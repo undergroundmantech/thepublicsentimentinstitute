@@ -132,6 +132,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return () => { dead = true; };
   }, [layerRace, live.at, live.byId]);
 
+  const calledSt = useMemo(() => new Set(races.filter((r) => live.byId[r.id]?.c.some((c) => c[4])).map((r) => r.st)), [races, live.byId]);
+  const sweepOn = useMemo(() => Object.values(live.byId).some((c) => hasReturns(c)), [live.byId]);
+  const votesIn = useMemo(() => races.reduce((s, r) => { const c = live.byId[r.id]; return s + (c ? c.c.reduce((a, x) => a + x[2], 0) : 0); }, 0), [races, live.byId]);
+  // the share of this view's races reporting, read by read, for the sparkline
+  const [hist, setHist] = useState<number[]>([]);
+  useEffect(() => { if (!live.at || !races.length) return; const rep = races.filter((r) => hasReturns(live.byId[r.id])).length / races.length; setHist((h) => [...h.slice(-39), rep]); }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
+  // a banner for each new call
+  const [toast, setToast] = useState<{ id: string; who: string; race: string } | null>(null);
+  useEffect(() => {
+    if (!live.at || !ix) return;
+    for (const r of ix.races) { const a = live.byId[r.id], b = live.prev[r.id]; const w = a?.c.find((c) => c[4]); if (w && b && !b.c.some((c) => c[4]) && (r.k === "sen" || r.k === "gov" || r.k === "house")) { setToast({ id: r.id, who: w[0], race: r.nm }); const t = window.setTimeout(() => setToast(null), 7000); return () => window.clearTimeout(t); } }
+  }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
   // what changed between reads
   useEffect(() => {
     if (!live.at || !ix) return;
@@ -168,7 +180,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         if (Math.abs(v.k - t.k) < 0.002 && v.rot.every((x, i) => Math.abs(x - t.rot[i]) < 0.02)) v.target = null;
       }
       // with a race desk open on the right, the globe centres in the space left of it
-      const dw = deskOpen.current && W > 1100 ? Math.min(1040, W * 0.66) : 0;
+      const dw = deskOpen.current && W > 1100 ? Math.min(1400, W * 0.78) : 0;
       proj.rotate(v.rot).scale(base * v.k).translate([(W - dw) / 2, H / 2]);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const R = proj.scale(), [cx, cy] = proj.translate();
@@ -214,6 +226,19 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         }
       }
       if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = "#ffd98a"; ctx.lineWidth = 2.2; ctx.stroke(); }
+      // states whose race civicAPI has called glow gold, breathing slowly
+      const breathe = 0.45 + 0.35 * Math.sin(performance.now() / 700);
+      for (const f of geo.states) {
+        if (!calledSt.has(f.st)) continue; ctx.beginPath(); path(f as GeoPermissibleObjects);
+        ctx.strokeStyle = `rgba(255,217,138,${breathe})`; ctx.lineWidth = 2.6; ctx.shadowColor = "rgba(255,217,138,.8)"; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
+      }
+      // a radar sweep across the globe while votes are being counted
+      if (sweepOn && !reduce) {
+        const a = (performance.now() / 2600) % (Math.PI * 2);
+        const g = ctx.createConicGradient ? ctx.createConicGradient(a, cx, cy) : null;
+        if (g) { g.addColorStop(0, "rgba(140,110,255,.16)"); g.addColorStop(0.06, "rgba(140,110,255,0)"); g.addColorStop(1, "rgba(140,110,255,0)"); ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip(); ctx.fillStyle = g; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R); ctx.restore(); }
+        ctx.strokeStyle = "rgba(160,140,255,.18)"; ctx.setLineDash([2, 6]); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R * 1.04, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+      }
       const fresh = new Set(feed.filter((x) => live.at && x.t.getTime() === live.at.getTime()).map((x) => x.id.split("-")[1]));
       const tt = performance.now();
       for (const f of geo.states) {
@@ -260,7 +285,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     box.addEventListener("pointerdown", down); box.addEventListener("pointermove", move); box.addEventListener("pointerup", up); box.addEventListener("wheel", wheel, { passive: false }); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); box.removeEventListener("pointerdown", down); box.removeEventListener("pointermove", move); box.removeEventListener("pointerup", up); box.removeEventListener("wheel", wheel); box.removeEventListener("pointerleave", leave); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState]);
+  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn]);
 
   const home = () => { view.current.target = { rot: [97, -39, 0], k: 2.2 }; setZoomK(2.2); setSel(null); setPick(null); };
   const zoomBy = (f: number) => { const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); };
@@ -359,7 +384,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         )}
       </aside>
 
-      <div className="mon-hud" aria-hidden="true"><span>{clock} ET</span><span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
+      <div className="mon-hud" aria-hidden="true"><span className="vin"><i />{votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span>{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>{clock} ET</span><span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
       <div className="mon-zoom">
         <button onClick={() => zoomBy(1.5)} aria-label="Zoom in">+</button>
         <button onClick={() => zoomBy(1 / 1.5)} aria-label="Zoom out">−</button>
@@ -367,6 +392,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         <button onClick={full} aria-label="Full screen" className="t">Full</button>
       </div>
 
+      {toast ? (
+        <button type="button" className="mon-toast" onClick={() => { setFocus(toast.id); setToast(null); }}>
+          <span className="k">civicAPI call</span><b>{toast.race}</b><span className="w">{toast.who}</span>
+        </button>
+      ) : null}
       {hov ? (() => {
         const rs = byState[hov.st] ?? [];
         const cr = hov.f && layerRace ? layerRace : null;
@@ -440,4 +470,15 @@ function RaceTip({ r, c, title, hint }: { r: XRace; c?: CRace; title: string; hi
       <small>{hint}</small>
     </>
   );
+}
+
+/** A whole number that counts up to its value and glides to each new one. */
+function CountUp({ v }: { v: number }) {
+  const [x, setX] = useState(0); const from = useRef(0);
+  useEffect(() => {
+    const a = from.current, t0 = performance.now(); let raf = 0;
+    const step = (t: number) => { const k = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - k, 3); setX(a + (v - a) * e); if (k < 1) raf = requestAnimationFrame(step); else from.current = v; };
+    raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
+  }, [v]);
+  return <>{Math.round(x).toLocaleString("en-US")}</>;
 }

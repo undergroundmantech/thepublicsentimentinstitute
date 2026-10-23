@@ -66,6 +66,10 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
     return () => { dead = true; };
   }, [c, reporting, live.at]);
   useEffect(() => { if (reporting) setView("results"); }, [reporting]);
+  useEffect(() => {
+    if (embedded || !r) return; const h = window.location.hash.slice(1);
+    if (h.startsWith("nd-")) { const t = window.setTimeout(() => jump(h), 400); return () => window.clearTimeout(t); }
+  }, [embedded, r, sf]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!ix) return <div className="desk"><style>{DESK_CSS}</style><main className="shell"><div className="nd-load sx-skel" /></main></div>;
   if (!r) return <div className="desk"><style>{DESK_CSS}</style><main className="shell"><h1>Race not found</h1><p className="prose">This race is not in the November 3 index. <Link href="/results/2026">See every race</Link>.</p></main></div>;
@@ -127,7 +131,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const body = (
     <main className="shell">
       <section className="race-header" aria-labelledby="nd-title">
-        {embedded ? <div className="archive-banner"><span>Situation monitor</span><button type="button" onClick={onClose}>Back to the globe</button></div> : null}
+        {embedded ? <div className="archive-banner"><span>Situation monitor</span><span className="nd-banner-acts"><Link href={`/results/2026/${r.id}`} className="nd-main">Open the race page</Link><button type="button" onClick={onClose}>Back to the globe</button></span></div> : null}
         {live.test && live.hidden > 0 ? <div className="archive-banner nd-test"><span>civicAPI is publishing test returns before Election Day. They are hidden here.</span><a href="?test=1">Preview with test returns</a></div> : null}
         {live.test && live.hidden === 0 && reporting ? <div className="archive-banner nd-test"><span>Test returns from civicAPI, shown for preview. These are not real votes.</span><a href="?">Hide test returns</a></div> : null}
         <div className="race-kicker">
@@ -149,7 +153,9 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
         </div>
         <nav className="race-tabs" aria-label="Race sections">
           {([["nd-results", "Overview"], ["nd-forecast", "Forecast"], ...(exp ? [["nd-counties", "Counties"]] : []), ...(legD.length ? [["nd-districts", "Districts"]] : [])] as [string, string][]).map(([k, l]) => (
-            <a key={k} href={`#${k}`} aria-current={tab === k ? "page" : undefined} onClick={(e) => { e.preventDefault(); jump(k); }}>{l}</a>
+            embedded
+              ? <Link key={k} href={`/results/2026/${r.id}#${k}`} aria-current={tab === k ? "page" : undefined}>{l}</Link>
+              : <a key={k} href={`#${k}`} aria-current={tab === k ? "page" : undefined} onClick={(e) => { e.preventDefault(); jump(k); }}>{l}</a>
           ))}
           <Link href={forecastHref(r)}>The forecast page</Link>{!embedded ? <Link href="/results/monitor">Situation monitor</Link> : null}
         </nav>
@@ -177,7 +183,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                 <div className="topline-columns" aria-hidden><span>Party</span><span>Seats won</span><span>Projected</span></div>
                 {([["Democrats", seats.d, legProj, "var(--dem)"], ["Republicans", seats.r, Math.max(0, (r.up ?? r.seats ?? 0) - legProj), "var(--gop)"]] as const).map(([n, w, pj, col]) => (
                   <div className="topline-row" key={n}><div className="topline-row-top"><div className="topline-candidate"><span className="nd-dot" style={{ background: col }} /><div className="topline-copy"><strong>{n}</strong><small>of {r.up ?? r.seats} seats up</small></div></div><div className="topline-votes">{w}</div><div className="topline-pct">{pj.toFixed(1)}</div></div>
-                    <div className="topline-bar"><span style={{ width: `${(100 * w) / Math.max(1, r.up ?? r.seats ?? 1)}%`, background: col }} /></div></div>
+                    <div className="topline-bar"><span style={{ width: `${(100 * w) / Math.max(1, r.up ?? r.seats ?? 1)}%`, backgroundColor: col, color: col }} /></div></div>
                 ))}
               </>
             ) : (
@@ -192,7 +198,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                         <div className="topline-candidate"><span className="nd-dot" style={{ background: col }} /><div className="topline-copy"><strong>{n}</strong><small>{p}</small>{i === 0 && gap > 0 && !w ? <span className="topline-lead">Leads by {fmtN(gap)} votes</span> : null}{w ? <span className="topline-lead won">Race called</span> : null}</div></div>
                         <div className="topline-votes">{fmtN(v)}</div><div className="topline-pct">{pctLabel(share)}%</div>
                       </div>
-                      <div className="topline-bar"><span style={{ width: `${Math.max(0, share)}%`, background: col }} /></div>
+                      <div className="topline-bar"><span style={{ width: `${Math.max(0, share)}%`, backgroundColor: col, color: col }} /></div>
                     </div>
                   );
                 })}
@@ -255,7 +261,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                 {([[last(A), finA, nowA, colA], [last(B), finB, nowB, colB], ...(finO >= 0.5 ? [["Others", finO, null, "var(--ink3)"] as const] : [])] as const).map(([n, s, a, col]) => (
                   <div className="projected-bar-row" key={n}>
                     <div className="projected-bar-name"><i style={{ background: col }} aria-hidden /><span>{n}</span></div>
-                    <div className="projected-bar-track"><span className="projected-bar-fill" style={{ width: `${s}%`, borderColor: col }} /></div>
+                    <div className="projected-bar-track"><span className="projected-bar-fill" style={{ width: `${s}%`, borderColor: col, color: col }} /></div>
                     <div className="projected-bar-value">{s.toFixed(1)}%</div>
                     <div className="projected-bar-delta">{a != null ? `${s - a >= 0 ? "+" : "−"}${Math.abs(s - a).toFixed(1)} vs now` : "projected"}</div>
                   </div>
@@ -435,6 +441,8 @@ const THEME_CSS = `
 .desk.nd .map-empty{top:auto;bottom:14px;left:50%;right:auto;transform:translateX(-50%);padding:10px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(var(--bg2-rgb),.85);backdrop-filter:blur(8px);text-align:center;pointer-events:none;inset:auto auto 14px 50%;position:absolute}
 .desk.nd .map-empty p{font:700 13px var(--font-b);color:var(--hi);display:flex;align-items:center;justify-content:center;gap:8px}
 .desk.nd .map-empty .map-empty-sub{font:500 12px var(--font-b);color:var(--mute);margin-top:3px}
+.desk.nd .nd-banner-acts{display:flex;gap:8px;flex-wrap:wrap}
+.desk.nd .archive-banner a.nd-main{background:var(--gold);color:#1a1200;border-color:var(--gold)}
 .desk.nd .rd-county-search{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05)}
 .desk.nd .rd-county-search input{border:0;background:none;outline:0;font-family:var(--font-b)}
 .desk.nd .rd-county-sorts{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05);padding:3px}
@@ -453,5 +461,24 @@ const THEME_CSS = `
 @keyframes nd-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @keyframes nd-fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @keyframes nd-pulse{0%{box-shadow:0 0 0 0 rgba(255,59,92,.55)}80%,100%{box-shadow:0 0 0 9px rgba(255,59,92,0)}}
-@media (prefers-reduced-motion:reduce){.desk.nd *{animation:none!important;transition:none!important}}
+/* a bigger forecast dial with a tick ring and a glow */
+.desk.nd .prob-ring{width:clamp(170px,14vw,220px);margin-top:14px}
+.desk.nd .prob-ring::before{inset:20px}
+.desk.nd .prob-ring::after{content:"";position:absolute;inset:-8px;border-radius:50%;background:repeating-conic-gradient(from -90deg,rgba(var(--line-rgb),.28) 0 .6deg,transparent .6deg 6deg);-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%,#000 66%,transparent 67%);mask:radial-gradient(circle,transparent 62%,#000 63%,#000 66%,transparent 67%);animation:nd-spin 40s linear infinite}
+.desk.nd .prob-ring .ring-center b{font-size:clamp(34px,2.8vw,46px)}
+.desk.nd .prob-ring .ring-center span{font:700 11px var(--font-m);letter-spacing:.14em;text-transform:uppercase}
+.desk.nd .rep-ring{width:110px}
+.desk.nd .forecast-model-layout,.desk.nd .forecast-hero{align-items:center}
+/* vote bars: segmented, glossy, with a light passing along them */
+.desk.nd .topline-bar{position:relative;height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,rgba(var(--line-rgb),.09) 0 calc(4% - 2px),transparent calc(4% - 2px) 4%);overflow:hidden}
+.desk.nd .topline-bar span{position:relative;border-radius:7px;background-image:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 55%);-webkit-mask:repeating-linear-gradient(90deg,#000 0 10px,rgba(0,0,0,.82) 10px 12px);mask:repeating-linear-gradient(90deg,#000 0 10px,rgba(0,0,0,.82) 10px 12px)}
+.desk.nd .topline-bar::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.28) 50%,transparent 60%);transform:translateX(-100%);animation:nd-sheen 3.4s ease-in-out 1.2s infinite}
+.desk.nd .projected-bar-track{height:12px;border-radius:6px;background:rgba(var(--line-rgb),.07);overflow:hidden}
+.desk.nd .projected-bar-fill{border-radius:6px;background-color:color-mix(in srgb,currentColor 32%,transparent);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.18) 0 6px,transparent 6px 12px);background-size:24px 24px;animation:nd-grow 1.1s cubic-bezier(.2,.8,.2,1) .25s both,nd-stripes 1.2s linear infinite}
+.desk.nd .model-stats>div{transition:transform .25s,border-color .25s;border:1px solid transparent}.desk.nd .model-stats>div:hover{transform:translateY(-2px);border-color:var(--line2)}
+.desk.nd .meta-block{transition:transform .25s}.desk.nd .meta-block:hover{transform:translateY(-2px)}
+@keyframes nd-spin{to{transform:rotate(360deg)}}
+@keyframes nd-sheen{to{transform:translateX(100%)}}
+@keyframes nd-stripes{to{background-position:24px 0}}
+@media (prefers-reduced-motion:reduce){.desk.nd *,.desk.nd *::after{animation:none!important;transition:none!important}}
 `;
