@@ -1,0 +1,5 @@
+.avg-tl { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; margin: 0 0 16px; padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(231, 179, 65, .45); background: linear-gradient(110deg, rgba(231, 179, 65, .14), rgba(var(--line-rgb), .03)); color: var(--ink2); font-size: 13.5px; text-decoration: none; }
+.avg-tl .k { font: 800 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: #160d00; background: var(--gold); padding: 3px 7px; border-radius: 6px; }
+.avg-tl b { font: 800 16px var(--font-d); color: var(--hi); }
+.avg-tl i { margin-left: auto; font-style: normal; font: 800 12.5px var(--font-b); color: var(--gold); }
+.avg-tl:hover { border-color: var(--gold); }

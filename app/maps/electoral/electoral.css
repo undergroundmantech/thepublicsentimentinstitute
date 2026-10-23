@@ -59,3 +59,101 @@
 @media (max-width: 1000px) { .emk-stage { grid-template-columns: 1fr; } .emk-tools { position: static; } .emk-pal { grid-template-columns: repeat(3, 1fr); } .emk-pal button:nth-child(5), .emk-pal button.blank { grid-column: auto; } }
 @media (max-width: 640px) { .emk-chart { grid-template-columns: 1fr 1fr; } .emk-chart .mid { grid-column: 1 / -1; grid-row: 2; } .emk-chart .side b { font-size: 32px; } .emk-tip { display: none; } .emk-pal { grid-template-columns: repeat(2, 1fr); } .emk-map text { font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { .emk-bar i, .emk-map path { transition: none; } }
+
+/* ---- Oct 23 map maker 2: tools, call banners, play the night and the studio ---- */
+.emk-main { display: grid; gap: 10px; min-width: 0; }
+.emk-bar2 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 6px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); }
+.emk-bar2 button { font: 700 12.5px var(--font-b); color: var(--ink2); background: rgba(var(--line-rgb), .05); border: 1px solid var(--line2); border-radius: 9px; padding: 7px 11px; cursor: pointer; }
+.emk-bar2 button:hover:not(:disabled) { color: var(--hi); border-color: var(--hi); }
+.emk-bar2 button:disabled { opacity: .4; cursor: default; }
+.emk-bar2 button[aria-pressed="true"] { color: var(--hi); background: rgba(130, 90, 255, .22); border-color: rgba(160, 130, 255, .6); }
+.emk-bar2 button.hot { color: #fff; background: linear-gradient(135deg, #ff3b5c, #9b5cff); border-color: transparent; }
+.emk-bar2 button.gold { color: #160d00; background: var(--gold); border-color: transparent; }
+.emk-bar2 .sep { width: 1px; height: 22px; background: var(--line2); margin: 0 2px; }
+.emk-titles { display: grid; gap: 5px; }
+.emk-titles label { font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.emk-titles input { font: 600 13px var(--font-b); color: var(--hi); background: rgba(var(--line-rgb), .05); border: 1px solid var(--line2); border-radius: 9px; padding: 8px 10px; }
+.emk-titles input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.emk-verdict.w-D { color: #8fb0ff; } .emk-verdict.w-R { color: #ff8399; } .emk-verdict.w-tie { color: var(--gold); }
+
+/* a painted state flashes once */
+.emk-map .fl, .emk-map g.fl polygon { animation: emk-flash .7s ease-out; }
+@keyframes emk-flash { 0% { filter: brightness(2.2) drop-shadow(0 0 12px #fff); } 100% { filter: none; } }
+
+/* the call banner, a lower third */
+.emk-mapcard, .emk-f-map { position: relative; }
+.emk-call { position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%); z-index: 20; display: grid; grid-template-columns: auto auto; grid-template-areas: "k w" "b b" "who who"; gap: 2px 12px; align-items: center;
+  min-width: min(420px, 80%); padding: 12px 20px 14px; border-radius: 16px; background: rgba(10, 6, 18, .92); border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 24px 60px -20px #000; color: #fff; pointer-events: none;
+  animation: emk-call 2.6s cubic-bezier(.2, .9, .2, 1) both; }
+.emk-call.d { box-shadow: inset 5px 0 0 #3d7bff, 0 24px 60px -20px #000; } .emk-call.r { box-shadow: inset 5px 0 0 #ff3b5c, 0 24px 60px -20px #000; } .emk-call.t { box-shadow: inset 5px 0 0 #e7b341, 0 24px 60px -20px #000; }
+.emk-call .k { grid-area: k; font: 800 10.5px var(--font-m); letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.emk-call b { grid-area: b; font: 800 clamp(20px, 2vw, 30px)/1.1 var(--font-d); letter-spacing: -.02em; }
+.emk-call .w { grid-area: w; justify-self: end; font: 800 12px var(--font-m); letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 7px; }
+.emk-call .who { grid-area: who; font: 600 14px var(--font-b); color: #d9d3ea; }
+@keyframes emk-call { 0% { opacity: 0; transform: translate(-50%, 24px) scale(.96); } 10% { opacity: 1; transform: translate(-50%, 0) scale(1); } 85% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, 10px); } }
+.emk-clock { position: absolute; z-index: 5; left: 16px; top: 16px; display: grid; gap: 1px; padding: 10px 14px; border-radius: 12px; background: rgba(10, 6, 18, .85); border: 1px solid rgba(231, 179, 65, .5); color: #fff; }
+.emk-clock span { font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.emk-clock b { font: 800 22px var(--font-m); font-variant-numeric: tabular-nums; } .emk-clock small { font: 600 11px var(--font-m); color: #b9b2d0; }
+.emk-toast { position: fixed; z-index: 7000; left: 50%; bottom: calc(var(--tabbar, 0px) + 24px); transform: translateX(-50%); padding: 10px 16px; border-radius: 12px; background: rgba(10, 6, 18, .95); border: 1px solid rgba(255, 255, 255, .18); color: #fff; font: 700 13px var(--font-b); }
+
+/* the studio: a full screen frame for screen recording */
+html.emk-studio .opp-top, html.emk-studio .ticker-bar, html.emk-studio .opp-tabs, html.emk-studio footer.opp { visibility: hidden !important; }
+.emk-studio-root { position: fixed; inset: 0; z-index: 6000; display: grid; place-items: center; background: #05030b; user-select: none; }
+.emk-studio-root.idle, .emk-studio-root.idle * { cursor: none !important; }
+.emk-frame { --fg: #fff; --mut: #b9b2d0; --pan: rgba(255, 255, 255, .05); position: relative; width: min(98vw, calc(94vh * var(--ar))); aspect-ratio: var(--ar); max-height: 94vh; container-type: size;
+  display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 1.6cqh; padding: 3.2cqh 3.4cqw; border-radius: 18px; overflow: hidden; color: var(--fg);
+  background: radial-gradient(80% 70% at 50% 45%, rgba(120, 80, 255, .18), transparent 70%), linear-gradient(160deg, #120a2a, #07040f 60%); box-shadow: 0 30px 90px -30px #000; }
+.bg-day .emk-frame { --fg: #140b24; --mut: #5b5372; --pan: rgba(17, 0, 25, .04); background: radial-gradient(80% 70% at 50% 45%, rgba(120, 80, 255, .12), transparent 70%), #f6f3fc; }
+.bg-green .emk-frame { background: #00b140; } .bg-blue .emk-frame { background: #0047bb; }
+.bg-green .emk-frame, .bg-blue .emk-frame { box-shadow: none; border-radius: 0; }
+.emk-f-top { display: flex; justify-content: space-between; align-items: start; gap: 2cqw; }
+.emk-f-title { display: grid; gap: .6cqh; min-width: 0; }
+.emk-f-title b { font: 800 6.2cqh/1.02 var(--font-d); letter-spacing: -.03em; outline: none; }
+.emk-f-title span { font: 600 2.4cqh var(--font-b); color: var(--mut); outline: none; }
+.emk-f-title [contenteditable]:focus { box-shadow: 0 2px 0 var(--gold); }
+.emk-f-clock { display: grid; justify-items: end; padding: 1cqh 1.4cqw; border-radius: 12px; background: rgba(10, 6, 18, .72); border: 1px solid rgba(231, 179, 65, .5); color: #fff; }
+.emk-f-clock span { font: 700 1.6cqh var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); } .emk-f-clock b { font: 800 3.8cqh var(--font-m); font-variant-numeric: tabular-nums; }
+.emk-f-count { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2cqw; align-items: center; padding: 1.4cqh 1.6cqw; border-radius: 16px; background: var(--pan); }
+.emk-f-count .side b { display: block; font: 800 7.4cqh/1 var(--font-d); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.emk-f-count .side span { font: 800 1.5cqh var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mut); }
+.emk-f-count .side.d b { color: #5b8cff; } .emk-f-count .side.r { text-align: right; } .emk-f-count .side.r b { color: #ff4d6a; }
+.bg-green .emk-f-count, .bg-blue .emk-f-count { background: rgba(8, 4, 18, .72); --mut: #d9d3ea; color: #fff; }
+.emk-bar.big { height: 5.2cqh; } .emk-bar.big i { font-size: 2cqh; }
+.emk-f-count .emk-verdict { font-size: 2.3cqh; margin-top: 1cqh; color: var(--fg); }
+.emk-f-map { min-height: 0; display: grid; place-items: center; }
+.emk-f-map .emk-map { width: auto; height: 100%; max-width: 100%; max-height: 100%; }
+.bg-day .emk-map path.off, .bg-day .emk-map polygon.off { fill: #e4dff0; }
+.bg-green .emk-map path, .bg-green .emk-map polygon { stroke: #00b140; } .bg-blue .emk-map path, .bg-blue .emk-map polygon { stroke: #0047bb; }
+.bg-day .emk-map path, .bg-day .emk-map polygon { stroke: #f6f3fc; }
+.emk-f-map .emk-call { min-width: min(46cqw, 520px); }
+.emk-f-map .emk-call b { font-size: 4.2cqh; } .emk-f-map .emk-call .who { font-size: 2.1cqh; } .emk-f-map .emk-call .k, .emk-f-map .emk-call .w { font-size: 1.6cqh; }
+.emk-f-foot { display: flex; justify-content: space-between; align-items: center; font: 700 1.8cqh var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mut); }
+.emk-f-foot .brand { display: inline-flex; align-items: center; gap: 1cqw; color: var(--fg); font-weight: 800; letter-spacing: .18em; }
+.emk-f-foot .brand i { width: 2.2cqh; height: 2.2cqh; border-radius: 50%; background: var(--grad); }
+.a-9x16 .emk-f-title b { font-size: 3.8cqh; } .a-9x16 .emk-f-title span { font-size: 1.6cqh; }
+.a-9x16 .emk-f-count { grid-template-columns: 1fr 1fr; } .a-9x16 .emk-f-count .mid { grid-column: 1 / -1; grid-row: 2; } .a-9x16 .emk-f-count .side b { font-size: 5.4cqh; }
+.a-9x16 .emk-bar.big { height: 3.2cqh; } .a-9x16 .emk-f-map .emk-call b { font-size: 2.8cqh; } .a-9x16 .emk-f-map .emk-call { min-width: 80cqw; }
+.a-1x1 .emk-f-title b { font-size: 5cqh; }
+
+/* the dock */
+.emk-dock { position: fixed; z-index: 6100; left: 50%; bottom: 14px; transform: translateX(-50%); display: grid; gap: 8px; width: min(1100px, calc(100vw - 24px)); padding: 10px 12px; border-radius: 16px;
+  background: rgba(10, 6, 18, .94); border: 1px solid rgba(255, 255, 255, .16); box-shadow: 0 20px 60px -20px #000; color: #fff; transition: opacity .35s ease, transform .35s ease; }
+.emk-studio-root.idle .emk-dock { opacity: 0; transform: translate(-50%, 20px); pointer-events: none; }
+.emk-dock.gone { display: none; }
+.emk-dock .emk-pal.mini { display: flex; flex-wrap: wrap; gap: 5px; }
+.emk-dock .emk-pal.mini button { flex: 1 1 0; min-width: 64px; padding: 7px 8px; font-size: 11.5px; justify-content: center; }
+.emk-dock .emk-pal.mini button kbd { display: none; }
+.emk-dock .row { display: flex; flex-wrap: wrap; gap: 5px; }
+.emk-dock .row button, .emk-dock .row select { font: 700 12px var(--font-b); color: #e9e4f6; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .16); border-radius: 9px; padding: 7px 10px; cursor: pointer; }
+.emk-dock .row button:disabled { opacity: .4; }
+.emk-dock .row button[aria-pressed="true"] { background: rgba(130, 90, 255, .3); border-color: rgba(160, 130, 255, .7); }
+.emk-dock .row button.hot { background: linear-gradient(135deg, #ff3b5c, #9b5cff); border-color: transparent; }
+.emk-dock .row button.gold { margin-left: auto; color: #160d00; background: var(--gold); border-color: transparent; }
+.emk-dock p { margin: 0; font-size: 11.5px; color: #a49cbc; }
+.emk-dock-show { position: fixed; z-index: 6100; right: 14px; bottom: 14px; font: 700 12px var(--font-b); color: #fff; background: rgba(10, 6, 18, .85); border: 1px solid rgba(255, 255, 255, .2); border-radius: 9px; padding: 7px 10px; cursor: pointer; opacity: .5; }
+.emk-dock-show:hover { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .emk-call, .emk-map .fl, .emk-map g.fl polygon { animation: none; } }
+html[data-theme="light"] .emk-bar2 button.hot { color: #fff; }
+.bg-green .emk-map path.off, .bg-green .emk-map polygon.off, .bg-blue .emk-map path.off, .bg-blue .emk-map polygon.off { fill: #2a2340; }
+.bg-green .emk-map text.off, .bg-blue .emk-map text.off { fill: rgba(255, 255, 255, .5); }
+.a-9x16 .emk-f-map { margin-inline: -2.4cqw; }

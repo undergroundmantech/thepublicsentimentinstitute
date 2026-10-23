@@ -20,6 +20,8 @@ function sweep() {
     if (!timing || timing.iterations !== Infinity) continue;
     const name = (a as CSSAnimation).animationName || "";
     const el = (a.effect as KeyframeEffect | null)?.target as Element | null;
+    // a figure meant to move, such as Pointy on the polling timelines, keeps moving
+    if (el?.closest?.("[data-motion-ok]")) continue;
     if (SPINNER.test(name) && el) { const r = el.getBoundingClientRect(); if (r.width <= 80 && r.height <= 80) continue; }
     try { a.currentTime = 0; a.pause(); } catch { /* the animation already ended */ }
   }

@@ -2,6 +2,8 @@ import PollingAveragesPage, { type ForecastLink } from "@/app/_polling/genericba
 import { getModel, isInd } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import JsonLd from "@/app/components/JsonLd";
+import Link from "next/link";
+import "./promo.css";
 import { aggById } from "./registry";
 import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
 import { avgLd, avgSummary } from "./seo";
@@ -18,6 +20,8 @@ function forecastLinks(): Record<string, ForecastLink> {
   } catch { /* no model build: the page simply shows no forecast link */ }
   return out;
 }
+
+const TIMELINE: Record<string, string> = { "trump-approval": "/polls/approval/timeline", "generic-ballot": "/polls/generic-ballot/timeline" };
 
 /** The page's own average built on the server, so the browser draws it without building it. */
 function initialBuild(id: string) {
@@ -37,6 +41,11 @@ export default function Average({ id }: { id: string }) {
   return (
     <>
       {s ? <JsonLd data={avgLd(s, crumbs)} /> : null}
+      {TIMELINE[id] ? (
+        <Link href={TIMELINE[id]} className="opp avg-tl" data-ev="Timeline opened" data-ev-d={JSON.stringify({ from: id })}>
+          <span className="k">New</span><b>Walk the timeline</b><span>Scroll the whole term day by day with Pointy, with every major event marked on the line</span><i aria-hidden="true">Open</i>
+        </Link>
+      ) : null}
       <PollingAveragesPage initialId={id} forecast={forecastLinks()} initialBuilt={initialBuild(id)} />
     </>
   );

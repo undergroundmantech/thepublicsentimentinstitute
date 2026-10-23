@@ -37,6 +37,8 @@ export const MENU: NavGroup[] = [
       { h: "National", links: [
         { href: "/polls/generic-ballot", label: "Generic ballot" },
         { href: "/polls/approval", label: "Trump approval" },
+        { href: "/polls/approval/timeline", label: "Approval timeline", badge: "New" },
+        { href: "/polls/generic-ballot/timeline", label: "Generic ballot timeline", badge: "New" },
         { href: "/polls/approval/vance", label: "Vance approval" },
         { href: "/polls/right-track", label: "Right track, wrong track" },
       ] },
