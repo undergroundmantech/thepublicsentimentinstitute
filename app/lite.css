@@ -1,0 +1,29 @@
+/* Light rendering, Oct 23 2026. html[data-lite] is set in <head> by app/lib/lite.ts on touch screens, narrow screens,
+   reduced motion, Data Saver and devices with 2 GB of memory or 2 cores or fewer. Everything here trades decoration for battery and
+   frame rate: no backdrop blur, no blurred drifting orbs, no marquee. Looping animations are paused by
+   app/components/LiteMotion.tsx; canvases cap their frame rate and pixel ratio through app/lib/lite.ts. */
+
+/* backdrop blur is the single most expensive effect on a phone GPU: every frame re-blurs what is behind it */
+html[data-lite] *, html[data-lite] *::before, html[data-lite] *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html[data-lite] header.opp.opp-top .top { background: rgb(var(--canvas-rgb)); }
+html[data-lite] .opp .mnav { background: rgb(var(--canvas-rgb)); }
+html[data-lite] .opp .tip { background: rgb(var(--bg2-rgb)); }
+
+/* the ambient orbs: still, and a soft gradient instead of a 90px blur filter */
+html[data-lite] .opp .orb { animation: none !important; filter: none; }
+html[data-lite] .opp .orb.a { background: radial-gradient(closest-side, rgba(6, 75, 249, .7), rgba(6, 75, 249, .25) 55%, rgba(6, 75, 249, 0)); }
+html[data-lite] .opp .orb.b { background: radial-gradient(closest-side, rgba(131, 68, 156, .7), rgba(131, 68, 156, .25) 55%, rgba(131, 68, 156, 0)); }
+html[data-lite] .opp .orb.c { background: radial-gradient(closest-side, rgba(249, 6, 75, .7), rgba(249, 6, 75, .25) 55%, rgba(249, 6, 75, 0)); }
+
+/* the ticker: a row you swipe instead of a marquee that repaints forever */
+html[data-lite] .opp .ticker-track { animation: none !important; transform: none; padding-inline: 14px; }
+html[data-lite] .opp .ticker { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; mask-image: linear-gradient(90deg, #000 92%, transparent); }
+html[data-lite] .opp .ticker::-webkit-scrollbar { display: none; }
+html[data-lite] .opp .ticker-track > span[aria-hidden="true"] { display: none !important; }
+html[data-lite] .opp .ticker-track span a { display: inline-block; padding-block: 9px; }
+
+/* the footer is far below the fold on every page: skip its layout and paint until it is near */
+html[data-lite] footer.opp { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* hover only flourishes never fire on touch, so drop their transitions too */
+html[data-lite] .opp .card { transition: none; }

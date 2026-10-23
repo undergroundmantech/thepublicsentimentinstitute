@@ -597,7 +597,9 @@ html[data-theme="light"] .evb .d { color: #1f4fd6; } html[data-theme="light"] .e
 .evh-stage { padding-bottom: 104px; }
 @media (max-width: 760px) { .evh-ped { width: 94%; } .evh-plate { bottom: 70px; } .evh-stage { padding-bottom: 100px; } }
 @media (max-width: 760px) {
-  .evb-fig { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* only the ruler scrolls sideways; its caption and key stay put */
+  .evb-grid > *, .evb-main, .evb-fig { min-width: 0; max-width: 100%; }
+  .evb-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: thin; }
   .evb-ruler, .evb-race { min-width: 660px; }
   .evb-key { min-width: 0; }
 }

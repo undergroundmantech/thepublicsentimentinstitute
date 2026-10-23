@@ -68,3 +68,21 @@
 html[data-theme="light"] .wd .pf-head.d h1 { color: #1f4fd6; } html[data-theme="light"] .wd .pf-head.r h1 { color: #c81e43; }
 html[data-theme="light"] .wd .pf-st.ok { color: #0a8a5c; } html[data-theme="light"] .wd .pf-st.pro, html[data-theme="light"] .wd .pf-src { color: #8a5d00; }
 @media (max-width: 900px) { .wd .pf-head { grid-template-columns: 1fr; } .wd .pf-acts { justify-content: flex-start; } .wd .pf-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wd .pf-body { padding: 14px; } }
+
+/* on a phone each person is a two line card instead of an 820px table row */
+@media (max-width: 760px) {
+  .wd .pf-list { min-width: 0; display: block; }
+  .wd .pf-list thead { display: none; }
+  .wd .pf-list tbody { display: block; }
+  .wd .pf-list tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 12px; padding: 11px 2px; border-bottom: 1px solid var(--line); }
+  .wd .pf-list td { display: block; padding: 0; border: 0; }
+  .wd .pf-list td:nth-child(1) { grid-column: 1; grid-row: 1; font-size: 15px; }
+  .wd .pf-list td:nth-child(5) { grid-column: 2; grid-row: 1; justify-self: end; }
+  .wd .pf-list td:nth-child(2) { grid-column: 1; grid-row: 2; font-size: 13px; }
+  .wd .pf-list td:nth-child(6) { grid-column: 2; grid-row: 2; justify-self: end; color: var(--mute); font-size: 12px; }
+  .wd .pf-list td:nth-child(6):not(:empty)::after { content: " ties"; }
+  .wd .pf-list td:nth-child(3) { grid-column: 1 / -1; grid-row: 3; font-size: 12.5px; }
+  .wd .pf-list td:nth-child(4) { grid-column: 1 / -1; grid-row: 4; font-size: 12px; }
+  .wd .pf-list td:nth-child(4):empty, .wd .pf-list td:nth-child(3):empty { display: none; }
+  .wd .pf-list .wd-empty { grid-column: 1 / -1; }
+}

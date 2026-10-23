@@ -6,7 +6,7 @@ import { Pointy } from "@/app/components/home/Mascot";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import { pollHref } from "@/app/polls/registry";
 import {
-  AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti,
+  AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti, builtN,
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/_polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
@@ -135,7 +135,7 @@ function SortIcon({ dir }: { dir: "asc" | "desc" | null }) {
   );
 }
 
-export default function PollingAveragesPage({ initialId, forecast }: { initialId?: string; forecast?: Record<string, ForecastLink> } = {}) {
+export default function PollingAveragesPage({ initialId, forecast, initialBuilt }: { initialId?: string; forecast?: Record<string, ForecastLink>; initialBuilt?: BuiltAggregate } = {}) {
   const initial = (initialId && CATALOG.find((c) => c.id === initialId)) || CATALOG[0];
   const [id, setId] = useState(initial.id);
   const [group, setGroup] = useState(initial.group);
@@ -177,8 +177,22 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   const h2hDef = isMulti ? null : (H2H_BY_ID[item.id] ?? null);
   const multiDef = isMulti ? (MULTI_BY_ID[item.id] ?? null) : null;
 
-  // unfiltered builds of the active average: the "All" view, and the source of the sample counts
-  const baseH2H = useMemo(() => (h2hDef ? buildAggregate(h2hDef) : null), [h2hDef]);
+  // unfiltered builds of the active average: the "All" view, and the source of the sample counts.
+  // Oct 23 2026: never built in the browser when it can be avoided. The page's own average arrives built from the
+  // server; another average loads its build from /api/polls/built, made once at deploy, and is only built here if
+  // that request fails. Building Trump approval alone took five seconds of a phone's main thread.
+  const [full, setFull] = useState<Record<string, BuiltAggregate>>(() => (initialBuilt ? { [initial.id]: initialBuilt } : {}));
+  const baseH2H = h2hDef ? full[h2hDef.id] ?? null : null;
+  const loadingH2H = !!h2hDef && !baseH2H;
+  useEffect(() => {
+    if (!h2hDef || full[h2hDef.id]) return;
+    let cancelled = false; const def = h2hDef;
+    const local = () => window.setTimeout(() => { if (!cancelled) setFull((f) => ({ ...f, [def.id]: buildAggregate(def) })); }, 0);
+    fetch(`/api/polls/built/${def.id}`).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((b: BuiltAggregate) => { if (!cancelled) setFull((f) => ({ ...f, [def.id]: b })); })
+      .catch(() => { local(); });
+    return () => { cancelled = true; };
+  }, [h2hDef, full]);
   const baseMulti = useMemo(() => (multiDef ? buildMulti(multiDef) : null), [multiDef]);
 
   // build everything after first paint (board tiles, the state map and instant switching)
@@ -194,6 +208,11 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     const tick = () => new Promise<void>((r) => setTimeout(r, 0));
     (async () => {
       await tick();
+      // summaries of every average, made once at deploy; built here in slices only if they cannot be fetched
+      try {
+        const r = await fetch("/api/polls/lite");
+        if (r.ok) { const j = (await r.json()) as Record<string, BuiltAggregate>; if (!cancelled) setAllBuilt(j); return; }
+      } catch { /* build them here */ }
       for (let i = 0; i < order.length; i += 4) {
         if (cancelled) return;
         for (const d of order.slice(i, i + 4)) a[d.id] = buildAggregate(d);
@@ -262,7 +281,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         color: lead.color,
         margin: Math.abs(net),
         marginText: def.fmtMargin(net),
-        polls: b.polls.length,
+        polls: builtN(b),
         party: lead.party ? lead.party[0] : undefined,
         trend: (() => {
           const sg = net >= 0 ? 1 : -1;
@@ -416,8 +435,8 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                   let color = "var(--ink2)", valueText = "", spark: number[] = [], n = 0, last: string | null = null;
                   if (it.kind === "h2h") {
                     const b = allBuilt[it.id]; const d = H2H_BY_ID[it.id];
-                    if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; valueText = d.fmtMargin(b.latest.net); spark = b.daily.map((x) => x.net); }
-                    if (b) { n = b.polls.length; last = b.daily.length ? b.daily[b.daily.length - 1].date : null; }
+                    if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; valueText = d.fmtMargin(b.latest.net); spark = b.spark ?? b.daily.map((x) => x.net); }
+                    if (b) { n = builtN(b); last = b.daily.length ? b.daily[b.daily.length - 1].date : null; }
                   } else {
                     const b = allMulti[it.id]; const d = MULTI_BY_ID[it.id];
                     if (b?.latest) { const li = leaderIdx(b.latest); color = d.series[li].color; valueText = `${d.series[li].label} ${b.latest[li].toFixed(1)}`; spark = b.daily.map((x) => x.v[li]); }
@@ -518,7 +537,9 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
       {/* the studio: one interactive chart, the average itself */}
       <section className="card pa-studio">
         <div className="card-b">
-          {dailyArr.length === 0 ? (
+          {loadingH2H ? (
+            <div className="empty" role="status">Loading the average.</div>
+          ) : dailyArr.length === 0 ? (
             <div className="empty">No {(SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full ?? "matching").toLowerCase()} polls for this average.</div>
           ) : isMulti && builtMulti && multiDef ? (
             <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />

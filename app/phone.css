@@ -1,0 +1,105 @@
+/* The phone layout, Oct 23 2026. html[data-phone] is set at 860px and narrower (app/lib/lite.ts, kept current on
+   rotation by LiteMotion). A tab bar at the bottom for the four main desks and the menu, a masthead that slides away
+   while reading and returns on a scroll up, and touch targets of at least 40px. */
+
+:root { --tabbar: 0px; }
+html[data-phone] { --tabbar: calc(58px + env(safe-area-inset-bottom, 0px)); }
+
+/* the tab bar */
+.opp-tabs { display: none; }
+html[data-phone] .opp-tabs {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: fixed; left: 0; right: 0; bottom: 0; z-index: 85;
+  height: var(--tabbar); padding: 0 4px env(safe-area-inset-bottom, 0px); background: rgb(var(--bg2-rgb)); border-top: 1px solid var(--line2);
+  transition: transform .2s ease;
+}
+html[data-phone] .opp-tabs.kb, html.cx-fs .opp-tabs, html[data-phone]:has(.opp .mnav) .opp-tabs { transform: translateY(110%); }
+.opp-tabs a, .opp-tabs button {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; height: 58px;
+  padding: 0; border: 0; background: none; color: var(--mute); font: 600 11px/1.1 var(--font-b); letter-spacing: .01em; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.opp-tabs span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.opp-tabs .on { color: var(--hi); }
+.opp-tabs .on svg { color: var(--gold); }
+.opp-tabs .on::before { content: ""; position: absolute; top: 0; left: 50%; width: 28px; height: 2px; margin-left: -14px; border-radius: 0 0 2px 2px; background: var(--gold); }
+.opp-tabs a:active, .opp-tabs button:active { background: var(--glass2); }
+.opp-tabs a:focus-visible, .opp-tabs button:focus-visible { outline: 2px solid var(--gold); outline-offset: -4px; border-radius: 10px; }
+html[data-phone] body { padding-bottom: var(--tabbar); }
+
+/* the masthead: compact, and out of the way while reading down */
+html[data-phone] header.opp.opp-top { transition: transform .22s ease; }
+html[data-phone] header.opp.opp-top.hide { transform: translateY(-100%); }
+html[data-phone] header.opp.opp-top.hide:has(.mnav) { transform: none; }
+html[data-phone] .opp .top .wrap { height: 54px; gap: 10px; }
+html[data-phone] .opp .top .logo svg { height: 32px; width: auto; }
+html[data-phone] .opp .top .right { gap: 8px; }
+html[data-phone] .opp .top .right .btn.ghost.search { display: inline-flex; width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
+html[data-phone] .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
+html[data-phone] .opp .top .right .btn.gold, html[data-phone] .opp .burger { display: none !important; }
+html[data-phone] .opp .mstrip .wrap { height: 32px; gap: 14px; }
+html[data-phone] .opp .ms-odds { padding-block: 7px; gap: 12px; }
+html[data-phone] header.opp.opp-top.scrolled .mstrip { margin-top: -33px; }
+html[data-phone] .opp .ticker-bar .lbl { padding-inline: 14px; font-size: 10.5px; }
+
+/* the phone menu: bigger rows, and room for the home indicator */
+html[data-phone] .opp .mnav { overflow-y: auto; overscroll-behavior: contain; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+html[data-phone] .opp .mnav .macc-b a { display: block; padding-block: 9px; }
+
+/* touch targets */
+html[data-phone] .opp .foot ul { gap: 0; }
+html[data-phone] .opp .foot ul a { display: inline-block; padding-block: 9px; }
+html[data-phone] .opp .foot .bottom a { display: inline-block; padding-block: 8px; }
+html[data-phone] .opp .btn.sm { min-height: 38px; }
+html[data-phone] .opp .crumbs a { display: inline-block; padding-block: 8px; }
+
+/* nothing fixed to the bottom of the screen sits under the tab bar */
+html[data-phone] .opp .toast, html[data-phone] .sl-toast, html[data-phone] .sw-toast { bottom: calc(var(--tabbar) + 14px) !important; }
+
+/* no double tap zoom delay on controls, and no grey flash on tap */
+html[data-phone] a, html[data-phone] button, html[data-phone] [role="tab"], html[data-phone] label { touch-action: manipulation; -webkit-tap-highlight-color: rgba(var(--line-rgb), .08); }
+
+/* text that is too small to read on a phone */
+html[data-phone] .opp .eye { letter-spacing: .1em; }
+
+/* Oct 23 audit fixes. Footer links were 20px tall: every link row is now a full finger high. */
+html[data-phone] .opp .foot .cols a { display: block; padding-block: 9px; }
+html[data-phone] .opp .callout a { display: inline-block; padding-block: 6px; }
+
+/* segmented controls, tabs and chips, all at least 36px */
+html[data-phone] .opp :is(.seg, .stu-seg, .cx-seg, .ax-seg, .wbr-tabs, .wbr-sort, .cx-tabs, .evc-chips, .sw-scen-chips, .sl-chips, .wd-chips, .sl-mode, .sw-mode) > button,
+html[data-phone] .opp :is(.sl-chips, .sw-scen-chips) .sl-chip, html[data-phone] .opp .sw-chip { min-height: 36px; }
+html[data-phone] .opp :is(nav.fnav, nav.fx-nav) > a { display: inline-flex; align-items: center; min-height: 40px; }
+html[data-phone] .opp .pa-sort, html[data-phone] .opp .sp-frow { min-height: 36px; }
+html[data-phone] .opp li > button { min-height: 36px; }
+
+/* links that are a table row's name: a taller hit area without a taller row look */
+html[data-phone] .opp :is(td.nm > a, td > a.pf-nm, .pd-top > a.pd-name, .cc-pj.click > a, .en-meta > a, .pd-src > a) { display: inline-block; padding-block: 7px; }
+
+/* labels and tags under 10.5px are hard to read on a phone */
+html[data-phone] .opp :is(.wd-pill, .cl-tag, .mw-race, .wbr-row .n, .wbr-row .n em, .wbr-card .s, .pd-kind, .wd-grp-l, .pf-st, .pa-grade, .sl-mag, .fcx-meta dt, .wbm-mcard small, .wbr-tabs small) { font-size: 11px; }
+html[data-phone] .opp :is(.evc-tw, .fcx-tw) th, html[data-phone] .opp .ax-t thead tr.grp th, html[data-phone] .opp :is(.evc-tw, .fcx-tw) td small { font-size: 11px; }
+
+/* single column grids on a phone must never grow past the screen because one child is wide: those children
+   shrink, and a wide control row scrolls inside itself instead */
+html[data-phone] .opp :is(.fx-body, .fx-body > div, .st-sec, .fx-grid2, .tn2, .cx) > * { min-width: 0; }
+html[data-phone] .opp .sp-tablewrap { overflow-x: auto; }
+
+/* footer groups: plain columns on a wide screen, a folding list on a phone */
+.opp .foot details.fgrp > summary { list-style: none; }
+.opp .foot details.fgrp > summary::-webkit-details-marker { display: none; }
+html:not([data-phone]) .opp .foot details.fgrp > summary { pointer-events: none; }
+html[data-phone] .opp .foot .wrap .cols { grid-template-columns: 1fr; gap: 0; }
+html[data-phone] .opp .foot details.fgrp { border-bottom: 1px solid var(--line); }
+html[data-phone] .opp .foot details.fgrp > summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; cursor: pointer; }
+html[data-phone] .opp .foot details.fgrp > summary h4 { margin: 0; }
+html[data-phone] .opp .foot details.fgrp > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--mute); border-bottom: 2px solid var(--mute); transform: rotate(45deg); margin-right: 6px; transition: transform .15s; }
+html[data-phone] .opp .foot details.fgrp[open] > summary::after { transform: rotate(225deg); }
+html[data-phone] .opp .foot details.fgrp > ul { display: block; columns: 2; column-gap: 16px; padding-bottom: 10px; }
+html[data-phone] .opp .foot details.fgrp li { break-inside: avoid; }
+html[data-phone] .opp .foot .cols > div:first-child { padding-bottom: 14px; }
+html[data-phone] .opp .foot .cam-foot { display: none; }
+html[data-phone] .opp .fx-st > * { min-width: 0; } html[data-phone] .opp .fx-st a { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+/* 360px phones */
+html[data-phone] .opp :is(.sl-foot, .bm-foot, .pa-hero, .tn2-head) > * { min-width: 0; }
+html[data-phone] .opp .callout { overflow-wrap: anywhere; }
+html[data-phone] .opp .tn-hl { white-space: normal; -webkit-box-decoration-break: clone; box-decoration-break: clone; }

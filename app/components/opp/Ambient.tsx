@@ -2,14 +2,16 @@
 // A fixed layer of slow pixel dust behind the race pages. It drifts upward, leans a little toward the pointer,
 // pauses when the tab is hidden, and is a single still frame under reduced motion.
 import { useEffect, useRef } from "react";
+import { canvasDpr, isLite } from "@/app/lib/lite";
 
 export default function Ambient({ tint = "#b8a4ff" }: { tint?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const cv = ref.current; if (!cv) return;
     const ctx = cv.getContext("2d"); if (!ctx) return;
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    // light rendering draws one still frame, like reduced motion
+    const reduce = isLite() || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const dpr = canvasDpr();
     const h = tint.replace("#", ""); const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
     let W = 0, H = 0, raf = 0, last = performance.now(), mx = 0.5;
     let dots: { x: number; y: number; s: number; v: number; a: number; p: number }[] = [];
@@ -32,9 +34,12 @@ export default function Ambient({ tint = "#b8a4ff" }: { tint?: string }) {
     const go = () => { cancelAnimationFrame(raf); last = performance.now(); raf = requestAnimationFrame(draw); };
     const onMove = (e: PointerEvent) => { mx = e.clientX / (W || 1); };
     const onVis = () => { if (!document.hidden && !reduce) go(); };
-    size(); go();
-    window.addEventListener("resize", size); window.addEventListener("pointermove", onMove); document.addEventListener("visibilitychange", onVis);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", size); window.removeEventListener("pointermove", onMove); document.removeEventListener("visibilitychange", onVis); };
+    // a phone fires resize as its address bar slides; only a real width change rebuilds the dust
+    let lastW = -1;
+    const onResize = () => { if (window.innerWidth === lastW && W) return; lastW = window.innerWidth; size(); go(); };
+    onResize();
+    window.addEventListener("resize", onResize); window.addEventListener("pointermove", onMove); document.addEventListener("visibilitychange", onVis);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); window.removeEventListener("pointermove", onMove); document.removeEventListener("visibilitychange", onVis); };
   }, [tint]);
   return <canvas ref={ref} className="amb-cv" aria-hidden="true" />;
 }

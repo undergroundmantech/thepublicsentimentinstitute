@@ -3,6 +3,7 @@
 // with Pointy the On Point canvasser walking across it from one close race to the next. Drag to turn the globe,
 // hover a state for its odds, click it for the full race. Canvas for the globe, SVG for the mascot and its bubble.
 import DaysOut from "@/app/components/DaysOut";
+import { canvasDpr, frameGap, isLite } from "@/app/lib/lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -78,8 +79,8 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     const c = cv.current, box = wrap.current; if (!c || !box || !geo) return;
     const ctx = c.getContext("2d"); if (!ctx) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    let W = 0, H = 0, raf = 0, visible = true;
+    const dpr = canvasDpr(), gap = frameGap();
+    let W = 0, H = 0, raf = 0, visible = true, lastF = 0;
     const proj = geoOrthographic().clipAngle(90);
     const size = () => {
       W = box.clientWidth; H = box.clientHeight; c.width = W * dpr; c.height = H * dpr; c.style.width = W + "px"; c.style.height = H + "px";
@@ -91,7 +92,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     const t0 = performance.now();
     // scenery: a quiet starfield, beacons on the closest races, Pointy's route drawn between them and his footprints
     const rnd = (i: number) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
-    const stars = Array.from({ length: 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
+    const stars = Array.from({ length: isLite() ? 120 : 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
     const centroid = (st: string) => { const f = geo.states.find((g) => g.st === st); return f ? (geoCentroid(f as GeoPermissibleObjects) as [number, number]) : null; };
     const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
     const steps: { ll: [number, number]; t: number; side: number }[] = []; let lastStep = 0, side = 1;
@@ -101,6 +102,9 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     if (tour[0]) setStop(tour[0].r);
     const STOP = 2800;
     const draw = (now: number) => {
+      // light rendering: about 30 frames a second, unless the reader is dragging the globe
+      if (gap && !dragRef.current && now - lastF < gap) { if (visible && !reduce) raf = requestAnimationFrame(draw); return; }
+      lastF = now;
       const t = now - t0;
       if (!dragRef.current && !reduce) rot.current = [96 + Math.sin(t / 9000) * 7, -38 + Math.sin(t / 13000) * 2.5, 0];
       proj.rotate(rot.current);

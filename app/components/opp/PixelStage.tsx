@@ -4,6 +4,7 @@
 // bobs slowly, and hovering a pixel lifts its whole county and names it. One canvas, paused when off screen,
 // a still frame under reduced motion.
 import { useEffect, useRef, useState } from "react";
+import { canvasDpr, frameGap } from "@/app/lib/lite";
 import { useThemeRef } from "@/app/lib/useSiteTheme";
 
 type P = { id: string; d: string };
@@ -35,8 +36,8 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
   useEffect(() => {
     const cv = ref.current, box = wrap.current; if (!cv || !box || !paths.length) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    let raf = 0, alive = true, visible = true, t0 = performance.now(), last = t0;
+    const dpr = canvasDpr(), gap = frameGap();
+    let raf = 0, alive = true, visible = true, t0 = performance.now(), last = t0, lastF = 0;
     let W = 0, H = 0, step = 8, gx0 = 0, gy0 = 0, floorY = 0, stW = 0, stCx = 0, stBottom = 0;
     let px: { x: number; y: number; sx: number; sy: number; dl: number; id: string; c: string; hc: string; col: number; row: number }[] = [];
     let grid = new Map<number, number>();
@@ -84,6 +85,8 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
 
     const ease = (k: number) => 1 - Math.pow(1 - k, 3);
     const draw = (now: number) => {
+      if (gap && now - lastF < gap) { if (alive && visible && !reduce) raf = requestAnimationFrame(draw); return; }
+      lastF = now;
       const t = now - t0, dt = Math.min(64, now - last) / 1000; last = now;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const bob = reduce ? 0 : Math.sin(t / 1500) * 7;

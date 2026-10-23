@@ -35,11 +35,11 @@ const mOf = (r: { a: number; b: number; total: number }) => (r.total > 0 ? ((r.b
 export const CX_CSS = `
 :root:has(.fc-xl){--wrap:2400px}
 .cx{display:grid;grid-template-columns:minmax(0,1fr) clamp(360px,23vw,480px);gap:16px;align-items:start}
-@media (max-width:1100px){.cx{grid-template-columns:1fr}}
+@media (max-width:1100px){.cx{grid-template-columns:minmax(0,1fr)}}
 .cx-map{position:relative;overflow:hidden;padding:0}
 .cx-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
 .cx-bar h3{margin:0;font:700 16px var(--font-d);letter-spacing:-.01em}
-.cx-seg{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line2);border-radius:999px;background:rgba(var(--line-rgb),.03)}
+.cx-seg{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line2);border-radius:999px;background:rgba(var(--line-rgb),.03);max-width:100%;overflow-x:auto;scrollbar-width:none}.cx-seg::-webkit-scrollbar{display:none}.cx-seg>button{flex:none}.cx>*{min-width:0}
 .cx-seg button{font:700 12px var(--font-b);color:var(--mute);background:none;border:0;border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap}
 .cx-seg button[aria-pressed="true"]{color:var(--ink);background:rgba(var(--line-rgb),.12)}
 .cx-seg button:focus-visible,.cx-zoom button:focus-visible,.cx-list button:focus-visible,.cx-step button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}

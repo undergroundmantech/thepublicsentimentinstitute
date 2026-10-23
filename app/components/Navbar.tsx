@@ -28,9 +28,25 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
   useEffect(() => { setOpen(false); setMenu(null); }, [pathname]);
   const head = useRef<HTMLElement>(null);
   useEffect(() => {
-    const on = () => head.current?.classList.toggle("scrolled", window.scrollY > 40);
-    on(); window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
+    // on a phone the masthead slides away while reading down the page and comes back on any scroll up,
+    // so the page gets the whole screen and the tab bar stays in reach
+    let lastY = window.scrollY, ticking = false;
+    const run = () => {
+      ticking = false;
+      const el = head.current; if (!el) return;
+      const y = window.scrollY, dy = y - lastY;
+      el.classList.toggle("scrolled", y > 40);
+      if (document.documentElement.hasAttribute("data-phone")) {
+        if (y < 120 || dy < -6) el.classList.remove("hide");
+        else if (dy > 8 && !el.querySelector(".mnav")) el.classList.add("hide");
+      } else el.classList.remove("hide");
+      if (Math.abs(dy) > 6 || y < 120) lastY = y;
+    };
+    const on = () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } };
+    run(); window.addEventListener("scroll", on, { passive: true });
+    const openMenu = () => { head.current?.classList.remove("hide"); setOpen(true); };
+    window.addEventListener("opp:menu", openMenu);
+    return () => { window.removeEventListener("scroll", on); window.removeEventListener("opp:menu", openMenu); };
   }, []);
   useEffect(() => {
     if (!open) return;

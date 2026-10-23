@@ -4,6 +4,7 @@
 // him or the bubble to open that race. Lives inside the map's SVG so it shares the map's coordinates; moves
 // by writing transforms straight to the DOM, so the map itself never re-renders per frame.
 import { useEffect, useMemo, useRef, useState } from "react";
+import { frameGap } from "@/app/lib/lite";
 
 export type WalkStop = { st: string; x: number; y: number; title: string; line: string; color: string; href: string };
 
@@ -75,7 +76,10 @@ export default function Walker({ stops, onOpen }: { stops: WalkStop[]; onOpen: (
     let raf = 0, visible = true, i = 0, phase: "walk" | "stop" = "stop", t0 = performance.now(), from = tour[0], to = tour[0], dur = 0, lastStep = 0, stepK = 0, dir = 1;
     setAt(0); setFrame("wave");
     const STOP = 2600, SPEED = 0.085; // viewBox units per ms
+    const gap = frameGap(); let lastF = 0;
     const tick = (now: number) => {
+      if (gap && now - lastF < gap) { if (visible) raf = requestAnimationFrame(tick); return; }
+      lastF = now;
       const t = now - t0;
       if (phase === "stop") {
         setFrame(Math.floor(t / 320) % 2 ? "wave" : "stand");

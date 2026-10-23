@@ -11,9 +11,9 @@
 .scn-modes button:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
 .scn-glide{position:absolute;z-index:0;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:12px;background:var(--hi);box-shadow:0 10px 30px -12px rgba(var(--line-rgb),.5);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
 .scn-modes.st .scn-glide{transform:translateX(100%)}
-.scn-state-ph{display:none}
+.scn-state-ph,.scn-state-ph.sl-load{display:none}
 html[data-scn="state"] .scn-across{display:none}
-html[data-scn="state"] .scn-state-ph{display:flex}
+html[data-scn="state"] .scn-state-ph,html[data-scn="state"] .scn-state-ph.sl-load{display:flex}
 .scn-state{animation:sl-rise .45s cubic-bezier(.2,.8,.2,1) both}
 @media (max-width:520px){.scn-modes button{padding:9px 10px}.scn-modes button b{font-size:13px}.scn-modes button small{font-size:9.5px;letter-spacing:.04em}}
 

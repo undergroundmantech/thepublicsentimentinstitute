@@ -2,6 +2,8 @@ import "./globals.css";
 import "./opp.css";
 import "./motion.css";
 import "./chrome.css";
+import "./lite.css";
+import "./phone.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -13,6 +15,9 @@ import Ambient from "./components/Ambient";
 import Spotlight from "./components/Spotlight";
 import RolloutGate from "./components/RolloutGate";
 import { THEME_INIT_SCRIPT } from "./lib/theme";
+import { LITE_INIT_SCRIPT } from "./lib/lite";
+import LiteMotion from "./components/LiteMotion";
+import MobileTabs from "./components/MobileTabs";
 import JsonLd from "./components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
 import SiteEvents from "./components/SiteEvents";
@@ -68,6 +73,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: LITE_INIT_SCRIPT }} />
+        {/* Google AdSense: the account tag that verifies onpointpolitics.us, and the AdSense loader, as AdSense asks, in
+            the head of every page. public/ads.txt carries the same publisher id. */}
+        <meta name="google-adsense-account" content="ca-pub-7542770820535344" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7542770820535344" crossOrigin="anonymous" />
         <link rel="alternate" type="text/plain" title="On Point Politics for language models" href="/llms.txt" />
         <JsonLd data={graph(orgLd())} />
       </head>
@@ -82,6 +92,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="opp-page">{children}</div>
         </main>
         <Footer />
+        <MobileTabs />
+        <LiteMotion />
         <script type="application/json" data-flag-values="" dangerouslySetInnerHTML={{ __html: flagJson(FLAG_VALUES) }} />
         <SiteEvents />
         <Analytics />

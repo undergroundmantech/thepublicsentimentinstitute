@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { loadGeo, makeProjector, geomToPath } from "../onpoint/electionLib.js";
 import { cssColor } from "@/app/lib/cssColor";
+import { frameGap } from "@/app/lib/lite";
 
 // DeskMapField — the hero backdrop is a broadcast-style tour of the season:
 //   1 · the NATIONAL county map fills in red/blue/purple as returns land,
@@ -167,8 +168,11 @@ export default function DeskMapField({ className, states }: { className?: string
       lastElapsed = 0;
     };
 
+    const gap = frameGap(); let lastF = 0;
     const tick = (now: number) => {
       if (!alive || !running) return;
+      if (gap && now - lastF < gap) { raf = requestAnimationFrame(tick); return; }
+      lastF = now;
       const elapsed = now - phaseStart;
 
       if (phase === "count") {

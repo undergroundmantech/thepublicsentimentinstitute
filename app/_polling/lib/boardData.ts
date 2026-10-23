@@ -1,6 +1,6 @@
 // What the polls whiteboard shows, built the same way on the index pages (at build time) and on a
 // race page (in the browser, from the averages it has already built).
-import type { AggregateDef, BuiltAggregate } from "./aggregates";
+import { builtN, type AggregateDef, type BuiltAggregate } from "./aggregates";
 import { HOUSE_DISTRICT_POLLS } from "./houseDistrictPolls";
 import type { MapRow } from "./StateRaceMap";
 import type { RoomItem } from "./PollRoom";
@@ -40,15 +40,15 @@ export function buildBoard(defs: AggregateDef[], built: Record<string, BuiltAggr
     const lead = net == null ? null : net >= 0 ? d.seriesA : d.seriesB;
     const it: RoomItem = {
       id: d.id, label: labelOf(d), sub: d.stateAbbr ? `${d.seriesA.label} vs. ${d.seriesB.label}` : undefined, st: d.stateAbbr,
-      value: net == null ? "" : d.fmtMargin(net), color: lead?.color ?? "", spark: b ? sample(b.daily.slice(-90).map((x) => x.net), 36) : [],
-      n: b?.polls.length ?? d.polls.length, margin: net == null ? null : Math.abs(net), href: pollHref(d.id),
+      value: net == null ? "" : d.fmtMargin(net), color: lead?.color ?? "", spark: b ? b.spark90 ?? sample(b.daily.slice(-90).map((x) => x.net), 36) : [],
+      n: b ? builtN(b) : d.polls.length, margin: net == null ? null : Math.abs(net), href: pollHref(d.id),
       fresh: cut ? d.polls.filter((p) => p.endDate > cut).length : 0,
     };
     items[g].push(it);
     if ((g === "senate" || g === "governor") && d.stateAbbr && b?.latest && lead) {
       const row: MapRow = {
         abbr: d.stateAbbr, id: d.id, title: `${STATE_NAME[d.stateAbbr] ?? d.stateAbbr} ${g === "senate" ? "Senate" : "governor"}: ${d.seriesA.label} vs. ${d.seriesB.label}`,
-        leader: lead.label, color: lead.color, margin: Math.abs(net!), marginText: d.fmtMargin(net!), polls: b.polls.length, party: lead.party ? lead.party[0] : undefined,
+        leader: lead.label, color: lead.color, margin: Math.abs(net!), marginText: d.fmtMargin(net!), polls: builtN(b), party: lead.party ? lead.party[0] : undefined,
         trend: (() => { const sg = net! >= 0 ? 1 : -1; const tail = b.daily.slice(-43); return tail.filter((_, i) => (tail.length - 1 - i) % 3 === 0).map((x) => x.net * sg); })(),
       };
       const prev = bestMap[g][d.stateAbbr];

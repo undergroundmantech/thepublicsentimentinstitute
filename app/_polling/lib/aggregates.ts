@@ -506,7 +506,24 @@ export type BuiltAggregate = {
   daily: AggDaily[];
   polls: AggPollPoint[];
   latest: { a: number; b: number; net: number } | null;
+  /** set on a summary build (liteBuilt): the poll count and a 60 point sparkline of the whole range */
+  n?: number;
+  spark?: number[];
+  spark90?: number[];
 };
+
+/** A small summary of a built average for boards, tiles and maps: the last 90 days of the line, the latest reading,
+ *  the poll count and a sparkline. The averages page loads these from /api/polls/lite instead of building every
+ *  average in the browser, which took seconds on a phone. */
+export function liteBuilt(b: BuiltAggregate): BuiltAggregate {
+  const pick = (a: number[], n: number) => (a.length <= n ? a : Array.from({ length: n }, (_, i) => a[Math.round((i * (a.length - 1)) / (n - 1))]));
+  const nets = b.daily.map((x) => x.net);
+  // the last 43 days carry only the date and the margin, which is all a board or map trend reads
+  const daily = b.daily.slice(-43).map((x) => ({ date: x.date, net: x.net })) as unknown as AggDaily[];
+  return { daily, polls: [], latest: b.latest, n: b.polls.length, spark: pick(nets, 60), spark90: pick(nets.slice(-90), 36) };
+}
+/** The poll count of a full or summary build. */
+export const builtN = (b: BuiltAggregate) => b.n ?? b.polls.length;
 
 export function buildAggregate(def0: AggregateDef): BuiltAggregate {
   const def = { ...def0, polls: def0.polls.filter((p) => !isExcludedPollster(p.pollster)) };

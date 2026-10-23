@@ -24,10 +24,11 @@ export default function Footer() {
               <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/maps/early-vote">Early vote tracker</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link></p>
             </div>
             {COLS.map((c) => (
-              <div key={c.h}>
-                <h4>{c.h}</h4>
+              // a collapsible group: always open on a wide screen, folded on a phone by LiteMotion so the footer is one screen
+              <details key={c.h} className="fgrp" open>
+                <summary><h4>{c.h}</h4></summary>
                 <ul>{c.links.map(([href, label]) => <li key={href + label}><Link href={href}>{label}</Link></li>)}</ul>
-              </div>
+              </details>
             ))}
           </div>
           <div className="bottom">

@@ -5,7 +5,7 @@
 import { SITE_V2, SHOW_FORECAST, SHOW_SITUATION_ROOM } from "./flags";
 
 // Bump on each release so a change in behavior can be read against the build that shipped it.
-export const RELEASE = "2026-10-23b";
+export const RELEASE = "2026-10-23c";
 
 export const FLAG_VALUES = {
   "site-v2": SITE_V2,
@@ -17,11 +17,12 @@ export const FLAG_VALUES = {
   "candidate-stops": true,
   "people-files": true,
   "eday-breaks": true,
+  "mobile-shell": true,
   release: RELEASE,
 } as const;
 
-// Flags set in the visitor's browser by SiteEvents: the theme they read the site in.
-export const CLIENT_FLAGS = ["theme"] as const;
+// Flags set in the visitor's browser by SiteEvents: the theme they read the site in, light rendering and the phone layout.
+export const CLIENT_FLAGS = ["theme", "lite-render", "phone-layout"] as const;
 
 export const FLAG_KEYS: string[] = [...Object.keys(FLAG_VALUES), ...CLIENT_FLAGS];
 

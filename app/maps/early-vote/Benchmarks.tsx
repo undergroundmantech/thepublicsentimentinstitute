@@ -70,7 +70,7 @@ function LeadRuler({ o, seen }: { o: BenchOut; seen: boolean }) {
   const y0 = 18 + nt * 30, H = y0 + 46 + nb * 34;
   useCenter(svg, X((o.lead + o.expLead) / 2) / W);
   return (
-    <svg ref={svg} className={`evb-ruler${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Party lead of the early vote, now ${lab(o.lead)}, expected ${lab(o.expLead)}`}>
+    <div className="evb-scroll"><svg ref={svg} className={`evb-ruler${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Party lead of the early vote, now ${lab(o.lead)}, expected ${lab(o.expLead)}`}>
       <defs>
         <linearGradient id="evb-zd" x1="0" x2="1"><stop offset="0" stopColor="var(--evb-d2)" /><stop offset="1" stopColor="var(--evb-d1)" /></linearGradient>
         <linearGradient id="evb-zr" x1="0" x2="1"><stop offset="0" stopColor="var(--evb-r1)" /><stop offset="1" stopColor="var(--evb-r2)" /></linearGradient>
@@ -93,7 +93,7 @@ function LeadRuler({ o, seen }: { o: BenchOut; seen: boolean }) {
           {t.key === "now" ? <circle cx={t.x} cy={y0 + 8} r={9} className="dot" /> : <circle cx={t.x} cy={y0 + 8} r={7} className="ring" />}
           <text x={t.x} y={y} className="tt">{t.t}</text>
         </g>); })}
-    </svg>
+    </svg></div>
   );
 }
 
@@ -116,7 +116,7 @@ function RaceRuler({ o, pres24, seen }: { o: BenchOut; pres24: number | null; se
   const y0 = 22 + nr * 26, H = y0 + 84;
   useCenter(svg, X((r.F + o.implied) / 2) / W);
   return (
-    <svg ref={svg} className={`evb-race${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Forecast ${lab(r.F, ind)}, early vote read ${lab(o.implied, ind)}`}>
+    <div className="evb-scroll"><svg ref={svg} className={`evb-race${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Forecast ${lab(r.F, ind)}, early vote read ${lab(o.implied, ind)}`}>
       <rect x={P} y={y0} width={W - 2 * P} height={22} rx={5} className="bed" />
       <rect x={X(0)} y={y0} width={Math.max(0, X(hi) - X(0))} height={22} className="rside" />
       <rect x={X(lo)} y={y0} width={Math.max(0, X(0) - X(lo))} height={22} className="dside" />
@@ -131,7 +131,7 @@ function RaceRuler({ o, pres24, seen }: { o: BenchOut; pres24: number | null; se
           {l.key === "e" ? <circle cx={l.x} cy={y0 + 11} r={8} className="dot" /> : l.key === "f" ? <rect x={l.x - 3} y={y0 - 2} width={6} height={26} rx={2} className="fm" /> : <path d={`M${l.x} ${y0 + 3}l6 8l-6 8l-6 -8z`} className="pm" />}
           <text x={l.x} y={y} className="tt">{l.t}</text>
         </g>); })}
-    </svg>
+    </svg></div>
   );
 }
 
@@ -169,7 +169,7 @@ function EdayCard({ o, seen, dN, rN }: { o: BenchOut; seen: boolean; dN: string;
         {seg(e.gDay, "Election Day voters", e.dayExp, "gd")}
         <div className="evb-grk"><span><i className="t" />Trump 2024 voters</span><span><i className="h" />Harris 2024 voters</span><span><i className="n" />New voters</span></div>
       </div>
-      <svg ref={svg} className={`evb-race evb-dayr${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Election Day margin: the forecast expects ${lab(e.dayExp, ind)}, the flip line is ${lab(flip.day)}`}>
+      <div className="evb-scroll"><svg ref={svg} className={`evb-race evb-dayr${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Election Day margin: the forecast expects ${lab(e.dayExp, ind)}, the flip line is ${lab(flip.day)}`}>
         <rect x={P} y={y0 + nr * 26} width={W - 2 * P} height={18} rx={5} className="bed" />
         <rect x={X(lo)} y={y0 + nr * 26} width={Math.max(0, X(flip.day) - X(lo))} height={18} className="dside" />
         <rect x={X(flip.day)} y={y0 + nr * 26} width={Math.max(0, X(hi) - X(flip.day))} height={18} className="rside" />
@@ -181,7 +181,7 @@ function EdayCard({ o, seen, dN, rN }: { o: BenchOut; seen: boolean; dN: string;
             {m.key === "exp" ? <circle cx={m.x} cy={y0 + nr * 26 + 9} r={8} className="dot" /> : <rect x={m.x - 2} y={y0 + nr * 26 - 1} width={4} height={20} rx={1} className="fm" />}
             <text x={m.x} y={y} className="tt">{m.t}</text>
           </g>); })}
-      </svg>
+      </svg></div>
       <p className="evb-dayt">If the early vote ends where it is pointing, <b>{under}</b> needs Election Day voters to break <b className={flip.side === "R" ? "r" : "d"}>{lab(flip.day)}</b> to win, {Math.abs(more).toFixed(1)} points {more > 0 ? (flip.side === "R" ? "redder" : "bluer") : (flip.side === "R" ? "bluer" : "redder")} than the <b className={side(e.dayExp)}>{lab(e.dayExp, ind)}</b> the forecast expects of them. With the forecast holding, Election Day lands near {lab(track.day, ind)}.</p>
     </figure>
   );

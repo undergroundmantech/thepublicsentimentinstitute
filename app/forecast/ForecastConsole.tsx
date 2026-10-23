@@ -12,7 +12,7 @@ import { Pointy } from "@/app/components/home/Mascot";
 import { useRouter } from "next/navigation";
 import { RATE, RATING_LABEL, rating, ratingPill, STATE_NAME, type Rating } from "@/app/lib/opp";
 import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
-import SpendingTracker from "./Spending";
+import SpendingTracker, { SPENDING_CSS } from "./Spending";
 import Ambient from "@/app/components/opp/Ambient";
 import "./console.css";
 
@@ -411,7 +411,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       </div>
 
       {layer === "senate" || layer === "house" ? (
-        <div className="fcx-money"><SpendingTracker office={layer} onPick={(id) => { const r = (layer === "senate" ? data.senate : data.house).find((x) => x.id === id); if (r) router.push(r.href); }} /></div>
+        <div className="fcx-money"><style>{SPENDING_CSS}</style><SpendingTracker office={layer} onPick={(id) => { const r = (layer === "senate" ? data.senate : data.house).find((x) => x.id === id); if (r) router.push(r.href); }} /></div>
       ) : null}
 
       <div className="fcx-links">

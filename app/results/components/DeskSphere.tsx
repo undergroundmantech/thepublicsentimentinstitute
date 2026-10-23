@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { loadGeo, makeProjector, geomToPath, candColor } from "../onpoint/electionLib.js";
 import { cssColor } from "@/app/lib/cssColor";
+import { frameGap } from "@/app/lib/lite";
 
 // DeskSphere — the desk opens INSIDE a sphere of election boards.
 //
@@ -580,8 +581,11 @@ export default function DeskSphere({
     let running = true;
     const veil = veilRef.current;
 
+    const gap = frameGap(); let lastF = 0;
     const tick = (now: number) => {
       if (!alive || !running) return;
+      if (gap && now - lastF < gap) { raf = requestAnimationFrame(tick); return; }
+      lastF = now;
       try {
         renderTick(now);
       } catch (err) {

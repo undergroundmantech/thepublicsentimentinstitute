@@ -3,6 +3,7 @@ import { getModel, isInd } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import JsonLd from "@/app/components/JsonLd";
 import { aggById } from "./registry";
+import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
 import { avgLd, avgSummary } from "./seo";
 
 /** Forecast race pages the averages page can link to, keyed `sen-GA` / `gov-GA`. Built on the
@@ -18,6 +19,12 @@ function forecastLinks(): Record<string, ForecastLink> {
   return out;
 }
 
+/** The page's own average built on the server, so the browser draws it without building it. */
+function initialBuild(id: string) {
+  const def = AGGREGATES.find((d) => d.id === id);
+  return def ? buildAggregate(def) : undefined;
+}
+
 /** One polling average on its canonical route. The averages engine renders the page; the
  *  route only picks which average opens first. */
 export default function Average({ id }: { id: string }) {
@@ -30,7 +37,7 @@ export default function Average({ id }: { id: string }) {
   return (
     <>
       {s ? <JsonLd data={avgLd(s, crumbs)} /> : null}
-      <PollingAveragesPage initialId={id} forecast={forecastLinks()} />
+      <PollingAveragesPage initialId={id} forecast={forecastLinks()} initialBuilt={initialBuild(id)} />
     </>
   );
 }
