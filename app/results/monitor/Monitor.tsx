@@ -186,7 +186,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         if (Math.abs(v.k - t.k) < 0.002 && v.rot.every((x, i) => Math.abs(x - t.rot[i]) < 0.02)) v.target = null;
       }
       // with a race desk open on the right, the globe centres in the space left of it
-      const dw = deskOpen.current && W > 1100 ? Math.min(1400, W * 0.78) : 0;
+      const dw = deskOpen.current && W > 1100 ? Math.min(1180, W * 0.64) : 0;
       proj.rotate(v.rot).scale(base * v.k).translate([(W - dw) / 2, H / 2]);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const R = proj.scale(), [cx, cy] = proj.translate();

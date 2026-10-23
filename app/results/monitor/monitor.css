@@ -78,7 +78,7 @@
 .mon-test a { color: var(--gold); font-weight: 700; text-decoration: underline; }
 .mon-ch .bar .lead { opacity: .45; } .mon-ch .bar .gap { flex: 1; }
 .mon-feed li button { all: unset; cursor: pointer; color: var(--ink2); } .mon-feed li button:hover { color: #fff; text-decoration: underline; }
-.mon-desk { position: absolute; top: 0; right: 0; bottom: 0; left: auto; width: min(1400px, 78%); z-index: 8; overflow: auto; background: #07050f; border-left: 1px solid rgba(255, 255, 255, .14); box-shadow: -40px 0 80px -30px rgba(0, 0, 0, .85); animation: mon-drawer .22s ease-out; }
+.mon-desk { position: absolute; top: 0; right: 0; bottom: 0; left: auto; width: min(1180px, 64%); z-index: 8; overflow: auto; background: #07050f; border-left: 1px solid rgba(255, 255, 255, .14); box-shadow: -40px 0 80px -30px rgba(0, 0, 0, .85); animation: mon-drawer .22s ease-out; }
 @keyframes mon-drawer { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .mon-desk { animation: none; } }
 .mon:fullscreen .mon-desk { background: #07050f; }
