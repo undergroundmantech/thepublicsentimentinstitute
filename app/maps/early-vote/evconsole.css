@@ -144,3 +144,54 @@
 .evc-meta .mb.d { border-color: rgba(61,123,255,.45); background: rgba(61,123,255,.08); } .evc-meta .mb.d dd { color: var(--dem2); }
 .evc-meta .mb.r { border-color: rgba(255,59,92,.45); background: rgba(255,59,92,.08); } .evc-meta .mb.r dd { color: var(--gop2); }
 .evc-tw td small { display: block; font-size: 10.5px; color: var(--mute); }
+
+/* then and now: 2026 against the same day in 2022 and 2024 */
+.tn { margin: 16px 0; padding-bottom: 14px; }
+.tn .card-h { padding: 14px 16px; }
+.tn-yrs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 0 16px; }
+.tn-yr { position: relative; display: grid; gap: 6px; align-content: start; padding: 14px; border-radius: 16px; border: 1px solid var(--line); background: var(--glass); overflow: hidden; animation: tn-up .6s cubic-bezier(.2,.8,.2,1) both; }
+.tn-yr:nth-child(2) { animation-delay: .08s; } .tn-yr:nth-child(3) { animation-delay: .16s; }
+.tn-yr::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--tc); }
+.tn-yr.y2026 { --tc: #3fd6a2; } .tn-yr.y2024 { --tc: #b9a4ff; } .tn-yr.y2022 { --tc: #e7b341; }
+.tn-yr .h { display: flex; justify-content: space-between; align-items: baseline; } .tn-yr .h b { font: 800 18px var(--font-d); color: var(--tc); } .tn-yr .h span { font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.tn-yr .n { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font: 800 30px/1 var(--font-d); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.tn-yr .v { font-size: 12.5px; color: var(--ink2); } .tn-yr .v.sm { font-size: 11.5px; color: var(--mute); }
+.tn-yr .v.up { color: #3fd6a2; font-weight: 700; } .tn-yr .v.dn { color: #ff9a6a; font-weight: 700; }
+.tn-yr .m { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--mute); border-top: 1px dashed var(--line); padding-top: 5px; } .tn-yr .m b { font: 800 13px var(--font-m); }
+.tn .tag { font: 700 9.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; font-style: normal; padding: 3px 7px; border-radius: 999px; }
+.tn .tag.m { color: #c9b8ff; background: rgba(155,123,255,.14); border: 1px solid rgba(155,123,255,.35); }
+.tn-pb .bar { display: flex; height: 9px; border-radius: 5px; overflow: hidden; background: rgba(var(--line-rgb), .08); gap: 2px; }
+.tn-pb .bar i { display: block; height: 100%; transform-origin: left; animation: tn-grow .9s cubic-bezier(.2,.8,.2,1) .2s both; }
+.tn-pb .bar .d { background: var(--dem); } .tn-pb .bar .r { background: var(--gop); } .tn-pb .bar .o { background: rgba(var(--line-rgb), .22); }
+.tn-pb .lbls { display: flex; justify-content: space-between; gap: 6px; margin-top: 4px; font: 700 11px var(--font-m); color: var(--mute); }
+.tn-pbar.none { font-size: 12px; color: var(--mute); }
+.tn-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 14px 16px 0; }
+.tn-charts figure { margin: 0; padding: 12px; border-radius: 16px; border: 1px solid var(--line); background: rgba(var(--canvas-rgb), .4); }
+.tn-charts figcaption { font: 800 10.5px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
+.tn-chart { width: 100%; height: auto; display: block; overflow: visible; }
+.tn-chart .g { stroke: rgba(var(--line-rgb), .08); } .tn-chart .z { stroke: rgba(var(--line-rgb), .35); stroke-dasharray: 3 4; }
+.tn-chart .ax { font: 600 9.5px var(--font-m); fill: var(--mute); text-anchor: middle; } .tn-chart .ax.l { text-anchor: end; }
+.tn-chart .ln { fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1400; animation: tn-draw 1.6s ease both; }
+.tn-chart .ln.dash { stroke-width: 1.8; stroke-dasharray: 5 5; animation: none; opacity: .85; }
+.tn-chart .ln.c22 { stroke: #e7b341; } .tn-chart .ln.c24 { stroke: #b9a4ff; } .tn-chart .ln.c26 { stroke: #3fd6a2; stroke-width: 3; }
+.tn-chart .pt { stroke: var(--bg); stroke-width: 2; } .tn-chart .pt.c26 { fill: #3fd6a2; } .tn-chart .pt.alt { fill: #9b7bff; }
+.tn-chart .lb { font: 800 11px var(--font-m); } .tn-chart .lb.c26 { fill: #3fd6a2; } .tn-chart .lb.alt { fill: #b9a4ff; }
+.tn-key { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 10px 16px 0; font: 700 11px var(--font-m); color: var(--mute); }
+.tn-key i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: 3px; }
+.tn-key i.c26 { background: #3fd6a2; } .tn-key i.c24 { background: #b9a4ff; } .tn-key i.c22 { background: #e7b341; }
+.tn-key i.dash { background: repeating-linear-gradient(90deg, #e7b341 0 4px, transparent 4px 7px); }
+.tn-tools { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: space-between; padding: 14px 16px 6px; }
+.tn .evc-tw { padding: 0 16px; } .tn .evc-note { padding: 10px 16px 0; margin: 0; }
+.tn tbody tr { cursor: pointer; } .tn td small { display: block; font: 600 10px var(--font-m); color: var(--mute); }
+@keyframes tn-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes tn-grow { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes tn-draw { from { stroke-dashoffset: 1400; } to { stroke-dashoffset: 0; } }
+@media (max-width: 900px) { .tn-yrs, .tn-charts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .tn-yr, .tn-pb .bar i, .tn-chart .ln { animation: none; } }
+html[data-theme="light"] .tn-yr.y2022 { --tc: #b07a00; } html[data-theme="light"] .tn-chart .ln.c22 { stroke: #c08a10; } html[data-theme="light"] .tn-key i.c22 { background: #c08a10; }
+html[data-theme="light"] .tn-yr.y2026 { --tc: #0a9a68; } html[data-theme="light"] .tn-chart .ln.c26, html[data-theme="light"] .tn-chart .pt.c26 { stroke: #0a9a68; } html[data-theme="light"] .tn-chart .pt.c26 { fill: #0a9a68; stroke: #fff; }
+html[data-theme="light"] .tn-chart .lb.c26 { fill: #0a9a68; } html[data-theme="light"] .tn-yr .v.up { color: #0a8a5c; } html[data-theme="light"] .tn-yr .v.dn { color: #c4521e; }
+html[data-theme="light"] .tn .tag.m { color: #5b3fd0; }
+.tn-chart .ln.thin { stroke-width: 1.4; opacity: .6; }
+html[data-theme="light"] .evc-head h1 > span:last-child { background-image: linear-gradient(90deg, #0a9a68, #5b3fd0); }
+html[data-theme="light"] .evc-map text { fill: rgba(17,0,25,.82); stroke: rgba(255,255,255,.85); stroke-width: 2.6px; }

@@ -1,0 +1,790 @@
+{
+ "source": "US Elections Project, 2022 General Election Early Voting Statistics, Michael McDonald, University of Florida, saved RPubs pages",
+ "url": "https://rpubs.com/ElectProject",
+ "electionDay": "2022-11-08",
+ "snapshots": [
+  {
+   "asOf": "2022-09-28 01:28 PM ET",
+   "daysOut": 40.44,
+   "total": 43900,
+   "inperson": 24016,
+   "mail": 19884,
+   "requested": 729470,
+   "party_total": {
+    "D": 6377,
+    "R": 2101,
+    "O": 3284,
+    "N": 11762
+   },
+   "party_mail": {
+    "D": null,
+    "R": null,
+    "O": null,
+    "N": 9948
+   },
+   "partyStates": [
+    "NC",
+    "PA",
+    "SD"
+   ]
+  },
+  {
+   "asOf": "2022-10-15 08:53 PM ET",
+   "daysOut": 23.13,
+   "total": 1956737,
+   "inperson": 163554,
+   "mail": 1793183,
+   "requested": 12046007,
+   "party_total": {
+    "D": 564482,
+    "R": 333229,
+    "O": 177762,
+    "N": 1075473
+   },
+   "party_inperson": {
+    "D": 7503,
+    "R": 5283,
+    "O": 1302,
+    "N": 14088
+   },
+   "party_mail": {
+    "D": 556979,
+    "R": 327946,
+    "O": 176460,
+    "N": 1061385
+   },
+   "partyStates": [
+    "FL",
+    "IA",
+    "MD",
+    "ME",
+    "NC",
+    "NJ",
+    "NM",
+    "PA",
+    "SD"
+   ]
+  },
+  {
+   "asOf": "2022-10-16 10:12 AM ET",
+   "daysOut": 22.57,
+   "total": 1982665,
+   "inperson": 163554,
+   "mail": 1819111,
+   "requested": 12043395,
+   "party_total": {
+    "D": 575522,
+    "R": 342703,
+    "O": 183039,
+    "N": 1101264
+   },
+   "party_inperson": {
+    "D": 7503,
+    "R": 5283,
+    "O": 1302,
+    "N": 14088
+   },
+   "party_mail": {
+    "D": 568019,
+    "R": 337420,
+    "O": 181737,
+    "N": 1087176
+   },
+   "partyStates": [
+    "FL",
+    "IA",
+    "MD",
+    "ME",
+    "NC",
+    "NJ",
+    "NM",
+    "PA",
+    "SD"
+   ]
+  },
+  {
+   "asOf": "2022-10-18 05:10 PM ET",
+   "daysOut": 20.28,
+   "total": 3172091,
+   "inperson": 376485,
+   "mail": 2795606,
+   "requested": 17359396,
+   "party_total": {
+    "D": 826839,
+    "R": 481479,
+    "O": 251153,
+    "N": 1559471
+   },
+   "party_inperson": {
+    "D": 12434,
+    "R": 8878,
+    "O": 2210,
+    "N": 23522
+   },
+   "party_mail": {
+    "D": 814405,
+    "R": 472601,
+    "O": 248943,
+    "N": 1535949
+   },
+   "partyStates": [
+    "AZ",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "PA",
+    "SD",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-20 04:24 PM ET",
+   "daysOut": 18.32,
+   "total": 5094598,
+   "inperson": 781886,
+   "mail": 4312712,
+   "requested": 39436002,
+   "party_total": {
+    "D": 1463356,
+    "R": 830565,
+    "O": 510107,
+    "N": 2804028
+   },
+   "party_inperson": {
+    "D": 17809,
+    "R": 13112,
+    "O": 3296,
+    "N": 34217
+   },
+   "party_mail": {
+    "D": 1445547,
+    "R": 817453,
+    "O": 506811,
+    "N": 2769811
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "PA",
+    "SD",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-22 08:26 AM ET",
+   "daysOut": 16.65,
+   "total": 7101488,
+   "inperson": 1375548,
+   "mail": 5725940,
+   "requested": 41509791,
+   "party_total": {
+    "D": 2009960,
+    "R": 1198143,
+    "O": 766475,
+    "N": 3974578
+   },
+   "party_inperson": {
+    "D": 123588,
+    "R": 102797,
+    "O": 80397,
+    "N": 306782
+   },
+   "party_mail": {
+    "D": 1891341,
+    "R": 1097868,
+    "O": 687084,
+    "N": 3676293
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "PA",
+    "SD",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-25 07:50 PM ET",
+   "daysOut": 13.17,
+   "total": 10278517,
+   "inperson": 2788622,
+   "mail": 7489895,
+   "requested": 45646502,
+   "party_total": {
+    "D": 2666630,
+    "R": 1642613,
+    "O": 1082383,
+    "N": 5391626
+   },
+   "party_inperson": {
+    "D": 267938,
+    "R": 247379,
+    "O": 171549,
+    "N": 686866
+   },
+   "party_mail": {
+    "D": 2415709,
+    "R": 1440828,
+    "O": 932040,
+    "N": 4788577
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "PA",
+    "SD",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-26 08:06 PM ET",
+   "daysOut": 12.16,
+   "total": 12961833,
+   "inperson": 4106410,
+   "mail": 8855423,
+   "requested": 53907152,
+   "party_total": {
+    "D": 3310725,
+    "R": 2128874,
+    "O": 1409125,
+    "N": 6848724
+   },
+   "party_inperson": {
+    "D": 367496,
+    "R": 362522,
+    "O": 270764,
+    "N": 1000782
+   },
+   "party_mail": {
+    "D": 2892350,
+    "R": 1722726,
+    "O": 1123928,
+    "N": 5739004
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-27 07:17 PM ET",
+   "daysOut": 11.2,
+   "total": 15568801,
+   "inperson": 5207152,
+   "mail": 10361649,
+   "requested": 55808607,
+   "party_total": {
+    "D": 3853517,
+    "R": 2588148,
+    "O": 1733167,
+    "N": 8174832
+   },
+   "party_inperson": {
+    "D": 438772,
+    "R": 430515,
+    "O": 351339,
+    "N": 1220626
+   },
+   "party_mail": {
+    "D": 3349683,
+    "R": 2095782,
+    "O": 1361734,
+    "N": 6807199
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-28 08:28 PM ET",
+   "daysOut": 10.15,
+   "total": 18050340,
+   "inperson": 6351025,
+   "mail": 11699315,
+   "requested": 53394181,
+   "party_total": {
+    "D": 4408912,
+    "R": 3104685,
+    "O": 2015799,
+    "N": 9529396
+   },
+   "party_inperson": {
+    "D": 594758,
+    "R": 641454,
+    "O": 435518,
+    "N": 1671730
+   },
+   "party_mail": {
+    "D": 3735372,
+    "R": 2383937,
+    "O": 1554861,
+    "N": 7674170
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-29 09:57 PM ET",
+   "daysOut": 9.09,
+   "total": 20336630,
+   "inperson": 7888417,
+   "mail": 12448213,
+   "requested": 56172497,
+   "party_total": {
+    "D": 4648517,
+    "R": 3395758,
+    "O": 2222263,
+    "N": 10266538
+   },
+   "party_inperson": {
+    "D": 705420,
+    "R": 789893,
+    "O": 566761,
+    "N": 2062074
+   },
+   "party_mail": {
+    "D": 3848981,
+    "R": 2507149,
+    "O": 1623692,
+    "N": 7979822
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-30 04:44 PM ET",
+   "daysOut": 8.3,
+   "total": 21174265,
+   "inperson": 8326118,
+   "mail": 12848147,
+   "requested": 56187998,
+   "party_total": {
+    "D": 5044704,
+    "R": 3712115,
+    "O": 2405970,
+    "N": 11162789
+   },
+   "party_inperson": {
+    "D": 842964,
+    "R": 951759,
+    "O": 635773,
+    "N": 2430496
+   },
+   "party_mail": {
+    "D": 4107624,
+    "R": 2661640,
+    "O": 1738387,
+    "N": 8507651
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-10-31 11:02 PM ET",
+   "daysOut": 7.04,
+   "total": 23203840,
+   "inperson": 9513504,
+   "mail": 13690336,
+   "requested": 56361413,
+   "party_total": {
+    "D": 5350302,
+    "R": 3967478,
+    "O": 2588641,
+    "N": 11906421
+   },
+   "party_inperson": {
+    "D": 956133,
+    "R": 1061282,
+    "O": 707628,
+    "N": 2725043
+   },
+   "party_mail": {
+    "D": 4285121,
+    "R": 2791484,
+    "O": 1842885,
+    "N": 8919490
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-11-04 12:52 AM ET",
+   "daysOut": 3.96,
+   "total": 33484287,
+   "inperson": 14274191,
+   "mail": 19210096,
+   "requested": 57410925,
+   "party_total": {
+    "D": 7404986,
+    "R": 5661023,
+    "O": 3801312,
+    "N": 16867321
+   },
+   "party_inperson": {
+    "D": 1448168,
+    "R": 1665950,
+    "O": 1090022,
+    "N": 4204140
+   },
+   "party_mail": {
+    "D": 5804040,
+    "R": 3836534,
+    "O": 2656654,
+    "N": 12297228
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-11-04 11:45 PM ET",
+   "daysOut": 3.01,
+   "total": 37105354,
+   "inperson": 16199642,
+   "mail": 20905712,
+   "requested": 57782025,
+   "party_total": {
+    "D": 8051585,
+    "R": 6244266,
+    "O": 4220568,
+    "N": 18516419
+   },
+   "party_inperson": {
+    "D": 1696015,
+    "R": 1960565,
+    "O": 1280211,
+    "N": 4936791
+   },
+   "party_mail": {
+    "D": 6213519,
+    "R": 4144704,
+    "O": 2888876,
+    "N": 13247099
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-11-06 03:33 PM ET",
+   "daysOut": 1.35,
+   "total": 40114753,
+   "inperson": 18325512,
+   "mail": 21789241,
+   "requested": 57832064,
+   "party_total": {
+    "D": 8820289,
+    "R": 6963201,
+    "O": 4711489,
+    "N": 20494979
+   },
+   "party_inperson": {
+    "D": 2088708,
+    "R": 2449310,
+    "O": 1606186,
+    "N": 6144204
+   },
+   "party_mail": {
+    "D": 6588603,
+    "R": 4359142,
+    "O": 3063829,
+    "N": 14011574
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  },
+  {
+   "asOf": "2022-11-08 03:31 PM ET",
+   "daysOut": 0.0,
+   "total": 45920446,
+   "inperson": 20487803,
+   "mail": 25432643,
+   "requested": 58142486,
+   "party_total": {
+    "D": 10179078,
+    "R": 8095750,
+    "O": 5657746,
+    "N": 23932574
+   },
+   "party_inperson": {
+    "D": 2381323,
+    "R": 2786421,
+    "O": 1823500,
+    "N": 6991244
+   },
+   "party_mail": {
+    "D": 7654771,
+    "R": 5154569,
+    "O": 3792772,
+    "N": 16602112
+   },
+   "partyStates": [
+    "AR",
+    "AZ",
+    "CA",
+    "CO",
+    "CT",
+    "FL",
+    "IA",
+    "ID",
+    "KS",
+    "KY",
+    "LA",
+    "MD",
+    "ME",
+    "NC",
+    "NE",
+    "NJ",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "PA",
+    "SD",
+    "UT",
+    "WV"
+   ]
+  }
+ ]
+}

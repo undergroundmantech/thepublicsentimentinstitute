@@ -189,23 +189,10 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   const sh = cur ? shift(cur.id) : null;
   const m24v = cur ? m24(cur.id) : null;
 
-  // labels: the ten biggest counties, sized to the current view so they read the same at any zoom
+  // the open county's label, sized to the current view so it reads the same at any zoom
   const fs = vb[2] / 70;
-  // labels: the biggest counties in view, skipping any that would overlap a bigger one
-  const labels: XRow[] = [];
-  {
-    const kept: [number, number, number, number][] = [];
-    for (const r of byVotes.slice(0, 80)) {
-      const b = boxes[r.id]; if (!b) continue;
-      const cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
-      if (cx < vb[0] || cx > vb[0] + vb[2] || cy < vb[1] || cy > vb[1] + vb[3]) continue;
-      const w = Math.max(r.name.replace(/ (County|Parish|Borough|city)$/i, "").length, 6) * fs * 0.56, h = fs * 2.3;
-      const box: [number, number, number, number] = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
-      if (kept.some((k) => box[0] < k[2] && box[2] > k[0] && box[1] < k[3] && box[3] > k[1])) continue;
-      kept.push(box); labels.push(r);
-      if (labels.length >= 28) break;
-    }
-  }
+  // no standing labels, the map reads cleaner without them; only the county you open is named on the map
+  const labels: XRow[] = sel ? byVotes.filter((r) => r.id === sel && boxes[r.id]) : [];
 
   // tug of war: net votes per county, left side counties from the center out to the left, right side to the right
   const aNet = rows.filter((r) => r.a > r.b).map((r) => ({ id: r.id, v: r.a - r.b })).sort((x, y) => y.v - x.v);

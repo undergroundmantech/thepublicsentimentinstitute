@@ -10,6 +10,7 @@ import Ambient from "@/app/components/opp/Ambient";
 import Count from "@/app/components/opp/Count";
 import { getCategory, getPartyModel, matchCounty, simulate, stateOfFips, type CategoryPayload, type PartyModel } from "./lib";
 import type { EvConsole, EvRow } from "./consoleData";
+import ThenNow from "./ThenNow";
 import "./evconsole.css";
 
 type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
@@ -366,6 +367,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
           {scope !== "US" ? <PaceChart r={R} label={R.name} /> : <p className="evc-note">Pace compares each state with its own 2022 count at the same number of days before Election Day. Open a state for its pace chart.</p>}
         </aside>
       </div>
+
+      <ThenNow data={data} scope={scope} onOpen={go} />
 
       <div className="evc-table card">
         <div className="card-h"><h3>{scope === "US" ? "Every reporting state" : `Every ${R.name} county`}</h3><span className="eye" style={{ marginLeft: "auto" }}>{tRows.length} {scope === "US" ? "states" : "counties"}</span></div>
