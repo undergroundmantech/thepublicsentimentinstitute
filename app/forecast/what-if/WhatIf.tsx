@@ -8,6 +8,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Pointy } from "@/app/components/home/Mascot";
 import { RATE, RATING_LABEL, rating, raceHref, STATE_NAME, type Rating } from "@/app/lib/opp";
+import { ev, evSettled } from "@/app/lib/ev";
 import "./whatif.css";
 
 type Race = { id: string; k: string; office: string; st: string; state: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean };
@@ -177,12 +178,12 @@ export default function WhatIf() {
   const byId = useMemo(() => { const o: Record<string, number> = {}; M?.R.forEach((r, i) => { o[r.id] = i; }); return o; }, [M]);
   const hById = useMemo(() => { const o: Record<string, number> = {}; M?.H.forEach((h, i) => { o[h.id] = i; }); return o; }, [M]);
 
-  const cycle = (id: string, ind = false) => setPins((o) => {
+  const cycle = (id: string, ind = false) => (ev("What if race called", { race: id, how: "map" }), setPins((o) => {
     const c = o[id], n = { ...o };
     if (!c) n[id] = { side: "D", by: null }; else if (c.side === "D") n[id] = { side: "R", by: null }; else delete n[id];
     void ind; return n;
-  });
-  const setBy = (id: string, by: number | null) => setPins((o) => (o[id] ? { ...o, [id]: { ...o[id], by } } : o));
+  }));
+  const setBy = (id: string, by: number | null) => (evSettled(`by${id}`, "What if margin set", { race: id, by: by ?? "any" }), setPins((o) => (o[id] ? { ...o, [id]: { ...o[id], by } } : o)));
   const raceOfState = (st: string) => M?.R.findIndex((r) => r.st === st && r.office === office) ?? -1;
 
   const shapes = useMemo(() => {
@@ -248,8 +249,8 @@ export default function WhatIf() {
           <p className="lede">Pick a winner, or a winning margin, in any Senate, governor or House race. Every other race moves the way the model ties them together: the same national environment, the same regional swing and the same shifts among groups of voters run through every race in each simulation.</p>
         </div>
         <div className="wif-presets" role="group" aria-label="Scenarios">
-          {PRESETS.map((p) => <button key={p.label} onClick={() => { setPins(p.pins); setSwing(p.swing ?? 0); }}>{p.label}</button>)}
-          <button className="reset" onClick={() => { setPins({}); setSwing(0); }}>Reset to the forecast</button>
+          {PRESETS.map((p) => <button key={p.label} onClick={() => { setPins(p.pins); setSwing(p.swing ?? 0); ev("Scenario preset", { preset: p.label, race: "what if" }); }}>{p.label}</button>)}
+          <button className="reset" onClick={() => { setPins({}); setSwing(0); ev("Scenario reset", { race: "what if", tool: "races" }); }}>Reset to the forecast</button>
         </div>
       </header>
 
@@ -311,7 +312,7 @@ export default function WhatIf() {
                   {statewide ? (
                     <div className="row3">
                       <label><input type="checkbox" checked={p.by != null} onChange={(e) => setBy(id, e.target.checked ? 5 : null)} /> Set the margin</label>
-                      {p.by != null ? <><input type="range" min={0.5} max={25} step={0.5} value={p.by} onChange={(e) => setBy(id, +e.target.value)} aria-label="Winning margin" /><span className="mono">by {p.by.toFixed(1)}</span></> : <span className="mute">by any margin</span>}
+                      {p.by != null ? <><input type="range" min={0.5} max={25} step={0.5} value={Math.min(25, p.by)} onChange={(e) => setBy(id, +e.target.value)} aria-label="Winning margin" /><label className="wif-by">by <input type="number" inputMode="decimal" min={0.1} max={60} step={0.1} value={p.by} aria-label="Type the winning margin" onChange={(e) => { const v = Number(e.target.value); if (Number.isFinite(v) && v > 0) setBy(id, Math.min(60, v)); }} /></label></> : <span className="mute">by any margin</span>}
                     </div>
                   ) : <div className="row3 mute">House picks keep only the simulations where that side wins</div>}
                 </div>
@@ -332,8 +333,8 @@ export default function WhatIf() {
                 <div key={r.id} className="wif-cl">
                   <span className="nm"><b>{r.state}</b><small>{last(r.dem)} vs {last(r.gop)} · now {fm(out.m[k], r.ind)}</small></span>
                   <span className="bt">
-                    <button className={pin?.side === "D" ? "on d" : ""} onClick={() => setPins((o) => (o[r.id]?.side === "D" ? (() => { const n = { ...o }; delete n[r.id]; return n; })() : { ...o, [r.id]: { side: "D", by: null } }))}>{r.ind ? "I" : "D"}</button>
-                    <button className={pin?.side === "R" ? "on r" : ""} onClick={() => setPins((o) => (o[r.id]?.side === "R" ? (() => { const n = { ...o }; delete n[r.id]; return n; })() : { ...o, [r.id]: { side: "R", by: null } }))}>R</button>
+                    <button className={pin?.side === "D" ? "on d" : ""} onClick={() => (ev("What if race called", { race: r.id, how: "list" }), setPins((o) => (o[r.id]?.side === "D" ? (() => { const n = { ...o }; delete n[r.id]; return n; })() : { ...o, [r.id]: { side: "D", by: null } })))}>{r.ind ? "I" : "D"}</button>
+                    <button className={pin?.side === "R" ? "on r" : ""} onClick={() => (ev("What if race called", { race: r.id, how: "list" }), setPins((o) => (o[r.id]?.side === "R" ? (() => { const n = { ...o }; delete n[r.id]; return n; })() : { ...o, [r.id]: { side: "R", by: null } })))}>R</button>
                   </span>
                 </div>
               );

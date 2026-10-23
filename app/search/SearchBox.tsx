@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { evSettled } from "@/app/lib/ev";
 
 export type Entry = { href: string; title: string; kind: string; sub?: string; keys: string };
 
@@ -17,6 +18,8 @@ export default function SearchBox({ entries }: { entries: Entry[] }) {
     if (!words.length) return [];
     return entries.filter((e) => words.every((w) => e.keys.includes(w))).slice(0, 60);
   }, [q, entries]);
+  // what people look for, once they stop typing, so missing pages show up as searches with no hits
+  useEffect(() => { const t = q.trim(); if (t.length >= 2) evSettled("site-q", "Site search", { q: t.slice(0, 60).toLowerCase(), hits: hits.length }); }, [q, hits.length]);
   const groups = hits.reduce<Record<string, Entry[]>>((a, e) => { (a[e.kind] ||= []).push(e); return a; }, {});
   return (
     <>
@@ -44,7 +47,7 @@ export default function SearchBox({ entries }: { entries: Entry[] }) {
             <div className="card" key={k}>
               <div className="card-h"><h3>{k}</h3><span className="eye mono" style={{ marginLeft: "auto" }}>{list.length}</span></div>
               <div>{list.map((e) => (
-                <Link key={e.href + e.title} href={e.href} className="race">
+                <Link key={e.href + e.title} href={e.href} className="race" data-ev="Search result opened" data-ev-d={JSON.stringify({ to: e.href, kind: e.kind })}>
                   <span className="who"><b>{e.title}</b>{e.sub && <small>{e.sub}</small>}</span>
                   <span className="path">{e.href}</span>
                 </Link>

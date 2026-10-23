@@ -1,7 +1,8 @@
 "use client";
 // The people files index: everyone in the On Point Watchdog Database, searchable by name, state or district, with
 // filters for office, party and how deep the research goes. Each row opens that person's file.
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ev, evSettled } from "@/app/lib/ev";
 import Link from "next/link";
 import type { PRow } from "../data";
 import { fileHref } from "./PersonFile";
@@ -27,6 +28,9 @@ export default function PeopleIndex({ people }: { people: PRow[] }) {
       && (!t || p.name.toLowerCase().includes(t) || where(p).toLowerCase() === t || p.st.toLowerCase() === t || p.current.toLowerCase().includes(t)));
   }, [people, q, office, party, st, deep]);
   const reset = () => setN(LIMIT);
+  const evReady = useRef(false);
+  useEffect(() => { if (!evReady.current) { evReady.current = true; return; } ev("People filter", { filter: `${office} ${party}${deep ? " full files" : ""}`, st }); }, [office, party, st, deep]);
+  useEffect(() => { const t = q.trim(); if (t.length >= 2) evSettled("pf-q", "People search", { q: t.slice(0, 60).toLowerCase(), hits: list.length }); }, [q, list.length]);
   return (
     <section className="pf-ix card" aria-label="Every person on file">
       <div className="pf-tools">
@@ -47,7 +51,7 @@ export default function PeopleIndex({ people }: { people: PRow[] }) {
           <tbody>
             {list.slice(0, n).map((p) => (
               <tr key={p.id}>
-                <td><Link href={fileHref(p.id, p.hand)} className="pf-nm"><i className={`pf-dot ${PN[p.party].toLowerCase()}`} />{p.name}</Link></td>
+                <td><Link href={fileHref(p.id, p.hand)} className="pf-nm" data-ev="People file opened" data-ev-d={JSON.stringify({ id: p.id, from: "index" })}><i className={`pf-dot ${PN[p.party].toLowerCase()}`} />{p.name}</Link></td>
                 <td>{p.office || "n/a"} <span className="pf-mute">{where(p)}</span></td>
                 <td className="pf-mute">{p.current && p.current !== "none" ? p.current : "Not in office"}</td>
                 <td className="pf-mute">{p.rating || p.race || "n/a"}</td>

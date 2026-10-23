@@ -1,5 +1,6 @@
 // app/api/forecast/route.ts
 import { NextResponse } from "next/server";
+import { evServer } from "@/app/lib/evServer";
 import { forecastRace, civicToForecastInput, ForecastInput, CivicRace, RaceRule } from "@/app/lib/electoralModel";
 
 const CIVIC_BASE = "https://civicapi.org/api/v2";
@@ -105,6 +106,7 @@ function runForecastFromCivicRace(
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    await evServer("Results forecast run", { type: String(body?.type ?? "manual"), race: body?.raceId != null ? String(body.raceId) : null }, req);
 
     if (!body.type || body.type === "manual") {
       const input = (body.input ?? body) as ForecastInput;

@@ -2391,6 +2391,5256 @@
    "race": "NV races",
    "note": "Unity event for Nevada Latino, labor and community groups at the Culinary Academy of Las Vegas with Stacey Abrams, per the Nevada Independent visit tracker.",
    "source": "https://thenevadaindependent.com/elections/2026/candidate-visit-tracker"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-04",
+   "state": "ME",
+   "city": "Waterville",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson stopped at a Maine Democratic Party canvass launch as part of his Take Action with Jackson get out the vote push.",
+   "source": "https://www.jacksonformaine.com/news/jackson-hits-canvass-launches-town-hall-in-ellsworth-and-virtual-town-hall-in-washington-county"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-04",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson rallied supporters and volunteers before a local canvass, his campaign said.",
+   "source": "https://www.jacksonformaine.com/news/jackson-hits-canvass-launches-town-hall-in-ellsworth-and-virtual-town-hall-in-washington-county"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-04",
+   "state": "ME",
+   "city": "Ellsworth",
+   "kind": "town hall",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson held a town hall in Ellsworth, his second town hall of the day according to his campaign.",
+   "source": "https://www.jacksonformaine.com/news/jackson-hits-canvass-launches-town-hall-in-ellsworth-and-virtual-town-hall-in-washington-county"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson visited the nonprofit Maine Needs in Portland ahead of the first debate, according to his campaign's news page.",
+   "source": "https://www.jacksonformaine.com/news"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "After the first debate Jackson did a live MS NOW interview with Jen Psaki and took questions from Mainers at a Portland bar, per a campaign release dated Oct. 7.",
+   "source": "https://www.jacksonformaine.com/news/after-winning-debate-jackson-joins-ms-now-takes-questions-from-mainers-at-local-portland-bar"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "ME",
+   "city": "Augusta",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson toured a local food bank and delivered donations from his campaign and supporters on Thursday morning.",
+   "source": "https://www.jacksonformaine.com/news/troy-jackson-tours-augusta-food-bank-and-delivers-donations-to-help-mainers-in-need"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "ME",
+   "city": "Bath",
+   "kind": "event",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson greeted Bath Iron Works workers at a shift change the morning after the second debate, his campaign said.",
+   "source": "https://www.jacksonformaine.com/news/jackson-joins-bath-iron-works-workers-for-a-shift-change-drives-contrast-in-the-race-on-morning-joe"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-10",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "rally",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Sen. Bernie Sanders urged a crowd of more than 600 to back Jackson at a Saturday rally in Bangor.",
+   "source": "https://www.bangordailynews.com/2026/10/10/politics/sanders-rallies-with-jackson-in-bangor-as-senate-race-tightens/"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-11",
+   "state": "ME",
+   "city": "Lewiston",
+   "kind": "rally",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson and Sen. Bernie Sanders held a Sunday get out the vote rally in Lewiston.",
+   "source": "https://www.bangordailynews.com/2026/10/10/politics/sanders-rallies-with-jackson-in-bangor-as-senate-race-tightens/"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-11",
+   "state": "ME",
+   "city": "Biddeford",
+   "kind": "rally",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson and Sen. Bernie Sanders held a Sunday get out the vote rally in Biddeford.",
+   "source": "https://www.jacksonformaine.com/news/troy-jackson-and-sen-sanders-rally-in-lewiston-and-biddeford-firing-up-mainers-to-get-out-and-vote"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "debate",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Fourth and final debate with Sen. Susan Collins at the Gracie Theater, hosted by Maine Public, NEWS CENTER Maine and the Portland Press Herald.",
+   "source": "https://www.wbur.org/news/2026/10/16/susan-collins-troy-jackson-senate-debate-recap"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "ME",
+   "city": "Biddeford",
+   "kind": "rally",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson spoke at a Maine AFL-CIO Working Class Rally with the Dropkick Murphys, Maine AFL-CIO President Cynthia Phinney and nurses union President Kelli Brennan.",
+   "source": "https://www.jacksonformaine.com/news/jackson-rallies-supporters-in-biddeford-with-dropkick-murphys-encourages-mainers-to-hit-the-polls"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "rally",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Jackson and Sen. Elizabeth Warren held a breakfast meet up at Becky's Diner, a canvass launch, a town hall and a rally at Deering Oaks Park with Hannah Pingree.",
+   "source": "https://www.jacksonformaine.com/news/troy-jackson-and-sen-warren-rally-support-for-a-government-that-works-for-working-people"
+  },
+  {
+   "person": "Susan Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "debate",
+   "for": [
+    "Susan Collins"
+   ],
+   "race": "ME Senate",
+   "note": "Fourth and final debate with Democrat Troy Jackson at the Gracie Theater in Bangor.",
+   "source": "https://www.wbur.org/news/2026/10/16/susan-collins-troy-jackson-senate-debate-recap"
+  },
+  {
+   "person": "Annie Andrews",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "SC",
+   "city": "Columbia",
+   "kind": "event",
+   "for": [
+    "Annie Andrews"
+   ],
+   "race": "SC Senate",
+   "note": "Andrews spoke at a campaign stop at the Columbia Bethlehem Community Center.",
+   "source": "https://www.thedailybeast.com/trump-makes-desperate-bid-to-drag-darline-graham-to-victory-over-annie-andrews/"
+  },
+  {
+   "person": "Annie Andrews",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "SC",
+   "city": "Columbia",
+   "kind": "rally",
+   "for": [
+    "Annie Andrews"
+   ],
+   "race": "SC Senate",
+   "note": "Rally at Senate's End ahead of early voting with Sen. Raphael Warnock and Democratic governor nominee Rep. Jermaine Johnson.",
+   "source": "https://www.newsfromthestates.com/node/433248"
+  },
+  {
+   "person": "Annie Andrews",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "SC",
+   "city": "North Charleston",
+   "kind": "rally",
+   "for": [
+    "Annie Andrews"
+   ],
+   "race": "SC Senate",
+   "note": "Andrews began her Saturday with a rally in North Charleston, joined on the tour by Sen. Raphael Warnock and Rep. Jermaine Johnson.",
+   "source": "https://abcnews4.com/news/local/senate-candidates-make-lowcountry-stops-ahead-of-early-voting"
+  },
+  {
+   "person": "Annie Andrews",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "SC",
+   "city": "Florence",
+   "kind": "rally",
+   "for": [
+    "Annie Andrews"
+   ],
+   "race": "SC Senate",
+   "note": "Andrews held a rally in Florence later the same day, a stop the SC Daily Gazette said included Warnock and Johnson.",
+   "source": "https://abcnews4.com/news/local/senate-candidates-make-lowcountry-stops-ahead-of-early-voting"
+  },
+  {
+   "person": "Darline Graham",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "SC",
+   "city": "Charleston",
+   "kind": "event",
+   "for": [
+    "Darline Graham"
+   ],
+   "race": "SC Senate",
+   "note": "Campaign fundraiser at Hall's Chophouse with Senate Majority Leader John Thune and Sen. Tim Scott, after which Graham spoke to reporters.",
+   "source": "https://www.newsfromthestates.com/article/us-senate-majority-leader-campaigns-darline-graham-sc-saying-gop-cant-take-any-chances"
+  },
+  {
+   "person": "Darline Graham",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "SC",
+   "city": "Mount Pleasant",
+   "kind": "event",
+   "for": [
+    "Darline Graham"
+   ],
+   "race": "SC Senate",
+   "note": "Graham spoke to supporters about her Senate work at a Saturday campaign event.",
+   "source": "https://abcnews4.com/news/local/senate-candidates-make-lowcountry-stops-ahead-of-early-voting"
+  },
+  {
+   "person": "Darline Graham",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "SC",
+   "city": "Summerville",
+   "kind": "tour stop",
+   "for": [
+    "Darline Graham"
+   ],
+   "race": "SC Senate",
+   "note": "Graham made a later Saturday campaign stop in Summerville.",
+   "source": "https://abcnews4.com/news/local/senate-candidates-make-lowcountry-stops-ahead-of-early-voting"
+  },
+  {
+   "person": "Darline Graham",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "SC",
+   "city": "Pendleton",
+   "kind": "rally",
+   "for": [
+    "Darline Graham"
+   ],
+   "race": "SC Senate",
+   "note": "Graham spoke at President Trump's Wednesday night rally, telling supporters she will fight for the state as a proud conservative Christian.",
+   "source": "https://www.live5news.com/2026/10/22/trump-rallies-gop-voters-upstate-senate-race-draws-national-spotlight/"
+  },
+  {
+   "person": "Dan S. Sullivan",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "AK",
+   "city": "Fairbanks",
+   "kind": "rally",
+   "for": [
+    "Dan S. Sullivan"
+   ],
+   "race": "AK Senate",
+   "note": "Sullivan spoke with Vice President JD Vance, Rep. Nick Begich and Gov. Mike Dunleavy at a hangar rally at Fairbanks International Airport and criticized Mary Peltola's energy record.",
+   "source": "https://alaskapublic.org/news/politics/2026-10-06/vance-targets-peltola-touts-energy-development-at-alaska-rally"
+  },
+  {
+   "person": "Dan S. Sullivan",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "AK",
+   "city": "Wasilla",
+   "kind": "rally",
+   "for": [
+    "Dan S. Sullivan"
+   ],
+   "race": "AK Senate",
+   "note": "Sullivan spoke at President Trump's rally at the Menard Sports Center and urged Mat Su voters to turn out.",
+   "source": "https://alaskapublic.org/news/politics/elections/2026-10-13/trump-rally-brings-pardons-promises-and-endorsements-to-wasilla"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "IA",
+   "city": "Johnston",
+   "kind": "debate",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "First Senate debate between Hinson and Turek on Iowa Press at the Iowa PBS studios, moderated by Kay Henderson.",
+   "source": "https://www.newsweek.com/iowa-senate-debate-ashley-hinson-josh-turek-polls-watch-12536792"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "IA",
+   "city": "Des Moines",
+   "kind": "debate",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Second Senate debate between Hinson and Turek, produced by Nexstar from the WHO TV studios.",
+   "source": "https://thedesk.net/2026/09/nexstar-to-produce-iowa-u-s-senate-debate-aired-across-multiple-stations/"
+  },
+  {
+   "person": "Ashley Hinson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "IA",
+   "city": "Johnston",
+   "kind": "debate",
+   "for": [
+    "Ashley Hinson"
+   ],
+   "race": "IA Senate",
+   "note": "First Senate debate between Hinson and Turek on Iowa Press at the Iowa PBS studios, moderated by Kay Henderson.",
+   "source": "https://www.newsweek.com/iowa-senate-debate-ashley-hinson-josh-turek-polls-watch-12536792"
+  },
+  {
+   "person": "Ashley Hinson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "IA",
+   "city": "Des Moines",
+   "kind": "debate",
+   "for": [
+    "Ashley Hinson"
+   ],
+   "race": "IA Senate",
+   "note": "Second Senate debate between Hinson and Turek, produced by Nexstar from the WHO TV studios.",
+   "source": "https://thedesk.net/2026/09/nexstar-to-produce-iowa-u-s-senate-debate-aired-across-multiple-stations/"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "IA",
+   "city": "Des Moines",
+   "kind": "event",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Roundtable with Iowa cancer survivors and providers on rising costs, including breast cancer survivor Amy Randall, per his campaign.",
+   "source": "https://turek4iowa.com/news/recap-josh-turek-holds-second-roundtable-in-a-week-to-discuss-how-rising-costs-are-impacting-iowas-cancer-patients"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "IA",
+   "city": "Council Bluffs",
+   "kind": "event",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Second cancer costs roundtable with his sister Ulette Song, Vergarie Sanford and Geri Fredericksen, per his campaign.",
+   "source": "https://turek4iowa.com/news/recap-josh-turek-holds-second-roundtable-in-a-week-to-discuss-how-rising-costs-are-impacting-iowas-cancer-patients"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Mason City",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek kicked off his At the Buzzer Tour with a get out the vote event, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Clear Lake",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek heard from parents of children with disabilities about rising costs, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Elkader",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek met with voters in Elkader on the first day of his At the Buzzer Tour, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "IA",
+   "city": "Davenport",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek visited the Freight House Farmers Market and launched a canvass at a west Davenport field office, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "IA",
+   "city": "Dubuque",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek visited the Dubuque Farmers Market and a canvass launch, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "IA",
+   "city": "Independence",
+   "kind": "tour stop",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Turek joined a canvass launch in Independence, his campaign said.",
+   "source": "https://turek4iowa.com/news/icymi-josh-turek-launches-at-the-buzzer-tour--criss-crosses-iowa-with-dozens-of-stops-to-go"
+  },
+  {
+   "person": "Josh Turek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "IA",
+   "city": "Ottumwa",
+   "kind": "rally",
+   "for": [
+    "Josh Turek"
+   ],
+   "race": "IA Senate",
+   "note": "Rally with Wapello County Democrats and former Sen. Tom Harkin, followed by door knocking around the city.",
+   "source": "https://www.newsfromthestates.com/article/turek-campaigns-former-us-sen-tom-harkin-final-stretch-election"
+  },
+  {
+   "person": "Ashley Hinson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "IA",
+   "city": "Sioux City",
+   "kind": "rally",
+   "for": [
+    "Ashley Hinson"
+   ],
+   "race": "IA Senate",
+   "note": "Hinson spoke with Sen. Chuck Grassley and governor nominee Zach Lahn at President Trump's rally near a hangar at Sioux Gateway Airport.",
+   "source": "https://www.iowapublicradio.org/political-news/2026-10-23/trump-rally-iowa-base-republicans-midterms-senate-governor-hinson-lahn"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "TX",
+   "city": "Austin",
+   "kind": "event",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Talarico mingled with concertgoers and posed for selfies at the Austin City Limits Festival after recovering from the flu.",
+   "source": "https://sacurrent.com/news/texas-news/u-s-senate-candidate-james-talarico-spotted-at-acl-after-recovering-from-flu"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "TX",
+   "city": "Plano",
+   "kind": "rally",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Talarico opened his Clear Eyes, Full Hearts tour of about 20 stops with a rally at Red Tail Pavilion.",
+   "source": "https://www.fox4news.com/news/james-talarico-launches-north-texas-campaign-swing-plano-rally"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "TX",
+   "city": "Denton",
+   "kind": "tour stop",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Afternoon tour stop at the University of North Texas.",
+   "source": "https://www.fox4news.com/news/james-talarico-launches-north-texas-campaign-swing-plano-rally"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "TX",
+   "city": "Fort Worth",
+   "kind": "tour stop",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Evening tour stop in Fort Worth on the first day of early voting.",
+   "source": "https://www.fox4news.com/news/james-talarico-launches-north-texas-campaign-swing-plano-rally"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "TX",
+   "city": "Houston",
+   "kind": "tour stop",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Midday tour stop at the University of Houston.",
+   "source": "https://www.click2houston.com/news/local/2026/10/20/ken-paxton-james-talarico-make-campaign-stops-in-houston-area-as-battle-for-texas-us-senate-seat-intensifies/"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "TX",
+   "city": "Richmond",
+   "kind": "tour stop",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Evening tour stop at Safari Texas Ranch.",
+   "source": "https://www.click2houston.com/news/local/2026/10/20/ken-paxton-james-talarico-make-campaign-stops-in-houston-area-as-battle-for-texas-us-senate-seat-intensifies/"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "TX",
+   "city": "Austin",
+   "kind": "announced",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Planned final stop of the Clear Eyes, Full Hearts tour on the night before Election Day.",
+   "source": "https://www.texastribune.org/2026/10/14/ken-paxton-bus-tour-texas-senate-come-and-take-it/"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "TX",
+   "city": "Rockwall",
+   "kind": "rally",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Paxton kicked off his Come and Take It bus tour in an airport hangar with Jace Yarbrough, Rep. Katrina Pierson and Nate Schatzline.",
+   "source": "https://dnyuz.com/2026/10/17/paxton-hits-the-road-looking-to-rally-texas-republicans/"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "TX",
+   "city": "Fort Worth",
+   "kind": "tour stop",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Paxton campaigned in Fort Worth on the first day of early voting, the same day as Talarico.",
+   "source": "https://www.click2houston.com/news/local/2026/10/20/ken-paxton-james-talarico-make-campaign-stops-in-houston-area-as-battle-for-texas-us-senate-seat-intensifies/"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "TX",
+   "city": "Conroe",
+   "kind": "tour stop",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Bus tour stop at The Table at Madeley.",
+   "source": "https://www.click2houston.com/news/local/2026/10/20/ken-paxton-james-talarico-make-campaign-stops-in-houston-area-as-battle-for-texas-us-senate-seat-intensifies/"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "TX",
+   "city": "Richmond",
+   "kind": "tour stop",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Evening bus tour stop at Safari Texas Ranch in Fort Bend County, the same venue the article places in Richmond for Talarico.",
+   "source": "https://www.click2houston.com/news/local/2026/10/20/ken-paxton-james-talarico-make-campaign-stops-in-houston-area-as-battle-for-texas-us-senate-seat-intensifies/"
+  },
+  {
+   "person": "Adam Hamilton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MO",
+   "city": "Kansas City",
+   "kind": "debate",
+   "for": [
+    "Adam Hamilton"
+   ],
+   "race": "KS Senate",
+   "note": "Final Kansas Senate debate, aired by Nexstar's Kansas stations from the WDAF TV FOX4 studios.",
+   "source": "https://fox4kc.com/politics/your-local-election-headquarters/nexstars-kansas-television-stations-to-air-live-debate-between-candidates-for-u-s-senate/amp/"
+  },
+  {
+   "person": "Roger Marshall",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MO",
+   "city": "Kansas City",
+   "kind": "debate",
+   "for": [
+    "Roger Marshall"
+   ],
+   "race": "KS Senate",
+   "note": "Final Kansas Senate debate, aired by Nexstar's Kansas stations from the WDAF TV FOX4 studios.",
+   "source": "https://fox4kc.com/politics/your-local-election-headquarters/nexstars-kansas-television-stations-to-air-live-debate-between-candidates-for-u-s-senate/amp/"
+  },
+  {
+   "person": "Roger Marshall",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "KS",
+   "city": "Park City",
+   "kind": "rally",
+   "for": [
+    "Roger Marshall"
+   ],
+   "race": "KS Senate",
+   "note": "Marshall spoke before President Trump at Heartland Credit Union Arena, focusing on Adam Hamilton, with Ted Nugent and Agriculture Secretary Brooke Rollins also present.",
+   "source": "https://dailymontanan.com/?p=39604"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "debate",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "First general election debate between El-Sayed and Rogers, moderated by Rick Albin of WOOD TV.",
+   "source": "https://fox11online.com/news/nation-world/democrat-abdul-el-sayed-republican-mike-rogers-agree-to-second-debate-for-michigans-senate-race-midterm-election"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "event",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Separate appearances of about 25 minutes each before the Detroit Economic Club, answering the same questions.",
+   "source": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MI",
+   "city": "Southfield",
+   "kind": "debate",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Second and final debate between El-Sayed and Rogers at WXYZ Channel 7.",
+   "source": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "person": "Mike Rogers",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "debate",
+   "for": [
+    "Mike Rogers"
+   ],
+   "race": "MI Senate",
+   "note": "First general election debate between El-Sayed and Rogers, moderated by Rick Albin of WOOD TV.",
+   "source": "https://fox11online.com/news/nation-world/democrat-abdul-el-sayed-republican-mike-rogers-agree-to-second-debate-for-michigans-senate-race-midterm-election"
+  },
+  {
+   "person": "Mike Rogers",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "event",
+   "for": [
+    "Mike Rogers"
+   ],
+   "race": "MI Senate",
+   "note": "Separate appearances of about 25 minutes each before the Detroit Economic Club, answering the same questions.",
+   "source": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "person": "Mike Rogers",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MI",
+   "city": "Southfield",
+   "kind": "debate",
+   "for": [
+    "Mike Rogers"
+   ],
+   "race": "MI Senate",
+   "note": "Second and final debate between El-Sayed and Rogers at WXYZ Channel 7.",
+   "source": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MI",
+   "city": "Escanaba",
+   "kind": "town hall",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Lunchtime It Shouldn't Be This Hard Tour event with Rep. Alexandria Ocasio-Cortez at the U.P. State Fairgrounds, about 500 attending.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-16/el-sayed-takes-senate-campaign-to-michigans-upper-peninsula-with-ocasio-cortez"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MI",
+   "city": "Iron Mountain",
+   "kind": "town hall",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Town hall with Rep. Alexandria Ocasio-Cortez drawing a few hundred people.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-16/el-sayed-takes-senate-campaign-to-michigans-upper-peninsula-with-ocasio-cortez"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MI",
+   "city": "Marquette",
+   "kind": "rally",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Largest Upper Peninsula stop, at Vandament Arena at Northern Michigan University with Rep. Alexandria Ocasio-Cortez, more than 1,200 attending.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-16/el-sayed-takes-senate-campaign-to-michigans-upper-peninsula-with-ocasio-cortez"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "announced",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Scheduled rally with former President Barack Obama and governor nominee Jocelyn Benson from 5 to 7:30 p.m. on the first day of early in person voting.",
+   "source": "https://www.fox2detroit.com/news/obama-joins-benson-el-sayed-detroit-campaign-stop"
+  },
+  {
+   "person": "Dan Osborn",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-01",
+   "state": "NE",
+   "city": "Red Cloud",
+   "kind": "town hall",
+   "for": [
+    "Dan Osborn"
+   ],
+   "race": "NE Senate",
+   "note": "Osborn apologized at a town hall for an audio recording about a hypothetical Trump supporting couple.",
+   "source": "https://dailymontanan.com/?p=39644"
+  },
+  {
+   "person": "Dan Osborn",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "NE",
+   "city": "Omaha",
+   "kind": "town hall",
+   "for": [
+    "Dan Osborn"
+   ],
+   "race": "NE Senate",
+   "note": "Late afternoon town hall at a Mexican restaurant that drew about 40 people.",
+   "source": "https://dailymontanan.com/?p=39644"
+  },
+  {
+   "person": "Dan Osborn",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "NE",
+   "city": "Hyannis",
+   "kind": "event",
+   "for": [
+    "Dan Osborn"
+   ],
+   "race": "NE Senate",
+   "note": "On a Sand Hills swing Osborn met with three skeptical voters, including rancher Mark Vinton, in a conference room.",
+   "source": "https://dailymontanan.com/?p=39644"
+  },
+  {
+   "person": "Dan Osborn",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "NE",
+   "city": "Arthur",
+   "kind": "event",
+   "for": [
+    "Dan Osborn"
+   ],
+   "race": "NE Senate",
+   "note": "Osborn spoke with lunchtime patrons at The Bunkhouse restaurant; the date is from a photo caption, while the text says Wednesday.",
+   "source": "https://dailymontanan.com/?p=39644"
+  },
+  {
+   "person": "Pete Ricketts",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "NE",
+   "city": "Grand Island",
+   "kind": "rally",
+   "for": [
+    "Pete Ricketts"
+   ],
+   "race": "NE Senate",
+   "note": "Ricketts spoke before President Trump and told the crowd we will keep Nebraska red, with Gov. Jim Pillen and Rep. Adrian Smith also speaking.",
+   "source": "https://www.newsfromthestates.com/node/430867"
+  },
+  {
+   "person": "Pete Ricketts",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "NE",
+   "city": "North Platte",
+   "kind": "rally",
+   "for": [
+    "Pete Ricketts"
+   ],
+   "race": "NE Senate",
+   "note": "Ricketts spoke ahead of Vice President JD Vance at the D&N Event Center, along with Gov. Jim Pillen and Rep. Adrian Smith.",
+   "source": "https://www.wowt.com/2026/10/19/how-watch-vice-president-jd-vance-midterm-rally-north-platte/"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "OH",
+   "city": "Bowling Green",
+   "kind": "event",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Brown began his day at a collegiate summit at Bowling Green State University.",
+   "source": "https://local12.com/news/local/president-donald-trump-visits-ohio-rally-republicans-party-fights-keep-congress-jon-husted-senator-vivek-ramaswamy-democrats-sherrod-brown-congressional-races-midterms-rally-vandalia-cincinnati-local-12-wkrc-news"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "OH",
+   "city": "Lima",
+   "kind": "event",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Brown stopped at a coffee shop to register voters.",
+   "source": "https://local12.com/news/local/president-donald-trump-visits-ohio-rally-republicans-party-fights-keep-congress-jon-husted-senator-vivek-ramaswamy-democrats-sherrod-brown-congressional-races-midterms-rally-vandalia-cincinnati-local-12-wkrc-news"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "event",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Brown registered voters at a coffee shop and talked with people at a barbershop.",
+   "source": "https://local12.com/news/local/president-donald-trump-visits-ohio-rally-republicans-party-fights-keep-congress-jon-husted-senator-vivek-ramaswamy-democrats-sherrod-brown-congressional-races-midterms-rally-vandalia-cincinnati-local-12-wkrc-news"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "event",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Brown cast his ballot early at the Franklin County Board of Elections and spoke with reporters and supporters.",
+   "source": "https://wlos.com/news/nation-world/gallery/republicans-fight-to-hold-on-to-ohio-as-democrats-eye-a-flipped-senate-seat-jon-husted-sherrod-brown-president-donald-trump?photo=1"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "OH",
+   "city": "Toledo",
+   "kind": "rally",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Campaign rally at the Central Midwest Regional Council of Carpenters with Rep. Marcy Kaptur and local officials.",
+   "source": "https://wlos.com/news/nation-world/gallery/big-spending-in-ohio-as-husted-and-brown-battle-for-rust-belt-voters-senate-gas-prices?photo=1"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "OH",
+   "city": "Cleveland",
+   "kind": "announced",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Scheduled afternoon rally with former President Barack Obama and governor nominee Dr. Amy Acton.",
+   "source": "https://www.cleveland19.com/2026/10/13/former-president-barack-obama-rally-cleveland/"
+  },
+  {
+   "person": "Jon Husted",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "OH",
+   "city": "Vandalia",
+   "kind": "rally",
+   "for": [
+    "Jon Husted"
+   ],
+   "race": "OH Senate",
+   "note": "Husted spoke before President Trump, criticizing Sherrod Brown on immigration, and was joined on stage by former coach Jon Gruden.",
+   "source": "https://local12.com/news/local/president-donald-trump-visits-ohio-rally-republicans-party-fights-keep-congress-jon-husted-senator-vivek-ramaswamy-democrats-sherrod-brown-congressional-races-midterms-rally-vandalia-cincinnati-local-12-wkrc-news"
+  },
+  {
+   "person": "Jon Husted",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "OH",
+   "city": "Youngstown",
+   "kind": "rally",
+   "for": [
+    "Jon Husted"
+   ],
+   "race": "OH Senate",
+   "note": "Husted spoke as President Trump looked on at a rally at the Covelli Centre.",
+   "source": "https://wlos.com/news/nation-world/gallery/republicans-fight-to-hold-on-to-ohio-as-democrats-eye-a-flipped-senate-seat-jon-husted-sherrod-brown-president-donald-trump?photo=1"
+  },
+  {
+   "person": "Jon Husted",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "OH",
+   "city": "Boardman",
+   "kind": "event",
+   "for": [
+    "Jon Husted"
+   ],
+   "race": "OH Senate",
+   "note": "Campaign appearance at Mahoning County Republican Party headquarters.",
+   "source": "https://wlos.com/news/nation-world/gallery/big-spending-in-ohio-as-husted-and-brown-battle-for-rust-belt-voters-senate-gas-prices?photo=1"
+  },
+  {
+   "person": "Scott Colom",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "MS",
+   "city": "Jackson",
+   "kind": "rally",
+   "for": [
+    "Scott Colom"
+   ],
+   "race": "MS Senate",
+   "note": "Rally at his campaign headquarters on River Place with Sen. Raphael Warnock of Georgia, with Pastor Marcus Cathy leading the prayer.",
+   "source": "https://themississippilink.com/wp-content/uploads/2026/10/October-22-2026-compressed.pdf"
+  },
+  {
+   "person": "Scott Colom",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MS",
+   "city": "Clarksdale",
+   "kind": "event",
+   "for": [
+    "Scott Colom"
+   ],
+   "race": "MS Senate",
+   "note": "Roundtable on rural health care at a community health center with Rep. Bennie Thompson, local doctors and other local leaders.",
+   "source": "https://mississippitoday.org/2026/10/22/kamala-harris-says-mississippi-matters-at-columbus-rally-for-scott-colom/"
+  },
+  {
+   "person": "Scott Colom",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MS",
+   "city": "Columbus",
+   "kind": "rally",
+   "for": [
+    "Scott Colom"
+   ],
+   "race": "MS Senate",
+   "note": "Rally in the Columbus High School gym, where Colom played basketball as a youth, with former Vice President Kamala Harris.",
+   "source": "https://mississippitoday.org/2026/10/22/kamala-harris-says-mississippi-matters-at-columbus-rally-for-scott-colom/"
+  },
+  {
+   "person": "Cindy Hyde-Smith",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MS",
+   "city": "Vicksburg",
+   "kind": "event",
+   "for": [
+    "Cindy Hyde-Smith"
+   ],
+   "race": "MS Senate",
+   "note": "Appeared at an event in Vicksburg where she spoke to reporters, with Sen. Roger Wicker and Rep. Bennie Thompson also appearing.",
+   "source": "https://mississippitoday.org/2026/10/21/trump-considering-mississippi-visit-to-support-hyde-smith/"
+  },
+  {
+   "person": "Cindy Hyde-Smith",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "MS",
+   "city": "Corinth",
+   "kind": "announced",
+   "for": [
+    "Cindy Hyde-Smith"
+   ],
+   "race": "MS Senate",
+   "note": "Scheduled rally with President Donald Trump at Crossroads Arena, with doors at 2:30 p.m. and Trump expected to speak at 6 p.m.",
+   "source": "https://magnoliastatelive.com/2026/10/22/trump-coming-to-mississippi-to-rally-for-cindy-hyde-smith/"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-11",
+   "state": "FL",
+   "city": "Miami",
+   "kind": "town hall",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Students vs Billionaires town hall at Florida International University hosted by More Perfect Union, with Rep. Maxwell Frost.",
+   "source": "https://floridianpress.com/2026/10/angie-nixon-receives-on-the-ground-support-from-democratic-lawmakers/"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "FL",
+   "city": "Orlando",
+   "kind": "event",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Veterans care event with Sen. Ruben Gallego on the day Sen. Chris Murphy also came to Florida to campaign with her.",
+   "source": "https://floridianpress.com/2026/10/angie-nixon-receives-on-the-ground-support-from-democratic-lawmakers/"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "FL",
+   "city": "Tampa",
+   "kind": "rally",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Rain soaked Fighting Oligarchy rally with Sen. Bernie Sanders in the courtyard of the Cuban Club in Ybor City.",
+   "source": "https://thebradentontimes.com/stories/rain-doesnt-dampen-enthusiasm-at-bernie-sandersangie-nixon-rally,216838"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "FL",
+   "city": "Melbourne",
+   "kind": "rally",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Scheduled stop on the Fighting Oligarchy tour with Sen. Bernie Sanders, per the published tour schedule.",
+   "source": "https://www.wlrn.org/light/government-politics/2026-10-13/bernie-sanders-and-other-progressives-are-coming-to-florida-to-campaign-with-democrat-angie-nixon"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "FL",
+   "city": "Gainesville",
+   "kind": "rally",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Scheduled stop on the Fighting Oligarchy tour with Sen. Bernie Sanders, per the published tour schedule.",
+   "source": "https://www.wlrn.org/light/government-politics/2026-10-13/bernie-sanders-and-other-progressives-are-coming-to-florida-to-campaign-with-democrat-angie-nixon"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "FL",
+   "city": "Tallahassee",
+   "kind": "rally",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Rally with Sen. Bernie Sanders, where Nixon addressed the crowd on the final day of his Florida swing.",
+   "source": "https://portside.org/node/40809/printable/print"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "FL",
+   "city": "Orlando",
+   "kind": "town hall",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Young voters town hall at the University of Central Florida with Rep. Ro Khanna.",
+   "source": "https://www.wdbo.com/news/local/rep-ro-khanna-angie-nixon-hosts-young-voters-town-hall-ucf/52IO4XML4BCEHMFVDNDZUTM3IA/"
+  },
+  {
+   "person": "Ashley Moody",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "FL",
+   "city": "Weston",
+   "kind": "event",
+   "for": [
+    "Ashley Moody"
+   ],
+   "race": "FL Senate",
+   "note": "Campaigned in Weston with Rep. Byron Donalds, the Republican nominee for governor.",
+   "source": "https://www.local10.com/news/politics/2026/10/16/moody-campaigns-in-weston-sanders-set-to-campaign-with-nixon/"
+  },
+  {
+   "person": "Ashley Moody",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "FL",
+   "city": "Plant City",
+   "kind": "tour stop",
+   "for": [
+    "Ashley Moody"
+   ],
+   "race": "FL Senate",
+   "note": "Bus tour stop in her hometown to open early voting in Hillsborough County, with Rep. Byron Donalds and state Sen. Bryan Avila.",
+   "source": "https://www.tampafp.com/moody-donalds-and-avila-rally-voters-at-plant-city-campaign-stop/"
+  },
+  {
+   "person": "Ashley Moody",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "FL",
+   "city": "Indian Rocks Beach",
+   "kind": "rally",
+   "for": [
+    "Ashley Moody"
+   ],
+   "race": "FL Senate",
+   "note": "Rally of about 100 people at The Original Crabby Bill's with Rep. Anna Paulina Luna.",
+   "source": "https://www.cltampa.com/news/in-indian-rocks-beach-ashley-moody-says-shes-not-avoiding-the-press-then-walks-away-during-flock-camera-question/"
+  },
+  {
+   "person": "Peggy Flanagan",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-04",
+   "state": "MN",
+   "city": "Appleton",
+   "kind": "event",
+   "for": [
+    "Peggy Flanagan"
+   ],
+   "race": "MN Senate",
+   "note": "Stop outside a private prison being converted to a federal detention center, part of her Got Your Back tour of 30 stops in 30 days.",
+   "source": "https://www.mprnews.org/story/2026/10/05/michele-tafoya-campaigns-with-john-thune-as-dfls-peggy-flanagan-tours-minnesota"
+  },
+  {
+   "person": "Peggy Flanagan",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-10",
+   "state": "MN",
+   "city": "Eden Prairie",
+   "kind": "event",
+   "for": [
+    "Peggy Flanagan"
+   ],
+   "race": "MN Senate",
+   "note": "Press conference on reproductive rights with Rep. Kelly Morrison and Planned Parenthood leaders Alexis McGill Johnson and Ruth Richardson.",
+   "source": "https://www.insightnews.com/news/flanagan-emphasizes-reproductive-rights-ice-reform-and-voter-turnout/article_e67660fb-e6f7-47b2-9f05-78121aca0a27.html"
+  },
+  {
+   "person": "Peggy Flanagan",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MN",
+   "city": "Apple Valley",
+   "kind": "event",
+   "for": [
+    "Peggy Flanagan"
+   ],
+   "race": "MN Senate",
+   "note": "Meet and greet with families alongside state Sen. Erin Maye Quade, per a campaign advisory.",
+   "source": "https://www.insightnews.com/news/flanagan-emphasizes-reproductive-rights-ice-reform-and-voter-turnout/article_e67660fb-e6f7-47b2-9f05-78121aca0a27.html"
+  },
+  {
+   "person": "Peggy Flanagan",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "MN",
+   "city": "St. Paul",
+   "kind": "debate",
+   "for": [
+    "Peggy Flanagan"
+   ],
+   "race": "MN Senate",
+   "note": "Only scheduled debate with Michele Tafoya, hosted by Minnesota Public Radio.",
+   "source": "https://www.kttc.com/2026/10/16/only-scheduled-debate-flanagan-tafoya-spar-over-track-records-policy-positions/"
+  },
+  {
+   "person": "Peggy Flanagan",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "MN",
+   "city": "Moorhead",
+   "kind": "tour stop",
+   "for": [
+    "Peggy Flanagan"
+   ],
+   "race": "MN Senate",
+   "note": "Got Your Back tour stop focused on affordability and farm policy.",
+   "source": "https://www.valleynewslive.com/2026/10/18/flanagan-talks-affordability-farm-policy-moorhead-campaign-stop/?outputType=amp"
+  },
+  {
+   "person": "Michele Tafoya",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "MN",
+   "city": "Le Sueur",
+   "kind": "event",
+   "for": [
+    "Michele Tafoya"
+   ],
+   "race": "MN Senate",
+   "note": "Farm roundtable and remarks with Senate Majority Leader John Thune, farmers and farm group leaders.",
+   "source": "https://www.mprnews.org/story/2026/10/05/michele-tafoya-campaigns-with-john-thune-as-dfls-peggy-flanagan-tours-minnesota"
+  },
+  {
+   "person": "Michele Tafoya",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "MN",
+   "city": "St. Paul",
+   "kind": "event",
+   "for": [
+    "Michele Tafoya"
+   ],
+   "race": "MN Senate",
+   "note": "News conference at the Capitol to unveil a five point public safety plan with leaders of the Minnesota Police and Peace Officers Association.",
+   "source": "https://www.newsfromthestates.com/node/432519"
+  },
+  {
+   "person": "Michele Tafoya",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "MN",
+   "city": "St. Paul",
+   "kind": "debate",
+   "for": [
+    "Michele Tafoya"
+   ],
+   "race": "MN Senate",
+   "note": "Only scheduled debate with Peggy Flanagan, hosted by Minnesota Public Radio.",
+   "source": "https://www.kttc.com/2026/10/16/only-scheduled-debate-flanagan-tafoya-spar-over-track-records-policy-positions/"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "GA",
+   "city": "Doraville",
+   "kind": "debate",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "First general election debate, held at the Atlanta News First studio and hosted by Atlanta News First and Gray Media.",
+   "source": "https://roughdraftatlanta.com/2026/10/09/ossoff-collins-senate-debate/"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "debate",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "Atlanta Press Club debate at the Georgia Public Broadcasting studio on the first day of early voting.",
+   "source": "https://www.wabe.org/?p=993114"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "GA",
+   "city": "Doraville",
+   "kind": "debate",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "First general election debate, held at the Atlanta News First studio and hosted by Atlanta News First and Gray Media.",
+   "source": "https://roughdraftatlanta.com/2026/10/09/ossoff-collins-senate-debate/"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "debate",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Atlanta Press Club debate at the Georgia Public Broadcasting studio on the first day of early voting.",
+   "source": "https://www.wabe.org/?p=993114"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "GA",
+   "city": "LaGrange",
+   "kind": "tour stop",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Opened a three stop campaign day in LaGrange.",
+   "source": "https://wsbtv.com/news/local/early-voting-ramps-up-senate-candidates-make-pitch/3DRSDF57MVFXFBVDLUQSR5PMQU/"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "GA",
+   "city": "Peachtree City",
+   "kind": "tour stop",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Campaign stop at Vanzant's off Highway 74.",
+   "source": "https://wsbtv.com/news/local/early-voting-ramps-up-senate-candidates-make-pitch/3DRSDF57MVFXFBVDLUQSR5PMQU/"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "GA",
+   "city": "Canton",
+   "kind": "event",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Evening meet and greet at Goin' Coastal Seafood downtown with state Sen. Chuck Payne and state Reps. Ray Martinez, Bill Fincher and Steve Tarvin.",
+   "source": "https://www.tribuneledgernews.com/local_news/election/u-s-rep-collins-meets-supporters-in-canton/collection_4bb07da0-59d3-47db-bfa7-bedcc492c29c.html"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "GA",
+   "city": "Dalton",
+   "kind": "rally",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Spoke at President Donald Trump's rally at Dalton Municipal Airport alongside governor nominee Rick Jackson.",
+   "source": "https://www.gpb.org/news/2026/10/21/how-visits-presidents-could-impact-voter-turnout-in-georgia"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "GA",
+   "city": "Perry",
+   "kind": "announced",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Scheduled to appear at a rally with President Donald Trump.",
+   "source": "https://www.gpb.org/news/2026/10/21/how-visits-presidents-could-impact-voter-turnout-in-georgia"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "rally",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "Rally at the Cobb Convention Center on the first weekend of early voting with governor nominee Keisha Lance Bottoms.",
+   "source": "https://www.ajc.com/politics/2026/10/ossoff-bottoms-cobb-county-rally/"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "GA",
+   "city": "Stonecrest",
+   "kind": "event",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "Panel on the cost of living, where Ossoff called on Mike Collins to disband his convoy captains program, according to his campaign.",
+   "source": "https://electjon.com/news/"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "announced",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "Scheduled rally with former President Barack Obama and Keisha Lance Bottoms from 4 p.m. to 7 p.m., venue not yet announced.",
+   "source": "https://hoodline.com/2026/10/obama-to-headline-atlanta-rally-with-ossoff-bottoms-before-early-voting-ends/"
+  },
+  {
+   "person": "Hallie Shoffner",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "AR",
+   "city": "Conway",
+   "kind": "debate",
+   "for": [
+    "Hallie Shoffner"
+   ],
+   "race": "AR Senate",
+   "note": "Televised debate at the Arkansas TV studios with Libertarian Jeff Wadlin, after Sen. Tom Cotton declined to take part.",
+   "source": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"
+  },
+  {
+   "person": "Hallie Shoffner",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "AR",
+   "city": "Fayetteville",
+   "kind": "rally",
+   "for": [
+    "Hallie Shoffner"
+   ],
+   "race": "AR Senate",
+   "note": "Rally for Hallie at George's Majestic Lounge with live music ahead of early voting.",
+   "source": "https://www.mobilize.us/hallieshoffner/event/1055144/"
+  },
+  {
+   "person": "Hallie Shoffner",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "AR",
+   "city": "Little Rock",
+   "kind": "event",
+   "for": [
+    "Hallie Shoffner"
+   ],
+   "race": "AR Senate",
+   "note": "Marched in the Central Arkansas Pride Parade near the state Capitol.",
+   "source": "https://arkansasadvocate.com/2026/10/17/days-before-early-vote-begins-arkansans-rally-for-change-for-no-kings-and-pride-events/"
+  },
+  {
+   "person": "Hallie Shoffner",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "AR",
+   "city": "Jonesboro",
+   "kind": "debate",
+   "for": [
+    "Hallie Shoffner"
+   ],
+   "race": "AR Senate",
+   "note": "Scheduled debate with Libertarian Jeff Wadlin at ASU TV, the Arkansas State University student station, with Cotton not attending.",
+   "source": "https://arkansasadvocate.com/2026/10/14/debate-in-arkansas-us-senate-race-wont-take-place-cotton-and-shoffner-campaigns-say/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "NH",
+   "city": "Manchester",
+   "kind": "event",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Toured the Somerville Street fire station with Sen. Raphael Warnock and met local officials and first responders.",
+   "source": "https://chrispappas.org/2026/10/roundup-senator-reverend-raphael-warnock-campaigns-for-congressman-chris-pappas-in-nh/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "NH",
+   "city": "Nashua",
+   "kind": "event",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Appeared with Sen. Raphael Warnock at a Democratic campaign field office.",
+   "source": "https://chrispappas.org/2026/10/roundup-senator-reverend-raphael-warnock-campaigns-for-congressman-chris-pappas-in-nh/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "NH",
+   "city": "Swanzey",
+   "kind": "event",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Opened a campaign office on Monadnock Highway with Sen. Raphael Warnock, party chair Ray Buckley and Keene Mayor Jay Kahn.",
+   "source": "https://chrispappas.org/2026/10/roundup-senator-reverend-raphael-warnock-campaigns-for-congressman-chris-pappas-in-nh/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "NH",
+   "city": "North Conway",
+   "kind": "debate",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "First Senate debate, hosted by the Mount Washington Valley Economic Council.",
+   "source": "https://political.org/2026/10/13/sununu-keeps-trump-at-arms-length-in-first-new-hampshire-senate-debate-ties-chris-pappas-to-biden/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "NH",
+   "city": "Salem",
+   "kind": "debate",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Candidate forum hosted by the Southern New Hampshire Chamber of Commerce.",
+   "source": "https://indepthnh.org/2026/10/14/u-s-senate-candidates-john-sununu-and-rep-chris-pappas-debate-in-salem/"
+  },
+  {
+   "person": "John E. Sununu",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "NH",
+   "city": "North Conway",
+   "kind": "debate",
+   "for": [
+    "John E. Sununu"
+   ],
+   "race": "NH Senate",
+   "note": "First Senate debate, hosted by the Mount Washington Valley Economic Council.",
+   "source": "https://political.org/2026/10/13/sununu-keeps-trump-at-arms-length-in-first-new-hampshire-senate-debate-ties-chris-pappas-to-biden/"
+  },
+  {
+   "person": "John E. Sununu",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "NH",
+   "city": "Salem",
+   "kind": "debate",
+   "for": [
+    "John E. Sununu"
+   ],
+   "race": "NH Senate",
+   "note": "Candidate forum hosted by the Southern New Hampshire Chamber of Commerce.",
+   "source": "https://indepthnh.org/2026/10/14/u-s-senate-candidates-john-sununu-and-rep-chris-pappas-debate-in-salem/"
+  },
+  {
+   "person": "John E. Sununu",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "NH",
+   "city": "Swanzey",
+   "kind": "event",
+   "for": [
+    "John E. Sununu"
+   ],
+   "race": "NH Senate",
+   "note": "Visited Keene Dillant Hopkins Airport and talked with about half a dozen airport workers.",
+   "source": "https://www.nhpr.org/nh-news/2026-10-21/nh-newhampshire-senate-race-pappas-sununu-2026-election"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NH",
+   "city": "Nashua",
+   "kind": "event",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Morning canvass with California Gov. Gavin Newsom and governor nominee Cinde Warmington, per the published schedule.",
+   "source": "https://dnyuz.com/2026/10/14/newsom-heads-to-new-hampshire-to-stump-for-democrats-raise-political-profile/"
+  },
+  {
+   "person": "Chris Pappas",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NH",
+   "city": "Exeter",
+   "kind": "rally",
+   "for": [
+    "Chris Pappas"
+   ],
+   "race": "NH Senate",
+   "note": "Afternoon Democratic rally with California Gov. Gavin Newsom and governor nominee Cinde Warmington.",
+   "source": "https://dnyuz.com/2026/10/14/newsom-heads-to-new-hampshire-to-stump-for-democrats-raise-political-profile/"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "NC",
+   "city": "Asheville",
+   "kind": "rally",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Make Stuff Cost Less rally a month before Election Day.",
+   "source": "https://wlos.com/news/local/democrat-roy-cooper-asheville-votes-michael-whatley-republican-gop-senate-seat-north-carolina-make-stuff-cost-less-rally-election-polls"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "NC",
+   "city": "Greensboro",
+   "kind": "tour stop",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Make Stuff Cost Less tour stop, per a campaign release.",
+   "source": "https://roycooper.com/press-releases/page/2/"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "NC",
+   "city": "Raleigh",
+   "kind": "event",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Early voting appearance at John Chavis Memorial Park on the first day of in person early voting.",
+   "source": "https://nsjonline.com/article/2026/10/coopers-early-voting-appearance-follows-legal-threat-over-senate-term-questions/"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "NC",
+   "city": "Rocky Mount",
+   "kind": "event",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Canvass launch at the Nash County Democrats office, with a news conference and remarks to supporters.",
+   "source": "https://rollcall.com/2026/10/21/north-carolina-senate-whatley-cooper-election/"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NC",
+   "city": "Charlotte",
+   "kind": "tour stop",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Make Stuff Cost Less tour event, per a campaign release.",
+   "source": "https://roycooper.com/press-releases/"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "NC",
+   "city": "Raleigh",
+   "kind": "rally",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Downtown Make Stuff Cost Less tour stop with about 150 supporters one week into early voting.",
+   "source": "https://www.newsfromthestates.com/article/cooper-rallies-support-one-week-north-carolinas-early-voting"
+  },
+  {
+   "person": "Michael Whatley",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "NC",
+   "city": "Gastonia",
+   "kind": "event",
+   "for": [
+    "Michael Whatley"
+   ],
+   "race": "NC Senate",
+   "note": "Cast his early vote in his hometown.",
+   "source": "https://wlos.com/news/local/north-carolina-senate-candidates-cooper-whatley-early-votes-politics-election-community-republican-democract"
+  },
+  {
+   "person": "Michael Whatley",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NC",
+   "city": "Lillington",
+   "kind": "event",
+   "for": [
+    "Michael Whatley"
+   ],
+   "race": "NC Senate",
+   "note": "Spoke to elected officials and supporters at a sports bar.",
+   "source": "https://rollcall.com/2026/10/21/north-carolina-senate-whatley-cooper-election/"
+  },
+  {
+   "person": "Michael Whatley",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "NC",
+   "city": "Greenville",
+   "kind": "rally",
+   "for": [
+    "Michael Whatley"
+   ],
+   "race": "NC Senate",
+   "note": "Spoke at President Donald Trump's rally at Pitt Greenville Airport on the first week of early voting.",
+   "source": "https://ncnewsline.com/2026/10/20/i-wanted-him-to-be-the-guy-trump-stumps-for-whatley-gop-slate-as-voting-in-nc-gets-underway/"
+  },
+  {
+   "person": "Julia Letlow",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "LA",
+   "city": "Lafayette",
+   "kind": "event",
+   "for": [
+    "Julia Letlow"
+   ],
+   "race": "LA Senate",
+   "note": "Campaigned in Lafayette as early voting opened, on the same day Sen. John Kennedy campaigned separately in the city.",
+   "source": "https://kalb.com/2026/10/21/kennedy-letlow-visit-lafayette-early-voting-opens"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Savannah",
+   "kind": "tour stop",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Statewide tour stop at Sheltair at Savannah Hilton Head International Airport with Gov. Brian Kemp and First Lady Marty Kemp, where Jackson attacked Bottoms on crime.",
+   "source": "https://www.wtoc.com/2026/10/13/rick-jackson-makes-stop-savannah-during-georgia-campaign-tour/"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Grovetown",
+   "kind": "tour stop",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Columbia County stop the night before early voting opened, with Gov. Brian Kemp at his side, talking taxes and data centers.",
+   "source": "https://www.wrdw.com/2026/10/12/rick-jackson-make-stop-columbia-county-ahead-early-voting/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "TX",
+   "city": "Houston",
+   "kind": "event",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Campaign event at the Houston Police Officers Union outlining his public safety agenda with HPOU Executive Director Ray Hunt and Chambers County Sheriff Brian Hawthorne, per a campaign release.",
+   "source": "https://www.gregabbott.com/governor-abbott-outlines-public-safety-agenda-alongside-houston-area-law-enforcement/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "TX",
+   "city": "Fort Worth",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Let's Roll tour stop at Old Texas Brewing Co. on the first day of early voting, urging supporters to keep Tarrant County red.",
+   "source": "https://news4sanantonio.com/news/local/hinojosa-abbott-make-campaign-stops-as-early-voting-begins"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "TX",
+   "city": "Corpus Christi",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Let's Roll get out the vote event at Brewster Street Ice House with Reps. Todd Hunter and Denise Villalobos.",
+   "source": "https://www.gregabbott.com/governor-abbott-calls-on-republicans-to-vote-at-lets-roll-gotv-event-in-corpus-christi/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "TX",
+   "city": "Allen",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Let's Roll get out the vote event at Matt's Rancho Martinez with Reps. Jeff Leach and Keresa Richardson.",
+   "source": "https://www.gregabbott.com/governor-abbott-mobilizes-voters-at-lets-roll-gotv-event-in-allen/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "TX",
+   "city": "Richmond",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Get out the vote stop at Gino's Italian Joint with Rep. Matt Morgan, urging Republicans to keep Texas red.",
+   "source": "https://www.gregabbott.com/governor-abbott-urges-republicans-in-richmond-to-vote-to-keep-texas-red/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "TX",
+   "city": "Temple",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Let's Roll get out the vote event at Clem Mikeska's Bar-B-Q with Reps. Brad Buckley and Hillary Hickland.",
+   "source": "https://www.gregabbott.com/governor-abbott-highlights-conservative-priorities-at-temple-lets-roll-gotv-event/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "TX",
+   "city": "San Angelo",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Let's Roll get out the vote event at Arc Light Sports with San Angelo Mayor Tom Thompson.",
+   "source": "https://www.gregabbott.com/governor-abbott-calls-on-texans-to-vote-in-the-midterm-elections-at-san-angelo-lets-roll-gotv-event/"
+  },
+  {
+   "person": "Gina Hinojosa",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "TX",
+   "city": "Austin",
+   "kind": "event",
+   "for": [
+    "Gina Hinojosa"
+   ],
+   "race": "TX Governor",
+   "note": "Proposed debate event outside the Governor's Mansion that Abbott skipped, then a rally for supporters at Wooldridge Square Park.",
+   "source": "https://www.texastribune.org/?p=246826"
+  },
+  {
+   "person": "Gina Hinojosa",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "TX",
+   "city": "San Antonio",
+   "kind": "tour stop",
+   "for": [
+    "Gina Hinojosa"
+   ],
+   "race": "TX Governor",
+   "note": "One Fight get out the vote tour stop at Hangar 9 at Brooks on the South Side as early voting began.",
+   "source": "https://news4sanantonio.com/news/local/hinojosa-abbott-make-campaign-stops-as-early-voting-begins"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "FL",
+   "city": "Orlando",
+   "kind": "event",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Attended the Seventh Annual ONYX Magazine Men of Honor Gala at the Rosen Centre after campaign events in Miami and Fort Lauderdale, per the Orlando Sentinel as cited by Hoodline.",
+   "source": "https://hoodline.com/2026/10/donalds-jolly-both-hit-orlando-gala-somehow-still-miss-each-other/"
+  },
+  {
+   "person": "David Jolly",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "FL",
+   "city": "Orlando",
+   "kind": "event",
+   "for": [
+    "David Jolly"
+   ],
+   "race": "FL Governor",
+   "note": "Attended the ONYX Magazine Men of Honor Gala at the Rosen Centre after campaigning in Pinellas and Sarasota, and did not cross paths with Donalds.",
+   "source": "https://hoodline.com/2026/10/donalds-jolly-both-hit-orlando-gala-somehow-still-miss-each-other/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "FL",
+   "city": "Lakewood Ranch",
+   "kind": "tour stop",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Defending the Florida Dream tour stop scheduled at Owen's Fish Camp.",
+   "source": "https://www.mysuncoast.com/2026/10/03/florida-governors-race-intensifies-donalds-jolly-court-voters-statewide/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "FL",
+   "city": "Melbourne",
+   "kind": "tour stop",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Campaign stop on the second day of early voting, part of his Defending the Florida Dream bus tour.",
+   "source": "https://www.mysuncoast.com/2026/10/20/jolly-appear-with-clinton-broward-county/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "FL",
+   "city": "Fort Pierce",
+   "kind": "tour stop",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Campaign stop on the second day of early voting, part of his Defending the Florida Dream bus tour.",
+   "source": "https://www.mysuncoast.com/2026/10/20/jolly-appear-with-clinton-broward-county/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "FL",
+   "city": "Miami",
+   "kind": "tour stop",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Campaign stop on the second day of early voting, part of his Defending the Florida Dream bus tour.",
+   "source": "https://www.mysuncoast.com/2026/10/20/jolly-appear-with-clinton-broward-county/"
+  },
+  {
+   "person": "David Jolly",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "FL",
+   "city": "Pembroke Park",
+   "kind": "event",
+   "for": [
+    "David Jolly"
+   ],
+   "race": "FL Governor",
+   "note": "Interfaith service supporting Jolly at Koinonia Worship Center with former President Bill Clinton, who also headlined a Miami fundraiser the campaign said raised 3 million dollars.",
+   "source": "https://www.nbcmiami.com/elections/bill-clinton-david-jolly-broward-florida-governors-race/3875310/?noamp=mobile"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "FL",
+   "city": "Fort Myers",
+   "kind": "rally",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Trump rally in Southwest Florida that Donalds was set to join, with Trump scheduled to speak at 2 p.m.",
+   "source": "https://www.newsfromthestates.com/node/433143"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "OH",
+   "city": "Cleveland",
+   "kind": "event",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "Marched in the Cleveland Columbus Day Parade amid a tight governor's race.",
+   "source": "https://www.news5cleveland.com/news/local-news/oh-cuyahoga/ramaswamy-campaigns-at-clevelands-columbus-day-parade-amid-tight-governors-race"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "OH",
+   "city": "Youngstown",
+   "kind": "rally",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "Appeared at President Trump's campaign event in Youngstown alongside Sen. Jon Husted the same day as the Cleveland parade.",
+   "source": "https://www.news5cleveland.com/news/local-news/oh-cuyahoga/ramaswamy-campaigns-at-clevelands-columbus-day-parade-amid-tight-governors-race"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "event",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "Public forum at the Columbus Metropolitan Club, in conversation with Statehouse News Bureau chief Karen Kasler, taking audience questions.",
+   "source": "https://www.dailysignal.com/?p=237954"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "OH",
+   "city": "Cleveland",
+   "kind": "announced",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Scheduled afternoon rally with former President Barack Obama and Sherrod Brown, venue not yet released as of Oct. 13.",
+   "source": "https://political.org/2026/10/13/barack-obama-to-rally-in-cleveland-with-sherrod-brown-and-dr-amy-acton-as-ohios-senate-and-governor-races-tighten/"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "WI",
+   "city": "Racine",
+   "kind": "event",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Morning gathering of supporters at the Racine County Democratic Party office with Maryland Gov. Wes Moore, where Crowley gave a short speech.",
+   "source": "https://urbanmilwaukee.com/2026/10/10/maryland-gov-wes-moore-campaigns-for-crowley-in-wisconsin/"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "WI",
+   "city": "Waukesha",
+   "kind": "rally",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Hunter Nation Sportsmen's Rally for Tiffany with former Packers quarterback Brett Favre and Hunter Nation CEO Keith Mark.",
+   "source": "https://urbanmilwaukee.com/2026/10/10/maryland-gov-wes-moore-campaigns-for-crowley-in-wisconsin/"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Pewaukee",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Oak Creek",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Cedarburg",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Sheboygan",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Manitowoc",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Luxemburg",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "WI",
+   "city": "Green Bay",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "WI",
+   "city": "Appleton",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "WI",
+   "city": "Oshkosh",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "WI",
+   "city": "Richfield",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Packers watch party, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "WI",
+   "city": "Oconomowoc",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Packers watch party, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "Racine",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "Kenosha",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "Elkhorn",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "Beloit",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "New Glarus",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "WI",
+   "city": "Lancaster",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "WI",
+   "city": "Prairie du Chien",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "WI",
+   "city": "Richland Center",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "WI",
+   "city": "Viroqua",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "WI",
+   "city": "West Salem",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "WI",
+   "city": "Sparta",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "WI",
+   "city": "Black River Falls",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "WI",
+   "city": "Wisconsin Rapids",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "WI",
+   "city": "Wausau",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "WI",
+   "city": "Tomahawk",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "WI",
+   "city": "Rhinelander",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "WI",
+   "city": "Antigo",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "WI",
+   "city": "Shawano",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "WI",
+   "city": "Crivitz",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "WI",
+   "city": "Green Bay",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Packers tailgate on Lombardi Avenue, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Ladysmith",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Hayward",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Spooner",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Rice Lake",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Chippewa Falls",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Menomonie",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-30",
+   "state": "WI",
+   "city": "Hudson",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "Watertown",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "West Bend",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "Brown Deer",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "Franklin",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "Big Bend",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-31",
+   "state": "WI",
+   "city": "Burlington",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "WI",
+   "city": "Madison",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "WI",
+   "city": "Wisconsin Dells",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "WI",
+   "city": "Stevens Point",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "WI",
+   "city": "Harshaw",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Superior",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Altoona",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "La Crosse",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Cottage Grove",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Delafield",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Green Bay",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a Tavern Talk, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Tom Tiffany",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "WI",
+   "city": "Rothschild",
+   "kind": "announced",
+   "for": [
+    "Tom Tiffany"
+   ],
+   "race": "WI Governor",
+   "note": "Scheduled Common Sense Bus Tour stop, a stop, on a 10 day tour the campaign says will feature Sen. Ron Johnson, Tommy Thompson and Scott Walker among other guests.",
+   "source": "https://urbanmilwaukee.com/?p=1008887"
+  },
+  {
+   "person": "Jim Pillen",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "NE",
+   "city": "Grand Island",
+   "kind": "rally",
+   "for": [
+    "Jim Pillen"
+   ],
+   "race": "NE Governor",
+   "note": "Joined President Trump on stage at his midterm rally at the Pinnacle Bank Expo Center on the Nebraska State Fairgrounds.",
+   "source": "https://www.rawstory.com/jim-pillen-2678011715/"
+  },
+  {
+   "person": "Ty Masterson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "KS",
+   "city": "Park City",
+   "kind": "rally",
+   "for": [
+    "Ty Masterson"
+   ],
+   "race": "KS Governor",
+   "note": "Spoke alongside President Trump at a Monday night rally at Heartland Credit Union Arena where Trump affirmed his endorsement.",
+   "source": "https://www.newsfromthestates.com/node/433874"
+  },
+  {
+   "person": "Aaron Ford",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NV",
+   "city": "Las Vegas",
+   "kind": "event",
+   "for": [
+    "Aaron Ford"
+   ],
+   "race": "NV Governor",
+   "note": "Cast his ballot at a downtown Las Vegas polling place on day one of early voting with his wife and supporters.",
+   "source": "https://www.fox5vegas.com/2026/10/19/early-voting-wraps-up-first-weekend-candidates-make-their-case/"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "tour stop",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "First stop of a statewide tour with Gov. Brian Kemp and First Lady Marty Kemp on the eve of early voting.",
+   "source": "https://www.dailysignal.com/?p=237434"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Stockbridge",
+   "kind": "event",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "Met with supporters in Stockbridge on the eve of early voting.",
+   "source": "https://thegrio.com/2026/10/13/georgia-governors-race-early-voting-bottoms-jackson/"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "debate",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "Atlanta Press Club Loudermilk Young governor debate at the Georgia Public Broadcasting studio, where Bottoms faced an empty podium after Jackson declined.",
+   "source": "https://www.newsfromthestates.com/node/432373"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "GA",
+   "city": "Dalton",
+   "kind": "rally",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Appeared with President Trump and Senate nominee Mike Collins at Trump's Dalton rally.",
+   "source": "https://www.fox5atlanta.com/news/ossoff-bottoms-headline-cobb-rally-first-weekend-early-voting"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "rally",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "Rally with Sen. Jon Ossoff at the Cobb Galleria Centre in Cobb County on the first weekend of early voting, drawing more than 1,500 supporters.",
+   "source": "https://www.atlantanewsfirst.com/2026/10/18/bottoms-ossoff-rally-supporters-cobb-county-day-after-trump-visits-dalton/?outputType=amp"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "announced",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "United for Georgia Rally with former President Barack Obama and Sen. Jon Ossoff from 4 to 7 p.m., venue to be emailed to registrants.",
+   "source": "https://www.fox5atlanta.com/news/former-president-barack-obama-join-ossoff-bottoms-atlanta-rally.amp"
+  },
+  {
+   "person": "Jermaine Johnson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "SC",
+   "city": "Columbia",
+   "kind": "debate",
+   "for": [
+    "Jermaine Johnson"
+   ],
+   "race": "SC Governor",
+   "note": "Televised governor debate with Alan Wilson scheduled at the WIS studios.",
+   "source": "https://www.wbtv.com/2026/09/30/2026-south-carolina-governor-candidates-debate-live-next-week-ahead-november-election/"
+  },
+  {
+   "person": "Alan Wilson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "SC",
+   "city": "Columbia",
+   "kind": "debate",
+   "for": [
+    "Alan Wilson"
+   ],
+   "race": "SC Governor",
+   "note": "Televised governor debate with Jermaine Johnson scheduled at the WIS studios.",
+   "source": "https://www.wbtv.com/2026/09/30/2026-south-carolina-governor-candidates-debate-live-next-week-ahead-november-election/"
+  },
+  {
+   "person": "Jermaine Johnson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "SC",
+   "city": "Columbia",
+   "kind": "event",
+   "for": [
+    "Jermaine Johnson"
+   ],
+   "race": "SC Governor",
+   "note": "Cast his ballot in Columbia on the first day of early voting before heading to the Grand Strand.",
+   "source": "https://www.live5news.com/2026/10/19/south-carolina-governors-race-enters-two-week-sprint/?outputType=amp"
+  },
+  {
+   "person": "Jonathan Kreiss-Tomkins",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "AK",
+   "city": "Anchorage",
+   "kind": "debate",
+   "for": [
+    "Jonathan Kreiss-Tomkins"
+   ],
+   "race": "AK Governor",
+   "note": "First Debate for the State broadcast from Alaska Public Media's Anchorage studio, with Bernadette Wilson, Dave Bronson and Treg Taylor.",
+   "source": "https://www.alaskasnewssource.com/2026/10/09/live-alaskas-gubernatorial-candidates-clash-debate-state/"
+  },
+  {
+   "person": "Bernadette Wilson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "AK",
+   "city": "Anchorage",
+   "kind": "debate",
+   "for": [
+    "Bernadette Wilson"
+   ],
+   "race": "AK Governor",
+   "note": "First Debate for the State broadcast from Alaska Public Media's Anchorage studio, with Jonathan Kreiss-Tomkins, Dave Bronson and Treg Taylor.",
+   "source": "https://www.alaskasnewssource.com/2026/10/09/live-alaskas-gubernatorial-candidates-clash-debate-state/"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "WI",
+   "city": "Beloit",
+   "kind": "rally",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Rally at New Zion Baptist Church with Maryland Gov. Wes Moore and Pastor James M. Ivy before about 120 attendees.",
+   "source": "https://www.newsfromthestates.com/node/432214"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "WI",
+   "city": "Kenosha",
+   "kind": "event",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Campaign stop with Maryland Gov. Wes Moore on a day that also took them to Racine, Beloit and Milwaukee.",
+   "source": "https://www.newsfromthestates.com/node/432214"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "WI",
+   "city": "Milwaukee",
+   "kind": "event",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Campaign stop with Maryland Gov. Wes Moore at the end of a four city swing.",
+   "source": "https://www.newsfromthestates.com/node/432214"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "WI",
+   "city": "Milwaukee",
+   "kind": "announced",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Kickoff rally for the 10 day, 40 city Let's Get to Work, Wisconsin bus tour with running mate Sarah Godlewski.",
+   "source": "https://www.wispolitics.com/?p=429880"
+  },
+  {
+   "person": "Jonathan Kreiss-Tomkins",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "AK",
+   "city": "Juneau",
+   "kind": "debate",
+   "for": [
+    "Jonathan Kreiss-Tomkins"
+   ],
+   "race": "AK Governor",
+   "note": "Juneau Chamber of Commerce gubernatorial forum with Bernadette Wilson and Dave Bronson, per Wikipedia's debate table.",
+   "source": "https://en.wikipedia.org/wiki/2026_Alaska_gubernatorial_election"
+  },
+  {
+   "person": "Bernadette Wilson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "AK",
+   "city": "Juneau",
+   "kind": "debate",
+   "for": [
+    "Bernadette Wilson"
+   ],
+   "race": "AK Governor",
+   "note": "Juneau Chamber of Commerce gubernatorial forum with Jonathan Kreiss-Tomkins and Dave Bronson, per Wikipedia's debate table.",
+   "source": "https://en.wikipedia.org/wiki/2026_Alaska_gubernatorial_election"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "OH",
+   "city": "Vandalia",
+   "kind": "rally",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "Campaign rally in Vandalia, shown in a Slate photo caption, the day President Trump rallied there for Husted and Ramaswamy.",
+   "source": "https://slate.com/news-and-politics/2026/10/vivek-ramaswamy-donald-trump-ohio-governor.html"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "OH",
+   "city": "Strongsville",
+   "kind": "rally",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "GOP ticket rally with running mate Senate President Rob McColley and other statewide Republican candidates on a three stop Friday swing.",
+   "source": "https://abc6onyourside.com/news/local/vivek-ramaswamy-running-mate-and-members-of-gop-ticket-rally-ohio-voters-senate-president-rob-mccolley-campaign-stops-strongsville-delaware-circleville-friday"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "OH",
+   "city": "Delaware",
+   "kind": "rally",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "GOP ticket rally with running mate Senate President Rob McColley and other statewide Republican candidates on a three stop Friday swing.",
+   "source": "https://abc6onyourside.com/news/local/vivek-ramaswamy-running-mate-and-members-of-gop-ticket-rally-ohio-voters-senate-president-rob-mccolley-campaign-stops-strongsville-delaware-circleville-friday"
+  },
+  {
+   "person": "Vivek Ramaswamy",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "OH",
+   "city": "Circleville",
+   "kind": "rally",
+   "for": [
+    "Vivek Ramaswamy"
+   ],
+   "race": "OH Governor",
+   "note": "GOP ticket rally with running mate Senate President Rob McColley and other statewide Republican candidates on a three stop Friday swing.",
+   "source": "https://abc6onyourside.com/news/local/vivek-ramaswamy-running-mate-and-members-of-gop-ticket-rally-ohio-voters-senate-president-rob-mccolley-campaign-stops-strongsville-delaware-circleville-friday"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "rally",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Rally closed to media with about 100 attendees, including Ohio State student supporters, at WOSU Public Media's Sandy and Andy Ross Community Studio near campus.",
+   "source": "https://www.wosu.org/politics-government/2026-10-14/amy-acton-campaigns-at-closed-door-rally-while-vivek-ramaswamy-criticizes-her-at-columbus-forum"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Macon",
+   "kind": "tour stop",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Press event on a one day statewide tour with Gov. Brian Kemp held instead of debating Bottoms, per the AJC's tour plan.",
+   "source": "https://www.ajc.com/politics/2026/10/jackson-plans-statewide-press-tour-with-kemp-instead-of-debating-bottoms/"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "GA",
+   "city": "Columbus",
+   "kind": "tour stop",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Press event on a one day statewide tour with Gov. Brian Kemp held instead of debating Bottoms, per the AJC's tour plan.",
+   "source": "https://www.ajc.com/politics/2026/10/jackson-plans-statewide-press-tour-with-kemp-instead-of-debating-bottoms/"
+  },
+  {
+   "person": "David Jolly",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "FL",
+   "city": "Miami",
+   "kind": "event",
+   "for": [
+    "David Jolly"
+   ],
+   "race": "FL Governor",
+   "note": "Evening meet and greet with members of the Haitian community alongside running mate Gwen Graham.",
+   "source": "https://mynews13.com/fl/orlando/political-connections/2026/10/07/political-connections--october-7-2026"
+  },
+  {
+   "person": "David Jolly",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "FL",
+   "city": "Miami Gardens",
+   "kind": "event",
+   "for": [
+    "David Jolly"
+   ],
+   "race": "FL Governor",
+   "note": "Live fireside chat at Florida Memorial University with Senate candidate Angie Nixon.",
+   "source": "https://mynews13.com/fl/orlando/political-connections/2026/10/07/political-connections--october-7-2026"
+  },
+  {
+   "person": "David Jolly",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-19",
+   "state": "FL",
+   "city": "Orlando",
+   "kind": "event",
+   "for": [
+    "David Jolly"
+   ],
+   "race": "FL Governor",
+   "note": "News conference with former Sen. Bill Nelson calling for a pause and moratorium on new data center construction.",
+   "source": "https://www.tampabay.com/news/florida-politics/elections/2026/10/20/david-jolly-democratic-governors-association-campaign-finance-donalds-governor/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "FL",
+   "city": "Tampa",
+   "kind": "announced",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Planned rally with Rep. Anna Paulina Luna and Sen. Ashley Moody, with more speakers to be announced.",
+   "source": "https://mynews13.com/fl/orlando/political-connections/2026/10/07/political-connections--october-7-2026"
+  },
+  {
+   "person": "Gina Hinojosa",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "TX",
+   "city": "Houston",
+   "kind": "tour stop",
+   "for": [
+    "Gina Hinojosa"
+   ],
+   "race": "TX Governor",
+   "note": "Launch of her 17 stop One Fight get out the vote tour, which Hoodline reported kicked off on Sunday in Houston and ends in Collin County on Oct. 29.",
+   "source": "https://hoodline.com/2026/10/ann-richards-old-guard-rallies-for-gina-hinojosa-in-travis-county/"
+  },
+  {
+   "person": "Phil Scott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "VT",
+   "city": "Colchester",
+   "kind": "debate",
+   "for": [
+    "Phil Scott"
+   ],
+   "race": "VT Governor",
+   "note": "Vermont Public governor debate with Amanda Janoo in the Vermont Public studio, moderated by Vermont Edition host Mikaela Lefrak.",
+   "source": "https://www.vermontpublic.org/show/vermont-edition/2026-10-20/vermont-publics-2026-governor-debate"
+  },
+  {
+   "person": "Amanda Janoo",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "VT",
+   "city": "Colchester",
+   "kind": "debate",
+   "for": [
+    "Amanda Janoo"
+   ],
+   "race": "VT Governor",
+   "note": "Vermont Public governor debate with Gov. Phil Scott in the Vermont Public studio, moderated by Vermont Edition host Mikaela Lefrak.",
+   "source": "https://www.vermontpublic.org/show/vermont-edition/2026-10-20/vermont-publics-2026-governor-debate"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "IA",
+   "city": "Davenport",
+   "kind": "debate",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "First general election debate between Sand and Lahn, hosted by KWQC.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "IA",
+   "city": "Sioux City",
+   "kind": "debate",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Second general election debate between Sand and Lahn, hosted by KTIV.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "IA",
+   "city": "Cedar Rapids",
+   "kind": "announced",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Third scheduled debate, hosted by KCRG TV9 and The Gazette.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "IA",
+   "city": "Davenport",
+   "kind": "debate",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "First general election debate between Sand and Lahn, hosted by KWQC.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "IA",
+   "city": "Sioux City",
+   "kind": "debate",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Second general election debate between Sand and Lahn, hosted by KTIV.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "IA",
+   "city": "Cedar Rapids",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Third scheduled debate, hosted by KCRG TV9 and The Gazette.",
+   "source": "https://www.kttc.com/2026/09/30/kttc-air-iowa-gubernatorial-debate-series/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-05",
+   "state": "IA",
+   "city": "Corning",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Toured Adams County economic development projects with the Adams County Economic Development Corporation on his Iowa for All tour.",
+   "source": "https://robsand.com/news/rob-sand-hits-the-ground-running-in-october-to-kick-off-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "IA",
+   "city": "Grinnell",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Spoke with students and community members at Grinnell College about the two party system, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-hits-the-ground-running-in-october-to-kick-off-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "IA",
+   "city": "Marshalltown",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Toured the JBS plant, held a town hall at the Iowa Veterans Home and met small business owners and city officials, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-09",
+   "state": "IA",
+   "city": "Waukee",
+   "kind": "rally",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Rallied supporters in Waukee, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-10",
+   "state": "IA",
+   "city": "Newton",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Met with voters about local issues, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-10",
+   "state": "IA",
+   "city": "St. Ansgar",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Held a meet and greet with voters, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-10",
+   "state": "IA",
+   "city": "Mason City",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Spoke to local Democrats and walked Oktoberfest talking with voters, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-11",
+   "state": "IA",
+   "city": "Winterset",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Walked in the Madison County Covered Bridges Festival parade, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "IA",
+   "city": "Dubuque",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Held a roundtable with about 15 small business owners and community leaders on downtown revitalization, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "IA",
+   "city": "Waterloo",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Toured Spellers True Value Hardware and other local businesses, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "IA",
+   "city": "Cedar Falls",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Met with students at the University of Northern Iowa about voting, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "IA",
+   "city": "Cedar Rapids",
+   "kind": "rally",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Met students at Coe College and held an evening rally, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-meets-with-iowans-across-the-state-on-iowa-for-all-tour/"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "IA",
+   "city": "Carroll",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Toured the plastics maker ThermoPlaz and discussed his small business plan; the campaign release gives only the weekday.",
+   "source": "https://robsand.com/news/rob-sand-continues-iowa-for-all-tour-highlights-plans-to-support-small-businesses-farmers-and-the-next-generation-of-iowans"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Sioux City",
+   "kind": "tour stop",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Stopped at Brightside Cafe and visited State Steel and other local businesses the day after the Sioux City debate, per his campaign.",
+   "source": "https://robsand.com/news/rob-sand-continues-iowa-for-all-tour-highlights-plans-to-support-small-businesses-farmers-and-the-next-generation-of-iowans"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Dunlap",
+   "kind": "event",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Held a Shop Talk with farmers and community members on rural Iowa issues.",
+   "source": "https://www.iowapublicradio.org/political-news/2026-10-23/trump-rally-iowa-base-republicans-midterms-senate-governor-hinson-lahn"
+  },
+  {
+   "person": "Rob Sand",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "IA",
+   "city": "Ames",
+   "kind": "town hall",
+   "for": [
+    "Rob Sand"
+   ],
+   "race": "IA Governor",
+   "note": "Held an open forum with Iowa State University students at the Memorial Union, with about 165 attending per the Iowa State Daily as cited by his campaign.",
+   "source": "https://robsand.com/news/rob-sand-continues-iowa-for-all-tour-highlights-plans-to-support-small-businesses-farmers-and-the-next-generation-of-iowans"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "IA",
+   "city": "Storm Lake",
+   "kind": "event",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Campaigned in Storm Lake, per an Iowa Public Radio photo caption.",
+   "source": "https://www.iowapublicradio.org/political-news/2026-10-23/trump-rally-iowa-base-republicans-midterms-senate-governor-hinson-lahn"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "IA",
+   "city": "Sioux City",
+   "kind": "rally",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Spoke at the Trump rally at a hangar at Sioux Gateway Airport alongside Sen. Chuck Grassley and Senate candidate Ashley Hinson.",
+   "source": "https://www.iowapublicradio.org/political-news/2026-10-23/trump-rally-iowa-base-republicans-midterms-senate-governor-hinson-lahn"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "IA",
+   "city": "Forest City",
+   "kind": "event",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Winnebago County meet and greet listed on his campaign events page for 1 PM.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-23",
+   "state": "IA",
+   "city": "Clear Lake",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Cerro Gordo County meet and greet at the Surf Music Experience Center with special guest Joe Mitchell. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "IA",
+   "city": "Decorah",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Winneshiek County meet and greet. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "IA",
+   "city": "Waukon",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Allamakee County meet and greet. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "IA",
+   "city": "Dubuque",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Dubuque County meet and greet. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "IA",
+   "city": "Pella",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Marion County get out the vote rally. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "IA",
+   "city": "Newton",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Jasper County get out the vote rally. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Zach Lahn",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "IA",
+   "city": "Ames",
+   "kind": "announced",
+   "for": [
+    "Zach Lahn"
+   ],
+   "race": "IA Governor",
+   "note": "Story County town hall at Torrent Brewing Company. Listed on his campaign events page.",
+   "source": "https://zachlahn.com/events/"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "debate",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "First gubernatorial debate between Benson and James, held on Grand Rapids station WOOD TV.",
+   "source": "https://www.jocelynbenson.com/news"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "debate",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Second and final gubernatorial debate, hosted by WDIV Local 4 in Detroit, with sparring over gas prices, tariffs and data centers.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-16/republican-john-james-and-democrat-jocelyn-benson-running-for-governor-debate-for-second-time"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-06",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "debate",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "First gubernatorial debate between Benson and James, held on Grand Rapids station WOOD TV.",
+   "source": "https://www.jocelynbenson.com/news"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "debate",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Second and final gubernatorial debate, hosted by WDIV Local 4 in Detroit, with sparring over gas prices, tariffs and data centers.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-16/republican-john-james-and-democrat-jocelyn-benson-running-for-governor-debate-for-second-time"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-02",
+   "state": "MI",
+   "city": "Flint",
+   "kind": "event",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Joined an SEIU homecare nurse on the job for the union's Walk a Day in our Shoes program and made a campaign stop.",
+   "source": "https://www.jocelynbenson.com/news"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "MI",
+   "city": "Traverse City",
+   "kind": "event",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Campaigned with Callie Barr, the Democratic nominee for the 1st Congressional District, per her campaign.",
+   "source": "https://www.jocelynbenson.com/news"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MI",
+   "city": "East Lansing",
+   "kind": "tour stop",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Launched her Driving Down Costs statewide bus tour with Gov. Gretchen Whitmer and running mate Winnie Brinks.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-22/benson-kicks-off-statewide-bus-tour-aims-to-reclaim-lansing-trifecta"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MI",
+   "city": "Battle Creek",
+   "kind": "tour stop",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Bus tour stop scheduled for this day, per a WWMT preview of the week's West Michigan events.",
+   "source": "https://wwmt.com/news/local/governor-candidates-working-to-gain-support-in-west-michigan-with-events-this-week-jocelyn-benson-john-james-gretchen-whitmer-wwmt"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MI",
+   "city": "Kalamazoo",
+   "kind": "tour stop",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Bus tour stop scheduled for this day, per a WWMT preview of the week's West Michigan events.",
+   "source": "https://wwmt.com/news/local/governor-candidates-working-to-gain-support-in-west-michigan-with-events-this-week-jocelyn-benson-john-james-gretchen-whitmer-wwmt"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "tour stop",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Bus tour stop scheduled for this day, per a WWMT preview of the week's West Michigan events.",
+   "source": "https://wwmt.com/news/local/governor-candidates-working-to-gain-support-in-west-michigan-with-events-this-week-jocelyn-benson-john-james-gretchen-whitmer-wwmt"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-02",
+   "state": "MI",
+   "city": "Saline Township",
+   "kind": "event",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Spoke outside the planned Saline Township data center site, making local control central to his data center policy.",
+   "source": "https://www.michiganpublic.org/politics-government/2026-10-02/governors-race-hits-saline-township-site-of-massive-data-center-project"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "MI",
+   "city": "Grosse Pointe",
+   "kind": "event",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Campaigned on Mack Avenue on parental rights and an education tax credit, joined by parent Shane Pruitt and athlete Briley Lechner.",
+   "source": "https://www.fox2detroit.com/news/michigan-governor-candidate-john-james-campaigns-grosse-pointe"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "MI",
+   "city": "Paw Paw",
+   "kind": "rally",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Spoke to supporters at Brookside Farms and urged them to plan to vote early or on Election Day.",
+   "source": "https://wwmt.com/news/local/governor-candidates-working-to-gain-support-in-west-michigan-with-events-this-week-jocelyn-benson-john-james-gretchen-whitmer-wwmt"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "MI",
+   "city": "St. Clair Shores",
+   "kind": "event",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Held a community talk at a restaurant on Lake St. Clair with running mate Jay DeBoyer and Macomb Public Works Commissioner Candice Miller.",
+   "source": "https://www.wmuk.org/2026-10-22/james-campaign-talks-environmental-policies-in-macomb-county"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-02",
+   "state": "AZ",
+   "city": "Prescott",
+   "kind": "event",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Launched a canvass for the Copper State Victory coordinated campaign ahead of the start of voting.",
+   "source": "https://katiehobbs.org/katie-hobbs-rallies-supporters-in-prescott/"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "AZ",
+   "city": "Phoenix",
+   "kind": "rally",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Spoke with Attorney General Kris Mayes to Arizona AFL CIO and AFSCME members before they canvassed metro Phoenix.",
+   "source": "https://www.abc15.com/news/local-news/every-vote-matters-kris-mayes-katie-hobbs-rally-union-organizers"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "AZ",
+   "city": "Yuma",
+   "kind": "event",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Rallied volunteers at a Copper State Victory canvass launch for the early vote weekend of action, per her campaign.",
+   "source": "https://katiehobbs.org/hobbs-and-giles-rally-supporters-from-phoenix-to-yuma/"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "AZ",
+   "city": "Somerton",
+   "kind": "tour stop",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Toured Tovar Farms and discussed water security and costs for farmers, per her campaign.",
+   "source": "https://katiehobbs.org/hobbs-and-giles-rally-supporters-from-phoenix-to-yuma/"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "AZ",
+   "city": "Mesa",
+   "kind": "event",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Held a canvass launch at the Mesa Copper State Victory office and sent volunteers out to talk with voters, per her campaign.",
+   "source": "https://katiehobbs.org/katie-hobbs-and-john-giles-rally-supporters-across-the-valley/"
+  },
+  {
+   "person": "Katie Hobbs",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "AZ",
+   "city": "Casa Grande",
+   "kind": "rally",
+   "for": [
+    "Katie Hobbs"
+   ],
+   "race": "AZ Governor",
+   "note": "Rallied supporters at the Landmark Event Center with John Giles, Sen. Mark Kelly, JoAnna Mendoza, Jonathan Nez and Gila River Gov. Stephen Roe Lewis.",
+   "source": "https://www.pinalcentral.com/casa_grande_dispatch/hobbs-others-rally-democratic-supporters-at-cg-event/article_028108ad-3afa-4814-a01d-91fc7472e0fc.html"
+  },
+  {
+   "person": "Andy Biggs",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-14",
+   "state": "AZ",
+   "city": "Bullhead City",
+   "kind": "rally",
+   "for": [
+    "Andy Biggs"
+   ],
+   "race": "AZ Governor",
+   "note": "Spoke before President Trump at a rally at Laughlin Bullhead International Airport.",
+   "source": "https://www.galvnews.com/news_reuters/nation/people-listen-to-arizona-republican-gubernatorial-candidate-andy-biggs-as-he-speaks-before-president-donald/image_03f28878-0468-5aaf-b044-86f55902de0e.html"
+  },
+  {
+   "person": "Andy Biggs",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-16",
+   "state": "AZ",
+   "city": "Tucson",
+   "kind": "event",
+   "for": [
+    "Andy Biggs"
+   ],
+   "race": "AZ Governor",
+   "note": "Met voters about Pima County Republican turnout and his platform on affordability and public safety.",
+   "source": "https://grandcanyontimes.com/biggs-and-kerr-campaign-holds-rallies-and-canvassing-events-across-arizona"
+  },
+  {
+   "person": "Andy Biggs",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "AZ",
+   "city": "Phoenix",
+   "kind": "event",
+   "for": [
+    "Andy Biggs"
+   ],
+   "race": "AZ Governor",
+   "note": "Joined running mate Sine Kerr and Turning Point Action volunteers at a Ballot Chase kickoff at the State Capitol.",
+   "source": "https://grandcanyontimes.com/biggs-and-kerr-campaign-holds-rallies-and-canvassing-events-across-arizona"
+  },
+  {
+   "person": "Andy Biggs",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "AZ",
+   "city": "Buckeye",
+   "kind": "rally",
+   "for": [
+    "Andy Biggs"
+   ],
+   "race": "AZ Governor",
+   "note": "Spoke at a get out the vote rally hosted by Sine Kerr with Alexander Kolodin, Warren Petersen and State Sen. Tim Dunn.",
+   "source": "https://grandcanyontimes.com/biggs-and-kerr-campaign-holds-rallies-and-canvassing-events-across-arizona"
+  },
+  {
+   "person": "Andy Biggs",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "AZ",
+   "city": "Yuma",
+   "kind": "event",
+   "for": [
+    "Andy Biggs"
+   ],
+   "race": "AZ Governor",
+   "note": "Campaigned at Yuma County Republican Party headquarters, pledging that Yuma's water would be protected.",
+   "source": "https://kyma.com/decision-politics/2026/10/22/rep-andy-biggs-rallies-with-yuma-residents/"
+  },
+  {
+   "person": "Cinde Warmington",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "NH",
+   "city": "Hanover",
+   "kind": "event",
+   "for": [
+    "Cinde Warmington"
+   ],
+   "race": "NH Governor",
+   "note": "Took questions on cost of living, energy and education at Dartmouth's Rockefeller Center speaker series.",
+   "source": "https://vnews.com/2026/10/14/warmington-dartmouth-governor-election/"
+  },
+  {
+   "person": "Cinde Warmington",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "NH",
+   "city": "Exeter",
+   "kind": "event",
+   "for": [
+    "Cinde Warmington"
+   ],
+   "race": "NH Governor",
+   "note": "Appeared with California Gov. Gavin Newsom.",
+   "source": "https://northeastindependent.com/2026/10/warmingtons-net-zero-agenda-draws-scrutiny-as-national-democrats-rally-behind-new-hampshire-campaign/"
+  },
+  {
+   "person": "Cinde Warmington",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "NH",
+   "city": "Goffstown",
+   "kind": "debate",
+   "for": [
+    "Cinde Warmington"
+   ],
+   "race": "NH Governor",
+   "note": "Greater Manchester Chamber of Commerce debate at the New Hampshire Institute of Politics at Saint Anselm College.",
+   "source": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/"
+  },
+  {
+   "person": "Cinde Warmington",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "NH",
+   "city": "Manchester",
+   "kind": "debate",
+   "for": [
+    "Cinde Warmington"
+   ],
+   "race": "NH Governor",
+   "note": "Live audience candidate forum at Harpoon at Queen City Center hosted by NHPR and the Granite State News Collaborative.",
+   "source": "https://www.nhpr.org/politics/2026-10-22/newhampshire-governor-republican-democrat-kelly-cinde-election-voting"
+  },
+  {
+   "person": "Kelly Ayotte",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "NH",
+   "city": "Goffstown",
+   "kind": "debate",
+   "for": [
+    "Kelly Ayotte"
+   ],
+   "race": "NH Governor",
+   "note": "Greater Manchester Chamber of Commerce debate at the New Hampshire Institute of Politics at Saint Anselm College.",
+   "source": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/"
+  },
+  {
+   "person": "Kelly Ayotte",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "NH",
+   "city": "Manchester",
+   "kind": "debate",
+   "for": [
+    "Kelly Ayotte"
+   ],
+   "race": "NH Governor",
+   "note": "Live audience candidate forum at Harpoon at Queen City Center hosted by NHPR and the Granite State News Collaborative.",
+   "source": "https://www.nhpr.org/politics/2026-10-22/newhampshire-governor-republican-democrat-kelly-cinde-election-voting"
+  },
+  {
+   "person": "Helena Foulkes",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "debate",
+   "for": [
+    "Helena Foulkes"
+   ],
+   "race": "RI Governor",
+   "note": "First televised debate, hosted by NBC 10 WJAR and moderated by Gene Valicenti, with Republican Aaron Guckian also on stage.",
+   "source": "https://turnto10.com/politics/foulkes-guckian-block-spar-over-housing-morales-abortion-gubernatorial-debate-october-7-2026"
+  },
+  {
+   "person": "Helena Foulkes",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "debate",
+   "for": [
+    "Helena Foulkes"
+   ],
+   "race": "RI Governor",
+   "note": "Final televised debate at Rhode Island College hosted by WPRI, with Republican Aaron Guckian also on stage.",
+   "source": "https://www.oceanstatemedia.org/politics/2026-10-20/block-foulkes-and-guckian-trade-jabs-in-final-debate"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "debate",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "First televised debate, hosted by NBC 10 WJAR and moderated by Gene Valicenti, with Republican Aaron Guckian also on stage.",
+   "source": "https://turnto10.com/politics/foulkes-guckian-block-spar-over-housing-morales-abortion-gubernatorial-debate-october-7-2026"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-20",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "debate",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Final televised debate at Rhode Island College hosted by WPRI, with Republican Aaron Guckian also on stage.",
+   "source": "https://www.oceanstatemedia.org/politics/2026-10-20/block-foulkes-and-guckian-trade-jabs-in-final-debate"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-02",
+   "state": "RI",
+   "city": "Cranston",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Forum on Aging, Disability and Behavioral Health at Rhodes on the Pawtuxet. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "RI",
+   "city": "Lincoln",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Eggs and Issues candidate forum at Kirkbrae Country Club. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "RI",
+   "city": "Newport",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Conversation with Ken at Provence sur Mer. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-11",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Marched in the Federal Hill Columbus Day Parade on Atwells Avenue. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "RI",
+   "city": "Woonsocket",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Autumnfest Parade at WWII Veterans Memorial Park. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "RI",
+   "city": "Portsmouth",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Conversation with Ken at The Valley Inn. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-18",
+   "state": "RI",
+   "city": "East Providence",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Ice Cream with Ken at Sacred Cow Scoop Shop. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Meet the Candidates at John Hope Settlement House hosted by the Providence Alumnae Chapter of Delta Sigma Theta. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "RI",
+   "city": "Warwick",
+   "kind": "event",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Conversation with Ken at Brewed Awakenings. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "RI",
+   "city": "North Smithfield",
+   "kind": "announced",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Artisan Fair at the Beef Barn. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "RI",
+   "city": "Providence",
+   "kind": "announced",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Latin Expo 2026 at Farm Fresh RI. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "RI",
+   "city": "Warren",
+   "kind": "announced",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Warren Walkabout street festival. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "RI",
+   "city": "Narragansett",
+   "kind": "announced",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "Conversation with Ken at George's of Galilee. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Ken Block",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "RI",
+   "city": "Warren",
+   "kind": "announced",
+   "for": [
+    "Ken Block"
+   ],
+   "race": "RI Governor",
+   "note": "East Bay Chamber of Commerce gubernatorial forum; the campaign page lists it as Mon Oct 28 although that date is a Wednesday. Listed on his campaign appearances page.",
+   "source": "https://blockforgovernor.com/event.php"
+  },
+  {
+   "person": "Hannah Pingree",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-01",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "debate",
+   "for": [
+    "Hannah Pingree"
+   ],
+   "race": "ME Governor",
+   "note": "First gubernatorial debate, hosted by News Center Maine and the Maine State Chamber of Commerce, with independent Rick Bennett.",
+   "source": "https://www.bangordailynews.com/2026/10/01/politics/elections/live-updates-maine-gubernatorial-debate/"
+  },
+  {
+   "person": "Hannah Pingree",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "debate",
+   "for": [
+    "Hannah Pingree"
+   ],
+   "race": "ME Governor",
+   "note": "Second debate at the Gracie Theatre at Husson University, hosted by the Portland Press Herald, Maine Public and NEWSCENTER Maine.",
+   "source": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  },
+  {
+   "person": "Bobby Charles",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-01",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "debate",
+   "for": [
+    "Bobby Charles"
+   ],
+   "race": "ME Governor",
+   "note": "First gubernatorial debate, hosted by News Center Maine and the Maine State Chamber of Commerce, with independent Rick Bennett.",
+   "source": "https://www.bangordailynews.com/2026/10/01/politics/elections/live-updates-maine-gubernatorial-debate/"
+  },
+  {
+   "person": "Bobby Charles",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-08",
+   "state": "ME",
+   "city": "Bangor",
+   "kind": "debate",
+   "for": [
+    "Bobby Charles"
+   ],
+   "race": "ME Governor",
+   "note": "Second debate at the Gracie Theatre at Husson University, hosted by the Portland Press Herald, Maine Public and NEWSCENTER Maine.",
+   "source": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  },
+  {
+   "person": "Hannah Pingree",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-17",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "rally",
+   "for": [
+    "Hannah Pingree"
+   ],
+   "race": "ME Governor",
+   "note": "Greeted diners at Becky's Diner and spoke at an Indivisible Greater Portland rally with Senate candidate Troy Jackson and Sen. Elizabeth Warren.",
+   "source": "https://hannahforgovernor.com/hannah-pingree-attends-long-list-of-events-on-saturday-in-last-push-before-election-day/"
+  },
+  {
+   "person": "Bobby Charles",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-03",
+   "state": "ME",
+   "city": "Penobscot",
+   "kind": "town hall",
+   "for": [
+    "Bobby Charles"
+   ],
+   "race": "ME Governor",
+   "note": "Spoke to about 30 people at the Penobscot Community School gym with local Republican candidates and State Rep. Russ White.",
+   "source": "https://www.risingtide.media/news1/new-bobby-charles-town-hall-penobscot-100626"
+  },
+  {
+   "person": "Bobby Charles",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-12",
+   "state": "ME",
+   "city": "Wells",
+   "kind": "town hall",
+   "for": [
+    "Bobby Charles"
+   ],
+   "race": "ME Governor",
+   "note": "Held a town hall with former New Hampshire Gov. Chris Sununu and pledged day one executive action.",
+   "source": "https://www.themainewire.com/2026/10/with-three-weeks-until-election-bobby-charles-makes-case-for-change-pledges-day-one-action-at-wells-town-hall/"
+  },
+  {
+   "person": "Bobby Charles",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "ME",
+   "city": "Auburn",
+   "kind": "announced",
+   "for": [
+    "Bobby Charles"
+   ],
+   "race": "ME Governor",
+   "note": "Open one on one conversations with voters, including critics, at Androscoggin County Republican headquarters in the Auburn Mall.",
+   "source": "https://www.pressherald.com/2026/10/22/bobby-charles-is-set-to-debate-critics-next-week-you-can-be-one-of-them/"
+  },
+  {
+   "person": "Tina Kotek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-01",
+   "state": "OR",
+   "city": "Eugene",
+   "kind": "debate",
+   "for": [
+    "Tina Kotek"
+   ],
+   "race": "OR Governor",
+   "note": "First gubernatorial debate, held on the University of Oregon campus.",
+   "source": "https://www.centraloregondaily.com/news/elections/kotek-drazan-oregon-governor-debate-eugene-takeaways/article_d623eea4-6d45-53f7-8346-ffb0af1b60b2.html"
+  },
+  {
+   "person": "Tina Kotek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "OR",
+   "city": "Medford",
+   "kind": "debate",
+   "for": [
+    "Tina Kotek"
+   ],
+   "race": "OR Governor",
+   "note": "Live televised debate at KOBI TV NBC5 studios in partnership with Southern Oregon University.",
+   "source": "https://ktvz.com/news/election/2026/10/07/decision-2026-candidates-for-governor-to-debate-on-fox-and-ktvz-tonight-at-7-pm/"
+  },
+  {
+   "person": "Tina Kotek",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "OR",
+   "city": "Bend",
+   "kind": "debate",
+   "for": [
+    "Tina Kotek"
+   ],
+   "race": "OR Governor",
+   "note": "Final debate hosted by KTVZ and The Source, focused on development.",
+   "source": "https://oregoncapitalchronicle.com/2026/10/13/kotek-drazan-focus-on-development-at-final-debate-in-bend-for-oregon-governors-race/"
+  },
+  {
+   "person": "Christine Drazan",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-01",
+   "state": "OR",
+   "city": "Eugene",
+   "kind": "debate",
+   "for": [
+    "Christine Drazan"
+   ],
+   "race": "OR Governor",
+   "note": "First gubernatorial debate, held on the University of Oregon campus.",
+   "source": "https://www.centraloregondaily.com/news/elections/kotek-drazan-oregon-governor-debate-eugene-takeaways/article_d623eea4-6d45-53f7-8346-ffb0af1b60b2.html"
+  },
+  {
+   "person": "Christine Drazan",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-07",
+   "state": "OR",
+   "city": "Medford",
+   "kind": "debate",
+   "for": [
+    "Christine Drazan"
+   ],
+   "race": "OR Governor",
+   "note": "Live televised debate at KOBI TV NBC5 studios in partnership with Southern Oregon University.",
+   "source": "https://ktvz.com/news/election/2026/10/07/decision-2026-candidates-for-governor-to-debate-on-fox-and-ktvz-tonight-at-7-pm/"
+  },
+  {
+   "person": "Christine Drazan",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-13",
+   "state": "OR",
+   "city": "Bend",
+   "kind": "debate",
+   "for": [
+    "Christine Drazan"
+   ],
+   "race": "OR Governor",
+   "note": "Final debate hosted by KTVZ and The Source, focused on development.",
+   "source": "https://oregoncapitalchronicle.com/2026/10/13/kotek-drazan-focus-on-development-at-final-debate-in-bend-for-oregon-governors-race/"
+  },
+  {
+   "person": "Troy Jackson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-22",
+   "state": "ME",
+   "city": "Portland",
+   "kind": "town hall",
+   "for": [
+    "Troy Jackson"
+   ],
+   "race": "ME Senate",
+   "note": "Scheduled Thursday town hall with Rep. Alexandria Ocasio-Cortez, reported in advance by the AP on Oct. 21.",
+   "source": "https://www.actionnewsjax.com/news/politics/maine-sen-collins/OUHLOP2WRQYYPHOQF5HDVLVD44/"
+  },
+  {
+   "person": "Susan Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "ME",
+   "city": "Lewiston",
+   "kind": "event",
+   "for": [
+    "Susan Collins"
+   ],
+   "race": "ME Senate",
+   "note": "Collins had breakfast at Simones' Hot Dog Stand with former Sen. Joe Manchin and spoke to reporters before a few dozen supporters.",
+   "source": "https://www.actionnewsjax.com/news/politics/maine-sen-collins/OUHLOP2WRQYYPHOQF5HDVLVD44/"
+  },
+  {
+   "person": "Susan Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-21",
+   "state": "ME",
+   "city": "Norway",
+   "kind": "event",
+   "for": [
+    "Susan Collins"
+   ],
+   "race": "ME Senate",
+   "note": "Collins and former Sen. Joe Manchin visited a New Balance shoe facility.",
+   "source": "https://www.actionnewsjax.com/news/politics/maine-sen-collins/OUHLOP2WRQYYPHOQF5HDVLVD44/"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "TX",
+   "city": "San Antonio",
+   "kind": "announced",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Planned finale of the Come and Take It bus tour at the Alamo on the eve of Election Day.",
+   "source": "https://www.kbtx.com/2026/10/15/ken-paxton-close-senate-campaign-with-come-take-it-bus-tour-ending-alamo/?outputType=amp"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-15",
+   "state": "TX",
+   "city": "Huntsville",
+   "kind": "tour stop",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Afternoon stop at Honor Cafe on a statewide trip ahead of early voting, focused on affordability and law enforcement.",
+   "source": "https://www.kbtx.com/2026/10/16/greg-abbott-gina-hinajosa-make-stops-texas-ahead-early-voting/"
   }
  ],
  "unconfirmed": [

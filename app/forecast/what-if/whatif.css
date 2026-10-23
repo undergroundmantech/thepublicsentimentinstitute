@@ -101,3 +101,5 @@
 @media (max-width: 1100px) { .wif-head { grid-template-columns: 1fr; } .wif-presets { justify-content: flex-start; } .wif-stage { grid-template-columns: 1fr; } .wif-side { position: static; } }
 @media (max-width: 760px) { .wif-chs { grid-template-columns: 1fr; } .wif-ch b { font-size: 28px; } .wif-tip { display: none; } .wif-hint { display: none; } .wif-map text { font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { .wif-pin { animation: none; } .wif-map path, .wif-ch .bar s { transition: none; } }
+.wif-by{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--font-m);color:var(--ink2)}
+.wif-by input{width:64px;font:800 13px var(--font-m);color:var(--ink);background:rgba(var(--line-rgb),.05);border:1px solid var(--line2);border-radius:8px;padding:4px 6px}

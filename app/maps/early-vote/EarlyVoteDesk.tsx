@@ -15,6 +15,7 @@ import {
 import Electorate, { EarlyDemographics, ELECTORATE_CSS, useElectorate, type ActualUnit, type P3 } from "./Electorate";
 import AdjustedForecast, { ADJ_CSS } from "./Adjusted";
 import PaceCompare, { PACE_CSS } from "./Pace";
+import { ev } from "@/app/lib/ev";
 import { KpiStrip, TopCards, SidePanels, DASH_CSS, centroidOf, paceFill, leadFill, getForecastRaces, type DashView, type FcRace } from "./Dashboard";
 
 const MONO = "var(--font-m)";
@@ -984,7 +985,7 @@ export default function EarlyVoteDesk({ initialScope = "US", lede, after }: { in
               <div className="db-tabs">
                 <div className="ev-seg" role="tablist" aria-label="Map view">
                   {MAP_TABS.map((t) => (
-                    <button key={t.k} role="tab" aria-selected={view === t.k} className={view === t.k ? "on" : ""} onClick={() => setView(t.k)}>{t.label}</button>
+                    <button key={t.k} role="tab" aria-selected={view === t.k} className={view === t.k ? "on" : ""} onClick={() => { setView(t.k); ev("Early vote view", { view: t.k }); }}>{t.label}</button>
                   ))}
                 </div>
               </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Hemicycle, { probFill, type HemiSeat } from "@/app/components/opp/Hemicycle";
 import type { SwingData, SwingRace } from "./data";
+import { ev, evSettled } from "@/app/lib/ev";
 import "./swing.css";
 
 type Office = "s" | "g" | "h";
@@ -69,6 +70,27 @@ const DIM_GROUPS: [string, string[]][] = [
   ["How they lean", ["party", "vote24", "approval"]],
   ["Who they are", ["race", "age", "edu", "raceedu", "gender", "income"]],
 ];
+
+// ---------- typed numbers ----------
+/** "D +12", "R 5", "-12" or "12" to an R minus D margin; plain numbers read as Republican positive */
+function parseM(s: string): number | null {
+  const t = s.trim().toUpperCase().replace(/\s+/g, "");
+  if (t === "EVEN") return 0;
+  const m = /^([DRI])?\+?(-?\d+(?:\.\d+)?)$/.exec(t); if (!m) return null;
+  const v = Number(m[2]); if (!Number.isFinite(v)) return null;
+  return m[1] === "R" ? Math.abs(v) : m[1] ? -Math.abs(v) : v;
+}
+function TypeNum({ id, label, value, show, parse, onCommit, hint }: { id: string; label: string; value: number; show: (v: number) => string; parse: (s: string) => number | null; onCommit: (v: number) => void; hint?: string }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  const commit = () => { if (draft == null) return; const v = parse(draft); setDraft(null); if (v != null && draft.trim() !== show(value)) { onCommit(v); ev("Exact number typed", { field: label, race: "national" }); } };
+  return (
+    <label className="sw-num" htmlFor={id}><span>{label}</span>
+      <input id={id} inputMode="decimal" value={draft ?? show(value)} onFocus={(e) => { const el = e.currentTarget; setDraft((d) => d ?? show(value)); requestAnimationFrame(() => { if (document.activeElement === el) el.select(); }); }} onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit} onKeyDown={(e) => { if (e.key === "Enter") { commit(); (e.target as HTMLInputElement).blur(); } if (e.key === "Escape") { setDraft(null); (e.target as HTMLInputElement).blur(); } }} />
+      {hint ? <small>{hint}</small> : null}
+    </label>
+  );
+}
 
 // ---------- scenario helpers ----------
 function emptyShifts(data: SwingData): Shifts {
@@ -136,8 +158,8 @@ function decode(h: string, data: SwingData): Scenario | null {
     const shifts = emptyShifts(data);
     for (const [k, [m, t]] of Object.entries(raw.s ?? {}) as [string, [number[], number[]]][]) {
       if (!shifts[k]) continue;
-      shifts[k].m = shifts[k].m.map((_, i) => clamp(Number(m[i]) || 0, -25, 25));
-      shifts[k].t = shifts[k].t.map((_, i) => clamp(Number(t[i]) || 0, -50, 50));
+      shifts[k].m = shifts[k].m.map((_, i) => clamp(Number(m[i]) || 0, -100, 100));
+      shifts[k].t = shifts[k].t.map((_, i) => clamp(Number(t[i]) || 0, -95, 400));
     }
     return { overall: clamp(Number(raw.o) || 0, -15, 15), shifts };
   } catch { return null; }
@@ -180,6 +202,7 @@ function Swing({ data }: { data: SwingData }) {
   const keys = useMemo(() => data.dims.map((d) => d.key), [data]);
   const [sc, setSc] = useState<Scenario>(() => ({ overall: 0, shifts: emptyShifts(data) }));
   const [dim, setDim] = useState(data.dims.some((d) => d.key === "voteprop") ? "voteprop" : data.dims[0].key);
+  const [exact, setExact] = useState(false);
   const [office, setOffice] = useState<Office>("s");
   const [focus, setFocus] = useState<string>("");
   const [mapO, setMapO] = useState<Office>("s");
@@ -232,18 +255,18 @@ function Swing({ data }: { data: SwingData }) {
   const movers = useMemo(() => moved.filter((m) => Math.abs(m.pD - m.r.pD) >= 0.005).sort((a, b) => Math.abs(b.pD - b.r.pD) - Math.abs(a.pD - a.r.pD)).slice(0, 14), [moved]);
   const avgD = useMemo(() => { const c = moved.filter((m) => m.r.x && m.r.o !== "h"); return c.reduce((a, m) => a + m.d, 0) / (c.length || 1); }, [moved]);
 
-  const setGroup = (k: string, gi: number, field: "m" | "t", v: number) => setScM((s) => ({ ...s, shifts: { ...s.shifts, [k]: { ...s.shifts[k], [field]: s.shifts[k][field].map((x, i) => (i === gi ? v : x)) } } }));
+  const setGroup = (k: string, gi: number, field: "m" | "t", v: number) => (evSettled(`g${k}${gi}${field}`, "Swingometer edit", { what: `${k} group ${gi + 1} ${field === "m" ? "margin" : "turnout"}`, race: "national" }), setScM((s) => ({ ...s, shifts: { ...s.shifts, [k]: { ...s.shifts[k], [field]: s.shifts[k][field].map((x, i) => (i === gi ? v : x)) } } })));
   const resetDim = (k: string) => setScM((s) => ({ ...s, shifts: { ...s.shifts, [k]: { m: s.shifts[k].m.map(() => 0), t: s.shifts[k].t.map(() => 0) } } }));
-  const resetAll = () => { setSc({ overall: 0, shifts: emptyShifts(data) }); setPreset(""); };
+  const resetAll = () => { setSc({ overall: 0, shifts: emptyShifts(data) }); setPreset(""); ev("Scenario reset", { race: "national", tool: "groups" }); };
   const setScM: typeof setSc = (v) => { setPreset(""); setSc(v); };
   const applyPreset = (p: Preset) => {
     const sh = emptyShifts(data);
     for (const [k, gi, f, v] of p.moves ?? []) if (sh[k]) sh[k][f][gi] = v;
-    setSc({ overall: p.overall ?? 0, shifts: sh }); setPreset(p.key); setToast(p.note);
+    setSc({ overall: p.overall ?? 0, shifts: sh }); setPreset(p.key); setToast(p.note); ev("Scenario preset", { preset: p.label, race: "national" });
     const first = p.moves?.[0]?.[0]; if (first) setDim(first);
   };
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(""), 3200); return () => clearTimeout(t); }, [toast]);
-  const copy = async () => { try { await navigator.clipboard.writeText(window.location.href); setToast("Link copied. It opens on this scenario."); } catch { setToast("Copy the address bar to share this scenario."); } };
+  const copy = async () => { ev("Scenario shared", { race: "national", tool: "groups" }); try { await navigator.clipboard.writeText(window.location.href); setToast("Link copied. It opens on this scenario."); } catch { setToast("Copy the address bar to share this scenario."); } };
 
   const di = keys.indexOf(dim);
   const dimDef = data.dims[di];
@@ -286,7 +309,7 @@ function Swing({ data }: { data: SwingData }) {
               <label htmlFor="sw-overall">Every voter</label>
               <output className={`mono ${sc.overall > 0 ? "d" : sc.overall < 0 ? "r" : ""}`}>{shiftLabel(sc.overall)}</output>
               <input id="sw-overall" type="range" className="sw-range m" min={-15} max={15} step={0.5} value={sc.overall}
-                aria-valuetext={shiftLabel(sc.overall)} onChange={(e) => setScM((s) => ({ ...s, overall: Number(e.target.value) }))} />
+                aria-valuetext={shiftLabel(sc.overall)} onChange={(e) => { const v = Number(e.target.value); evSettled("overall", "Swingometer edit", { what: "every voter", race: "national" }); setScM((s) => ({ ...s, overall: v })); }} />
               <div className="sw-scale"><span>Republican</span><span>Democratic</span></div>
             </div>
 
@@ -305,7 +328,38 @@ function Swing({ data }: { data: SwingData }) {
               ))}
             </div>
 
-            <div className="sw-groups">
+            <div className="sw-mode" role="group" aria-label="How to change the groups">
+              <button type="button" className={!exact ? "on" : undefined} aria-pressed={!exact} onClick={() => { setExact(false); ev("Exact entry mode", { on: false, race: "national" }); }}>Shift with sliders</button>
+              <button type="button" className={exact ? "on" : undefined} aria-pressed={exact} onClick={() => { setExact(true); ev("Exact entry mode", { on: true, race: "national" }); }}>Type exact numbers</button>
+            </div>
+            {exact ? (() => {
+              // the group's national share and margin with the scenario's moves, and the moves that land typed numbers
+              const base = data.nat[di], sh = sc.shifts[dim];
+              const k = base.map((_, gi) => 1 + (sh.t[gi] || 0) / 100);
+              const W = base.reduce((a, [s0], gi) => a + s0 * k[gi], 0) || 1;
+              const cur = base.map(([s0, mg], gi) => ({ share: (100 * s0 * k[gi]) / W, mR: -(mg + (sh.m[gi] || 0)), share0: s0, mR0: -mg }));
+              const setShare = (gi: number, v: number) => {
+                const tg = clamp(v / 100, 0.001, 0.98), others = base.reduce((a, [s0], j) => (j === gi ? a : a + s0 * k[j]), 0);
+                const kk = (tg * others) / ((1 - tg) * Math.max(1e-6, base[gi][0]));
+                setGroup(dim, gi, "t", clamp(Math.round((kk - 1) * 1000) / 10, -95, 400));
+              };
+              const setMargin = (gi: number, mR: number) => setGroup(dim, gi, "m", clamp(Math.round((-mR - base[gi][1]) * 10) / 10, -100, 100));
+              return (
+                <div className="sw-groups sw-exact">
+                  <p className="sw-fine">Type each group&apos;s share of voters nationwide and how it votes, like 35 and D +12, then press Enter. The other groups keep their own turnout, so their shares make up the rest.</p>
+                  {dimDef.groups.map((g, gi) => (
+                    <div key={g} className="sw-g">
+                      <div className="sw-g-h"><b>{g}</b></div>
+                      <div className="sw-nums">
+                        <TypeNum id={`swx-${dim}-${gi}-s`} label="Share of voters" value={cur[gi].share} show={(v) => `${v.toFixed(1)}%`} parse={(t) => { const v = Number(t.replace(/[%,\s]/g, "")); return Number.isFinite(v) ? v : null; }} hint={`Forecast ${cur[gi].share0.toFixed(1)}%`} onCommit={(v) => setShare(gi, v)} />
+                        <TypeNum id={`swx-${dim}-${gi}-m`} label="Margin" value={cur[gi].mR} show={(v) => fm(v)} parse={parseM} hint={`Forecast ${fm(cur[gi].mR0)}`} onCommit={(v) => setMargin(gi, v)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })() : null}
+            <div className="sw-groups" hidden={exact}>
               {dimDef.groups.map((g, gi) => {
                 const [share, mg] = data.nat[di][gi];
                 const sm = sc.shifts[dim].m[gi], st = sc.shifts[dim].t[gi];

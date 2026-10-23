@@ -12,7 +12,9 @@ import { Num, StateBar, Tug } from "./bits";
 import {
   EMPTY, clamp, compute, decodeScen, editZero, encodeScen, fmM, fmShift, groupZero, lastName, memberships, n0, pct, scenZero, short,
   type CountyOut, type Edit, type Index, type IndexRace, type RaceFile, type Scen, similarity, LINK_MAX, type Sim,
+  exactEdit, groupState, shareToTurnout, marginToShift, parseMargin,
 } from "./engine";
+import { ev, evSettled } from "@/app/lib/ev";
 import "./scenarios.css";
 
 export type Tool = "counties" | "groups";
@@ -72,7 +74,7 @@ export default function StateLab({ tool, base, crumbs = false, bootSearch }: { t
   return (
     <section className="sl" aria-label="Within a state scenarios">
       {head}
-      <RacePicker idx={idx} raceId={raceId} all={all} setAll={setAll} onPick={(id) => setRaceId(id)} />
+      <RacePicker idx={idx} raceId={raceId} all={all} setAll={setAll} onPick={(id) => { setRaceId(id); ev("Scenario race", { race: id, tool }); }} />
       {rf && paths && rf.id === raceId ? <Lab key={rf.id} rf={rf} paths={paths} tool={tool} base={base} bootX={boot.race === rf.id ? boot.x : null} />
         : <div className="card sl-load"><span />Loading every county in the race</div>}
     </section>
@@ -178,20 +180,21 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(""), 3000); return () => clearTimeout(t); }, [toast]);
 
   // edits
-  const setC = (id: string, f: (e: Edit) => Edit) => { setPreset(""); setSc((s) => { const e = f(s.c[id] ?? { m: 0, t: 0 }); const c = { ...s.c }; if (editZero(e)) delete c[id]; else c[id] = { m: clamp(e.m, -40, 40), t: clamp(e.t, -60, 60) }; return { ...s, c }; }); };
-  const setR = (k: string, f: (e: Edit) => Edit) => { setPreset(""); setSc((s) => { const e = f(s.r[k] ?? { m: 0, t: 0 }); const r = { ...s.r }; if (editZero(e)) delete r[k]; else r[k] = { m: clamp(e.m, -30, 30), t: clamp(e.t, -50, 50) }; return { ...s, r }; }); };
-  const setG = (k: string, gi: number, field: "m" | "t", v: number) => { setPreset(""); setSc((s) => {
+  const setC = (id: string, f: (e: Edit) => Edit) => { setPreset(""); evSettled(`c${rf.id}`, "Scenario edit", { race: rf.id, what: tool === "counties" ? "county" : "county in groups" }); setSc((s) => { const e = f(s.c[id] ?? { m: 0, t: 0 }); const c = { ...s.c }; if (editZero(e)) delete c[id]; else c[id] = { m: clamp(e.m, -100, 100), t: clamp(e.t, -95, 400) }; return { ...s, c }; }); };
+  const setR = (k: string, f: (e: Edit) => Edit) => { setPreset(""); evSettled(`r${rf.id}${k}`, "Scenario edit", { race: rf.id, what: `area ${k}` }); setSc((s) => { const e = f(s.r[k] ?? { m: 0, t: 0 }); const r = { ...s.r }; if (editZero(e)) delete r[k]; else r[k] = { m: clamp(e.m, -30, 30), t: clamp(e.t, -50, 50) }; return { ...s, r }; }); };
+  const setG = (k: string, gi: number, field: "m" | "t", v: number) => { setPreset(""); evSettled(`g${rf.id}${k}${gi}${field}`, "Scenario edit", { race: rf.id, what: `${k} group ${gi + 1} ${field === "m" ? "margin" : "turnout"}` }); setSc((s) => {
     const d = rf.dims.find((x) => x.k === k)!; const cur = s.g[k] ?? { m: d.g.map(() => 0), t: d.g.map(() => 0) };
     const nx = { ...cur, [field]: cur[field].map((x, i) => (i === gi ? v : x)) }; const g = { ...s.g }; if (groupZero(nx)) delete g[k]; else g[k] = nx; return { ...s, g };
   }); };
-  const resetAll = () => { setSc(EMPTY); setPreset(""); };
+  const resetAll = () => { setSc(EMPTY); setPreset(""); ev("Scenario reset", { race: rf.id, tool }); };
   const applyPreset = (p: Preset) => {
     const g: Scen["g"] = {};
     for (const [k, gi, f, v] of p.moves) { const d = rf.dims.find((x) => x.k === k); if (!d) continue; g[k] ??= { m: d.g.map(() => 0), t: d.g.map(() => 0) }; g[k][f][gi] = v; }
-    setSc({ ...EMPTY, g }); setPreset(p.key); setDim(p.moves[0][0]);
+    setSc({ ...EMPTY, g }); setPreset(p.key); setDim(p.moves[0][0]); ev("Scenario preset", { preset: p.label, race: rf.id });
   };
-  const copy = async () => { try { await navigator.clipboard.writeText(window.location.href); setToast("Link copied. It opens on this scenario."); } catch { setToast("Copy the address bar to share this scenario."); } };
+  const copy = async () => { ev("Scenario shared", { race: rf.id, tool }); try { await navigator.clipboard.writeText(window.location.href); setToast("Link copied. It opens on this scenario."); } catch { setToast("Copy the address bar to share this scenario."); } };
   const pick = (id: string) => {
+    ev("Scenario county opened", { race: rf.id, tool });
     setSel((s) => (s === id && tool === "groups" ? null : id));
     // on a phone the editor sits under the map, so bring it up
     if (typeof window !== "undefined" && window.innerWidth < 1100) {
@@ -285,7 +288,7 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
 
         <aside className="sl-rail" aria-label="Scenario controls">
           {tool === "counties"
-            ? <CountyRail rf={rf} sc={sc} S={S} setL={(v) => setSc((x) => ({ ...x, L: v }))} sel={selRow} setSel={setSel} setC={setC} setR={setR} region={region} setRegion={setRegion} rank={rank} out={out} L={L} one={one} zero={zero} resetAll={resetAll} copy={copy} />
+            ? <CountyRail rf={rf} sc={sc} S={S} mem={mem} setL={(v) => setSc((x) => ({ ...x, L: v }))} sel={selRow} setSel={setSel} setC={setC} setR={setR} region={region} setRegion={setRegion} rank={rank} out={out} L={L} one={one} zero={zero} resetAll={resetAll} copy={copy} />
             : <GroupRail rf={rf} sc={sc} setSc={setSc} dim={dim} setDim={setDim} setG={setG} preset={preset} applyPreset={applyPreset} sel={selRow} setSel={setSel} mem={mem} L={L} zero={zero} resetAll={resetAll} copy={copy} setPreset={setPreset} />}
           <Link className="sl-other" href={otherHref}>{tool === "counties" ? `Move groups of voters in ${rf.state} instead` : `Change single counties in ${rf.state} instead`}</Link>
         </aside>
@@ -327,6 +330,21 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
   );
 }
 
+/** A typed number that commits on Enter or when it loses focus; anything it cannot read snaps back. */
+function NumField({ race, id, label, value, show, parse, onCommit, hint, wide }: { race: string; id: string; label: string; value: number; show: (v: number) => string; parse: (s: string) => number | null; onCommit: (v: number) => void; hint?: string; wide?: boolean }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  const commit = () => { if (draft == null) return; const v = parse(draft); setDraft(null); if (v != null && Number.isFinite(v) && draft.trim() !== show(value)) { onCommit(v); ev("Exact number typed", { field: label, race }); } };
+  return (
+    <label className={`sl-num${wide ? " w" : ""}`} htmlFor={id}>
+      <span>{label}</span>
+      <input id={id} inputMode="decimal" value={draft ?? show(value)} onFocus={(e) => { const el = e.currentTarget; setDraft((d) => d ?? show(value)); requestAnimationFrame(() => { if (document.activeElement === el) el.select(); }); }} onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit} onKeyDown={(e) => { if (e.key === "Enter") { commit(); (e.target as HTMLInputElement).blur(); } if (e.key === "Escape") { setDraft(null); (e.target as HTMLInputElement).blur(); } }} />
+      {hint ? <small>{hint}</small> : null}
+    </label>
+  );
+}
+const parseNum = (s: string) => { const v = Number(s.replace(/[,%\s]/g, "")); return Number.isFinite(v) ? v : null; };
+
 function Slider({ id, label, v, min, max, step, kind, out, onChange }: { id: string; label: string; v: number; min: number; max: number; step: number; kind: "m" | "t"; out: string; onChange: (v: number) => void }) {
   const fill = ((v - min) / (max - min)) * 100;
   return (
@@ -339,8 +357,8 @@ function Slider({ id, label, v, min, max, step, kind, out, onChange }: { id: str
   );
 }
 
-function CountyRail({ rf, sc, S, setL, sel, setSel, setC, setR, region, setRegion, rank, out, L, one, zero, resetAll, copy }: {
-  rf: RaceFile; sc: Scen; S: Sim | null; setL: (v: number) => void; sel: CountyOut | null; setSel: (id: string | null) => void; setC: (id: string, f: (e: Edit) => Edit) => void; setR: (k: string, f: (e: Edit) => Edit) => void;
+function CountyRail({ rf, sc, S, mem, setL, sel, setSel, setC, setR, region, setRegion, rank, out, L, one, zero, resetAll, copy }: {
+  rf: RaceFile; sc: Scen; S: Sim | null; mem: string[][]; setL: (v: number) => void; sel: CountyOut | null; setSel: (id: string | null) => void; setC: (id: string, f: (e: Edit) => Edit) => void; setR: (k: string, f: (e: Edit) => Edit) => void;
   region: string; setRegion: (k: string) => void; rank: Record<string, number>; out: ReturnType<typeof compute>; L: string; one: string; zero: boolean; resetAll: () => void; copy: () => void;
 }) {
   const ce = sel ? sc.c[sel.id] ?? { m: 0, t: 0 } : null;
@@ -376,7 +394,7 @@ function CountyRail({ rf, sc, S, setL, sel, setSel, setC, setR, region, setRegio
           <div className="card-h"><h3>Linked {rf.unit}</h3><span className={`pill ${link > 0 ? "d" : "t"}`} style={{ marginLeft: "auto" }}>{link > 0 ? "On" : "Off"}</span></div>
           <div className="card-b">
             <p className="sl-hint">Change one {one} and the {rf.unit} like it move too, the way states move together in the statewide what if. Likeness comes from each {one}&apos;s forecast margin and 2020 to 2024 shift, party, 2024 vote, Trump approval, turnout propensity, financial strain, education, race, age, density, gas prices and data centers.</p>
-            <Slider id={`sl-link-${rf.id}`} label="How closely they follow" v={Math.round(link * 100)} min={0} max={100} step={5} kind="t" out={link > 0 ? `${Math.round(link * 100)}%` : "Off, only the county you change moves"} onChange={(v) => setL(v / 100)} />
+            <Slider id={`sl-link-${rf.id}`} label="How closely they follow" v={Math.round(link * 100)} min={0} max={100} step={5} kind="t" out={link > 0 ? `${Math.round(link * 100)}%` : "Off, only the county you change moves"} onChange={(v) => { evSettled(`l${rf.id}`, "Linked counties set", { strength: v, race: rf.id }); setL(v / 100); }} />
             {linkedN ? <p className="sl-fine">{linkedN} more {linkedN === 1 ? one : rf.unit} follow your changes by a quarter or more.</p> : null}
           </div>
         </section>
@@ -399,6 +417,17 @@ function CountyRail({ rf, sc, S, setL, sel, setSel, setC, setR, region, setRegio
                 <div><span>Scenario</span><b className={`mono ${sel.M < 0 ? "d" : "rr"}`}><Num v={sel.M} f={(x) => fmM(x, L)} /></b></div>
                 <div><span>Votes</span><b className="mono"><Num v={sel.T} f={short} /></b></div>
               </div>
+              <div className="sl-nums sl-cx">
+                <NumField race={rf.id} id={`sl-cd-${sel.id}`} label={`${rf.ind ? "Independent" : "Democratic"} votes`} value={sel.D} show={n0} parse={parseNum} hint={`Forecast ${n0(sel.D0)}`}
+                  onCommit={(v) => setC(sel.id, () => exactEdit(rf, sc, mem, S, sel.id, Math.max(0, v), sel.R))} />
+                <NumField race={rf.id} id={`sl-cr-${sel.id}`} label="Republican votes" value={sel.R} show={n0} parse={parseNum} hint={`Forecast ${n0(sel.R0)}`}
+                  onCommit={(v) => setC(sel.id, () => exactEdit(rf, sc, mem, S, sel.id, sel.D, Math.max(0, v)))} />
+                <NumField race={rf.id} id={`sl-cmx-${sel.id}`} label="Margin" value={sel.M} show={(v) => fmM(v, L)} parse={(t) => parseMargin(t, L)} hint={`Forecast ${fmM(sel.M0, L)}`}
+                  onCommit={(v) => { const tp = sel.D + sel.R, T = sel.T || 1, mt = clamp(v, -99, 99); const R = clamp((tp + (mt / 100) * T) / 2, 0, tp); setC(sel.id, () => exactEdit(rf, sc, mem, S, sel.id, tp - R, R)); }} />
+                <NumField race={rf.id} id={`sl-ctx-${sel.id}`} label="Total votes" value={sel.T} show={n0} parse={parseNum} hint={`Forecast ${n0(sel.T0)}`}
+                  onCommit={(v) => { const k = Math.max(0.01, v) / Math.max(1, sel.T); setC(sel.id, () => exactEdit(rf, sc, mem, S, sel.id, sel.D * k, sel.R * k)); }} />
+              </div>
+              <p className="sl-fine">Type a number and press Enter, or move the sliders below. Typed numbers land this {one} exactly there, with area and linked moves counted in.</p>
               <Slider id={`sl-cm-${sel.id}`} label="Margin" v={ce.m} min={-30} max={30} step={0.5} kind="m" out={fmShift(ce.m, L)} onChange={(v) => setC(sel.id, (e) => ({ ...e, m: v }))} />
               <Slider id={`sl-ct-${sel.id}`} label="Turnout" v={ce.t} min={-50} max={50} step={1} kind="t" out={ce.t ? `${ce.t > 0 ? "+" : "−"}${Math.abs(ce.t)}%` : "Forecast"} onChange={(v) => setC(sel.id, (e) => ({ ...e, t: v }))} />
               <div className="sl-quick" role="group" aria-label="Quick changes">
@@ -470,6 +499,8 @@ function GroupRail({ rf, sc, setSc, dim, setDim, setG, preset, applyPreset, sel,
   preset: string; applyPreset: (p: Preset) => void; sel: CountyOut | null; setSel: (id: string | null) => void; mem: string[][]; L: string; zero: boolean; resetAll: () => void; copy: () => void; setPreset: (k: string) => void;
 }) {
   const d = rf.dims.find((x) => x.k === dim) ?? rf.dims[0];
+  const [exact, setExact] = useState(false);
+  const gs = useMemo(() => (d ? groupState(rf, sc, d.k) : []), [rf, sc, d]);
   // each group statewide: share of the expected vote and its margin, from the counties
   const state = useMemo(() => {
     const o: Record<string, [number, number][]> = {};
@@ -505,7 +536,31 @@ function GroupRail({ rf, sc, setSc, dim, setDim, setG, preset, applyPreset, sel,
           <div className="sl-dims" role="tablist" aria-label="Breakdown">
             {rf.dims.map((x) => <button key={x.k} type="button" role="tab" aria-selected={d.k === x.k} className={d.k === x.k ? "on" : undefined} onClick={() => setDim(x.k)}>{x.l}{active(x.k) ? <i aria-label="has changes" /> : null}</button>)}
           </div>
-          <div className="sl-groups" key={d.k}>
+          <div className="sl-mode" role="group" aria-label="How to change the groups">
+            <button type="button" className={!exact ? "on" : undefined} aria-pressed={!exact} onClick={() => { setExact(false); ev("Exact entry mode", { on: false, race: rf.id }); }}>Shift with sliders</button>
+            <button type="button" className={exact ? "on" : undefined} aria-pressed={exact} onClick={() => { setExact(true); ev("Exact entry mode", { on: true, race: rf.id }); }}>Type exact numbers</button>
+          </div>
+          {exact ? (
+            <div className="sl-groups sl-exact" key={`x-${d.k}`}>
+              <p className="sl-fine">Type each group&apos;s share of {rf.state} voters and how it votes, like 35 and D +12. The other groups keep their own turnout, so their shares make up the rest.</p>
+              {d.g.map((g, gi) => {
+                const cur = gs[gi]; if (!cur) return null;
+                const live = (sc.g[d.k]?.m[gi] ?? 0) || (sc.g[d.k]?.t[gi] ?? 0);
+                return (
+                  <div key={g} className={`sl-g sl-gx${live ? " live" : ""}`}>
+                    <div className="sl-g-h"><b>{g}</b></div>
+                    <div className="sl-nums">
+                      <NumField race={rf.id} id={`sl-x-${d.k}-${gi}-s`} label="Share of voters" value={cur.share} show={(v) => `${v.toFixed(1)}%`} parse={parseNum}
+                        hint={`Forecast ${cur.share0.toFixed(1)}%`} onCommit={(v) => setG(d.k, gi, "t", shareToTurnout(rf, sc, d.k, gi, v))} />
+                      <NumField race={rf.id} id={`sl-x-${d.k}-${gi}-m`} label="Margin" value={cur.m} show={(v) => fmM(v, L)} parse={(t) => parseMargin(t, L)}
+                        hint={`Forecast ${fmM(cur.m0, L)}`} onCommit={(v) => setG(d.k, gi, "m", marginToShift(rf, sc, d.k, gi, v))} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div className="sl-groups" key={d.k} hidden={exact}>
             {d.g.map((g, gi) => {
               const [share, mg] = state[d.k][gi];
               const sm = sc.g[d.k]?.m[gi] ?? 0, st = sc.g[d.k]?.t[gi] ?? 0;

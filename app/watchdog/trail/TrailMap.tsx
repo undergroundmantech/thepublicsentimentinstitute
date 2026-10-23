@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
 import { Pointy } from "@/app/components/home/Mascot";
+import { ev } from "@/app/lib/ev";
 import type { Trail, Person } from "../data";
 
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]> };
@@ -18,7 +19,7 @@ const tOf = (iso: string) => { const t = Date.parse(iso.slice(0, 10) + "T12:00:0
 // Oct 22 2026: on the national endorsements map each state shows its three most important endorsers and a count of
 // the rest; a click on any state opens its county map with every endorser and every campaign stop there.
 const TIER: [RegExp, number][] = [[/^president$/i, 100], [/former president/i, 92], [/^vice president$/i, 88], [/former vice president/i, 80], [/majority leader|minority leader|speaker|whip/i, 70],
-  [/governor/i, 66], [/senator/i, 62], [/cabinet/i, 60], [/representative|rep\./i, 50], [/surrogate/i, 48], [/celebrity|musician/i, 44], [/podcaster|host|commentator|streamer|influencer/i, 40], [/activist|business/i, 36], [/group/i, 20]];
+  [/governor/i, 66], [/senator/i, 62], [/^candidate$/i, 58], [/cabinet/i, 60], [/representative|rep\./i, 50], [/surrogate/i, 48], [/celebrity|musician/i, 44], [/podcaster|host|commentator|streamer|influencer/i, 40], [/activist|business/i, 36], [/group/i, 20]];
 const tierOf = (role?: string) => TIER.find(([re]) => re.test(role ?? ""))?.[1] ?? 30;
 function bbox(d: string) { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; const re = /(-?\d+\.?\d*)[ ,](-?\d+\.?\d*)/g; let m; while ((m = re.exec(d))) { const x = +m[1], y = +m[2]; if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } return [x0, y0, x1, y1]; }
 
@@ -26,12 +27,17 @@ export default function TrailMap({ data }: { data: Trail }) {
   const [geo, setGeo] = useState<Geo | null>(null);
   const [mode, setMode] = useState<Mode>("trail");
   const [party, setParty] = useState<"all" | "R" | "D">("all");
+  const [kind, setKind] = useState<"all" | "cand" | "sur">("all");
   const [who, setWho] = useState<string | null>(null);
   const [st, setSt] = useState<string | null>(null);
   const [t, setT] = useState<number>(() => Math.min(END, Date.parse("2026-10-22T12:00:00Z")));
   const [playing, setPlaying] = useState(false);
   const [tip, setTip] = useState<{ x: number; y: number; st: string } | null>(null);
   const [zoom, setZoom] = useState<string | null>(null);
+  // one event per change of view, never on first load
+  const evReady = useRef(false);
+  useEffect(() => { if (!evReady.current) { evReady.current = true; return; } ev("Trail filter", { view: `${mode} ${party} ${kind}`, who: who ?? "everyone" }); }, [mode, party, kind, who]);
+  useEffect(() => { if (zoom) ev("Trail state opened", { st: zoom, view: mode }); }, [zoom, mode]);
   const wrap = useRef<HTMLDivElement>(null);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
   useEffect(() => {
@@ -48,7 +54,8 @@ export default function TrailMap({ data }: { data: Trail }) {
     return out;
   }, [geo]);
   const okParty = (p: string) => party === "all" || p === party;
-  const visits = useMemo(() => data.visits.filter((v) => okParty(v.party) && (!who || v.who === who)), [data.visits, party, who]);
+  const okKind = (v: { cand?: boolean }) => kind === "all" || (kind === "cand" ? !!v.cand : !v.cand);
+  const visits = useMemo(() => data.visits.filter((v) => okParty(v.party) && okKind(v) && (!who || v.who === who)), [data.visits, party, who, kind]);
   const shown = visits.filter((v) => tOf(v.date) <= t);
   const att = data.attention.filter((a) => (party === "all" || a.lean === party) && (!who || a.who === who));
   const end = data.endorse.filter((e) => (party === "all" || e.party === party) && (!who || e.by === who));
@@ -114,10 +121,10 @@ export default function TrailMap({ data }: { data: Trail }) {
   }, [who, mode, shown, pt]);
 
   const W = geo?.frame[0] ?? 975, H = geo?.frame[1] ?? 610;
-  const stVisits = st ? data.visits.filter((v) => v.st === st && okParty(v.party)) : [];
+  const stVisits = st ? data.visits.filter((v) => v.st === st && okParty(v.party) && okKind(v)) : [];
   const stAtt = st ? data.attention.filter((a) => a.st === st) : [];
   const stEnd = st ? data.endorse.filter((e) => e.st === st) : [];
-  const upcoming = data.visits.filter((v) => tOf(v.date) > Date.parse("2026-10-22T00:00:00Z") && okParty(v.party)).sort((a, b) => tOf(a.date) - tOf(b.date));
+  const upcoming = data.visits.filter((v) => tOf(v.date) > Date.parse("2026-10-23T00:00:00Z") && okParty(v.party) && okKind(v)).sort((a, b) => tOf(a.date) - tOf(b.date));
   const recent = [...shown].sort((a, b) => tOf(b.date) - tOf(a.date)).slice(0, 8);
   const pct = ((t - START) / (END - START)) * 100;
   const peopleShown = data.people.filter((p) => okParty(p.party) && (mode === "trail" ? p.visits : mode === "attention" ? p.attention : p.endorse));
@@ -131,6 +138,9 @@ export default function TrailMap({ data }: { data: Trail }) {
         <div className="wd-chips" role="group" aria-label="Party">
           {([["all", "Everyone"], ["R", "Republicans"], ["D", "Democrats"]] as const).map(([k, l]) => <button key={k} className={party === k ? "on" : ""} aria-pressed={party === k} onClick={() => setParty(k)}>{l}</button>)}
         </div>
+        {mode === "trail" ? <div className="wd-chips" role="group" aria-label="Whose stops">
+          {([["all", "All stops"], ["cand", "The candidates"], ["sur", "Surrogates"]] as const).map(([k, l]) => <button key={k} className={kind === k ? "on" : ""} aria-pressed={kind === k} onClick={() => setKind(k)}>{l}</button>)}
+        </div> : null}
         {who ? <button className="wd-btn" onClick={() => setWho(null)}>Showing {who} · show everyone</button> : null}
       </div>
 
@@ -171,7 +181,7 @@ export default function TrailMap({ data }: { data: Trail }) {
             </FloatTip>
           ) : null}
           <div className="tr-time">
-            <button className="wd-btn" onClick={() => { if (t >= END) setT(START); setPlaying((p) => !p); }} aria-label={playing ? "Pause" : "Play the campaign from August"}>{playing ? "Pause" : "Play"}</button>
+            <button className="wd-btn" onClick={() => { if (t >= END) setT(START); if (!playing) ev("Trail played", { view: mode }); setPlaying((p) => !p); }} aria-label={playing ? "Pause" : "Play the campaign from August"}>{playing ? "Pause" : "Play"}</button>
             <div className="tr-slider">
               <input id="tr-t" type="range" min={START} max={END} step={DAY} value={t} onChange={(e) => { setPlaying(false); setT(+e.target.value); }} aria-label="Date" />
               <div className="tr-fill" style={{ width: `${pct}%` }} />

@@ -15,6 +15,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
 import type { Graph, GNode, GEdge } from "../data";
+import { ev } from "@/app/lib/ev";
 
 /* ---------------------------------------------------------------- words */
 const usd = (n: number | null | undefined) => (n == null ? "" : n >= 1e9 ? `$${(n / 1e9).toFixed(2)}B` : n >= 1e6 ? `$${(n / 1e6).toFixed(n >= 1e8 ? 0 : 1)}M` : n >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n)}`);
@@ -312,6 +313,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
   /** Put a name in the middle. Leaves the story and keeps a trail so the reader can step back. */
   const go = (id: string) => {
     if (!byId.has(id)) return;
+    { const n = byId.get(id)!; ev("Connections focus", { who: n.name, kind: n.kind }); }
     if (id !== focus) setTrail((t) => [...t.filter((x) => x !== id), focus].slice(-6));
     setFocus(id); setStory(null); setStoryBase(null); setPin(null); setHot(null); setTipAt(null); setOpenG(new Set());
     if (focus2 === id) setFocus2(null);
@@ -319,6 +321,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
   };
   const playStory = (s: Story | undefined) => {
     if (!s) return;
+    ev("Connections story", { story: s.id });
     if (s.focus !== focus) setTrail((t) => [...t.filter((x) => x !== s.focus), focus].slice(-6));
     setFocus(s.focus); setStory(s.id); setStoryBase(s.id); setPin(null); setHot(null); setFocus2(null); setOpenG(new Set());
     setOn(s.only ? new Set<string>([...s.only, "runs", "campaign"]) : ALL_ON);
@@ -555,7 +558,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
         <div className="cx-tools">
           <button type="button" className="wd-btn" onClick={() => zoomBy(1.25)} aria-label="Zoom in">+</button>
           <button type="button" className="wd-btn" onClick={() => zoomBy(1 / 1.25)} aria-label="Zoom out">−</button>
-          <button type="button" className={`wd-btn${big ? " on" : ""}`} aria-pressed={big} onClick={() => { setBig((b) => !b); setTimeout(fit, 60); }}>{big ? "Close full screen" : "Full screen"}</button>
+          <button type="button" className={`wd-btn${big ? " on" : ""}`} aria-pressed={big} onClick={() => { ev("Connections full screen", { on: !big, who: byId.get(focus)?.name ?? null }); setBig((b) => !b); setTimeout(fit, 60); }}>{big ? "Close full screen" : "Full screen"}</button>
           <button type="button" className="wd-btn" onClick={fit}>Fit to screen</button>
           <button type="button" className="wd-btn" onClick={() => { setFocus2(null); setTrail([]); fit(); playStory(stories[0]); }}>Start over</button>
           {!reduce ? <button type="button" className="wd-btn" aria-pressed={!flow} onClick={() => setFlow((x) => !x)}>{flow ? "Pause motion" : "Play motion"}</button> : null}

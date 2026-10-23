@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { evServer } from "@/app/lib/evServer";
 
 const PAYPAL_BASE =
   process.env.PAYPAL_ENV === "live"
@@ -49,9 +50,13 @@ export async function POST(req: Request) {
     const captureData = await captureRes.json();
 
     if (!captureRes.ok) {
+      await evServer("Payment failed", { stage: "capture", code: captureRes.status }, req);
       return NextResponse.json({ error: captureData }, { status: 500 });
     }
 
+    // the amount and status only, never who paid
+    const amt = Number(captureData?.purchase_units?.[0]?.payments?.captures?.[0]?.amount?.value);
+    await evServer("Payment completed", { amount: Number.isFinite(amt) ? amt : null, status: String(captureData?.status ?? "") }, req);
     return NextResponse.json(captureData);
   } catch (e: any) {
     return NextResponse.json({ error: e?.message ?? "Server error" }, { status: 500 });

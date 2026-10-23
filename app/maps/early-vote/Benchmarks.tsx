@@ -4,6 +4,7 @@
 // vote once defections and independents are counted, and where that leaves the race against the forecast, the polls
 // and the 2024 presidential result. The math is in bench.ts. For the nation, a board of every competitive race.
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ev, evSettled } from "@/app/lib/ev";
 import Link from "next/link";
 import { Pointy } from "@/app/components/home/Mascot";
 import type { Pose, Prop } from "@/app/components/home/Mascot";
@@ -198,6 +199,13 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
   const [topic, setTopic] = useState<Topic>("signal");
   const [ref, seen] = useSeen<HTMLDivElement>();
   useEffect(() => { setRi(0); setBeh(base); setTopic("signal"); }, [row.st, base]);
+  // reading a topic, switching races and moving the voting habits, per state
+  const evTopic = useRef(topic);
+  useEffect(() => { if (evTopic.current !== topic) ev("Benchmark topic", { topic, st: row.st }); evTopic.current = topic; }, [topic, row.st]);
+  const evRi = useRef(ri);
+  useEffect(() => { if (evRi.current !== ri) ev("Benchmark race", { race: races[ri]?.label ?? String(ri), st: row.st }); evRi.current = ri; }, [ri, row.st, races]);
+  const evBeh = useRef(beh);
+  useEffect(() => { if (evBeh.current !== beh && beh !== base) evSettled(`beh${row.st}`, "Benchmark habits moved", { st: row.st }); evBeh.current = beh; }, [beh, base, row.st]);
   const race = races[Math.min(ri, races.length - 1)];
   const o = useMemo(() => (row.bench && race ? benchmark(row.bench, race, beh, base, data.xo) : null), [row.bench, race, beh, base, data.xo]);
   if (!row.bench || !race || !o) {

@@ -17,7 +17,7 @@ export type Money = { asOf: string; races: RaceMoney[]; groups: Group[]; flow: {
   tape: { date: string; group: string; against: string; amount: number; what: string; vendor: string }[];
   campaigns: { candidate: string; committee: string; paid: [string, number, string][]; gifts: [string, number][]; outside_for: [string, number][]; outside_for_total: number; outside_against: [string, number][]; outside_against_total: number }[]; notes: string };
 export type Person = { name: string; party: string; role: string; ini: string; visits: number; attention: number; endorse: number; states: string[] };
-export type Trail = { people: Person[]; visits: { who: string; party: string; date: string; st: string; city: string; kind: string; for: string[]; race: string; note: string; src: string }[];
+export type Trail = { people: Person[]; visits: { who: string; party: string; cand?: boolean; date: string; st: string; city: string; kind: string; for: string[]; race: string; note: string; src: string }[];
   attention: { who: string; role: string; lean: string; st: string; race: string; what: string; when: string; src: string }[];
   endorse: { by: string; byFull: string; st: string; race: string; cand: string; party: string; date: string; src: string }[] };
 export type GNode = { id: string; kind: "race" | "candidate" | "group" | "donor" | "vendor" | "person" | "committee"; name: string; side: Side; href?: string; role?: string; what?: string; race?: string; m?: number };

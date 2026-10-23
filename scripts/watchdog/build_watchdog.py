@@ -137,9 +137,9 @@ def person(name, party, role):
     return p
 visits = []
 for v in trail["visits"]:
-    p = person(v["person"], v.get("party", "R"), ROLE.get(v["person"], "surrogate")); p["visits"] += 1
+    p = person(v["person"], v.get("party", "R"), v.get("role") or ROLE.get(v["person"], "surrogate")); p["visits"] += 1
     if v["state"] not in p["states"]: p["states"].append(v["state"])
-    visits.append({"who": v["person"], "party": v.get("party"), "date": v["date"], "st": v["state"], "city": v.get("city", ""), "kind": v.get("kind", "event"), "for": v.get("for", []), "race": v.get("race", ""), "note": v.get("note", ""), "src": v.get("source", "")})
+    visits.append({"who": v["person"], "party": v.get("party"), "cand": v.get("role") == "candidate", "date": v["date"], "st": v["state"], "city": v.get("city", ""), "kind": v.get("kind", "event"), "for": v.get("for", []), "race": v.get("race", ""), "note": v.get("note", ""), "src": v.get("source", "")})
 attention = []
 MEDIA = {m["name"]: m for m in res.get("media_people", [])}
 seen_att = set()

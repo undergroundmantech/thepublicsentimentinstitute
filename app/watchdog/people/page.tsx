@@ -27,7 +27,7 @@ export default function Page() {
         <div className="pf-deep-h"><span className="eye">Researched in full</span><span className="pf-mute">Governor races in Georgia, Michigan, Arizona, Pennsylvania, Ohio and Wisconsin, plus Florida&apos;s Byron Donalds</span></div>
         <div className="pf-cards">
           {deep.map((p) => (
-            <Link key={p.id} href={`/watchdog/people/${p.id}`} className={`pf-card ${p.party.toLowerCase()}`}>
+            <Link key={p.id} href={`/watchdog/people/${p.id}`} className={`pf-card ${p.party.toLowerCase()}`} data-ev="People file opened" data-ev-d={JSON.stringify({ id: p.id, from: "researched cards" })}>
               <span className="k">{p.office} · {p.st}</span><b>{p.name}</b><small>{p.edges} money ties · {p.levers || "no"} researched decisions</small>
             </Link>
           ))}

@@ -22,7 +22,7 @@ export const WD_GROUPS: ToolGroup[] = [
   },
   {
     key: "people", label: "Follow the people", tools: [
-      { key: "trail", href: "/watchdog/trail", label: "Campaign trail", question: "Who is campaigning where?", desc: "Where Trump, Vance, Obama and other national figures have held rallies and events this fall." },
+      { key: "trail", href: "/watchdog/trail", label: "Campaign trail", question: "Who is campaigning where?", desc: "Where the nominees and national figures like Trump, Vance and Obama have held rallies and events this fall." },
       { key: "endorsements", href: "/watchdog/endorsements", label: "Endorsements", question: "Who is backing whom?", desc: "Every notable endorsement in the Senate and governor races, each with its source." },
       { key: "media", href: "/watchdog/media", label: "Media watch", question: "Who is talking about which race?", desc: "Which podcasters, hosts and reporters are putting a race in front of their audience." },
       { key: "people", href: "/watchdog/people", label: "People files", question: "What is on file for my candidate?", desc: "A file on every member of Congress, governor and 2026 nominee: who funds them, the decisions on their desk, and the sources." },

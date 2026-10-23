@@ -174,6 +174,59 @@ export function compute(rf: RaceFile, sc: Scen, mem: string[][], only?: { dim?: 
   return { rows, D, R, O, T, T0: T0s, dM, M: rf.m + dM, pD, net: R - D };
 }
 
+// ---------- exact numbers ----------
+/** The county's own edit that lands it on exactly these Democratic and Republican votes, counting every other change
+ *  already acting on it: area swings and the pull of linked counties. Other candidates' votes scale with turnout. */
+export function exactEdit(rf: RaceFile, sc: Scen, mem: string[][], S: Sim | null | undefined, id: string, Dt: number, Rt: number): Edit {
+  const i = rf.c.findIndex((c) => c[0] === id); if (i < 0) return { m: 0, t: 0 };
+  const [, , D0, R0, O0] = rf.c[i];
+  const TP0 = D0 + R0, T0 = TP0 + O0;
+  if (TP0 <= 0) return { m: 0, t: 0 };
+  let em = 0, et = 1;
+  const ap = (e?: Edit) => { if (!e) return; em += e.m; et *= 1 + e.t / 100; };
+  ap(sc.r.all); for (const k of mem[i]) ap(sc.r[k]);
+  const sp = spill(rf, sc, S); if (sp) { em += sp.m[i]; et *= 1 + sp.t[i] / 100; }
+  const TPt = Math.max(1, Dt + Rt);
+  const f = TPt / TP0, M2 = ((R0 - D0) / TP0) * 100, M2t = ((Rt - Dt) / TPt) * 100;
+  const emAll = (-(M2t - M2) * TP0) / T0;
+  return { m: clamp(Math.round((emAll - em) * 100) / 100, -100, 100), t: clamp(Math.round((f / Math.max(0.05, et) - 1) * 1000) / 10, -95, 400) };
+}
+/** Statewide share of the vote and margin of every group in a breakdown, with the scenario's turnout and margin moves. */
+export function groupState(rf: RaceFile, sc: Scen, dim: string): { share: number; m: number; share0: number; m0: number }[] {
+  const d = rf.dims.find((x) => x.k === dim); if (!d) return [];
+  const sh = sc.g[dim];
+  const acc = d.g.map(() => ({ w0: 0, wm0: 0, w: 0, wm: 0 }));
+  rf.c.forEach((c, i) => {
+    const row = rf.x[dim]?.[i]; if (!row) return; const T = c[2] + c[3] + c[4];
+    d.g.forEach((_, gi) => { const s = (T * row[2 * gi]) / 100, m = row[2 * gi + 1], k = 1 + (sh?.t[gi] || 0) / 100;
+      acc[gi].w0 += s; acc[gi].wm0 += s * m; acc[gi].w += s * k; acc[gi].wm += s * k * clamp(m - (sh?.m[gi] || 0), -100, 100); });
+  });
+  const W0 = acc.reduce((a, x) => a + x.w0, 0) || 1, W = acc.reduce((a, x) => a + x.w, 0) || 1;
+  return acc.map((x) => ({ share0: (100 * x.w0) / W0, m0: x.w0 ? x.wm0 / x.w0 : 0, share: (100 * x.w) / W, m: x.w ? x.wm / x.w : 0 }));
+}
+/** The turnout move that gives one group exactly this share of the state's voters, the other groups as they are. */
+export function shareToTurnout(rf: RaceFile, sc: Scen, dim: string, gi: number, target: number): number {
+  const st = groupState(rf, sc, dim); if (!st.length) return 0;
+  const s0 = st[gi].share0 / 100, others = st.reduce((a, x, j) => (j === gi ? a : a + (x.share0 / 100) * (1 + (sc.g[dim]?.t[j] || 0) / 100)), 0);
+  const tg = clamp(target / 100, 0.001, 0.98);
+  const k = (tg * others) / ((1 - tg) * Math.max(1e-6, s0));
+  return clamp(Math.round((k - 1) * 1000) / 10, -95, 400);
+}
+/** The margin move that gives one group exactly this statewide margin, R minus D points. */
+export function marginToShift(rf: RaceFile, sc: Scen, dim: string, gi: number, target: number): number {
+  const st = groupState(rf, sc, dim); if (!st.length) return 0;
+  const cur = sc.g[dim]?.m[gi] || 0;
+  return clamp(Math.round((cur + (st[gi].m - target)) * 10) / 10, -100, 100);
+}
+/** "D +12", "R 5", "d12", "-12" or "12" to an R minus D margin; plain numbers read as Republican positive. */
+export function parseMargin(s: string, L = "D"): number | null {
+  const t = s.trim().toUpperCase().replace(/\s+/g, "");
+  if (/^EVEN$/.test(t)) return 0;
+  const m = /^([DRI])?\+?(-?\d+(?:\.\d+)?)$/.exec(t); if (!m) return null;
+  const v = Number(m[2]); if (!Number.isFinite(v)) return null;
+  return m[1] === "R" ? Math.abs(v) : m[1] === "D" || m[1] === "I" || m[1] === L ? -Math.abs(v) : v;
+}
+
 // ---------- share links ----------
 const b64 = (s: string) => btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 const unb64 = (s: string) => atob(s.replace(/-/g, "+").replace(/_/g, "/"));
@@ -192,11 +245,11 @@ export function decodeScen(h: string, rf: RaceFile): Scen | null {
     const ids = new Set(rf.c.map((x) => x[0])), regs = new Set(["all", ...rf.regions.map((x) => x.k)]);
     const s: Scen = { c: {}, r: {}, g: {}, o: clamp(Number(raw.o) || 0, -20, 20) };
     if (raw.L != null && Number.isFinite(+raw.L)) s.L = clamp(+raw.L, 0, 1);
-    for (const [k, m, t] of raw.c ?? []) if (ids.has(k)) s.c[k] = { m: clamp(+m || 0, -40, 40), t: clamp(+t || 0, -60, 60) };
+    for (const [k, m, t] of raw.c ?? []) if (ids.has(k)) s.c[k] = { m: clamp(+m || 0, -100, 100), t: clamp(+t || 0, -95, 400) };
     for (const [k, m, t] of raw.r ?? []) if (regs.has(k)) s.r[k] = { m: clamp(+m || 0, -30, 30), t: clamp(+t || 0, -50, 50) };
     for (const [k, m, t] of raw.g ?? []) {
       const d = rf.dims.find((x) => x.k === k); if (!d) continue;
-      s.g[k] = { m: d.g.map((_, i) => clamp(Number(m?.[i]) || 0, -25, 25)), t: d.g.map((_, i) => clamp(Number(t?.[i]) || 0, -50, 50)) };
+      s.g[k] = { m: d.g.map((_, i) => clamp(Number(m?.[i]) || 0, -100, 100)), t: d.g.map((_, i) => clamp(Number(t?.[i]) || 0, -95, 400)) };
     }
     return s;
   } catch { return null; }

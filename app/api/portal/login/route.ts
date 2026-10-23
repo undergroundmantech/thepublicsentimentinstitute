@@ -5,6 +5,7 @@ import {
   issueSession,
   sessionCookie,
 } from "@/app/lib/portalSession";
+import { evServer } from "@/app/lib/evServer";
 
 export const runtime = "nodejs";
 
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
   await sleep(DELAY_MS);
 
   if (!credentialsMatch(user, pass)) {
+    await evServer("Portal sign in", { ok: false }, req);
     // One message for both failure modes: never confirm that a username exists.
     return NextResponse.json({ ok: false, error: "invalid" }, { status: 401 });
   }
@@ -39,6 +41,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
+  await evServer("Portal sign in", { ok: true }, req);
   const res = NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
   res.cookies.set(sessionCookie(token));
   return res;
