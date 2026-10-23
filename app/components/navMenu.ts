@@ -1,7 +1,7 @@
 // The site's one menu: the masthead menus, the phone menu and the footer all read it.
 export type NavLink = { href: string; label: string; note?: string; badge?: string };
 export type NavCol = { h: string; links: NavLink[] };
-export type NavGroup = { key: string; label: string; href: string; live?: boolean; cols: NavCol[]; feature?: { href: string; eyebrow: string; title: string; note: string } };
+export type NavGroup = { key: string; label: string; href: string; /** where clicking the label itself goes, when not href */ go?: string; live?: boolean; cols: NavCol[]; feature?: { href: string; eyebrow: string; title: string; note: string } };
 
 export const MENU: NavGroup[] = [
   { key: "forecast", label: "Forecast", href: "/forecast",
@@ -45,7 +45,7 @@ export const MENU: NavGroup[] = [
         { href: "/on-point-polling/polls", label: "On Point Polling releases" },
       ] },
     ] },
-  { key: "results", label: "Results", href: "/results", live: true,
+  { key: "results", label: "Results", href: "/results", go: "/results/monitor", live: true,
     feature: { href: "/results/monitor", eyebrow: "New", title: "Situation monitor", note: "Every November 3 race on one globe, live from civicAPI against our forecast." },
     cols: [
       { h: "November 3", links: [

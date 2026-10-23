@@ -104,11 +104,11 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
                   {has ? (
                     // the label goes straight to the section's main page; hovering it, or the caret, opens the menu
                     <span className={`mm-t${on ? " on" : ""}${g.live ? " live" : ""}`}>
-                      <Link href={g.href} className="mm-l" aria-current={on ? "page" : undefined} onFocus={() => enter(g.key)}>{g.label}</Link>
+                      <Link href={g.go ?? g.href} className="mm-l" aria-current={on ? "page" : undefined} onFocus={() => enter(g.key)}>{g.label}</Link>
                       <button type="button" className="mm-c" aria-label={`${g.label} menu`} aria-expanded={op} aria-controls={`mm-${g.key}`} onClick={() => setMenu(op ? null : g.key)}><Caret /></button>
                     </span>
                   ) : (
-                    <Link href={g.href} className={on ? "on" : undefined} aria-current={on ? "page" : undefined}>{g.label}</Link>
+                    <Link href={g.go ?? g.href} className={on ? "on" : undefined} aria-current={on ? "page" : undefined}>{g.label}</Link>
                   )}
                   {has && op ? (
                     <div className="mm-panel" id={`mm-${g.key}`} role="region" aria-label={`${g.label} menu`}>
