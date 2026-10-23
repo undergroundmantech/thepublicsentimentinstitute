@@ -72,21 +72,21 @@ export default function CountyCenter() {
   const dcBy = useMemo(() => { const m: Record<string, DC[]> = {}; for (const p of dc?.projects ?? []) if (p.fips) (m[p.fips.padStart(5, "0")] ??= []).push(p); return m; }, [dc]);
   const centers = useMemo(() => { const m: Record<string, [number, number]> = {}; for (const [f, , d] of shapes ?? []) { if (!dcBy[f]) continue; const b = bbox(d); m[f] = [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2]; } return m; }, [shapes, dcBy]);
   const fill = (f: string) => {
-    const c = data?.[f]; if (!c) return "rgba(255,255,255,.04)";
-    if (layer === "r24") return c.r24 == null ? "rgba(255,255,255,.06)" : marginColor(c.r24);
-    if (layer === "shift") { if (c.r24 == null || c.r20 == null) return "rgba(255,255,255,.06)"; const s = c.r24 - c.r20; return marginColor(s * 4); }
-    if (layer === "fc" || layer === "gov" || layer === "house") { const m = fcOf(c, layer === "fc" ? "sen" : layer); return m == null ? "rgba(255,255,255,.05)" : marginColor(m); }
-    if (layer === "turn") { const t = turnOf(c); return t == null ? "rgba(255,255,255,.05)" : seq((t - 35) / 45, [47, 191, 155]); }
+    const c = data?.[f]; if (!c) return "rgba(var(--wd-e),.04)";
+    if (layer === "r24") return c.r24 == null ? "rgba(var(--wd-e),.06)" : marginColor(c.r24);
+    if (layer === "shift") { if (c.r24 == null || c.r20 == null) return "rgba(var(--wd-e),.06)"; const s = c.r24 - c.r20; return marginColor(s * 4); }
+    if (layer === "fc" || layer === "gov" || layer === "house") { const m = fcOf(c, layer === "fc" ? "sen" : layer); return m == null ? "rgba(var(--wd-e),.05)" : marginColor(m); }
+    if (layer === "turn") { const t = turnOf(c); return t == null ? "rgba(var(--wd-e),.05)" : seq((t - 35) / 45, [47, 191, 155]); }
     const pf = prof?.c[f];
-    if (layer === "ev") return pf?.to == null ? "rgba(255,255,255,.05)" : seq((pf.to - 25) / 45, [47, 191, 155]);
-    if (layer === "hiprop") return pf?.prop ? seq(pf.prop[0][0] / 55, [143, 176, 255]) : "rgba(255,255,255,.05)";
-    if (layer === "lotrump") { const v = loTrump(pf); return v == null ? "rgba(255,255,255,.05)" : seq(v / 30, [255, 59, 92]); }
-    if (layer === "loharris") { const v = loHarris(pf); return v == null ? "rgba(255,255,255,.05)" : seq(v / 30, [61, 123, 255]); }
-    if (layer === "appr") return pf?.appr ? marginColor(pf.appr[3]) : "rgba(255,255,255,.05)";
-    if (layer === "gas") return pf?.gas == null ? "rgba(255,255,255,.05)" : seq((pf.gas - 2.9) / 1.6, [231, 179, 65]);
-    if (layer === "stops") { const n = stops[f]?.length ?? 0; return n ? seq(0.35 + Math.min(1, n / 6) * 0.65, [255, 217, 138]) : "rgba(255,255,255,.06)"; }
-    if (layer === "dc") return dcBy[f] ? "rgba(231,179,65,.75)" : c.r24 == null ? "rgba(255,255,255,.05)" : "rgba(255,255,255,.07)";
-    const v = c.pop?.[layer]; return v == null ? "rgba(255,255,255,.05)" : seq(v / (layer === "wnh" ? 100 : 60), layer === "his" ? [255, 154, 92] : layer === "bnh" ? [183, 140, 255] : [143, 176, 255]);
+    if (layer === "ev") return pf?.to == null ? "rgba(var(--wd-e),.05)" : seq((pf.to - 25) / 45, [47, 191, 155]);
+    if (layer === "hiprop") return pf?.prop ? seq(pf.prop[0][0] / 55, [143, 176, 255]) : "rgba(var(--wd-e),.05)";
+    if (layer === "lotrump") { const v = loTrump(pf); return v == null ? "rgba(var(--wd-e),.05)" : seq(v / 30, [255, 59, 92]); }
+    if (layer === "loharris") { const v = loHarris(pf); return v == null ? "rgba(var(--wd-e),.05)" : seq(v / 30, [61, 123, 255]); }
+    if (layer === "appr") return pf?.appr ? marginColor(pf.appr[3]) : "rgba(var(--wd-e),.05)";
+    if (layer === "gas") return pf?.gas == null ? "rgba(var(--wd-e),.05)" : seq((pf.gas - 2.9) / 1.6, [231, 179, 65]);
+    if (layer === "stops") { const n = stops[f]?.length ?? 0; return n ? seq(0.35 + Math.min(1, n / 6) * 0.65, [255, 217, 138]) : "rgba(var(--wd-e),.06)"; }
+    if (layer === "dc") return dcBy[f] ? "rgba(231,179,65,.75)" : c.r24 == null ? "rgba(var(--wd-e),.05)" : "rgba(var(--wd-e),.07)";
+    const v = c.pop?.[layer]; return v == null ? "rgba(var(--wd-e),.05)" : seq(v / (layer === "wnh" ? 100 : 60), layer === "his" ? [255, 154, 92] : layer === "bnh" ? [183, 140, 255] : [143, 176, 255]);
   };
   const legend = layer === "appr" ? ["Net disapprove 40", "Even", "Net approve 40"] : layer === "ev" ? ["25% of adults", "", "70% or more"] : layer === "hiprop" ? ["0% of adults", "", "55% or more"] : layer === "lotrump" || layer === "loharris" ? ["0% of adults", "", "30% or more"] : layer === "gas" ? ["$2.90", "", "$4.50 or more"] : layer === "r24" || layer === "fc" || layer === "gov" || layer === "house" ? ["D +40", "Even", "R +40"] : layer === "shift" ? ["Moved D 10", "No move", "Moved R 10"] : layer === "turn" ? ["35% of citizens", "", "80% or more"] : layer === "stops" ? ["1 stop", "", "6 or more"] : layer === "dc" ? ["", "", ""] : ["0%", "", layer === "wnh" ? "100%" : "60% or more"];
   // the state as a whole, from its counties weighted by 2024 votes, for the "compared with the state" line

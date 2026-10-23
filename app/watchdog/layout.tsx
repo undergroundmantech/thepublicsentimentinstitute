@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import WatchdogNav from "./WatchdogNav";
 import "./watchdog.css";
 import "./terminal.css";
+import "./light.gen.css";
+import "./light.css";
 
 export const metadata: Metadata = {
   title: { default: "Watchdog: who is spending, who is campaigning, and who gets paid", template: "%s | Watchdog | On Point Politics" },

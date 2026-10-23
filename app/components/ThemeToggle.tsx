@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getTheme, THEME_EVENT, toggleTheme, type Theme } from "../lib/theme";
+import { getTheme, setTheme, THEME_EVENT, THEME_KEY, toggleTheme, type Theme } from "../lib/theme";
 
 // Light / dark switch. Server and first client render show the dark state (the
 // default); the real value is read from <html data-theme> after mount.
@@ -9,6 +9,8 @@ export default function ThemeToggle({ className = "btn icon" }: { className?: st
   const [theme, setThemeState] = useState<Theme>("dark");
 
   useEffect(() => {
+    // pages rendered on the client, such as a not found page, skip the inline head script, so apply the choice here
+    try { const t = localStorage.getItem(THEME_KEY); if ((t === "light" || t === "dark") && t !== getTheme()) setTheme(t, false); } catch {}
     setThemeState(getTheme());
     const sync = () => setThemeState(getTheme());
     window.addEventListener(THEME_EVENT, sync);

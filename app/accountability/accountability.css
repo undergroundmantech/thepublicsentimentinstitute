@@ -303,3 +303,10 @@
 .ax-c8 .track .me { top: -4px; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
 .ax-c8 .f { display: flex; justify-content: space-between; font: 600 11px var(--font-m); color: var(--mute); }
 @media (max-width: 900px) { .ax-cards8 { grid-template-columns: 1fr; } }
+
+/* light theme: markers that were white on the dark ground take ink */
+html[data-theme="light"] .ax-hemi circle:hover, html[data-theme="light"] .ax-hemi circle.on, html[data-theme="light"] .ax-map .p:hover, html[data-theme="light"] .ax-map .p.on,
+html[data-theme="light"] .ax-strip circle.me, html[data-theme="light"] .ax-strip .mk circle { stroke: #110019; }
+html[data-theme="light"] .ax-strip .mk line { stroke: #110019; }
+html[data-theme="light"] .ax-c8 .track .me { background: #110019; box-shadow: 0 0 0 3px rgba(17, 0, 25, .18); }
+html[data-theme="light"] .ax-stack .blk .t, html[data-theme="light"] .ax-stack .blk .n { color: #110019; text-shadow: 0 1px 2px rgba(255, 255, 255, .85); }

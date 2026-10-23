@@ -217,7 +217,7 @@ const CSS = `
 .wbr-board { position: relative; width: 100%; max-width: 1900px; margin: 0 auto; }
 .wbr-board::before { content: ""; position: absolute; left: -10%; right: -10%; top: -70px; height: 60%; z-index: -1; pointer-events: none; background: radial-gradient(50% 55% at 50% 0%, rgba(255,222,160,.28), rgba(255,222,160,.08) 55%, transparent 75%); }
 .wbr-frame { position: relative; padding: 10px; border-radius: 10px; background: linear-gradient(180deg, #d9dde3, #9aa1ab 50%, #c4c9d0); box-shadow: 0 30px 60px -28px rgba(0,0,0,.85), 0 2px 0 rgba(255,255,255,.4) inset; }
-.wbr-surface { position: relative; border-radius: 4px; padding: 18px 22px 18px; color: #23252b; overflow: hidden;
+.wbr-surface { --ink: #1f2127; --ink2: #454852; --mute: #6b6f78; --hi: #14161b; position: relative; border-radius: 4px; padding: 18px 22px 18px; color: #23252b; overflow: hidden;
   background: radial-gradient(80% 50% at 50% 0%, rgba(255,246,222,.75), rgba(255,246,222,0) 70%), linear-gradient(112deg, transparent 58%, rgba(255,255,255,.28) 66%, transparent 74%), radial-gradient(120% 120% at 50% 10%, #efeee8 40%, #dedcd3 100%);
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), inset 0 -30px 60px rgba(0,0,0,.05); }
 .wbr-intro { margin: 0 0 8px; }
@@ -299,4 +299,9 @@ const CSS = `
   .wbr-tray-ctl { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .wbr-card { animation: none; } }
+/* light theme: the same board on a pale painted wall over a light oak floor */
+html[data-theme="light"] .wbr-wall { background: radial-gradient(60% 40% at 50% 0%, rgba(255,214,150,.30), transparent 70%), repeating-linear-gradient(90deg, rgba(60,40,90,.035) 0 1px, transparent 1px 160px), linear-gradient(180deg, #ebe8f0 0%, #e4e0ea 70%, #d9d4e1 100%); }
+html[data-theme="light"] .wbr-floor { background: linear-gradient(180deg, #a98a66 0 6px, #8c6f50 6px 9px, transparent 9px), repeating-linear-gradient(90deg, #d2b48c 0 120px, #c8a97f 120px 240px); box-shadow: inset 0 10px 18px rgba(80,50,20,.25); }
+html[data-theme="light"] .wbr-lamp .bar { box-shadow: 0 6px 14px rgba(80,60,30,.3); }
+html[data-theme="light"] .wbr-frame { box-shadow: 0 30px 60px -30px rgba(40,20,80,.45), 0 2px 0 rgba(255,255,255,.6) inset; }
 `;

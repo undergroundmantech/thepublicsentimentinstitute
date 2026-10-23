@@ -1,0 +1,32 @@
+/* Watchdog OS in the light theme: the same investigator's terminal printed on lab paper. Deep green ink for the
+   interface, amber for evidence, white windows with green corner brackets. The generated light.gen.css maps every
+   literal colour; this file sets the palette and the few things a colour map cannot judge. */
+.wd { --wd-e: 255,255,255; }
+html[data-theme="light"] .wd { --wg: #b07a00; --wg2: #8a5c00; --wd-e: 17,40,28; }
+html[data-theme="light"] .wd.wdt {
+  --wg: #0a8a4c; --wg2: #0f6b3e; --wt: #0a8a4c; --wt2: #0f6b3e; --wa: #a66300; --wbg: #f2f7f3; --wpan: rgba(255, 255, 255, .9);
+  --wline: rgba(10, 120, 70, .22); --wline2: rgba(10, 120, 70, .45);
+  --ink: #0b2a1b; --ink2: #2f5a45; --mute: #62806f; --line: rgba(10, 120, 70, .14); --line2: rgba(10, 120, 70, .28); --hi: #062014;
+}
+/* glows read as smudges on paper */
+html[data-theme="light"] .wd.wdt .wd-hero h1, html[data-theme="light"] .wd.wdt .lg-head h1,
+html[data-theme="light"] .wd.wdt .wd-hero h1 em, html[data-theme="light"] .wd.wdt .lg-head h1 em,
+html[data-theme="light"] .wd.wdt .wd-kpi b { text-shadow: none; }
+html[data-theme="light"] .wd.wdt .wd-tab.on, html[data-theme="light"] .wd.wdt .wd-input:focus { box-shadow: 0 6px 14px -8px rgba(10, 120, 70, .55); }
+html[data-theme="light"] .wd.wdt .card { box-shadow: 0 0 0 1px rgba(10, 60, 35, .05), 0 22px 44px -32px rgba(10, 60, 35, .45); backdrop-filter: none; }
+html[data-theme="light"] .wd.wdt .wd-tip { box-shadow: 0 18px 40px -20px rgba(10, 60, 35, .45); }
+html[data-theme="light"] .wdt-bg .scan { mix-blend-mode: normal; opacity: .5; }
+html[data-theme="light"] .wd .wd-scan { mix-blend-mode: normal; opacity: .4; }
+html[data-theme="light"] .wd.wdt .lg-missing code { color: var(--wt); background: rgba(10, 120, 70, .06); }
+html[data-theme="light"] .wd.wdt .pty-say, html[data-theme="light"] .wd.wdt .pty-say::after { background: rgba(255, 255, 255, .97); }
+html[data-theme="light"] .wdt-tape { box-shadow: 0 6px 14px -10px rgba(0, 0, 0, .45); }
+/* the money web and the radar take ink instead of light */
+html[data-theme="light"] .cx-hex { fill: rgba(17, 40, 28, .06); stroke: #9a6a06; }
+html[data-theme="light"] .cx-vend { fill: #6b6384; }
+html[data-theme="light"] .cx-hint { color: #9a6a06; }
+html[data-theme="light"] .dk-sweep { background: conic-gradient(from 0deg, rgba(176, 122, 0, .28), transparent 22%); }
+html[data-theme="light"] .dk-orbit .don { stroke: #fff; }
+html[data-theme="light"] .dk-orbit .mote { fill: #b07a00; filter: none; }
+html[data-theme="light"] .dk-orbit .hub { stroke: #9a6a06; }
+html[data-theme="light"] .dk-race b { color: #9a6a06; }
+html[data-theme="light"] .dk-stop { border-top-color: rgba(17, 40, 28, .08); }

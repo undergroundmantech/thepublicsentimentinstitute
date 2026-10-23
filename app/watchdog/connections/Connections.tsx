@@ -316,8 +316,8 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
                   {n.kind === "person" ? <g transform={`translate(${isF ? -20 : -14},${isF ? -34 : -24})`}><PersonToken ini={n.name.split(" ").map((w) => w[0]).slice(0, 2).join("")} party={n.side ?? "O"} role={n.role} size={isF ? 52 : 36} /></g>
                     : n.kind === "candidate" ? <rect x={-n.r} y={-n.r} width={n.r * 2} height={n.r * 2} transform="rotate(45)" rx="3" fill={c} className="cx-shape" />
                     : n.kind === "group" ? <rect x={-n.r} y={-n.r} width={n.r * 2} height={n.r * 2} rx="5" fill={c} className="cx-shape" />
-                    : n.kind === "vendor" ? <path d={`M0,${-n.r * 1.15} L${n.r},${n.r * 0.75} L${-n.r},${n.r * 0.75} Z`} fill="#c9c2d6" className="cx-shape" />
-                    : n.kind === "race" ? <path d={hex(n.r)} fill="rgba(255,255,255,.12)" stroke="#ffd98a" strokeWidth="1.6" className="cx-shape" />
+                    : n.kind === "vendor" ? <path d={`M0,${-n.r * 1.15} L${n.r},${n.r * 0.75} L${-n.r},${n.r * 0.75} Z`} className="cx-shape cx-vend" />
+                    : n.kind === "race" ? <path d={hex(n.r)} strokeWidth="1.6" className="cx-shape cx-hex" />
                     : n.kind === "committee" ? <g className="cx-shape"><rect x={-n.r} y={-n.r * 0.8} width={n.r * 2} height={n.r * 1.6} rx="3" fill={c} /><path d={`M${-n.r * 0.55},0 H${n.r * 0.55} M0,${-n.r * 0.45} V${n.r * 0.45}`} stroke="rgba(10,6,18,.7)" strokeWidth="2" /></g>
                     : <circle r={n.r} fill={n.side ? c : "#e7b341"} className="cx-shape" />}
                   <text y={n.r + 15} textAnchor="middle" className="cx-l">{n.name.length > 30 ? n.name.slice(0, 28) + "…" : n.name}</text>
@@ -331,7 +331,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
             <h4>{hovNode.name}</h4>
             <div style={{ opacity: .75 }}>{KIND[hovNode.kind]}{hovNode.race ? ` · ${hovNode.race}` : ""}</div>
             {(idx.get(hovNode.id) ?? []).filter((e) => net.edges.includes(e)).sort((a, b) => (b.v ?? 0) - (a.v ?? 0)).slice(0, 4).map((e, i) => <div key={i}>{line(e, byId)}</div>)}
-            <div style={{ marginTop: 4, color: "#ffd98a" }}>Click to trace, drag to move</div>
+            <div className="cx-hint" style={{ marginTop: 4 }}>Click to trace, drag to move</div>
           </FloatTip>); })() : null}
         <div className="cx-tools">
           <button className="wd-btn" onClick={() => setView((v) => ({ k: Math.min(3, v.k * 1.25), x: W / 2 - (W / 2 - v.x) * 1.25, y: H / 2 - (H / 2 - v.y) * 1.25 }))} aria-label="Zoom in">+</button>

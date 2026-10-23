@@ -15,6 +15,7 @@ import { useIndex, useLive, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
 import RaceBrief from "./RaceBrief";
+import { useSiteTheme } from "@/app/lib/useSiteTheme";
 
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 type SF = Feature<Geometry, { name: string }> & { st: string };
@@ -47,6 +48,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const [cll, setCll] = useState<Record<string, number[][][]> | null>(null);
   const [hov, setHov] = useState<{ st: string; f?: string; d?: string; x: number; y: number } | null>(null);
   const hovRef = useRef<{ st: string; f?: string; d?: string } | null>(null);
+  const theme = useSiteTheme();
   const [dll, setDll] = useState<Record<string, number[][][]> | null>(null);
   const [feed, setFeed] = useState<Feed[]>([]);
   const [now, setNow] = useState<Date | null>(null);
@@ -173,6 +175,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const cGeo = sel && cll ? Object.entries(cll).filter(([f]) => FIPS[f.slice(0, 2)] === sel).map(([f, rings]) => ({
       f, g: { type: "MultiPolygon", coordinates: rings.map((r) => [geoArea({ type: "Polygon", coordinates: [r] } as GeoPermissibleObjects) > 2 * Math.PI ? [...r].reverse() : r]) } as unknown as GeoPermissibleObjects,
     })) : [];
+    // the globe by night, or by day in the light theme
+    const LT = theme === "light";
+    const fx = (c: string) => (!LT ? c : c === AWAIT ? "#d8d2ea" : c === NO_RACE ? "#ebe8f3" : c);
+    const GOLD = LT ? "176,122,0" : "255,217,138";
     const draw = () => {
       const v = view.current;
       if (v.target) {
@@ -184,34 +190,34 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       proj.rotate(v.rot).scale(base * v.k).translate([(W - dw) / 2, H / 2]);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const R = proj.scale(), [cx, cy] = proj.translate();
-      const atm = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.1); atm.addColorStop(0, "rgba(120,90,255,.32)"); atm.addColorStop(1, "rgba(120,90,255,0)");
+      const atm = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.1); atm.addColorStop(0, LT ? "rgba(120,90,255,.2)" : "rgba(120,90,255,.32)"); atm.addColorStop(1, "rgba(120,90,255,0)");
       ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(cx, cy, R * 1.1, 0, 6.283); ctx.fill();
-      const sea = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.4, R * 0.1, cx, cy, R); sea.addColorStop(0, "#17113a"); sea.addColorStop(1, "#06040e");
+      const sea = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.4, R * 0.1, cx, cy, R); sea.addColorStop(0, LT ? "#f3f1fb" : "#17113a"); sea.addColorStop(1, LT ? "#cbc5e4" : "#06040e");
       ctx.fillStyle = sea; ctx.beginPath(); path({ type: "Sphere" }); ctx.fill();
-      ctx.strokeStyle = "rgba(170,150,255,.09)"; ctx.lineWidth = 1; ctx.beginPath(); path(grat); ctx.stroke();
-      ctx.fillStyle = "#1a1530"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill();
+      ctx.strokeStyle = LT ? "rgba(60,40,140,.09)" : "rgba(170,150,255,.09)"; ctx.lineWidth = 1; ctx.beginPath(); path(grat); ctx.stroke();
+      ctx.fillStyle = LT ? "#e6e2f2" : "#1a1530"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill();
       const hv = hovRef.current;
       for (const f of geo.states) {
         ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.fillStyle = stateColor[f.st] ?? NO_RACE; ctx.globalAlpha = sel && sel !== f.st ? 0.45 : 1; ctx.fill(); ctx.globalAlpha = 1;
-        ctx.strokeStyle = hv?.st === f.st && !hv.f ? "#fff" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
+        ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = sel && sel !== f.st ? 0.45 : 1; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = hv?.st === f.st && !hv.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
       }
       if (mode === "house" && dGeo.length) {
         for (const x of dGeo) {
           if (geoDistance(x.c, [-v.rot[0], -v.rot[1]]) > 1.6) continue;
           const dc = districtColor[x.id] ?? { fill: NO_RACE, a: 1 };
-          ctx.beginPath(); path(x.g); ctx.fillStyle = dc.fill; ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill(); ctx.globalAlpha = 1;
-          ctx.strokeStyle = hv?.d === x.id ? "#fff" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 2 : v.k > 5 ? 0.8 : 0.45; ctx.stroke();
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.strokeStyle = hv?.d === x.id ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.85)" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 2 : v.k > 5 ? 0.8 : 0.45; ctx.stroke();
         }
-        ctx.strokeStyle = "rgba(255,255,255,.38)"; ctx.lineWidth = 1;
+        ctx.strokeStyle = LT ? "rgba(17,0,25,.4)" : "rgba(255,255,255,.38)"; ctx.lineWidth = 1;
         for (const f of geo.states) { ctx.beginPath(); path(f as GeoPermissibleObjects); ctx.stroke(); }
         if (v.k >= 4) {
           ctx.font = "700 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
           for (const x of dGeo) {
             if (geoDistance(x.c, [-v.rot[0], -v.rot[1]]) > 1.3) continue; const b = path.bounds(x.g); if (b[1][0] - b[0][0] < 26 || b[1][1] - b[0][1] < 16) continue;
             const pt = proj(x.c); if (!pt) continue; const c = live.byId[x.id]; const n = x.id.split("-")[2];
-            ctx.fillStyle = "rgba(255,255,255,.92)"; ctx.fillText(n === "01" && !(byState[x.st]?.length > 1) ? "AL" : n.replace(/^0/, ""), pt[0], pt[1] - (hasReturns(c) ? 6 : 0));
-            if (hasReturns(c)) { ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.fillText(`${Math.round(c!.pr)}%`, pt[0], pt[1] + 6); }
+            ctx.fillStyle = LT ? "rgba(17,0,25,.85)" : "rgba(255,255,255,.92)"; ctx.fillText(n === "01" && !(byState[x.st]?.length > 1) ? "AL" : n.replace(/^0/, ""), pt[0], pt[1] - (hasReturns(c) ? 6 : 0));
+            if (hasReturns(c)) { ctx.fillStyle = LT ? "rgba(17,0,25,.6)" : "rgba(255,255,255,.7)"; ctx.fillText(`${Math.round(c!.pr)}%`, pt[0], pt[1] + 6); }
           }
         }
       }
@@ -221,35 +227,36 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           const e = expC?.[x.f]; const lv = liveC?.[x.f];
           const em = e && e[3] ? (100 * (e[1] - e[0])) / e[3] : null;
           const fill = lv?.m != null ? (color === "results" ? shade(lv.m, layerRace.k, ind) : em != null ? vsColor(lv.m - em) : AWAIT) : AWAIT;
-          ctx.beginPath(); path(x.g); ctx.fillStyle = fill; ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill(); ctx.globalAlpha = 1;
-          ctx.strokeStyle = hv?.f === x.f ? "#fff" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.strokeStyle = hv?.f === x.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
         }
       }
-      if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = "#ffd98a"; ctx.lineWidth = 2.2; ctx.stroke(); }
+      if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = `rgb(${GOLD})`; ctx.lineWidth = 2.2; ctx.stroke(); }
       // states whose race civicAPI has called glow gold, breathing slowly
       const breathe = 0.45 + 0.35 * Math.sin(performance.now() / 700);
       for (const f of geo.states) {
         if (!calledSt.has(f.st)) continue; ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.strokeStyle = `rgba(255,217,138,${breathe})`; ctx.lineWidth = 2.6; ctx.shadowColor = "rgba(255,217,138,.8)"; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
+        ctx.strokeStyle = `rgba(${GOLD},${breathe})`; ctx.lineWidth = 2.6; ctx.shadowColor = `rgba(${GOLD},.8)`; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
       }
       // a radar sweep across the globe while votes are being counted
       if (sweepOn && !reduce) {
         const a = (performance.now() / 2600) % (Math.PI * 2);
         const g = ctx.createConicGradient ? ctx.createConicGradient(a, cx, cy) : null;
         if (g) { g.addColorStop(0, "rgba(140,110,255,.16)"); g.addColorStop(0.06, "rgba(140,110,255,0)"); g.addColorStop(1, "rgba(140,110,255,0)"); ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip(); ctx.fillStyle = g; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R); ctx.restore(); }
-        ctx.strokeStyle = "rgba(160,140,255,.18)"; ctx.setLineDash([2, 6]); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R * 1.04, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+        ctx.strokeStyle = LT ? "rgba(90,60,200,.25)" : "rgba(160,140,255,.18)"; ctx.setLineDash([2, 6]); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R * 1.04, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
       }
       const fresh = new Set(feed.filter((x) => live.at && x.t.getTime() === live.at.getTime()).map((x) => x.id.split("-")[1]));
       const tt = performance.now();
       for (const f of geo.states) {
         if (!fresh.has(f.st)) continue; const ll = geoCentroid(f as GeoPermissibleObjects) as [number, number];
         if (geoDistance(ll, [-v.rot[0], -v.rot[1]]) > 1.4) continue; const p = proj(ll); if (!p) continue;
-        const ph = (tt / 1600) % 1; ctx.strokeStyle = `rgba(255,217,138,${1 - ph})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(p[0], p[1], 6 + ph * 30, 0, 6.283); ctx.stroke();
+        const ph = (tt / 1600) % 1; ctx.strokeStyle = `rgba(${GOLD},${1 - ph})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(p[0], p[1], 6 + ph * 30, 0, 6.283); ctx.stroke();
       }
-      ctx.font = "700 10.5px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "rgba(255,255,255,.86)";
+      ctx.font = "700 10.5px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = LT ? "rgba(17,0,25,.78)" : "rgba(255,255,255,.86)";
+      ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 3; ctx.lineJoin = "round";
       if (v.k < (mode === "house" ? 4 : 4.5)) for (const f of geo.states) {
         const ll = geoCentroid(f as GeoPermissibleObjects) as [number, number]; if (geoDistance(ll, [-v.rot[0], -v.rot[1]]) > 1.35) continue;
-        const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 30) continue; const p = proj(ll); if (p) ctx.fillText(f.st, p[0], p[1]);
+        const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 30) continue; const p = proj(ll); if (p) { if (LT) ctx.strokeText(f.st, p[0], p[1]); ctx.fillText(f.st, p[0], p[1]); }
       }
       if (!reduce || v.target) raf = requestAnimationFrame(draw);
     };
@@ -285,7 +292,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     box.addEventListener("pointerdown", down); box.addEventListener("pointermove", move); box.addEventListener("pointerup", up); box.addEventListener("wheel", wheel, { passive: false }); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); box.removeEventListener("pointerdown", down); box.removeEventListener("pointermove", move); box.removeEventListener("pointerup", up); box.removeEventListener("wheel", wheel); box.removeEventListener("pointerleave", leave); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn]);
+  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme]);
 
   const home = () => { view.current.target = { rot: [97, -39, 0], k: 2.2 }; setZoomK(2.2); setSel(null); setPick(null); };
   const zoomBy = (f: number) => { const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); };

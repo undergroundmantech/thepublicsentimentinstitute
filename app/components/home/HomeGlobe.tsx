@@ -12,6 +12,7 @@ import type { Feature, Geometry } from "geojson";
 import Mascot from "./Mascot";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
+import { useThemeRef } from "@/app/lib/useSiteTheme";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
 type Office = "senate" | "governor";
@@ -47,6 +48,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const rot = useRef<[number, number, number]>([96, -38, 0]);
   const dragRef = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
   const hoverRef = useRef<string | null>(null);
+  const themeRef = useThemeRef();
 
   useEffect(() => {
     Promise.all([fetch("/us-states.json").then((r) => r.json()), fetch("/geo/world-110m.json").then((r) => r.json())]).then(([us, w]) => {
@@ -103,29 +105,30 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       proj.rotate(rot.current);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const [cx, cy] = proj.translate(), R = proj.scale();
+      const L = themeRef.current === "light";
       // stars
       for (const st of stars) {
         const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(st.ph + t / 1000 * st.sp));
-        ctx.fillStyle = st.hue > 0.85 ? `rgba(255,214,140,${a * 0.8})` : st.hue > 0.7 ? `rgba(160,190,255,${a * 0.8})` : `rgba(255,255,255,${a * 0.7})`;
+        ctx.fillStyle = L ? (st.hue > 0.7 ? `rgba(120,90,220,${a * 0.22})` : `rgba(60,40,120,${a * 0.12})`) : st.hue > 0.85 ? `rgba(255,214,140,${a * 0.8})` : st.hue > 0.7 ? `rgba(160,190,255,${a * 0.8})` : `rgba(255,255,255,${a * 0.7})`;
         ctx.fillRect(st.x * W, st.y * H, st.r, st.r);
       }
       // atmosphere and ocean
       const atm = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.12);
-      atm.addColorStop(0, "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
+      atm.addColorStop(0, L ? "rgba(120,90,255,.22)" : "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
       ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, 6.283); ctx.fill();
       const sea = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.4, R * 0.1, cx, cy, R);
-      sea.addColorStop(0, "#1a1240"); sea.addColorStop(1, "#07040f");
+      sea.addColorStop(0, L ? "#f1effa" : "#1a1240"); sea.addColorStop(1, L ? "#cdc7e6" : "#07040f");
       ctx.fillStyle = sea; ctx.beginPath(); path({ type: "Sphere" }); ctx.fill();
-      ctx.strokeStyle = "rgba(170,150,255,.08)"; ctx.lineWidth = 1; ctx.beginPath(); path(grat); ctx.stroke();
-      if (geo.land) { ctx.fillStyle = "#1c1630"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill(); }
-      ctx.strokeStyle = "rgba(255,255,255,.06)"; ctx.stroke();
+      ctx.strokeStyle = L ? "rgba(60,40,140,.09)" : "rgba(170,150,255,.08)"; ctx.lineWidth = 1; ctx.beginPath(); path(grat); ctx.stroke();
+      if (geo.land) { ctx.fillStyle = L ? "#e6e2f2" : "#1c1630"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill(); }
+      ctx.strokeStyle = L ? "rgba(60,40,120,.14)" : "rgba(255,255,255,.06)"; ctx.stroke();
       for (const f of geo.states) {
         const r = bySt[f.st];
         ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.fillStyle = r ? RATE[rateOf(r)] : "#2b2440";
+        ctx.fillStyle = r ? RATE[rateOf(r)] : L ? "#d9d4e8" : "#2b2440";
         ctx.fill();
         if (hoverRef.current === f.st) { ctx.fillStyle = `rgba(255,255,255,${0.12 + 0.1 * Math.sin(t / 240)})`; ctx.fill(); }
-        ctx.strokeStyle = hoverRef.current === f.st ? "#fff" : "rgba(10,6,18,.9)"; ctx.lineWidth = hoverRef.current === f.st ? 2.2 : 0.8; ctx.stroke();
+        ctx.strokeStyle = hoverRef.current === f.st ? (L ? "#110019" : "#fff") : L ? "rgba(255,255,255,.95)" : "rgba(10,6,18,.9)"; ctx.lineWidth = hoverRef.current === f.st ? 2.2 : 0.8; ctx.stroke();
       }
       // labels
       ctx.font = "800 11px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -135,7 +138,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 34) continue;
         const p = proj(ll); if (!p || (W >= 1100 && p[0] < W * 0.31)) continue;
         const r = bySt[f.st], rt = r ? rateOf(r) : null;
-        ctx.fillStyle = rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : "rgba(255,255,255,.3)";
+        ctx.fillStyle = rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : L ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.3)";
         ctx.fillText(f.st, p[0], p[1]);
       }
       // beacons on the closest races
@@ -154,7 +157,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
           const ip = geoInterpolate(a, b), pts: [number, number][] = [];
           for (let q = 0; q <= 24; q++) { const pp = proj(ip(q / 24) as [number, number]); if (pp) pts.push([pp[0], pp[1]]); }
           if (pts.length < 2) continue;
-          ctx.strokeStyle = "rgba(255,255,255,.22)"; ctx.lineWidth = 1.2; ctx.setLineDash([1.5, 6]); ctx.lineDashOffset = reduce ? 0 : -t / 90;
+          ctx.strokeStyle = L ? "rgba(17,0,25,.32)" : "rgba(255,255,255,.22)"; ctx.lineWidth = 1.2; ctx.setLineDash([1.5, 6]); ctx.lineDashOffset = reduce ? 0 : -t / 90;
           ctx.beginPath(); pts.forEach((q, n) => (n ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke(); ctx.setLineDash([]);
         }
       }
@@ -162,7 +165,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       for (const s0 of steps) {
         if (!facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
         const age = (now - s0.t) / 4200; if (age > 1) continue;
-        ctx.fillStyle = `rgba(255,255,255,${(1 - age) * 0.55})`; ctx.beginPath(); ctx.ellipse(p[0] + s0.side * 4, p[1], 2.6, 1.6, 0, 0, 6.283); ctx.fill();
+        ctx.fillStyle = L ? `rgba(17,0,25,${(1 - age) * 0.4})` : `rgba(255,255,255,${(1 - age) * 0.55})`; ctx.beginPath(); ctx.ellipse(p[0] + s0.side * 4, p[1], 2.6, 1.6, 0, 0, 6.283); ctx.fill();
       }
       while (steps.length && now - steps[0].t > 4200) steps.shift();
       // the canvasser
@@ -230,8 +233,8 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         {tr ? (
           <div className="hg-tip" style={{ left: tip!.x, top: tip!.y, transform: `translate(${tip!.x > tip!.w - 300 ? "calc(-100% - 18px)" : "18px"}, ${tip!.y > tip!.h - 220 ? "calc(-100% - 12px)" : "12px"})` }}>
             <h4>{tr.name}</h4>
-            <div className="r"><span style={{ color: tr.ind ? "#b78cff" : "#8fb0ff" }}>{tr.dem}</span><b>{pc(1 - tr.p)}</b></div>
-            <div className="r"><span style={{ color: "#ff8399" }}>{tr.gop}</span><b>{pc(tr.p)}</b></div>
+            <div className="r"><span className={tr.ind ? "ci" : "cd"}>{tr.dem}</span><b>{pc(1 - tr.p)}</b></div>
+            <div className="r"><span className="cr">{tr.gop}</span><b>{pc(tr.p)}</b></div>
             <div className="r"><span>{RATING_LABEL[rateOf(tr)]}</span><b>{fm(tr.m, tr.ind)}</b></div>
             {tr.pl?.length ? <div className="hg-tptr"><span>{tr.pl.length} polls</span><PollTrail polls={tr.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={220} ind={tr.ind} uid={`ht${tr.id}`} /></div> : null}
             <div className="cta">Click for the full race</div>

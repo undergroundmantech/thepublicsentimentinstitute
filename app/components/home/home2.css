@@ -126,3 +126,41 @@
 .hg-legend span { animation: hg-rise .6s both; } .hg-legend span:nth-child(n) { animation-delay: calc(.5s + var(--i, 0) * .04s); }
 @media (prefers-reduced-motion: reduce) { .hg::after, .hg-copy .chip, .hg-cta .btn, .hg-cta .btn.g, .hg-side, .hg-legend span { animation: none; } .hg-spot { display: none; } }
 @media (hover: none) { .hg-spot { display: none; } }
+
+/* party names in the globe tooltip */
+.hg-tip .cd { color: #8fb0ff; } .hg-tip .cr { color: #ff8399; } .hg-tip .ci { color: #b78cff; }
+
+/* Light theme: the globe by day. Same stage, a pale sky, ink type and white glass. */
+html[data-theme="light"] .hg { background: linear-gradient(180deg, #f3f1fb 0%, #ebe7f7 60%, #f5f3fa 100%); color: var(--ink); }
+html[data-theme="light"] .hg::before { background:
+  radial-gradient(60% 50% at 70% 100%, rgba(110,70,255,.16), transparent 70%), radial-gradient(40% 40% at 10% 20%, rgba(61,123,255,.10), transparent 70%),
+  radial-gradient(30% 30% at 90% 10%, rgba(232,38,75,.06), transparent 70%); }
+html[data-theme="light"] .hg::after { opacity: .035; background-image: radial-gradient(rgba(17,0,25,.9) .5px, transparent .6px); }
+html[data-theme="light"] .hg-spot { background: radial-gradient(420px circle at var(--mx, 70%) var(--my, 40%), rgba(120,90,255,.10), transparent 60%); mix-blend-mode: multiply; }
+html[data-theme="light"] .hg .d, html[data-theme="light"] .hg-tip .cd { color: var(--dem); }
+html[data-theme="light"] .hg .r, html[data-theme="light"] .hg-tip .cr { color: var(--gop); }
+html[data-theme="light"] .hg .i, html[data-theme="light"] .hg-tip .ci { color: var(--ind); }
+html[data-theme="light"] .hg-tip .r { color: #3a3350; } html[data-theme="light"] .hg-tip .r b { color: var(--ink); }
+html[data-theme="light"] .hg-flip { filter: drop-shadow(0 14px 16px rgba(40,20,80,.28)); }
+html[data-theme="light"] .hg-bub, html[data-theme="light"] .hg-tip { background: rgba(255,255,255,.97); border-color: rgba(17,0,25,.12); color: var(--ink); box-shadow: 0 18px 40px -18px rgba(40,20,80,.45); }
+html[data-theme="light"] .hg-bub::after { background: rgba(255,255,255,.97); border-color: rgba(17,0,25,.12); }
+html[data-theme="light"] .hg-bub small, html[data-theme="light"] .hg-tip .cta, html[data-theme="light"] .hg-bptr em, html[data-theme="light"] .hg-tptr span { color: #6b6384; }
+html[data-theme="light"] .hg-bptr, html[data-theme="light"] .hg-tptr { color: #3a3350; }
+html[data-theme="light"] .hg-tptr { border-top-color: rgba(17,0,25,.1); }
+html[data-theme="light"] .hg-copy .chip { color: #3a2f5c; background: rgba(255,255,255,.75); border-color: rgba(17,0,25,.1); }
+html[data-theme="light"] .hg-copy h1 { text-shadow: 0 6px 30px rgba(255,255,255,.9); }
+html[data-theme="light"] .hg-copy h1 em { background-image: linear-gradient(90deg, #2a63f0, #8b3fd9 25%, #e8264b 50%, #8b3fd9 75%, #2a63f0); }
+html[data-theme="light"] .hg-copy p { color: #3a3350; text-shadow: 0 1px 10px rgba(255,255,255,.95); }
+html[data-theme="light"] .hg-odds a, html[data-theme="light"] .hg-tabs, html[data-theme="light"] .hg-list { background: rgba(255,255,255,.78); border-color: rgba(17,0,25,.1); box-shadow: 0 14px 34px -22px rgba(40,20,80,.45); }
+html[data-theme="light"] .hg-odds a:hover { border-color: rgba(17,0,25,.3); }
+html[data-theme="light"] .hg-odds a::after { background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.7) 50%, transparent 70%); }
+html[data-theme="light"] .hg-odds a.d b { color: var(--dem); } html[data-theme="light"] .hg-odds a.r b { color: var(--gop); }
+html[data-theme="light"] .hg-odds span, html[data-theme="light"] .hg-list .eye, html[data-theme="light"] .hg-row .st, html[data-theme="light"] .hg-tabs button { color: #6b6384; }
+html[data-theme="light"] .hg-tabs button.on { color: #fff; }
+html[data-theme="light"] .hg-row { color: var(--ink); } html[data-theme="light"] .hg-row:hover { background: rgba(17,0,25,.05); }
+html[data-theme="light"] .hg-row::before { background: #8b3fd9; }
+html[data-theme="light"] .hg-legend { color: #3a3350; } html[data-theme="light"] .hg-legend .hint { color: #7a7290; }
+
+/* story thumbnails: the plate behind the mini maps follows the theme */
+.thb-bg { fill: #120820; } .thb-ln { stroke: #120820; } .thb-tx { fill: #c9c2d6; } .thb-tr { fill: rgba(255,255,255,.07); }
+html[data-theme="light"] .thb-bg { fill: #ece8f6; } html[data-theme="light"] .thb-ln { stroke: #fff; } html[data-theme="light"] .thb-tx { fill: #4a4360; } html[data-theme="light"] .thb-tr { fill: rgba(17,0,25,.08); }

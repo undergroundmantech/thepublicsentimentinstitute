@@ -481,4 +481,14 @@ const THEME_CSS = `
 @keyframes nd-sheen{to{transform:translateX(100%)}}
 @keyframes nd-stripes{to{background-position:24px 0}}
 @media (prefers-reduced-motion:reduce){.desk.nd *,.desk.nd *::after{animation:none!important;transition:none!important}}
+/* light theme: white glass cards on the pale ground, ink headline */
+html[data-theme="light"] .desk.nd{background:radial-gradient(70% 50% at 10% 0%,rgba(42,99,240,.07),transparent 60%),radial-gradient(60% 50% at 100% 10%,rgba(232,38,75,.05),transparent 60%)}
+html[data-theme="light"] .desk.nd .race-header h1{background-image:linear-gradient(90deg,#110019,#5b3fd0)}
+html[data-theme="light"] .desk.nd .card{background:linear-gradient(170deg,rgba(255,255,255,.96),rgba(255,255,255,.78));border-color:rgba(17,0,25,.09);box-shadow:0 26px 50px -38px rgba(40,20,80,.45)}
+html[data-theme="light"] .desk.nd .meta-block{background:rgba(255,255,255,.85);border-color:rgba(17,0,25,.09)}
+html[data-theme="light"] .desk.nd .winner-band{background:linear-gradient(90deg,rgba(224,162,28,.16),transparent);border-bottom-color:rgba(154,106,6,.3)}
+html[data-theme="light"] .desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(154,106,6,.06)}
+html[data-theme="light"] .desk.nd .topline-bar span{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 55%);box-shadow:none}
+html[data-theme="light"] .desk.nd .prob-ring,html[data-theme="light"] .desk.nd .rep-ring{filter:drop-shadow(0 8px 18px rgba(40,20,80,.18))}
+html[data-theme="light"] .desk.nd .rd-map{background:radial-gradient(80% 80% at 50% 40%,rgba(120,90,255,.06),transparent 70%),#fff}
 `;

@@ -67,7 +67,7 @@ export default function TrailMap({ data }: { data: Trail }) {
     return h;
   }, [mode, shown, att, end]);
   const maxHeat = Math.max(1, ...Object.values(heat));
-  const fillOf = (s: string) => { const n = heat[s] ?? 0; if (!n) return "rgba(255,255,255,.035)"; const a = 0.16 + 0.6 * Math.sqrt(n / maxHeat); return `rgba(231,179,65,${a.toFixed(3)})`; };
+  const fillOf = (s: string) => { const n = heat[s] ?? 0; if (!n) return "rgba(var(--wd-e),.035)"; const a = 0.16 + 0.6 * Math.sqrt(n / maxHeat); return `rgba(231,179,65,${a.toFixed(3)})`; };
 
   // tokens to draw
   type Tok = { key: string; name: string; st: string; x: number; y: number; dim: boolean; date?: string; label?: string; size: number; more?: number };
@@ -293,7 +293,7 @@ function StateView({ st, statePath, data, P, party, onBack, onWho, who }: { st: 
   const coStops = useMemo(() => { const m: Record<string, (typeof stops)[number][]> = {}; for (const v of stops) for (const f of v.fips) (m[f] ??= []).push(v); return m; }, [stops]);
   const noCity = stops.filter((v) => !v.fips.length);
   const res = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "No 2024 result on file"; return r >= 0 ? `Trump +${r.toFixed(1)} in 2024` : `Harris +${(-r).toFixed(1)} in 2024`; };
-  const shade = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "rgba(255,255,255,.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.08 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.08 - lean * 0.5).toFixed(3)})`; };
+  const shade = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "rgba(var(--wd-e),.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.08 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.08 - lean * 0.5).toFixed(3)})`; };
   const tip = (e: React.MouseEvent, t: string, lines: string[]) => setHv({ x: e.clientX, y: e.clientY, t, s: lines });
   const coName = (f: string) => meta?.[f]?.n ?? f;
   const suffix = st === "LA" ? " Parish" : st === "AK" ? "" : " County";

@@ -18,7 +18,7 @@ export default function MiniMap({ raceId }: { raceId: string }) {
   const { sc, ox, oy } = fit(pathsBox(g.paths), 320, 180, 30, 20);
   return (
     <g transform={`translate(${ox},${oy}) scale(${sc})`}>
-      {g.paths.map((p) => <path key={p.id} d={p.d} fill={marginColor(g.rows[p.id]?.[0] ?? 0)} stroke="#120820" strokeWidth={1 / sc} />)}
+      {g.paths.map((p) => <path key={p.id} d={p.d} fill={marginColor(g.rows[p.id]?.[0] ?? 0)} className="thb-ln" strokeWidth={1 / sc} />)}
     </g>
   );
 }

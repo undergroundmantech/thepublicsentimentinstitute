@@ -83,6 +83,30 @@ export const STAGE_CSS = `
   .sg-odds .side b{font-size:26px}
 }
 @media (prefers-reduced-motion:reduce){.sg-bulbs i,.sg-c,.sg-seg i.on,.sg-grid i{animation:none}}
+/* light theme: the same show in daylight, a pale lavender stage, ink type and white glass wings */
+html[data-theme="light"] .sg{background:linear-gradient(180deg,rgba(234,229,247,0) 0,#ebe6f7 110px,#ebe6f7 calc(100% - 90px),rgba(234,229,247,0) 100%);color:var(--ink)}
+html[data-theme="light"] .sg::before{background:radial-gradient(70% 55% at 50% 0%,rgba(120,80,255,.16),transparent 70%),radial-gradient(40% 30% at 12% 70%,rgba(42,99,240,.10),transparent 70%),radial-gradient(40% 30% at 88% 70%,rgba(232,38,75,.09),transparent 70%)}
+html[data-theme="light"] .sg::after{opacity:.6;background-image:linear-gradient(rgba(17,0,25,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,0,25,.05) 1px,transparent 1px)}
+html[data-theme="light"] .sg-marq{background:rgba(255,255,255,.8);border-color:rgba(17,0,25,.1);color:#3a2f5c}
+html[data-theme="light"] .sg-bulbs i{background:#e0a21c;box-shadow:0 0 6px 1px rgba(224,162,28,.55)}
+html[data-theme="light"] .sg h1{color:var(--ink)}
+html[data-theme="light"] .sg h1 .nm{text-shadow:none}
+html[data-theme="light"] .sg h1 .ph-w{background-image:linear-gradient(90deg,#2a63f0,#8b3fd9 45%,#e8264b)}
+html[data-theme="light"] .sg .lede{color:#3a3350}
+html[data-theme="light"] .sg-pills span{color:#3a3350;background:#fff;border-color:rgba(17,0,25,.1)}
+html[data-theme="light"] .sg-pills b{color:var(--ink)}
+html[data-theme="light"] .sg-lamp{background:linear-gradient(180deg,#d8d2ea,#b9b0d6);box-shadow:0 10px 40px 8px rgba(124,92,240,.22),inset 0 -3px 0 rgba(255,255,255,.9)}
+html[data-theme="light"] .ps-tip{background:rgba(255,255,255,.97);border-color:rgba(17,0,25,.12);box-shadow:0 18px 40px -18px rgba(40,20,80,.45)}
+html[data-theme="light"] .ps-tip b{color:var(--ink)}
+html[data-theme="light"] .sg-c{background:linear-gradient(180deg,#fff,rgba(255,255,255,.8));border-color:rgba(17,0,25,.08);box-shadow:0 30px 60px -32px rgba(40,20,80,.4),inset 0 1px 0 #fff}
+html[data-theme="light"] .sg-c::before{box-shadow:0 0 12px 0 var(--c)}
+html[data-theme="light"] .sg-c .nm{color:var(--ink)}
+html[data-theme="light"] .sg-c .pt,html[data-theme="light"] .sg-odds .side span,html[data-theme="light"] .sg-odds .cap{color:#6b6384}
+html[data-theme="light"] .sg-c .pc{text-shadow:none}
+html[data-theme="light"] .sg-c .vt{color:#4a4360}
+html[data-theme="light"] .sg-seg i{background:rgba(17,0,25,.08)}
+html[data-theme="light"] .sg-seg i.on{box-shadow:none}
+html[data-theme="light"] .sg-odds .cap b{color:var(--ink)}
 `;
 
 function Wing({ c, side }: { c: StageCand; side: "a" | "b" }) {

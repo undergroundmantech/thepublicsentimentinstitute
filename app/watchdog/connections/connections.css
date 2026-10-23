@@ -48,3 +48,4 @@
 .cx-more { align-self: center; font: 700 11px var(--font-m); color: #ffd98a; padding: 0 6px; }
 .cx-kind.k-committee { border-color: rgba(159,227,193,.55); color: #9fe3c1; }
 @media (max-width: 900px) { .cx-stage { height: 78vh; } .cx-words { max-height: none; } }
+.cx-hex { fill: rgba(255,255,255,.12); stroke: #ffd98a; } .cx-vend { fill: #c9c2d6; } .cx-hint { color: #ffd98a; }

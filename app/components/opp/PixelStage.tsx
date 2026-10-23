@@ -4,6 +4,7 @@
 // bobs slowly, and hovering a pixel lifts its whole county and names it. One canvas, paused when off screen,
 // a still frame under reduced motion.
 import { useEffect, useRef, useState } from "react";
+import { useThemeRef } from "@/app/lib/useSiteTheme";
 
 type P = { id: string; d: string };
 export type StageLabel = { t: string; s: string; c: string };
@@ -28,6 +29,7 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
   const wrap = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLCanvasElement>(null);
   const hovRef = useRef<string | null>(null);
+  const themeRef = useThemeRef();
   const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
     let px: { x: number; y: number; sx: number; sy: number; dl: number; id: string; c: string; hc: string; col: number; row: number }[] = [];
     let grid = new Map<number, number>();
     let motes: { x: number; y: number; s: number; v: number; a: number; ph: number }[] = [];
-    const [br, bg, bb] = parse(beam);
+    const [br0, bg0, bb0] = parse(beam);
     const ctx = cv.getContext("2d"); if (!ctx) return;
 
     const build = () => {
@@ -86,14 +88,16 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const bob = reduce ? 0 : Math.sin(t / 1500) * 7;
       const sway = reduce ? 0 : Math.sin(t / 2300) * 18;
-      // the beam
-      ctx.globalCompositeOperation = "lighter";
+      // the beam: added light on the dark stage, a soft lavender wash by day
+      const LT = themeRef.current === "light";
+      const [br, bg, bb] = LT ? [124, 92, 240] : [br0, bg0, bb0];
+      ctx.globalCompositeOperation = LT ? "multiply" : "lighter";
       const topX = stCx + sway, half = Math.max(160, stW * 0.6);
       const g = ctx.createLinearGradient(0, 0, 0, floorY);
       g.addColorStop(0, `rgba(${br},${bg},${bb},.20)`); g.addColorStop(0.55, `rgba(${br},${bg},${bb},.07)`); g.addColorStop(1, `rgba(${br},${bg},${bb},0)`);
       ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(topX - 34, -10); ctx.lineTo(topX + 34, -10); ctx.lineTo(stCx + half, floorY); ctx.lineTo(stCx - half, floorY); ctx.closePath(); ctx.fill();
       const g2 = ctx.createLinearGradient(0, 0, 0, floorY);
-      g2.addColorStop(0, `rgba(255,255,255,.16)`); g2.addColorStop(1, "rgba(255,255,255,0)");
+      g2.addColorStop(0, LT ? "rgba(124,92,240,.10)" : `rgba(255,255,255,.16)`); g2.addColorStop(1, LT ? "rgba(124,92,240,0)" : "rgba(255,255,255,0)");
       ctx.fillStyle = g2; ctx.beginPath(); ctx.moveTo(topX - 8, -10); ctx.lineTo(topX + 8, -10); ctx.lineTo(stCx + half * 0.35, floorY); ctx.lineTo(stCx - half * 0.35, floorY); ctx.closePath(); ctx.fill();
       // the pool of light on the floor
       ctx.save(); ctx.translate(stCx, floorY); ctx.scale(1, 0.16);
@@ -104,7 +108,7 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
       // the shadow, tighter when the state rises
       ctx.save(); ctx.translate(stCx, floorY); ctx.scale(1, 0.12);
       const sh = ctx.createRadialGradient(0, 0, 0, 0, 0, stW * 0.42);
-      sh.addColorStop(0, `rgba(0,0,0,${0.55 - bob * 0.02})`); sh.addColorStop(1, "rgba(0,0,0,0)");
+      sh.addColorStop(0, `rgba(${LT ? "40,20,80" : "0,0,0"},${(LT ? 0.3 : 0.55) - bob * 0.02})`); sh.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = sh; ctx.beginPath(); ctx.arc(0, 0, stW * 0.42 * (1 + bob / 70), 0, 6.283); ctx.fill(); ctx.restore();
 
       // the pixels
@@ -145,7 +149,7 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
         const rel = (m.y + 10) / (floorY + 10), hw = 34 + (half - 34) * Math.max(0, Math.min(1, rel)), cx = topX + (stCx - topX) * rel;
         const inBeam = Math.abs(m.x - cx) < hw && m.y < floorY;
         ctx.globalAlpha = m.a * (inBeam ? 1.6 : 0.45) * (0.7 + 0.3 * Math.sin(t / 700 + m.ph));
-        ctx.fillStyle = inBeam ? "#fff" : `rgb(${br},${bg},${bb})`;
+        ctx.fillStyle = inBeam && !LT ? "#fff" : `rgb(${br},${bg},${bb})`;
         ctx.fillRect(m.x, m.y, m.s, m.s);
       }
       ctx.globalAlpha = 1;

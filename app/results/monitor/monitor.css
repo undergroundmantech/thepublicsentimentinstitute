@@ -152,3 +152,37 @@
 .mon-right { animation-delay: .1s; } .mon-left > *:nth-child(2) { animation-delay: .08s; } .mon-left > *:nth-child(3) { animation-delay: .16s; } .mon-left > *:nth-child(4) { animation-delay: .24s; }
 @keyframes mon-panel { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .mon *, .mon *::after { animation: none !important; transition: none !important; } }
+
+/* Light theme: the same room by day. A pale globe, white glass panels, ink type, a deeper gold. */
+html[data-theme="light"] .mon { background: radial-gradient(120% 90% at 55% 45%, #f4f2fb 0%, #e9e5f5 60%, #dfdaee 100%); }
+html[data-theme="light"] .mon-reticle i { background: #b07a00; }
+html[data-theme="light"] .mon .glass, html[data-theme="light"] .mon-left > *, html[data-theme="light"] .mon-right, html[data-theme="light"] .mon-title,
+html[data-theme="light"] .mon-seg, html[data-theme="light"] .mon-hud, html[data-theme="light"] .mon-zoom button { background: rgba(255, 255, 255, .82); border-color: rgba(17, 0, 25, .1); box-shadow: 0 16px 36px -26px rgba(40, 20, 80, .5); }
+html[data-theme="light"] .mon-title h1, html[data-theme="light"] .mon-ch .h b, html[data-theme="light"] .mon-rh b, html[data-theme="light"] .mon-zoom button,
+html[data-theme="light"] .mon-hud .vin, html[data-theme="light"] .mon-brief h3, html[data-theme="light"] .mon-brief .nums b, html[data-theme="light"] .mon-brief .proj b,
+html[data-theme="light"] .mon-brief .cands td, html[data-theme="light"] .mon-brief .cands td:nth-child(3), html[data-theme="light"] .mon-tip h4, html[data-theme="light"] .mon-tip b,
+html[data-theme="light"] .mon-tc td, html[data-theme="light"] .mon-tc td:nth-child(3), html[data-theme="light"] .mon-tip .meta b { color: var(--ink); }
+html[data-theme="light"] .mon-seg button[aria-pressed="true"] { color: var(--ink); background: rgba(17, 0, 25, .08); }
+html[data-theme="light"] .mon-ch .bar, html[data-theme="light"] .mon-brief .cands .bar { background: rgba(17, 0, 25, .07); }
+html[data-theme="light"] .mon-ch .bar .d { background: var(--dem); } html[data-theme="light"] .mon-ch .bar .r { background: var(--gop); }
+html[data-theme="light"] .mon-ch .bar .mid { background: rgba(17, 0, 25, .45); }
+html[data-theme="light"] .mon-ch .bar::after { background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, .6) 50%, transparent 65%); }
+html[data-theme="light"] .mon-ch .n .d, html[data-theme="light"] .mon-row .d { color: var(--dem); }
+html[data-theme="light"] .mon-ch .n .r, html[data-theme="light"] .mon-row .r { color: var(--gop); }
+html[data-theme="light"] .mon-row .lv.i { color: var(--ind); }
+html[data-theme="light"] .mon-feed a:hover, html[data-theme="light"] .mon-feed li button:hover, html[data-theme="light"] .mon-row:hover { color: var(--ink); }
+html[data-theme="light"] .mon-row:hover { background: rgba(17, 0, 25, .05); }
+html[data-theme="light"] .mon-row.on { background: rgba(176, 122, 0, .1); }
+html[data-theme="light"] .mon-rh button, html[data-theme="light"] .mon-brief .x { color: var(--ink2); background: rgba(17, 0, 25, .05); border-color: rgba(17, 0, 25, .12); }
+html[data-theme="light"] .mon-test { border-color: rgba(176, 122, 0, .45); background: rgba(224, 162, 28, .12); color: #6b4a00 !important; }
+html[data-theme="light"] .mon-desk, html[data-theme="light"] .mon:fullscreen .mon-desk { background: var(--bg); border-left-color: rgba(17, 0, 25, .12); box-shadow: -40px 0 80px -40px rgba(40, 20, 80, .45); }
+html[data-theme="light"] .mon-tip { background: rgba(255, 255, 255, .98); border-color: rgba(17, 0, 25, .12); box-shadow: 0 20px 50px -22px rgba(40, 20, 80, .5); }
+html[data-theme="light"] .mon-tc td, html[data-theme="light"] .mon-brief .cands td { border-top-color: rgba(17, 0, 25, .08); }
+html[data-theme="light"] .mon-brief { border-color: rgba(17, 0, 25, .1); background: linear-gradient(170deg, #fff, #f4f1fb); box-shadow: 0 20px 40px -26px rgba(40, 20, 80, .5); }
+html[data-theme="light"] .mon-brief .st { background: rgba(17, 0, 25, .06); }
+html[data-theme="light"] .mon-brief .st.live { color: #8a0f28; background: rgba(232, 38, 75, .14); }
+html[data-theme="light"] .mon-brief .st.called { color: #05542f; background: #bff0d6; }
+html[data-theme="light"] .mon-brief .nums div { background: rgba(17, 0, 25, .04); }
+html[data-theme="light"] .mon-toast { border-color: rgba(176, 122, 0, .55); background: linear-gradient(120deg, #fff8e6, #f3eefc); box-shadow: 0 0 0 6px rgba(224, 162, 28, .12), 0 30px 60px -24px rgba(40, 20, 80, .5); color: var(--ink); }
+html[data-theme="light"] .mon-toast::after { background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .8) 50%, transparent 70%); }
+html[data-theme="light"] .mon-toast .w { color: #6b4a00; }

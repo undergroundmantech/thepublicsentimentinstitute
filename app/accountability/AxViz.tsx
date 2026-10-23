@@ -52,7 +52,7 @@ export function Chambers({ dots }: { dots: Dot[] }) {
     <figure className={`ax-hemi ${title === "House" ? "h" : "s"}`}>
       <svg viewBox="-1.06 -1.06 2.12 1.16" role="img" aria-label={`${title}, every member as a seat, from the lowest index on the left to the highest on the right`}>
         {l.map((p) => (
-          <circle key={p.d.slug} cx={p.x} cy={p.y} r={r} fill={p.d.index == null ? "rgba(255,255,255,.12)" : by === "grade" ? GC[p.d.grade ?? "F"] : PC[p.d.party]}
+          <circle key={p.d.slug} cx={p.x} cy={p.y} r={r} fill={p.d.index == null ? "rgba(var(--line-rgb),.12)" : by === "grade" ? GC[p.d.grade ?? "F"] : PC[p.d.party]}
             className={hov?.d.slug === p.d.slug ? "on" : ""}
             onMouseMove={(e) => setHov({ d: p.d, x: e.clientX, y: e.clientY })} onMouseLeave={() => setHov(null)} onClick={() => router.push(`/accountability/${p.d.slug}`)} />
         ))}
