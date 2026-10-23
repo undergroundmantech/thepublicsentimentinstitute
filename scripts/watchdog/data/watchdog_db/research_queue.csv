@@ -1,0 +1,1223 @@
+priority,person_id,name,party,state,office_sought,district,rating,status,edges
+1,AK-bernadette-wilson,Bernadette Wilson,Republican,AK,Governor,,Cook: Lean D,queued,0
+1,AK-dave-bronson,Dave Bronson,Republican,AK,Governor,,Cook: Lean D,queued,0
+1,AK-jonathan-kreiss-tomkins,Jonathan Kreiss-Tomkins,Democrat,AK,Governor,,Cook: Lean D,queued,0
+1,AK-mike-dunleavy,Mike Dunleavy,Republican,AK,,,,queued,0
+1,AK-treg-taylor,Treg Taylor,Republican,AK,Governor,,Cook: Lean D,queued,0
+1,AL-doug-jones,Doug Jones,Democrat,AL,Governor,,Cook: Solid Republican,queued,0
+1,AL-kay-ivey,Kay Ivey,Republican,AL,,,,queued,0
+1,AL-tommy-tuberville,Tommy Tuberville,Republican,AL,Governor,,Cook: Solid Republican,queued,0
+1,AR-fredrick-love,Fredrick Love,Democrat,AR,Governor,,Cook: Solid Republican,queued,0
+1,AR-sarah-huckabee-sanders,Sarah Huckabee Sanders,Republican,AR,Governor,,Cook: Solid Republican,queued,0
+1,CA-gavin-newsom,Gavin Newsom,Democrat,CA,,,,queued,0
+1,CA-steve-hilton,Steve Hilton,Republican,CA,Governor,,Cook: Solid D,queued,0
+1,CA-xavier-becerra,Xavier Becerra,Democrat,CA,Governor,,Cook: Solid D,queued,0
+1,CO-greg-lopez,Greg Lopez,Unaffiliated,CO,Governor,,Cook: Solid Democrat,queued,0
+1,CO-jared-polis,Jared Polis,Democrat,CO,,,,queued,0
+1,CO-phil-weiser,Phil Weiser,Democrat,CO,Governor,,Cook: Solid Democrat,queued,0
+1,CO-victor-marx,Victor Marx,Republican,CO,Governor,,Cook: Solid Democrat,queued,0
+1,CT-ned-lamont,Ned Lamont,Democrat,CT,Governor,,Cook: Solid D,queued,0
+1,CT-ryan-fazio,Ryan Fazio,Republican,CT,Governor,,Cook: Solid D,queued,0
+1,DE-matt-meyer,Matt Meyer,Democrat,DE,,,,queued,0
+1,FL-david-jolly,David Jolly,Democrat,FL,Governor,,Cook: Lean Republican,queued,0
+1,FL-ron-desantis,Ron DeSantis,Republican,FL,,,,queued,0
+1,GA-brian-kemp,Brian Kemp,Republican,GA,,,,queued,0
+1,HI-gary-cordery,Gary Cordery,Republican,HI,Governor,,Cook: Solid D,queued,0
+1,HI-josh-green,Josh Green,Democrat,HI,Governor,,Cook: Solid D,queued,0
+1,IA-kim-reynolds,Kim Reynolds,Republican,IA,,,,queued,0
+1,IA-rob-sand,Rob Sand,Democrat,IA,Governor,,Cook: Lean D,queued,0
+1,IA-zach-lahn,Zach Lahn,Republican,IA,Governor,,Cook: Lean D,queued,0
+1,ID-brad-little,Brad Little,Republican,ID,Governor,,Cook: Solid Republican,queued,0
+1,ID-john-stegner,John Stegner,Independent,ID,Governor,,Cook: Solid Republican,queued,0
+1,ID-terri-pickens,Terri Pickens,Democrat,ID,Governor,,Cook: Solid Republican,queued,0
+1,IL-darren-bailey,Darren Bailey,Republican,IL,Governor,,Cook: Solid D,queued,0
+1,IL-jb-pritzker,JB Pritzker,Democrat,IL,Governor,,Cook: Solid D,queued,0
+1,IN-mike-braun,Mike Braun,Republican,IN,,,,queued,0
+1,KS-cindy-holscher,Cindy Holscher,Democrat,KS,Governor,,Cook: Lean Republican,queued,0
+1,KS-laura-kelly,Laura Kelly,Democrat,KS,,,,queued,0
+1,KS-ty-masterson,Ty Masterson,Republican,KS,Governor,,Cook: Lean Republican,queued,0
+1,KY-andy-beshear,Andy Beshear,Democrat,KY,,,,queued,0
+1,LA-jeff-landry,Jeff Landry,Republican,LA,,,,queued,0
+1,MA-maura-healey,Maura Healey,Democrat,MA,Governor,,Cook: Solid D,queued,0
+1,MA-mike-minogue,Mike Minogue,Republican,MA,Governor,,Cook: Solid D,queued,0
+1,MD-dan-cox,Dan Cox,Republican,MD,Governor,,Cook: Solid D,queued,0
+1,MD-wes-moore,Wes Moore,Democrat,MD,Governor,,Cook: Solid D,queued,0
+1,ME-bobby-charles,Bobby Charles,Republican,ME,Governor,,Cook: Solid D,queued,0
+1,ME-hannah-pingree,Hannah Pingree,Democrat,ME,Governor,,Cook: Solid D,queued,0
+1,ME-janet-mills,Janet Mills,Democrat,ME,,,,queued,0
+1,ME-rick-bennett,Rick Bennett,Independent,ME,Governor,,Cook: Solid D,queued,0
+1,MI-gretchen-whitmer,Gretchen Whitmer,Democrat,MI,,,,queued,0
+1,MN-amy-klobuchar,Amy Klobuchar,Democrat,MN,Governor,,Cook: Solid D,queued,0
+1,MN-lisa-demuth,Lisa Demuth,Republican,MN,Governor,,Cook: Solid D,queued,0
+1,MN-tim-walz,Tim Walz,Democrat,MN,,,,queued,0
+1,MO-mike-kehoe,Mike Kehoe,Republican,MO,,,,queued,0
+1,MS-tate-reeves,Tate Reeves,Republican,MS,,,,queued,0
+1,MT-greg-gianforte,Greg Gianforte,Republican,MT,,,,queued,0
+1,NC-josh-stein,Josh Stein,Democrat,NC,,,,queued,0
+1,ND-kelly-armstrong,Kelly Armstrong,Republican,ND,,,,queued,0
+1,NE-jim-pillen,Jim Pillen,Republican,NE,Governor,,Cook: Likely Republican,queued,0
+1,NE-lynne-walz,Lynne Walz,Democrat,NE,Governor,,Cook: Likely Republican,queued,0
+1,NH-cinde-warmington,Cinde Warmington,Democrat,NH,Governor,,Cook: Likely R,queued,0
+1,NH-kelly-ayotte,Kelly Ayotte,Republican,NH,Governor,,Cook: Likely R,queued,0
+1,NJ-mikie-sherrill,Mikie Sherrill,Democrat,NJ,,,,queued,0
+1,NM-deb-haaland,Deb Haaland,Democrat,NM,Governor,,Cook: Solid Democratic,queued,0
+1,NM-gregg-hull,Gregg Hull,Republican,NM,Governor,,Cook: Solid Democratic,queued,0
+1,NM-michelle-lujan-grisham,Michelle Lujan Grisham,Democrat,NM,,,,queued,0
+1,NV-aaron-ford,Aaron Ford,Democrat,NV,Governor,,Cook: Toss Up,queued,0
+1,NV-joe-lombardo,Joe Lombardo,Republican,NV,Governor,,Cook: Toss Up,queued,0
+1,NY-bruce-blakeman,Bruce Blakeman,Republican,NY,Governor,,Cook: Solid D,queued,0
+1,NY-kathy-hochul,Kathy Hochul,Democrat,NY,Governor,,Cook: Solid D,queued,0
+1,OH-mike-dewine,Mike DeWine,Republican,OH,,,,queued,0
+1,OK-cyndi-munson,Cyndi Munson,Democrat,OK,Governor,,,queued,0
+1,OK-kevin-stitt,Kevin Stitt,Republican,OK,,,,queued,0
+1,OK-mike-mazzei,Mike Mazzei,Republican,OK,Governor,,,queued,0
+1,OR-christine-drazan,Christine Drazan,Republican,OR,Governor,,Cook: Lean D,queued,0
+1,OR-tina-kotek,Tina Kotek,Democrat,OR,Governor,,Cook: Lean D,queued,0
+1,RI-aaron-guckian,Aaron Guckian,Republican,RI,Governor,,Cook: Solid D,queued,0
+1,RI-dan-mckee,Dan McKee,Democrat,RI,,,,queued,0
+1,RI-helena-foulkes,Helena Foulkes,Democrat,RI,Governor,,Cook: Solid D,queued,0
+1,RI-ken-block,Ken Block,Independent,RI,Governor,,Cook: Solid D,queued,0
+1,SC-alan-wilson,Alan Wilson,Republican,SC,Governor,,Cook: Solid Republican,queued,0
+1,SC-henry-mcmaster,Henry McMaster,Republican,SC,,,,queued,0
+1,SC-jermaine-johnson,Jermaine Johnson,Democrat,SC,Governor,,Cook: Solid Republican,queued,0
+1,SD-dan-ahlers,Dan Ahlers,Democrat,SD,Governor,,Cook: Solid Republican,queued,0
+1,SD-larry-rhoden,Larry Rhoden,Republican,SD,Governor,,Cook: Solid Republican,queued,0
+1,TN-bill-lee,Bill Lee,Republican,TN,,,,queued,0
+1,TN-jerri-green,Jerri Green,Democrat,TN,Governor,,Cook: Solid R; Sabato: Safe R; Inside: Solid R,queued,0
+1,TN-marsha-blackburn,Marsha Blackburn,Republican,TN,Governor,,Cook: Solid R; Sabato: Safe R; Inside: Solid R,queued,0
+1,TX-gina-hinojosa,Gina Hinojosa,Democrat,TX,Governor,,Cook: Lean Republican,queued,0
+1,TX-greg-abbott,Greg Abbott,Republican,TX,Governor,,Cook: Lean Republican,queued,0
+1,UT-spencer-cox,Spencer Cox,Republican,UT,,,,queued,0
+1,VA-abigail-spanberger,Abigail Spanberger,Democrat,VA,,,,queued,0
+1,VI-stacey-e-plaskett,Stacey E. Plaskett,Democrat,VI,Governor,,,queued,0
+1,VT-amanda-janoo,Amanda Janoo,Democrat,VT,Governor,,Cook: Likely R,queued,0
+1,VT-phil-scott,Phil Scott,Republican,VT,Governor,,Cook: Likely R,queued,0
+1,WA-bob-ferguson,Bob Ferguson,Democrat,WA,,,,queued,0
+1,WI-tony-evers,Tony Evers,Democrat,WI,,,,queued,0
+1,WV-patrick-morrisey,Patrick Morrisey,Republican,WV,,,,queued,0
+1,WY-eric-barlow,Eric Barlow,Republican,WY,Governor,,Cook: Solid Republican,queued,0
+1,WY-ken-casner,Ken Casner,Democrat,WY,Governor,,Cook: Solid Republican,queued,0
+1,WY-mark-gordon,Mark Gordon,Republican,WY,,,,queued,0
+2,AK-dan-sullivan,Dan Sullivan,Republican,AK,U.S. Senate,,Cook: Toss Up,queued,0
+2,AK-daniel-j-sullivan-jr,Daniel J. Sullivan Jr.,Republican,AK,U.S. Senate,,Cook: Toss Up,queued,0
+2,AK-gerald-heikes,Gerald Heikes,Republican,AK,U.S. Senate,,Cook: Toss Up,queued,0
+2,AK-lisa-murkowski,Lisa Murkowski,Republican,AK,,,,queued,0
+2,AK-mary-peltola,Mary Peltola,Democrat,AK,U.S. Senate,,Cook: Toss Up,queued,0
+2,AL-barry-moore,Barry Moore,Republican,AL,U.S. Senate,,Cook: Solid Republican,queued,0
+2,AL-everett-wess,Everett Wess,Democrat,AL,U.S. Senate,,Cook: Solid Republican,queued,0
+2,AL-katie-boyd-britt,Katie Boyd Britt,Republican,AL,,,,queued,0
+2,AR-hallie-shoffner,Hallie Shoffner,Democrat,AR,U.S. Senate,,Cook: Solid Republican,queued,0
+2,AR-john-boozman,John Boozman,Republican,AR,,,,queued,0
+2,AR-tom-cotton,Tom Cotton,Republican,AR,U.S. Senate,,Cook: Solid Republican,queued,0
+2,AZ-mark-kelly,Mark Kelly,Democrat,AZ,,,,queued,0
+2,AZ-ruben-gallego,Ruben Gallego,Democrat,AZ,,,,queued,0
+2,CA-adam-b-schiff,Adam B. Schiff,Democrat,CA,,,,queued,0
+2,CA-alex-padilla,Alex Padilla,Democrat,CA,,,,queued,0
+2,CO-john-w-hickenlooper,John W. Hickenlooper,Democrat,CO,U.S. Senate,,Cook: Solid Democrat,queued,0
+2,CO-mark-baisley,Mark Baisley,Republican,CO,U.S. Senate,,Cook: Solid Democrat,queued,0
+2,CO-michael-f-bennet,Michael F. Bennet,Democrat,CO,,,,queued,0
+2,CT-christopher-murphy,Christopher Murphy,Democrat,CT,,,,queued,0
+2,CT-richard-blumenthal,Richard Blumenthal,Democrat,CT,,,,queued,0
+2,DE-christopher-a-coons,Christopher A. Coons,Democrat,DE,U.S. Senate,,Cook: Solid D,queued,0
+2,DE-lisa-blunt-rochester,Lisa Blunt Rochester,Democrat,DE,,,,queued,0
+2,DE-michael-katz,Michael Katz,Republican,DE,U.S. Senate,,Cook: Solid D,queued,0
+2,FL-angie-nixon,Angie Nixon,Democrat,FL,U.S. Senate special,,Cook: Solid Republican,queued,0
+2,FL-ashley-moody,Ashley Moody,Republican,FL,U.S. Senate special,,Cook: Solid Republican,queued,0
+2,FL-rick-scott,Rick Scott,Republican,FL,,,,queued,0
+2,GA-jon-ossoff,Jon Ossoff,Democrat,GA,U.S. Senate,,Cook: Likely Democrat,queued,0
+2,GA-mike-collins,Mike Collins,Republican,GA,U.S. Senate,,Cook: Likely Democrat,queued,0
+2,GA-raphael-g-warnock,Raphael G. Warnock,Democrat,GA,,,,queued,0
+2,HI-brian-schatz,Brian Schatz,Democrat,HI,,,,queued,0
+2,HI-mazie-k-hirono,Mazie K. Hirono,Democrat,HI,,,,queued,0
+2,IA-ashley-hinson,Ashley Hinson,Republican,IA,U.S. Senate,,Cook: Toss Up; Sabato: Toss-up; IE: Tilt R,queued,0
+2,IA-chuck-grassley,Chuck Grassley,Republican,IA,,,,queued,0
+2,IA-joni-ernst,Joni Ernst,Republican,IA,,,,queued,0
+2,IA-josh-turek,Josh Turek,Democrat,IA,U.S. Senate,,Cook: Toss Up; Sabato: Toss-up; IE: Tilt R,queued,0
+2,ID-james-e-risch,James E. Risch,Republican,ID,U.S. Senate,,Cook: Solid Republican,queued,0
+2,ID-mike-crapo,Mike Crapo,Republican,ID,,,,queued,0
+2,ID-todd-achilles,Todd Achilles,Independent,ID,U.S. Senate,,Cook: Solid Republican,queued,0
+2,IL-don-tracy,Don Tracy,Republican,IL,U.S. Senate,,Cook: Solid D; Sabato: Safe D; IE: Solid D,queued,0
+2,IL-juliana-stratton,Juliana Stratton,Democrat,IL,U.S. Senate,,Cook: Solid D; Sabato: Safe D; IE: Solid D,queued,0
+2,IL-richard-j-durbin,Richard J. Durbin,Democrat,IL,,,,queued,0
+2,IL-tammy-duckworth,Tammy Duckworth,Democrat,IL,,,,queued,0
+2,IN-jim-banks,Jim Banks,Republican,IN,,,,queued,0
+2,IN-todd-young,Todd Young,Republican,IN,,,,queued,0
+2,KS-adam-hamilton,Adam Hamilton,Democrat,KS,U.S. Senate,,Cook: Toss Up,queued,0
+2,KS-jerry-moran,Jerry Moran,Republican,KS,,,,queued,0
+2,KS-roger-marshall,Roger Marshall,Republican,KS,U.S. Senate,,Cook: Toss Up,queued,0
+2,KY-andy-barr,Andy Barr,Republican,KY,U.S. Senate,,Cook: Solid R,queued,0
+2,KY-charles-booker,Charles Booker,Democrat,KY,U.S. Senate,,Cook: Solid R,queued,0
+2,KY-mitch-mcconnell,Mitch McConnell,Republican,KY,,,,queued,0
+2,KY-rand-paul,Rand Paul,Republican,KY,,,,queued,0
+2,LA-bill-cassidy,Bill Cassidy,Republican,LA,,,,queued,0
+2,LA-jamie-davis,Jamie Davis,Democrat,LA,U.S. Senate,,,queued,0
+2,LA-john-kennedy,John Kennedy,Republican,LA,,,,queued,0
+2,LA-julia-letlow,Julia Letlow,Republican,LA,U.S. Senate,,,queued,0
+2,MA-edward-j-markey,Edward J. Markey,Democrat,MA,U.S. Senate,,Cook: Solid D,queued,0
+2,MA-elizabeth-warren,Elizabeth Warren,Democrat,MA,,,,queued,0
+2,MA-john-deaton,John Deaton,Republican,MA,U.S. Senate,,Cook: Solid D,queued,0
+2,MD-angela-d-alsobrooks,Angela D. Alsobrooks,Democrat,MD,,,,queued,0
+2,MD-chris-van-hollen,Chris Van Hollen,Democrat,MD,,,,queued,0
+2,ME-angus-s-king-jr,"Angus S. King, Jr.",Independent,ME,,,,queued,0
+2,ME-susan-m-collins,Susan M. Collins,Republican,ME,U.S. Senate,,Cook: Toss Up,queued,0
+2,ME-troy-jackson,Troy Jackson,Democrat,ME,U.S. Senate,,Cook: Toss Up,queued,0
+2,MI-abdul-el-sayed,Abdul El-Sayed,Democrat,MI,U.S. Senate,,Cook: Toss Up,queued,0
+2,MI-elissa-slotkin,Elissa Slotkin,Democrat,MI,,,,queued,0
+2,MI-gary-c-peters,Gary C. Peters,Democrat,MI,,,,queued,0
+2,MI-mike-rogers,Mike Rogers,Republican,MI,U.S. Senate,,Cook: Toss Up,queued,0
+2,MN-michele-tafoya,Michele Tafoya,Republican,MN,U.S. Senate,,Cook: Lean D; Sabato: Lean D; IE: Lean D,queued,0
+2,MN-peggy-flanagan,Peggy Flanagan,Democrat,MN,U.S. Senate,,Cook: Lean D; Sabato: Lean D; IE: Lean D,queued,0
+2,MN-tina-smith,Tina Smith,Democrat,MN,,,,queued,0
+2,MO-eric-schmitt,Eric Schmitt,Republican,MO,,,,queued,0
+2,MO-josh-hawley,Josh Hawley,Republican,MO,,,,queued,0
+2,MS-cindy-hyde-smith,Cindy Hyde-Smith,Republican,MS,U.S. Senate,,Cook: Likely Republican,queued,0
+2,MS-roger-f-wicker,Roger F. Wicker,Republican,MS,,,,queued,0
+2,MS-scott-colom,Scott Colom,Democrat,MS,U.S. Senate,,Cook: Likely Republican,queued,0
+2,MS-ty-pinkins,Ty Pinkins,Independent,MS,U.S. Senate,,Cook: Likely Republican,queued,0
+2,MT-alani-bankhead,Alani Bankhead,Democrat,MT,U.S. Senate,,Cook: Solid Republican,queued,0
+2,MT-kurt-alme,Kurt Alme,Republican,MT,U.S. Senate,,Cook: Solid Republican,queued,0
+2,MT-seth-bodnar,Seth Bodnar,Independent,MT,U.S. Senate,,Cook: Solid Republican,queued,0
+2,MT-steve-daines,Steve Daines,Republican,MT,,,,queued,0
+2,MT-tim-sheehy,Tim Sheehy,Republican,MT,,,,queued,0
+2,NC-michael-whatley,Michael Whatley,Republican,NC,U.S. Senate,,Cook: Likely D; Sabato: Lean D; Inside: Lean D,queued,0
+2,NC-roy-cooper,Roy Cooper,Democrat,NC,U.S. Senate,,Cook: Likely D; Sabato: Lean D; Inside: Lean D,queued,0
+2,NC-ted-budd,Ted Budd,Republican,NC,,,,queued,0
+2,NC-thom-tillis,Thom Tillis,Republican,NC,,,,queued,0
+2,ND-john-hoeven,John Hoeven,Republican,ND,,,,queued,0
+2,ND-kevin-cramer,Kevin Cramer,Republican,ND,,,,queued,0
+2,NE-dan-osborn,Dan Osborn,Independent,NE,U.S. Senate,,Cook: Likely Republican,queued,0
+2,NE-deb-fischer,Deb Fischer,Republican,NE,,,,queued,0
+2,NE-pete-ricketts,Pete Ricketts,Republican,NE,U.S. Senate,,Cook: Likely Republican,queued,0
+2,NH-chris-pappas,Chris Pappas,Democrat,NH,U.S. Senate,,Cook: Lean D,queued,0
+2,NH-jeanne-shaheen,Jeanne Shaheen,Democrat,NH,,,,queued,0
+2,NH-john-e-sununu,John E. Sununu,Republican,NH,U.S. Senate,,Cook: Lean D,queued,0
+2,NH-margaret-wood-hassan,Margaret Wood Hassan,Democrat,NH,,,,queued,0
+2,NJ-andy-kim,Andy Kim,Democrat,NJ,,,,queued,0
+2,NJ-cory-a-booker,Cory A. Booker,Democrat,NJ,U.S. Senate,,Cook: Solid D,queued,0
+2,NJ-justin-murphy,Justin Murphy,Republican,NJ,U.S. Senate,,Cook: Solid D,queued,0
+2,NM-ben-ray-lujan,Ben Ray Luján,Democrat,NM,U.S. Senate,,Cook: Solid Democratic,queued,0
+2,NM-larry-e-marker,Larry E. Marker,Republican,NM,U.S. Senate,,Cook: Solid Democratic,queued,0
+2,NM-martin-heinrich,Martin Heinrich,Democrat,NM,,,,queued,0
+2,NV-catherine-cortez-masto,Catherine Cortez Masto,Democrat,NV,,,,queued,0
+2,NV-jacky-rosen,Jacky Rosen,Democrat,NV,,,,queued,0
+2,NY-charles-e-schumer,Charles E. Schumer,Democrat,NY,,,,queued,0
+2,NY-kirsten-e-gillibrand,Kirsten E. Gillibrand,Democrat,NY,,,,queued,0
+2,OH-bernie-moreno,Bernie Moreno,Republican,OH,,,,queued,0
+2,OH-jon-husted,Jon Husted,Republican,OH,U.S. Senate special,,Cook: Toss Up,queued,0
+2,OH-sherrod-brown,Sherrod Brown,Democrat,OH,U.S. Senate special,,Cook: Toss Up,queued,0
+2,OK-alan-armstrong,Alan Armstrong,Republican,OK,,,,queued,0
+2,OK-james-lankford,James Lankford,Republican,OK,,,,queued,0
+2,OK-kevin-hern,Kevin Hern,Republican,OK,U.S. Senate,,,queued,0
+2,OK-n-kiyla-jasmine-thomas,N'Kiyla Jasmine Thomas,Democrat,OK,U.S. Senate,,,queued,0
+2,OR-david-brock-smith,David Brock Smith,Republican,OR,U.S. Senate,,Cook: Solid D,queued,0
+2,OR-jeff-merkley,Jeff Merkley,Democrat,OR,U.S. Senate,,Cook: Solid D,queued,0
+2,OR-ron-wyden,Ron Wyden,Democrat,OR,,,,queued,0
+2,PA-david-mccormick,David McCormick,Republican,PA,,,,queued,0
+2,PA-john-fetterman,John Fetterman,Democrat,PA,,,,queued,0
+2,RI-jack-reed,Jack Reed,Democrat,RI,U.S. Senate,,Cook: Solid D,queued,0
+2,RI-ray-mckay,Ray McKay,Republican,RI,U.S. Senate,,Cook: Solid D,queued,0
+2,RI-sheldon-whitehouse,Sheldon Whitehouse,Democrat,RI,,,,queued,0
+2,SC-annie-andrews,Annie Andrews,Democrat,SC,U.S. Senate,,Cook: Lean Republican,queued,0
+2,SC-darline-graham,Darline Graham,Republican,SC,U.S. Senate,,Cook: Lean Republican,queued,0
+2,SC-tim-scott,Tim Scott,Republican,SC,,,,queued,0
+2,SD-brian-bengs,Brian Bengs,Independent,SD,U.S. Senate,,Cook: Solid Republican,queued,0
+2,SD-john-thune,John Thune,Republican,SD,,,,queued,0
+2,SD-mike-rounds,Mike Rounds,Republican,SD,U.S. Senate,,Cook: Solid Republican,queued,0
+2,TN-bill-hagerty,Bill Hagerty,Republican,TN,U.S. Senate,,Cook: Solid R; Sabato: Safe R; Inside: Solid R,queued,0
+2,TN-marquita-bradshaw,Marquita Bradshaw,Democrat,TN,U.S. Senate,,Cook: Solid R; Sabato: Safe R; Inside: Solid R,queued,0
+2,TX-james-talarico,James Talarico,Democrat,TX,U.S. Senate,,Cook: Toss-up,queued,0
+2,TX-john-cornyn,John Cornyn,Republican,TX,,,,queued,0
+2,TX-ken-paxton,Ken Paxton,Republican,TX,U.S. Senate,,Cook: Toss-up,queued,0
+2,TX-ted-cruz,Ted Cruz,Republican,TX,,,,queued,0
+2,UT-john-r-curtis,John R. Curtis,Republican,UT,,,,queued,0
+2,UT-mike-lee,Mike Lee,Republican,UT,,,,queued,0
+2,VA-bert-mizusawa,Bert Mizusawa,Republican,VA,U.S. Senate,,Cook: Solid D; Sabato: Safe D; Inside: Solid D,queued,0
+2,VA-mark-r-warner,Mark R. Warner,Democrat,VA,U.S. Senate,,Cook: Solid D; Sabato: Safe D; Inside: Solid D,queued,0
+2,VA-tim-kaine,Tim Kaine,Democrat,VA,,,,queued,0
+2,VT-bernard-sanders,Bernard Sanders,Independent,VT,,,,queued,0
+2,VT-peter-welch,Peter Welch,Democrat,VT,,,,queued,0
+2,WA-maria-cantwell,Maria Cantwell,Democrat,WA,,,,queued,0
+2,WA-patty-murray,Patty Murray,Democrat,WA,,,,queued,0
+2,WI-ron-johnson,Ron Johnson,Republican,WI,,,,queued,0
+2,WI-tammy-baldwin,Tammy Baldwin,Democrat,WI,,,,queued,0
+2,WV-james-c-justice,James C. Justice,Republican,WV,,,,queued,0
+2,WV-rachel-fetty-anderson,Rachel Fetty Anderson,Democrat,WV,U.S. Senate,,Cook: Solid R,queued,0
+2,WV-shelley-moore-capito,Shelley Moore Capito,Republican,WV,U.S. Senate,,Cook: Solid R,queued,0
+2,WY-cynthia-m-lummis,Cynthia M. Lummis,Republican,WY,,,,queued,0
+2,WY-harriet-m-hageman,Harriet M. Hageman,Republican,WY,U.S. Senate,,Cook: Solid Republican,queued,0
+2,WY-jim-byrd,Jim Byrd,Democrat,WY,U.S. Senate,,Cook: Solid Republican,queued,0
+2,WY-john-barrasso,John Barrasso,Republican,WY,,,,queued,0
+3,AK-bill-hill,Bill Hill,Independent,AK,U.S. House,AL,Cook: Lean R,queued,0
+3,AK-eric-hafner,Eric Hafner,Democrat,AK,U.S. House,AL,Cook: Lean R,queued,0
+3,AK-jim-mcdermott,Jim McDermott,Libertarian,AK,U.S. House,AL,Cook: Lean R,queued,0
+3,AK-nicholas-j-begich-iii,Nicholas J. Begich III,Republican,AK,U.S. House,AL,Cook: Lean R,queued,0
+3,AL-rhett-marques,Rhett Marques,Republican,AL,U.S. House,2,Cook: Lean Republican,queued,0
+3,AL-shomari-figures,Shomari Figures,Democrat,AL,U.S. House,2,Cook: Lean Republican,queued,0
+3,AZ-amish-shah,Amish Shah,Democrat,AZ,U.S. House,1,Cook: Lean Democrat,queued,0
+3,AZ-elijah-crane,Elijah Crane,Republican,AZ,U.S. House,2,Cook: Lean Republican,queued,0
+3,AZ-jay-feely,Jay Feely,Republican,AZ,U.S. House,1,Cook: Lean Democrat,queued,0
+3,AZ-joanna-mendoza,JoAnna Mendoza,Democrat,AZ,U.S. House,6,Cook: Lean Democrat,queued,0
+3,AZ-jonathan-nez,Jonathan Nez,Democrat,AZ,U.S. House,2,Cook: Lean Republican,queued,0
+3,AZ-juan-ciscomani,Juan Ciscomani,Republican,AZ,U.S. House,6,Cook: Lean Democrat,queued,0
+3,CA-david-g-valadao,David G. Valadao,Republican,CA,U.S. House,22,Cook: Toss Up,queued,0
+3,CA-jim-desmond,Jim Desmond,Republican,CA,U.S. House,48,Cook: Lean D,queued,0
+3,CA-marni-von-wilpert,Marni von Wilpert,Democrat,CA,U.S. House,48,Cook: Lean D,queued,0
+3,CA-randy-villegas,Randy Villegas,Democrat,CA,U.S. House,22,Cook: Toss Up,queued,0
+3,CO-eileen-laubacher,Eileen Laubacher,Democrat,CO,U.S. House,4,Cook: Lean Republican,queued,0
+3,CO-gabe-evans,Gabe Evans,Republican,CO,U.S. House,8,Cook: Lean Democrat,queued,0
+3,CO-jeff-crank,Jeff Crank,Republican,CO,U.S. House,5,Cook: Lean Republican,queued,0
+3,CO-jessica-killin,Jessica Killin,Democrat,CO,U.S. House,5,Cook: Lean Republican,queued,0
+3,CO-lauren-boebert,Lauren Boebert,Republican,CO,U.S. House,4,Cook: Lean Republican,queued,0
+3,CO-manny-rutinel,Manny Rutinel,Democrat,CO,U.S. House,8,Cook: Lean Democrat,queued,0
+3,FL-anna-paulina-luna,Anna Paulina Luna,Republican,FL,U.S. House,13,Cook: Lean Republican,queued,0
+3,FL-casey-askar,Casey Askar,Republican,FL,U.S. House,22,Cook: Toss Up,queued,0
+3,FL-eliott-rodriguez,Eliott Rodriguez,Democrat,FL,U.S. House,27,Cook: Lean Republican,queued,0
+3,FL-jared-moskowitz,Jared Moskowitz,Democrat,FL,U.S. House,25,Cook: Lean Democrat,queued,0
+3,FL-kathy-castor,Kathy Castor,Democrat,FL,U.S. House,14,Cook: Toss Up,queued,0
+3,FL-leela-gray,Leela Gray,Democrat,FL,U.S. House,13,Cook: Lean Republican,queued,0
+3,FL-maria-elvira-salazar,Maria Elvira Salazar,Republican,FL,U.S. House,27,Cook: Lean Republican,queued,0
+3,FL-mike-beltran,Mike Beltran,Republican,FL,U.S. House,14,Cook: Toss Up,queued,0
+3,FL-pia-dandiya,Pia Dandiya,Democrat,FL,U.S. House,22,Cook: Toss Up,queued,0
+3,FL-scott-singer,Scott Singer,Republican,FL,U.S. House,25,Cook: Lean Democrat,queued,0
+3,IA-christina-bohannan,Christina Bohannan,Democrat,IA,U.S. House,1,Cook: Lean D,queued,0
+3,IA-joe-mitchell,Joe Mitchell,Republican,IA,U.S. House,2,Cook: Toss Up,queued,0
+3,IA-lindsay-james,Lindsay James,Democrat,IA,U.S. House,2,Cook: Toss Up,queued,0
+3,IA-mariannette-miller-meeks,Mariannette Miller-Meeks,Republican,IA,U.S. House,1,Cook: Lean D,queued,0
+3,IA-sarah-trone-garriott,Sarah Trone Garriott,Democrat,IA,U.S. House,3,Cook: Lean D,queued,0
+3,IA-zachary-nunn,Zachary Nunn,Republican,IA,U.S. House,3,Cook: Lean D,queued,0
+3,KY-ralph-alvarado,Ralph Alvarado,Republican,KY,U.S. House,6,Cook: Toss Up,queued,0
+3,KY-zach-dembo,Zach Dembo,Democrat,KY,U.S. House,6,Cook: Toss Up,queued,0
+3,ME-matt-dunlap,Matt Dunlap,Democrat,ME,U.S. House,2,Cook: Lean R,queued,0
+3,ME-paul-lepage,Paul LePage,Republican,ME,U.S. House,2,Cook: Lean R,queued,0
+3,MI-bill-huizenga,Bill Huizenga,Republican,MI,U.S. House,4,Cook: Toss Up,queued,0
+3,MI-christina-hines,Christina Hines,Democrat,MI,U.S. House,10,Cook: Toss Up,queued,0
+3,MI-michael-bouchard-jr,Michael Bouchard Jr.,Republican,MI,U.S. House,10,Cook: Toss Up,queued,0
+3,MI-sean-mccann,Sean McCann,Democrat,MI,U.S. House,4,Cook: Toss Up,queued,0
+3,MI-tom-barrett,Tom Barrett,Republican,MI,U.S. House,7,Cook: Toss Up,queued,0
+3,MI-william-lawrence,William Lawrence,Democrat,MI,U.S. House,7,Cook: Toss Up,queued,0
+3,MN-brad-finstad,Brad Finstad,Republican,MN,U.S. House,1,Cook: Lean R,queued,0
+3,MN-jake-johnson,Jake Johnson,Democrat,MN,U.S. House,1,Cook: Lean R,queued,0
+3,MT-aaron-flint,Aaron Flint,Republican,MT,U.S. House,1,Cook: Toss Up,queued,0
+3,MT-sam-forstag,Sam Forstag,Democrat,MT,U.S. House,1,Cook: Toss Up,queued,0
+3,NC-donald-g-davis,Donald G. Davis,Democrat,NC,U.S. House,1,Cook: Toss-up,queued,0
+3,NC-jamie-ager,Jamie Ager,Democrat,NC,U.S. House,11,Cook: Toss-up,queued,0
+3,NC-jennifer-balkcom,Jennifer Balkcom,Republican,NC,U.S. House,11,Cook: Toss-up,queued,0
+3,NC-laurie-buckhout,Laurie Buckhout,Republican,NC,U.S. House,1,Cook: Toss-up,queued,0
+3,NJ-rebecca-bennett,Rebecca Bennett,Democrat,NJ,U.S. House,7,Cook: Lean D,queued,0
+3,NJ-thomas-h-kean-jr,"Thomas H. Kean, Jr.",Republican,NJ,U.S. House,7,Cook: Lean D,queued,0
+3,NV-david-flippo,David Flippo,Republican,NV,U.S. House,2,Cook: Lean Republican,queued,0
+3,NV-teresa-benitez-thompson,Teresa Benitez-Thompson,Democrat,NV,U.S. House,2,Cook: Lean Republican,queued,0
+3,NY-anthony-constantino,Anthony Constantino,Republican,NY,U.S. House,21,Cook: Lean R,queued,0
+3,NY-blake-gendebien,Blake Gendebien,Democrat,NY,U.S. House,21,Cook: Lean R,queued,0
+3,NY-cait-conley,Cait Conley,Democrat,NY,U.S. House,17,Cook: Toss Up,queued,0
+3,NY-michael-lawler,Michael Lawler,Republican,NY,U.S. House,17,Cook: Toss Up,queued,0
+3,OH-brian-poindexter,Brian Poindexter,Democrat,OH,U.S. House,7,Cook: Toss Up,queued,0
+3,OH-derek-merrin,Derek Merrin,Republican,OH,U.S. House,9,Cook: Toss Up,queued,0
+3,OH-don-leonard,Don Leonard,Democrat,OH,U.S. House,15,Cook: Lean R,queued,0
+3,OH-kristina-knickerbocker,Kristina Knickerbocker,Democrat,OH,U.S. House,10,Cook: Lean R,queued,0
+3,OH-marcy-kaptur,Marcy Kaptur,Democrat,OH,U.S. House,9,Cook: Toss Up,queued,0
+3,OH-max-l-miller,Max L. Miller,Republican,OH,U.S. House,7,Cook: Toss Up,queued,0
+3,OH-michael-r-turner,Michael R. Turner,Republican,OH,U.S. House,10,Cook: Lean R,queued,0
+3,OH-mike-carey,Mike Carey,Republican,OH,U.S. House,15,Cook: Lean R,queued,0
+3,PA-bob-brooks,Bob Brooks,Democrat,PA,U.S. House,7,Cook: Lean D,queued,0
+3,PA-bob-harvie,Bob Harvie,Democrat,PA,U.S. House,1,Cook: Lean R,queued,0
+3,PA-brian-k-fitzpatrick,Brian K. Fitzpatrick,Republican,PA,U.S. House,1,Cook: Lean R,queued,0
+3,PA-janelle-stelson,Janelle Stelson,Democrat,PA,U.S. House,10,Cook: Lean D,queued,0
+3,PA-paige-cognetti,Paige Cognetti,Democrat,PA,U.S. House,8,Cook: Toss Up,queued,0
+3,PA-robert-p-bresnahan-jr,"Robert P. Bresnahan, Jr.",Republican,PA,U.S. House,8,Cook: Toss Up,queued,0
+3,PA-ryan-mackenzie,Ryan Mackenzie,Republican,PA,U.S. House,7,Cook: Lean D,queued,0
+3,PA-scott-perry,Scott Perry,Republican,PA,U.S. House,10,Cook: Lean D,queued,0
+3,SC-jenny-costa-honeycutt,Jenny Costa Honeycutt,Republican,SC,U.S. House,1,Cook: Lean Republican,queued,0
+3,SC-nancy-lacore,Nancy Lacore,Democrat,SC,U.S. House,1,Cook: Lean Republican,queued,0
+3,TX-bobby-pulido,Bobby Pulido,Democrat,TX,U.S. House,15,Cook: Toss-up,queued,0
+3,TX-carlos-de-la-cruz,Carlos De La Cruz,Republican,TX,U.S. House,35,Cook: Lean Republican,queued,0
+3,TX-eric-flores,Eric Flores,Republican,TX,U.S. House,34,Cook: Toss-up,queued,0
+3,TX-henry-cuellar,Henry Cuellar,Democrat,TX,U.S. House,28,Cook: Lean Democratic,queued,0
+3,TX-johnny-garcia,Johnny Garcia,Democrat,TX,U.S. House,35,Cook: Lean Republican,queued,0
+3,TX-monica-de-la-cruz,Monica De La Cruz,Republican,TX,U.S. House,15,Cook: Toss-up,queued,0
+3,TX-tano-tijerina,Tano Tijerina,Republican,TX,U.S. House,28,Cook: Lean Democratic,queued,0
+3,TX-vicente-gonzalez,Vicente Gonzalez,Democrat,TX,U.S. House,34,Cook: Toss-up,queued,0
+3,VA-elaine-luria,Elaine Luria,Democrat,VA,U.S. House,2,Cook: Toss-up,queued,0
+3,VA-jennifer-a-kiggans,Jennifer A. Kiggans,Republican,VA,U.S. House,2,Cook: Toss-up,queued,0
+3,VA-robert-j-wittman,Robert J. Wittman,Republican,VA,U.S. House,1,Cook: Toss-up,queued,0
+3,VA-shannon-taylor,Shannon Taylor,Democrat,VA,U.S. House,1,Cook: Toss-up,queued,0
+3,WA-john-braun,John Braun,Republican,WA,U.S. House,3,Cook: Lean D,queued,0
+3,WA-marie-gluesenkamp-perez,Marie Gluesenkamp Perez,Democrat,WA,U.S. House,3,Cook: Lean D,queued,0
+3,WI-bryan-steil,Bryan Steil,Republican,WI,U.S. House,1,Cook: Lean R,queued,0
+3,WI-derrick-van-orden,Derrick Van Orden,Republican,WI,U.S. House,3,Cook: Lean D,queued,0
+3,WI-mitchell-berman,Mitchell Berman,Democrat,WI,U.S. House,1,Cook: Lean R,queued,0
+3,WI-rebecca-cooke,Rebecca Cooke,Democrat,WI,U.S. House,3,Cook: Lean D,queued,0
+4,AL-amanda-pusczek,Amanda Pusczek,Democrat,AL,U.S. House,4,Cook: Solid Republican,queued,0
+4,AL-ammie-akin,Ammie Akin,Republican,AL,U.S. House,7,Cook: Solid Democrat,queued,0
+4,AL-andrew-sneed,Andrew Sneed,Democrat,AL,U.S. House,5,Cook: Solid Republican,queued,0
+4,AL-clyde-jones-jr,Clyde Jones Jr.,Democrat,AL,U.S. House,1,Cook: Solid Republican,queued,0
+4,AL-dale-w-strong,Dale W. Strong,Republican,AL,U.S. House,5,Cook: Solid Republican,queued,0
+4,AL-gary-j-palmer,Gary J. Palmer,Republican,AL,U.S. House,6,Cook: Solid Republican,queued,0
+4,AL-jerry-carl,Jerry Carl,Republican,AL,U.S. House,1,Cook: Solid Republican,queued,0
+4,AL-lee-mcinnis,Lee McInnis,Democrat,AL,U.S. House,3,Cook: Solid Republican,queued,0
+4,AL-maurice-mercer,Maurice Mercer,Democrat,AL,U.S. House,6,Cook: Solid Republican,queued,0
+4,AL-mike-rogers,Mike Rogers,Republican,AL,U.S. House,3,Cook: Solid Republican,queued,0
+4,AL-robert-b-aderholt,Robert B. Aderholt,Republican,AL,U.S. House,4,Cook: Solid Republican,queued,0
+4,AL-terri-a-sewell,Terri A. Sewell,Democrat,AL,U.S. House,7,Cook: Solid Democrat,queued,0
+4,AR-bruce-westerman,Bruce Westerman,Republican,AR,U.S. House,4,,queued,0
+4,AR-chris-jones,Chris Jones,Democrat,AR,U.S. House,2,,queued,0
+4,AR-eric-a-rick-crawford,"Eric A. ""Rick"" Crawford",Republican,AR,U.S. House,1,,queued,0
+4,AR-j-french-hill,J. French Hill,Republican,AR,U.S. House,2,,queued,0
+4,AR-james-russell,James Russell,Democrat,AR,U.S. House,4,,queued,0
+4,AR-robb-ryerse,Robb Ryerse,Democrat,AR,U.S. House,3,,queued,0
+4,AR-steve-womack,Steve Womack,Republican,AR,U.S. House,3,,queued,0
+4,AR-terri-yarbrough-green,Terri Yarbrough Green,Democrat,AR,U.S. House,1,,queued,0
+4,AS-aumua-amata-coleman-radewagen,Aumua Amata Coleman Radewagen,Republican,AS,U.S. House,AL,,queued,0
+4,AS-fualaau-rosie-tago-lancaster,Fualaau Rosie Tago Lancaster,Independent,AS,U.S. House,AL,,queued,0
+4,AS-meleagi-suitonu-chapman,Meleagi Suitonu-Chapman,Independent,AS,U.S. House,AL,,queued,0
+4,AS-samana-semo-veavea,Samana Semo Veavea,Independent,AS,U.S. House,AL,,queued,0
+4,AS-sandra-king-young,Sandra King Young,Democrat,AS,U.S. House,AL,,queued,0
+4,AS-tuifagaloa-afu-lefaoseu,Tuifagaloa Afu Lefaoseu,Independent,AS,U.S. House,AL,,queued,0
+4,AZ-abraham-j-hamadeh,Abraham J. Hamadeh,Republican,AZ,U.S. House,8,Cook: Solid Republican,queued,0
+4,AZ-adelita-s-grijalva,Adelita S. Grijalva,Democrat,AZ,U.S. House,7,Cook: Solid Democrat,queued,0
+4,AZ-bernadette-greene-placentia,Bernadette Greene Placentia,Democrat,AZ,U.S. House,8,Cook: Solid Republican,queued,0
+4,AZ-daniel-butierez-sr,Daniel Butierez Sr.,Republican,AZ,U.S. House,7,Cook: Solid Democrat,queued,0
+4,AZ-danielle-sterbinsky,Danielle Sterbinsky,Democrat,AZ,U.S. House,9,Cook: Solid Republican,queued,0
+4,AZ-david-schweikert,David Schweikert,Republican,AZ,,,,queued,0
+4,AZ-elizabeth-lee,Elizabeth Lee,Democrat,AZ,U.S. House,5,Cook: Solid Republican,queued,0
+4,AZ-greg-stanton,Greg Stanton,Democrat,AZ,U.S. House,4,Cook: Solid Democrat,queued,0
+4,AZ-mark-lamb,Mark Lamb,Republican,AZ,U.S. House,5,Cook: Solid Republican,queued,0
+4,AZ-paul-a-gosar,Paul A. Gosar,Republican,AZ,U.S. House,9,Cook: Solid Republican,queued,0
+4,AZ-yassamin-ansari,Yassamin Ansari,Democrat,AZ,U.S. House,3,Cook: Solid Democrat,queued,0
+4,AZ-zuhdi-jasser,Zuhdi Jasser,Republican,AZ,U.S. House,4,Cook: Solid Democrat,queued,0
+4,CA-adam-gray,Adam Gray,Democrat,CA,U.S. House,13,Cook: Likely D,queued,0
+4,CA-aisha-wahab,Aisha Wahab,Democrat,CA,U.S. House,14,Cook: Solid D,queued,0
+4,CA-ami-bera,Ami Bera,Democrat,CA,U.S. House,3,Cook: Solid D,queued,0
+4,CA-angela-gonzales-torres,Angela Gonzales-Torres,Democrat,CA,U.S. House,34,Cook: Solid D,queued,0
+4,CA-angelica-maria-duenas,Angélica María Dueñas,Democrat,CA,U.S. House,29,Cook: Solid D,queued,0
+4,CA-april-a-verlato,April A. Verlato,Republican,CA,U.S. House,28,Cook: Solid D,queued,0
+4,CA-armen-kurdian,Armen Kurdian,Republican,CA,U.S. House,49,Cook: Solid D,queued,0
+4,CA-bob-smith,Bob Smith,Republican,CA,U.S. House,24,Cook: Solid D,queued,0
+4,CA-brad-sherman,Brad Sherman,Democrat,CA,U.S. House,32,Cook: Solid D,queued,0
+4,CA-brian-burley,Brian Burley,Republican,CA,U.S. House,42,Cook: Solid D,queued,0
+4,CA-charles-hoelter,Charles Hoelter,Republican,CA,U.S. House,15,Cook: Solid D,queued,0
+4,CA-chuong-v-vo,Chuong V. Vo,Republican,CA,U.S. House,45,Cook: Likely D,queued,0
+4,CA-connie-chan,Connie Chan,Democrat,CA,U.S. House,11,Cook: Solid D,queued,0
+4,CA-cristian-morales,Cristian Morales,Republican,CA,U.S. House,43,Cook: Solid D,queued,0
+4,CA-darrell-issa,Darrell Issa,Republican,CA,,,,queued,0
+4,CA-dave-min,Dave Min,Democrat,CA,U.S. House,47,Cook: Solid D,queued,0
+4,CA-david-pan,David Pan,Republican,CA,U.S. House,46,Cook: Solid D,queued,0
+4,CA-derek-tran,Derek Tran,Democrat,CA,U.S. House,45,Cook: Likely D,queued,0
+4,CA-doris-o-matsui,Doris O. Matsui,Democrat,CA,U.S. House,7,Cook: Solid D,queued,0
+4,CA-eric-ching,Eric Ching,Republican,CA,U.S. House,31,Cook: Solid D,queued,0
+4,CA-eric-jones,Eric Jones,Democrat,CA,U.S. House,4,Cook: Solid D,queued,0
+4,CA-genevieve-angel,Genevieve Angel,Republican,CA,U.S. House,44,Cook: Solid D,queued,0
+4,CA-george-whitesides,George Whitesides,Democrat,CA,U.S. House,27,Cook: Solid D,queued,0
+4,CA-gilbert-ray-cisneros-jr,"Gilbert Ray Cisneros, Jr.",Democrat,CA,U.S. House,31,Cook: Solid D,queued,0
+4,CA-hilda-solis,Hilda Solis,Democrat,CA,U.S. House,38,Cook: Solid D,queued,0
+4,CA-houston-brignano,Houston Brignano,Republican,CA,U.S. House,36,Cook: Solid D,queued,0
+4,CA-j-luis-correa,J. Luis Correa,Democrat,CA,U.S. House,46,Cook: Solid D,queued,0
+4,CA-jacqui-irwin,Jacqui Irwin,Democrat,CA,U.S. House,26,Cook: Solid D,queued,0
+4,CA-james-gallagher,James Gallagher,Republican,CA,U.S. House,1,Cook: Solid D,queued,0
+4,CA-jamie-joyce,Jamie Joyce,Democrat,CA,U.S. House,12,Cook: Solid D,queued,0
+4,CA-jared-huffman,Jared Huffman,Democrat,CA,U.S. House,2,Cook: Solid D,queued,0
+4,CA-jason-gibbs,Jason Gibbs,Republican,CA,U.S. House,27,Cook: Solid D,queued,0
+4,CA-jay-obernolte,Jay Obernolte,Republican,CA,U.S. House,23,Cook: Solid R,queued,0
+4,CA-jeff-belle,Jeff Belle,Republican,CA,U.S. House,52,Cook: Solid D,queued,0
+4,CA-jeff-frese,Jeff Frese,Republican,CA,U.S. House,10,Cook: Solid D,queued,0
+4,CA-jenny-rae-le-roux,Jenny Rae Le Roux,Republican,CA,U.S. House,47,Cook: Solid D,queued,0
+4,CA-jim-costa,Jim Costa,Democrat,CA,U.S. House,21,Cook: Solid D,queued,0
+4,CA-jimmy-gomez,Jimmy Gomez,Democrat,CA,U.S. House,34,Cook: Solid D,queued,0
+4,CA-jimmy-panetta,Jimmy Panetta,Democrat,CA,U.S. House,19,Cook: Solid D,queued,0
+4,CA-joe-males,Joe Males,Republican,CA,U.S. House,25,Cook: Solid D,queued,0
+4,CA-john-garamendi,John Garamendi,Democrat,CA,U.S. House,8,Cook: Solid D,queued,0
+4,CA-john-mcbride,John McBride,Republican,CA,U.S. House,9,Cook: Solid D,queued,0
+4,CA-josh-harder,Josh Harder,Democrat,CA,U.S. House,9,Cook: Solid D,queued,0
+4,CA-juan-vargas,Juan Vargas,Democrat,CA,U.S. House,52,Cook: Solid D,queued,0
+4,CA-judy-chu,Judy Chu,Democrat,CA,U.S. House,28,Cook: Solid D,queued,0
+4,CA-julia-brownley,Julia Brownley,Democrat,CA,,,,queued,0
+4,CA-ken-calvert,Ken Calvert,Republican,CA,U.S. House,40,Cook: Solid R,queued,0
+4,CA-kevin-kiley,Kevin Kiley,Independent,CA,U.S. House,6,Cook: Solid D,queued,0
+4,CA-kevin-lincoln,Kevin Lincoln,Republican,CA,U.S. House,13,Cook: Likely D,queued,0
+4,CA-kevin-mullin,Kevin Mullin,Democrat,CA,U.S. House,15,Cook: Solid D,queued,0
+4,CA-kyle-kirkland,Kyle Kirkland,Republican,CA,U.S. House,21,Cook: Solid D,queued,0
+4,CA-larry-thompson,Larry Thompson,Republican,CA,U.S. House,32,Cook: Solid D,queued,0
+4,CA-lateefah-simon,Lateefah Simon,Democrat,CA,U.S. House,12,Cook: Solid D,queued,0
+4,CA-laura-friedman,Laura Friedman,Democrat,CA,U.S. House,30,Cook: Solid D,queued,0
+4,CA-linda-t-sanchez,Linda T. Sánchez,Democrat,CA,U.S. House,41,Cook: Solid D,queued,0
+4,CA-luz-m-rivas,Luz M. Rivas,Democrat,CA,U.S. House,29,Cook: Solid D,queued,0
+4,CA-mai-vang,Mai Vang,Democrat,CA,U.S. House,7,Cook: Solid D,queued,0
+4,CA-mark-desaulnier,Mark DeSaulnier,Democrat,CA,U.S. House,10,Cook: Solid D,queued,0
+4,CA-mark-takano,Mark Takano,Democrat,CA,U.S. House,39,Cook: Solid D,queued,0
+4,CA-maxine-waters,Maxine Waters,Democrat,CA,U.S. House,43,Cook: Solid D,queued,0
+4,CA-melissa-hernandez,Melissa Hernandez,Democrat,CA,U.S. House,14,Cook: Solid D,queued,0
+4,CA-michael-masuda,Michael Masuda,Democrat,CA,U.S. House,5,Cook: Solid R,queued,0
+4,CA-mike-cargile,Mike Cargile,Republican,CA,U.S. House,35,Cook: Solid D,queued,0
+4,CA-mike-levin,Mike Levin,Democrat,CA,U.S. House,49,Cook: Solid D,queued,0
+4,CA-mike-mcguire,Mike McGuire,Democrat,CA,U.S. House,1,Cook: Solid D,queued,0
+4,CA-mike-thompson,Mike Thompson,Democrat,CA,U.S. House,4,Cook: Solid D,queued,0
+4,CA-mitch-clemmons,Mitch Clemmons,Republican,CA,U.S. House,41,Cook: Solid D,queued,0
+4,CA-nancy-pelosi,Nancy Pelosi,Democrat,CA,,,,queued,0
+4,CA-nanette-diaz-barragan,Nanette Diaz Barragán,Democrat,CA,U.S. House,44,Cook: Solid D,queued,0
+4,CA-norma-j-torres,Norma J. Torres,Democrat,CA,U.S. House,35,Cook: Solid D,queued,0
+4,CA-pedro-antonio-casas,Pedro Antonio Casas,Republican,CA,U.S. House,38,Cook: Solid D,queued,0
+4,CA-pete-aguilar,Pete Aguilar,Democrat,CA,U.S. House,33,Cook: Solid D,queued,0
+4,CA-peter-coe-verbica,Peter Coe Verbica,Republican,CA,U.S. House,19,Cook: Solid D,queued,0
+4,CA-peter-sundin-soule,Peter Sundin Soulé,Republican,CA,U.S. House,16,Cook: Solid D,queued,0
+4,CA-raul-ruiz,Raul Ruiz,Democrat,CA,U.S. House,25,Cook: Solid D,queued,0
+4,CA-ricardo-cabrera,Ricardo Cabrera,Republican,CA,U.S. House,51,Cook: Solid D,queued,0
+4,CA-richard-pan,Richard Pan,Democrat,CA,U.S. House,6,Cook: Solid D,queued,0
+4,CA-ritesh-tandon,Ritesh Tandon,Republican,CA,U.S. House,17,Cook: Solid D,queued,0
+4,CA-ro-khanna,Ro Khanna,Democrat,CA,U.S. House,17,Cook: Solid D,queued,0
+4,CA-robb-tucker,Robb Tucker,Republican,CA,U.S. House,3,Cook: Solid D,queued,0
+4,CA-robert-garcia,Robert Garcia,Democrat,CA,U.S. House,42,Cook: Solid D,queued,0
+4,CA-robin-littau,Robin Littau,Republican,CA,U.S. House,2,Cook: Solid D,queued,0
+4,CA-rudy-recile,Rudy Recile,Republican,CA,U.S. House,8,Cook: Solid D,queued,0
+4,CA-salud-o-carbajal,Salud O. Carbajal,Democrat,CA,U.S. House,24,Cook: Solid D,queued,0
+4,CA-sam-gallucci,Sam Gallucci,Republican,CA,U.S. House,26,Cook: Solid D,queued,0
+4,CA-sam-t-liccardo,Sam T. Liccardo,Democrat,CA,U.S. House,16,Cook: Solid D,queued,0
+4,CA-samantha-mota,Samantha Mota,Democrat,CA,U.S. House,37,Cook: Solid D,queued,0
+4,CA-sandra-van-scotter,Sandra Van Scotter,Democrat,CA,U.S. House,20,Cook: Solid R,queued,0
+4,CA-sara-jacobs,Sara Jacobs,Democrat,CA,U.S. House,51,Cook: Solid D,queued,0
+4,CA-scott-alan-meyers,Scott Alan Meyers,Republican,CA,U.S. House,30,Cook: Solid D,queued,0
+4,CA-scott-h-peters,Scott H. Peters,Democrat,CA,U.S. House,50,Cook: Solid D,queued,0
+4,CA-scott-wiener,Scott Wiener,Democrat,CA,U.S. House,11,Cook: Solid D,queued,0
+4,CA-shane-lewis,Shane Lewis,Republican,CA,U.S. House,18,Cook: Solid D,queued,0
+4,CA-stephanie-m-vargas,Stephanie M. Vargas,Republican,CA,U.S. House,33,Cook: Solid D,queued,0
+4,CA-steve-cohen,Steve Cohen,Republican,CA,U.S. House,50,Cook: Solid D,queued,0
+4,CA-steve-manos,Steve Manos,Republican,CA,U.S. House,39,Cook: Solid D,queued,0
+4,CA-sydney-kamlager-dove,Sydney Kamlager-Dove,Democrat,CA,U.S. House,37,Cook: Solid D,queued,0
+4,CA-ted-lieu,Ted Lieu,Democrat,CA,U.S. House,36,Cook: Solid D,queued,0
+4,CA-tessa-lynn-hodge,Tessa Lynn Hodge,Democrat,CA,U.S. House,23,Cook: Solid R,queued,0
+4,CA-tom-mcclintock,Tom McClintock,Republican,CA,U.S. House,5,Cook: Solid R,queued,0
+4,CA-vince-fong,Vince Fong,Republican,CA,U.S. House,20,Cook: Solid R,queued,0
+4,CA-young-kim,Young Kim,Republican,CA,U.S. House,40,Cook: Solid R,queued,0
+4,CA-zoe-lofgren,Zoe Lofgren,Democrat,CA,U.S. House,18,Cook: Solid D,queued,0
+4,CO-brittany-pettersen,Brittany Pettersen,Democrat,CO,U.S. House,7,Cook: Solid Democrat,queued,0
+4,CO-christy-peterson,Christy Peterson,Republican,CO,U.S. House,1,Cook: Solid Democrat,queued,0
+4,CO-diana-degette,Diana DeGette,Democrat,CO,,,,queued,0
+4,CO-dwayne-romero,Dwayne Romero,Democrat,CO,U.S. House,3,Cook: Likely Republican,queued,0
+4,CO-jason-clark,Jason Clark,Republican,CO,U.S. House,6,Cook: Solid Democrat,queued,0
+4,CO-jason-crow,Jason Crow,Democrat,CO,U.S. House,6,Cook: Solid Democrat,queued,0
+4,CO-jeff-hurd,Jeff Hurd,Republican,CO,U.S. House,3,Cook: Likely Republican,queued,0
+4,CO-joe-neguse,Joe Neguse,Democrat,CO,U.S. House,2,Cook: Solid Democrat,queued,0
+4,CO-kelley-anne-dennison,Kelley Anne Dennison,Republican,CO,U.S. House,2,Cook: Solid Democrat,queued,0
+4,CO-melat-kiros,Melat Kiros,Democrat,CO,U.S. House,1,Cook: Solid Democrat,queued,0
+4,CO-tim-bennett,Tim Bennett,Republican,CO,U.S. House,7,Cook: Solid Democrat,queued,0
+4,CT-amy-chai,Amy Chai,Republican,CT,U.S. House,1,Cook: Solid D,queued,0
+4,CT-chris-lancia,Chris Lancia,Republican,CT,U.S. House,3,Cook: Solid D,queued,0
+4,CT-chris-shea,Chris Shea,Republican,CT,U.S. House,5,Cook: Solid D,queued,0
+4,CT-george-austin,George Austin,Republican,CT,U.S. House,2,Cook: Solid D,queued,0
+4,CT-jahana-hayes,Jahana Hayes,Democrat,CT,U.S. House,5,Cook: Solid D,queued,0
+4,CT-james-a-himes,James A. Himes,Democrat,CT,U.S. House,4,Cook: Solid D,queued,0
+4,CT-joe-courtney,Joe Courtney,Democrat,CT,U.S. House,2,Cook: Solid D,queued,0
+4,CT-john-b-larson,John B. Larson,Democrat,CT,,,,queued,0
+4,CT-luke-bronin,Luke Bronin,Democrat,CT,U.S. House,1,Cook: Solid D,queued,0
+4,CT-michael-goldstein,Michael Goldstein,Republican,CT,U.S. House,4,Cook: Solid D,queued,0
+4,CT-rosa-l-delauro,Rosa L. DeLauro,Democrat,CT,U.S. House,3,Cook: Solid D,queued,0
+4,DC-denise-rosado,Denise Rosado,Republican,DC,U.S. House,AL,,queued,0
+4,DC-eleanor-holmes-norton,Eleanor Holmes Norton,Democrat,DC,,,,queued,0
+4,DC-robert-white-jr,Robert White Jr.,Democrat,DC,U.S. House,AL,,queued,0
+4,DE-joseph-arminio,Joseph Arminio,Republican,DE,U.S. House,AL,Cook: Solid D,queued,0
+4,DE-sarah-mcbride,Sarah McBride,Democrat,DE,U.S. House,AL,Cook: Solid D,queued,0
+4,FL-aaron-bean,Aaron Bean,Republican,FL,U.S. House,4,Cook: Solid Republican,queued,0
+4,FL-amanda-green,Amanda Green,Democrat,FL,U.S. House,2,Cook: Solid Republican,queued,0
+4,FL-austin-rogers,Austin Rogers,Republican,FL,U.S. House,2,Cook: Solid Republican,queued,0
+4,FL-bale-dalton,Bale Dalton,Democrat,FL,U.S. House,7,Cook: Likely Republican,queued,0
+4,FL-brent-andersen,Brent Andersen,Republican,FL,U.S. House,20,Cook: Solid Democrat,queued,0
+4,FL-brian-j-mast,Brian J. Mast,Republican,FL,U.S. House,21,Cook: Solid Republican,queued,0
+4,FL-carlos-a-gimenez,Carlos A. Gimenez,Republican,FL,U.S. House,28,Cook: Solid Republican,queued,0
+4,FL-cory-mills,Cory Mills,Republican,FL,,,,queued,0
+4,FL-curtis-gibson,Curtis Gibson,Democrat,FL,U.S. House,18,Cook: Solid Republican,queued,0
+4,FL-dan-green,Dan Green,Republican,FL,U.S. House,9,Cook: Likely Republican,queued,0
+4,FL-daniel-webster,Daniel Webster,Republican,FL,,,,queued,0
+4,FL-darren-soto,Darren Soto,Democrat,FL,U.S. House,9,Cook: Likely Republican,queued,0
+4,FL-debbie-wasserman-schultz,Debbie Wasserman Schultz,Democrat,FL,U.S. House,20,Cook: Solid Democrat,queued,0
+4,FL-deborah-adeimy,Deborah Adeimy,Republican,FL,U.S. House,23,Cook: Solid Democrat,queued,0
+4,FL-eric-yonce,Eric Yonce,Democrat,FL,U.S. House,6,Cook: Solid Republican,queued,0
+4,FL-frederica-s-wilson,Frederica S. Wilson,Democrat,FL,,,,queued,0
+4,FL-gay-valimont,Gay Valimont,Democrat,FL,U.S. House,1,Cook: Solid Republican,queued,0
+4,FL-gus-m-bilirakis,Gus M. Bilirakis,Republican,FL,U.S. House,12,Cook: Solid Republican,queued,0
+4,FL-james-martin,James Martin,Democrat,FL,U.S. House,21,Cook: Solid Republican,queued,0
+4,FL-james-pericola,James Pericola,Democrat,FL,U.S. House,11,Cook: Solid Republican,queued,0
+4,FL-jennifer-jenkins,Jennifer Jenkins,Democrat,FL,U.S. House,8,Cook: Solid Republican,queued,0
+4,FL-jim-schwartzel,Jim Schwartzel,Republican,FL,U.S. House,19,Cook: Solid Republican,queued,0
+4,FL-jimmy-patronis,Jimmy Patronis,Republican,FL,U.S. House,1,Cook: Solid Republican,queued,0
+4,FL-joe-strada,Joe Strada,Republican,FL,U.S. House,11,Cook: Solid Republican,queued,0
+4,FL-john-h-rutherford,John H. Rutherford,Republican,FL,U.S. House,5,Cook: Solid Republican,queued,0
+4,FL-kat-cammack,Kat Cammack,Republican,FL,U.S. House,3,Cook: Solid Republican,queued,0
+4,FL-kelly-kirschner,Kelly Kirschner,Democrat,FL,U.S. House,16,Cook: Likely Republican,queued,0
+4,FL-kimberly-overman,Kimberly Overman,Democrat,FL,U.S. House,12,Cook: Solid Republican,queued,0
+4,FL-lashonda-holloway,LaShonda Holloway,Democrat,FL,U.S. House,4,Cook: Solid Republican,queued,0
+4,FL-laurel-m-lee,Laurel M. Lee,Republican,FL,U.S. House,15,Cook: Solid Republican,queued,0
+4,FL-lois-frankel,Lois Frankel,Democrat,FL,U.S. House,23,Cook: Solid Democrat,queued,0
+4,FL-mario-diaz-balart,Mario Diaz-Balart,Republican,FL,U.S. House,26,Cook: Solid Republican,queued,0
+4,FL-matt-montavon,Matt Montavon,Democrat,FL,U.S. House,17,Cook: Solid Republican,queued,0
+4,FL-maxwell-frost,Maxwell Frost,Democrat,FL,U.S. House,10,Cook: Solid Democrat,queued,0
+4,FL-mike-haridopolos,Mike Haridopolos,Republican,FL,U.S. House,8,Cook: Solid Republican,queued,0
+4,FL-neal-p-dunn,Neal P. Dunn,Republican,FL,,,,queued,0
+4,FL-nicole-locklin,Nicole Locklin,Democrat,FL,U.S. House,26,Cook: Solid Republican,queued,0
+4,FL-oliver-gilbert-iii,Oliver Gilbert III,Democrat,FL,U.S. House,24,Cook: Solid Democrat,queued,0
+4,FL-phil-ehr,Phil Ehr,Democrat,FL,U.S. House,28,Cook: Solid Republican,queued,0
+4,FL-rachel-grage,Rachel Grage,Democrat,FL,U.S. House,5,Cook: Solid Republican,queued,0
+4,FL-randy-fine,Randy Fine,Republican,FL,U.S. House,6,Cook: Solid Republican,queued,0
+4,FL-robert-people,Robert People,Democrat,FL,U.S. House,15,Cook: Solid Republican,queued,0
+4,FL-ryan-elijah,Ryan Elijah,Republican,FL,U.S. House,7,Cook: Likely Republican,queued,0
+4,FL-scott-franklin,Scott Franklin,Republican,FL,U.S. House,18,Cook: Solid Republican,queued,0
+4,FL-seth-harp,Seth Harp,Democrat,FL,U.S. House,3,Cook: Solid Republican,queued,0
+4,FL-sydney-gruters,Sydney Gruters,Republican,FL,U.S. House,16,Cook: Likely Republican,queued,0
+4,FL-te-mayonna-brown,Te Mayonna Brown,Republican,FL,U.S. House,24,Cook: Solid Democrat,queued,0
+4,FL-vern-buchanan,Vern Buchanan,Republican,FL,,,,queued,0
+4,FL-victor-arias,Victor Arias,Democrat,FL,U.S. House,19,Cook: Solid Republican,queued,0
+4,FL-w-gregory-steube,W. Gregory Steube,Republican,FL,U.S. House,17,Cook: Solid Republican,queued,0
+4,GA-amanda-hollowell,Amanda Hollowell,Democrat,GA,U.S. House,1,Cook: Solid Republican,queued,0
+4,GA-andrew-s-clyde,Andrew S. Clyde,Republican,GA,U.S. House,9,Cook: Solid Republican,queued,0
+4,GA-austin-scott,Austin Scott,Republican,GA,U.S. House,8,Cook: Solid Republican,queued,0
+4,GA-barry-loudermilk,Barry Loudermilk,Republican,GA,,,,queued,0
+4,GA-brian-jack,Brian Jack,Republican,GA,U.S. House,3,Cook: Solid Republican,queued,0
+4,GA-caitlyn-gegen,Caitlyn Gegen,Democrat,GA,U.S. House,9,Cook: Solid Republican,queued,0
+4,GA-ceretta-smith,Ceretta Smith,Democrat,GA,U.S. House,12,Cook: Solid Republican,queued,0
+4,GA-chris-harden,Chris Harden,Democrat,GA,U.S. House,11,Cook: Solid Republican,queued,0
+4,GA-clay-fuller,Clay Fuller,Republican,GA,U.S. House,14,Cook: Solid Republican,queued,0
+4,GA-earl-l-buddy-carter,"Earl L. ""Buddy"" Carter",Republican,GA,,,,queued,0
+4,GA-everton-blair-jr,Everton Blair Jr.,Democrat,GA,,,,queued,0
+4,GA-henry-c-hank-johnson-jr,"Henry C. ""Hank"" Johnson, Jr.",Democrat,GA,U.S. House,4,Cook: Solid Democrat,queued,0
+4,GA-houston-gaines,Houston Gaines,Republican,GA,U.S. House,10,Cook: Solid Republican,queued,0
+4,GA-jasmine-clark,Jasmine Clark,Democrat,GA,U.S. House,13,Cook: Solid Democrat,queued,0
+4,GA-jim-duffie,Jim Duffie,Republican,GA,U.S. House,4,Cook: Solid Democrat,queued,0
+4,GA-jim-kingston,Jim Kingston,Republican,GA,U.S. House,1,Cook: Solid Republican,queued,0
+4,GA-john-cowan-jr,John Cowan Jr.,Republican,GA,U.S. House,11,Cook: Solid Republican,queued,0
+4,GA-john-salvesen-ii,John Salvesen II,Republican,GA,U.S. House,5,Cook: Solid Democrat,queued,0
+4,GA-jonathan-chavez,Jonathan Chavez,Republican,GA,U.S. House,13,Cook: Solid Democrat,queued,0
+4,GA-kelly-esti,Kelly Esti,Democrat,GA,U.S. House,8,Cook: Solid Republican,queued,0
+4,GA-kevin-martin,Kevin Martin,Republican,GA,U.S. House,6,Cook: Solid Democrat,queued,0
+4,GA-lucy-mcbath,Lucy McBath,Democrat,GA,U.S. House,6,Cook: Solid Democrat,queued,0
+4,GA-matt-day,Matt Day,Republican,GA,U.S. House,2,Cook: Solid Democrat,queued,0
+4,GA-maura-keller,Maura Keller,Democrat,GA,U.S. House,3,Cook: Solid Republican,queued,0
+4,GA-nikema-williams,Nikema Williams,Democrat,GA,U.S. House,5,Cook: Solid Democrat,queued,0
+4,GA-pam-delancy,Pam DeLancy,Democrat,GA,U.S. House,10,Cook: Solid Republican,queued,0
+4,GA-richard-mccormick,Richard McCormick,Republican,GA,U.S. House,7,Cook: Solid Republican,queued,0
+4,GA-rick-w-allen,Rick W. Allen,Republican,GA,U.S. House,12,Cook: Solid Republican,queued,0
+4,GA-sanford-d-bishop-jr,"Sanford D. Bishop, Jr.",Democrat,GA,U.S. House,2,Cook: Solid Democrat,queued,0
+4,GA-shawn-harris,Shawn Harris,Democrat,GA,U.S. House,14,Cook: Solid Republican,queued,0
+4,GA-tony-kozycki,Tony Kozycki,Democrat,GA,U.S. House,7,Cook: Solid Republican,queued,0
+4,GU-alicia-limtiaco,Alicia Limtiaco,Democrat,GU,U.S. House,AL,,queued,0
+4,GU-james-c-moylan,James C. Moylan,Republican,GU,U.S. House,AL,,queued,0
+4,HI-adriel-c-lam,Adriel C. Lam,Republican,HI,U.S. House,1,Cook: Solid D,queued,0
+4,HI-brenton-awa,Brenton Awa,Republican,HI,U.S. House,2,Cook: Solid D,queued,0
+4,HI-ed-case,Ed Case,Democrat,HI,U.S. House,1,Cook: Solid D,queued,0
+4,HI-jill-n-tokuda,Jill N. Tokuda,Democrat,HI,U.S. House,2,Cook: Solid D,queued,0
+4,IA-chris-mcgowan,Chris McGowan,Republican,IA,U.S. House,4,Cook: Solid R,queued,0
+4,IA-dave-dawson,Dave Dawson,Democrat,IA,U.S. House,4,Cook: Solid R,queued,0
+4,IA-randy-feenstra,Randy Feenstra,Republican,IA,,,,queued,0
+4,ID-ellie-gilbreath,Ellie Gilbreath,Democrat,ID,U.S. House,2,Cook: Solid Republican,queued,0
+4,ID-kaylee-peterson,Kaylee Peterson,Democrat,ID,U.S. House,1,Cook: Solid Republican,queued,0
+4,ID-michael-k-simpson,Michael K. Simpson,Republican,ID,U.S. House,2,Cook: Solid Republican,queued,0
+4,ID-russ-fulcher,Russ Fulcher,Republican,ID,U.S. House,1,Cook: Solid Republican,queued,0
+4,IL-angel-oakley,Angel Oakley,Republican,IL,U.S. House,3,Cook: Solid D,queued,0
+4,IL-bill-foster,Bill Foster,Democrat,IL,U.S. House,11,Cook: Solid D,queued,0
+4,IL-bradley-scott-schneider,Bradley Scott Schneider,Democrat,IL,U.S. House,10,Cook: Solid D,queued,0
+4,IL-carl-lambrecht,Carl Lambrecht,Republican,IL,U.S. House,10,Cook: Solid D,queued,0
+4,IL-chad-koppie,Chad Koppie,Republican,IL,U.S. House,7,Cook: Solid D,queued,0
+4,IL-christian-maxwell,Christian Maxwell,Republican,IL,U.S. House,1,Cook: Solid D,queued,0
+4,IL-daniel-biss,Daniel Biss,Democrat,IL,U.S. House,9,Cook: Solid D,queued,0
+4,IL-danny-k-davis,Danny K. Davis,Democrat,IL,,,,queued,0
+4,IL-darin-lahood,Darin LaHood,Republican,IL,U.S. House,16,Cook: Solid R,queued,0
+4,IL-delia-c-ramirez,Delia C. Ramirez,Democrat,IL,U.S. House,3,Cook: Solid D,queued,0
+4,IL-dillan-vancil,Dillan Vancil,Republican,IL,U.S. House,17,Cook: Solid D,queued,0
+4,IL-donna-miller,Donna Miller,Democrat,IL,U.S. House,2,Cook: Solid D,queued,0
+4,IL-eric-sorensen,Eric Sorensen,Democrat,IL,U.S. House,17,Cook: Solid D,queued,0
+4,IL-janice-d-schakowsky,Janice D. Schakowsky,Democrat,IL,,,,queued,0
+4,IL-jeff-wilson,Jeff Wilson,Republican,IL,U.S. House,13,Cook: Solid D,queued,0
+4,IL-jeffrey-walter,Jeffrey Walter,Republican,IL,U.S. House,11,Cook: Solid D,queued,0
+4,IL-jennifer-davis,Jennifer Davis,Republican,IL,U.S. House,8,Cook: Solid D,queued,0
+4,IL-jennifer-todd,Jennifer Todd,Democrat,IL,U.S. House,15,Cook: Solid R,queued,0
+4,IL-jesus-g-chuy-garcia,"Jesús G. ""Chuy"" García",Democrat,IL,,,,queued,0
+4,IL-jim-marter,Jim Marter,Republican,IL,U.S. House,14,Cook: Solid D,queued,0
+4,IL-john-elleson,John Elleson,Republican,IL,U.S. House,9,Cook: Solid D,queued,0
+4,IL-jonathan-l-jackson,Jonathan L. Jackson,Democrat,IL,U.S. House,1,Cook: Solid D,queued,0
+4,IL-julie-fortier,Julie Fortier,Democrat,IL,U.S. House,12,Cook: Solid R,queued,0
+4,IL-la-shawn-ford,La Shawn Ford,Democrat,IL,U.S. House,7,Cook: Solid D,queued,0
+4,IL-lauren-underwood,Lauren Underwood,Democrat,IL,U.S. House,14,Cook: Solid D,queued,0
+4,IL-lupe-castillo,Lupe Castillo,Republican,IL,U.S. House,4,Cook: Solid D,queued,0
+4,IL-mary-e-miller,Mary E. Miller,Republican,IL,U.S. House,15,Cook: Solid R,queued,0
+4,IL-melissa-bean,Melissa Bean,Democrat,IL,U.S. House,8,Cook: Solid D,queued,0
+4,IL-mike-bost,Mike Bost,Republican,IL,U.S. House,12,Cook: Solid R,queued,0
+4,IL-mike-noack,Mike Noack,Republican,IL,U.S. House,2,Cook: Solid D,queued,0
+4,IL-mike-quigley,Mike Quigley,Democrat,IL,U.S. House,5,Cook: Solid D,queued,0
+4,IL-niki-conforti,Niki Conforti,Republican,IL,U.S. House,6,Cook: Solid D,queued,0
+4,IL-nikki-budzinski,Nikki Budzinski,Democrat,IL,U.S. House,13,Cook: Solid D,queued,0
+4,IL-patty-garcia,Patty Garcia,Democrat,IL,U.S. House,4,Cook: Solid D,queued,0
+4,IL-paul-nolley,Paul Nolley,Democrat,IL,U.S. House,16,Cook: Solid R,queued,0
+4,IL-raja-krishnamoorthi,Raja Krishnamoorthi,Democrat,IL,,,,queued,0
+4,IL-robin-l-kelly,Robin L. Kelly,Democrat,IL,,,,queued,0
+4,IL-sean-casten,Sean Casten,Democrat,IL,U.S. House,6,Cook: Solid D,queued,0
+4,IL-tom-hanson,Tom Hanson,Republican,IL,U.S. House,5,Cook: Solid D,queued,0
+4,IN-andre-carson,André Carson,Democrat,IN,U.S. House,7,Cook: Solid D,queued,0
+4,IN-barb-regnitz,Barb Regnitz,Republican,IN,U.S. House,1,Cook: Likely D,queued,0
+4,IN-brad-meyer,Brad Meyer,Democrat,IN,U.S. House,9,Cook: Solid R,queued,0
+4,IN-cynthia-wirth,Cynthia Wirth,Democrat,IN,U.S. House,6,Cook: Solid R,queued,0
+4,IN-drew-cox,Drew Cox,Democrat,IN,U.S. House,4,Cook: Solid R,queued,0
+4,IN-erin-houchin,Erin Houchin,Republican,IN,U.S. House,9,Cook: Solid R,queued,0
+4,IN-frank-j-mrvan,Frank J. Mrvan,Democrat,IN,U.S. House,1,Cook: Likely D,queued,0
+4,IN-j-d-ford,J.D. Ford,Democrat,IN,U.S. House,5,Cook: Likely R,queued,0
+4,IN-jamee-decio,Jamee Decio,Democrat,IN,U.S. House,2,Cook: Solid R,queued,0
+4,IN-james-r-baird,James R. Baird,Republican,IN,U.S. House,4,Cook: Solid R,queued,0
+4,IN-jefferson-shreve,Jefferson Shreve,Republican,IN,U.S. House,6,Cook: Solid R,queued,0
+4,IN-kelly-thompson,Kelly Thompson,Democrat,IN,U.S. House,3,Cook: Solid R,queued,0
+4,IN-mark-b-messmer,Mark B. Messmer,Republican,IN,U.S. House,8,Cook: Solid R,queued,0
+4,IN-marlin-a-stutzman,Marlin A. Stutzman,Republican,IN,U.S. House,3,Cook: Solid R,queued,0
+4,IN-mary-allen,Mary Allen,Democrat,IN,U.S. House,8,Cook: Solid R,queued,0
+4,IN-patrick-mcauley,Patrick McAuley,Republican,IN,U.S. House,7,Cook: Solid D,queued,0
+4,IN-rudy-yakym-iii,Rudy Yakym III,Republican,IN,U.S. House,2,Cook: Solid R,queued,0
+4,IN-victoria-spartz,Victoria Spartz,Republican,IN,U.S. House,5,Cook: Likely R,queued,0
+4,KS-derek-schmidt,Derek Schmidt,Republican,KS,U.S. House,2,Cook: Likely Republican,queued,0
+4,KS-don-coover,Don Coover,Democrat,KS,U.S. House,2,Cook: Likely Republican,queued,0
+4,KS-eric-jenkins,Eric Jenkins,Republican,KS,U.S. House,3,Cook: Solid Democrat,queued,0
+4,KS-katy-tyndell,Katy Tyndell,Democrat,KS,U.S. House,4,Cook: Solid Republican,queued,0
+4,KS-lauren-reinhold,Lauren Reinhold,Democrat,KS,U.S. House,1,Cook: Solid Republican,queued,0
+4,KS-ron-estes,Ron Estes,Republican,KS,U.S. House,4,Cook: Solid Republican,queued,0
+4,KS-sharice-davids,Sharice Davids,Democrat,KS,U.S. House,3,Cook: Solid Democrat,queued,0
+4,KS-tracey-mann,Tracey Mann,Republican,KS,U.S. House,1,Cook: Solid Republican,queued,0
+4,KY-brett-guthrie,Brett Guthrie,Republican,KY,U.S. House,2,Cook: Solid R,queued,0
+4,KY-drew-williams,Drew Williams,Democrat,KY,U.S. House,1,Cook: Solid R,queued,0
+4,KY-ed-gallrein,Ed Gallrein,Republican,KY,U.S. House,4,Cook: Solid R,queued,0
+4,KY-harold-rogers,Harold Rogers,Republican,KY,U.S. House,5,Cook: Solid R,queued,0
+4,KY-james-comer,James Comer,Republican,KY,U.S. House,1,Cook: Solid R,queued,0
+4,KY-maria-teresa-rodriguez,Maria Teresa Rodriguez,Republican,KY,U.S. House,3,Cook: Solid D,queued,0
+4,KY-megan-wingfield,Megan Wingfield,Democrat,KY,U.S. House,2,Cook: Solid R,queued,0
+4,KY-melissa-strange,Melissa Strange,Democrat,KY,U.S. House,4,Cook: Solid R,queued,0
+4,KY-morgan-mcgarvey,Morgan McGarvey,Democrat,KY,U.S. House,3,Cook: Solid D,queued,0
+4,KY-ned-pillersdorf,Ned Pillersdorf,Democrat,KY,U.S. House,5,Cook: Solid R,queued,0
+4,KY-thomas-massie,Thomas Massie,Republican,KY,,,,queued,0
+4,LA-antonio-wilson,Antonio Wilson,Democrat,LA,U.S. House,5,,queued,0
+4,LA-austin-magee,Austin Magee,Republican,LA,U.S. House,5,,queued,0
+4,LA-blake-miguez,Blake Miguez,Republican,LA,U.S. House,6,,queued,0
+4,LA-caleb-walker,Caleb Walker,Democrat,LA,U.S. House,3,,queued,0
+4,LA-chauna-banks,Chauna Banks,Democrat,LA,U.S. House,6,,queued,0
+4,LA-clay-higgins,Clay Higgins,Republican,LA,U.S. House,3,,queued,0
+4,LA-cleo-fields,Cleo Fields,Democrat,LA,,,,queued,0
+4,LA-conrad-cable,Conrad Cable,Democrat,LA,U.S. House,4,,queued,0
+4,LA-dan-mckay,Dan McKay,Democrat,LA,U.S. House,5,,queued,0
+4,LA-gabe-firment,Gabe Firment,Republican,LA,U.S. House,5,,queued,0
+4,LA-gordon-heslop,Gordon Heslop,Republican,LA,U.S. House,4,,queued,0
+4,LA-john-day,John Day,Democrat,LA,U.S. House,3,,queued,0
+4,LA-kate-cotten,Kate Cotten,Republican,LA,U.S. House,3,,queued,0
+4,LA-larry-davis-iii,Larry Davis III,Republican,LA,U.S. House,6,,queued,0
+4,LA-lauren-jewett,Lauren Jewett,Democrat,LA,U.S. House,1,,queued,0
+4,LA-lindsay-garcia,Lindsay Garcia,Democrat,LA,U.S. House,6,,queued,0
+4,LA-matt-gromlich,Matt Gromlich,Democrat,LA,U.S. House,4,,queued,0
+4,LA-michael-echols,Michael Echols,Republican,LA,U.S. House,5,,queued,0
+4,LA-michael-mebruer,Michael Mebruer,Republican,LA,U.S. House,6,,queued,0
+4,LA-mike-johnson,Mike Johnson,Republican,LA,U.S. House,4,,queued,0
+4,LA-mike-nichols,Mike Nichols,Republican,LA,U.S. House,4,,queued,0
+4,LA-misti-cordell,Misti Cordell,Republican,LA,U.S. House,5,,queued,0
+4,LA-monique-appeaning,Monique Appeaning,Republican,LA,U.S. House,6,,queued,0
+4,LA-omar-dantzler,Omar Dantzler,Republican,LA,U.S. House,5,,queued,0
+4,LA-pat-forbes,Pat Forbes,Democrat,LA,U.S. House,6,,queued,0
+4,LA-pat-moore,Pat Moore,Democrat,LA,U.S. House,5,,queued,0
+4,LA-peter-williams,Peter Williams,Republican,LA,U.S. House,2,,queued,0
+4,LA-priscilla-gonzalez,Priscilla Gonzalez,Democrat,LA,U.S. House,3,,queued,0
+4,LA-randall-arrington,Randall Arrington,Republican,LA,U.S. House,1,,queued,0
+4,LA-rick-edmonds,Rick Edmonds,Republican,LA,U.S. House,6,,queued,0
+4,LA-stephen-wagley,Stephen Wagley,Republican,LA,U.S. House,6,,queued,0
+4,LA-steve-scalise,Steve Scalise,Republican,LA,U.S. House,1,,queued,0
+4,LA-stewart-cathey-jr,Stewart Cathey Jr.,Republican,LA,U.S. House,5,,queued,0
+4,LA-troy-a-carter,Troy A. Carter,Democrat,LA,U.S. House,2,,queued,0
+4,MA-ayanna-pressley,Ayanna Pressley,Democrat,MA,U.S. House,7,Cook: Solid D,queued,0
+4,MA-dan-koh,Dan Koh,Democrat,MA,U.S. House,6,Cook: Solid D,queued,0
+4,MA-gary-grossi,Gary Grossi,Republican,MA,U.S. House,3,Cook: Solid D,queued,0
+4,MA-jake-auchincloss,Jake Auchincloss,Democrat,MA,U.S. House,4,Cook: Solid D,queued,0
+4,MA-james-p-mcgovern,James P. McGovern,Democrat,MA,U.S. House,2,Cook: Solid D,queued,0
+4,MA-katherine-m-clark,Katherine M. Clark,Democrat,MA,U.S. House,5,Cook: Solid D,queued,0
+4,MA-lori-trahan,Lori Trahan,Democrat,MA,U.S. House,3,Cook: Solid D,queued,0
+4,MA-micah-quinney-jones,Micah Quinney Jones,Republican,MA,U.S. House,6,Cook: Solid D,queued,0
+4,MA-richard-e-neal,Richard E. Neal,Democrat,MA,U.S. House,1,Cook: Solid D,queued,0
+4,MA-robert-burke,Robert Burke,Republican,MA,U.S. House,8,Cook: Solid D,queued,0
+4,MA-seth-moulton,Seth Moulton,Democrat,MA,,,,queued,0
+4,MA-stephen-f-lynch,Stephen F. Lynch,Democrat,MA,U.S. House,8,Cook: Solid D,queued,0
+4,MA-thomas-stalcup,Thomas Stalcup,Republican,MA,U.S. House,4,Cook: Solid D,queued,0
+4,MA-tyler-macallister,Tyler Macallister,Republican,MA,U.S. House,9,Cook: Solid D,queued,0
+4,MA-william-r-keating,William R. Keating,Democrat,MA,U.S. House,9,Cook: Solid D,queued,0
+4,MD-adrian-boafo,Adrian Boafo,Democrat,MD,U.S. House,5,Cook: Solid D,queued,0
+4,MD-andy-harris,Andy Harris,Republican,MD,U.S. House,1,Cook: Solid R,queued,0
+4,MD-april-mcclain-delaney,April McClain Delaney,Democrat,MD,U.S. House,6,Cook: Solid D,queued,0
+4,MD-bernard-flowers,Bernard Flowers,Republican,MD,U.S. House,3,Cook: Solid D,queued,0
+4,MD-cheryl-riley,Cheryl Riley,Republican,MD,U.S. House,8,Cook: Solid D,queued,0
+4,MD-chris-chaffee,Chris Chaffee,Republican,MD,U.S. House,5,Cook: Solid D,queued,0
+4,MD-dan-schwartz,Dan Schwartz,Democrat,MD,U.S. House,1,Cook: Solid R,queued,0
+4,MD-dave-wallace,Dave Wallace,Republican,MD,U.S. House,2,Cook: Solid D,queued,0
+4,MD-george-mcdermott,George McDermott,Republican,MD,U.S. House,4,Cook: Solid D,queued,0
+4,MD-glenn-ivey,Glenn Ivey,Democrat,MD,U.S. House,4,Cook: Solid D,queued,0
+4,MD-jamie-raskin,Jamie Raskin,Democrat,MD,U.S. House,8,Cook: Solid D,queued,0
+4,MD-johnny-olszewski-jr,"Johnny Olszewski, Jr.",Democrat,MD,U.S. House,2,Cook: Solid D,queued,0
+4,MD-kweisi-mfume,Kweisi Mfume,Democrat,MD,U.S. House,7,Cook: Solid D,queued,0
+4,MD-robin-ficker,Robin Ficker,Republican,MD,U.S. House,6,Cook: Solid D,queued,0
+4,MD-sarah-elfreth,Sarah Elfreth,Democrat,MD,U.S. House,3,Cook: Solid D,queued,0
+4,MD-scott-collier,Scott Collier,Republican,MD,U.S. House,7,Cook: Solid D,queued,0
+4,MD-steny-h-hoyer,Steny H. Hoyer,Democrat,MD,,,,queued,0
+4,ME-chellie-pingree,Chellie Pingree,Democrat,ME,U.S. House,1,Cook: Solid D,queued,0
+4,ME-jared-f-golden,Jared F. Golden,Democrat,ME,,,,queued,0
+4,ME-ron-russell,Ron Russell,Republican,ME,U.S. House,1,Cook: Solid D,queued,0
+4,MI-ben-ambrose,Ben Ambrose,Democrat,MI,U.S. House,2,Cook: Solid R,queued,0
+4,MI-callie-barr,Callie Barr,Democrat,MI,U.S. House,1,Cook: Solid R,queued,0
+4,MI-christian-vukasovich,Christian Vukasovich,Democrat,MI,U.S. House,5,Cook: Solid R,queued,0
+4,MI-debbie-dingell,Debbie Dingell,Democrat,MI,U.S. House,6,Cook: Solid D,queued,0
+4,MI-donavan-mckinney,Donavan McKinney,Democrat,MI,U.S. House,13,Cook: Solid D,queued,0
+4,MI-ethan-baker,Ethan Baker,Republican,MI,U.S. House,11,Cook: Solid D,queued,0
+4,MI-haley-m-stevens,Haley M. Stevens,Democrat,MI,,,,queued,0
+4,MI-heather-smiley,Heather Smiley,Republican,MI,U.S. House,6,Cook: Solid D,queued,0
+4,MI-hillary-j-scholten,Hillary J. Scholten,Democrat,MI,U.S. House,3,Cook: Solid D,queued,0
+4,MI-jack-bergman,Jack Bergman,Republican,MI,U.S. House,1,Cook: Solid R,queued,0
+4,MI-james-hooper,James Hooper,Republican,MI,U.S. House,12,Cook: Solid D,queued,0
+4,MI-jeremy-moss,Jeremy Moss,Democrat,MI,U.S. House,11,Cook: Solid D,queued,0
+4,MI-john-r-moolenaar,John R. Moolenaar,Republican,MI,U.S. House,2,Cook: Solid R,queued,0
+4,MI-kristen-mcdonald-rivet,Kristen McDonald Rivet,Democrat,MI,U.S. House,8,Cook: Likely D,queued,0
+4,MI-lisa-c-mcclain,Lisa C. McClain,Republican,MI,U.S. House,9,Cook: Solid R,queued,0
+4,MI-rashida-tlaib,Rashida Tlaib,Democrat,MI,U.S. House,12,Cook: Solid D,queued,0
+4,MI-ray-pooley,Ray Pooley,Democrat,MI,U.S. House,9,Cook: Solid R,queued,0
+4,MI-shri-thanedar,Shri Thanedar,Democrat,MI,,,,queued,0
+4,MI-taras-nykoriak,Taras Nykoriak,Republican,MI,U.S. House,13,Cook: Solid D,queued,0
+4,MI-terri-deboer,Terri DeBoer,Republican,MI,U.S. House,3,Cook: Solid D,queued,0
+4,MI-thomas-smith,Thomas Smith,Republican,MI,U.S. House,8,Cook: Likely D,queued,0
+4,MI-tim-walberg,Tim Walberg,Republican,MI,U.S. House,5,Cook: Solid R,queued,0
+4,MN-angie-craig,Angie Craig,Democrat,MN,,,,queued,0
+4,MN-betty-mccollum,Betty McCollum,Democrat,MN,U.S. House,4,Cook: Solid D,queued,0
+4,MN-doug-chapin,Doug Chapin,Democrat,MN,U.S. House,6,Cook: Solid R,queued,0
+4,MN-eric-pratt,Eric Pratt,Republican,MN,U.S. House,2,Cook: Likely D,queued,0
+4,MN-erik-osberg,Erik Osberg,Democrat,MN,U.S. House,7,Cook: Solid R,queued,0
+4,MN-ilhan-omar,Ilhan Omar,Democrat,MN,U.S. House,5,Cook: Solid D,queued,0
+4,MN-john-nagel,John Nagel,Republican,MN,U.S. House,5,Cook: Solid D,queued,0
+4,MN-kelly-morrison,Kelly Morrison,Democrat,MN,U.S. House,3,Cook: Solid D,queued,0
+4,MN-matt-little,Matt Little,Democrat,MN,U.S. House,2,Cook: Likely D,queued,0
+4,MN-michelle-fischbach,Michelle Fischbach,Republican,MN,U.S. House,7,Cook: Solid R,queued,0
+4,MN-paul-wikstrom,Paul Wikstrom,Republican,MN,U.S. House,4,Cook: Solid D,queued,0
+4,MN-pete-stauber,Pete Stauber,Republican,MN,U.S. House,8,Cook: Solid R,queued,0
+4,MN-tom-emmer,Tom Emmer,Republican,MN,U.S. House,6,Cook: Solid R,queued,0
+4,MN-trina-swanson,Trina Swanson,Democrat,MN,U.S. House,8,Cook: Solid R,queued,0
+4,MN-tyler-bass,Tyler Bass,Republican,MN,U.S. House,3,Cook: Solid D,queued,0
+4,MO-ann-wagner,Ann Wagner,Republican,MO,U.S. House,2,Cook: Likely R,queued,0
+4,MO-bethany-mann,Bethany Mann,Democrat,MO,U.S. House,3,Cook: Solid R,queued,0
+4,MO-chris-reichard,Chris Reichard,Democrat,MO,U.S. House,8,Cook: Solid R,queued,0
+4,MO-chris-stigall,Chris Stigall,Republican,MO,U.S. House,6,Cook: Solid R,queued,0
+4,MO-emanuel-cleaver,Emanuel Cleaver,Democrat,MO,U.S. House,5,Cook: Solid D,queued,0
+4,MO-eric-burlison,Eric Burlison,Republican,MO,U.S. House,7,Cook: Solid R,queued,0
+4,MO-fred-wellman,Fred Wellman,Democrat,MO,U.S. House,2,Cook: Likely R,queued,0
+4,MO-jason-smith,Jason Smith,Republican,MO,U.S. House,8,Cook: Solid R,queued,0
+4,MO-jordan-herrera,Jordan Herrera,Democrat,MO,U.S. House,4,Cook: Solid R,queued,0
+4,MO-josh-smead,Josh Smead,Democrat,MO,U.S. House,6,Cook: Solid R,queued,0
+4,MO-mark-alford,Mark Alford,Republican,MO,U.S. House,4,Cook: Solid R,queued,0
+4,MO-missi-hesketh,Missi Hesketh,Democrat,MO,U.S. House,7,Cook: Solid R,queued,0
+4,MO-paul-berry,Paul Berry,Republican,MO,U.S. House,1,Cook: Solid D,queued,0
+4,MO-rick-brattin,Rick Brattin,Republican,MO,U.S. House,5,Cook: Solid D,queued,0
+4,MO-robert-f-onder-jr,"Robert F. Onder, Jr.",Republican,MO,U.S. House,3,Cook: Solid R,queued,0
+4,MO-sam-graves,Sam Graves,Republican,MO,,,,queued,0
+4,MO-wesley-bell,Wesley Bell,Democrat,MO,U.S. House,1,Cook: Solid D,queued,0
+4,MP-galvin-sablan-deleon-guerrero,Galvin Sablan Deleon Guerrero,Independent,MP,U.S. House,AL,,queued,0
+4,MP-kimberlyn-king-hinds,Kimberlyn King-Hinds,Republican,MP,U.S. House,AL,,queued,0
+4,MS-bennie-g-thompson,Bennie G. Thompson,Democrat,MS,U.S. House,2,Cook: Solid Democrat,queued,0
+4,MS-cliff-johnson,Cliff Johnson,Democrat,MS,U.S. House,1,Cook: Solid Republican,queued,0
+4,MS-jeffrey-hulum-iii,Jeffrey Hulum III,Democrat,MS,U.S. House,4,Cook: Solid Republican,queued,0
+4,MS-michael-chiaradio,Michael Chiaradio,Democrat,MS,U.S. House,3,Cook: Solid Republican,queued,0
+4,MS-michael-guest,Michael Guest,Republican,MS,U.S. House,3,Cook: Solid Republican,queued,0
+4,MS-mike-ezell,Mike Ezell,Republican,MS,U.S. House,4,Cook: Solid Republican,queued,0
+4,MS-ron-eller,Ron Eller,Republican,MS,U.S. House,2,Cook: Solid Democrat,queued,0
+4,MS-trent-kelly,Trent Kelly,Republican,MS,U.S. House,1,Cook: Solid Republican,queued,0
+4,MT-brian-miller,Brian Miller,Democrat,MT,U.S. House,2,Cook: Solid Republican,queued,0
+4,MT-ryan-k-zinke,Ryan K. Zinke,Republican,MT,,,,queued,0
+4,MT-troy-downing,Troy Downing,Republican,MT,U.S. House,2,Cook: Solid Republican,queued,0
+4,NC-addison-p-mcdowell,Addison P. McDowell,Republican,NC,U.S. House,6,Cook: Solid R,queued,0
+4,NC-alma-s-adams,Alma S. Adams,Democrat,NC,U.S. House,12,Cook: Solid D,queued,0
+4,NC-ashley-bell,Ashley Bell,Democrat,NC,U.S. House,10,Cook: Solid R,queued,0
+4,NC-brad-knott,Brad Knott,Republican,NC,U.S. House,13,Cook: Solid R,queued,0
+4,NC-chuck-edwards,Chuck Edwards,Republican,NC,,,,queued,0
+4,NC-chuck-hubbard,Chuck Hubbard,Democrat,NC,U.S. House,5,Cook: Solid R,queued,0
+4,NC-colby-watson,Colby Watson,Democrat,NC,U.S. House,8,Cook: Solid R,queued,0
+4,NC-cyril-jefferson,Cyril Jefferson,Democrat,NC,U.S. House,6,Cook: Solid R,queued,0
+4,NC-david-rouzer,David Rouzer,Republican,NC,U.S. House,7,Cook: Solid R,queued,0
+4,NC-deborah-k-ross,Deborah K. Ross,Democrat,NC,U.S. House,2,Cook: Solid D,queued,0
+4,NC-eugene-douglass,Eugene Douglass,Republican,NC,U.S. House,2,Cook: Solid D,queued,0
+4,NC-gregory-f-murphy,Gregory F. Murphy,Republican,NC,U.S. House,3,Cook: Solid R,queued,0
+4,NC-jack-codiga,Jack Codiga,Republican,NC,U.S. House,12,Cook: Solid D,queued,0
+4,NC-kimberly-hardy,Kimberly Hardy,Democrat,NC,U.S. House,7,Cook: Solid R,queued,0
+4,NC-lakesha-womack,Lakesha Womack,Democrat,NC,U.S. House,14,Cook: Solid R,queued,0
+4,NC-mahesh-ganorkar,Mahesh Ganorkar,Republican,NC,U.S. House,4,Cook: Solid D,queued,0
+4,NC-mark-harris,Mark Harris,Republican,NC,U.S. House,8,Cook: Solid R,queued,0
+4,NC-pat-harrigan,Pat Harrigan,Republican,NC,U.S. House,10,Cook: Solid R,queued,0
+4,NC-paul-barringer,Paul Barringer,Democrat,NC,U.S. House,13,Cook: Solid R,queued,0
+4,NC-raymond-smith-jr,Raymond Smith Jr.,Democrat,NC,U.S. House,3,Cook: Solid R,queued,0
+4,NC-richard-hudson,Richard Hudson,Republican,NC,U.S. House,9,Cook: Solid R,queued,0
+4,NC-richard-ojeda,Richard Ojeda,Democrat,NC,U.S. House,9,Cook: Solid R,queued,0
+4,NC-tim-moore,Tim Moore,Republican,NC,U.S. House,14,Cook: Solid R,queued,0
+4,NC-valerie-p-foushee,Valerie P. Foushee,Democrat,NC,U.S. House,4,Cook: Solid D,queued,0
+4,NC-virginia-foxx,Virginia Foxx,Republican,NC,U.S. House,5,Cook: Solid R,queued,0
+4,ND-julie-fedorchak,Julie Fedorchak,Republican,ND,U.S. House,AL,Cook: Solid Republican,queued,0
+4,ND-trygve-hammer,Trygve Hammer,Democratic-NPL,ND,U.S. House,AL,Cook: Solid Republican,queued,0
+4,NE-adrian-smith,Adrian Smith,Republican,NE,U.S. House,3,Cook: Solid Republican,queued,0
+4,NE-becky-stille,Becky Stille,Democrat,NE,U.S. House,3,Cook: Solid Republican,queued,0
+4,NE-brinker-harding,Brinker Harding,Republican,NE,U.S. House,2,Cook: Likely Democrat,queued,0
+4,NE-chris-backemeyer,Chris Backemeyer,Democrat,NE,U.S. House,1,Cook: Likely Republican,queued,0
+4,NE-denise-powell,Denise Powell,Democrat,NE,U.S. House,2,Cook: Likely Democrat,queued,0
+4,NE-don-bacon,Don Bacon,Republican,NE,,,,queued,0
+4,NE-mike-flood,Mike Flood,Republican,NE,U.S. House,1,Cook: Likely Republican,queued,0
+4,NH-anthony-dilorenzo,Anthony DiLorenzo,Republican,NH,U.S. House,1,Cook: Likely D,queued,0
+4,NH-lily-tang-williams,Lily Tang Williams,Republican,NH,U.S. House,2,Cook: Solid D,queued,0
+4,NH-maggie-goodlander,Maggie Goodlander,Democrat,NH,U.S. House,2,Cook: Solid D,queued,0
+4,NH-stefany-shaheen,Stefany Shaheen,Democrat,NH,U.S. House,1,Cook: Likely D,queued,0
+4,NJ-adam-hamawy,Adam Hamawy,Democrat,NJ,U.S. House,12,Cook: Solid D,queued,0
+4,NJ-analilia-mejia,Analilia Mejia,Democrat,NJ,U.S. House,11,Cook: Solid D,queued,0
+4,NJ-bonnie-watson-coleman,Bonnie Watson Coleman,Democrat,NJ,,,,queued,0
+4,NJ-carmen-bucco,Carmen Bucco,Republican,NJ,U.S. House,10,Cook: Solid D,queued,0
+4,NJ-christopher-h-smith,Christopher H. Smith,Republican,NJ,U.S. House,4,Cook: Solid R,queued,0
+4,NJ-damon-galdo,Damon Galdo,Republican,NJ,U.S. House,1,Cook: Solid D,queued,0
+4,NJ-donald-norcross,Donald Norcross,Democrat,NJ,U.S. House,1,Cook: Solid D,queued,0
+4,NJ-frank-pallone-jr,"Frank Pallone, Jr.",Democrat,NJ,U.S. House,6,Cook: Solid D,queued,0
+4,NJ-gregg-mele,Gregg Mele,Republican,NJ,U.S. House,12,Cook: Solid D,queued,0
+4,NJ-herbert-c-conaway-jr,"Herbert C. Conaway, Jr.",Democrat,NJ,U.S. House,3,Cook: Solid D,queued,0
+4,NJ-hillary-herzig,Hillary Herzig,Republican,NJ,U.S. House,6,Cook: Solid D,queued,0
+4,NJ-jefferson-van-drew,Jefferson Van Drew,Republican,NJ,U.S. House,2,Cook: Solid R,queued,0
+4,NJ-joe-hathaway,Joe Hathaway,Republican,NJ,U.S. House,11,Cook: Solid D,queued,0
+4,NJ-josh-gottheimer,Josh Gottheimer,Democrat,NJ,U.S. House,5,Cook: Solid D,queued,0
+4,NJ-lamonica-mciver,LaMonica McIver,Democrat,NJ,U.S. House,10,Cook: Solid D,queued,0
+4,NJ-michael-mcguire,Michael McGuire,Republican,NJ,U.S. House,3,Cook: Solid D,queued,0
+4,NJ-nellie-pou,Nellie Pou,Democrat,NJ,U.S. House,9,Cook: Likely D,queued,0
+4,NJ-rachel-peace,Rachel Peace,Democrat,NJ,U.S. House,4,Cook: Solid R,queued,0
+4,NJ-robert-menendez,Robert Menendez,Democrat,NJ,U.S. House,8,Cook: Solid D,queued,0
+4,NJ-rosie-pino,Rosie Pino,Republican,NJ,U.S. House,9,Cook: Likely D,queued,0
+4,NJ-sean-kirrane,Sean Kirrane,Republican,NJ,U.S. House,5,Cook: Solid D,queued,0
+4,NJ-zack-mullock,Zack Mullock,Democrat,NJ,U.S. House,2,Cook: Solid R,queued,0
+4,NM-gabe-vasquez,Gabe Vasquez,Democrat,NM,U.S. House,2,,queued,0
+4,NM-greg-cunningham,Greg Cunningham,Republican,NM,U.S. House,2,,queued,0
+4,NM-martin-ruben-zamora,Martin Ruben Zamora,Republican,NM,U.S. House,3,,queued,0
+4,NM-melanie-a-stansbury,Melanie A. Stansbury,Democrat,NM,U.S. House,1,,queued,0
+4,NM-ndidiamaka-okpareke,Ndidiamaka Okpareke,Republican,NM,U.S. House,1,,queued,0
+4,NM-teresa-leger-fernandez,Teresa Leger Fernandez,Democrat,NM,U.S. House,3,,queued,0
+4,NV-carrie-buck,Carrie Buck,Republican,NV,U.S. House,1,Cook: Likely Democrat,queued,0
+4,NV-cody-whipple,Cody Whipple,Republican,NV,U.S. House,4,Cook: Likely Democrat,queued,0
+4,NV-dina-titus,Dina Titus,Democrat,NV,U.S. House,1,Cook: Likely Democrat,queued,0
+4,NV-mark-e-amodei,Mark E. Amodei,Republican,NV,,,,queued,0
+4,NV-marty-o-donnell,Marty O'Donnell,Republican,NV,U.S. House,3,Cook: Likely Democrat,queued,0
+4,NV-steven-horsford,Steven Horsford,Democrat,NV,U.S. House,4,Cook: Likely Democrat,queued,0
+4,NV-susie-lee,Susie Lee,Democrat,NV,U.S. House,3,Cook: Likely Democrat,queued,0
+4,NY-aaron-gies,Aaron Gies,Democrat,NY,U.S. House,23,Cook: Solid R,queued,0
+4,NY-adriano-espaillat,Adriano Espaillat,Democrat,NY,,,,queued,0
+4,NY-alexandria-ocasio-cortez,Alexandria Ocasio-Cortez,Democrat,NY,U.S. House,14,Cook: Solid D,queued,0
+4,NY-alissa-ellman,Alissa Ellman,Democrat,NY,U.S. House,24,Cook: Solid R,queued,0
+4,NY-andrew-r-garbarino,Andrew R. Garbarino,Republican,NY,U.S. House,2,Cook: Solid R,queued,0
+4,NY-brad-lander,Brad Lander,Democrat,NY,U.S. House,10,Cook: Solid D,queued,0
+4,NY-caroline-shinkle,Caroline Shinkle,Republican,NY,U.S. House,12,Cook: Solid D,queued,0
+4,NY-chris-gallant,Chris Gallant,Democrat,NY,U.S. House,1,Cook: Solid R,queued,0
+4,NY-claire-valdez,Claire Valdez,Democrat,NY,U.S. House,7,Cook: Solid D,queued,0
+4,NY-claudia-tenney,Claudia Tenney,Republican,NY,U.S. House,24,Cook: Solid R,queued,0
+4,NY-daniel-s-goldman,Daniel S. Goldman,Democrat,NY,,,,queued,0
+4,NY-darializa-avila-chevalier,Darializa Avila Chevalier,Democrat,NY,U.S. House,13,Cook: Solid D,queued,0
+4,NY-dennis-hannon,Dennis Hannon,Republican,NY,U.S. House,26,Cook: Solid D,queued,0
+4,NY-diamant-hysenaj,Diamant Hysenaj,Republican,NY,U.S. House,14,Cook: Solid D,queued,0
+4,NY-elise-m-stefanik,Elise M. Stefanik,Republican,NY,,,,queued,0
+4,NY-george-latimer,George Latimer,Democrat,NY,U.S. House,16,Cook: Solid D,queued,0
+4,NY-george-marsh,George Marsh,Republican,NY,U.S. House,5,Cook: Solid D,queued,0
+4,NY-grace-meng,Grace Meng,Democrat,NY,U.S. House,6,Cook: Solid D,queued,0
+4,NY-gregory-w-meeks,Gregory W. Meeks,Democrat,NY,U.S. House,5,Cook: Solid D,queued,0
+4,NY-hakeem-s-jeffries,Hakeem S. Jeffries,Democrat,NY,U.S. House,8,Cook: Solid D,queued,0
+4,NY-jackie-auringer,Jackie Auringer,Republican,NY,U.S. House,18,Cook: Solid D,queued,0
+4,NY-jeanine-driscoll,Jeanine Driscoll,Republican,NY,U.S. House,4,Cook: Likely D,queued,0
+4,NY-jennifer-moore,Jennifer Moore,Republican,NY,U.S. House,10,Cook: Solid D,queued,0
+4,NY-jerrold-nadler,Jerrold Nadler,Democrat,NY,,,,queued,0
+4,NY-joel-anabilah-azumah,Joel Anabilah-Azumah,Republican,NY,U.S. House,9,Cook: Solid D,queued,0
+4,NY-john-w-mannion,John W. Mannion,Democrat,NY,U.S. House,22,Cook: Solid D,queued,0
+4,NY-joseph-chou,Joseph Chou,Republican,NY,U.S. House,6,Cook: Solid D,queued,0
+4,NY-joseph-cinquemani,Joseph Cinquemani,Republican,NY,U.S. House,16,Cook: Solid D,queued,0
+4,NY-joseph-d-morelle,Joseph D. Morelle,Democrat,NY,U.S. House,25,Cook: Solid D,queued,0
+4,NY-josh-riley,Josh Riley,Democrat,NY,U.S. House,19,Cook: Likely D,queued,0
+4,NY-kailee-buller,Kailee Buller,Republican,NY,U.S. House,22,Cook: Solid D,queued,0
+4,NY-laura-gillen,Laura Gillen,Democrat,NY,U.S. House,4,Cook: Likely D,queued,0
+4,NY-lewis-mizrahi,Lewis Mizrahi,Republican,NY,U.S. House,8,Cook: Solid D,queued,0
+4,NY-manual-williams,Manual Williams,Republican,NY,U.S. House,13,Cook: Solid D,queued,0
+4,NY-melvin-rivera,Melvin Rivera,Republican,NY,U.S. House,7,Cook: Solid D,queued,0
+4,NY-micah-lasher,Micah Lasher,Democrat,NY,U.S. House,12,Cook: Solid D,queued,0
+4,NY-mike-decillis,Mike DeCillis,Democrat,NY,U.S. House,11,Cook: Solid R,queued,0
+4,NY-mike-lipetri-jr,Mike LiPetri Jr.,Republican,NY,U.S. House,3,Cook: Likely D,queued,0
+4,NY-nicholas-a-langworthy,Nicholas A. Langworthy,Republican,NY,U.S. House,23,Cook: Solid R,queued,0
+4,NY-nick-lalota,Nick LaLota,Republican,NY,U.S. House,1,Cook: Solid R,queued,0
+4,NY-nicole-malliotakis,Nicole Malliotakis,Republican,NY,U.S. House,11,Cook: Solid R,queued,0
+4,NY-nydia-m-velazquez,Nydia M. Velázquez,Democrat,NY,,,,queued,0
+4,NY-pat-halpin,Pat Halpin,Democrat,NY,U.S. House,2,Cook: Solid R,queued,0
+4,NY-patrick-ryan,Patrick Ryan,Democrat,NY,U.S. House,18,Cook: Solid D,queued,0
+4,NY-paul-tonko,Paul Tonko,Democrat,NY,U.S. House,20,Cook: Solid D,queued,0
+4,NY-peter-oberacker,Peter Oberacker,Republican,NY,U.S. House,19,Cook: Likely D,queued,0
+4,NY-ralph-ambrosio,Ralph Ambrosio,Republican,NY,U.S. House,20,Cook: Solid D,queued,0
+4,NY-ritchie-torres,Ritchie Torres,Democrat,NY,U.S. House,15,Cook: Solid D,queued,0
+4,NY-stylo-sapaskis,Stylo Sapaskis,Republican,NY,U.S. House,15,Cook: Solid D,queued,0
+4,NY-thomas-r-suozzi,Thomas R. Suozzi,Democrat,NY,U.S. House,3,Cook: Likely D,queued,0
+4,NY-timothy-m-kennedy,Timothy M. Kennedy,Democrat,NY,U.S. House,26,Cook: Solid D,queued,0
+4,NY-virginia-mcintyre,Virginia McIntyre,Republican,NY,U.S. House,25,Cook: Solid D,queued,0
+4,NY-yvette-d-clarke,Yvette D. Clarke,Democrat,NY,U.S. House,9,Cook: Solid D,queued,0
+4,OH-brian-shaver,Brian Shaver,Democrat,OH,U.S. House,5,Cook: Solid R,queued,0
+4,OH-carey-coleman,Carey Coleman,Republican,OH,U.S. House,13,Cook: Likely D,queued,0
+4,OH-cleophus-dulaney,Cleophus Dulaney,Republican,OH,U.S. House,3,Cook: Solid D,queued,0
+4,OH-david-j-taylor,David J. Taylor,Republican,OH,U.S. House,2,Cook: Solid R,queued,0
+4,OH-david-p-joyce,David P. Joyce,Republican,OH,U.S. House,14,Cook: Solid R,queued,0
+4,OH-elizabeth-kirtley,Elizabeth Kirtley,Democrat,OH,U.S. House,6,Cook: Solid R,queued,0
+4,OH-emilia-strong-sykes,Emilia Strong Sykes,Democrat,OH,U.S. House,13,Cook: Likely D,queued,0
+4,OH-eric-conroy,Eric Conroy,Republican,OH,U.S. House,1,Cook: Likely D,queued,0
+4,OH-greg-landsman,Greg Landsman,Democrat,OH,U.S. House,1,Cook: Likely D,queued,0
+4,OH-jen-mazzuckelli,Jen Mazzuckelli,Democrat,OH,U.S. House,2,Cook: Solid R,queued,0
+4,OH-jerrad-christian,Jerrad Christian,Democrat,OH,U.S. House,12,Cook: Solid R,queued,0
+4,OH-jim-jordan,Jim Jordan,Republican,OH,U.S. House,4,Cook: Solid R,queued,0
+4,OH-joshua-kolasinski,Joshua Kolasinski,Democrat,OH,U.S. House,4,Cook: Solid R,queued,0
+4,OH-joyce-beatty,Joyce Beatty,Democrat,OH,U.S. House,3,Cook: Solid D,queued,0
+4,OH-maria-jukic,Maria Jukic,Democrat,OH,U.S. House,14,Cook: Solid R,queued,0
+4,OH-michael-a-rulli,Michael A. Rulli,Republican,OH,U.S. House,6,Cook: Solid R,queued,0
+4,OH-mike-kirchner,Mike Kirchner,Republican,OH,U.S. House,11,Cook: Solid D,queued,0
+4,OH-robert-e-latta,Robert E. Latta,Republican,OH,U.S. House,5,Cook: Solid R,queued,0
+4,OH-shontel-m-brown,Shontel M. Brown,Democrat,OH,U.S. House,11,Cook: Solid D,queued,0
+4,OH-troy-balderson,Troy Balderson,Republican,OH,U.S. House,12,Cook: Solid R,queued,0
+4,OH-vanessa-enoch,Vanessa Enoch,Democrat,OH,U.S. House,8,Cook: Solid R,queued,0
+4,OH-warren-davidson,Warren Davidson,Republican,OH,U.S. House,8,Cook: Solid R,queued,0
+4,OK-brandon-wade,Brandon Wade,Democrat,OK,U.S. House,2,,queued,0
+4,OK-frank-d-lucas,Frank D. Lucas,Republican,OK,U.S. House,3,,queued,0
+4,OK-jena-nelson,Jena Nelson,Democrat,OK,U.S. House,5,,queued,0
+4,OK-john-croisant,John Croisant,Democrat,OK,U.S. House,1,,queued,0
+4,OK-josh-brecheen,Josh Brecheen,Republican,OK,U.S. House,2,,queued,0
+4,OK-mark-tedford,Mark Tedford,Republican,OK,U.S. House,1,,queued,0
+4,OK-mitchell-jacob,Mitchell Jacob,Democrat,OK,U.S. House,4,,queued,0
+4,OK-stephanie-i-bice,Stephanie I. Bice,Republican,OK,U.S. House,5,,queued,0
+4,OK-suzie-byrd,Suzie Byrd,Democrat,OK,U.S. House,3,,queued,0
+4,OK-tom-cole,Tom Cole,Republican,OK,U.S. House,4,,queued,0
+4,OR-andrea-salinas,Andrea Salinas,Democrat,OR,U.S. House,6,Cook: Solid D,queued,0
+4,OR-barbara-j-kahl,Barbara J. Kahl,Republican,OR,U.S. House,1,Cook: Solid D,queued,0
+4,OR-chris-beck,Chris Beck,Democrat,OR,U.S. House,2,Cook: Solid R,queued,0
+4,OR-cliff-bentz,Cliff Bentz,Republican,OR,U.S. House,2,Cook: Solid R,queued,0
+4,OR-david-russ,David Russ,Republican,OR,U.S. House,6,Cook: Solid D,queued,0
+4,OR-janelle-s-bynum,Janelle S. Bynum,Democrat,OR,U.S. House,5,Cook: Solid D,queued,0
+4,OR-loran-ayles,Loran Ayles,Republican,OR,U.S. House,3,Cook: Solid D,queued,0
+4,OR-maxine-dexter,Maxine Dexter,Democrat,OR,U.S. House,3,Cook: Solid D,queued,0
+4,OR-monique-despain,Monique DeSpain,Republican,OR,U.S. House,4,Cook: Solid D,queued,0
+4,OR-patti-adair,Patti Adair,Republican,OR,U.S. House,5,Cook: Solid D,queued,0
+4,OR-suzanne-bonamici,Suzanne Bonamici,Democrat,OR,U.S. House,1,Cook: Solid D,queued,0
+4,OR-val-t-hoyle,Val T. Hoyle,Democrat,OR,U.S. House,4,Cook: Solid D,queued,0
+4,PA-alan-bradstock,Alan Bradstock,Democrat,PA,U.S. House,14,Cook: Solid R,queued,0
+4,PA-aurora-stuski,Aurora Stuski,Republican,PA,U.S. House,4,Cook: Solid D,queued,0
+4,PA-beth-farnham,Beth Farnham,Democrat,PA,U.S. House,13,Cook: Solid R,queued,0
+4,PA-brendan-f-boyle,Brendan F. Boyle,Democrat,PA,U.S. House,2,Cook: Solid D,queued,0
+4,PA-chris-rabb,Chris Rabb,Democrat,PA,U.S. House,3,Cook: Solid D,queued,0
+4,PA-chrissy-houlahan,Chrissy Houlahan,Democrat,PA,U.S. House,6,Cook: Solid D,queued,0
+4,PA-christopher-r-deluzio,Christopher R. Deluzio,Democrat,PA,U.S. House,17,Cook: Solid D,queued,0
+4,PA-daniel-meuser,Daniel Meuser,Republican,PA,U.S. House,9,Cook: Solid R,queued,0
+4,PA-dennis-mahoney,Dennis Mahoney,Independent,PA,U.S. House,3,Cook: Solid D,queued,0
+4,PA-dwight-evans,Dwight Evans,Democrat,PA,,,,queued,0
+4,PA-glenn-thompson,Glenn Thompson,Republican,PA,U.S. House,15,Cook: Solid R,queued,0
+4,PA-guy-reschenthaler,Guy Reschenthaler,Republican,PA,U.S. House,14,Cook: Solid R,queued,0
+4,PA-james-hayes,James Hayes,Republican,PA,U.S. House,12,Cook: Solid D,queued,0
+4,PA-jessica-arriaga,Jessica Arriaga,Republican,PA,U.S. House,2,Cook: Solid D,queued,0
+4,PA-john-joyce,John Joyce,Republican,PA,U.S. House,13,Cook: Solid R,queued,0
+4,PA-justin-wagner,Justin Wagner,Democrat,PA,U.S. House,16,Cook: Solid R,queued,0
+4,PA-lloyd-smucker,Lloyd Smucker,Republican,PA,U.S. House,11,Cook: Solid R,queued,0
+4,PA-madeleine-dean,Madeleine Dean,Democrat,PA,U.S. House,4,Cook: Solid D,queued,0
+4,PA-marty-young,Marty Young,Republican,PA,U.S. House,6,Cook: Solid D,queued,0
+4,PA-mary-gay-scanlon,Mary Gay Scanlon,Democrat,PA,U.S. House,5,Cook: Solid D,queued,0
+4,PA-mike-kelly,Mike Kelly,Republican,PA,U.S. House,16,Cook: Solid R,queued,0
+4,PA-nancy-mannion,Nancy Mannion,Democrat,PA,U.S. House,11,Cook: Solid R,queued,0
+4,PA-nick-manganaro,Nick Manganaro,Republican,PA,U.S. House,5,Cook: Solid D,queued,0
+4,PA-rachel-wallace,Rachel Wallace,Democrat,PA,U.S. House,9,Cook: Solid R,queued,0
+4,PA-ray-bilger,Ray Bilger,Democrat,PA,U.S. House,15,Cook: Solid R,queued,0
+4,PA-summer-l-lee,Summer L. Lee,Democrat,PA,U.S. House,12,Cook: Solid D,queued,0
+4,PA-tony-guy,Tony Guy,Republican,PA,U.S. House,17,Cook: Solid D,queued,0
+4,PR-pablo-jose-hernandez,Pablo José Hernández,Democrat,PR,,,,queued,0
+4,RI-gabe-amo,Gabe Amo,Democrat,RI,U.S. House,1,Cook: Solid D,queued,0
+4,RI-kellie-keenan,Kellie Keenan,Republican,RI,U.S. House,1,Cook: Solid D,queued,0
+4,RI-seth-magaziner,Seth Magaziner,Democrat,RI,U.S. House,2,Cook: Solid D,queued,0
+4,RI-vic-mellor,Vic Mellor,Republican,RI,U.S. House,2,Cook: Solid D,queued,0
+4,SC-courtney-mcclain,Courtney McClain,Democrat,SC,U.S. House,4,Cook: Solid Republican,queued,0
+4,SC-eunice-lehmacher,Eunice Lehmacher,Democrat,SC,U.S. House,3,Cook: Solid Republican,queued,0
+4,SC-james-e-clyburn,James E. Clyburn,Democrat,SC,U.S. House,6,Cook: Solid Democrat,queued,0
+4,SC-joe-wilson,Joe Wilson,Republican,SC,U.S. House,2,Cook: Solid Republican,queued,0
+4,SC-john-peterson,John Peterson,Republican,SC,U.S. House,6,Cook: Solid Democrat,queued,0
+4,SC-john-vincent,John Vincent,Democrat,SC,U.S. House,7,Cook: Solid Republican,queued,0
+4,SC-mallory-dittmer,Mallory Dittmer,Democrat,SC,U.S. House,5,Cook: Solid Republican,queued,0
+4,SC-nancy-mace,Nancy Mace,Republican,SC,,,,queued,0
+4,SC-ralph-norman,Ralph Norman,Republican,SC,,,,queued,0
+4,SC-russell-fry,Russell Fry,Republican,SC,U.S. House,7,Cook: Solid Republican,queued,0
+4,SC-sheri-biggs,Sheri Biggs,Republican,SC,U.S. House,3,Cook: Solid Republican,queued,0
+4,SC-wes-climer,Wes Climer,Republican,SC,U.S. House,5,Cook: Solid Republican,queued,0
+4,SC-william-r-timmons-iv,William R. Timmons IV,Republican,SC,U.S. House,4,Cook: Solid Republican,queued,0
+4,SC-zyon-khalifa,Zyon Khalifa,Democrat,SC,U.S. House,2,Cook: Solid Republican,queued,0
+4,SD-dusty-johnson,Dusty Johnson,Republican,SD,,,,queued,0
+4,SD-marty-jackley,Marty Jackley,Republican,SD,U.S. House,AL,Cook: Solid Republican,queued,0
+4,SD-nikki-gronli,Nikki Gronli,Democrat,SD,U.S. House,AL,Cook: Solid Republican,queued,0
+4,TN-andrew-ogles,Andrew Ogles,Republican,TN,,,,queued,0
+4,TN-anna-golladay,Anna Golladay,Democrat,TN,U.S. House,3,Cook: Solid R,queued,0
+4,TN-brent-taylor,Brent Taylor,Republican,TN,U.S. House,9,Cook: Solid R,queued,0
+4,TN-charles-j-chuck-fleischmann,"Charles J. ""Chuck"" Fleischmann",Republican,TN,U.S. House,3,Cook: Solid R,queued,0
+4,TN-charlie-hatcher,Charlie Hatcher,Republican,TN,U.S. House,5,Cook: Solid R,queued,0
+4,TN-chaz-molder,Chaz Molder,Democrat,TN,U.S. House,5,Cook: Solid R,queued,0
+4,TN-darden-copeland,Darden Copeland,Democrat,TN,U.S. House,7,Cook: Solid R,queued,0
+4,TN-david-kustoff,David Kustoff,Republican,TN,U.S. House,8,Cook: Solid R,queued,0
+4,TN-diana-harshbarger,Diana Harshbarger,Republican,TN,U.S. House,1,Cook: Solid R,queued,0
+4,TN-heidi-kuhn,Heidi Kuhn,Democrat,TN,U.S. House,8,Cook: Solid R,queued,0
+4,TN-john-w-rose,John W. Rose,Republican,TN,,,,queued,0
+4,TN-johnny-garrett,Johnny Garrett,Republican,TN,U.S. House,6,Cook: Solid R,queued,0
+4,TN-justin-pearson,Justin Pearson,Democrat,TN,U.S. House,9,Cook: Solid R,queued,0
+4,TN-kristi-burke,Kristi Burke,Democrat,TN,U.S. House,1,Cook: Solid R,queued,0
+4,TN-matt-van-epps,Matt Van Epps,Republican,TN,U.S. House,7,Cook: Solid R,queued,0
+4,TN-michaela-barnett,Michaela Barnett,Democrat,TN,U.S. House,2,Cook: Solid R,queued,0
+4,TN-mike-croley,Mike Croley,Democrat,TN,U.S. House,6,Cook: Solid R,queued,0
+4,TN-scott-desjarlais,Scott DesJarlais,Republican,TN,U.S. House,4,Cook: Solid R,queued,0
+4,TN-steve-cohen,Steve Cohen,Democrat,TN,,,,queued,0
+4,TN-tim-burchett,Tim Burchett,Republican,TN,U.S. House,2,Cook: Solid R,queued,0
+4,TN-victoria-broderick,Victoria Broderick,Democrat,TN,U.S. House,4,Cook: Solid R,queued,0
+4,TX-adam-bauman,Adam Bauman,Republican,TX,U.S. House,16,Cook: Solid Democratic,queued,0
+4,TX-al-green,Al Green,Democrat,TX,,,,queued,0
+4,TX-alex-mealer,Alex Mealer,Republican,TX,U.S. House,9,,queued,0
+4,TX-alexander-hale,Alexander Hale,Republican,TX,U.S. House,7,,queued,0
+4,TX-august-pfluger,August Pfluger,Republican,TX,U.S. House,11,Cook: Solid Republican,queued,0
+4,TX-beth-van-duyne,Beth Van Duyne,Republican,TX,U.S. House,24,Cook: Solid Republican,queued,0
+4,TX-brandon-gill,Brandon Gill,Republican,TX,U.S. House,26,Cook: Solid Republican,queued,0
+4,TX-brandon-herrera,Brandon Herrera,Republican,TX,U.S. House,23,,queued,0
+4,TX-brian-babin,Brian Babin,Republican,TX,U.S. House,36,,queued,0
+4,TX-caitlin-rourk,Caitlin Rourk,Democrat,TX,U.S. House,10,,queued,0
+4,TX-casey-shepard,Casey Shepard,Democrat,TX,U.S. House,17,Cook: Solid Republican,queued,0
+4,TX-chelsey-hockett,Chelsey Hockett,Democrat,TX,U.S. House,5,,queued,0
+4,TX-chip-roy,Chip Roy,Republican,TX,,,,queued,0
+4,TX-chris-gober,Chris Gober,Republican,TX,U.S. House,10,,queued,0
+4,TX-christian-d-menefee,Christian D. Menefee,Democrat,TX,U.S. House,18,Cook: Solid Democratic,queued,0
+4,TX-claire-reynolds,Claire Reynolds,Democrat,TX,U.S. House,11,Cook: Solid Republican,queued,0
+4,TX-colin-allred,Colin Allred,Democrat,TX,U.S. House,33,,queued,0
+4,TX-craig-a-goldman,Craig A. Goldman,Republican,TX,U.S. House,12,Cook: Solid Republican,queued,0
+4,TX-dan-barrios,Dan Barrios,Democrat,TX,U.S. House,32,,queued,0
+4,TX-dan-crenshaw,Dan Crenshaw,Republican,TX,,,,queued,0
+4,TX-danny-minton,Danny Minton,Democrat,TX,U.S. House,6,,queued,0
+4,TX-dione-sims,Dione Sims,Democrat,TX,U.S. House,25,Cook: Solid Republican,queued,0
+4,TX-edgardo-baez,Edgardo Baez,Republican,TX,U.S. House,20,Cook: Solid Democratic,queued,0
+4,TX-evan-hunt,Evan Hunt,Democrat,TX,U.S. House,3,,queued,0
+4,TX-everett-jackson,Everett Jackson,Republican,TX,U.S. House,30,Cook: Solid Democratic,queued,0
+4,TX-frederick-haynes,Frederick Haynes,Democrat,TX,U.S. House,30,Cook: Solid Democratic,queued,0
+4,TX-greg-casar,Greg Casar,Democrat,TX,U.S. House,37,,queued,0
+4,TX-heli-rodriguez-prilliman,Heli Rodriguez Prilliman,Democrat,TX,U.S. House,12,Cook: Solid Republican,queued,0
+4,TX-jace-yarbrough,Jace Yarbrough,Republican,TX,U.S. House,32,,queued,0
+4,TX-jake-ellzey,Jake Ellzey,Republican,TX,U.S. House,6,,queued,0
+4,TX-jasmine-crockett,Jasmine Crockett,Democrat,TX,,,,queued,0
+4,TX-jason-pearce,Jason Pearce,Democrat,TX,U.S. House,4,,queued,0
+4,TX-jessica-steinmann,Jessica Steinmann,Republican,TX,U.S. House,8,Cook: Solid Republican,queued,0
+4,TX-joaquin-castro,Joaquin Castro,Democrat,TX,U.S. House,20,Cook: Solid Democratic,queued,0
+4,TX-jodey-c-arrington,Jodey C. Arrington,Republican,TX,,,,queued,0
+4,TX-john-r-carter,John R. Carter,Republican,TX,U.S. House,31,Cook: Solid Republican,queued,0
+4,TX-jon-bonck,Jon Bonck,Republican,TX,U.S. House,38,,queued,0
+4,TX-julie-johnson,Julie Johnson,Democrat,TX,,,,queued,0
+4,TX-justin-early,Justin Early,Democrat,TX,U.S. House,31,Cook: Solid Republican,queued,0
+4,TX-katy-padilla-stout,Katy Padilla Stout,Democrat,TX,U.S. House,23,,queued,0
+4,TX-keith-self,Keith Self,Republican,TX,U.S. House,3,,queued,0
+4,TX-kevin-burge,Kevin Burge,Democrat,TX,U.S. House,24,Cook: Solid Republican,queued,0
+4,TX-kristin-hook,Kristin Hook,Democrat,TX,U.S. House,21,Cook: Solid Republican,queued,0
+4,TX-kyle-rable,Kyle Rable,Democrat,TX,U.S. House,19,Cook: Solid Republican,queued,0
+4,TX-lance-gooden,Lance Gooden,Republican,TX,U.S. House,5,,queued,0
+4,TX-laura-jones,Laura Jones,Democrat,TX,U.S. House,8,Cook: Solid Republican,queued,0
+4,TX-lauren-pena,Lauren Pena,Republican,TX,U.S. House,37,,queued,0
+4,TX-leticia-gutierrez,Leticia Gutierrez,Democrat,TX,U.S. House,9,,queued,0
+4,TX-lizzie-fletcher,Lizzie Fletcher,Democrat,TX,U.S. House,7,,queued,0
+4,TX-lloyd-doggett,Lloyd Doggett,Democrat,TX,,,,queued,0
+4,TX-marc-a-veasey,Marc A. Veasey,Democrat,TX,,,,queued,0
+4,TX-mark-nair,Mark Nair,Democrat,TX,U.S. House,13,Cook: Solid Republican,queued,0
+4,TX-mark-teixeira,Mark Teixeira,Republican,TX,U.S. House,21,Cook: Solid Republican,queued,0
+4,TX-marquette-greene-scott,Marquette Greene-Scott,Democrat,TX,U.S. House,22,Cook: Solid Republican,queued,0
+4,TX-martha-fierro,Martha Fierro,Republican,TX,U.S. House,29,Cook: Solid Democratic,queued,0
+4,TX-melissa-mcdonough,Melissa McDonough,Democrat,TX,U.S. House,38,,queued,0
+4,TX-michael-cloud,Michael Cloud,Republican,TX,U.S. House,27,Cook: Solid Republican,queued,0
+4,TX-michael-t-mccaul,Michael T. McCaul,Republican,TX,,,,queued,0
+4,TX-morgan-luttrell,Morgan Luttrell,Republican,TX,,,,queued,0
+4,TX-nathaniel-moran,Nathaniel Moran,Republican,TX,U.S. House,1,,queued,0
+4,TX-pat-fallon,Pat Fallon,Republican,TX,U.S. House,4,,queued,0
+4,TX-patrick-gillespie,Patrick Gillespie,Republican,TX,U.S. House,33,,queued,0
+4,TX-pete-sessions,Pete Sessions,Republican,TX,U.S. House,17,Cook: Solid Republican,queued,0
+4,TX-randy-k-weber-sr,"Randy K. Weber, Sr.",Republican,TX,U.S. House,14,Cook: Solid Republican,queued,0
+4,TX-rhonda-hart,Rhonda Hart,Democrat,TX,U.S. House,36,,queued,0
+4,TX-roger-williams,Roger Williams,Republican,TX,U.S. House,25,Cook: Solid Republican,queued,0
+4,TX-ronald-whitfield,Ronald Whitfield,Republican,TX,U.S. House,18,Cook: Solid Democratic,queued,0
+4,TX-ronny-jackson,Ronny Jackson,Republican,TX,U.S. House,13,Cook: Solid Republican,queued,0
+4,TX-shaun-finnie,Shaun Finnie,Democrat,TX,U.S. House,2,,queued,0
+4,TX-steve-toth,Steve Toth,Republican,TX,U.S. House,2,,queued,0
+4,TX-steven-shook,Steven Shook,Democrat,TX,U.S. House,26,Cook: Solid Republican,queued,0
+4,TX-sylvia-r-garcia,Sylvia R. Garcia,Democrat,TX,U.S. House,29,Cook: Solid Democratic,queued,0
+4,TX-tanya-lloyd,Tanya Lloyd,Democrat,TX,U.S. House,27,Cook: Solid Republican,queued,0
+4,TX-thurman-bill-bartie,Thurman Bill Bartie,Democrat,TX,U.S. House,14,Cook: Solid Republican,queued,0
+4,TX-tom-sell,Tom Sell,Republican,TX,U.S. House,19,Cook: Solid Republican,queued,0
+4,TX-trever-nehls,Trever Nehls,Republican,TX,U.S. House,22,Cook: Solid Republican,queued,0
+4,TX-troy-e-nehls,Troy E. Nehls,Republican,TX,,,,queued,0
+4,TX-veronica-escobar,Veronica Escobar,Democrat,TX,U.S. House,16,Cook: Solid Democratic,queued,0
+4,TX-wesley-hunt,Wesley Hunt,Republican,TX,,,,queued,0
+4,TX-yolanda-prince,Yolanda Prince,Democrat,TX,U.S. House,1,,queued,0
+4,UT-ben-mcadams,Ben McAdams,Democrat,UT,U.S. House,1,Cook: Solid Democrat,queued,0
+4,UT-blake-d-moore,Blake D. Moore,Republican,UT,U.S. House,2,Cook: Solid Republican,queued,0
+4,UT-burgess-owens,Burgess Owens,Republican,UT,,,,queued,0
+4,UT-celeste-maloy,Celeste Maloy,Republican,UT,U.S. House,3,Cook: Solid Republican,queued,0
+4,UT-jonny-larsen,Jonny Larsen,Democrat,UT,U.S. House,4,Cook: Solid Republican,queued,0
+4,UT-kent-udell,Kent Udell,Democrat,UT,U.S. House,3,Cook: Solid Republican,queued,0
+4,UT-mike-kennedy,Mike Kennedy,Republican,UT,U.S. House,4,Cook: Solid Republican,queued,0
+4,UT-peter-crosby,Peter Crosby,Democrat,UT,U.S. House,2,Cook: Solid Republican,queued,0
+4,UT-riley-owen,Riley Owen,Republican,UT,U.S. House,1,Cook: Solid Democrat,queued,0
+4,VA-arthur-purves,Arthur Purves,Republican,VA,U.S. House,11,Cook: Solid D,queued,0
+4,VA-ben-cline,Ben Cline,Republican,VA,U.S. House,6,Cook: Solid R,queued,0
+4,VA-beth-macy,Beth Macy,Democrat,VA,U.S. House,6,Cook: Solid R,queued,0
+4,VA-dave-beckwith,Dave Beckwith,Republican,VA,U.S. House,10,Cook: Solid D,queued,0
+4,VA-donald-s-beyer-jr,"Donald S. Beyer, Jr.",Democrat,VA,U.S. House,8,Cook: Solid D,queued,0
+4,VA-douglas-ollivant,Douglas Ollivant,Republican,VA,U.S. House,7,Cook: Likely D,queued,0
+4,VA-edwin-rivera,Edwin Rivera,Republican,VA,U.S. House,3,Cook: Solid D,queued,0
+4,VA-eugene-simon-vindman,Eugene Simon Vindman,Democrat,VA,U.S. House,7,Cook: Likely D,queued,0
+4,VA-h-morgan-griffith,H. Morgan Griffith,Republican,VA,U.S. House,9,Cook: Solid R,queued,0
+4,VA-james-r-walkinshaw,James R. Walkinshaw,Democrat,VA,U.S. House,11,Cook: Solid D,queued,0
+4,VA-jennifer-l-mcclellan,Jennifer L. McClellan,Democrat,VA,U.S. House,4,Cook: Solid D,queued,0
+4,VA-john-j-mcguire-iii,John J. McGuire III,Republican,VA,U.S. House,5,Cook: Likely R,queued,0
+4,VA-joy-powers,Joy Powers,Democrat,VA,U.S. House,9,Cook: Solid R,queued,0
+4,VA-robert-c-bobby-scott,"Robert C. ""Bobby"" Scott",Democrat,VA,U.S. House,3,Cook: Solid D,queued,0
+4,VA-robert-murray-jr,Robert Murray Jr.,Republican,VA,U.S. House,4,Cook: Solid D,queued,0
+4,VA-suhas-subramanyam,Suhas Subramanyam,Democrat,VA,U.S. House,10,Cook: Solid D,queued,0
+4,VA-tom-perriello,Tom Perriello,Democrat,VA,U.S. House,5,Cook: Likely R,queued,0
+4,VA-tony-sabio,Tony Sabio,Republican,VA,U.S. House,8,Cook: Solid D,queued,0
+4,VI-janelle-sarauw,Janelle Sarauw,Democrat,VI,U.S. House,AL,,queued,0
+4,VI-shelley-moorhead,Shelley Moorhead,Independent,VI,U.S. House,AL,,queued,0
+4,VT-becca-balint,Becca Balint,Democrat,VT,U.S. House,AL,Cook: Solid D,queued,0
+4,VT-gerald-malloy,Gerald Malloy,Republican,VT,U.S. House,AL,Cook: Solid D,queued,0
+4,WA-adam-smith,Adam Smith,Democrat,WA,U.S. House,9,Cook: Solid D,queued,0
+4,WA-amanda-mckinney,Amanda McKinney,Republican,WA,U.S. House,4,Cook: Solid R,queued,0
+4,WA-carmela-conroy,Carmela Conroy,Democrat,WA,U.S. House,5,Cook: Solid R,queued,0
+4,WA-chris-chung,Chris Chung,Republican,WA,U.S. House,10,Cook: Solid D,queued,0
+4,WA-dan-newhouse,Dan Newhouse,Republican,WA,,,,queued,0
+4,WA-doug-basler,Doug Basler,Republican,WA,U.S. House,9,Cook: Solid D,queued,0
+4,WA-edwin-feller,Edwin Feller,Republican,WA,U.S. House,2,Cook: Solid D,queued,0
+4,WA-emily-randall,Emily Randall,Democrat,WA,U.S. House,6,Cook: Solid D,queued,0
+4,WA-john-duresky,John Duresky,Democrat,WA,U.S. House,4,Cook: Solid R,queued,0
+4,WA-kim-schrier,Kim Schrier,Democrat,WA,U.S. House,8,Cook: Solid D,queued,0
+4,WA-marilyn-strickland,Marilyn Strickland,Democrat,WA,U.S. House,10,Cook: Solid D,queued,0
+4,WA-mary-silva,Mary Silva,Republican,WA,U.S. House,1,Cook: Solid D,queued,0
+4,WA-michael-baumgartner,Michael Baumgartner,Republican,WA,U.S. House,5,Cook: Solid R,queued,0
+4,WA-nirav-sheth,Nirav Sheth,Republican,WA,U.S. House,7,Cook: Solid D,queued,0
+4,WA-pramila-jayapal,Pramila Jayapal,Democrat,WA,U.S. House,7,Cook: Solid D,queued,0
+4,WA-rick-larsen,Rick Larsen,Democrat,WA,U.S. House,2,Cook: Solid D,queued,0
+4,WA-spencer-meline,Spencer Meline,Republican,WA,U.S. House,8,Cook: Solid D,queued,0
+4,WA-suzan-k-delbene,Suzan K. DelBene,Democrat,WA,U.S. House,1,Cook: Solid D,queued,0
+4,WA-teresa-fox,Teresa Fox,Republican,WA,U.S. House,6,Cook: Solid D,queued,0
+4,WI-andrew-beck,Andrew Beck,Democrat,WI,U.S. House,5,Cook: Solid R,queued,0
+4,WI-bradley-smith,Bradley Smith,Democrat,WI,U.S. House,6,Cook: Solid R,queued,0
+4,WI-fred-clark,Fred Clark,Democrat,WI,U.S. House,7,Cook: Solid R,queued,0
+4,WI-glenn-grothman,Glenn Grothman,Republican,WI,U.S. House,6,Cook: Solid R,queued,0
+4,WI-gwen-moore,Gwen Moore,Democrat,WI,U.S. House,4,Cook: Solid D,queued,0
+4,WI-mark-pocan,Mark Pocan,Democrat,WI,U.S. House,2,Cook: Solid D,queued,0
+4,WI-michael-alfonso,Michael Alfonso,Republican,WI,U.S. House,7,Cook: Solid R,queued,0
+4,WI-rick-crosson,Rick Crosson,Democrat,WI,U.S. House,8,Cook: Solid R,queued,0
+4,WI-scott-fitzgerald,Scott Fitzgerald,Republican,WI,U.S. House,5,Cook: Solid R,queued,0
+4,WI-tim-rogers,Tim Rogers,Republican,WI,U.S. House,4,Cook: Solid D,queued,0
+4,WI-tony-wied,Tony Wied,Republican,WI,U.S. House,8,Cook: Solid R,queued,0
+4,WV-ace-parsi,Ace Parsi,Democrat,WV,U.S. House,2,Cook: Solid R,queued,0
+4,WV-carol-d-miller,Carol D. Miller,Republican,WV,U.S. House,1,Cook: Solid R,queued,0
+4,WV-riley-m-moore,Riley M. Moore,Republican,WV,U.S. House,2,Cook: Solid R,queued,0
+4,WV-vince-george,Vince George,Democrat,WV,U.S. House,1,Cook: Solid R,queued,0
+4,WY-chuck-gray,Chuck Gray,Republican,WY,U.S. House,AL,Cook: Solid Republican,queued,0
+4,WY-lisa-kinney,Lisa Kinney,Democrat,WY,U.S. House,AL,Cook: Solid Republican,queued,0
+1,AZ-andy-biggs,Andy Biggs,Republican,AZ,Governor,,Cook: Lean Democrat,hand researched,30
+1,AZ-katie-hobbs,Katie Hobbs,Democrat,AZ,Governor,,Cook: Lean Democrat,hand researched,38
+1,FL-byron-donalds,Byron Donalds,Republican,FL,Governor,,Cook: Lean Republican,hand researched,423
+1,GA-keisha-lance-bottoms,Keisha Lance Bottoms,Democrat,GA,Governor,,Cook: Toss Up,hand researched,29
+1,GA-rick-jackson,Rick Jackson,Republican,GA,Governor,,Cook: Toss Up,hand researched,35
+1,MI-jocelyn-benson,Jocelyn Benson,Democrat,MI,Governor,,Cook: Lean D,hand researched,44
+1,MI-john-james,John James,Republican,MI,Governor,,Cook: Lean D,hand researched,48
+1,OH-amy-acton,Amy Acton,Democrat,OH,Governor,,Cook: Toss Up,hand researched,41
+1,OH-vivek-ramaswamy,Vivek Ramaswamy,Republican,OH,Governor,,Cook: Toss Up,hand researched,88
+1,PA-josh-shapiro,Josh Shapiro,Democrat,PA,Governor,,Cook: Solid D,hand researched,45
+1,PA-stacy-garrity,Stacy Garrity,Republican,PA,Governor,,Cook: Solid D,hand researched,43
+1,WI-david-crowley,David Crowley,Democrat,WI,Governor,,Cook: Toss Up; Sabato: Lean D; IE: Toss-up,hand researched,65
+1,WI-thomas-p-tiffany,Thomas P. Tiffany,Republican,WI,Governor,,Cook: Toss Up; Sabato: Lean D; IE: Toss-up,hand researched,63

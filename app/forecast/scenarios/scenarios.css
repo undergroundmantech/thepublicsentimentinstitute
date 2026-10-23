@@ -240,3 +240,18 @@ html[data-scn="state"] .scn-state-ph{display:flex}
   .scn-glide,.scn-state,.sl-lab,.sl-map .sl-c,.sl-map .sl-pulse,.sl-map .sl-edot,.sl-call,.sl-bar i,.sl-bar .was,.sl-seg,.sl-g,.sl-county,.sl-chg li,.sl-mv li,.sl-mv .bar i,.sl-part .bar i,.sl-mixr .bars i,.sl-tip,.sl-flipnote,.sl-score.flipped::after,.sl-toast,.sl-load span,.sl-skel{animation:none !important;transition:none !important}
   .sl-map .sl-pulse{opacity:.6}
 }
+/* linked counties */
+.sl-link .card-b{display:grid;gap:10px}
+.sl-twins{display:grid;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.sl-twins-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sl-twins-h b{font:800 13px var(--font-d)}
+.sl-twins-h span{font-size:11.5px;color:var(--mute)}
+.sl-twins ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.sl-twins li{display:grid;gap:1px;animation:sl-rise .3s both}
+.sl-twins li button{display:grid;grid-template-columns:minmax(0,1fr) 90px 40px;gap:8px;align-items:center;width:100%;background:none;border:0;padding:4px 2px;color:var(--ink);font:inherit;cursor:pointer;text-align:left;border-radius:6px}
+.sl-twins li button:hover{background:rgba(var(--line-rgb),.06)}
+.sl-twins .nm{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sl-twins .bar{height:7px;border-radius:4px;background:rgba(var(--line-rgb),.1);overflow:hidden}
+.sl-twins .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#9b7bff,#e7b341);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.sl-twins b{font-size:12px;text-align:right}
+.sl-twins small{font-size:11px;color:var(--mute);padding-left:2px}

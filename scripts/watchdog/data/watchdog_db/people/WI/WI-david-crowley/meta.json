@@ -1,0 +1,45 @@
+{
+  "person_id": "WI-david-crowley",
+  "name": "David Crowley",
+  "party": "Democrat",
+  "state": "WI",
+  "office_sought": "Governor",
+  "current_office": "Milwaukee County Executive",
+  "opponents": [
+    "WI-thomas-p-tiffany"
+  ],
+  "vehicles": [
+    {
+      "name": "Crowley for Wisconsin",
+      "id": "WEC 0105751",
+      "kind": "state candidate committee",
+      "treasurer": "Nick Truog"
+    },
+    {
+      "name": "Crowley county executive campaign committee",
+      "id": "not captured",
+      "kind": "state local candidate committee",
+      "treasurer": "not captured"
+    },
+    {
+      "name": "Democratic Party of Wisconsin",
+      "id": "not captured",
+      "kind": "state party, unlimited transfers to candidate",
+      "treasurer": "not captured"
+    }
+  ],
+  "top_blocs": [
+    "Labor unions",
+    "Party and leadership",
+    "Billionaire megadonor"
+  ],
+  "headline_total": {
+    "amount_usd": 11229316.58,
+    "label": "raised 2026 year to date by Crowley for Wisconsin, all sources including party transfers, Jan 1 to Sept 23, 2026; AP puts campaign to date near $12M",
+    "as_of": "2026-09-23",
+    "source": "https://campaignfinance.wi.gov/report-download/0105751-CF-2--2026_September_Report--ORIGINAL--cover--2026-10-01-04-10-96.pdf"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Wisconsin Ethics Commission Fall Pre-election Report covering activity after Sept. 23, 2026; exact due date not verified in this pass, expected late Oct 2026"
+}

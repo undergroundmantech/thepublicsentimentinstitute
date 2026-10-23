@@ -1,247 +1,1370 @@
 {
-  "updated": "2026-10-22T14:30:00-04:00",
-  "note": "Written by the On Point Politics news desk from the reporting linked under each story. Every fact is attributed to the outlet that reported it; claims made by candidates and officials are given as their claims.",
-  "stories": [
+ "updated": "2026-10-23T12:30:00-04:00",
+ "note": "Written by the On Point Politics news desk from the reporting linked under each story. Every fact is attributed to the outlet that reported it; claims made by candidates and officials are given as their claims.",
+ "stories": [
+  {
+   "id": "early-vote-surge-senate-states",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Early voting runs well ahead of 2022 in Texas, Kansas and other Senate battlegrounds",
+   "dek": "More than 13 million ballots were in by Tuesday, against 9 million at the same point four years ago. Michigan and Georgia are running about even with 2022, and Iowa is slightly behind.",
+   "summary": [
+    "More than 13 million mail and early in person ballots had been cast nationwide through Oct. 20, compared with 9 million at the same point in 2022, an Associated Press analysis found. Texas was up 74 percent, with nearly 1 million ballots against roughly 550,000 four years ago, and Kansas more than doubled, with over 55,000 ballots against 27,000. Maine was up 39 percent, Ohio 30 percent and North Carolina more than 30 percent. Michigan and Georgia were high but similar to 2022, and Iowa was down about 6 percent.",
+    "The AP called the data \"a snapshot of potential voter enthusiasm\" and cautioned that some of the increase comes from states expanding early voting or releasing more data, that Texas does not report ballots by party, and that Ohio dropped its grace period for mail ballots, so voters must return them earlier.",
+    "By Thursday morning more than 18 million Americans had voted, according to the University of Florida's Election Lab, ABC News reported. ABC found that registered and modeled Democrats made up a larger share of early ballots than in 2024 in every state it examined except Alaska and Michigan, where the share was similar, and that early and absentee votes in Georgia and Iowa were about 18 points more Democratic than in 2024. ABC cautioned that the numbers do not show whether lower propensity voters of either party will turn out later, and that Republicans have historically been more likely to vote on Election Day.",
+    "Spectrum News reported more than 16 million votes in 41 states and Washington, D.C., about 10 million by mail and 6 million in person, and paired the numbers with closing messages on gas prices and the Iran war from Michigan Senate candidates Abdul El-Sayed and Mike Rogers."
+   ],
+   "facts": [
+    "Texas early voting was up 74 percent from 2022 through Oct. 20, the AP found.",
+    "Kansas ballots more than doubled from 2022.",
+    "Iowa was down about 6 percent from 2022, the AP found.",
+    "Tallies differ by date and source; the AP figure runs through Tuesday and ABC's through Thursday morning."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "Network coverage read the party data as a sign of Democratic enthusiasm in key states, with caveats about Election Day Republicans.",
+    "C": "Wire and local coverage framed the numbers as a snapshot of enthusiasm in Senate battlegrounds and listed the rule changes that blur comparisons."
+   },
+   "related": [
     {
-      "id": "ohio-governor-acton-mother-ad",
-      "cat": "politics",
-      "date": "2026-10-22",
-      "title": "Ramaswamy campaign ad featuring Amy Acton's estranged mother draws criticism from both parties",
-      "dek": "The Republican nominee for Ohio governor says the ad is his campaign's. Gov. Mike DeWine says it is wrong to run it; Vice President JD Vance told Republicans to stop complaining about it.",
-      "summary": [
-        "An online ad in the Ohio governor's race began circulating on the night of Oct. 19. In it, Donna Arthur, the long estranged mother of Democratic nominee Amy Acton, calls her daughter \"a liar\" and suggests she has mental health problems, the Associated Press reported. The ad first appeared without the legally required paid for line.",
-        "Republican nominee Vivek Ramaswamy confirmed on Oct. 20 that it was \"an ad from our campaign,\" CBS News reported, and his campaign defended its content. A later AP report said he would spend millions of dollars to promote it.",
-        "Acton said she was removed from her mother's custody at 12 because of abuse and neglect. A statement from her brother, Philip Stearns, said the two were removed after their mother's husband was indicted for raping Acton as a child. Police and court records reviewed by the AP show the husband, Cledith Arthur, was charged in 1978; he pleaded not guilty, failed to appear in court and has since died.",
-        "Gov. Mike DeWine, a Republican, said \"It's wrong to run this ad\" and asked the campaign to take it down, while keeping his endorsement of Ramaswamy. Sen. Jon Husted said he would not have run it, and Rep. Nancy Mace called it the most offensive ad of the cycle. Vice President JD Vance said whether the ad was appropriate \"is not really my concern\" and told Republicans to stop complaining and focus on winning. President Trump said he knew nothing about it."
-      ],
-      "facts": [
-        "The ad features Acton's estranged mother, Donna Arthur, and first circulated online on Oct. 19.",
-        "Ramaswamy confirmed on Oct. 20 that it is his campaign's ad.",
-        "Court records show Acton's stepfather was charged in 1978 with raping her as a child.",
-        "Republicans including Gov. DeWine, Sen. Husted, Nikki Haley and Rep. Mace criticized the ad; Vance and the Ramaswamy campaign defended running it."
-      ],
-      "sides": [
-        { "who": "Ramaswamy campaign", "says": "Acton \"has some serious problems with the truth that the public needs to be aware of,\" and she was the first candidate to bring her opponent's mother into the race, spokesperson Connie Luck said." },
-        { "who": "Acton campaign", "says": "The ad uses her abuse as a political talking point and fits what Acton called \"a lifelong pattern\" of personal attacks by Ramaswamy." }
-      ],
-      "framing": {
-        "L": "Network and public radio coverage led with the bipartisan backlash and Acton's account of her childhood.",
-        "C": "Wire and Capitol Hill coverage led with the reactions of named Republicans, from DeWine and Husted to Vance.",
-        "R": "Conservative commentary was critical of Ramaswamy; National Review ran a column saying the ad reminded voters why they never liked him."
-      },
-      "related": [{ "href": "/forecast/oh/governor", "label": "Ohio governor forecast" }],
-      "keys": ["ramaswamy", "acton"],
-      "coverage": [
-        { "o": "ap", "t": "Ramaswamy takes responsibility for ad with Amy Acton's mother and will spend millions to promote it", "u": "https://abcnews.com/Politics/wireStory/democrat-ohio-governors-race-pushes-back-unattributed-ad-137424257", "d": "2026-10-20" },
-        { "o": "cbs", "t": "Ramaswamy should drop ad featuring Acton's mom, GOP governor says, as Vance accuses critics of \"whining\"", "u": "https://www.cbsnews.com/news/vivek-ramaswamy-ad-amy-acton-mother-republicans-ohio/", "d": "2026-10-22" },
-        { "o": "nbc", "t": "Vance says Republicans should 'stop whining' about Vivek Ramaswamy's attack ad", "u": "https://www.nbcnews.com/politics/2026-election/vance-republicans-stop-whining-vivek-ramaswamy-attack-ad-amy-acton-rcna604817", "d": "2026-10-21" },
-        { "o": "npr", "t": "Backlash from attack ad upends Ohio gubernatorial race", "u": "https://www.npr.org/2026/10/22/nx-s1-6011216/backlash-from-attack-ad-upends-ohio-gubernatorial-race", "d": "2026-10-22" },
-        { "o": "cnn", "t": "Key Ohio Republicans criticize Ramaswamy's ad with Acton's estranged mother, even as Vance warned them not to", "u": "https://www.cnn.com/2026/10/20/politics/amy-acton-mother-video", "d": "2026-10-20" },
-        { "o": "hill", "t": "Nancy Mace says Vivek Ramaswamy has run the most offensive ad of the cycle", "u": "https://thehill.com/homenews/campaign/6164220-nancy-mace-vivek-ramaswamy-political-ad/", "d": "2026-10-21" },
-        { "o": "hill", "t": "Vance 'disgusted' by Republicans decrying Ramaswamy ad with Acton's mother", "u": "https://thehill.com/homenews/campaign/6163244-vance-criticizes-gop-ramaswamy-ad/", "d": "2026-10-21" },
-        { "o": "local", "n": "Cleveland 19", "t": "Ramaswamy campaign takes credit for controversial ad featuring Acton's estranged mother", "u": "https://www.cleveland19.com/2026/10/21/ramaswamy-campaign-takes-credit-controversial-ad-featuring-actons-estranged-mother/", "d": "2026-10-21" },
-        { "o": "local", "n": "NBC4 Columbus", "t": "Ohio governor calls for Ramaswamy to pull ad featuring Acton's mother", "u": "https://www.nbc4i.com/news/politics/ohio-governor-calls-for-ramaswamy-to-pull-ad-featuring-actons-mother/", "d": "2026-10-22" },
-        { "o": "nr", "t": "Vivek Ramaswamy Reminds Voters Why They Never Liked Him", "u": "https://www.nationalreview.com/2026/10/vivek-ramaswamy-reminds-voters-why-they-never-liked-him/", "d": "2026-10-21", "op": true }
-      ]
+     "href": "/maps/early-vote",
+     "label": "Early vote tracker"
     },
     {
-      "id": "judge-halts-noncitizen-voter-probes",
-      "cat": "politics",
-      "date": "2026-10-22",
-      "title": "Federal judge orders a halt to noncitizen voter investigations in nine states through Election Day",
-      "dek": "The order covers investigations into whether noncitizens are registered to vote. It is on hold until Oct. 23 so the administration can appeal.",
-      "summary": [
-        "U.S. District Judge Araceli Martinez-Olguin in Oakland, California, ordered the Trump administration on Oct. 21 to stop investigating whether noncitizens are registered to vote in nine states until polls close on Nov. 3, the Associated Press reported. She paused her order until Oct. 23 to give the administration time to appeal.",
-        "The states are California, Connecticut, Georgia, Missouri, Nevada, New York, Pennsylvania, Washington and Wisconsin. The suit was brought by the California Nurses Association, National Nurses United, the Voto Latino Foundation, San Francisco and Santa Clara County.",
-        "The judge found the effort relies on data that is \"full of errors\" and is leading to intimidation of groups that help people register and vote, according to the AP. The Department of Homeland Security did not immediately respond to a request for comment."
-      ],
-      "facts": [
-        "The order covers nine states and runs until polls close on Nov. 3.",
-        "It takes effect Oct. 23 unless an appeals court steps in.",
-        "Plaintiffs are two nurses' unions, the Voto Latino Foundation, San Francisco and Santa Clara County."
-      ],
-      "sides": [
-        { "who": "The administration", "says": "Has said noncitizen voting is a major problem. Its own investigations, like earlier studies, have found such voting rare, the AP noted." },
-        { "who": "Plaintiffs", "says": "The sweeps rely on faulty data and intimidate voter registration groups weeks before an election." }
-      ],
-      "framing": {
-        "L": "Network coverage framed the ruling as a check on Homeland Security sweeps for possible noncitizen voters.",
-        "C": "Wire coverage led with the scope of the order, the nine states and the appeal window.",
-        "R": "No coverage from Right outlets in our feeds yet at the time of writing."
-      },
-      "related": [{ "href": "/maps/early-vote", "label": "Early vote tracker" }],
-      "keys": ["noncitizen", "judge"],
-      "coverage": [
-        { "o": "ap", "t": "Judge orders Trump administration to halt noncitizen voting investigation in 9 states", "u": "https://abcnews.com/Politics/wireStory/federal-judge-orders-trump-administration-halt-noncitizen-voting-137479894", "d": "2026-10-22" },
-        { "o": "cbs", "t": "Judge curbs DHS efforts to conduct sweeps for possible noncitizen voters", "u": "https://www.cbsnews.com/news/judge-dhs-noncitizen-voters-ruling/", "d": "2026-10-21" }
-      ]
+     "href": "/maps/early-vote/texas",
+     "label": "Texas early vote"
     },
     {
-      "id": "ilhan-omar-home-search",
-      "cat": "politics",
-      "date": "2026-10-22",
-      "title": "Rep. Ilhan Omar says she will move out of her Washington home after a federal search and threats",
-      "dek": "Federal agents searched the Minnesota Democrat's home on Oct. 12 under a warrant the Justice Department says a judge approved. The scope of the investigation has not been made public.",
-      "summary": [
-        "Homeland Security agents searched Rep. Ilhan Omar's home in Washington before dawn on Oct. 12, executing what the Justice Department called \"a judicially authorized search warrant,\" Axios reported. The department described an ongoing federal criminal investigation and has not said publicly what it covers. Agents seized her phone, MPR News reported.",
-        "Officials have pointed to two lines of inquiry. Homeland Security Secretary Markwayne Mullin referred to possible fraud in her family's immigration paperwork, and Jeanine Pirro, the U.S. attorney in Washington, said her office is looking at Omar's financial disclosures, according to MPR News. The Wall Street Journal reported that the administration's ultimate aim is to strip Omar of her citizenship and deport her; Omar's lawyers say there is \"no legitimate basis\" for any suggestion she violated a law on her citizenship, and say she was naturalized in 2000.",
-        "On Oct. 21 Omar said the search is meant to intimidate her before the midterms and said she will have to move because of threats, NBC News and The Hill reported. House Democratic leaders called the search \"deeply disturbing.\" President Trump said authorities are looking at Omar \"very carefully.\""
-      ],
-      "facts": [
-        "The search took place on Oct. 12 under a court approved warrant, according to the Justice Department.",
-        "No charges have been announced.",
-        "The Justice Department has long avoided public steps against candidates within 60 days of an election, MPR News noted; Omar is on the Nov. 3 ballot."
-      ],
-      "sides": [
-        { "who": "The administration", "says": "Officials describe a criminal investigation that may involve immigration paperwork and financial disclosures." },
-        { "who": "Omar", "says": "The search is political retaliation; she has \"done nothing wrong,\" her spokesperson said, and she will not be silenced." }
-      ],
-      "framing": {
-        "L": "Coverage led with Omar's account of the search, the timing before the election and threats against her.",
-        "C": "Coverage led with what officials have and have not confirmed about the investigation.",
-        "R": "Coverage focused on the subject of the investigation, including long running questions about Omar's marriage and immigration history."
-      },
-      "related": [],
-      "keys": ["omar"],
-      "coverage": [
-        { "o": "axios", "t": "Feds search Rep. Ilhan Omar's home in immigration probe", "u": "https://www.axios.com/2026/10/12/ilhan-omar-search-immigration", "d": "2026-10-12" },
-        { "o": "npr", "t": "Federal agents search Rep. Ilhan Omar's Washington, D.C., home", "u": "https://www.npr.org/2026/10/12/nx-s1-5998856/federal-agents-search-congressperson-home-dc-doj", "d": "2026-10-12" },
-        { "o": "nbc", "t": "Rep. Ilhan Omar details federal search of her D.C. home, says she'll move for safety", "u": "https://www.nbcnews.com/politics/congress/ilhan-omar-details-federal-search-dc-home-will-move-safety-reasons-rcna604930", "d": "2026-10-22" },
-        { "o": "hill", "t": "Omar said she will have to move due to threats following federal raid", "u": "https://thehill.com/homenews/house/6164465-omar-to-move-dc-residence/", "d": "2026-10-22" },
-        { "o": "newsweek", "t": "Ilhan Omar Says She Can't Stay at Home After Raid Amid Death Threats", "u": "https://www.newsweek.com/ilhan-omar-says-she-cant-stay-at-home-after-raid-amid-death-threats-12602896", "d": "2026-10-21" },
-        { "o": "mpr", "t": "Rep. Ilhan Omar says she won't be 'intimidated' by federal investigation", "u": "https://www.mprnews.org/story/2026/10/21/ilhan-omar-says-she-wont-be-intimidated-federal-investigation", "d": "2026-10-21" },
-        { "o": "msnow", "t": "Rep. Ilhan Omar says she 'will not be silenced' after federal agents search home", "u": "https://www.ms.now/news/ilhan-omar-house-search-federal-agents-doj", "d": "2026-10-12" },
-        { "o": "aljazeera", "t": "Ilhan Omar home raid, Haines attack: Inside rise in violence on officials", "u": "https://aljazeera.com/news-analysis/2026/10/22/ilhan-omar-home-raid-haines-attack-inside-rise-in-violence-on-officials", "d": "2026-10-22" },
-        { "o": "dailywire", "t": "WATCH: Ilhan Omar's Strange Answer When Asked If She Married Brother", "u": "https://www.dailywire.com/news/watch-ilhan-omars-strange-answer-when-asked-if-she-married-brother", "d": "2026-10-22" }
-      ]
-    },
-    {
-      "id": "final-senate-debates-michigan-kansas",
-      "cat": "politics",
-      "date": "2026-10-22",
-      "title": "Michigan and Kansas Senate candidates meet in their final debates; Wisconsin's governor candidates hold their only one",
-      "dek": "Abdul El-Sayed and Mike Rogers in Michigan, and Roger Marshall and Adam Hamilton in Kansas, debated for the last time on Oct. 21, 13 days before the election.",
-      "summary": [
-        "In Michigan, Democrat Abdul El-Sayed and Republican Mike Rogers clashed over the cost of living, President Trump and guns in their final debate for the open Senate seat, according to NBC News, CBS News and Fox News. Fox reported that the two also sparred over the Muslim Brotherhood.",
-        "In Kansas, Republican Sen. Roger Marshall and Democrat Adam Hamilton argued over Trump's policies and control of the Senate, CBS News reported. Fox News reported that both candidates distanced themselves from their party's leaders.",
-        "In Wisconsin, Republican Tom Tiffany and Democrat David Crowley met in their only governor's debate, sparring over the economy, Trump and the 2020 election, NBC News reported."
-      ],
-      "facts": [
-        "Both Senate debates were held on the evening of Oct. 21.",
-        "The Michigan seat is open; Kansas Sen. Roger Marshall is seeking a second term."
-      ],
-      "sides": [],
-      "framing": {
-        "L": "Takeaways centered on the economy and on each Republican's ties to Trump.",
-        "C": "Takeaway lists from each debate, by the clash.",
-        "R": "Coverage highlighted moments where the Republicans pressed their opponents, including Rogers listing what he called El-Sayed's lies."
-      },
-      "related": [{ "href": "/forecast/mi/senate", "label": "Michigan Senate forecast" }, { "href": "/forecast/ks/senate", "label": "Kansas Senate forecast" }, { "href": "/forecast/wi/governor", "label": "Wisconsin governor forecast" }],
-      "keys": ["el-sayed", "rogers", "marshall", "hamilton", "debate"],
-      "coverage": [
-        { "o": "nbc", "t": "Abdul El-Sayed and Mike Rogers clash over cost of living in final Michigan Senate debate", "u": "https://www.nbcnews.com/politics/2026-election/abdul-el-sayed-mike-rogers-final-debate-clash-sets-final-sprint-michig-rcna604591", "d": "2026-10-22" },
-        { "o": "cbs", "t": "Abdul El-Sayed and Mike Rogers clash in final Michigan Senate debate", "u": "https://www.cbsnews.com/news/final-michigan-senate-debate-abdul-el-sayed-mike-rogers/", "d": "2026-10-21" },
-        { "o": "cbs", "t": "Candidates clash over Trump policies, Senate control in debate", "u": "https://www.cbsnews.com/news/kansas-senate-debate-roger-marshall-adam-hamilton-2026/", "d": "2026-10-22" },
-        { "o": "nbc", "t": "Roger Marshall and Adam Hamilton face off in fiery Kansas Senate debate", "u": "https://www.nbcnews.com/politics/2026-election/roger-marshall-adam-hamilton-face-fiery-final-kansas-senate-debate-rcna604592", "d": "2026-10-22" },
-        { "o": "hill", "t": "El-Sayed, Rogers face off in last Michigan Senate debate: 3 takeaways", "u": "https://thehill.com/homenews/campaign/6164307-michigan-senate-debate-el-sayed-rogers-takeaways/", "d": "2026-10-22" },
-        { "o": "hill", "t": "Marshall, Hamilton clash in battleground Kansas Senate debate: 4 takeaways", "u": "https://thehill.com/homenews/campaign/6164323-marshall-hamilton-clash-in-battleground-kansas-senate-debate-4-takeaways/", "d": "2026-10-22" },
-        { "o": "hill", "t": "Tiffany, Crowley tangle in only Wisconsin governor's debate: 3 takeaways", "u": "https://thehill.com/homenews/campaign/6164326-tiffany-crowley-wisconsin-governor-debate-takeaways/", "d": "2026-10-22" },
-        { "o": "fox", "t": "El-Sayed, Rogers clash over Muslim Brotherhood, Trump and guns: 5 fiery debate moments", "u": "https://www.foxnews.com/politics/el-sayed-rogers-clash-over-muslim-brotherhood-trump-guns-5-fiery-debate-moments", "d": "2026-10-22" },
-        { "o": "fox", "t": "Kansas Senate rivals distance themselves from party leaders in fiery debate", "u": "https://www.foxnews.com/politics/kansas-senate-rivals-distance-themselves-from-party-leaders-fiery-debate", "d": "2026-10-21" },
-        { "o": "dailywire", "t": "Mike Rogers Breaks Down El-Sayed With Rapid-Fire List Of Lies At Debate", "u": "https://www.dailywire.com/news/mike-rogers-breaks-down-el-sayed-with-rapid-fire-list-of-lies-at-debate", "d": "2026-10-22" }
-      ]
-    },
-    {
-      "id": "us-staff-leave-saudi-arabia-houthi",
-      "cat": "world",
-      "date": "2026-10-22",
-      "title": "U.S. orders some embassy staff and families to leave Saudi Arabia after a Houthi attack on an airport",
-      "dek": "Reports that the U.S. is preparing for possible strikes on Iran after the midterms are attributed to unnamed sources and have not been confirmed by the administration.",
-      "summary": [
-        "The State Department ordered some U.S. government staff and their families to leave Saudi Arabia on Oct. 21 amid Houthi attacks, CBS News, CNN and The Hill reported. The Hill reported that an attack on a Saudi airport killed one person and wounded eight.",
-        "CBS News reported, citing sources, that the U.S. is reducing its troop footprint in the Middle East. CNBC and NPR reported that the U.S. may be preparing strikes on Iran after the midterm elections; those reports rely on unnamed officials and have not been confirmed publicly."
-      ],
-      "facts": [
-        "The State Department ordered the departure of some staff and families from Saudi Arabia on Oct. 21.",
-        "The Hill reported one person killed and eight wounded in the airport attack."
-      ],
-      "sides": [],
-      "framing": {
-        "L": "Coverage tied the departures to reports of possible strikes on Iran after the election.",
-        "C": "Coverage led with the ordered departure and the airport attack.",
-        "R": "No coverage from Right outlets in our feeds yet at the time of writing."
-      },
-      "related": [],
-      "keys": ["saudi", "houthi", "embassy"],
-      "coverage": [
-        { "o": "hill", "t": "US orders departure of embassy staff, families from Saudi Arabia", "u": "https://thehill.com/policy/international/6164064-houthi-attacks-trigger-evacuations/", "d": "2026-10-21" },
-        { "o": "hill", "t": "1 killed, 8 wounded in Saudi Arabia airport attack", "u": "https://thehill.com/policy/international/6164397-houthi-attacked-king-fahd-airport/", "d": "2026-10-22" },
-        { "o": "cbs", "t": "U.S. ordering some government staff to depart Saudi Arabia", "u": "https://www.cbsnews.com/news/us-saudi-arabia-ordered-departure-houthis/", "d": "2026-10-21" },
-        { "o": "cbs", "t": "U.S. reducing troop footprint in Middle East, sources say", "u": "https://www.cbsnews.com/live-updates/iran-war-trump-us-ceasefire-talks-ongoing/", "d": "2026-10-22" },
-        { "o": "cnn", "t": "US orders departure of some embassy staff and families from Saudi Arabia amid Houthi threat", "u": "https://edition.cnn.com/2026/10/21/politics/us-orders-departure-embassy-staff-saudi-arabia", "d": "2026-10-21" },
-        { "o": "cnbc", "t": "U.S. pulls diplomats from Saudi Arabia as it reportedly readies Iran strikes after midterms", "u": "https://www.cnbc.com/2026/10/22/us-iran-trump-hormuz-.html", "d": "2026-10-22" },
-        { "o": "usnews", "t": "US Orders Some Diplomats to Leave Saudi Arabia as Fears of Escalating Houthi Attacks Rise", "u": "https://www.usnews.com/news/politics/articles/2026-10-21/us-orders-some-diplomats-to-leave-saudi-arabia-as-fears-of-escalating-houthi-attacks-rise", "d": "2026-10-21" },
-        { "o": "npr", "t": "U.S., Israel may attack Iran post-elections. And, SpaceX and Tesla consider merging", "u": "https://www.npr.org/2026/10/22/g-s1-149315/up-first-newsletter-midterm-campaign-israel-iran-elon-musk-spacex-tesla", "d": "2026-10-22" }
-      ]
-    },
-    {
-      "id": "aipac-ends-endorsements",
-      "cat": "politics",
-      "date": "2026-10-21",
-      "title": "AIPAC will stop endorsing candidates and giving directly through its PAC; its super PAC continues",
-      "dek": "The pro Israel lobby says members will still be urged to give to candidates it recommends.",
-      "summary": [
-        "AIPAC said on Oct. 21 that it will no longer endorse candidates or earmark contributions to them through its political action committee, Jewish Insider and NPR reported. Its super PAC, United Democracy Project, will keep operating, and the group will recommend candidates it considers \"worthy of your support\" to members who give on their own.",
-        "A letter from AIPAC's leaders said the group must build \"a more strategic, consequential, and nimble political operation\" and called 2026 \"one of the most challenging environments in recent memory,\" according to Jewish Insider. AIPAC said its members gave more than $90 million to candidates this cycle, against more than $3 million in direct PAC contributions."
-      ],
-      "facts": [
-        "Endorsements, direct PAC contributions and earmarking end.",
-        "The United Democracy Project super PAC continues.",
-        "The PAC launched in 2021 and took part in three election cycles."
-      ],
-      "sides": [{ "who": "AIPAC", "says": "\"Our measurement of success is the strength of the U.S.-Israel relationship,\" spokesperson Deryn Sousa said." }],
-      "framing": {
-        "L": "Coverage linked the change to AIPAC's standing with Democrats.",
-        "C": "Coverage led with what ends and what continues.",
-        "R": "Coverage led with the announcement itself."
-      },
-      "related": [{ "href": "/watchdog/money", "label": "Watchdog money flow" }],
-      "keys": ["aipac"],
-      "coverage": [
-        { "o": "npr", "t": "AIPAC halts endorsements and direct contributions to candidates", "u": "https://www.npr.org/2026/10/21/nx-s1-6011531/aipac-campaign-contributions-israel-democrats", "d": "2026-10-21" },
-        { "o": "jewishinsider", "t": "AIPAC to end candidate endorsements, PAC contributions to allies", "u": "https://jewishinsider.com/2026/10/aipac-end-candidate-endorsements-pac-contributions/", "d": "2026-10-21" },
-        { "o": "cnbc", "t": "AIPAC to stop endorsing candidates, making direct PAC contributions", "u": "https://www.cnbc.com/2026/10/21/aipac-candidate-endorsements-pac-contributions-israel-election.html", "d": "2026-10-21" },
-        { "o": "haaretz", "t": "AIPAC to Stop Officially Endorsing Candidates as Its Backing Becomes Political Liability", "u": "https://www.haaretz.com/us-news/2026-10-22/ty-article/.premium/aipac-to-stop-officially-endorsing-candidates-as-its-backing-becomes-liability/000001a1-608b-d686-a7a9-e5abc8500000", "d": "2026-10-22" },
-        { "o": "jns", "t": "AIPAC says it will stop endorsing, making direct political donations", "u": "https://www.jns.org/news/u-s-news/aipac-says-it-will-stop-endorsing-making-direct-political-donations", "d": "2026-10-21" }
-      ]
-    },
-    {
-      "id": "stephen-hubbard-freed-russia",
-      "cat": "world",
-      "date": "2026-10-22",
-      "title": "American Stephen Hubbard freed from Russian prison after more than four years",
-      "dek": "President Trump said Vladimir Putin agreed to release him at his request, with no prisoner swap.",
-      "summary": [
-        "Stephen Hubbard, a 74 year old retired schoolteacher, was released by Russia on Oct. 21, CBS News reported. Russian forces detained him in Ukraine soon after the full scale invasion in 2022; he was accused of manning a checkpoint for mercenaries and sentenced after a closed trial to almost seven years. The U.S. government had designated him wrongfully detained, and his family and lawyer dispute the charges.",
-        "The release was announced during a meeting between U.S. special envoy Steve Witkoff and Putin. Trump said Putin agreed at his request with \"no 'swap' necessary\" and said a U.S. decision to waive new sanctions on Russia played a role, CBS News reported. Witkoff's description of Putin as a \"humanitarian\" drew criticism from lawmakers in both parties. NBC News reported that Hubbard arrived in Texas."
-      ],
-      "facts": [
-        "Hubbard was held for more than four years.",
-        "The U.S. had deemed him wrongfully detained.",
-        "No prisoner exchange was involved, according to Trump."
-      ],
-      "sides": [{ "who": "Hubbard's lawyer, Martin De Luca", "says": "Credited the administration's diplomacy and said he did not believe the release was directly tied to other U.S. decisions that benefit Russia." }],
-      "framing": {
-        "L": "Coverage paired the release with criticism of Witkoff's praise for Putin.",
-        "C": "Coverage led with the release and Hubbard's family.",
-        "R": "No coverage from Right outlets in our feeds yet at the time of writing."
-      },
-      "related": [],
-      "keys": ["hubbard"],
-      "coverage": [
-        { "o": "cbs", "t": "Son of Stephen Hubbard, American freed from Russian jail, speaks out", "u": "https://www.cbsnews.com/news/stephen-hubbard-freed-american-russia-son-interview/", "d": "2026-10-21" },
-        { "o": "nbc", "t": "American Freed From Russian Prison Arrives in Texas", "u": "https://www.today.com/video/witkoff-sparks-bipartisan-outrage-for-calling-putin-a-humanitarian-272025157912", "d": "2026-10-22" }
-      ]
+     "href": "/maps/early-vote/kansas",
+     "label": "Kansas early vote"
     }
-  ]
+   ],
+   "keys": [
+    "early vote",
+    "turnout",
+    "texas",
+    "kansas"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Many states deciding control of the Senate are seeing a big boost in early voting, AP analysis shows",
+     "u": "https://www.ksat.com/news/politics/2026/10/21/many-states-deciding-control-of-the-senate-are-seeing-a-big-boost-in-early-voting-ap-analysis-shows/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "abc",
+     "t": "Takeaways from the early vote in the 2026 midterms two weeks out",
+     "u": "https://www.aol.com/articles/takeaways-early-vote-2026-midterms-143931000.html",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "local",
+     "n": "Spectrum News",
+     "t": "Early voting surges in several states with competitive Senate races",
+     "u": "https://spectrumlocalnews.com/us/snplus/politics/2026/10/22/early-voting-surges-states-competitive-senate-races",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "iran-war-oil-tanker-claims",
+   "cat": "world",
+   "date": "2026-10-23",
+   "title": "Oil reaches its highest price since March as Iran claims tanker strikes and Trump calls them fake",
+   "dek": "Brent crude hit $117 a barrel on Oct. 23. Trump says Iran is inventing attacks to push prices up before the midterms; Iran's claims have not been independently confirmed.",
+   "summary": [
+    "Iran's Revolutionary Guard said on Oct. 22 that it struck four vessels carrying out ship to ship oil transfers in the Persian Gulf, saying \"All four ships were hit simultaneously and are burning,\" CBS News reported. Iranian state television reported seven tankers damaged in the Strait of Hormuz, which would be the most in one day since the war began on Feb. 28 if confirmed, the Associated Press reported. CBS said none of the Oct. 22 claims had been independently confirmed.",
+    "Brent crude rose 3.2% to $112.27 a barrel on Oct. 22, the AP reported. On Oct. 23 Brent reached $117, up 3.5% and its highest since March, after trading under $97 at the start of October, CBS News reported. The Dow was down about 550 points by late morning Oct. 23, according to CBS.",
+    "Trump wrote on Truth Social that Iran is \"making up fake hits, mines, and everything else\" to drive up oil prices before the midterm election, and said more oil is moving through Hormuz than before the war, CBS and Fox News reported. Fox reported that at a rally in Sioux City, Iowa, Trump said prices would fall once the war ends, acknowledged the war carries \"a price to pay\" before the midterms, and invoked Defense Production Act powers to boost domestic oil production. The Guard warned the conflict \"will extend\" to U.S. bases if U.S. forces keep escorting ships, Fox reported.",
+    "U.N. Ambassador Mike Waltz told the Financial Times the war could last another year and that the Navy can keep up its blockade of Iranian ports \"for the foreseeable future,\" CBS reported. U.S. Central Command said the blockade, reinstated on July 14, has kept at least $25 billion in Iranian crude off the market, CBS and Fox reported. Foreign ministers of Britain, France and Germany met counterparts from Turkey, Saudi Arabia, Pakistan and Egypt in Istanbul on Oct. 23 to discuss Hormuz shipping, according to CBS."
+   ],
+   "facts": [
+    "Brent crude hit $117 a barrel on Oct. 23, its highest since March, CBS reported.",
+    "Iran's claims of hits on as many as seven tankers have not been independently confirmed.",
+    "The U.S. blockade of Iranian ports passed 100 days on Oct. 22.",
+    "The war with Iran began on Feb. 28."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "Iran is \"making up fake hits, mines\" to raise oil prices before the midterms, and more oil is moving through Hormuz than before the war."
+    },
+    {
+     "who": "Iran's Revolutionary Guard",
+     "says": "It hit vessels doing ship to ship oil transfers and warns the fight \"will extend\" to U.S. bases if U.S. escorts continue."
+    }
+   ],
+   "framing": {
+    "L": "CBS led with Trump's claim that the strikes are fake, set beside the price jump and Houthi attacks on Saudi Arabia.",
+    "C": "AP led with the market reaction, the oil price and the unverified count of damaged tankers.",
+    "R": "Fox led with Iran's warning to U.S. forces and carried voters saying they would accept higher gas prices to stop an Iranian nuclear weapon."
+   },
+   "related": [],
+   "keys": [
+    "iran",
+    "oil",
+    "hormuz",
+    "brent",
+    "tankers"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Iran War Updates: Trump envoy says war could last another year as oil prices continue rising",
+     "u": "https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "cbs",
+     "t": "Trump accuses Iran of making up fake strikes on ships to drive up oil prices",
+     "u": "https://www.cbsnews.com/live-updates/iran-war-trump-us-ceasefire-talks-ongoing/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "World shares retreat as report of damage to oil tankers pushes oil prices higher",
+     "u": "https://abcnews.com/Business/wireStory/world-shares-retreat-report-damage-oil-takers-pushes-137466921",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "fox",
+     "t": "Iran issues 'serious warning' to US military forces in Middle East",
+     "u": "https://www.foxnews.com/live-news/us-iran-war-strait-hormuz-oil-prices-10-22-26",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "france-protests-unrest",
+   "cat": "world",
+   "date": "2026-10-23",
+   "title": "France braces for another weekend of protests after riots, as Macron blames the ultra left",
+   "dek": "About 2,400 people were arrested on Oct. 17 and nearly 1,000 officers were injured. Macron wants limits on protests; families of injured teenagers say police went too far.",
+   "summary": [
+    "The protests began in mid September, when high school students and teachers in the Paris suburbs demanded smaller classes, better buildings and more teachers, and grew into a wider movement against high living costs joined by unions and Yellow Vest activists, CBS News reported. Rioters burned buildings, including a historic town hall in Limoges, and looted businesses. By the evening of Oct. 19 more than 2,500 people had been taken into custody, according to Justice Minister Gérald Darmanin, CBS reported.",
+    "About 2,400 people were arrested across France on Oct. 17, and the Interior Ministry said 997 officers and gendarmes were injured that day, seven seriously, the Associated Press reported. A 17 year old girl lost an eye in Mulhouse and a 17 year old boy lost a hand in Saint-Etienne, putting police weapons such as foam round launchers and stun grenades under scrutiny. Interior Minister Laurent Nuñez said police should be able to use \"the entirety of the intermediate weapons at their disposal,\" the AP reported.",
+    "On Oct. 22 Macron blamed \"ultra-left groups whose aim is to bring down the Republic\" and said he would ban protests by people or groups without legitimate authority, Fox News reported, citing Reuters. Lyon banned protests planned for Saturday, while organizers said a court overturned a Paris police ban, according to Fox. Prime Minister Sébastien Lecornu promised a \"massive\" police deployment for the Oct. 24 demonstrations, CBS reported.",
+    "Macron's approval stood at 15% in an Ipsos poll taken Oct. 7 and 8, and France holds a presidential election in April, CBS reported."
+   ],
+   "facts": [
+    "The protests started in mid September over conditions in schools.",
+    "About 2,400 people were arrested on Oct. 17, the AP reported.",
+    "The Interior Ministry said 997 officers and gendarmes were injured on Oct. 17.",
+    "The next large demonstrations are set for Oct. 24."
+   ],
+   "sides": [
+    {
+     "who": "President Emmanuel Macron",
+     "says": "The riots were \"political and seditious acts by ultra-left groups,\" and protests should be limited and rerouted away from city centers."
+    },
+    {
+     "who": "Families of injured teenagers and Amnesty International",
+     "says": "Police have been too heavy handed; Amnesty wants a permanent ban on stun grenades."
+    }
+   ],
+   "framing": {
+    "L": "CBS led with the curfews, the scale of arrests and the roots of the unrest in school conditions and living costs.",
+    "C": "AP focused on injuries to teenage protesters and scrutiny of police weapons.",
+    "R": "Fox led with Macron blaming the far left and covered warnings to French Jews; the Washington Examiner ran opinion calling the riots a dangerous turning point for the West."
+   },
+   "related": [],
+   "keys": [
+    "france",
+    "macron",
+    "protests",
+    "riots"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "What to know about the weapons and tactics blamed for injuring French protesters",
+     "u": "https://abcnews.com/International/wireStory/weapons-tactics-blamed-injuring-french-protesters-137499821",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "fox",
+     "t": "France's Macron blames protests on 'ultra-left groups whose aim is to bring down the Republic'",
+     "u": "https://www.foxnews.com/world/frances-macron-blames-protests-ultra-left-groups-aim-bring-down-republic",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "French government extends curfews after riots sweep across the country",
+     "u": "https://www.cbsnews.com/news/france-extends-curfews-riots-sweep-country/",
+     "d": "2026-10-20"
+    },
+    {
+     "o": "examiner",
+     "t": "France on fire: The riots are a dangerous inflection point for the West",
+     "u": "https://www.washingtonexaminer.com/premium/4775254/france-riots-dangerous-inflection-point-for-the-west/",
+     "d": "2026-10-23",
+     "op": true
+    }
+   ]
+  },
+  {
+   "id": "ukraine-talks-kyiv-strikes",
+   "cat": "world",
+   "date": "2026-10-23",
+   "title": "Kremlin plans three way Ukraine talks in Abu Dhabi after Russia strikes Kyiv with missiles",
+   "dek": "Talks with the U.S. and Ukraine are planned for the first half of November. Hours after Russia agreed to them, it fired 21 missiles at Kyiv, Zelenskyy said, some with cluster warheads.",
+   "summary": [
+    "Kremlin spokesperson Dmitry Peskov said on Oct. 23 that the next round of talks among Russia, Ukraine and the United States is \"planned for the first half of November in Abu Dhabi,\" Al Jazeera reported, citing AFP. Putin agreed \"in principle\" to resume the talks after meeting U.S. envoy Steve Witkoff near St. Petersburg on Oct. 21, the Associated Press and Fox News reported. Putin aide Yuri Ushakov said proposals he attributed to Ukraine and the EU \"contained little that was useful,\" CBS News reported.",
+    "Overnight into Oct. 22 Russia fired 21 missiles at Kyiv in three waves, Zelenskyy said, damaging apartment buildings, energy sites, a railway station and the subway, the AP reported; at least four people were killed across Ukraine. Zelenskyy said three ballistic missiles carried cluster warheads and 34 people were hurt, including five children, according to CBS. Russia's Defense Ministry said it downed 808 Ukrainian drones overnight, the AP reported.",
+    "Zelenskyy told Fox News he would accept freezing the front lines as a ceasefire, saying \"Yes, right now, we have to freeze,\" with Ukraine then seeking security guarantees from the U.S. and Europe. Russia has often rejected ceasefire deals; Foreign Minister Sergey Lavrov said last week there would be no ceasefire that lets Kyiv rearm, Fox reported.",
+    "Ukraine has also faced limits on SpaceX's military satellite network. CBS News reported, citing sources, that Elon Musk chose to restrict Ukraine's access to Starshield, slowing drone operations; Musk wrote that limits are \"decided by the US military and ultimately POTUS.\" Trump said Musk restored the access, saying \"The bottom line, he put it back,\" Al Jazeera reported. Al Jazeera also reported that the U.S. has eased sanctions on Moscow and agreed to buy 300,000 tonnes of Russian diesel, and that Russia and Ukraine each released 270 prisoners of war."
+   ],
+   "facts": [
+    "Three way talks are planned for the first half of November in Abu Dhabi, the Kremlin said.",
+    "At least four people were killed in Russian strikes on Oct. 22, the AP reported.",
+    "Zelenskyy says Ukraine would accept a freeze along the current front lines.",
+    "Trump says Musk restored Ukraine's satellite access after restrictions began around Oct. 13."
+   ],
+   "sides": [
+    {
+     "who": "President Volodymyr Zelenskyy",
+     "says": "A freeze of the front lines is the minimum Ukraine needs, and the latest strikes show no real change in Russia's stance."
+    },
+    {
+     "who": "The Kremlin",
+     "says": "Talks will take a long time and should settle long term security arrangements rather than a short truce, and Ukraine must make the \"necessary decisions.\""
+    }
+   ],
+   "framing": {
+    "L": "CBS and Al Jazeera set the talks beside the strikes, the satellite restrictions and Washington's warmer ties with Moscow.",
+    "C": "AP led with the barrage coming hours after Russia agreed to new talks.",
+    "R": "Fox led with Zelenskyy's openness to freezing the front lines and Trump's role in freeing Stephen Hubbard."
+   },
+   "related": [],
+   "keys": [
+    "ukraine",
+    "russia",
+    "putin",
+    "zelenskyy",
+    "starlink"
+   ],
+   "coverage": [
+    {
+     "o": "aljazeera",
+     "t": "Russia-Ukraine talks planned for November in UAE: Kremlin",
+     "u": "https://www.aljazeera.com/news/2026/10/23/russia-ukraine-talks-planned-for-november-in-uae-kremlin",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Trump says Musk restored Ukraine's Starlink access amid Russia war",
+     "u": "https://www.aljazeera.com/news/2026/10/23/trump-says-musk-restored-ukraines-starlink-access-amid-russia-war",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "ap",
+     "t": "Russia pounds Ukraine with missiles and drones, hours after agreeing to peace talks",
+     "u": "https://abcnews.com/International/wireStory/russia-pounds-ukraines-capital-kyiv-missiles-drones-hours-137468007",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Zelenskyy accuses Russia of using cluster warheads in deadly strikes hours after U.S. prisoner release",
+     "u": "https://www.cbsnews.com/news/zelenskyy-russia-cluster-warheads-deadly-strikes-hours-after-us-prisoner-release/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Russia says Ukraine must make \"necessary decisions\" to end war as Witkoff meets Putin",
+     "u": "https://www.cbsnews.com/news/russia-ukraine-war-witkoff-putin-trump-zelenskyy/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "cbs",
+     "t": "Musk chose to restrict Ukraine's access to SpaceX satellite network, sources say",
+     "u": "https://www.cbsnews.com/news/elon-musk-ukraine-spacex-starshield-trump-administration/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "fox",
+     "t": "Ukraine's Zelenskyy open to freezing front lines in ceasefire with Russia",
+     "u": "https://www.foxnews.com/world/ukraines-zelenskyy-open-freezing-front-lines-ceasefire-russia",
+     "d": "2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "tibet-earthquake",
+   "cat": "world",
+   "date": "2026-10-23",
+   "title": "Magnitude 7.0 earthquake in Tibet kills at least 16",
+   "dek": "The quake struck a remote, high altitude area of northern Tibet late on Oct. 22. Rescuers face snow, rockfalls and downed communications.",
+   "summary": [
+    "The earthquake struck at 10:33 p.m. local time on Oct. 22, about 119 miles east northeast of Nagqu, according to the U.S. Geological Survey, CBS News and the Associated Press reported. Chinese state media reported at least 16 dead and 54 injured; Al Jazeera reported that Nagqu officials gave up to 65 injuries. At least 339 homes and 20 livestock sheds collapsed.",
+    "State broadcaster CCTV called it the biggest earthquake in the region in five years, CBS reported, and Al Jazeera said it was the strongest to hit China since January 2024. The area sits about 4,800 meters above sea level, the AP reported.",
+    "More than 5,000 people from three counties had been deployed by Oct. 23, up from about 1,600 at first, the AP reported. Communications were down in some areas, rail traffic was halted and part of National Highway 317 was closed by rockfalls, with snow forecast for three days. President Xi Jinping called for \"all-out efforts\" in rescue and relief. The USGS recorded at least seven aftershocks of magnitude 4.3 to 5.2."
+   ],
+   "facts": [
+    "Magnitude 7.0, struck at 10:33 p.m. local time on Oct. 22.",
+    "At least 16 dead and 54 injured, according to Chinese state media.",
+    "At least 339 homes collapsed.",
+    "More than 5,000 rescuers deployed, the AP reported."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "CBS and Al Jazeera led with the death toll and the scale of the quake.",
+    "C": "AP led with the rescue effort and the cold, high altitude conditions.",
+    "R": "No coverage from Right outlets in our feeds yet at the time of writing."
+   },
+   "related": [],
+   "keys": [
+    "tibet",
+    "earthquake",
+    "china"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Rescuers search for survivors after deadly earthquake in China's Tibet region",
+     "u": "https://abcnews.com/International/wireStory/rescuers-search-survivors-after-deadly-earthquake-chinas-tibet-137501379",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "cbs",
+     "t": "At least 16 people killed by powerful 7.0 magnitude earthquake in Tibet, officials say",
+     "u": "https://www.cbsnews.com/news/powerful-earthquake-tibet-china/",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Powerful earthquake in Tibet kills at least 16 people",
+     "u": "https://www.aljazeera.com/news/2026/10/22/magnitude-7-earthquake-kills-16-people-in-chinas-tibet-xinhua-reports",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "supreme-court-new-hampshire-student-ids",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Supreme Court lets New Hampshire refuse student IDs at the polls in November",
+   "dek": "The unsigned order pauses a lower court ruling less than two weeks before a close U.S. Senate race. Justice Ketanji Brown Jackson was the only justice to publicly dissent.",
+   "summary": [
+    "The Supreme Court on Oct. 22 cleared the way for New Hampshire to fully bar student IDs as a voting credential in the midterms, granting the state's emergency appeal and blocking the use of student IDs as a backup form of identification, CBS News reported. The order was unsigned and one paragraph long, and the Republican National Committee had filed in support of the state.",
+    "The dispute turns on House Bill 323, which Gov. Kelly Ayotte signed in April and which took effect June 2, removing student IDs from the list of IDs expressly accepted for getting a ballot, Fox News reported. New Hampshire Public Radio reported earlier this month that U.S. District Judge Joseph Laplante, ruling in a suit by the Coalition for Open Democracy, let the law stand but blocked a directive from Secretary of State David Scanlan to the extent it barred or discouraged poll workers from considering student IDs as evidence of identity. The judge found the directive likely went further than the law, which includes a safety valve that lets officials weigh other evidence.",
+    "The majority relied on the Purcell principle, which holds that federal courts should not change election rules close to an election, and said the lower court \"did not point to anything that would justify deviating from that principle,\" according to Fox News and CBS News. Jackson wrote that an order stopping \"material misrepresentations\" about state election rules \"does not contribute to public confusion, it prevents that very problem.\" Fox News noted the order is not a final ruling and the case continues.",
+    "Attorney General John Formella, a Republican, said the state \"has a responsibility to protect the integrity of its elections\" and called the decision an important victory against last minute court orders, both outlets reported."
+   ],
+   "facts": [
+    "The order came on Oct. 22, 12 days before Election Day.",
+    "Only Justice Ketanji Brown Jackson publicly dissented.",
+    "The state law removing student IDs from the accepted list took effect June 2.",
+    "The order is not a ruling on the merits; the underlying suit continues."
+   ],
+   "sides": [
+    {
+     "who": "New Hampshire Attorney General John Formella",
+     "says": "The state has a duty to protect the integrity of its elections, and the ruling guards against last minute court orders that create uncertainty for voters and election officials."
+    },
+    {
+     "who": "Justice Ketanji Brown Jackson, in dissent",
+     "says": "The lower court left the state law in place and only stopped misleading guidance, so its order prevented voter confusion instead of causing it."
+    }
+   ],
+   "framing": {
+    "L": "Network coverage led with the court clearing the way to bar student IDs and noted the close Senate race on the ballot.",
+    "C": "Local public radio coverage of the earlier ruling centered on the judge's finding that the secretary of state went further than the law.",
+    "R": "Fox News led with the timing rule the majority cited, gave Jackson's dissent space and closed on the attorney general's statement."
+   },
+   "related": [
+    {
+     "href": "/forecast/nh/senate",
+     "label": "New Hampshire Senate forecast"
+    }
+   ],
+   "keys": [
+    "new hampshire",
+    "student id",
+    "supreme court",
+    "voter id"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Supreme Court rules New Hampshire can ban use of student IDs for midterm voters",
+     "u": "https://www.cbsnews.com/news/supreme-court-new-hampshire-can-ban-use-student-ids-midterms/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "fox",
+     "t": "Supreme Court blocks use of student IDs as voter identification in New Hampshire",
+     "u": "https://www.foxnews.com/politics/supreme-court-blocks-student-ids-voter-identification-new-hampshire",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "local",
+     "n": "New Hampshire Public Radio",
+     "t": "Judge says NH Secretary of State went too far on student IDs for voting",
+     "u": "https://www.nhpr.org/politics/2026-10-06/judge-says-nh-secretary-of-state-went-too-far-on-student-ids-for-voting",
+     "d": "2026-10-06"
+    }
+   ]
+  },
+  {
+   "id": "blanche-certification-dhs-voter-sweeps",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Attorney General Blanche will not rule out Justice Department action on certifying midterm results",
+   "dek": "He called it a hypothetical doomsday scenario and said he has no plan to block certification. A court order curbing Homeland Security sweeps for noncitizen voters is set to take effect Friday unless an appeals court steps in.",
+   "summary": [
+    "Attorney General Todd Blanche told reporters in Norfolk, Virginia, on Oct. 22 that he would not rule out Justice Department involvement in states' certification of midterm results, Fox News reported. He said it was not his intention to \"improperly interfere with elections\" and called the situation a \"doomsday scenario,\" adding, \"Of course there's scenarios that we can all come up with hypothetically.\" Asked whether he planned to block certification, he said, \"Of course not, no, not at all,\" and said the department was \"not trying to create chaos.\" Fox noted that federal law does not specifically authorize the department to challenge ballots or delay certification.",
+    "The remarks came a day after U.S. District Judge Araceli Martinez-Olguin ordered Homeland Security to halt certain field investigations of suspected noncitizen voters in nine states through Election Day. Fox News reported that she found the plaintiffs likely to win their claim that armed agents interviewing people at home violate the Voting Rights Act's ban on intimidating people who help others register and vote, and that her order is on hold until Friday to allow an appeal. The Associated Press reported that the Justice Department has sued the 30 states that refused to hand over unredacted voter rolls and has lost each of those cases so far.",
+    "CBS News reported that armed Homeland Security Investigations agents have visited homes in several states since September, asking residents about their immigration status and voting history. The department says as many as 250,000 people may be illegally registered, a figure election experts dispute, and the Justice Department says 156 people have been charged with voting fraud offenses since the administration began, out of about 227 million registered voters, CBS reported. A Citizenship and Immigration Services whistleblower told CBS that employees were given quotas of 40 subjects a day.",
+    "Senate Minority Leader Chuck Schumer said Democrats \"have been preparing for this for months and will be ready,\" Fox News reported. Rep. Bennie Thompson, the top Democrat on the House Homeland Security Committee, asked Secretary Markwayne Mullin to halt the home visits, calling them voter intimidation, according to CBS."
+   ],
+   "facts": [
+    "Blanche spoke at a news conference in Norfolk on Oct. 22.",
+    "The judge's order covers nine states and is on hold until Friday, Oct. 23, to allow an appeal.",
+    "The Justice Department has lost each of its suits seeking unredacted voter rolls so far, the AP reported.",
+    "DHS says people here legally who break no laws \"have nothing to fear.\""
+   ],
+   "sides": [
+    {
+     "who": "Attorney General Todd Blanche",
+     "says": "The department is not trying to create chaos or improperly interfere, only to make sure eligible people vote, but he will not promise it would never act in an extreme scenario."
+    },
+    {
+     "who": "Homeland Security",
+     "says": "It is \"laser focused on identifying, prosecuting, and removing aliens who vote\" and has no plans to question people it believes are citizens, a spokesperson told Fox News."
+    },
+    {
+     "who": "Democrats and voting groups",
+     "says": "The sweeps and the talk of federal action after the election are meant to scare lawful voters; Schumer accused Trump and his allies of trying to \"steal this election.\""
+    }
+   ],
+   "framing": {
+    "L": "Network coverage led with armed agents at voters' doors and critics who call the effort intimidation.",
+    "C": "Wire coverage led with the scope of the court order and the department's string of losses in voter roll suits.",
+    "R": "Fox News led its ruling story with the judge's appointment by President Biden and her past work at the ACLU, and its Blanche story gave weight to his denial of any plan to block certification."
+   },
+   "related": [
+    {
+     "href": "/maps/early-vote",
+     "label": "Early vote tracker"
+    }
+   ],
+   "keys": [
+    "blanche",
+    "certification",
+    "noncitizen",
+    "dhs"
+   ],
+   "coverage": [
+    {
+     "o": "fox",
+     "t": "Blanche won't rule out DOJ blocking election certification in 'doomsday' scenario",
+     "u": "https://www.foxnews.com/politics/blanche-wont-rule-out-doj-blocking-election-certification-doomsday-scenario",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "fox",
+     "t": "Biden-appointed judge blocks voter-fraud probes in battleground states just days before midterms",
+     "u": "https://www.foxnews.com/politics/biden-appointed-judge-blocks-voter-fraud-probes-battleground-states-days-before-midterms",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Federal agents knock on doors to track down possible noncitizen voters ahead of midterms",
+     "u": "https://www.cbsnews.com/news/federal-agents-seek-noncitizen-voters/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "Federal judge orders Trump administration to halt noncitizen voting investigation in 9 states",
+     "u": "https://www.wbtv.com/2026/10/23/federal-judge-orders-trump-administration-halt-noncitizen-voting-investigation-9-states/?outputType=amp",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "trump-iowa-rally-hinson",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Trump rallies for Ashley Hinson in Sioux City as Iowa's Senate race tightens",
+   "dek": "The president pitched farm aid and his record in a western Iowa hangar. Hinson has broken with him on Russian diesel and beef imports while backing his tariffs.",
+   "summary": [
+    "President Trump held a rally in an airplane hangar in Sioux City on Oct. 22 for Republican Senate nominee Ashley Hinson and governor nominee Zach Lahn, CBS News and Iowa Public Radio reported. Trump called Hinson \"all that stands between the people of Iowa and communists controlling the United States Senate,\" CBS reported, and called her Democratic opponent, state lawmaker Josh Turek, a \"woke, far-left radical,\" according to the Associated Press. \"I'm asking you to pretend that I'm running,\" he told the crowd, the AP reported.",
+    "Trump told the crowd \"I love farmers\" and promoted an $8 billion harvest fuel relief program for diesel costs and $150 million under the Defense Production Act to expand refining, CBS reported. He said oil would get cheaper \"when the war in Iran ends.\" CBS reported that diesel is still above $6 a gallon nationally and that polls show most voters blame the war for higher energy prices.",
+    "The AP reported that Hinson has shifted from calling herself Trump's \"top ally\" to \"Iowa's best bipartisan fighter.\" She has called his plan to increase beef imports \"a bad idea\" and criticized easing Russia sanctions in exchange for diesel, saying, \"I'll be President Trump's ally when it is important for Iowa, but I will push back on him.\" Iowa Public Radio reported that Hinson backs Trump's tariffs and voted against measures to end U.S. involvement in the Iran war, and that Reps. Zach Nunn and Mariannette Miller-Meeks did not attend the rally.",
+    "Iowa Public Radio cited a Cook Political Report survey showing Turek ahead of Hinson by 2 points, within the margin of error, and Democrat Rob Sand ahead of Lahn by 11 in the governor's race. Broadcast and cable ad spending in the Senate race has passed $200 million, the AP reported. Breitbart News focused on Turek's statement in an NBC interview that people who entered the country illegally should face \"not an immediate deportation,\" and said he wrongly tied two Republican House members to an immigration bill."
+   ],
+   "facts": [
+    "The rally was held at the Sioux Gateway Airport hangar on Oct. 22.",
+    "Hinson and Turek are running for the seat Sen. Joni Ernst is leaving.",
+    "Ad spending in the Senate race has passed $200 million, the AP reported.",
+    "Trump is expected back in eastern Iowa on Nov. 1, according to the AP."
+   ],
+   "sides": [
+    {
+     "who": "Hinson",
+     "says": "She will be Trump's ally when it helps Iowa but will push back on him, including on deals with Russia."
+    },
+    {
+     "who": "Turek and Iowa Democrats",
+     "says": "The Iran war is driving up energy costs, and farmers at a Democratic news conference called the new aid \"too little, too late.\""
+    },
+    {
+     "who": "Iowa Republicans",
+     "says": "Turek is pretending to be a moderate, the AP reported; Hinson said, \"We needed to turn off that spigot of illegal immigration, and we did that.\""
+    }
+   ],
+   "framing": {
+    "L": "Network coverage framed the visit around Republicans struggling on once friendly farm ground and the cost of the Iran war.",
+    "C": "Wire and Iowa public radio coverage centered on Hinson's balancing act with Trump and on the tightening polls.",
+    "R": "Breitbart News left the rally aside and went after Turek's comments on deportation in an NBC interview."
+   },
+   "related": [
+    {
+     "href": "/forecast/ia/senate",
+     "label": "Iowa Senate forecast"
+    },
+    {
+     "href": "/forecast/ia/governor",
+     "label": "Iowa governor forecast"
+    }
+   ],
+   "keys": [
+    "hinson",
+    "turek",
+    "iowa",
+    "lahn",
+    "sand"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Trump puts focus on farmers in Iowa visit, as Republicans struggle on once-fertile ground",
+     "u": "https://www.cbsnews.com/news/trump-iowa-farmers-rally-senate-hinson-turek/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "Ashley Hinson shows Republicans' midterm balancing act as Trump comes to boost Iowa turnout",
+     "u": "https://www.idahostatejournal.com/news/national/ashley-hinson-shows-republicans-midterm-balancing-act-as-trump-comes-to-boost-iowa-turnout/article_f81bc0d0-2445-5cd5-be8c-ac4eec24067c.html",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "local",
+     "n": "Iowa Public Radio",
+     "t": "Trump rallies his Iowa base as Republicans face tougher statewide races",
+     "u": "https://www.iowapublicradio.org/political-news/2026-10-23/trump-rally-iowa-base-republicans-midterms-senate-governor-hinson-lahn",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "breitbart",
+     "t": "Iowa Dem Josh Turek Rejects Immediate Deportation of Illegal Aliens, Incorrectly Links Reps. Miller-Meeks and Feenstra to Dignity Act",
+     "u": "https://www.breitbart.com/politics/2026/10/22/iowa-dem-josh-turek-rejects-immediate-deportation-of-illegal-aliens-incorrectly-links-reps-miller-meeks-and-feenstra-to-dignity-act/",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "maine-senate-collins-creep-ad",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Susan Collins asks a Republican super PAC to pull a radio ad calling Troy Jackson a creep",
+   "dek": "The Senate Leadership Fund ad targets the Maine Democrat's family. Collins says she had nothing to do with it, while campaigning with Joe Manchin to win over moderates.",
+   "summary": [
+    "Sen. Susan Collins called on Oct. 21 for the removal of a radio ad from the Senate Leadership Fund, a super PAC aligned with Senate Republicans, that attacks her Democratic opponent Troy Jackson, the Associated Press reported. The ad, set to a country song, calls Jackson a \"freak\" and a \"creep\" over his relationship with the mother of his children, whom it describes as his cousin. Collins said she \"had nothing to do with that ad\" and that federal law bars her from coordinating with the group.",
+    "Jackson's partner of nearly four decades, Lana Pelletier, wrote in a Bangor Daily News op ed that she \"never imagined U.S. Sen. Susan Collins and her allies would stoop this low,\" Newsweek reported. Newsweek said the cousin claim first appeared in The Maine Wire in July and that it had not independently verified it. Jackson's campaign manager, Dan Gottlieb, said Collins owes the family an apology and accused her of spreading the attacks herself, according to the AP. Jackson, for his part, has called Collins corrupt and his campaign has criticized her husband's past work for defense and AI linked firms, Newsweek reported.",
+    "The same day, Collins campaigned in Lewiston with former Sen. Joe Manchin, the Democrat turned independent, who said, \"She's not a Trump senator. She's not a Republican senator or a Democrat senator,\" CBS News reported. Collins called Vladimir Putin a \"warmonger, a thug\" and opposed the decision to waive new Russia sanctions. Jackson told CBS that as chair of the Appropriations Committee she could cut funding for the Iran war but is \"not willing to do that.\"",
+    "CBS News rates the race a toss up, and Collins is the only Republican senator on the ballot this year in a state Trump lost. Newsweek reported that Jackson has led most polls since entering the race in late July, mostly within the margin of error."
+   ],
+   "facts": [
+    "The ad was paid for by the Senate Leadership Fund, which candidates cannot legally coordinate with.",
+    "Collins publicly asked for it to be taken down on Oct. 21.",
+    "Collins won by more than 8 points in 2020 while Trump lost Maine by 9, CBS reported.",
+    "Collins said \"this race is unique in Maine history in the number of personal attacks.\""
+   ],
+   "sides": [
+    {
+     "who": "Collins",
+     "says": "She had nothing to do with the ad, wants it off the air, and says the race has been unusually personal."
+    },
+    {
+     "who": "Jackson campaign",
+     "says": "Collins owes Jackson's family an apology and has spread the attacks herself, campaign manager Dan Gottlieb said."
+    }
+   ],
+   "framing": {
+    "L": "Network coverage put the race in the frame of Collins distancing herself from Trump and recruiting Manchin to reach moderates.",
+    "C": "Wire coverage led with Collins's call to pull the ad; Newsweek led with Pelletier's op ed and the toll on the family."
+   },
+   "related": [
+    {
+     "href": "/forecast/me/senate",
+     "label": "Maine Senate forecast"
+    }
+   ],
+   "keys": [
+    "collins",
+    "troy jackson",
+    "maine",
+    "manchin"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Sen. Susan Collins calls for removal of radio ad attacking Democrat Troy Jackson as a 'creep'",
+     "u": "https://boston.com/news/politics/2026/10/21/sen-susan-collins-calls-for-removal-of-radio-ad-attacking-democrat-troy-jackson-as-a-creep",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "newsweek",
+     "t": "Troy Jackson's Partner Slams Susan Collins Attacks on Their Family",
+     "u": "https://www.newsweek.com/troy-jacksons-partner-slams-susan-collins-for-upsetting-attacks-on-family-12605322",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Sen. Susan Collins enlists Manchin to woo Maine moderates as she distances herself from Trump",
+     "u": "https://www.cbsnews.com/news/susan-collins-joe-manchin-maine-senate-trump/",
+     "d": "2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "virginia-louise-lucas-indicted",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Virginia state Sen. Louise Lucas, who led Democrats' redistricting push, is indicted in a federal marijuana case",
+   "dek": "Prosecutors accuse the 82 year old Portsmouth Democrat of using her office to shield a marijuana business run with relatives. She says she will not be intimidated.",
+   "summary": [
+    "Federal prosecutors charged Virginia state Sen. L. Louise Lucas, 82, and six co defendants on Oct. 22 in an alleged bribery and racketeering scheme, CBS News reported. The 45 page indictment in the Eastern District of Virginia includes conspiracy to distribute marijuana, money laundering and bribery; Lucas faces five of its eight counts. Co defendants include her daughters, Lisa Lucas Burke and Theresa Lucas Lamb, and her grandson, Ryan Eichelberger.",
+    "Prosecutors allege that a \"Lucas Enterprise\" handled at least 100 kilograms of marijuana and that Lucas used her post as chair of the Senate Finance and Appropriations Committee to shield it and shape legislation in its favor, the Virginia Mercury reported. The Daily Caller and CBS reported that the indictment quotes her as saying she wanted a license for \"generational wealth.\" Fox News reported that she was released on her own recognizance after a first appearance in Norfolk, with arraignment set for Nov. 16 in Newport News.",
+    "Lucas was a key figure behind a congressional map adding four Democratic leaning seats that voters approved in an April referendum; the Virginia Supreme Court threw it out in May, CBS reported. She is not up for reelection until 2027. The Virginia Mercury noted the charges came 12 days before the midterms and months after FBI agents searched her office and cannabis businesses on May 6. A source told CBS the investigation began under the Biden administration.",
+    "Attorney General Todd Blanche said the charges show \"a public servant who will put her own financial interests before the people she was elected to serve,\" CBS reported. Lucas wrote, \"I will not be intimidated. I will not be bullied. And I will not back down,\" according to Fox News. Her lawyer, Brian Woolfolk, called the case \"the circus we always expected it to be,\" and Senate Majority Leader Scott Surovell said, \"She is innocent until proven guilty in a court of law,\" the Virginia Mercury reported."
+   ],
+   "facts": [
+    "The indictment has eight counts; Lucas faces five.",
+    "Arraignment is set for Nov. 16 in Newport News, Fox News reported.",
+    "FBI agents searched her office and businesses in May.",
+    "Lucas is Senate president pro tempore and is not on the ballot until 2027."
+   ],
+   "sides": [
+    {
+     "who": "Justice Department",
+     "says": "Lucas used a position of public trust to enrich herself and her family, Blanche said."
+    },
+    {
+     "who": "Lucas and her lawyer",
+     "says": "The case is political intimidation of an 82 year old, and she will keep fighting."
+    }
+   ],
+   "framing": {
+    "L": "Network coverage led with her role in Democrats' redistricting push and noted the investigation began under Biden.",
+    "C": "Virginia coverage noted the timing before the midterms and gave space to Democratic calls for the presumption of innocence.",
+    "R": "Coverage highlighted the alleged quotes about greed and generational wealth and her past criticism of Trump."
+   },
+   "related": [],
+   "keys": [
+    "lucas",
+    "virginia",
+    "redistricting"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Feds charge L. Louise Lucas, Virginia state senator who led Democrats' redistricting push",
+     "u": "https://www.cbsnews.com/news/l-louise-lucas-charged-indictment-arrested-virginia/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "local",
+     "n": "Virginia Mercury",
+     "t": "Va. Sen. Louise Lucas, six others indicted in federal cannabis corruption case",
+     "u": "https://www.insidenova.com/news/politics/va-sen-louise-lucas-six-others-indicted-in-federal-cannabis-corruption-case/article_70fa64f2-8c6e-4ed9-8418-bad3d5d5cdfe.html",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "fox",
+     "t": "Virginia state senator indicted, accused of leading a marijuana distribution enterprise",
+     "u": "https://www.foxnews.com/politics/virginia-state-senator-indicted-accused-leading-marijuana-distribution-enterprise",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "caller",
+     "t": "'I've Gotten Too Old To Not Be Greedy': Feds Hit Louise Lucas With Pot-Fueled Racketeering Charges",
+     "u": "https://dailycaller.com/2026/10/22/democrat-louise-lucas-virginia-senator-bribery-marijuana-scheme",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "ai-stocks-selloff-nasdaq",
+   "cat": "business",
+   "date": "2026-10-22",
+   "title": "Nasdaq falls 2.6% as investors question whether AI spending will pay off",
+   "dek": "The S&P 500 had its worst day since July on Oct. 22, while the Dow edged up. Rising oil prices added to the pressure.",
+   "summary": [
+    "The Nasdaq composite fell 694 points, or 2.6%, to 26,008.86 on Oct. 22, and the S&P 500 fell 1.2%, its worst day since July, the Associated Press reported. The Dow rose less than 0.1% because most U.S. stocks gained even as tech fell. CBS News reported the Nasdaq had been down 751 points shortly before the close.",
+    "Investors worried that huge AI investments will not deliver the profits expected and about the debt AI companies are taking on to build data centers, CBS reported. \"Companies are reliant on the largess of equity and debt investors to underwrite all the spending,\" Adam Crisafulli of Vital Knowledge told CBS, adding that those markets are \"becoming increasingly less accommodating.\" Meta fell 7% after its profit fell short of estimates, and Tesla slipped 3.1%, CBS reported.",
+    "Earlier in Asia, SoftBank fell 6.9% and Tokyo Electron 7% on worries that data center construction may slow as borrowing gets more expensive, the AP reported. A day before the sell off, the Daily Caller reported that S&P Global's Mark Habib said there is likely more AI related debt than is visible, and that S&P estimates Amazon, Microsoft, Alphabet, Oracle, Meta and SpaceX will spend more than $7 trillion on AI from 2025 through 2030. Oil also weighed on stocks, with Brent up about 3.7% to near $113, CBS reported."
+   ],
+   "facts": [
+    "The Nasdaq fell 694 points, or 2.6%, on Oct. 22.",
+    "The S&P 500 fell 1.2%, its worst day since July, the AP reported.",
+    "Meta shares fell 7% after its earnings.",
+    "The Nasdaq is still up 11.9% for the year, according to the AP."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "CBS framed the drop around doubts that AI spending will pay off and the debt behind it.",
+    "C": "AP led with the index numbers and noted that most stocks rose even as tech fell.",
+    "R": "The Daily Caller's business coverage focused on hidden debt behind Big Tech's AI buildout."
+   },
+   "related": [],
+   "keys": [
+    "nasdaq",
+    "stocks",
+    "ai",
+    "meta",
+    "markets"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Nasdaq dives more than 750 points as investors worry massive AI spending won't pay off",
+     "u": "https://www.cbsnews.com/news/nasdaq-ai-spending-debt-investors-concerns-stocks/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "How major US stock indexes fared Thursday 10/22/2026",
+     "u": "https://abcnews.com/Business/wireStory/major-us-stock-indexes-fared-thursday-10222026-137490327",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "World shares retreat as report of damage to oil tankers pushes oil prices higher",
+     "u": "https://abcnews.com/Business/wireStory/world-shares-retreat-report-damage-oil-takers-pushes-137466921",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "caller",
+     "t": "Big Tech's AI Debt Deluge Might Be Even Worse Than Previously Reported",
+     "u": "https://dailycaller.com/2026/10/21/wall-streets-ai-boom-faces-growing-questions-over-who-holds-the-debt",
+     "d": "2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "trump-bbc-deposition",
+   "cat": "us",
+   "date": "2026-10-22",
+   "title": "Judge orders Trump to sit for a deposition in his $10 billion BBC lawsuit by Dec. 11",
+   "dek": "Trump canceled an Oct. 16 deposition, citing matters of national importance. The BBC also wants to question former special counsel Jack Smith.",
+   "summary": [
+    "U.S. Magistrate Judge Enjolique Lett ruled at a hearing in Miami on Oct. 22 that Trump must answer questions under oath by Dec. 11 or face penalties that could include dismissal of his lawsuit, CBS News reported. Discovery is set to close on Dec. 18.",
+    "Trump sued the BBC in December 2025 over the documentary \"Trump: A Second Chance,\" which spliced parts of his Jan. 6, 2021 speech. The BBC admits the editing made it appear he directly urged violence, apologized, and saw its director general and top news executive resign, but denies defaming him, the Associated Press reported.",
+    "Trump was due to be deposed on Oct. 16, but his lawyers canceled, citing \"matters of national importance.\" BBC lawyer Charles Tobin said Trump was campaigning in Georgia that day, Al Jazeera reported. The BBC says Trump is trying to push his deposition to January 2027, the AP reported.",
+    "The BBC has subpoenaed Jack Smith, arguing he can shed light on whether Trump knew his remarks could lead to violence. Trump's lawyers say Smith has no personal knowledge of the speech or Trump's state of mind and that his testimony would be \"duplicative,\" CBS reported."
+   ],
+   "facts": [
+    "The deposition deadline is Dec. 11; discovery closes Dec. 18.",
+    "Trump is seeking $10 billion in damages.",
+    "The BBC apologized for the edit but denies defamation."
+   ],
+   "sides": [
+    {
+     "who": "Trump's lawyers",
+     "says": "Jack Smith lacks personal knowledge of the speech, his testimony would duplicate his public report, and requests for Mar-a-Lago membership records serve no legitimate purpose."
+    },
+    {
+     "who": "The BBC",
+     "says": "Nearly eight months into discovery it has not been able to question Trump, \"the most central figure in this case.\""
+    }
+   ],
+   "framing": {
+    "L": "CBS and Al Jazeera highlighted that Trump spent the canceled deposition day at a Georgia rally.",
+    "C": "AP led with the fight over deposing Jack Smith.",
+    "R": "No coverage from Right outlets in our feeds yet at the time of writing."
+   },
+   "related": [],
+   "keys": [
+    "bbc",
+    "deposition",
+    "defamation",
+    "trump"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Judge in Miami says Trump must sit for deposition in BBC defamation lawsuit by Dec. 11",
+     "u": "https://www.cbsnews.com/news/trump-bbc-deposition-defamation-lawsuit/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "ap",
+     "t": "Lawyers for Trump, BBC battle over depositions in president's $10 billion defamation case",
+     "u": "https://abcnews.com/Business/wireStory/lawyers-trump-bbc-battle-depositions-presidents-10-billion-137477823",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Trump ordered to sit for deposition in BBC defamation lawsuit",
+     "u": "https://www.aljazeera.com/news/2026/10/22/trump-ordered-to-sit-for-deposition-in-bbc-defamation-lawsuit",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "ohio-governor-acton-mother-ad",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Ramaswamy campaign ad featuring Amy Acton's estranged mother draws criticism from both parties",
+   "dek": "The Republican nominee for Ohio governor says the ad is his campaign's. Gov. Mike DeWine says it is wrong to run it; Vice President JD Vance told Republicans to stop complaining about it.",
+   "summary": [
+    "An online ad in the Ohio governor's race began circulating on the night of Oct. 19. In it, Donna Arthur, the long estranged mother of Democratic nominee Amy Acton, calls her daughter \"a liar\" and suggests she has mental health problems, the Associated Press reported. The ad first appeared without the legally required paid for line.",
+    "Republican nominee Vivek Ramaswamy confirmed on Oct. 20 that it was \"an ad from our campaign,\" CBS News reported, and his campaign defended its content. A later AP report said he would spend millions of dollars to promote it.",
+    "Acton said she was removed from her mother's custody at 12 because of abuse and neglect. A statement from her brother, Philip Stearns, said the two were removed after their mother's husband was indicted for raping Acton as a child. Police and court records reviewed by the AP show the husband, Cledith Arthur, was charged in 1978; he pleaded not guilty, failed to appear in court and has since died.",
+    "Gov. Mike DeWine, a Republican, said \"It's wrong to run this ad\" and asked the campaign to take it down, while keeping his endorsement of Ramaswamy. Sen. Jon Husted said he would not have run it, and Rep. Nancy Mace called it the most offensive ad of the cycle. Vice President JD Vance said whether the ad was appropriate \"is not really my concern\" and told Republicans to stop complaining and focus on winning. President Trump said he knew nothing about it."
+   ],
+   "facts": [
+    "The ad features Acton's estranged mother, Donna Arthur, and first circulated online on Oct. 19.",
+    "Ramaswamy confirmed on Oct. 20 that it is his campaign's ad.",
+    "Court records show Acton's stepfather was charged in 1978 with raping her as a child.",
+    "Republicans including Gov. DeWine, Sen. Husted, Nikki Haley and Rep. Mace criticized the ad; Vance and the Ramaswamy campaign defended running it."
+   ],
+   "sides": [
+    {
+     "who": "Ramaswamy campaign",
+     "says": "Acton \"has some serious problems with the truth that the public needs to be aware of,\" and she was the first candidate to bring her opponent's mother into the race, spokesperson Connie Luck said."
+    },
+    {
+     "who": "Acton campaign",
+     "says": "The ad uses her abuse as a political talking point and fits what Acton called \"a lifelong pattern\" of personal attacks by Ramaswamy."
+    }
+   ],
+   "framing": {
+    "L": "Network and public radio coverage led with the bipartisan backlash and Acton's account of her childhood.",
+    "C": "Wire and Capitol Hill coverage led with the reactions of named Republicans, from DeWine and Husted to Vance.",
+    "R": "Conservative commentary was critical of Ramaswamy; National Review ran a column saying the ad reminded voters why they never liked him."
+   },
+   "related": [
+    {
+     "href": "/forecast/oh/governor",
+     "label": "Ohio governor forecast"
+    }
+   ],
+   "keys": [
+    "ramaswamy",
+    "acton"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Ramaswamy takes responsibility for ad with Amy Acton's mother and will spend millions to promote it",
+     "u": "https://abcnews.com/Politics/wireStory/democrat-ohio-governors-race-pushes-back-unattributed-ad-137424257",
+     "d": "2026-10-20"
+    },
+    {
+     "o": "cbs",
+     "t": "Ramaswamy should drop ad featuring Acton's mom, GOP governor says, as Vance accuses critics of \"whining\"",
+     "u": "https://www.cbsnews.com/news/vivek-ramaswamy-ad-amy-acton-mother-republicans-ohio/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "nbc",
+     "t": "Vance says Republicans should 'stop whining' about Vivek Ramaswamy's attack ad",
+     "u": "https://www.nbcnews.com/politics/2026-election/vance-republicans-stop-whining-vivek-ramaswamy-attack-ad-amy-acton-rcna604817",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "npr",
+     "t": "Backlash from attack ad upends Ohio gubernatorial race",
+     "u": "https://www.npr.org/2026/10/22/nx-s1-6011216/backlash-from-attack-ad-upends-ohio-gubernatorial-race",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cnn",
+     "t": "Key Ohio Republicans criticize Ramaswamy's ad with Acton's estranged mother, even as Vance warned them not to",
+     "u": "https://www.cnn.com/2026/10/20/politics/amy-acton-mother-video",
+     "d": "2026-10-20"
+    },
+    {
+     "o": "hill",
+     "t": "Nancy Mace says Vivek Ramaswamy has run the most offensive ad of the cycle",
+     "u": "https://thehill.com/homenews/campaign/6164220-nancy-mace-vivek-ramaswamy-political-ad/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "hill",
+     "t": "Vance 'disgusted' by Republicans decrying Ramaswamy ad with Acton's mother",
+     "u": "https://thehill.com/homenews/campaign/6163244-vance-criticizes-gop-ramaswamy-ad/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "local",
+     "n": "Cleveland 19",
+     "t": "Ramaswamy campaign takes credit for controversial ad featuring Acton's estranged mother",
+     "u": "https://www.cleveland19.com/2026/10/21/ramaswamy-campaign-takes-credit-controversial-ad-featuring-actons-estranged-mother/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "local",
+     "n": "NBC4 Columbus",
+     "t": "Ohio governor calls for Ramaswamy to pull ad featuring Acton's mother",
+     "u": "https://www.nbc4i.com/news/politics/ohio-governor-calls-for-ramaswamy-to-pull-ad-featuring-actons-mother/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "nr",
+     "t": "Vivek Ramaswamy Reminds Voters Why They Never Liked Him",
+     "u": "https://www.nationalreview.com/2026/10/vivek-ramaswamy-reminds-voters-why-they-never-liked-him/",
+     "d": "2026-10-21",
+     "op": true
+    }
+   ]
+  },
+  {
+   "id": "judge-halts-noncitizen-voter-probes",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Federal judge orders a halt to noncitizen voter investigations in nine states through Election Day",
+   "dek": "The order covers investigations into whether noncitizens are registered to vote. It is on hold until Oct. 23 so the administration can appeal.",
+   "summary": [
+    "U.S. District Judge Araceli Martinez-Olguin in Oakland, California, ordered the Trump administration on Oct. 21 to stop investigating whether noncitizens are registered to vote in nine states until polls close on Nov. 3, the Associated Press reported. She paused her order until Oct. 23 to give the administration time to appeal.",
+    "The states are California, Connecticut, Georgia, Missouri, Nevada, New York, Pennsylvania, Washington and Wisconsin. The suit was brought by the California Nurses Association, National Nurses United, the Voto Latino Foundation, San Francisco and Santa Clara County.",
+    "The judge found the effort relies on data that is \"full of errors\" and is leading to intimidation of groups that help people register and vote, according to the AP. The Department of Homeland Security did not immediately respond to a request for comment."
+   ],
+   "facts": [
+    "The order covers nine states and runs until polls close on Nov. 3.",
+    "It takes effect Oct. 23 unless an appeals court steps in.",
+    "Plaintiffs are two nurses' unions, the Voto Latino Foundation, San Francisco and Santa Clara County."
+   ],
+   "sides": [
+    {
+     "who": "The administration",
+     "says": "Has said noncitizen voting is a major problem. Its own investigations, like earlier studies, have found such voting rare, the AP noted."
+    },
+    {
+     "who": "Plaintiffs",
+     "says": "The sweeps rely on faulty data and intimidate voter registration groups weeks before an election."
+    }
+   ],
+   "framing": {
+    "L": "Network coverage framed the ruling as a check on Homeland Security sweeps for possible noncitizen voters.",
+    "C": "Wire coverage led with the scope of the order, the nine states and the appeal window.",
+    "R": "No coverage from Right outlets in our feeds yet at the time of writing."
+   },
+   "related": [
+    {
+     "href": "/maps/early-vote",
+     "label": "Early vote tracker"
+    }
+   ],
+   "keys": [
+    "noncitizen",
+    "judge"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Judge orders Trump administration to halt noncitizen voting investigation in 9 states",
+     "u": "https://abcnews.com/Politics/wireStory/federal-judge-orders-trump-administration-halt-noncitizen-voting-137479894",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Judge curbs DHS efforts to conduct sweeps for possible noncitizen voters",
+     "u": "https://www.cbsnews.com/news/judge-dhs-noncitizen-voters-ruling/",
+     "d": "2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "ilhan-omar-home-search",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Rep. Ilhan Omar says she will move out of her Washington home after a federal search and threats",
+   "dek": "Federal agents searched the Minnesota Democrat's home on Oct. 12 under a warrant the Justice Department says a judge approved. The scope of the investigation has not been made public.",
+   "summary": [
+    "Homeland Security agents searched Rep. Ilhan Omar's home in Washington before dawn on Oct. 12, executing what the Justice Department called \"a judicially authorized search warrant,\" Axios reported. The department described an ongoing federal criminal investigation and has not said publicly what it covers. Agents seized her phone, MPR News reported.",
+    "Officials have pointed to two lines of inquiry. Homeland Security Secretary Markwayne Mullin referred to possible fraud in her family's immigration paperwork, and Jeanine Pirro, the U.S. attorney in Washington, said her office is looking at Omar's financial disclosures, according to MPR News. The Wall Street Journal reported that the administration's ultimate aim is to strip Omar of her citizenship and deport her; Omar's lawyers say there is \"no legitimate basis\" for any suggestion she violated a law on her citizenship, and say she was naturalized in 2000.",
+    "On Oct. 21 Omar said the search is meant to intimidate her before the midterms and said she will have to move because of threats, NBC News and The Hill reported. House Democratic leaders called the search \"deeply disturbing.\" President Trump said authorities are looking at Omar \"very carefully.\""
+   ],
+   "facts": [
+    "The search took place on Oct. 12 under a court approved warrant, according to the Justice Department.",
+    "No charges have been announced.",
+    "The Justice Department has long avoided public steps against candidates within 60 days of an election, MPR News noted; Omar is on the Nov. 3 ballot."
+   ],
+   "sides": [
+    {
+     "who": "The administration",
+     "says": "Officials describe a criminal investigation that may involve immigration paperwork and financial disclosures."
+    },
+    {
+     "who": "Omar",
+     "says": "The search is political retaliation; she has \"done nothing wrong,\" her spokesperson said, and she will not be silenced."
+    }
+   ],
+   "framing": {
+    "L": "Coverage led with Omar's account of the search, the timing before the election and threats against her.",
+    "C": "Coverage led with what officials have and have not confirmed about the investigation.",
+    "R": "Coverage focused on the subject of the investigation, including long running questions about Omar's marriage and immigration history."
+   },
+   "related": [],
+   "keys": [
+    "omar"
+   ],
+   "coverage": [
+    {
+     "o": "axios",
+     "t": "Feds search Rep. Ilhan Omar's home in immigration probe",
+     "u": "https://www.axios.com/2026/10/12/ilhan-omar-search-immigration",
+     "d": "2026-10-12"
+    },
+    {
+     "o": "npr",
+     "t": "Federal agents search Rep. Ilhan Omar's Washington, D.C., home",
+     "u": "https://www.npr.org/2026/10/12/nx-s1-5998856/federal-agents-search-congressperson-home-dc-doj",
+     "d": "2026-10-12"
+    },
+    {
+     "o": "nbc",
+     "t": "Rep. Ilhan Omar details federal search of her D.C. home, says she'll move for safety",
+     "u": "https://www.nbcnews.com/politics/congress/ilhan-omar-details-federal-search-dc-home-will-move-safety-reasons-rcna604930",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "hill",
+     "t": "Omar said she will have to move due to threats following federal raid",
+     "u": "https://thehill.com/homenews/house/6164465-omar-to-move-dc-residence/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "newsweek",
+     "t": "Ilhan Omar Says She Can't Stay at Home After Raid Amid Death Threats",
+     "u": "https://www.newsweek.com/ilhan-omar-says-she-cant-stay-at-home-after-raid-amid-death-threats-12602896",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "mpr",
+     "t": "Rep. Ilhan Omar says she won't be 'intimidated' by federal investigation",
+     "u": "https://www.mprnews.org/story/2026/10/21/ilhan-omar-says-she-wont-be-intimidated-federal-investigation",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "msnow",
+     "t": "Rep. Ilhan Omar says she 'will not be silenced' after federal agents search home",
+     "u": "https://www.ms.now/news/ilhan-omar-house-search-federal-agents-doj",
+     "d": "2026-10-12"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Ilhan Omar home raid, Haines attack: Inside rise in violence on officials",
+     "u": "https://aljazeera.com/news-analysis/2026/10/22/ilhan-omar-home-raid-haines-attack-inside-rise-in-violence-on-officials",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "dailywire",
+     "t": "WATCH: Ilhan Omar's Strange Answer When Asked If She Married Brother",
+     "u": "https://www.dailywire.com/news/watch-ilhan-omars-strange-answer-when-asked-if-she-married-brother",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "final-senate-debates-michigan-kansas",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Michigan and Kansas Senate candidates meet in their final debates; Wisconsin's governor candidates hold their only one",
+   "dek": "Abdul El-Sayed and Mike Rogers in Michigan, and Roger Marshall and Adam Hamilton in Kansas, debated for the last time on Oct. 21, 13 days before the election.",
+   "summary": [
+    "In Michigan, Democrat Abdul El-Sayed and Republican Mike Rogers clashed over the cost of living, President Trump and guns in their final debate for the open Senate seat, according to NBC News, CBS News and Fox News. Fox reported that the two also sparred over the Muslim Brotherhood.",
+    "In Kansas, Republican Sen. Roger Marshall and Democrat Adam Hamilton argued over Trump's policies and control of the Senate, CBS News reported. Fox News reported that both candidates distanced themselves from their party's leaders.",
+    "In Wisconsin, Republican Tom Tiffany and Democrat David Crowley met in their only governor's debate, sparring over the economy, Trump and the 2020 election, NBC News reported."
+   ],
+   "facts": [
+    "Both Senate debates were held on the evening of Oct. 21.",
+    "The Michigan seat is open; Kansas Sen. Roger Marshall is seeking a second term."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "Takeaways centered on the economy and on each Republican's ties to Trump.",
+    "C": "Takeaway lists from each debate, by the clash.",
+    "R": "Coverage highlighted moments where the Republicans pressed their opponents, including Rogers listing what he called El-Sayed's lies."
+   },
+   "related": [
+    {
+     "href": "/forecast/mi/senate",
+     "label": "Michigan Senate forecast"
+    },
+    {
+     "href": "/forecast/ks/senate",
+     "label": "Kansas Senate forecast"
+    },
+    {
+     "href": "/forecast/wi/governor",
+     "label": "Wisconsin governor forecast"
+    }
+   ],
+   "keys": [
+    "el-sayed",
+    "rogers",
+    "marshall",
+    "hamilton",
+    "debate"
+   ],
+   "coverage": [
+    {
+     "o": "nbc",
+     "t": "Abdul El-Sayed and Mike Rogers clash over cost of living in final Michigan Senate debate",
+     "u": "https://www.nbcnews.com/politics/2026-election/abdul-el-sayed-mike-rogers-final-debate-clash-sets-final-sprint-michig-rcna604591",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "Abdul El-Sayed and Mike Rogers clash in final Michigan Senate debate",
+     "u": "https://www.cbsnews.com/news/final-michigan-senate-debate-abdul-el-sayed-mike-rogers/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "cbs",
+     "t": "Candidates clash over Trump policies, Senate control in debate",
+     "u": "https://www.cbsnews.com/news/kansas-senate-debate-roger-marshall-adam-hamilton-2026/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "nbc",
+     "t": "Roger Marshall and Adam Hamilton face off in fiery Kansas Senate debate",
+     "u": "https://www.nbcnews.com/politics/2026-election/roger-marshall-adam-hamilton-face-fiery-final-kansas-senate-debate-rcna604592",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "hill",
+     "t": "El-Sayed, Rogers face off in last Michigan Senate debate: 3 takeaways",
+     "u": "https://thehill.com/homenews/campaign/6164307-michigan-senate-debate-el-sayed-rogers-takeaways/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "hill",
+     "t": "Marshall, Hamilton clash in battleground Kansas Senate debate: 4 takeaways",
+     "u": "https://thehill.com/homenews/campaign/6164323-marshall-hamilton-clash-in-battleground-kansas-senate-debate-4-takeaways/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "hill",
+     "t": "Tiffany, Crowley tangle in only Wisconsin governor's debate: 3 takeaways",
+     "u": "https://thehill.com/homenews/campaign/6164326-tiffany-crowley-wisconsin-governor-debate-takeaways/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "fox",
+     "t": "El-Sayed, Rogers clash over Muslim Brotherhood, Trump and guns: 5 fiery debate moments",
+     "u": "https://www.foxnews.com/politics/el-sayed-rogers-clash-over-muslim-brotherhood-trump-guns-5-fiery-debate-moments",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "fox",
+     "t": "Kansas Senate rivals distance themselves from party leaders in fiery debate",
+     "u": "https://www.foxnews.com/politics/kansas-senate-rivals-distance-themselves-from-party-leaders-fiery-debate",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "dailywire",
+     "t": "Mike Rogers Breaks Down El-Sayed With Rapid-Fire List Of Lies At Debate",
+     "u": "https://www.dailywire.com/news/mike-rogers-breaks-down-el-sayed-with-rapid-fire-list-of-lies-at-debate",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "us-staff-leave-saudi-arabia-houthi",
+   "cat": "world",
+   "date": "2026-10-22",
+   "title": "U.S. orders some embassy staff and families to leave Saudi Arabia after a Houthi attack on an airport",
+   "dek": "Reports that the U.S. is preparing for possible strikes on Iran after the midterms are attributed to unnamed sources and have not been confirmed by the administration.",
+   "summary": [
+    "The State Department ordered some U.S. government staff and their families to leave Saudi Arabia on Oct. 21 amid Houthi attacks, CBS News, CNN and The Hill reported. The Hill reported that an attack on a Saudi airport killed one person and wounded eight.",
+    "CBS News reported, citing sources, that the U.S. is reducing its troop footprint in the Middle East. CNBC and NPR reported that the U.S. may be preparing strikes on Iran after the midterm elections; those reports rely on unnamed officials and have not been confirmed publicly."
+   ],
+   "facts": [
+    "The State Department ordered the departure of some staff and families from Saudi Arabia on Oct. 21.",
+    "The Hill reported one person killed and eight wounded in the airport attack."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "Coverage tied the departures to reports of possible strikes on Iran after the election.",
+    "C": "Coverage led with the ordered departure and the airport attack.",
+    "R": "No coverage from Right outlets in our feeds yet at the time of writing."
+   },
+   "related": [],
+   "keys": [
+    "saudi",
+    "houthi",
+    "embassy"
+   ],
+   "coverage": [
+    {
+     "o": "hill",
+     "t": "US orders departure of embassy staff, families from Saudi Arabia",
+     "u": "https://thehill.com/policy/international/6164064-houthi-attacks-trigger-evacuations/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "hill",
+     "t": "1 killed, 8 wounded in Saudi Arabia airport attack",
+     "u": "https://thehill.com/policy/international/6164397-houthi-attacked-king-fahd-airport/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cbs",
+     "t": "U.S. ordering some government staff to depart Saudi Arabia",
+     "u": "https://www.cbsnews.com/news/us-saudi-arabia-ordered-departure-houthis/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "cbs",
+     "t": "U.S. reducing troop footprint in Middle East, sources say",
+     "u": "https://www.cbsnews.com/live-updates/iran-war-trump-us-ceasefire-talks-ongoing/",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "cnn",
+     "t": "US orders departure of some embassy staff and families from Saudi Arabia amid Houthi threat",
+     "u": "https://edition.cnn.com/2026/10/21/politics/us-orders-departure-embassy-staff-saudi-arabia",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "cnbc",
+     "t": "U.S. pulls diplomats from Saudi Arabia as it reportedly readies Iran strikes after midterms",
+     "u": "https://www.cnbc.com/2026/10/22/us-iran-trump-hormuz-.html",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "usnews",
+     "t": "US Orders Some Diplomats to Leave Saudi Arabia as Fears of Escalating Houthi Attacks Rise",
+     "u": "https://www.usnews.com/news/politics/articles/2026-10-21/us-orders-some-diplomats-to-leave-saudi-arabia-as-fears-of-escalating-houthi-attacks-rise",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "npr",
+     "t": "U.S., Israel may attack Iran post-elections. And, SpaceX and Tesla consider merging",
+     "u": "https://www.npr.org/2026/10/22/g-s1-149315/up-first-newsletter-midterm-campaign-israel-iran-elon-musk-spacex-tesla",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "stephen-hubbard-freed-russia",
+   "cat": "world",
+   "date": "2026-10-22",
+   "title": "American Stephen Hubbard freed from Russian prison after more than four years",
+   "dek": "President Trump said Vladimir Putin agreed to release him at his request, with no prisoner swap.",
+   "summary": [
+    "Stephen Hubbard, a 74 year old retired schoolteacher, was released by Russia on Oct. 21, CBS News reported. Russian forces detained him in Ukraine soon after the full scale invasion in 2022; he was accused of manning a checkpoint for mercenaries and sentenced after a closed trial to almost seven years. The U.S. government had designated him wrongfully detained, and his family and lawyer dispute the charges.",
+    "The release was announced during a meeting between U.S. special envoy Steve Witkoff and Putin. Trump said Putin agreed at his request with \"no 'swap' necessary\" and said a U.S. decision to waive new sanctions on Russia played a role, CBS News reported. Witkoff's description of Putin as a \"humanitarian\" drew criticism from lawmakers in both parties. NBC News reported that Hubbard arrived in Texas."
+   ],
+   "facts": [
+    "Hubbard was held for more than four years.",
+    "The U.S. had deemed him wrongfully detained.",
+    "No prisoner exchange was involved, according to Trump."
+   ],
+   "sides": [
+    {
+     "who": "Hubbard's lawyer, Martin De Luca",
+     "says": "Credited the administration's diplomacy and said he did not believe the release was directly tied to other U.S. decisions that benefit Russia."
+    }
+   ],
+   "framing": {
+    "L": "Coverage paired the release with criticism of Witkoff's praise for Putin.",
+    "C": "Coverage led with the release and Hubbard's family.",
+    "R": "No coverage from Right outlets in our feeds yet at the time of writing."
+   },
+   "related": [],
+   "keys": [
+    "hubbard"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Son of Stephen Hubbard, American freed from Russian jail, speaks out",
+     "u": "https://www.cbsnews.com/news/stephen-hubbard-freed-american-russia-son-interview/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "nbc",
+     "t": "American Freed From Russian Prison Arrives in Texas",
+     "u": "https://www.today.com/video/witkoff-sparks-bipartisan-outrage-for-calling-putin-a-humanitarian-272025157912",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "aipac-ends-endorsements",
+   "cat": "politics",
+   "date": "2026-10-21",
+   "title": "AIPAC will stop endorsing candidates and giving directly through its PAC; its super PAC continues",
+   "dek": "The pro Israel lobby says members will still be urged to give to candidates it recommends.",
+   "summary": [
+    "AIPAC said on Oct. 21 that it will no longer endorse candidates or earmark contributions to them through its political action committee, Jewish Insider and NPR reported. Its super PAC, United Democracy Project, will keep operating, and the group will recommend candidates it considers \"worthy of your support\" to members who give on their own.",
+    "A letter from AIPAC's leaders said the group must build \"a more strategic, consequential, and nimble political operation\" and called 2026 \"one of the most challenging environments in recent memory,\" according to Jewish Insider. AIPAC said its members gave more than $90 million to candidates this cycle, against more than $3 million in direct PAC contributions."
+   ],
+   "facts": [
+    "Endorsements, direct PAC contributions and earmarking end.",
+    "The United Democracy Project super PAC continues.",
+    "The PAC launched in 2021 and took part in three election cycles."
+   ],
+   "sides": [
+    {
+     "who": "AIPAC",
+     "says": "\"Our measurement of success is the strength of the U.S.-Israel relationship,\" spokesperson Deryn Sousa said."
+    }
+   ],
+   "framing": {
+    "L": "Coverage linked the change to AIPAC's standing with Democrats.",
+    "C": "Coverage led with what ends and what continues.",
+    "R": "Coverage led with the announcement itself."
+   },
+   "related": [
+    {
+     "href": "/watchdog/money",
+     "label": "Watchdog money flow"
+    }
+   ],
+   "keys": [
+    "aipac"
+   ],
+   "coverage": [
+    {
+     "o": "npr",
+     "t": "AIPAC halts endorsements and direct contributions to candidates",
+     "u": "https://www.npr.org/2026/10/21/nx-s1-6011531/aipac-campaign-contributions-israel-democrats",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "jewishinsider",
+     "t": "AIPAC to end candidate endorsements, PAC contributions to allies",
+     "u": "https://jewishinsider.com/2026/10/aipac-end-candidate-endorsements-pac-contributions/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "cnbc",
+     "t": "AIPAC to stop endorsing candidates, making direct PAC contributions",
+     "u": "https://www.cnbc.com/2026/10/21/aipac-candidate-endorsements-pac-contributions-israel-election.html",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "haaretz",
+     "t": "AIPAC to Stop Officially Endorsing Candidates as Its Backing Becomes Political Liability",
+     "u": "https://www.haaretz.com/us-news/2026-10-22/ty-article/.premium/aipac-to-stop-officially-endorsing-candidates-as-its-backing-becomes-liability/000001a1-608b-d686-a7a9-e5abc8500000",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "jns",
+     "t": "AIPAC says it will stop endorsing, making direct political donations",
+     "u": "https://www.jns.org/news/u-s-news/aipac-says-it-will-stop-endorsing-making-direct-political-donations",
+     "d": "2026-10-21"
+    }
+   ]
+  }
+ ]
 }

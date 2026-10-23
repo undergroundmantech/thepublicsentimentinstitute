@@ -1,0 +1,33 @@
+{
+  "person_id": "PA-josh-shapiro",
+  "name": "Josh Shapiro",
+  "party": "Democrat",
+  "state": "PA",
+  "office_sought": "Governor",
+  "current_office": "Governor of Pennsylvania",
+  "opponents": [
+    "PA-stacy-garrity"
+  ],
+  "vehicles": [
+    {
+      "name": "Josh Shapiro gubernatorial campaign committee, formal name not retrieved",
+      "id": "PA DOS filer ID not retrieved",
+      "kind": "candidate committee",
+      "treasurer": "not retrieved"
+    }
+  ],
+  "top_blocs": [
+    "Labor unions",
+    "Billionaire megadonor",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 55000000,
+    "label": "about $55 million raised since the start of 2025, candidate committee; campaign says more than $60 million since taking office",
+    "as_of": "2026-09-14",
+    "source": "https://www.spotlightpa.org/news/2026/10/josh-shapiro-stacy-garrity-pennsylvania-governor-debate-elections/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Pennsylvania pre-election report due 2026-10-23, not yet covered at compile time; then the 30 day post-election report in early December 2026"
+}

@@ -11,7 +11,7 @@ import StateMap, { CHANGE_RAMP, CHANGE_RAMP_IND, type Path, type View } from "./
 import { Num, StateBar, Tug } from "./bits";
 import {
   EMPTY, clamp, compute, decodeScen, editZero, encodeScen, fmM, fmShift, groupZero, lastName, memberships, n0, pct, scenZero, short,
-  type CountyOut, type Edit, type Index, type IndexRace, type RaceFile, type Scen,
+  type CountyOut, type Edit, type Index, type IndexRace, type RaceFile, type Scen, similarity, LINK_MAX, type Sim,
 } from "./engine";
 import "./scenarios.css";
 
@@ -64,7 +64,7 @@ export default function StateLab({ tool, base, crumbs = false, bootSearch }: { t
       <div className="eye g">{tool === "counties" ? "County what if" : "Swingometer inside a state"} · {idx ? `${idx.races.length} statewide races` : "Senate and governor"}</div>
       <h1>{tool === "counties" ? <>What if <em>these counties move?</em></> : <>Move the voters, <em>county by county</em></>}</h1>
       <p className="lede">{tool === "counties"
-        ? "Pick a Senate or governor race and change any county: its margin, its turnout, or a whole area of the state at once. The statewide vote, the margin and the win chance add up live from every county."
+        ? "Pick a Senate or governor race and change any county: its margin, its turnout, or a whole area of the state at once. Counties like the one you change move with it, matched on party, 2024 vote, Trump approval, turnout, financial strain and more, and the statewide vote, margin and win chance add up live from every county."
         : "Pick a Senate or governor race and shift how a group of voters votes or how many of them turn out. Every county moves by how many of those voters live there, so the map recolors where the change lands."}</p>
     </header>
   );
@@ -142,7 +142,8 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
   const [pulse, setPulse] = useState<{ ids: string[]; k: number }>({ ids: [], k: 0 });
   const mem = useMemo(() => memberships(rf), [rf]);
   const live = useDeferredValue(sc);
-  const out = useMemo(() => compute(rf, live, mem), [rf, live, mem]);
+  const S = useMemo(() => (tool === "counties" ? similarity(rf) : null), [rf, tool]);
+  const out = useMemo(() => compute(rf, live, mem, undefined, S), [rf, live, mem, S]);
   const byId = useMemo(() => new Map(out.rows.map((r) => [r.id, r])), [out]);
   const L = rf.ind ? "I" : "D";
   const dColor = rf.ind ? "var(--ind)" : "var(--dem)";
@@ -284,7 +285,7 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
 
         <aside className="sl-rail" aria-label="Scenario controls">
           {tool === "counties"
-            ? <CountyRail rf={rf} sc={sc} sel={selRow} setSel={setSel} setC={setC} setR={setR} region={region} setRegion={setRegion} rank={rank} out={out} L={L} one={one} zero={zero} resetAll={resetAll} copy={copy} />
+            ? <CountyRail rf={rf} sc={sc} S={S} setL={(v) => setSc((x) => ({ ...x, L: v }))} sel={selRow} setSel={setSel} setC={setC} setR={setR} region={region} setRegion={setRegion} rank={rank} out={out} L={L} one={one} zero={zero} resetAll={resetAll} copy={copy} />
             : <GroupRail rf={rf} sc={sc} setSc={setSc} dim={dim} setDim={setDim} setG={setG} preset={preset} applyPreset={applyPreset} sel={selRow} setSel={setSel} mem={mem} L={L} zero={zero} resetAll={resetAll} copy={copy} setPreset={setPreset} />}
           <Link className="sl-other" href={otherHref}>{tool === "counties" ? `Move groups of voters in ${rf.state} instead` : `Change single counties in ${rf.state} instead`}</Link>
         </aside>
@@ -338,8 +339,8 @@ function Slider({ id, label, v, min, max, step, kind, out, onChange }: { id: str
   );
 }
 
-function CountyRail({ rf, sc, sel, setSel, setC, setR, region, setRegion, rank, out, L, one, zero, resetAll, copy }: {
-  rf: RaceFile; sc: Scen; sel: CountyOut | null; setSel: (id: string | null) => void; setC: (id: string, f: (e: Edit) => Edit) => void; setR: (k: string, f: (e: Edit) => Edit) => void;
+function CountyRail({ rf, sc, S, setL, sel, setSel, setC, setR, region, setRegion, rank, out, L, one, zero, resetAll, copy }: {
+  rf: RaceFile; sc: Scen; S: Sim | null; setL: (v: number) => void; sel: CountyOut | null; setSel: (id: string | null) => void; setC: (id: string, f: (e: Edit) => Edit) => void; setR: (k: string, f: (e: Edit) => Edit) => void;
   region: string; setRegion: (k: string) => void; rank: Record<string, number>; out: ReturnType<typeof compute>; L: string; one: string; zero: boolean; resetAll: () => void; copy: () => void;
 }) {
   const ce = sel ? sc.c[sel.id] ?? { m: 0, t: 0 } : null;
@@ -352,8 +353,34 @@ function CountyRail({ rf, sc, sel, setSel, setC, setR, region, setRegion, rank, 
   const findId = `sl-find-${rf.id}`;
   // how much one point in this county moves the state
   const perPt = sel ? (sel.T / (out.T || 1)) : 0;
+  const link = sc.L ?? 1;
+  // the counties most like the open one, with how far they follow and why
+  const twins = useMemo(() => {
+    if (!S || !sel) return [] as { id: string; name: string; w: number; why: string[] }[];
+    const i = sel.i, n = S.n;
+    return Array.from({ length: n }, (_, j) => j).filter((j) => j !== i).map((j) => ({ j, w: S.W[i * n + j] * LINK_MAX * link }))
+      .sort((a, b) => b.w - a.w).slice(0, 6).filter((x) => x.w >= 0.05)
+      .map(({ j, w }) => ({ id: rf.c[j][0], name: rf.c[j][1], w, why: S.why(i, j) }));
+  }, [S, sel, link, rf]);
+  const linkedN = useMemo(() => {
+    if (!S || link <= 0) return 0;
+    const ed = Object.keys(sc.c).map((id) => rf.c.findIndex((c) => c[0] === id)).filter((i) => i >= 0);
+    if (!ed.length) return 0;
+    let k = 0; for (let j = 0; j < S.n; j++) { if (ed.includes(j)) continue; if (ed.some((i) => S.W[i * S.n + j] * LINK_MAX * link >= 0.25)) k++; }
+    return k;
+  }, [S, sc.c, link, rf]);
   return (
     <>
+      {S ? (
+        <section className="card sl-box sl-link" aria-label={`Linked ${rf.unit}`}>
+          <div className="card-h"><h3>Linked {rf.unit}</h3><span className={`pill ${link > 0 ? "d" : "t"}`} style={{ marginLeft: "auto" }}>{link > 0 ? "On" : "Off"}</span></div>
+          <div className="card-b">
+            <p className="sl-hint">Change one {one} and the {rf.unit} like it move too, the way states move together in the statewide what if. Likeness comes from each {one}&apos;s forecast margin and 2020 to 2024 shift, party, 2024 vote, Trump approval, turnout propensity, financial strain, education, race, age, density, gas prices and data centers.</p>
+            <Slider id={`sl-link-${rf.id}`} label="How closely they follow" v={Math.round(link * 100)} min={0} max={100} step={5} kind="t" out={link > 0 ? `${Math.round(link * 100)}%` : "Off, only the county you change moves"} onChange={(v) => setL(v / 100)} />
+            {linkedN ? <p className="sl-fine">{linkedN} more {linkedN === 1 ? one : rf.unit} follow your changes by a quarter or more.</p> : null}
+          </div>
+        </section>
+      ) : null}
       <section className="card sl-box" aria-label={`Change a ${one}`}>
         <div className="card-h"><h3>Change a {one}</h3>
           <input className="sl-find" list={findId} placeholder={`Find a ${one}`} aria-label={`Find a ${one}`}
@@ -381,7 +408,18 @@ function CountyRail({ rf, sc, sel, setSel, setC, setR, region, setRegion, rank, 
                 <button type="button" onClick={() => setC(sel.id, (e) => ({ ...e, t: e.t - 10 }))}>Turnout −10%</button>
                 <button type="button" className="z" disabled={editZero(sc.c[sel.id])} onClick={() => setC(sel.id, () => ({ m: 0, t: 0 }))}>Reset</button>
               </div>
-              <p className="sl-fine">One point here moves the statewide margin about {(perPt).toFixed(2)} points.</p>
+              <p className="sl-fine">One point here moves the statewide margin about {(perPt).toFixed(2)} points{link > 0 ? `, before the ${rf.unit} like it follow` : ""}.</p>
+              {S && link > 0 && twins.length ? (
+                <div className="sl-twins">
+                  <div className="sl-twins-h"><b>Moves with it</b><span>How far each follows a change here</span></div>
+                  <ol>
+                    {twins.map((t) => (
+                      <li key={t.id}><button type="button" onClick={() => setSel(t.id)}><span className="nm">{t.name}</span><span className="bar"><i style={{ width: `${Math.round(t.w * 100)}%` }} /></span><b className="mono">{Math.round(t.w * 100)}%</b></button>
+                        {t.why.length ? <small>Alike in {t.why.join(", ")}</small> : null}</li>
+                    ))}
+                  </ol>
+                </div>
+              ) : null}
             </div>
           ) : <p className="sl-hint">Click any {one} on the map, or find one above, to change its margin or turnout.</p>}
         </div>

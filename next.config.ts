@@ -6,6 +6,9 @@ import { redirects } from "./next.redirects";
 const SITE_V2 = (process.env.NEXT_PUBLIC_SITE_V2 ?? "on") === "on";
 
 const nextConfig: NextConfig = {
+  // Oct 23 2026: two static page workers on small build machines, so no single worker holds every page in memory.
+  // Vercel's build machines already run several.
+  ...(process.env.VERCEL ? {} : { experimental: { cpus: 3, staticGenerationMaxConcurrency: 4 } }),
   // The early vote tracker falls back to the saved civicAPI snapshots when the live feed is down, so ship
   // them with the routes that read them.
   outputFileTracingIncludes: {

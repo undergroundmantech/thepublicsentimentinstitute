@@ -1,0 +1,59 @@
+{
+  "person_id": "FL-byron-donalds",
+  "name": "Byron Donalds",
+  "party": "Republican",
+  "state": "FL",
+  "office_sought": "Governor",
+  "current_office": "U.S. House FL-19",
+  "opponents": [
+    "FL-david-jolly"
+  ],
+  "vehicles": [
+    {
+      "name": "Friends of Byron Donalds PAC",
+      "id": "FL DOE 89043",
+      "kind": "state political committee",
+      "treasurer": "Bradley T. Crate, Red Curve Solutions"
+    },
+    {
+      "name": "Byron Donalds for Governor",
+      "id": "",
+      "kind": "state candidate account",
+      "treasurer": "Bradley T. Crate, Red Curve Solutions"
+    },
+    {
+      "name": "Byron Donalds for Congress",
+      "id": "FEC C00733329",
+      "kind": "federal campaign",
+      "treasurer": "Bradley T. Crate, Red Curve Solutions"
+    },
+    {
+      "name": "Proven Conservatives PAC",
+      "id": "FEC C00755728; C00894147",
+      "kind": "leadership PAC",
+      "treasurer": "Bradley T. Crate, Red Curve Solutions"
+    },
+    {
+      "name": "Byron Donalds Victory Fund",
+      "id": "FEC C00760108",
+      "kind": "joint fundraising committee",
+      "treasurer": "Bradley T. Crate, Red Curve Solutions"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "Gambling",
+    "Detention vendors",
+    "Utilities and energy",
+    "School choice and family"
+  ],
+  "headline_total": {
+    "amount_usd": 149000000,
+    "label": "about, raised across vehicles",
+    "as_of": "2026-10-22",
+    "source": "Byron Donalds Watchdog File"
+  },
+  "research_tier": "Tier 1 full file",
+  "compiled": "2026-10-23",
+  "next_filing": "Florida Division of Elections reports due 2026-10-30"
+}

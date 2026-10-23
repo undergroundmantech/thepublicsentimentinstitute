@@ -1,0 +1,39 @@
+{
+  "person_id": "OH-amy-acton",
+  "name": "Amy Acton",
+  "party": "Democrat",
+  "state": "OH",
+  "office_sought": "Governor",
+  "current_office": "none",
+  "opponents": [
+    "OH-vivek-ramaswamy"
+  ],
+  "vehicles": [
+    {
+      "name": "Acton and Pepper campaign committee",
+      "id": "Ohio SOS committee ID not verified",
+      "kind": "state candidate committee",
+      "treasurer": "not verified; campaign manager Philip Stein"
+    },
+    {
+      "name": "Ohioans For Lower Costs",
+      "id": "Ohio SOS ID not verified",
+      "kind": "state political committee created by the DGA",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Labor unions",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 21800000,
+    "label": "raised for the whole campaign per most recent public numbers; July to September monthly reports added about $15.8M more, not summed",
+    "as_of": "2026-08-27",
+    "source": "https://signalohio.org/billionaire-jeff-yass-ohio-governor-race-november-election-2026/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Ohio pre-general and post-general campaign finance reports; exact due dates not verified in this pass"
+}

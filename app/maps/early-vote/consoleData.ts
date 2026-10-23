@@ -25,7 +25,9 @@ export type BenchRace = { id: string; office: "senate" | "governor"; label: stri
   F: number; p10: number; p90: number; prob: number; evShift: number;
   /** polls of the last 30 days the site average counts, as margins */
   polls: { lo: number; hi: number; loBy: string; hiBy: string; n: number; avg: number } | null };
-export type Bench = { races: BenchRace[]; pres24: number | null; expEarly: number; expTotal: number; ballots: number; now: P3; expNow: P3; expFull: P3 };
+export type Bench = { races: BenchRace[]; pres24: number | null; expEarly: number; expTotal: number; ballots: number; now: P3; expNow: P3; expFull: P3;
+  /** 2024 vote of the early voters the forecast expects by now and of its whole electorate: Trump, Harris, new */
+  gExp?: number[]; gFc?: number[] };
 /** how On Point Polling likely voters of each party registration vote: shares of 2024 Trump, Harris and new voters, and their crossover */
 export type Crossover = { trumpToD: number; harrisToR: number; newD: number; partyToGroup: Record<"Democrat" | "Republican" | "Independent", number[]> };
 export type EvConsole = { snapshot: string; daysOut: number; total: number; mail: number; inperson: number; requested: number; dem: number; rep: number; ind: number; partyTotal: number;
@@ -70,7 +72,7 @@ function dailySeries(): Record<string, [number, number][]> {
   return out;
 }
 
-type Sig = { ballots: number; estimatedShare: number; party: P3; expectedParty?: P3; expectedPartyFull?: P3; expectedEarly?: number; expectedTotal?: number; actualMargin: number; expectedMargin: number; delta: number };
+type Sig = { ballots: number; estimatedShare: number; party: P3; expectedParty?: P3; expectedPartyFull?: P3; expectedEarly?: number; expectedTotal?: number; expGroups?: number[]; forecastElectorate?: number[]; actualMargin: number; expectedMargin: number; delta: number };
 function signals(): { date: string | null; states: Record<string, Sig> } {
   try {
     const dir = path.join(process.cwd(), "scripts/forecast/earlyvote/snapshots");
@@ -153,7 +155,7 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
       t22: h["2022"]?.turnout ?? null, t24: h["2024"]?.turnout ?? null, e22: h["2022"]?.early ?? null, e24: h["2024"]?.early ?? null,
       pace22: a22 ? s.total / a22 : null, pace24: a24 ? s.total / a24 : null, cps22: c22, cps24: c24, s26, fc: fc[s.st] ?? null,
       bench: (() => { const g = sig.states[s.st]; if (!g || !g.expectedParty || !g.expectedPartyFull || !g.expectedEarly || !g.expectedTotal) return null;
-        return { races: BR[s.st] ?? [], pres24: P24[s.st] ?? null, expEarly: g.expectedEarly, expTotal: g.expectedTotal, ballots: g.ballots, now: g.party, expNow: g.expectedParty, expFull: g.expectedPartyFull }; })(),
+        return { races: BR[s.st] ?? [], pres24: P24[s.st] ?? null, expEarly: g.expectedEarly, expTotal: g.expectedTotal, ballots: g.ballots, now: g.party, expNow: g.expectedParty, expFull: g.expectedPartyFull, gExp: g.expGroups, gFc: g.forecastElectorate }; })(),
       pm: sig.states[s.st] ? { d: sig.states[s.st].party.d, r: sig.states[s.st].party.r, o: sig.states[s.st].party.o, est: sig.states[s.st].estimatedShare ?? 0,
         xd: sig.states[s.st].expectedParty?.d ?? 0, xr: sig.states[s.st].expectedParty?.r ?? 0, delta: sig.states[s.st].delta ?? 0, shift: shifts[s.st] ?? null } : null };
   });

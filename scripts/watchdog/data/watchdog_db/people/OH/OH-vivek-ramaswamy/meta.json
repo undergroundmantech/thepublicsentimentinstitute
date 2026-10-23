@@ -1,0 +1,39 @@
+{
+  "person_id": "OH-vivek-ramaswamy",
+  "name": "Vivek Ramaswamy",
+  "party": "Republican",
+  "state": "OH",
+  "office_sought": "Governor",
+  "current_office": "none",
+  "opponents": [
+    "OH-amy-acton"
+  ],
+  "vehicles": [
+    {
+      "name": "Ramaswamy and McColley campaign committee",
+      "id": "Ohio SOS committee ID not verified",
+      "kind": "state candidate committee",
+      "treasurer": "not verified; strategist Jai Chabria, campaign manager Jonathan Ewing"
+    },
+    {
+      "name": "V-PAC: Victors Not Victims",
+      "id": "FEC C00892919",
+      "kind": "federal super PAC",
+      "treasurer": "not verified; chief strategist Andy Surbian"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "Self funding",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 50000000,
+    "label": "more than this raised by the campaign since declaring, including his own money; V-PAC separately took at least $30M from Yass alone",
+    "as_of": "2026-04-15",
+    "source": "https://www.nbc4i.com/news/your-local-election-hq/acton-ramaswamy-each-raise-over-5-million-from-donors-in-past-four-months/amp/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Ohio pre-general and post-general campaign finance reports for the campaign, and V-PAC FEC pre-general and post-general reports; exact due dates not verified in this pass"
+}

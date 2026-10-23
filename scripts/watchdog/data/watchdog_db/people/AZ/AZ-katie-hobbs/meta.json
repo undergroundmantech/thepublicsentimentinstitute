@@ -1,0 +1,57 @@
+{
+  "person_id": "AZ-katie-hobbs",
+  "name": "Katie Hobbs",
+  "party": "Democrat",
+  "state": "AZ",
+  "office_sought": "Governor",
+  "current_office": "Governor of Arizona",
+  "opponents": [
+    "AZ-andy-biggs"
+  ],
+  "vehicles": [
+    {
+      "name": "Elect Katie Hobbs",
+      "id": "Arizona SOS committee ID not retrieved",
+      "kind": "candidate committee",
+      "treasurer": "not retrieved; campaign manager Nicole DeMont"
+    },
+    {
+      "name": "Copper State Values PAC",
+      "id": "not retrieved",
+      "kind": "aligned state political committee",
+      "treasurer": "not retrieved"
+    },
+    {
+      "name": "Copper State Victory",
+      "id": "not retrieved",
+      "kind": "coordinated fundraising effort via Navajo County Democratic Committee",
+      "treasurer": "liaison Missa Foy, county party chair"
+    },
+    {
+      "name": "Hobbs legal defense fund",
+      "id": "none, funds held in Coopersmith Brockelman trust account",
+      "kind": "undisclosed legal fund",
+      "treasurer": "attorney Andrew Yost; Nicole DeMont directs transfers"
+    },
+    {
+      "name": "Hobbs 2023 inaugural committee",
+      "id": "not retrieved",
+      "kind": "inaugural fund",
+      "treasurer": "not retrieved"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Social services contractors",
+    "Utilities and energy"
+  ],
+  "headline_total": {
+    "amount_usd": 9800000,
+    "label": "raised by Elect Katie Hobbs, cycle to date",
+    "as_of": "2026-06-30",
+    "source": "https://ballotpedia.org/Arizona_gubernatorial_election,_2026"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Arizona pre-general election campaign finance report, late October 2026, exact due date to confirm with the Arizona Secretary of State"
+}

@@ -1,0 +1,27 @@
+{
+  "person_id": "LA-blake-miguez",
+  "name": "Blake Miguez",
+  "party": "Republican",
+  "state": "LA",
+  "office_sought": "U.S. House",
+  "current_office": "State Senator",
+  "opponents": [
+    "LA-chauna-banks",
+    "LA-larry-davis-iii",
+    "LA-lindsay-garcia",
+    "LA-michael-mebruer",
+    "LA-monique-appeaning",
+    "LA-pat-forbes",
+    "LA-rick-edmonds",
+    "LA-stephen-wagley"
+  ],
+  "vehicles": [],
+  "top_blocs": [],
+  "headline_total": {},
+  "research_tier": "Queued, roster and office levers only",
+  "compiled": "2026-10-23",
+  "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
+  "groups": "2026 House nominee",
+  "competitive_rating": "",
+  "research_priority": "4"
+}

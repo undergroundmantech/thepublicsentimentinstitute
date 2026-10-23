@@ -1,0 +1,45 @@
+{
+  "person_id": "MI-jocelyn-benson",
+  "name": "Jocelyn Benson",
+  "party": "Democrat",
+  "state": "MI",
+  "office_sought": "Governor",
+  "current_office": "Michigan Secretary of State",
+  "opponents": [
+    "MI-john-james"
+  ],
+  "vehicles": [
+    {
+      "name": "Benson gubernatorial candidate committee, exact filed name not verified",
+      "id": "Michigan Bureau of Elections ID not found",
+      "kind": "state candidate committee",
+      "treasurer": "not found"
+    },
+    {
+      "name": "Michigan Legacy PAC",
+      "id": "not found",
+      "kind": "state PAC established by Benson",
+      "treasurer": "not found"
+    },
+    {
+      "name": "Benson Secretary of State committee",
+      "id": "not found",
+      "kind": "prior state candidate committee, transferred $1.2M in 2025",
+      "treasurer": "not found"
+    }
+  ],
+  "top_blocs": [
+    "Labor unions",
+    "Utilities and data centers",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 6700000,
+    "label": "raised by the candidate committee Jan 1 to Aug 24, 2026, derived by adding $4.9M through Jul 20 per Michigan Advance and $1.8M for Jul 20 to Aug 24 per Bridge; excludes 2025 receipts; cash on hand $5.9M Aug 24",
+    "as_of": "2026-08-24",
+    "source": "https://bridgemi.com/michigan-government/jocelyn-benson-outraises-john-james-see-top-donors-in-michigan-governor-race/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Michigan pre-general campaign statements, expected the week ending Oct 23, 2026 per Bridge Michigan, not yet reviewed; then the post-general statement"
+}

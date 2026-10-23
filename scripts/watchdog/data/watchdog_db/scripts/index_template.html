@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watchdog Database Index</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#0f1115;--panel:#161a21;--panel2:#1d222b;--line:#2a303b;--fg:#e8e6e1;--muted:#9aa3b2;--hub:#f2c14e;--d:#5b8def;--r:#e05d5d;--i:#9aa3b2;color-scheme:dark;
+--fd:"Archivo",system-ui,sans-serif;--fb:"Source Sans 3",system-ui,sans-serif;--fm:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f3f1ec;--panel:#fff;--panel2:#ebe8e1;--line:#d6d2c8;--fg:#1a1c21;--muted:#5a6170;--hub:#8a6400;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f3f1ec;--panel:#fff;--panel2:#ebe8e1;--line:#d6d2c8;--fg:#1a1c21;--muted:#5a6170;--hub:#8a6400;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--fb)}
+header{padding:20px 16px 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+h1{font:900 1.5rem var(--fd);margin:0}h1 span{color:var(--hub)}
+.stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:10px}.stats div{font:600 .75rem var(--fm);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.stats b{display:block;font:600 1.4rem var(--fm);color:var(--fg)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:2}
+input,select{background:var(--panel2);border:1px solid var(--line);color:var(--fg);padding:7px 10px;border-radius:4px;font:inherit}
+input{flex:1;min-width:200px}
+.wrap{padding:0 16px 40px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.88rem}
+th{font:600 .7rem var(--fm);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n{font-family:var(--fm);text-align:right;white-space:nowrap}
+.p{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.st{font:600 .68rem var(--fm);padding:2px 6px;border-radius:3px;border:1px solid var(--line);white-space:nowrap}
+.st.h{color:var(--hub);border-color:var(--hub)}
+a{color:var(--hub)}.muted{color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body>
+<header><h1>On Point Politics <span>Watchdog Database</span></h1>
+<div class="muted">Every sitting member of Congress, every governor, and every 2026 House, Senate and governor general election nominee. Open a folder for the profile, the connections board, the edge list and the research notes.</div>
+<div class="stats" id="stats"></div></header>
+<div class="bar">
+<input id="q" type="search" placeholder="Search name, state, office, bloc" aria-label="Search">
+<select id="grp" aria-label="Group"><option value="">All groups</option><option>2026 Governor nominee</option><option>2026 Senate nominee</option><option>2026 House nominee</option><option>Sitting governor</option><option>Sitting Congress</option></select>
+<select id="st" aria-label="Status"><option value="">Any status</option><option value="hand researched">Hand researched</option><option value="queued">Queued</option></select>
+<select id="ss" aria-label="State"><option value="">All states</option></select>
+</div>
+<div class="wrap"><table><thead><tr><th data-k="name">Name</th><th data-k="state">State</th><th data-k="office">Running for</th><th data-k="cur">Current office</th><th data-k="rating">Rating</th><th data-k="status">Status</th><th data-k="edges">Edges</th><th data-k="raised">Headline $</th><th>Files</th></tr></thead><tbody id="tb"></tbody></table>
+<p class="muted" id="cnt"></p></div>
+<script>
+const D=/*__DATA__*/null;
+const S=D.stats;document.getElementById("stats").innerHTML=`<div><b>${S.people.toLocaleString()}</b>people</div><div><b>${S.hand}</b>hand researched</div><div><b>${S.edges.toLocaleString()}</b>ledger rows</div><div><b>${S.built}</b>built</div>`;
+const states=[...new Set(D.rows.map(r=>r.state))].sort();const ss=document.getElementById("ss");states.forEach(s=>{const o=document.createElement("option");o.textContent=s;ss.appendChild(o)});
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pc=p=>/Democrat/.test(p)?"var(--d)":/Republican/.test(p)?"var(--r)":"var(--i)";
+const fm=v=>!v?"":v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":"$"+v;
+let sortK="prio",dir=1;
+function draw(){const q=document.getElementById("q").value.toLowerCase(),g=document.getElementById("grp").value,st=document.getElementById("st").value,s=ss.value;
+ let R=D.rows.filter(r=>(!q||[r.name,r.state,r.office,r.cur,r.blocs,r.id].join(" ").toLowerCase().includes(q))&&(!g||r.groups.includes(g))&&(!st||r.status===st)&&(!s||r.state===s));
+ R.sort((a,b)=>{const x=a[sortK],y=b[sortK];return (typeof x==="number"||sortK==="raised"||sortK==="edges"?(+x||0)-(+y||0):String(x).localeCompare(String(y)))*dir||String(a.name).localeCompare(b.name)});
+ document.getElementById("tb").innerHTML=R.slice(0,1500).map(r=>`<tr><td><i class="p" style="background:${pc(r.party)}"></i>${esc(r.name)}<div class="muted">${esc(r.party)}${r.blocs?" · "+esc(r.blocs):""}</div></td><td>${esc(r.state)}${r.dist&&r.dist!=="AL"?"-"+esc(r.dist):""}</td><td>${esc(r.office)}</td><td>${esc(r.cur)}</td><td>${esc(r.rating)}</td><td><span class="st ${r.status==="queued"?"":"h"}">${esc(r.status)}</span></td><td class="n">${r.edges}</td><td class="n">${fm(+r.raised)}</td><td><a href="${r.path}profile.md">profile</a>${r.board?` · <a href="${r.path}board.html">board</a>`:""} · <a href="${r.path}edges.csv">edges</a></td></tr>`).join("");
+ document.getElementById("cnt").textContent=R.length+" shown";}
+document.querySelectorAll("th[data-k]").forEach(th=>th.onclick=()=>{const k=th.dataset.k;dir=sortK===k?-dir:(k==="edges"||k==="raised"?-1:1);sortK=k;draw()});
+["q","grp","st","ss"].forEach(id=>document.getElementById(id).addEventListener("input",draw));
+draw();
+</script>
+</body>
+</html>

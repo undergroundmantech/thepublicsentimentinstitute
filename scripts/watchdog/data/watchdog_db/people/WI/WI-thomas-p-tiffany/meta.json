@@ -1,0 +1,51 @@
+{
+  "person_id": "WI-thomas-p-tiffany",
+  "name": "Thomas P. Tiffany",
+  "party": "Republican",
+  "state": "WI",
+  "office_sought": "Governor",
+  "current_office": "U.S. House WI-7",
+  "opponents": [
+    "WI-david-crowley"
+  ],
+  "vehicles": [
+    {
+      "name": "Tiffany for Wisconsin",
+      "id": "WEC 0104212",
+      "kind": "state candidate committee",
+      "treasurer": "James Koth"
+    },
+    {
+      "name": "Tiffany For Wisconsin, Inc.",
+      "id": "FEC C00718635; candidate ID H0WI07101",
+      "kind": "federal House campaign committee",
+      "treasurer": "Fred Koth"
+    },
+    {
+      "name": "Republican Party of Wisconsin",
+      "id": "WEC 0300173",
+      "kind": "state party, unlimited transfers to candidate",
+      "treasurer": "not captured"
+    },
+    {
+      "name": "Restoration of America PAC",
+      "id": "not captured",
+      "kind": "aligned super PAC funded by Richard Uihlein",
+      "treasurer": "not captured"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "Party and leadership",
+    "Ideological groups"
+  ],
+  "headline_total": {
+    "amount_usd": 39653484.86,
+    "label": "raised 2026 year to date by Tiffany for Wisconsin, all sources including party transfers, Jan 1 to Sept 23, 2026; AP puts campaign to date near $43M",
+    "as_of": "2026-09-23",
+    "source": "https://campaignfinance.wi.gov/report-download/0104212-CF-2--2026_September_Report--ORIGINAL--cover--2026-09-30-22-09-04.pdf"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Wisconsin Ethics Commission Fall Pre-election Report covering activity after Sept. 23, 2026; exact due date not verified in this pass, expected late Oct 2026"
+}

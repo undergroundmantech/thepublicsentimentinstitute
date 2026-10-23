@@ -1,0 +1,45 @@
+{
+  "person_id": "AZ-andy-biggs",
+  "name": "Andy Biggs",
+  "party": "Republican",
+  "state": "AZ",
+  "office_sought": "Governor",
+  "current_office": "U.S. House AZ-5",
+  "opponents": [
+    "AZ-katie-hobbs"
+  ],
+  "vehicles": [
+    {
+      "name": "Biggs for Arizona",
+      "id": "Arizona SOS committee ID not retrieved",
+      "kind": "candidate committee",
+      "treasurer": "not retrieved"
+    },
+    {
+      "name": "Biggs federal House committee",
+      "id": "FEC candidate H6AZ05083; committee ID not retrieved",
+      "kind": "federal principal campaign committee",
+      "treasurer": "not retrieved"
+    },
+    {
+      "name": "Turning Point Action",
+      "id": "not retrieved",
+      "kind": "aligned outside spender, independent expenditures",
+      "treasurer": "not retrieved; directed by Tyler Bowyer"
+    }
+  ],
+  "top_blocs": [
+    "Trump world",
+    "Ideological groups",
+    "Small donors"
+  ],
+  "headline_total": {
+    "amount_usd": 2800000,
+    "label": "raised by Biggs for Arizona, cycle to date",
+    "as_of": "2026-06-30",
+    "source": "https://ballotpedia.org/Arizona_gubernatorial_election,_2026"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Arizona pre-general election campaign finance report, late October 2026, exact due date to confirm with the Arizona Secretary of State"
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getEndorsements, getGraph, getMoney, getTrail, usd } from "./data";
+import { getEndorsements, getGraph, getMoney, getPeople, getTrail, usd } from "./data";
 import { WD_GROUPS, ToolIcon, type ToolKey } from "./tools";
 import { Pointy } from "@/app/components/home/Mascot";
 import PersonToken from "./PersonToken";
@@ -42,6 +42,7 @@ export default function Page() {
     desk: undefined,
     money: { stat: usd(total), unit: `in outside money across ${m.races.length} Senate and governor races`, line: topRace ? `${STN[topRace.st] ?? topRace.st} draws the most, ${usd(topRace.total)}.` : "" },
     paid: { stat: `${vend.size} firms`, unit: `paid ${usd(vendTotal)} by the groups and campaigns we track`, line: topVend[0] ? `${name(topVend[0][0])} was paid the most, ${usd(topVend[0][1])}.` : "" },
+    people: (() => { const pp = getPeople(); return { stat: `${num(pp.n)} files`, unit: "on every member of Congress, governor and 2026 nominee", line: `${pp.hand} researched in full, with every money tie sourced.` }; })(),
     connections: { stat: `${num(g.edges.length)} ties`, unit: `between ${num(g.nodes.length)} donors, groups, candidates, firms and public figures`, line: topDonors[0] ? `${name(topDonors[0][0])} alone gave ${usd(topDonors[0][1])}. See where it went.` : "" },
     trail: { stat: `${t.visits.length} stops`, unit: `by ${t.people.filter((p) => p.visits).length} national figures since August`, line: next ? `Next on the list: ${next.who} in ${next.city ? `${next.city}, ` : ""}${next.st} on ${day(next.date)}.` : "" },
     endorsements: { stat: num(endorseN), unit: `endorsements across ${en.races.length} Senate and governor races`, line: "Each one links to where it was reported." },

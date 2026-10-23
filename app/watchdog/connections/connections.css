@@ -226,3 +226,22 @@ span.cx-src { text-decoration: none; }
   .cx-steps li, .cx-how3 li, .cx-rings circle, .cx-halo { animation: none; }
   .cx-e, .cx-n, .cx-e .ln, .cx-n .cx-shape { transition: none; }
 }
+/* Oct 23: room for busy names */
+.cx-stage.cx-tall { height: clamp(760px, calc(100vh - 150px), 1120px); }
+.cx-stage.cx-big { position: fixed; inset: 10px; z-index: 80; height: auto; border-radius: 14px; box-shadow: 0 30px 90px -20px #000; background: radial-gradient(70% 60% at 50% 50%, rgba(130,90,255,.12), transparent 70%), #07040d; }
+.cx-bigx { position: absolute; top: 12px; right: 12px; z-index: 3; }
+.cx-stage .cx-n.nolab { opacity: .55; }
+.cx-stage .cx-n.nolab:hover { opacity: 1; }
+html[data-theme="light"] .cx-stage.cx-big { background: radial-gradient(70% 60% at 50% 50%, rgba(130,90,255,.10), transparent 70%), #f6f4fb; box-shadow: 0 30px 90px -30px rgba(40,20,80,.45); }
+@media (max-width: 720px) { .cx-stage.cx-tall { height: 560px; } }
+.cx-stage.cx-big { z-index: 1100 !important; animation: none !important; transform: none !important; background: radial-gradient(70% 60% at 50% 50%, rgba(130,90,255,.12), transparent 70%), #07040d !important; }
+html[data-theme="light"] .cx-stage.cx-big { background: radial-gradient(70% 60% at 50% 50%, rgba(130,90,255,.10), transparent 70%), #f6f4fb !important; }
+.wd.wdt .cx-stage.cx-big { background: radial-gradient(70% 60% at 50% 50%, rgba(57,255,156,.08), transparent 70%), #010805 !important; }
+html[data-theme="light"] .wd.wdt .cx-stage.cx-big { background: radial-gradient(70% 60% at 50% 50%, rgba(10,120,70,.06), transparent 70%), #f4f8f5 !important; }
+.cx-stage.card.cx-big { position: fixed !important; inset: 10px !important; height: auto !important; margin: 0 !important; }
+html.cx-fs .sx-route, html.cx-fs .opp-page, html.cx-fs .opp-main { transform: none !important; filter: none !important; animation: none !important; }
+html.cx-fs .cx-stage.card.cx-big { z-index: 5000 !important; }
+html.cx-fs [role="tooltip"] { z-index: 6000 !important; }
+html.cx-fs .opp-top, html.cx-fs .ticker-bar, html.cx-fs .wd-nav, html.cx-fs .wdt-tape, html.cx-fs .wdt-status { visibility: hidden !important; }
+html.cx-fs .opp-main, html.cx-fs .wd .cx { z-index: auto !important; }
+html.cx-fs footer { visibility: hidden !important; }

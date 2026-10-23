@@ -31,6 +31,11 @@ CITY = {
  "VA": {"Henrico": ["Henrico"]}, "WA": {"Chehalis": ["Lewis"], "Olympia": ["Thurston"]},
  "WI": {"Racine": ["Racine"], "Sparta": ["Monroe"]},
 }
+# Oct 23 2026 sweep
+for _st, _m in {"GA": {"Locust Grove": ["Henry"], "Perry": ["Houston"]}, "IA": {"Dubuque": ["Dubuque"]}, "KS": {"Topeka": ["Shawnee"]},
+                "MS": {"Clarksdale": ["Coahoma"], "Columbus": ["Lowndes"], "Corinth": ["Alcorn"]}, "NH": {"Manchester": ["Hillsborough"], "Portsmouth": ["Rockingham"]},
+                "OH": {"Chillicothe": ["Ross"]}, "WI": {"Madison": ["Dane"], "Milwaukee": ["Milwaukee"]}}.items():
+    CITY.setdefault(_st, {}).update(_m)
 co = json.load(open(os.path.join(site, "public/watchdog/counties.json")))
 by = {}
 for f, v in co.items():

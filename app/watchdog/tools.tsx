@@ -2,7 +2,7 @@
 // "Start here" cards all read, so a tool is named and explained the same way everywhere.
 import React from "react";
 
-export type ToolKey = "desk" | "money" | "paid" | "connections" | "trail" | "endorsements" | "media" | "counties";
+export type ToolKey = "desk" | "money" | "paid" | "connections" | "trail" | "endorsements" | "media" | "counties" | "people";
 export type Tool = { key: ToolKey; href: string; label: string; question: string; desc: string };
 export type ToolGroup = { key: string; label: string; tools: Tool[] };
 
@@ -25,6 +25,7 @@ export const WD_GROUPS: ToolGroup[] = [
       { key: "trail", href: "/watchdog/trail", label: "Campaign trail", question: "Who is campaigning where?", desc: "Where Trump, Vance, Obama and other national figures have held rallies and events this fall." },
       { key: "endorsements", href: "/watchdog/endorsements", label: "Endorsements", question: "Who is backing whom?", desc: "Every notable endorsement in the Senate and governor races, each with its source." },
       { key: "media", href: "/watchdog/media", label: "Media watch", question: "Who is talking about which race?", desc: "Which podcasters, hosts and reporters are putting a race in front of their audience." },
+      { key: "people", href: "/watchdog/people", label: "People files", question: "What is on file for my candidate?", desc: "A file on every member of Congress, governor and 2026 nominee: who funds them, the decisions on their desk, and the sources." },
     ],
   },
   {
@@ -53,6 +54,7 @@ export function ToolIcon({ k, size = 16 }: { k: ToolKey; size?: number }) {
     case "trail": return <svg {...s}><path d="M12 21s-6-5.6-6-10.5A6 6 0 0 1 18 10.5C18 15.4 12 21 12 21z" /><circle cx="12" cy="10.5" r="2.2" /></svg>;
     case "endorsements": return <svg {...s}><path d="M7 11l3-7c1.2 0 2 .9 2 2v3h5.2a1.8 1.8 0 0 1 1.8 2.1l-1 6.2A2 2 0 0 1 16 19H7z" /><path d="M3 11h4v8H3z" /></svg>;
     case "media": return <svg {...s}><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" /></svg>;
+    case "people": return <svg {...s}><path d="M6 3h9l4 4v14H6z" /><path d="M15 3v4h4" /><circle cx="12" cy="11" r="2.2" /><path d="M8.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3" /></svg>;
     case "counties": return <svg {...s}><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" /><path d="M9 4v14M15 6v14" /></svg>;
   }
 }

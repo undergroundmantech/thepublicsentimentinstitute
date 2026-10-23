@@ -134,8 +134,60 @@ function RaceRuler({ o, pres24, seen }: { o: BenchOut; pres24: number | null; se
   );
 }
 
-type Topic = "signal" | "behind" | "habits" | "defect" | "ind" | "base";
-const TOPIC: [Topic, string, Pose, Prop][] = [["signal", "The signal", "point", "chart"], ["behind", "Margin behind", "think", "clipboard"], ["habits", "Voting habits", "idle", "ballot"],
+// ── Election Day: who is left to vote and how they have to break ─────────────────────────────────────────────
+function EdayCard({ o, seen, dN, rN }: { o: BenchOut; seen: boolean; dN: string; rN: string }) {
+  const e = o.eday!; const ind = o.race.ind;
+  const W = 860, P = 26;
+  const flip = e.need.find((n) => n.key === "flip")!, track = e.need.find((n) => n.key === "track")!;
+  const vals = [e.dayExp, ...e.need.map((n) => n.day), 0];
+  let lo = Math.min(...vals) - 4, hi = Math.max(...vals) + 4; lo = Math.max(-70, lo); hi = Math.min(70, hi);
+  const X = (v: number) => P + ((Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo)) * (W - 2 * P);
+  const step = hi - lo > 50 ? 10 : 5; const ticks: number[] = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) ticks.push(v);
+  const marks = rows([
+    { key: "exp", x: X(e.dayExp), w: 170, t: `Forecast expects ${lab(e.dayExp, ind)}`, cls: "exp" },
+    ...e.need.filter((n) => n.key !== "track").map((n) => ({ key: n.key, x: X(n.day), w: n.key === "flip" ? 140 : 150, t: `${n.key === "flip" ? "Flip line" : n.side === "D" ? "D +5 on forecast" : "R +5 on forecast"} ${lab(n.day)}`, cls: `${n.key} ${n.side.toLowerCase()}` })),
+  ], 8);
+  const nr = Math.max(1, ...marks.map((m) => m.row + 1));
+  const y0 = 16, H = y0 + 40 + nr * 26 + 14;
+  const svg = useRef<SVGSVGElement | null>(null);
+  useCenter(svg, X((e.dayExp + flip.day) / 2) / W);
+  const under = flip.side === "R" ? rN : dN;
+  const more = flip.side === "R" ? flip.day - e.dayExp : e.dayExp - flip.day;
+  const seg = (g: number[], label: string, m: number, cls: string) => (
+    <div className={`evb-gr ${cls}`}>
+      <div className="l"><span>{label}</span><b className={side(m)}>votes {lab(m, ind)}</b></div>
+      <div className="bar"><i className="t" style={{ width: pc(g[0], 1) }}><em>{pc(g[0])}</em></i><i className="h" style={{ width: pc(g[1], 1) }}><em>{pc(g[1])}</em></i><i className="n" style={{ width: pc(g[2], 1) }} /></div>
+    </div>
+  );
+  return (
+    <figure className="evb-fig evb-day">
+      <figcaption><b>How Election Day voters have to break</b><span>Election Day is about {pc(e.dayShare)} of the vote the forecast expects. Its voters are whoever the forecast expects to vote, minus the early voters, sorted by how they voted in 2024</span></figcaption>
+      <div className="evb-grs">
+        {seg(e.gEarly, "Early voters", e.earlyNow, "ge")}
+        {seg(e.gDay, "Election Day voters", e.dayExp, "gd")}
+        <div className="evb-grk"><span><i className="t" />Trump 2024 voters</span><span><i className="h" />Harris 2024 voters</span><span><i className="n" />New voters</span></div>
+      </div>
+      <svg ref={svg} className={`evb-race evb-dayr${seen ? " go" : ""}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Election Day margin: the forecast expects ${lab(e.dayExp, ind)}, the flip line is ${lab(flip.day)}`}>
+        <rect x={P} y={y0 + nr * 26} width={W - 2 * P} height={18} rx={5} className="bed" />
+        <rect x={X(lo)} y={y0 + nr * 26} width={Math.max(0, X(flip.day) - X(lo))} height={18} className="dside" />
+        <rect x={X(flip.day)} y={y0 + nr * 26} width={Math.max(0, X(hi) - X(flip.day))} height={18} className="rside" />
+        <line x1={X(flip.day)} x2={X(flip.day)} y1={y0 + nr * 26 - 4} y2={y0 + nr * 26 + 24} className="fl" />
+        {ticks.map((v) => <text key={v} x={X(v)} y={y0 + nr * 26 + 36} className="ax">{v === 0 ? "Even" : `${v < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(v)}`}</text>)}
+        {marks.map((m) => { const y = y0 + (nr - 1 - m.row) * 26 + 6; return (
+          <g key={m.key} className={`ml ${m.cls}`}>
+            <line x1={m.x} x2={m.x} y1={y + 4} y2={y0 + nr * 26 + 9} className="lead" />
+            {m.key === "exp" ? <circle cx={m.x} cy={y0 + nr * 26 + 9} r={8} className="dot" /> : <rect x={m.x - 2} y={y0 + nr * 26 - 1} width={4} height={20} rx={1} className="fm" />}
+            <text x={m.x} y={y} className="tt">{m.t}</text>
+          </g>); })}
+      </svg>
+      <p className="evb-dayt">If the early vote ends where it is pointing, <b>{under}</b> needs Election Day voters to break <b className={flip.side === "R" ? "r" : "d"}>{lab(flip.day)}</b> to win, {Math.abs(more).toFixed(1)} points {more > 0 ? (flip.side === "R" ? "redder" : "bluer") : (flip.side === "R" ? "bluer" : "redder")} than the <b className={side(e.dayExp)}>{lab(e.dayExp, ind)}</b> the forecast expects of them. With the forecast holding, Election Day lands near {lab(track.day, ind)}.</p>
+    </figure>
+  );
+}
+
+type Topic = "signal" | "behind" | "eday" | "habits" | "defect" | "ind" | "base";
+const TOPIC: [Topic, string, Pose, Prop][] = [["signal", "The signal", "point", "chart"], ["behind", "Margin behind", "think", "clipboard"], ["eday", "Election Day", "wave", "flag"], ["habits", "Voting habits", "idle", "ballot"],
   ["defect", "Defections", "think", "magnifier"], ["ind", "Independents", "wave", "megaphone"], ["base", "2024 baseline", "point", "flag"]];
 
 export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow; data: EvConsole; m24: number | null; m26: number | null; geo24: number | null }) {
@@ -147,7 +199,7 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
   const [ref, seen] = useSeen<HTMLDivElement>();
   useEffect(() => { setRi(0); setBeh(base); setTopic("signal"); }, [row.st, base]);
   const race = races[Math.min(ri, races.length - 1)];
-  const o = useMemo(() => (row.bench && race ? benchmark(row.bench, race, beh, base) : null), [row.bench, race, beh, base]);
+  const o = useMemo(() => (row.bench && race ? benchmark(row.bench, race, beh, base, data.xo) : null), [row.bench, race, beh, base, data.xo]);
   if (!row.bench || !race || !o) {
     return (
       <section className="evb card" aria-label="Early vote benchmarks">
@@ -177,6 +229,7 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
       : flip.reach ? <><b>{under} are {fb.toFixed(1)} points behind</b> the early vote it takes to flip this race. They need <b>{lab(flip.lead)}</b> by now; it is <b>{lab(o.lead)}</b>.</>
       : <><b>Out of reach on early ballots alone.</b> Flipping this race would take an early vote past {lab(flip.lead)}, so {under.toLowerCase()} need Election Day to break far from the forecast.</>}
       {" "}To beat the forecast by 5, {fav === "D" ? "Republicans" : dWho} need {big.reach ? <b>{lab(big.lead)}</b> : "more than any early vote has shown"}; {fav === "D" ? dWho : "Republicans"} need {bigF.reach ? <b>{lab(bigF.lead)}</b> : "a historic early vote"}.</>,
+    eday: o.eday ? <>The voters still to come lean differently. Early voters so far are <b>{pc(o.eday.gEarly[1])}</b> Harris 2024 voters; the Election Day crowd the forecast expects is <b>{pc(o.eday.gDay[0])}</b> Trump 2024 voters, so it is expected to vote <b className={side(o.eday.dayExp)}>{lab(o.eday.dayExp, ind)}</b>. {(() => { const f = o.eday!.need.find((n) => n.key === "flip")!; return <>To flip the race, Election Day has to break <b className={f.side === "R" ? "r" : "d"}>{lab(f.day)}</b>, which is how strong the late vote has to be to undo the early lead.</>; })()}</> : <>There is no electorate model for {row.name} yet, so Election Day cannot be split out.</>,
     habits: <>Party splits in the early vote are not the tell they were in 2020. Republicans have moved a big share of their vote to early and mail ballots since then, so these benchmarks start from what the forecast expected given that shift, not from an even split.
       {m24 != null && m26 != null ? <> At this point in 2024 {row.name}&apos;s early vote was <b>{lab(m24)}</b>; it is <b>{lab(m26)}</b> now, {Math.abs(m26 - m24).toFixed(1)} points {m26 < m24 ? "bluer" : "redder"}.</> : null}</>,
     defect: <>A registered voter is not a vote. On Point Polling likely voters put <b>{pc(1 - beh.dLoyal)}</b> of Democrats and <b>{pc(1 - beh.rLoyal)}</b> of Republicans on the other side of the ballot, which is why a one point party lead is worth only <b>{o.k.toFixed(2)}</b> points of vote. Move the sliders to try a year when one party breaks harder.{changed ? <> With your settings the whole electorate moves <b className={side(o.behDelta)}>{lab(o.behDelta)}</b> before a single early ballot is counted.</> : null}</>,
@@ -232,6 +285,7 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
             <RaceRuler o={o} pres24={row.bench.pres24} seen={seen} />
             <div className="evb-key"><span><i className="k-band" />Forecast 80% range</span><span><i className="k-polls" />Poll range</span><span><i className="k-e" />Early vote read</span>{row.bench.pres24 != null ? <span><i className="k-p" />2024 president</span> : null}</div>
           </figure>
+          {o.eday ? <EdayCard o={o} seen={seen} dN={dN} rN={rN} /> : null}
         </div>
 
         <aside className="evb-side">
@@ -277,10 +331,10 @@ export function BenchBoard({ data, onOpen }: { data: EvConsole; onOpen: (st: str
     const out: (BenchOut & { st: string; name: string })[] = [];
     for (const r of data.rows) {
       if (!r.bench) continue;
-      for (const race of r.bench.races) if (Math.abs(race.F) < 8) out.push({ ...benchmark(r.bench, race, base, base), st: r.st, name: r.name });
+      for (const race of r.bench.races) if (Math.abs(race.F) < 8) out.push({ ...benchmark(r.bench, race, base, base, data.xo), st: r.st, name: r.name });
     }
     return out.sort((a, b) => Math.abs(a.race.F) - Math.abs(b.race.F));
-  }, [data.rows, base]);
+  }, [data.rows, base, data.xo]);
   const [ref, seen] = useSeen<HTMLDivElement>();
   if (!L.length) return null;
   return (

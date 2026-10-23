@@ -102,6 +102,7 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/trail", label: "Campaign trail" },
         { href: "/watchdog/endorsements", label: "Endorsements" },
         { href: "/watchdog/media", label: "Media watch" },
+        { href: "/watchdog/people", label: "People files" },
         { href: "/watchdog/counties", label: "County data center" },
       ] },
     ] },

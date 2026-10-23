@@ -47,9 +47,36 @@ export type BenchOut = {
   /** each registration's ballots so far and how they vote */
   sim: { k: "d" | "o" | "r"; label: string; n: number; dv: number }[];
   simM: number;
+  /** Election Day: how the voters still to come are expected to vote, and how they have to break for each result */
+  eday: Eday | null;
+};
+export type Eday = {
+  /** 2024 vote of the voters, Trump, Harris and new, early and on Election Day */
+  gEarly: number[]; gDay: number[];
+  /** vote margins on the forecast's electorate model, Republican positive */
+  earlyExp: number; earlyNow: number; dayExp: number;
+  /** the Election Day margin each result needs, given the early vote read */
+  need: { key: string; side: "D" | "R"; label: string; margin: number; day: number }[];
+  dayShare: number;
 };
 
-export function benchmark(b: Bench, race: BenchRace, beh: Beh, base: Beh): BenchOut {
+/** The forecast's electorate model sorts voters by their 2024 vote. Election Day voters are whoever the forecast expects
+ *  minus the early voters; their margin is set so early and Election Day add up to the forecast. */
+function edayOf(b: Bench, xo: Crossover | null, s: number, F0: number, behDelta: number, kGap: number, targets: Target[]): Eday | null {
+  if (!xo || !b.gExp || !b.gFc) return null;
+  const norm = (g: number[]) => { const t = g.reduce((a, x) => a + Math.max(0, x), 0) || 1; return g.map((x) => Math.max(0, x) / t); };
+  const gE = norm(b.gExp), gF = norm(b.gFc);
+  const gD = norm(gF.map((x, i) => (x - s * gE[i]) / (1 - s)));
+  const m = (g: number[]) => (1 - 2 * dOf(g, xo)) * 100;
+  const off = F0 - m(gF);   // the race's own candidates and state, beyond what the 2024 vote explains
+  const earlyExp = m(gE) + off + behDelta, dayExp = m(gD) + off + behDelta;
+  const earlyNow = earlyExp + kGap;
+  const day = (M: number) => (M - s * earlyNow) / (1 - s);
+  return { gEarly: gE, gDay: gD, earlyExp, earlyNow, dayExp, dayShare: 1 - s,
+    need: targets.filter((t) => t.key === "dbig" || t.key === "track" || t.key === "rbig" || t.key === "flip").map((t) => ({ key: t.key, side: t.side, label: t.label, margin: t.margin, day: day(t.margin) })) };
+}
+
+export function benchmark(b: Bench, race: BenchRace, beh: Beh, base: Beh, xo: Crossover | null = null): BenchOut {
   const s = Math.max(0.02, Math.min(0.98, b.expEarly / Math.max(1, b.expTotal)));
   const k = kOf(beh);
   const F0 = race.F - race.evShift;
@@ -86,5 +113,5 @@ export function benchmark(b: Bench, race: BenchRace, beh: Beh, base: Beh): Bench
     { k: "r" as const, label: "Registered Republicans", n: b.now.r * n, dv: 1 - beh.rLoyal },
   ];
   return { race, beh, base, s, k, F0, behDelta, lead, expLead, gap, implied, impliedLo: implLo, impliedHi: implHi, share, targets: T,
-    signal: { side, strength, word }, sim, simM: voteM(b.now, beh) };
+    signal: { side, strength, word }, sim, simM: voteM(b.now, beh), eday: edayOf(b, xo, s, F0, behDelta, k * gap, T) };
 }

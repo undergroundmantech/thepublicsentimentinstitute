@@ -14,6 +14,7 @@ import Spotlight from "./components/Spotlight";
 import RolloutGate from "./components/RolloutGate";
 import { THEME_INIT_SCRIPT } from "./lib/theme";
 import JsonLd from "./components/JsonLd";
+import { Analytics } from "@vercel/analytics/next";
 import { KEYWORDS, SITE, graph, orgLd } from "./lib/seo";
 
 // Same type system as the main site: Geist for display and body, JetBrains Mono for data.
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="opp-page">{children}</div>
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

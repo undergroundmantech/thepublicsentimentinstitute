@@ -1,0 +1,39 @@
+{
+  "person_id": "GA-rick-jackson",
+  "name": "Rick Jackson",
+  "party": "Republican",
+  "state": "GA",
+  "office_sought": "Governor",
+  "current_office": "none; founder and executive of Jackson Healthcare",
+  "opponents": [
+    "GA-keisha-lance-bottoms"
+  ],
+  "vehicles": [
+    {
+      "name": "Rick Jackson campaign committee",
+      "id": "Georgia candidate account ID not retrieved; state site blocked automated access",
+      "kind": "state candidate committee",
+      "treasurer": "not found"
+    },
+    {
+      "name": "For All Georgians Inc.",
+      "id": "Georgia leadership committee ID not retrieved",
+      "kind": "state leadership committee, opened June 2026 after nomination",
+      "treasurer": "not found"
+    }
+  ],
+  "top_blocs": [
+    "Self funding",
+    "Party and leadership",
+    "Health care and pharma"
+  ],
+  "headline_total": {
+    "amount_usd": 130000000,
+    "label": "roughly raised across campaign accounts, mostly his own money, cumulative",
+    "as_of": "2026-07-31",
+    "source": "https://www.ajc.com/politics/2026/10/pritzker-bloomberg-donate-keisha-lance-bottoms-georgia-governor/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Georgia report covering through Oct 20 2026, due the week of Oct 26 2026 per AJC; exact due date not verified"
+}

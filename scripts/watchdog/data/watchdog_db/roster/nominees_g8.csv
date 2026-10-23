@@ -1,0 +1,141 @@
+person_id,name,party,state,district,office_sought,role,race_status,current_office,incumbent_in_seat,competitive_rating,source_url,notes
+AZ-katie-hobbs,Katie Hobbs,Democrat,AZ,,Governor,incumbent,nominee,Governor,Katie Hobbs,Cook: Lean Democrat,"https://ballotpedia.org/Arizona_gubernatorial_election,_2026","running mate John Giles; Sabato Lean D, Inside Tilt D"
+AZ-andy-biggs,Andy Biggs,Republican,AZ,,Governor,delegation member running for other office,nominee,U.S. House AZ-5,Katie Hobbs,Cook: Lean Democrat,"https://ballotpedia.org/Arizona_gubernatorial_election,_2026",won July 21 GOP primary with 74%; AZ-5 open
+AZ-david-schweikert,David Schweikert,Republican,AZ,,Governor,delegation member running for other office,not on ballot,U.S. House AZ-1,Katie Hobbs,,"https://ballotpedia.org/Arizona_gubernatorial_election,_2026","lost July 21 GOP gov primary to Biggs, 14.4%; AZ-1 open"
+AZ-amish-shah,Amish Shah,Democrat,AZ,1,U.S. House,open seat,nominee,former State Representative,David Schweikert,Cook: Lean Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",open seat
+AZ-jay-feely,Jay Feely,Republican,AZ,1,U.S. House,open seat,nominee,,David Schweikert,Cook: Lean Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",open seat
+AZ-elijah-crane,Eli Crane,Republican,AZ,2,U.S. House,incumbent,nominee,U.S. House AZ-2,Eli Crane,Cook: Lean Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-jonathan-nez,Jonathan Nez,Democrat,AZ,2,U.S. House,challenger,nominee,,Eli Crane,Cook: Lean Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-yassamin-ansari,Yassamin Ansari,Democrat,AZ,3,U.S. House,incumbent,nominee,U.S. House AZ-3,Yassamin Ansari,Cook: Solid Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",no Republican nominee on ballot; GOP write-in only
+AZ-greg-stanton,Greg Stanton,Democrat,AZ,4,U.S. House,incumbent,nominee,U.S. House AZ-4,Greg Stanton,Cook: Solid Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-zuhdi-jasser,Zuhdi Jasser,Republican,AZ,4,U.S. House,challenger,nominee,,Greg Stanton,Cook: Solid Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-mark-lamb,Mark Lamb,Republican,AZ,5,U.S. House,open seat,nominee,,Andy Biggs,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026","open seat, Biggs running for governor"
+AZ-elizabeth-lee,Elizabeth Lee,Democrat,AZ,5,U.S. House,open seat,nominee,,Andy Biggs,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026","open seat, Biggs running for governor"
+AZ-juan-ciscomani,Juan Ciscomani,Republican,AZ,6,U.S. House,incumbent,nominee,U.S. House AZ-6,Juan Ciscomani,Cook: Lean Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-joanna-mendoza,JoAnna Mendoza,Democrat,AZ,6,U.S. House,challenger,nominee,,Juan Ciscomani,Cook: Lean Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-adelita-s-grijalva,Adelita Grijalva,Democrat,AZ,7,U.S. House,incumbent,nominee,U.S. House AZ-7,Adelita Grijalva,Cook: Solid Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-daniel-butierez-sr,Daniel Butierez Sr.,Republican,AZ,7,U.S. House,challenger,nominee,,Adelita Grijalva,Cook: Solid Democrat,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-abraham-j-hamadeh,Abe Hamadeh,Republican,AZ,8,U.S. House,incumbent,nominee,U.S. House AZ-8,Abe Hamadeh,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-bernadette-greene-placentia,Bernadette Greene Placentia,Democrat,AZ,8,U.S. House,challenger,nominee,,Abe Hamadeh,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-paul-a-gosar,Paul Gosar,Republican,AZ,9,U.S. House,incumbent,nominee,U.S. House AZ-9,Paul Gosar,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-danielle-sterbinsky,Danielle Sterbinsky,Democrat,AZ,9,U.S. House,challenger,nominee,,Paul Gosar,Cook: Solid Republican,"https://ballotpedia.org/United_States_House_of_Representatives_elections_in_Arizona,_2026",
+AZ-ruben-gallego,Ruben Gallego,Democrat,AZ,,,delegation member not running,not on ballot,U.S. Senate AZ,,,https://www.thegreenpapers.com/G26/AZ,seat up 2030
+AZ-mark-kelly,Mark Kelly,Democrat,AZ,,,delegation member not running,not on ballot,U.S. Senate AZ,,,https://www.thegreenpapers.com/G26/AZ,seat up 2028
+NV-joe-lombardo,Joe Lombardo,Republican,NV,,Governor,incumbent,nominee,Governor,Joe Lombardo,Cook: Toss Up,https://www.thegreenpapers.com/G26/NV,won June 9 primary with over 90%
+NV-aaron-ford,Aaron Ford,Democrat,NV,,Governor,challenger,nominee,Attorney General,Joe Lombardo,Cook: Toss Up,https://nevadacurrent.com/2026/06/09/nevada-primary-election-results/,won June 9 Dem primary with 66%
+NV-dina-titus,Dina Titus,Democrat,NV,1,U.S. House,incumbent,nominee,U.S. House NV-1,Dina Titus,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-carrie-buck,Carrie Buck,Republican,NV,1,U.S. House,challenger,nominee,State Senator,Dina Titus,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-david-flippo,David Flippo,Republican,NV,2,U.S. House,open seat,nominee,,Mark Amodei,Cook: Lean Republican,https://www.thegreenpapers.com/G26/NV,"open seat, Amodei retiring"
+NV-teresa-benitez-thompson,Teresa Benitez-Thompson,Democrat,NV,2,U.S. House,open seat,nominee,former State Assembly Majority Leader,Mark Amodei,Cook: Lean Republican,https://www.thegreenpapers.com/G26/NV,"open seat, Amodei retiring"
+NV-susie-lee,Susie Lee,Democrat,NV,3,U.S. House,incumbent,nominee,U.S. House NV-3,Susie Lee,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-marty-o-donnell,Marty O'Donnell,Republican,NV,3,U.S. House,challenger,nominee,,Susie Lee,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-steven-horsford,Steven Horsford,Democrat,NV,4,U.S. House,incumbent,nominee,U.S. House NV-4,Steven Horsford,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-cody-whipple,Cody Whipple,Republican,NV,4,U.S. House,challenger,nominee,,Steven Horsford,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NV,
+NV-mark-e-amodei,Mark Amodei,Republican,NV,2,,delegation member not running,not on ballot,U.S. House NV-2,,,https://www.thegreenpapers.com/G26/NV,not seeking reelection
+NV-jacky-rosen,Jacky Rosen,Democrat,NV,,,delegation member not running,not on ballot,U.S. Senate NV,,,https://www.thegreenpapers.com/G26/NV,seat up 2030
+NV-catherine-cortez-masto,Catherine Cortez Masto,Democrat,NV,,,delegation member not running,not on ballot,U.S. Senate NV,,,https://www.thegreenpapers.com/G26/NV,seat up 2028
+UT-spencer-cox,Spencer Cox,Republican,UT,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/UT,next gubernatorial election 2028
+UT-ben-mcadams,Ben McAdams,Democrat,UT,1,U.S. House,open seat,nominee,former U.S. Representative,Blake Moore,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/UT,"new court ordered map; open seat, Moore moved to UT-2"
+UT-riley-owen,Riley Owen,Republican,UT,1,U.S. House,open seat,nominee,,Blake Moore,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/UT,"new court ordered map; open seat, Moore moved to UT-2"
+UT-blake-d-moore,Blake Moore,Republican,UT,2,U.S. House,incumbent,nominee,U.S. House UT-1,Celeste Maloy,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Moore currently represents UT-1
+UT-peter-crosby,Peter Crosby,Democrat,UT,2,U.S. House,challenger,nominee,,Celeste Maloy,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Moore currently represents UT-1
+UT-celeste-maloy,Celeste Maloy,Republican,UT,3,U.S. House,incumbent,nominee,U.S. House UT-2,Mike Kennedy,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Maloy currently represents UT-2
+UT-kent-udell,Kent Udell,Democrat,UT,3,U.S. House,challenger,nominee,,Mike Kennedy,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Maloy currently represents UT-2
+UT-mike-kennedy,Mike Kennedy,Republican,UT,4,U.S. House,incumbent,nominee,U.S. House UT-3,Burgess Owens,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Kennedy currently represents UT-3; Owens not running
+UT-jonny-larsen,Jonny Larsen,Democrat,UT,4,U.S. House,challenger,nominee,,Burgess Owens,Cook: Solid Republican,https://www.thegreenpapers.com/G26/UT,new court ordered map; Kennedy currently represents UT-3; Owens not running
+UT-burgess-owens,Burgess Owens,Republican,UT,4,,delegation member not running,not on ballot,U.S. House UT-4,,,https://news.ballotpedia.org/2026/05/26/three-of-utahs-four-u-s-house-incumbents-are-running-for-different-districts-this-year-due-to-redistricting/,not seeking reelection
+UT-mike-lee,Mike Lee,Republican,UT,,,delegation member not running,not on ballot,U.S. Senate UT,,,https://www.thegreenpapers.com/G26/UT,seat up 2028
+UT-john-r-curtis,John Curtis,Republican,UT,,,delegation member not running,not on ballot,U.S. Senate UT,,,https://www.thegreenpapers.com/G26/UT,seat up 2030
+CO-jared-polis,Jared Polis,Democrat,CO,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/CO,term limited
+CO-phil-weiser,Phil Weiser,Democrat,CO,,Governor,open seat,nominee,Attorney General,Jared Polis,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-victor-marx,Victor Marx,Republican,CO,,Governor,open seat,nominee,none,Jared Polis,Cook: Solid Democrat,https://coloradopolitics.com/2026/08/27/colorado-gubernatorial-candidates-phil-weiser-greg-lopez-to-face-off-thursday-in-televised-debate/,"ministry leader, first time candidate"
+CO-greg-lopez,Greg Lopez,Unaffiliated,CO,,Governor,open seat,nominee,none,Jared Polis,Cook: Solid Democrat,https://coloradopolitics.com/2026/08/27/colorado-gubernatorial-candidates-phil-weiser-greg-lopez-to-face-off-thursday-in-televised-debate/,"former U.S. Rep CO-4, left GOP, petitioned onto ballot; debated Weiser"
+CO-michael-f-bennet,Michael Bennet,Democrat,CO,,Governor,delegation member running for other office,not on ballot,U.S. Senate CO,Jared Polis,,https://www.thegreenpapers.com/G26/CO,lost Dem gov primary to Weiser; Senate seat up 2028
+CO-john-w-hickenlooper,John Hickenlooper,Democrat,CO,,U.S. Senate,incumbent,nominee,U.S. Senate CO,John Hickenlooper,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-mark-baisley,Mark Baisley,Republican,CO,,U.S. Senate,challenger,nominee,,John Hickenlooper,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-melat-kiros,Melat Kiros,Democrat,CO,1,U.S. House,open seat,nominee,,Diana DeGette,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,"open seat, DeGette lost primary"
+CO-christy-peterson,Christy Peterson,Republican,CO,1,U.S. House,open seat,nominee,,Diana DeGette,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,"open seat, DeGette lost primary"
+CO-joe-neguse,Joe Neguse,Democrat,CO,2,U.S. House,incumbent,nominee,U.S. House CO-2,Joe Neguse,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-kelley-anne-dennison,Kelley Anne Dennison,Republican,CO,2,U.S. House,challenger,nominee,,Joe Neguse,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-jeff-hurd,Jeff Hurd,Republican,CO,3,U.S. House,incumbent,nominee,U.S. House CO-3,Jeff Hurd,Cook: Likely Republican,https://www.thegreenpapers.com/G26/CO,
+CO-dwayne-romero,Dwayne Romero,Democrat,CO,3,U.S. House,challenger,nominee,,Jeff Hurd,Cook: Likely Republican,https://www.thegreenpapers.com/G26/CO,
+CO-lauren-boebert,Lauren Boebert,Republican,CO,4,U.S. House,incumbent,nominee,U.S. House CO-4,Lauren Boebert,Cook: Lean Republican,https://www.thegreenpapers.com/G26/CO,
+CO-eileen-laubacher,Eileen Laubacher,Democrat,CO,4,U.S. House,challenger,nominee,,Lauren Boebert,Cook: Lean Republican,https://www.thegreenpapers.com/G26/CO,
+CO-jeff-crank,Jeff Crank,Republican,CO,5,U.S. House,incumbent,nominee,U.S. House CO-5,Jeff Crank,Cook: Lean Republican,https://www.thegreenpapers.com/G26/CO,
+CO-jessica-killin,Jessica Killin,Democrat,CO,5,U.S. House,challenger,nominee,,Jeff Crank,Cook: Lean Republican,https://www.thegreenpapers.com/G26/CO,
+CO-jason-crow,Jason Crow,Democrat,CO,6,U.S. House,incumbent,nominee,U.S. House CO-6,Jason Crow,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-jason-clark,Jason Clark,Republican,CO,6,U.S. House,challenger,nominee,,Jason Crow,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-brittany-pettersen,Brittany Pettersen,Democrat,CO,7,U.S. House,incumbent,nominee,U.S. House CO-7,Brittany Pettersen,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-tim-bennett,Tim Bennett,Republican,CO,7,U.S. House,challenger,nominee,,Brittany Pettersen,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-gabe-evans,Gabe Evans,Republican,CO,8,U.S. House,incumbent,nominee,U.S. House CO-8,Gabe Evans,Cook: Lean Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-manny-rutinel,Manny Rutinel,Democrat,CO,8,U.S. House,challenger,nominee,former State Representative,Gabe Evans,Cook: Lean Democrat,https://www.thegreenpapers.com/G26/CO,
+CO-diana-degette,Diana DeGette,Democrat,CO,1,U.S. House,incumbent,not on ballot,U.S. House CO-1,Diana DeGette,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/CO,lost 2026 Dem primary; leaves office Jan 2027
+ID-brad-little,Brad Little,Republican,ID,,Governor,incumbent,nominee,Governor,Brad Little,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-terri-pickens,Terri Pickens,Democrat,ID,,Governor,challenger,nominee,,Brad Little,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-john-stegner,John Stegner,Independent,ID,,Governor,challenger,nominee,none,Brad Little,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,"former Idaho Supreme Court Justice; serious independent bid, no public polling found"
+ID-james-e-risch,Jim Risch,Republican,ID,,U.S. Senate,incumbent,nominee,U.S. Senate ID,Jim Risch,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-todd-achilles,Todd Achilles,Independent,ID,,U.S. Senate,challenger,nominee,none,Jim Risch,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,"former Dem State Rep; no Dem nominee; internal poll had him 4 pts back, Risch internal +34"
+ID-russ-fulcher,Russ Fulcher,Republican,ID,1,U.S. House,incumbent,nominee,U.S. House ID-1,Russ Fulcher,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-kaylee-peterson,Kaylee Peterson,Democrat,ID,1,U.S. House,challenger,nominee,,Russ Fulcher,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-michael-k-simpson,Mike Simpson,Republican,ID,2,U.S. House,incumbent,nominee,U.S. House ID-2,Mike Simpson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-ellie-gilbreath,Ellie Gilbreath,Democrat,ID,2,U.S. House,challenger,nominee,,Mike Simpson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ID,
+ID-mike-crapo,Mike Crapo,Republican,ID,,,delegation member not running,not on ballot,U.S. Senate ID,,,https://www.thegreenpapers.com/G26/ID,seat up 2028
+MT-greg-gianforte,Greg Gianforte,Republican,MT,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/MT,term limited; next election 2028
+MT-kurt-alme,Kurt Alme,Republican,MT,,U.S. Senate,open seat,nominee,,Steve Daines,Cook: Solid Republican,https://www.kxlf.com/news/montana-politics/montanas-us-senate-race-daines-out-alme-in,Daines backed him after late exit
+MT-seth-bodnar,Seth Bodnar,Independent,MT,,U.S. Senate,open seat,nominee,,Steve Daines,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MT,"independent with Democratic association, main challenger"
+MT-alani-bankhead,Alani Bankhead,Democrat,MT,,U.S. Senate,open seat,nominee,,Steve Daines,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MT,
+MT-steve-daines,Steve Daines,Republican,MT,,,delegation member not running,not on ballot,U.S. Senate MT,,,https://www.kxlf.com/news/montana-politics/montanas-us-senate-race-daines-out-alme-in,"not seeking reelection, announced March 2026"
+MT-aaron-flint,Aaron Flint,Republican,MT,1,U.S. House,open seat,nominee,,Ryan Zinke,Cook: Toss Up,https://www.thegreenpapers.com/G26/MT,"open seat, Zinke not running"
+MT-sam-forstag,Sam Forstag,Democrat,MT,1,U.S. House,open seat,nominee,,Ryan Zinke,Cook: Toss Up,https://www.thegreenpapers.com/G26/MT,"open seat, Zinke not running"
+MT-troy-downing,Troy Downing,Republican,MT,2,U.S. House,incumbent,nominee,U.S. House MT-2,Troy Downing,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MT,
+MT-brian-miller,Brian Miller,Democrat,MT,2,U.S. House,challenger,nominee,,Troy Downing,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MT,
+MT-ryan-k-zinke,Ryan Zinke,Republican,MT,1,,delegation member not running,not on ballot,U.S. House MT-1,,,https://www.thegreenpapers.com/G26/MT,not seeking reelection
+MT-tim-sheehy,Tim Sheehy,Republican,MT,,,delegation member not running,not on ballot,U.S. Senate MT,,,https://www.thegreenpapers.com/G26/MT,seat up 2030
+WY-mark-gordon,Mark Gordon,Republican,WY,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/WY,not seeking third term
+WY-eric-barlow,Eric Barlow,Republican,WY,,Governor,open seat,nominee,State Senator,Mark Gordon,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,beat Megan Degenfelder in Aug 18 primary
+WY-ken-casner,Ken Casner,Democrat,WY,,Governor,open seat,nominee,,Mark Gordon,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,
+WY-harriet-m-hageman,Harriet Hageman,Republican,WY,,U.S. Senate,delegation member running for other office,nominee,U.S. House WY-AL,Cynthia Lummis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,House seat open
+WY-jim-byrd,Jim Byrd,Democrat,WY,,U.S. Senate,open seat,nominee,former State Representative,Cynthia Lummis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,
+WY-cynthia-m-lummis,Cynthia Lummis,Republican,WY,,,delegation member not running,not on ballot,U.S. Senate WY,,,https://www.thegreenpapers.com/G26/WY,"retiring, announced Dec 19 2025"
+WY-chuck-gray,Chuck Gray,Republican,WY,AL,U.S. House,open seat,nominee,Secretary of State,Harriet Hageman,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,"open seat, Hageman running for Senate"
+WY-lisa-kinney,Lisa Kinney,Democrat,WY,AL,U.S. House,open seat,nominee,former State Senator,Harriet Hageman,Cook: Solid Republican,https://www.thegreenpapers.com/G26/WY,open seat
+WY-john-barrasso,John Barrasso,Republican,WY,,,delegation member not running,not on ballot,U.S. Senate WY,,,https://www.thegreenpapers.com/G26/WY,seat up 2030
+ND-kelly-armstrong,Kelly Armstrong,Republican,ND,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/ND,next election 2028
+ND-julie-fedorchak,Julie Fedorchak,Republican,ND,AL,U.S. House,incumbent,nominee,U.S. House ND-AL,Julie Fedorchak,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ND,
+ND-trygve-hammer,Trygve Hammer,Democratic-NPL,ND,AL,U.S. House,challenger,nominee,,Julie Fedorchak,Cook: Solid Republican,https://www.thegreenpapers.com/G26/ND,
+ND-john-hoeven,John Hoeven,Republican,ND,,,delegation member not running,not on ballot,U.S. Senate ND,,,https://www.thegreenpapers.com/G26/ND,seat up 2028
+ND-kevin-cramer,Kevin Cramer,Republican,ND,,,delegation member not running,not on ballot,U.S. Senate ND,,,https://www.thegreenpapers.com/G26/ND,seat up 2030
+SD-larry-rhoden,Larry Rhoden,Republican,SD,,Governor,incumbent,nominee,Governor,Larry Rhoden,Cook: Solid Republican,https://southdakotasearchlight.com/2026/07/28/south-dakota-governor-wins-republican-nomination-to-seek-his-own-term-after-succeeding-noem/,won July 28 GOP runoff over Toby Doeden; succeeded Noem Jan 2025
+SD-dan-ahlers,Dan Ahlers,Democrat,SD,,Governor,challenger,nominee,former State Senator,Larry Rhoden,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SD,
+SD-dusty-johnson,Dusty Johnson,Republican,SD,,Governor,delegation member running for other office,not on ballot,U.S. House SD-AL,Larry Rhoden,,https://www.thegreenpapers.com/G26/SD,lost June 2 GOP gov primary; House seat open
+SD-mike-rounds,Mike Rounds,Republican,SD,,U.S. Senate,incumbent,nominee,U.S. Senate SD,Mike Rounds,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SD,
+SD-brian-bengs,Brian Bengs,Independent,SD,,U.S. Senate,challenger,nominee,none,Mike Rounds,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SD,"former Democrat, no Dem nominee on ballot"
+SD-marty-jackley,Marty Jackley,Republican,SD,AL,U.S. House,open seat,nominee,Attorney General,Dusty Johnson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SD,open seat
+SD-nikki-gronli,Nikki Gronli,Democrat,SD,AL,U.S. House,open seat,nominee,,Dusty Johnson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SD,open seat
+SD-john-thune,John Thune,Republican,SD,,,delegation member not running,not on ballot,U.S. Senate SD,,,https://www.thegreenpapers.com/G26/SD,seat up 2028
+NE-jim-pillen,Jim Pillen,Republican,NE,,Governor,incumbent,nominee,Governor,Jim Pillen,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,
+NE-lynne-walz,Lynne Walz,Democrat,NE,,Governor,challenger,nominee,,Jim Pillen,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,
+NE-pete-ricketts,Pete Ricketts,Republican,NE,,U.S. Senate,incumbent,nominee,U.S. Senate NE,Pete Ricketts,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,
+NE-dan-osborn,Dan Osborn,Independent,NE,,U.S. Senate,challenger,nominee,none,Pete Ricketts,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,"by petition, no Dem nominee"
+NE-mike-flood,Mike Flood,Republican,NE,1,U.S. House,incumbent,nominee,U.S. House NE-1,Mike Flood,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,
+NE-chris-backemeyer,Chris Backemeyer,Democrat,NE,1,U.S. House,challenger,nominee,,Mike Flood,Cook: Likely Republican,https://www.thegreenpapers.com/G26/NE,
+NE-denise-powell,Denise Powell,Democrat,NE,2,U.S. House,open seat,nominee,,Don Bacon,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NE,"open seat, Bacon not running"
+NE-brinker-harding,Brinker Harding,Republican,NE,2,U.S. House,open seat,nominee,Omaha City Council member,Don Bacon,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/NE,"open seat, Bacon not running"
+NE-adrian-smith,Adrian Smith,Republican,NE,3,U.S. House,incumbent,nominee,U.S. House NE-3,Adrian Smith,Cook: Solid Republican,https://www.thegreenpapers.com/G26/NE,
+NE-becky-stille,Becky Stille,Democrat,NE,3,U.S. House,challenger,nominee,,Adrian Smith,Cook: Solid Republican,https://www.thegreenpapers.com/G26/NE,
+NE-don-bacon,Don Bacon,Republican,NE,2,,delegation member not running,not on ballot,U.S. House NE-2,,,https://www.thegreenpapers.com/G26/NE,not seeking reelection
+NE-deb-fischer,Deb Fischer,Republican,NE,,,delegation member not running,not on ballot,U.S. Senate NE,,,https://www.thegreenpapers.com/G26/NE,seat up 2030
+KS-laura-kelly,Laura Kelly,Democrat,KS,,,sitting governor not running,not on ballot,Governor,,,https://www.thegreenpapers.com/G26/KS,term limited
+KS-ty-masterson,Ty Masterson,Republican,KS,,Governor,open seat,nominee,State Senator,Laura Kelly,Cook: Lean Republican,https://www.thegreenpapers.com/G26/KS,
+KS-cindy-holscher,Cindy Holscher,Democrat,KS,,Governor,open seat,nominee,State Senator,Laura Kelly,Cook: Lean Republican,https://www.thegreenpapers.com/G26/KS,
+KS-roger-marshall,Roger Marshall,Republican,KS,,U.S. Senate,incumbent,nominee,U.S. Senate KS,Roger Marshall,Cook: Toss Up,https://www.thegreenpapers.com/G26/KS,
+KS-adam-hamilton,Adam Hamilton,Democrat,KS,,U.S. Senate,challenger,nominee,,Roger Marshall,Cook: Toss Up,https://www.thegreenpapers.com/G26/KS,
+KS-tracey-mann,Tracey Mann,Republican,KS,1,U.S. House,incumbent,nominee,U.S. House KS-1,Tracey Mann,Cook: Solid Republican,https://www.thegreenpapers.com/G26/KS,
+KS-lauren-reinhold,Lauren Reinhold,Democrat,KS,1,U.S. House,challenger,nominee,,Tracey Mann,Cook: Solid Republican,https://www.thegreenpapers.com/G26/KS,
+KS-derek-schmidt,Derek Schmidt,Republican,KS,2,U.S. House,incumbent,nominee,U.S. House KS-2,Derek Schmidt,Cook: Likely Republican,https://www.thegreenpapers.com/G26/KS,
+KS-don-coover,Don Coover,Democrat,KS,2,U.S. House,challenger,nominee,,Derek Schmidt,Cook: Likely Republican,https://www.thegreenpapers.com/G26/KS,
+KS-sharice-davids,Sharice Davids,Democrat,KS,3,U.S. House,incumbent,nominee,U.S. House KS-3,Sharice Davids,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/KS,
+KS-eric-jenkins,Eric Jenkins,Republican,KS,3,U.S. House,challenger,nominee,,Sharice Davids,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/KS,
+KS-ron-estes,Ron Estes,Republican,KS,4,U.S. House,incumbent,nominee,U.S. House KS-4,Ron Estes,Cook: Solid Republican,https://www.thegreenpapers.com/G26/KS,
+KS-katy-tyndell,Katy Tyndell,Democrat,KS,4,U.S. House,challenger,nominee,,Ron Estes,Cook: Solid Republican,https://www.thegreenpapers.com/G26/KS,
+KS-jerry-moran,Jerry Moran,Republican,KS,,,delegation member not running,not on ballot,U.S. Senate KS,,,https://www.thegreenpapers.com/G26/KS,seat up 2028

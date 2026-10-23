@@ -1,0 +1,51 @@
+{
+  "person_id": "MI-john-james",
+  "name": "John James",
+  "party": "Republican",
+  "state": "MI",
+  "office_sought": "Governor",
+  "current_office": "U.S. House MI-10",
+  "opponents": [
+    "MI-jocelyn-benson"
+  ],
+  "vehicles": [
+    {
+      "name": "James gubernatorial candidate committee, exact filed name not verified",
+      "id": "Michigan Bureau of Elections ID not found",
+      "kind": "state candidate committee, accepted public funding",
+      "treasurer": "not found"
+    },
+    {
+      "name": "Mission Michigan",
+      "id": "not found",
+      "kind": "state super PAC supporting James, formed April 2025",
+      "treasurer": "not found; compliance by Crosby Ottenhoff Group, Mountain Brook AL"
+    },
+    {
+      "name": "Mission First People Always PAC",
+      "id": "not found",
+      "kind": "PAC whose treasurer is a James congressional staffer",
+      "treasurer": "James congressional staffer, name not given"
+    },
+    {
+      "name": "James House campaign committee",
+      "id": "FEC candidate IDs H2MI10150 and S8MI00372 from roster; CRP N00041550; bioguide J000307",
+      "kind": "federal candidate committee",
+      "treasurer": "not found"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "West Michigan business",
+    "Developers and construction"
+  ],
+  "headline_total": {
+    "amount_usd": 6000000,
+    "label": "Dan and Pamella DeVos to Mission Michigan since 2025, the largest single source; campaign itself raised $3.1M Jan 1 to Jul 20 and $1.2M private Jul 20 to Aug 24, 2026, cash on hand $1.5M Aug 24",
+    "as_of": "2026-07-25",
+    "source": "https://bridgemi.com/michigan-government/whos-funding-michigan-governor-candidates-new-filings-reveal-top-donors/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Michigan pre-general campaign statements expected the week ending Oct 23, 2026 per Bridge Michigan, not yet reviewed; FEC pre-general and year end reports for his House committee"
+}

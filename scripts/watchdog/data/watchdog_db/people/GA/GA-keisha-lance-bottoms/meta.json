@@ -1,0 +1,39 @@
+{
+  "person_id": "GA-keisha-lance-bottoms",
+  "name": "Keisha Lance Bottoms",
+  "party": "Democrat",
+  "state": "GA",
+  "office_sought": "Governor",
+  "current_office": "none; former Mayor of Atlanta 2018 to 2022",
+  "opponents": [
+    "GA-rick-jackson"
+  ],
+  "vehicles": [
+    {
+      "name": "Keisha Lance Bottoms campaign committee",
+      "id": "Georgia candidate account ID not retrieved; state site blocked automated access",
+      "kind": "state candidate committee",
+      "treasurer": "not found"
+    },
+    {
+      "name": "Project Battleground Georgia",
+      "id": "Georgia leadership committee ID not retrieved",
+      "kind": "state leadership committee, formed after May 2026 nomination",
+      "treasurer": "not found"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Billionaire megadonor",
+    "Real estate"
+  ],
+  "headline_total": {
+    "amount_usd": 23200000,
+    "label": "raised across campaign and leadership committee Aug 1 to Oct 20 2026, campaign announced, provisional",
+    "as_of": "2026-10-20",
+    "source": "https://www.ajc.com/politics/2026/10/keisha-lance-bottoms-fundraising/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-23",
+  "next_filing": "Georgia report covering through Oct 20 2026, due the week of Oct 26 2026 per AJC; exact due date not verified"
+}

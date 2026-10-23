@@ -54,6 +54,19 @@ const DIMS = [
   } },
   { k: "prop", l: "Turnout propensity", g: ["High propensity", "Medium propensity", "Low propensity"], get: (p) => (p.prop ? p.prop.map((x) => [x[1], x[2]]) : null) },
   { k: "approval", l: "Trump approval", g: ["Approve of Trump", "No opinion", "Disapprove of Trump"], get: (p) => p.ap },
+  // Oct 23 2026: financial strain, from On Point Polling respondents who find it difficult to pay the bills
+  { k: "fin", l: "Financial strain", g: ["Struggling to pay the bills", "Getting by"], get: (p) => p.fin },
+];
+
+// Oct 23 2026: county traits the linked county what if uses to find counties like each other, beside the group shares
+const WC = read("watchdog/counties.json");
+const DC = (() => { const o = {}; try { for (const p of read("watchdog/datacenters.json").projects ?? []) { const f = String(p.fips ?? "").padStart(5, "0"); if (f !== "00000") o[f] = (o[f] ?? 0) + (Number(p.mw) || 100); } } catch { /* no data center file */ } return o; })();
+const FEAT = [
+  { k: "dens", l: "Population density", get: (id, T) => { const a = WC[id]?.area; return a > 0 ? Math.log10(Math.max(1, T) / a) : null; } },
+  { k: "trend", l: "Shift from 2020 to 2024", get: (id) => (WC[id] && Number.isFinite(WC[id].r24) && Number.isFinite(WC[id].r20) ? WC[id].r24 - WC[id].r20 : null) },
+  { k: "gas", l: "Gas prices", get: (id) => (Number.isFinite(P[id]?.gas) ? P[id].gas : null) },
+  { k: "dc", l: "Data centers", get: (id) => Math.log10(1 + (DC[id] ?? 0)) },
+  { k: "appr", l: "Trump approval, On Point Polling county estimate", get: (id) => (Array.isArray(P[id]?.appr) && Number.isFinite(P[id].appr[3]) ? P[id].appr[3] : null) },
 ];
 
 function bbox(d) {
@@ -89,7 +102,8 @@ for (const r of model.races) {
   // largest first, so the file reads like the race page's county table
   ids.sort((a, b) => rows[b][3] - rows[a][3]);
 
-  const c = [], x = {}, profRaces = new Set();
+  const c = [], x = {}, profRaces = new Set(), fv = {};
+  for (const f of FEAT) fv[f.k] = [];
   for (const d of DIMS) x[d.k] = [];
   for (const id of ids) {
     const [, D, R, T] = rows[id];
@@ -97,6 +111,7 @@ for (const r of model.races) {
     c.push([id, countyName(NAMES[id] ?? id, st), Math.round(D), Math.round(R), Math.round(O)]);
     const pf = P[id];
     if (pf?.race) profRaces.add(pf.race);
+    for (const f of FEAT) { const v = f.get(id, T); fv[f.k].push(Number.isFinite(v) ? Math.round(v * 1000) / 1000 : null); }
     const two = D + R > 0 ? ((R - D) / (D + R)) * 100 : 0;
     for (const d of DIMS) {
       const g = pf ? d.get(pf) : null;
@@ -151,6 +166,7 @@ for (const r of model.races) {
     votes: r.votes ?? null, unit: unitOf(st),
     prof: prof && prof !== r.id ? prof : null,
     dims, c, x, regions,
+    f: FEAT.filter((f) => fv[f.k].some((v) => v != null) && new Set(fv[f.k]).size > 1).map((f) => ({ k: f.k, l: f.l, v: fv[f.k] })),
   };
   fs.writeFileSync(path.join(OUT, `${r.id}.json`), JSON.stringify(out));
   index.push({ id: r.id, st, state: r.state, office: r.office, dem: r.dem, gop: r.gop, ind, m: e.margin, pD: out.pD, n: c.length, dims: dims.length });

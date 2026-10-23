@@ -261,6 +261,37 @@ for c in scr["campaigns"]:
         edge(kid, node("v:" + vn, "vendor", vn, None, what=what), "paid", amt, f"{c['committee']} paid {vn}", "Ledger")
     for dn, amt in c["gifts"]:
         edge(node("d:" + dn, "donor", dn, "D"), kid, "gave", amt, f"gave to {c['committee']}", "Ledger")
+# Oct 23 2026: hand researched money ties from the On Point Watchdog Database (scripts/watchdog/build_people.py)
+try: _pl = json.load(open(os.path.join(D, "people_ledger.json")))["rows"]
+except Exception: _pl = []
+_SRC = "On Point Watchdog Database"
+def _clean_vehicle(v):
+    v = re.sub(r",\s*(FEC|WEC|SOS|ID)\b.*$", "", v or "", flags=re.I)
+    return re.sub(r",?\s*formal name not retrieved", "", v, flags=re.I).strip(" ,")
+def _is_committee(v):
+    return bool(re.search(r"campaign|committee|\bfor (governor|congress|senate|[A-Z][a-z]+)\b|inaugural|\bfriends of\b", v, re.I)) and not re.search(r"\bsuper ?pac\b", v, re.I)
+for r in _pl:
+    cid = "c:" + r["subject"]
+    if cid not in N: node(cid, "candidate", r["subject"], r["party"] if r["party"] in ("D", "R", "I") else None, race=f"{r['st']} {r['office']}")
+    veh = _clean_vehicle(r["vehicle"])
+    note = f"{r['bloc']}: {r['note']}" if r["bloc"] and r["note"] else (r["note"] or r["bloc"])
+    if not veh or veh.lower() == r["subject"].lower(): tid = cid
+    elif "g:" + veh in N: tid = "g:" + veh; edge(tid, cid, "support", None, f"{veh} backs {r['subject']}", _SRC)
+    elif _is_committee(veh) and "PAC" not in veh.split()[-1:]:
+        tid = node("k:" + veh, "committee", veh, r["party"] if r["party"] in ("D", "R", "I") else None); edge(tid, cid, "campaign", None, f"{veh} is {r['subject']}'s committee", _SRC)
+    else: tid = node("g:" + veh, "group", veh, r["party"] if r["party"] in ("D", "R") else "other"); edge(tid, cid, "support", None, f"{veh} backs {r['subject']}", _SRC)
+    ent = clean(r["entity"]) if r["entity"] else ""
+    if not ent: continue
+    t = r["type"].lower()
+    if t.startswith("vendor"):
+        edge(tid, node("v:" + ent, "vendor", ent, None, what=r["bloc"] or "vendor"), "paid", r["amount"], f"paid {ent}, {r['date']}".strip(", "), r["src"] or _SRC)
+    elif t.startswith("independent expenditure"):
+        gid = "g:" + ent if "g:" + ent in N else node("g:" + ent, "group", ent, "other")
+        edge(gid, cid, "oppose" if "against" in t else "support", r["amount"], f"{'spent against' if 'against' in t else 'spent for'} {r['subject']}, {r['date']}".strip(", "), r["src"] or _SRC)
+    else:
+        did = next((x + ent for x in ("g:", "c:", "k:") if x + ent in N), None) or node("d:" + ent, "donor", ent, None)
+        if did == tid: continue
+        edge(did, tid, "gave", r["amount"], f"gave to {veh or r['subject']}, {r['date']}".strip(", "), r["src"] or _SRC)
 for t in scr["tape"]:
     gid = node("g:" + t["group"], "group", t["group"], N.get("g:" + t["group"], {}).get("side") or "other")
     cid = node("c:" + t["against"], "candidate", t["against"], "R", race="House")

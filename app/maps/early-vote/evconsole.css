@@ -601,3 +601,25 @@ html[data-theme="light"] .evb .d { color: #1f4fd6; } html[data-theme="light"] .e
   .evb-ruler, .evb-race { min-width: 660px; }
   .evb-key { min-width: 0; }
 }
+
+/* Election Day: who is left to vote */
+.evb-day { display: grid; gap: 10px; }
+.evb-grs { display: grid; gap: 8px; }
+.evb-gr { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; align-items: center; }
+.evb-gr .l { display: grid; gap: 1px; }
+.evb-gr .l span { font: 700 13px var(--font-b); }
+.evb-gr .l b { font: 800 12px var(--font-m); }
+.evb-gr .bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; gap: 2px; background: rgba(var(--line-rgb), .06); }
+.evb-gr .bar i { position: relative; display: flex; align-items: center; justify-content: center; height: 100%; transform-origin: left; animation: evc-grow 1s cubic-bezier(.2,.8,.2,1) backwards; }
+.evb-gr .bar i em { font: 800 10.5px var(--font-m); font-style: normal; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.evb-gr .bar i.t, .evb-grk i.t { background: #d63a57; } .evb-gr .bar i.h, .evb-grk i.h { background: #3a6ee8; animation-delay: .1s; } .evb-gr .bar i.n, .evb-grk i.n { background: #9b7bff; animation-delay: .2s; }
+.evb-grk { display: flex; flex-wrap: wrap; gap: 14px; font: 700 10.5px var(--font-m); letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); padding-left: 182px; }
+.evb-grk i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.evb-dayr .fl { stroke: var(--gold); stroke-width: 3; }
+.evb-dayr .ml.exp .tt { fill: #3fd6a2; } .evb-dayr .ml.flip .tt { fill: var(--gold); } .evb-dayr .ml.d .tt { fill: var(--dem2); } .evb-dayr .ml.r .tt { fill: var(--gop2); }
+.evb-dayr .ml.flip .fm { fill: var(--gold); }
+.evb-dayt { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink2); }
+.evb-dayt b { color: var(--ink); } .evb-dayt b.d { color: var(--dem2); } .evb-dayt b.r { color: var(--gop2); }
+html[data-theme="light"] .evb-dayr .ml.exp .tt { fill: #0a8a5c; } html[data-theme="light"] .evb-dayr .ml.flip .tt { fill: #9a6a06; }
+html[data-theme="light"] .evb-dayt b.d { color: #1f4fd6; } html[data-theme="light"] .evb-dayt b.r { color: #c81e43; }
+@media (max-width: 760px) { .evb-gr { grid-template-columns: 1fr; gap: 4px; } .evb-grk { padding-left: 0; } .evb-dayr { min-width: 660px; } }

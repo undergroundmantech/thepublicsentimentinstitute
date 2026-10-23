@@ -1,0 +1,159 @@
+person_id,name,party,state,district,office_sought,role,race_status,current_office,incumbent_in_seat,competitive_rating,source_url,notes
+FL-david-jolly,David Jolly,Democrat,FL,,Governor,open seat,nominee,none,Ron DeSantis,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,former U.S. Rep.; running mate Gwen Graham
+FL-byron-donalds,Byron Donalds,Republican,FL,,Governor,delegation member running for other office,nominee,U.S. House FL-19,Ron DeSantis,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,won GOP nomination Aug 18 2026; running mate Bryan Avila
+FL-ron-desantis,Ron DeSantis,Republican,FL,,,sitting governor not running,not on ballot,Governor,Ron DeSantis,,https://www.thegreenpapers.com/G26/FL,term limited
+FL-ashley-moody,Ashley Moody,Republican,FL,,U.S. Senate special,incumbent,nominee,U.S. Senate,Ashley Moody,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,appointed Jan 2025 to Rubio seat; special for remainder of term
+FL-angie-nixon,Angie Nixon,Democrat,FL,,U.S. Senate special,challenger,nominee,State Representative,Ashley Moody,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-rick-scott,Rick Scott,Republican,FL,,,delegation member not running,not on ballot,U.S. Senate,,,https://www.thegreenpapers.com/G26/FL,class 1 seat not up until 2030
+FL-jimmy-patronis,Jimmy Patronis,Republican,FL,1,U.S. House,incumbent,nominee,U.S. House FL-1,Jimmy Patronis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-gay-valimont,Gay Valimont,Democrat,FL,1,U.S. House,challenger,nominee,,Jimmy Patronis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-austin-rogers,Austin Rogers,Republican,FL,2,U.S. House,open seat,nominee,,Neal Dunn,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-amanda-green,Amanda Green,Democrat,FL,2,U.S. House,open seat,nominee,,Neal Dunn,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-kat-cammack,Kat Cammack,Republican,FL,3,U.S. House,incumbent,nominee,U.S. House FL-3,Kat Cammack,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-seth-harp,Seth Harp,Democrat,FL,3,U.S. House,challenger,nominee,,Kat Cammack,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-aaron-bean,Aaron Bean,Republican,FL,4,U.S. House,incumbent,nominee,U.S. House FL-4,Aaron Bean,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-lashonda-holloway,LaShonda Holloway,Democrat,FL,4,U.S. House,challenger,nominee,,Aaron Bean,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-john-h-rutherford,John H. Rutherford,Republican,FL,5,U.S. House,incumbent,nominee,U.S. House FL-5,John H. Rutherford,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-rachel-grage,Rachel Grage,Democrat,FL,5,U.S. House,challenger,nominee,,John H. Rutherford,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-randy-fine,Randy Fine,Republican,FL,6,U.S. House,incumbent,nominee,U.S. House FL-6,Randy Fine,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-eric-yonce,Eric Yonce,Democrat,FL,6,U.S. House,challenger,nominee,,Randy Fine,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-ryan-elijah,Ryan Elijah,Republican,FL,7,U.S. House,open seat,nominee,,Cory Mills,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,
+FL-bale-dalton,Bale Dalton,Democrat,FL,7,U.S. House,open seat,nominee,,Cory Mills,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,
+FL-mike-haridopolos,Mike Haridopolos,Republican,FL,8,U.S. House,incumbent,nominee,U.S. House FL-8,Mike Haridopolos,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-jennifer-jenkins,Jennifer Jenkins,Democrat,FL,8,U.S. House,challenger,nominee,,Mike Haridopolos,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,former Brevard County School Board member
+FL-darren-soto,Darren Soto,Democrat,FL,9,U.S. House,incumbent,nominee,U.S. House FL-9,Darren Soto,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,
+FL-dan-green,Dan Green,Republican,FL,9,U.S. House,challenger,nominee,,Darren Soto,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,
+FL-maxwell-frost,Maxwell Frost,Democrat,FL,10,U.S. House,incumbent,nominee,U.S. House FL-10,Maxwell Frost,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,unopposed; not printed on Nov ballot under FL law
+FL-joe-strada,Joe Strada,Republican,FL,11,U.S. House,open seat,nominee,,Daniel Webster,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,won GOP primary after Aug 25 machine recount
+FL-james-pericola,James Pericola,Democrat,FL,11,U.S. House,open seat,nominee,,Daniel Webster,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-gus-m-bilirakis,Gus M. Bilirakis,Republican,FL,12,U.S. House,incumbent,nominee,U.S. House FL-12,Gus M. Bilirakis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-kimberly-overman,Kimberly Overman,Democrat,FL,12,U.S. House,challenger,nominee,,Gus M. Bilirakis,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,former Hillsborough County Commissioner
+FL-anna-paulina-luna,Anna Paulina Luna,Republican,FL,13,U.S. House,incumbent,nominee,U.S. House FL-13,Anna Paulina Luna,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,
+FL-leela-gray,Leela Gray,Democrat,FL,13,U.S. House,challenger,nominee,,Anna Paulina Luna,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,
+FL-kathy-castor,Kathy Castor,Democrat,FL,14,U.S. House,incumbent,nominee,U.S. House FL-14,Kathy Castor,Cook: Toss Up,https://www.thegreenpapers.com/G26/FL,
+FL-mike-beltran,Mike Beltran,Republican,FL,14,U.S. House,challenger,nominee,,Kathy Castor,Cook: Toss Up,https://www.thegreenpapers.com/G26/FL,former state Representative
+FL-laurel-m-lee,Laurel M. Lee,Republican,FL,15,U.S. House,incumbent,nominee,U.S. House FL-15,Laurel M. Lee,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-robert-people,Robert People,Democrat,FL,15,U.S. House,challenger,nominee,,Laurel M. Lee,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-sydney-gruters,Sydney Gruters,Republican,FL,16,U.S. House,open seat,nominee,,Vern Buchanan,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,
+FL-kelly-kirschner,Kelly Kirschner,Democrat,FL,16,U.S. House,open seat,nominee,,Vern Buchanan,Cook: Likely Republican,https://www.thegreenpapers.com/G26/FL,former Sarasota mayor
+FL-w-gregory-steube,W. Gregory Steube,Republican,FL,17,U.S. House,incumbent,nominee,U.S. House FL-17,W. Gregory Steube,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-matt-montavon,Matt Montavon,Democrat,FL,17,U.S. House,challenger,nominee,,W. Gregory Steube,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-scott-franklin,Scott Franklin,Republican,FL,18,U.S. House,incumbent,nominee,U.S. House FL-18,Scott Franklin,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-curtis-gibson,Curtis Gibson,Democrat,FL,18,U.S. House,challenger,nominee,,Scott Franklin,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,former Lake Wales city commissioner
+FL-jim-schwartzel,Jim Schwartzel,Republican,FL,19,U.S. House,open seat,nominee,,Byron Donalds,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-victor-arias,Victor Arias,Democrat,FL,19,U.S. House,open seat,nominee,,Byron Donalds,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-brent-andersen,Brent Andersen,Republican,FL,20,U.S. House,open seat,nominee,,vacant (Sheila Cherfilus-McCormick resigned Apr 21 2026),Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,
+FL-brian-j-mast,Brian J. Mast,Republican,FL,21,U.S. House,incumbent,nominee,U.S. House FL-21,Brian J. Mast,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-james-martin,James Martin,Democrat,FL,21,U.S. House,challenger,nominee,,Brian J. Mast,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-casey-askar,Casey Askar,Republican,FL,22,U.S. House,open seat,nominee,,Lois Frankel (old map; running in FL-23),Cook: Toss Up,https://www.thegreenpapers.com/G26/FL,
+FL-pia-dandiya,Pia Dandiya,Democrat,FL,22,U.S. House,open seat,nominee,,Lois Frankel (old map; running in FL-23),Cook: Toss Up,https://www.thegreenpapers.com/G26/FL,
+FL-lois-frankel,Lois Frankel,Democrat,FL,23,U.S. House,incumbent,nominee,U.S. House FL-22,Lois Frankel,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,currently represents old FL-22; running in redrawn FL-23 under May 2026 map
+FL-deborah-adeimy,Deborah Adeimy,Republican,FL,23,U.S. House,challenger,nominee,,Lois Frankel,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,
+FL-oliver-gilbert-iii,Oliver Gilbert III,Democrat,FL,24,U.S. House,open seat,nominee,,Frederica S. Wilson,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,former Miami-Dade County commissioner
+FL-te-mayonna-brown,Te Mayonna Brown,Republican,FL,24,U.S. House,open seat,nominee,,Frederica S. Wilson,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/FL,
+FL-jared-moskowitz,Jared Moskowitz,Democrat,FL,25,U.S. House,incumbent,nominee,U.S. House FL-23,Jared Moskowitz,Cook: Lean Democrat,https://www.thegreenpapers.com/G26/FL,currently represents old FL-23; running in redrawn FL-25 under May 2026 map
+FL-scott-singer,Scott Singer,Republican,FL,25,U.S. House,challenger,nominee,,Jared Moskowitz,Cook: Lean Democrat,https://www.thegreenpapers.com/G26/FL,former Boca Raton mayor
+FL-mario-diaz-balart,Mario Diaz-Balart,Republican,FL,26,U.S. House,incumbent,nominee,U.S. House FL-26,Mario Diaz-Balart,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-nicole-locklin,Nicole Locklin,Democrat,FL,26,U.S. House,challenger,nominee,,Mario Diaz-Balart,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-maria-elvira-salazar,Maria Elvira Salazar,Republican,FL,27,U.S. House,incumbent,nominee,U.S. House FL-27,Maria Elvira Salazar,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,
+FL-eliott-rodriguez,Eliott Rodriguez,Democrat,FL,27,U.S. House,challenger,nominee,,Maria Elvira Salazar,Cook: Lean Republican,https://www.thegreenpapers.com/G26/FL,
+FL-carlos-a-gimenez,Carlos A. Gimenez,Republican,FL,28,U.S. House,incumbent,nominee,U.S. House FL-28,Carlos A. Gimenez,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-phil-ehr,Phil Ehr,Democrat,FL,28,U.S. House,challenger,nominee,,Carlos A. Gimenez,Cook: Solid Republican,https://www.thegreenpapers.com/G26/FL,
+FL-debbie-wasserman-schultz,Debbie Wasserman Schultz,Democrat,FL,20,U.S. House,incumbent,nominee,U.S. House FL-25,vacant (Sheila Cherfilus-McCormick resigned Apr 21 2026),Cook: Solid Democrat,https://news.ballotpedia.org/?p=50582,represents old FL-25; won FL-20 Dem primary Aug 18 2026 under new map
+FL-neal-p-dunn,Neal P. Dunn,Republican,FL,2,,delegation member not running,not on ballot,U.S. House FL-2,,,https://www.thegreenpapers.com/G26/FL,not seeking reelection
+FL-cory-mills,Cory Mills,Republican,FL,7,,delegation member not running,not on ballot,U.S. House FL-7,,,https://www.thegreenpapers.com/G26/FL,lost Aug 18 2026 GOP primary
+FL-daniel-webster,Daniel Webster,Republican,FL,11,,delegation member not running,not on ballot,U.S. House FL-11,,,https://www.thegreenpapers.com/G26/FL,not seeking reelection
+FL-vern-buchanan,Vern Buchanan,Republican,FL,16,,delegation member not running,not on ballot,U.S. House FL-16,,,https://www.thegreenpapers.com/G26/FL,retiring
+FL-frederica-s-wilson,Frederica S. Wilson,Democrat,FL,24,,delegation member not running,not on ballot,U.S. House FL-24,,,https://www.thegreenpapers.com/G26/FL,not seeking reelection
+GA-keisha-lance-bottoms,Keisha Lance Bottoms,Democrat,GA,,Governor,open seat,nominee,none,Brian Kemp,Cook: Toss Up,https://www.thegreenpapers.com/G26/GA,former Atlanta mayor
+GA-rick-jackson,Rick Jackson,Republican,GA,,Governor,open seat,nominee,,Brian Kemp,Cook: Toss Up,https://www.thegreenpapers.com/G26/GA,won June 16 GOP runoff
+GA-brian-kemp,Brian Kemp,Republican,GA,,,sitting governor not running,not on ballot,Governor,Brian Kemp,,https://www.thegreenpapers.com/G26/GA,term limited
+GA-jon-ossoff,Jon Ossoff,Democrat,GA,,U.S. Senate,incumbent,nominee,U.S. Senate,Jon Ossoff,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-mike-collins,Mike Collins,Republican,GA,,U.S. Senate,delegation member running for other office,nominee,U.S. House GA-10,Jon Ossoff,Cook: Likely Democrat,https://www.thegreenpapers.com/G26/GA,won June 16 GOP Senate runoff
+GA-raphael-g-warnock,Raphael G. Warnock,Democrat,GA,,,delegation member not running,not on ballot,U.S. Senate,,,https://www.thegreenpapers.com/G26/GA,class 3 seat not up until 2028
+GA-jim-kingston,Jim Kingston,Republican,GA,1,U.S. House,open seat,nominee,,"Earl L. ""Buddy"" Carter",Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,son of former Rep. Jack Kingston
+GA-amanda-hollowell,Amanda Hollowell,Democrat,GA,1,U.S. House,open seat,nominee,,"Earl L. ""Buddy"" Carter",Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,won Dem runoff
+GA-sanford-d-bishop-jr,"Sanford D. Bishop, Jr.",Democrat,GA,2,U.S. House,incumbent,nominee,U.S. House GA-2,"Sanford D. Bishop, Jr.",Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-matt-day,Matt Day,Republican,GA,2,U.S. House,challenger,nominee,,"Sanford D. Bishop, Jr.",Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-brian-jack,Brian Jack,Republican,GA,3,U.S. House,incumbent,nominee,U.S. House GA-3,Brian Jack,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-maura-keller,Maura Keller,Democrat,GA,3,U.S. House,challenger,nominee,,Brian Jack,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-henry-c-hank-johnson-jr,"Henry C. ""Hank"" Johnson, Jr.",Democrat,GA,4,U.S. House,incumbent,nominee,U.S. House GA-4,"Henry C. ""Hank"" Johnson, Jr.",Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-jim-duffie,Jim Duffie,Republican,GA,4,U.S. House,challenger,nominee,,"Henry C. ""Hank"" Johnson, Jr.",Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-nikema-williams,Nikema Williams,Democrat,GA,5,U.S. House,incumbent,nominee,U.S. House GA-5,Nikema Williams,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-john-salvesen-ii,John Salvesen II,Republican,GA,5,U.S. House,challenger,nominee,,Nikema Williams,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-lucy-mcbath,Lucy McBath,Democrat,GA,6,U.S. House,incumbent,nominee,U.S. House GA-6,Lucy McBath,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-kevin-martin,Kevin Martin,Republican,GA,6,U.S. House,challenger,nominee,,Lucy McBath,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-richard-mccormick,Richard McCormick,Republican,GA,7,U.S. House,incumbent,nominee,U.S. House GA-7,Richard McCormick,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-tony-kozycki,Tony Kozycki,Democrat,GA,7,U.S. House,challenger,nominee,,Richard McCormick,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,won Dem runoff
+GA-austin-scott,Austin Scott,Republican,GA,8,U.S. House,incumbent,nominee,U.S. House GA-8,Austin Scott,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-kelly-esti,Kelly Esti,Democrat,GA,8,U.S. House,challenger,nominee,,Austin Scott,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-andrew-s-clyde,Andrew S. Clyde,Republican,GA,9,U.S. House,incumbent,nominee,U.S. House GA-9,Andrew S. Clyde,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-caitlyn-gegen,Caitlyn Gegen,Democrat,GA,9,U.S. House,challenger,nominee,,Andrew S. Clyde,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-houston-gaines,Houston Gaines,Republican,GA,10,U.S. House,open seat,nominee,State Representative,Mike Collins,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-pam-delancy,Pam DeLancy,Democrat,GA,10,U.S. House,open seat,nominee,,Mike Collins,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-john-cowan-jr,John Cowan Jr.,Republican,GA,11,U.S. House,open seat,nominee,,Barry Loudermilk,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,won GOP runoff
+GA-chris-harden,Chris Harden,Democrat,GA,11,U.S. House,open seat,nominee,,Barry Loudermilk,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-rick-w-allen,Rick W. Allen,Republican,GA,12,U.S. House,incumbent,nominee,U.S. House GA-12,Rick W. Allen,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,
+GA-ceretta-smith,Ceretta Smith,Democrat,GA,12,U.S. House,challenger,nominee,Grovetown City Council member,Rick W. Allen,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,won Dem runoff
+GA-jasmine-clark,Jasmine Clark,Democrat,GA,13,U.S. House,open seat,nominee,State Representative,Everton Blair Jr.,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,regular-term nominee; Blair holds seat via special but is not on Nov ballot
+GA-jonathan-chavez,Jonathan Chavez,Republican,GA,13,U.S. House,open seat,nominee,,Everton Blair Jr.,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/GA,
+GA-clay-fuller,Clay Fuller,Republican,GA,14,U.S. House,incumbent,nominee,U.S. House GA-14,Clay Fuller,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,won Apr 7 2026 special runoff after Greene resignation
+GA-shawn-harris,Shawn Harris,Democrat,GA,14,U.S. House,challenger,nominee,,Clay Fuller,Cook: Solid Republican,https://www.thegreenpapers.com/G26/GA,also lost Apr 7 2026 special runoff to Fuller
+GA-earl-l-buddy-carter,"Earl L. ""Buddy"" Carter",Republican,GA,1,,delegation member not running,not on ballot,U.S. House GA-1,,,https://www.thegreenpapers.com/G26/GA,lost 2026 GOP Senate primary; GA-1 open
+GA-barry-loudermilk,Barry Loudermilk,Republican,GA,11,,delegation member not running,not on ballot,U.S. House GA-11,,,https://www.thegreenpapers.com/G26/GA,not seeking reelection
+GA-everton-blair-jr,Everton Blair Jr.,Democrat,GA,13,,delegation member not running,not on ballot,U.S. House GA-13,,,https://www.thegreenpapers.com/G26/GA,won Aug 25 2026 special runoff after David Scott death; sworn in Sept 2026; not on Nov ballot
+AL-doug-jones,Doug Jones,Democrat,AL,,Governor,open seat,nominee,none,Kay Ivey,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,former U.S. Senator
+AL-tommy-tuberville,Tommy Tuberville,Republican,AL,,Governor,delegation member running for other office,nominee,U.S. Senate,Kay Ivey,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,leaving Senate seat to run for governor
+AL-kay-ivey,Kay Ivey,Republican,AL,,,sitting governor not running,not on ballot,Governor,Kay Ivey,,https://www.thegreenpapers.com/G26/AL,term limited
+AL-barry-moore,Barry Moore,Republican,AL,,U.S. Senate,delegation member running for other office,nominee,U.S. House AL-1,Tommy Tuberville,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,won June 16 GOP Senate runoff; open seat
+AL-everett-wess,Everett Wess,Democrat,AL,,U.S. Senate,open seat,nominee,,Tommy Tuberville,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,won June 16 Dem runoff
+AL-katie-boyd-britt,Katie Boyd Britt,Republican,AL,,,delegation member not running,not on ballot,U.S. Senate,,,https://www.thegreenpapers.com/G26/AL,class 3 seat not up until 2028
+AL-jerry-carl,Jerry Carl,Republican,AL,1,U.S. House,open seat,nominee,none,Barry Moore,Cook: Solid Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,former U.S. Rep.; won Aug 11 special primary under new map
+AL-clyde-jones-jr,Clyde Jones Jr.,Democrat,AL,1,U.S. House,open seat,nominee,,Barry Moore,Cook: Solid Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,
+AL-shomari-figures,Shomari Figures,Democrat,AL,2,U.S. House,incumbent,nominee,U.S. House AL-2,Shomari Figures,Cook: Lean Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,redrawn district after May 2026 map reinstated by SCOTUS
+AL-rhett-marques,Rhett Marques,Republican,AL,2,U.S. House,challenger,nominee,State Representative,Shomari Figures,Cook: Lean Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,won Aug 11 special primary under new map
+AL-mike-rogers,Mike Rogers,Republican,AL,3,U.S. House,incumbent,nominee,U.S. House AL-3,Mike Rogers,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,
+AL-lee-mcinnis,Lee McInnis,Democrat,AL,3,U.S. House,challenger,nominee,,Mike Rogers,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,
+AL-robert-b-aderholt,Robert B. Aderholt,Republican,AL,4,U.S. House,incumbent,nominee,U.S. House AL-4,Robert B. Aderholt,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,
+AL-amanda-pusczek,Amanda Pusczek,Democrat,AL,4,U.S. House,challenger,nominee,,Robert B. Aderholt,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,
+AL-dale-w-strong,Dale W. Strong,Republican,AL,5,U.S. House,incumbent,nominee,U.S. House AL-5,Dale W. Strong,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,
+AL-andrew-sneed,Andrew Sneed,Democrat,AL,5,U.S. House,challenger,nominee,,Dale W. Strong,Cook: Solid Republican,https://www.thegreenpapers.com/G26/AL,won June 16 Dem runoff
+AL-gary-j-palmer,Gary J. Palmer,Republican,AL,6,U.S. House,incumbent,nominee,U.S. House AL-6,Gary J. Palmer,Cook: Solid Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,redrawn district after May 2026 map reinstated by SCOTUS
+AL-maurice-mercer,Maurice Mercer,Democrat,AL,6,U.S. House,challenger,nominee,,Gary J. Palmer,Cook: Solid Republican,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,former Pelham city councilman
+AL-terri-a-sewell,Terri A. Sewell,Democrat,AL,7,U.S. House,incumbent,nominee,U.S. House AL-7,Terri A. Sewell,Cook: Solid Democrat,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,redrawn district after May 2026 map reinstated by SCOTUS
+AL-ammie-akin,Ammie Akin,Republican,AL,7,U.S. House,challenger,nominee,,Terri A. Sewell,Cook: Solid Democrat,https://www.wbhm.org/local-news/2026-08-11/2026-alabama-special-congressional-primary-results,won Aug 11 special primary
+SC-alan-wilson,Alan Wilson,Republican,SC,,Governor,open seat,nominee,Attorney General,Henry McMaster,Cook: Solid Republican,https://www.wfae.org/text/politics/2026-06-23/attorney-general-alan-wilson-wins-republican-runoff-for-sc-governor,won June 23 GOP runoff over Pamela Evette
+SC-jermaine-johnson,Jermaine Johnson,Democrat,SC,,Governor,open seat,nominee,State Representative,Henry McMaster,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-henry-mcmaster,Henry McMaster,Republican,SC,,,sitting governor not running,not on ballot,Governor,Henry McMaster,,https://www.thegreenpapers.com/G26/SC,term limited
+SC-darline-graham,Darline Graham,Republican,SC,,U.S. Senate,incumbent,nominee,U.S. Senate,Darline Graham,Cook: Lean Republican,"https://ballotpedia.org/United_States_Senate_election_in_South_Carolina,_2026",appointed July 13 2026 after Lindsey Graham died July 11; won Aug 25 special GOP runoff; legal name Darline Graham Nordone
+SC-annie-andrews,Annie Andrews,Democrat,SC,,U.S. Senate,challenger,nominee,none,Darline Graham,Cook: Lean Republican,"https://ballotpedia.org/United_States_Senate_election_in_South_Carolina,_2026",pediatrician
+SC-tim-scott,Tim Scott,Republican,SC,,,delegation member not running,not on ballot,U.S. Senate,,,https://www.thegreenpapers.com/G26/SC,class 3 seat not up until 2028
+SC-jenny-costa-honeycutt,Jenny Costa Honeycutt,Republican,SC,1,U.S. House,open seat,nominee,,Nancy Mace,Cook: Lean Republican,https://www.thegreenpapers.com/G26/SC,won June 23 GOP runoff over Mark Smith
+SC-nancy-lacore,Nancy Lacore,Democrat,SC,1,U.S. House,open seat,nominee,none,Nancy Mace,Cook: Lean Republican,https://www.thegreenpapers.com/G26/SC,retired Navy admiral; won Dem runoff over Mac Deford
+SC-joe-wilson,Joe Wilson,Republican,SC,2,U.S. House,incumbent,nominee,U.S. House SC-2,Joe Wilson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-zyon-khalifa,Zyon Khalifa,Democrat,SC,2,U.S. House,challenger,nominee,,Joe Wilson,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,won June 23 Dem runoff
+SC-sheri-biggs,Sheri Biggs,Republican,SC,3,U.S. House,incumbent,nominee,U.S. House SC-3,Sheri Biggs,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-eunice-lehmacher,Eunice Lehmacher,Democrat,SC,3,U.S. House,challenger,nominee,,Sheri Biggs,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-william-r-timmons-iv,William R. Timmons IV,Republican,SC,4,U.S. House,incumbent,nominee,U.S. House SC-4,William R. Timmons IV,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-courtney-mcclain,Courtney McClain,Democrat,SC,4,U.S. House,challenger,nominee,,William R. Timmons IV,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-wes-climer,Wes Climer,Republican,SC,5,U.S. House,open seat,nominee,,Ralph Norman,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,unopposed in GOP primary
+SC-mallory-dittmer,Mallory Dittmer,Democrat,SC,5,U.S. House,open seat,nominee,,Ralph Norman,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-james-e-clyburn,James E. Clyburn,Democrat,SC,6,U.S. House,incumbent,nominee,U.S. House SC-6,James E. Clyburn,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/SC,
+SC-john-peterson,John Peterson,Republican,SC,6,U.S. House,challenger,nominee,,James E. Clyburn,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/SC,
+SC-russell-fry,Russell Fry,Republican,SC,7,U.S. House,incumbent,nominee,U.S. House SC-7,Russell Fry,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-john-vincent,John Vincent,Democrat,SC,7,U.S. House,challenger,nominee,,Russell Fry,Cook: Solid Republican,https://www.thegreenpapers.com/G26/SC,
+SC-nancy-mace,Nancy Mace,Republican,SC,1,,delegation member not running,not on ballot,U.S. House SC-1,,,https://www.thegreenpapers.com/G26/SC,ran for governor; eliminated in June 9 2026 GOP primary
+SC-ralph-norman,Ralph Norman,Republican,SC,5,,delegation member not running,not on ballot,U.S. House SC-5,,,https://www.thegreenpapers.com/G26/SC,"ran for governor, lost June primary; lost Aug 25 special Senate GOP runoff to Darline Graham"
+MS-tate-reeves,Tate Reeves,Republican,MS,,,sitting governor not running,not on ballot,Governor,Tate Reeves,,https://www.thegreenpapers.com/G26/MS,no governor race in 2026; next election Nov 2027
+MS-cindy-hyde-smith,Cindy Hyde-Smith,Republican,MS,,U.S. Senate,incumbent,nominee,U.S. Senate,Cindy Hyde-Smith,Cook: Likely Republican,https://www.thegreenpapers.com/G26/MS,
+MS-scott-colom,Scott Colom,Democrat,MS,,U.S. Senate,challenger,nominee,District Attorney,Cindy Hyde-Smith,Cook: Likely Republican,https://www.thegreenpapers.com/G26/MS,Lowndes County area district attorney
+MS-ty-pinkins,Ty Pinkins,Independent,MS,,U.S. Senate,challenger,nominee,none,Cindy Hyde-Smith,Cook: Likely Republican,https://www.thegreenpapers.com/G26/MS,2024 Dem Senate nominee now running as independent; poll share unverified
+MS-roger-f-wicker,Roger F. Wicker,Republican,MS,,,delegation member not running,not on ballot,U.S. Senate,,,https://www.thegreenpapers.com/G26/MS,class 1 seat not up until 2030
+MS-trent-kelly,Trent Kelly,Republican,MS,1,U.S. House,incumbent,nominee,U.S. House MS-1,Trent Kelly,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,
+MS-cliff-johnson,Cliff Johnson,Democrat,MS,1,U.S. House,challenger,nominee,,Trent Kelly,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,
+MS-bennie-g-thompson,Bennie G. Thompson,Democrat,MS,2,U.S. House,incumbent,nominee,U.S. House MS-2,Bennie G. Thompson,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/MS,
+MS-ron-eller,Ron Eller,Republican,MS,2,U.S. House,challenger,nominee,,Bennie G. Thompson,Cook: Solid Democrat,https://www.thegreenpapers.com/G26/MS,
+MS-michael-guest,Michael Guest,Republican,MS,3,U.S. House,incumbent,nominee,U.S. House MS-3,Michael Guest,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,
+MS-michael-chiaradio,Michael Chiaradio,Democrat,MS,3,U.S. House,challenger,nominee,,Michael Guest,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,
+MS-mike-ezell,Mike Ezell,Republican,MS,4,U.S. House,incumbent,nominee,U.S. House MS-4,Mike Ezell,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,
+MS-jeffrey-hulum-iii,Jeffrey Hulum III,Democrat,MS,4,U.S. House,challenger,nominee,State Representative,Mike Ezell,Cook: Solid Republican,https://www.thegreenpapers.com/G26/MS,

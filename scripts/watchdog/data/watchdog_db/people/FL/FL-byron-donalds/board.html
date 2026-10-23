@@ -1,0 +1,443 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Donalds Connections Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: an investigator's wall. Left, a full-bleed network canvas with Donalds at the hub, money vehicles on the first ring, interest blocs fanned around them, upstream chains pushed to the rim. Right, a dossier panel for whatever is selected. Dark first. */
+:root{
+  --bg:#0f1115; --panel:#161a21; --panel2:#1d222b; --line:#2a303b; --fg:#e8e6e1; --muted:#9aa3b2; --faint:#5e6673;
+  --hub:#f2c14e; --edge:#3a414d;
+  --c-billion:#e4b04a; --c-school:#d96c5f; --c-gamble:#7c6ff2; --c-detain:#e2593c; --c-energy:#4fb3bf; --c-dev:#7fb069; --c-insure:#b0a7e8; --c-crypto:#49c2a1; --c-ai:#f08cc0; --c-sugar:#c9a26b; --c-israel:#6aa6e8; --c-trump:#ef6b6b; --c-enforce:#ff8a3d; --c-vehicle:#c7cbd3; --c-family:#ff9eb5;
+  --font-display:"Archivo",system-ui,sans-serif; --font-body:"Source Sans 3",system-ui,sans-serif; --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#f3f1ec; --panel:#ffffff; --panel2:#ebe8e1; --line:#d6d2c8; --fg:#1a1c21; --muted:#5a6170; --faint:#8a8f99; --hub:#b8860b; --edge:#b9b4a8; --c-vehicle:#4b5260; color-scheme:light } }
+:root[data-theme="light"]{ --bg:#f3f1ec; --panel:#ffffff; --panel2:#ebe8e1; --line:#d6d2c8; --fg:#1a1c21; --muted:#5a6170; --faint:#8a8f99; --hub:#b8860b; --edge:#b9b4a8; --c-vehicle:#4b5260; color-scheme:light }
+
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.45;overflow:hidden}
+.app{height:100%;display:grid;grid-template-rows:auto 1fr;}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line);background:var(--panel)}
+header h1{font-family:var(--font-display);font-weight:900;font-size:1.25rem;margin:0;letter-spacing:-0.01em;text-wrap:balance}
+header h1 span{color:var(--hub)}
+.asof{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);font:600 .74rem var(--font-body);padding:4px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;letter-spacing:.02em}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c);display:inline-block}
+.chip.on{color:var(--fg);border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
+.chip:focus-visible{outline:2px solid var(--hub);outline-offset:2px}
+.main{display:grid;grid-template-columns:1fr 360px;min-height:0}
+.canvas{position:relative;min-width:0;min-height:0;overflow:hidden;background:
+ radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--hub) 6%,transparent),transparent 55%),
+ repeating-linear-gradient(0deg,transparent 0 39px,color-mix(in srgb,var(--line) 55%,transparent) 39px 40px),
+ repeating-linear-gradient(90deg,transparent 0 39px,color-mix(in srgb,var(--line) 55%,transparent) 39px 40px);}
+svg{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+svg.dragging{cursor:grabbing}
+.edge{fill:none;stroke:var(--edge);stroke-linecap:round;opacity:.85}
+.edge.contested{stroke-dasharray:6 6}
+.edge.flow{stroke:var(--ec)}
+.node{cursor:pointer}
+.node circle{stroke:var(--bg);stroke-width:2}
+.node text{font-family:var(--font-body);font-weight:600;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
+.node .amt{font-family:var(--font-mono);font-weight:400;fill:var(--muted);font-size:10px}
+.node.hub circle{fill:var(--hub);stroke:var(--fg)}
+.node.hub text{font-family:var(--font-display);font-weight:900;font-size:16px}
+.dim{opacity:.12;transition:opacity .25s}
+.lit{opacity:1}
+.ring{fill:none;stroke:var(--line);stroke-dasharray:2 6}
+.sector{font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;fill:var(--sc);opacity:.9}
+.ringlab{font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;fill:var(--faint)}
+.leverbox{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--hub) 35%,transparent))}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);padding:6px 10px;border-radius:4px;font-size:.8rem;max-width:260px;box-shadow:0 6px 20px rgba(0,0,0,.35);display:none;z-index:5}
+.tip b{display:block;font-family:var(--font-display)}
+.tip .m{font-family:var(--font-mono);color:var(--hub);font-size:.76rem}
+.hint{position:absolute;left:12px;bottom:12px;font:400 .72rem var(--font-mono);color:var(--faint);pointer-events:none}
+.zoomctl{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.zoomctl button{width:32px;height:32px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:4px;cursor:pointer;font:600 1rem var(--font-mono)}
+.zoomctl button:focus-visible{outline:2px solid var(--hub)}
+aside{border-left:1px solid var(--line);background:var(--panel);overflow:auto;min-width:0;padding-block:16px;padding-left:16px;padding-right:max(16px,env(safe-area-inset-right,0px))}
+aside .eyebrow{font:600 .68rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--sc,var(--muted))}
+aside h2{font-family:var(--font-display);font-weight:900;font-size:1.3rem;margin:4px 0 2px;letter-spacing:-0.01em;text-wrap:balance}
+aside .big{font-family:var(--font-mono);font-size:1.5rem;color:var(--hub);font-variant-numeric:tabular-nums}
+aside p{margin:10px 0;color:var(--fg)}
+aside .note{color:var(--muted);font-size:.9rem}
+aside .flag{display:inline-block;background:color-mix(in srgb,var(--c-enforce) 18%,transparent);color:var(--c-enforce);font:600 .7rem var(--font-mono);padding:3px 8px;border-radius:3px;letter-spacing:.06em;margin-top:6px}
+.links{display:grid;gap:4px;margin-top:12px}
+.links h3{font:600 .68rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:8px 0 2px}
+.links button{text-align:left;background:var(--panel2);border:1px solid transparent;color:var(--fg);padding:6px 8px;border-radius:3px;cursor:pointer;font:400 .86rem var(--font-body);display:flex;justify-content:space-between;gap:8px}
+.links button:hover,.links button:focus-visible{border-color:var(--line);outline:none}
+.links button span{font-family:var(--font-mono);color:var(--muted);font-size:.76rem;white-space:nowrap}
+.legend{margin-top:18px;border-top:1px solid var(--line);padding-top:10px;font-size:.8rem;color:var(--muted);display:grid;gap:6px}
+.legend div{display:flex;align-items:center;gap:8px}
+.legend .ln{width:28px;height:0;border-top:2px solid var(--edge)}
+.legend .ln.d{border-top-style:dashed}
+.legend .ln.t{border-top-width:5px}
+.src{margin-top:14px;font-size:.78rem;color:var(--faint);line-height:1.4}
+@media (max-width:820px){
+  .main{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  aside{border-left:0;border-top:1px solid var(--line);max-height:42vh;padding-left:max(16px,env(safe-area-inset-left,0px))}
+  .chips{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){ .dim,.lit{transition:none} }
+</style>
+
+<div class="app">
+<header>
+  <div>
+    <h1>Byron Donalds <span>Connections Board</span></h1>
+    <div class="asof">Money map as of Oct 22, 2026. About $149M raised. Second hop added: upstream funders, the AG, and the decisions each bloc is buying into</div>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filter by interest bloc"></div>
+</header>
+<div class="main">
+  <div class="canvas" id="canvas">
+    <svg id="svg" viewBox="0 0 1700 1180" preserveAspectRatio="xMidYMid meet" aria-label="Network of Byron Donalds donors, vehicles and family businesses"></svg>
+    <div class="tip" id="tip"></div>
+    <div class="hint">drag to pan · scroll to zoom · click a node for the dossier</div>
+    <div class="zoomctl"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset view">⌂</button></div>
+  </div>
+  <aside id="panel"></aside>
+</div>
+</div>
+
+<script>
+const BLOCS = {
+  vehicle:{name:"Money vehicles",c:"--c-vehicle"},
+  billion:{name:"Billionaires",c:"--c-billion"},
+  school:{name:"School choice and family",c:"--c-school"},
+  gamble:{name:"Gambling and prediction markets",c:"--c-gamble"},
+  detain:{name:"Detention vendors",c:"--c-detain"},
+  energy:{name:"Utilities, energy, data centers",c:"--c-energy"},
+  dev:{name:"Developers and construction",c:"--c-dev"},
+  insure:{name:"Insurance and tort",c:"--c-insure"},
+  crypto:{name:"Crypto and finance",c:"--c-crypto"},
+  ai:{name:"AI industry",c:"--c-ai"},
+  sugar:{name:"Sugar, agriculture, business",c:"--c-sugar"},
+  israel:{name:"Pro-Israel and Kohelet",c:"--c-israel"},
+  trump:{name:"Trump world and operatives",c:"--c-trump"},
+  enforce:{name:"Enforcement and disclosure",c:"--c-enforce"},
+};
+
+// amt in dollars (latest cumulative where reported). ring: 1 vehicles, 2 direct donors, 3 upstream or downstream chain.
+const N = [
+ {id:"donalds",label:"Byron Donalds",bloc:"vehicle",ring:0,hub:true,note:"U.S. Rep for FL-19 since 2021, Republican nominee for governor after winning the Aug 18, 2026 primary with 47.8 percent. Former Wells Fargo and Moran Wealth adviser, chaired the FL House Insurance and Banking Subcommittee. Entry assets in 2020 were $69K to $985K. The 2025 report shows $1.6M to $7M, almost all through his wife's Onesto LLC.",flag:"2024 CLC STOCK Act complaint: 108 unreported trades up to $1.6M"},
+ // vehicles
+ {id:"fbd",label:"Friends of Byron Donalds PAC",bloc:"vehicle",ring:1,amt:130400000,note:"Florida political committee, DOE account 89043. Chair Ryan Smith, treasurer Bradley Crate of Red Curve Solutions. About $130.4M raised after the Oct 3 to 9 week. Ran a $20M statewide buy from June 30 to Aug 18. Seventeen billionaires supplied $23.3M. Roughly 30 percent of money is out of state."},
+ {id:"gov",label:"Byron Donalds for Governor",bloc:"vehicle",ring:1,amt:7000000,note:"Candidate account. Took about $823K in state matching funds through Aug 17, 2026 and had $6.8M cash on hand that week."},
+ {id:"cong",label:"Byron Donalds for Congress",bloc:"vehicle",ring:1,amt:16200000,note:"FEC C00733329. Raised $3.25M in 2020, $5.66M in 2022, $6.60M in 2024. Transferred $1.2M to the state PAC within two days of the Feb 25, 2025 governor announcement. FEC told him Aug 5, 2025 that about $400K must be refunded; treasurer refused the next day."},
+ {id:"pcp",label:"Proven Conservatives PAC",bloc:"vehicle",ring:1,amt:450000,note:"Leadership PAC, C00755728 plus a second federal entity C00894147. Funded by Koch, Realtors, UBS, Microsoft, Comcast, NextEra, CPAs and Robinhood PACs. Gave $119,500 to other committees in 2024."},
+ {id:"amf",label:"American Mission Florida",bloc:"ai",ring:2,amt:3000000,note:"Pro-Donalds committee chaired by Sarasota Property Appraiser Bill Furst. Funded solely by the AI super PAC Leading the Future. About $2M in ads by April 2026 through Summit Ridge Media Group and Strategic Media Placement. Campaign Legal Center filed an FEC complaint in May 2026."},
+ // billionaires
+ {id:"griffin",label:"Ken Griffin",bloc:"billion",ring:2,amt:10000000,note:"Citadel founder, Miami. $10M to Friends of Byron Donalds reported July 24, 2026, the single largest check. Also $2.5M to Ashley Moody's committee. A former DeSantis backer."},
+ {id:"yass",label:"Jeff Yass",bloc:"billion",ring:2,amt:11000000,note:"Susquehanna International Group co-founder, Haverford PA. Net worth $77.8B per Forbes Sept 2026. Personal ByteDance stake near 7 percent. $5M to Friends of Byron Donalds by March 31, 2025, $7.5M cumulative by mid 2026, plus $3.5M to Club for Growth Action Florida which passed $3.75M to the PAC. Tampa Bay Times totals him at about $11M. Largest GOP outside donor in 2024 and 2026, about $110M this cycle. Susquehanna spokesman on the giving: Donalds is a school choice warrior. Donalds voted for the TikTok divestiture bill against Yass's position.",flag:"See Kohelet node for the Israel link, which is contested"},
+ {id:"uihlein",label:"Richard Uihlein",bloc:"billion",ring:2,amt:2000000,note:"Uline founder. $1M by March 31, 2025 and $1M on June 6, 2025. Put $26.5M into Club for Growth Action in 2020, the cycle that PAC spent $2.5M for Donalds in his first House primary."},
+ {id:"peterffy",label:"Thomas Peterffy",bloc:"billion",ring:2,amt:1200000,note:"Interactive Brokers founder, Palm Beach. $1M by Aug 2025, $1.2M cumulative by July 2026."},
+ {id:"devos",label:"DeVos family",bloc:"school",ring:2,amt:1000000,note:"About $1M through Sept 18, 2026 per Tampa Bay Times. The family's core issue is school vouchers."},
+ {id:"fields",label:"Clive Fields",bloc:"billion",ring:2,amt:500000,note:"$500K by March 2025. Migrated from DeSantis donor list."},
+ {id:"magowan",label:"Deborah Magowan",bloc:"billion",ring:2,amt:150000,note:"$150K by March 2025."},
+ {id:"cfg",label:"Club for Growth PAC",bloc:"billion",ring:2,amt:3650000,note:"$975K by Aug 2025, $2.5M more in Q1 2026, $3.65M cumulative by July 2026. Endorsed Donalds March 11, 2025. Yass supplies about a quarter of the Club's political money over its history and is its main 2026 funder. Club for Growth Action spent $2,504,727 for Donalds and against Casey Askar in the 2020 primary."},
+ {id:"cfgfl",label:"Club for Growth Action Florida",bloc:"billion",ring:3,amt:3750000,note:"State conduit. Took $3.5M from Yass and gave $3.75M to Friends of Byron Donalds by Sept 2026."},
+ {id:"pfp",label:"Protect Freedom PAC",bloc:"billion",ring:3,amt:120000,note:"Yass gives about 80 to 95 percent of its money: $8M on March 31, 2024 and $7.5M on Oct 20, 2025. Spent $80,188 for Donalds in Oct 2020, $30K in 2022, $10K in 2024."},
+ {id:"maga",label:"MAGA Inc.",bloc:"trump",ring:3,amt:16000000,note:"Yass gave $16M in the first half of 2025. Florida Crystals gave $1M in 2024 and $2M per a Sept 2025 filing. No MAGA Inc. spending in the governor race was found."},
+ // school choice and family
+ {id:"erika",label:"Erika Donalds",bloc:"school",ring:2,amt:0,note:"Wife. Former Collier County School Board member and 2017 to 2018 Constitution Revision Commission member. Chairs the AFPI Center for Education Opportunity, advises Moms for Liberty and the Classical Learning Test. Her OptimaEd was a 2023 Yass Prize semifinalist. Owns Onesto LLC, sole member, which holds the family's education companies. Paid $183,326 by Optima Foundation in FY2022, a payment Byron did not disclose until an amendment, and $500K plus by Educator Solutions.",flag:"Governor oversees FL DOE and the voucher program her firms sell into"},
+ {id:"onesto",label:"Onesto LLC",bloc:"school",ring:3,amt:0,note:"Delaware holding company formed 2018, Erika sole member. Holds Optima Management Services LLC, valued $250K to $500K on the 2025 report, down from $1M to $5M, and OptimaEd Inc., $500K to $1M, converted to a C corp Nov 2025. New Dewalt Impact Group LLC of Lewes DE, $250K to $500K, business income $100K to $1M, no press coverage found."},
+ {id:"optimaed",label:"OptimaEd",bloc:"school",ring:3,amt:3185266,note:"For-profit, 81 percent Erika. The virtual Optima Classical Academy paid it $1,085,266 in 2023 and $2.1M in 2024, about 89 percent of the school's $3.59M in state funding."},
+ {id:"oms",label:"Optima Management Services",bloc:"school",ring:3,amt:5843969,note:"For-profit formed 2022. The two for-profits took $5,843,969 from Optima schools and the Foundation in 2023. Naples Classical Academy paid $1.56M in 2023 to 2024."},
+ {id:"optfound",label:"Optima Foundation",bloc:"school",ring:3,amt:15126615,note:"Nonprofit EIN 82-3745515, formed late 2017, renamed Education Freedom Foundation March 2025. Management fees from auditor filings: Naples Classical $8,424,572, Treasure Coast Classical $4,303,822, Jacksonville Classical $2,398,221. CBS News Dec 2025 put total public money reaching the Optima network at about $35M, 30 percent of the schools' government funding 2020 to 2023. All four opened schools cut ties in 2023 citing accounting deficiencies."},
+ {id:"schools",label:"Optima charter schools",bloc:"school",ring:3,amt:35000000,note:"Naples Classical, Treasure Coast Classical, Jacksonville Classical, Mason Classical, and the virtual Optima Classical Academy. Public per-pupil money flows from these schools to the Foundation and the for-profits. Treasure Coast Classical sued alleging side deals; dismissed on venue May 2025, on appeal. Fort Myers Optima Classical never opened and was transferred Oct 2025."},
+ {id:"esi",label:"Educator Solutions",bloc:"school",ring:3,amt:9713800,note:"ESI Technical, owned by state Rep. John Snyder. Received $6,930,584 from Optima schools plus $2,783,216 from the Foundation in 2020 to 2022, and paid Erika Donalds $500K plus."},
+ {id:"summit",label:"Summit Construction",bloc:"school",ring:3,amt:46400000,note:"Summit Construction Management Group, Cordes family. $46.4M across four Optima school contracts 2019 to 2023. The TCCA suit alleges side deals. Charles Cordes and spouse gave Byron $18,800 in 2020 to 2021."},
+ // gambling
+ {id:"seminole",label:"Seminole Tribe of Florida",bloc:"gamble",ring:2,amt:5500000,note:"$1M Aug 2025, $1M Q4 2025, $1M Aug 2026, $5.5M cumulative by Sept 18, 2026. Holds the gaming compact worth about $1B a year to the state and faces a fight with prediction markets and online sportsbooks. Donalds has taken no public position. Former DeSantis donor."},
+ {id:"wynn",label:"Steve Wynn",bloc:"gamble",ring:2,amt:1000000,note:"$1M in Q1 2026."},
+ {id:"fanduel",label:"FanDuel",bloc:"gamble",ring:2,amt:581000,note:"$500K in Q4 2025, $581K through July 2026."},
+ {id:"dk",label:"DraftKings",bloc:"gamble",ring:2,amt:525000,note:"DK Crown Holdings. $500K in Q4 2025, $525K through July 2026."},
+ {id:"sba",label:"Sports Betting Alliance",bloc:"gamble",ring:2,amt:250000,note:"$250K through July 2026."},
+ {id:"caesars",label:"Caesars",bloc:"gamble",ring:2,amt:245000,note:"$245K through July 2026."},
+ {id:"prize",label:"PrizePicks",bloc:"gamble",ring:2,amt:100000,note:"$100K through July 2026."},
+ {id:"poarch",label:"Poarch Band of Creek Indians",bloc:"gamble",ring:2,amt:100000,note:"$100K through July 2026. Alabama tribe with Florida gaming interests."},
+ // detention
+ {id:"geo",label:"GEO Group",bloc:"detain",ring:2,amt:3500000,note:"Boca Raton private prison and detention operator. $500K Q4 2025, $1.5M by July 2026, $2.5M by Sept 30, 2026, plus $1M in the Oct 3 to 9 week. GEO lobbied for his 2024 detention bills. Detention vendors owed $417M by the state gave $3.3M plus to Donalds and nothing to Jolly."},
+ {id:"cdr",label:"CDR entities, Carlos Duart",bloc:"detain",ring:2,amt:620000,note:"$620K plus by Sept 30, 2026. CDR Enterprises also gave $250K to Jay Collins' committee in Q4 2025."},
+ {id:"irg",label:"Access Restoration, IRG",bloc:"detain",ring:2,amt:100000,note:"$100K plus by Sept 30, 2026."},
+ {id:"lemoine",label:"The Lemoine Company",bloc:"detain",ring:2,amt:59000,note:"$59K by Sept 30, 2026."},
+ {id:"crs",label:"Critical Response Strategies",bloc:"detain",ring:2,amt:10000,note:"$10K by Sept 30, 2026."},
+ // energy
+ {id:"nextera",label:"NextEra, FPL",bloc:"energy",ring:2,amt:1000000,note:"$500K in Q4 2025, $1M cumulative by July 2026, plus $25K plus to his federal committees since 2020. CLEO Institute counts $1.79M in career utility money. Donalds opposes a return-on-equity cap after the $6.9B FPL rate hike."},
+ {id:"duke",label:"Duke Energy",bloc:"energy",ring:2,amt:500000,note:"$500K in March 2026."},
+ {id:"teco",label:"TECO affiliate",bloc:"energy",ring:2,amt:125000,note:"$125K in Aug 2026 from a TECO-associated company. TECO PAC gave $1K in 2020."},
+ {id:"ferreira",label:"Ferreira Construction",bloc:"energy",ring:2,amt:500000,note:"Nelson Ferreira. $500K in Aug 2026. Data center and infrastructure builder; Seeking Rents counts $6M plus from data center interests behind Donalds."},
+ {id:"phillips",label:"Phillips Infrastructure, Palm Beach Aggregates",bloc:"energy",ring:2,amt:350000,note:"$350K in Aug 2026. Backers of the Project Tango data center."},
+ {id:"timber",label:"Timberline Real Estate",bloc:"energy",ring:2,amt:44000,note:"$34K plus in Aug 2026, with Fort Meade LLC and Stonebridge at $10K. Data center land interests."},
+ // developers
+ {id:"fff",label:"Fighting for Florida's Families PC",bloc:"dev",ring:2,amt:1000000,note:"$1M in the Oct 3 to 9, 2026 week. Business committee."},
+ {id:"hosseini",label:"Mori Hosseini, MHK of Volusia",bloc:"dev",ring:2,amt:500000,note:"ICI Homes chairman, DeSantis's closest donor. $500K on Sept 15, 2026, part of a $1M developer cluster that day."},
+ {id:"neal",label:"Pat Neal",bloc:"dev",ring:2,amt:640000,note:"Neal Communities. $640K plus cumulative by Oct 2026, including $100K on Oct 8 and $10K from Neal Land and Neighborhoods."},
+ {id:"hutson",label:"The Hutson Companies",bloc:"dev",ring:2,amt:350000,note:"$100K earlier in 2026 and $250K on Sept 15, 2026. Northeast Florida developer."},
+ {id:"davis",label:"Davis family, PARC, DDI",bloc:"dev",ring:2,amt:300000,note:"$100K each from DDI Inc. and The PARC Group on Sept 15, 2026, and $100K from Big Creek Timber earlier. Nocatee developers."},
+ {id:"beruff",label:"Carlos Beruff",bloc:"dev",ring:2,amt:100000,note:"Medallion Home. $100K on Oct 8, 2026."},
+ {id:"dream",label:"Dream Finders Homes",bloc:"dev",ring:2,amt:50000,note:"Patrick Zalupski. $50K on Sept 15, 2026."},
+ {id:"airbnb",label:"Airbnb",bloc:"dev",ring:3,amt:1500000,note:"$1.5M on May 19, 2026 to The People Versus The Powerful, a committee chaired by Airbnb's own lobbyist, which sent $1M to Friends of Byron Donalds the same day."},
+ {id:"pvp",label:"The People Versus The Powerful",bloc:"dev",ring:2,amt:1000000,note:"Pass-through committee chaired by an Airbnb lobbyist. $1M to Friends of Byron Donalds on May 19, 2026."},
+ {id:"realtors",label:"Florida Realtors",bloc:"dev",ring:2,amt:10000000,note:"Endorsed Donalds Aug 21, 2026. Put $10M into Yes On 3, the homestead property tax amendment Donalds is campaigning on. He wants full homestead elimination through the 2027 Tax and Budget Reform Commission; FPI estimates nearly $12B a year in local revenue loss."},
+ {id:"perez",label:"Daniel Perez committees",bloc:"dev",ring:2,amt:1000000,note:"House Speaker. Miami United PC and Conservatives for a Better Florida gave $500K each on Aug 27, 2026. Publix put $100K into Conservatives for a Better Florida in Q4 2023."},
+ // insurance
+ {id:"heritage",label:"Heritage P&C Insurance",bloc:"insure",ring:2,amt:50000,note:"$50K in Aug 2026. Donalds' Bring Down the Bill plan keeps the 2022 to 2023 tort reforms and shrinks Citizens. AFP Action's endorsement praised his pledge to protect tort reform."},
+ {id:"kompo",label:"Gary Kompothecras",bloc:"insure",ring:2,amt:79000,note:"1-800-ASK-GARY. $79K in Oct 2026."},
+ {id:"aifpac",label:"Associated Industries of Florida PAC",bloc:"sugar",ring:2,amt:762000,note:"$525K in March 2026 plus $237K plus through The Florida PC. AIF endorsed Jan 27, 2026. Its committees are historically funded by Florida Crystals, U.S. Sugar, FPL, HCA and Disney."},
+ {id:"statefarm",label:"State Farm Federal PAC",bloc:"insure",ring:2,amt:14000,note:"$14K across 8 gifts to his House committee in the 2026 cycle. Dozens of insurer PACs gave in 2020: AFLAC, Chubb, Liberty Mutual, Marsh, Protective Life, Jackson National."},
+ // crypto and finance
+ {id:"wink",label:"Winklevoss twins",bloc:"crypto",ring:2,amt:1000000,note:"Gemini founders. $500K each by Aug 2025. Donalds sits on the Digital Assets subcommittee, voted for FIT21, GENIUS, CLARITY and the Anti-CBDC bill, and introduced a Strategic Bitcoin Reserve bill in May 2025."},
+ {id:"robinhood",label:"Robinhood",bloc:"crypto",ring:2,amt:200000,note:"$200K through July 2026 plus $1K to his leadership PAC in 2023. Prediction markets stake via Kalshi partnership."},
+ {id:"kalshi",label:"Kalshi",bloc:"crypto",ring:2,amt:75000,note:"$25K in 2025, $75K cumulative through July 2026. Prediction market fighting the Seminole compact framework."},
+ {id:"btc",label:"Household bitcoin buys",bloc:"crypto",ring:2,amt:100000,note:"Dec 18, 2025: $50K to $100K bitcoin purchase in Erika's Alto IRA, the same day Byron co-signed a letter to the IRS on crypto staking taxes. Second buy Jan 8, 2026, $1K to $15K.",flag:"Same-day timing reported by NOTUS"},
+ {id:"a16zfed",label:"a16z founders, federal",bloc:"crypto",ring:2,amt:65100,note:"Chris Dixon, Ben Horowitz, Marc and Laura Andreessen gave $39,600 to his House committees in 2024 and $25,500 in 2026."},
+ // AI
+ {id:"ltf",label:"Leading the Future",bloc:"ai",ring:3,amt:3000000,note:"AI industry super PAC. $3M to American Mission Florida on March 4, 2026, $5M pledged. Funded by Andreessen Horowitz $25M, Marc Andreessen $12.5M, Ben Horowitz $12.5M, and Greg and Anna Brockman $25M since Aug 2025."},
+ {id:"a16z",label:"Andreessen Horowitz",bloc:"ai",ring:3,amt:50000000,note:"The firm plus Andreessen and Horowitz personally put $50M into Leading the Future. Donalds is conditionally supportive of data centers; Mother Jones reports up to $390K in data-center-linked stock holdings."},
+ {id:"brockman",label:"Greg and Anna Brockman",bloc:"ai",ring:3,amt:25000000,note:"OpenAI president. $25M to Leading the Future since Aug 2025."},
+ {id:"schmidt",label:"Eric Schmidt",bloc:"ai",ring:2,amt:500000,note:"Former Google CEO. $500K direct to Friends of Byron Donalds in the Oct 3 to 9, 2026 week."},
+ // sugar and ag
+ {id:"crystals",label:"Florida Crystals",bloc:"sugar",ring:3,amt:705000,note:"Fanjul family. $500K to The Committee on June 15, 2026, which then sent $360K in three gifts to Friends of Byron Donalds. A Jason Garcia post reports a further $205K directly in Oct 2026, provisional until the Oct 30 filings. Also $3M to MAGA Inc. across 2024 and 2025."},
+ {id:"committee",label:"The Committee",bloc:"sugar",ring:2,amt:360000,note:"Conduit committee. Took $500K from Florida Crystals June 15, 2026 and gave $360K to Friends of Byron Donalds by Aug 2026."},
+ {id:"mosaic",label:"Mosaic",bloc:"sugar",ring:2,amt:200000,note:"Phosphate mining. $200K in March 2026 plus $1K PAC money in 2020."},
+ {id:"spencer",label:"Spencers, West Coast Tomato",bloc:"sugar",ring:2,amt:109000,note:"$109K cumulative by Oct 2026."},
+ {id:"disney",label:"Disney",bloc:"sugar",ring:2,amt:78000,note:"About $78K in Oct 2026, reported by Jason Garcia, provisional until Oct 30 filings."},
+ {id:"pm",label:"Philip Morris",bloc:"sugar",ring:2,amt:100000,note:"$100K in 2026. Swisher and Premium Cigar PACs gave $10K to his House committee in 2023."},
+ {id:"ussugar",label:"U.S. Sugar PAC",bloc:"sugar",ring:2,amt:5000,note:"$5K ESOP PAC gift in 2020 and $5K from American Crystal Sugar PAC. Everglades Trust nonetheless endorsed Donalds Oct 6, 2026."},
+ // Israel and Kohelet
+ {id:"aipac",label:"AIPAC PAC",bloc:"israel",ring:2,amt:18415,note:"$18,415 net across 12 entries, April 2022 to Sept 2024. All pro-Israel sources total $104,719 over 2020 to 2026. No AIPAC sponsored Israel trip found on his travel disclosures. Forty rabbis endorsed him Oct 16, 2026."},
+ {id:"rjc",label:"Republican Jewish Coalition PAC",bloc:"israel",ring:2,amt:488,note:"$488, Sept to Nov 2024."},
+ {id:"dantchik",label:"Arthur Dantchik",bloc:"israel",ring:3,amt:12000000,note:"Susquehanna co-founder with Yass. Reported dominant funder of Kohelet, about 93 percent of its budget per Calcalist. His Claws Foundation sent about $12M in 2021 to Silver Valley Research Foundation, which passed most of it to the Central Fund of Israel, Kohelet's sole 2021 donor. Statement Aug 4, 2023: he stopped donating to think tanks in Israel including Kohelet."},
+ {id:"kohelet",label:"Kohelet Policy Forum",bloc:"israel",ring:3,amt:0,note:"Jerusalem think tank founded Jan 2012 by Moshe Koppel. Its papers underpinned the 2023 judicial overhaul submitted by Justice Minister Yariv Levin and MK Simcha Rothman. Took 25M shekels in 2021 and 29M in 2022, cut about half its staff April 2024. Haaretz in March 2021 named both Yass and Dantchik as principal funders. The New York Times, Washington Post and Calcalist reported in 2023 that Yass never donated and Dantchik was the dominant funder. No filing shows a Yass grant to any Kohelet vehicle.",flag:"Yass link CONTESTED. Defensible line: Donalds' second largest donor is the business partner of the man who bankrolled Kohelet"},
+ {id:"overhaul",label:"Netanyahu judicial overhaul",bloc:"israel",ring:3,amt:0,note:"2023 package: judicial appointments, override clause, limits on government legal advisers. Drafted on Kohelet policy work, carried by Levin and Rothman. Largely halted after Oct 7, 2023; the reasonableness law was struck down by the Supreme Court in Jan 2024."},
+ // Trump world
+ {id:"trump",label:"Donald Trump",bloc:"trump",ring:2,amt:0,note:"Endorsed Donalds Feb 20, 2025. Defended him Sept 26, 2026 after the campaign scrubbed Trump from its site. Rally at FGCU in Fort Myers Oct 23, 2026. Musk endorsed Nov 13, 2025; Turning Point Action Jan 13, 2026; DeSantis Sept 1, 2026."},
+ {id:"redcurve",label:"Red Curve Solutions, Bradley Crate",bloc:"trump",ring:2,amt:0,note:"Beverly MA compliance shop. Treasurer of every Donalds committee, state and federal, and of Trump's committees. Crate signed the Aug 6, 2025 Form 99 refusing the FEC refund demand, asserting Donalds remained a House candidate."},
+ {id:"afp",label:"Americans for Prosperity Action",bloc:"trump",ring:2,amt:251328,note:"Koch network. $251,328 for Donalds in 2020. Endorsed for governor March 4, 2026, praising his tort reform pledge. KochPAC gave $15K across his committees."},
+ {id:"chamber",label:"Florida Chamber, FOP, PBA",bloc:"trump",ring:2,amt:0,note:"Florida Chamber endorsed June 23, 2026; Fraternal Order of Police and PBA in Sept 2026; Rick Scott Aug 2, 2025."},
+ // enforcement
+ {id:"mur",label:"FEC MUR 7783",bloc:"enforce",ring:2,amt:107456,note:"CLC complaint Aug 18, 2020. $87,000 moved Jan 3, 2020 from his 2019 state PC to Conservatives for Effective Government, which returned $107,038.66, and the state PC then sent $107,456 on June 22, 2020 to federal super PAC Trusted Conservatives, which spent $82,025 on pro-Donalds mail. FEC general counsel found reason to believe; commission deadlocked 3 to 3 and closed the file April 26, 2022."},
+ {id:"clc",label:"Campaign Legal Center complaints",bloc:"enforce",ring:2,amt:1600000,note:"Sept 5, 2024 OCE complaint: 108 trades up to $1.6M in 2022 to 2023 with zero periodic transaction reports, 12 in firms regulated by his Financial Services Committee. No public outcome. May 2026 FEC complaint over American Mission Florida ads."},
+ {id:"amend",label:"Amended disclosures",bloc:"enforce",ring:2,amt:0,note:"Florida Bulldog, Oct 5, 2026: financial disclosures for 2021 to 2024 were inaccurate, omitting liabilities and Erika's Foundation pay, and were amended in June and Aug 2026. FEC RAD letter Aug 5, 2025 said about $400K in post-announcement House contributions must be refunded."},
+ {id:"wilcoxson",label:"Larry Wilcoxson",bloc:"enforce",ring:2,amt:133450,note:"Aide paid $133,450 from the House committee, July 2020 to March 2025, documented in an opinion column."},
+ {id:"match",label:"State matching funds",bloc:"vehicle",ring:2,amt:823000,note:"Florida public campaign financing: $662,350.93 in July 2026 and about $21K on Sept 8, about $823K cumulative by Aug 17."},
+
+ // ===== second hop: upstream, downstream and the decisions on the governor's desk =====
+ // gambling
+ {id:"compact",label:"2021 Seminole compact",bloc:"gamble",ring:4,lever:true,amt:903000000,note:"Executed April 23, 2021, runs to July 31, 2051. Exclusivity over slots, craps, roulette, banked cards, fantasy and statewide mobile sports betting via servers on tribal land. State share 13.75 percent of sports net win, $2.5B guaranteed over the first five years. Payments: $357M FY23-24, $817.3M FY24-25, forecast $903M FY25-26 and past $1B by FY28-29. The only reopener, a 36 month iGaming window, lapsed around Sept 2024. The governor executes compacts and the Legislature ratifies. The 2015 to 2019 precedent shows the Tribe withholds payments when exclusivity is breached.",flag:"Governor decides whether exclusivity is enforced against prediction markets"},
+ {id:"fgcc",label:"Florida Gaming Control Commission",bloc:"gamble",ring:4,lever:true,amt:0,note:"Five members, all appointed by the governor and Senate confirmed to four year terms under s. 16.71. Enforcement posture on prediction markets, pick6 style products and iGaming runs through this body. HB 189 and HB 591, which would have made non compact online wagering a felony, failed in 2026."},
+ {id:"hardrock",label:"Hard Rock Bet",bloc:"gamble",ring:3,amt:0,note:"The Seminole Tribe's monopoly mobile sportsbook. Jim Allen said in 2024 Hard Rock never ruled out partnering with Caesars, BetMGM, DraftKings or FanDuel and wants to reopen the compact for online casino. Ballard Partners dropped DraftKings and FanDuel in 2021 and represents Hard Rock."},
+ {id:"dksuit",label:"Seminole v. DraftKings, Oct 8 2026",bloc:"gamble",ring:3,amt:0,note:"72 page Broward Circuit Court suit against DraftKings, CEO Jason Robins and GUS III LLC over DraftKings Predictions and Pick6: injunction, disgorgement and a RICO count. The only Florida enforcement against a prediction market product so far. The state has taken no action against Kalshi, Robinhood or Polymarket. AG Uthmeier was one of six AGs who did not sign the anti Kalshi coalition letter.",flag:"Donalds has no recorded reaction"},
+ {id:"scotus",label:"Prediction markets at the Supreme Court",bloc:"gamble",ring:4,lever:true,amt:0,note:"Circuit split, Third versus Sixth and Ninth, on whether CFTC jurisdiction preempts state gambling law. New Jersey cert petition No. 26-299 filed with 39 AGs and 130 tribes as amici Oct 7 to 8, 2026. CFTC issued odds display guidance Aug 7, 2026. A governor and AG decide whether Florida joins the states fighting Kalshi."},
+ {id:"semgive",label:"Seminole 2026 giving elsewhere",bloc:"gamble",ring:3,amt:3300000,note:"Beyond Donalds: Wilton Simpson $1M, Jason Brodeur and Boyd $750K, RPOF $750K, Florida Democratic Party $200K, Uthmeier $50K, Crist $50K, Jolly $0. $8.79M total per Transparency USA as of Oct 2, 2026."},
+ // detention
+ {id:"depot",label:"Deportation Depot, Baker CI",bloc:"detain",ring:4,lever:true,amt:101000000,note:"Still operating with about 1,000 detainees as of Oct 15, 2026, run by GEO|CDR BAKER, a venture formed late Aug 2025 whose officers include Carlos Duart, Vidal-Duart, George Zoley and GEO CEO Donahue. Contract cap $101M, $32M paid by Sept 22, 2026. Alligator Alcatraz closed June 25, 2026 and was dismantled by July 15 after costs ran toward $1B. The next governor decides whether the Depot stays open, under what contract, and whether FDEM keeps running detention under a DeSantis emergency order extended more than 20 times."},
+ {id:"owed",label:"$417M in unpaid vendor invoices",bloc:"detain",ring:4,lever:true,amt:417000000,note:"June 30, 2026 FDEM report: more than $417M across 592 immigration invoices. Florida Phoenix June 17: at least $603M owed to 27 of 38 contractors, including Doodie Calls $122M owed, IRG about $112M, GEO CDR Baker about $100M, GardaWorld $78M. Legislative Budget Commission moved $240M on Sept 11, 2026, about $187M for immigration invoices, leaving roughly $230M unfunded entering the next term. FY2026-27 immigration projection $500M, worst case a $1.5B fund deficit.",flag:"Vendors owed money gave $3.3M plus to Donalds and nothing to Jolly"},
+ {id:"fema",label:"FEMA $608M reimbursement",bloc:"detain",ring:3,amt:608000000,note:"Award effective Sept 30, 2025. First request denied Dec 10, 2025 over environmental review; $58M paid late May 2026; $84.5M received by mid Sept 2026. Florida says the federal government still owes $523M. The grant cannot cover construction."},
+ {id:"sbie",label:"State Board of Immigration Enforcement",bloc:"detain",ring:4,lever:true,amt:250000000,note:"Created by SB 2-C, Feb 13, 2025: Governor and Cabinet acting unanimously, a $250M local grant program, a council that recommends detention bed strategy, and authority to suspend noncompliant local officials. Donalds said in Aug 2026 he will remove local officials and state attorneys over sanctuary policies, and in Jacksonville Oct 13: states don't set immigration policy, the federal government does."},
+ {id:"uthmeier",label:"AG James Uthmeier",bloc:"detain",ring:3,amt:375000,note:"The second office the big blocs need. Shared donors with Donalds: CDR $275K including $250K on Sept 17, 2025 two weeks after the $100M Depot contract; GEO $50K; Seminole $50K; Kalshi $50K; Garner, Williams and AT&T gifts around contract awards. Club for Growth endorsed him. He sells Alligator Alcatraz merchandise and alligatoralcatraz.com redirects to his store.",flag:"Three of the top four blocs depend on both the governor and the AG"},
+ {id:"geofed",label:"GEO federal expansion",bloc:"detain",ring:3,amt:3000000000,note:"2025 revenue $2.6B, FY2026 guidance $2.95B to $3.05B, ICE 48 percent of revenue. New ICE contracts at Hudson CO and Winton NC. GEO Reentry gave MAGA Inc. $1M on July 16, 2026 and $413K on July 31 within days of those awards. Zoley led $5M plus to Trump world since 2024. Acting ICE director Venturella is ex GEO; Tom Homan reported as a paid GEO consultant. Florida: Broward Transitional Center renewal, Graceville and Bay prisons transition to GEO July 1, 2027 at about $100M a year. GEO has collected $320M plus on South Bay since 2009."},
+ {id:"vendorgive",label:"Vendor giving to DeSantis and RPOF",bloc:"detain",ring:3,amt:2300000,note:"CDR and Duart about $1.9M historical to DeSantis and RPOF plus $500K to a DeSantis committee and $70K to Miami-Dade Commissioner Gilbert. ARS and IRG, Canadian owned by the Gagliano family with about $200M in prior no bid state work and Hurricane Ian fraud countersuits: $99,980 to Friends of Ron DeSantis Nov 3, 2022, $99,980 to RPOF, $75K to Moody, $10K to RPOF the day after a $51M contract, $100K to RPOF Oct 2025. Longview Solutions, $25.6M, is owned by Roy Dunn, ex FDEM and ex CDR Maguire. Ballard Partners lobbies for IRG."},
+ // utilities and data centers
+ {id:"psc",label:"Public Service Commission",bloc:"energy",ring:4,lever:true,amt:7000000000,note:"Approved FPL's roughly $7B settlement unanimously Nov 20, 2025; challenge pending at the Florida Supreme Court. Governor appoints commissioners from a legislative nominating council; DeSantis reappointed Gary Clark and Gabriella Passidomo-Smith in 2026. Duke's settlement runs through 2027, so Duke's next rate case lands on the next governor's PSC. PSC approved $1.55B in TECO and Duke storm cost recovery. SB 126 adds affordability as a rate criterion rather than capping return on equity. Donalds opposes an ROE cap; Jolly wants a profit cap.",flag:"NextEra forecasts 8 GW of data center load by 2032"},
+ {id:"tango",label:"Project Tango and SB 484",bloc:"energy",ring:4,lever:true,amt:0,note:"Project Tango, about 37M square feet near Loxahatchee: zoning board denial July 2 to 3, 2026, county moratorium July 7, commissioners rejected it July 16, though prior data center entitlement on the site survived. Seeking Rents counts $20M to $30M in data center money in Florida campaigns. SB 484 on data centers was signed May 7, 2026 after being watered down following White House contact with House members; HB 7031 in 2025 ended the sales tax exemption below 100 MW. Donalds opposes a statewide moratorium; Jolly says a ban should be on the table."},
+ {id:"sb482",label:"SB 482 AI Bill of Rights",bloc:"ai",ring:4,lever:true,amt:0,note:"Passed the Senate 35 to 2 and was killed in Speaker Perez's House after White House contact, then failed again in the April 28 to May 1 special session. Leading the Future's stated goal is a national framework, meaning preemption of state AI laws. Donalds moved from 'the future of the state is data centers' in June 2025 to local control plus a federal Protecting Ratepayers Act in July 2026; Anthropic linked Public First spent $1M plus praising him for opposing federal preemption."},
+ {id:"ltfother",label:"Leading the Future elsewhere",bloc:"ai",ring:3,amt:140000000,note:"$140M plus network. $800K in the Kansas governor primary, endorsements of unnamed Florida legislative candidates, roughly 1,700 Tampa and Tallahassee spots for Donalds in March and April 2026 that never mentioned AI."},
+ // developers and tax
+ {id:"amend3",label:"Amendment 3 homestead exemption",bloc:"dev",ring:4,lever:true,amt:12000000000,note:"Raises the homestead exemption to $50K to $150K in 2027 and $250K in 2028. Realtors committed $10M on Sept 9, 2026 and the pro side reached $18M per WPTV, outspending opponents 26 to 1. FPI estimates nearly $12B a year in lost local revenue. Sheriff Grady Judd called it a train wreck Aug 4, 2026; Sarasota's administrator warned of sheriff cuts; Florida Association of Special Districts put $100K into Vote No on 3. Donalds narrowed his fallback plan over a math problem and said fiscally constrained counties should not sing for supper.",flag:"Full homestead elimination goes to the 2027 Tax and Budget Reform Commission"},
+ {id:"tbrc",label:"2027 Tax and Budget Reform Commission",bloc:"dev",ring:4,lever:true,amt:0,note:"Convenes in 2027 with gubernatorial and legislative appointees. Donalds has promised full and complete property tax reform through it. Speaker Perez's House authored the Dec 2025 property tax plan."},
+ {id:"rural",label:"Rural boundary and sprawl bills",bloc:"dev",ring:4,lever:true,amt:0,note:"Rural boundary bill cleared committee March 2025 and Seminole County sued in Aug 2025; a 2026 law eases paving farmland per Florida Trident July 1, 2026; WGCU Oct 13, 2026 reported a major developer eyeing rural Florida. DEP, DEO and the water management district appointments run through the governor. Hosseini was reappointed UF chair June 9, 2025 amid the presidential search fight."},
+ {id:"sb280",label:"Short term rental preemption",bloc:"dev",ring:4,lever:true,amt:0,note:"SB 280 is Airbnb's vehicle to preempt local short term rental rules. 2026 status unconfirmed; the earlier DeSantis veto is recalled but unverified."},
+ // insurance
+ {id:"citizens",label:"Citizens and tort reform",bloc:"insure",ring:4,lever:true,amt:0,note:"Citizens is down to about 270,000 policies and S&P projects its largest full year underwriting loss. Donalds' Bring Down the Bill plan keeps the 2022 to 2023 tort reforms and shrinks Citizens further; AFP Action's endorsement praised that pledge. PolitiFact on Sept 21, 2026 found his $1,000 hurricane tax attack on Jolly comes with a lot of fine print. Jolly proposes a catastrophe wind fund."},
+ // school choice
+ {id:"stepup",label:"Step Up for Students and the $4B voucher economy",bloc:"school",ring:4,lever:true,amt:4250000000,note:"Florida choice spending is about $4B to $4.5B a year across 500K plus students, roughly $8K per voucher, 82 percent at religious schools. The Nov 2025 Auditor General report found overspending, double funding and no controls on where students are educated; Step Up froze about 28,000 accounts in Aug 2025; $1M to $2M went to fictitious students. SB 318 fixes passed the Senate unanimously and died in the House. Donalds' plan: funding follows every student, scrap A to F grades, AI and ed tech, private sector participation, no new accountability measures. Yass wants 100 percent of per pupil funding in accounts.",flag:"Erika's firms sell into this program; she says she will keep doing education policy work as first lady"},
+ {id:"afpi",label:"AFPI, Moms for Liberty, CLT",bloc:"school",ring:3,amt:0,note:"Erika chairs the America First Policy Institute's Center for Education Opportunity, advises Moms for Liberty and the Classical Learning Test, and launched a Florida Promise Tour Sept 21, 2026. She told Axios Sept 22: I would be doing that whether I'm first lady or not."},
+ {id:"snyder",label:"Rep. John Snyder",bloc:"school",ring:3,amt:700000,note:"HD 86, in office since Nov 2020. Owns ESI Technical dba Educator Solutions, paid $6.93M by Optima charters 2020 to 2022 plus $2.78M by the Foundation and $1.76M in 2023. Reports nearly $700K from ESI since 2020. Also sponsor of the HB 1039 bitcoin reserve bill with Gruters, which cleared its first committee 18 to 0 on Feb 11, 2026."},
+ // billionaires second hop
+ {id:"griffinfl",label:"Griffin's Florida footprint",bloc:"billion",ring:3,amt:28000000,note:"$28M plus in Florida in 2024: $12M against the marijuana amendment, $7M to RPOF, $4M each to House and Senate leadership; Citadel got a carveout in the Chinese property law. 2026: $2.5M in May to Stronger Safer Nation for Moody, $10M SLF, $5M CLF. $3B to Carnegie Mellon Sept 30, 2026 including a Wynwood campus, $75M Baptist Health, $50M UM, a 54 story Brickell HQ. DeSantis pitched Griffin in June 2025 and at Fishers Island on funding Collins; Griffin declined. Oct 21, 2026 he called tariffs a fiasco and urged investment in AI, data centers and nuclear."},
+ {id:"cfgslate",label:"Club for Growth Florida slate",bloc:"billion",ring:3,amt:2300000,note:"Endorsed Donalds, Uthmeier for AG, Luna FL-13, Beltran FL-14. CFG Action, funded by Yass $10M Nov 2025 and $15M this cycle plus Uihlein's Restoration of America $17.5M, spent about $705K against Casey Askar in FL-22 and $456K against Kathy Castor; Win It Back PAC $1.1M against Chris Collins in FL-19."},
+ {id:"yasstrump",label:"Yass and Trump",bloc:"trump",ring:3,amt:21000000,note:"$16M to MAGA Inc. on Jan 17 and March 6, 2025, a $5M White House ballroom pledge, and a Susquehanna affiliate seat on the TikTok USDS board in Jan 2026. Yass retains about 7 percent of ByteDance and is a Kalshi investor."},
+ // Israel second hop
+ {id:"claws",label:"Claws Foundation",bloc:"israel",ring:3,amt:31000000,note:"EIN 20-1658710. Funding attributed exclusively to Dantchik per Shomrim; Yass was a director 2015 to 2022 only. Largest Israel grantee is the pluralist Shalom Hartman Institute, $25M plus 2010 to 2020 and $31M per a spokesperson, then Jerusalem Online University $7.9M, Hebrew University, Taub Center. The Guardian's $16M Yass figure is mostly Claws money and therefore weak attribution."},
+ {id:"silver",label:"Silver Valley Research Foundation",bloc:"israel",ring:3,amt:12000000,note:"US nonprofit described as medical research. Received about $12M from Claws in 2021 and passed most of it to the Central Fund of Israel, Kohelet's sole 2021 donor. Kohelet got about $7.7M in 2021 and $8.5M in 2022 through CFI."},
+ {id:"hartman",label:"Shalom Hartman Institute",bloc:"israel",ring:3,amt:31000000,note:"Pluralist Jerusalem institute and the biggest recipient of Claws Foundation money. Included so the Kohelet chain is read in proportion."},
+ {id:"yassisrael",label:"Yass's own Israel-adjacent giving",bloc:"israel",ring:3,amt:5800000,note:"$3M to Hadassah in 2023 via the Susquehanna Foundation. QXZ Inc. grants: $1.5M Citizens for a Nuclear Free Iran, $250K Emergency Committee for Israel in 2015, $1.05M Republican Jewish Coalition 2018 to 2019, which his spokesperson says he did not direct. No link found to Tikvah, Shalem, Im Tirtzu, Regavim or Israeli defense investments."},
+ // sugar
+ {id:"reservoir",label:"EAA reservoir and discharges",bloc:"sugar",ring:4,lever:true,amt:0,note:"State led build with all contracts finalized April 2026, completion 2029. Florida Crystals publicly commended it April 15, 2026 and makes no explicit asks; its New Hope Sugar got $2.4M in 2019 to end a 1,234 acre lease. Everglades Trust endorsed Donalds the week of Oct 6, 2026 to maintain DeSantis's momentum and keep discharges out of the estuaries. Donalds has no documented statement on sugar."},
+ {id:"hb167",label:"HB 167 phosphate liability",bloc:"sugar",ring:4,lever:true,amt:500000,note:"Mosaic wrote HB 167 to replace strict liability with negligence for radiation claims from phosphogypsum. Mosaic gave $500K plus to state candidates in the first nine months of 2025. Final 2026 fate unconfirmed."},
+ // crypto second hop
+ {id:"fairshake",label:"Fairshake in Florida",bloc:"crypto",ring:3,amt:2200000,note:"About $2.2M in Florida in 2026: a failed $2.06M against Oliver Gilbert in FL-24 and support for Patronis, Fine, Gruters, Frankel and Haridopolos. Nothing in the governor's race."},
+ {id:"winkmaga",label:"Winklevoss to MAGA Inc.",bloc:"crypto",ring:3,amt:10000000,note:"$10M on June 19, 2026, three weeks after the administration moved to vacate a Gemini enforcement action. Part of $32M plus in 2025 to 2026 giving including $21M to their Digital Freedom Fund."},
+ {id:"btcreserve",label:"Florida bitcoin reserve bill",bloc:"crypto",ring:4,lever:true,amt:0,note:"HB 1039 and SB 1038 by Snyder and Gruters cleared the first committee 18 to 0 on Feb 11, 2026; final status not found. Donalds introduced a federal Strategic Bitcoin Reserve bill in May 2025."},
+ // Trump world second hop
+ {id:"hudson",label:"Chris Hudson, campaign manager",bloc:"trump",ring:3,amt:0,note:"Ex Americans for Prosperity and Foundation for Government Accountability. Ryan Smith is chief strategist. No transition team, chief of staff or agency head names have been reported."},
+ {id:"summitridge",label:"Summit Ridge Media, Strategic Media Placement",bloc:"trump",ring:3,amt:500000,note:"Vendors for American Mission Florida's $500K plus pro Donalds TV. Campaign Legal Center's May 2026 FEC complaint alleges shell vendors."},
+ {id:"desantis",label:"Ron DeSantis",bloc:"trump",ring:3,amt:0,note:"Told lobbyists in March 2025 not to back Donalds, pitched Griffin on funding Collins, then endorsed the slate Sept 1 to 2, 2026. The Hope Florida grand jury on Sept 1, 2026 found misuse; Donalds promised law changes but did not back the recommendations and called Jolly's demand for a new probe playing politics. Donors who migrated from DeSantis: Uihlein, Yass, Griffin, Seminole, Clive Fields, Hosseini."},
+ {id:"hope",label:"Hope Florida",bloc:"enforce",ring:3,amt:10000000,note:"The $10M Medicaid settlement diversion. Grand jury findings Sept 1, 2026. Donalds called the findings very concerning and promised law changes but dismissed a new probe."},
+ {id:"doge",label:"Florida DOGE and the budget",bloc:"trump",ring:4,lever:true,amt:0,note:"Donalds would expand Florida DOGE audits with Amber alert style texts, insurance deregulation and hospital price transparency. No cut list, workforce target or Medicaid position has been published. Jolly: Medicaid expansion for about 266K adults, a 30 percent teacher raise via tourism taxes, means tested vouchers."},
+];
+
+// Edges: s gives to t. amt in dollars for width. kind: flow (money), link (relationship), contested
+const E = [
+ ["fbd","donalds",130400000,"Spends for Donalds"],["gov","donalds",7000000,"Candidate account"],["cong","donalds",16200000,"House committee"],["pcp","donalds",450000,"Leadership PAC"],["match","gov",823000,"Public matching funds"],["cong","fbd",1200000,"$1.2M transfer Feb 2025"],
+ ["griffin","fbd",10000000,"$10M Jul 2026"],["yass","fbd",7500000,"$7.5M direct"],["yass","cfgfl",3500000,"$3.5M"],["cfgfl","fbd",3750000,"$3.75M"],["cfg","fbd",3650000,"$3.65M"],["yass","cfg",16000000,"Main funder"],["yass","pfp",15500000,"$15.5M 2024 to 2025"],["pfp","cong",120000,"$120K outside spend 2020 to 2024"],["uihlein","fbd",2000000,"$2M"],["uihlein","cfg",26500000,"$26.5M in 2020"],["peterffy","fbd",1200000,"$1.2M"],["devos","fbd",1000000,"About $1M"],["fields","fbd",500000,"$500K"],["magowan","fbd",150000,"$150K"],["yass","maga",16000000,"$16M H1 2025"],["maga","trump",16000000,"Trump super PAC"],
+ ["erika","donalds",0,"Spouse",{kind:"link"}],["erika","onesto",0,"Sole member",{kind:"link"}],["onesto","optimaed",0,"Holds",{kind:"link"}],["onesto","oms",0,"Holds",{kind:"link"}],["schools","optfound",15126615,"$15.1M management fees"],["schools","optimaed",3185266,"$3.2M from virtual academy"],["schools","oms",5843969,"$5.8M in 2023"],["schools","esi",6930584,"$6.9M"],["optfound","esi",2783216,"$2.8M"],["esi","erika",500000,"$500K plus pay"],["optfound","erika",183326,"$183K pay"],["schools","summit",46400000,"$46.4M construction"],["summit","cong",18800,"Cordes gave $18,800"],["yass","erika",0,"Yass Prize semifinalist 2023",{kind:"link"}],["devos","erika",0,"Shared voucher agenda",{kind:"link"}],
+ ["seminole","fbd",5500000,"$5.5M"],["wynn","fbd",1000000,"$1M"],["fanduel","fbd",581000,"$581K"],["dk","fbd",525000,"$525K"],["sba","fbd",250000,"$250K"],["caesars","fbd",245000,"$245K"],["prize","fbd",100000,"$100K"],["poarch","fbd",100000,"$100K"],
+ ["geo","fbd",3500000,"$3.5M"],["geo","cong",10000,"$10K PAC gifts"],["cdr","fbd",620000,"$620K plus"],["irg","fbd",100000,"$100K plus"],["lemoine","fbd",59000,"$59K"],["crs","fbd",10000,"$10K"],
+ ["nextera","fbd",1000000,"$1M"],["nextera","pcp",2500,"$2.5K"],["nextera","cong",25000,"$25K plus"],["duke","fbd",500000,"$500K"],["teco","fbd",125000,"$125K"],["ferreira","fbd",500000,"$500K"],["phillips","fbd",350000,"$350K"],["timber","fbd",44000,"$44K"],
+ ["fff","fbd",1000000,"$1M Oct 2026"],["hosseini","fbd",500000,"$500K"],["neal","fbd",640000,"$640K plus"],["hutson","fbd",350000,"$350K"],["davis","fbd",300000,"$300K"],["beruff","fbd",100000,"$100K"],["dream","fbd",50000,"$50K"],["airbnb","pvp",1500000,"$1.5M May 19"],["pvp","fbd",1000000,"$1M May 19"],["realtors","donalds",0,"Endorsement, $10M to Yes On 3",{kind:"link"}],["perez","fbd",1000000,"$1M Aug 27"],
+ ["heritage","fbd",50000,"$50K"],["kompo","fbd",79000,"$79K"],["aifpac","fbd",762000,"$762K"],["statefarm","cong",14000,"$14K"],
+ ["wink","fbd",1000000,"$1M"],["robinhood","fbd",200000,"$200K"],["robinhood","pcp",1000,"$1K"],["kalshi","fbd",75000,"$75K"],["btc","erika",100000,"Alto IRA buys",{kind:"link"}],["a16zfed","cong",65100,"$65K"],
+ ["ltf","amf",3000000,"$3M Mar 4 2026"],["amf","donalds",2000000,"$2M in ads"],["a16z","ltf",50000000,"$50M"],["brockman","ltf",25000000,"$25M"],["schmidt","fbd",500000,"$500K"],
+ ["crystals","committee",500000,"$500K Jun 15"],["committee","fbd",360000,"$360K"],["crystals","fbd",205000,"$205K provisional",{kind:"contested"}],["crystals","maga",3000000,"$3M"],["crystals","aifpac",0,"Historic AIF funder",{kind:"link"}],["ussugar","aifpac",0,"Historic AIF funder",{kind:"link"}],["mosaic","fbd",200000,"$200K"],["spencer","fbd",109000,"$109K"],["disney","fbd",78000,"$78K provisional",{kind:"contested"}],["pm","fbd",100000,"$100K"],["ussugar","cong",10000,"$10K 2020"],
+ ["aipac","cong",18415,"$18K"],["rjc","cong",488,"$488"],["yass","dantchik",0,"Susquehanna co-founders",{kind:"link"}],["dantchik","kohelet",12000000,"About $12M via Claws Foundation, Silver Valley, Central Fund of Israel"],["yass","kohelet",0,"Haaretz 2021 alleged; NYT, WaPo, Calcalist say no",{kind:"contested"}],["kohelet","overhaul",0,"Drafted policy basis",{kind:"link"}],
+ ["trump","donalds",0,"Endorsed Feb 20 2025",{kind:"link"}],["redcurve","fbd",0,"Treasurer",{kind:"link"}],["redcurve","cong",0,"Treasurer",{kind:"link"}],["redcurve","trump",0,"Treasurer for Trump committees",{kind:"link"}],["afp","cong",251328,"$251K in 2020"],["afp","donalds",0,"Endorsed Mar 4 2026",{kind:"link"}],["chamber","donalds",0,"Endorsements",{kind:"link"}],
+ ["mur","fbd",107456,"Soft money chain through 2019 state PC",{kind:"link"}],["clc","donalds",0,"STOCK Act complaint",{kind:"link"}],["clc","amf",0,"FEC complaint May 2026",{kind:"link"}],["amend","donalds",0,"2021 to 2024 filings amended",{kind:"link"}],["cong","wilcoxson",133450,"$133K"],["amend","cong",0,"$400K refund demand",{kind:"link"}],
+ // second hop edges: donor to the decision it is buying into, plus upstream chains
+ ["seminole","compact",0,"Wants exclusivity enforced",{kind:"link"}],["seminole","hardrock",0,"Owns",{kind:"link"}],["seminole","dksuit",0,"Plaintiff",{kind:"link"}],["dk","dksuit",0,"Defendant",{kind:"link"}],["seminole","fgcc",0,"Enforcement posture",{kind:"link"}],["kalshi","scotus",0,"Wants CFTC preemption",{kind:"link"}],["robinhood","scotus",0,"Kalshi partner",{kind:"link"}],["fanduel","compact",0,"Wants commercial access or Hard Rock deal",{kind:"link"}],["sba","compact",0,"Wants reopener",{kind:"link"}],["seminole","semgive",3300000,"Other 2026 giving"],["seminole","uthmeier",50000,"$50K"],["kalshi","uthmeier",50000,"$50K"],["compact","donalds",903000000,"Compact payments to the state"],["fgcc","donalds",0,"Governor appoints all five",{kind:"link"}],["yass","kalshi",0,"Investor",{kind:"link"}],["peterffy","scotus",0,"IBKR runs ForecastEx",{kind:"link"}],
+ ["geo","depot",101000000,"GEO CDR Baker venture, $101M cap"],["cdr","depot",0,"Joint venture partner",{kind:"link"}],["geo","owed",40000000,"About $40M owed"],["cdr","owed",40000000,"$40M plus owed"],["irg","owed",68000000,"$68M plus owed"],["lemoine","owed",27300000,"$27.3M owed"],["crs","owed",35000000,"$35M plus owed"],["fema","owed",84500000,"$84.5M received of $608M"],["owed","donalds",0,"Next governor decides who gets paid",{kind:"link"}],["depot","donalds",0,"FDEM runs it under the governor",{kind:"link"}],["sbie","donalds",0,"Governor and Cabinet",{kind:"link"}],["geo","sbie",0,"Wants more state detention beds",{kind:"link"}],["cdr","uthmeier",275000,"$275K"],["geo","uthmeier",50000,"$50K"],["irg","vendorgive",0,"Prior giving",{kind:"link"}],["cdr","vendorgive",0,"Prior giving",{kind:"link"}],["vendorgive","desantis",2300000,"$2.3M plus"],["geo","geofed",0,"Parent business",{kind:"link"}],["geofed","maga",1413000,"$1.41M July 2026"],["uthmeier","donalds",0,"Shared donors, shared levers",{kind:"link"}],["cfgslate","uthmeier",0,"Club for Growth endorsed",{kind:"link"}],
+ ["nextera","psc",7000000000,"$7B settlement approved Nov 2025"],["duke","psc",0,"Next rate case lands on new PSC",{kind:"link"}],["teco","psc",0,"Storm cost recovery",{kind:"link"}],["psc","donalds",0,"Governor appoints commissioners",{kind:"link"}],["ferreira","tango",0,"Data center builder",{kind:"link"}],["phillips","tango",0,"Project Tango backers",{kind:"link"}],["timber","tango",0,"Data center land",{kind:"link"}],["nextera","tango",0,"8 GW data center load by 2032",{kind:"link"}],["tango","donalds",0,"Opposes statewide moratorium",{kind:"link"}],["griffin","tango",0,"Urges AI, data centers, nuclear",{kind:"link"}],
+ ["ltf","sb482",0,"Wants state AI laws preempted",{kind:"link"}],["sb482","perez",0,"Killed in Perez's House",{kind:"link"}],["sb482","donalds",0,"Now says local control",{kind:"link"}],["ltf","ltfother",0,"Same network",{kind:"link"}],["schmidt","sb482",0,"AI industry",{kind:"link"}],
+ ["realtors","amend3",18000000,"$10M to $18M to Yes On 3"],["amend3","donalds",0,"Campaigns on it",{kind:"link"}],["amend3","tbrc",0,"Phase two: full elimination",{kind:"link"}],["tbrc","donalds",0,"Governor appoints members",{kind:"link"}],["perez","tbrc",0,"House property tax plan",{kind:"link"}],["hosseini","rural",0,"UF chair, developer",{kind:"link"}],["neal","rural",0,"Rural land developer",{kind:"link"}],["hutson","rural",0,"NE Florida developer",{kind:"link"}],["davis","rural",0,"Nocatee developer",{kind:"link"}],["beruff","rural",0,"Developer",{kind:"link"}],["dream","rural",0,"Homebuilder",{kind:"link"}],["fff","rural",0,"Business committee",{kind:"link"}],["rural","donalds",0,"DEP, DEO, water district appointments",{kind:"link"}],["airbnb","sb280",0,"Preemption vehicle",{kind:"link"}],["sb280","donalds",0,"Sign or veto",{kind:"link"}],
+ ["heritage","citizens",0,"Wants Citizens shrunk",{kind:"link"}],["kompo","citizens",0,"Tort stake",{kind:"link"}],["afp","citizens",0,"Praised tort reform pledge",{kind:"link"}],["citizens","donalds",0,"Bring Down the Bill plan",{kind:"link"}],["statefarm","citizens",0,"Insurer",{kind:"link"}],
+ ["schools","stepup",0,"Funded through vouchers and FEFP",{kind:"link"}],["optimaed","stepup",0,"Sells into ESA marketplace",{kind:"link"}],["yass","stepup",0,"Wants 100 percent per pupil in accounts",{kind:"link"}],["devos","stepup",0,"Voucher agenda",{kind:"link"}],["griffin","stepup",0,"Education giving",{kind:"link"}],["stepup","donalds",0,"Governor oversees DOE and Step Up contracts",{kind:"link"}],["erika","afpi",0,"Chairs education center",{kind:"link"}],["afpi","stepup",0,"Model legislation",{kind:"link"}],["snyder","esi",0,"Owner",{kind:"link"}],["snyder","btcreserve",0,"Bill sponsor",{kind:"link"}],["esi","snyder",700000,"$700K reported income"],
+ ["griffin","griffinfl",0,"Broader Florida giving",{kind:"link"}],["griffinfl","desantis",11000000,"$7M RPOF, $4M each chamber 2024"],["cfg","cfgslate",0,"2026 Florida slate",{kind:"link"}],["yass","cfgslate",25000000,"$25M to CFG Action"],["uihlein","cfgslate",17500000,"$17.5M Restoration of America"],["yass","yasstrump",0,"Trump giving",{kind:"link"}],["yasstrump","maga",16000000,"$16M"],["yasstrump","trump",5000000,"$5M ballroom pledge"],
+ ["dantchik","claws",0,"Sole funder per Shomrim",{kind:"link"}],["yass","claws",0,"Director 2015 to 2022 only",{kind:"link"}],["claws","hartman",31000000,"$31M, largest grantee"],["claws","silver",12000000,"About $12M 2021"],["silver","kohelet",7700000,"Via Central Fund of Israel, $7.7M 2021, $8.5M 2022"],["yass","yassisrael",5800000,"Hadassah $3M, QXZ grants"],
+ ["crystals","reservoir",0,"No explicit ask, commended build",{kind:"link"}],["ussugar","reservoir",0,"EAA landowner",{kind:"link"}],["reservoir","donalds",0,"Everglades Trust endorsed",{kind:"link"}],["mosaic","hb167",500000,"$500K plus to state candidates 2025"],["hb167","donalds",0,"Sign or veto",{kind:"link"}],
+ ["wink","winkmaga",10000000,"$10M June 2026"],["winkmaga","maga",10000000,"$10M"],["fairshake","cong",0,"No governor race spend",{kind:"link"}],["btcreserve","donalds",0,"Federal reserve bill sponsor",{kind:"link"}],["kalshi","btcreserve",0,"Crypto agenda",{kind:"link"}],
+ ["hudson","fbd",0,"Campaign manager",{kind:"link"}],["afp","hudson",0,"Ex AFP",{kind:"link"}],["amf","summitridge",500000,"$500K plus TV"],["desantis","donalds",0,"Endorsed Sept 2026 after freeze",{kind:"link"}],["desantis","hope",0,"Hope Florida findings",{kind:"link"}],["hope","donalds",0,"Promised law changes, no new probe",{kind:"link"}],["doge","donalds",0,"Budget agenda",{kind:"link"}],["afp","doge",0,"FGA, AFP playbook",{kind:"link"}],["hudson","doge",0,"Ex FGA",{kind:"link"}],
+].map(e=>({s:e[0],t:e[1],amt:e[2],label:e[3],kind:(e[4]&&e[4].kind)||"flow"}));
+
+// ---------- layout ----------
+const W=2200,H=1560,CX=1100,CY=780;
+const byId={}; N.forEach(n=>byId[n.id]=n);
+const blocOrder=["billion","israel","trump","enforce","ai","crypto","insure","sugar","dev","energy","detain","gamble","school"];
+const rings={1:170,2:360,3:540,4:720};
+const sectors={};
+// allocate angular span proportional to count of ring 2 and 3 nodes, with a floor
+let weights=blocOrder.map(b=>Math.max(3,N.filter(n=>n.bloc===b&&n.ring>=2).length));
+let tot=weights.reduce((a,b)=>a+b,0), a0=-Math.PI/2;
+blocOrder.forEach((b,i)=>{const span=2*Math.PI*weights[i]/tot; sectors[b]={a0:a0,a1:a0+span,mid:a0+span/2}; a0+=span;});
+function place(){
+  byId.donalds.x=CX; byId.donalds.y=CY;
+  const veh=["fbd","gov","cong","pcp"], vang={fbd:Math.PI*0.5, gov:Math.PI*1.0, cong:Math.PI*1.5, pcp:0};
+  byId.fbd.x=CX; byId.fbd.y=CY+rings[1];
+  byId.gov.x=CX-rings[1]*0.85; byId.gov.y=CY-rings[1]*0.3;
+  byId.cong.x=CX+rings[1]*0.85; byId.cong.y=CY-rings[1]*0.3;
+  byId.pcp.x=CX+rings[1]*0.55; byId.pcp.y=CY-rings[1]*1.05;
+  byId.match.x=CX-rings[1]*1.6; byId.match.y=CY-rings[1]*0.9;
+  blocOrder.forEach(b=>{
+    const s=sectors[b];
+    [2,3,4].forEach(r=>{
+      const nodes=N.filter(n=>n.bloc===b&&n.ring===r&&n.id!=="amf");
+      nodes.forEach((n,i)=>{
+        const t=(i+0.5)/nodes.length;
+        const ang=s.a0+(s.a1-s.a0)*t;
+        const jit=r===2?(i%2?44:-10):r===3?(i%2?48:-24):(i%2?46:-30);
+        const rad=rings[r]+jit;
+        n.x=CX+Math.cos(ang)*rad*1.12; n.y=CY+Math.sin(ang)*rad*0.96; n.ang=ang;
+      });
+    });
+  });
+  // tuck AMF just inside the ai sector
+  const amf=byId.amf, s=sectors.ai; amf.x=CX+Math.cos(s.mid)*270*1.12; amf.y=CY+Math.sin(s.mid)*270*0.96;
+}
+place();
+
+// ---------- render ----------
+const svg=document.getElementById("svg");
+const NS="http://www.w3.org/2000/svg";
+const root=document.createElementNS(NS,"g"); svg.appendChild(root);
+const gRings=document.createElementNS(NS,"g"), gEdges=document.createElementNS(NS,"g"), gNodes=document.createElementNS(NS,"g"), gLab=document.createElementNS(NS,"g");
+[gRings,gEdges,gLab,gNodes].forEach(g=>root.appendChild(g));
+function el(t,attrs,parent){const e=document.createElementNS(NS,t);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const cvar=b=>`var(${BLOCS[b].c})`;
+[1,2,3,4].forEach(r=>el("ellipse",{cx:CX,cy:CY,rx:rings[r]*1.12,ry:rings[r]*0.96,class:"ring"},gRings));
+const ringNames={1:"MONEY VEHICLES",2:"DIRECT DONORS",3:"UPSTREAM AND DOWNSTREAM",4:"DECISIONS ON THE GOVERNOR'S DESK"};
+[1,2,3,4].forEach(r=>{const t=el("text",{x:CX+6,y:CY-rings[r]*0.96+14,class:"ringlab"},gRings);t.textContent=ringNames[r];});
+blocOrder.forEach(b=>{const s=sectors[b],R=860;const x=CX+Math.cos(s.mid)*R*1.12,y=CY+Math.sin(s.mid)*R*0.96;const t=el("text",{x,y,class:"sector","text-anchor":"middle",style:`--sc:${cvar(b)}`},gLab);t.textContent=BLOCS[b].name;});
+const fmt=v=>v>=1e9?"$"+(v/1e9).toFixed(v%1e9?1:0)+"B":v>=1e6?"$"+(v/1e6).toFixed(v%1e6?1:0)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":v>0?"$"+v:"";
+const rad=n=>n.hub?34:n.lever?15:n.ring===1?22:Math.max(7,Math.min(30,4+Math.sqrt((n.amt||0)/1e6)*7));
+const edgeEls=[],nodeEls={};
+E.forEach(e=>{
+  const a=byId[e.s],b=byId[e.t]; if(!a||!b){return;}
+  const w=e.kind==="link"?1.2:Math.max(1,Math.min(9,0.8+Math.sqrt(e.amt/1e6)*2.2));
+  const mx=(a.x+b.x)/2+(a.y-b.y)*0.12, my=(a.y+b.y)/2+(b.x-a.x)*0.12;
+  const p=el("path",{d:`M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`,class:"edge"+(e.kind==="contested"?" contested":e.kind==="flow"?" flow":""),"stroke-width":w,style:`--ec:color-mix(in srgb,${cvar(a.bloc==="vehicle"?b.bloc:a.bloc)} 55%,var(--edge))`},gEdges);
+  p.dataset.s=e.s;p.dataset.t=e.t; edgeEls.push({e,p});
+});
+N.forEach(n=>{
+  const g=el("g",{class:"node"+(n.hub?" hub":""),transform:`translate(${n.x},${n.y})`,tabindex:0,role:"button","aria-label":n.label},gNodes);
+  const r=rad(n);
+  if(n.lever){el("rect",{x:-r,y:-r,width:r*2,height:r*2,rx:3,transform:"rotate(45)",fill:"var(--panel)",stroke:cvar(n.bloc),"stroke-width":3,class:"leverbox"},g);}
+  else el("circle",{r,fill:n.hub?"var(--hub)":cvar(n.bloc)},g);
+  if(n.flag&&!n.hub){el("circle",{r:r+7,fill:"none",stroke:"var(--c-enforce)","stroke-width":1.5,"stroke-dasharray":"3 3"},g);}
+  const t=el("text",{y:r+13,"text-anchor":"middle","font-size":n.ring<=1?13:11},g); t.textContent=n.label;
+  if(n.amt&&!n.hub){const a=el("text",{y:r+25,"text-anchor":"middle",class:"amt"},g);a.textContent=fmt(n.amt);}
+  g.addEventListener("click",ev=>{ev.stopPropagation();select(n.id);});
+  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();select(n.id);}});
+  g.addEventListener("mousemove",ev=>showTip(n,ev)); g.addEventListener("mouseleave",hideTip);
+  nodeEls[n.id]=g;
+});
+
+// ---------- interaction ----------
+const tip=document.getElementById("tip");
+function showTip(n,ev){const rect=document.getElementById("canvas").getBoundingClientRect();tip.style.display="block";tip.innerHTML=`<b>${n.label}</b><span class="m">${n.amt?fmt(n.amt):""} · ${BLOCS[n.bloc].name}</span>`;tip.style.left=(ev.clientX-rect.left+14)+"px";tip.style.top=(ev.clientY-rect.top+14)+"px";}
+function hideTip(){tip.style.display="none";}
+let selected=null, activeBlocs=new Set(Object.keys(BLOCS));
+function neighbors(id){const s=new Set([id]);E.forEach(e=>{if(e.s===id)s.add(e.t);if(e.t===id)s.add(e.s);});return s;}
+function applyVis(){
+  const nb=selected?neighbors(selected):null;
+  N.forEach(n=>{
+    const g=nodeEls[n.id];const inBloc=activeBlocs.has(n.bloc)||n.hub||n.bloc==="vehicle";
+    const lit=inBloc&&(!nb||nb.has(n.id));
+    g.classList.toggle("dim",!lit);g.classList.toggle("lit",lit);
+  });
+  edgeEls.forEach(({e,p})=>{
+    const a=byId[e.s],b=byId[e.t];
+    const inBloc=(activeBlocs.has(a.bloc)||a.bloc==="vehicle")&&(activeBlocs.has(b.bloc)||b.bloc==="vehicle");
+    const lit=inBloc&&(!selected||e.s===selected||e.t===selected);
+    p.classList.toggle("dim",!lit);
+  });
+}
+const panel=document.getElementById("panel");
+function select(id){
+  selected=id;applyVis();const n=byId[id];
+  const ins=E.filter(e=>e.t===id),outs=E.filter(e=>e.s===id);
+  const row=(e,other)=>`<button data-go="${other}">${byId[other].label}<span>${e.label}</span></button>`;
+  panel.innerHTML=`<div class="eyebrow" style="--sc:${cvar(n.bloc)}">${BLOCS[n.bloc].name}</div><h2>${n.label}</h2>${n.amt?`<div class="big">${fmt(n.amt)}</div>`:""}<p>${n.note}</p>${n.flag?`<span class="flag">${n.flag}</span>`:""}<div class="links">${ins.length?`<h3>Money or ties in</h3>`+ins.map(e=>row(e,e.s)).join(""):""}${outs.length?`<h3>Money or ties out</h3>`+outs.map(e=>row(e,e.t)).join(""):""}</div><p class="note" style="margin-top:14px"><button data-clear style="background:none;border:1px solid var(--line);color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer;font:600 .74rem var(--font-body)">Clear selection</button></p>`;
+  panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go)));
+  panel.querySelector("[data-clear]").addEventListener("click",()=>{selected=null;applyVis();home();});
+}
+function home(){
+  panel.innerHTML=`<div class="eyebrow">How to read this</div><h2>Who is behind the $149M, and what they get</h2><p>Donalds sits at the center. Ring one holds the committees that take and spend the money. Ring two is the direct donors, sized by dollars. Ring three is where the money came from and where else it goes. Ring four, the diamonds, is the set of decisions that actually sit on a Florida governor's desk: appointments, contracts, compacts and bills. Follow a donor outward and you reach what they are buying into.</p><p class="note">Click any node for a dossier with amounts, dates and the chain it belongs to. Use the chips above to isolate one bloc.</p>
+  <div class="legend"><div><span class="ln t"></span>Money flow, thicker is larger</div><div><span class="ln"></span>Relationship, no dollar amount</div><div><span class="ln d"></span>Contested or provisional, pending Oct 30 filings</div><div><span style="width:11px;height:11px;border:2px solid var(--hub);transform:rotate(45deg);display:inline-block;margin:0 3px"></span>Decision the governor controls</div><div><span style="width:12px;height:12px;border:1.5px dashed var(--c-enforce);border-radius:50%;display:inline-block"></span>Disclosure or enforcement flag on this node</div></div>
+  <div class="links"><h3>Start here</h3><button data-go="uthmeier">AG Uthmeier<span>Shared donors, shared levers</span></button><button data-go="compact">Seminole compact<span>$903M a year to the state</span></button><button data-go="owed">$417M unpaid invoices<span>Who gets paid</span></button><button data-go="psc">Public Service Commission<span>$7B FPL settlement</span></button><button data-go="amend3">Amendment 3<span>$12B a year local hole</span></button><button data-go="stepup">Voucher economy<span>$4B a year, Erika's market</span></button><button data-go="yass">Jeff Yass<span>$11M, Kohelet question</span></button><button data-go="claws">Claws Foundation<span>Dantchik's chain, in proportion</span></button></div>
+  <div class="src">Sources: Florida Division of Elections filings as reported by Tampa Bay Times, Florida Politics, Florida Phoenix, Florida Bulldog, WUSF, Seeking Rents and Miami New Times; FEC filings; House financial disclosures; Campaign Legal Center; NOTUS; CBS News; Haaretz, New York Times, Washington Post, Calcalist and Shomrim on Kohelet. Figures through Oct 22, 2026. Next data drop: Oct 30 filings.</div>`;
+  panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go)));
+}
+home();
+svg.addEventListener("click",()=>{if(selected){selected=null;applyVis();home();}});
+
+// chips
+const chips=document.getElementById("chips");
+Object.keys(BLOCS).filter(b=>b!=="vehicle").forEach(b=>{const c=document.createElement("button");c.className="chip on";c.style.setProperty("--c",cvar(b));c.innerHTML=`<i></i>${BLOCS[b].name}`;c.setAttribute("aria-pressed","true");c.addEventListener("click",()=>{const allOn=[...chips.querySelectorAll(".chip")].every(x=>x.classList.contains("on"));if(allOn){activeBlocs=new Set(["vehicle",b]);}else if(activeBlocs.has(b)){activeBlocs.delete(b);if(activeBlocs.size<=1)activeBlocs=new Set(Object.keys(BLOCS));}else activeBlocs.add(b);chips.querySelectorAll(".chip").forEach(x=>{const on=activeBlocs.has(x.dataset.b);x.classList.toggle("on",on);x.setAttribute("aria-pressed",on);});applyVis();});c.dataset.b=b;chips.appendChild(c);});
+
+// pan and zoom
+let vb={x:0,y:0,w:W,h:H},drag=null;
+function setVB(){svg.setAttribute("viewBox",`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);}
+function zoom(f,cx,cy){const nw=Math.max(400,Math.min(W*2.5,vb.w*f));const nh=nw*H/W;const px=cx===undefined?vb.x+vb.w/2:cx,py=cy===undefined?vb.y+vb.h/2:cy;vb.x=px-(px-vb.x)*(nw/vb.w);vb.y=py-(py-vb.y)*(nh/vb.h);vb.w=nw;vb.h=nh;setVB();}
+function pt(ev){const r=svg.getBoundingClientRect();return{x:vb.x+(ev.clientX-r.left)/r.width*vb.w,y:vb.y+(ev.clientY-r.top)/r.height*vb.h};}
+svg.addEventListener("wheel",ev=>{ev.preventDefault();const p=pt(ev);zoom(ev.deltaY>0?1.12:0.89,p.x,p.y);},{passive:false});
+svg.addEventListener("pointerdown",ev=>{drag={x:ev.clientX,y:ev.clientY,vx:vb.x,vy:vb.y};svg.classList.add("dragging");svg.setPointerCapture(ev.pointerId);});
+svg.addEventListener("pointermove",ev=>{if(!drag)return;const r=svg.getBoundingClientRect();vb.x=drag.vx-(ev.clientX-drag.x)/r.width*vb.w;vb.y=drag.vy-(ev.clientY-drag.y)/r.height*vb.h;setVB();});
+svg.addEventListener("pointerup",()=>{drag=null;svg.classList.remove("dragging");});
+document.getElementById("zin").onclick=()=>zoom(0.8);document.getElementById("zout").onclick=()=>zoom(1.25);document.getElementById("zreset").onclick=()=>{vb={x:0,y:0,w:W,h:H};setVB();};
+// phone: start zoomed to center
+if(window.innerWidth<820){vb={x:CX-600,y:CY-480,w:1200,h:1200*H/W};setVB();}
+</script>
+
+</body></html>

@@ -197,10 +197,13 @@ function layout(nodes: LNode[], edges: GEdge[], focus: string, focus2: string | 
     if (n.id === focus2) { n.x = cx + W * 0.16; n.y = cy; n.fixed = true; }
   }
   for (const [k, list] of groups) {
-    const [kind, d] = k.split("|"), base = SECTOR[kind] ?? 0, spread = kind === "person" ? 1.5 : 0.55;
+    // a crowded kind fans out wider and over more rows, biggest nearest the middle
+    const [kind, d] = k.split("|"), base = SECTOR[kind] ?? 0, many = list.length > 10;
+    const spread = kind === "person" ? 1.5 : Math.min(1.05, 0.55 + Math.max(0, list.length - 6) * 0.03), rowsN = many ? 4 : 3;
+    list.sort((a, b) => b.weight - a.weight);
     list.forEach((n, i) => {
       const a = base * Math.PI + (list.length > 1 ? (i / (list.length - 1) - 0.5) * spread * Math.PI : 0);
-      const rr = R * (Number(d) === 2 ? 0.95 : 0.55) * (0.88 + (i % 3) * 0.08);
+      const rr = R * (Number(d) === 2 ? 0.97 : 0.56) * (0.84 + (i % rowsN) * (many ? 0.09 : 0.08));
       n.x = cx + Math.cos(a) * rr * wide; n.y = cy + Math.sin(a) * rr * 0.82;
     });
   }
@@ -296,6 +299,14 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
   }, []);
   const { W, H } = size;
   const compact = W < 720;
+  const [big, setBig] = useState(false);
+  useEffect(() => {
+    if (!big) return;
+    // the page wrappers keep an identity transform from their entry animation, which would trap a fixed element
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") setBig(false); };
+    window.addEventListener("keydown", k); document.body.style.overflow = "hidden"; document.documentElement.classList.add("cx-fs");
+    return () => { window.removeEventListener("keydown", k); document.body.style.overflow = ""; document.documentElement.classList.remove("cx-fs"); };
+  }, [big]);
   const setUrl = (id: string | null) => { try { const u = new URL(window.location.href); if (id) u.searchParams.set("name", id); else u.searchParams.delete("name"); window.history.replaceState(null, "", u.toString()); } catch { /* no window */ } };
 
   /** Put a name in the middle. Leaves the story and keeps a trail so the reader can step back. */
@@ -315,8 +326,13 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
   };
   const back = () => { const t = [...trail]; const id = t.pop(); if (!id) return; setTrail(t); setFocus(id); setStory(null); setStoryBase(null); setPin(null); setHot(null); setUrl(id); };
 
+  // a name with dozens of ties gets fewer second step names and a taller map, so nothing piles up
+  const degree = useMemo(() => (idx.get(focus) ?? []).filter((e) => on.has(e.k)).length, [idx, focus, on]);
+  const busy = degree > 30;
   const net = useMemo(() => {
-    const caps: Caps = compact ? { first: 10, people: 5, ring: 2, per: 2 } : { first: 20, people: 12, ring: 6, per: 3 };
+    const caps: Caps = compact ? { first: 10, people: 5, ring: 2, per: 2 }
+      : big ? { first: 30, people: 16, ring: busy ? 5 : 8, per: 3 }
+      : busy ? { first: 18, people: 10, ring: 2, per: 2 } : { first: 20, people: 12, ring: 6, per: 3 };
     const e = ego(idx, byId, focus, focus2, on, caps, forced);
     const wt = new Map<string, number>();
     for (const x of e.edges) { wt.set(x.s, (wt.get(x.s) ?? 0) + (x.v ?? 0)); wt.set(x.t, (wt.get(x.t) ?? 0) + (x.v ?? 0)); }
@@ -325,7 +341,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
     const storyIds = new Set(forced.flatMap((x) => [x.s, x.t]));
     const d1 = [...e.ids].filter((id) => e.depth.get(id) === 1).sort((a, b) => (wt.get(b) ?? 0) - (wt.get(a) ?? 0));
     const d2 = [...e.ids].filter((id) => e.depth.get(id) === 2).sort((a, b) => (wt.get(b) ?? 0) - (wt.get(a) ?? 0));
-    const lab = new Set<string>([focus, ...(focus2 ? [focus2] : []), ...storyIds, ...d1.slice(0, compact ? 8 : 40), ...d2.slice(0, compact ? 0 : 4)]);
+    const lab = new Set<string>([focus, ...(focus2 ? [focus2] : []), ...storyIds, ...d1.slice(0, compact ? 8 : big ? 46 : 40), ...d2.slice(0, compact || busy ? 0 : big ? 8 : 4)]);
     const charW = compact ? 6.5 : 6.9;
     const nodes: LNode[] = [...e.ids].map((id) => {
       const n = byId.get(id)!; const w = wt.get(id) ?? 0, isF = id === focus || id === focus2;
@@ -338,7 +354,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
     });
     layout(nodes, e.edges, focus, focus2, W, H, e.depth);
     return { nodes, edges: e.edges };
-  }, [idx, byId, focus, focus2, on, W, H, compact, forced]);
+  }, [idx, byId, focus, focus2, on, W, H, compact, forced, big, busy]);
 
   // glide from the last layout to the new one
   useEffect(() => {
@@ -539,6 +555,7 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
         <div className="cx-tools">
           <button type="button" className="wd-btn" onClick={() => zoomBy(1.25)} aria-label="Zoom in">+</button>
           <button type="button" className="wd-btn" onClick={() => zoomBy(1 / 1.25)} aria-label="Zoom out">−</button>
+          <button type="button" className={`wd-btn${big ? " on" : ""}`} aria-pressed={big} onClick={() => { setBig((b) => !b); setTimeout(fit, 60); }}>{big ? "Close full screen" : "Full screen"}</button>
           <button type="button" className="wd-btn" onClick={fit}>Fit to screen</button>
           <button type="button" className="wd-btn" onClick={() => { setFocus2(null); setTrail([]); fit(); playStory(stories[0]); }}>Start over</button>
           {!reduce ? <button type="button" className="wd-btn" aria-pressed={!flow} onClick={() => setFlow((x) => !x)}>{flow ? "Pause motion" : "Play motion"}</button> : null}
@@ -547,7 +564,8 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
 
       <div className="cx-body">
         <div className="cx-mapcol">
-          <div className="cx-stage card" ref={stageRef} onWheel={onWheel}>
+          <div className={`cx-stage card${big ? " cx-big" : ""}${busy && !big ? " cx-tall" : ""}`} ref={stageRef} onWheel={onWheel}>
+            {big ? <button type="button" className="wd-btn cx-bigx" onClick={() => setBig(false)}>Close full screen</button> : null}
             <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="group" aria-label={`Map of everyone tied to ${label(f)}. The same ties are listed in words beside the map.`}
               onPointerDown={(e) => onDown(e, null)} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={() => { if (!drag.current) { setHot(null); setTipAt(null); } }}
               className={`${lit.mode ? `has-${lit.mode}` : ""}${motion ? " moving" : ""}`}>

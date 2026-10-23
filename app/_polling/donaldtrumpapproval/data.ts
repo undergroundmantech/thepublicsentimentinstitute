@@ -14,7 +14,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "American Research Group", endDate: "2026-10-20", sampleSize: 1100, sampleType: "A", results: { Approve: 29, Disapprove: 67 } },   // Oct 16 to 20, adults; registered voters 30 to 67
   // ── Added Oct 22, 2026: releases through Oct 20 ──
   { pollster: "RMG Research", endDate: "2026-10-13", sampleSize: 2000, sampleType: "RV", results: { Approve: 41, Disapprove: 58 } },   // Napolitan News, Oct 5 to 13
-  { pollster: "AP-NORC", endDate: "2026-10-12", sampleSize: 1119, sampleType: "A", results: { Approve: 35, Disapprove: 64 } },   // Oct 8 to 12
+  { pollster: "AP/NORC", endDate: "2026-10-12", sampleSize: 1119, sampleType: "A", results: { Approve: 36, Disapprove: 64 } },   // Oct 8 to 12, approve 36 per the AP-NORC release
   { pollster: "Fox News", endDate: "2026-10-12", sampleSize: 1202, sampleType: "RV", results: { Approve: 36, Disapprove: 64 } },   // Beacon Research and Shaw & Company, Oct 9 to 12
   { pollster: "NBC News/SurveyMonkey", endDate: "2026-10-12", sampleSize: 19135, sampleType: "A", results: { Approve: 34, Disapprove: 66 } },   // Decision Desk, Sep 28 to Oct 12
   { pollster: "ABC/Washington Post/Ipsos", endDate: "2026-10-13", sampleSize: 2545, sampleType: "A", results: { Approve: 33, Disapprove: 66 } },   // Oct 9 to 13, adults
@@ -23,7 +23,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "CNN/SSRS", endDate: "2026-10-18", sampleSize: 1701, sampleType: "A", results: { Approve: 32, Disapprove: 67 } },   // Oct 15 to 18
   { pollster: "Reuters/Ipsos", endDate: "2026-10-19", sampleSize: 1679, sampleType: "A", results: { Approve: 31, Disapprove: 66 } },   // Oct 16 to 19, adults
   { pollster: "Echelon Insights", endDate: "2026-10-19", sampleSize: 1010, sampleType: "LV", results: { Approve: 39, Disapprove: 60 } },   // Oct 15 to 19
-  { pollster: "Rasmussen Reports", endDate: "2026-10-20", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },   // Daily tracking, five night rolling, nights inferred
+  { pollster: "Rasmussen Reports", endDate: "2026-10-22", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },   // Daily tracking Oct 18 to 22, five night rolling, nights inferred; replaces the Oct 20 reading
   // ── Added Oct 14, 2026: releases through the Oct 10 to 12 Economist/YouGov poll ──
   { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1548, sampleType: "A", results: { Approve: 34, Disapprove: 62 } },   // Oct 10 to 12, adult citizens; registered voter approval not published
   { pollster: "Morning Consult", endDate: "2026-10-11", sampleSize: 2204, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },   // Oct 5 to 11
