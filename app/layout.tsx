@@ -20,6 +20,11 @@ import LiteMotion from "./components/LiteMotion";
 import MobileTabs from "./components/MobileTabs";
 import JsonLd from "./components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
+
+// Google Analytics 4. Loaded once the page is interactive so it never holds up the first paint on a phone; GA4's
+// enhanced measurement counts each page change in the app from the browser history.
+const GA_ID = "G-77X2X4JG8M";
 import SiteEvents from "./components/SiteEvents";
 import { FLAG_VALUES, flagJson } from "./lib/flagValues";
 import { KEYWORDS, SITE, graph, orgLd } from "./lib/seo";
@@ -96,6 +101,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LiteMotion />
         <script type="application/json" data-flag-values="" dangerouslySetInnerHTML={{ __html: flagJson(FLAG_VALUES) }} />
         <SiteEvents />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag("js",new Date());gtag("config","${GA_ID}");`}</Script>
         <Analytics />
       </body>
     </html>

@@ -1,4 +1,4 @@
-// Custom events for Vercel Web Analytics, from the browser. Use ev() instead of calling track()
+// Custom events for Vercel Web Analytics and Google Analytics 4, from the browser. Use ev() instead of calling track()
 // directly: it keeps data to what Web Analytics accepts, flat strings, numbers, booleans or null,
 // strings cut to 255 characters, and attaches the site's feature flags to every event.
 //
@@ -41,6 +41,11 @@ export function ev(name: string, data?: EvData): void {
   last.set(sig, now);
   if (last.size > 200) last.clear();
   try { track(name.slice(0, MAX_LEN), d, { flags: FLAG_KEYS }); } catch { /* analytics never breaks the page */ }
+  // the same event in Google Analytics 4, named the GA way: lower case words joined by underscores, at most 40 characters
+  try {
+    const g = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+    if (g) g("event", name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 40), d ?? {});
+  } catch { /* analytics never breaks the page */ }
 }
 
 const timers = new Map<string, ReturnType<typeof setTimeout>>();
