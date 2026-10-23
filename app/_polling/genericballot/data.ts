@@ -9,6 +9,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 22, 2026 evening ──
+  { pollster: "CNBC", endDate: "2026-10-18", sampleSize: 1000, sampleType: "RV", results: { Democrats: 52, Republicans: 45 } },   // Oct 14 to 18
   // ── Added Oct 22, 2026: releases through Oct 20 ──
   { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1403, sampleType: "RV", results: { Democrats: 46, Republicans: 39 } },   // Oct 10 to 12, registered voters
   { pollster: "Cygnal", endDate: "2026-10-10", sampleSize: 1500, sampleType: "LV", results: { Democrats: 51, Republicans: 42 } },   // Oct 7 to 10

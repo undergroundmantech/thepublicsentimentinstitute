@@ -48,13 +48,21 @@ export function WireStats() {
   );
 }
 
-function Pic({ c }: { c: Cluster }) {
-  const img = c.items.find((x) => x.img)?.img;
-  const [bad, setBad] = useState(false);
+/** Every picture the story's outlets offer, largest first: an outlet's large size, then its feed size. */
+export function picsOf(c: Cluster): { src: string; o: string; u: string }[] {
+  const score = (x: Cluster["items"][number]) => (x.iw ?? 0) >= 800 ? 3 : x.thumb ? 2 : (x.iw ?? 0) >= 400 ? 1 : 0;
+  const its = c.items.filter((x) => x.img).sort((a, b) => score(b) - score(a));
+  return its.flatMap((x) => [{ src: x.img!, o: x.o, u: x.u }, ...(x.thumb ? [{ src: x.thumb, o: x.o, u: x.u }] : [])]);
+}
+/** A picture that falls back down the list when a size does not load, and to a coverage graphic at the end. */
+export function Photo({ c, credit = true, eager = false }: { c: Cluster; credit?: boolean; eager?: boolean }) {
+  const list = useMemo(() => picsOf(c), [c]);
+  const [i, setI] = useState(0);
+  const cur = list[i];
   const b = balance(c);
   return (
-    <div className={`nw-pic t-${tilt(b)}`}>
-      {img && !bad ? <img src={img} alt="" loading="lazy" referrerPolicy="no-referrer" onError={() => setBad(true)} /> : (
+    <figure className={`nw-pic t-${tilt(b)}`}>
+      {cur ? <img src={cur.src} alt="" loading={eager ? "eager" : "lazy"} decoding="async" referrerPolicy="no-referrer" onError={() => setI(i + 1)} onLoad={(e) => { const im = e.currentTarget; if (im.naturalWidth && im.naturalWidth < 120) setI(i + 1); }} /> : (
         <svg viewBox="0 0 300 170" preserveAspectRatio="none" aria-hidden="true">
           {(["L", "C", "R"] as Lean[]).reduce<{ x: number; el: React.ReactNode[] }>((acc, l) => { const t = c.n.L + c.n.C + c.n.R || 1; const w = (300 * c.n[l]) / t; acc.el.push(<rect key={l} x={acc.x} y={0} width={w} height={170} className={`f-${l}`} />); acc.x += w; return acc; }, { x: 0, el: [] }).el}
           <text x="18" y="150" className="n">{c.outlets}</text>
@@ -62,8 +70,45 @@ function Pic({ c }: { c: Cluster }) {
         </svg>
       )}
       {c.blind ? <span className="flag">Blindspot for the {LEAN_LABEL[c.blind]}</span> : null}
-    </div>
+      {credit && cur ? <figcaption>Photo via {outletName(cur.o)}</figcaption> : null}
+    </figure>
   );
+}
+const Pic = ({ c }: { c: Cluster }) => <Photo c={c} />;
+
+/** The lead story's picture: taken from the live wire story that matches it. */
+export function LeadPhoto({ keys }: { keys: string[] }) {
+  const { w } = useWire();
+  const c = useMemo(() => (w?.stories ?? []).find((x) => picsOf(x).length && keys.some((k) => x.items.map((i) => i.t.toLowerCase()).join(" ").includes(k.toLowerCase()))), [w, keys]);
+  if (!c) return null;
+  return <div className="np-leadpic" data-rv><Photo c={c} eager /></div>;
+}
+
+/** Today's date in Eastern time, for the edition line. */
+export function Edition() {
+  const [d, setD] = useState<string>("");
+  useEffect(() => { setD(new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "America/New_York" })); }, []);
+  return <span>{d || "Today"}</span>;
+}
+
+/** Cards rise into place as they scroll into view. Without script, or with reduced motion, everything just shows. */
+export function ScrollFx({ font }: { font?: string }) {
+  useEffect(() => {
+    if (font && !document.querySelector(`link[data-np-font]`)) { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = font; l.setAttribute("data-np-font", "1"); document.head.appendChild(l); }
+    const root = document.querySelector(".nwp"); if (!root) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    root.classList.add("np-fx");
+    const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { (e.target as HTMLElement).classList.add("in"); io.unobserve(e.target); } }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    const seen = new WeakSet<Element>();
+    const scan = () => root.querySelectorAll("[data-rv]").forEach((el, i) => {
+      if (seen.has(el)) return; seen.add(el);
+      (el as HTMLElement).style.setProperty("--d", `${(i % 4) * 70}ms`);
+      const r = el.getBoundingClientRect(); if (r.top < window.innerHeight * 0.92) requestAnimationFrame(() => el.classList.add("in")); else io.observe(el);
+    });
+    scan(); const mo = new MutationObserver(scan); mo.observe(root, { childList: true, subtree: true });
+    return () => { io.disconnect(); mo.disconnect(); };
+  }, [font]);
+  return null;
 }
 
 export function WireCards({ n = 8 }: { n?: number }) {
@@ -74,7 +119,7 @@ export function WireCards({ n = 8 }: { n?: number }) {
   return (
     <div className="nw-cards">
       {list.map((c, i) => (
-        <article key={c.id} className={`nw-cardx${i === 0 ? " big" : ""}`}>
+        <article key={c.id} className={`nw-cardx${i === 0 ? " big" : ""}`} data-rv>
           <button onClick={() => openStory(c.id)} aria-label={`Open coverage of ${c.head.t}`}>
             <Pic c={c} />
             <span className="nw-cat">{CATS.find((k) => k.k === c.cat)?.l} · {now ? ago(c.last, now) : ""}</span>
@@ -98,7 +143,7 @@ export function Compass() {
     return list.map((c, i) => { const b = balance(c); const y = 300 - (Math.log(c.outlets) / Math.log(maxO)) * 210; return { c, x: 710 + b * 630 + ((i * 37) % 23) - 11, y: y + ((i * 53) % 19) - 9, r: 6 + Math.sqrt(c.outlets) * 3.4, t: tilt(b) }; });
   }, [w]);
   return (
-    <div className="card nw-compass">
+    <div className="card nw-compass" data-rv>
       <div className="card-h"><h3>The coverage compass</h3><span className="eye">every story on more than one outlet, placed by who carries it</span></div>
       <svg viewBox="0 0 1400 360" role="img" aria-label="Stories placed from carried only on the Left to carried only on the Right, higher when more outlets carry them">
         <rect x="70" y="20" width="427" height="300" className="band L" /><rect x="497" y="20" width="426" height="300" className="band C" /><rect x="923" y="20" width="427" height="300" className="band R" />
@@ -131,7 +176,7 @@ export function Blindspots() {
   const col = (l: "L" | "R") => {
     const other: Lean = l === "L" ? "R" : "L"; const list = side(l);
     return (
-      <div className={`nw-bs b-${l}`}>
+      <div className={`nw-bs b-${l}`} data-rv>
         <div className="nw-bs-h"><span className="k">Blindspot for the {LEAN_LABEL[l]}</span><h3>Only the {LEAN_LABEL[other]} is covering these</h3><p>Three or more {LEAN_LABEL[other]} outlets and no {LEAN_LABEL[l]} outlet.</p></div>
         {list.length ? <ul>{list.map((c) => (
           <li key={c.id}><button onClick={() => openStory(c.id)}><b>{c.head.t}</b><span>{c.items.map((x) => outletName(x.o)).slice(0, 4).join(", ")}{c.items.length > 4 ? ` and ${c.items.length - 4} more` : ""}</span></button></li>

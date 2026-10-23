@@ -7,6 +7,9 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 22, 2026 evening ──
+  { pollster: "CNBC", endDate: "2026-10-18", sampleSize: 1000, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },   // Oct 14 to 18
+  { pollster: "Economist/YouGov", endDate: "2026-10-20", sampleSize: 1501, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },   // Oct 19 to 20
   // ── Added Oct 22, 2026 8 AM sweep ──
   { pollster: "American Research Group", endDate: "2026-10-20", sampleSize: 1100, sampleType: "A", results: { Approve: 29, Disapprove: 67 } },   // Oct 16 to 20, adults; registered voters 30 to 67
   // ── Added Oct 22, 2026: releases through Oct 20 ──

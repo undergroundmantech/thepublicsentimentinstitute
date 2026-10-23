@@ -304,7 +304,7 @@
    "ballots": 136065,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.88,
+   "comp": 0.87,
    "level": 0.01
   },
   "MI": {
@@ -708,22 +708,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.02,
-   "dem_control_before": 0.8914,
-   "dem_control": 0.8926,
-   "dem_seats": 28.41
+   "seat_change": -0.0,
+   "dem_control_before": 0.8891,
+   "dem_control": 0.8891,
+   "dem_seats": 28.37
   },
   "senate": {
-   "seat_change": -0.02,
-   "dem_control_before": 0.8326,
-   "dem_control": 0.8307,
-   "dem_seats": 53.39
+   "seat_change": -0.0,
+   "dem_control_before": 0.8247,
+   "dem_control": 0.8246,
+   "dem_seats": 53.32
   },
   "house": {
-   "seat_change": 0.67,
-   "dem_control_before": 0.917,
-   "dem_control": 0.9233,
-   "dem_seats": 244.7
+   "seat_change": -0.0,
+   "dem_control_before": 0.9237,
+   "dem_control": 0.9237,
+   "dem_seats": 244.75
   }
  }
 }
