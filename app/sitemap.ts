@@ -1,3 +1,4 @@
+import { getAx } from "./accountability/data";
 // Every public page on the site, built from the same data the pages are built from, so a new
 // race, chamber, measure or polling average is listed the moment it has a page.
 import type { MetadataRoute } from "next";
@@ -43,6 +44,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/watchdog/connections", fc, "daily", 0.8),
     u("/watchdog/paid", fc, "daily", 0.8),
     u("/watchdog/counties", fc, "daily", 0.8),
+    u("/accountability", today, "weekly", 0.9),
+    u("/accountability/methodology", today, "monthly", 0.5),
     ...["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
@@ -87,6 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const c of sl.chambers) out.push(u(slHref(c), sl.meta.updated, "daily", 0.7));
   for (const m of ms.measures) out.push(u(bmHref(m), ms.meta.updated, "daily", 0.7));
   // one early vote tracker page per reporting state
+  for (const m of getAx().members) out.push(u(`/accountability/${m.slug}`, today, "weekly", 0.5));
   for (const s of ev?.states ?? []) out.push(u(`/maps/early-vote/${s.slug}`, ev!.snapshot, "daily", 0.8));
 
   // polling averages, every one at its canonical route

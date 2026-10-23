@@ -67,6 +67,10 @@ export const MENU: NavGroup[] = [
         { href: "/news", label: "Front page", note: "Top stories, summarized", badge: "New" },
         { href: "/news#wire", label: "The live wire", note: "Every outlet, grouped by story" },
       ] },
+      { h: "Accountability", links: [
+        { href: "/accountability", label: "Accountability Index", note: "Every member of Congress, scored for independence", badge: "New" },
+        { href: "/accountability/methodology", label: "How the index works", note: "Sources, weights and gaps" },
+      ] },
       { h: "Method", links: [
         { href: "/news/sources", label: "Outlets and ratings", note: "Every outlet and why we rate it" },
       ] },
@@ -93,6 +97,7 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/paid", label: "Who gets paid" },
         { href: "/watchdog/connections", label: "Connections" },
         { href: "/watchdog/ledger", label: "Ledger records" },
+        { href: "/accountability", label: "Accountability Index" },
       ] },
       { h: "People and places", links: [
         { href: "/watchdog/trail", label: "Campaign trail" },

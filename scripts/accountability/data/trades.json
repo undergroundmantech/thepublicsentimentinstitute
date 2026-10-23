@@ -1,0 +1,817 @@
+{
+ "source": "Quiver Quantitative, Congress Trading page, table 'Most Active Congressional Traders - Last Year' (https://www.quiverquant.com/congresstrading/). Capitol Trades /politicians listing could not be read (site returned client_error on every fetch, including ?page=2 and ?chamber= variants), so it was not used.",
+ "period": "Trailing one year as labeled by the source ('Last Year'), as of fetch date 2026-10-22. Not three years: the source offers no longer-period per-politician table that could be read.",
+ "fetched": "2026-10-22",
+ "notes": "trades = number of reported transactions in the source table. volume = the source's 'Estimated Trade Volume' in US dollars; Quiver does not state its method on the page (STOCK Act disclosures give amount ranges, so this is an estimate, not an exact figure). issuers, last and late are null for everyone because this source table does not show distinct companies, last trade date or late filings. Rows were read through a page-to-text summarizer; the top 15 were identical across two separate reads. John McGuire (VA) appeared as two source rows ('John Mcguire' 11 trades $88,000 and 'John J Mr Mcguire Iii' 6 trades $48,000); they are summed here and the member entry has a note. 104 distinct people in the source; 3 are not on the current roster (Markwayne Mullin, Lindsey Graham, Marjorie Taylor Greene) and were left out. Absence from this file means the member is not in Quiver's last-year table, which is not proof of zero trades: e.g. Jefferson Shreve (IN) is missing although other trackers show 2026 trades for him.",
+ "members": {
+  "K000389": {
+   "trades": 4310,
+   "volume": 64395000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "P000197": {
+   "trades": 26,
+   "volume": 60975000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000829": {
+   "trades": 19,
+   "volume": 25882500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001157": {
+   "trades": 468,
+   "volume": 24125000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "A000383": {
+   "trades": 369,
+   "volume": 21387000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "R000614": {
+   "trades": 3,
+   "volume": 15350000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001123": {
+   "trades": 1077,
+   "volume": 12021500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "H001082": {
+   "trades": 174,
+   "volume": 8882500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001232": {
+   "trades": 344,
+   "volume": 8216500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "G000583": {
+   "trades": 131,
+   "volume": 6538000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000110": {
+   "trades": 67,
+   "volume": 4198500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001136": {
+   "trades": 463,
+   "volume": 4047000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001243": {
+   "trades": 5,
+   "volume": 3257500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001236": {
+   "trades": 56,
+   "volume": 2594500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S000168": {
+   "trades": 120,
+   "volume": 1933500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "J000309": {
+   "trades": 55,
+   "volume": 1837000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001236": {
+   "trades": 170,
+   "volume": 1616500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "T000490": {
+   "trades": 180,
+   "volume": 1611500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "A000372": {
+   "trades": 33,
+   "volume": 1543000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "J000305": {
+   "trades": 2,
+   "volume": 1500000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001203": {
+   "trades": 8,
+   "volume": 1300000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "J000310": {
+   "trades": 147,
+   "volume": 1176000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "H001086": {
+   "trades": 8,
+   "volume": 1157500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000802": {
+   "trades": 36,
+   "volume": 891500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "K000398": {
+   "trades": 63,
+   "volume": 773500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001217": {
+   "trades": 82,
+   "volume": 754000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001218": {
+   "trades": 87,
+   "volume": 696000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "H000273": {
+   "trades": 7,
+   "volume": 582500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000032": {
+   "trades": 50,
+   "volume": 534000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001199": {
+   "trades": 8,
+   "volume": 489500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "T000278": {
+   "trades": 15,
+   "volume": 456500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000595": {
+   "trades": 50,
+   "volume": 400000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "N000189": {
+   "trades": 49,
+   "volume": 392000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "R000619": {
+   "trades": 28,
+   "volume": 358000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001234": {
+   "trades": 19,
+   "volume": 323500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001047": {
+   "trades": 30,
+   "volume": 313500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000624": {
+   "trades": 13,
+   "volume": 311500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "P000048": {
+   "trades": 15,
+   "volume": 267000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001325": {
+   "trades": 4,
+   "volume": 266000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001288": {
+   "trades": 6,
+   "volume": 264000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S000250": {
+   "trades": 5,
+   "volume": 256000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001068": {
+   "trades": 8,
+   "volume": 253500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "H001072": {
+   "trades": 4,
+   "volume": 248000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001291": {
+   "trades": 12,
+   "volume": 212000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001211": {
+   "trades": 2,
+   "volume": 207500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000450": {
+   "trades": 11,
+   "volume": 204000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000560": {
+   "trades": 25,
+   "volume": 200000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000472": {
+   "trades": 15,
+   "volume": 187000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000597": {
+   "trades": 8,
+   "volume": 180000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001245": {
+   "trades": 7,
+   "volume": 178500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000399": {
+   "trades": 22,
+   "volume": 176000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001098": {
+   "trades": 1,
+   "volume": 175000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001242": {
+   "trades": 1,
+   "volume": 175000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "T000488": {
+   "trades": 1,
+   "volume": 175000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001227": {
+   "trades": 1,
+   "volume": 175000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "P000595": {
+   "trades": 9,
+   "volume": 170000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001222": {
+   "trades": 15,
+   "volume": 169500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "T000480": {
+   "trades": 2,
+   "volume": 150000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "E000296": {
+   "trades": 14,
+   "volume": 136500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "A000148": {
+   "trades": 4,
+   "volume": 130000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "Y000067": {
+   "trades": 4,
+   "volume": 130000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "V000139": {
+   "trades": 13,
+   "volume": 128500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000628": {
+   "trades": 4,
+   "volume": 123500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001201": {
+   "trades": 4,
+   "volume": 105500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "K000383": {
+   "trades": 12,
+   "volume": 96000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "K000376": {
+   "trades": 5,
+   "volume": 89000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001204": {
+   "trades": 8,
+   "volume": 88500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000468": {
+   "trades": 11,
+   "volume": 88000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M001239": {
+   "trades": 17,
+   "volume": 136000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/",
+   "note": "sum of 2 source rows: \"John Mcguire\" 11 trades $88,000 + \"John J Mr Mcguire Iii\" 6 trades $48,000"
+  },
+  "B001327": {
+   "trades": 2,
+   "volume": 83000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M000934": {
+   "trades": 7,
+   "volume": 80500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "J000289": {
+   "trades": 1,
+   "volume": 75000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "H001047": {
+   "trades": 3,
+   "volume": 73000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "G000591": {
+   "trades": 9,
+   "volume": 72000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "M000355": {
+   "trades": 5,
+   "volume": 64500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000479": {
+   "trades": 8,
+   "volume": 64000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000816": {
+   "trades": 4,
+   "volume": 56500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000566": {
+   "trades": 4,
+   "volume": 56500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001319": {
+   "trades": 7,
+   "volume": 56000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "A000379": {
+   "trades": 7,
+   "volume": 56000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001120": {
+   "trades": 7,
+   "volume": 56000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000798": {
+   "trades": 2,
+   "volume": 40500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001214": {
+   "trades": 2,
+   "volume": 40500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001185": {
+   "trades": 2,
+   "volume": 40500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000616": {
+   "trades": 2,
+   "volume": 40500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "C001055": {
+   "trades": 5,
+   "volume": 40000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "G000603": {
+   "trades": 1,
+   "volume": 32500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000607": {
+   "trades": 1,
+   "volume": 32500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001212": {
+   "trades": 1,
+   "volume": 32500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "J000307": {
+   "trades": 1,
+   "volume": 32500,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000459": {
+   "trades": 4,
+   "volume": 32000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "L000590": {
+   "trades": 3,
+   "volume": 24000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "R000603": {
+   "trades": 2,
+   "volume": 16000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "F000483": {
+   "trades": 2,
+   "volume": 16000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B001299": {
+   "trades": 2,
+   "volume": 16000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001189": {
+   "trades": 2,
+   "volume": 16000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000804": {
+   "trades": 1,
+   "volume": 8000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "S001156": {
+   "trades": 1,
+   "volume": 8000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "B000668": {
+   "trades": 1,
+   "volume": 8000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "D000626": {
+   "trades": 1,
+   "volume": 8000,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  },
+  "W000797": {
+   "trades": 2,
+   "volume": 0,
+   "issuers": null,
+   "last": null,
+   "late": null,
+   "url": "https://www.quiverquant.com/congresstrading/"
+  }
+ }
+}

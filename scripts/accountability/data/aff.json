@@ -1,0 +1,3217 @@
+{
+ "source": "https://americafirstfoundation.org/scorecard",
+ "fetched": "2026-10-22",
+ "notes": "Scale and method as the site describes it: America First Foundation grades current incumbents against an America First policy framework on stand-alone bills in three domains, immigration, trade and foreign policy, from the 117th, 118th and 119th Congresses, with activity counted through June 30, 2026. Simple and concurrent resolutions and bills without published GPO text are excluded. Actions are sponsorships, cosponsorships and recorded final passage votes where available. Each bill is scored 0 to 100 for alignment with the framework; supporting aligned bills or opposing misaligned bills raises a member's evaluation and the reverse lowers it. Bills with little bearing may get reduced weight or be dropped. Israel, the Middle East and U.S. military commitments there get extra weight. Some areas, such as Western Hemisphere, Russia and Ukraine and the Indo-Pacific, are reward only, so members holding a competing position are not penalized. Member pages show a Total grade plus separate Immigration, Foreign Policy and Trade grades; this file records only the Total grade. The site publishes no letter grade cutoffs and no aggregation formula. 'aligned' of 'total' is the site's 'N of M actions aligned with America First positions'. Grades seen: C+, C, C-, D+, D, D-, F and 'Ungraded'. No A or B grades appear; C+ is the highest, and Bernie Moreno is the only member with it. 'Ungraded' members are listed by the site with no N of M figure; aligned and total are null for them. Collection: the listing shows at most 24 cards; page, state and chamber query parameters are ignored. The site search q= parameter matching state or name, plus sort=name and sort=tenure, was used to enumerate all members. Values were read through WebFetch summaries. 90 records were confirmed by a second independent listing read with 0 differences, and 20 more against member pages with 0 differences. One early Texas listing read had digit errors and was thrown out and re-read. The rest have a single read. Verification stopped when the web fetch hourly rate limit was hit. 4 roster members were not found on the site under any search: James Gallagher CA-1, Aisha Wahab CA-14, Everton Blair Jr. GA-13 and Darline Graham SC senator.",
+ "members": {
+  "A000055": {
+   "grade": "F",
+   "aligned": 112,
+   "total": 173,
+   "url": "https://americafirstfoundation.org/scorecard/robert-b-aderholt-alabama-house-4th-district"
+  },
+  "A000148": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 210,
+   "url": "https://americafirstfoundation.org/scorecard/jake-auchincloss-massachusetts-house-4th-district"
+  },
+  "A000369": {
+   "grade": "F",
+   "aligned": 86,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/mark-e-amodei-nevada-house-2nd-district"
+  },
+  "A000370": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 161,
+   "url": "https://americafirstfoundation.org/scorecard/alma-adams-north-carolina-house-12th-district"
+  },
+  "A000371": {
+   "grade": "F",
+   "aligned": 50,
+   "total": 159,
+   "url": "https://americafirstfoundation.org/scorecard/pete-aguilar-california-house-33rd-district"
+  },
+  "A000372": {
+   "grade": "F",
+   "aligned": 117,
+   "total": 179,
+   "url": "https://americafirstfoundation.org/scorecard/rick-w-allen-georgia-house-12th-district"
+  },
+  "A000375": {
+   "grade": "F",
+   "aligned": 146,
+   "total": 208,
+   "url": "https://americafirstfoundation.org/scorecard/jodey-c-arrington-texas-house-19th-district"
+  },
+  "A000379": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 126,
+   "url": "https://americafirstfoundation.org/scorecard/mark-alford-missouri-house-4th-district"
+  },
+  "A000380": {
+   "grade": "F",
+   "aligned": 55,
+   "total": 130,
+   "url": "https://americafirstfoundation.org/scorecard/gabe-amo-rhode-island-house-1st-district"
+  },
+  "A000381": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 83,
+   "url": "https://americafirstfoundation.org/scorecard/yassamin-ansari-arizona-house-3rd-district"
+  },
+  "A000382": {
+   "grade": "F",
+   "aligned": 9,
+   "total": 38,
+   "url": "https://americafirstfoundation.org/scorecard/angela-alsobrooks-maryland-senate-senate"
+  },
+  "A000383": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/alan-armstrong-oklahoma-senate-senate"
+  },
+  "B000490": {
+   "grade": "F",
+   "aligned": 59,
+   "total": 154,
+   "url": "https://americafirstfoundation.org/scorecard/sanford-bishop-georgia-house-2nd-district"
+  },
+  "B000668": {
+   "grade": "F",
+   "aligned": 83,
+   "total": 136,
+   "url": "https://americafirstfoundation.org/scorecard/cliff-bentz-oregon-house-2nd-district"
+  },
+  "B000740": {
+   "grade": "F",
+   "aligned": 117,
+   "total": 178,
+   "url": "https://americafirstfoundation.org/scorecard/stephanie-i-bice-oklahoma-house-5th-district"
+  },
+  "B000825": {
+   "grade": "D",
+   "aligned": 209,
+   "total": 268,
+   "url": "https://americafirstfoundation.org/scorecard/lauren-boebert-colorado-house-4th-district"
+  },
+  "B001230": {
+   "grade": "F",
+   "aligned": 35,
+   "total": 83,
+   "url": "https://americafirstfoundation.org/scorecard/tammy-baldwin-wisconsin-senate-senate"
+  },
+  "B001236": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 86,
+   "url": "https://americafirstfoundation.org/scorecard/john-boozman-arkansas-senate-class-3"
+  },
+  "B001243": {
+   "grade": "D-",
+   "aligned": 166,
+   "total": 218,
+   "url": "https://americafirstfoundation.org/scorecard/marsha-blackburn-tennessee-senate-class-1"
+  },
+  "B001257": {
+   "grade": "F",
+   "aligned": 128,
+   "total": 213,
+   "url": "https://americafirstfoundation.org/scorecard/gus-m-bilirakis-florida-house-12th-district"
+  },
+  "B001260": {
+   "grade": "F",
+   "aligned": 118,
+   "total": 191,
+   "url": "https://americafirstfoundation.org/scorecard/vern-buchanan-florida-house-16th-district"
+  },
+  "B001261": {
+   "grade": "F",
+   "aligned": 78,
+   "total": 105,
+   "url": "https://americafirstfoundation.org/scorecard/john-barrasso-wyoming-senate-class-1"
+  },
+  "B001267": {
+   "grade": "F",
+   "aligned": 32,
+   "total": 89,
+   "url": "https://americafirstfoundation.org/scorecard/michael-bennet-colorado-senate-senate"
+  },
+  "B001277": {
+   "grade": "F",
+   "aligned": 26,
+   "total": 158,
+   "url": "https://americafirstfoundation.org/scorecard/richard-blumenthal-connecticut-senate-senate"
+  },
+  "B001278": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 207,
+   "url": "https://americafirstfoundation.org/scorecard/suzanne-bonamici-oregon-house-1st-district"
+  },
+  "B001281": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 162,
+   "url": "https://americafirstfoundation.org/scorecard/joyce-beatty-ohio-house-3rd-district"
+  },
+  "B001282": {
+   "grade": "F",
+   "aligned": 161,
+   "total": 241,
+   "url": "https://americafirstfoundation.org/scorecard/andy-barr-kentucky-house-6th-district"
+  },
+  "B001285": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 201,
+   "url": "https://americafirstfoundation.org/scorecard/julia-brownley-california-house-26th-district"
+  },
+  "B001287": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 270,
+   "url": "https://americafirstfoundation.org/scorecard/ami-bera-california-house-6th-district"
+  },
+  "B001288": {
+   "grade": "F",
+   "aligned": 24,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/cory-booker-new-jersey-senate-senate"
+  },
+  "B001291": {
+   "grade": "D",
+   "aligned": 293,
+   "total": 367,
+   "url": "https://americafirstfoundation.org/scorecard/brian-babin-texas-house-36th-district"
+  },
+  "B001292": {
+   "grade": "F",
+   "aligned": 78,
+   "total": 237,
+   "url": "https://americafirstfoundation.org/scorecard/donald-beyer-virginia-house-8th-district"
+  },
+  "B001295": {
+   "grade": "F",
+   "aligned": 131,
+   "total": 209,
+   "url": "https://americafirstfoundation.org/scorecard/mike-bost-illinois-house-12th-district"
+  },
+  "B001296": {
+   "grade": "F",
+   "aligned": 59,
+   "total": 175,
+   "url": "https://americafirstfoundation.org/scorecard/brendan-boyle-pennsylvania-house-2nd-district"
+  },
+  "B001298": {
+   "grade": "F",
+   "aligned": 125,
+   "total": 275,
+   "url": "https://americafirstfoundation.org/scorecard/don-bacon-nebraska-house-2nd-district"
+  },
+  "B001299": {
+   "grade": "F",
+   "aligned": 160,
+   "total": 230,
+   "url": "https://americafirstfoundation.org/scorecard/jim-banks-indiana-senate-class-1-2"
+  },
+  "B001300": {
+   "grade": "F",
+   "aligned": 61,
+   "total": 226,
+   "url": "https://americafirstfoundation.org/scorecard/nanette-barragan-california-house-44th-district"
+  },
+  "B001301": {
+   "grade": "F",
+   "aligned": 130,
+   "total": 207,
+   "url": "https://americafirstfoundation.org/scorecard/jack-bergman-michigan-house-1st-district"
+  },
+  "B001302": {
+   "grade": "D",
+   "aligned": 352,
+   "total": 419,
+   "url": "https://americafirstfoundation.org/scorecard/andy-biggs-arizona-house-5th-district"
+  },
+  "B001303": {
+   "grade": "F",
+   "aligned": 51,
+   "total": 153,
+   "url": "https://americafirstfoundation.org/scorecard/lisa-blunt-rochester-delaware-senate-senate-2"
+  },
+  "B001305": {
+   "grade": "F",
+   "aligned": 188,
+   "total": 253,
+   "url": "https://americafirstfoundation.org/scorecard/ted-budd-north-carolina-senate-class-3-2"
+  },
+  "B001306": {
+   "grade": "F",
+   "aligned": 118,
+   "total": 181,
+   "url": "https://americafirstfoundation.org/scorecard/troy-balderson-ohio-house-12th-district"
+  },
+  "B001307": {
+   "grade": "F",
+   "aligned": 155,
+   "total": 249,
+   "url": "https://americafirstfoundation.org/scorecard/james-r-baird-indiana-house-4th-district"
+  },
+  "B001309": {
+   "grade": "F",
+   "aligned": 158,
+   "total": 234,
+   "url": "https://americafirstfoundation.org/scorecard/tim-burchett-tennessee-house-2nd-district"
+  },
+  "B001313": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/shontel-brown-ohio-house-11th-district"
+  },
+  "B001314": {
+   "grade": "F",
+   "aligned": 92,
+   "total": 134,
+   "url": "https://americafirstfoundation.org/scorecard/aaron-bean-florida-house-4th-district"
+  },
+  "B001315": {
+   "grade": "F",
+   "aligned": 55,
+   "total": 122,
+   "url": "https://americafirstfoundation.org/scorecard/nikki-budzinski-illinois-house-13th-district"
+  },
+  "B001316": {
+   "grade": "F",
+   "aligned": 88,
+   "total": 126,
+   "url": "https://americafirstfoundation.org/scorecard/eric-burlison-missouri-house-7th-district"
+  },
+  "B001317": {
+   "grade": "D",
+   "aligned": 157,
+   "total": 198,
+   "url": "https://americafirstfoundation.org/scorecard/josh-brecheen-oklahoma-house-2nd-district"
+  },
+  "B001318": {
+   "grade": "F",
+   "aligned": 50,
+   "total": 145,
+   "url": "https://americafirstfoundation.org/scorecard/becca-balint-vermont-house-at-large"
+  },
+  "B001319": {
+   "grade": "D-",
+   "aligned": 67,
+   "total": 91,
+   "url": "https://americafirstfoundation.org/scorecard/katie-britt-alabama-senate-class-3"
+  },
+  "B001321": {
+   "grade": "D-",
+   "aligned": 33,
+   "total": 44,
+   "url": "https://americafirstfoundation.org/scorecard/tom-barrett-michigan-house-7th-district"
+  },
+  "B001322": {
+   "grade": "F",
+   "aligned": 46,
+   "total": 72,
+   "url": "https://americafirstfoundation.org/scorecard/michael-baumgartner-washington-house-5th-district"
+  },
+  "B001323": {
+   "grade": "D+",
+   "aligned": 36,
+   "total": 43,
+   "url": "https://americafirstfoundation.org/scorecard/nicholas-j-begich-iii-alaska-house-at-large"
+  },
+  "B001324": {
+   "grade": "F",
+   "aligned": 14,
+   "total": 60,
+   "url": "https://americafirstfoundation.org/scorecard/wesley-bell-missouri-house-1st-district"
+  },
+  "B001325": {
+   "grade": "C-",
+   "aligned": 66,
+   "total": 75,
+   "url": "https://americafirstfoundation.org/scorecard/sheri-biggs-south-carolina-house-3rd-district"
+  },
+  "B001326": {
+   "grade": "F",
+   "aligned": 16,
+   "total": 41,
+   "url": "https://americafirstfoundation.org/scorecard/janelle-bynum-oregon-house-5th-district"
+  },
+  "B001327": {
+   "grade": "D-",
+   "aligned": 30,
+   "total": 38,
+   "url": "https://americafirstfoundation.org/scorecard/robert-p-bresnahan-pennsylvania-house-8th-district"
+  },
+  "C000059": {
+   "grade": "F",
+   "aligned": 116,
+   "total": 183,
+   "url": "https://americafirstfoundation.org/scorecard/ken-calvert-california-house-41st-district"
+  },
+  "C000127": {
+   "grade": "F",
+   "aligned": 6,
+   "total": 35,
+   "url": "https://americafirstfoundation.org/scorecard/maria-cantwell-washington-senate-senate"
+  },
+  "C000537": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 134,
+   "url": "https://americafirstfoundation.org/scorecard/james-clyburn-south-carolina-house-6th-district"
+  },
+  "C000880": {
+   "grade": "F",
+   "aligned": 55,
+   "total": 91,
+   "url": "https://americafirstfoundation.org/scorecard/mike-crapo-idaho-senate-class-3"
+  },
+  "C001035": {
+   "grade": "F",
+   "aligned": 37,
+   "total": 112,
+   "url": "https://americafirstfoundation.org/scorecard/susan-collins-maine-senate-class-2"
+  },
+  "C001039": {
+   "grade": "F",
+   "aligned": 147,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/kat-cammack-florida-house-3rd-district"
+  },
+  "C001047": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 87,
+   "url": "https://americafirstfoundation.org/scorecard/shelley-capito-west-virginia-senate-senate"
+  },
+  "C001051": {
+   "grade": "F",
+   "aligned": 116,
+   "total": 175,
+   "url": "https://americafirstfoundation.org/scorecard/john-r-carter-texas-house-31st-district"
+  },
+  "C001053": {
+   "grade": "F",
+   "aligned": 96,
+   "total": 164,
+   "url": "https://americafirstfoundation.org/scorecard/tom-cole-oklahoma-house-4th-district"
+  },
+  "C001055": {
+   "grade": "F",
+   "aligned": 102,
+   "total": 244,
+   "url": "https://americafirstfoundation.org/scorecard/ed-case-hawaii-house-1st-district"
+  },
+  "C001056": {
+   "grade": "F",
+   "aligned": 138,
+   "total": 202,
+   "url": "https://americafirstfoundation.org/scorecard/john-cornyn-texas-senate-class-2"
+  },
+  "C001059": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 237,
+   "url": "https://americafirstfoundation.org/scorecard/jim-costa-california-house-21st-district"
+  },
+  "C001061": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 174,
+   "url": "https://americafirstfoundation.org/scorecard/emanuel-cleaver-missouri-house-5th-district"
+  },
+  "C001063": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/henry-cuellar-texas-house-28th-district"
+  },
+  "C001066": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 174,
+   "url": "https://americafirstfoundation.org/scorecard/kathy-castor-florida-house-14th-district"
+  },
+  "C001067": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 245,
+   "url": "https://americafirstfoundation.org/scorecard/yvette-clarke-new-york-house-9th-district"
+  },
+  "C001068": {
+   "grade": "F",
+   "aligned": 92,
+   "total": 277,
+   "url": "https://americafirstfoundation.org/scorecard/steve-cohen-tennessee-house-9th-district"
+  },
+  "C001069": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 162,
+   "url": "https://americafirstfoundation.org/scorecard/joe-courtney-connecticut-house-2nd-district"
+  },
+  "C001072": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 291,
+   "url": "https://americafirstfoundation.org/scorecard/andre-carson-indiana-house-7th-district"
+  },
+  "C001075": {
+   "grade": "D-",
+   "aligned": 96,
+   "total": 145,
+   "url": "https://americafirstfoundation.org/scorecard/bill-cassidy-louisiana-senate-class-2"
+  },
+  "C001080": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 277,
+   "url": "https://americafirstfoundation.org/scorecard/judy-chu-california-house-28th-district"
+  },
+  "C001087": {
+   "grade": "F",
+   "aligned": 137,
+   "total": 201,
+   "url": "https://americafirstfoundation.org/scorecard/eric-a-crawford-arkansas-house-1st-district"
+  },
+  "C001088": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 188,
+   "url": "https://americafirstfoundation.org/scorecard/christopher-coons-delaware-senate-senate"
+  },
+  "C001091": {
+   "grade": "F",
+   "aligned": 111,
+   "total": 301,
+   "url": "https://americafirstfoundation.org/scorecard/joaquin-castro-texas-house-20th-district"
+  },
+  "C001095": {
+   "grade": "F",
+   "aligned": 137,
+   "total": 183,
+   "url": "https://americafirstfoundation.org/scorecard/tom-cotton-arkansas-senate-class-2"
+  },
+  "C001096": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 142,
+   "url": "https://americafirstfoundation.org/scorecard/kevin-cramer-north-dakota-senate-class-1"
+  },
+  "C001098": {
+   "grade": "F",
+   "aligned": 160,
+   "total": 217,
+   "url": "https://americafirstfoundation.org/scorecard/ted-cruz-texas-senate-class-1"
+  },
+  "C001101": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 143,
+   "url": "https://americafirstfoundation.org/scorecard/katherine-clark-massachusetts-house-5th-district"
+  },
+  "C001103": {
+   "grade": "F",
+   "aligned": 142,
+   "total": 221,
+   "url": "https://americafirstfoundation.org/scorecard/earl-l-carter-georgia-house-1st-district"
+  },
+  "C001108": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 136,
+   "url": "https://americafirstfoundation.org/scorecard/james-comer-kentucky-house-1st-district"
+  },
+  "C001110": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 224,
+   "url": "https://americafirstfoundation.org/scorecard/j-correa-california-house-46th-district"
+  },
+  "C001112": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 232,
+   "url": "https://americafirstfoundation.org/scorecard/salud-carbajal-california-house-24th-district"
+  },
+  "C001113": {
+   "grade": "F",
+   "aligned": 36,
+   "total": 121,
+   "url": "https://americafirstfoundation.org/scorecard/catherine-cortez-masto-nevada-senate-senate"
+  },
+  "C001114": {
+   "grade": "F",
+   "aligned": 110,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/john-curtis-utah-senate-class-1-2"
+  },
+  "C001115": {
+   "grade": "D",
+   "aligned": 162,
+   "total": 222,
+   "url": "https://americafirstfoundation.org/scorecard/michael-cloud-texas-house-27th-district"
+  },
+  "C001116": {
+   "grade": "D-",
+   "aligned": 135,
+   "total": 188,
+   "url": "https://americafirstfoundation.org/scorecard/andrew-s-clyde-georgia-house-9th-district"
+  },
+  "C001117": {
+   "grade": "F",
+   "aligned": 63,
+   "total": 195,
+   "url": "https://americafirstfoundation.org/scorecard/sean-casten-illinois-house-6th-district"
+  },
+  "C001118": {
+   "grade": "F",
+   "aligned": 177,
+   "total": 246,
+   "url": "https://americafirstfoundation.org/scorecard/ben-cline-virginia-house-6th-district"
+  },
+  "C001119": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 195,
+   "url": "https://americafirstfoundation.org/scorecard/angie-craig-minnesota-house-2nd-district"
+  },
+  "C001120": {
+   "grade": "F",
+   "aligned": 184,
+   "total": 275,
+   "url": "https://americafirstfoundation.org/scorecard/dan-crenshaw-texas-house-2nd-district"
+  },
+  "C001121": {
+   "grade": "F",
+   "aligned": 81,
+   "total": 227,
+   "url": "https://americafirstfoundation.org/scorecard/jason-crow-colorado-house-6th-district"
+  },
+  "C001123": {
+   "grade": "F",
+   "aligned": 16,
+   "total": 60,
+   "url": "https://americafirstfoundation.org/scorecard/gilbert-cisneros-california-house-31st-district"
+  },
+  "C001125": {
+   "grade": "F",
+   "aligned": 64,
+   "total": 164,
+   "url": "https://americafirstfoundation.org/scorecard/troy-carter-louisiana-house-2nd-district"
+  },
+  "C001126": {
+   "grade": "F",
+   "aligned": 92,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/mike-carey-ohio-house-15th-district"
+  },
+  "C001129": {
+   "grade": "F",
+   "aligned": 101,
+   "total": 136,
+   "url": "https://americafirstfoundation.org/scorecard/mike-collins-georgia-house-10th-district"
+  },
+  "C001130": {
+   "grade": "F",
+   "aligned": 49,
+   "total": 149,
+   "url": "https://americafirstfoundation.org/scorecard/jasmine-crockett-texas-house-30th-district"
+  },
+  "C001131": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 162,
+   "url": "https://americafirstfoundation.org/scorecard/greg-casar-texas-house-35th-district"
+  },
+  "C001132": {
+   "grade": "D",
+   "aligned": 200,
+   "total": 247,
+   "url": "https://americafirstfoundation.org/scorecard/elijah-crane-arizona-house-2nd-district"
+  },
+  "C001133": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 166,
+   "url": "https://americafirstfoundation.org/scorecard/juan-ciscomani-arizona-house-6th-district"
+  },
+  "C001136": {
+   "grade": "F",
+   "aligned": 16,
+   "total": 36,
+   "url": "https://americafirstfoundation.org/scorecard/herbert-conaway-new-jersey-house-3rd-district"
+  },
+  "C001137": {
+   "grade": "D-",
+   "aligned": 29,
+   "total": 37,
+   "url": "https://americafirstfoundation.org/scorecard/jeff-crank-colorado-house-5th-district"
+  },
+  "D000032": {
+   "grade": "D",
+   "aligned": 265,
+   "total": 334,
+   "url": "https://americafirstfoundation.org/scorecard/byron-donalds-florida-house-19th-district"
+  },
+  "D000096": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 217,
+   "url": "https://americafirstfoundation.org/scorecard/danny-davis-illinois-house-7th-district"
+  },
+  "D000197": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 194,
+   "url": "https://americafirstfoundation.org/scorecard/diana-degette-colorado-house-1st-district"
+  },
+  "D000216": {
+   "grade": "F",
+   "aligned": 64,
+   "total": 159,
+   "url": "https://americafirstfoundation.org/scorecard/rosa-delauro-connecticut-house-3rd-district"
+  },
+  "D000230": {
+   "grade": "F",
+   "aligned": 89,
+   "total": 159,
+   "url": "https://americafirstfoundation.org/scorecard/donald-davis-north-carolina-house-1st-district"
+  },
+  "D000399": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 208,
+   "url": "https://americafirstfoundation.org/scorecard/lloyd-doggett-texas-house-37th-district"
+  },
+  "D000530": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 143,
+   "url": "https://americafirstfoundation.org/scorecard/christopher-deluzio-pennsylvania-house-17th-district"
+  },
+  "D000563": {
+   "grade": "F",
+   "aligned": 25,
+   "total": 159,
+   "url": "https://americafirstfoundation.org/scorecard/richard-durbin-illinois-senate-senate"
+  },
+  "D000594": {
+   "grade": "F",
+   "aligned": 108,
+   "total": 164,
+   "url": "https://americafirstfoundation.org/scorecard/monica-de-la-cruz-texas-house-15th-district"
+  },
+  "D000600": {
+   "grade": "F",
+   "aligned": 114,
+   "total": 195,
+   "url": "https://americafirstfoundation.org/scorecard/mario-diaz-balart-florida-house-26th-district"
+  },
+  "D000616": {
+   "grade": "F",
+   "aligned": 122,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/scott-desjarlais-tennessee-house-4th-district"
+  },
+  "D000617": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 222,
+   "url": "https://americafirstfoundation.org/scorecard/suzan-delbene-washington-house-1st-district"
+  },
+  "D000618": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 133,
+   "url": "https://americafirstfoundation.org/scorecard/steve-daines-montana-senate-class-2"
+  },
+  "D000622": {
+   "grade": "F",
+   "aligned": 31,
+   "total": 132,
+   "url": "https://americafirstfoundation.org/scorecard/tammy-duckworth-illinois-senate-senate"
+  },
+  "D000623": {
+   "grade": "F",
+   "aligned": 75,
+   "total": 216,
+   "url": "https://americafirstfoundation.org/scorecard/mark-desaulnier-california-house-10th-district"
+  },
+  "D000624": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 179,
+   "url": "https://americafirstfoundation.org/scorecard/debbie-dingell-michigan-house-6th-district"
+  },
+  "D000626": {
+   "grade": "D",
+   "aligned": 145,
+   "total": 207,
+   "url": "https://americafirstfoundation.org/scorecard/warren-davidson-ohio-house-8th-district"
+  },
+  "D000628": {
+   "grade": "F",
+   "aligned": 125,
+   "total": 191,
+   "url": "https://americafirstfoundation.org/scorecard/neal-p-dunn-florida-house-2nd-district"
+  },
+  "D000629": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/sharice-davids-kansas-house-3rd-district"
+  },
+  "D000631": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 218,
+   "url": "https://americafirstfoundation.org/scorecard/madeleine-dean-pennsylvania-house-4th-district"
+  },
+  "D000634": {
+   "grade": "D",
+   "aligned": 43,
+   "total": 51,
+   "url": "https://americafirstfoundation.org/scorecard/troy-downing-montana-house-2nd-district"
+  },
+  "D000635": {
+   "grade": "F",
+   "aligned": 17,
+   "total": 64,
+   "url": "https://americafirstfoundation.org/scorecard/maxine-dexter-oregon-house-3rd-district"
+  },
+  "E000071": {
+   "grade": "F",
+   "aligned": 129,
+   "total": 192,
+   "url": "https://americafirstfoundation.org/scorecard/jake-ellzey-texas-house-6th-district"
+  },
+  "E000235": {
+   "grade": "F",
+   "aligned": 82,
+   "total": 125,
+   "url": "https://americafirstfoundation.org/scorecard/mike-ezell-mississippi-house-4th-district"
+  },
+  "E000246": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 150,
+   "url": "https://americafirstfoundation.org/scorecard/chuck-edwards-north-carolina-house-11th-district"
+  },
+  "E000294": {
+   "grade": "F",
+   "aligned": 103,
+   "total": 165,
+   "url": "https://americafirstfoundation.org/scorecard/tom-emmer-minnesota-house-6th-district"
+  },
+  "E000295": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 149,
+   "url": "https://americafirstfoundation.org/scorecard/joni-ernst-iowa-senate-class-2"
+  },
+  "E000296": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 198,
+   "url": "https://americafirstfoundation.org/scorecard/dwight-evans-pennsylvania-house-3rd-district"
+  },
+  "E000297": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 308,
+   "url": "https://americafirstfoundation.org/scorecard/adriano-espaillat-new-york-house-13th-district"
+  },
+  "E000298": {
+   "grade": "F",
+   "aligned": 104,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/ron-estes-kansas-house-4th-district"
+  },
+  "E000299": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 219,
+   "url": "https://americafirstfoundation.org/scorecard/veronica-escobar-texas-house-16th-district"
+  },
+  "E000300": {
+   "grade": "D",
+   "aligned": 39,
+   "total": 52,
+   "url": "https://americafirstfoundation.org/scorecard/gabe-evans-colorado-house-8th-district"
+  },
+  "E000301": {
+   "grade": "F",
+   "aligned": 13,
+   "total": 46,
+   "url": "https://americafirstfoundation.org/scorecard/sarah-elfreth-maryland-house-3rd-district"
+  },
+  "F000110": {
+   "grade": "F",
+   "aligned": 15,
+   "total": 40,
+   "url": "https://americafirstfoundation.org/scorecard/cleo-fields-louisiana-house-6th-district"
+  },
+  "F000246": {
+   "grade": "F",
+   "aligned": 170,
+   "total": 247,
+   "url": "https://americafirstfoundation.org/scorecard/pat-fallon-texas-house-4th-district"
+  },
+  "F000446": {
+   "grade": "F",
+   "aligned": 130,
+   "total": 209,
+   "url": "https://americafirstfoundation.org/scorecard/randy-feenstra-iowa-house-4th-district"
+  },
+  "F000450": {
+   "grade": "F",
+   "aligned": 104,
+   "total": 169,
+   "url": "https://americafirstfoundation.org/scorecard/virginia-foxx-north-carolina-house-5th-district"
+  },
+  "F000454": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 189,
+   "url": "https://americafirstfoundation.org/scorecard/bill-foster-illinois-house-11th-district"
+  },
+  "F000459": {
+   "grade": "F",
+   "aligned": 119,
+   "total": 199,
+   "url": "https://americafirstfoundation.org/scorecard/charles-j-fleischmann-tennessee-house-3rd-district"
+  },
+  "F000462": {
+   "grade": "F",
+   "aligned": 47,
+   "total": 193,
+   "url": "https://americafirstfoundation.org/scorecard/lois-frankel-florida-house-22nd-district"
+  },
+  "F000463": {
+   "grade": "F",
+   "aligned": 54,
+   "total": 75,
+   "url": "https://americafirstfoundation.org/scorecard/deb-fischer-nebraska-senate-class-1"
+  },
+  "F000466": {
+   "grade": "F",
+   "aligned": 174,
+   "total": 390,
+   "url": "https://americafirstfoundation.org/scorecard/brian-k-fitzpatrick-pennsylvania-house-1st-district"
+  },
+  "F000468": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 192,
+   "url": "https://americafirstfoundation.org/scorecard/lizzie-fletcher-texas-house-7th-district"
+  },
+  "F000469": {
+   "grade": "F",
+   "aligned": 110,
+   "total": 170,
+   "url": "https://americafirstfoundation.org/scorecard/russ-fulcher-idaho-house-1st-district"
+  },
+  "F000470": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 151,
+   "url": "https://americafirstfoundation.org/scorecard/michelle-fischbach-minnesota-house-7th-district"
+  },
+  "F000471": {
+   "grade": "F",
+   "aligned": 111,
+   "total": 165,
+   "url": "https://americafirstfoundation.org/scorecard/scott-fitzgerald-wisconsin-house-5th-district"
+  },
+  "F000472": {
+   "grade": "F",
+   "aligned": 144,
+   "total": 221,
+   "url": "https://americafirstfoundation.org/scorecard/scott-franklin-florida-house-18th-district"
+  },
+  "F000474": {
+   "grade": "F",
+   "aligned": 72,
+   "total": 126,
+   "url": "https://americafirstfoundation.org/scorecard/mike-flood-nebraska-house-1st-district"
+  },
+  "F000475": {
+   "grade": "F",
+   "aligned": 96,
+   "total": 157,
+   "url": "https://americafirstfoundation.org/scorecard/brad-finstad-minnesota-house-1st-district"
+  },
+  "F000476": {
+   "grade": "F",
+   "aligned": 51,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/maxwell-frost-florida-house-10th-district"
+  },
+  "F000477": {
+   "grade": "F",
+   "aligned": 47,
+   "total": 140,
+   "url": "https://americafirstfoundation.org/scorecard/valerie-foushee-north-carolina-house-4th-district"
+  },
+  "F000478": {
+   "grade": "F",
+   "aligned": 101,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/russell-fry-south-carolina-house-7th-district"
+  },
+  "F000479": {
+   "grade": "F",
+   "aligned": 20,
+   "total": 49,
+   "url": "https://americafirstfoundation.org/scorecard/john-fetterman-pennsylvania-senate-senate"
+  },
+  "F000480": {
+   "grade": "D",
+   "aligned": 41,
+   "total": 51,
+   "url": "https://americafirstfoundation.org/scorecard/vince-fong-california-house-20th-district"
+  },
+  "F000481": {
+   "grade": "F",
+   "aligned": 16,
+   "total": 40,
+   "url": "https://americafirstfoundation.org/scorecard/shomari-figures-alabama-house-2nd-district"
+  },
+  "F000482": {
+   "grade": "D+",
+   "aligned": 29,
+   "total": 35,
+   "url": "https://americafirstfoundation.org/scorecard/julie-fedorchak-north-dakota-house-at-large"
+  },
+  "F000483": {
+   "grade": "F",
+   "aligned": 13,
+   "total": 48,
+   "url": "https://americafirstfoundation.org/scorecard/laura-friedman-california-house-30th-district"
+  },
+  "F000484": {
+   "grade": "D-",
+   "aligned": 62,
+   "total": 75,
+   "url": "https://americafirstfoundation.org/scorecard/randy-fine-florida-house-6th-district"
+  },
+  "F000485": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/clay-fuller-georgia-house-14th-district"
+  },
+  "G000386": {
+   "grade": "D-",
+   "aligned": 99,
+   "total": 132,
+   "url": "https://americafirstfoundation.org/scorecard/chuck-grassley-iowa-senate-class-3"
+  },
+  "G000546": {
+   "grade": "F",
+   "aligned": 83,
+   "total": 130,
+   "url": "https://americafirstfoundation.org/scorecard/sam-graves-missouri-house-6th-district"
+  },
+  "G000553": {
+   "grade": "F",
+   "aligned": 74,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/al-green-texas-house-9th-district"
+  },
+  "G000555": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 96,
+   "url": "https://americafirstfoundation.org/scorecard/kirsten-gillibrand-new-york-senate-senate"
+  },
+  "G000558": {
+   "grade": "F",
+   "aligned": 96,
+   "total": 156,
+   "url": "https://americafirstfoundation.org/scorecard/brett-guthrie-kentucky-house-2nd-district"
+  },
+  "G000559": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/john-garamendi-california-house-8th-district"
+  },
+  "G000565": {
+   "grade": "D+",
+   "aligned": 241,
+   "total": 290,
+   "url": "https://americafirstfoundation.org/scorecard/paul-a-gosar-arizona-house-9th-district"
+  },
+  "G000568": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 148,
+   "url": "https://americafirstfoundation.org/scorecard/h-griffith-virginia-house-9th-district"
+  },
+  "G000574": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 213,
+   "url": "https://americafirstfoundation.org/scorecard/ruben-gallego-arizona-senate-senate-2"
+  },
+  "G000576": {
+   "grade": "F",
+   "aligned": 168,
+   "total": 240,
+   "url": "https://americafirstfoundation.org/scorecard/glenn-grothman-wisconsin-house-6th-district"
+  },
+  "G000581": {
+   "grade": "F",
+   "aligned": 75,
+   "total": 182,
+   "url": "https://americafirstfoundation.org/scorecard/vicente-gonzalez-texas-house-34th-district"
+  },
+  "G000583": {
+   "grade": "F",
+   "aligned": 103,
+   "total": 289,
+   "url": "https://americafirstfoundation.org/scorecard/josh-gottheimer-new-jersey-house-5th-district"
+  },
+  "G000585": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/jimmy-gomez-california-house-34th-district"
+  },
+  "G000586": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 286,
+   "url": "https://americafirstfoundation.org/scorecard/jesus-garcia-illinois-house-4th-district"
+  },
+  "G000587": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 255,
+   "url": "https://americafirstfoundation.org/scorecard/sylvia-garcia-texas-house-29th-district"
+  },
+  "G000589": {
+   "grade": "D-",
+   "aligned": 195,
+   "total": 271,
+   "url": "https://americafirstfoundation.org/scorecard/lance-gooden-texas-house-5th-district"
+  },
+  "G000591": {
+   "grade": "F",
+   "aligned": 177,
+   "total": 255,
+   "url": "https://americafirstfoundation.org/scorecard/michael-guest-mississippi-house-3rd-district"
+  },
+  "G000592": {
+   "grade": "F",
+   "aligned": 103,
+   "total": 178,
+   "url": "https://americafirstfoundation.org/scorecard/jared-golden-maine-house-2nd-district"
+  },
+  "G000593": {
+   "grade": "F",
+   "aligned": 154,
+   "total": 251,
+   "url": "https://americafirstfoundation.org/scorecard/carlos-a-gimenez-florida-house-28th-district"
+  },
+  "G000597": {
+   "grade": "F",
+   "aligned": 127,
+   "total": 222,
+   "url": "https://americafirstfoundation.org/scorecard/andrew-r-garbarino-new-york-house-2nd-district"
+  },
+  "G000598": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 136,
+   "url": "https://americafirstfoundation.org/scorecard/robert-garcia-california-house-42nd-district"
+  },
+  "G000599": {
+   "grade": "F",
+   "aligned": 38,
+   "total": 218,
+   "url": "https://americafirstfoundation.org/scorecard/daniel-goldman-new-york-house-10th-district"
+  },
+  "G000600": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 120,
+   "url": "https://americafirstfoundation.org/scorecard/marie-perez-washington-house-3rd-district"
+  },
+  "G000601": {
+   "grade": "F",
+   "aligned": 42,
+   "total": 61,
+   "url": "https://americafirstfoundation.org/scorecard/craig-a-goldman-texas-house-12th-district"
+  },
+  "G000602": {
+   "grade": "F",
+   "aligned": 26,
+   "total": 47,
+   "url": "https://americafirstfoundation.org/scorecard/laura-gillen-new-york-house-4th-district"
+  },
+  "G000603": {
+   "grade": "C",
+   "aligned": 102,
+   "total": 110,
+   "url": "https://americafirstfoundation.org/scorecard/brandon-gill-texas-house-26th-district"
+  },
+  "G000604": {
+   "grade": "F",
+   "aligned": 23,
+   "total": 48,
+   "url": "https://americafirstfoundation.org/scorecard/maggie-goodlander-new-hampshire-house-2nd-district"
+  },
+  "G000605": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 32,
+   "url": "https://americafirstfoundation.org/scorecard/adam-gray-california-house-13th-district"
+  },
+  "G000606": {
+   "grade": "F",
+   "aligned": 6,
+   "total": 38,
+   "url": "https://americafirstfoundation.org/scorecard/adelita-grijalva-arizona-house-7th-district"
+  },
+  "H000273": {
+   "grade": "F",
+   "aligned": 15,
+   "total": 65,
+   "url": "https://americafirstfoundation.org/scorecard/john-hickenlooper-colorado-senate-senate"
+  },
+  "H000601": {
+   "grade": "F",
+   "aligned": 137,
+   "total": 193,
+   "url": "https://americafirstfoundation.org/scorecard/bill-hagerty-tennessee-senate-class-2"
+  },
+  "H000874": {
+   "grade": "F",
+   "aligned": 48,
+   "total": 130,
+   "url": "https://americafirstfoundation.org/scorecard/steny-hoyer-maryland-house-5th-district"
+  },
+  "H001042": {
+   "grade": "F",
+   "aligned": 21,
+   "total": 111,
+   "url": "https://americafirstfoundation.org/scorecard/mazie-hirono-hawaii-senate-senate"
+  },
+  "H001046": {
+   "grade": "F",
+   "aligned": 21,
+   "total": 55,
+   "url": "https://americafirstfoundation.org/scorecard/martin-heinrich-new-mexico-senate-senate"
+  },
+  "H001047": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 176,
+   "url": "https://americafirstfoundation.org/scorecard/james-himes-connecticut-house-4th-district"
+  },
+  "H001052": {
+   "grade": "D",
+   "aligned": 149,
+   "total": 202,
+   "url": "https://americafirstfoundation.org/scorecard/andy-harris-maryland-house-1st-district"
+  },
+  "H001058": {
+   "grade": "F",
+   "aligned": 128,
+   "total": 214,
+   "url": "https://americafirstfoundation.org/scorecard/bill-huizenga-michigan-house-4th-district"
+  },
+  "H001061": {
+   "grade": "F",
+   "aligned": 65,
+   "total": 106,
+   "url": "https://americafirstfoundation.org/scorecard/john-hoeven-north-dakota-senate-class-3"
+  },
+  "H001066": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 185,
+   "url": "https://americafirstfoundation.org/scorecard/steven-horsford-nevada-house-4th-district"
+  },
+  "H001067": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 178,
+   "url": "https://americafirstfoundation.org/scorecard/richard-hudson-north-carolina-house-9th-district"
+  },
+  "H001068": {
+   "grade": "F",
+   "aligned": 75,
+   "total": 212,
+   "url": "https://americafirstfoundation.org/scorecard/jared-huffman-california-house-2nd-district"
+  },
+  "H001072": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 190,
+   "url": "https://americafirstfoundation.org/scorecard/j-hill-arkansas-house-2nd-district"
+  },
+  "H001076": {
+   "grade": "F",
+   "aligned": 36,
+   "total": 65,
+   "url": "https://americafirstfoundation.org/scorecard/maggie-hassan-new-hampshire-senate-senate"
+  },
+  "H001077": {
+   "grade": "D-",
+   "aligned": 198,
+   "total": 263,
+   "url": "https://americafirstfoundation.org/scorecard/clay-higgins-louisiana-house-3rd-district"
+  },
+  "H001079": {
+   "grade": "D-",
+   "aligned": 73,
+   "total": 98,
+   "url": "https://americafirstfoundation.org/scorecard/cindy-hyde-smith-mississippi-senate-class-2"
+  },
+  "H001081": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 197,
+   "url": "https://americafirstfoundation.org/scorecard/jahana-hayes-connecticut-house-5th-district"
+  },
+  "H001082": {
+   "grade": "F",
+   "aligned": 120,
+   "total": 183,
+   "url": "https://americafirstfoundation.org/scorecard/kevin-hern-oklahoma-house-1st-district"
+  },
+  "H001085": {
+   "grade": "F",
+   "aligned": 78,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/chrissy-houlahan-pennsylvania-house-6th-district"
+  },
+  "H001086": {
+   "grade": "D-",
+   "aligned": 170,
+   "total": 231,
+   "url": "https://americafirstfoundation.org/scorecard/diana-harshbarger-tennessee-house-1st-district"
+  },
+  "H001089": {
+   "grade": "D",
+   "aligned": 87,
+   "total": 105,
+   "url": "https://americafirstfoundation.org/scorecard/josh-hawley-missouri-senate-class-1"
+  },
+  "H001090": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 171,
+   "url": "https://americafirstfoundation.org/scorecard/josh-harder-california-house-9th-district"
+  },
+  "H001091": {
+   "grade": "F",
+   "aligned": 148,
+   "total": 223,
+   "url": "https://americafirstfoundation.org/scorecard/ashley-hinson-iowa-house-2nd-district"
+  },
+  "H001093": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 138,
+   "url": "https://americafirstfoundation.org/scorecard/erin-houchin-indiana-house-9th-district"
+  },
+  "H001094": {
+   "grade": "F",
+   "aligned": 54,
+   "total": 129,
+   "url": "https://americafirstfoundation.org/scorecard/val-hoyle-oregon-house-4th-district"
+  },
+  "H001095": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 133,
+   "url": "https://americafirstfoundation.org/scorecard/wesley-hunt-texas-house-38th-district"
+  },
+  "H001096": {
+   "grade": "D-",
+   "aligned": 107,
+   "total": 145,
+   "url": "https://americafirstfoundation.org/scorecard/harriet-m-hageman-wyoming-house-at-large"
+  },
+  "H001098": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 63,
+   "url": "https://americafirstfoundation.org/scorecard/abraham-j-hamadeh-arizona-house-8th-district"
+  },
+  "H001099": {
+   "grade": "D",
+   "aligned": 56,
+   "total": 70,
+   "url": "https://americafirstfoundation.org/scorecard/mike-haridopolos-florida-house-8th-district"
+  },
+  "H001100": {
+   "grade": "D-",
+   "aligned": 25,
+   "total": 37,
+   "url": "https://americafirstfoundation.org/scorecard/jeff-hurd-colorado-house-3rd-district"
+  },
+  "H001101": {
+   "grade": "D",
+   "aligned": 55,
+   "total": 68,
+   "url": "https://americafirstfoundation.org/scorecard/pat-harrigan-north-carolina-house-10th-district"
+  },
+  "H001102": {
+   "grade": "C-",
+   "aligned": 53,
+   "total": 59,
+   "url": "https://americafirstfoundation.org/scorecard/mark-harris-north-carolina-house-8th-district"
+  },
+  "H001103": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/pablo-hernandez-puerto-rico-house-at-large"
+  },
+  "H001104": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/jon-husted-ohio-senate-class-3"
+  },
+  "I000056": {
+   "grade": "F",
+   "aligned": 124,
+   "total": 194,
+   "url": "https://americafirstfoundation.org/scorecard/darrell-issa-california-house-48th-district"
+  },
+  "I000058": {
+   "grade": "F",
+   "aligned": 41,
+   "total": 112,
+   "url": "https://americafirstfoundation.org/scorecard/glenn-ivey-maryland-house-4th-district"
+  },
+  "J000288": {
+   "grade": "F",
+   "aligned": 87,
+   "total": 293,
+   "url": "https://americafirstfoundation.org/scorecard/henry-johnson-georgia-house-4th-district"
+  },
+  "J000289": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 134,
+   "url": "https://americafirstfoundation.org/scorecard/jim-jordan-ohio-house-4th-district"
+  },
+  "J000293": {
+   "grade": "D-",
+   "aligned": 39,
+   "total": 49,
+   "url": "https://americafirstfoundation.org/scorecard/ron-johnson-wisconsin-senate-class-3"
+  },
+  "J000294": {
+   "grade": "F",
+   "aligned": 53,
+   "total": 139,
+   "url": "https://americafirstfoundation.org/scorecard/hakeem-jeffries-new-york-house-8th-district"
+  },
+  "J000295": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 163,
+   "url": "https://americafirstfoundation.org/scorecard/david-p-joyce-ohio-house-14th-district"
+  },
+  "J000298": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 300,
+   "url": "https://americafirstfoundation.org/scorecard/pramila-jayapal-washington-house-7th-district"
+  },
+  "J000299": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 139,
+   "url": "https://americafirstfoundation.org/scorecard/mike-johnson-louisiana-house-4th-district"
+  },
+  "J000301": {
+   "grade": "F",
+   "aligned": 106,
+   "total": 173,
+   "url": "https://americafirstfoundation.org/scorecard/dusty-johnson-south-dakota-house-at-large"
+  },
+  "J000302": {
+   "grade": "F",
+   "aligned": 103,
+   "total": 151,
+   "url": "https://americafirstfoundation.org/scorecard/john-joyce-pennsylvania-house-13th-district"
+  },
+  "J000304": {
+   "grade": "F",
+   "aligned": 206,
+   "total": 296,
+   "url": "https://americafirstfoundation.org/scorecard/ronny-jackson-texas-house-13th-district"
+  },
+  "J000305": {
+   "grade": "F",
+   "aligned": 91,
+   "total": 276,
+   "url": "https://americafirstfoundation.org/scorecard/sara-jacobs-california-house-51st-district"
+  },
+  "J000307": {
+   "grade": "F",
+   "aligned": 74,
+   "total": 121,
+   "url": "https://americafirstfoundation.org/scorecard/john-james-michigan-house-10th-district"
+  },
+  "J000309": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 163,
+   "url": "https://americafirstfoundation.org/scorecard/jonathan-jackson-illinois-house-1st-district"
+  },
+  "J000310": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 85,
+   "url": "https://americafirstfoundation.org/scorecard/julie-johnson-texas-house-32nd-district"
+  },
+  "J000311": {
+   "grade": "D-",
+   "aligned": 36,
+   "total": 47,
+   "url": "https://americafirstfoundation.org/scorecard/brian-jack-georgia-house-3rd-district"
+  },
+  "J000312": {
+   "grade": "F",
+   "aligned": 21,
+   "total": 29,
+   "url": "https://americafirstfoundation.org/scorecard/jim-justice-west-virginia-senate-class-1"
+  },
+  "K000009": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 163,
+   "url": "https://americafirstfoundation.org/scorecard/marcy-kaptur-ohio-house-9th-district"
+  },
+  "K000367": {
+   "grade": "F",
+   "aligned": 28,
+   "total": 123,
+   "url": "https://americafirstfoundation.org/scorecard/amy-klobuchar-minnesota-senate-senate"
+  },
+  "K000375": {
+   "grade": "F",
+   "aligned": 83,
+   "total": 229,
+   "url": "https://americafirstfoundation.org/scorecard/william-keating-massachusetts-house-9th-district"
+  },
+  "K000376": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 171,
+   "url": "https://americafirstfoundation.org/scorecard/mike-kelly-pennsylvania-house-16th-district"
+  },
+  "K000377": {
+   "grade": "F",
+   "aligned": 44,
+   "total": 83,
+   "url": "https://americafirstfoundation.org/scorecard/mark-kelly-arizona-senate-senate"
+  },
+  "K000383": {
+   "grade": "F",
+   "aligned": 28,
+   "total": 84,
+   "url": "https://americafirstfoundation.org/scorecard/angus-king-maine-senate-senate"
+  },
+  "K000384": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 197,
+   "url": "https://americafirstfoundation.org/scorecard/timothy-kaine-virginia-senate-senate"
+  },
+  "K000385": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 183,
+   "url": "https://americafirstfoundation.org/scorecard/robin-kelly-illinois-house-2nd-district"
+  },
+  "K000388": {
+   "grade": "F",
+   "aligned": 101,
+   "total": 168,
+   "url": "https://americafirstfoundation.org/scorecard/trent-kelly-mississippi-house-1st-district"
+  },
+  "K000389": {
+   "grade": "F",
+   "aligned": 104,
+   "total": 279,
+   "url": "https://americafirstfoundation.org/scorecard/ro-khanna-california-house-17th-district"
+  },
+  "K000391": {
+   "grade": "F",
+   "aligned": 101,
+   "total": 283,
+   "url": "https://americafirstfoundation.org/scorecard/raja-krishnamoorthi-illinois-house-8th-district"
+  },
+  "K000392": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 175,
+   "url": "https://americafirstfoundation.org/scorecard/david-kustoff-tennessee-house-8th-district"
+  },
+  "K000393": {
+   "grade": "D",
+   "aligned": 69,
+   "total": 90,
+   "url": "https://americafirstfoundation.org/scorecard/john-kennedy-louisiana-senate-class-3"
+  },
+  "K000394": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 220,
+   "url": "https://americafirstfoundation.org/scorecard/andy-kim-new-jersey-senate-senate-2"
+  },
+  "K000397": {
+   "grade": "F",
+   "aligned": 165,
+   "total": 292,
+   "url": "https://americafirstfoundation.org/scorecard/young-kim-california-house-40th-district"
+  },
+  "K000398": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 178,
+   "url": "https://americafirstfoundation.org/scorecard/thomas-h-kean-new-jersey-house-7th-district"
+  },
+  "K000399": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 124,
+   "url": "https://americafirstfoundation.org/scorecard/jennifer-a-kiggans-virginia-house-2nd-district"
+  },
+  "K000400": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 180,
+   "url": "https://americafirstfoundation.org/scorecard/sydney-kamlager-dove-california-house-37th-district"
+  },
+  "K000401": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 99,
+   "url": "https://americafirstfoundation.org/scorecard/kevin-kiley-california-house-3rd-district"
+  },
+  "K000402": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 84,
+   "url": "https://americafirstfoundation.org/scorecard/timothy-kennedy-new-york-house-26th-district"
+  },
+  "K000403": {
+   "grade": "D+",
+   "aligned": 39,
+   "total": 46,
+   "url": "https://americafirstfoundation.org/scorecard/mike-kennedy-utah-house-3rd-district"
+  },
+  "K000404": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/kimberlyn-king-hinds-northern-mariana-islands-house-at-large"
+  },
+  "K000405": {
+   "grade": "D",
+   "aligned": 31,
+   "total": 37,
+   "url": "https://americafirstfoundation.org/scorecard/brad-knott-north-carolina-house-13th-district"
+  },
+  "L000273": {
+   "grade": "F",
+   "aligned": 51,
+   "total": 171,
+   "url": "https://americafirstfoundation.org/scorecard/teresa-leger-fernandez-new-mexico-house-3rd-district"
+  },
+  "L000397": {
+   "grade": "F",
+   "aligned": 74,
+   "total": 250,
+   "url": "https://americafirstfoundation.org/scorecard/zoe-lofgren-california-house-18th-district"
+  },
+  "L000491": {
+   "grade": "F",
+   "aligned": 87,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/frank-d-lucas-oklahoma-house-3rd-district"
+  },
+  "L000557": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/john-larson-connecticut-house-1st-district"
+  },
+  "L000560": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 197,
+   "url": "https://americafirstfoundation.org/scorecard/rick-larsen-washington-house-2nd-district"
+  },
+  "L000562": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/stephen-lynch-massachusetts-house-8th-district"
+  },
+  "L000566": {
+   "grade": "F",
+   "aligned": 90,
+   "total": 142,
+   "url": "https://americafirstfoundation.org/scorecard/robert-e-latta-ohio-house-5th-district"
+  },
+  "L000570": {
+   "grade": "F",
+   "aligned": 12,
+   "total": 69,
+   "url": "https://americafirstfoundation.org/scorecard/ben-lujan-new-mexico-senate-senate"
+  },
+  "L000571": {
+   "grade": "D",
+   "aligned": 90,
+   "total": 112,
+   "url": "https://americafirstfoundation.org/scorecard/cynthia-lummis-wyoming-senate-class-2"
+  },
+  "L000575": {
+   "grade": "F",
+   "aligned": 122,
+   "total": 159,
+   "url": "https://americafirstfoundation.org/scorecard/james-lankford-oklahoma-senate-class-3"
+  },
+  "L000577": {
+   "grade": "D+",
+   "aligned": 106,
+   "total": 127,
+   "url": "https://americafirstfoundation.org/scorecard/mike-lee-utah-senate-class-3"
+  },
+  "L000582": {
+   "grade": "F",
+   "aligned": 105,
+   "total": 318,
+   "url": "https://americafirstfoundation.org/scorecard/ted-lieu-california-house-36th-district"
+  },
+  "L000583": {
+   "grade": "F",
+   "aligned": 108,
+   "total": 175,
+   "url": "https://americafirstfoundation.org/scorecard/barry-loudermilk-georgia-house-11th-district"
+  },
+  "L000585": {
+   "grade": "F",
+   "aligned": 97,
+   "total": 173,
+   "url": "https://americafirstfoundation.org/scorecard/darin-lahood-illinois-house-16th-district"
+  },
+  "L000590": {
+   "grade": "F",
+   "aligned": 86,
+   "total": 175,
+   "url": "https://americafirstfoundation.org/scorecard/susie-lee-nevada-house-3rd-district"
+  },
+  "L000593": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 218,
+   "url": "https://americafirstfoundation.org/scorecard/mike-levin-california-house-49th-district"
+  },
+  "L000595": {
+   "grade": "F",
+   "aligned": 79,
+   "total": 140,
+   "url": "https://americafirstfoundation.org/scorecard/julia-letlow-louisiana-house-5th-district"
+  },
+  "L000596": {
+   "grade": "D-",
+   "aligned": 133,
+   "total": 171,
+   "url": "https://americafirstfoundation.org/scorecard/anna-paulina-luna-florida-house-13th-district"
+  },
+  "L000597": {
+   "grade": "F",
+   "aligned": 74,
+   "total": 116,
+   "url": "https://americafirstfoundation.org/scorecard/laurel-m-lee-florida-house-15th-district"
+  },
+  "L000598": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 144,
+   "url": "https://americafirstfoundation.org/scorecard/nick-lalota-new-york-house-1st-district"
+  },
+  "L000599": {
+   "grade": "F",
+   "aligned": 232,
+   "total": 434,
+   "url": "https://americafirstfoundation.org/scorecard/michael-lawler-new-york-house-17th-district"
+  },
+  "L000600": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/nicholas-a-langworthy-new-york-house-23rd-district"
+  },
+  "L000601": {
+   "grade": "F",
+   "aligned": 59,
+   "total": 142,
+   "url": "https://americafirstfoundation.org/scorecard/greg-landsman-ohio-house-1st-district"
+  },
+  "L000602": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/summer-lee-pennsylvania-house-12th-district"
+  },
+  "L000603": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 141,
+   "url": "https://americafirstfoundation.org/scorecard/morgan-luttrell-texas-house-8th-district"
+  },
+  "L000606": {
+   "grade": "F",
+   "aligned": 17,
+   "total": 70,
+   "url": "https://americafirstfoundation.org/scorecard/george-latimer-new-york-house-16th-district"
+  },
+  "L000607": {
+   "grade": "F",
+   "aligned": 17,
+   "total": 55,
+   "url": "https://americafirstfoundation.org/scorecard/sam-liccardo-california-house-16th-district"
+  },
+  "M000133": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 141,
+   "url": "https://americafirstfoundation.org/scorecard/edward-markey-massachusetts-senate-senate"
+  },
+  "M000194": {
+   "grade": "D",
+   "aligned": 220,
+   "total": 284,
+   "url": "https://americafirstfoundation.org/scorecard/nancy-mace-south-carolina-house-1st-district"
+  },
+  "M000312": {
+   "grade": "F",
+   "aligned": 126,
+   "total": 395,
+   "url": "https://americafirstfoundation.org/scorecard/james-mcgovern-massachusetts-house-2nd-district"
+  },
+  "M000317": {
+   "grade": "F",
+   "aligned": 167,
+   "total": 267,
+   "url": "https://americafirstfoundation.org/scorecard/nicole-malliotakis-new-york-house-11th-district"
+  },
+  "M000355": {
+   "grade": "F",
+   "aligned": 12,
+   "total": 23,
+   "url": "https://americafirstfoundation.org/scorecard/mitch-mcconnell-kentucky-senate-class-2"
+  },
+  "M000687": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 162,
+   "url": "https://americafirstfoundation.org/scorecard/kweisi-mfume-maryland-house-7th-district"
+  },
+  "M000871": {
+   "grade": "F",
+   "aligned": 121,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/tracey-mann-kansas-house-1st-district"
+  },
+  "M000934": {
+   "grade": "F",
+   "aligned": 40,
+   "total": 77,
+   "url": "https://americafirstfoundation.org/scorecard/jerry-moran-kansas-senate-class-3"
+  },
+  "M001111": {
+   "grade": "F",
+   "aligned": 11,
+   "total": 77,
+   "url": "https://americafirstfoundation.org/scorecard/patty-murray-washington-senate-senate"
+  },
+  "M001136": {
+   "grade": "F",
+   "aligned": 116,
+   "total": 176,
+   "url": "https://americafirstfoundation.org/scorecard/lisa-c-mcclain-michigan-house-9th-district"
+  },
+  "M001137": {
+   "grade": "F",
+   "aligned": 102,
+   "total": 262,
+   "url": "https://americafirstfoundation.org/scorecard/gregory-meeks-new-york-house-5th-district"
+  },
+  "M001143": {
+   "grade": "F",
+   "aligned": 77,
+   "total": 230,
+   "url": "https://americafirstfoundation.org/scorecard/betty-mccollum-minnesota-house-4th-district"
+  },
+  "M001153": {
+   "grade": "F",
+   "aligned": 23,
+   "total": 71,
+   "url": "https://americafirstfoundation.org/scorecard/lisa-murkowski-alaska-senate-class-3"
+  },
+  "M001157": {
+   "grade": "F",
+   "aligned": 199,
+   "total": 307,
+   "url": "https://americafirstfoundation.org/scorecard/michael-t-mccaul-texas-house-10th-district"
+  },
+  "M001160": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 207,
+   "url": "https://americafirstfoundation.org/scorecard/gwen-moore-wisconsin-house-4th-district"
+  },
+  "M001163": {
+   "grade": "F",
+   "aligned": 59,
+   "total": 182,
+   "url": "https://americafirstfoundation.org/scorecard/doris-matsui-california-house-7th-district"
+  },
+  "M001169": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 92,
+   "url": "https://americafirstfoundation.org/scorecard/christopher-murphy-connecticut-senate-senate"
+  },
+  "M001176": {
+   "grade": "F",
+   "aligned": 75,
+   "total": 196,
+   "url": "https://americafirstfoundation.org/scorecard/jeff-merkley-oregon-senate-senate"
+  },
+  "M001177": {
+   "grade": "F",
+   "aligned": 139,
+   "total": 198,
+   "url": "https://americafirstfoundation.org/scorecard/tom-mcclintock-california-house-5th-district"
+  },
+  "M001184": {
+   "grade": "C-",
+   "aligned": 137,
+   "total": 177,
+   "url": "https://americafirstfoundation.org/scorecard/thomas-massie-kentucky-house-4th-district"
+  },
+  "M001188": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 261,
+   "url": "https://americafirstfoundation.org/scorecard/grace-meng-new-york-house-6th-district"
+  },
+  "M001194": {
+   "grade": "F",
+   "aligned": 196,
+   "total": 287,
+   "url": "https://americafirstfoundation.org/scorecard/john-r-moolenaar-michigan-house-2nd-district"
+  },
+  "M001196": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 274,
+   "url": "https://americafirstfoundation.org/scorecard/seth-moulton-massachusetts-house-6th-district"
+  },
+  "M001198": {
+   "grade": "D-",
+   "aligned": 96,
+   "total": 125,
+   "url": "https://americafirstfoundation.org/scorecard/roger-marshall-kansas-senate-class-2"
+  },
+  "M001199": {
+   "grade": "F",
+   "aligned": 143,
+   "total": 235,
+   "url": "https://americafirstfoundation.org/scorecard/brian-j-mast-florida-house-21st-district"
+  },
+  "M001204": {
+   "grade": "F",
+   "aligned": 129,
+   "total": 216,
+   "url": "https://americafirstfoundation.org/scorecard/daniel-meuser-pennsylvania-house-9th-district"
+  },
+  "M001205": {
+   "grade": "F",
+   "aligned": 110,
+   "total": 203,
+   "url": "https://americafirstfoundation.org/scorecard/carol-d-miller-west-virginia-house-1st-district"
+  },
+  "M001206": {
+   "grade": "F",
+   "aligned": 70,
+   "total": 186,
+   "url": "https://americafirstfoundation.org/scorecard/joseph-morelle-new-york-house-25th-district"
+  },
+  "M001208": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 147,
+   "url": "https://americafirstfoundation.org/scorecard/lucy-mcbath-georgia-house-6th-district"
+  },
+  "M001210": {
+   "grade": "F",
+   "aligned": 120,
+   "total": 193,
+   "url": "https://americafirstfoundation.org/scorecard/gregory-f-murphy-north-carolina-house-3rd-district"
+  },
+  "M001211": {
+   "grade": "D+",
+   "aligned": 256,
+   "total": 308,
+   "url": "https://americafirstfoundation.org/scorecard/mary-e-miller-illinois-house-15th-district"
+  },
+  "M001212": {
+   "grade": "D",
+   "aligned": 232,
+   "total": 301,
+   "url": "https://americafirstfoundation.org/scorecard/barry-moore-alabama-house-1st-district"
+  },
+  "M001213": {
+   "grade": "F",
+   "aligned": 96,
+   "total": 180,
+   "url": "https://americafirstfoundation.org/scorecard/blake-d-moore-utah-house-1st-district"
+  },
+  "M001214": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/frank-mrvan-indiana-house-1st-district"
+  },
+  "M001215": {
+   "grade": "F",
+   "aligned": 149,
+   "total": 254,
+   "url": "https://americafirstfoundation.org/scorecard/mariannette-miller-meeks-iowa-house-1st-district"
+  },
+  "M001216": {
+   "grade": "F",
+   "aligned": 102,
+   "total": 152,
+   "url": "https://americafirstfoundation.org/scorecard/cory-mills-florida-house-7th-district"
+  },
+  "M001217": {
+   "grade": "F",
+   "aligned": 61,
+   "total": 188,
+   "url": "https://americafirstfoundation.org/scorecard/jared-moskowitz-florida-house-23rd-district"
+  },
+  "M001218": {
+   "grade": "F",
+   "aligned": 109,
+   "total": 172,
+   "url": "https://americafirstfoundation.org/scorecard/richard-mccormick-georgia-house-7th-district"
+  },
+  "M001219": {
+   "grade": "D-",
+   "aligned": 45,
+   "total": 73,
+   "url": "https://americafirstfoundation.org/scorecard/james-moylan-guam-house-at-large"
+  },
+  "M001220": {
+   "grade": "F",
+   "aligned": 47,
+   "total": 119,
+   "url": "https://americafirstfoundation.org/scorecard/morgan-mcgarvey-kentucky-house-3rd-district"
+  },
+  "M001222": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 132,
+   "url": "https://americafirstfoundation.org/scorecard/max-l-miller-ohio-house-7th-district"
+  },
+  "M001223": {
+   "grade": "F",
+   "aligned": 54,
+   "total": 138,
+   "url": "https://americafirstfoundation.org/scorecard/seth-magaziner-rhode-island-house-2nd-district"
+  },
+  "M001224": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 160,
+   "url": "https://americafirstfoundation.org/scorecard/nathaniel-moran-texas-house-1st-district"
+  },
+  "M001225": {
+   "grade": "F",
+   "aligned": 37,
+   "total": 130,
+   "url": "https://americafirstfoundation.org/scorecard/kevin-mullin-california-house-15th-district"
+  },
+  "M001226": {
+   "grade": "F",
+   "aligned": 37,
+   "total": 135,
+   "url": "https://americafirstfoundation.org/scorecard/robert-menendez-new-jersey-house-8th-district"
+  },
+  "M001227": {
+   "grade": "F",
+   "aligned": 46,
+   "total": 127,
+   "url": "https://americafirstfoundation.org/scorecard/jennifer-mcclellan-virginia-house-4th-district"
+  },
+  "M001228": {
+   "grade": "F",
+   "aligned": 51,
+   "total": 78,
+   "url": "https://americafirstfoundation.org/scorecard/celeste-maloy-utah-house-2nd-district"
+  },
+  "M001229": {
+   "grade": "F",
+   "aligned": 15,
+   "total": 70,
+   "url": "https://americafirstfoundation.org/scorecard/lamonica-mciver-new-jersey-house-10th-district"
+  },
+  "M001230": {
+   "grade": "D+",
+   "aligned": 43,
+   "total": 49,
+   "url": "https://americafirstfoundation.org/scorecard/ryan-mackenzie-pennsylvania-house-7th-district"
+  },
+  "M001231": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 40,
+   "url": "https://americafirstfoundation.org/scorecard/john-mannion-new-york-house-22nd-district"
+  },
+  "M001232": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 57,
+   "url": "https://americafirstfoundation.org/scorecard/april-mcclain-delaney-maryland-house-6th-district"
+  },
+  "M001233": {
+   "grade": "F",
+   "aligned": 43,
+   "total": 60,
+   "url": "https://americafirstfoundation.org/scorecard/mark-b-messmer-indiana-house-8th-district"
+  },
+  "M001234": {
+   "grade": "F",
+   "aligned": 14,
+   "total": 51,
+   "url": "https://americafirstfoundation.org/scorecard/kelly-morrison-minnesota-house-3rd-district"
+  },
+  "M001235": {
+   "grade": "C-",
+   "aligned": 50,
+   "total": 56,
+   "url": "https://americafirstfoundation.org/scorecard/riley-m-moore-west-virginia-house-2nd-district"
+  },
+  "M001236": {
+   "grade": "D+",
+   "aligned": 52,
+   "total": 61,
+   "url": "https://americafirstfoundation.org/scorecard/tim-moore-north-carolina-house-14th-district"
+  },
+  "M001237": {
+   "grade": "F",
+   "aligned": 26,
+   "total": 44,
+   "url": "https://americafirstfoundation.org/scorecard/kristen-mcdonald-rivet-michigan-house-8th-district"
+  },
+  "M001238": {
+   "grade": "F",
+   "aligned": 35,
+   "total": 92,
+   "url": "https://americafirstfoundation.org/scorecard/sarah-mcbride-delaware-house-at-large"
+  },
+  "M001239": {
+   "grade": "D",
+   "aligned": 49,
+   "total": 59,
+   "url": "https://americafirstfoundation.org/scorecard/john-j-mcguire-iii-virginia-house-5th-district"
+  },
+  "M001240": {
+   "grade": "D+",
+   "aligned": 63,
+   "total": 71,
+   "url": "https://americafirstfoundation.org/scorecard/addison-p-mcdowell-north-carolina-house-6th-district"
+  },
+  "M001241": {
+   "grade": "F",
+   "aligned": 24,
+   "total": 65,
+   "url": "https://americafirstfoundation.org/scorecard/dave-min-california-house-47th-district"
+  },
+  "M001242": {
+   "grade": "C+",
+   "aligned": 29,
+   "total": 31,
+   "url": "https://americafirstfoundation.org/scorecard/bernie-moreno-ohio-senate-class-1"
+  },
+  "M001243": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 62,
+   "url": "https://americafirstfoundation.org/scorecard/david-mccormick-pennsylvania-senate-class-1"
+  },
+  "M001244": {
+   "grade": "F",
+   "aligned": 24,
+   "total": 29,
+   "url": "https://americafirstfoundation.org/scorecard/ashley-moody-florida-senate-class-3"
+  },
+  "M001245": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/christian-menefee-texas-house-18th-district"
+  },
+  "M001246": {
+   "grade": "Ungraded",
+   "aligned": null,
+   "total": null,
+   "url": "https://americafirstfoundation.org/scorecard/analilia-mejia-new-jersey-house-11th-district"
+  },
+  "N000002": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 227,
+   "url": "https://americafirstfoundation.org/scorecard/jerrold-nadler-new-york-house-12th-district"
+  },
+  "N000015": {
+   "grade": "F",
+   "aligned": 53,
+   "total": 146,
+   "url": "https://americafirstfoundation.org/scorecard/richard-neal-massachusetts-house-1st-district"
+  },
+  "N000026": {
+   "grade": "D+",
+   "aligned": 194,
+   "total": 244,
+   "url": "https://americafirstfoundation.org/scorecard/troy-e-nehls-texas-house-22nd-district"
+  },
+  "N000147": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 325,
+   "url": "https://americafirstfoundation.org/scorecard/eleanor-norton-district-of-columbia-house-at-large"
+  },
+  "N000188": {
+   "grade": "F",
+   "aligned": 54,
+   "total": 161,
+   "url": "https://americafirstfoundation.org/scorecard/donald-norcross-new-jersey-house-1st-district"
+  },
+  "N000189": {
+   "grade": "F",
+   "aligned": 107,
+   "total": 183,
+   "url": "https://americafirstfoundation.org/scorecard/dan-newhouse-washington-house-4th-district"
+  },
+  "N000190": {
+   "grade": "D",
+   "aligned": 260,
+   "total": 339,
+   "url": "https://americafirstfoundation.org/scorecard/ralph-norman-south-carolina-house-5th-district"
+  },
+  "N000191": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 201,
+   "url": "https://americafirstfoundation.org/scorecard/joe-neguse-colorado-house-2nd-district"
+  },
+  "N000193": {
+   "grade": "F",
+   "aligned": 120,
+   "total": 194,
+   "url": "https://americafirstfoundation.org/scorecard/zachary-nunn-iowa-house-3rd-district"
+  },
+  "O000019": {
+   "grade": "F",
+   "aligned": 110,
+   "total": 168,
+   "url": "https://americafirstfoundation.org/scorecard/jay-obernolte-california-house-23rd-district"
+  },
+  "O000086": {
+   "grade": "F",
+   "aligned": 137,
+   "total": 210,
+   "url": "https://americafirstfoundation.org/scorecard/burgess-owens-utah-house-4th-district"
+  },
+  "O000172": {
+   "grade": "F",
+   "aligned": 82,
+   "total": 211,
+   "url": "https://americafirstfoundation.org/scorecard/alexandria-ocasio-cortez-new-york-house-14th-district"
+  },
+  "O000173": {
+   "grade": "F",
+   "aligned": 111,
+   "total": 303,
+   "url": "https://americafirstfoundation.org/scorecard/ilhan-omar-minnesota-house-5th-district"
+  },
+  "O000174": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 51,
+   "url": "https://americafirstfoundation.org/scorecard/jon-ossoff-georgia-senate-senate"
+  },
+  "O000175": {
+   "grade": "D",
+   "aligned": 195,
+   "total": 247,
+   "url": "https://americafirstfoundation.org/scorecard/andrew-ogles-tennessee-house-5th-district"
+  },
+  "O000176": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 60,
+   "url": "https://americafirstfoundation.org/scorecard/johnny-olszewski-maryland-house-2nd-district"
+  },
+  "O000177": {
+   "grade": "C-",
+   "aligned": 35,
+   "total": 40,
+   "url": "https://americafirstfoundation.org/scorecard/robert-f-onder-missouri-house-3rd-district"
+  },
+  "P000034": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 200,
+   "url": "https://americafirstfoundation.org/scorecard/frank-pallone-new-jersey-house-6th-district"
+  },
+  "P000048": {
+   "grade": "F",
+   "aligned": 183,
+   "total": 259,
+   "url": "https://americafirstfoundation.org/scorecard/august-pfluger-texas-house-11th-district"
+  },
+  "P000145": {
+   "grade": "F",
+   "aligned": 14,
+   "total": 105,
+   "url": "https://americafirstfoundation.org/scorecard/alex-padilla-california-senate-senate"
+  },
+  "P000197": {
+   "grade": "F",
+   "aligned": 46,
+   "total": 99,
+   "url": "https://americafirstfoundation.org/scorecard/nancy-pelosi-california-house-11th-district"
+  },
+  "P000595": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 87,
+   "url": "https://americafirstfoundation.org/scorecard/gary-peters-michigan-senate-senate"
+  },
+  "P000597": {
+   "grade": "F",
+   "aligned": 79,
+   "total": 236,
+   "url": "https://americafirstfoundation.org/scorecard/chellie-pingree-maine-house-1st-district"
+  },
+  "P000603": {
+   "grade": "D-",
+   "aligned": 58,
+   "total": 99,
+   "url": "https://americafirstfoundation.org/scorecard/rand-paul-kentucky-senate-class-3"
+  },
+  "P000605": {
+   "grade": "D-",
+   "aligned": 202,
+   "total": 267,
+   "url": "https://americafirstfoundation.org/scorecard/scott-perry-pennsylvania-house-10th-district"
+  },
+  "P000607": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 260,
+   "url": "https://americafirstfoundation.org/scorecard/mark-pocan-wisconsin-house-2nd-district"
+  },
+  "P000608": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 216,
+   "url": "https://americafirstfoundation.org/scorecard/scott-peters-california-house-50th-district"
+  },
+  "P000609": {
+   "grade": "F",
+   "aligned": 108,
+   "total": 161,
+   "url": "https://americafirstfoundation.org/scorecard/gary-j-palmer-alabama-house-6th-district"
+  },
+  "P000610": {
+   "grade": "F",
+   "aligned": 4,
+   "total": 31,
+   "url": "https://americafirstfoundation.org/scorecard/stacey-plaskett-virgin-islands-house-at-large"
+  },
+  "P000613": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 289,
+   "url": "https://americafirstfoundation.org/scorecard/jimmy-panetta-california-house-19th-district"
+  },
+  "P000614": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 217,
+   "url": "https://americafirstfoundation.org/scorecard/chris-pappas-new-hampshire-house-1st-district"
+  },
+  "P000617": {
+   "grade": "F",
+   "aligned": 83,
+   "total": 219,
+   "url": "https://americafirstfoundation.org/scorecard/ayanna-pressley-massachusetts-house-7th-district"
+  },
+  "P000620": {
+   "grade": "F",
+   "aligned": 45,
+   "total": 123,
+   "url": "https://americafirstfoundation.org/scorecard/brittany-pettersen-colorado-house-7th-district"
+  },
+  "P000621": {
+   "grade": "F",
+   "aligned": 14,
+   "total": 42,
+   "url": "https://americafirstfoundation.org/scorecard/nellie-pou-new-jersey-house-9th-district"
+  },
+  "P000622": {
+   "grade": "C-",
+   "aligned": 25,
+   "total": 31,
+   "url": "https://americafirstfoundation.org/scorecard/jimmy-patronis-florida-house-1st-district"
+  },
+  "Q000023": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 238,
+   "url": "https://americafirstfoundation.org/scorecard/mike-quigley-illinois-house-5th-district"
+  },
+  "R000122": {
+   "grade": "F",
+   "aligned": 11,
+   "total": 49,
+   "url": "https://americafirstfoundation.org/scorecard/john-reed-rhode-island-senate-senate"
+  },
+  "R000305": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 227,
+   "url": "https://americafirstfoundation.org/scorecard/deborah-ross-north-carolina-house-2nd-district"
+  },
+  "R000395": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 134,
+   "url": "https://americafirstfoundation.org/scorecard/harold-rogers-kentucky-house-5th-district"
+  },
+  "R000575": {
+   "grade": "F",
+   "aligned": 102,
+   "total": 155,
+   "url": "https://americafirstfoundation.org/scorecard/mike-rogers-alabama-house-3rd-district"
+  },
+  "R000579": {
+   "grade": "F",
+   "aligned": 61,
+   "total": 137,
+   "url": "https://americafirstfoundation.org/scorecard/patrick-ryan-new-york-house-18th-district"
+  },
+  "R000584": {
+   "grade": "F",
+   "aligned": 98,
+   "total": 143,
+   "url": "https://americafirstfoundation.org/scorecard/jim-risch-idaho-senate-class-2"
+  },
+  "R000599": {
+   "grade": "F",
+   "aligned": 49,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/raul-ruiz-california-house-25th-district"
+  },
+  "R000600": {
+   "grade": "F",
+   "aligned": 29,
+   "total": 76,
+   "url": "https://americafirstfoundation.org/scorecard/aumua-amata-radewagen-american-samoa-house-at-large"
+  },
+  "R000603": {
+   "grade": "F",
+   "aligned": 133,
+   "total": 206,
+   "url": "https://americafirstfoundation.org/scorecard/david-rouzer-north-carolina-house-7th-district"
+  },
+  "R000605": {
+   "grade": "F",
+   "aligned": 65,
+   "total": 98,
+   "url": "https://americafirstfoundation.org/scorecard/mike-rounds-south-dakota-senate-class-2"
+  },
+  "R000606": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 229,
+   "url": "https://americafirstfoundation.org/scorecard/jamie-raskin-maryland-house-8th-district"
+  },
+  "R000608": {
+   "grade": "F",
+   "aligned": 26,
+   "total": 128,
+   "url": "https://americafirstfoundation.org/scorecard/jacky-rosen-nevada-senate-senate"
+  },
+  "R000609": {
+   "grade": "F",
+   "aligned": 152,
+   "total": 259,
+   "url": "https://americafirstfoundation.org/scorecard/john-h-rutherford-florida-house-5th-district"
+  },
+  "R000610": {
+   "grade": "F",
+   "aligned": 124,
+   "total": 215,
+   "url": "https://americafirstfoundation.org/scorecard/guy-reschenthaler-pennsylvania-house-14th-district"
+  },
+  "R000612": {
+   "grade": "F",
+   "aligned": 122,
+   "total": 190,
+   "url": "https://americafirstfoundation.org/scorecard/john-w-rose-tennessee-house-6th-district"
+  },
+  "R000614": {
+   "grade": "D",
+   "aligned": 250,
+   "total": 320,
+   "url": "https://americafirstfoundation.org/scorecard/chip-roy-texas-house-21st-district"
+  },
+  "R000617": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 206,
+   "url": "https://americafirstfoundation.org/scorecard/delia-ramirez-illinois-house-3rd-district"
+  },
+  "R000618": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 138,
+   "url": "https://americafirstfoundation.org/scorecard/pete-ricketts-nebraska-senate-class-2"
+  },
+  "R000619": {
+   "grade": "D",
+   "aligned": 61,
+   "total": 75,
+   "url": "https://americafirstfoundation.org/scorecard/michael-a-rulli-ohio-house-6th-district"
+  },
+  "R000620": {
+   "grade": "F",
+   "aligned": 11,
+   "total": 44,
+   "url": "https://americafirstfoundation.org/scorecard/luz-rivas-california-house-29th-district"
+  },
+  "R000621": {
+   "grade": "F",
+   "aligned": 14,
+   "total": 59,
+   "url": "https://americafirstfoundation.org/scorecard/emily-randall-washington-house-6th-district"
+  },
+  "R000622": {
+   "grade": "F",
+   "aligned": 28,
+   "total": 45,
+   "url": "https://americafirstfoundation.org/scorecard/josh-riley-new-york-house-19th-district"
+  },
+  "S000033": {
+   "grade": "F",
+   "aligned": 55,
+   "total": 144,
+   "url": "https://americafirstfoundation.org/scorecard/bernie-sanders-vermont-senate-senate"
+  },
+  "S000148": {
+   "grade": "F",
+   "aligned": 23,
+   "total": 57,
+   "url": "https://americafirstfoundation.org/scorecard/charles-schumer-new-york-senate-senate"
+  },
+  "S000168": {
+   "grade": "F",
+   "aligned": 172,
+   "total": 415,
+   "url": "https://americafirstfoundation.org/scorecard/maria-salazar-florida-house-27th-district"
+  },
+  "S000185": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 148,
+   "url": "https://americafirstfoundation.org/scorecard/robert-scott-virginia-house-3rd-district"
+  },
+  "S000250": {
+   "grade": "D-",
+   "aligned": 166,
+   "total": 237,
+   "url": "https://americafirstfoundation.org/scorecard/pete-sessions-texas-house-17th-district"
+  },
+  "S000344": {
+   "grade": "F",
+   "aligned": 136,
+   "total": 336,
+   "url": "https://americafirstfoundation.org/scorecard/brad-sherman-california-house-32nd-district"
+  },
+  "S000510": {
+   "grade": "F",
+   "aligned": 64,
+   "total": 210,
+   "url": "https://americafirstfoundation.org/scorecard/adam-smith-washington-house-9th-district"
+  },
+  "S000522": {
+   "grade": "F",
+   "aligned": 175,
+   "total": 283,
+   "url": "https://americafirstfoundation.org/scorecard/christopher-h-smith-new-jersey-house-4th-district"
+  },
+  "S000929": {
+   "grade": "F",
+   "aligned": 99,
+   "total": 153,
+   "url": "https://americafirstfoundation.org/scorecard/victoria-spartz-indiana-house-5th-district"
+  },
+  "S001145": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 283,
+   "url": "https://americafirstfoundation.org/scorecard/janice-schakowsky-illinois-house-9th-district"
+  },
+  "S001148": {
+   "grade": "F",
+   "aligned": 80,
+   "total": 146,
+   "url": "https://americafirstfoundation.org/scorecard/michael-k-simpson-idaho-house-2nd-district"
+  },
+  "S001150": {
+   "grade": "F",
+   "aligned": 70,
+   "total": 240,
+   "url": "https://americafirstfoundation.org/scorecard/adam-schiff-california-senate-senate-2"
+  },
+  "S001156": {
+   "grade": "F",
+   "aligned": 68,
+   "total": 206,
+   "url": "https://americafirstfoundation.org/scorecard/linda-sanchez-california-house-38th-district"
+  },
+  "S001159": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 204,
+   "url": "https://americafirstfoundation.org/scorecard/marilyn-strickland-washington-house-10th-district"
+  },
+  "S001172": {
+   "grade": "F",
+   "aligned": 105,
+   "total": 186,
+   "url": "https://americafirstfoundation.org/scorecard/adrian-smith-nebraska-house-3rd-district"
+  },
+  "S001176": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 125,
+   "url": "https://americafirstfoundation.org/scorecard/steve-scalise-louisiana-house-1st-district"
+  },
+  "S001181": {
+   "grade": "F",
+   "aligned": 38,
+   "total": 129,
+   "url": "https://americafirstfoundation.org/scorecard/jeanne-shaheen-new-hampshire-senate-senate"
+  },
+  "S001183": {
+   "grade": "F",
+   "aligned": 99,
+   "total": 170,
+   "url": "https://americafirstfoundation.org/scorecard/david-schweikert-arizona-house-1st-district"
+  },
+  "S001184": {
+   "grade": "F",
+   "aligned": 69,
+   "total": 102,
+   "url": "https://americafirstfoundation.org/scorecard/tim-scott-south-carolina-senate-class-3"
+  },
+  "S001185": {
+   "grade": "F",
+   "aligned": 72,
+   "total": 191,
+   "url": "https://americafirstfoundation.org/scorecard/terri-sewell-alabama-house-7th-district"
+  },
+  "S001188": {
+   "grade": "D-",
+   "aligned": 34,
+   "total": 42,
+   "url": "https://americafirstfoundation.org/scorecard/marlin-a-stutzman-indiana-house-3rd-district"
+  },
+  "S001189": {
+   "grade": "F",
+   "aligned": 101,
+   "total": 164,
+   "url": "https://americafirstfoundation.org/scorecard/austin-scott-georgia-house-8th-district"
+  },
+  "S001190": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 258,
+   "url": "https://americafirstfoundation.org/scorecard/bradley-schneider-illinois-house-10th-district"
+  },
+  "S001194": {
+   "grade": "F",
+   "aligned": 23,
+   "total": 83,
+   "url": "https://americafirstfoundation.org/scorecard/brian-schatz-hawaii-senate-senate"
+  },
+  "S001195": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 155,
+   "url": "https://americafirstfoundation.org/scorecard/jason-smith-missouri-house-8th-district"
+  },
+  "S001196": {
+   "grade": "F",
+   "aligned": 152,
+   "total": 266,
+   "url": "https://americafirstfoundation.org/scorecard/elise-m-stefanik-new-york-house-21st-district"
+  },
+  "S001198": {
+   "grade": "F",
+   "aligned": 83,
+   "total": 121,
+   "url": "https://americafirstfoundation.org/scorecard/dan-sullivan-alaska-senate-class-2"
+  },
+  "S001199": {
+   "grade": "F",
+   "aligned": 86,
+   "total": 168,
+   "url": "https://americafirstfoundation.org/scorecard/lloyd-smucker-pennsylvania-house-11th-district"
+  },
+  "S001200": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 241,
+   "url": "https://americafirstfoundation.org/scorecard/darren-soto-florida-house-9th-district"
+  },
+  "S001201": {
+   "grade": "F",
+   "aligned": 94,
+   "total": 232,
+   "url": "https://americafirstfoundation.org/scorecard/thomas-suozzi-new-york-house-3rd-district"
+  },
+  "S001203": {
+   "grade": "F",
+   "aligned": 15,
+   "total": 71,
+   "url": "https://americafirstfoundation.org/scorecard/tina-smith-minnesota-senate-senate"
+  },
+  "S001205": {
+   "grade": "F",
+   "aligned": 62,
+   "total": 223,
+   "url": "https://americafirstfoundation.org/scorecard/mary-gay-scanlon-pennsylvania-house-5th-district"
+  },
+  "S001208": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 196,
+   "url": "https://americafirstfoundation.org/scorecard/elissa-slotkin-michigan-senate-senate-2"
+  },
+  "S001211": {
+   "grade": "F",
+   "aligned": 82,
+   "total": 216,
+   "url": "https://americafirstfoundation.org/scorecard/greg-stanton-arizona-house-4th-district"
+  },
+  "S001212": {
+   "grade": "F",
+   "aligned": 146,
+   "total": 227,
+   "url": "https://americafirstfoundation.org/scorecard/pete-stauber-minnesota-house-8th-district"
+  },
+  "S001213": {
+   "grade": "F",
+   "aligned": 94,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/bryan-steil-wisconsin-house-1st-district"
+  },
+  "S001214": {
+   "grade": "D-",
+   "aligned": 279,
+   "total": 373,
+   "url": "https://americafirstfoundation.org/scorecard/w-steube-florida-house-17th-district"
+  },
+  "S001215": {
+   "grade": "F",
+   "aligned": 63,
+   "total": 188,
+   "url": "https://americafirstfoundation.org/scorecard/haley-stevens-michigan-house-11th-district"
+  },
+  "S001216": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 160,
+   "url": "https://americafirstfoundation.org/scorecard/kim-schrier-washington-house-8th-district"
+  },
+  "S001217": {
+   "grade": "D-",
+   "aligned": 219,
+   "total": 291,
+   "url": "https://americafirstfoundation.org/scorecard/rick-scott-florida-senate-class-1"
+  },
+  "S001218": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 186,
+   "url": "https://americafirstfoundation.org/scorecard/melanie-stansbury-new-mexico-house-1st-district"
+  },
+  "S001220": {
+   "grade": "F",
+   "aligned": 84,
+   "total": 122,
+   "url": "https://americafirstfoundation.org/scorecard/dale-w-strong-alabama-house-5th-district"
+  },
+  "S001221": {
+   "grade": "F",
+   "aligned": 50,
+   "total": 126,
+   "url": "https://americafirstfoundation.org/scorecard/hillary-scholten-michigan-house-3rd-district"
+  },
+  "S001223": {
+   "grade": "F",
+   "aligned": 43,
+   "total": 103,
+   "url": "https://americafirstfoundation.org/scorecard/emilia-sykes-ohio-house-13th-district"
+  },
+  "S001224": {
+   "grade": "D-",
+   "aligned": 167,
+   "total": 225,
+   "url": "https://americafirstfoundation.org/scorecard/keith-self-texas-house-3rd-district"
+  },
+  "S001225": {
+   "grade": "F",
+   "aligned": 53,
+   "total": 114,
+   "url": "https://americafirstfoundation.org/scorecard/eric-sorensen-illinois-house-17th-district"
+  },
+  "S001226": {
+   "grade": "F",
+   "aligned": 57,
+   "total": 165,
+   "url": "https://americafirstfoundation.org/scorecard/andrea-salinas-oregon-house-6th-district"
+  },
+  "S001227": {
+   "grade": "D+",
+   "aligned": 53,
+   "total": 61,
+   "url": "https://americafirstfoundation.org/scorecard/eric-schmitt-missouri-senate-class-3"
+  },
+  "S001228": {
+   "grade": "D-",
+   "aligned": 53,
+   "total": 69,
+   "url": "https://americafirstfoundation.org/scorecard/derek-schmidt-kansas-house-2nd-district"
+  },
+  "S001229": {
+   "grade": "D",
+   "aligned": 53,
+   "total": 65,
+   "url": "https://americafirstfoundation.org/scorecard/jefferson-shreve-indiana-house-6th-district"
+  },
+  "S001230": {
+   "grade": "F",
+   "aligned": 20,
+   "total": 63,
+   "url": "https://americafirstfoundation.org/scorecard/suhas-subramanyam-virginia-house-10th-district"
+  },
+  "S001231": {
+   "grade": "F",
+   "aligned": 18,
+   "total": 79,
+   "url": "https://americafirstfoundation.org/scorecard/lateefah-simon-california-house-12th-district"
+  },
+  "S001232": {
+   "grade": "C",
+   "aligned": 34,
+   "total": 38,
+   "url": "https://americafirstfoundation.org/scorecard/tim-sheehy-montana-senate-class-1"
+  },
+  "T000165": {
+   "grade": "D",
+   "aligned": 209,
+   "total": 268,
+   "url": "https://americafirstfoundation.org/scorecard/thomas-p-tiffany-wisconsin-house-7th-district"
+  },
+  "T000193": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 151,
+   "url": "https://americafirstfoundation.org/scorecard/bennie-thompson-mississippi-house-2nd-district"
+  },
+  "T000250": {
+   "grade": "F",
+   "aligned": 43,
+   "total": 73,
+   "url": "https://americafirstfoundation.org/scorecard/john-thune-south-dakota-senate-class-3"
+  },
+  "T000278": {
+   "grade": "D+",
+   "aligned": 88,
+   "total": 102,
+   "url": "https://americafirstfoundation.org/scorecard/tommy-tuberville-alabama-senate-class-2"
+  },
+  "T000460": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 205,
+   "url": "https://americafirstfoundation.org/scorecard/mike-thompson-california-house-4th-district"
+  },
+  "T000463": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 146,
+   "url": "https://americafirstfoundation.org/scorecard/michael-r-turner-ohio-house-10th-district"
+  },
+  "T000467": {
+   "grade": "F",
+   "aligned": 96,
+   "total": 157,
+   "url": "https://americafirstfoundation.org/scorecard/glenn-thompson-pennsylvania-house-15th-district"
+  },
+  "T000468": {
+   "grade": "F",
+   "aligned": 119,
+   "total": 349,
+   "url": "https://americafirstfoundation.org/scorecard/dina-titus-nevada-house-1st-district"
+  },
+  "T000469": {
+   "grade": "F",
+   "aligned": 75,
+   "total": 207,
+   "url": "https://americafirstfoundation.org/scorecard/paul-tonko-new-york-house-20th-district"
+  },
+  "T000472": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 203,
+   "url": "https://americafirstfoundation.org/scorecard/mark-takano-california-house-39th-district"
+  },
+  "T000474": {
+   "grade": "F",
+   "aligned": 53,
+   "total": 190,
+   "url": "https://americafirstfoundation.org/scorecard/norma-torres-california-house-35th-district"
+  },
+  "T000476": {
+   "grade": "F",
+   "aligned": 119,
+   "total": 194,
+   "url": "https://americafirstfoundation.org/scorecard/thom-tillis-north-carolina-senate-class-2"
+  },
+  "T000478": {
+   "grade": "F",
+   "aligned": 201,
+   "total": 344,
+   "url": "https://americafirstfoundation.org/scorecard/claudia-tenney-new-york-house-24th-district"
+  },
+  "T000480": {
+   "grade": "F",
+   "aligned": 114,
+   "total": 180,
+   "url": "https://americafirstfoundation.org/scorecard/william-r-timmons-iv-south-carolina-house-4th-district"
+  },
+  "T000481": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 305,
+   "url": "https://americafirstfoundation.org/scorecard/rashida-tlaib-michigan-house-12th-district"
+  },
+  "T000482": {
+   "grade": "F",
+   "aligned": 73,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/lori-trahan-massachusetts-house-3rd-district"
+  },
+  "T000486": {
+   "grade": "F",
+   "aligned": 56,
+   "total": 212,
+   "url": "https://americafirstfoundation.org/scorecard/ritchie-torres-new-york-house-15th-district"
+  },
+  "T000487": {
+   "grade": "F",
+   "aligned": 71,
+   "total": 189,
+   "url": "https://americafirstfoundation.org/scorecard/jill-tokuda-hawaii-house-2nd-district"
+  },
+  "T000488": {
+   "grade": "F",
+   "aligned": 41,
+   "total": 192,
+   "url": "https://americafirstfoundation.org/scorecard/shri-thanedar-michigan-house-13th-district"
+  },
+  "T000490": {
+   "grade": "C-",
+   "aligned": 42,
+   "total": 48,
+   "url": "https://americafirstfoundation.org/scorecard/david-j-taylor-ohio-house-2nd-district"
+  },
+  "T000491": {
+   "grade": "F",
+   "aligned": 29,
+   "total": 63,
+   "url": "https://americafirstfoundation.org/scorecard/derek-tran-california-house-45th-district"
+  },
+  "U000040": {
+   "grade": "F",
+   "aligned": 55,
+   "total": 148,
+   "url": "https://americafirstfoundation.org/scorecard/lauren-underwood-illinois-house-14th-district"
+  },
+  "V000081": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 246,
+   "url": "https://americafirstfoundation.org/scorecard/nydia-velazquez-new-york-house-7th-district"
+  },
+  "V000128": {
+   "grade": "F",
+   "aligned": 61,
+   "total": 157,
+   "url": "https://americafirstfoundation.org/scorecard/chris-van-hollen-maryland-senate-senate"
+  },
+  "V000129": {
+   "grade": "F",
+   "aligned": 94,
+   "total": 181,
+   "url": "https://americafirstfoundation.org/scorecard/david-g-valadao-california-house-22nd-district"
+  },
+  "V000130": {
+   "grade": "F",
+   "aligned": 65,
+   "total": 283,
+   "url": "https://americafirstfoundation.org/scorecard/juan-vargas-california-house-52nd-district"
+  },
+  "V000131": {
+   "grade": "F",
+   "aligned": 67,
+   "total": 188,
+   "url": "https://americafirstfoundation.org/scorecard/marc-veasey-texas-house-33rd-district"
+  },
+  "V000133": {
+   "grade": "F",
+   "aligned": 188,
+   "total": 286,
+   "url": "https://americafirstfoundation.org/scorecard/jefferson-van-drew-new-jersey-house-2nd-district"
+  },
+  "V000134": {
+   "grade": "D-",
+   "aligned": 165,
+   "total": 233,
+   "url": "https://americafirstfoundation.org/scorecard/beth-van-duyne-texas-house-24th-district"
+  },
+  "V000135": {
+   "grade": "F",
+   "aligned": 85,
+   "total": 129,
+   "url": "https://americafirstfoundation.org/scorecard/derrick-van-orden-wisconsin-house-3rd-district"
+  },
+  "V000136": {
+   "grade": "F",
+   "aligned": 61,
+   "total": 129,
+   "url": "https://americafirstfoundation.org/scorecard/gabe-vasquez-new-mexico-house-2nd-district"
+  },
+  "V000138": {
+   "grade": "F",
+   "aligned": 52,
+   "total": 94,
+   "url": "https://americafirstfoundation.org/scorecard/eugene-vindman-virginia-house-7th-district"
+  },
+  "V000139": {
+   "grade": "C",
+   "aligned": 20,
+   "total": 23,
+   "url": "https://americafirstfoundation.org/scorecard/matt-van-epps-tennessee-house-7th-district"
+  },
+  "W000187": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 167,
+   "url": "https://americafirstfoundation.org/scorecard/maxine-waters-california-house-43rd-district"
+  },
+  "W000437": {
+   "grade": "F",
+   "aligned": 64,
+   "total": 108,
+   "url": "https://americafirstfoundation.org/scorecard/roger-wicker-mississippi-senate-class-1"
+  },
+  "W000779": {
+   "grade": "F",
+   "aligned": 28,
+   "total": 120,
+   "url": "https://americafirstfoundation.org/scorecard/ron-wyden-oregon-senate-senate"
+  },
+  "W000788": {
+   "grade": "F",
+   "aligned": 64,
+   "total": 230,
+   "url": "https://americafirstfoundation.org/scorecard/nikema-williams-georgia-house-5th-district"
+  },
+  "W000790": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 50,
+   "url": "https://americafirstfoundation.org/scorecard/raphael-warnock-georgia-senate-senate"
+  },
+  "W000795": {
+   "grade": "F",
+   "aligned": 155,
+   "total": 298,
+   "url": "https://americafirstfoundation.org/scorecard/joe-wilson-south-carolina-house-2nd-district"
+  },
+  "W000797": {
+   "grade": "F",
+   "aligned": 58,
+   "total": 244,
+   "url": "https://americafirstfoundation.org/scorecard/debbie-wasserman-schultz-florida-house-25th-district"
+  },
+  "W000798": {
+   "grade": "F",
+   "aligned": 102,
+   "total": 172,
+   "url": "https://americafirstfoundation.org/scorecard/tim-walberg-michigan-house-5th-district"
+  },
+  "W000800": {
+   "grade": "F",
+   "aligned": 60,
+   "total": 190,
+   "url": "https://americafirstfoundation.org/scorecard/peter-welch-vermont-senate-senate-2"
+  },
+  "W000802": {
+   "grade": "F",
+   "aligned": 27,
+   "total": 87,
+   "url": "https://americafirstfoundation.org/scorecard/sheldon-whitehouse-rhode-island-senate-senate"
+  },
+  "W000804": {
+   "grade": "F",
+   "aligned": 118,
+   "total": 185,
+   "url": "https://americafirstfoundation.org/scorecard/robert-j-wittman-virginia-house-1st-district"
+  },
+  "W000805": {
+   "grade": "F",
+   "aligned": 22,
+   "total": 60,
+   "url": "https://americafirstfoundation.org/scorecard/mark-warner-virginia-senate-senate"
+  },
+  "W000806": {
+   "grade": "F",
+   "aligned": 120,
+   "total": 180,
+   "url": "https://americafirstfoundation.org/scorecard/daniel-webster-florida-house-11th-district"
+  },
+  "W000808": {
+   "grade": "F",
+   "aligned": 42,
+   "total": 161,
+   "url": "https://americafirstfoundation.org/scorecard/frederica-wilson-florida-house-24th-district"
+  },
+  "W000809": {
+   "grade": "F",
+   "aligned": 95,
+   "total": 160,
+   "url": "https://americafirstfoundation.org/scorecard/steve-womack-arkansas-house-3rd-district"
+  },
+  "W000812": {
+   "grade": "F",
+   "aligned": 127,
+   "total": 215,
+   "url": "https://americafirstfoundation.org/scorecard/ann-wagner-missouri-house-2nd-district"
+  },
+  "W000814": {
+   "grade": "F",
+   "aligned": 321,
+   "total": 432,
+   "url": "https://americafirstfoundation.org/scorecard/randy-k-weber-texas-house-14th-district"
+  },
+  "W000816": {
+   "grade": "F",
+   "aligned": 126,
+   "total": 187,
+   "url": "https://americafirstfoundation.org/scorecard/roger-williams-texas-house-25th-district"
+  },
+  "W000817": {
+   "grade": "F",
+   "aligned": 32,
+   "total": 135,
+   "url": "https://americafirstfoundation.org/scorecard/elizabeth-warren-massachusetts-senate-senate"
+  },
+  "W000821": {
+   "grade": "F",
+   "aligned": 93,
+   "total": 150,
+   "url": "https://americafirstfoundation.org/scorecard/bruce-westerman-arkansas-house-4th-district"
+  },
+  "W000822": {
+   "grade": "F",
+   "aligned": 76,
+   "total": 237,
+   "url": "https://americafirstfoundation.org/scorecard/bonnie-watson-coleman-new-jersey-house-12th-district"
+  },
+  "W000829": {
+   "grade": "C-",
+   "aligned": 48,
+   "total": 56,
+   "url": "https://americafirstfoundation.org/scorecard/tony-wied-wisconsin-house-8th-district"
+  },
+  "W000830": {
+   "grade": "F",
+   "aligned": 19,
+   "total": 41,
+   "url": "https://americafirstfoundation.org/scorecard/george-whitesides-california-house-27th-district"
+  },
+  "W000831": {
+   "grade": "F",
+   "aligned": 9,
+   "total": 48,
+   "url": "https://americafirstfoundation.org/scorecard/james-walkinshaw-virginia-house-11th-district"
+  },
+  "Y000064": {
+   "grade": "F",
+   "aligned": 66,
+   "total": 110,
+   "url": "https://americafirstfoundation.org/scorecard/todd-young-indiana-senate-class-3"
+  },
+  "Y000067": {
+   "grade": "F",
+   "aligned": 94,
+   "total": 162,
+   "url": "https://americafirstfoundation.org/scorecard/rudy-yakym-iii-indiana-house-2nd-district"
+  },
+  "Z000018": {
+   "grade": "F",
+   "aligned": 100,
+   "total": 141,
+   "url": "https://americafirstfoundation.org/scorecard/ryan-k-zinke-montana-house-1st-district"
+  }
+ }
+}

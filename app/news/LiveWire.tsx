@@ -19,7 +19,7 @@ export function useWire() {
 function StoryRow({ c, now, open, onToggle }: { c: Cluster; now: number; open: boolean; onToggle: () => void }) {
   const by = (l: Lean) => c.items.filter((x) => x.lean === l);
   return (
-    <article className={`nw-wire-row${open ? " open" : ""}`}>
+    <article id={`st-${c.id}`} className={`nw-wire-row${open ? " open" : ""}`}>
       <button className="nw-wire-h" aria-expanded={open} onClick={onToggle}>
         <span className="t">{c.head.t}</span>
         <span className="m"><span>{c.outlets} {c.outlets === 1 ? "outlet" : "outlets"}</span><span>{ago(c.last, now)}</span>{c.blind ? <span className="blind">Blindspot for the {LEAN_LABEL[c.blind]}</span> : null}</span>
@@ -41,13 +41,21 @@ function StoryRow({ c, now, open, onToggle }: { c: Cluster; now: number; open: b
   );
 }
 
-export default function LiveWire({ limit = 40, keys, title = "The live wire", compact = false }: { limit?: number; keys?: string[]; title?: string; compact?: boolean }) {
+export default function LiveWire({ limit = 40, keys, title = "The live wire", compact = false, blind = true }: { limit?: number; keys?: string[]; title?: string; compact?: boolean; blind?: boolean }) {
   const { w, err } = useWire();
   const [cat, setCat] = useState<Cat | "all">("all");
   const [lean, setLean] = useState<Lean | "all">("all");
   const [open, setOpen] = useState<string | null>(null);
   const [now, setNow] = useState(0);
   useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 60000); return () => clearInterval(t); }, []);
+  // other parts of the page open a story here: the compass, the picture cards and the blindspots
+  useEffect(() => {
+    const on = (e: Event) => {
+      const id = (e as CustomEvent<string>).detail; setCat("all"); setLean("all"); setOpen(id);
+      requestAnimationFrame(() => document.getElementById(`st-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    };
+    window.addEventListener("nw-open", on); return () => window.removeEventListener("nw-open", on);
+  }, []);
   const list = useMemo(() => {
     let s = w?.stories ?? [];
     if (keys?.length) s = s.filter((c) => { const t = c.items.map((x) => x.t.toLowerCase()).join(" "); return keys.some((k) => t.includes(k.toLowerCase())); });
@@ -57,6 +65,7 @@ export default function LiveWire({ limit = 40, keys, title = "The live wire", co
   }, [w, keys, cat, lean]);
   const multi = list.filter((c) => c.outlets > 1);
   const shown = (keys ? list : multi).slice(0, limit);
+  if (open && !shown.some((c) => c.id === open)) { const extra = (w?.stories ?? []).find((c) => c.id === open); if (extra) shown.unshift(extra); }
   const blindL = (w?.stories ?? []).filter((c) => c.blind === "L").slice(0, 6), blindR = (w?.stories ?? []).filter((c) => c.blind === "R").slice(0, 6);
 
   return (
@@ -75,7 +84,7 @@ export default function LiveWire({ limit = 40, keys, title = "The live wire", co
       {err ? <p className="nw-note">Headlines will appear here as soon as the feeds can be read. The written stories above are unaffected.</p> : null}
       {w && !shown.length ? <p className="nw-note">{keys ? "No new headlines on this story in the last two days." : "No stories carried by more than one outlet in this section yet."}</p> : null}
       <div className="nw-wire-list">{shown.map((c) => <StoryRow key={c.id} c={c} now={now} open={open === c.id} onToggle={() => setOpen(open === c.id ? null : c.id)} />)}</div>
-      {!compact && w ? (
+      {!compact && blind && w ? (
         <div className="nw-blind">
           <div><h3>Blindspots for the Left</h3><p>Stories carried by three or more Right outlets and no Left outlet.</p>{blindL.length ? <ul>{blindL.map((c) => <li key={c.id}><a href={c.head.u} target="_blank" rel="noopener noreferrer">{c.head.t}</a><span>{c.items.map((x) => outletName(x.o)).slice(0, 4).join(", ")}</span></li>)}</ul> : <p className="nw-note">None right now.</p>}</div>
           <div><h3>Blindspots for the Right</h3><p>Stories carried by three or more Left outlets and no Right outlet.</p>{blindR.length ? <ul>{blindR.map((c) => <li key={c.id}><a href={c.head.u} target="_blank" rel="noopener noreferrer">{c.head.t}</a><span>{c.items.map((x) => outletName(x.o)).slice(0, 4).join(", ")}</span></li>)}</ul> : <p className="nw-note">None right now.</p>}</div>

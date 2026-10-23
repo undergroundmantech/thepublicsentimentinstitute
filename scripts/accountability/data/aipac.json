@@ -1,0 +1,5360 @@
+{
+ "source": "https://www.trackaipac.com/",
+ "fetched": "2026-10-22",
+ "notes": "Figures come from TrackAIPAC (Citizens Against AIPAC Corruption). Per the site, they 'reflect federal career totals from all pro-Israel PACs & their large donors': 'Donations' or 'PACs' = direct and earmarked donations from pro-Israel PACs to the candidate; 'IE' = independent expenditures (ad spending etc.) by pro-Israel PACs on the candidate's behalf; 'Israel Lobby Total' (a few entries print just 'Lobby Total') is the headline number stored as amount. Data sourced from the FEC; the congress page dates it 7/5/26. amount null with label 'Track AIPAC Approved!' means the site lists the member as rejecting AIPAC and shows no dollar figure; amount 0 means the site prints $0 (often 'newly elected, evaluating'). No per-member pages exist; every member url is the /congress page. Coverage gap: the fetch tool's text of /congress (and the identical /israel-lobby-tracker and /us-senate pages) is capped at 65,602 characters and cuts off at the start of Washington, so WA, WV, WI and WY (29 members) could not be read; the older /states/washington and /states/wisconsin pages show figures only inside images (not readable), /states/westvirginia lists no members, and /states/wyoming, /house and /senate returned client errors. The 6 non-voting delegates (DC, PR, GU, VI, AS, MP) are not listed by the site. Site quirks recorded as shown: Rick Allen GA-12 marked [D]; Chris Deluzio PACs $330,816 exceeds his total $314,836; Gabe Amo, Kevin Kiley, James Comer, Maggie Hassan components do not sum to the total. The /2028 page carries older, different figures for sitting members (e.g. Cruz $1,617,745, Booker $846,471, Gallego $83,219, Kelly $495,311, Slotkin $491,189, AOC $0); members use the /congress figures. Trump admin page figures are rough text claims (e.g. '>$230 MILLION'), kept in amount_text with amount null unless an exact graphic figure was shown.",
+ "members": {
+  "T000278": {
+   "amount": 29184,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tommy Tuberville",
+   "site_seat": "AL-SEN",
+   "pacs_or_donations": 29184,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "B001319": {
+   "amount": 106961,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Katie Britt",
+   "site_seat": "AL-SEN",
+   "pacs_or_donations": 106961,
+   "ie": 0
+  },
+  "M001212": {
+   "amount": 30173,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Barry Moore",
+   "site_seat": "AL-01",
+   "pacs_or_donations": 30173,
+   "ie": 0,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "F000481": {
+   "amount": 63235,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Shomari Figures",
+   "site_seat": "AL-02",
+   "pacs_or_donations": 61835,
+   "ie": 1400
+  },
+  "R000575": {
+   "amount": 1033286,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Rogers",
+   "site_seat": "AL-03",
+   "pacs_or_donations": 1033286,
+   "ie": 0
+  },
+  "A000055": {
+   "amount": 116967,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Robert Aderholt",
+   "site_seat": "AL-04",
+   "pacs_or_donations": 116967,
+   "ie": 0
+  },
+  "S001220": {
+   "amount": 37335,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dale Strong",
+   "site_seat": "AL-05",
+   "pacs_or_donations": 37335,
+   "ie": 0
+  },
+  "P000609": {
+   "amount": 88031,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gary Palmer",
+   "site_seat": "AL-06",
+   "pacs_or_donations": 88031,
+   "ie": 0
+  },
+  "S001185": {
+   "amount": 75552,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Terri Sewell",
+   "site_seat": "AL-07",
+   "pacs_or_donations": 75552,
+   "ie": 0
+  },
+  "M001153": {
+   "amount": 265262,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lisa Murkowski",
+   "site_seat": "AK-SEN",
+   "pacs_or_donations": 265262,
+   "ie": 0
+  },
+  "S001198": {
+   "amount": 789874,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dan Sullivan",
+   "site_seat": "AK-SEN",
+   "pacs_or_donations": 789874,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "B001323": {
+   "amount": 16107,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nick Begich",
+   "site_seat": "AK-00",
+   "pacs_or_donations": 16107,
+   "ie": 0
+  },
+  "K000377": {
+   "amount": 554054,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Kelly",
+   "site_seat": "AZ-SEN",
+   "pacs_or_donations": 499717,
+   "ie": 54337
+  },
+  "G000574": {
+   "amount": 141670,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ruben Gallego",
+   "site_seat": "AZ-SEN",
+   "pacs_or_donations": 99419,
+   "ie": 42251,
+   "tags": "Next election 2030"
+  },
+  "S001183": {
+   "amount": 206443,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "David Schweikert",
+   "site_seat": "AZ-01",
+   "pacs_or_donations": 206443,
+   "ie": 0
+  },
+  "C001132": {
+   "amount": 500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Eli Crane",
+   "site_seat": "AZ-02",
+   "pacs_or_donations": 500,
+   "ie": 0
+  },
+  "A000381": {
+   "amount": 1161274,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Yassamin Ansari",
+   "site_seat": "AZ-03",
+   "pacs_or_donations": 5000,
+   "ie": 1156274,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "S001211": {
+   "amount": 321822,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Greg Stanton",
+   "site_seat": "AZ-04",
+   "pacs_or_donations": 321822,
+   "ie": 0
+  },
+  "B001302": {
+   "amount": 39184,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andy Biggs",
+   "site_seat": "AZ-05",
+   "pacs_or_donations": 39184,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "C001133": {
+   "amount": 1224703,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Juan Ciscomani",
+   "site_seat": "AZ-06",
+   "pacs_or_donations": 1224703,
+   "ie": 0
+  },
+  "G000606": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Adelita Grijalva",
+   "site_seat": "AZ-07",
+   "tags": "Track AIPAC Approved"
+  },
+  "H001098": {
+   "amount": 53638,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Abe Hamadeh",
+   "site_seat": "AZ-08",
+   "pacs_or_donations": 53638,
+   "ie": 0
+  },
+  "G000565": {
+   "amount": 18250,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Paul Gosar",
+   "site_seat": "AZ-09",
+   "pacs_or_donations": 18250,
+   "ie": 0
+  },
+  "B001236": {
+   "amount": 191516,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Boozman",
+   "site_seat": "AR-SEN",
+   "pacs_or_donations": 191516,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "C001095": {
+   "amount": 1127943,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Cotton",
+   "site_seat": "AR-SEN",
+   "pacs_or_donations": 1127943,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "C001087": {
+   "amount": 25398,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rick Crawford",
+   "site_seat": "AR-01",
+   "pacs_or_donations": 25398,
+   "ie": 0
+  },
+  "H001072": {
+   "amount": 71443,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "French Hill",
+   "site_seat": "AR-02",
+   "pacs_or_donations": 71443,
+   "ie": 0
+  },
+  "W000809": {
+   "amount": 134837,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steve Womack",
+   "site_seat": "AR-03",
+   "pacs_or_donations": 134837,
+   "ie": 0
+  },
+  "W000821": {
+   "amount": 79146,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bruce Westerman",
+   "site_seat": "AR-04",
+   "pacs_or_donations": 79146,
+   "ie": 0
+  },
+  "P000145": {
+   "amount": 104055,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Alex Padilla",
+   "site_seat": "CA-SEN",
+   "pacs_or_donations": 104055,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "S001150": {
+   "amount": 5609345,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Adam Schiff",
+   "site_seat": "CA-SEN",
+   "pacs_or_donations": 581595,
+   "ie": 5027750,
+   "tags": "Next election 2030"
+  },
+  "G000607": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "James Gallagher",
+   "site_seat": "CA-01",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Newly elected"
+  },
+  "H001068": {
+   "amount": 59362,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jared Huffman",
+   "site_seat": "CA-02",
+   "pacs_or_donations": 59362,
+   "ie": 0
+  },
+  "K000401": {
+   "amount": 90537,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kevin Kiley",
+   "site_seat": "CA-03",
+   "pacs_or_donations": 90487,
+   "ie": 0
+  },
+  "T000460": {
+   "amount": 42865,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Thompson",
+   "site_seat": "CA-04",
+   "pacs_or_donations": 42865,
+   "ie": 0
+  },
+  "M001177": {
+   "amount": 45548,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom McClintock",
+   "site_seat": "CA-05",
+   "pacs_or_donations": 45548,
+   "ie": 0
+  },
+  "B001287": {
+   "amount": 269170,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ami Bera",
+   "site_seat": "CA-06",
+   "pacs_or_donations": 269170,
+   "ie": 0
+  },
+  "M001163": {
+   "amount": 21305,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Doris Matsui",
+   "site_seat": "CA-07",
+   "pacs_or_donations": 21305,
+   "ie": 0
+  },
+  "G000559": {
+   "amount": 65867,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Garamendi",
+   "site_seat": "CA-08",
+   "pacs_or_donations": 65867,
+   "ie": 0
+  },
+  "H001090": {
+   "amount": 394208,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Josh Harder",
+   "site_seat": "CA-09",
+   "pacs_or_donations": 394208,
+   "ie": 0
+  },
+  "D000623": {
+   "amount": 27060,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark DeSaulnier",
+   "site_seat": "CA-10",
+   "pacs_or_donations": 27060,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "P000197": {
+   "amount": 188554,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nancy Pelosi",
+   "site_seat": "CA-11",
+   "pacs_or_donations": 188554,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "S001231": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lateefah Simon",
+   "site_seat": "CA-12",
+   "tags": "Track AIPAC Approved"
+  },
+  "G000605": {
+   "amount": 60523,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Adam Gray",
+   "site_seat": "CA-13",
+   "pacs_or_donations": 60523,
+   "ie": 0
+  },
+  "W000832": {
+   "amount": 110300,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Aisha Wahab",
+   "site_seat": "CA-14",
+   "pacs_or_donations": 2300,
+   "ie": 108000,
+   "tags": "Newly elected"
+  },
+  "M001225": {
+   "amount": 733366,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kevin Mullin",
+   "site_seat": "CA-15",
+   "pacs_or_donations": 129685,
+   "ie": 603681
+  },
+  "L000607": {
+   "amount": 52780,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sam Liccardo",
+   "site_seat": "CA-16",
+   "pacs_or_donations": 52780,
+   "ie": 0
+  },
+  "K000389": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ro Khanna",
+   "site_seat": "CA-17",
+   "tags": "Track AIPAC Approved; Signed PEACE Pledge"
+  },
+  "L000397": {
+   "amount": 49388,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Zoe Lofgren",
+   "site_seat": "CA-18",
+   "pacs_or_donations": 49388,
+   "ie": 0
+  },
+  "P000613": {
+   "amount": 540047,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jimmy Panetta",
+   "site_seat": "CA-19",
+   "pacs_or_donations": 540047,
+   "ie": 0
+  },
+  "F000480": {
+   "amount": 23278,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Vince Fong",
+   "site_seat": "CA-20",
+   "pacs_or_donations": 23278,
+   "ie": 0
+  },
+  "C001059": {
+   "amount": 346393,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Costa",
+   "site_seat": "CA-21",
+   "pacs_or_donations": 346393,
+   "ie": 0
+  },
+  "V000129": {
+   "amount": 271108,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "David Valadao",
+   "site_seat": "CA-22",
+   "pacs_or_donations": 271108,
+   "ie": 0
+  },
+  "O000019": {
+   "amount": 31414,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jay Obernolte",
+   "site_seat": "CA-23",
+   "pacs_or_donations": 31414,
+   "ie": 0
+  },
+  "C001112": {
+   "amount": 50945,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Salud Carbajal",
+   "site_seat": "CA-24",
+   "pacs_or_donations": 50945,
+   "ie": 0
+  },
+  "R000599": {
+   "amount": 220069,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Raul Ruiz",
+   "site_seat": "CA-25",
+   "pacs_or_donations": 220069,
+   "ie": 0
+  },
+  "B001285": {
+   "amount": 192080,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Julia Brownley",
+   "site_seat": "CA-26",
+   "pacs_or_donations": 192080,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "W000830": {
+   "amount": 56129,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "George Whitesides",
+   "site_seat": "CA-27",
+   "pacs_or_donations": 56129,
+   "ie": 0
+  },
+  "C001080": {
+   "amount": 29735,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Judy Chu",
+   "site_seat": "CA-28",
+   "pacs_or_donations": 29735,
+   "ie": 0
+  },
+  "R000620": {
+   "amount": 84629,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Luz Rivas",
+   "site_seat": "CA-29",
+   "pacs_or_donations": 84629,
+   "ie": 0
+  },
+  "F000483": {
+   "amount": 44717,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Laura Friedman",
+   "site_seat": "CA-30",
+   "pacs_or_donations": 44717,
+   "ie": 0
+  },
+  "C001123": {
+   "amount": 159352,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gil Cisneros",
+   "site_seat": "CA-31",
+   "pacs_or_donations": 158477,
+   "ie": 875
+  },
+  "S000344": {
+   "amount": 1024183,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brad Sherman",
+   "site_seat": "CA-32",
+   "pacs_or_donations": 1024183,
+   "ie": 0
+  },
+  "A000371": {
+   "amount": 1534149,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pete Aguilar",
+   "site_seat": "CA-33",
+   "pacs_or_donations": 1534149,
+   "ie": 0
+  },
+  "G000585": {
+   "amount": 2641199,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jimmy Gomez",
+   "site_seat": "CA-34",
+   "pacs_or_donations": 368917,
+   "ie": 2272282
+  },
+  "T000474": {
+   "amount": 437242,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Norma Torres",
+   "site_seat": "CA-35",
+   "pacs_or_donations": 437242,
+   "ie": 0
+  },
+  "L000582": {
+   "amount": 919240,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ted Lieu",
+   "site_seat": "CA-36",
+   "pacs_or_donations": 919240,
+   "ie": 0
+  },
+  "K000400": {
+   "amount": 154718,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sydney Kamlager-Dove",
+   "site_seat": "CA-37",
+   "pacs_or_donations": 66367,
+   "ie": 88351
+  },
+  "S001156": {
+   "amount": 135571,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Linda Sanchez",
+   "site_seat": "CA-38",
+   "pacs_or_donations": 135571,
+   "ie": 0
+  },
+  "T000472": {
+   "amount": 85802,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Takano",
+   "site_seat": "CA-39",
+   "pacs_or_donations": 85802,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "K000397": {
+   "amount": 538062,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Young Kim",
+   "site_seat": "CA-40",
+   "pacs_or_donations": 538062,
+   "ie": 0
+  },
+  "C000059": {
+   "amount": 1115690,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ken Calvert",
+   "site_seat": "CA-41",
+   "pacs_or_donations": 1115690,
+   "ie": 0
+  },
+  "G000598": {
+   "amount": 107107,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Robert Garcia",
+   "site_seat": "CA-42",
+   "pacs_or_donations": 107107,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "W000187": {
+   "amount": 4000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maxine Waters",
+   "site_seat": "CA-43",
+   "pacs_or_donations": 4000,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "B001300": {
+   "amount": 94404,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nanette Barragan",
+   "site_seat": "CA-44",
+   "pacs_or_donations": 94404,
+   "ie": 0
+  },
+  "T000491": {
+   "amount": 198745,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Derek Tran",
+   "site_seat": "CA-45",
+   "pacs_or_donations": 198745,
+   "ie": 0
+  },
+  "C001110": {
+   "amount": 79966,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lou Correa",
+   "site_seat": "CA-46",
+   "pacs_or_donations": 79966,
+   "ie": 0
+  },
+  "M001241": {
+   "amount": 78336,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dave Min",
+   "site_seat": "CA-47",
+   "pacs_or_donations": 78336,
+   "ie": 0
+  },
+  "I000056": {
+   "amount": 91526,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Darrell Issa",
+   "site_seat": "CA-48",
+   "pacs_or_donations": 91526,
+   "ie": 0
+  },
+  "L000593": {
+   "amount": 512590,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Levin",
+   "site_seat": "CA-49",
+   "pacs_or_donations": 512590,
+   "ie": 0
+  },
+  "P000608": {
+   "amount": 163497,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Scott Peters",
+   "site_seat": "CA-50",
+   "pacs_or_donations": 163497,
+   "ie": 0
+  },
+  "J000305": {
+   "amount": 73381,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sara Jacobs",
+   "site_seat": "CA-51",
+   "pacs_or_donations": 73381,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "V000130": {
+   "amount": 319703,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Juan Vargas",
+   "site_seat": "CA-52",
+   "pacs_or_donations": 317123,
+   "ie": 2580
+  },
+  "B001267": {
+   "amount": 357996,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michael Bennet",
+   "site_seat": "CO-SEN",
+   "pacs_or_donations": 357616,
+   "ie": 380,
+   "tags": "Next election 2028"
+  },
+  "H000273": {
+   "amount": 615856,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Hickenlooper",
+   "site_seat": "CO-SEN",
+   "pacs_or_donations": 599447,
+   "ie": 16409,
+   "tags": "Up for re-election"
+  },
+  "D000197": {
+   "amount": 1654229,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Diana DeGette",
+   "site_seat": "CO-01",
+   "pacs_or_donations": 111576,
+   "ie": 1542653
+  },
+  "N000191": {
+   "amount": 406102,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joe Neguse",
+   "site_seat": "CO-02",
+   "pacs_or_donations": 406102,
+   "ie": 0
+  },
+  "H001100": {
+   "amount": 65198,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jeff Hurd",
+   "site_seat": "CO-03",
+   "pacs_or_donations": 65198,
+   "ie": 0
+  },
+  "B000825": {
+   "amount": 5810,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lauren Boebert",
+   "site_seat": "CO-04",
+   "pacs_or_donations": 5810,
+   "ie": 0
+  },
+  "C001137": {
+   "amount": 12306,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jeff Crank",
+   "site_seat": "CO-05",
+   "pacs_or_donations": 12306,
+   "ie": 0
+  },
+  "C001121": {
+   "amount": 259109,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jason Crow",
+   "site_seat": "CO-06",
+   "pacs_or_donations": 258827,
+   "ie": 282
+  },
+  "P000620": {
+   "amount": 141630,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brittany Pettersen",
+   "site_seat": "CO-07",
+   "pacs_or_donations": 141630,
+   "ie": 0
+  },
+  "E000300": {
+   "amount": 724445,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gabe Evans",
+   "site_seat": "CO-08",
+   "pacs_or_donations": 56292,
+   "ie": 668153
+  },
+  "B001277": {
+   "amount": 326757,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Richard Blumenthal",
+   "site_seat": "CT-SEN",
+   "pacs_or_donations": 326757,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "M001169": {
+   "amount": 133605,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Murphy",
+   "site_seat": "CT-SEN",
+   "pacs_or_donations": 133605,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "L000557": {
+   "amount": 84450,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Larson",
+   "site_seat": "CT-01",
+   "pacs_or_donations": 84450,
+   "ie": 0
+  },
+  "C001069": {
+   "amount": 107877,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joe Courtney",
+   "site_seat": "CT-02",
+   "pacs_or_donations": 107877,
+   "ie": 0
+  },
+  "D000216": {
+   "amount": 164911,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rosa DeLauro",
+   "site_seat": "CT-03",
+   "pacs_or_donations": 164911,
+   "ie": 0
+  },
+  "H001047": {
+   "amount": 76408,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Himes",
+   "site_seat": "CT-04",
+   "pacs_or_donations": 76408,
+   "ie": 0
+  },
+  "H001081": {
+   "amount": 129447,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jahana Hayes",
+   "site_seat": "CT-05",
+   "pacs_or_donations": 129447,
+   "ie": 0
+  },
+  "C001088": {
+   "amount": 592873,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Coons",
+   "site_seat": "DE-SEN",
+   "pacs_or_donations": 592873,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "B001303": {
+   "amount": 63626,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lisa Blunt Rochester",
+   "site_seat": "DE-SEN",
+   "pacs_or_donations": 63626,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "M001238": {
+   "amount": 74816,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sarah McBride",
+   "site_seat": "DE-00",
+   "pacs_or_donations": 74816,
+   "ie": 0
+  },
+  "S001217": {
+   "amount": 574767,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rick Scott",
+   "site_seat": "FL-SEN",
+   "pacs_or_donations": 574767,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "M001244": {
+   "amount": 508616,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ashley Moody",
+   "site_seat": "FL-SEN",
+   "pacs_or_donations": 508616,
+   "ie": 0,
+   "tags": "2026 Special Election"
+  },
+  "P000622": {
+   "amount": 46597,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jimmy Patronis",
+   "site_seat": "FL-01",
+   "pacs_or_donations": 46597,
+   "ie": 0
+  },
+  "D000628": {
+   "amount": 63547,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Neal Dunn",
+   "site_seat": "FL-02",
+   "pacs_or_donations": 63547,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "C001039": {
+   "amount": 94824,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kat Cammack",
+   "site_seat": "FL-03",
+   "pacs_or_donations": 94824,
+   "ie": 0
+  },
+  "B001314": {
+   "amount": 79918,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Aaron Bean",
+   "site_seat": "FL-04",
+   "pacs_or_donations": 79918,
+   "ie": 0
+  },
+  "R000609": {
+   "amount": 64283,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Rutherford",
+   "site_seat": "FL-05",
+   "pacs_or_donations": 64283,
+   "ie": 0
+  },
+  "F000484": {
+   "amount": 546864,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Randy Fine",
+   "site_seat": "FL-06",
+   "pacs_or_donations": 546864,
+   "ie": 0
+  },
+  "M001216": {
+   "amount": 36573,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Cory Mills",
+   "site_seat": "FL-07",
+   "pacs_or_donations": 36573,
+   "ie": 0
+  },
+  "H001099": {
+   "amount": 62558,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Haridopolos",
+   "site_seat": "FL-08",
+   "pacs_or_donations": 62558,
+   "ie": 0
+  },
+  "S001200": {
+   "amount": 482822,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Darren Soto",
+   "site_seat": "FL-09",
+   "pacs_or_donations": 482822,
+   "ie": 0
+  },
+  "F000476": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maxwell Frost",
+   "site_seat": "FL-10",
+   "tags": "Track AIPAC Approved"
+  },
+  "W000806": {
+   "amount": 95623,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Daniel Webster",
+   "site_seat": "FL-11",
+   "pacs_or_donations": 95623,
+   "ie": 0
+  },
+  "B001257": {
+   "amount": 111500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gus Bilirakis",
+   "site_seat": "FL-12",
+   "pacs_or_donations": 111500,
+   "ie": 0
+  },
+  "L000596": {
+   "amount": 27549,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Anna Paulina Luna",
+   "site_seat": "FL-13",
+   "pacs_or_donations": 27549,
+   "ie": 0
+  },
+  "C001066": {
+   "amount": 93407,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kathy Castor",
+   "site_seat": "FL-14",
+   "pacs_or_donations": 93407,
+   "ie": 0
+  },
+  "L000597": {
+   "amount": 46200,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Laurel Lee",
+   "site_seat": "FL-15",
+   "pacs_or_donations": 46200,
+   "ie": 0
+  },
+  "B001260": {
+   "amount": 81481,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Vern Buchanan",
+   "site_seat": "FL-16",
+   "pacs_or_donations": 81481,
+   "ie": 0
+  },
+  "S001214": {
+   "amount": 101633,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Greg Steube",
+   "site_seat": "FL-17",
+   "pacs_or_donations": 101633,
+   "ie": 0
+  },
+  "F000472": {
+   "amount": 73238,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Scott Franklin",
+   "site_seat": "FL-18",
+   "pacs_or_donations": 73238,
+   "ie": 0
+  },
+  "D000032": {
+   "amount": 77628,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Byron Donalds",
+   "site_seat": "FL-19",
+   "pacs_or_donations": 77628,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "M001199": {
+   "amount": 901030,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brian Mast",
+   "site_seat": "FL-21",
+   "pacs_or_donations": 901030,
+   "ie": 0
+  },
+  "F000462": {
+   "amount": 860618,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lois Frankel",
+   "site_seat": "FL-22",
+   "pacs_or_donations": 860618,
+   "ie": 0
+  },
+  "M001217": {
+   "amount": 833288,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jared Moskowitz",
+   "site_seat": "FL-23",
+   "pacs_or_donations": 833288,
+   "ie": 0
+  },
+  "W000808": {
+   "amount": 44385,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Frederica Wilson",
+   "site_seat": "FL-24",
+   "pacs_or_donations": 44385,
+   "ie": 0
+  },
+  "W000797": {
+   "amount": 1542327,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Debbie Wasserman Schultz",
+   "site_seat": "FL-25",
+   "pacs_or_donations": 1542327,
+   "ie": 0
+  },
+  "D000600": {
+   "amount": 1025461,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mario Diaz-Balart",
+   "site_seat": "FL-26",
+   "pacs_or_donations": 1025461,
+   "ie": 0
+  },
+  "S000168": {
+   "amount": 155970,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maria Salazar",
+   "site_seat": "FL-27",
+   "pacs_or_donations": 155970,
+   "ie": 0
+  },
+  "G000593": {
+   "amount": 124654,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Carlos A. Gimenez",
+   "site_seat": "FL-28",
+   "pacs_or_donations": 124654,
+   "ie": 0
+  },
+  "O000174": {
+   "amount": 954187,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jon Ossoff",
+   "site_seat": "GA-SEN",
+   "pacs_or_donations": 758957,
+   "ie": 195230,
+   "tags": "Up for re-election"
+  },
+  "W000790": {
+   "amount": 858927,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Raphael Warnock",
+   "site_seat": "GA-SEN",
+   "pacs_or_donations": 665319,
+   "ie": 193608,
+   "tags": "Next election 2028"
+  },
+  "C001103": {
+   "amount": 72447,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Buddy Carter",
+   "site_seat": "GA-01",
+   "pacs_or_donations": 72447,
+   "ie": 0,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "B000490": {
+   "amount": 86537,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sanford Bishop",
+   "site_seat": "GA-02",
+   "pacs_or_donations": 86537,
+   "ie": 0
+  },
+  "J000311": {
+   "amount": 257792,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brian Jack",
+   "site_seat": "GA-03",
+   "pacs_or_donations": 257792,
+   "ie": 0
+  },
+  "J000288": {
+   "amount": 68435,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Hank Johnson",
+   "site_seat": "GA-04",
+   "pacs_or_donations": 68435,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "W000788": {
+   "amount": 130141,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nikema Williams",
+   "site_seat": "GA-05",
+   "pacs_or_donations": 128749,
+   "ie": 1392
+  },
+  "M001208": {
+   "amount": 708909,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lucy McBath",
+   "site_seat": "GA-06",
+   "pacs_or_donations": 705212,
+   "ie": 3697
+  },
+  "M001218": {
+   "amount": 116137,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rich McCormick",
+   "site_seat": "GA-07",
+   "pacs_or_donations": 116137,
+   "ie": 0
+  },
+  "S001189": {
+   "amount": 63230,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Austin Scott",
+   "site_seat": "GA-08",
+   "pacs_or_donations": 63230,
+   "ie": 0
+  },
+  "C001116": {
+   "amount": 1000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andrew Clyde",
+   "site_seat": "GA-09",
+   "pacs_or_donations": 1000,
+   "ie": 0
+  },
+  "C001129": {
+   "amount": 20946,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Collins",
+   "site_seat": "GA-10",
+   "pacs_or_donations": 20946,
+   "ie": 0
+  },
+  "L000583": {
+   "amount": 78182,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Barry Loudermilk",
+   "site_seat": "GA-11",
+   "pacs_or_donations": 78182,
+   "ie": 0
+  },
+  "A000372": {
+   "amount": 53630,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rick Allen",
+   "site_seat": "GA-12",
+   "pacs_or_donations": 53630,
+   "ie": 0
+  },
+  "B001328": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Everton Blair",
+   "site_seat": "GA-13",
+   "tags": "Track AIPAC Approved"
+  },
+  "F000485": {
+   "amount": 8500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Clay Fuller",
+   "site_seat": "GA-14",
+   "pacs_or_donations": 8500,
+   "ie": 0
+  },
+  "S001194": {
+   "amount": 211632,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brian Schatz",
+   "site_seat": "HI-SEN",
+   "pacs_or_donations": 211632,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "H001042": {
+   "amount": 32848,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mazie Hirono",
+   "site_seat": "HI-SEN",
+   "pacs_or_donations": 32848,
+   "ie": 0,
+   "tags": "Up for re-election; Encouraged to improve Israel-Palestine record"
+  },
+  "C001055": {
+   "amount": 51918,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ed Case",
+   "site_seat": "HI-01",
+   "pacs_or_donations": 51918,
+   "ie": 0
+  },
+  "T000487": {
+   "amount": 27000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jill Tokuda",
+   "site_seat": "HI-02",
+   "pacs_or_donations": 27000,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "C000880": {
+   "amount": 223977,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Crapo",
+   "site_seat": "ID-SEN",
+   "pacs_or_donations": 223977,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "R000584": {
+   "amount": 730786,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Risch",
+   "site_seat": "ID-SEN",
+   "pacs_or_donations": 730786,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "F000469": {
+   "amount": 32485,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Russ Fulcher",
+   "site_seat": "ID-01",
+   "pacs_or_donations": 32485,
+   "ie": 0
+  },
+  "S001148": {
+   "amount": 66777,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Simpson",
+   "site_seat": "ID-02",
+   "pacs_or_donations": 66777,
+   "ie": 0
+  },
+  "D000563": {
+   "amount": 641079,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dick Durbin",
+   "site_seat": "IL-SEN",
+   "pacs_or_donations": 641079,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "D000622": {
+   "amount": 561821,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tammy Duckworth",
+   "site_seat": "IL-SEN",
+   "pacs_or_donations": 561821,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "J000309": {
+   "amount": 20500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jonathan Jackson",
+   "site_seat": "IL-01",
+   "pacs_or_donations": 20500,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "K000385": {
+   "amount": 62992,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Robin Kelly",
+   "site_seat": "IL-02",
+   "pacs_or_donations": 62992,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "R000617": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Delia Ramirez",
+   "site_seat": "IL-03",
+   "tags": "Track AIPAC Approved; Signed PEACE Pledge"
+  },
+  "G000586": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jesús Chuy García",
+   "site_seat": "IL-04",
+   "tags": "Track AIPAC Approved; Retiring 2026"
+  },
+  "Q000023": {
+   "amount": 91585,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Quigley",
+   "site_seat": "IL-05",
+   "pacs_or_donations": 91585,
+   "ie": 0
+  },
+  "C001117": {
+   "amount": 313469,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sean Casten",
+   "site_seat": "IL-06",
+   "pacs_or_donations": 272693,
+   "ie": 40776
+  },
+  "D000096": {
+   "amount": 60360,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Danny Davis",
+   "site_seat": "IL-07",
+   "pacs_or_donations": 60360,
+   "ie": 0,
+   "tags": "Retiring 2026; Encouraged to improve Israel-Palestine record"
+  },
+  "K000391": {
+   "amount": 266094,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Raja Krishnamoorthi",
+   "site_seat": "IL-08",
+   "pacs_or_donations": 266094,
+   "ie": 0
+  },
+  "S001145": {
+   "amount": 376102,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jan Schakowsky",
+   "site_seat": "IL-09",
+   "pacs_or_donations": 376102,
+   "ie": 0,
+   "tags": "Retiring 2026; Encouraged to improve Israel-Palestine record"
+  },
+  "S001190": {
+   "amount": 1190464,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brad Schneider",
+   "site_seat": "IL-10",
+   "pacs_or_donations": 1190464,
+   "ie": 0
+  },
+  "F000454": {
+   "amount": 418630,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bill Foster",
+   "site_seat": "IL-11",
+   "pacs_or_donations": 377779,
+   "ie": 40851
+  },
+  "B001295": {
+   "amount": 140402,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Bost",
+   "site_seat": "IL-12",
+   "pacs_or_donations": 140402,
+   "ie": 0
+  },
+  "B001315": {
+   "amount": 282623,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nikki Budzinski",
+   "site_seat": "IL-13",
+   "pacs_or_donations": 279823,
+   "ie": 2800
+  },
+  "U000040": {
+   "amount": 10950,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lauren Underwood",
+   "site_seat": "IL-14",
+   "pacs_or_donations": 10950,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "M001211": {
+   "amount": 11062,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mary Miller",
+   "site_seat": "IL-15",
+   "pacs_or_donations": 11062,
+   "ie": 0
+  },
+  "L000585": {
+   "amount": 146867,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Darin LaHood",
+   "site_seat": "IL-16",
+   "pacs_or_donations": 146867,
+   "ie": 0
+  },
+  "S001225": {
+   "amount": 304632,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Eric Sorensen",
+   "site_seat": "IL-17",
+   "pacs_or_donations": 304632,
+   "ie": 0
+  },
+  "Y000064": {
+   "amount": 232249,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Todd Young",
+   "site_seat": "IN-SEN",
+   "pacs_or_donations": 232249,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "B001299": {
+   "amount": 355651,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Banks",
+   "site_seat": "IN-SEN",
+   "pacs_or_donations": 355651,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "M001214": {
+   "amount": 106825,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Frank Mrvan",
+   "site_seat": "IN-01",
+   "pacs_or_donations": 106825,
+   "ie": 0
+  },
+  "Y000067": {
+   "amount": 231960,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rudy Yakym",
+   "site_seat": "IN-02",
+   "pacs_or_donations": 231960,
+   "ie": 0
+  },
+  "S001188": {
+   "amount": 48892,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Marlin Stutzman",
+   "site_seat": "IN-03",
+   "pacs_or_donations": 48892,
+   "ie": 0
+  },
+  "B001307": {
+   "amount": 25856,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Baird",
+   "site_seat": "IN-04",
+   "pacs_or_donations": 25856,
+   "ie": 0
+  },
+  "S000929": {
+   "amount": 86085,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Victoria Spartz",
+   "site_seat": "IN-05",
+   "pacs_or_donations": 86085,
+   "ie": 0
+  },
+  "S001229": {
+   "amount": 19088,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jefferson Shreve",
+   "site_seat": "IN-06",
+   "pacs_or_donations": 19088,
+   "ie": 0
+  },
+  "C001072": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "André Carson",
+   "site_seat": "IN-07",
+   "tags": "Track AIPAC Approved"
+  },
+  "M001233": {
+   "amount": 2852335,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Messmer",
+   "site_seat": "IN-08",
+   "pacs_or_donations": 329491,
+   "ie": 2522844
+  },
+  "H001093": {
+   "amount": 34482,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Erin Houchin",
+   "site_seat": "IN-09",
+   "pacs_or_donations": 34482,
+   "ie": 0
+  },
+  "G000386": {
+   "amount": 331397,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chuck Grassley",
+   "site_seat": "IA-SEN",
+   "pacs_or_donations": 331397,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "E000295": {
+   "amount": 595161,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joni Ernst",
+   "site_seat": "IA-SEN",
+   "pacs_or_donations": 595161,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "M001215": {
+   "amount": 251697,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Marianette Miller-Meeks",
+   "site_seat": "IA-01",
+   "pacs_or_donations": 251697,
+   "ie": 0
+  },
+  "H001091": {
+   "amount": 204110,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ashley Hinson",
+   "site_seat": "IA-02",
+   "pacs_or_donations": 204110,
+   "ie": 0,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "N000193": {
+   "amount": 148525,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Zach Nunn",
+   "site_seat": "IA-03",
+   "pacs_or_donations": 148525,
+   "ie": 0
+  },
+  "F000446": {
+   "amount": 106694,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Randy Feenstra",
+   "site_seat": "IA-04",
+   "pacs_or_donations": 106694,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "M000934": {
+   "amount": 163949,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jerry Moran",
+   "site_seat": "KS-SEN",
+   "pacs_or_donations": 163949,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "M001198": {
+   "amount": 282556,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Roger Marshall",
+   "site_seat": "KS-SEN",
+   "pacs_or_donations": 282556,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "M000871": {
+   "amount": 93939,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tracey Mann",
+   "site_seat": "KS-01",
+   "pacs_or_donations": 93939,
+   "ie": 0
+  },
+  "S001228": {
+   "amount": 48017,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Derek Schmidt",
+   "site_seat": "KS-02",
+   "pacs_or_donations": 48017,
+   "ie": 0
+  },
+  "D000629": {
+   "amount": 239495,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sharice Davids",
+   "site_seat": "KS-03",
+   "pacs_or_donations": 239495,
+   "ie": 0
+  },
+  "E000298": {
+   "amount": 78939,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ron Estes",
+   "site_seat": "KS-04",
+   "pacs_or_donations": 78939,
+   "ie": 0
+  },
+  "M000355": {
+   "amount": 992646,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mitch McConnell",
+   "site_seat": "KY-SEN",
+   "pacs_or_donations": 992646,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "P000603": {
+   "amount": 2000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rand Paul",
+   "site_seat": "KY-SEN",
+   "pacs_or_donations": 2000,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "C001108": {
+   "amount": 49298,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "James Comer",
+   "site_seat": "KY-01",
+   "pacs_or_donations": 49284,
+   "ie": 0
+  },
+  "G000558": {
+   "amount": 42067,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brett Guthrie",
+   "site_seat": "KY-02",
+   "pacs_or_donations": 42067,
+   "ie": 0
+  },
+  "M001220": {
+   "amount": 160890,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Morgan McGarvey",
+   "site_seat": "KY-03",
+   "pacs_or_donations": 108749,
+   "ie": 52141
+  },
+  "M001184": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Thomas Massie",
+   "site_seat": "KY-04",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record; does not support overturning Citizens United"
+  },
+  "R000395": {
+   "amount": 53688,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Hal Rogers",
+   "site_seat": "KY-05",
+   "pacs_or_donations": 53688,
+   "ie": 0
+  },
+  "B001282": {
+   "amount": 295476,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andy Barr",
+   "site_seat": "KY-06",
+   "pacs_or_donations": 295476,
+   "ie": 0,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "C001075": {
+   "amount": 615305,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bill Cassidy",
+   "site_seat": "LA-SEN",
+   "pacs_or_donations": 615305,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "K000393": {
+   "amount": 113680,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Kennedy",
+   "site_seat": "LA-SEN",
+   "pacs_or_donations": 113680,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "S001176": {
+   "amount": 1030168,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steve Scalise",
+   "site_seat": "LA-01",
+   "pacs_or_donations": 1030168,
+   "ie": 0
+  },
+  "C001125": {
+   "amount": 53337,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Troy Carter",
+   "site_seat": "LA-02",
+   "pacs_or_donations": 53337,
+   "ie": 0
+  },
+  "H001077": {
+   "amount": 19546,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Clay Higgins",
+   "site_seat": "LA-03",
+   "pacs_or_donations": 19546,
+   "ie": 0
+  },
+  "J000299": {
+   "amount": 1134227,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Johnson",
+   "site_seat": "LA-04",
+   "pacs_or_donations": 1134227,
+   "ie": 0
+  },
+  "L000595": {
+   "amount": 83896,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Julia Letlow",
+   "site_seat": "LA-05",
+   "pacs_or_donations": 83896,
+   "ie": 0,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "F000110": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Cleo Fields",
+   "site_seat": "LA-06",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Poor legislative record on Israel-Palestine"
+  },
+  "C001035": {
+   "amount": 4131569,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Susan Collins",
+   "site_seat": "ME-SEN",
+   "pacs_or_donations": 3566569,
+   "ie": 565000,
+   "tags": "Up for re-election"
+  },
+  "K000383": {
+   "amount": 206555,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Angus King",
+   "site_seat": "ME-SEN",
+   "pacs_or_donations": 206555,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "P000597": {
+   "amount": 62950,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chellie Pingree",
+   "site_seat": "ME-01",
+   "pacs_or_donations": 62950,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "G000592": {
+   "amount": 1071069,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jared Golden",
+   "site_seat": "ME-02",
+   "pacs_or_donations": 1071069,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "V000128": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Van Hollen",
+   "site_seat": "MD-SEN",
+   "tags": "Track AIPAC Approved; Next election 2028"
+  },
+  "A000382": {
+   "amount": 246550,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Angela Alsobrooks",
+   "site_seat": "MD-SEN",
+   "pacs_or_donations": 230348,
+   "ie": 16202,
+   "tags": "Next election 2030"
+  },
+  "H001052": {
+   "amount": 91968,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andy Harris",
+   "site_seat": "MD-01",
+   "pacs_or_donations": 91968,
+   "ie": 0
+  },
+  "O000176": {
+   "amount": 76071,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Olszewski",
+   "site_seat": "MD-02",
+   "pacs_or_donations": 73946,
+   "ie": 2125
+  },
+  "E000301": {
+   "amount": 4202730,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sarah Elfreth",
+   "site_seat": "MD-03",
+   "pacs_or_donations": 20892,
+   "ie": 4181838
+  },
+  "I000058": {
+   "amount": 7320411,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Glenn Ivey",
+   "site_seat": "MD-04",
+   "pacs_or_donations": 899013,
+   "ie": 6421398
+  },
+  "H000874": {
+   "amount": 957516,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steny Hoyer",
+   "site_seat": "MD-05",
+   "pacs_or_donations": 957516,
+   "ie": 0
+  },
+  "M001232": {
+   "amount": 147330,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "April McClain Delaney",
+   "site_seat": "MD-06",
+   "pacs_or_donations": 147330,
+   "ie": 0
+  },
+  "M000687": {
+   "amount": 186359,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kweisi Mfume",
+   "site_seat": "MD-07",
+   "pacs_or_donations": 186359,
+   "ie": 0
+  },
+  "R000606": {
+   "amount": 174616,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jamie Raskin",
+   "site_seat": "MD-08",
+   "pacs_or_donations": 174616,
+   "ie": 0
+  },
+  "W000817": {
+   "amount": 30454,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Elizabeth Warren",
+   "site_seat": "MA-SEN",
+   "pacs_or_donations": 30454,
+   "ie": 0,
+   "tags": "Next election 2030; Encouraged to improve Israel-Palestine record"
+  },
+  "M000133": {
+   "amount": 67259,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ed Markey",
+   "site_seat": "MA-SEN",
+   "pacs_or_donations": 67259,
+   "ie": 0,
+   "tags": "Up for re-election; Encouraged to improve Israel-Palestine record"
+  },
+  "N000015": {
+   "amount": 139849,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Richard Neal",
+   "site_seat": "MA-01",
+   "pacs_or_donations": 139849,
+   "ie": 0
+  },
+  "M000312": {
+   "amount": 77342,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim McGovern",
+   "site_seat": "MA-02",
+   "pacs_or_donations": 77342,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "T000482": {
+   "amount": 52703,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lori Trahan",
+   "site_seat": "MA-03",
+   "pacs_or_donations": 52703,
+   "ie": 0
+  },
+  "A000148": {
+   "amount": 1033889,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jake Auchincloss",
+   "site_seat": "MA-04",
+   "pacs_or_donations": 1033889,
+   "ie": 0
+  },
+  "C001101": {
+   "amount": 930508,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Katherine Clark",
+   "site_seat": "MA-05",
+   "pacs_or_donations": 930508,
+   "ie": 0
+  },
+  "M001196": {
+   "amount": 101532,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Seth Moulton",
+   "site_seat": "MA-06",
+   "pacs_or_donations": 101532,
+   "ie": 0
+  },
+  "P000617": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ayanna Pressley",
+   "site_seat": "MA-07",
+   "tags": "Track AIPAC Approved"
+  },
+  "L000562": {
+   "amount": 1000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Stephen Lynch",
+   "site_seat": "MA-08",
+   "pacs_or_donations": 1000,
+   "ie": 0
+  },
+  "K000375": {
+   "amount": 109818,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bill Keating",
+   "site_seat": "MA-09",
+   "pacs_or_donations": 109818,
+   "ie": 0
+  },
+  "P000595": {
+   "amount": 502411,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gary Peters",
+   "site_seat": "MI-SEN",
+   "pacs_or_donations": 232740,
+   "ie": 269671,
+   "tags": "Retiring 2026"
+  },
+  "S001208": {
+   "amount": 517272,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Elissa Slotkin",
+   "site_seat": "MI-SEN",
+   "pacs_or_donations": 415142,
+   "ie": 102130,
+   "tags": "Next election 2030"
+  },
+  "B001301": {
+   "amount": 58277,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jack Bergman",
+   "site_seat": "MI-01",
+   "pacs_or_donations": 58277,
+   "ie": 0
+  },
+  "M001194": {
+   "amount": 36159,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Moolenaar",
+   "site_seat": "MI-02",
+   "pacs_or_donations": 36159,
+   "ie": 0
+  },
+  "S001221": {
+   "amount": 413999,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Hillary Scholten",
+   "site_seat": "MI-03",
+   "pacs_or_donations": 413999,
+   "ie": 0
+  },
+  "H001058": {
+   "amount": 42367,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bill Huizenga",
+   "site_seat": "MI-04",
+   "pacs_or_donations": 42367,
+   "ie": 0
+  },
+  "W000798": {
+   "amount": 141400,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Walberg",
+   "site_seat": "MI-05",
+   "pacs_or_donations": 141400,
+   "ie": 0
+  },
+  "D000624": {
+   "amount": 29424,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Debbie Dingell",
+   "site_seat": "MI-06",
+   "pacs_or_donations": 29424,
+   "ie": 0
+  },
+  "B001321": {
+   "amount": 31136,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Barrett",
+   "site_seat": "MI-07",
+   "pacs_or_donations": 31136,
+   "ie": 0
+  },
+  "M001237": {
+   "amount": 372536,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kristen McDonald Rivet",
+   "site_seat": "MI-08",
+   "pacs_or_donations": 372340,
+   "ie": 196
+  },
+  "M001136": {
+   "amount": 203528,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lisa McClain",
+   "site_seat": "MI-09",
+   "pacs_or_donations": 203528,
+   "ie": 0
+  },
+  "J000307": {
+   "amount": 268355,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John James",
+   "site_seat": "MI-10",
+   "pacs_or_donations": 268355,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "S001215": {
+   "amount": 36280260,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Haley Stevens",
+   "site_seat": "MI-11",
+   "pacs_or_donations": 1366314,
+   "ie": 34913946,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "T000481": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rashida Tlaib",
+   "site_seat": "MI-12",
+   "tags": "Track AIPAC Approved; Signed PEACE Pledge"
+  },
+  "T000488": {
+   "amount": 2489792,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Shri Thanedar",
+   "site_seat": "MI-13",
+   "pacs_or_donations": 221060,
+   "ie": 2268732
+  },
+  "K000367": {
+   "amount": 443272,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Amy Klobuchar",
+   "site_seat": "MN-SEN",
+   "pacs_or_donations": 443272,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "S001203": {
+   "amount": 113794,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tina Smith",
+   "site_seat": "MN-SEN",
+   "pacs_or_donations": 113794,
+   "ie": 0,
+   "tags": "Retiring 2026; Encouraged to improve Israel-Palestine record"
+  },
+  "F000475": {
+   "amount": 47306,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brad Finstad",
+   "site_seat": "MN-01",
+   "pacs_or_donations": 47306,
+   "ie": 0
+  },
+  "C001119": {
+   "amount": 710098,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Angie Craig",
+   "site_seat": "MN-02",
+   "pacs_or_donations": 705463,
+   "ie": 4635,
+   "tags": "Retiring 2026"
+  },
+  "M001234": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kelly Morrison",
+   "site_seat": "MN-03",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Poor legislative record on Israel-Palestine"
+  },
+  "M001143": {
+   "amount": 59108,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Betty McCollum",
+   "site_seat": "MN-04",
+   "pacs_or_donations": 59108,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "O000173": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ilhan Omar",
+   "site_seat": "MN-05",
+   "tags": "Track AIPAC Approved"
+  },
+  "E000294": {
+   "amount": 994736,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Emmer",
+   "site_seat": "MN-06",
+   "pacs_or_donations": 992087,
+   "ie": 2649
+  },
+  "F000470": {
+   "amount": 64292,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michelle Fischbach",
+   "site_seat": "MN-07",
+   "pacs_or_donations": 64292,
+   "ie": 0
+  },
+  "S001212": {
+   "amount": 62259,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pete Stauber",
+   "site_seat": "MN-08",
+   "pacs_or_donations": 62259,
+   "ie": 0
+  },
+  "W000437": {
+   "amount": 533926,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Roger Wicker",
+   "site_seat": "MS-SEN",
+   "pacs_or_donations": 533926,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "H001079": {
+   "amount": 274855,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Cindy Hyde-Smith",
+   "site_seat": "MS-SEN",
+   "pacs_or_donations": 274855,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "K000388": {
+   "amount": 50027,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Trent Kelly",
+   "site_seat": "MS-01",
+   "pacs_or_donations": 50027,
+   "ie": 0
+  },
+  "T000193": {
+   "amount": 9550,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bennie Thompson",
+   "site_seat": "MS-02",
+   "pacs_or_donations": 9550,
+   "ie": 0
+  },
+  "G000591": {
+   "amount": 40766,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michael Guest",
+   "site_seat": "MS-03",
+   "pacs_or_donations": 40766,
+   "ie": 0
+  },
+  "E000235": {
+   "amount": 51922,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Ezell",
+   "site_seat": "MS-04",
+   "pacs_or_donations": 51922,
+   "ie": 0
+  },
+  "H001089": {
+   "amount": 273535,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Josh Hawley",
+   "site_seat": "MO-SEN",
+   "pacs_or_donations": 273535,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "S001227": {
+   "amount": 38079,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Eric Schmitt",
+   "site_seat": "MO-SEN",
+   "pacs_or_donations": 38079,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "B001324": {
+   "amount": 18126578,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Wesley Bell",
+   "site_seat": "MO-01",
+   "pacs_or_donations": 4396533,
+   "ie": 13730045
+  },
+  "W000812": {
+   "amount": 315619,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ann Wagner",
+   "site_seat": "MO-02",
+   "pacs_or_donations": 315619,
+   "ie": 0
+  },
+  "O000177": {
+   "amount": 24924,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bob Onder",
+   "site_seat": "MO-03",
+   "pacs_or_donations": 24924,
+   "ie": 0
+  },
+  "A000379": {
+   "amount": 80402,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Alford",
+   "site_seat": "MO-04",
+   "pacs_or_donations": 80402,
+   "ie": 0
+  },
+  "C001061": {
+   "amount": 95782,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Emanuel Cleaver",
+   "site_seat": "MO-05",
+   "pacs_or_donations": 95782,
+   "ie": 0
+  },
+  "G000546": {
+   "amount": 81756,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sam Graves",
+   "site_seat": "MO-06",
+   "pacs_or_donations": 81756,
+   "ie": 0
+  },
+  "B001316": {
+   "amount": 36934,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Eric Burlison",
+   "site_seat": "MO-07",
+   "pacs_or_donations": 36934,
+   "ie": 0
+  },
+  "S001195": {
+   "amount": 105099,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jason Smith",
+   "site_seat": "MO-08",
+   "pacs_or_donations": 105099,
+   "ie": 0
+  },
+  "D000618": {
+   "amount": 717245,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steve Daines",
+   "site_seat": "MT-SEN",
+   "pacs_or_donations": 717245,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "S001232": {
+   "amount": 79253,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Sheehy",
+   "site_seat": "MT-SEN",
+   "pacs_or_donations": 79253,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "Z000018": {
+   "amount": 52326,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ryan Zinke",
+   "site_seat": "MT-01",
+   "pacs_or_donations": 52326,
+   "ie": 0
+  },
+  "D000634": {
+   "amount": 30160,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Troy Downing",
+   "site_seat": "MT-02",
+   "pacs_or_donations": 30160,
+   "ie": 0
+  },
+  "F000463": {
+   "amount": 632220,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Deb Fischer",
+   "site_seat": "NE-SEN",
+   "pacs_or_donations": 632220,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "R000618": {
+   "amount": 372814,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pete Ricketts",
+   "site_seat": "NE-SEN",
+   "pacs_or_donations": 372814,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "F000474": {
+   "amount": 48340,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Flood",
+   "site_seat": "NE-01",
+   "pacs_or_donations": 48340,
+   "ie": 0
+  },
+  "B001298": {
+   "amount": 1291908,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Don Bacon",
+   "site_seat": "NE-02",
+   "pacs_or_donations": 1291908,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "S001172": {
+   "amount": 29241,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Adrian Smith",
+   "site_seat": "NE-03",
+   "pacs_or_donations": 29241,
+   "ie": 0
+  },
+  "C001113": {
+   "amount": 834443,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Catherine Cortez Masto",
+   "site_seat": "NV-SEN",
+   "pacs_or_donations": 690929,
+   "ie": 143514,
+   "tags": "Next election 2028"
+  },
+  "R000608": {
+   "amount": 2264274,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jacky Rosen",
+   "site_seat": "NV-SEN",
+   "pacs_or_donations": 2118418,
+   "ie": 145856,
+   "tags": "Next election 2030"
+  },
+  "T000468": {
+   "amount": 283381,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dina Titus",
+   "site_seat": "NV-01",
+   "pacs_or_donations": 202621,
+   "ie": 80760
+  },
+  "A000369": {
+   "amount": 36207,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Amodei",
+   "site_seat": "NV-02",
+   "pacs_or_donations": 36207,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "L000590": {
+   "amount": 858493,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Susie Lee",
+   "site_seat": "NV-03",
+   "pacs_or_donations": 856786,
+   "ie": 1707
+  },
+  "H001066": {
+   "amount": 214081,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steven Horsford",
+   "site_seat": "NV-04",
+   "pacs_or_donations": 213591,
+   "ie": 490
+  },
+  "S001181": {
+   "amount": 533077,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jeanne Shaheen",
+   "site_seat": "NH-SEN",
+   "pacs_or_donations": 533077,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "H001076": {
+   "amount": 760712,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maggie Hassan",
+   "site_seat": "NH-SEN",
+   "pacs_or_donations": 760212,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "P000614": {
+   "amount": 823030,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Pappas",
+   "site_seat": "NH-01",
+   "pacs_or_donations": 819719,
+   "ie": 3311,
+   "tags": "Running for U.S. Senate 2026"
+  },
+  "G000604": {
+   "amount": 221536,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maggie Goodlander",
+   "site_seat": "NH-02",
+   "pacs_or_donations": 221536,
+   "ie": 0
+  },
+  "B001288": {
+   "amount": 851721,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Cory Booker",
+   "site_seat": "NJ-SEN",
+   "pacs_or_donations": 851721,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "K000394": {
+   "amount": 514769,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andy Kim",
+   "site_seat": "NJ-SEN",
+   "pacs_or_donations": 514769,
+   "ie": 0,
+   "tags": "Next election 2030; Encouraged to improve Israel-Palestine record"
+  },
+  "N000188": {
+   "amount": 309186,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Donald Norcross",
+   "site_seat": "NJ-01",
+   "pacs_or_donations": 306686,
+   "ie": 2500
+  },
+  "V000133": {
+   "amount": 87921,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jeff Van Drew",
+   "site_seat": "NJ-02",
+   "pacs_or_donations": 87921,
+   "ie": 0
+  },
+  "C001136": {
+   "amount": 26075,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Herb Conaway",
+   "site_seat": "NJ-03",
+   "pacs_or_donations": 26075,
+   "ie": 0
+  },
+  "S000522": {
+   "amount": 241318,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Smith",
+   "site_seat": "NJ-04",
+   "pacs_or_donations": 241318,
+   "ie": 0
+  },
+  "G000583": {
+   "amount": 2328664,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Josh Gottheimer",
+   "site_seat": "NJ-05",
+   "pacs_or_donations": 2328664,
+   "ie": 0
+  },
+  "P000034": {
+   "amount": 240683,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Frank Pallone",
+   "site_seat": "NJ-06",
+   "pacs_or_donations": 240683,
+   "ie": 0
+  },
+  "K000398": {
+   "amount": 866404,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Kean",
+   "site_seat": "NJ-07",
+   "pacs_or_donations": 866404,
+   "ie": 0
+  },
+  "M001226": {
+   "amount": 609027,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rob Menendez",
+   "site_seat": "NJ-08",
+   "pacs_or_donations": 609027,
+   "ie": 0
+  },
+  "P000621": {
+   "amount": 37666,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nellie Pou",
+   "site_seat": "NJ-09",
+   "pacs_or_donations": 37666,
+   "ie": 0
+  },
+  "M001229": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "LaMonica McIver",
+   "site_seat": "NJ-10",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Newly elected"
+  },
+  "M001246": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Analilia Mejia",
+   "site_seat": "NJ-11",
+   "tags": "Track AIPAC Approved"
+  },
+  "W000822": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bonnie Watson Coleman",
+   "site_seat": "NJ-12",
+   "tags": "Track AIPAC Approved"
+  },
+  "H001046": {
+   "amount": 289007,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Martin Heinrich",
+   "site_seat": "NM-SEN",
+   "pacs_or_donations": 289007,
+   "ie": 0,
+   "tags": "Next election 2030; Encouraged to improve Israel-Palestine record"
+  },
+  "L000570": {
+   "amount": 96167,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ben Ray Luján",
+   "site_seat": "NM-SEN",
+   "pacs_or_donations": 96167,
+   "ie": 0,
+   "tags": "Up for re-election; Encouraged to improve Israel-Palestine record"
+  },
+  "S001218": {
+   "amount": 56213,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Melanie Stansbury",
+   "site_seat": "NM-01",
+   "pacs_or_donations": 56213,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "V000136": {
+   "amount": 226605,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gabe Vasquez",
+   "site_seat": "NM-02",
+   "pacs_or_donations": 226605,
+   "ie": 0
+  },
+  "L000273": {
+   "amount": 91898,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Teresa Leger Fernandez",
+   "site_seat": "NM-03",
+   "pacs_or_donations": 91898,
+   "ie": 0
+  },
+  "S000148": {
+   "amount": 411980,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chuck Schumer",
+   "site_seat": "NY-SEN",
+   "pacs_or_donations": 411980,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "G000555": {
+   "amount": 629057,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kirsten Gillibrand",
+   "site_seat": "NY-SEN",
+   "pacs_or_donations": 629057,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "L000598": {
+   "amount": 176737,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nick LaLota",
+   "site_seat": "NY-01",
+   "pacs_or_donations": 176737,
+   "ie": 0
+  },
+  "G000597": {
+   "amount": 216807,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andrew Garbarino",
+   "site_seat": "NY-02",
+   "pacs_or_donations": 216807,
+   "ie": 0
+  },
+  "S001201": {
+   "amount": 605438,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Suozzi",
+   "site_seat": "NY-03",
+   "pacs_or_donations": 515878,
+   "ie": 89560
+  },
+  "G000602": {
+   "amount": 359704,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Laura Gillen",
+   "site_seat": "NY-04",
+   "pacs_or_donations": 293106,
+   "ie": 66598
+  },
+  "M001137": {
+   "amount": 986946,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gregory Meeks",
+   "site_seat": "NY-05",
+   "pacs_or_donations": 986946,
+   "ie": 0
+  },
+  "M001188": {
+   "amount": 998167,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Grace Meng",
+   "site_seat": "NY-06",
+   "pacs_or_donations": 998167,
+   "ie": 0
+  },
+  "V000081": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nydia Velázquez",
+   "site_seat": "NY-07",
+   "tags": "Track AIPAC Approved; Retiring 2026"
+  },
+  "J000294": {
+   "amount": 1495709,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Hakeem Jeffries",
+   "site_seat": "NY-08",
+   "pacs_or_donations": 1495709,
+   "ie": 0
+  },
+  "C001067": {
+   "amount": 131354,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Yvette Clarke",
+   "site_seat": "NY-09",
+   "pacs_or_donations": 131354,
+   "ie": 0
+  },
+  "G000599": {
+   "amount": 998868,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dan Goldman",
+   "site_seat": "NY-10",
+   "pacs_or_donations": 582104,
+   "ie": 416764
+  },
+  "M000317": {
+   "amount": 278736,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nicole Malliotakis",
+   "site_seat": "NY-11",
+   "pacs_or_donations": 278736,
+   "ie": 0
+  },
+  "N000002": {
+   "amount": 309889,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jerry Nadler",
+   "site_seat": "NY-12",
+   "pacs_or_donations": 239889,
+   "ie": 70000,
+   "tags": "Retiring 2026"
+  },
+  "E000297": {
+   "amount": 3667411,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Adriano Espaillat",
+   "site_seat": "NY-13",
+   "pacs_or_donations": 363617,
+   "ie": 3303794
+  },
+  "O000172": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Alexandria Ocasio-Cortez",
+   "site_seat": "NY-14",
+   "tags": "Track AIPAC Approved"
+  },
+  "T000486": {
+   "amount": 2108567,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ritchie Torres",
+   "site_seat": "NY-15",
+   "pacs_or_donations": 2050615,
+   "ie": 57952
+  },
+  "L000606": {
+   "amount": 19182192,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "George Latimer",
+   "site_seat": "NY-16",
+   "pacs_or_donations": 2982052,
+   "ie": 16200140
+  },
+  "L000599": {
+   "amount": 1181950,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Lawler",
+   "site_seat": "NY-17",
+   "pacs_or_donations": 1181950,
+   "ie": 0
+  },
+  "R000579": {
+   "amount": 441763,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pat Ryan",
+   "site_seat": "NY-18",
+   "pacs_or_donations": 441763,
+   "ie": 0
+  },
+  "R000622": {
+   "amount": 188016,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Josh Riley",
+   "site_seat": "NY-19",
+   "pacs_or_donations": 188016,
+   "ie": 0
+  },
+  "T000469": {
+   "amount": 58890,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Paul Tonko",
+   "site_seat": "NY-20",
+   "pacs_or_donations": 58890,
+   "ie": 0
+  },
+  "S001196": {
+   "amount": 684629,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Elise Stefanik",
+   "site_seat": "NY-21",
+   "pacs_or_donations": 684629,
+   "ie": 0
+  },
+  "M001231": {
+   "amount": 109302,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Mannion",
+   "site_seat": "NY-22",
+   "pacs_or_donations": 109292,
+   "ie": 10
+  },
+  "L000600": {
+   "amount": 101082,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nick Langworthy",
+   "site_seat": "NY-23",
+   "pacs_or_donations": 101082,
+   "ie": 0
+  },
+  "T000478": {
+   "amount": 146157,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Claudia Tenney",
+   "site_seat": "NY-24",
+   "pacs_or_donations": 146157,
+   "ie": 0
+  },
+  "M001206": {
+   "amount": 246269,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joe Morelle",
+   "site_seat": "NY-25",
+   "pacs_or_donations": 246269,
+   "ie": 0
+  },
+  "K000402": {
+   "amount": 130903,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Kennedy",
+   "site_seat": "NY-26",
+   "pacs_or_donations": 130903,
+   "ie": 0
+  },
+  "T000476": {
+   "amount": 405386,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Thom Tillis",
+   "site_seat": "NC-SEN",
+   "pacs_or_donations": 405386,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "B001305": {
+   "amount": 80136,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ted Budd",
+   "site_seat": "NC-SEN",
+   "pacs_or_donations": 80136,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "D000230": {
+   "amount": 4059404,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Don Davis",
+   "site_seat": "NC-01",
+   "pacs_or_donations": 1490060,
+   "ie": 2569344
+  },
+  "R000305": {
+   "amount": 229484,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Deborah Ross",
+   "site_seat": "NC-02",
+   "pacs_or_donations": 228984,
+   "ie": 500
+  },
+  "M001210": {
+   "amount": 101306,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Greg Murphy",
+   "site_seat": "NC-03",
+   "pacs_or_donations": 101306,
+   "ie": 0
+  },
+  "F000477": {
+   "amount": 3479345,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Valerie Foushee",
+   "site_seat": "NC-04",
+   "pacs_or_donations": 483998,
+   "ie": 2995347,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "F000450": {
+   "amount": 326334,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Virginia Foxx",
+   "site_seat": "NC-05",
+   "pacs_or_donations": 326334,
+   "ie": 0
+  },
+  "M001240": {
+   "amount": 34246,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Addison McDowell",
+   "site_seat": "NC-06",
+   "pacs_or_donations": 34246,
+   "ie": 0
+  },
+  "R000603": {
+   "amount": 51582,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "David Rouzer",
+   "site_seat": "NC-07",
+   "pacs_or_donations": 51582,
+   "ie": 0
+  },
+  "H001102": {
+   "amount": 26813,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Harris",
+   "site_seat": "NC-08",
+   "pacs_or_donations": 26813,
+   "ie": 0
+  },
+  "H001067": {
+   "amount": 259669,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Richard Hudson",
+   "site_seat": "NC-09",
+   "pacs_or_donations": 259669,
+   "ie": 0
+  },
+  "H001101": {
+   "amount": 32314,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pat Harrigan",
+   "site_seat": "NC-10",
+   "pacs_or_donations": 32314,
+   "ie": 0
+  },
+  "E000246": {
+   "amount": 87166,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chuck Edwards",
+   "site_seat": "NC-11",
+   "pacs_or_donations": 87166,
+   "ie": 0
+  },
+  "A000370": {
+   "amount": 25858,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Alma Adams",
+   "site_seat": "NC-12",
+   "pacs_or_donations": 25858,
+   "ie": 0
+  },
+  "K000405": {
+   "amount": 17011,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brad Knott",
+   "site_seat": "NC-13",
+   "pacs_or_donations": 17011,
+   "ie": 0
+  },
+  "M001236": {
+   "amount": 31583,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Moore",
+   "site_seat": "NC-14",
+   "pacs_or_donations": 31583,
+   "ie": 0
+  },
+  "C001096": {
+   "amount": 364123,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kevin Cramer",
+   "site_seat": "ND-SEN",
+   "pacs_or_donations": 364123,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "H001061": {
+   "amount": 314804,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Hoeven",
+   "site_seat": "ND-SEN",
+   "pacs_or_donations": 314804,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "F000482": {
+   "amount": 22335,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Julie Fedorchak",
+   "site_seat": "ND-00",
+   "pacs_or_donations": 22335,
+   "ie": 0
+  },
+  "M001242": {
+   "amount": 66112,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bernie Moreno",
+   "site_seat": "OH-SEN",
+   "pacs_or_donations": 66112,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "H001104": {
+   "amount": 368339,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jon Husted",
+   "site_seat": "OH-SEN",
+   "pacs_or_donations": 368339,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "L000601": {
+   "amount": 959062,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Greg Landsman",
+   "site_seat": "OH-01",
+   "pacs_or_donations": 957856,
+   "ie": 1206
+  },
+  "T000490": {
+   "amount": 42585,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "David Taylor",
+   "site_seat": "OH-02",
+   "pacs_or_donations": 42585,
+   "ie": 0
+  },
+  "B001281": {
+   "amount": 198029,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joyce Beatty",
+   "site_seat": "OH-03",
+   "pacs_or_donations": 196709,
+   "ie": 1320
+  },
+  "J000289": {
+   "amount": 250698,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Jordan",
+   "site_seat": "OH-04",
+   "pacs_or_donations": 250698,
+   "ie": 0
+  },
+  "L000566": {
+   "amount": 75397,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bob Latta",
+   "site_seat": "OH-05",
+   "pacs_or_donations": 75397,
+   "ie": 0
+  },
+  "R000619": {
+   "amount": 58559,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michael Rulli",
+   "site_seat": "OH-06",
+   "pacs_or_donations": 58559,
+   "ie": 0
+  },
+  "M001222": {
+   "amount": 366455,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Max Miller",
+   "site_seat": "OH-07",
+   "pacs_or_donations": 366455,
+   "ie": 0
+  },
+  "D000626": {
+   "amount": 3300,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Warren Davidson",
+   "site_seat": "OH-08",
+   "pacs_or_donations": 3300,
+   "ie": 0
+  },
+  "K000009": {
+   "amount": 227588,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Marcy Kaptur",
+   "site_seat": "OH-09",
+   "pacs_or_donations": 227430,
+   "ie": 158
+  },
+  "T000463": {
+   "amount": 232577,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Turner",
+   "site_seat": "OH-10",
+   "pacs_or_donations": 232577,
+   "ie": 0
+  },
+  "B001313": {
+   "amount": 5090445,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Shontel Brown",
+   "site_seat": "OH-11",
+   "pacs_or_donations": 1536547,
+   "ie": 3553898
+  },
+  "B001306": {
+   "amount": 85805,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Troy Balderson",
+   "site_seat": "OH-12",
+   "pacs_or_donations": 85805,
+   "ie": 0
+  },
+  "S001223": {
+   "amount": 391529,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Emilia Sykes",
+   "site_seat": "OH-13",
+   "pacs_or_donations": 390509,
+   "ie": 1020
+  },
+  "J000295": {
+   "amount": 84910,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dave Joyce",
+   "site_seat": "OH-14",
+   "pacs_or_donations": 84910,
+   "ie": 0
+  },
+  "C001126": {
+   "amount": 76235,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Carey",
+   "site_seat": "OH-15",
+   "pacs_or_donations": 76235,
+   "ie": 0
+  },
+  "L000575": {
+   "amount": 311655,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "James Lankford",
+   "site_seat": "OK-SEN",
+   "pacs_or_donations": 311655,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "A000383": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Alan Armstrong",
+   "site_seat": "OK-SEN",
+   "pacs_or_donations": 0,
+   "ie": 0
+  },
+  "H001082": {
+   "amount": 161565,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Kevin Hern",
+   "site_seat": "OK-01",
+   "pacs_or_donations": 161565,
+   "ie": 0
+  },
+  "B001317": {
+   "amount": 49147,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Josh Brecheen",
+   "site_seat": "OK-02",
+   "pacs_or_donations": 49147,
+   "ie": 0
+  },
+  "L000491": {
+   "amount": 11604,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Frank Lucas",
+   "site_seat": "OK-03",
+   "pacs_or_donations": 11604,
+   "ie": 0
+  },
+  "C001053": {
+   "amount": 559448,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tom Cole",
+   "site_seat": "OK-04",
+   "pacs_or_donations": 559448,
+   "ie": 0
+  },
+  "B000740": {
+   "amount": 75724,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Stephanie Bice",
+   "site_seat": "OK-05",
+   "pacs_or_donations": 75724,
+   "ie": 0
+  },
+  "W000779": {
+   "amount": 414693,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ron Wyden",
+   "site_seat": "OR-SEN",
+   "pacs_or_donations": 414693,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "M001176": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jeff Merkley",
+   "site_seat": "OR-SEN",
+   "tags": "Track AIPAC Approved"
+  },
+  "B001278": {
+   "amount": 97784,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Suzanne Bonamici",
+   "site_seat": "OR-01",
+   "pacs_or_donations": 97784,
+   "ie": 0
+  },
+  "B000668": {
+   "amount": 10786,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Cliff Bentz",
+   "site_seat": "OR-02",
+   "pacs_or_donations": 10786,
+   "ie": 0
+  },
+  "D000635": {
+   "amount": 2212990,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Maxine Dexter",
+   "site_seat": "OR-03",
+   "pacs_or_donations": 0,
+   "ie": 2212990,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "H001094": {
+   "amount": 71420,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Val Hoyle",
+   "site_seat": "OR-04",
+   "pacs_or_donations": 71420,
+   "ie": 0
+  },
+  "B001326": {
+   "amount": 1454465,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Janelle Bynum",
+   "site_seat": "OR-05",
+   "pacs_or_donations": 25700,
+   "ie": 1428765
+  },
+  "S001226": {
+   "amount": 301196,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andrea Salinas",
+   "site_seat": "OR-06",
+   "pacs_or_donations": 301196,
+   "ie": 0
+  },
+  "F000479": {
+   "amount": 487491,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Fetterman",
+   "site_seat": "PA-SEN",
+   "pacs_or_donations": 264418,
+   "ie": 223073,
+   "tags": "Next election 2028"
+  },
+  "M001243": {
+   "amount": 173074,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dave McCormick",
+   "site_seat": "PA-SEN",
+   "pacs_or_donations": 134978,
+   "ie": 38096,
+   "tags": "Next election 2030"
+  },
+  "F000466": {
+   "amount": 965597,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brian Fitzpatrick",
+   "site_seat": "PA-01",
+   "pacs_or_donations": 965597,
+   "ie": 0
+  },
+  "B001296": {
+   "amount": 466252,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brendan Boyle",
+   "site_seat": "PA-02",
+   "pacs_or_donations": 459445,
+   "ie": 6807
+  },
+  "E000296": {
+   "amount": 38306,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dwight Evans",
+   "site_seat": "PA-03",
+   "pacs_or_donations": 33999,
+   "ie": 4307
+  },
+  "D000631": {
+   "amount": 71725,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Madeleine Dean",
+   "site_seat": "PA-04",
+   "pacs_or_donations": 71725,
+   "ie": 0
+  },
+  "S001205": {
+   "amount": 75411,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mary Gay Scanlon",
+   "site_seat": "PA-05",
+   "pacs_or_donations": 75411,
+   "ie": 0
+  },
+  "H001085": {
+   "amount": 110915,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chrissy Houlahan",
+   "site_seat": "PA-06",
+   "pacs_or_donations": 100632,
+   "ie": 10283
+  },
+  "M001230": {
+   "amount": 74280,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ryan Mackenzie",
+   "site_seat": "PA-07",
+   "pacs_or_donations": 74280,
+   "ie": 0
+  },
+  "B001327": {
+   "amount": 83266,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rob Bresnahan",
+   "site_seat": "PA-08",
+   "pacs_or_donations": 83266,
+   "ie": 0
+  },
+  "M001204": {
+   "amount": 56329,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dan Meuser",
+   "site_seat": "PA-09",
+   "pacs_or_donations": 56329,
+   "ie": 0
+  },
+  "P000605": {
+   "amount": 128972,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Scott Perry",
+   "site_seat": "PA-10",
+   "pacs_or_donations": 128972,
+   "ie": 0
+  },
+  "S001199": {
+   "amount": 88529,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lloyd Smucker",
+   "site_seat": "PA-11",
+   "pacs_or_donations": 88529,
+   "ie": 0
+  },
+  "L000602": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Summer Lee",
+   "site_seat": "PA-12",
+   "tags": "Track AIPAC Approved"
+  },
+  "J000302": {
+   "amount": 431,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Joyce",
+   "site_seat": "PA-13",
+   "pacs_or_donations": 431,
+   "ie": 0
+  },
+  "R000610": {
+   "amount": 482888,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Guy Reschenthaler",
+   "site_seat": "PA-14",
+   "pacs_or_donations": 482888,
+   "ie": 0
+  },
+  "T000467": {
+   "amount": 26949,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Glenn Thompson",
+   "site_seat": "PA-15",
+   "pacs_or_donations": 26949,
+   "ie": 0
+  },
+  "K000376": {
+   "amount": 50545,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Kelly",
+   "site_seat": "PA-16",
+   "pacs_or_donations": 50545,
+   "ie": 0
+  },
+  "D000530": {
+   "amount": 314836,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chris Deluzio",
+   "site_seat": "PA-17",
+   "pacs_or_donations": 330816,
+   "ie": 6779
+  },
+  "W000802": {
+   "amount": 408094,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sheldon Whitehouse",
+   "site_seat": "RI-SEN",
+   "pacs_or_donations": 408094,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "R000122": {
+   "amount": 421697,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jack Reed",
+   "site_seat": "RI-SEN",
+   "pacs_or_donations": 421697,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "A000380": {
+   "amount": 112512,
+   "label": "Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Gabe Amo",
+   "site_seat": "RI-01",
+   "pacs_or_donations": 112512,
+   "ie": 2800
+  },
+  "M001223": {
+   "amount": 108479,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Seth Magaziner",
+   "site_seat": "RI-02",
+   "pacs_or_donations": 107179,
+   "ie": 1300
+  },
+  "G000608": {
+   "amount": 0,
+   "label": "Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Darline Graham",
+   "site_seat": "SC-SEN",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Endorsed by RJC; Appointed by Gov. Henry McMaster"
+  },
+  "S001184": {
+   "amount": 249459,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Scott",
+   "site_seat": "SC-SEN",
+   "pacs_or_donations": 249459,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "M000194": {
+   "amount": 107936,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nancy Mace",
+   "site_seat": "SC-01",
+   "pacs_or_donations": 107936,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "W000795": {
+   "amount": 405073,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joe Wilson",
+   "site_seat": "SC-02",
+   "pacs_or_donations": 405073,
+   "ie": 0
+  },
+  "B001325": {
+   "amount": 10814,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sheri Biggs",
+   "site_seat": "SC-03",
+   "pacs_or_donations": 10814,
+   "ie": 0
+  },
+  "T000480": {
+   "amount": 80185,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "William Timmons",
+   "site_seat": "SC-04",
+   "pacs_or_donations": 80185,
+   "ie": 0
+  },
+  "N000190": {
+   "amount": 10211,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ralph Norman",
+   "site_seat": "SC-05",
+   "pacs_or_donations": 10211,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "C000537": {
+   "amount": 172823,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jim Clyburn",
+   "site_seat": "SC-06",
+   "pacs_or_donations": 172823,
+   "ie": 0
+  },
+  "F000478": {
+   "amount": 90175,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Russell Fry",
+   "site_seat": "SC-07",
+   "pacs_or_donations": 90175,
+   "ie": 0
+  },
+  "T000250": {
+   "amount": 314319,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Thune",
+   "site_seat": "SD-SEN",
+   "pacs_or_donations": 314319,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "R000605": {
+   "amount": 324380,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Rounds",
+   "site_seat": "SD-SEN",
+   "pacs_or_donations": 324380,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "J000301": {
+   "amount": 98014,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dusty Johnson",
+   "site_seat": "SD-00",
+   "pacs_or_donations": 98014,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "B001243": {
+   "amount": 449882,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Marsha Blackburn",
+   "site_seat": "TN-SEN",
+   "pacs_or_donations": 449882,
+   "ie": 0,
+   "tags": "Running for Governor 2026"
+  },
+  "H000601": {
+   "amount": 137129,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bill Hagerty",
+   "site_seat": "TN-SEN",
+   "pacs_or_donations": 137129,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "H001086": {
+   "amount": 49519,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Diana Harshbarger",
+   "site_seat": "TN-01",
+   "pacs_or_donations": 49519,
+   "ie": 0
+  },
+  "B001309": {
+   "amount": 50574,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Burchett",
+   "site_seat": "TN-02",
+   "pacs_or_donations": 50574,
+   "ie": 0
+  },
+  "F000459": {
+   "amount": 63999,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chuck Fleischmann",
+   "site_seat": "TN-03",
+   "pacs_or_donations": 63999,
+   "ie": 0
+  },
+  "D000616": {
+   "amount": 25745,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Scott DesJarlais",
+   "site_seat": "TN-04",
+   "pacs_or_donations": 25745,
+   "ie": 0
+  },
+  "O000175": {
+   "amount": 42154,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Andy Ogles",
+   "site_seat": "TN-05",
+   "pacs_or_donations": 42154,
+   "ie": 0
+  },
+  "R000612": {
+   "amount": 52738,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Rose",
+   "site_seat": "TN-06",
+   "pacs_or_donations": 52738,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "V000139": {
+   "amount": 13278,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Matt Van Epps",
+   "site_seat": "TN-07",
+   "pacs_or_donations": 13278,
+   "ie": 0
+  },
+  "K000392": {
+   "amount": 255173,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "David Kustoff",
+   "site_seat": "TN-08",
+   "pacs_or_donations": 255173,
+   "ie": 0
+  },
+  "C001068": {
+   "amount": 128498,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Steve Cohen",
+   "site_seat": "TN-09",
+   "pacs_or_donations": 128498,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "C001098": {
+   "amount": 1411545,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ted Cruz",
+   "site_seat": "TX-SEN",
+   "pacs_or_donations": 1411545,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "C001056": {
+   "amount": 1079549,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Cornyn",
+   "site_seat": "TX-SEN",
+   "pacs_or_donations": 1079549,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "M001224": {
+   "amount": 60481,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Nathaniel Moran",
+   "site_seat": "TX-01",
+   "pacs_or_donations": 60481,
+   "ie": 0
+  },
+  "C001120": {
+   "amount": 355293,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Dan Crenshaw",
+   "site_seat": "TX-02",
+   "pacs_or_donations": 355293,
+   "ie": 0
+  },
+  "S001224": {
+   "amount": 71013,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Keith Self",
+   "site_seat": "TX-03",
+   "pacs_or_donations": 71013,
+   "ie": 0
+  },
+  "F000246": {
+   "amount": 88088,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pat Fallon",
+   "site_seat": "TX-04",
+   "pacs_or_donations": 88088,
+   "ie": 0
+  },
+  "G000589": {
+   "amount": 52261,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lance Gooden",
+   "site_seat": "TX-05",
+   "pacs_or_donations": 52261,
+   "ie": 0
+  },
+  "E000071": {
+   "amount": 170338,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jake Ellzey",
+   "site_seat": "TX-06",
+   "pacs_or_donations": 170338,
+   "ie": 0
+  },
+  "F000468": {
+   "amount": 205478,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lizzie Fletcher",
+   "site_seat": "TX-07",
+   "pacs_or_donations": 205478,
+   "ie": 0
+  },
+  "L000603": {
+   "amount": 31165,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Morgan Luttrell",
+   "site_seat": "TX-08",
+   "pacs_or_donations": 31165,
+   "ie": 0
+  },
+  "G000553": {
+   "amount": 27855,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Al Green",
+   "site_seat": "TX-09",
+   "pacs_or_donations": 27855,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "M001157": {
+   "amount": 890606,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michael McCaul",
+   "site_seat": "TX-10",
+   "pacs_or_donations": 883348,
+   "ie": 7258,
+   "tags": "Retiring 2026"
+  },
+  "P000048": {
+   "amount": 219959,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "August Pfluger",
+   "site_seat": "TX-11",
+   "pacs_or_donations": 219959,
+   "ie": 0
+  },
+  "G000601": {
+   "amount": 171025,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Craig Goldman",
+   "site_seat": "TX-12",
+   "pacs_or_donations": 171025,
+   "ie": 0
+  },
+  "J000304": {
+   "amount": 90676,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ronny Jackson",
+   "site_seat": "TX-13",
+   "pacs_or_donations": 90676,
+   "ie": 0
+  },
+  "W000814": {
+   "amount": 107071,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Randy Weber",
+   "site_seat": "TX-14",
+   "pacs_or_donations": 107071,
+   "ie": 0
+  },
+  "D000594": {
+   "amount": 137890,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Monica De La Cruz",
+   "site_seat": "TX-15",
+   "pacs_or_donations": 137890,
+   "ie": 0
+  },
+  "E000299": {
+   "amount": 54896,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Veronica Escobar",
+   "site_seat": "TX-16",
+   "pacs_or_donations": 54896,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "S000250": {
+   "amount": 68317,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Pete Sessions",
+   "site_seat": "TX-17",
+   "pacs_or_donations": 68317,
+   "ie": 0
+  },
+  "M001245": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Christian Menefee",
+   "site_seat": "TX-18",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Newly elected"
+  },
+  "A000375": {
+   "amount": 44730,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jodey Arrington",
+   "site_seat": "TX-19",
+   "pacs_or_donations": 44730,
+   "ie": 0
+  },
+  "C001091": {
+   "amount": 30401,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Joaquin Castro",
+   "site_seat": "TX-20",
+   "pacs_or_donations": 30401,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "R000614": {
+   "amount": 17000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Chip Roy",
+   "site_seat": "TX-21",
+   "pacs_or_donations": 17000,
+   "ie": 0,
+   "tags": "Running for Texas AG 2026"
+  },
+  "N000026": {
+   "amount": 17282,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Troy Nehls",
+   "site_seat": "TX-22",
+   "pacs_or_donations": 17282,
+   "ie": 0
+  },
+  "V000134": {
+   "amount": 106016,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Beth Van Duyne",
+   "site_seat": "TX-24",
+   "pacs_or_donations": 106016,
+   "ie": 0
+  },
+  "W000816": {
+   "amount": 39526,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Roger Williams",
+   "site_seat": "TX-25",
+   "pacs_or_donations": 39526,
+   "ie": 0
+  },
+  "G000603": {
+   "amount": 45420,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brandon Gill",
+   "site_seat": "TX-26",
+   "pacs_or_donations": 45420,
+   "ie": 0
+  },
+  "C001115": {
+   "amount": 36023,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Michael Cloud",
+   "site_seat": "TX-27",
+   "pacs_or_donations": 36023,
+   "ie": 0
+  },
+  "C001063": {
+   "amount": 2399841,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Henry Cuellar",
+   "site_seat": "TX-28",
+   "pacs_or_donations": 564211,
+   "ie": 1835630
+  },
+  "G000587": {
+   "amount": 101262,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Sylvia Garcia",
+   "site_seat": "TX-29",
+   "pacs_or_donations": 101262,
+   "ie": 0
+  },
+  "C001130": {
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jasmine Crockett",
+   "site_seat": "TX-30",
+   "pacs_or_donations": 0,
+   "ie": 0,
+   "tags": "Poor legislative record on Israel-Palestine; Ran for U.S. Senate 2026"
+  },
+  "C001051": {
+   "amount": 61035,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Carter",
+   "site_seat": "TX-31",
+   "pacs_or_donations": 61035,
+   "ie": 0
+  },
+  "J000310": {
+   "amount": 103485,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Julie Johnson",
+   "site_seat": "TX-32",
+   "pacs_or_donations": 101535,
+   "ie": 1950,
+   "tags": "Running for reelection in TX-31"
+  },
+  "V000131": {
+   "amount": 116097,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Marc Veasey",
+   "site_seat": "TX-33",
+   "pacs_or_donations": 116097,
+   "ie": 0,
+   "tags": "Retiring 2026"
+  },
+  "G000581": {
+   "amount": 397389,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Vicente Gonzalez",
+   "site_seat": "TX-34",
+   "pacs_or_donations": 397389,
+   "ie": 0
+  },
+  "C001131": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Greg Casar",
+   "site_seat": "TX-35",
+   "tags": "Track AIPAC Approved"
+  },
+  "B001291": {
+   "amount": 44553,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Brian Babin",
+   "site_seat": "TX-36",
+   "pacs_or_donations": 44553,
+   "ie": 0
+  },
+  "D000399": {
+   "amount": 67374,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Lloyd Doggett",
+   "site_seat": "TX-37",
+   "pacs_or_donations": 67374,
+   "ie": 0,
+   "tags": "Retiring 2026; Encouraged to improve Israel-Palestine record"
+  },
+  "H001095": {
+   "amount": 139862,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Wesley Hunt",
+   "site_seat": "TX-38",
+   "pacs_or_donations": 139862,
+   "ie": 0
+  },
+  "L000577": {
+   "amount": 292124,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Lee",
+   "site_seat": "UT-SEN",
+   "pacs_or_donations": 292124,
+   "ie": 0,
+   "tags": "Next election 2028"
+  },
+  "C001114": {
+   "amount": 67900,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John Curtis",
+   "site_seat": "UT-SEN",
+   "pacs_or_donations": 67900,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "M001213": {
+   "amount": 103449,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Blake Moore",
+   "site_seat": "UT-01",
+   "pacs_or_donations": 103449,
+   "ie": 0
+  },
+  "M001228": {
+   "amount": 86517,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Celeste Maloy",
+   "site_seat": "UT-02",
+   "pacs_or_donations": 86517,
+   "ie": 0
+  },
+  "K000403": {
+   "amount": 15261,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mike Kennedy",
+   "site_seat": "UT-03",
+   "pacs_or_donations": 15261,
+   "ie": 0
+  },
+  "O000086": {
+   "amount": 83696,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Burgess Owens",
+   "site_seat": "UT-04",
+   "pacs_or_donations": 83696,
+   "ie": 0
+  },
+  "S000033": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bernie Sanders",
+   "site_seat": "VT-SEN",
+   "tags": "Track AIPAC Approved; Next election 2030"
+  },
+  "W000800": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Peter Welch",
+   "site_seat": "VT-SEN",
+   "tags": "Track AIPAC Approved; Next election 2028"
+  },
+  "B001318": {
+   "amount": null,
+   "label": "Track AIPAC Approved! (no dollar figure shown)",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Becca Balint",
+   "site_seat": "VT-00",
+   "tags": "Track AIPAC Approved"
+  },
+  "K000384": {
+   "amount": 444106,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Tim Kaine",
+   "site_seat": "VA-SEN",
+   "pacs_or_donations": 444106,
+   "ie": 0,
+   "tags": "Next election 2030"
+  },
+  "W000805": {
+   "amount": 809214,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Mark Warner",
+   "site_seat": "VA-SEN",
+   "pacs_or_donations": 809214,
+   "ie": 0,
+   "tags": "Up for re-election"
+  },
+  "W000804": {
+   "amount": 118902,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Rob Wittman",
+   "site_seat": "VA-01",
+   "pacs_or_donations": 118902,
+   "ie": 0
+  },
+  "K000399": {
+   "amount": 110700,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jen Kiggans",
+   "site_seat": "VA-02",
+   "pacs_or_donations": 110700,
+   "ie": 0
+  },
+  "S000185": {
+   "amount": 1500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Bobby Scott",
+   "site_seat": "VA-03",
+   "pacs_or_donations": 1500,
+   "ie": 0
+  },
+  "M001227": {
+   "amount": 91697,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Jennifer McClellan",
+   "site_seat": "VA-04",
+   "pacs_or_donations": 91697,
+   "ie": 0
+  },
+  "M001239": {
+   "amount": 48221,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "John McGuire",
+   "site_seat": "VA-05",
+   "pacs_or_donations": 48221,
+   "ie": 0
+  },
+  "C001118": {
+   "amount": 55551,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Ben Cline",
+   "site_seat": "VA-06",
+   "pacs_or_donations": 55551,
+   "ie": 0
+  },
+  "V000138": {
+   "amount": 12608,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Eugene Vindman",
+   "site_seat": "VA-07",
+   "pacs_or_donations": 12608,
+   "ie": 0
+  },
+  "B001292": {
+   "amount": 63389,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Don Beyer",
+   "site_seat": "VA-08",
+   "pacs_or_donations": 63389,
+   "ie": 0,
+   "tags": "Encouraged to improve Israel-Palestine record"
+  },
+  "G000568": {
+   "amount": 33166,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Morgan Griffith",
+   "site_seat": "VA-09",
+   "pacs_or_donations": 33166,
+   "ie": 0
+  },
+  "S001230": {
+   "amount": 36443,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "Suhas Subramanyam",
+   "site_seat": "VA-10",
+   "pacs_or_donations": 36443,
+   "ie": 0
+  },
+  "W000831": {
+   "amount": 9450,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/congress",
+   "site_name": "James Walkinshaw",
+   "site_seat": "VA-11",
+   "pacs_or_donations": 9450,
+   "ie": 0
+  }
+ },
+ "others": [
+  {
+   "name": "Mary Peltola",
+   "office": "Candidate, U.S. Senate, AK",
+   "party": "D",
+   "amount": 96546,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 96546,
+   "ie": 0
+  },
+  {
+   "name": "Amish Shah",
+   "office": "Candidate, U.S. House, AZ-01",
+   "party": "D",
+   "amount": 23383,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 21450,
+   "ie": 1933
+  },
+  {
+   "name": "Mark Lamb",
+   "office": "Candidate, U.S. House, AZ-05",
+   "party": "R",
+   "amount": 2000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 2000,
+   "ie": 0
+  },
+  {
+   "name": "Joanna Mendoza",
+   "office": "Candidate, U.S. House, AZ-06",
+   "party": "D",
+   "amount": 81516,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 81516,
+   "ie": 0
+  },
+  {
+   "name": "Mike McGuire",
+   "office": "Candidate, U.S. House, CA-01",
+   "party": "D",
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates"
+  },
+  {
+   "name": "Scott Wiener",
+   "office": "Candidate, U.S. House, CA-11",
+   "party": "D",
+   "amount": 61605,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1605,
+   "ie": 60000
+  },
+  {
+   "name": "Melissa Hernandez",
+   "office": "Candidate, U.S. House, CA-14",
+   "party": "D",
+   "amount": 6379454,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 0,
+   "ie": 6379454
+  },
+  {
+   "name": "Hilda Solis",
+   "office": "Candidate, U.S. House, CA-38",
+   "party": "D",
+   "amount": 3515,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 3515,
+   "ie": 0
+  },
+  {
+   "name": "Marni Von Wilpert",
+   "office": "Candidate, U.S. House, CA-48",
+   "party": "D",
+   "amount": 2004008,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 3675,
+   "ie": 2000333
+  },
+  {
+   "name": "Houston Gaines",
+   "office": "Candidate, U.S. House, GA-10",
+   "party": "R",
+   "amount": 15500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 15500,
+   "ie": 0
+  },
+  {
+   "name": "Christina Bohannan",
+   "office": "Candidate, U.S. House, IA-01",
+   "party": "D",
+   "amount": 326809,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 326809,
+   "ie": 0
+  },
+  {
+   "name": "Joe Mitchell",
+   "office": "Candidate, U.S. House, IA-02",
+   "party": "R",
+   "amount": 2250,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 2250,
+   "ie": 0
+  },
+  {
+   "name": "Julianna Stratton",
+   "office": "Candidate, U.S. Senate, IL",
+   "party": "D",
+   "amount": 10675,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 10675,
+   "ie": 0
+  },
+  {
+   "name": "Donna Miller",
+   "office": "Candidate, U.S. House, IL-02",
+   "party": "D",
+   "amount": 4393893,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 14650,
+   "ie": 4379243
+  },
+  {
+   "name": "Melissa Bean",
+   "office": "Candidate, U.S. House, IL-08",
+   "party": "D",
+   "amount": 4716060,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 66483,
+   "ie": 4649577
+  },
+  {
+   "name": "Daniel Biss",
+   "office": "Candidate, U.S. House, IL-09",
+   "party": "D",
+   "amount": 359458,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 209685,
+   "ie": 149773
+  },
+  {
+   "name": "James Marter",
+   "office": "Candidate, U.S. House, IL-14",
+   "party": "R",
+   "amount": 670,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 670,
+   "ie": 0
+  },
+  {
+   "name": "Ed Gallrein",
+   "office": "Candidate, U.S. House, KY-04",
+   "party": "R",
+   "amount": 15544205,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 85346,
+   "ie": 15458859
+  },
+  {
+   "name": "Ralph Alvarado",
+   "office": "Candidate, U.S. House, KY-06",
+   "party": "R",
+   "amount": 3000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 3000,
+   "ie": 0
+  },
+  {
+   "name": "John Fleming",
+   "office": "Candidate, U.S. Senate, LA",
+   "party": "R",
+   "amount": 30000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 30000,
+   "ie": 0
+  },
+  {
+   "name": "Adrian Boafo",
+   "office": "Candidate, U.S. House, MD-05",
+   "party": "D",
+   "amount": 5752013,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 18000,
+   "ie": 5734013
+  },
+  {
+   "name": "Mike Rogers",
+   "office": "Candidate, U.S. Senate, MI",
+   "party": "R",
+   "amount": 5980794,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 139134,
+   "ie": 5841660
+  },
+  {
+   "name": "Tim Greimel",
+   "office": "Candidate, U.S. House, MI-10",
+   "party": "D",
+   "amount": 1686,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1686,
+   "ie": 0
+  },
+  {
+   "name": "Jeremy Moss",
+   "office": "Candidate, U.S. House, MI-11",
+   "party": "D",
+   "amount": 57357,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 56975,
+   "ie": 382
+  },
+  {
+   "name": "Kurt Alme",
+   "office": "Candidate, U.S. Senate, MT",
+   "party": "R",
+   "amount": 110,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 110,
+   "ie": 0
+  },
+  {
+   "name": "Roy Cooper",
+   "office": "Candidate, U.S. Senate, NC",
+   "party": "D",
+   "amount": 132025,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 132025,
+   "ie": 0
+  },
+  {
+   "name": "Michael Whatley",
+   "office": "Candidate, U.S. Senate, NC",
+   "party": "R",
+   "amount": 26156,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 26156,
+   "ie": 0
+  },
+  {
+   "name": "Laurie Buckhout",
+   "office": "Candidate, U.S. House, NC-01",
+   "party": "R",
+   "amount": 6199,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 6199,
+   "ie": 0
+  },
+  {
+   "name": "Allison Jaslow",
+   "office": "Candidate, U.S. House, NC-03",
+   "party": "D",
+   "amount": 1150,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1150,
+   "ie": 0
+  },
+  {
+   "name": "Denise Powell",
+   "office": "Candidate, U.S. House, NE-02",
+   "party": "D",
+   "amount": 41211,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 0,
+   "ie": 41211
+  },
+  {
+   "name": "David Flippo",
+   "office": "Candidate, U.S. House, NV-02",
+   "party": "R",
+   "amount": 1000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "ie": 0
+  },
+  {
+   "name": "John Sununu",
+   "office": "Candidate, U.S. Senate, NH",
+   "party": "R",
+   "amount": 19500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 19500,
+   "ie": 0
+  },
+  {
+   "name": "Maura Sullivan",
+   "office": "Candidate, U.S. House, NH-01",
+   "party": "D",
+   "amount": 40107,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 39725,
+   "ie": 382
+  },
+  {
+   "name": "Micah Lasher",
+   "office": "Candidate, U.S. House, NY-12",
+   "party": "D",
+   "amount": 5358,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 5358,
+   "ie": 0
+  },
+  {
+   "name": "Cait Conley",
+   "office": "Candidate, U.S. House, NY-17",
+   "party": "D",
+   "amount": 1350,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1350,
+   "ie": 0
+  },
+  {
+   "name": "Sherrod Brown",
+   "office": "Candidate, U.S. Senate, OH",
+   "party": "D",
+   "amount": 1472588,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1418351,
+   "ie": 54237
+  },
+  {
+   "name": "Paige Cognetti",
+   "office": "Candidate, U.S. House, PA-08",
+   "party": "D",
+   "amount": 48159,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 47777,
+   "ie": 382
+  },
+  {
+   "name": "Janelle Stelson",
+   "office": "Candidate, U.S. House, PA-10",
+   "party": "D",
+   "amount": 80125,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 28350,
+   "ie": 51775
+  },
+  {
+   "name": "Raymond McKay",
+   "office": "Candidate, U.S. Senate, RI",
+   "party": "R",
+   "amount": 26,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 26,
+   "ie": 0
+  },
+  {
+   "name": "Annie Andrews",
+   "office": "Candidate, U.S. Senate, SC",
+   "party": "D",
+   "amount": 5330,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 5330,
+   "ie": 0
+  },
+  {
+   "name": "Brent Taylor",
+   "office": "Candidate, U.S. House, TN-09",
+   "party": "R",
+   "amount": 6500,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 6500,
+   "ie": 0
+  },
+  {
+   "name": "Ken Paxton",
+   "office": "Candidate, U.S. Senate, TX",
+   "party": "R",
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates"
+  },
+  {
+   "name": "James Talarico",
+   "office": "Candidate, U.S. Senate, TX",
+   "party": "D",
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates"
+  },
+  {
+   "name": "Steve Toth",
+   "office": "Candidate, U.S. House, TX-02",
+   "party": "R",
+   "amount": 0,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates"
+  },
+  {
+   "name": "Mark Teixeira",
+   "office": "Candidate, U.S. House, TX-21",
+   "party": "R",
+   "amount": 10750,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 10750,
+   "ie": 0
+  },
+  {
+   "name": "Jace Yarbrough",
+   "office": "Candidate, U.S. House, TX-32",
+   "party": "R",
+   "amount": 10000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "ie": 0
+  },
+  {
+   "name": "Colin Allred",
+   "office": "Candidate, U.S. House, TX-33",
+   "party": "D",
+   "amount": 698281,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 692559,
+   "ie": 5722
+  },
+  {
+   "name": "Eric Flores",
+   "office": "Candidate, U.S. House, TX-34",
+   "party": "R",
+   "amount": 3501,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 3501,
+   "ie": 0
+  },
+  {
+   "name": "Johnny Garcia",
+   "office": "Candidate, U.S. House, TX-35",
+   "party": "D",
+   "amount": 182352,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 3950,
+   "ie": 178402
+  },
+  {
+   "name": "Bobby Pulido",
+   "office": "Candidate, U.S. House, TX-15",
+   "party": "D",
+   "amount": null,
+   "label": "Israel Lobby Total: TBD",
+   "url": "https://www.trackaipac.com/candidates"
+  },
+  {
+   "name": "Tom Sell",
+   "office": "Candidate, U.S. House, TX-19",
+   "party": "R",
+   "amount": null,
+   "label": "No Israel Lobby Total shown (Donations $30, IE $0)",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 30,
+   "ie": 0
+  },
+  {
+   "name": "Ben McAdams",
+   "office": "Candidate, U.S. House, UT-01",
+   "party": "D",
+   "amount": 94575,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 94575,
+   "ie": 0
+  },
+  {
+   "name": "Elaine Luria",
+   "office": "Candidate, U.S. House, VA-02",
+   "party": "D",
+   "amount": 2334883,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 1098072,
+   "ie": 1236811
+  },
+  {
+   "name": "Rebecca Cooke",
+   "office": "Candidate, U.S. House, WI-03",
+   "party": "D",
+   "amount": 209323,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/candidates",
+   "pacs_or_donations": 209323,
+   "ie": 0
+  },
+  {
+   "name": "Andy Beshear",
+   "office": "Governor of Kentucky; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Pete Buttigieg",
+   "office": "Former U.S. Secretary of Transportation; 2028 potential candidate",
+   "party": "D",
+   "amount": 191145,
+   "label": "Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Rahm Emanuel",
+   "office": "Former Mayor of Chicago; 2028 potential candidate",
+   "party": "D",
+   "amount": 42250,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Kamala Harris",
+   "office": "Former Vice President; 2028 potential candidate",
+   "party": "D",
+   "amount": 9036107,
+   "label": "Israel Lobby Total (PACs $6,082,868; IE $2,953,239)",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Wes Moore",
+   "office": "Governor of Maryland; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Gavin Newsom",
+   "office": "Governor of California; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "JB Pritzker",
+   "office": "Governor of Illinois; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Josh Shapiro",
+   "office": "Governor of Pennsylvania; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Gretchen Whitmer",
+   "office": "Governor of Michigan; 2028 potential candidate",
+   "party": "D",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Ron DeSantis",
+   "office": "Governor of Florida; 2028 potential candidate",
+   "party": "R",
+   "amount": 56373,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Robert F. Kennedy Jr.",
+   "office": "U.S. Secretary of Health and Human Services; 2028 potential candidate",
+   "party": "R",
+   "amount": null,
+   "label": "No data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Kristi Noem",
+   "office": "U.S. Secretary of Homeland Security; 2028 potential candidate",
+   "party": "R",
+   "amount": 8000,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Marco Rubio",
+   "office": "U.S. Secretary of State; 2028 potential candidate",
+   "party": "R",
+   "amount": 420421,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "JD Vance",
+   "office": "Vice President; 2028 potential candidate",
+   "party": "R",
+   "amount": 81985,
+   "label": "Israel Lobby Total",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Glenn Youngkin",
+   "office": "Governor of Virginia; 2028 potential candidate",
+   "party": "R",
+   "amount": null,
+   "label": "No federal data available",
+   "url": "https://www.trackaipac.com/2028"
+  },
+  {
+   "name": "Donald Trump",
+   "office": "President (Trump administration page)",
+   "party": null,
+   "amount": null,
+   "amount_text": ">$230 MILLION",
+   "label": "Spending by pro-Israel interest groups benefiting him since 2020",
+   "url": "https://www.trackaipac.com/trump"
+  },
+  {
+   "name": "JD Vance",
+   "office": "Vice President (Trump administration page)",
+   "party": null,
+   "amount": 167324,
+   "amount_text": ">$167,000 (text); $167,324 (graphic)",
+   "label": "Received from the Israel lobby",
+   "url": "https://www.trackaipac.com/trump"
+  },
+  {
+   "name": "Marco Rubio",
+   "office": "Secretary of State & National Security Advisor (Trump administration page)",
+   "party": null,
+   "amount": null,
+   "amount_text": ">$1 MILLION",
+   "label": "Campaign contributions from AIPAC and the Israel lobby since 2010",
+   "url": "https://www.trackaipac.com/trump"
+  },
+  {
+   "name": "Mike Waltz",
+   "office": "Nominee for U.S. Ambassador to the United Nations (Trump administration page)",
+   "party": null,
+   "amount": null,
+   "amount_text": "nearly $250,000",
+   "label": "Campaign contributions from AIPAC and their allies",
+   "url": "https://www.trackaipac.com/trump"
+  },
+  {
+   "name": "Tulsi Gabbard",
+   "office": "Director of National Intelligence (Trump administration page)",
+   "party": null,
+   "amount": 46500,
+   "amount_text": ">$46,000 (text); $46,500 (graphic, 'Data via opensecrets.org 2/12/25')",
+   "label": "From the pro-Israel lobby",
+   "url": "https://www.trackaipac.com/trump"
+  }
+ ]
+}

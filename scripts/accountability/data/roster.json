@@ -1,0 +1,8712 @@
+[
+{
+"bio": "C000127",
+"name": "Maria Cantwell",
+"first": "Maria",
+"last": "Cantwell",
+"chamber": "senate",
+"state": "WA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00007836",
+"fec": [
+"S8WA00194",
+"H2WA01054"
+],
+"ballotpedia": "Maria Cantwell",
+"start": "1993-01-05"
+},
+{
+"bio": "K000367",
+"name": "Amy Klobuchar",
+"first": "Amy",
+"last": "Klobuchar",
+"chamber": "senate",
+"state": "MN",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00027500",
+"fec": [
+"S6MN00267"
+],
+"ballotpedia": "Amy Klobuchar",
+"start": "2007-01-04"
+},
+{
+"bio": "S000033",
+"name": "Bernard Sanders",
+"first": "Bernard",
+"last": "Sanders",
+"chamber": "senate",
+"state": "VT",
+"district": null,
+"party": "Independent",
+"opensecrets": "N00000528",
+"fec": [
+"H8VT01016",
+"S4VT00033"
+],
+"ballotpedia": "Bernie Sanders",
+"start": "1991-01-03"
+},
+{
+"bio": "W000802",
+"name": "Sheldon Whitehouse",
+"first": "Sheldon",
+"last": "Whitehouse",
+"chamber": "senate",
+"state": "RI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00027533",
+"fec": [
+"S6RI00221"
+],
+"ballotpedia": "Sheldon Whitehouse",
+"start": "2007-01-04"
+},
+{
+"bio": "B001261",
+"name": "John Barrasso",
+"first": "John",
+"last": "Barrasso",
+"chamber": "senate",
+"state": "WY",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00006236",
+"fec": [
+"S6WY00068"
+],
+"ballotpedia": "John Barrasso",
+"start": "2007-06-25"
+},
+{
+"bio": "W000437",
+"name": "Roger F. Wicker",
+"first": "Roger",
+"last": "Wicker",
+"chamber": "senate",
+"state": "MS",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00003280",
+"fec": [
+"H4MS01078",
+"S8MS00196"
+],
+"ballotpedia": "Roger Wicker",
+"start": "1995-01-04"
+},
+{
+"bio": "C001035",
+"name": "Susan M. Collins",
+"first": "Susan",
+"last": "Collins",
+"chamber": "senate",
+"state": "ME",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00000491",
+"fec": [
+"S6ME00159"
+],
+"ballotpedia": "Susan Collins",
+"start": "1997-01-07"
+},
+{
+"bio": "C001056",
+"name": "John Cornyn",
+"first": "John",
+"last": "Cornyn",
+"chamber": "senate",
+"state": "TX",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00024852",
+"fec": [
+"S2TX00106"
+],
+"ballotpedia": "John Cornyn",
+"start": "2002-11-30"
+},
+{
+"bio": "D000563",
+"name": "Richard J. Durbin",
+"first": "Richard",
+"last": "Durbin",
+"chamber": "senate",
+"state": "IL",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00004981",
+"fec": [
+"S6IL00151",
+"H2IL20026"
+],
+"ballotpedia": "Dick Durbin",
+"start": "1983-01-03"
+},
+{
+"bio": "M000355",
+"name": "Mitch McConnell",
+"first": "Mitch",
+"last": "McConnell",
+"chamber": "senate",
+"state": "KY",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00003389",
+"fec": [
+"S2KY00012"
+],
+"ballotpedia": "Mitch McConnell",
+"start": "1985-01-03"
+},
+{
+"bio": "M001176",
+"name": "Jeff Merkley",
+"first": "Jeff",
+"last": "Merkley",
+"chamber": "senate",
+"state": "OR",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00029303",
+"fec": [
+"S8OR00207"
+],
+"ballotpedia": "Jeff Merkley",
+"start": "2009-01-06"
+},
+{
+"bio": "R000122",
+"name": "Jack Reed",
+"first": "John",
+"last": "Reed",
+"chamber": "senate",
+"state": "RI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00000362",
+"fec": [
+"S6RI00163",
+"H0RI02071"
+],
+"ballotpedia": "Jack Reed",
+"start": "1991-01-03"
+},
+{
+"bio": "R000584",
+"name": "James E. Risch",
+"first": "James",
+"last": "Risch",
+"chamber": "senate",
+"state": "ID",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00029441",
+"fec": [
+"S8ID00092"
+],
+"ballotpedia": "Jim Risch",
+"start": "2009-01-06"
+},
+{
+"bio": "S001181",
+"name": "Jeanne Shaheen",
+"first": "Jeanne",
+"last": "Shaheen",
+"chamber": "senate",
+"state": "NH",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00024790",
+"fec": [
+"S0NH00219"
+],
+"ballotpedia": "Jeanne Shaheen",
+"start": "2009-01-06"
+},
+{
+"bio": "W000805",
+"name": "Mark R. Warner",
+"first": "Mark",
+"last": "Warner",
+"chamber": "senate",
+"state": "VA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00002097",
+"fec": [
+"S6VA00093",
+"P80003023"
+],
+"ballotpedia": "Mark Warner",
+"start": "2009-01-06"
+},
+{
+"bio": "G000555",
+"name": "Kirsten E. Gillibrand",
+"first": "Kirsten",
+"last": "Gillibrand",
+"chamber": "senate",
+"state": "NY",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00027658",
+"fec": [
+"H6NY20167",
+"S0NY00410"
+],
+"ballotpedia": "Kirsten Gillibrand",
+"start": "2007-01-04"
+},
+{
+"bio": "C001088",
+"name": "Christopher A. Coons",
+"first": "Christopher",
+"last": "Coons",
+"chamber": "senate",
+"state": "DE",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00031820",
+"fec": [
+"S0DE00092"
+],
+"ballotpedia": "Chris Coons",
+"start": "2010-11-15"
+},
+{
+"bio": "A000055",
+"name": "Robert B. Aderholt",
+"first": "Robert",
+"last": "Aderholt",
+"chamber": "house",
+"state": "AL",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00003028",
+"fec": [
+"H6AL04098"
+],
+"ballotpedia": "Robert B. Aderholt",
+"start": "1997-01-07"
+},
+{
+"bio": "B001230",
+"name": "Tammy Baldwin",
+"first": "Tammy",
+"last": "Baldwin",
+"chamber": "senate",
+"state": "WI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00004367",
+"fec": [
+"H8WI00018",
+"S2WI00219"
+],
+"ballotpedia": "Tammy Baldwin",
+"start": "1999-01-06"
+},
+{
+"bio": "B001267",
+"name": "Michael F. Bennet",
+"first": "Michael",
+"last": "Bennet",
+"chamber": "senate",
+"state": "CO",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00030608",
+"fec": [
+"S0CO00211"
+],
+"ballotpedia": "Michael Bennet",
+"start": "2009-01-22"
+},
+{
+"bio": "B001257",
+"name": "Gus M. Bilirakis",
+"first": "Gus",
+"last": "Bilirakis",
+"chamber": "house",
+"state": "FL",
+"district": 12,
+"party": "Republican",
+"opensecrets": "N00027462",
+"fec": [
+"H6FL09070"
+],
+"ballotpedia": "Gus M. Bilirakis",
+"start": "2007-01-04"
+},
+{
+"bio": "B000490",
+"name": "Sanford D. Bishop, Jr.",
+"first": "Sanford",
+"last": "Bishop",
+"chamber": "house",
+"state": "GA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00002674",
+"fec": [
+"H2GA02031"
+],
+"ballotpedia": "Sanford Bishop Jr.",
+"start": "1993-01-05"
+},
+{
+"bio": "B001243",
+"name": "Marsha Blackburn",
+"first": "Marsha",
+"last": "Blackburn",
+"chamber": "senate",
+"state": "TN",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00003105",
+"fec": [
+"H2TN06030",
+"S8TN00337"
+],
+"ballotpedia": "Marsha Blackburn",
+"start": "2003-01-07"
+},
+{
+"bio": "B001277",
+"name": "Richard Blumenthal",
+"first": "Richard",
+"last": "Blumenthal",
+"chamber": "senate",
+"state": "CT",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00031685",
+"fec": [
+"S0CT00177"
+],
+"ballotpedia": "Richard Blumenthal",
+"start": "2011-01-05"
+},
+{
+"bio": "B001236",
+"name": "John Boozman",
+"first": "John",
+"last": "Boozman",
+"chamber": "senate",
+"state": "AR",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00013873",
+"fec": [
+"H2AR03176",
+"S0AR00150"
+],
+"ballotpedia": "John Boozman",
+"start": "2001-11-29"
+},
+{
+"bio": "B001260",
+"name": "Vern Buchanan",
+"first": "Vern",
+"last": "Buchanan",
+"chamber": "house",
+"state": "FL",
+"district": 16,
+"party": "Republican",
+"opensecrets": "N00027626",
+"fec": [
+"H6FL13148"
+],
+"ballotpedia": "Vern Buchanan",
+"start": "2007-01-04"
+},
+{
+"bio": "C000059",
+"name": "Ken Calvert",
+"first": "Ken",
+"last": "Calvert",
+"chamber": "house",
+"state": "CA",
+"district": 41,
+"party": "Republican",
+"opensecrets": "N00007099",
+"fec": [
+"H2CA37023"
+],
+"ballotpedia": "Ken Calvert",
+"start": "1993-01-05"
+},
+{
+"bio": "C001047",
+"name": "Shelley Moore Capito",
+"first": "Shelley",
+"last": "Capito",
+"chamber": "senate",
+"state": "WV",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00009771",
+"fec": [
+"H0WV02138",
+"S4WV00159"
+],
+"ballotpedia": "Shelley Moore Capito",
+"start": "2001-01-03"
+},
+{
+"bio": "C001072",
+"name": "Andr\u00e9 Carson",
+"first": "Andr\u00e9",
+"last": "Carson",
+"chamber": "house",
+"state": "IN",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00029513",
+"fec": [
+"H8IN07184"
+],
+"ballotpedia": "Andre Carson",
+"start": "2008-03-13"
+},
+{
+"bio": "C001051",
+"name": "John R. Carter",
+"first": "John",
+"last": "Carter",
+"chamber": "house",
+"state": "TX",
+"district": 31,
+"party": "Republican",
+"opensecrets": "N00025095",
+"fec": [
+"H2TX31044"
+],
+"ballotpedia": "John Carter",
+"start": "2003-01-07"
+},
+{
+"bio": "C001075",
+"name": "Bill Cassidy",
+"first": "Bill",
+"last": "Cassidy",
+"chamber": "senate",
+"state": "LA",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00030245",
+"fec": [
+"H8LA00017",
+"S4LA00107"
+],
+"ballotpedia": "Bill Cassidy",
+"start": "2009-01-06"
+},
+{
+"bio": "C001066",
+"name": "Kathy Castor",
+"first": "Kathy",
+"last": "Castor",
+"chamber": "house",
+"state": "FL",
+"district": 14,
+"party": "Democrat",
+"opensecrets": "N00027514",
+"fec": [
+"H6FL11126",
+"H6FL11134"
+],
+"ballotpedia": "Kathy Castor",
+"start": "2007-01-04"
+},
+{
+"bio": "C001080",
+"name": "Judy Chu",
+"first": "Judy",
+"last": "Chu",
+"chamber": "house",
+"state": "CA",
+"district": 28,
+"party": "Democrat",
+"opensecrets": "N00030600",
+"fec": [
+"H0CA32101"
+],
+"ballotpedia": "Judy Chu",
+"start": "2009-07-16"
+},
+{
+"bio": "C001067",
+"name": "Yvette D. Clarke",
+"first": "Yvette",
+"last": "Clarke",
+"chamber": "house",
+"state": "NY",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00026961",
+"fec": [
+"H4NY11138"
+],
+"ballotpedia": "Yvette D. Clarke",
+"start": "2007-01-04"
+},
+{
+"bio": "C001061",
+"name": "Emanuel Cleaver",
+"first": "Emanuel",
+"last": "Cleaver",
+"chamber": "house",
+"state": "MO",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00026790",
+"fec": [
+"H4MO05234"
+],
+"ballotpedia": "Emanuel Cleaver",
+"start": "2005-01-04"
+},
+{
+"bio": "C000537",
+"name": "James E. Clyburn",
+"first": "James",
+"last": "Clyburn",
+"chamber": "house",
+"state": "SC",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00002408",
+"fec": [
+"H2SC02042"
+],
+"ballotpedia": "James E. Clyburn",
+"start": "1993-01-05"
+},
+{
+"bio": "C001068",
+"name": "Steve Cohen",
+"first": "Steve",
+"last": "Cohen",
+"chamber": "house",
+"state": "TN",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00003225",
+"fec": [
+"H6TN09068"
+],
+"ballotpedia": "Steve Cohen",
+"start": "2007-01-04"
+},
+{
+"bio": "C001053",
+"name": "Tom Cole",
+"first": "Tom",
+"last": "Cole",
+"chamber": "house",
+"state": "OK",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00025726",
+"fec": [
+"H2OK04055"
+],
+"ballotpedia": "Tom Cole",
+"start": "2003-01-07"
+},
+{
+"bio": "C001059",
+"name": "Jim Costa",
+"first": "Jim",
+"last": "Costa",
+"chamber": "house",
+"state": "CA",
+"district": 21,
+"party": "Democrat",
+"opensecrets": "N00026341",
+"fec": [
+"H4CA20082"
+],
+"ballotpedia": "Jim Costa",
+"start": "2005-01-04"
+},
+{
+"bio": "C001069",
+"name": "Joe Courtney",
+"first": "Joe",
+"last": "Courtney",
+"chamber": "house",
+"state": "CT",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00024842",
+"fec": [
+"H2CT02112"
+],
+"ballotpedia": "Joe Courtney",
+"start": "2007-01-04"
+},
+{
+"bio": "C000880",
+"name": "Mike Crapo",
+"first": "Michael",
+"last": "Crapo",
+"chamber": "senate",
+"state": "ID",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00006267",
+"fec": [
+"S8ID00027",
+"H2ID02034"
+],
+"ballotpedia": "Mike Crapo",
+"start": "1993-01-05"
+},
+{
+"bio": "C001087",
+"name": "Eric A. \"Rick\" Crawford",
+"first": "Eric",
+"last": "Crawford",
+"chamber": "house",
+"state": "AR",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00030770",
+"fec": [
+"H0AR01083"
+],
+"ballotpedia": "Rick Crawford",
+"start": "2011-01-05"
+},
+{
+"bio": "C001063",
+"name": "Henry Cuellar",
+"first": "Henry",
+"last": "Cuellar",
+"chamber": "house",
+"state": "TX",
+"district": 28,
+"party": "Democrat",
+"opensecrets": "N00024978",
+"fec": [
+"H2TX23082"
+],
+"ballotpedia": "Henry Cuellar",
+"start": "2005-01-04"
+},
+{
+"bio": "D000096",
+"name": "Danny K. Davis",
+"first": "Danny",
+"last": "Davis",
+"chamber": "house",
+"state": "IL",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00004884",
+"fec": [
+"H4IL07037"
+],
+"ballotpedia": "Danny K. Davis",
+"start": "1997-01-07"
+},
+{
+"bio": "D000197",
+"name": "Diana DeGette",
+"first": "Diana",
+"last": "DeGette",
+"chamber": "house",
+"state": "CO",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00006134",
+"fec": [
+"H6CO01141"
+],
+"ballotpedia": "Diana DeGette",
+"start": "1997-01-07"
+},
+{
+"bio": "D000216",
+"name": "Rosa L. DeLauro",
+"first": "Rosa",
+"last": "DeLauro",
+"chamber": "house",
+"state": "CT",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00000615",
+"fec": [
+"H0CT03072"
+],
+"ballotpedia": "Rosa DeLauro",
+"start": "1991-01-03"
+},
+{
+"bio": "D000616",
+"name": "Scott DesJarlais",
+"first": "Scott",
+"last": "DesJarlais",
+"chamber": "house",
+"state": "TN",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00030957",
+"fec": [
+"H0TN04195"
+],
+"ballotpedia": "Scott DesJarlais",
+"start": "2011-01-05"
+},
+{
+"bio": "D000600",
+"name": "Mario Diaz-Balart",
+"first": "Mario",
+"last": "Diaz-Balart",
+"chamber": "house",
+"state": "FL",
+"district": 26,
+"party": "Republican",
+"opensecrets": "N00025337",
+"fec": [
+"H2FL25018"
+],
+"ballotpedia": "Mario Diaz-Balart",
+"start": "2003-01-07"
+},
+{
+"bio": "D000399",
+"name": "Lloyd Doggett",
+"first": "Lloyd",
+"last": "Doggett",
+"chamber": "house",
+"state": "TX",
+"district": 37,
+"party": "Democrat",
+"opensecrets": "N00006023",
+"fec": [
+"H4TX10028"
+],
+"ballotpedia": "Lloyd Doggett",
+"start": "1995-01-04"
+},
+{
+"bio": "F000459",
+"name": "Charles J. \"Chuck\" Fleischmann",
+"first": "Charles",
+"last": "Fleischmann",
+"chamber": "house",
+"state": "TN",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00030815",
+"fec": [
+"H0TN03254"
+],
+"ballotpedia": "Charles Fleischmann",
+"start": "2011-01-05"
+},
+{
+"bio": "F000450",
+"name": "Virginia Foxx",
+"first": "Virginia",
+"last": "Foxx",
+"chamber": "house",
+"state": "NC",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00026166",
+"fec": [
+"H4NC05146"
+],
+"ballotpedia": "Virginia Foxx",
+"start": "2005-01-04"
+},
+{
+"bio": "G000559",
+"name": "John Garamendi",
+"first": "John",
+"last": "Garamendi",
+"chamber": "house",
+"state": "CA",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00030856",
+"fec": [
+"H0CA10149"
+],
+"ballotpedia": "John Garamendi",
+"start": "2009-11-03"
+},
+{
+"bio": "G000565",
+"name": "Paul A. Gosar",
+"first": "Paul",
+"last": "Gosar",
+"chamber": "house",
+"state": "AZ",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00030771",
+"fec": [
+"H0AZ01259"
+],
+"ballotpedia": "Paul Gosar",
+"start": "2011-01-05"
+},
+{
+"bio": "G000386",
+"name": "Chuck Grassley",
+"first": "Charles",
+"last": "Grassley",
+"chamber": "senate",
+"state": "IA",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00001758",
+"fec": [
+"S0IA00028"
+],
+"ballotpedia": "Chuck Grassley",
+"start": "1975-01-14"
+},
+{
+"bio": "G000546",
+"name": "Sam Graves",
+"first": "Sam",
+"last": "Graves",
+"chamber": "house",
+"state": "MO",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00013323",
+"fec": [
+"H0MO06073"
+],
+"ballotpedia": "Sam Graves",
+"start": "2001-01-03"
+},
+{
+"bio": "G000553",
+"name": "Al Green",
+"first": "Al",
+"last": "Green",
+"chamber": "house",
+"state": "TX",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00026686",
+"fec": [
+"H4TX09095"
+],
+"ballotpedia": "Al Green",
+"start": "2005-01-04"
+},
+{
+"bio": "G000568",
+"name": "H. Morgan Griffith",
+"first": "H.",
+"last": "Griffith",
+"chamber": "house",
+"state": "VA",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00032029",
+"fec": [
+"H0VA09055"
+],
+"ballotpedia": "Morgan Griffith",
+"start": "2011-01-05"
+},
+{
+"bio": "G000558",
+"name": "Brett Guthrie",
+"first": "Brett",
+"last": "Guthrie",
+"chamber": "house",
+"state": "KY",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00029675",
+"fec": [
+"H8KY02031"
+],
+"ballotpedia": "Brett Guthrie",
+"start": "2009-01-06"
+},
+{
+"bio": "H001052",
+"name": "Andy Harris",
+"first": "Andy",
+"last": "Harris",
+"chamber": "house",
+"state": "MD",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00029147",
+"fec": [
+"H8MD01094"
+],
+"ballotpedia": "Andrew Harris",
+"start": "2011-01-05"
+},
+{
+"bio": "H001046",
+"name": "Martin Heinrich",
+"first": "Martin",
+"last": "Heinrich",
+"chamber": "senate",
+"state": "NM",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00029835",
+"fec": [
+"H8NM01224",
+"S2NM00088"
+],
+"ballotpedia": "Martin Heinrich",
+"start": "2009-01-06"
+},
+{
+"bio": "H001047",
+"name": "James A. Himes",
+"first": "James",
+"last": "Himes",
+"chamber": "house",
+"state": "CT",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00029070",
+"fec": [
+"H8CT04172"
+],
+"ballotpedia": "Jim Himes",
+"start": "2009-01-06"
+},
+{
+"bio": "H001042",
+"name": "Mazie K. Hirono",
+"first": "Mazie",
+"last": "Hirono",
+"chamber": "senate",
+"state": "HI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00028139",
+"fec": [
+"H6HI02251",
+"S2HI00106"
+],
+"ballotpedia": "Mazie K. Hirono",
+"start": "2007-01-04"
+},
+{
+"bio": "H001061",
+"name": "John Hoeven",
+"first": "John",
+"last": "Hoeven",
+"chamber": "senate",
+"state": "ND",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00031688",
+"fec": [
+"S0ND00093"
+],
+"ballotpedia": "John Hoeven",
+"start": "2011-01-05"
+},
+{
+"bio": "H000874",
+"name": "Steny H. Hoyer",
+"first": "Steny",
+"last": "Hoyer",
+"chamber": "house",
+"state": "MD",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00001821",
+"fec": [
+"H2MD05155"
+],
+"ballotpedia": "Steny Hoyer",
+"start": "1981-01-05"
+},
+{
+"bio": "H001058",
+"name": "Bill Huizenga",
+"first": "Bill",
+"last": "Huizenga",
+"chamber": "house",
+"state": "MI",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00030673",
+"fec": [
+"H0MI02094"
+],
+"ballotpedia": "Bill Huizenga",
+"start": "2011-01-05"
+},
+{
+"bio": "J000288",
+"name": "Henry C. \"Hank\" Johnson, Jr.",
+"first": "Henry",
+"last": "Johnson",
+"chamber": "house",
+"state": "GA",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00027848",
+"fec": [
+"H6GA04129"
+],
+"ballotpedia": "Henry C. Johnson, Jr.",
+"start": "2007-01-04"
+},
+{
+"bio": "J000293",
+"name": "Ron Johnson",
+"first": "Ron",
+"last": "Johnson",
+"chamber": "senate",
+"state": "WI",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00032546",
+"fec": [
+"S0WI00197"
+],
+"ballotpedia": "Ron Johnson (Wisconsin)",
+"start": "2011-01-05"
+},
+{
+"bio": "J000289",
+"name": "Jim Jordan",
+"first": "Jim",
+"last": "Jordan",
+"chamber": "house",
+"state": "OH",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00027894",
+"fec": [
+"H6OH04082"
+],
+"ballotpedia": "Jim Jordan (Ohio)",
+"start": "2007-01-04"
+},
+{
+"bio": "K000009",
+"name": "Marcy Kaptur",
+"first": "Marcy",
+"last": "Kaptur",
+"chamber": "house",
+"state": "OH",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00003522",
+"fec": [
+"H2OH09031"
+],
+"ballotpedia": "Marcy Kaptur",
+"start": "1983-01-03"
+},
+{
+"bio": "K000375",
+"name": "William R. Keating",
+"first": "William",
+"last": "Keating",
+"chamber": "house",
+"state": "MA",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00031933",
+"fec": [
+"H0MA10082"
+],
+"ballotpedia": "Bill Keating",
+"start": "2011-01-05"
+},
+{
+"bio": "K000376",
+"name": "Mike Kelly",
+"first": "Mike",
+"last": "Kelly",
+"chamber": "house",
+"state": "PA",
+"district": 16,
+"party": "Republican",
+"opensecrets": "N00031647",
+"fec": [
+"H0PA03271"
+],
+"ballotpedia": "Mike Kelly",
+"start": "2011-01-05"
+},
+{
+"bio": "L000575",
+"name": "James Lankford",
+"first": "James",
+"last": "Lankford",
+"chamber": "senate",
+"state": "OK",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00031129",
+"fec": [
+"H0OK05114",
+"S4OK00232"
+],
+"ballotpedia": "James Lankford",
+"start": "2011-01-05"
+},
+{
+"bio": "L000560",
+"name": "Rick Larsen",
+"first": "Rick",
+"last": "Larsen",
+"chamber": "house",
+"state": "WA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00009759",
+"fec": [
+"H0WA02080"
+],
+"ballotpedia": "Rick Larsen",
+"start": "2001-01-03"
+},
+{
+"bio": "L000557",
+"name": "John B. Larson",
+"first": "John",
+"last": "Larson",
+"chamber": "house",
+"state": "CT",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00000575",
+"fec": [
+"H8CT01046"
+],
+"ballotpedia": "John B. Larson",
+"start": "1999-01-06"
+},
+{
+"bio": "L000566",
+"name": "Robert E. Latta",
+"first": "Robert",
+"last": "Latta",
+"chamber": "house",
+"state": "OH",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00012233",
+"fec": [
+"H8OH05036"
+],
+"ballotpedia": "Bob Latta",
+"start": "2007-12-13"
+},
+{
+"bio": "L000577",
+"name": "Mike Lee",
+"first": "Mike",
+"last": "Lee",
+"chamber": "senate",
+"state": "UT",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00031696",
+"fec": [
+"S0UT00165"
+],
+"ballotpedia": "Mike Lee",
+"start": "2011-01-05"
+},
+{
+"bio": "L000397",
+"name": "Zoe Lofgren",
+"first": "Zoe",
+"last": "Lofgren",
+"chamber": "house",
+"state": "CA",
+"district": 18,
+"party": "Democrat",
+"opensecrets": "N00007479",
+"fec": [
+"H4CA16049"
+],
+"ballotpedia": "Zoe Lofgren",
+"start": "1995-01-04"
+},
+{
+"bio": "L000491",
+"name": "Frank D. Lucas",
+"first": "Frank",
+"last": "Lucas",
+"chamber": "house",
+"state": "OK",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00005559",
+"fec": [
+"H4OK06056"
+],
+"ballotpedia": "Frank D. Lucas",
+"start": "1993-05-10"
+},
+{
+"bio": "L000570",
+"name": "Ben Ray Luj\u00e1n",
+"first": "Ben",
+"last": "Luj\u00e1n",
+"chamber": "senate",
+"state": "NM",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00029562",
+"fec": [
+"H8NM03196",
+"S0NM00058"
+],
+"ballotpedia": "Ben Ray Luj\u00e1n",
+"start": "2009-01-06"
+},
+{
+"bio": "L000562",
+"name": "Stephen F. Lynch",
+"first": "Stephen",
+"last": "Lynch",
+"chamber": "house",
+"state": "MA",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00013855",
+"fec": [
+"H2MA09072",
+"S0MA00083"
+],
+"ballotpedia": "Stephen Lynch",
+"start": "2001-10-23"
+},
+{
+"bio": "M000133",
+"name": "Edward J. Markey",
+"first": "Edward",
+"last": "Markey",
+"chamber": "senate",
+"state": "MA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00000270",
+"fec": [
+"H6MA07101",
+"S4MA00028"
+],
+"ballotpedia": "Ed Markey",
+"start": "1975-01-14"
+},
+{
+"bio": "M001163",
+"name": "Doris O. Matsui",
+"first": "Doris",
+"last": "Matsui",
+"chamber": "house",
+"state": "CA",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00027459",
+"fec": [
+"H6CA05195"
+],
+"ballotpedia": "Doris Matsui",
+"start": "2005-03-10"
+},
+{
+"bio": "M001157",
+"name": "Michael T. McCaul",
+"first": "Michael",
+"last": "McCaul",
+"chamber": "house",
+"state": "TX",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00026460",
+"fec": [
+"H4TX10093"
+],
+"ballotpedia": "Michael McCaul",
+"start": "2005-01-04"
+},
+{
+"bio": "M001177",
+"name": "Tom McClintock",
+"first": "Tom",
+"last": "McClintock",
+"chamber": "house",
+"state": "CA",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00006863",
+"fec": [
+"H8CA04152",
+"H6CA21135"
+],
+"ballotpedia": "Tom McClintock",
+"start": "2009-01-06"
+},
+{
+"bio": "M001143",
+"name": "Betty McCollum",
+"first": "Betty",
+"last": "McCollum",
+"chamber": "house",
+"state": "MN",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00012942",
+"fec": [
+"H0MN04049"
+],
+"ballotpedia": "Betty McCollum",
+"start": "2001-01-03"
+},
+{
+"bio": "M000312",
+"name": "James P. McGovern",
+"first": "James",
+"last": "McGovern",
+"chamber": "house",
+"state": "MA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00000179",
+"fec": [
+"H4MA03022"
+],
+"ballotpedia": "Jim McGovern (Massachusetts)",
+"start": "1997-01-07"
+},
+{
+"bio": "M001137",
+"name": "Gregory W. Meeks",
+"first": "Gregory",
+"last": "Meeks",
+"chamber": "house",
+"state": "NY",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00001171",
+"fec": [
+"H8NY06048"
+],
+"ballotpedia": "Gregory Meeks",
+"start": "1997-01-07"
+},
+{
+"bio": "M001160",
+"name": "Gwen Moore",
+"first": "Gwen",
+"last": "Moore",
+"chamber": "house",
+"state": "WI",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00026914",
+"fec": [
+"H4WI04183"
+],
+"ballotpedia": "Gwen Moore",
+"start": "2005-01-04"
+},
+{
+"bio": "M000934",
+"name": "Jerry Moran",
+"first": "Jerry",
+"last": "Moran",
+"chamber": "senate",
+"state": "KS",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00005282",
+"fec": [
+"H6KS01096",
+"S0KS00091"
+],
+"ballotpedia": "Jerry Moran",
+"start": "1997-01-07"
+},
+{
+"bio": "M001153",
+"name": "Lisa Murkowski",
+"first": "Lisa",
+"last": "Murkowski",
+"chamber": "senate",
+"state": "AK",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00026050",
+"fec": [
+"S4AK00099"
+],
+"ballotpedia": "Lisa Murkowski",
+"start": "2003-01-07"
+},
+{
+"bio": "M001169",
+"name": "Christopher Murphy",
+"first": "Christopher",
+"last": "Murphy",
+"chamber": "senate",
+"state": "CT",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00027566",
+"fec": [
+"H6CT05124",
+"S2CT00132"
+],
+"ballotpedia": "Chris Murphy (Connecticut)",
+"start": "2007-01-04"
+},
+{
+"bio": "M001111",
+"name": "Patty Murray",
+"first": "Patty",
+"last": "Murray",
+"chamber": "senate",
+"state": "WA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00007876",
+"fec": [
+"S2WA00189"
+],
+"ballotpedia": "Patty Murray",
+"start": "1993-01-05"
+},
+{
+"bio": "N000002",
+"name": "Jerrold Nadler",
+"first": "Jerrold",
+"last": "Nadler",
+"chamber": "house",
+"state": "NY",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00000939",
+"fec": [
+"H2NY17071"
+],
+"ballotpedia": "Jerrold Nadler",
+"start": "1992-11-03"
+},
+{
+"bio": "N000015",
+"name": "Richard E. Neal",
+"first": "Richard",
+"last": "Neal",
+"chamber": "house",
+"state": "MA",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00000153",
+"fec": [
+"H8MA02041"
+],
+"ballotpedia": "Richard Neal",
+"start": "1989-01-03"
+},
+{
+"bio": "N000147",
+"name": "Eleanor Holmes Norton",
+"first": "Eleanor",
+"last": "Norton",
+"chamber": "house",
+"state": "DC",
+"district": 0,
+"party": "Democrat",
+"opensecrets": "N00001692",
+"fec": [
+"H0DC00058"
+],
+"ballotpedia": "Eleanor Holmes Norton",
+"start": "1991-01-03"
+},
+{
+"bio": "P000034",
+"name": "Frank Pallone, Jr.",
+"first": "Frank",
+"last": "Pallone",
+"chamber": "house",
+"state": "NJ",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00000781",
+"fec": [
+"H8NJ03073",
+"S6NJ00263"
+],
+"ballotpedia": "Frank Pallone",
+"start": "1987-01-06"
+},
+{
+"bio": "P000603",
+"name": "Rand Paul",
+"first": "Rand",
+"last": "Paul",
+"chamber": "senate",
+"state": "KY",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00030836",
+"fec": [
+"S0KY00156"
+],
+"ballotpedia": "Rand Paul",
+"start": "2011-01-05"
+},
+{
+"bio": "P000197",
+"name": "Nancy Pelosi",
+"first": "Nancy",
+"last": "Pelosi",
+"chamber": "house",
+"state": "CA",
+"district": 11,
+"party": "Democrat",
+"opensecrets": "N00007360",
+"fec": [
+"H8CA05035"
+],
+"ballotpedia": "Nancy Pelosi",
+"start": "1987-01-06"
+},
+{
+"bio": "P000595",
+"name": "Gary C. Peters",
+"first": "Gary",
+"last": "Peters",
+"chamber": "senate",
+"state": "MI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00029277",
+"fec": [
+"H8MI09068",
+"S4MI00355"
+],
+"ballotpedia": "Gary Peters",
+"start": "2009-01-06"
+},
+{
+"bio": "P000597",
+"name": "Chellie Pingree",
+"first": "Chellie",
+"last": "Pingree",
+"chamber": "house",
+"state": "ME",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00013817",
+"fec": [
+"H8ME01120",
+"S0ME00038"
+],
+"ballotpedia": "Chellie Pingree",
+"start": "2009-01-06"
+},
+{
+"bio": "Q000023",
+"name": "Mike Quigley",
+"first": "Mike",
+"last": "Quigley",
+"chamber": "house",
+"state": "IL",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00030581",
+"fec": [
+"H0IL05096"
+],
+"ballotpedia": "Michael Quigley",
+"start": "2009-04-07"
+},
+{
+"bio": "R000395",
+"name": "Harold Rogers",
+"first": "Harold",
+"last": "Rogers",
+"chamber": "house",
+"state": "KY",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00003473",
+"fec": [
+"H0KY05015"
+],
+"ballotpedia": "Harold Rogers",
+"start": "1981-01-05"
+},
+{
+"bio": "R000575",
+"name": "Mike Rogers",
+"first": "Mike",
+"last": "Rogers",
+"chamber": "house",
+"state": "AL",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00024759",
+"fec": [
+"H2AL03032"
+],
+"ballotpedia": "Mike Rogers (Alabama)",
+"start": "2003-01-07"
+},
+{
+"bio": "S001176",
+"name": "Steve Scalise",
+"first": "Steve",
+"last": "Scalise",
+"chamber": "house",
+"state": "LA",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00009660",
+"fec": [
+"H0LA01087"
+],
+"ballotpedia": "Steve Scalise",
+"start": "2008-05-07"
+},
+{
+"bio": "S001145",
+"name": "Janice D. Schakowsky",
+"first": "Janice",
+"last": "Schakowsky",
+"chamber": "house",
+"state": "IL",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00004724",
+"fec": [
+"H8IL09067"
+],
+"ballotpedia": "Jan Schakowsky",
+"start": "1999-01-06"
+},
+{
+"bio": "S001150",
+"name": "Adam B. Schiff",
+"first": "Adam",
+"last": "Schiff",
+"chamber": "senate",
+"state": "CA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00009585",
+"fec": [
+"H0CA27085",
+"S4CA00555"
+],
+"ballotpedia": "Adam Schiff",
+"start": "2001-01-03"
+},
+{
+"bio": "S000148",
+"name": "Charles E. Schumer",
+"first": "Charles",
+"last": "Schumer",
+"chamber": "senate",
+"state": "NY",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00001093",
+"fec": [
+"S8NY00082",
+"H0NY16010"
+],
+"ballotpedia": "Chuck Schumer",
+"start": "1981-01-05"
+},
+{
+"bio": "S001183",
+"name": "David Schweikert",
+"first": "David",
+"last": "Schweikert",
+"chamber": "house",
+"state": "AZ",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00006460",
+"fec": [
+"H4AZ06045",
+"H8AZ05097"
+],
+"ballotpedia": "David Schweikert",
+"start": "2011-01-05"
+},
+{
+"bio": "S001189",
+"name": "Austin Scott",
+"first": "Austin",
+"last": "Scott",
+"chamber": "house",
+"state": "GA",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00032457",
+"fec": [
+"H0GA08099"
+],
+"ballotpedia": "Austin Scott",
+"start": "2011-01-05"
+},
+{
+"bio": "S000185",
+"name": "Robert C. \"Bobby\" Scott",
+"first": "Robert",
+"last": "Scott",
+"chamber": "house",
+"state": "VA",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00002147",
+"fec": [
+"H6VA01117"
+],
+"ballotpedia": "Robert C. Scott",
+"start": "1993-01-05"
+},
+{
+"bio": "S001184",
+"name": "Tim Scott",
+"first": "Tim",
+"last": "Scott",
+"chamber": "senate",
+"state": "SC",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00031782",
+"fec": [
+"H0SC01279",
+"S4SC00240"
+],
+"ballotpedia": "Tim Scott",
+"start": "2011-01-05"
+},
+{
+"bio": "S001185",
+"name": "Terri A. Sewell",
+"first": "Terri",
+"last": "Sewell",
+"chamber": "house",
+"state": "AL",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00030622",
+"fec": [
+"H0AL07086"
+],
+"ballotpedia": "Terri Sewell",
+"start": "2011-01-05"
+},
+{
+"bio": "S000344",
+"name": "Brad Sherman",
+"first": "Brad",
+"last": "Sherman",
+"chamber": "house",
+"state": "CA",
+"district": 32,
+"party": "Democrat",
+"opensecrets": "N00006897",
+"fec": [
+"H6CA24113"
+],
+"ballotpedia": "Brad Sherman",
+"start": "1997-01-07"
+},
+{
+"bio": "S001148",
+"name": "Michael K. Simpson",
+"first": "Michael",
+"last": "Simpson",
+"chamber": "house",
+"state": "ID",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00006263",
+"fec": [
+"H8ID02064"
+],
+"ballotpedia": "Michael K. Simpson",
+"start": "1999-01-06"
+},
+{
+"bio": "S000510",
+"name": "Adam Smith",
+"first": "Adam",
+"last": "Smith",
+"chamber": "house",
+"state": "WA",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00007833",
+"fec": [
+"H6WA09025"
+],
+"ballotpedia": "Adam Smith",
+"start": "1997-01-07"
+},
+{
+"bio": "S001172",
+"name": "Adrian Smith",
+"first": "Adrian",
+"last": "Smith",
+"chamber": "house",
+"state": "NE",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00027623",
+"fec": [
+"H6NE03115"
+],
+"ballotpedia": "Adrian Smith",
+"start": "2007-01-04"
+},
+{
+"bio": "S000522",
+"name": "Christopher H. Smith",
+"first": "Christopher",
+"last": "Smith",
+"chamber": "house",
+"state": "NJ",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00009816",
+"fec": [
+"H8NJ04014"
+],
+"ballotpedia": "Chris Smith (New Jersey)",
+"start": "1981-01-05"
+},
+{
+"bio": "S001156",
+"name": "Linda T. S\u00e1nchez",
+"first": "Linda",
+"last": "S\u00e1nchez",
+"chamber": "house",
+"state": "CA",
+"district": 38,
+"party": "Democrat",
+"opensecrets": "N00024870",
+"fec": [
+"H2CA39078"
+],
+"ballotpedia": "Linda S\u00e1nchez",
+"start": "2003-01-07"
+},
+{
+"bio": "T000193",
+"name": "Bennie G. Thompson",
+"first": "Bennie",
+"last": "Thompson",
+"chamber": "house",
+"state": "MS",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00003288",
+"fec": [
+"H4MS02068"
+],
+"ballotpedia": "Bennie Thompson",
+"start": "1993-04-13"
+},
+{
+"bio": "T000460",
+"name": "Mike Thompson",
+"first": "Mike",
+"last": "Thompson",
+"chamber": "house",
+"state": "CA",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00007419",
+"fec": [
+"H8CA01109"
+],
+"ballotpedia": "Mike Thompson (California)",
+"start": "1999-01-06"
+},
+{
+"bio": "T000467",
+"name": "Glenn Thompson",
+"first": "Glenn",
+"last": "Thompson",
+"chamber": "house",
+"state": "PA",
+"district": 15,
+"party": "Republican",
+"opensecrets": "N00029736",
+"fec": [
+"H8PA05071"
+],
+"ballotpedia": "Glenn Thompson (Pennsylvania)",
+"start": "2009-01-06"
+},
+{
+"bio": "T000250",
+"name": "John Thune",
+"first": "John",
+"last": "Thune",
+"chamber": "senate",
+"state": "SD",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00004572",
+"fec": [
+"S2SD00068",
+"H6SD00085"
+],
+"ballotpedia": "John Thune",
+"start": "1997-01-07"
+},
+{
+"bio": "T000469",
+"name": "Paul Tonko",
+"first": "Paul",
+"last": "Tonko",
+"chamber": "house",
+"state": "NY",
+"district": 20,
+"party": "Democrat",
+"opensecrets": "N00030196",
+"fec": [
+"H8NY21203"
+],
+"ballotpedia": "Paul Tonko",
+"start": "2009-01-06"
+},
+{
+"bio": "T000463",
+"name": "Michael R. Turner",
+"first": "Michael",
+"last": "Turner",
+"chamber": "house",
+"state": "OH",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00025175",
+"fec": [
+"H2OH03067",
+"H2OH03091"
+],
+"ballotpedia": "Michael Turner (Ohio)",
+"start": "2003-01-07"
+},
+{
+"bio": "V000128",
+"name": "Chris Van Hollen",
+"first": "Chris",
+"last": "Van Hollen",
+"chamber": "senate",
+"state": "MD",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00013820",
+"fec": [
+"H2MD08126",
+"S6MD03441"
+],
+"ballotpedia": "Chris Van Hollen",
+"start": "2003-01-07"
+},
+{
+"bio": "V000081",
+"name": "Nydia M. Vel\u00e1zquez",
+"first": "Nydia",
+"last": "Vel\u00e1zquez",
+"chamber": "house",
+"state": "NY",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00001102",
+"fec": [
+"H2NY00010"
+],
+"ballotpedia": "Nydia Velazquez",
+"start": "1993-01-05"
+},
+{
+"bio": "W000798",
+"name": "Tim Walberg",
+"first": "Tim",
+"last": "Walberg",
+"chamber": "house",
+"state": "MI",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00026368",
+"fec": [
+"H4MI07103"
+],
+"ballotpedia": "Tim Walberg",
+"start": "2007-01-04"
+},
+{
+"bio": "W000797",
+"name": "Debbie Wasserman Schultz",
+"first": "Debbie",
+"last": "Wasserman Schultz",
+"chamber": "house",
+"state": "FL",
+"district": 25,
+"party": "Democrat",
+"opensecrets": "N00026106",
+"fec": [
+"H4FL20023"
+],
+"ballotpedia": "Debbie Wasserman Schultz",
+"start": "2005-01-04"
+},
+{
+"bio": "W000187",
+"name": "Maxine Waters",
+"first": "Maxine",
+"last": "Waters",
+"chamber": "house",
+"state": "CA",
+"district": 43,
+"party": "Democrat",
+"opensecrets": "N00006690",
+"fec": [
+"H4CA23011"
+],
+"ballotpedia": "Maxine Waters",
+"start": "1991-01-03"
+},
+{
+"bio": "W000806",
+"name": "Daniel Webster",
+"first": "Daniel",
+"last": "Webster",
+"chamber": "house",
+"state": "FL",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00026335",
+"fec": [
+"H0FL08208",
+"S4FL00256"
+],
+"ballotpedia": "Daniel Webster",
+"start": "2011-01-05"
+},
+{
+"bio": "W000800",
+"name": "Peter Welch",
+"first": "Peter",
+"last": "Welch",
+"chamber": "senate",
+"state": "VT",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00000515",
+"fec": [
+"H6VT00160",
+"H8VT00034",
+"S2VT00235"
+],
+"ballotpedia": "Peter Welch",
+"start": "2007-01-04"
+},
+{
+"bio": "W000795",
+"name": "Joe Wilson",
+"first": "Joe",
+"last": "Wilson",
+"chamber": "house",
+"state": "SC",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00024809",
+"fec": [
+"H2SC02059"
+],
+"ballotpedia": "Joe Wilson",
+"start": "2001-12-18"
+},
+{
+"bio": "W000808",
+"name": "Frederica S. Wilson",
+"first": "Frederica",
+"last": "Wilson",
+"chamber": "house",
+"state": "FL",
+"district": 24,
+"party": "Democrat",
+"opensecrets": "N00030650",
+"fec": [
+"H0FL17068"
+],
+"ballotpedia": "Frederica Wilson",
+"start": "2011-01-05"
+},
+{
+"bio": "W000804",
+"name": "Robert J. Wittman",
+"first": "Robert",
+"last": "Wittman",
+"chamber": "house",
+"state": "VA",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00029459",
+"fec": [
+"H8VA01147"
+],
+"ballotpedia": "Robert J. Wittman",
+"start": "2007-12-13"
+},
+{
+"bio": "W000809",
+"name": "Steve Womack",
+"first": "Steve",
+"last": "Womack",
+"chamber": "house",
+"state": "AR",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00031857",
+"fec": [
+"H0AR03055"
+],
+"ballotpedia": "Steve Womack",
+"start": "2011-01-05"
+},
+{
+"bio": "W000779",
+"name": "Ron Wyden",
+"first": "Ron",
+"last": "Wyden",
+"chamber": "senate",
+"state": "OR",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00007724",
+"fec": [
+"S6OR00110",
+"H0OR03026"
+],
+"ballotpedia": "Ron Wyden",
+"start": "1981-01-05"
+},
+{
+"bio": "Y000064",
+"name": "Todd Young",
+"first": "Todd",
+"last": "Young",
+"chamber": "senate",
+"state": "IN",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00030670",
+"fec": [
+"H0IN09070",
+"S6IN00191"
+],
+"ballotpedia": "Todd Young",
+"start": "2011-01-05"
+},
+{
+"bio": "A000369",
+"name": "Mark E. Amodei",
+"first": "Mark",
+"last": "Amodei",
+"chamber": "house",
+"state": "NV",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00031177",
+"fec": [
+"H2NV02395",
+"H1NV02017",
+"S0NV00237"
+],
+"ballotpedia": "Mark Amodei",
+"start": "2011-09-13"
+},
+{
+"bio": "B001278",
+"name": "Suzanne Bonamici",
+"first": "Suzanne",
+"last": "Bonamici",
+"chamber": "house",
+"state": "OR",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00033474",
+"fec": [
+"H2OR01133"
+],
+"ballotpedia": "Suzanne Bonamici",
+"start": "2012-02-07"
+},
+{
+"bio": "D000617",
+"name": "Suzan K. DelBene",
+"first": "Suzan",
+"last": "DelBene",
+"chamber": "house",
+"state": "WA",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00030693",
+"fec": [
+"H0WA08046"
+],
+"ballotpedia": "Suzan DelBene",
+"start": "2012-11-13"
+},
+{
+"bio": "M001184",
+"name": "Thomas Massie",
+"first": "Thomas",
+"last": "Massie",
+"chamber": "house",
+"state": "KY",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00034041",
+"fec": [
+"H2KY04121"
+],
+"ballotpedia": "Thomas Massie",
+"start": "2012-11-13"
+},
+{
+"bio": "S001194",
+"name": "Brian Schatz",
+"first": "Brian",
+"last": "Schatz",
+"chamber": "senate",
+"state": "HI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00028138",
+"fec": [
+"S4HI00136",
+"H6HI02244"
+],
+"ballotpedia": "Brian E. Schatz",
+"start": "2012-12-27"
+},
+{
+"bio": "F000454",
+"name": "Bill Foster",
+"first": "Bill",
+"last": "Foster",
+"chamber": "house",
+"state": "IL",
+"district": 11,
+"party": "Democrat",
+"opensecrets": "N00029139",
+"fec": [
+"H8IL14067",
+"H2IL11124"
+],
+"ballotpedia": "Bill Foster",
+"start": "2008-03-08"
+},
+{
+"bio": "T000468",
+"name": "Dina Titus",
+"first": "Dina",
+"last": "Titus",
+"chamber": "house",
+"state": "NV",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00030191",
+"fec": [
+"H8NV03036"
+],
+"ballotpedia": "Dina Titus",
+"start": "2009-01-06"
+},
+{
+"bio": "C001095",
+"name": "Tom Cotton",
+"first": "Tom",
+"last": "Cotton",
+"chamber": "senate",
+"state": "AR",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00033363",
+"fec": [
+"H2AR04083",
+"S4AR00103"
+],
+"ballotpedia": "Tom Cotton",
+"start": "2013-01-03"
+},
+{
+"bio": "H001068",
+"name": "Jared Huffman",
+"first": "Jared",
+"last": "Huffman",
+"chamber": "house",
+"state": "CA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00033030",
+"fec": [
+"H2CA06259"
+],
+"ballotpedia": "Jared Huffman",
+"start": "2013-01-03"
+},
+{
+"bio": "B001287",
+"name": "Ami Bera",
+"first": "Ami",
+"last": "Bera",
+"chamber": "house",
+"state": "CA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00030717",
+"fec": [
+"H0CA03078"
+],
+"ballotpedia": "Ami Bera",
+"start": "2013-01-03"
+},
+{
+"bio": "B001285",
+"name": "Julia Brownley",
+"first": "Julia",
+"last": "Brownley",
+"chamber": "house",
+"state": "CA",
+"district": 26,
+"party": "Democrat",
+"opensecrets": "N00034254",
+"fec": [
+"H2CA00120"
+],
+"ballotpedia": "Julia Brownley",
+"start": "2013-01-03"
+},
+{
+"bio": "R000599",
+"name": "Raul Ruiz",
+"first": "Raul",
+"last": "Ruiz",
+"chamber": "house",
+"state": "CA",
+"district": 25,
+"party": "Democrat",
+"opensecrets": "N00033510",
+"fec": [
+"H2CA36439"
+],
+"ballotpedia": "Raul Ruiz",
+"start": "2013-01-03"
+},
+{
+"bio": "T000472",
+"name": "Mark Takano",
+"first": "Mark",
+"last": "Takano",
+"chamber": "house",
+"state": "CA",
+"district": 39,
+"party": "Democrat",
+"opensecrets": "N00006701",
+"fec": [
+"H2CA43245"
+],
+"ballotpedia": "Mark Takano",
+"start": "2013-01-03"
+},
+{
+"bio": "V000130",
+"name": "Juan Vargas",
+"first": "Juan",
+"last": "Vargas",
+"chamber": "house",
+"state": "CA",
+"district": 52,
+"party": "Democrat",
+"opensecrets": "N00007021",
+"fec": [
+"H2CA50026"
+],
+"ballotpedia": "Juan Vargas",
+"start": "2013-01-03"
+},
+{
+"bio": "P000608",
+"name": "Scott H. Peters",
+"first": "Scott",
+"last": "Peters",
+"chamber": "house",
+"state": "CA",
+"district": 50,
+"party": "Democrat",
+"opensecrets": "N00033591",
+"fec": [
+"H2CA52089"
+],
+"ballotpedia": "Scott Peters",
+"start": "2013-01-03"
+},
+{
+"bio": "F000462",
+"name": "Lois Frankel",
+"first": "Lois",
+"last": "Frankel",
+"chamber": "house",
+"state": "FL",
+"district": 22,
+"party": "Democrat",
+"opensecrets": "N00002893",
+"fec": [
+"H2FL14053",
+"H2FL22080"
+],
+"ballotpedia": "Lois Frankel",
+"start": "2013-01-03"
+},
+{
+"bio": "D000622",
+"name": "Tammy Duckworth",
+"first": "Tammy",
+"last": "Duckworth",
+"chamber": "senate",
+"state": "IL",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00027860",
+"fec": [
+"H6IL06141",
+"S6IL00292"
+],
+"ballotpedia": "Tammy Duckworth",
+"start": "2013-01-03"
+},
+{
+"bio": "B001282",
+"name": "Andy Barr",
+"first": "Garland",
+"last": "Barr",
+"chamber": "house",
+"state": "KY",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00031233",
+"fec": [
+"H0KY06104",
+"S6KY00286"
+],
+"ballotpedia": "Andy Barr",
+"start": "2013-01-03"
+},
+{
+"bio": "W000817",
+"name": "Elizabeth Warren",
+"first": "Elizabeth",
+"last": "Warren",
+"chamber": "senate",
+"state": "MA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00033492",
+"fec": [
+"S2MA00170"
+],
+"ballotpedia": "Elizabeth Warren",
+"start": "2013-01-03"
+},
+{
+"bio": "K000383",
+"name": "Angus S. King, Jr.",
+"first": "Angus",
+"last": "King",
+"chamber": "senate",
+"state": "ME",
+"district": null,
+"party": "Independent",
+"opensecrets": "N00034580",
+"fec": [
+"S2ME00109"
+],
+"ballotpedia": "Angus King",
+"start": "2013-01-03"
+},
+{
+"bio": "W000812",
+"name": "Ann Wagner",
+"first": "Ann",
+"last": "Wagner",
+"chamber": "house",
+"state": "MO",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00033106",
+"fec": [
+"H2MO02102"
+],
+"ballotpedia": "Ann Wagner",
+"start": "2013-01-03"
+},
+{
+"bio": "D000618",
+"name": "Steve Daines",
+"first": "Steve",
+"last": "Daines",
+"chamber": "senate",
+"state": "MT",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00033054",
+"fec": [
+"H2MT01060",
+"S2MT00096"
+],
+"ballotpedia": "Steve Daines",
+"start": "2013-01-03"
+},
+{
+"bio": "H001067",
+"name": "Richard Hudson",
+"first": "Richard",
+"last": "Hudson",
+"chamber": "house",
+"state": "NC",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00033630",
+"fec": [
+"H2NC08185"
+],
+"ballotpedia": "Richard Hudson",
+"start": "2013-01-03"
+},
+{
+"bio": "C001096",
+"name": "Kevin Cramer",
+"first": "Kevin",
+"last": "Cramer",
+"chamber": "senate",
+"state": "ND",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00004614",
+"fec": [
+"H0ND01026",
+"H6ND00074",
+"S8ND00120"
+],
+"ballotpedia": "Kevin Cramer",
+"start": "2013-01-03"
+},
+{
+"bio": "F000463",
+"name": "Deb Fischer",
+"first": "Deb",
+"last": "Fischer",
+"chamber": "senate",
+"state": "NE",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00033443",
+"fec": [
+"S2NE00094"
+],
+"ballotpedia": "Deb Fischer",
+"start": "2013-01-03"
+},
+{
+"bio": "M001188",
+"name": "Grace Meng",
+"first": "Grace",
+"last": "Meng",
+"chamber": "house",
+"state": "NY",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00034547",
+"fec": [
+"H2NY06116"
+],
+"ballotpedia": "Grace Meng",
+"start": "2013-01-03"
+},
+{
+"bio": "J000294",
+"name": "Hakeem S. Jeffries",
+"first": "Hakeem",
+"last": "Jeffries",
+"chamber": "house",
+"state": "NY",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00033640",
+"fec": [
+"H2NY10092"
+],
+"ballotpedia": "Hakeem Jeffries",
+"start": "2013-01-03"
+},
+{
+"bio": "B001281",
+"name": "Joyce Beatty",
+"first": "Joyce",
+"last": "Beatty",
+"chamber": "house",
+"state": "OH",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00033904",
+"fec": [
+"H2OH03125"
+],
+"ballotpedia": "Joyce Beatty",
+"start": "2013-01-03"
+},
+{
+"bio": "J000295",
+"name": "David P. Joyce",
+"first": "David",
+"last": "Joyce",
+"chamber": "house",
+"state": "OH",
+"district": 14,
+"party": "Republican",
+"opensecrets": "N00035007",
+"fec": [
+"H2OH14064"
+],
+"ballotpedia": "David Joyce",
+"start": "2013-01-03"
+},
+{
+"bio": "P000605",
+"name": "Scott Perry",
+"first": "Scott",
+"last": "Perry",
+"chamber": "house",
+"state": "PA",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00034120",
+"fec": [
+"H2PA04135"
+],
+"ballotpedia": "Scott Perry",
+"start": "2013-01-03"
+},
+{
+"bio": "C001098",
+"name": "Ted Cruz",
+"first": "Ted",
+"last": "Cruz",
+"chamber": "senate",
+"state": "TX",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00033085",
+"fec": [
+"S2TX00312"
+],
+"ballotpedia": "Ted Cruz",
+"start": "2013-01-03"
+},
+{
+"bio": "W000814",
+"name": "Randy K. Weber, Sr.",
+"first": "Randy",
+"last": "Weber",
+"chamber": "house",
+"state": "TX",
+"district": 14,
+"party": "Republican",
+"opensecrets": "N00033539",
+"fec": [
+"H2TX14149"
+],
+"ballotpedia": "Randy Weber",
+"start": "2013-01-03"
+},
+{
+"bio": "C001091",
+"name": "Joaquin Castro",
+"first": "Joaquin",
+"last": "Castro",
+"chamber": "house",
+"state": "TX",
+"district": 20,
+"party": "Democrat",
+"opensecrets": "N00033316",
+"fec": [
+"H2TX35011"
+],
+"ballotpedia": "Joaquin Castro",
+"start": "2013-01-03"
+},
+{
+"bio": "W000816",
+"name": "Roger Williams",
+"first": "Roger",
+"last": "Williams",
+"chamber": "house",
+"state": "TX",
+"district": 25,
+"party": "Republican",
+"opensecrets": "N00030602",
+"fec": [
+"H2TX33040",
+"S2TX00270"
+],
+"ballotpedia": "Roger Williams",
+"start": "2013-01-03"
+},
+{
+"bio": "V000131",
+"name": "Marc A. Veasey",
+"first": "Marc",
+"last": "Veasey",
+"chamber": "house",
+"state": "TX",
+"district": 33,
+"party": "Democrat",
+"opensecrets": "N00033839",
+"fec": [
+"H2TX33073"
+],
+"ballotpedia": "Marc Veasey",
+"start": "2013-01-03"
+},
+{
+"bio": "K000384",
+"name": "Tim Kaine",
+"first": "Timothy",
+"last": "Kaine",
+"chamber": "senate",
+"state": "VA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00033177",
+"fec": [
+"S2VA00142"
+],
+"ballotpedia": "Tim Kaine",
+"start": "2013-01-03"
+},
+{
+"bio": "P000607",
+"name": "Mark Pocan",
+"first": "Mark",
+"last": "Pocan",
+"chamber": "house",
+"state": "WI",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00033549",
+"fec": [
+"H2WI02124"
+],
+"ballotpedia": "Mark Pocan",
+"start": "2013-01-03"
+},
+{
+"bio": "K000385",
+"name": "Robin L. Kelly",
+"first": "Robin",
+"last": "Kelly",
+"chamber": "house",
+"state": "IL",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00035215",
+"fec": [
+"H2IL02172",
+"S6IL00474"
+],
+"ballotpedia": "Robin Kelly",
+"start": "2013-04-09"
+},
+{
+"bio": "S001195",
+"name": "Jason Smith",
+"first": "Jason",
+"last": "Smith",
+"chamber": "house",
+"state": "MO",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00035282",
+"fec": [
+"H4MO08162"
+],
+"ballotpedia": "Jason Smith (Missouri representative)",
+"start": "2013-06-04"
+},
+{
+"bio": "B001288",
+"name": "Cory A. Booker",
+"first": "Cory",
+"last": "Booker",
+"chamber": "senate",
+"state": "NJ",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00035267",
+"fec": [
+"S4NJ00185"
+],
+"ballotpedia": "Cory Booker",
+"start": "2013-10-31"
+},
+{
+"bio": "C001101",
+"name": "Katherine M. Clark",
+"first": "Katherine",
+"last": "Clark",
+"chamber": "house",
+"state": "MA",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00035278",
+"fec": [
+"H4MA05084"
+],
+"ballotpedia": "Katherine Clark",
+"start": "2013-12-12"
+},
+{
+"bio": "N000188",
+"name": "Donald Norcross",
+"first": "Donald",
+"last": "Norcross",
+"chamber": "house",
+"state": "NJ",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00036154",
+"fec": [
+"H4NJ01084"
+],
+"ballotpedia": "Donald Norcross",
+"start": "2014-11-12"
+},
+{
+"bio": "A000370",
+"name": "Alma S. Adams",
+"first": "Alma",
+"last": "Adams",
+"chamber": "house",
+"state": "NC",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00035451",
+"fec": [
+"H4NC12100"
+],
+"ballotpedia": "Alma Adams",
+"start": "2014-11-12"
+},
+{
+"bio": "P000609",
+"name": "Gary J. Palmer",
+"first": "Gary",
+"last": "Palmer",
+"chamber": "house",
+"state": "AL",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00035691",
+"fec": [
+"H4AL06098"
+],
+"ballotpedia": "Gary Palmer",
+"start": "2015-01-06"
+},
+{
+"bio": "H001072",
+"name": "J. French Hill",
+"first": "J.",
+"last": "Hill",
+"chamber": "house",
+"state": "AR",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00035792",
+"fec": [
+"H4AR02141"
+],
+"ballotpedia": "French Hill",
+"start": "2015-01-06"
+},
+{
+"bio": "W000821",
+"name": "Bruce Westerman",
+"first": "Bruce",
+"last": "Westerman",
+"chamber": "house",
+"state": "AR",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00035527",
+"fec": [
+"H4AR04048"
+],
+"ballotpedia": "Bruce Westerman",
+"start": "2015-01-06"
+},
+{
+"bio": "G000574",
+"name": "Ruben Gallego",
+"first": "Ruben",
+"last": "Gallego",
+"chamber": "senate",
+"state": "AZ",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00036097",
+"fec": [
+"H4AZ07043",
+"S4AZ00139"
+],
+"ballotpedia": "Ruben Gallego",
+"start": "2015-01-06"
+},
+{
+"bio": "D000623",
+"name": "Mark DeSaulnier",
+"first": "Mark",
+"last": "DeSaulnier",
+"chamber": "house",
+"state": "CA",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00030709",
+"fec": [
+"H0CA10073"
+],
+"ballotpedia": "Mark DeSaulnier",
+"start": "2015-01-06"
+},
+{
+"bio": "A000371",
+"name": "Pete Aguilar",
+"first": "Pete",
+"last": "Aguilar",
+"chamber": "house",
+"state": "CA",
+"district": 33,
+"party": "Democrat",
+"opensecrets": "N00033997",
+"fec": [
+"H2CA31125"
+],
+"ballotpedia": "Pete Aguilar",
+"start": "2015-01-06"
+},
+{
+"bio": "L000582",
+"name": "Ted Lieu",
+"first": "Ted",
+"last": "Lieu",
+"chamber": "house",
+"state": "CA",
+"district": 36,
+"party": "Democrat",
+"opensecrets": "N00035825",
+"fec": [
+"H4CA33119"
+],
+"ballotpedia": "Ted Lieu",
+"start": "2015-01-06"
+},
+{
+"bio": "T000474",
+"name": "Norma J. Torres",
+"first": "Norma",
+"last": "Torres",
+"chamber": "house",
+"state": "CA",
+"district": 35,
+"party": "Democrat",
+"opensecrets": "N00036107",
+"fec": [
+"H4CA35031"
+],
+"ballotpedia": "Norma Torres",
+"start": "2015-01-06"
+},
+{
+"bio": "C001103",
+"name": "Earl L. \"Buddy\" Carter",
+"first": "Earl",
+"last": "Carter",
+"chamber": "house",
+"state": "GA",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00035346",
+"fec": [
+"H4GA01039",
+"S6GA00374"
+],
+"ballotpedia": "Earl \"Buddy\" Carter",
+"start": "2015-01-06"
+},
+{
+"bio": "L000583",
+"name": "Barry Loudermilk",
+"first": "Barry",
+"last": "Loudermilk",
+"chamber": "house",
+"state": "GA",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00035347",
+"fec": [
+"H4GA11061"
+],
+"ballotpedia": "Barry Loudermilk",
+"start": "2015-01-06"
+},
+{
+"bio": "A000372",
+"name": "Rick W. Allen",
+"first": "Rick",
+"last": "Allen",
+"chamber": "house",
+"state": "GA",
+"district": 12,
+"party": "Republican",
+"opensecrets": "N00033720",
+"fec": [
+"H2GA12121"
+],
+"ballotpedia": "Rick Allen",
+"start": "2015-01-06"
+},
+{
+"bio": "B001295",
+"name": "Mike Bost",
+"first": "Mike",
+"last": "Bost",
+"chamber": "house",
+"state": "IL",
+"district": 12,
+"party": "Republican",
+"opensecrets": "N00035420",
+"fec": [
+"H4IL12060"
+],
+"ballotpedia": "Mike Bost",
+"start": "2015-01-06"
+},
+{
+"bio": "M001196",
+"name": "Seth Moulton",
+"first": "Seth",
+"last": "Moulton",
+"chamber": "house",
+"state": "MA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00035431",
+"fec": [
+"H4MA06090",
+"S6MA00296"
+],
+"ballotpedia": "Seth Moulton",
+"start": "2015-01-06"
+},
+{
+"bio": "M001194",
+"name": "John R. Moolenaar",
+"first": "John",
+"last": "Moolenaar",
+"chamber": "house",
+"state": "MI",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00036275",
+"fec": [
+"H4MI04126"
+],
+"ballotpedia": "John Moolenaar",
+"start": "2015-01-06"
+},
+{
+"bio": "D000624",
+"name": "Debbie Dingell",
+"first": "Debbie",
+"last": "Dingell",
+"chamber": "house",
+"state": "MI",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00036149",
+"fec": [
+"H4MI12079"
+],
+"ballotpedia": "Debbie Dingell",
+"start": "2015-01-06"
+},
+{
+"bio": "E000294",
+"name": "Tom Emmer",
+"first": "Tom",
+"last": "Emmer",
+"chamber": "house",
+"state": "MN",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00035440",
+"fec": [
+"H4MN06087"
+],
+"ballotpedia": "Tom Emmer",
+"start": "2015-01-06"
+},
+{
+"bio": "R000603",
+"name": "David Rouzer",
+"first": "David",
+"last": "Rouzer",
+"chamber": "house",
+"state": "NC",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00033527",
+"fec": [
+"H2NC07096"
+],
+"ballotpedia": "David Rouzer",
+"start": "2015-01-06"
+},
+{
+"bio": "W000822",
+"name": "Bonnie Watson Coleman",
+"first": "Bonnie",
+"last": "Watson Coleman",
+"chamber": "house",
+"state": "NJ",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00036158",
+"fec": [
+"H4NJ12149"
+],
+"ballotpedia": "Bonnie Watson Coleman",
+"start": "2015-01-06"
+},
+{
+"bio": "S001196",
+"name": "Elise M. Stefanik",
+"first": "Elise",
+"last": "Stefanik",
+"chamber": "house",
+"state": "NY",
+"district": 21,
+"party": "Republican",
+"opensecrets": "N00035523",
+"fec": [
+"H4NY21079"
+],
+"ballotpedia": "Elise Stefanik",
+"start": "2015-01-06"
+},
+{
+"bio": "B001296",
+"name": "Brendan F. Boyle",
+"first": "Brendan",
+"last": "Boyle",
+"chamber": "house",
+"state": "PA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00035307",
+"fec": [
+"H4PA13199"
+],
+"ballotpedia": "Brendan Boyle",
+"start": "2015-01-06"
+},
+{
+"bio": "B001291",
+"name": "Brian Babin",
+"first": "Brian",
+"last": "Babin",
+"chamber": "house",
+"state": "TX",
+"district": 36,
+"party": "Republican",
+"opensecrets": "N00005736",
+"fec": [
+"H6TX02079"
+],
+"ballotpedia": "Brian Babin",
+"start": "2015-01-06"
+},
+{
+"bio": "B001292",
+"name": "Donald S. Beyer, Jr.",
+"first": "Donald",
+"last": "Beyer",
+"chamber": "house",
+"state": "VA",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00036018",
+"fec": [
+"H4VA08224"
+],
+"ballotpedia": "Don Beyer",
+"start": "2015-01-06"
+},
+{
+"bio": "P000610",
+"name": "Stacey E. Plaskett",
+"first": "Stacey",
+"last": "Plaskett",
+"chamber": "house",
+"state": "VI",
+"district": 0,
+"party": "Democrat",
+"opensecrets": "N00035000",
+"fec": [
+"H2VI00082"
+],
+"ballotpedia": "Stacey Plaskett",
+"start": "2015-01-06"
+},
+{
+"bio": "N000189",
+"name": "Dan Newhouse",
+"first": "Dan",
+"last": "Newhouse",
+"chamber": "house",
+"state": "WA",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00036403",
+"fec": [
+"H4WA04104"
+],
+"ballotpedia": "Dan Newhouse",
+"start": "2015-01-06"
+},
+{
+"bio": "G000576",
+"name": "Glenn Grothman",
+"first": "Glenn",
+"last": "Grothman",
+"chamber": "house",
+"state": "WI",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00036409",
+"fec": [
+"H4WI06048"
+],
+"ballotpedia": "Glenn Grothman",
+"start": "2015-01-06"
+},
+{
+"bio": "R000600",
+"name": "Aumua Amata Coleman Radewagen",
+"first": "Aumua Amata",
+"last": "Radewagen",
+"chamber": "house",
+"state": "AS",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00007635",
+"fec": [
+"H4AS00036"
+],
+"ballotpedia": "Amata Radewagen",
+"start": "2015-01-06"
+},
+{
+"bio": "S001198",
+"name": "Dan Sullivan",
+"first": "Dan",
+"last": "Sullivan",
+"chamber": "senate",
+"state": "AK",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00035774",
+"fec": [
+"S4AK00214"
+],
+"ballotpedia": "Daniel S. Sullivan",
+"start": "2015-01-06"
+},
+{
+"bio": "E000295",
+"name": "Joni Ernst",
+"first": "Joni",
+"last": "Ernst",
+"chamber": "senate",
+"state": "IA",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00035483",
+"fec": [
+"S4IA00129"
+],
+"ballotpedia": "Joni Ernst",
+"start": "2015-01-06"
+},
+{
+"bio": "T000476",
+"name": "Thom Tillis",
+"first": "Thom",
+"last": "Tillis",
+"chamber": "senate",
+"state": "NC",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00035492",
+"fec": [
+"S4NC00162"
+],
+"ballotpedia": "Thom Tillis (North Carolina)",
+"start": "2015-01-06"
+},
+{
+"bio": "R000605",
+"name": "Mike Rounds",
+"first": "Mike",
+"last": "Rounds",
+"chamber": "senate",
+"state": "SD",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00035187",
+"fec": [
+"S4SD00049"
+],
+"ballotpedia": "Mike Rounds",
+"start": "2015-01-06"
+},
+{
+"bio": "K000388",
+"name": "Trent Kelly",
+"first": "Trent",
+"last": "Kelly",
+"chamber": "house",
+"state": "MS",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00037003",
+"fec": [
+"H6MS01131"
+],
+"ballotpedia": "Trent Kelly",
+"start": "2015-06-09"
+},
+{
+"bio": "L000585",
+"name": "Darin LaHood",
+"first": "Darin",
+"last": "LaHood",
+"chamber": "house",
+"state": "IL",
+"district": 16,
+"party": "Republican",
+"opensecrets": "N00037031",
+"fec": [
+"H6IL18088"
+],
+"ballotpedia": "Darin LaHood",
+"start": "2015-09-17"
+},
+{
+"bio": "D000626",
+"name": "Warren Davidson",
+"first": "Warren",
+"last": "Davidson",
+"chamber": "house",
+"state": "OH",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00038767",
+"fec": [
+"H6OH08315"
+],
+"ballotpedia": "Warren Davidson",
+"start": "2016-06-09"
+},
+{
+"bio": "C001108",
+"name": "James Comer",
+"first": "James",
+"last": "Comer",
+"chamber": "house",
+"state": "KY",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00038260",
+"fec": [
+"H6KY01110"
+],
+"ballotpedia": "James Comer Jr.",
+"start": "2016-11-14"
+},
+{
+"bio": "E000296",
+"name": "Dwight Evans",
+"first": "Dwight",
+"last": "Evans",
+"chamber": "house",
+"state": "PA",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00038450",
+"fec": [
+"H6PA02171"
+],
+"ballotpedia": "Dwight Evans",
+"start": "2016-11-14"
+},
+{
+"bio": "K000393",
+"name": "John Kennedy",
+"first": "John",
+"last": "Kennedy",
+"chamber": "senate",
+"state": "LA",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00026823",
+"fec": [
+"S4LA00065"
+],
+"ballotpedia": "John Neely Kennedy",
+"start": "2017-01-03"
+},
+{
+"bio": "H001076",
+"name": "Margaret Wood Hassan",
+"first": "Margaret",
+"last": "Hassan",
+"chamber": "senate",
+"state": "NH",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00038397",
+"fec": [
+"S6NH00091"
+],
+"ballotpedia": "Maggie Hassan",
+"start": "2017-01-03"
+},
+{
+"bio": "C001113",
+"name": "Catherine Cortez Masto",
+"first": "Catherine",
+"last": "Cortez Masto",
+"chamber": "senate",
+"state": "NV",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00037161",
+"fec": [
+"S6NV00200"
+],
+"ballotpedia": "Catherine Cortez Masto",
+"start": "2017-01-03"
+},
+{
+"bio": "S001190",
+"name": "Bradley Scott Schneider",
+"first": "Bradley",
+"last": "Schneider",
+"chamber": "house",
+"state": "IL",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00033101",
+"fec": [
+"H2IL10068"
+],
+"ballotpedia": "Brad Schneider",
+"start": "2013-01-03"
+},
+{
+"bio": "B001302",
+"name": "Andy Biggs",
+"first": "Andy",
+"last": "Biggs",
+"chamber": "house",
+"state": "AZ",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00039293",
+"fec": [
+"H6AZ05083"
+],
+"ballotpedia": "Andy Biggs",
+"start": "2017-01-03"
+},
+{
+"bio": "K000389",
+"name": "Ro Khanna",
+"first": "Ro",
+"last": "Khanna",
+"chamber": "house",
+"state": "CA",
+"district": 17,
+"party": "Democrat",
+"opensecrets": "N00026427",
+"fec": [
+"H4CA12055"
+],
+"ballotpedia": "Ro Khanna",
+"start": "2017-01-03"
+},
+{
+"bio": "P000613",
+"name": "Jimmy Panetta",
+"first": "Jimmy",
+"last": "Panetta",
+"chamber": "house",
+"state": "CA",
+"district": 19,
+"party": "Democrat",
+"opensecrets": "N00038601",
+"fec": [
+"H6CA20152"
+],
+"ballotpedia": "Jimmy Panetta",
+"start": "2017-01-03"
+},
+{
+"bio": "C001112",
+"name": "Salud O. Carbajal",
+"first": "Salud",
+"last": "Carbajal",
+"chamber": "house",
+"state": "CA",
+"district": 24,
+"party": "Democrat",
+"opensecrets": "N00037015",
+"fec": [
+"H6CA24303"
+],
+"ballotpedia": "Salud Carbajal",
+"start": "2017-01-03"
+},
+{
+"bio": "B001300",
+"name": "Nanette Diaz Barrag\u00e1n",
+"first": "Nanette",
+"last": "Barrag\u00e1n",
+"chamber": "house",
+"state": "CA",
+"district": 44,
+"party": "Democrat",
+"opensecrets": "N00037019",
+"fec": [
+"H6CA44103"
+],
+"ballotpedia": "Nanette Barrag\u00e1n",
+"start": "2017-01-03"
+},
+{
+"bio": "C001110",
+"name": "J. Luis Correa",
+"first": "J.",
+"last": "Correa",
+"chamber": "house",
+"state": "CA",
+"district": 46,
+"party": "Democrat",
+"opensecrets": "N00037260",
+"fec": [
+"H6CA46116"
+],
+"ballotpedia": "Lou Correa",
+"start": "2017-01-03"
+},
+{
+"bio": "B001303",
+"name": "Lisa Blunt Rochester",
+"first": "Lisa",
+"last": "Blunt Rochester",
+"chamber": "senate",
+"state": "DE",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00038414",
+"fec": [
+"H6DE00206",
+"S4DE00060"
+],
+"ballotpedia": "Lisa Blunt Rochester",
+"start": "2017-01-03"
+},
+{
+"bio": "D000628",
+"name": "Neal P. Dunn",
+"first": "Neal",
+"last": "Dunn",
+"chamber": "house",
+"state": "FL",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00037442",
+"fec": [
+"H6FL02208"
+],
+"ballotpedia": "Neal Dunn",
+"start": "2017-01-03"
+},
+{
+"bio": "R000609",
+"name": "John H. Rutherford",
+"first": "John",
+"last": "Rutherford",
+"chamber": "house",
+"state": "FL",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00039777",
+"fec": [
+"H6FL04105"
+],
+"ballotpedia": "John Rutherford (Florida)",
+"start": "2017-01-03"
+},
+{
+"bio": "S001200",
+"name": "Darren Soto",
+"first": "Darren",
+"last": "Soto",
+"chamber": "house",
+"state": "FL",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00037422",
+"fec": [
+"H6FL09179"
+],
+"ballotpedia": "Darren Soto",
+"start": "2017-01-03"
+},
+{
+"bio": "M001199",
+"name": "Brian J. Mast",
+"first": "Brian",
+"last": "Mast",
+"chamber": "house",
+"state": "FL",
+"district": 21,
+"party": "Republican",
+"opensecrets": "N00037269",
+"fec": [
+"H6FL18097"
+],
+"ballotpedia": "Brian Mast",
+"start": "2017-01-03"
+},
+{
+"bio": "K000391",
+"name": "Raja Krishnamoorthi",
+"first": "Raja",
+"last": "Krishnamoorthi",
+"chamber": "house",
+"state": "IL",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00033240",
+"fec": [
+"H6IL08147",
+"S6IL00482"
+],
+"ballotpedia": "Raja Krishnamoorthi",
+"start": "2017-01-03"
+},
+{
+"bio": "B001299",
+"name": "Jim Banks",
+"first": "Jim",
+"last": "Banks",
+"chamber": "senate",
+"state": "IN",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00037185",
+"fec": [
+"H6IN03229",
+"S4IN00196"
+],
+"ballotpedia": "Jim Banks",
+"start": "2017-01-03"
+},
+{
+"bio": "M001198",
+"name": "Roger Marshall",
+"first": "Roger",
+"last": "Marshall",
+"chamber": "senate",
+"state": "KS",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00037034",
+"fec": [
+"H6KS01179",
+"S0KS00315"
+],
+"ballotpedia": "Roger Marshall",
+"start": "2017-01-03"
+},
+{
+"bio": "H001077",
+"name": "Clay Higgins",
+"first": "Clay",
+"last": "Higgins",
+"chamber": "house",
+"state": "LA",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00039953",
+"fec": [
+"H6LA03148"
+],
+"ballotpedia": "Clay Higgins",
+"start": "2017-01-03"
+},
+{
+"bio": "J000299",
+"name": "Mike Johnson",
+"first": "Mike",
+"last": "Johnson",
+"chamber": "house",
+"state": "LA",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00039106",
+"fec": [
+"H6LA04138"
+],
+"ballotpedia": "Mike Johnson (Louisiana)",
+"start": "2017-01-03"
+},
+{
+"bio": "R000606",
+"name": "Jamie Raskin",
+"first": "Jamie",
+"last": "Raskin",
+"chamber": "house",
+"state": "MD",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00037036",
+"fec": [
+"H6MD08457"
+],
+"ballotpedia": "Jamie Raskin",
+"start": "2017-01-03"
+},
+{
+"bio": "B001301",
+"name": "Jack Bergman",
+"first": "Jack",
+"last": "Bergman",
+"chamber": "house",
+"state": "MI",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00039533",
+"fec": [
+"H6MI01226"
+],
+"ballotpedia": "Jack Bergman",
+"start": "2017-01-03"
+},
+{
+"bio": "B001305",
+"name": "Ted Budd",
+"first": "Ted",
+"last": "Budd",
+"chamber": "senate",
+"state": "NC",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00039551",
+"fec": [
+"H6NC13129",
+"S2NC00505"
+],
+"ballotpedia": "Ted Budd",
+"start": "2017-01-03"
+},
+{
+"bio": "B001298",
+"name": "Don Bacon",
+"first": "Don",
+"last": "Bacon",
+"chamber": "house",
+"state": "NE",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00037049",
+"fec": [
+"H6NE02125"
+],
+"ballotpedia": "Don Bacon",
+"start": "2017-01-03"
+},
+{
+"bio": "G000583",
+"name": "Josh Gottheimer",
+"first": "Josh",
+"last": "Gottheimer",
+"chamber": "house",
+"state": "NJ",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00036944",
+"fec": [
+"H6NJ05171"
+],
+"ballotpedia": "Josh Gottheimer",
+"start": "2017-01-03"
+},
+{
+"bio": "R000608",
+"name": "Jacky Rosen",
+"first": "Jacky",
+"last": "Rosen",
+"chamber": "senate",
+"state": "NV",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00038734",
+"fec": [
+"H6NV03139",
+"S8NV00156"
+],
+"ballotpedia": "Jacky Rosen",
+"start": "2017-01-03"
+},
+{
+"bio": "E000297",
+"name": "Adriano Espaillat",
+"first": "Adriano",
+"last": "Espaillat",
+"chamber": "house",
+"state": "NY",
+"district": 13,
+"party": "Democrat",
+"opensecrets": "N00034549",
+"fec": [
+"H2NY13096"
+],
+"ballotpedia": "Adriano Espaillat",
+"start": "2017-01-03"
+},
+{
+"bio": "F000466",
+"name": "Brian K. Fitzpatrick",
+"first": "Brian",
+"last": "Fitzpatrick",
+"chamber": "house",
+"state": "PA",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00038779",
+"fec": [
+"H6PA08277"
+],
+"ballotpedia": "Brian Fitzpatrick",
+"start": "2017-01-03"
+},
+{
+"bio": "S001199",
+"name": "Lloyd Smucker",
+"first": "Lloyd",
+"last": "Smucker",
+"chamber": "house",
+"state": "PA",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00038781",
+"fec": [
+"H6PA16320"
+],
+"ballotpedia": "Lloyd Smucker",
+"start": "2017-01-03"
+},
+{
+"bio": "K000392",
+"name": "David Kustoff",
+"first": "David",
+"last": "Kustoff",
+"chamber": "house",
+"state": "TN",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00025445",
+"fec": [
+"H2TN07103"
+],
+"ballotpedia": "David Kustoff",
+"start": "2017-01-03"
+},
+{
+"bio": "G000581",
+"name": "Vicente Gonzalez",
+"first": "Vicente",
+"last": "Gonzalez",
+"chamber": "house",
+"state": "TX",
+"district": 34,
+"party": "Democrat",
+"opensecrets": "N00038809",
+"fec": [
+"H6TX15162"
+],
+"ballotpedia": "Vicente Gonzalez Jr.",
+"start": "2017-01-03"
+},
+{
+"bio": "A000375",
+"name": "Jodey C. Arrington",
+"first": "Jodey",
+"last": "Arrington",
+"chamber": "house",
+"state": "TX",
+"district": 19,
+"party": "Republican",
+"opensecrets": "N00038285",
+"fec": [
+"H6TX19099"
+],
+"ballotpedia": "Jodey Arrington",
+"start": "2017-01-03"
+},
+{
+"bio": "J000298",
+"name": "Pramila Jayapal",
+"first": "Pramila",
+"last": "Jayapal",
+"chamber": "house",
+"state": "WA",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00038858",
+"fec": [
+"H6WA07458"
+],
+"ballotpedia": "Pramila Jayapal",
+"start": "2017-01-03"
+},
+{
+"bio": "E000298",
+"name": "Ron Estes",
+"first": "Ron",
+"last": "Estes",
+"chamber": "house",
+"state": "KS",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00040712",
+"fec": [
+"H8KS04112"
+],
+"ballotpedia": "Ron Estes (U.S. House representative)",
+"start": "2017-04-25"
+},
+{
+"bio": "N000190",
+"name": "Ralph Norman",
+"first": "Ralph",
+"last": "Norman",
+"chamber": "house",
+"state": "SC",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00027783",
+"fec": [
+"H8SC05158",
+"S6SC04445"
+],
+"ballotpedia": "Ralph Norman",
+"start": "2017-06-26"
+},
+{
+"bio": "G000585",
+"name": "Jimmy Gomez",
+"first": "Jimmy",
+"last": "Gomez",
+"chamber": "house",
+"state": "CA",
+"district": 34,
+"party": "Democrat",
+"opensecrets": "N00040597",
+"fec": [
+"H8CA34266"
+],
+"ballotpedia": "Jimmy Gomez",
+"start": "2017-07-11"
+},
+{
+"bio": "C001114",
+"name": "John R. Curtis",
+"first": "John",
+"last": "Curtis",
+"chamber": "senate",
+"state": "UT",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00041221",
+"fec": [
+"H8UT03238",
+"S4UT00282"
+],
+"ballotpedia": "John Curtis (Utah)",
+"start": "2017-11-13"
+},
+{
+"bio": "S001203",
+"name": "Tina Smith",
+"first": "Tina",
+"last": "Smith",
+"chamber": "senate",
+"state": "MN",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00042353",
+"fec": [
+"S8MN00578"
+],
+"ballotpedia": "Tina Smith",
+"start": "2018-01-03"
+},
+{
+"bio": "H001079",
+"name": "Cindy Hyde-Smith",
+"first": "Cindy",
+"last": "Hyde-Smith",
+"chamber": "senate",
+"state": "MS",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00043298",
+"fec": [
+"S8MS00261"
+],
+"ballotpedia": "Cindy Hyde-Smith",
+"start": "2018-04-09"
+},
+{
+"bio": "C001115",
+"name": "Michael Cloud",
+"first": "Michael",
+"last": "Cloud",
+"chamber": "house",
+"state": "TX",
+"district": 27,
+"party": "Republican",
+"opensecrets": "N00041882",
+"fec": [
+"H8TX27049"
+],
+"ballotpedia": "Michael Cloud (Texas)",
+"start": "2018-07-10"
+},
+{
+"bio": "B001306",
+"name": "Troy Balderson",
+"first": "Troy",
+"last": "Balderson",
+"chamber": "house",
+"state": "OH",
+"district": 12,
+"party": "Republican",
+"opensecrets": "N00042194",
+"fec": [
+"H8OH12180"
+],
+"ballotpedia": "Troy Balderson",
+"start": "2018-09-05"
+},
+{
+"bio": "H001082",
+"name": "Kevin Hern",
+"first": "Kevin",
+"last": "Hern",
+"chamber": "house",
+"state": "OK",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00040829",
+"fec": [
+"H8OK01157",
+"S6OK04247"
+],
+"ballotpedia": "Kevin Hern",
+"start": "2018-11-13"
+},
+{
+"bio": "M001206",
+"name": "Joseph D. Morelle",
+"first": "Joseph",
+"last": "Morelle",
+"chamber": "house",
+"state": "NY",
+"district": 25,
+"party": "Democrat",
+"opensecrets": "N00043207",
+"fec": [
+"H8NY25105"
+],
+"ballotpedia": "Joseph Morelle",
+"start": "2018-11-13"
+},
+{
+"bio": "S001205",
+"name": "Mary Gay Scanlon",
+"first": "Mary",
+"last": "Scanlon",
+"chamber": "house",
+"state": "PA",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00042706",
+"fec": [
+"H8PA07200"
+],
+"ballotpedia": "Mary Gay Scanlon",
+"start": "2018-11-13"
+},
+{
+"bio": "C001055",
+"name": "Ed Case",
+"first": "Ed",
+"last": "Case",
+"chamber": "house",
+"state": "HI",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00025882",
+"fec": [
+"H2HI02128"
+],
+"ballotpedia": "Ed Case",
+"start": "2003-01-07"
+},
+{
+"bio": "H001066",
+"name": "Steven Horsford",
+"first": "Steven",
+"last": "Horsford",
+"chamber": "house",
+"state": "NV",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00033638",
+"fec": [
+"H2NV04011"
+],
+"ballotpedia": "Steven Horsford",
+"start": "2013-01-03"
+},
+{
+"bio": "S001211",
+"name": "Greg Stanton",
+"first": "Greg",
+"last": "Stanton",
+"chamber": "house",
+"state": "AZ",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00041750",
+"fec": [
+"H8AZ09040"
+],
+"ballotpedia": "Greg Stanton",
+"start": "2019-01-03"
+},
+{
+"bio": "H001090",
+"name": "Josh Harder",
+"first": "Josh",
+"last": "Harder",
+"chamber": "house",
+"state": "CA",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00040853",
+"fec": [
+"H8CA10126"
+],
+"ballotpedia": "Josh Harder",
+"start": "2019-01-03"
+},
+{
+"bio": "L000593",
+"name": "Mike Levin",
+"first": "Mike",
+"last": "Levin",
+"chamber": "house",
+"state": "CA",
+"district": 49,
+"party": "Democrat",
+"opensecrets": "N00040667",
+"fec": [
+"H8CA49058"
+],
+"ballotpedia": "Mike Levin",
+"start": "2019-01-03"
+},
+{
+"bio": "N000191",
+"name": "Joe Neguse",
+"first": "Joe",
+"last": "Neguse",
+"chamber": "house",
+"state": "CO",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00041080",
+"fec": [
+"H8CO02160"
+],
+"ballotpedia": "Joe Neguse",
+"start": "2019-01-03"
+},
+{
+"bio": "C001121",
+"name": "Jason Crow",
+"first": "Jason",
+"last": "Crow",
+"chamber": "house",
+"state": "CO",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00040876",
+"fec": [
+"H8CO06229"
+],
+"ballotpedia": "Jason Crow",
+"start": "2019-01-03"
+},
+{
+"bio": "H001081",
+"name": "Jahana Hayes",
+"first": "Jahana",
+"last": "Hayes",
+"chamber": "house",
+"state": "CT",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00043421",
+"fec": [
+"H8CT05245"
+],
+"ballotpedia": "Jahana Hayes",
+"start": "2019-01-03"
+},
+{
+"bio": "S001214",
+"name": "W. Gregory Steube",
+"first": "W.",
+"last": "Steube",
+"chamber": "house",
+"state": "FL",
+"district": 17,
+"party": "Republican",
+"opensecrets": "N00042808",
+"fec": [
+"H8FL17053"
+],
+"ballotpedia": "Greg Steube",
+"start": "2019-01-03"
+},
+{
+"bio": "M001208",
+"name": "Lucy McBath",
+"first": "Lucy",
+"last": "McBath",
+"chamber": "house",
+"state": "GA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00042813",
+"fec": [
+"H8GA06393"
+],
+"ballotpedia": "Lucy McBath",
+"start": "2019-01-03"
+},
+{
+"bio": "F000469",
+"name": "Russ Fulcher",
+"first": "Russ",
+"last": "Fulcher",
+"chamber": "house",
+"state": "ID",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00041335",
+"fec": [
+"H8ID01124"
+],
+"ballotpedia": "Russ Fulcher",
+"start": "2019-01-03"
+},
+{
+"bio": "G000586",
+"name": "Jes\u00fas G. \"Chuy\" Garc\u00eda",
+"first": "Jes\u00fas",
+"last": "Garc\u00eda",
+"chamber": "house",
+"state": "IL",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00042114",
+"fec": [
+"H8IL04134"
+],
+"ballotpedia": "Jesus Garcia",
+"start": "2019-01-03"
+},
+{
+"bio": "C001117",
+"name": "Sean Casten",
+"first": "Sean",
+"last": "Casten",
+"chamber": "house",
+"state": "IL",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00041338",
+"fec": [
+"H8IL06139"
+],
+"ballotpedia": "Sean Casten",
+"start": "2019-01-03"
+},
+{
+"bio": "U000040",
+"name": "Lauren Underwood",
+"first": "Lauren",
+"last": "Underwood",
+"chamber": "house",
+"state": "IL",
+"district": 14,
+"party": "Democrat",
+"opensecrets": "N00041569",
+"fec": [
+"H8IL14174"
+],
+"ballotpedia": "Lauren Underwood",
+"start": "2019-01-03"
+},
+{
+"bio": "B001307",
+"name": "James R. Baird",
+"first": "James",
+"last": "Baird",
+"chamber": "house",
+"state": "IN",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00041954",
+"fec": [
+"H8IN04199"
+],
+"ballotpedia": "James Baird",
+"start": "2019-01-03"
+},
+{
+"bio": "D000629",
+"name": "Sharice Davids",
+"first": "Sharice",
+"last": "Davids",
+"chamber": "house",
+"state": "KS",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00042626",
+"fec": [
+"H8KS03155"
+],
+"ballotpedia": "Sharice Davids",
+"start": "2019-01-03"
+},
+{
+"bio": "T000482",
+"name": "Lori Trahan",
+"first": "Lori",
+"last": "Trahan",
+"chamber": "house",
+"state": "MA",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00041808",
+"fec": [
+"H8MA03106"
+],
+"ballotpedia": "Lori Trahan",
+"start": "2019-01-03"
+},
+{
+"bio": "P000617",
+"name": "Ayanna Pressley",
+"first": "Ayanna",
+"last": "Pressley",
+"chamber": "house",
+"state": "MA",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00042581",
+"fec": [
+"H8MA07032"
+],
+"ballotpedia": "Ayanna Pressley",
+"start": "2019-01-03"
+},
+{
+"bio": "S001208",
+"name": "Elissa Slotkin",
+"first": "Elissa",
+"last": "Slotkin",
+"chamber": "senate",
+"state": "MI",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00041357",
+"fec": [
+"H8MI08102",
+"S4MI00470"
+],
+"ballotpedia": "Elissa Slotkin",
+"start": "2019-01-03"
+},
+{
+"bio": "S001215",
+"name": "Haley M. Stevens",
+"first": "Haley",
+"last": "Stevens",
+"chamber": "house",
+"state": "MI",
+"district": 11,
+"party": "Democrat",
+"opensecrets": "N00040915",
+"fec": [
+"H8MI11254",
+"S6MI00426"
+],
+"ballotpedia": "Haley Stevens",
+"start": "2019-01-03"
+},
+{
+"bio": "T000481",
+"name": "Rashida Tlaib",
+"first": "Rashida",
+"last": "Tlaib",
+"chamber": "house",
+"state": "MI",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00042649",
+"fec": [
+"H8MI13250"
+],
+"ballotpedia": "Rashida Tlaib",
+"start": "2019-01-03"
+},
+{
+"bio": "C001119",
+"name": "Angie Craig",
+"first": "Angie",
+"last": "Craig",
+"chamber": "house",
+"state": "MN",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00037039",
+"fec": [
+"H6MN02131",
+"S6MN00499"
+],
+"ballotpedia": "Angie Craig",
+"start": "2019-01-03"
+},
+{
+"bio": "O000173",
+"name": "Ilhan Omar",
+"first": "Ilhan",
+"last": "Omar",
+"chamber": "house",
+"state": "MN",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00043581",
+"fec": [
+"H8MN05239"
+],
+"ballotpedia": "Ilhan Omar",
+"start": "2019-01-03"
+},
+{
+"bio": "S001212",
+"name": "Pete Stauber",
+"first": "Pete",
+"last": "Stauber",
+"chamber": "house",
+"state": "MN",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00041511",
+"fec": [
+"H8MN08043"
+],
+"ballotpedia": "Pete Stauber",
+"start": "2019-01-03"
+},
+{
+"bio": "G000591",
+"name": "Michael Guest",
+"first": "Michael",
+"last": "Guest",
+"chamber": "house",
+"state": "MS",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00042458",
+"fec": [
+"H8MS03125"
+],
+"ballotpedia": "Michael Guest",
+"start": "2019-01-03"
+},
+{
+"bio": "P000614",
+"name": "Chris Pappas",
+"first": "Chris",
+"last": "Pappas",
+"chamber": "house",
+"state": "NH",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00042161",
+"fec": [
+"H8NH01210",
+"S6NH00141"
+],
+"ballotpedia": "Chris Pappas",
+"start": "2019-01-03"
+},
+{
+"bio": "V000133",
+"name": "Jefferson Van Drew",
+"first": "Jefferson",
+"last": "Van Drew",
+"chamber": "house",
+"state": "NJ",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00042164",
+"fec": [
+"H8NJ02166"
+],
+"ballotpedia": "Jeff Van Drew",
+"start": "2019-01-03"
+},
+{
+"bio": "K000394",
+"name": "Andy Kim",
+"first": "Andy",
+"last": "Kim",
+"chamber": "senate",
+"state": "NJ",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00041370",
+"fec": [
+"H8NJ03206",
+"S4NJ00466"
+],
+"ballotpedia": "Andrew Kim (New Jersey)",
+"start": "2019-01-03"
+},
+{
+"bio": "L000590",
+"name": "Susie Lee",
+"first": "Susie",
+"last": "Lee",
+"chamber": "house",
+"state": "NV",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00037247",
+"fec": [
+"H6NV04020"
+],
+"ballotpedia": "Susie Lee",
+"start": "2019-01-03"
+},
+{
+"bio": "O000172",
+"name": "Alexandria Ocasio-Cortez",
+"first": "Alexandria",
+"last": "Ocasio-Cortez",
+"chamber": "house",
+"state": "NY",
+"district": 14,
+"party": "Democrat",
+"opensecrets": "N00041162",
+"fec": [
+"H8NY15148"
+],
+"ballotpedia": "Alexandria Ocasio-Cortez",
+"start": "2019-01-03"
+},
+{
+"bio": "D000631",
+"name": "Madeleine Dean",
+"first": "Madeleine",
+"last": "Dean",
+"chamber": "house",
+"state": "PA",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00042894",
+"fec": [
+"H8PA04116"
+],
+"ballotpedia": "Madeleine Dean",
+"start": "2019-01-03"
+},
+{
+"bio": "H001085",
+"name": "Chrissy Houlahan",
+"first": "Chrissy",
+"last": "Houlahan",
+"chamber": "house",
+"state": "PA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00040949",
+"fec": [
+"H8PA06087"
+],
+"ballotpedia": "Chrissy Houlahan",
+"start": "2019-01-03"
+},
+{
+"bio": "M001204",
+"name": "Daniel Meuser",
+"first": "Daniel",
+"last": "Meuser",
+"chamber": "house",
+"state": "PA",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00029416",
+"fec": [
+"H8PA10147"
+],
+"ballotpedia": "Dan Meuser",
+"start": "2019-01-03"
+},
+{
+"bio": "J000302",
+"name": "John Joyce",
+"first": "John",
+"last": "Joyce",
+"chamber": "house",
+"state": "PA",
+"district": 13,
+"party": "Republican",
+"opensecrets": "N00043242",
+"fec": [
+"H8PA13125"
+],
+"ballotpedia": "John Joyce (Pennsylvania)",
+"start": "2019-01-03"
+},
+{
+"bio": "R000610",
+"name": "Guy Reschenthaler",
+"first": "Guy",
+"last": "Reschenthaler",
+"chamber": "house",
+"state": "PA",
+"district": 14,
+"party": "Republican",
+"opensecrets": "N00041871",
+"fec": [
+"H8PA18199"
+],
+"ballotpedia": "Guy Reschenthaler",
+"start": "2019-01-03"
+},
+{
+"bio": "T000480",
+"name": "William R. Timmons IV",
+"first": "William",
+"last": "Timmons",
+"chamber": "house",
+"state": "SC",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00042715",
+"fec": [
+"H8SC04250"
+],
+"ballotpedia": "William Timmons",
+"start": "2019-01-03"
+},
+{
+"bio": "J000301",
+"name": "Dusty Johnson",
+"first": "Dusty",
+"last": "Johnson",
+"chamber": "house",
+"state": "SD",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00040559",
+"fec": [
+"H8SD01055"
+],
+"ballotpedia": "Dusty Johnson",
+"start": "2019-01-03"
+},
+{
+"bio": "B001309",
+"name": "Tim Burchett",
+"first": "Tim",
+"last": "Burchett",
+"chamber": "house",
+"state": "TN",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00041594",
+"fec": [
+"H8TN02119"
+],
+"ballotpedia": "Tim Burchett",
+"start": "2019-01-03"
+},
+{
+"bio": "R000612",
+"name": "John W. Rose",
+"first": "John",
+"last": "Rose",
+"chamber": "house",
+"state": "TN",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00041599",
+"fec": [
+"H8TN06094"
+],
+"ballotpedia": "John Rose (Tennessee)",
+"start": "2019-01-03"
+},
+{
+"bio": "C001120",
+"name": "Dan Crenshaw",
+"first": "Dan",
+"last": "Crenshaw",
+"chamber": "house",
+"state": "TX",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00042224",
+"fec": [
+"H8TX02166"
+],
+"ballotpedia": "Daniel Crenshaw",
+"start": "2019-01-03"
+},
+{
+"bio": "G000589",
+"name": "Lance Gooden",
+"first": "Lance",
+"last": "Gooden",
+"chamber": "house",
+"state": "TX",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00042237",
+"fec": [
+"H8TX05144"
+],
+"ballotpedia": "Lance Gooden",
+"start": "2019-01-03"
+},
+{
+"bio": "F000468",
+"name": "Lizzie Fletcher",
+"first": "Lizzie",
+"last": "Fletcher",
+"chamber": "house",
+"state": "TX",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00041194",
+"fec": [
+"H8TX07140"
+],
+"ballotpedia": "Lizzie Pannill Fletcher",
+"start": "2019-01-03"
+},
+{
+"bio": "E000299",
+"name": "Veronica Escobar",
+"first": "Veronica",
+"last": "Escobar",
+"chamber": "house",
+"state": "TX",
+"district": 16,
+"party": "Democrat",
+"opensecrets": "N00041702",
+"fec": [
+"H8TX16109"
+],
+"ballotpedia": "Veronica Escobar",
+"start": "2019-01-03"
+},
+{
+"bio": "R000614",
+"name": "Chip Roy",
+"first": "Chip",
+"last": "Roy",
+"chamber": "house",
+"state": "TX",
+"district": 21,
+"party": "Republican",
+"opensecrets": "N00042268",
+"fec": [
+"H8TX21307"
+],
+"ballotpedia": "Chip Roy",
+"start": "2019-01-03"
+},
+{
+"bio": "G000587",
+"name": "Sylvia R. Garcia",
+"first": "Sylvia",
+"last": "Garcia",
+"chamber": "house",
+"state": "TX",
+"district": 29,
+"party": "Democrat",
+"opensecrets": "N00042282",
+"fec": [
+"H8TX29052"
+],
+"ballotpedia": "Sylvia Garcia",
+"start": "2019-01-03"
+},
+{
+"bio": "C001118",
+"name": "Ben Cline",
+"first": "Ben",
+"last": "Cline",
+"chamber": "house",
+"state": "VA",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00042296",
+"fec": [
+"H8VA06104"
+],
+"ballotpedia": "Ben Cline",
+"start": "2019-01-03"
+},
+{
+"bio": "S001216",
+"name": "Kim Schrier",
+"first": "Kim",
+"last": "Schrier",
+"chamber": "house",
+"state": "WA",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00041606",
+"fec": [
+"H8WA08189"
+],
+"ballotpedia": "Kim Schrier",
+"start": "2019-01-03"
+},
+{
+"bio": "S001213",
+"name": "Bryan Steil",
+"first": "Bryan",
+"last": "Steil",
+"chamber": "house",
+"state": "WI",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00043379",
+"fec": [
+"H8WI01156"
+],
+"ballotpedia": "Bryan Steil",
+"start": "2019-01-03"
+},
+{
+"bio": "M001205",
+"name": "Carol D. Miller",
+"first": "Carol",
+"last": "Miller",
+"chamber": "house",
+"state": "WV",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00041542",
+"fec": [
+"H8WV03097"
+],
+"ballotpedia": "Carol Miller (West Virginia)",
+"start": "2019-01-03"
+},
+{
+"bio": "S001217",
+"name": "Rick Scott",
+"first": "Rick",
+"last": "Scott",
+"chamber": "senate",
+"state": "FL",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00043290",
+"fec": [
+"S8FL00273"
+],
+"ballotpedia": "Rick Scott",
+"start": "2019-01-08"
+},
+{
+"bio": "H001089",
+"name": "Josh Hawley",
+"first": "Joshua",
+"last": "Hawley",
+"chamber": "senate",
+"state": "MO",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00041620",
+"fec": [
+"S8MO00160"
+],
+"ballotpedia": "Josh Hawley",
+"start": "2019-01-03"
+},
+{
+"bio": "G000592",
+"name": "Jared F. Golden",
+"first": "Jared",
+"last": "Golden",
+"chamber": "house",
+"state": "ME",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00041668",
+"fec": [
+"H8ME02185"
+],
+"ballotpedia": "Jared Golden",
+"start": "2019-01-03"
+},
+{
+"bio": "M001210",
+"name": "Gregory F. Murphy",
+"first": "Gregory",
+"last": "Murphy",
+"chamber": "house",
+"state": "NC",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00044027",
+"fec": [
+"H0NC03172"
+],
+"ballotpedia": "Gregory Murphy",
+"start": "2019-09-17"
+},
+{
+"bio": "M000687",
+"name": "Kweisi Mfume",
+"first": "Kweisi",
+"last": "Mfume",
+"chamber": "house",
+"state": "MD",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00001799",
+"fec": [
+"S6MD03185",
+"H6MD07020",
+"H0MD07114"
+],
+"ballotpedia": "Kweisi Mfume",
+"start": "1987-01-06"
+},
+{
+"bio": "T000165",
+"name": "Thomas P. Tiffany",
+"first": "Thomas",
+"last": "Tiffany",
+"chamber": "house",
+"state": "WI",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00045307",
+"fec": [
+"H0WI07101"
+],
+"ballotpedia": "Tom Tiffany",
+"start": "2020-05-19"
+},
+{
+"bio": "K000377",
+"name": "Mark Kelly",
+"first": "Mark",
+"last": "Kelly",
+"chamber": "senate",
+"state": "AZ",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00044223",
+"fec": [
+"S0AZ00350"
+],
+"ballotpedia": "Mark Kelly",
+"start": "2020-12-02"
+},
+{
+"bio": "L000571",
+"name": "Cynthia M. Lummis",
+"first": "Cynthia",
+"last": "Lummis",
+"chamber": "senate",
+"state": "WY",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00029788",
+"fec": [
+"H8WY00148",
+"S0WY00137"
+],
+"ballotpedia": "Cynthia Lummis",
+"start": "2009-01-06"
+},
+{
+"bio": "I000056",
+"name": "Darrell Issa",
+"first": "Darrell",
+"last": "Issa",
+"chamber": "house",
+"state": "CA",
+"district": 48,
+"party": "Republican",
+"opensecrets": "N00007017",
+"fec": [
+"H0CA48024",
+"S8CA00135"
+],
+"ballotpedia": "Darrell Issa",
+"start": "2001-01-03"
+},
+{
+"bio": "S000250",
+"name": "Pete Sessions",
+"first": "Pete",
+"last": "Sessions",
+"chamber": "house",
+"state": "TX",
+"district": 17,
+"party": "Republican",
+"opensecrets": "N00005681",
+"fec": [
+"H2TX03126"
+],
+"ballotpedia": "Pete Sessions",
+"start": "1997-01-07"
+},
+{
+"bio": "V000129",
+"name": "David G. Valadao",
+"first": "David",
+"last": "Valadao",
+"chamber": "house",
+"state": "CA",
+"district": 22,
+"party": "Republican",
+"opensecrets": "N00033367",
+"fec": [
+"H2CA20094"
+],
+"ballotpedia": "David G. Valadao",
+"start": "2013-01-03"
+},
+{
+"bio": "T000278",
+"name": "Tommy Tuberville",
+"first": "Tommy",
+"last": "Tuberville",
+"chamber": "senate",
+"state": "AL",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00044434",
+"fec": [
+"S0AL00230"
+],
+"ballotpedia": "Tommy Tuberville",
+"start": "2021-01-03"
+},
+{
+"bio": "H000273",
+"name": "John W. Hickenlooper",
+"first": "John",
+"last": "Hickenlooper",
+"chamber": "senate",
+"state": "CO",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00044206",
+"fec": [
+"S0CO00575"
+],
+"ballotpedia": "John Hickenlooper",
+"start": "2021-01-03"
+},
+{
+"bio": "H000601",
+"name": "Bill Hagerty",
+"first": "Bill",
+"last": "Hagerty",
+"chamber": "senate",
+"state": "TN",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00045369",
+"fec": [
+"S0TN00169"
+],
+"ballotpedia": "Bill Hagerty",
+"start": "2021-01-03"
+},
+{
+"bio": "M001212",
+"name": "Barry Moore",
+"first": "Barry",
+"last": "Moore",
+"chamber": "house",
+"state": "AL",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00041295",
+"fec": [
+"H8AL02171",
+"S6AL00476"
+],
+"ballotpedia": "Barry Moore (Alabama)",
+"start": "2021-01-03"
+},
+{
+"bio": "O000019",
+"name": "Jay Obernolte",
+"first": "Jay",
+"last": "Obernolte",
+"chamber": "house",
+"state": "CA",
+"district": 23,
+"party": "Republican",
+"opensecrets": "N00045377",
+"fec": [
+"H0CA08135"
+],
+"ballotpedia": "Jay Obernolte",
+"start": "2021-01-03"
+},
+{
+"bio": "K000397",
+"name": "Young Kim",
+"first": "Young",
+"last": "Kim",
+"chamber": "house",
+"state": "CA",
+"district": 40,
+"party": "Republican",
+"opensecrets": "N00042386",
+"fec": [
+"H8CA39240"
+],
+"ballotpedia": "Young Kim (California)",
+"start": "2021-01-03"
+},
+{
+"bio": "J000305",
+"name": "Sara Jacobs",
+"first": "Sara",
+"last": "Jacobs",
+"chamber": "house",
+"state": "CA",
+"district": 51,
+"party": "Democrat",
+"opensecrets": "N00042081",
+"fec": [
+"H8CA49074"
+],
+"ballotpedia": "Sara Jacobs",
+"start": "2021-01-03"
+},
+{
+"bio": "B000825",
+"name": "Lauren Boebert",
+"first": "Lauren",
+"last": "Boebert",
+"chamber": "house",
+"state": "CO",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00045974",
+"fec": [
+"H0CO03165"
+],
+"ballotpedia": "Lauren Boebert",
+"start": "2021-01-03"
+},
+{
+"bio": "C001039",
+"name": "Kat Cammack",
+"first": "Katherine",
+"last": "Cammack",
+"chamber": "house",
+"state": "FL",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00045978",
+"fec": [
+"H0FL03175"
+],
+"ballotpedia": "Kat Cammack",
+"start": "2021-01-03"
+},
+{
+"bio": "F000472",
+"name": "Scott Franklin",
+"first": "C.",
+"last": "Franklin",
+"chamber": "house",
+"state": "FL",
+"district": 18,
+"party": "Republican",
+"opensecrets": "N00046760",
+"fec": [
+"H0FL15104"
+],
+"ballotpedia": "Scott Franklin",
+"start": "2021-01-03"
+},
+{
+"bio": "D000032",
+"name": "Byron Donalds",
+"first": "Byron",
+"last": "Donalds",
+"chamber": "house",
+"state": "FL",
+"district": 19,
+"party": "Republican",
+"opensecrets": "N00034016",
+"fec": [
+"H2FL14186"
+],
+"ballotpedia": "Byron Donalds",
+"start": "2021-01-03"
+},
+{
+"bio": "G000593",
+"name": "Carlos A. Gimenez",
+"first": "Carlos",
+"last": "Gimenez",
+"chamber": "house",
+"state": "FL",
+"district": 28,
+"party": "Republican",
+"opensecrets": "N00046394",
+"fec": [
+"H0FL26036"
+],
+"ballotpedia": "Carlos Gimenez",
+"start": "2021-01-03"
+},
+{
+"bio": "S000168",
+"name": "Maria Elvira Salazar",
+"first": "Maria",
+"last": "Salazar",
+"chamber": "house",
+"state": "FL",
+"district": 27,
+"party": "Republican",
+"opensecrets": "N00042810",
+"fec": [
+"H8FL27185"
+],
+"ballotpedia": "Maria Elvira Salazar",
+"start": "2021-01-03"
+},
+{
+"bio": "W000788",
+"name": "Nikema Williams",
+"first": "Nikema",
+"last": "Williams",
+"chamber": "house",
+"state": "GA",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00047361",
+"fec": [
+"H0GA05301"
+],
+"ballotpedia": "Nikema Williams",
+"start": "2021-01-03"
+},
+{
+"bio": "C001116",
+"name": "Andrew S. Clyde",
+"first": "Andrew",
+"last": "Clyde",
+"chamber": "house",
+"state": "GA",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00046654",
+"fec": [
+"H0GA09246"
+],
+"ballotpedia": "Andrew Clyde",
+"start": "2021-01-03"
+},
+{
+"bio": "H001091",
+"name": "Ashley Hinson",
+"first": "Ashley",
+"last": "Hinson",
+"chamber": "house",
+"state": "IA",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00044521",
+"fec": [
+"H0IA01174"
+],
+"ballotpedia": "Ashley Hinson",
+"start": "2021-01-03"
+},
+{
+"bio": "M001215",
+"name": "Mariannette Miller-Meeks",
+"first": "Mariannette",
+"last": "Miller-Meeks",
+"chamber": "house",
+"state": "IA",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00029495",
+"fec": [
+"H8IA02043"
+],
+"ballotpedia": "Mariannette Miller-Meeks",
+"start": "2021-01-03"
+},
+{
+"bio": "F000446",
+"name": "Randy Feenstra",
+"first": "Randy",
+"last": "Feenstra",
+"chamber": "house",
+"state": "IA",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00044011",
+"fec": [
+"H0IA04145"
+],
+"ballotpedia": "Randy Feenstra",
+"start": "2021-01-03"
+},
+{
+"bio": "M001211",
+"name": "Mary E. Miller",
+"first": "Mary",
+"last": "Miller",
+"chamber": "house",
+"state": "IL",
+"district": 15,
+"party": "Republican",
+"opensecrets": "N00045703",
+"fec": [
+"H0IL15129"
+],
+"ballotpedia": "Mary Miller (Illinois)",
+"start": "2021-01-03"
+},
+{
+"bio": "M001214",
+"name": "Frank J. Mrvan",
+"first": "Frank",
+"last": "Mrvan",
+"chamber": "house",
+"state": "IN",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00045905",
+"fec": [
+"H0IN01150"
+],
+"ballotpedia": "Frank Mrvan (Indiana congressional member)",
+"start": "2021-01-03"
+},
+{
+"bio": "S000929",
+"name": "Victoria Spartz",
+"first": "Victoria",
+"last": "Spartz",
+"chamber": "house",
+"state": "IN",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00046537",
+"fec": [
+"H0IN05326"
+],
+"ballotpedia": "Victoria Spartz",
+"start": "2021-01-03"
+},
+{
+"bio": "M000871",
+"name": "Tracey Mann",
+"first": "Tracey",
+"last": "Mann",
+"chamber": "house",
+"state": "KS",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00030743",
+"fec": [
+"H0KS01123"
+],
+"ballotpedia": "Tracey Mann",
+"start": "2021-01-03"
+},
+{
+"bio": "A000148",
+"name": "Jake Auchincloss",
+"first": "Jake",
+"last": "Auchincloss",
+"chamber": "house",
+"state": "MA",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00045506",
+"fec": [
+"H0MA04192"
+],
+"ballotpedia": "Jake Auchincloss",
+"start": "2021-01-03"
+},
+{
+"bio": "M001136",
+"name": "Lisa C. McClain",
+"first": "Lisa",
+"last": "McClain",
+"chamber": "house",
+"state": "MI",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00045730",
+"fec": [
+"H0MI10287"
+],
+"ballotpedia": "Lisa McClain",
+"start": "2021-01-03"
+},
+{
+"bio": "F000470",
+"name": "Michelle Fischbach",
+"first": "Michelle",
+"last": "Fischbach",
+"chamber": "house",
+"state": "MN",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00045251",
+"fec": [
+"H0MN07091"
+],
+"ballotpedia": "Michelle Fischbach",
+"start": "2021-01-03"
+},
+{
+"bio": "R000305",
+"name": "Deborah K. Ross",
+"first": "Deborah",
+"last": "Ross",
+"chamber": "house",
+"state": "NC",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00038565",
+"fec": [
+"H0NC02125"
+],
+"ballotpedia": "Deborah Ross",
+"start": "2021-01-03"
+},
+{
+"bio": "L000273",
+"name": "Teresa Leger Fernandez",
+"first": "Teresa",
+"last": "Leger Fernandez",
+"chamber": "house",
+"state": "NM",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00044559",
+"fec": [
+"H0NM03102"
+],
+"ballotpedia": "Teresa Leger Fernandez",
+"start": "2021-01-03"
+},
+{
+"bio": "G000597",
+"name": "Andrew R. Garbarino",
+"first": "Andrew",
+"last": "Garbarino",
+"chamber": "house",
+"state": "NY",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00046030",
+"fec": [
+"H0NY02234"
+],
+"ballotpedia": "Andrew Garbarino",
+"start": "2021-01-03"
+},
+{
+"bio": "M000317",
+"name": "Nicole Malliotakis",
+"first": "Nicole",
+"last": "Malliotakis",
+"chamber": "house",
+"state": "NY",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00044040",
+"fec": [
+"H0NY11078"
+],
+"ballotpedia": "Nicole Malliotakis",
+"start": "2021-01-03"
+},
+{
+"bio": "T000486",
+"name": "Ritchie Torres",
+"first": "Ritchie",
+"last": "Torres",
+"chamber": "house",
+"state": "NY",
+"district": 15,
+"party": "Democrat",
+"opensecrets": "N00044346",
+"fec": [
+"H0NY15160"
+],
+"ballotpedia": "Ritchie Torres",
+"start": "2021-01-03"
+},
+{
+"bio": "B000740",
+"name": "Stephanie I. Bice",
+"first": "Stephanie",
+"last": "Bice",
+"chamber": "house",
+"state": "OK",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00044579",
+"fec": [
+"H0OK05205"
+],
+"ballotpedia": "Stephanie Bice",
+"start": "2021-01-03"
+},
+{
+"bio": "B000668",
+"name": "Cliff Bentz",
+"first": "Cliff",
+"last": "Bentz",
+"chamber": "house",
+"state": "OR",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00045773",
+"fec": [
+"H0OR02127"
+],
+"ballotpedia": "Cliff Bentz",
+"start": "2021-01-03"
+},
+{
+"bio": "M000194",
+"name": "Nancy Mace",
+"first": "Nancy",
+"last": "Mace",
+"chamber": "house",
+"state": "SC",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00035670",
+"fec": [
+"H0SC01394"
+],
+"ballotpedia": "Nancy Mace",
+"start": "2021-01-03"
+},
+{
+"bio": "H001086",
+"name": "Diana Harshbarger",
+"first": "Diana",
+"last": "Harshbarger",
+"chamber": "house",
+"state": "TN",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00046688",
+"fec": [
+"H0TN01118"
+],
+"ballotpedia": "Diana Harshbarger",
+"start": "2021-01-03"
+},
+{
+"bio": "F000246",
+"name": "Pat Fallon",
+"first": "Patrick",
+"last": "Fallon",
+"chamber": "house",
+"state": "TX",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00047264",
+"fec": [
+"H0TX04219"
+],
+"ballotpedia": null,
+"start": "2021-01-03"
+},
+{
+"bio": "P000048",
+"name": "August Pfluger",
+"first": "August",
+"last": "Pfluger",
+"chamber": "house",
+"state": "TX",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00045421",
+"fec": [
+"H0TX11230"
+],
+"ballotpedia": "August Pfluger",
+"start": "2021-01-03"
+},
+{
+"bio": "J000304",
+"name": "Ronny Jackson",
+"first": "Ronny",
+"last": "Jackson",
+"chamber": "house",
+"state": "TX",
+"district": 13,
+"party": "Republican",
+"opensecrets": "N00046055",
+"fec": [
+"H0TX13228"
+],
+"ballotpedia": "Ronny Jackson",
+"start": "2021-01-03"
+},
+{
+"bio": "N000026",
+"name": "Troy E. Nehls",
+"first": "Troy",
+"last": "Nehls",
+"chamber": "house",
+"state": "TX",
+"district": 22,
+"party": "Republican",
+"opensecrets": "N00046067",
+"fec": [
+"H0TX22302"
+],
+"ballotpedia": "Troy Nehls",
+"start": "2021-01-03"
+},
+{
+"bio": "V000134",
+"name": "Beth Van Duyne",
+"first": "Beth",
+"last": "Van Duyne",
+"chamber": "house",
+"state": "TX",
+"district": 24,
+"party": "Republican",
+"opensecrets": "N00045167",
+"fec": [
+"H0TX24209"
+],
+"ballotpedia": "Beth Van Duyne",
+"start": "2021-01-03"
+},
+{
+"bio": "M001213",
+"name": "Blake D. Moore",
+"first": "Blake",
+"last": "Moore",
+"chamber": "house",
+"state": "UT",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00046598",
+"fec": [
+"H0UT01205"
+],
+"ballotpedia": null,
+"start": "2021-01-03"
+},
+{
+"bio": "O000086",
+"name": "Burgess Owens",
+"first": "Clarence",
+"last": "Owens",
+"chamber": "house",
+"state": "UT",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00045812",
+"fec": [
+"H0UT04076"
+],
+"ballotpedia": "Burgess Owens",
+"start": "2021-01-03"
+},
+{
+"bio": "S001159",
+"name": "Marilyn Strickland",
+"first": "Marilyn",
+"last": "Strickland",
+"chamber": "house",
+"state": "WA",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00046320",
+"fec": [
+"H0WA10034"
+],
+"ballotpedia": "Marilyn Strickland",
+"start": "2021-01-03"
+},
+{
+"bio": "F000471",
+"name": "Scott Fitzgerald",
+"first": "Scott",
+"last": "Fitzgerald",
+"chamber": "house",
+"state": "WI",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00045434",
+"fec": [
+"H0WI05113"
+],
+"ballotpedia": null,
+"start": "2021-01-03"
+},
+{
+"bio": "P000145",
+"name": "Alex Padilla",
+"first": "Alejandro",
+"last": "Padilla",
+"chamber": "senate",
+"state": "CA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00047888",
+"fec": [
+"S2CA00955"
+],
+"ballotpedia": "Alex Padilla",
+"start": "2021-01-20"
+},
+{
+"bio": "O000174",
+"name": "Jon Ossoff",
+"first": "Jon",
+"last": "Ossoff",
+"chamber": "senate",
+"state": "GA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00040675",
+"fec": [
+"H8GA06195",
+"S8GA00180"
+],
+"ballotpedia": "Jon Ossoff",
+"start": "2021-01-20"
+},
+{
+"bio": "W000790",
+"name": "Raphael G. Warnock",
+"first": "Raphael",
+"last": "Warnock",
+"chamber": "senate",
+"state": "GA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00046489",
+"fec": [
+"S0GA00559"
+],
+"ballotpedia": "Raphael Warnock",
+"start": "2021-01-20"
+},
+{
+"bio": "T000478",
+"name": "Claudia Tenney",
+"first": "Claudia",
+"last": "Tenney",
+"chamber": "house",
+"state": "NY",
+"district": 24,
+"party": "Republican",
+"opensecrets": "N00036351",
+"fec": [
+"H4NY22051"
+],
+"ballotpedia": "Claudia Tenney",
+"start": "2017-01-03"
+},
+{
+"bio": "L000595",
+"name": "Julia Letlow",
+"first": "Julia",
+"last": "Letlow",
+"chamber": "house",
+"state": "LA",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00047972",
+"fec": [
+"H2LA05126",
+"S6LA00664"
+],
+"ballotpedia": "Julia Letlow",
+"start": "2021-04-14"
+},
+{
+"bio": "C001125",
+"name": "Troy A. Carter",
+"first": "Troy",
+"last": "Carter",
+"chamber": "house",
+"state": "LA",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00025766",
+"fec": [
+"H2LA02149"
+],
+"ballotpedia": "Troy Carter",
+"start": "2021-05-11"
+},
+{
+"bio": "S001218",
+"name": "Melanie A. Stansbury",
+"first": "Melanie",
+"last": "Stansbury",
+"chamber": "house",
+"state": "NM",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00047871",
+"fec": [
+"H2NM01144"
+],
+"ballotpedia": "Melanie Ann Stansbury",
+"start": "2021-06-14"
+},
+{
+"bio": "E000071",
+"name": "Jake Ellzey",
+"first": "Jake",
+"last": "Ellzey",
+"chamber": "house",
+"state": "TX",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00042243",
+"fec": [
+"H8TX06266"
+],
+"ballotpedia": "Jake Ellzey",
+"start": "2021-07-30"
+},
+{
+"bio": "B001313",
+"name": "Shontel M. Brown",
+"first": "Shontel",
+"last": "Brown",
+"chamber": "house",
+"state": "OH",
+"district": 11,
+"party": "Democrat",
+"opensecrets": "N00047875",
+"fec": [
+"H2OH11169"
+],
+"ballotpedia": "Shontel Brown",
+"start": "2021-11-04"
+},
+{
+"bio": "C001126",
+"name": "Mike Carey",
+"first": "Mike",
+"last": "Carey",
+"chamber": "house",
+"state": "OH",
+"district": 15,
+"party": "Republican",
+"opensecrets": "N00048568",
+"fec": [
+"H2OH15228"
+],
+"ballotpedia": "Mike Carey (Ohio)",
+"start": "2021-11-04"
+},
+{
+"bio": "F000474",
+"name": "Mike Flood",
+"first": "Mike",
+"last": "Flood",
+"chamber": "house",
+"state": "NE",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00050145",
+"fec": [
+"H2NE01118"
+],
+"ballotpedia": "Mike Flood",
+"start": "2022-07-12"
+},
+{
+"bio": "F000475",
+"name": "Brad Finstad",
+"first": "Brad",
+"last": "Finstad",
+"chamber": "house",
+"state": "MN",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00050649",
+"fec": [
+"H2MN01223"
+],
+"ballotpedia": "Brad Finstad",
+"start": "2022-08-12"
+},
+{
+"bio": "R000579",
+"name": "Patrick Ryan",
+"first": "Patrick",
+"last": "Ryan",
+"chamber": "house",
+"state": "NY",
+"district": 18,
+"party": "Democrat",
+"opensecrets": "N00041165",
+"fec": [
+"H8NY19223"
+],
+"ballotpedia": "Pat Ryan (New York)",
+"start": "2022-09-13"
+},
+{
+"bio": "Y000067",
+"name": "Rudy Yakym III",
+"first": "Rudy",
+"last": "Yakym",
+"chamber": "house",
+"state": "IN",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00051733",
+"fec": [
+"H2IN02295"
+],
+"ballotpedia": "Rudy Yakym",
+"start": "2022-11-14"
+},
+{
+"bio": "Z000018",
+"name": "Ryan K. Zinke",
+"first": "Ryan",
+"last": "Zinke",
+"chamber": "house",
+"state": "MT",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00035616",
+"fec": [
+"H4MT01041"
+],
+"ballotpedia": "Ryan Zinke",
+"start": "2015-01-06"
+},
+{
+"bio": "B001319",
+"name": "Katie Boyd Britt",
+"first": "Katie",
+"last": "Britt",
+"chamber": "senate",
+"state": "AL",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00048812",
+"fec": [
+"S2AL00145"
+],
+"ballotpedia": "Katie Britt",
+"start": "2023-01-03"
+},
+{
+"bio": "S001227",
+"name": "Eric Schmitt",
+"first": "Eric",
+"last": "Schmitt",
+"chamber": "senate",
+"state": "MO",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00048414",
+"fec": [
+"S2MO00544"
+],
+"ballotpedia": "Eric Schmitt",
+"start": "2023-01-03"
+},
+{
+"bio": "F000479",
+"name": "John Fetterman",
+"first": "John",
+"last": "Fetterman",
+"chamber": "senate",
+"state": "PA",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00038201",
+"fec": [
+"S6PA00274"
+],
+"ballotpedia": "John Fetterman",
+"start": "2023-01-03"
+},
+{
+"bio": "S001220",
+"name": "Dale W. Strong",
+"first": "Dale",
+"last": "Strong",
+"chamber": "house",
+"state": "AL",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00048145",
+"fec": [
+"H2AL05102"
+],
+"ballotpedia": "Dale Strong",
+"start": "2023-01-03"
+},
+{
+"bio": "C001132",
+"name": "Elijah Crane",
+"first": "Eli",
+"last": "Crane",
+"chamber": "house",
+"state": "AZ",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00048953",
+"fec": [
+"H2AZ01354"
+],
+"ballotpedia": "Eli Crane",
+"start": "2023-01-03"
+},
+{
+"bio": "C001133",
+"name": "Juan Ciscomani",
+"first": "Juan",
+"last": "Ciscomani",
+"chamber": "house",
+"state": "AZ",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00049039",
+"fec": [
+"H2AZ02360"
+],
+"ballotpedia": "Juan Ciscomani",
+"start": "2023-01-03"
+},
+{
+"bio": "K000401",
+"name": "Kevin Kiley",
+"first": "Kevin",
+"last": "Kiley",
+"chamber": "house",
+"state": "CA",
+"district": 3,
+"party": "Independent",
+"opensecrets": "N00050259",
+"fec": [
+"H2CA03157"
+],
+"ballotpedia": "Kevin Kiley",
+"start": "2023-01-03"
+},
+{
+"bio": "M001225",
+"name": "Kevin Mullin",
+"first": "Kevin",
+"last": "Mullin",
+"chamber": "house",
+"state": "CA",
+"district": 15,
+"party": "Democrat",
+"opensecrets": "N00049438",
+"fec": [
+"H2CA14162"
+],
+"ballotpedia": "Kevin Mullin (California)",
+"start": "2023-01-03"
+},
+{
+"bio": "K000400",
+"name": "Sydney Kamlager-Dove",
+"first": "Sydney",
+"last": "Kamlager-Dove",
+"chamber": "house",
+"state": "CA",
+"district": 37,
+"party": "Democrat",
+"opensecrets": "N00049460",
+"fec": [
+"H2CA37304"
+],
+"ballotpedia": "Sydney Kamlager-Dove",
+"start": "2023-01-03"
+},
+{
+"bio": "G000598",
+"name": "Robert Garcia",
+"first": "Robert",
+"last": "Garcia",
+"chamber": "house",
+"state": "CA",
+"district": 42,
+"party": "Democrat",
+"opensecrets": "N00049470",
+"fec": [
+"H2CA47188"
+],
+"ballotpedia": "Robert Garcia (California)",
+"start": "2023-01-03"
+},
+{
+"bio": "P000620",
+"name": "Brittany Pettersen",
+"first": "Brittany",
+"last": "Pettersen",
+"chamber": "house",
+"state": "CO",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00040878",
+"fec": [
+"H8CO07045"
+],
+"ballotpedia": "Brittany Pettersen",
+"start": "2023-01-03"
+},
+{
+"bio": "B001314",
+"name": "Aaron Bean",
+"first": "Aaron",
+"last": "Bean",
+"chamber": "house",
+"state": "FL",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00051369",
+"fec": [
+"H2FL04211"
+],
+"ballotpedia": "Aaron Bean",
+"start": "2023-01-03"
+},
+{
+"bio": "M001216",
+"name": "Cory Mills",
+"first": "Cory",
+"last": "Mills",
+"chamber": "house",
+"state": "FL",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00048179",
+"fec": [
+"H2FL07156"
+],
+"ballotpedia": "Cory Mills",
+"start": "2023-01-03"
+},
+{
+"bio": "F000476",
+"name": "Maxwell Frost",
+"first": "Maxwell",
+"last": "Frost",
+"chamber": "house",
+"state": "FL",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00049075",
+"fec": [
+"H2FL10259"
+],
+"ballotpedia": "Maxwell Alejandro Frost",
+"start": "2023-01-03"
+},
+{
+"bio": "L000596",
+"name": "Anna Paulina Luna",
+"first": "Anna",
+"last": "Luna",
+"chamber": "house",
+"state": "FL",
+"district": 13,
+"party": "Republican",
+"opensecrets": "N00045228",
+"fec": [
+"H0FL13158"
+],
+"ballotpedia": "Anna Paulina Luna",
+"start": "2023-01-03"
+},
+{
+"bio": "L000597",
+"name": "Laurel M. Lee",
+"first": "Laurel",
+"last": "Lee",
+"chamber": "house",
+"state": "FL",
+"district": 15,
+"party": "Republican",
+"opensecrets": "N00051178",
+"fec": [
+"H2FL15241"
+],
+"ballotpedia": "Laurel Lee",
+"start": "2023-01-03"
+},
+{
+"bio": "M001217",
+"name": "Jared Moskowitz",
+"first": "Jared",
+"last": "Moskowitz",
+"chamber": "house",
+"state": "FL",
+"district": 23,
+"party": "Democrat",
+"opensecrets": "N00050596",
+"fec": [
+"H2FL22171"
+],
+"ballotpedia": "Jared Moskowitz",
+"start": "2023-01-03"
+},
+{
+"bio": "M001218",
+"name": "Richard McCormick",
+"first": "Rich",
+"last": "McCormick",
+"chamber": "house",
+"state": "GA",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00044520",
+"fec": [
+"H0GA07273"
+],
+"ballotpedia": "Rich McCormick",
+"start": "2023-01-03"
+},
+{
+"bio": "C001129",
+"name": "Mike Collins",
+"first": "Mike",
+"last": "Collins",
+"chamber": "house",
+"state": "GA",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00035370",
+"fec": [
+"H4GA10071",
+"S6GA00390"
+],
+"ballotpedia": "Mike Collins (Georgia)",
+"start": "2023-01-03"
+},
+{
+"bio": "M001219",
+"name": "James C. Moylan",
+"first": "James (Jim)",
+"last": "Moylan",
+"chamber": "house",
+"state": "GU",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00050604",
+"fec": [
+"H2GU01031"
+],
+"ballotpedia": "James Moylan",
+"start": "2023-01-03"
+},
+{
+"bio": "T000487",
+"name": "Jill N. Tokuda",
+"first": "Jill",
+"last": "Tokuda",
+"chamber": "house",
+"state": "HI",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00051049",
+"fec": [
+"H2HI02581"
+],
+"ballotpedia": "Jill Tokuda",
+"start": "2023-01-03"
+},
+{
+"bio": "N000193",
+"name": "Zachary Nunn",
+"first": "Zachary (Zach)",
+"last": "Nunn",
+"chamber": "house",
+"state": "IA",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00048870",
+"fec": [
+"H2IA03119"
+],
+"ballotpedia": "Zach Nunn",
+"start": "2023-01-03"
+},
+{
+"bio": "J000309",
+"name": "Jonathan L. Jackson",
+"first": "Jonathan",
+"last": "Jackson",
+"chamber": "house",
+"state": "IL",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00050105",
+"fec": [
+"H2IL01349"
+],
+"ballotpedia": "Jonathan Jackson (Illinois)",
+"start": "2023-01-03"
+},
+{
+"bio": "R000617",
+"name": "Delia C. Ramirez",
+"first": "Delia",
+"last": "Ramirez",
+"chamber": "house",
+"state": "IL",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00049548",
+"fec": [
+"H2IL03162"
+],
+"ballotpedia": "Delia Ramirez",
+"start": "2023-01-03"
+},
+{
+"bio": "B001315",
+"name": "Nikki Budzinski",
+"first": "Nicole (Nikki)",
+"last": "Budzinski",
+"chamber": "house",
+"state": "IL",
+"district": 13,
+"party": "Democrat",
+"opensecrets": "N00049102",
+"fec": [
+"H2IL13153"
+],
+"ballotpedia": "Nikki Budzinski",
+"start": "2023-01-03"
+},
+{
+"bio": "S001225",
+"name": "Eric Sorensen",
+"first": "Eric",
+"last": "Sorensen",
+"chamber": "house",
+"state": "IL",
+"district": 17,
+"party": "Democrat",
+"opensecrets": "N00049558",
+"fec": [
+"H2IL17147"
+],
+"ballotpedia": "Eric Sorensen",
+"start": "2023-01-03"
+},
+{
+"bio": "H001093",
+"name": "Erin Houchin",
+"first": "Erin",
+"last": "Houchin",
+"chamber": "house",
+"state": "IN",
+"district": 9,
+"party": "Republican",
+"opensecrets": "N00037427",
+"fec": [
+"H6IN09143"
+],
+"ballotpedia": "Erin Houchin",
+"start": "2023-01-03"
+},
+{
+"bio": "M001220",
+"name": "Morgan McGarvey",
+"first": "Morgan",
+"last": "McGarvey",
+"chamber": "house",
+"state": "KY",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00049295",
+"fec": [
+"H2KY03206"
+],
+"ballotpedia": "Morgan McGarvey",
+"start": "2023-01-03"
+},
+{
+"bio": "I000058",
+"name": "Glenn Ivey",
+"first": "Glenn",
+"last": "Ivey",
+"chamber": "house",
+"state": "MD",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00033749",
+"fec": [
+"H2MD04315",
+"H2MD04232"
+],
+"ballotpedia": "Glenn Ivey",
+"start": "2023-01-03"
+},
+{
+"bio": "S001221",
+"name": "Hillary J. Scholten",
+"first": "Hillary",
+"last": "Scholten",
+"chamber": "house",
+"state": "MI",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00044885",
+"fec": [
+"H0MI03316"
+],
+"ballotpedia": "Hillary Scholten",
+"start": "2023-01-03"
+},
+{
+"bio": "J000307",
+"name": "John James",
+"first": "John",
+"last": "James",
+"chamber": "house",
+"state": "MI",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00041550",
+"fec": [
+"H2MI10150",
+"S8MI00372"
+],
+"ballotpedia": "John James (Michigan)",
+"start": "2023-01-03"
+},
+{
+"bio": "T000488",
+"name": "Shri Thanedar",
+"first": "Shri",
+"last": "Thanedar",
+"chamber": "house",
+"state": "MI",
+"district": 13,
+"party": "Democrat",
+"opensecrets": "N00049602",
+"fec": [
+"H2MI13204"
+],
+"ballotpedia": "Shri Thanedar",
+"start": "2023-01-03"
+},
+{
+"bio": "A000379",
+"name": "Mark Alford",
+"first": "Mark",
+"last": "Alford",
+"chamber": "house",
+"state": "MO",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00049617",
+"fec": [
+"H2MO04207"
+],
+"ballotpedia": "Mark Alford",
+"start": "2023-01-03"
+},
+{
+"bio": "B001316",
+"name": "Eric Burlison",
+"first": "Eric",
+"last": "Burlison",
+"chamber": "house",
+"state": "MO",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00049123",
+"fec": [
+"H2MO07143"
+],
+"ballotpedia": "Eric Burlison",
+"start": "2023-01-03"
+},
+{
+"bio": "E000235",
+"name": "Mike Ezell",
+"first": "Mike",
+"last": "Ezell",
+"chamber": "house",
+"state": "MS",
+"district": 4,
+"party": "Republican",
+"opensecrets": "N00048240",
+"fec": [
+"H2MS04258"
+],
+"ballotpedia": "Mike Ezell",
+"start": "2023-01-03"
+},
+{
+"bio": "D000230",
+"name": "Donald G. Davis",
+"first": "Donald",
+"last": "Davis",
+"chamber": "house",
+"state": "NC",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00049636",
+"fec": [
+"H2NC02287"
+],
+"ballotpedia": "Donald Davis",
+"start": "2023-01-03"
+},
+{
+"bio": "F000477",
+"name": "Valerie P. Foushee",
+"first": "Valerie",
+"last": "Foushee",
+"chamber": "house",
+"state": "NC",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00049652",
+"fec": [
+"H2NC06114"
+],
+"ballotpedia": "Valerie Foushee",
+"start": "2023-01-03"
+},
+{
+"bio": "E000246",
+"name": "Chuck Edwards",
+"first": "Charles (Chuck)",
+"last": "Edwards",
+"chamber": "house",
+"state": "NC",
+"district": 11,
+"party": "Republican",
+"opensecrets": "N00049670",
+"fec": [
+"H2NC14050"
+],
+"ballotpedia": "Chuck Edwards",
+"start": "2023-01-03"
+},
+{
+"bio": "K000398",
+"name": "Thomas H. Kean, Jr.",
+"first": "Thomas",
+"last": "Kean",
+"chamber": "house",
+"state": "NJ",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00027502",
+"fec": [
+"H0NJ07261"
+],
+"ballotpedia": "Thomas Kean Jr.",
+"start": "2023-01-03"
+},
+{
+"bio": "M001226",
+"name": "Robert Menendez",
+"first": "Robert",
+"last": "Menendez",
+"chamber": "house",
+"state": "NJ",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00049686",
+"fec": [
+"H2NJ08232"
+],
+"ballotpedia": "Rob Menendez (New Jersey)",
+"start": "2023-01-03"
+},
+{
+"bio": "V000136",
+"name": "Gabe Vasquez",
+"first": "Gabriel (Gabe)",
+"last": "Vasquez",
+"chamber": "house",
+"state": "NM",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00049142",
+"fec": [
+"H2NM02191"
+],
+"ballotpedia": "Gabriel Vasquez",
+"start": "2023-01-03"
+},
+{
+"bio": "L000598",
+"name": "Nick LaLota",
+"first": "Nicolas",
+"last": "LaLota",
+"chamber": "house",
+"state": "NY",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00050419",
+"fec": [
+"H2NY01190"
+],
+"ballotpedia": "Nicholas J. LaLota",
+"start": "2023-01-03"
+},
+{
+"bio": "G000599",
+"name": "Daniel S. Goldman",
+"first": "Dan",
+"last": "Goldman",
+"chamber": "house",
+"state": "NY",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00051424",
+"fec": [
+"H2NY10308"
+],
+"ballotpedia": "Daniel Goldman",
+"start": "2023-01-03"
+},
+{
+"bio": "L000599",
+"name": "Michael Lawler",
+"first": "Michael",
+"last": "Lawler",
+"chamber": "house",
+"state": "NY",
+"district": 17,
+"party": "Republican",
+"opensecrets": "N00051208",
+"fec": [
+"H2NY17162"
+],
+"ballotpedia": "Michael Lawler (New York)",
+"start": "2023-01-03"
+},
+{
+"bio": "L000600",
+"name": "Nicholas A. Langworthy",
+"first": "Nicholas",
+"last": "Langworthy",
+"chamber": "house",
+"state": "NY",
+"district": 23,
+"party": "Republican",
+"opensecrets": "N00051431",
+"fec": [
+"H2NY23228"
+],
+"ballotpedia": "Nick Langworthy",
+"start": "2023-01-03"
+},
+{
+"bio": "L000601",
+"name": "Greg Landsman",
+"first": "Greg",
+"last": "Landsman",
+"chamber": "house",
+"state": "OH",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00049718",
+"fec": [
+"H2OH01194"
+],
+"ballotpedia": "Greg Landsman",
+"start": "2023-01-03"
+},
+{
+"bio": "M001222",
+"name": "Max L. Miller",
+"first": "Max",
+"last": "Miller",
+"chamber": "house",
+"state": "OH",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00048277",
+"fec": [
+"H2OH16051"
+],
+"ballotpedia": "Max Miller",
+"start": "2023-01-03"
+},
+{
+"bio": "S001223",
+"name": "Emilia Strong Sykes",
+"first": "Emilia",
+"last": "Sykes",
+"chamber": "house",
+"state": "OH",
+"district": 13,
+"party": "Democrat",
+"opensecrets": "N00050165",
+"fec": [
+"H2OH13264"
+],
+"ballotpedia": "Emilia Sykes",
+"start": "2023-01-03"
+},
+{
+"bio": "B001317",
+"name": "Josh Brecheen",
+"first": "Josh",
+"last": "Brecheen",
+"chamber": "house",
+"state": "OK",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00051106",
+"fec": [
+"H2OK02315"
+],
+"ballotpedia": "Josh Brecheen",
+"start": "2023-01-03"
+},
+{
+"bio": "H001094",
+"name": "Val T. Hoyle",
+"first": "Valerie",
+"last": "Hoyle",
+"chamber": "house",
+"state": "OR",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00049734",
+"fec": [
+"H2OR04095"
+],
+"ballotpedia": "Val Hoyle",
+"start": "2023-01-03"
+},
+{
+"bio": "S001226",
+"name": "Andrea Salinas",
+"first": "Andrea",
+"last": "Salinas",
+"chamber": "house",
+"state": "OR",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00049738",
+"fec": [
+"H2OR06066"
+],
+"ballotpedia": "Andrea Salinas",
+"start": "2023-01-03"
+},
+{
+"bio": "L000602",
+"name": "Summer L. Lee",
+"first": "Summer",
+"last": "Lee",
+"chamber": "house",
+"state": "PA",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00049757",
+"fec": [
+"H2PA18200"
+],
+"ballotpedia": "Summer Lee",
+"start": "2023-01-03"
+},
+{
+"bio": "D000530",
+"name": "Christopher R. Deluzio",
+"first": "Chris",
+"last": "Deluzio",
+"chamber": "house",
+"state": "PA",
+"district": 17,
+"party": "Democrat",
+"opensecrets": "N00049160",
+"fec": [
+"H2PA17103"
+],
+"ballotpedia": "Chris Deluzio",
+"start": "2023-01-03"
+},
+{
+"bio": "M001223",
+"name": "Seth Magaziner",
+"first": "Seth",
+"last": "Magaziner",
+"chamber": "house",
+"state": "RI",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00050458",
+"fec": [
+"H2RI02184"
+],
+"ballotpedia": "Seth Magaziner",
+"start": "2023-01-03"
+},
+{
+"bio": "F000478",
+"name": "Russell Fry",
+"first": "Russell",
+"last": "Fry",
+"chamber": "house",
+"state": "SC",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00049165",
+"fec": [
+"H2SC07280",
+"S6SC04403"
+],
+"ballotpedia": null,
+"start": "2023-01-03"
+},
+{
+"bio": "O000175",
+"name": "Andrew Ogles",
+"first": "Andrew",
+"last": "Ogles",
+"chamber": "house",
+"state": "TN",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00050943",
+"fec": [
+"H2TN05446"
+],
+"ballotpedia": "Andy Ogles",
+"start": "2023-01-03"
+},
+{
+"bio": "M001224",
+"name": "Nathaniel Moran",
+"first": "Nathaniel",
+"last": "Moran",
+"chamber": "house",
+"state": "TX",
+"district": 1,
+"party": "Republican",
+"opensecrets": "N00049775",
+"fec": [
+"H2TX01112"
+],
+"ballotpedia": "Nathaniel Moran",
+"start": "2023-01-03"
+},
+{
+"bio": "S001224",
+"name": "Keith Self",
+"first": "Keith",
+"last": "Self",
+"chamber": "house",
+"state": "TX",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00049337",
+"fec": [
+"H2TX03290",
+"H2TX00064"
+],
+"ballotpedia": "Keith Self",
+"start": "2023-01-03"
+},
+{
+"bio": "L000603",
+"name": "Morgan Luttrell",
+"first": "Morgan",
+"last": "Luttrell",
+"chamber": "house",
+"state": "TX",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00048776",
+"fec": [
+"H2TX08182"
+],
+"ballotpedia": null,
+"start": "2023-01-03"
+},
+{
+"bio": "D000594",
+"name": "Monica De La Cruz",
+"first": "M\u00f3nica",
+"last": "De La Cruz",
+"chamber": "house",
+"state": "TX",
+"district": 15,
+"party": "Republican",
+"opensecrets": "N00045793",
+"fec": [
+"H0TX15124"
+],
+"ballotpedia": "Monica De La Cruz",
+"start": "2023-01-03"
+},
+{
+"bio": "C001130",
+"name": "Jasmine Crockett",
+"first": "Jasmine",
+"last": "Crockett",
+"chamber": "house",
+"state": "TX",
+"district": 30,
+"party": "Democrat",
+"opensecrets": "N00049840",
+"fec": [
+"H2TX30178",
+"S6TX00552"
+],
+"ballotpedia": "Jasmine Crockett",
+"start": "2023-01-03"
+},
+{
+"bio": "C001131",
+"name": "Greg Casar",
+"first": "Gregorio",
+"last": "Casar",
+"chamber": "house",
+"state": "TX",
+"district": 35,
+"party": "Democrat",
+"opensecrets": "N00049855",
+"fec": [
+"H2TX35144"
+],
+"ballotpedia": null,
+"start": "2023-01-03"
+},
+{
+"bio": "H001095",
+"name": "Wesley Hunt",
+"first": "Wesley",
+"last": "Hunt",
+"chamber": "house",
+"state": "TX",
+"district": 38,
+"party": "Republican",
+"opensecrets": "N00044362",
+"fec": [
+"H0TX07170",
+"S6TX00511"
+],
+"ballotpedia": "Wesley Hunt (Texas Congress)",
+"start": "2023-01-03"
+},
+{
+"bio": "K000399",
+"name": "Jennifer A. Kiggans",
+"first": "Jennifer",
+"last": "Kiggans",
+"chamber": "house",
+"state": "VA",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00048315",
+"fec": [
+"H2VA02064"
+],
+"ballotpedia": "Jennifer Kiggans",
+"start": "2023-01-03"
+},
+{
+"bio": "B001318",
+"name": "Becca Balint",
+"first": "Becca",
+"last": "Balint",
+"chamber": "house",
+"state": "VT",
+"district": 0,
+"party": "Democrat",
+"opensecrets": "N00049900",
+"fec": [
+"H2VT01076"
+],
+"ballotpedia": "Becca Balint",
+"start": "2023-01-03"
+},
+{
+"bio": "G000600",
+"name": "Marie Gluesenkamp Perez",
+"first": "Marie",
+"last": "Gluesenkamp Perez",
+"chamber": "house",
+"state": "WA",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00050490",
+"fec": [
+"H2WA03217"
+],
+"ballotpedia": "Marie Gluesenkamp Perez",
+"start": "2023-01-03"
+},
+{
+"bio": "V000135",
+"name": "Derrick Van Orden",
+"first": "Derrick",
+"last": "Van Orden",
+"chamber": "house",
+"state": "WI",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00046843",
+"fec": [
+"H0WI03175"
+],
+"ballotpedia": "Derrick Van Orden",
+"start": "2023-01-03"
+},
+{
+"bio": "H001096",
+"name": "Harriet M. Hageman",
+"first": "Harriet",
+"last": "Hageman",
+"chamber": "house",
+"state": "WY",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00049197",
+"fec": [
+"H2WY00166",
+"S6WY00209"
+],
+"ballotpedia": "Harriet Hageman",
+"start": "2023-01-03"
+},
+{
+"bio": "R000618",
+"name": "Pete Ricketts",
+"first": "Pete",
+"last": "Ricketts",
+"chamber": "senate",
+"state": "NE",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00027695",
+"fec": [
+"S6NE00129"
+],
+"ballotpedia": "Pete Ricketts",
+"start": "2023-01-23"
+},
+{
+"bio": "M001227",
+"name": "Jennifer L. McClellan",
+"first": "Jennifer",
+"last": "McClellan",
+"chamber": "house",
+"state": "VA",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00051961",
+"fec": [
+"H4VA04066"
+],
+"ballotpedia": "Jennifer McClellan",
+"start": "2023-03-07"
+},
+{
+"bio": "A000380",
+"name": "Gabe Amo",
+"first": "Gabe",
+"last": "Amo",
+"chamber": "house",
+"state": "RI",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00052615",
+"fec": [
+"H4RI01265"
+],
+"ballotpedia": "Gabe Amo",
+"start": "2023-11-07"
+},
+{
+"bio": "M001228",
+"name": "Celeste Maloy",
+"first": "Celeste",
+"last": "Maloy",
+"chamber": "house",
+"state": "UT",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00052817",
+"fec": [
+"H4UT02296"
+],
+"ballotpedia": "Celeste Maloy",
+"start": "2023-11-21"
+},
+{
+"bio": "S001201",
+"name": "Thomas R. Suozzi",
+"first": "Thomas",
+"last": "Suozzi",
+"chamber": "house",
+"state": "NY",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00038742",
+"fec": [
+"H6NY03247"
+],
+"ballotpedia": "Tom Suozzi",
+"start": "2017-01-03"
+},
+{
+"bio": "K000402",
+"name": "Timothy M. Kennedy",
+"first": "Timothy",
+"last": "Kennedy",
+"chamber": "house",
+"state": "NY",
+"district": 26,
+"party": "Democrat",
+"opensecrets": "N00054366",
+"fec": [
+"H4NY26078"
+],
+"ballotpedia": "Timothy M. Kennedy",
+"start": "2024-05-06"
+},
+{
+"bio": "F000480",
+"name": "Vince Fong",
+"first": "Vince",
+"last": "Fong",
+"chamber": "house",
+"state": "CA",
+"district": 20,
+"party": "Republican",
+"opensecrets": "N00054216",
+"fec": [
+"H4CA20181"
+],
+"ballotpedia": "Vince Fong",
+"start": "2024-06-03"
+},
+{
+"bio": "R000619",
+"name": "Michael A. Rulli",
+"first": "Michael",
+"last": "Rulli",
+"chamber": "house",
+"state": "OH",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00054190",
+"fec": [
+"H4OH06165"
+],
+"ballotpedia": "Michael Rulli",
+"start": "2024-06-11"
+},
+{
+"bio": "M001229",
+"name": "LaMonica McIver",
+"first": "LaMonica",
+"last": "McIver",
+"chamber": "house",
+"state": "NJ",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00055172",
+"fec": [
+"H4NJ10176"
+],
+"ballotpedia": "LaMonica McIver",
+"start": "2024-09-18"
+},
+{
+"bio": "W000829",
+"name": "Tony Wied",
+"first": "Tony",
+"last": "Wied",
+"chamber": "house",
+"state": "WI",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00055013",
+"fec": [
+"H4WI08119"
+],
+"ballotpedia": "Tony Wied",
+"start": "2024-11-05"
+},
+{
+"bio": "F000110",
+"name": "Cleo Fields",
+"first": "Cleo",
+"last": "Fields",
+"chamber": "house",
+"state": "LA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00005398",
+"fec": [
+"H4LA06211"
+],
+"ballotpedia": "Cleo Fields",
+"start": "1993-01-05"
+},
+{
+"bio": "S001188",
+"name": "Marlin A. Stutzman",
+"first": "Marlin",
+"last": "Stutzman",
+"chamber": "house",
+"state": "IN",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00030891",
+"fec": [
+"H0IN03198",
+"S0IN00095"
+],
+"ballotpedia": "Marlin Stutzman",
+"start": "2010-11-16"
+},
+{
+"bio": "C001123",
+"name": "Gilbert Ray Cisneros, Jr.",
+"first": "Gilbert",
+"last": "Cisneros",
+"chamber": "house",
+"state": "CA",
+"district": 31,
+"party": "Democrat",
+"opensecrets": "N00041464",
+"fec": [
+"H8CA39174",
+"H4CA31170"
+],
+"ballotpedia": "Gil Cisneros",
+"start": "2019-01-03"
+},
+{
+"bio": "A000382",
+"name": "Angela D. Alsobrooks",
+"first": "Angela",
+"last": "Alsobrooks",
+"chamber": "senate",
+"state": "MD",
+"district": null,
+"party": "Democrat",
+"opensecrets": "N00053033",
+"fec": [
+"S4MD00327"
+],
+"ballotpedia": "Angela Alsobrooks",
+"start": "2025-01-03"
+},
+{
+"bio": "S001232",
+"name": "Tim Sheehy",
+"first": "Tim",
+"last": "Sheehy",
+"chamber": "senate",
+"state": "MT",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00053174",
+"fec": [
+"S4MT00183"
+],
+"ballotpedia": "Tim Sheehy",
+"start": "2025-01-03"
+},
+{
+"bio": "M001242",
+"name": "Bernie Moreno",
+"first": "Bernie",
+"last": "Moreno",
+"chamber": "senate",
+"state": "OH",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00048437",
+"fec": [
+"S4OH00192"
+],
+"ballotpedia": "Bernie Moreno",
+"start": "2025-01-03"
+},
+{
+"bio": "M001243",
+"name": "David McCormick",
+"first": "Dave",
+"last": "McCormick",
+"chamber": "senate",
+"state": "PA",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00050244",
+"fec": [
+"S2PA00661"
+],
+"ballotpedia": "David McCormick (Pennsylvania)",
+"start": "2025-01-03"
+},
+{
+"bio": "B001323",
+"name": "Nicholas J. Begich III",
+"first": "Nicholas",
+"last": "Begich",
+"chamber": "house",
+"state": "AK",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00049408",
+"fec": [
+"H2AK01083"
+],
+"ballotpedia": "Nicholas Begich",
+"start": "2025-01-03"
+},
+{
+"bio": "F000481",
+"name": "Shomari Figures",
+"first": "Shomari",
+"last": "Figures",
+"chamber": "house",
+"state": "AL",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00053909",
+"fec": [
+"H4AL02170"
+],
+"ballotpedia": "Shomari Figures",
+"start": "2025-01-03"
+},
+{
+"bio": "A000381",
+"name": "Yassamin Ansari",
+"first": "Yassamin",
+"last": "Ansari",
+"chamber": "house",
+"state": "AZ",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00052497",
+"fec": [
+"H4AZ03109"
+],
+"ballotpedia": "Yassamin Ansari",
+"start": "2025-01-03"
+},
+{
+"bio": "H001098",
+"name": "Abraham J. Hamadeh",
+"first": "Abraham",
+"last": "Hamadeh",
+"chamber": "house",
+"state": "AZ",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00053795",
+"fec": [
+"H4AZ08108"
+],
+"ballotpedia": "Abraham Hamadeh",
+"start": "2025-01-03"
+},
+{
+"bio": "S001231",
+"name": "Lateefah Simon",
+"first": "Lateefah",
+"last": "Simon",
+"chamber": "house",
+"state": "CA",
+"district": 12,
+"party": "Democrat",
+"opensecrets": "N00052195",
+"fec": [
+"H4CA12154"
+],
+"ballotpedia": "Lateefah Simon",
+"start": "2025-01-03"
+},
+{
+"bio": "G000605",
+"name": "Adam Gray",
+"first": "Adam",
+"last": "Gray",
+"chamber": "house",
+"state": "CA",
+"district": 13,
+"party": "Democrat",
+"opensecrets": "N00050061",
+"fec": [
+"H2CA13115"
+],
+"ballotpedia": "Adam Gray",
+"start": "2025-01-03"
+},
+{
+"bio": "L000607",
+"name": "Sam T. Liccardo",
+"first": "Sam",
+"last": "Liccardo",
+"chamber": "house",
+"state": "CA",
+"district": 16,
+"party": "Democrat",
+"opensecrets": "N00054265",
+"fec": [
+"H4CA16197"
+],
+"ballotpedia": "Sam Liccardo",
+"start": "2025-01-03"
+},
+{
+"bio": "W000830",
+"name": "George Whitesides",
+"first": "George",
+"last": "Whitesides",
+"chamber": "house",
+"state": "CA",
+"district": 27,
+"party": "Democrat",
+"opensecrets": "N00052205",
+"fec": [
+"H4CA27111"
+],
+"ballotpedia": "George Whitesides",
+"start": "2025-01-03"
+},
+{
+"bio": "R000620",
+"name": "Luz M. Rivas",
+"first": "Luz",
+"last": "Rivas",
+"chamber": "house",
+"state": "CA",
+"district": 29,
+"party": "Democrat",
+"opensecrets": "N00054215",
+"fec": [
+"H4CA29141"
+],
+"ballotpedia": "Luz Maria Rivas",
+"start": "2025-01-03"
+},
+{
+"bio": "F000483",
+"name": "Laura Friedman",
+"first": "Laura",
+"last": "Friedman",
+"chamber": "house",
+"state": "CA",
+"district": 30,
+"party": "Democrat",
+"opensecrets": "N00052209",
+"fec": [
+"H4CA30149"
+],
+"ballotpedia": "Laura Friedman",
+"start": "2025-01-03"
+},
+{
+"bio": "T000491",
+"name": "Derek Tran",
+"first": "Derek",
+"last": "Tran",
+"chamber": "house",
+"state": "CA",
+"district": 45,
+"party": "Democrat",
+"opensecrets": "N00053582",
+"fec": [
+"H4CA45170"
+],
+"ballotpedia": "Derek Tran",
+"start": "2025-01-03"
+},
+{
+"bio": "M001241",
+"name": "Dave Min",
+"first": "Dave",
+"last": "Min",
+"chamber": "house",
+"state": "CA",
+"district": 47,
+"party": "Democrat",
+"opensecrets": "N00040866",
+"fec": [
+"H4CA47085"
+],
+"ballotpedia": "Dave Min",
+"start": "2025-01-03"
+},
+{
+"bio": "H001100",
+"name": "Jeff Hurd",
+"first": "Jeff",
+"last": "Hurd",
+"chamber": "house",
+"state": "CO",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00053367",
+"fec": [
+"H4CO03357"
+],
+"ballotpedia": "Jeff Hurd",
+"start": "2025-01-03"
+},
+{
+"bio": "C001137",
+"name": "Jeff Crank",
+"first": "Jeff",
+"last": "Crank",
+"chamber": "house",
+"state": "CO",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00028132",
+"fec": [
+"H6CO05142"
+],
+"ballotpedia": "Jeff Crank",
+"start": "2025-01-03"
+},
+{
+"bio": "E000300",
+"name": "Gabe Evans",
+"first": "Gabe",
+"last": "Evans",
+"chamber": "house",
+"state": "CO",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00053312",
+"fec": [
+"H4CO08034"
+],
+"ballotpedia": "Gabe Evans",
+"start": "2025-01-03"
+},
+{
+"bio": "M001238",
+"name": "Sarah McBride",
+"first": "Sarah",
+"last": "McBride",
+"chamber": "house",
+"state": "DE",
+"district": 0,
+"party": "Democrat",
+"opensecrets": "N00052698",
+"fec": [
+"H4DE00045"
+],
+"ballotpedia": "Sarah McBride",
+"start": "2025-01-03"
+},
+{
+"bio": "H001099",
+"name": "Mike Haridopolos",
+"first": "Mike",
+"last": "Haridopolos",
+"chamber": "house",
+"state": "FL",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00033076",
+"fec": [
+"H4FL08168"
+],
+"ballotpedia": "Mike Haridopolos",
+"start": "2025-01-03"
+},
+{
+"bio": "J000311",
+"name": "Brian Jack",
+"first": "Brian",
+"last": "Jack",
+"chamber": "house",
+"state": "GA",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00055118",
+"fec": [
+"H4GA03126"
+],
+"ballotpedia": "Brian Jack",
+"start": "2025-01-03"
+},
+{
+"bio": "S001229",
+"name": "Jefferson Shreve",
+"first": "Jefferson",
+"last": "Shreve",
+"chamber": "house",
+"state": "IN",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00054651",
+"fec": [
+"H4IN06185"
+],
+"ballotpedia": "Jefferson Shreve",
+"start": "2025-01-03"
+},
+{
+"bio": "M001233",
+"name": "Mark B. Messmer",
+"first": "Mark",
+"last": "Messmer",
+"chamber": "house",
+"state": "IN",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00054523",
+"fec": [
+"H4IN08249"
+],
+"ballotpedia": "Mark Messmer",
+"start": "2025-01-03"
+},
+{
+"bio": "S001228",
+"name": "Derek Schmidt",
+"first": "Derek",
+"last": "Schmidt",
+"chamber": "house",
+"state": "KS",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00055179",
+"fec": [
+"H4KS02164"
+],
+"ballotpedia": "Derek Schmidt",
+"start": "2025-01-03"
+},
+{
+"bio": "O000176",
+"name": "Johnny Olszewski, Jr.",
+"first": "Johnny",
+"last": "Olszewski",
+"chamber": "house",
+"state": "MD",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00054814",
+"fec": [
+"H4MD02232"
+],
+"ballotpedia": "John Olszewski Jr.",
+"start": "2025-01-03"
+},
+{
+"bio": "E000301",
+"name": "Sarah Elfreth",
+"first": "Sarah",
+"last": "Elfreth",
+"chamber": "house",
+"state": "MD",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00053710",
+"fec": [
+"H4MD03156"
+],
+"ballotpedia": "Sarah Elfreth",
+"start": "2025-01-03"
+},
+{
+"bio": "M001232",
+"name": "April McClain Delaney",
+"first": "April",
+"last": "McClain Delaney",
+"chamber": "house",
+"state": "MD",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00053899",
+"fec": [
+"H4MD06340"
+],
+"ballotpedia": "April McClain-Delaney",
+"start": "2025-01-03"
+},
+{
+"bio": "B001321",
+"name": "Tom Barrett",
+"first": "Tom",
+"last": "Barrett",
+"chamber": "house",
+"state": "MI",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00049596",
+"fec": [
+"H2MI07123"
+],
+"ballotpedia": "Tom Barrett (Michigan)",
+"start": "2025-01-03"
+},
+{
+"bio": "M001237",
+"name": "Kristen McDonald Rivet",
+"first": "Kristen",
+"last": "McDonald Rivet",
+"chamber": "house",
+"state": "MI",
+"district": 8,
+"party": "Democrat",
+"opensecrets": "N00054163",
+"fec": [
+"H4MI08218"
+],
+"ballotpedia": "Kristen McDonald Rivet",
+"start": "2025-01-03"
+},
+{
+"bio": "M001234",
+"name": "Kelly Morrison",
+"first": "Kelly",
+"last": "Morrison",
+"chamber": "house",
+"state": "MN",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00053930",
+"fec": [
+"H4MN03118"
+],
+"ballotpedia": "Kelly Morrison",
+"start": "2025-01-03"
+},
+{
+"bio": "B001324",
+"name": "Wesley Bell",
+"first": "Wesley",
+"last": "Bell",
+"chamber": "house",
+"state": "MO",
+"district": 1,
+"party": "Democrat",
+"opensecrets": "N00053042",
+"fec": [
+"H4MO01134",
+"S4MO00250"
+],
+"ballotpedia": "Wesley Bell",
+"start": "2025-01-03"
+},
+{
+"bio": "O000177",
+"name": "Robert F. Onder, Jr.",
+"first": "Robert",
+"last": "Onder",
+"chamber": "house",
+"state": "MO",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00030025",
+"fec": [
+"H8MO09146",
+"H4MO03221"
+],
+"ballotpedia": "Bob Onder",
+"start": "2025-01-03"
+},
+{
+"bio": "K000404",
+"name": "Kimberlyn King-Hinds",
+"first": "Kimberlyn",
+"last": "King-Hinds",
+"chamber": "house",
+"state": "MP",
+"district": 0,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H4MP01022"
+],
+"ballotpedia": null,
+"start": "2025-01-03"
+},
+{
+"bio": "D000634",
+"name": "Troy Downing",
+"first": "Troy",
+"last": "Downing",
+"chamber": "house",
+"state": "MT",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00041283",
+"fec": [
+"H4MT02098"
+],
+"ballotpedia": "Troy Downing",
+"start": "2025-01-03"
+},
+{
+"bio": "M001240",
+"name": "Addison P. McDowell",
+"first": "Addison",
+"last": "McDowell",
+"chamber": "house",
+"state": "NC",
+"district": 6,
+"party": "Republican",
+"opensecrets": "N00054055",
+"fec": [
+"H4NC06177"
+],
+"ballotpedia": "Addison McDowell",
+"start": "2025-01-03"
+},
+{
+"bio": "H001102",
+"name": "Mark Harris",
+"first": "Mark",
+"last": "Harris",
+"chamber": "house",
+"state": "NC",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00035491",
+"fec": [
+"H6NC09200",
+"H4NC08066"
+],
+"ballotpedia": "Mark Harris (North Carolina)",
+"start": "2025-01-03"
+},
+{
+"bio": "H001101",
+"name": "Pat Harrigan",
+"first": "Pat",
+"last": "Harrigan",
+"chamber": "house",
+"state": "NC",
+"district": 10,
+"party": "Republican",
+"opensecrets": "N00050144",
+"fec": [
+"H2NC13243"
+],
+"ballotpedia": "Pat Harrigan",
+"start": "2025-01-03"
+},
+{
+"bio": "K000405",
+"name": "Brad Knott",
+"first": "Brad",
+"last": "Knott",
+"chamber": "house",
+"state": "NC",
+"district": 13,
+"party": "Republican",
+"opensecrets": "N00053743",
+"fec": [
+"H4NC13116"
+],
+"ballotpedia": "Brad Knott",
+"start": "2025-01-03"
+},
+{
+"bio": "M001236",
+"name": "Tim Moore",
+"first": "Tim",
+"last": "Moore",
+"chamber": "house",
+"state": "NC",
+"district": 14,
+"party": "Republican",
+"opensecrets": "N00053948",
+"fec": [
+"H4NC14015"
+],
+"ballotpedia": "Timothy K. Moore",
+"start": "2025-01-03"
+},
+{
+"bio": "F000482",
+"name": "Julie Fedorchak",
+"first": "Julie",
+"last": "Fedorchak",
+"chamber": "house",
+"state": "ND",
+"district": 0,
+"party": "Republican",
+"opensecrets": "N00054800",
+"fec": [
+"H4ND00061"
+],
+"ballotpedia": "Julie Fedorchak",
+"start": "2025-01-03"
+},
+{
+"bio": "G000604",
+"name": "Maggie Goodlander",
+"first": "Maggie",
+"last": "Goodlander",
+"chamber": "house",
+"state": "NH",
+"district": 2,
+"party": "Democrat",
+"opensecrets": "N00055218",
+"fec": [
+"H4NH02399"
+],
+"ballotpedia": "Maggie Goodlander",
+"start": "2025-01-03"
+},
+{
+"bio": "C001136",
+"name": "Herbert C. Conaway, Jr.",
+"first": "Herbert",
+"last": "Conaway",
+"chamber": "house",
+"state": "NJ",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00026951",
+"fec": [
+"H4NJ03080"
+],
+"ballotpedia": "Herbert Conaway Jr.",
+"start": "2025-01-03"
+},
+{
+"bio": "P000621",
+"name": "Nellie Pou",
+"first": "Nellie",
+"last": "Pou",
+"chamber": "house",
+"state": "NJ",
+"district": 9,
+"party": "Democrat",
+"opensecrets": "N00055613",
+"fec": [
+"H4NJ09194"
+],
+"ballotpedia": "Nellie Pou",
+"start": "2025-01-03"
+},
+{
+"bio": "G000602",
+"name": "Laura Gillen",
+"first": "Laura",
+"last": "Gillen",
+"chamber": "house",
+"state": "NY",
+"district": 4,
+"party": "Democrat",
+"opensecrets": "N00050425",
+"fec": [
+"H4NY04158",
+"H2NY04244"
+],
+"ballotpedia": "Laura Gillen",
+"start": "2025-01-03"
+},
+{
+"bio": "L000606",
+"name": "George Latimer",
+"first": "George",
+"last": "Latimer",
+"chamber": "house",
+"state": "NY",
+"district": 16,
+"party": "Democrat",
+"opensecrets": "N00054136",
+"fec": [
+"H4NY16087"
+],
+"ballotpedia": "George Latimer (New York)",
+"start": "2025-01-03"
+},
+{
+"bio": "R000622",
+"name": "Josh Riley",
+"first": "Josh",
+"last": "Riley",
+"chamber": "house",
+"state": "NY",
+"district": 19,
+"party": "Democrat",
+"opensecrets": "N00049916",
+"fec": [
+"H8NY22177"
+],
+"ballotpedia": "Josh Riley",
+"start": "2025-01-03"
+},
+{
+"bio": "M001231",
+"name": "John W. Mannion",
+"first": "John",
+"last": "Mannion",
+"chamber": "house",
+"state": "NY",
+"district": 22,
+"party": "Democrat",
+"opensecrets": "N00053112",
+"fec": [
+"H4NY22085"
+],
+"ballotpedia": "John Mannion",
+"start": "2025-01-03"
+},
+{
+"bio": "T000490",
+"name": "David J. Taylor",
+"first": "David",
+"last": "Taylor",
+"chamber": "house",
+"state": "OH",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00054098",
+"fec": [
+"H4OH02248"
+],
+"ballotpedia": "David Taylor (Ohio)",
+"start": "2025-01-03"
+},
+{
+"bio": "D000635",
+"name": "Maxine Dexter",
+"first": "Maxine",
+"last": "Dexter",
+"chamber": "house",
+"state": "OR",
+"district": 3,
+"party": "Democrat",
+"opensecrets": "N00054144",
+"fec": [
+"H4OR03192"
+],
+"ballotpedia": "Maxine Dexter",
+"start": "2025-01-03"
+},
+{
+"bio": "B001326",
+"name": "Janelle S. Bynum",
+"first": "Janelle",
+"last": "Bynum",
+"chamber": "house",
+"state": "OR",
+"district": 5,
+"party": "Democrat",
+"opensecrets": "N00052777",
+"fec": [
+"H4OR05304"
+],
+"ballotpedia": "Janelle Bynum",
+"start": "2025-01-03"
+},
+{
+"bio": "M001230",
+"name": "Ryan Mackenzie",
+"first": "Ryan",
+"last": "Mackenzie",
+"chamber": "house",
+"state": "PA",
+"district": 7,
+"party": "Republican",
+"opensecrets": "N00041866",
+"fec": [
+"H8PA15195"
+],
+"ballotpedia": "Ryan Mackenzie",
+"start": "2025-01-03"
+},
+{
+"bio": "B001327",
+"name": "Robert P. Bresnahan, Jr.",
+"first": "Robert",
+"last": "Bresnahan",
+"chamber": "house",
+"state": "PA",
+"district": 8,
+"party": "Republican",
+"opensecrets": "N00053588",
+"fec": [
+"H4PA08124"
+],
+"ballotpedia": "Rob Bresnahan Jr.",
+"start": "2025-01-03"
+},
+{
+"bio": "H001103",
+"name": "Pablo Jos\u00e9 Hern\u00e1ndez",
+"first": "Pablo Jos\u00e9",
+"last": "Hern\u00e1ndez Rivera",
+"chamber": "house",
+"state": "PR",
+"district": 0,
+"party": "Democrat",
+"opensecrets": "N00052286",
+"fec": [
+"H4PR01010"
+],
+"ballotpedia": "Pablo Jose Hernandez Rivera",
+"start": "2025-01-03"
+},
+{
+"bio": "B001325",
+"name": "Sheri Biggs",
+"first": "Sheri",
+"last": "Biggs",
+"chamber": "house",
+"state": "SC",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00054222",
+"fec": [
+"H4SC01313"
+],
+"ballotpedia": "Sheri Biggs",
+"start": "2025-01-03"
+},
+{
+"bio": "G000601",
+"name": "Craig A. Goldman",
+"first": "Craig",
+"last": "Goldman",
+"chamber": "house",
+"state": "TX",
+"district": 12,
+"party": "Republican",
+"opensecrets": "N00053861",
+"fec": [
+"H4TX12065"
+],
+"ballotpedia": null,
+"start": "2025-01-03"
+},
+{
+"bio": "G000603",
+"name": "Brandon Gill",
+"first": "Brandon",
+"last": "Gill",
+"chamber": "house",
+"state": "TX",
+"district": 26,
+"party": "Republican",
+"opensecrets": "N00054402",
+"fec": [
+"H4TX26149"
+],
+"ballotpedia": "Brandon Gill",
+"start": "2025-01-03"
+},
+{
+"bio": "J000310",
+"name": "Julie Johnson",
+"first": "Julie",
+"last": "Johnson",
+"chamber": "house",
+"state": "TX",
+"district": 32,
+"party": "Democrat",
+"opensecrets": "N00052806",
+"fec": [
+"H4TX32089"
+],
+"ballotpedia": "Julie Johnson",
+"start": "2025-01-03"
+},
+{
+"bio": "K000403",
+"name": "Mike Kennedy",
+"first": "Mike",
+"last": "Kennedy",
+"chamber": "house",
+"state": "UT",
+"district": 3,
+"party": "Republican",
+"opensecrets": "N00043086",
+"fec": [
+"H4UT03260"
+],
+"ballotpedia": null,
+"start": "2025-01-03"
+},
+{
+"bio": "M001239",
+"name": "John J. McGuire III",
+"first": "John",
+"last": "McGuire",
+"chamber": "house",
+"state": "VA",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00045930",
+"fec": [
+"H2VA07196",
+"H0VA07133"
+],
+"ballotpedia": "John McGuire",
+"start": "2025-01-03"
+},
+{
+"bio": "V000138",
+"name": "Eugene Simon Vindman",
+"first": "Eugene",
+"last": "Vindman",
+"chamber": "house",
+"state": "VA",
+"district": 7,
+"party": "Democrat",
+"opensecrets": "N00054112",
+"fec": [
+"H4VA07234"
+],
+"ballotpedia": "Eugene Vindman",
+"start": "2025-01-03"
+},
+{
+"bio": "S001230",
+"name": "Suhas Subramanyam",
+"first": "Suhas",
+"last": "Subramanyam",
+"chamber": "house",
+"state": "VA",
+"district": 10,
+"party": "Democrat",
+"opensecrets": "N00054085",
+"fec": [
+"H4VA10279"
+],
+"ballotpedia": "Suhas Subramanyam",
+"start": "2025-01-03"
+},
+{
+"bio": "B001322",
+"name": "Michael Baumgartner",
+"first": "Michael",
+"last": "Baumgartner",
+"chamber": "house",
+"state": "WA",
+"district": 5,
+"party": "Republican",
+"opensecrets": "N00033716",
+"fec": [
+"H4WA05234"
+],
+"ballotpedia": null,
+"start": "2025-01-03"
+},
+{
+"bio": "R000621",
+"name": "Emily Randall",
+"first": "Emily",
+"last": "Randall",
+"chamber": "house",
+"state": "WA",
+"district": 6,
+"party": "Democrat",
+"opensecrets": "N00054078",
+"fec": [
+"H4WA06117"
+],
+"ballotpedia": "Emily Randall",
+"start": "2025-01-03"
+},
+{
+"bio": "M001235",
+"name": "Riley M. Moore",
+"first": "Riley",
+"last": "Moore",
+"chamber": "house",
+"state": "WV",
+"district": 2,
+"party": "Republican",
+"opensecrets": "N00051965",
+"fec": [
+"H4WV02205"
+],
+"ballotpedia": null,
+"start": "2025-01-03"
+},
+{
+"bio": "J000312",
+"name": "James C. Justice",
+"first": "Jim",
+"last": "Justice",
+"chamber": "senate",
+"state": "WV",
+"district": null,
+"party": "Republican",
+"opensecrets": "N00053062",
+"fec": [
+"S4WV00332"
+],
+"ballotpedia": null,
+"start": "2025-01-14"
+},
+{
+"bio": "H001104",
+"name": "Jon Husted",
+"first": "Jon",
+"last": "Husted",
+"chamber": "senate",
+"state": "OH",
+"district": null,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"S6OH00304"
+],
+"ballotpedia": "Jon Husted",
+"start": "2025-01-21"
+},
+{
+"bio": "M001244",
+"name": "Ashley Moody",
+"first": "Ashley",
+"last": "Moody",
+"chamber": "senate",
+"state": "FL",
+"district": null,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"S6FL00640"
+],
+"ballotpedia": "Ashley B. Moody",
+"start": "2025-01-21"
+},
+{
+"bio": "P000622",
+"name": "Jimmy Patronis",
+"first": "Jimmy",
+"last": "Patronis",
+"chamber": "house",
+"state": "FL",
+"district": 1,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H6FL01390"
+],
+"ballotpedia": "Jimmy Patronis",
+"start": "2025-04-02"
+},
+{
+"bio": "F000484",
+"name": "Randy Fine",
+"first": "Randall",
+"last": "Fine",
+"chamber": "house",
+"state": "FL",
+"district": 6,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H6FL06258"
+],
+"ballotpedia": "Randy Fine",
+"start": "2025-04-02"
+},
+{
+"bio": "W000831",
+"name": "James R. Walkinshaw",
+"first": "James",
+"last": "Walkinshaw",
+"chamber": "house",
+"state": "VA",
+"district": 11,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H6VA11066"
+],
+"ballotpedia": "James Walkinshaw",
+"start": "2025-09-10"
+},
+{
+"bio": "G000606",
+"name": "Adelita S. Grijalva",
+"first": "Adelita",
+"last": "Grijalva",
+"chamber": "house",
+"state": "AZ",
+"district": 7,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H6AZ07121"
+],
+"ballotpedia": "Adelita Grijalva",
+"start": "2025-11-12"
+},
+{
+"bio": "V000139",
+"name": "Matt Van Epps",
+"first": "Matt",
+"last": "Van Epps",
+"chamber": "house",
+"state": "TN",
+"district": 7,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H6TN07161"
+],
+"ballotpedia": "Matt Van Epps",
+"start": "2025-12-04"
+},
+{
+"bio": "M001245",
+"name": "Christian D. Menefee",
+"first": "Christian",
+"last": "Menefee",
+"chamber": "house",
+"state": "TX",
+"district": 18,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H6TX18232"
+],
+"ballotpedia": "Christian Menefee",
+"start": "2026-02-02"
+},
+{
+"bio": "A000383",
+"name": "Alan Armstrong",
+"first": "Alan",
+"last": "Armstrong",
+"chamber": "senate",
+"state": "OK",
+"district": null,
+"party": "Republican",
+"opensecrets": null,
+"fec": [],
+"ballotpedia": "Alan Armstrong",
+"start": "2026-03-24"
+},
+{
+"bio": "F000485",
+"name": "Clay Fuller",
+"first": "Clay",
+"last": "Fuller",
+"chamber": "house",
+"state": "GA",
+"district": 14,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H0GA14030"
+],
+"ballotpedia": "Clayton Fuller",
+"start": "2026-04-14"
+},
+{
+"bio": "M001246",
+"name": "Analilia Mejia",
+"first": "Analilia",
+"last": "Mejia",
+"chamber": "house",
+"state": "NJ",
+"district": 11,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H6NJ11286"
+],
+"ballotpedia": "Analilia Mejia",
+"start": "2026-04-20"
+},
+{
+"bio": "G000607",
+"name": "James Gallagher",
+"first": "James",
+"last": "Gallagher",
+"chamber": "house",
+"state": "CA",
+"district": 1,
+"party": "Republican",
+"opensecrets": null,
+"fec": [
+"H6CA01285"
+],
+"ballotpedia": null,
+"start": "2026-06-10"
+},
+{
+"bio": "G000608",
+"name": "Darline Graham",
+"first": "Darline",
+"last": "Graham Nordone",
+"chamber": "senate",
+"state": "SC",
+"district": null,
+"party": "Republican",
+"opensecrets": null,
+"fec": [],
+"ballotpedia": null,
+"start": "2026-07-14"
+},
+{
+"bio": "B001328",
+"name": "Everton Blair Jr.",
+"first": "Everton",
+"last": "Blair",
+"chamber": "house",
+"state": "GA",
+"district": 13,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H6GA13062"
+],
+"ballotpedia": "Everton Blair Jr.",
+"start": "2026-09-01"
+},
+{
+"bio": "W000832",
+"name": "Aisha Wahab",
+"first": "Aisha",
+"last": "Wahab",
+"chamber": "house",
+"state": "CA",
+"district": 14,
+"party": "Democrat",
+"opensecrets": null,
+"fec": [
+"H0CA15213"
+],
+"ballotpedia": "Aisha Wahab",
+"start": "2026-09-02"
+}
+]

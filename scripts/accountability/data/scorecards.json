@@ -1,0 +1,6389 @@
+{
+ "fetched": "2026-10-22",
+ "cards": {
+  "lcv": {
+   "name": "League of Conservation Voters",
+   "lean": "left",
+   "scale": "percent",
+   "source": "https://www.lcv.org/congressional-scorecard/members-of-congress/",
+   "notes": "National Environmental Scorecard. score = 2025 score (share of LCV-selected 2025 environmental roll call votes cast in the pro-environment direction; first session of the 119th Congress); lifetime = LCV lifetime score across all years served. LCV counts missed votes against the member. score is null where LCV shows N/A for 2025 (e.g. Speaker Mike Johnson, who rarely votes). Members newly sworn in after the 2025 scorecard with no LCV score shown (Armstrong OK-Sen, Fuller GA-14, Mejia NJ-11, Menefee TX-18) and members not listed at all (Gallagher CA-01, Blair GA-13, Wahab CA-14) are omitted. Collected from the member list page and its ?chamber=house&state=XX filtered views.",
+   "members": {
+    "B001319": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/katie-britt/"
+    },
+    "T000278": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tommy-tuberville/"
+    },
+    "M001153": {
+     "score": 20,
+     "lifetime": 20,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lisa-a-murkowski/"
+    },
+    "S001198": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dan-sullivan/"
+    },
+    "G000574": {
+     "score": 86,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ruben-gallego/"
+    },
+    "K000377": {
+     "score": 91,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-kelly/"
+    },
+    "B001236": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-n-boozman/"
+    },
+    "C001095": {
+     "score": 3,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-cotton/"
+    },
+    "P000145": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/alex-padilla/"
+    },
+    "S001150": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adam-b-schiff/"
+    },
+    "B001267": {
+     "score": 94,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-bennet/"
+    },
+    "H000273": {
+     "score": 91,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-hickenlooper/"
+    },
+    "B001277": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/richard-blumenthal/"
+    },
+    "M001169": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chris-s-murphy/"
+    },
+    "B001303": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lisa-blunt-rochester/"
+    },
+    "C001088": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chris-coons/"
+    },
+    "M001244": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ashley-moody/"
+    },
+    "S001217": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rick-scott/"
+    },
+    "O000174": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jon-ossoff/"
+    },
+    "W000790": {
+     "score": 91,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/raphael-warnock/"
+    },
+    "H001042": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mazie-k-hirono/"
+    },
+    "S001194": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brian-emanuel-schatz/"
+    },
+    "C000880": {
+     "score": 3,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-d-crapo/"
+    },
+    "R000584": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-risch/"
+    },
+    "D000622": {
+     "score": 100,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tammy-duckworth/"
+    },
+    "D000563": {
+     "score": 97,
+     "lifetime": 90,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dick-durbin/"
+    },
+    "B001299": {
+     "score": 3,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-banks/"
+    },
+    "Y000064": {
+     "score": 3,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/todd-young/"
+    },
+    "E000295": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joni-ernst/"
+    },
+    "G000386": {
+     "score": 0,
+     "lifetime": 17,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chuck-e-grassley/"
+    },
+    "M001198": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/roger-marshall/"
+    },
+    "M000934": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jerry-moran/"
+    },
+    "M000355": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mitch-mcconnell/"
+    },
+    "P000603": {
+     "score": 9,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rand-paul/"
+    },
+    "C001075": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bill-cassidy/"
+    },
+    "K000393": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-neely-kennedy/"
+    },
+    "C001035": {
+     "score": 31,
+     "lifetime": 52,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/susan-m-collins/"
+    },
+    "K000383": {
+     "score": 94,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/angus-king/"
+    },
+    "A000382": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/angela-alsobrooks/"
+    },
+    "V000128": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chris-van-hollen/"
+    },
+    "M000133": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ed-markey/"
+    },
+    "W000817": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/elizabeth-warren/"
+    },
+    "P000595": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gary-c-peters/"
+    },
+    "S001208": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/elissa-slotkin/"
+    },
+    "K000367": {
+     "score": 94,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/amy-klobuchar/"
+    },
+    "S001203": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tina-smith-7/"
+    },
+    "H001079": {
+     "score": 0,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cindy-hyde-smith/"
+    },
+    "W000437": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/roger-f-wicker/"
+    },
+    "H001089": {
+     "score": 6,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joshua-hawley/"
+    },
+    "S001227": {
+     "score": 3,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eric-schmitt/"
+    },
+    "D000618": {
+     "score": 6,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steve-daines/"
+    },
+    "S001232": {
+     "score": 6,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tim-sheehy/"
+    },
+    "F000463": {
+     "score": 3,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/deb-fischer/"
+    },
+    "R000618": {
+     "score": 3,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pete-ricketts/"
+    },
+    "C001113": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/catherine-cortez-masto/"
+    },
+    "R000608": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jacky-rosen/"
+    },
+    "H001076": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/margaret-wood-hassan/"
+    },
+    "S001181": {
+     "score": 91,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jeanne-shaheen/"
+    },
+    "B001288": {
+     "score": 94,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cory-anthony-booker/"
+    },
+    "K000394": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andy-kim/"
+    },
+    "H001046": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/martin-t-heinrich/"
+    },
+    "L000570": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ben-ray-lujan/"
+    },
+    "G000555": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kirsten-e-gillibrand/"
+    },
+    "S000148": {
+     "score": 100,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chuck-schumer/"
+    },
+    "B001305": {
+     "score": 3,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ted-budd/"
+    },
+    "T000476": {
+     "score": 9,
+     "lifetime": 11,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/thom-tillis/"
+    },
+    "C001096": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kevin-cramer/"
+    },
+    "H001061": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-hoeven/"
+    },
+    "H001104": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jon-husted/"
+    },
+    "M001242": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bernie-moreno/"
+    },
+    "L000575": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-lankford/"
+    },
+    "M001176": {
+     "score": 97,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jeff-merkley/"
+    },
+    "W000779": {
+     "score": 100,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ron-wyden/"
+    },
+    "F000479": {
+     "score": 80,
+     "lifetime": 84,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-fetterman/"
+    },
+    "M001243": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-mccormick/"
+    },
+    "R000122": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jack-reed/"
+    },
+    "W000802": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sheldon-whitehouse/"
+    },
+    "G000608": {
+     "score": 3,
+     "lifetime": 14,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lindsey-o-graham/"
+    },
+    "S001184": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tim-scott/"
+    },
+    "R000605": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-rounds/"
+    },
+    "T000250": {
+     "score": 3,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-r-thune/"
+    },
+    "B001243": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marsha-blackburn/"
+    },
+    "H000601": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bill-hagerty/"
+    },
+    "C001056": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-cornyn/"
+    },
+    "C001098": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ted-cruz/"
+    },
+    "C001114": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-curtis/"
+    },
+    "L000577": {
+     "score": 3,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-lee/"
+    },
+    "S000033": {
+     "score": 94,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bernie-sanders/"
+    },
+    "W000800": {
+     "score": 97,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/peter-f-welch/"
+    },
+    "K000384": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/timothy-kaine/"
+    },
+    "W000805": {
+     "score": 97,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-r-warner/"
+    },
+    "C000127": {
+     "score": 97,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maria-cantwell/"
+    },
+    "M001111": {
+     "score": 100,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/patty-murray/"
+    },
+    "C001047": {
+     "score": 3,
+     "lifetime": 16,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/shelley-moore-capito/"
+    },
+    "J000312": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-c-justice/"
+    },
+    "B001230": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tammy-baldwin/"
+    },
+    "J000293": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ron-johnson/"
+    },
+    "B001261": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-barrasso/"
+    },
+    "L000571": {
+     "score": 3,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cynthia-m-lummis/"
+    },
+    "M001212": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/barry-moore/"
+    },
+    "F000481": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/shomari-figures/"
+    },
+    "R000575": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-d-rogers/"
+    },
+    "A000055": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-b-aderholt/"
+    },
+    "S001220": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dale-strong/"
+    },
+    "P000609": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gary-palmer/"
+    },
+    "S001185": {
+     "score": 91,
+     "lifetime": 85,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/terri-sewell/"
+    },
+    "B001323": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nicholas-j-begich/"
+    },
+    "R000600": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/amata-coleman-radewagen/"
+    },
+    "S001183": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-schweikert/"
+    },
+    "C001132": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eli-crane/"
+    },
+    "A000381": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/yassamin-ansari/"
+    },
+    "S001211": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/greg-stanton/"
+    },
+    "B001302": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andy-biggs/"
+    },
+    "C001133": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/juan-ciscomani/"
+    },
+    "G000606": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adelita-grijalva/"
+    },
+    "H001098": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/abraham-j-hamadeh/"
+    },
+    "G000565": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/paul-gosar/"
+    },
+    "C001087": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rick-crawford/"
+    },
+    "H001072": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/french-hill/"
+    },
+    "W000809": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steve-womack/"
+    },
+    "W000821": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bruce-westerman/"
+    },
+    "H001068": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jared-huffman/"
+    },
+    "K000401": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kevin-kiley/"
+    },
+    "T000460": {
+     "score": 97,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-thompson/"
+    },
+    "M001177": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-mcclintock/"
+    },
+    "B001287": {
+     "score": 97,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ami-bera/"
+    },
+    "M001163": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/doris-o-matsui/"
+    },
+    "G000559": {
+     "score": 100,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-garamendi/"
+    },
+    "H001090": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/josh-harder/"
+    },
+    "D000623": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-desaulnier/"
+    },
+    "P000197": {
+     "score": 100,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nancy-pelosi/"
+    },
+    "S001231": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lateefah-simon/"
+    },
+    "G000605": {
+     "score": 61,
+     "lifetime": 61,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adam-gray/"
+    },
+    "M001225": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kevin-mullin/"
+    },
+    "L000607": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sam-t-liccardo/"
+    },
+    "K000389": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ro-khanna/"
+    },
+    "L000397": {
+     "score": 97,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/zoe-lofgren/"
+    },
+    "P000613": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jimmy-panetta/"
+    },
+    "F000480": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/vince-fong/"
+    },
+    "C001059": {
+     "score": 67,
+     "lifetime": 62,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-costa/"
+    },
+    "V000129": {
+     "score": 12,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-g-valadao/"
+    },
+    "O000019": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jay-obernolte/"
+    },
+    "C001112": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/salud-carbajal/"
+    },
+    "R000599": {
+     "score": 91,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/raul-ruiz/"
+    },
+    "B001285": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/julia-brownley/"
+    },
+    "W000830": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/george-whitesides/"
+    },
+    "C001080": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/judy-m-chu/"
+    },
+    "R000620": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/luz-m-rivas/"
+    },
+    "F000483": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/laura-friedman/"
+    },
+    "C001123": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gilbert-cisneros/"
+    },
+    "S000344": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brad-j-sherman/"
+    },
+    "A000371": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pete-aguilar/"
+    },
+    "G000585": {
+     "score": 91,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jimmy-gomez/"
+    },
+    "T000474": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/norma-torres/"
+    },
+    "L000582": {
+     "score": 97,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ted-lieu/"
+    },
+    "K000400": {
+     "score": 97,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sydney-kamlager-dove/"
+    },
+    "S001156": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/linda-sanchez/"
+    },
+    "T000472": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-takano/"
+    },
+    "K000397": {
+     "score": 3,
+     "lifetime": 13,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/young-kim/"
+    },
+    "C000059": {
+     "score": 3,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ken-s-calvert/"
+    },
+    "G000598": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-garcia-2/"
+    },
+    "W000187": {
+     "score": 88,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maxine-waters/"
+    },
+    "B001300": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nanette-barragan/"
+    },
+    "T000491": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/derek-tran/"
+    },
+    "C001110": {
+     "score": 82,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/j-correa/"
+    },
+    "M001241": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dave-min/"
+    },
+    "I000056": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/darrell-issa/"
+    },
+    "L000593": {
+     "score": 97,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-levin/"
+    },
+    "P000608": {
+     "score": 91,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/scott-h-peters/"
+    },
+    "J000305": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sara-jacobs/"
+    },
+    "V000130": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/juan-vargas/"
+    },
+    "D000197": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/diana-l-degette/"
+    },
+    "N000191": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joe-neguse/"
+    },
+    "H001100": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jeff-hurd/"
+    },
+    "B000825": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lauren-boebert/"
+    },
+    "C001137": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jeff-crank/"
+    },
+    "C001121": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jason-crow/"
+    },
+    "P000620": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brittany-pettersen/"
+    },
+    "E000300": {
+     "score": 6,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gabe-evans/"
+    },
+    "L000557": {
+     "score": 97,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-b-larson/"
+    },
+    "C001069": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joe-courtney/"
+    },
+    "D000216": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rosa-l-delauro/"
+    },
+    "H001047": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-himes/"
+    },
+    "H001081": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jahana-hayes/"
+    },
+    "M001238": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sarah-mcbride/"
+    },
+    "N000147": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eleanor-holmes-norton/"
+    },
+    "P000622": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jimmy-patronis/"
+    },
+    "D000628": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/neal-dunn/"
+    },
+    "C001039": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kat-cammack/"
+    },
+    "B001314": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/aaron-bean/"
+    },
+    "R000609": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-rutherford/"
+    },
+    "F000484": {
+     "score": 4,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/randy-fine/"
+    },
+    "M001216": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cory-mills/"
+    },
+    "H001099": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-haridopolos/"
+    },
+    "S001200": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/darren-soto/"
+    },
+    "F000476": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maxwell-frost/"
+    },
+    "W000806": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/daniel-webster/"
+    },
+    "B001257": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gus-bilirakis/"
+    },
+    "L000596": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/anna-paulina-luna/"
+    },
+    "C001066": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kathy-castor/"
+    },
+    "L000597": {
+     "score": 3,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/laurel-lee/"
+    },
+    "B001260": {
+     "score": 3,
+     "lifetime": 18,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/vern-buchanan/"
+    },
+    "S001214": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/greg-steube/"
+    },
+    "F000472": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/scott-franklin/"
+    },
+    "D000032": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/byron-donalds/"
+    },
+    "M001199": {
+     "score": 0,
+     "lifetime": 16,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brian-mast/"
+    },
+    "F000462": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lois-frankel/"
+    },
+    "M001217": {
+     "score": 88,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jared-moskowitz/"
+    },
+    "W000808": {
+     "score": 97,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/frederica-wilson/"
+    },
+    "W000797": {
+     "score": 100,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/debbie-wasserman-schultz/"
+    },
+    "D000600": {
+     "score": 0,
+     "lifetime": 12,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mario-diaz-balart/"
+    },
+    "S000168": {
+     "score": 0,
+     "lifetime": 11,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maria-elvira-salazar/"
+    },
+    "G000593": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/carlos-gimenez/"
+    },
+    "C001103": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/buddy-carter/"
+    },
+    "B000490": {
+     "score": 85,
+     "lifetime": 62,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sanford-d-bishop/"
+    },
+    "J000311": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brian-jack/"
+    },
+    "J000288": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/hank-johnson/"
+    },
+    "W000788": {
+     "score": 91,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nikema-williams/"
+    },
+    "M001208": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lucy-mcbath/"
+    },
+    "M001218": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rich-mccormick/"
+    },
+    "S001189": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/austin-scott/"
+    },
+    "C001116": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andrew-clyde/"
+    },
+    "C001129": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-collins/"
+    },
+    "L000583": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/barry-loudermilk/"
+    },
+    "A000372": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rick-allen/"
+    },
+    "M001219": {
+     "score": 67,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-moylan/"
+    },
+    "C001055": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ed-case/"
+    },
+    "T000487": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jill-tokuda/"
+    },
+    "F000469": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/russ-fulcher/"
+    },
+    "S001148": {
+     "score": 3,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-simpson/"
+    },
+    "J000309": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jonathan-jackson/"
+    },
+    "K000385": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robin-kelly/"
+    },
+    "R000617": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/delia-ramirez/"
+    },
+    "G000586": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jesus-garcia/"
+    },
+    "Q000023": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-quigley/"
+    },
+    "C001117": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sean-casten/"
+    },
+    "D000096": {
+     "score": 100,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/danny-k-davis/"
+    },
+    "K000391": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/raja-krishnamoorthi/"
+    },
+    "S001145": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jan-schakowsky/"
+    },
+    "S001190": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brad-schneider/"
+    },
+    "F000454": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bill-foster/"
+    },
+    "B001295": {
+     "score": 3,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-bost/"
+    },
+    "B001315": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nikki-budzinski/"
+    },
+    "U000040": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lauren-underwood/"
+    },
+    "M001211": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mary-miller/"
+    },
+    "L000585": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/darin-lahood/"
+    },
+    "S001225": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eric-sorensen/"
+    },
+    "M001214": {
+     "score": 94,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/frank-mrvan/"
+    },
+    "Y000067": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rudy-yakym-2/"
+    },
+    "S001188": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marlin-stutzman/"
+    },
+    "B001307": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-baird/"
+    },
+    "S000929": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/victoria-spartz/"
+    },
+    "S001229": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jefferson-shreve/"
+    },
+    "C001072": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andre-carson/"
+    },
+    "M001233": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-b-messmer/"
+    },
+    "H001093": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/erin-houchin/"
+    },
+    "M001215": {
+     "score": 6,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mariannette-miller-meeks/"
+    },
+    "H001091": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ashley-hinson/"
+    },
+    "N000193": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/zach-nunn/"
+    },
+    "F000446": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/randy-feenstra/"
+    },
+    "M000871": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tracey-mann/"
+    },
+    "S001228": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/derek-schmidt/"
+    },
+    "D000629": {
+     "score": 94,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sharice-davids/"
+    },
+    "E000298": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ron-estes/"
+    },
+    "C001108": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-comer/"
+    },
+    "G000558": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brett-guthrie/"
+    },
+    "M001220": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/morgan-mcgarvey/"
+    },
+    "M001184": {
+     "score": 15,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/thomas-massie/"
+    },
+    "R000395": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/harold-rogers/"
+    },
+    "B001282": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/garland-barr/"
+    },
+    "S001176": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steve-scalise/"
+    },
+    "C001125": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/troy-carter/"
+    },
+    "H001077": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/clay-higgins/"
+    },
+    "J000299": {
+     "score": null,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-johnson/"
+    },
+    "L000595": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/julia-letlow/"
+    },
+    "F000110": {
+     "score": 91,
+     "lifetime": 79,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cleo-fields/"
+    },
+    "P000597": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chellie-m-pingree/"
+    },
+    "G000592": {
+     "score": 55,
+     "lifetime": 70,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jared-golden/"
+    },
+    "H001052": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andy-harris/"
+    },
+    "O000176": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/johnny-olszewski/"
+    },
+    "E000301": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sarah-elfreth/"
+    },
+    "I000058": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/glenn-ivey/"
+    },
+    "H000874": {
+     "score": 88,
+     "lifetime": 84,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steny-h-hoyer/"
+    },
+    "M001232": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/april-mcclain-delaney/"
+    },
+    "M000687": {
+     "score": 97,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kweisi-mfume/"
+    },
+    "R000606": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jamie-raskin/"
+    },
+    "N000015": {
+     "score": 100,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/richard-e-neal/"
+    },
+    "M000312": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-mcgovern/"
+    },
+    "T000482": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lori-trahan/"
+    },
+    "A000148": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jake-auchincloss/"
+    },
+    "C001101": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/katherine-m-clark/"
+    },
+    "M001196": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/seth-moulton/"
+    },
+    "P000617": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ayanna-pressley/"
+    },
+    "L000562": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/stephen-f-lynch/"
+    },
+    "K000375": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bill-keating/"
+    },
+    "B001301": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jack-bergman/"
+    },
+    "M001194": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-moolenaar/"
+    },
+    "S001221": {
+     "score": 88,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/hillary-scholten/"
+    },
+    "H001058": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bill-huizenga/"
+    },
+    "W000798": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tim-walberg/"
+    },
+    "D000624": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/debbie-dingell/"
+    },
+    "B001321": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-barrett/"
+    },
+    "M001237": {
+     "score": 85,
+     "lifetime": 85,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kristen-mcdonald-rivet/"
+    },
+    "M001136": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lisa-mcclain/"
+    },
+    "J000307": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-james/"
+    },
+    "S001215": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/haley-stevens/"
+    },
+    "T000481": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rashida-tlaib/"
+    },
+    "T000488": {
+     "score": 97,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/shri-thanedar/"
+    },
+    "F000475": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brad-finstad/"
+    },
+    "C001119": {
+     "score": 97,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/angie-craig/"
+    },
+    "M001234": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kelly-morrison/"
+    },
+    "M001143": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/betty-mccollum/"
+    },
+    "O000173": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ilhan-omar/"
+    },
+    "E000294": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-emmer/"
+    },
+    "F000470": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michelle-fischbach/"
+    },
+    "S001212": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pete-stauber/"
+    },
+    "K000388": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/trent-kelly/"
+    },
+    "T000193": {
+     "score": 97,
+     "lifetime": 85,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bennie-g-thompson/"
+    },
+    "G000591": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-guest/"
+    },
+    "E000235": {
+     "score": 3,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-ezell/"
+    },
+    "B001324": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/wesley-bell/"
+    },
+    "W000812": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ann-wagner/"
+    },
+    "O000177": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-f-onder/"
+    },
+    "A000379": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-alford/"
+    },
+    "C001061": {
+     "score": 100,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/emanuel-cleaver/"
+    },
+    "G000546": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sam-graves/"
+    },
+    "B001316": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eric-burlison/"
+    },
+    "S001195": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jason-t-smith/"
+    },
+    "Z000018": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ryan-zinke/"
+    },
+    "D000634": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/troy-downing/"
+    },
+    "F000474": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-flood/"
+    },
+    "B001298": {
+     "score": 9,
+     "lifetime": 15,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/don-bacon/"
+    },
+    "S001172": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adrian-m-smith/"
+    },
+    "T000468": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dina-titus/"
+    },
+    "A000369": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-e-amodei/"
+    },
+    "L000590": {
+     "score": 88,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/susie-lee/"
+    },
+    "H001066": {
+     "score": 88,
+     "lifetime": 90,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steven-a-horsford/"
+    },
+    "P000614": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chris-pappas/"
+    },
+    "G000604": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maggie-goodlander/"
+    },
+    "N000188": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/donald-w-norcross/"
+    },
+    "V000133": {
+     "score": 9,
+     "lifetime": 29,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jefferson-van-drew/"
+    },
+    "C001136": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/herbert-c-conaway/"
+    },
+    "S000522": {
+     "score": 6,
+     "lifetime": 54,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/christopher-h-smith/"
+    },
+    "G000583": {
+     "score": 79,
+     "lifetime": 92,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/josh-gottheimer/"
+    },
+    "P000034": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/frank-j-pallone/"
+    },
+    "K000398": {
+     "score": 9,
+     "lifetime": 18,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/thomas-kean/"
+    },
+    "M001226": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-menendez-2/"
+    },
+    "P000621": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nellie-pou/"
+    },
+    "M001229": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lamonica-mciver/"
+    },
+    "W000822": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bonnie-watson-coleman/"
+    },
+    "S001218": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/melanie-stansbury/"
+    },
+    "V000136": {
+     "score": 79,
+     "lifetime": 88,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gabe-vasquez/"
+    },
+    "L000273": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/teresa-leger-fernandez/"
+    },
+    "L000598": {
+     "score": 12,
+     "lifetime": 13,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nick-lalota/"
+    },
+    "G000597": {
+     "score": 9,
+     "lifetime": 15,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andrew-garbarino/"
+    },
+    "S001201": {
+     "score": 84,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/thomas-suozzi/"
+    },
+    "G000602": {
+     "score": 84,
+     "lifetime": 84,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/laura-gillen/"
+    },
+    "M001137": {
+     "score": 97,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gregory-w-meeks/"
+    },
+    "M001188": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/grace-meng/"
+    },
+    "V000081": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nydia-velazquez/"
+    },
+    "J000294": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/hakeem-s-jeffries/"
+    },
+    "C001067": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/yvette-d-clarke/"
+    },
+    "G000599": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dan-goldman/"
+    },
+    "M000317": {
+     "score": 9,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nicole-malliotakis/"
+    },
+    "N000002": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jerrold-l-nadler/"
+    },
+    "E000297": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adriano-espaillat/"
+    },
+    "O000172": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/alexandria-ocasio-cortez/"
+    },
+    "T000486": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ritchie-torres/"
+    },
+    "L000606": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/george-latimer/"
+    },
+    "L000599": {
+     "score": 12,
+     "lifetime": 17,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-lawler/"
+    },
+    "R000579": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/patrick-ryan-2/"
+    },
+    "R000622": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/josh-riley/"
+    },
+    "T000469": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/paul-d-tonko/"
+    },
+    "S001196": {
+     "score": 0,
+     "lifetime": 23,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/elise-stefanik/"
+    },
+    "M001231": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-w-mannion/"
+    },
+    "L000600": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nick-langworthy/"
+    },
+    "T000478": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/claudia-tenney/"
+    },
+    "M001206": {
+     "score": 91,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joe-morelle/"
+    },
+    "K000402": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/timothy-kennedy/"
+    },
+    "D000230": {
+     "score": 64,
+     "lifetime": 71,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/donald-g-davis/"
+    },
+    "R000305": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/deborah-ross/"
+    },
+    "M001210": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/greg-murphy/"
+    },
+    "F000477": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/valerie-foushee/"
+    },
+    "F000450": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/virginia-foxx/"
+    },
+    "M001240": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/addison-p-mcdowell/"
+    },
+    "R000603": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-rouzer/"
+    },
+    "H001102": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-harris/"
+    },
+    "H001067": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/richard-hudson/"
+    },
+    "H001101": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pat-harrigan/"
+    },
+    "E000246": {
+     "score": 3,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chuck-edwards/"
+    },
+    "A000370": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/alma-adams/"
+    },
+    "K000405": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brad-knott/"
+    },
+    "M001236": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tim-moore/"
+    },
+    "F000482": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/julie-fedorchak/"
+    },
+    "K000404": {
+     "score": 33,
+     "lifetime": 33,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kimberlyn-king-hinds/"
+    },
+    "L000601": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/greg-landsman/"
+    },
+    "T000490": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-j-taylor/"
+    },
+    "B001281": {
+     "score": 88,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joyce-beatty/"
+    },
+    "J000289": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jim-jordan/"
+    },
+    "L000566": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bob-latta/"
+    },
+    "R000619": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-a-rulli/"
+    },
+    "M001222": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/max-miller/"
+    },
+    "D000626": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/warren-davidson/"
+    },
+    "K000009": {
+     "score": 94,
+     "lifetime": 86,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marcy-kaptur/"
+    },
+    "T000463": {
+     "score": 6,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-r-turner/"
+    },
+    "B001313": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/shontel-brown/"
+    },
+    "B001306": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/troy-balderson/"
+    },
+    "S001223": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/emilia-sykes/"
+    },
+    "J000295": {
+     "score": 6,
+     "lifetime": 12,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-p-joyce/"
+    },
+    "C001126": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-carey/"
+    },
+    "H001082": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kevin-hern/"
+    },
+    "B001317": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/josh-brecheen/"
+    },
+    "L000491": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/frank-d-lucas/"
+    },
+    "C001053": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-cole/"
+    },
+    "B000740": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/stephanie-bice/"
+    },
+    "B001278": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/suzanne-bonamici/"
+    },
+    "B000668": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/cliff-bentz/"
+    },
+    "D000635": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/maxine-dexter/"
+    },
+    "H001094": {
+     "score": 97,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/valerie-hoyle/"
+    },
+    "B001326": {
+     "score": 91,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/janelle-s-bynum/"
+    },
+    "S001226": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/andrea-salinas/"
+    },
+    "F000466": {
+     "score": 76,
+     "lifetime": 71,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brian-fitzpatrick/"
+    },
+    "B001296": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brendan-boyle/"
+    },
+    "E000296": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dwight-evans/"
+    },
+    "D000631": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/madeleine-dean/"
+    },
+    "S001205": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mary-gay-scanlon/"
+    },
+    "H001085": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chrissy-houlahan/"
+    },
+    "M001230": {
+     "score": 9,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ryan-mackenzie/"
+    },
+    "B001327": {
+     "score": 9,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-p-bresnahan/"
+    },
+    "M001204": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/daniel-meuser/"
+    },
+    "P000605": {
+     "score": 3,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/scott-perry/"
+    },
+    "S001199": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lloyd-smucker/"
+    },
+    "L000602": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/summer-lee/"
+    },
+    "J000302": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-joyce/"
+    },
+    "R000610": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/guy-reschenthaler/"
+    },
+    "T000467": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/glenn-w-thompson/"
+    },
+    "K000376": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-kelly/"
+    },
+    "D000530": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chris-deluzio/"
+    },
+    "H001103": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pablo-jose-hernandez/"
+    },
+    "A000380": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gabe-amo/"
+    },
+    "M001223": {
+     "score": 94,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/seth-magaziner/"
+    },
+    "M000194": {
+     "score": 6,
+     "lifetime": 19,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nancy-mace/"
+    },
+    "W000795": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joe-wilson/"
+    },
+    "B001325": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sheri-biggs/"
+    },
+    "T000480": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/william-timmons/"
+    },
+    "N000190": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ralph-norman/"
+    },
+    "C000537": {
+     "score": 94,
+     "lifetime": 88,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-e-clyburn/"
+    },
+    "F000478": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/russell-fry/"
+    },
+    "J000301": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dusty-johnson/"
+    },
+    "H001086": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/diana-harshbarger/"
+    },
+    "B001309": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tim-burchett/"
+    },
+    "F000459": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chuck-fleischmann/"
+    },
+    "D000616": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/scott-desjarlais/"
+    },
+    "O000175": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/william-ogles/"
+    },
+    "R000612": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-rose/"
+    },
+    "V000139": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/matt-van-epps/"
+    },
+    "K000392": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/david-kustoff/"
+    },
+    "C001068": {
+     "score": 96,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/steve-cohen/"
+    },
+    "M001224": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/nathaniel-moran/"
+    },
+    "C001120": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dan-crenshaw/"
+    },
+    "S001224": {
+     "score": 3,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/keith-self/"
+    },
+    "F000246": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pat-fallon/"
+    },
+    "G000589": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lance-gooden/"
+    },
+    "E000071": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jake-ellzey/"
+    },
+    "F000468": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lizzie-fletcher/"
+    },
+    "L000603": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/morgan-luttrell/"
+    },
+    "G000553": {
+     "score": 100,
+     "lifetime": 90,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/al-green/"
+    },
+    "M001157": {
+     "score": 3,
+     "lifetime": 8,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-t-mccaul/"
+    },
+    "P000048": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/august-pfluger/"
+    },
+    "G000601": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/craig-a-goldman/"
+    },
+    "J000304": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ronny-jackson/"
+    },
+    "W000814": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/randy-k-weber/"
+    },
+    "D000594": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/monica-de-la-cruz/"
+    },
+    "E000299": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/veronica-escobar/"
+    },
+    "S000250": {
+     "score": 3,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pete-sessions/"
+    },
+    "A000375": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jodey-arrington/"
+    },
+    "C001091": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/joaquin-castro/"
+    },
+    "R000614": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/chip-roy/"
+    },
+    "N000026": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/troy-nehls/"
+    },
+    "V000134": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/beth-van-duyne/"
+    },
+    "W000816": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/roger-williams/"
+    },
+    "G000603": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brandon-gill/"
+    },
+    "C001115": {
+     "score": 3,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-cloud/"
+    },
+    "C001063": {
+     "score": 42,
+     "lifetime": 51,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/henry-cuellar/"
+    },
+    "G000587": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/sylvia-garcia/"
+    },
+    "C001130": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jasmine-crockett/"
+    },
+    "C001051": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-r-carter/"
+    },
+    "J000310": {
+     "score": 91,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/julie-johnson/"
+    },
+    "V000131": {
+     "score": 79,
+     "lifetime": 91,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marc-a-veasey/"
+    },
+    "G000581": {
+     "score": 55,
+     "lifetime": 75,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/vicente-gonzalez/"
+    },
+    "C001131": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/greg-casar/"
+    },
+    "B001291": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/brian-babin/"
+    },
+    "D000399": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/lloyd-a-doggett/"
+    },
+    "H001095": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/wesley-hunt/"
+    },
+    "M001213": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/blake-moore/"
+    },
+    "M001228": {
+     "score": 3,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/celeste-maloy/"
+    },
+    "K000403": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mike-kennedy/"
+    },
+    "O000086": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/burgess-owens/"
+    },
+    "B001318": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/becca-balint/"
+    },
+    "P000610": {
+     "score": 67,
+     "lifetime": 66,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/stacey-plaskett/"
+    },
+    "W000804": {
+     "score": 3,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rob-wittman/"
+    },
+    "K000399": {
+     "score": 6,
+     "lifetime": 11,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jennifer-kiggans/"
+    },
+    "S000185": {
+     "score": 100,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/robert-c-scott/"
+    },
+    "M001227": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/jennifer-mcclellan/"
+    },
+    "M001239": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/john-j-mcguire/"
+    },
+    "C001118": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/ben-cline/"
+    },
+    "V000138": {
+     "score": 88,
+     "lifetime": 88,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/eugene-simon-vindman/"
+    },
+    "B001292": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/donald-beyer/"
+    },
+    "G000568": {
+     "score": 3,
+     "lifetime": 6,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/morgan-griffith/"
+    },
+    "S001230": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/suhas-subramanyam/"
+    },
+    "W000831": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/james-walkinshaw/"
+    },
+    "D000617": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/suzan-k-delbene/"
+    },
+    "L000560": {
+     "score": 97,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/rick-larsen/"
+    },
+    "G000600": {
+     "score": 48,
+     "lifetime": 57,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marie-gluesenkamp-perez/"
+    },
+    "N000189": {
+     "score": 6,
+     "lifetime": 7,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/dan-newhouse/"
+    },
+    "B001322": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/michael-baumgartner/"
+    },
+    "R000621": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/emily-randall/"
+    },
+    "J000298": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/pramila-jayapal/"
+    },
+    "S001216": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/kim-schrier/"
+    },
+    "S000510": {
+     "score": 100,
+     "lifetime": 93,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/adam-smith/"
+    },
+    "S001159": {
+     "score": 97,
+     "lifetime": 97,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/marilyn-strickland/"
+    },
+    "M001205": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/carol-miller/"
+    },
+    "M001235": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/riley-m-moore/"
+    },
+    "S001213": {
+     "score": 0,
+     "lifetime": 10,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/bryan-steil/"
+    },
+    "P000607": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/mark-pocan/"
+    },
+    "V000135": {
+     "score": 6,
+     "lifetime": 9,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/derrick-van-orden/"
+    },
+    "M001160": {
+     "score": 94,
+     "lifetime": 95,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/gwen-moore/"
+    },
+    "F000471": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/scott-fitzgerald/"
+    },
+    "G000576": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/glenn-grothman/"
+    },
+    "T000165": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tom-tiffany/"
+    },
+    "W000829": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/tony-wied/"
+    },
+    "H001096": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "2025",
+     "url": "https://www.lcv.org/moc/harriet-hageman/"
+    }
+   }
+  },
+  "heritage": {
+   "name": "Heritage Action for America",
+   "lean": "right",
+   "scale": "percent",
+   "source": "https://heritageaction.com/scorecard/members",
+   "notes": "Heritage Action Scorecard 119. score = the 'Session Score' shown on each member page (page title labels it 'Scorecard 119'), covering key votes and weighted cosponsorships Heritage Action has scored in the 119th Congress to date; the scorecard updates weekly while Congress is in session, so this is a snapshot as of the fetch date. lifetime = Heritage Action lifetime score. Read from individual member pages at heritageaction.com/scorecard/members/{bioguide}; the list/search pages load data by script and show no members. Coverage: 529 of 539 current members of Congress. Members not included: pages that returned a server error or a broken page when fetched (several non-voting delegates and some newly seated members), and one page that did not state its chamber. A null value means the page showed N/A for that score.",
+   "members": {
+    "C000127": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C000127"
+    },
+    "K000367": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000367"
+    },
+    "S000033": {
+     "score": 0,
+     "lifetime": 12,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000033"
+    },
+    "W000802": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000802"
+    },
+    "B001261": {
+     "score": 94,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001261"
+    },
+    "W000437": {
+     "score": 79,
+     "lifetime": 60,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000437"
+    },
+    "C001035": {
+     "score": 18,
+     "lifetime": 24,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001035"
+    },
+    "C001056": {
+     "score": 96,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001056"
+    },
+    "D000563": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000563"
+    },
+    "M000355": {
+     "score": 77,
+     "lifetime": 61,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000355"
+    },
+    "M001176": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001176"
+    },
+    "R000122": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000122"
+    },
+    "R000584": {
+     "score": 96,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000584"
+    },
+    "S001181": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001181"
+    },
+    "W000805": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000805"
+    },
+    "G000555": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000555"
+    },
+    "C001088": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001088"
+    },
+    "A000055": {
+     "score": 83,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000055"
+    },
+    "B001230": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001230"
+    },
+    "B001267": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001267"
+    },
+    "B001257": {
+     "score": 91,
+     "lifetime": 78,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001257"
+    },
+    "B000490": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B000490"
+    },
+    "B001243": {
+     "score": 98,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001243"
+    },
+    "B001277": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001277"
+    },
+    "B001236": {
+     "score": 79,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001236"
+    },
+    "B001260": {
+     "score": 79,
+     "lifetime": 64,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001260"
+    },
+    "C000059": {
+     "score": 81,
+     "lifetime": 61,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C000059"
+    },
+    "C001047": {
+     "score": 79,
+     "lifetime": 53,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001047"
+    },
+    "C001072": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001072"
+    },
+    "C001051": {
+     "score": 72,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001051"
+    },
+    "C001075": {
+     "score": 96,
+     "lifetime": 66,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001075"
+    },
+    "C001066": {
+     "score": 14,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001066"
+    },
+    "C001080": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001080"
+    },
+    "C001061": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001061"
+    },
+    "C001068": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001068"
+    },
+    "C001053": {
+     "score": 72,
+     "lifetime": 60,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001053"
+    },
+    "C001059": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001059"
+    },
+    "C001069": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001069"
+    },
+    "C000880": {
+     "score": 96,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C000880"
+    },
+    "C001087": {
+     "score": 79,
+     "lifetime": 70,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001087"
+    },
+    "C001063": {
+     "score": 13,
+     "lifetime": 16,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001063"
+    },
+    "D000096": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000096"
+    },
+    "D000197": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000197"
+    },
+    "D000216": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000216"
+    },
+    "D000616": {
+     "score": 93,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000616"
+    },
+    "D000600": {
+     "score": 72,
+     "lifetime": 52,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000600"
+    },
+    "D000399": {
+     "score": 7,
+     "lifetime": 12,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000399"
+    },
+    "F000459": {
+     "score": 81,
+     "lifetime": 74,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000459"
+    },
+    "F000450": {
+     "score": 92,
+     "lifetime": 78,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000450"
+    },
+    "C001067": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001067"
+    },
+    "C000537": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C000537"
+    },
+    "G000559": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000559"
+    },
+    "G000565": {
+     "score": 100,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000565"
+    },
+    "G000386": {
+     "score": 94,
+     "lifetime": 70,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000386"
+    },
+    "G000546": {
+     "score": 85,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000546"
+    },
+    "G000553": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000553"
+    },
+    "G000568": {
+     "score": 91,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000568"
+    },
+    "G000558": {
+     "score": 79,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000558"
+    },
+    "H001052": {
+     "score": 94,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001052"
+    },
+    "H001046": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001046"
+    },
+    "H001047": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001047"
+    },
+    "H001042": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001042"
+    },
+    "H001061": {
+     "score": 94,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001061"
+    },
+    "H000874": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H000874"
+    },
+    "H001058": {
+     "score": 85,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001058"
+    },
+    "J000288": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000288"
+    },
+    "J000293": {
+     "score": 96,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000293"
+    },
+    "J000289": {
+     "score": 85,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000289"
+    },
+    "K000009": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000009"
+    },
+    "K000375": {
+     "score": null,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000375"
+    },
+    "K000376": {
+     "score": 83,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000376"
+    },
+    "L000575": {
+     "score": 96,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000575"
+    },
+    "L000560": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000560"
+    },
+    "L000557": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000557"
+    },
+    "L000566": {
+     "score": 85,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000566"
+    },
+    "L000577": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000577"
+    },
+    "L000397": {
+     "score": 7,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000397"
+    },
+    "L000491": {
+     "score": 72,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000491"
+    },
+    "L000570": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000570"
+    },
+    "L000562": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000562"
+    },
+    "M000133": {
+     "score": 29,
+     "lifetime": 11,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000133"
+    },
+    "M001163": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001163"
+    },
+    "M001157": {
+     "score": 69,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001157"
+    },
+    "M001177": {
+     "score": 92,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001177"
+    },
+    "M001143": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001143"
+    },
+    "M000312": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000312"
+    },
+    "M001137": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001137"
+    },
+    "M001160": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001160"
+    },
+    "M000934": {
+     "score": 79,
+     "lifetime": 66,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000934"
+    },
+    "M001153": {
+     "score": 46,
+     "lifetime": 36,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001153"
+    },
+    "M001169": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001169"
+    },
+    "M001111": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001111"
+    },
+    "N000002": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000002"
+    },
+    "N000015": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000015"
+    },
+    "P000034": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000034"
+    },
+    "P000603": {
+     "score": 76,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000603"
+    },
+    "P000197": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000197"
+    },
+    "P000595": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000595"
+    },
+    "P000597": {
+     "score": 7,
+     "lifetime": 10,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000597"
+    },
+    "Q000023": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/Q000023"
+    },
+    "R000395": {
+     "score": 72,
+     "lifetime": 59,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000395"
+    },
+    "R000575": {
+     "score": 72,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000575"
+    },
+    "S001176": {
+     "score": 92,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001176"
+    },
+    "S001145": {
+     "score": 0,
+     "lifetime": 10,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001145"
+    },
+    "S001150": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001150"
+    },
+    "S000148": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000148"
+    },
+    "S001183": {
+     "score": 92,
+     "lifetime": 91,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001183"
+    },
+    "S001189": {
+     "score": 94,
+     "lifetime": 78,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001189"
+    },
+    "S000185": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000185"
+    },
+    "S001184": {
+     "score": 94,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001184"
+    },
+    "S001185": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001185"
+    },
+    "S000344": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000344"
+    },
+    "S001148": {
+     "score": 74,
+     "lifetime": 57,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001148"
+    },
+    "S000510": {
+     "score": 7,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000510"
+    },
+    "S001172": {
+     "score": 85,
+     "lifetime": 71,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001172"
+    },
+    "S000522": {
+     "score": 94,
+     "lifetime": 57,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000522"
+    },
+    "S001156": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001156"
+    },
+    "T000193": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000193"
+    },
+    "T000460": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000460"
+    },
+    "T000467": {
+     "score": 71,
+     "lifetime": 60,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000467"
+    },
+    "T000250": {
+     "score": 79,
+     "lifetime": 64,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000250"
+    },
+    "T000469": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000469"
+    },
+    "T000463": {
+     "score": 59,
+     "lifetime": 55,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000463"
+    },
+    "V000128": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000128"
+    },
+    "V000081": {
+     "score": 7,
+     "lifetime": 11,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000081"
+    },
+    "W000798": {
+     "score": 81,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000798"
+    },
+    "W000797": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000797"
+    },
+    "W000187": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000187"
+    },
+    "W000806": {
+     "score": 89,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000806"
+    },
+    "W000800": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000800"
+    },
+    "W000795": {
+     "score": 74,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000795"
+    },
+    "W000808": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000808"
+    },
+    "W000804": {
+     "score": 72,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000804"
+    },
+    "W000809": {
+     "score": 79,
+     "lifetime": 66,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000809"
+    },
+    "W000779": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000779"
+    },
+    "Y000064": {
+     "score": 94,
+     "lifetime": 64,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/Y000064"
+    },
+    "A000369": {
+     "score": 72,
+     "lifetime": 63,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000369"
+    },
+    "B001278": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001278"
+    },
+    "D000617": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000617"
+    },
+    "M001184": {
+     "score": 87,
+     "lifetime": 83,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001184"
+    },
+    "S001194": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001194"
+    },
+    "F000454": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000454"
+    },
+    "T000468": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000468"
+    },
+    "C001095": {
+     "score": 81,
+     "lifetime": 78,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001095"
+    },
+    "H001068": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001068"
+    },
+    "B001287": {
+     "score": 7,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001287"
+    },
+    "B001285": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001285"
+    },
+    "R000599": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000599"
+    },
+    "T000472": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000472"
+    },
+    "V000130": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000130"
+    },
+    "P000608": {
+     "score": 7,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000608"
+    },
+    "F000462": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000462"
+    },
+    "D000622": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000622"
+    },
+    "B001282": {
+     "score": 93,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001282"
+    },
+    "W000817": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000817"
+    },
+    "K000383": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000383"
+    },
+    "W000812": {
+     "score": 89,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000812"
+    },
+    "D000618": {
+     "score": 96,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000618"
+    },
+    "H001067": {
+     "score": 87,
+     "lifetime": 84,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001067"
+    },
+    "C001096": {
+     "score": 96,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001096"
+    },
+    "F000463": {
+     "score": 79,
+     "lifetime": 71,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000463"
+    },
+    "M001188": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001188"
+    },
+    "J000294": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000294"
+    },
+    "B001281": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001281"
+    },
+    "J000295": {
+     "score": 61,
+     "lifetime": 56,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000295"
+    },
+    "P000605": {
+     "score": 96,
+     "lifetime": 91,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000605"
+    },
+    "C001098": {
+     "score": 96,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001098"
+    },
+    "W000814": {
+     "score": 89,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000814"
+    },
+    "C001091": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001091"
+    },
+    "W000816": {
+     "score": 94,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000816"
+    },
+    "V000131": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000131"
+    },
+    "K000384": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000384"
+    },
+    "P000607": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000607"
+    },
+    "K000385": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000385"
+    },
+    "S001195": {
+     "score": 100,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001195"
+    },
+    "B001288": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001288"
+    },
+    "C001101": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001101"
+    },
+    "N000188": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000188"
+    },
+    "A000370": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000370"
+    },
+    "P000609": {
+     "score": 96,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000609"
+    },
+    "H001072": {
+     "score": 79,
+     "lifetime": 72,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001072"
+    },
+    "W000821": {
+     "score": 85,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000821"
+    },
+    "G000574": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000574"
+    },
+    "D000623": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000623"
+    },
+    "A000371": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000371"
+    },
+    "L000582": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000582"
+    },
+    "T000474": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000474"
+    },
+    "C001103": {
+     "score": 89,
+     "lifetime": 79,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001103"
+    },
+    "L000583": {
+     "score": 92,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000583"
+    },
+    "A000372": {
+     "score": 87,
+     "lifetime": 83,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000372"
+    },
+    "B001295": {
+     "score": 81,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001295"
+    },
+    "M001196": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001196"
+    },
+    "M001194": {
+     "score": 81,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001194"
+    },
+    "D000624": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000624"
+    },
+    "E000294": {
+     "score": 92,
+     "lifetime": 79,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000294"
+    },
+    "R000603": {
+     "score": 87,
+     "lifetime": 82,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000603"
+    },
+    "W000822": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000822"
+    },
+    "S001196": {
+     "score": 72,
+     "lifetime": 55,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001196"
+    },
+    "B001296": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001296"
+    },
+    "B001291": {
+     "score": 87,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001291"
+    },
+    "B001292": {
+     "score": 7,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001292"
+    },
+    "N000189": {
+     "score": 72,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000189"
+    },
+    "G000576": {
+     "score": 100,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000576"
+    },
+    "S001198": {
+     "score": 79,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001198"
+    },
+    "E000295": {
+     "score": 94,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000295"
+    },
+    "T000476": {
+     "score": 65,
+     "lifetime": 60,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000476"
+    },
+    "R000605": {
+     "score": 76,
+     "lifetime": 63,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000605"
+    },
+    "K000388": {
+     "score": 94,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000388"
+    },
+    "L000585": {
+     "score": 66,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000585"
+    },
+    "D000626": {
+     "score": 98,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000626"
+    },
+    "C001108": {
+     "score": 89,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001108"
+    },
+    "E000296": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000296"
+    },
+    "K000393": {
+     "score": 81,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000393"
+    },
+    "H001076": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001076"
+    },
+    "C001113": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001113"
+    },
+    "S001190": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001190"
+    },
+    "B001302": {
+     "score": 98,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001302"
+    },
+    "K000389": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000389"
+    },
+    "P000613": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000613"
+    },
+    "C001112": {
+     "score": 7,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001112"
+    },
+    "B001300": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001300"
+    },
+    "C001110": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001110"
+    },
+    "B001303": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001303"
+    },
+    "D000628": {
+     "score": 85,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000628"
+    },
+    "R000609": {
+     "score": 77,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000609"
+    },
+    "S001200": {
+     "score": 7,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001200"
+    },
+    "M001199": {
+     "score": 85,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001199"
+    },
+    "K000391": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000391"
+    },
+    "B001299": {
+     "score": 100,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001299"
+    },
+    "M001198": {
+     "score": 96,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001198"
+    },
+    "H001077": {
+     "score": 100,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001077"
+    },
+    "J000299": {
+     "score": 92,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000299"
+    },
+    "R000606": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000606"
+    },
+    "B001301": {
+     "score": 85,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001301"
+    },
+    "B001305": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001305"
+    },
+    "B001298": {
+     "score": 59,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001298"
+    },
+    "G000583": {
+     "score": 7,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000583"
+    },
+    "R000608": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000608"
+    },
+    "E000297": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000297"
+    },
+    "F000466": {
+     "score": 20,
+     "lifetime": 32,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000466"
+    },
+    "S001199": {
+     "score": 87,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001199"
+    },
+    "K000392": {
+     "score": 100,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000392"
+    },
+    "G000581": {
+     "score": 13,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000581"
+    },
+    "A000375": {
+     "score": 92,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000375"
+    },
+    "J000298": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000298"
+    },
+    "E000298": {
+     "score": 91,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000298"
+    },
+    "N000190": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000190"
+    },
+    "G000585": {
+     "score": 0,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000585"
+    },
+    "C001114": {
+     "score": 94,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001114"
+    },
+    "S001203": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001203"
+    },
+    "H001079": {
+     "score": 81,
+     "lifetime": 69,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001079"
+    },
+    "C001115": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001115"
+    },
+    "B001306": {
+     "score": 85,
+     "lifetime": 72,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001306"
+    },
+    "H001082": {
+     "score": 87,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001082"
+    },
+    "M001206": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001206"
+    },
+    "S001205": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001205"
+    },
+    "C001055": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001055"
+    },
+    "H001066": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001066"
+    },
+    "S001211": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001211"
+    },
+    "H001090": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001090"
+    },
+    "L000593": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000593"
+    },
+    "N000191": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000191"
+    },
+    "C001121": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001121"
+    },
+    "H001081": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001081"
+    },
+    "S001214": {
+     "score": 96,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001214"
+    },
+    "M001208": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001208"
+    },
+    "F000469": {
+     "score": 96,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000469"
+    },
+    "G000586": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000586"
+    },
+    "C001117": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001117"
+    },
+    "U000040": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/U000040"
+    },
+    "B001307": {
+     "score": 84,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001307"
+    },
+    "D000629": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000629"
+    },
+    "T000482": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000482"
+    },
+    "P000617": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000617"
+    },
+    "S001208": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001208"
+    },
+    "S001215": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001215"
+    },
+    "C001119": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001119"
+    },
+    "O000173": {
+     "score": 7,
+     "lifetime": 11,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000173"
+    },
+    "S001212": {
+     "score": 87,
+     "lifetime": 82,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001212"
+    },
+    "G000591": {
+     "score": 100,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000591"
+    },
+    "P000614": {
+     "score": 13,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000614"
+    },
+    "V000133": {
+     "score": 87,
+     "lifetime": 70,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000133"
+    },
+    "K000394": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000394"
+    },
+    "L000590": {
+     "score": 13,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000590"
+    },
+    "O000172": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000172"
+    },
+    "D000631": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000631"
+    },
+    "H001085": {
+     "score": 0,
+     "lifetime": 1,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001085"
+    },
+    "M001204": {
+     "score": 81,
+     "lifetime": 82,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001204"
+    },
+    "J000302": {
+     "score": 92,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000302"
+    },
+    "R000610": {
+     "score": 85,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000610"
+    },
+    "T000480": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000480"
+    },
+    "J000301": {
+     "score": 85,
+     "lifetime": 83,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000301"
+    },
+    "B001309": {
+     "score": 94,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001309"
+    },
+    "R000612": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000612"
+    },
+    "C001120": {
+     "score": 96,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001120"
+    },
+    "G000589": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000589"
+    },
+    "F000468": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000468"
+    },
+    "E000299": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000299"
+    },
+    "R000614": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000614"
+    },
+    "G000587": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000587"
+    },
+    "C001118": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001118"
+    },
+    "S001216": {
+     "score": 7,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001216"
+    },
+    "S001213": {
+     "score": 92,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001213"
+    },
+    "M001205": {
+     "score": 85,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001205"
+    },
+    "S001217": {
+     "score": 96,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001217"
+    },
+    "H001089": {
+     "score": 98,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001089"
+    },
+    "G000592": {
+     "score": 20,
+     "lifetime": 22,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000592"
+    },
+    "M001210": {
+     "score": 69,
+     "lifetime": 82,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001210"
+    },
+    "M000687": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000687"
+    },
+    "T000165": {
+     "score": 92,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000165"
+    },
+    "K000377": {
+     "score": 6,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000377"
+    },
+    "L000571": {
+     "score": 96,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000571"
+    },
+    "I000056": {
+     "score": 79,
+     "lifetime": 66,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/I000056"
+    },
+    "S000250": {
+     "score": 94,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000250"
+    },
+    "V000129": {
+     "score": 59,
+     "lifetime": 49,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000129"
+    },
+    "T000278": {
+     "score": 98,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000278"
+    },
+    "H000273": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H000273"
+    },
+    "H000601": {
+     "score": 96,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H000601"
+    },
+    "M001212": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001212"
+    },
+    "O000019": {
+     "score": 78,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000019"
+    },
+    "K000397": {
+     "score": 87,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000397"
+    },
+    "J000305": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000305"
+    },
+    "B000825": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B000825"
+    },
+    "C001039": {
+     "score": 98,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001039"
+    },
+    "F000472": {
+     "score": 93,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000472"
+    },
+    "D000032": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000032"
+    },
+    "G000593": {
+     "score": 59,
+     "lifetime": 63,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000593"
+    },
+    "S000168": {
+     "score": 55,
+     "lifetime": 60,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000168"
+    },
+    "W000788": {
+     "score": 0,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000788"
+    },
+    "C001116": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001116"
+    },
+    "H001091": {
+     "score": 87,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001091"
+    },
+    "M001215": {
+     "score": 85,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001215"
+    },
+    "F000446": {
+     "score": 85,
+     "lifetime": 82,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000446"
+    },
+    "M001211": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001211"
+    },
+    "M001214": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001214"
+    },
+    "S000929": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S000929"
+    },
+    "M000871": {
+     "score": 89,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000871"
+    },
+    "A000148": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000148"
+    },
+    "M001136": {
+     "score": 85,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001136"
+    },
+    "F000470": {
+     "score": 94,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000470"
+    },
+    "R000305": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000305"
+    },
+    "L000273": {
+     "score": 7,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000273"
+    },
+    "G000597": {
+     "score": 53,
+     "lifetime": 61,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000597"
+    },
+    "M000317": {
+     "score": 66,
+     "lifetime": 73,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000317"
+    },
+    "T000486": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000486"
+    },
+    "B000740": {
+     "score": 79,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B000740"
+    },
+    "B000668": {
+     "score": 79,
+     "lifetime": 74,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B000668"
+    },
+    "M000194": {
+     "score": 100,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M000194"
+    },
+    "H001086": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001086"
+    },
+    "F000246": {
+     "score": 96,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000246"
+    },
+    "P000048": {
+     "score": 93,
+     "lifetime": 86,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000048"
+    },
+    "J000304": {
+     "score": 98,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000304"
+    },
+    "N000026": {
+     "score": 98,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000026"
+    },
+    "V000134": {
+     "score": 96,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000134"
+    },
+    "M001213": {
+     "score": 87,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001213"
+    },
+    "O000086": {
+     "score": 87,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000086"
+    },
+    "S001159": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001159"
+    },
+    "F000471": {
+     "score": 87,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000471"
+    },
+    "P000145": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000145"
+    },
+    "O000174": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000174"
+    },
+    "W000790": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000790"
+    },
+    "T000478": {
+     "score": 85,
+     "lifetime": 74,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000478"
+    },
+    "L000595": {
+     "score": 94,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000595"
+    },
+    "C001125": {
+     "score": 0,
+     "lifetime": 2,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001125"
+    },
+    "S001218": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001218"
+    },
+    "E000071": {
+     "score": 74,
+     "lifetime": 73,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000071"
+    },
+    "B001313": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001313"
+    },
+    "C001126": {
+     "score": 53,
+     "lifetime": 63,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001126"
+    },
+    "F000474": {
+     "score": 83,
+     "lifetime": 79,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000474"
+    },
+    "F000475": {
+     "score": 89,
+     "lifetime": 91,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000475"
+    },
+    "R000579": {
+     "score": 0,
+     "lifetime": null,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000579"
+    },
+    "Y000067": {
+     "score": 85,
+     "lifetime": 76,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/Y000067"
+    },
+    "Z000018": {
+     "score": 87,
+     "lifetime": 59,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/Z000018"
+    },
+    "B001319": {
+     "score": 81,
+     "lifetime": 73,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001319"
+    },
+    "S001227": {
+     "score": 98,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001227"
+    },
+    "F000479": {
+     "score": 0,
+     "lifetime": 4,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000479"
+    },
+    "S001220": {
+     "score": 85,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001220"
+    },
+    "C001132": {
+     "score": 92,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001132"
+    },
+    "C001133": {
+     "score": 87,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001133"
+    },
+    "K000401": {
+     "score": 66,
+     "lifetime": 64,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000401"
+    },
+    "M001225": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001225"
+    },
+    "K000400": {
+     "score": 0,
+     "lifetime": 11,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000400"
+    },
+    "G000598": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000598"
+    },
+    "P000620": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000620"
+    },
+    "B001314": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001314"
+    },
+    "M001216": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001216"
+    },
+    "F000476": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000476"
+    },
+    "L000596": {
+     "score": 94,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000596"
+    },
+    "L000597": {
+     "score": 94,
+     "lifetime": 84,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000597"
+    },
+    "M001217": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001217"
+    },
+    "M001218": {
+     "score": 93,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001218"
+    },
+    "C001129": {
+     "score": 100,
+     "lifetime": 99,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001129"
+    },
+    "T000487": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000487"
+    },
+    "N000193": {
+     "score": 66,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/N000193"
+    },
+    "J000309": {
+     "score": 0,
+     "lifetime": 11,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000309"
+    },
+    "R000617": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000617"
+    },
+    "B001315": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001315"
+    },
+    "S001225": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001225"
+    },
+    "H001093": {
+     "score": 94,
+     "lifetime": 80,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001093"
+    },
+    "I000058": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/I000058"
+    },
+    "S001221": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001221"
+    },
+    "M001220": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001220"
+    },
+    "J000307": {
+     "score": 87,
+     "lifetime": 74,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000307"
+    },
+    "T000488": {
+     "score": 7,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000488"
+    },
+    "A000379": {
+     "score": 87,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000379"
+    },
+    "B001316": {
+     "score": 96,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001316"
+    },
+    "E000235": {
+     "score": 85,
+     "lifetime": 77,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000235"
+    },
+    "D000230": {
+     "score": 7,
+     "lifetime": 12,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000230"
+    },
+    "F000477": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000477"
+    },
+    "E000246": {
+     "score": 79,
+     "lifetime": 74,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000246"
+    },
+    "K000398": {
+     "score": 59,
+     "lifetime": 58,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000398"
+    },
+    "M001226": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001226"
+    },
+    "V000136": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000136"
+    },
+    "L000598": {
+     "score": 53,
+     "lifetime": 54,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000598"
+    },
+    "G000599": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000599"
+    },
+    "L000599": {
+     "score": 39,
+     "lifetime": 48,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000599"
+    },
+    "L000600": {
+     "score": 96,
+     "lifetime": 84,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000600"
+    },
+    "L000601": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000601"
+    },
+    "M001222": {
+     "score": 66,
+     "lifetime": 62,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001222"
+    },
+    "S001223": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001223"
+    },
+    "B001317": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001317"
+    },
+    "H001094": {
+     "score": 0,
+     "lifetime": 8,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001094"
+    },
+    "S001226": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001226"
+    },
+    "L000602": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000602"
+    },
+    "D000530": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000530"
+    },
+    "M001223": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001223"
+    },
+    "F000478": {
+     "score": 100,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000478"
+    },
+    "O000175": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000175"
+    },
+    "M001224": {
+     "score": 87,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001224"
+    },
+    "S001224": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001224"
+    },
+    "L000603": {
+     "score": 85,
+     "lifetime": 81,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000603"
+    },
+    "D000594": {
+     "score": 87,
+     "lifetime": 75,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000594"
+    },
+    "C001130": {
+     "score": 0,
+     "lifetime": 9,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001130"
+    },
+    "C001131": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001131"
+    },
+    "H001095": {
+     "score": 100,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001095"
+    },
+    "K000399": {
+     "score": 72,
+     "lifetime": 65,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000399"
+    },
+    "B001318": {
+     "score": 0,
+     "lifetime": 13,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001318"
+    },
+    "G000600": {
+     "score": 13,
+     "lifetime": 18,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000600"
+    },
+    "V000135": {
+     "score": 73,
+     "lifetime": 68,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000135"
+    },
+    "H001096": {
+     "score": 96,
+     "lifetime": 97,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001096"
+    },
+    "R000618": {
+     "score": 94,
+     "lifetime": 84,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000618"
+    },
+    "M001227": {
+     "score": 0,
+     "lifetime": 3,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001227"
+    },
+    "A000380": {
+     "score": 0,
+     "lifetime": 6,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000380"
+    },
+    "M001228": {
+     "score": 72,
+     "lifetime": null,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001228"
+    },
+    "S001201": {
+     "score": 7,
+     "lifetime": 5,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001201"
+    },
+    "K000402": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000402"
+    },
+    "F000480": {
+     "score": 85,
+     "lifetime": 88,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000480"
+    },
+    "R000619": {
+     "score": 100,
+     "lifetime": 95,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000619"
+    },
+    "M001229": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001229"
+    },
+    "W000829": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000829"
+    },
+    "F000110": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000110"
+    },
+    "S001188": {
+     "score": 100,
+     "lifetime": 90,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001188"
+    },
+    "C001123": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001123"
+    },
+    "A000382": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000382"
+    },
+    "S001232": {
+     "score": 78,
+     "lifetime": 78,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001232"
+    },
+    "M001242": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001242"
+    },
+    "M001243": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001243"
+    },
+    "B001323": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001323"
+    },
+    "F000481": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000481"
+    },
+    "A000381": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000381"
+    },
+    "H001098": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001098"
+    },
+    "S001231": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001231"
+    },
+    "G000605": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000605"
+    },
+    "L000607": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000607"
+    },
+    "W000830": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000830"
+    },
+    "R000620": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000620"
+    },
+    "F000483": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000483"
+    },
+    "T000491": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000491"
+    },
+    "M001241": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001241"
+    },
+    "H001100": {
+     "score": 66,
+     "lifetime": 66,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001100"
+    },
+    "C001137": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001137"
+    },
+    "E000300": {
+     "score": 79,
+     "lifetime": 79,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000300"
+    },
+    "M001238": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001238"
+    },
+    "H001099": {
+     "score": 85,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001099"
+    },
+    "J000311": {
+     "score": 93,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000311"
+    },
+    "S001229": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001229"
+    },
+    "M001233": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001233"
+    },
+    "S001228": {
+     "score": 85,
+     "lifetime": 85,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001228"
+    },
+    "O000176": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000176"
+    },
+    "E000301": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/E000301"
+    },
+    "M001232": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001232"
+    },
+    "B001321": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001321"
+    },
+    "M001237": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001237"
+    },
+    "M001234": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001234"
+    },
+    "B001324": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001324"
+    },
+    "O000177": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/O000177"
+    },
+    "D000634": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000634"
+    },
+    "M001240": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001240"
+    },
+    "H001102": {
+     "score": 91,
+     "lifetime": 91,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001102"
+    },
+    "H001101": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001101"
+    },
+    "K000405": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000405"
+    },
+    "M001236": {
+     "score": 93,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001236"
+    },
+    "F000482": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000482"
+    },
+    "G000604": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000604"
+    },
+    "C001136": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/C001136"
+    },
+    "P000621": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000621"
+    },
+    "G000602": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000602"
+    },
+    "L000606": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/L000606"
+    },
+    "R000622": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000622"
+    },
+    "M001231": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001231"
+    },
+    "T000490": {
+     "score": 87,
+     "lifetime": 87,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/T000490"
+    },
+    "D000635": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/D000635"
+    },
+    "B001326": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001326"
+    },
+    "M001230": {
+     "score": 72,
+     "lifetime": 72,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001230"
+    },
+    "B001327": {
+     "score": 42,
+     "lifetime": 42,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001327"
+    },
+    "B001325": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001325"
+    },
+    "G000601": {
+     "score": 89,
+     "lifetime": 89,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000601"
+    },
+    "G000603": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000603"
+    },
+    "J000310": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000310"
+    },
+    "K000403": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/K000403"
+    },
+    "M001239": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001239"
+    },
+    "V000138": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000138"
+    },
+    "S001230": {
+     "score": 7,
+     "lifetime": 7,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/S001230"
+    },
+    "B001322": {
+     "score": 83,
+     "lifetime": 83,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/B001322"
+    },
+    "R000621": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/R000621"
+    },
+    "M001235": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001235"
+    },
+    "J000312": {
+     "score": 94,
+     "lifetime": 94,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/J000312"
+    },
+    "H001104": {
+     "score": 79,
+     "lifetime": 79,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/H001104"
+    },
+    "M001244": {
+     "score": 96,
+     "lifetime": 96,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001244"
+    },
+    "P000622": {
+     "score": 93,
+     "lifetime": 93,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/P000622"
+    },
+    "F000484": {
+     "score": 98,
+     "lifetime": 98,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000484"
+    },
+    "W000831": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/W000831"
+    },
+    "G000606": {
+     "score": 0,
+     "lifetime": 0,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000606"
+    },
+    "V000139": {
+     "score": 100,
+     "lifetime": 100,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/V000139"
+    },
+    "M001245": {
+     "score": null,
+     "lifetime": null,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001245"
+    },
+    "A000383": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/A000383"
+    },
+    "F000485": {
+     "score": null,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/F000485"
+    },
+    "M001246": {
+     "score": null,
+     "lifetime": null,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/M001246"
+    },
+    "G000608": {
+     "score": 92,
+     "lifetime": 92,
+     "year": "119",
+     "url": "https://heritageaction.com/scorecard/members/G000608"
+    }
+   }
+  }
+ }
+}

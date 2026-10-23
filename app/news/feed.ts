@@ -12,7 +12,7 @@ const decode = (s: string) => s
   .replace(/&quot;/g, '"').replace(/&apos;|&#039;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
   .replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 const tag = (x: string, t: string) => { const m = x.match(new RegExp(`<${t}(?:\\s[^>]*)?>([\\s\\S]*?)</${t}>`, "i")); return m ? decode(m[1]) : ""; };
-const attr = (x: string, t: string, a: string) => { const m = x.match(new RegExp(`<${t}\\s[^>]*${a}="([^"]+)"`, "i")); return m ? m[1] : ""; };
+const attr = (x: string, t: string, a: string) => { const m = x.match(new RegExp(`<${t}\\s[^>]*${a}=["']([^"']+)["']`, "i")); return m ? m[1] : ""; };
 
 /** RSS 2.0 and Atom, without a dependency. */
 export function parseFeed(xml: string, outlet: string, cat: Cat): Item[] {
@@ -25,12 +25,14 @@ export function parseFeed(xml: string, outlet: string, cat: Cat): Item[] {
     if (!/^https?:\/\//.test(u)) continue;
     const ds = tag(b, "pubDate") || tag(b, "published") || tag(b, "updated") || tag(b, "dc:date");
     const d = Date.parse(ds); if (!Number.isFinite(d)) continue;
-    const img = attr(b, "media:content", "url") || attr(b, "media:thumbnail", "url") || attr(b, "enclosure", "url") || undefined;
+    // a picture from the feed itself: media tags first, then the first image inside the description
+    const inline = (b.match(/<img[^>]+src=["'](https:[^"']+)["']/i) ?? b.match(/&lt;img[^&]*?src=(?:&quot;|&#34;|")(https:[^&"]+)/i))?.[1];
+    const img = attr(b, "media:content", "url") || attr(b, "media:thumbnail", "url") || attr(b, "enclosure", "url") || inline || undefined;
     const s = tag(b, "description").slice(0, 280) || undefined;
     // wire copy republished by a network is credited to the wire
     const ap = /\/wireStory\//i.test(u) || /\(AP\)|Associated Press/.test(s ?? "");
     const op = o.opinionHeavy || /\/(opinion|op-eds?|opinions|commentary|columns?|editorials?)\//i.test(u);
-    out.push({ o: ap && o.id !== "ap" ? "ap" : o.id, lean: ap ? "C" : o.lean, t, u, d, cat, img: img && /^https:/.test(img) ? img : undefined, op, ap: ap || undefined, s });
+    out.push({ o: ap && o.id !== "ap" ? "ap" : o.id, lean: ap ? "C" : o.lean, t, u, d, cat, img: img && /^https:/.test(img) && !/\.(mp3|mp4|m4a)(\?|$)/i.test(img) ? img.replace(/&amp;/g, "&") : undefined, op, ap: ap || undefined, s });
   }
   return out;
 }
