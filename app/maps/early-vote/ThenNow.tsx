@@ -14,6 +14,7 @@ type YrM = { n: (number | null)[]; nRep: number[]; d: (number | null)[]; r: (num
 type HM = {
   meta: { fit: Record<"2022" | "2024", { countErrorByDay: number[]; partyErrorByDay: (number | null)[] }> };
   us2022: { daily: [number, number, number, number, number | null, number | null, number | null][]; partyStates: string[]; source: string; url: string };
+  us2024?: { daily: [number, number, number | null, number | null, number | null, number | null][]; source: string };
   states: Record<string, Record<"2022" | "2024", YrM>>;
 };
 type Y = "2022" | "2024";
@@ -63,11 +64,11 @@ function compare(r: EvRow, hm: HM, day: number): Cmp {
 }
 
 // One view of a place, nation or state, on one scale for every graphic below.
-type View = {
+export type View = {
   name: string; day: number;
   now: number; n22: number | null; n24: number | null; mod22: number; mod24: number;
   p26: P | null; p22: P | null; p24: P | null; p26Mod: boolean; p22Mod: boolean; p24Mod: boolean;
-  c22: Pt[]; c24: Pt[]; c26: Pt[]; m22: Pt[]; m24: Pt[]; tally22?: Pt[];
+  c22: Pt[]; c24: Pt[]; c26: Pt[]; m22: Pt[]; m24: Pt[]; tally22?: Pt[]; tally24?: Pt[];
   partyNote?: string;
 };
 
@@ -161,7 +162,7 @@ function PartyTug({ v }: { v: View }) {
           {[-R, -R / 2, 0, R / 2, R].map((t) => <span key={t} className="tick" style={{ left: `${X(t)}%` }}><em>{t === 0 ? "Even" : `${t < 0 ? "D" : "R"} +${Math.abs(t)}`}</em></span>)}
           {m22 != null && m26 != null ? <span className={`arrow ${m26 < m22 ? "d" : "r"}`} style={{ left: `${Math.min(X(m22), X(m26))}%`, width: seen ? `${Math.abs(X(m26) - X(m22))}%` : "0%" }} /> : null}
           {pts.map(([y, m, mod], i) => (
-            <div key={y} className={`pin y${y} ${y === "2026" ? "hi" : y === "2024" && m22 != null && m24 != null && Math.abs(X(m24) - X(m22)) < 16 ? "lo2" : "lo"}`} style={{ left: seen ? `${X(m)}%` : "50%", transitionDelay: `${0.2 + i * 0.15}s` }}>
+            <div key={y} className={`pin y${y} ${y === "2026" ? "hi" : y === "2024" && m22 != null && m24 != null && Math.abs(X(m24) - X(m22)) < 32 ? "lo2" : "lo"}`} style={{ left: seen ? `${X(m)}%` : "50%", transitionDelay: `${0.2 + i * 0.15}s` }}>
               <i /><b>{y}</b><span>{mLab(m)}{mod ? " · model" : ""}</span>
             </div>
           ))}
@@ -205,6 +206,7 @@ function BigChart({ v }: { v: View }) {
       ...(v.c24.length ? [{ k: "24", cls: "y2024", pts: v.c24.filter((p) => p[0] <= dMax), label: "2024", end: true }] : []),
       ...(v.c22.length ? [{ k: "22", cls: "y2022", pts: v.c22.filter((p) => p[0] <= dMax), label: "2022", end: true }] : []),
       ...(v.tally22?.length ? [{ k: "tl", cls: "y2022 faint", pts: v.tally22.filter((p) => p[0] <= dMax), dash: true, label: "2022 tally" }] : []),
+      ...(v.tally24?.length ? [{ k: "tl4", cls: "y2024 faint", pts: v.tally24.filter((p) => p[0] <= dMax), dash: true, label: "2024 tally" }] : []),
       ...(proj.length ? [{ k: "pj", cls: "y2026 proj", pts: proj, dash: true, label: "2026 on pace", end: true }] : []),
       ...(has26 ? [{ k: "26", cls: "y2026", pts: v.c26, label: "2026" }] : []),
     ];
@@ -310,7 +312,7 @@ function BigChart({ v }: { v: View }) {
         <span className="y2026"><i />2026{tab === "ballots" && proj.length ? ", dashed on its current pace against " + base : ""}</span>
         {v.c22.length || v.m22.length ? <span className="y2022"><i />2022</span> : null}
         {v.c24.length || v.m24.length ? <span className="y2024"><i />2024</span> : null}
-        {tab === "ballots" && v.tally22?.length ? <span className="y2022 faint"><i />2022 as tallied that day</span> : null}
+        {tab === "ballots" && v.tally22?.length ? <span className="y2022 faint"><i />2022 and 2024 as tallied that day, all reporting states</span> : null}
         {tab === "ballots" && gap ? <span className={`gapk ${gap.up ? "up" : "dn"}`}><i />Gap: 2026 {gap.up ? "ahead of" : "behind"} {base}</span> : null}
         <span className="hint">Hover the chart for any day</span>
       </div>
@@ -333,15 +335,11 @@ function GapCell({ val, cap, kind, text }: { val: number | null; cap: number; ki
 }
 
 // ── the section ───────────────────────────────────────────────────────────────────────────────────────────────────
-export default function ThenNow({ data, scope, onOpen }: { data: EvConsole; scope: string; onOpen: (st: string) => void }) {
+/** The then and now view of a place, nation or state, shared by the console hero and the section below it. */
+export function useEvView(data: EvConsole, scope: string): { hm: HM | null; view: View | null; day: number } {
   const [hm, setHm] = useState<HM | null>(null);
-  const [sort, setSort] = useState<"most" | "ahead" | "behind" | "tod" | "tor">("most");
-  const [base, setBase] = useState<Y>("2022");
-  const [all, setAll] = useState(false);
   useEffect(() => { getHM().then(setHm); }, []);
   const day = Math.min(45, data.daysOut);
-  const rows = useMemo(() => (hm ? data.rows.map((r) => compare(r, hm, day)) : []), [hm, data.rows, day]);
-
   const view = useMemo<View | null>(() => {
     if (!hm) return null;
     const curve = (h: Record<Y, YrM>, y: Y) => h[y].n.map((v, i) => [i, v] as [number, number | null]).filter((p): p is Pt => p[1] != null);
@@ -369,15 +367,28 @@ export default function ThenNow({ data, scope, onOpen }: { data: EvConsole; scop
     const D22 = natAt(nat, day, 4), R22 = natAt(nat, day, 5), O22 = natAt(nat, day, 6);
     const P22r = D22 != null && R22 != null && O22 != null ? { d: D22 / (D22 + R22 + O22), r: R22 / (D22 + R22 + O22) } : null;
     const P26r = data.partyTotal ? { d: data.dem / data.partyTotal, r: data.rep / data.partyTotal } : null;
+    // 2024 reported party share in the party states, read between the dated national tallies that carry one
+    const P24r = (() => { const pts = (hm.us2024?.daily ?? []).filter((r) => r[4] != null && r[5] != null).map((r) => [r[0], ((r[5] as number) - (r[4] as number)) * 100] as Pt); if (!pts.length) return null; const s0 = [...pts].sort((a, b) => b[0] - a[0]); return lerp(pts, day) ?? (day > s0[0][0] ? s0[0][1] : s0[s0.length - 1][1]); })();
     const days = Array.from({ length: 41 }, (_, d) => d);
     return { name: "Nationwide", day, now: data.total, n22: s22.n || null, n24: s24.n || null, mod22: s22.mod, mod24: s24.mod,
       p26: data.pm ? { d: data.pm.d, r: data.pm.r } : null, p22: s22.p, p24: s24.p, p26Mod: true, p22Mod: true, p24Mod: true,
       c22: days.map((d) => [d, sumY("2022", d).n] as Pt).filter((p) => p[1] > 0), c24: days.map((d) => [d, sumY("2024", d).n] as Pt).filter((p) => p[1] > 0), c26: data.s26,
       m22: days.map((d) => { const p = sumY("2022", d).p; return [d, p ? (p.r - p.d) * 100 : NaN] as Pt; }).filter((p) => isFinite(p[1])),
       m24: days.map((d) => { const p = sumY("2024", d).p; return [d, p ? (p.r - p.d) * 100 : NaN] as Pt; }).filter((p) => isFinite(p[1])),
-      tally22: nat.map((r) => [r[0], r[1]] as Pt),
-      partyNote: P22r && P26r ? `Every state on one scale, modeled where a state reports no party. In the ${hm.us2022.partyStates.length} states that register by party, as reported: 2022 ${mLab(margin(P22r) as number)} on this day, 2026 ${mLab(margin(P26r) as number)}.` : undefined };
+      tally22: nat.map((r) => [r[0], r[1]] as Pt), tally24: (hm.us2024?.daily ?? []).map((r) => [r[0], r[1]] as Pt),
+      partyNote: P22r && P26r ? `Every state on one scale, modeled where a state reports no party. In the states that register by party, as reported: 2022 ${mLab(margin(P22r) as number)} on this day${P24r != null ? `, 2024 about ${mLab(P24r)}` : ""}, 2026 ${mLab(margin(P26r) as number)}.` : undefined };
   }, [hm, scope, data, day]);
+  return { hm, view, day };
+}
+
+export default function ThenNow({ data, scope, onOpen }: { data: EvConsole; scope: string; onOpen: (st: string) => void }) {
+  const [sort, setSort] = useState<"most" | "ahead" | "behind" | "tod" | "tor">("most");
+  const [base, setBase] = useState<Y>("2022");
+  const [all, setAll] = useState(false);
+  const { hm, view, day } = useEvView(data, scope);
+  const rows = useMemo(() => (hm ? data.rows.map((r) => compare(r, hm, day)) : []), [hm, data.rows, day]);
+
+
 
   if (!hm || !view) return <section className="tn2 card"><div className="evc-load sx-skel" style={{ height: 320 }} /></section>;
   const errN = hm.meta.fit["2022"].countErrorByDay[day] ?? 0, errP = hm.meta.fit["2022"].partyErrorByDay[day] ?? null;

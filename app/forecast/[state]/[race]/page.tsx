@@ -45,6 +45,15 @@ export async function generateMetadata({ params }: { params: Promise<{ state: st
 }
 
 const FX_CSS = `
+.rx-play{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:10px;align-items:stretch;margin-top:14px;padding:12px;border-radius:18px;border:1px solid rgba(231,179,65,.35);background:radial-gradient(80% 140% at 0% 0%,rgba(231,179,65,.10),transparent 60%),var(--glass)}
+.rx-ph{display:grid;align-content:center;gap:2px;padding:0 8px}
+.rx-ph .eye{font:800 10px var(--font-m);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.rx-ph b{font:800 15px var(--font-d);letter-spacing:-.01em}
+.rx-pl{display:grid;gap:3px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--line-rgb),.03);transition:border-color .2s,transform .2s}
+.rx-pl:hover{border-color:var(--gold);transform:translateY(-2px)}
+.rx-pl b{font:800 14px var(--font-d)}
+.rx-pl span{font-size:12.5px;color:var(--mute);line-height:1.4}
+@media (max-width:900px){.rx-play{grid-template-columns:1fr}}
 .opp.fx{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .opp.fx > .crumbs,.opp.fx > header{margin-bottom:0}
 .fx-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -176,6 +185,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
     ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
   ];
 
+  const hasScn = r.office !== "house" && fs.existsSync(path.join(process.cwd(), "public/forecast/scenarios", `${r.id}.json`));
+  const evSlug = r.office !== "house" ? (STATE_NAME[r.st] ?? "").toLowerCase().replace(/[^a-z]+/g, "-") : "";
   return (
     <div className="opp fc-xl fx fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb">
@@ -241,6 +252,14 @@ export default async function Page({ params }: { params: Promise<{ state: string
           </div>
         </section>
       )}
+      {r.office !== "house" && hasScn ? (
+        <div className="rx-play">
+          <div className="rx-ph"><span className="eye">Play it out</span><b>Move {STATE_NAME[r.st] ?? r.state} yourself</b></div>
+          <Link className="rx-pl" href={`/what-if?mode=state&race=${r.id}`}><b>County what if</b><span>Swing any county or region and watch the statewide result move</span></Link>
+          <Link className="rx-pl" href={`/swingometer?mode=state&race=${r.id}`}><b>Demographic swingometer</b><span>Shift turnout and support by group, county by county</span></Link>
+          {evSlug ? <Link className="rx-pl" href={`/maps/early-vote/${evSlug}`}><b>Early vote benchmarks</b><span>Where each side needs the early vote to be by now</span></Link> : null}
+        </div>
+      ) : null}
           </section>
 
           <section id="vote" className="st-sec">

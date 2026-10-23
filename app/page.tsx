@@ -1,3 +1,4 @@
+import DaysOut from "@/app/components/DaysOut";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
@@ -129,7 +130,7 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<>{meta.daysOut} days until the desk goes live.</>} /><div><div className="eye g">Results desk</div><h2>Live returns, called by the desk</h2></div><span className="pill live" style={{ marginBottom: 6 }}>Election night ready</span></div>
+        <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<><DaysOut initial={meta.daysOut} suffix=" days" /> until the desk goes live.</>} /><div><div className="eye g">Results desk</div><h2>Live returns, called by the desk</h2></div><span className="pill live" style={{ marginBottom: 6 }}>Election night ready</span></div>
         <div className="grid3">
           <ResultCard raceId={86349} title="Florida Governor, GOP primary" date="Aug 18" href="/results/2026-08-18/florida-governor-republican-primary" names={["Byron Donalds", "James Fishback", "Jay Collins"]} />
           <ResultCard raceId={87529} title="Oklahoma Governor, GOP runoff" date="Aug 25" href="/results/2026-08-25/oklahoma-governor-republican-runoff" names={["Gentner Drummond", "Mike Mazzei"]} />

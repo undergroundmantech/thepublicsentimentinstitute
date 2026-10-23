@@ -1,0 +1,14 @@
+{
+ "source": "US Elections Project and UF Election Lab national early vote tallies for 2024, as quoted with dates by news reports. The Election Lab's own 2024 pages no longer carry their numbers.",
+ "electionDay": "2024-11-05",
+ "note": "daysOut counts from the day the tally was quoted; total, mail and inperson are ballots cast before Election Day; party is the share of ballots in the states that report party, D and R",
+ "snapshots": [
+  {"daysOut": 14, "asOf": "2024-10-22", "total": 21100000, "mail": 13300000, "inperson": 7800000, "rounded": true, "src": "https://www.theweek.in/wire-updates/international/2024/10/23/fgn9-us-election-ld-early-voters.html"},
+  {"daysOut": 11, "asOf": "2024-10-25", "total": 32000000, "rounded": true, "src": "https://cbsnews.com/news/early-voting-election-2024-28-million-ballots-cast-so-far"},
+  {"daysOut": 7, "asOf": "2024-10-29 1:59 PM ET", "total": 50300000, "rounded": true, "party": {"D": 0.39, "R": 0.36}, "src": "https://www.axios.com/2024/10/29/2024-election-early-voting-harris-trump"},
+  {"daysOut": 6, "asOf": "2024-10-30", "total": 55000000, "mail": 25900000, "inperson": 29000000, "rounded": true, "partyCounts": {"D": 11000000, "R": 10000000, "states": 25}, "src": "https://www.cbsnews.com/news/early-voting-2024-election-55-million-30-10-2024/"},
+  {"daysOut": 4, "asOf": "2024-11-01 afternoon", "total": 70000000, "rounded": true, "src": "https://abcnews.com/Politics/tens-millions-early-votes-cast-election-day/story?id=115272249"},
+  {"daysOut": 1, "asOf": "2024-11-04 morning", "total": 78041301, "mail": 35376421, "inperson": 42664880, "party": {"D": 0.379, "R": 0.36}, "partyCounts": {"D": 14800000, "R": 14100000, "O": 10200000, "states": 26}, "src": "https://www.newsweek.com/early-voting-figures-2024-election-republican-democrats-1979690"},
+  {"daysOut": 0, "asOf": "2024-11-04 8:00 PM ET", "total": 81000000, "mail": 37000000, "inperson": 44000000, "rounded": true, "party": {"D": 0.375, "R": 0.357}, "src": "https://www.npr.org/2024/11/05/g-s1-32395/more-than-80-million-americans-cast-ballots-before-election-day"}
+ ]
+}

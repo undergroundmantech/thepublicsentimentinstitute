@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import WhatIf from "@/app/forecast/what-if/WhatIf";
 import ScenarioNav from "@/app/components/opp/ScenarioNav";
+import ScenarioModes, { MODE_BOOT } from "@/app/forecast/scenarios/ScenarioModes";
 import { seo } from "@/app/lib/seo";
 
 export const metadata: Metadata = seo({
@@ -14,8 +15,11 @@ export const metadata: Metadata = seo({
 export default function Page() {
   return (
     <div className="opp fc-page fx-dark">
+      <script dangerouslySetInnerHTML={{ __html: MODE_BOOT }} />
       <ScenarioNav />
-      <WhatIf />
+      <ScenarioModes tool="counties" base="/what-if" crumbs>
+        <WhatIf />
+      </ScenarioModes>
     </div>
   );
 }

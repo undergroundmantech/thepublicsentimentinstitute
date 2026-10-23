@@ -205,7 +205,7 @@ export default function PollRoom({
 
 const CSS = `
 .wbroom { --font-mark: "Permanent Marker", "Marker Felt", "Comic Sans MS", cursive; --font-hand: "Kalam", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
-  position: relative; isolation: isolate; margin: 0 calc(50% - 50vw) 0; padding: 50px 16px 54px; min-height: calc(100vh - 110px); overflow: hidden; }
+  position: relative; isolation: isolate; margin: 0 calc(50% - 50vw) 0; padding: 50px max(16px, calc(50vw - 50%)) 54px; min-height: calc(100vh - 110px); overflow: hidden; }
 .wbr-wall { position: absolute; inset: 0; z-index: -2;
   background: radial-gradient(60% 40% at 50% 0%, rgba(255,214,150,.16), transparent 70%), repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 1px, transparent 1px 160px), linear-gradient(180deg, #2b2733 0%, #26222d 70%, #1e1b24 100%); }
 .wbr-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 40px; z-index: -1;

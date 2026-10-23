@@ -76,8 +76,9 @@ HIST = {
            "party": [[15, .430, .396], [0, .379, .395]],
            "src": ["https://www.bleedingheartland.com/2024/10/18/iowa-absentee-ballot-numbers-in-the-2024-general-election/"]}},
  "AZ": {
-  "2022": {"evStart": 27, "cps": [[14, 365000, "r"], [8, 875000, "r"], [1, 1544753]],
-           "src": ["https://news.yahoo.com/arizona-voting-updates-republics-analysis-174548254.html"]},
+  "2022": {"evStart": 27, "cps": [[14, 365000, "r"], [8, 875000, "r"], [2, 1508399], [1, 1544753]],
+           "party": [[2, .384, .371]],
+           "src": ["https://news.yahoo.com/arizona-voting-updates-republics-analysis-174548254.html", "https://rpubs.com/ElectProject/AZ_early_vote_2022"]},
   "2024": {"evStart": 27, "cps": [[8, 1400000, "r"], [1, 2300000, "r"]],
            "party": [[8, .347, .420], [1, .32, .41]],
            "src": ["https://www.kold.com/2024/10/29/republicans-lead-early-vote-numbers-arizona-even-though-democrats-turnout-is-higher/", "https://www.axios.com/local/phoenix/2024/11/05/arizona-republicans-take-big-early-voting-lead-into-election-day"]}},
@@ -102,7 +103,8 @@ HIST = {
            "src": ["https://www.texastribune.org/2024/10/25/texas-2024-election-early-vote-turnout/", "https://www.texastribune.org/2024/11/04/texas-early-voting-turnout-rate-down/"]}},
  "CA": {
   "2022": {"evStart": 28, "cps": [[12, 1800000, "r"], [1, 5230699]],
-           "src": ["https://elections.cdn.sos.ca.gov/statewide-elections/2022-general/media-releases/10-27-22-over1million-vbm-returned.pdf", "https://elections.cdn.sos.ca.gov/statewide-elections/2022-general/vbm-statistics.pdf"]},
+           "party": [[1, .506, .279]],
+           "src": ["https://elections.cdn.sos.ca.gov/statewide-elections/2022-general/media-releases/10-27-22-over1million-vbm-returned.pdf", "https://elections.cdn.sos.ca.gov/statewide-elections/2022-general/vbm-statistics.pdf", "https://rpubs.com/ElectProject/CA_early_vote_2022"]},
   "2024": {"evStart": 28, "cps": [[18, 1500000, "r"], [15, 1987421], [1, 8000000, "r"]],
            "party": [[1, .48, .30]],
            "src": ["https://elections.cdn.sos.ca.gov/statewide-elections/2024-general/vbm-statistics.pdf", "https://calmatters.org/newsletter/california-election-results-what-to-watch/"]}},
@@ -118,7 +120,8 @@ HIST = {
            "src": ["https://sos.mn.gov/about-the-office/news-room/337-633-ballots-accepted-in-first-four-weeks-for-november-5-election/", "https://www.sos.mn.gov/about-the-office/news-room/1-271-636-absentee-and-mail-ballots-accepted-for-november-5-election/"]}},
  "NJ": {
   "2022": {"evStart": 10, "cps": [[20, 270719], [18, 303008], [15, 320936], [8, 493414], [7, 529611], [6, 568734], [4, 642305], [3, 684072], [2, 725595]],
-           "src": ["https://newjerseyglobe.com/campaigns/returned-n-j-mail-in-ballots-now-over-300000/", "https://nj.gov/www.nj.gov/state/press-2022-1107.shtml"]},
+           "party": [[19, .657, .208], [7, .624, .200], [2, .589, .228]],
+           "src": ["https://newjerseyglobe.com/campaigns/returned-n-j-mail-in-ballots-now-over-300000/", "https://nj.gov/www.nj.gov/state/press-2022-1107.shtml", "https://newjerseyglobe.com/congress/30-of-vbm-ballots-have-alreadybeen-returned/", "https://newjerseyglobe.com/campaigns/nearly-530000-votes-cast-for-new-jerseys-2022-election/", "https://rpubs.com/ElectProject/NJ_early_vote_2022"]},
   "2024": {"evStart": 10, "cps": [[32, 165000, "r"], [26, 291651], [21, 350000, "r"], [15, 470657], [14, 500810], [10, 589353], [9, 858031], [4, 1607140], [2, 1936020]],
            "party": [[15, .622, .206], [2, .446, .287]],
            "src": ["https://newjerseyglobe.com/voters/vote-by-mail-update-470k-have-voted-in-new-jersey/", "https://newjerseyglobe.com/voters/with-early-voting-done-new-jerseyans-have-cast-1-9-million-ballots/"]}},
@@ -177,7 +180,7 @@ for st in sorted(BASE["states"]):
     states[st] = {"2022": year(st, "2022"), "2024": year(st, "2024")}
 out = {
     "meta": {
-        "built": "2026-10-18",
+        "built": "2026-10-23",
         "electionDay": {"2022": "2022-11-08", "2024": "2024-11-05", "2026": "2026-11-03"},
         "sources": {
             "turnout": ["https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.1.csv", "https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2024G_v0.4.csv"],

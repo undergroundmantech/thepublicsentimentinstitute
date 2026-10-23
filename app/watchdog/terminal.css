@@ -2,7 +2,7 @@
    grid behind everything, every panel a window with corner brackets, every number a readout. Party colours
    stay on the data; green is the interface, amber marks evidence. */
 .wd.wdt {
-  --wg: #39ff9c; --wg2: #a6ffd2; --wt: #39ff9c; --wt2: #a6ffd2; --wa: #ffb547; --wbg: #030806; --wpan: rgba(4, 14, 10, .86); --wline: rgba(57, 255, 156, .22); --wline2: rgba(57, 255, 156, .45);
+  --wg: #39ff9c; --wg2: #a6ffd2; --wt: #39ff9c; --wt2: #a6ffd2; --wa: #ffb547; --wbg: #030806; --wpan: rgba(4, 14, 10, .86); --wnav: rgba(3, 8, 6, .95); --wline: rgba(57, 255, 156, .22); --wline2: rgba(57, 255, 156, .45);
   --ink: #d8ffe9; --ink2: #9fd8b8; --mute: #5f9b7b; --line: rgba(57, 255, 156, .14); --line2: rgba(57, 255, 156, .28); --glass: var(--wpan); --hi: #eafff3;
   font-family: var(--font-m); color: var(--ink);
 }
@@ -28,16 +28,27 @@
 .wdt-status .cur, .wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { animation: wdt-blink 1s steps(2) infinite; }
 .wdt-status .clock { color: var(--ink2); font-variant-numeric: tabular-nums; }
 
-/* navigation as terminal tabs */
-.wd.wdt .wd-nav { background: linear-gradient(180deg, rgba(3,8,6,.95), rgba(3,8,6,.86)); border-bottom: 1px solid var(--wline); padding: 10px 0; margin-bottom: 0; }
+/* navigation as terminal tabs, in plain groups. The bar runs edge to edge once it sticks; its tabs keep the gutter. */
+.wd.wdt .wd-nav { background: var(--wnav); box-shadow: 0 0 0 100vmax var(--wnav); clip-path: inset(0 -100vmax); border-bottom: 1px solid var(--wline); padding: 9px 0 10px; margin-bottom: 0; }
 .wd.wdt .wd-brand { font: 800 15px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--wt); }
 .wd.wdt .wd-brand small { margin-left: 4px; padding: 1px 5px; border: 1px solid var(--wline2); font-size: 9.5px; color: var(--wt2); }
 .wd.wdt .wd-brand i { background: var(--wt); box-shadow: 0 0 0 0 rgba(57,255,156,.7); }
-.wd.wdt .wd-tab { font: 700 12px var(--font-m); letter-spacing: .04em; color: var(--ink2); border-radius: 0; border: 1px solid transparent; padding: 7px 12px; }
-.wd.wdt .wd-tab::before { content: "./"; color: var(--mute); }
-.wd.wdt .wd-tab:hover { color: var(--wt); background: rgba(57,255,156,.06); border-color: var(--wline); }
+.wd.wdt .wd-grp { border-left-color: var(--wline); }
+.wd.wdt .wd-grp-l { color: var(--mute); }
+.wd.wdt .wd-grp-l::before { content: "// "; opacity: .6; }
+.wd.wdt .wd-grp.has-on .wd-grp-l { color: var(--wa); }
+.wd.wdt .wd-tab { font: 700 12.5px var(--font-m); letter-spacing: .02em; color: var(--ink2); border-radius: 0; border: 1px solid var(--line); background: rgba(57,255,156,.025); padding: 7px 11px; }
+.wd.wdt .wd-tab:hover { color: var(--wt); background: rgba(57,255,156,.07); border-color: var(--wline2); }
 .wd.wdt .wd-tab.on { color: #021108; background: var(--wt); border-color: var(--wt); box-shadow: 0 0 18px -4px rgba(57,255,156,.6); }
-.wd.wdt .wd-tab.on::before { color: #04361d; }
+.wd.wdt .wd-grp-start .wd-tab:not(.on) { color: var(--wa); border-color: rgba(255,181,71,.4); background: rgba(255,181,71,.06); }
+.wd.wdt .wd-grp-start .wd-tab:not(.on):hover { border-color: var(--wa); }
+
+/* the "you are here" line under the nav */
+.wdt-status.wd-here { margin-top: 10px; padding: 8px 12px; align-items: baseline; }
+.wd-here .here { flex: 1; min-width: 220px; margin: 0; font: 600 12.5px/1.45 var(--font-m); letter-spacing: .01em; animation: wd-type .8s steps(32) both; }
+.wd-here .here .q { color: var(--wt); font-weight: 800; }
+.wd-here .here .d { color: var(--ink2); }
+@keyframes wd-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* headlines: a prompt and a blinking cursor */
 .wd.wdt .wd-hero, .wd.wdt .lg-head { padding-top: 18px; }
@@ -131,5 +142,5 @@
 @keyframes wdt-blink { 50% { opacity: 0; } }
 @keyframes wdt-tape { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 @keyframes wdt-boot { 0% { opacity: 0; filter: brightness(2) saturate(0); clip-path: inset(0 0 100% 0); } 60% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { filter: none; } }
-@media (max-width: 900px) { .wd.wdt .wd-nav { padding: 8px 0; } .wdt-status .typed { min-width: 0; } }
-@media (prefers-reduced-motion: reduce) { .wdt-bg .scan::after, .wdt-tape span, .wdt-status .cur, .wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { animation: none !important; } }
+@media (max-width: 900px) { .wd.wdt .wd-nav { padding: 8px 0; } .wdt-status .typed { min-width: 0; } .wd.wdt .wd-tab { padding: 8px 10px; } .wdt-status.wd-here .path, .wdt-status.wd-here .clock { display: none; } .wd-here .here { min-width: 0; font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { .wd-here .here, .wdt-bg .scan::after, .wdt-tape span, .wdt-status .cur, .wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { animation: none !important; } }

@@ -4,6 +4,7 @@
 // spectrum of every margin, a control strip and a legislature map, with the race desk below for drill down.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import DaysOut from "@/app/components/DaysOut";
 import { useRouter } from "next/navigation";
 import { useJson } from "./ForecastDesk";
 import { type DBJson, type Model, dbRaces, indSide } from "./lib";
@@ -406,7 +407,7 @@ export default function ForecastHub() {
         </div>
         <aside className="hub-side">
           <header className="hub-hero">
-            <div className="eye g">2026 forecast{model ? ` · ${model.meta.daysOut} days out` : ""}</div>
+            <div className="eye g">2026 forecast{model ? <> · <DaysOut initial={model.meta.daysOut} suffix=" days out" /></> : ""}</div>
             <h1 id="hub-h">Every race on the ballot. <em>One board.</em></h1>
             <p className="lede">
               The Senate, the House, {govs.length || 36} governors, {by("db").length || 114} statewide offices and {sl?.chambers.length ?? 87} state legislative chambers,

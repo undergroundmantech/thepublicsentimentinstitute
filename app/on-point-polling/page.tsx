@@ -17,7 +17,7 @@ const LINKS = [
   { href: "/on-point-polling/methodology", t: "Methodology", s: "DSMeridian weighting, the dual panel design and the gold standard pollster list." },
   { href: "/on-point-polling/services", t: "Partner with On Point Polling", s: "Commission statewide, district or national polling." },
   { href: "/on-point-polling/weighting-room", t: "The Weighting Room", s: "The subscriber community for people who like their crosstabs raw." },
-  { href: "/on-point-polling/situation-room", t: "Situation room", s: "Streams and election night video from the desk." },
+  { href: "/results/monitor", t: "Situation monitor", s: "Election night, every race on one globe, live against our forecast." },
   { href: "/on-point-polling/sms", t: "SMS updates", s: "Text alerts for releases and results nights." },
 ];
 

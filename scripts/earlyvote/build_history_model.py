@@ -6,6 +6,7 @@ party mix compares with the same point in past cycles.
 Inputs
   public/earlyvote-history.json        state checkpoints, party splits, final early vote and mail and in person mix
   scripts/earlyvote/data/ev2022_national.json   the US Elections Project 2022 national daily counts and party split
+  scripts/earlyvote/data/ev2024_national.json   the 2024 national tallies of the same project, as quoted with dates in news reports
   scripts/forecast/earlyvote/snapshots/<latest>/ev_signals.json   today's 2026 party mix by state, reported or modeled
   public/forecast/pres24_counties.json  2024 presidential vote, for each state's lean
 
@@ -16,7 +17,8 @@ Ballots, modeled
   on their own window. The pace factor and the power are fitted each year on every published checkpoint, then one
   median factor per day lines the curves up with the states that did publish. The state's final early vote and its
   mail and in person mix come from the history file. The national 2022 tally is not used as a total to match, since on
-  any given day it counted only the states that had reported to it.
+  any given day it counted only the states that had reported to it. The 2024 tally, quoted with dates from October 22
+  on, is used as a total: on those days the modeled 2024 states are scaled so that every state adds up to it.
 
 Party, modeled
   The split of a past year's ballots in a state that published none starts from the state's own 2026 split today,
@@ -34,6 +36,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 DAYS = list(range(0, 46))
 H = json.load(open(os.path.join(ROOT, "public", "earlyvote-history.json")))
 N22 = json.load(open(os.path.join(HERE, "data", "ev2022_national.json")))
+N24 = json.load(open(os.path.join(HERE, "data", "ev2024_national.json")))
 SNAP = os.path.join(ROOT, "scripts", "forecast", "earlyvote", "snapshots")
 LATEST = sorted(d for d in os.listdir(SNAP) if d[:2] == "20" and os.path.exists(os.path.join(SNAP, d, "ev_signals.json")))[-1]
 SIG = json.load(open(os.path.join(SNAP, LATEST, "ev_signals.json")))["states"]
@@ -271,10 +274,36 @@ for y in ("2022", "2024"):
                 pd.append(None); pr.append(None); ph.append(0)
         out_states.setdefault(st, {})[y] = {"n": n, "nRep": nh, "d": pd, "r": pr, "pRep": ph}
 
+# 2024 against its own national tally: on the dated days a national 2024 count was quoted, the published and modeled
+# states should add up to it, so the modeled share is scaled to close the gap, read between those days and held at
+# the nearest one outside them. By late October 2024 nearly every state was reporting to the tally, so unlike 2022
+# the tally is a fair total.
+t24 = [[x["daysOut"], x["total"]] for x in N24["snapshots"]]
+fac24 = {}
+for dd, tot in t24:
+    rep = sum(v["2024"]["n"][dd] or 0 for v in out_states.values() if v["2024"]["nRep"][dd])
+    mod = sum(v["2024"]["n"][dd] or 0 for v in out_states.values() if not v["2024"]["nRep"][dd])
+    if mod:
+        fac24[dd] = max(0.4, min(1.3, (tot - rep) / mod))
+fpts = sorted(fac24.items(), key=lambda x: -x[0])
+def f24(d):
+    if not fpts:
+        return 1.0
+    if d >= fpts[0][0]:
+        return fpts[0][1]
+    if d <= fpts[-1][0]:
+        return fpts[-1][1]
+    return interp([[a, b] for a, b in fpts], d, clamp_end=46)
+for v in out_states.values():
+    x = v["2024"]
+    x["n"] = [None if n is None else (n if x["nRep"][d] else round(n * f24(d))) for d, n in enumerate(x["n"])]
+meta["scale2024"] = {str(k): round(v, 3) for k, v in fac24.items()}
+
 nat = [[s["daysOut"], s["total"], s["mail"], s["inperson"]] + ([s["party_total"]["D"], s["party_total"]["R"], s["party_total"]["O"]] if s.get("party_total") else [None] * 3) for s in snaps]
 out = {"meta": meta | {"note": "Arrays run from 0 to 45 days before Election Day. nRep and pRep mark a reported value with 1 and a modeled one with 0. d and r are the registered Democratic and Republican shares of the ballots cast so far.",
                        "sources": [N22["source"], "public/earlyvote-history.json", f"ev_signals {LATEST}"]},
        "us2022": {"daily": nat, "partyStates": snaps[-1].get("partyStates", []), "source": N22["source"], "url": N22["url"]},
+       "us2024": {"daily": [[x["daysOut"], x["total"], x.get("mail"), x.get("inperson"), (x.get("party") or {}).get("D"), (x.get("party") or {}).get("R")] for x in N24["snapshots"]], "source": N24["source"]},
        "states": out_states}
 p = os.path.join(ROOT, "public", "earlyvote-history-model.json")
 json.dump(out, open(p, "w"), separators=(",", ":"))

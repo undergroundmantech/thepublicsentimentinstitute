@@ -10,7 +10,8 @@ import Ambient from "@/app/components/opp/Ambient";
 import Count from "@/app/components/opp/Count";
 import { getCategory, getPartyModel, matchCounty, simulate, stateOfFips, type CategoryPayload, type PartyModel } from "./lib";
 import type { EvConsole, EvRow } from "./consoleData";
-import ThenNow from "./ThenNow";
+import ThenNow, { useEvView } from "./ThenNow";
+import Benchmarks, { BenchBoard } from "./Benchmarks";
 import "./evconsole.css";
 
 type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
@@ -35,6 +36,10 @@ function bboxOf(d: string): [number, number, number, number] {
   return [x0, y0, x1, y1];
 }
 const sumRow = (row: Record<string, { votes: number }> | undefined, f: (k: string) => boolean) => Object.entries(row ?? {}).reduce((s, [k, v]) => s + (f(k) ? Number(v?.votes) || 0 : 0), 0);
+const AP = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+const apDate = (d: string) => { const t = new Date(`${d}T12:00:00Z`); return isNaN(+t) ? d : `${AP[t.getUTCMonth()]} ${t.getUTCDate()}, ${t.getUTCFullYear()}`; };
+let p24P: Promise<Record<string, [number, number, number]>> | null = null;
+const getP24 = () => (p24P ??= fetch("/forecast/pres24_counties.json").then((r) => r.json()).then((j) => j.c ?? {}).catch(() => ({})));
 const isOther = (k: string) => k !== "Democratic" && k !== "Republican" && k !== "Unspecified";
 
 // ── pace chart: 2022, 2024 and 2026 counts by days before Election Day ────────
@@ -86,6 +91,10 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   const [sort, setSort] = useState<"most" | "pace" | "d" | "r" | "az">("most");
   const [all, setAll] = useState(false);
   const [pmodel, setPmodel] = useState<PartyModel | null>(null);
+  const [hov, setHov] = useState<string | null>(null);
+  const [p24raw, setP24raw] = useState<Record<string, [number, number, number]> | null>(null);
+  useEffect(() => { if (scope !== "US" && !p24raw) getP24().then(setP24raw); }, [scope, p24raw]);
+  const { view } = useEvView(data, scope);
   useEffect(() => { getPartyModel().then(setPmodel); }, []);
 
   const byState = useMemo(() => Object.fromEntries(data.rows.map((r) => [r.st, r])) as Record<string, EvRow>, [data.rows]);
@@ -242,130 +251,194 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
     : metric === "pace" ? ["Behind 2022", "Ahead of 2022", paceFill(0.55), paceFill(1.8)] : metric === "party" || metric === "model" ? ["More Democrats", "More Republicans", marginColor(-35), marginColor(35)]
     : metric === "expect" ? ["Better for Democrats than expected", "Better for Republicans", marginColor(-35), marginColor(35)] : ["In person", "By mail", methodFill(0), methodFill(1)];
   const dateLabel = new Date(`${data.snapshot}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" });
+  // the hero: 2026 against the same day in 2024 (or 2022), modeled on one scale
+  const p24 = useMemo(() => { const o: Record<string, number> = {}; for (const [f, v] of Object.entries(p24raw ?? {})) { const n = v[0] + v[1] + v[2]; if (n > 0) o[f] = ((v[1] - v[0]) / n) * 100; } return o; }, [p24raw]);
+  const geo24 = useMemo(() => { if (!counties?.length) return null; let w = 0, m = 0; for (const c of counties) { const x = p24[c.id]; if (x == null) continue; w += c.total; m += c.total * x; } return w > 0 ? m / w : null; }, [counties, p24]);
+  const mg = (p: { d: number; r: number } | null | undefined) => (p ? (p.r - p.d) * 100 : null);
+  const m26 = mg(view?.p26), m24 = mg(view?.p24), m22 = mg(view?.p22);
+  const who = scope === "US" ? "The nation" : R.name;
+  const vs = m26 != null && m24 != null ? { y: "2024", dm: m26 - m24 } : m26 != null && m22 != null ? { y: "2022", dm: m26 - m22 } : null;
+  const head = vs ? <>{who}&apos;s early vote is <em className={vs.dm < 0 ? "d" : "r"}>{Math.abs(vs.dm).toFixed(1)} points {vs.dm < 0 ? "bluer" : "redder"}</em> than this point in {vs.y}</>
+    : <><em className="g"><Count value={R.total} /></em> ballots cast {scope === "US" ? "so far" : `in ${R.name}`}</>;
+  const pmShow = R.pm ? { d: R.pm.d, r: R.pm.r, o: R.pm.o } : party && pT > 0 ? { d: R.dem / pT, r: R.rep / pT, o: R.ind / pT } : null;
+  const tn = ([["2022", m22], ["2024", m24], ["2026", m26]] as [string, number | null][]).filter((x): x is [string, number] => x[1] != null);
+  const tnSpan = Math.max(20, Math.ceil(Math.max(0, ...tn.map((x) => Math.abs(x[1]))) / 10) * 10 + 5);
+  const tnX = (m: number) => 50 + (Math.max(-tnSpan, Math.min(tnSpan, m)) / tnSpan) * 46;
+  const cmp = ([["2022", m22], ["2024", m24]] as [string, number | null][]).filter((x): x is [string, number] => x[1] != null && m26 != null).map(([y, m]) => [y, (m26 as number) - m] as [string, number]);
+  const top5 = scope === "US"
+    ? [...data.rows].sort((a, b) => b.total - a.total).slice(0, 6).map((r) => ({ id: r.st, name: r.name, n: r.total, m: r.pm ? pmM(r.pm) : r.partyShare > 0.5 ? partyM(r.dem, r.rep, r.ind) : null }))
+    : [...(counties ?? [])].sort((a, b) => b.total - a.total).slice(0, 6).map((c) => ({ id: c.id, name: c.name, n: c.total, m: c.md + c.mr > 0 ? partyM(c.md, c.mr, c.mo) : null }));
 
   return (
     <section className="evc" aria-labelledby="evc-h">
       <Ambient tint="#9fe3c8" />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/maps">Maps</Link><span className="sep">/</span>{scope === "US" ? <span>Early vote</span> : <><button className="evc-crumb" onClick={() => go("US")}>Early vote</button><span className="sep">/</span><span>{R.name}</span></>}</nav>
-      <header className="evc-head">
-        <Pointy className="cam-hero cam-ev pty-side" pose="wave" prop="ballot" size={118} look={-1} flip say={<>Every county&apos;s ballots, modeled by party as they come in.</>} />
-        <div>
-          <div className="eye g">2026 early vote · as of {dateLabel} · {data.daysOut} days out</div>
-          <h1 id="evc-h"><Count value={R.total} /> <span>ballots cast {scope === "US" ? "so far" : `in ${R.name}`}</span></h1>
-          {lede ? <div className="evc-lede">{lede}</div> : null}
-        </div>
-        <dl className="evc-meta">
-          {mB && mB.n ? <>
-            <div className="mb d"><dt>Modeled Democrats</dt><dd>{short(mB.d)}<small>{pctS(mB.d / mB.n, 1)}</small></dd></div>
-            <div className="mb r"><dt>Modeled Republicans</dt><dd>{short(mB.r)}<small>{pctS(mB.r / mB.n, 1)}</small></dd></div>
-            <div className="mb o"><dt>Modeled other</dt><dd>{short(mB.o)}<small>{pctS(mB.o / mB.n, 1)}</small></dd></div>
-          </> : null}
-          <div><dt>By mail</dt><dd>{short(R.mail)}</dd></div>
-          <div><dt>In person</dt><dd>{short(R.inperson)}</dd></div>
-          {scope === "US" ? <div><dt>States reporting</dt><dd>{data.rows.length}</dd></div> : <div><dt>Counties</dt><dd>{counties ? counties.length : "..."}</dd></div>}
-          {R.t22 ? <div><dt>Of 2022 turnout</dt><dd>{pctS(R.total / R.t22, 1)}</dd></div> : null}
-        </dl>
-      </header>
-
-      <div className="evc-tiles" role="tablist" aria-label="What the map shows">
-        {(Object.keys(tiles) as Metric[]).map((k) => (
-          <button key={k} role="tab" aria-selected={metric === k} className={`evc-tile${metric === k ? " on" : ""}`} onClick={() => setMetric(k)}>
-            <span className="lb">{tiles[k].lb}</span><b>{tiles[k].big}</b><span className="sb">{tiles[k].sub}</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="evc-stage" id="evc-stage">
-        <div className="evc-mapcard">
-          <div className="evc-maphead">
-            <div><span className="eye">{scope === "US" ? "Every reporting state" : `${R.name} by county`}</span><h2>{tiles[metric].lb}{scope === "US" ? " by state" : ""}</h2></div>
-            {scope !== "US" ? <button className="btn sm" onClick={() => go("US")}>Back to the nation</button> : <span className="evc-hint">Click a state to see its counties</span>}
-          </div>
-          <div className="evc-mapwrap" onMouseLeave={() => setTip(null)}>
-            {scope === "US" ? (geo ? (
-              <svg key={`us-${metric}`} className="evc-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Early vote by state, ${tiles[metric].lb.toLowerCase()}`}>
-                <defs><pattern id="evc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="rgba(255,255,255,.04)" /><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,.16)" strokeWidth="2" /></pattern></defs>
-                {states.map((s) => {
-                  const r = byState[s.st], f = stFill(r);
-                  return <path key={s.st} d={s.d} className={r ? "live" : "off"} style={{ fill: r ? f ?? "url(#evc-hatch)" : undefined, animationDelay: `${((s.x / W) * 0.5).toFixed(2)}s` }}
-                    tabIndex={r ? 0 : -1} role={r ? "button" : undefined} aria-label={r ? `${r.name}, ${commas(r.total)} ballots` : undefined}
-                    onMouseMove={r ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.st, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); } : undefined}
-                    onClick={r ? () => go(s.st) : undefined} onKeyDown={r ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(s.st); } } : undefined} />;
-                })}
-                {states.filter((s) => s.w > 36).map((s) => <text key={s.st} x={s.cx} y={s.cy + 4} className={byState[s.st] ? "" : "off"}>{s.st}</text>)}
-              </svg>) : <div className="evc-load sx-skel" />)
-            : cPaths && cBox ? (
-              <svg key={`${scope}-${metric}`} className="evc-map cty" viewBox={cBox} role="img" aria-label={`${R.name} early vote by county`}>
-                {cPaths.map((p) => {
-                  const c = cById[p.id], f = cFill(c);
-                  return <path key={p.id} d={p.d} className={c ? "live" : "off"} style={{ fill: f ?? undefined }}
-                    onMouseMove={(e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: p.id, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); }} />;
-                })}
-              </svg>) : <div className="evc-load sx-skel" />}
-            {failed ? <div className="evc-fail">{R.name} county counts did not load just now. The state totals above are current as of {dateLabel}.</div> : null}
-            {tipRow ? (
-              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
-                <h4>{tipRow.name}</h4>
-                <div className="r"><span>Ballots</span><b>{commas(tipRow.total)}</b></div>
-                <div className="r"><span>Mail / in person</span><b>{pctS(tipRow.mail / Math.max(1, tipRow.total))} / {pctS(tipRow.inperson / Math.max(1, tipRow.total))}</b></div>
-                {tipRow.t22 ? <div className="r"><span>Of 2022 turnout</span><b>{pctS(tipRow.total / tipRow.t22, 1)}</b></div> : null}
-                <div className="r"><span>Pace</span><b>{paceLabel(tipRow.pace22)}</b></div>
-                {tipRow.partyShare > 0.5 ? <div className="r"><span>Party of ballots</span><b className={(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0)}</b></div> : <div className="r"><span>Party</span><b>Not reported</b></div>}
-                {tipRow.pm ? <div className="r"><span>Party model{tipRow.pm.est > 0.5 ? ", modeled" : ""}</span><b className={(pmM(tipRow.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(tipRow.pm) ?? 0)}</b></div> : null}
-                <div className="cta">Click for counties</div>
+      <div className="evh" id="evc-stage">
+        <div className="evh-body">
+          <div className="evh-left">
+        <div className="evh-top">
+            <div className="evh-eye">Early vote by {scope === "US" ? "state" : "county"} · {scope === "US" ? "Nationwide" : R.name} · {apDate(data.snapshot)}</div>
+            <h1 id="evc-h">{head}</h1>
+            <div className="evh-ctl">
+              {metric === "party" || metric === "model" || metric === "expect" ? (
+                <div className="evh-chips" aria-label={metric === "expect" ? "Against expectations" : `${scope === "US" ? "State" : "County"} lead`}>
+                  <span className="cap">{metric === "expect" ? "Vs expected" : scope === "US" ? "State lead" : "County lead"}</span>
+                  {[-30, -15, -5, 0, 5, 15, 30].map((m) => <i key={m} style={{ background: m === 0 ? "var(--evh-even)" : marginColor(metric === "expect" ? m * 1.2 : m), color: Math.abs(m) >= 15 ? "#fff" : "#1a1030" }}>{m === 0 ? "Even" : `${m < 0 ? "D" : "R"} +${Math.abs(metric === "expect" ? m / 4 : m)}`}</i>)}
+                </div>
+              ) : (
+                <div className="evc-legend evh-leg"><span>{legend[0]}</span><i style={{ background: `linear-gradient(90deg, ${legend[2]}, ${metric === "pace" ? "rgb(240,240,240)," : ""} ${legend[3]})` }} /><span>{legend[1]}</span></div>
+              )}
+              <div className="evh-metric" role="tablist" aria-label="What the map shows">
+                {(Object.keys(tiles) as Metric[]).map((k) => (
+                  <button key={k} role="tab" aria-selected={metric === k} className={metric === k ? "on" : ""} onClick={() => setMetric(k)} title={tiles[k].sub}>
+                    {tiles[k].lb}<b>{tiles[k].big}</b>
+                  </button>
+                ))}
               </div>
-            ) : tipC ? (
-              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
-                <h4>{tipC.name}</h4>
-                <div className="r"><span>Ballots</span><b>{commas(tipC.total)}</b></div>
-                <div className="r"><span>Mail / in person</span><b>{commas(tipC.mail)} / {commas(tipC.inperson)}</b></div>
-                {tipC.md + tipC.mr > 0 ? <>
-                  <div className="r"><span>{tipC.modeled ? "Modeled Democrats" : "Democrats"}</span><b className="d">{commas(tipC.md)} · {pctS(tipC.md / Math.max(1, tipC.total), 1)}</b></div>
-                  <div className="r"><span>{tipC.modeled ? "Modeled Republicans" : "Republicans"}</span><b className="r">{commas(tipC.mr)} · {pctS(tipC.mr / Math.max(1, tipC.total), 1)}</b></div>
-                  <div className="r"><span>{tipC.modeled ? "Modeled lead" : "Party lead"}</span><b className={(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0)}</b></div>
-                </> : null}
-                {tipC.dem + tipC.rep > 0 && tipC.modeled ? <div className="r"><span>Reported party</span><b className={(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0)}</b></div> : null}
+            </div>
+          </div>
+          <div className="evh-stage" onMouseLeave={() => { setTip(null); setHov(null); }}>
+            <div className="evh-beam" aria-hidden="true" />
+            <div className="evh-ped" aria-hidden="true"><i className="glow" /><i className="lid" /><i className="rim" /></div>
+            <div className="evh-plate"><b><Count value={R.total} /></b><span>Ballots cast</span></div>
+            <div className="evh-nav">{scope !== "US" ? <button className="btn sm" onClick={() => go("US")}>Back to the nation</button> : <span className="evc-hint">Click a state to see its counties</span>}</div>
+            <div className="evc-mapwrap evh-map">
+              {scope === "US" ? (geo ? (
+                <svg key={`us-${metric}`} className="evc-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Early vote by state, ${tiles[metric].lb.toLowerCase()}`}>
+                  <defs><pattern id="evc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="rgba(255,255,255,.04)" /><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,.16)" strokeWidth="2" /></pattern></defs>
+                  {states.map((s) => {
+                    const r = byState[s.st], f = stFill(r);
+                    return <path key={s.st} d={s.d} className={`${r ? "live" : "off"}${hov === s.st ? " hl" : ""}`} style={{ fill: r ? f ?? "url(#evc-hatch)" : undefined, animationDelay: `${((s.x / W) * 0.5).toFixed(2)}s` }}
+                      tabIndex={r ? 0 : -1} role={r ? "button" : undefined} aria-label={r ? `${r.name}, ${commas(r.total)} ballots` : undefined}
+                      onMouseMove={r ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.st, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); } : undefined}
+                      onClick={r ? () => go(s.st) : undefined} onKeyDown={r ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(s.st); } } : undefined} />;
+                  })}
+                  {states.filter((s) => s.w > 36).map((s) => <text key={s.st} x={s.cx} y={s.cy + 4} className={byState[s.st] ? "" : "off"}>{s.st}</text>)}
+                </svg>) : <div className="evc-load sx-skel" />)
+              : cPaths && cBox ? (
+                <svg key={`${scope}-${metric}`} className="evc-map cty" viewBox={cBox} role="img" aria-label={`${R.name} early vote by county`}>
+                  {cPaths.map((p) => {
+                    const c = cById[p.id], f = cFill(c);
+                    return <path key={p.id} d={p.d} className={`${c ? "live" : "off"}${hov === p.id ? " hl" : ""}`} style={{ fill: f ?? undefined }}
+                      onMouseMove={(e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: p.id, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); }} />;
+                  })}
+                </svg>) : <div className="evc-load sx-skel" />}
+              {failed ? <div className="evc-fail">{R.name} county counts did not load just now. The state totals are current as of {dateLabel}.</div> : null}
+              {tipRow ? (
+                <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
+                  <h4>{tipRow.name}</h4>
+                  <div className="r"><span>Ballots</span><b>{commas(tipRow.total)}</b></div>
+                  <div className="r"><span>Mail / in person</span><b>{pctS(tipRow.mail / Math.max(1, tipRow.total))} / {pctS(tipRow.inperson / Math.max(1, tipRow.total))}</b></div>
+                  {tipRow.t22 ? <div className="r"><span>Of 2022 turnout</span><b>{pctS(tipRow.total / tipRow.t22, 1)}</b></div> : null}
+                  <div className="r"><span>Pace</span><b>{paceLabel(tipRow.pace22)}</b></div>
+                  {tipRow.partyShare > 0.5 ? <div className="r"><span>Party of ballots</span><b className={(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0)}</b></div> : <div className="r"><span>Party</span><b>Not reported</b></div>}
+                  {tipRow.pm ? <div className="r"><span>Party model{tipRow.pm.est > 0.5 ? ", modeled" : ""}</span><b className={(pmM(tipRow.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(tipRow.pm) ?? 0)}</b></div> : null}
+                  {tipRow.bench?.pres24 != null ? <div className="r"><span>2024 president</span><b className={tipRow.bench.pres24 < 0 ? "d" : "r"}>{mLabel(tipRow.bench.pres24)}</b></div> : null}
+                  <div className="cta">Click for counties and benchmarks</div>
+                </div>
+              ) : tipC ? (
+                <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
+                  <h4>{tipC.name}</h4>
+                  <div className="r"><span>Ballots</span><b>{commas(tipC.total)}</b></div>
+                  <div className="r"><span>Mail / in person</span><b>{commas(tipC.mail)} / {commas(tipC.inperson)}</b></div>
+                  {tipC.md + tipC.mr > 0 ? <>
+                    <div className="r"><span>{tipC.modeled ? "Modeled Democrats" : "Democrats"}</span><b className="d">{commas(tipC.md)} · {pctS(tipC.md / Math.max(1, tipC.total), 1)}</b></div>
+                    <div className="r"><span>{tipC.modeled ? "Modeled Republicans" : "Republicans"}</span><b className="r">{commas(tipC.mr)} · {pctS(tipC.mr / Math.max(1, tipC.total), 1)}</b></div>
+                    <div className="r"><span>{tipC.modeled ? "Modeled lead" : "Party lead"}</span><b className={(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0)}</b></div>
+                  </> : null}
+                  {tipC.dem + tipC.rep > 0 && tipC.modeled ? <div className="r"><span>Reported party</span><b className={(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0)}</b></div> : null}
+                  {p24[tipC.id] != null ? <div className="r"><span>2024 president</span><b className={p24[tipC.id] < 0 ? "d" : "r"}>{mLabel(p24[tipC.id])}</b></div> : null}
+                </div>
+              ) : null}
+            </div>
+          </div>
+          </div>
+
+          <aside className="evh-side" aria-live="polite">
+            <div className="evh-panel">
+              <div className="evh-ph"><span>On Point party model, all ballots</span>{R.pm ? <b className={(pmM(R.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(R.pm) ?? 0)}</b> : null}</div>
+              {pmShow ? <>
+                <div className="evh-bar"><i className="d" style={{ width: pctS(pmShow.d, 2) }} /><i className="o" style={{ width: pctS(pmShow.o, 2) }} /><i className="r" style={{ width: pctS(pmShow.r, 2) }} /></div>
+                {([["d", "Democrats", pmShow.d], ["o", "Independents and other", pmShow.o], ["r", "Republicans", pmShow.r]] as [string, string, number][]).map(([k, l, v]) => (
+                  <div key={k} className={`evh-pr ${k}`}><span><i />{l}</span><b>{commas(v * R.total)}</b><em>{pctS(v, 1)}</em></div>
+                ))}
+                <p className="evh-pn">{scope === "US" ? `Reported party where a state publishes it, the On Point model elsewhere. ${pctS(R.pm?.est ?? 0)} of ballots modeled.` : R.pm && R.pm.est > 0.5 ? `${R.name} does not publish party, so every ballot here is modeled.` : R.pm && R.pm.est > 0 ? "Partly modeled where ballots carry no party." : "Party registration as the state reports it."}</p>
+              </> : <p className="evh-pn">{R.name} has no party model yet.</p>}
+            </div>
+            {tn.length ? (
+              <div className="evh-panel">
+                <div className="evh-ph"><span>Then and now · same day · modeled</span></div>
+                <div className="evh-tn">
+                  {tn.map(([y, m]) => (
+                    <div key={y} className={`row y${y}`}><span className="yr">{y}</span>
+                      <span className="trk"><i className="mid" /><i className={`dot ${m < 0 ? "d" : "r"}`} style={{ left: `${tnX(m)}%` }} /></span>
+                      <b className={m < 0 ? "d" : "r"}>{mLabel(m)}</b></div>
+                  ))}
+                </div>
+                <div className="evh-cmp">
+                  {cmp.map(([y, dm]) => (
+                    <div key={y} className={dm < 0 ? "d" : "r"}><b>{Math.abs(dm).toFixed(1)}</b><span>{dm < 0 ? "bluer" : "redder"}</span><small>than {y}</small></div>
+                  ))}
+                </div>
               </div>
             ) : null}
-          </div>
-          <div className="evc-legend"><span>{legend[0]}</span><i style={{ background: `linear-gradient(90deg, ${legend[2]}, ${metric === "pace" ? "rgb(240,240,240)," : metric === "party" || metric === "model" || metric === "expect" ? "rgb(240,236,246)," : ""} ${legend[3]})` }} /><span>{legend[1]}</span>{metric === "party" || metric === "pace" || metric === "model" || metric === "expect" ? <span className="hatch">No data</span> : null}</div>
+            <div className="evh-panel">
+              <div className="evh-ph"><span>Most ballots</span><span className="sub">{scope === "US" ? "States" : "Counties"}</span></div>
+              <ol className="evh-top5">
+                {top5.map((t) => (
+                  <li key={t.id} onMouseEnter={() => setHov(t.id)} onMouseLeave={() => setHov(null)}>
+                    {scope === "US" ? <button onClick={() => go(t.id)}>{t.name}</button> : <span>{t.name}</span>}
+                    <b>{short(t.n)}</b><em className={t.m == null ? "" : t.m < 0 ? "d" : "r"}>{t.m == null ? "n/a" : mLabel(t.m)}</em>
+                  </li>
+                ))}
+                {!top5.length ? <li className="evh-pn">Loading</li> : null}
+              </ol>
+            </div>
+          </aside>
         </div>
+        <div className="evh-foot"><span>Counts from state election offices via civicAPI, as of {dateLabel}. Party modeled by On Point Polling where a state reports none. Past years modeled on the same day before Election Day.</span><span className="url">onpointpolitics.us/maps/early-vote{scope === "US" ? "" : `/${R.slug}`}</span></div>
+      </div>
 
-        <aside className="evc-read" aria-live="polite">
-          <div className="evc-rh"><div><span className="eye">{scope === "US" ? "All reporting states" : "State"}</span><h3>{R.name}</h3></div>{R.fc ? <Link className="btn sm" href={R.fc.href}>{scope === "US" ? "Forecast" : "Race forecast"}</Link> : null}</div>
+      <div className="evh-lede">
+        <Pointy className="evh-pty pty-side" pose="wave" prop="ballot" size={92} look={-1} flip say={<>Hover any {scope === "US" ? "state" : "county"} for its ballots. Below: where each side needs the early vote to be.</>} />
+        {lede ? <div className="evc-lede">{lede}</div> : <div className="evc-lede"><p>{commas(R.total)} ballots cast in {R.name} as of {dateLabel}: {commas(R.mail)} by mail and {commas(R.inperson)} in person.</p></div>}
+      </div>
+
+      {scope === "US" ? <BenchBoard data={data} onOpen={go} /> : row ? <Benchmarks row={row} data={data} m24={view?.p24 ? (view.p24.r - view.p24.d) * 100 : null} m26={view?.p26 ? (view.p26.r - view.p26.d) * 100 : null} geo24={geo24} /> : null}
+
+      <div className="evd">
+        <div className="evd-c">
+          <div className="evd-h"><span className="eye">How ballots came in</span>{R.fc ? <Link className="btn sm" href={R.fc.href}>{scope === "US" ? "Forecast" : "Race forecast"}</Link> : null}</div>
           <div className="evc-split">
             <div className="lbls"><span><i className="m" />Mail {short(R.mail)}</span><span>In person {short(R.inperson)}<i className="p" /></span></div>
             <div className="bar"><i className="m" style={{ width: pctS(R.mail / Math.max(1, R.total), 2) }} /><i className="p" style={{ width: pctS(R.inperson / Math.max(1, R.total), 2) }} /></div>
           </div>
-          {party && pT > 0 ? (
-            <div className="evc-party">
-              <div className="lbls"><span className="d">Democrats {pctS(R.dem / pT, 1)}</span><span>Other {pctS(R.ind / pT, 1)}</span><span className="r">Republicans {pctS(R.rep / pT, 1)}</span></div>
-              <div className="bar"><i className="d" style={{ width: pctS(R.dem / pT, 2) }} /><i className="o" style={{ width: pctS(R.ind / pT, 2) }} /><i className="r" style={{ width: pctS(R.rep / pT, 2) }} /></div>
-              <p className="evc-note">Party registration of the voters who cast these ballots{scope === "US" ? ", in the states that publish it" : ""}. It is not how they voted.</p>
-            </div>
-          ) : <p className="evc-note">{R.name} does not report the party of its early voters{R.pm ? ", so the split below comes from the On Point party model." : "."}</p>}
-          {R.pm ? (
-            <div className="evc-pm">
-              <div className="evc-pmh"><span className="eye">On Point party model</span><span className={`tag ${scope === "US" ? "p" : R.pm.est > 0.5 ? "m" : R.pm.est > 0 ? "p" : "s"}`}>{scope === "US" ? `${pctS(R.pm.est)} modeled` : R.pm.est > 0.5 ? "Modeled" : R.pm.est > 0 ? "Partly modeled" : "Reported"}</span></div>
-              <div className="lbls"><span className="d">D {pctS(R.pm.d, 1)} · {short(R.pm.d * R.total)}</span><span>Other {pctS(R.pm.o, 1)}</span><span className="r">R {pctS(R.pm.r, 1)} · {short(R.pm.r * R.total)}</span></div>
-              <div className="bar"><i className="d" style={{ width: pctS(R.pm.d, 2) }} /><i className="o" style={{ width: pctS(R.pm.o, 2) }} /><i className="r" style={{ width: pctS(R.pm.r, 2) }} /></div>
-              {R.pm.xd ? <div className="lbls exp"><span>Expected by now</span><span className="d">D {pctS(R.pm.xd, 1)}</span><span className="r">R {pctS(R.pm.xr, 1)}</span></div> : null}
-              <div className="evc-pmk">
-                <div><span>Party lead</span><b className={(pmM(R.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(R.pm) ?? 0)}</b></div>
-                <div><span>Vs expected</span><b className={R.pm.delta < 0 ? "d" : "r"}>{Math.abs(R.pm.delta) < 0.05 ? "Even" : `${R.pm.delta < 0 ? "D" : "R"} +${Math.abs(R.pm.delta).toFixed(1)}`}</b></div>
-                {R.pm.shift != null ? <div><span>Forecast effect</span><b className={R.pm.shift < 0 ? "d" : "r"}>{Math.abs(R.pm.shift) < 0.05 ? "None" : `${R.pm.shift < 0 ? "D" : "R"} +${Math.abs(R.pm.shift).toFixed(1)}`}</b></div> : null}
-              </div>
-              <p className="evc-note">{scope === "US" ? "Every reporting state on one scale: reported party where a state publishes it, and the On Point Polling model of each county where it does not." : R.pm.est > 0.5 ? `${R.name} does not publish party, so On Point Polling models it from each county's count, its voter file and its past early voters.` : R.pm.est > 0 ? "Some of these ballots carry no party, so On Point Polling models that share." : "Party registration as the state reports it."} The forecast compares these ballots with what it expected by now and moves the race by the difference.</p>
-            </div>
-          ) : null}
           <div className="evc-stats">
             <div><span>Of 2022 turnout</span><b>{R.t22 ? pctS(R.total / R.t22, 1) : "n/a"}</b></div>
             <div><span>Pace</span><b className={R.pace22 == null ? "" : R.pace22 >= 1 ? "up" : "dn"}>{R.pace22 == null ? "n/a" : `${R.pace22 >= 1 ? "+" : ""}${((R.pace22 - 1) * 100).toFixed(0)}%`}</b></div>
             <div><span>Mail not back yet</span><b>{outstanding ? short(outstanding) : "n/a"}</b></div>
           </div>
           {R.e22 ? <Meter have={R.total} of={R.e22} label={`of the ${short(R.e22)} early ballots cast in 2022`} /> : null}
-          {scope !== "US" ? <PaceChart r={R} label={R.name} /> : <p className="evc-note">Pace compares each state with its own 2022 count at the same number of days before Election Day. Open a state for its pace chart.</p>}
-        </aside>
+        </div>
+        <div className="evd-c">
+          <div className="evd-h"><span className="eye">Party registration, as reported</span></div>
+          {party && pT > 0 ? (
+            <div className="evc-party">
+              <div className="lbls"><span className="d">Democrats {pctS(R.dem / pT, 1)}</span><span>Other {pctS(R.ind / pT, 1)}</span><span className="r">Republicans {pctS(R.rep / pT, 1)}</span></div>
+              <div className="bar"><i className="d" style={{ width: pctS(R.dem / pT, 2) }} /><i className="o" style={{ width: pctS(R.ind / pT, 2) }} /><i className="r" style={{ width: pctS(R.rep / pT, 2) }} /></div>
+              <p className="evc-note">Party registration of the voters who cast these ballots{scope === "US" ? ", in the states that publish it" : ""}. It is not how they voted.</p>
+            </div>
+          ) : <p className="evc-note">{R.name} does not report the party of its early voters{R.pm ? ", so the party model above comes from On Point Polling." : "."}</p>}
+          {R.pm ? <div className="evc-pmk">
+            <div><span>Party lead</span><b className={(pmM(R.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(R.pm) ?? 0)}</b></div>
+            <div><span>Vs expected</span><b className={R.pm.delta < 0 ? "d" : "r"}>{Math.abs(R.pm.delta) < 0.05 ? "Even" : `${R.pm.delta < 0 ? "D" : "R"} +${Math.abs(R.pm.delta).toFixed(1)}`}</b></div>
+            {R.pm.shift != null ? <div><span>Forecast effect</span><b className={R.pm.shift < 0 ? "d" : "r"}>{Math.abs(R.pm.shift) < 0.05 ? "None" : `${R.pm.shift < 0 ? "D" : "R"} +${Math.abs(R.pm.shift).toFixed(1)}`}</b></div> : null}
+          </div> : null}
+        </div>
+        <div className="evd-c">
+          <div className="evd-h"><span className="eye">Pace against past years</span></div>
+          {scope !== "US" ? <PaceChart r={R} label={R.name} /> : <p className="evc-note">Pace compares each state with its own 2022 count at the same number of days before Election Day. Open a state for its pace chart, or read the then and now section below.</p>}
+        </div>
       </div>
 
       <ThenNow data={data} scope={scope} onOpen={go} />

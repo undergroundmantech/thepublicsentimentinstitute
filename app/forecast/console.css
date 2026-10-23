@@ -136,7 +136,7 @@
 @media (max-width: 760px) {
   .fcx-head { grid-template-columns: 1fr; }
   .fcx-meta { justify-content: flex-start; }
-  .fcx-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -16px; padding-inline: 16px; }
+  .fcx-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .fcx-tile { flex: 0 0 168px; scroll-snap-align: start; }
   .fcx-mapcard { padding: 12px 10px; border-radius: 18px; }
   .fcx-map text { font-size: 13px; }

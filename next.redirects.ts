@@ -11,6 +11,10 @@ export const redirects: Redirect[] = [
   p("/early-voting", "/maps/early-vote"),
   p("/early-vote-tracker", "/maps/early-vote"),
   p("/early-vote/:state", "/maps/early-vote/:state"),
+  // Oct 23 2026: retired and unfinished pages fold into the pages that replaced them
+  p("/on-point-polling/situation-room", "/results/monitor", false),
+  p("/results/forecast", "/forecast", false),
+  p("/results/timeline-qa", "/results/2026", false),
   // Oct 22 2026: the swingometer and What If are their own pages
   p("/forecast/swingometer", "/swingometer"),
   p("/forecast/what-if", "/what-if"),

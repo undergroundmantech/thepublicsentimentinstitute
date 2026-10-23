@@ -2,6 +2,7 @@
 // The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast,
 // with Pointy the On Point canvasser walking across it from one close race to the next. Drag to turn the globe,
 // hover a state for its odds, click it for the full race. Canvas for the globe, SVG for the mascot and its bubble.
+import DaysOut from "@/app/components/DaysOut";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -244,7 +245,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
 
       <div className="hg-over">
         <div className="hg-copy">
-          <span className="chip"><i />{daysOut} days to Election Day · updated {updated}</span>
+          <span className="chip"><i /><DaysOut initial={daysOut} suffix=" days" /> to Election Day · updated {updated}</span>
           <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
           <p>The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races.</p>
           <div className="hg-odds">

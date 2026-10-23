@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
 import { MENU, type NavGroup } from "./navMenu";
+import { daysOut } from "@/app/lib/opp";
 
 // The On Point Politics masthead. A slim status strip (Election Day countdown, the three control odds, utility links)
 // over the main bar, where every section opens a grouped menu: what the section holds, sorted into columns, each link
@@ -14,6 +15,9 @@ import { MENU, type NavGroup } from "./navMenu";
 const Caret = () => <svg className="cr" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
 export default function Navbar({ status }: { status?: { days: number; updated: string; sen: number; house: number; gov: number } }) {
+  // the build date's count, then today's once the page is in the browser, the same as the ticker
+  const [liveDays, setLiveDays] = useState(status?.days ?? 0);
+  useEffect(() => { setLiveDays(daysOut()); }, []);
   const pathname = usePathname() || "/";
   const [open, setOpen] = useState(false);               // phone menu
   const [menu, setMenu] = useState<string | null>(null); // desktop group
@@ -60,7 +64,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
       {status ? (
         <div className="mstrip">
           <div className="wrap">
-            <span className="ms-day"><i aria-hidden="true" />Election Day, Nov 3 <b>{status.days === 0 ? "Today" : `${status.days} ${status.days === 1 ? "day" : "days"}`}</b></span>
+            <span className="ms-day"><i aria-hidden="true" />Election Day, Nov 3 <b>{liveDays === 0 ? "Today" : `${liveDays} ${liveDays === 1 ? "day" : "days"}`}</b></span>
             <Link href="/forecast" className="ms-odds" aria-label="Chances of Democratic control">
               <span>Senate <b>D {pct(status.sen)}</b></span><span>House <b>D {pct(status.house)}</b></span><span>Governors <b>D {pct(status.gov)}</b></span>
             </Link>
@@ -82,10 +86,11 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
               return (
                 <div key={g.key} className={`mm-i${op ? " open" : ""}`} onMouseEnter={has ? () => enter(g.key) : undefined} onMouseLeave={has ? leave : undefined}>
                   {has ? (
-                    <button type="button" className={[g.live ? "live" : "", on ? "on" : ""].join(" ").trim() || undefined} aria-expanded={op} aria-controls={`mm-${g.key}`}
-                      onClick={() => setMenu(op ? null : g.key)}>
-                      {g.label}<Caret />
-                    </button>
+                    // the label goes straight to the section's main page; hovering it, or the caret, opens the menu
+                    <span className={`mm-t${on ? " on" : ""}${g.live ? " live" : ""}`}>
+                      <Link href={g.href} className="mm-l" aria-current={on ? "page" : undefined} onFocus={() => enter(g.key)}>{g.label}</Link>
+                      <button type="button" className="mm-c" aria-label={`${g.label} menu`} aria-expanded={op} aria-controls={`mm-${g.key}`} onClick={() => setMenu(op ? null : g.key)}><Caret /></button>
+                    </span>
                   ) : (
                     <Link href={g.href} className={on ? "on" : undefined} aria-current={on ? "page" : undefined}>{g.label}</Link>
                   )}

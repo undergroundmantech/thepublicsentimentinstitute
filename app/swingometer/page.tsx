@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScenarioNav from "@/app/components/opp/ScenarioNav";
+import ScenarioModes, { MODE_BOOT } from "@/app/forecast/scenarios/ScenarioModes";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, pageLd, seo } from "@/app/lib/seo";
 import SwingClient from "@/app/forecast/swingometer/SwingClient";
@@ -28,7 +29,9 @@ export default function Page() {
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><span>Swingometer</span>
       </nav>
+      <script dangerouslySetInnerHTML={{ __html: MODE_BOOT }} />
       <ScenarioNav />
+      <ScenarioModes tool="groups" base="/swingometer">
       <header className="ph">
         <div className="eye g">2026 swingometer</div>
         <h1>Move the voters, <em>move the map</em></h1>
@@ -52,6 +55,7 @@ export default function Page() {
         more Democrats and more Black voters, a rural seat more white voters without a degree. Chamber odds move the forecast&apos;s full range of seat outcomes by
         the change in expected seats. With every slider at zero, every number is the published forecast. <Link href="/forecast/methodology" style={{ textDecoration: "underline" }}>Forecast methodology</Link>.
       </div>
+      </ScenarioModes>
     </div>
   );
 }

@@ -4,7 +4,7 @@
 .wd { --wd-e: 255,255,255; }
 html[data-theme="light"] .wd { --wg: #b07a00; --wg2: #8a5c00; --wd-e: 17,40,28; }
 html[data-theme="light"] .wd.wdt {
-  --wg: #0a8a4c; --wg2: #0f6b3e; --wt: #0a8a4c; --wt2: #0f6b3e; --wa: #a66300; --wbg: #f2f7f3; --wpan: rgba(255, 255, 255, .9);
+  --wg: #0a8a4c; --wg2: #0f6b3e; --wt: #0a8a4c; --wt2: #0f6b3e; --wa: #a66300; --wbg: #f2f7f3; --wpan: rgba(255, 255, 255, .9); --wnav: rgba(246, 250, 247, .96);
   --wline: rgba(10, 120, 70, .22); --wline2: rgba(10, 120, 70, .45);
   --ink: #0b2a1b; --ink2: #2f5a45; --mute: #62806f; --line: rgba(10, 120, 70, .14); --line2: rgba(10, 120, 70, .28); --hi: #062014;
 }
@@ -30,3 +30,16 @@ html[data-theme="light"] .dk-orbit .mote { fill: #b07a00; filter: none; }
 html[data-theme="light"] .dk-orbit .hub { stroke: #9a6a06; }
 html[data-theme="light"] .dk-race b { color: #9a6a06; }
 html[data-theme="light"] .dk-stop { border-top-color: rgba(17, 40, 28, .08); }
+/* Connections: the tie colors and the map's ink, darkened so every line style reads on paper */
+html[data-theme="light"] .wd {
+  --t-gave: #a26e00; --t-support: #0b8a80; --t-oppose: #d0451b; --t-paid: #6b44d4; --t-rally: #c01f78;
+  --t-endorse: #56687e; --t-attention: #8a6a2e; --t-runs: #8b979f; --t-campaign: #1f8a5a;
+  --cx-glow: #b07a00; --cx-halo: rgba(255, 255, 255, .94); --cx-edge: #ffffff; --cx-donor: #c08a12;
+}
+html[data-theme="light"] .cx-e .ln { opacity: .75; }
+html[data-theme="light"] .cx-stage svg.has-pin .cx-e.dim, html[data-theme="light"] .cx-stage svg.has-story .cx-e.dim { opacity: .35; }
+html[data-theme="light"] .cx-cross { stroke: rgba(255, 255, 255, .85); }
+html[data-theme="light"] .cx-sugg { background: rgba(255, 255, 255, .99); border-color: rgba(10, 120, 70, .25); box-shadow: 0 18px 36px -18px rgba(10, 60, 35, .4); }
+/* the nav and the Start here cards */
+html[data-theme="light"] .wd.wdt .wd-tab.on .wd-ico { color: #ffffff; }
+html[data-theme="light"] .dk-q:hover, html[data-theme="light"] .dk-q:focus-visible { box-shadow: 0 0 0 1px var(--wline2), 0 20px 40px -26px rgba(10, 60, 35, .45); }

@@ -96,7 +96,6 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/money", label: "Money flow" },
         { href: "/watchdog/paid", label: "Who gets paid" },
         { href: "/watchdog/connections", label: "Connections" },
-        { href: "/watchdog/ledger", label: "Ledger records" },
         { href: "/accountability", label: "Accountability Index" },
       ] },
       { h: "People and places", links: [
@@ -111,7 +110,7 @@ export const MENU: NavGroup[] = [
       { h: "Our polling", links: [
         { href: "/on-point-polling/polls", label: "Poll releases" },
         { href: "/on-point-polling/methodology", label: "Methodology" },
-        { href: "/on-point-polling/situation-room", label: "Situation room" },
+        { href: "/results/monitor", label: "Situation monitor", note: "Election night on one globe" },
       ] },
       { h: "Work with us", links: [
         { href: "/on-point-polling/services", label: "Partner with us" },

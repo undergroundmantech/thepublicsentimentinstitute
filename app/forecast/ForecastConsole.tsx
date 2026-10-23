@@ -6,6 +6,7 @@
 // Clicking a state or district opens its full race page.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import DaysOut from "@/app/components/DaysOut";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { useRouter } from "next/navigation";
@@ -251,7 +252,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
           <Pointy key={layer} className="fcx-pty pty-side" pose={layer === "measures" ? "think" : "point"} prop="none" size={92} look={-1} flip cap
             say={closest[0] ? <>Closest {layer === "legis" ? "chamber" : layer === "measures" ? "measure" : "race"}: <b>{closest[0].name}</b>, <span className={closest[0].cls === "r" || closest[0].cls === "no" ? "r" : "d"}>{closest[0].val}</span></> : undefined} />
         <div>
-          <div className="eye g">2026 midterm forecast · {data.daysOut} days out</div>
+          <div className="eye g">2026 midterm forecast · <DaysOut initial={data.daysOut} suffix=" days out" /></div>
           <h1 id="fcx-h">Every 2026 race, <em>in one place.</em></h1>
           <p className="lede">Pick a layer to see its map, its odds and its closest races. Click any state or district to open the full forecast for that race.</p>
         </div>

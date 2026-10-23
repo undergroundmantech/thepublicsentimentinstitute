@@ -2,11 +2,13 @@ import { getAx } from "./accountability/data";
 // Every public page on the site, built from the same data the pages are built from, so a new
 // race, chamber, measure or polling average is listed the moment it has a page.
 import type { MetadataRoute } from "next";
+const ledgerReady = () => { try { return fs.readdirSync(path.join(process.cwd(), "public/watchdog/ledger-data")).length > 0; } catch { return false; } };
 import { getModel } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
 import { getEarlyVote } from "@/app/maps/early-vote/server";
-import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
+import fs from "node:fs";
+import path from "node:path";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 import { pollHref, stateRaceParams } from "@/app/polls/registry";
 import { dbHref, getDownballot } from "@/app/forecast/statewide/data";
@@ -46,7 +48,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/watchdog/counties", fc, "daily", 0.8),
     u("/accountability", today, "weekly", 0.9),
     u("/accountability/methodology", today, "monthly", 0.5),
-    ...["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)),
+    // the Ledger pages are listed only once a Ledger snapshot is exported into public/watchdog/ledger-data
+    ...(ledgerReady() ? ["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)) : []),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),
@@ -81,8 +84,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/terms", today, "yearly", 0.1),
   );
 
-  // the situation room ships dark in production until the desk launches it
-  if (SHOW_SITUATION_ROOM) out.push(u("/on-point-polling/situation-room", today, "daily", 0.5));
 
   // forecast pages: marquee races first, so the sitemap reads in order of interest
   for (const r of model.races) out.push(u(raceHref(r.id), fc, "daily", r.office === "house" ? (r.marquee ? 0.8 : 0.6) : 0.9));

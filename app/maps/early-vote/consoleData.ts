@@ -2,10 +2,10 @@
 // checkpoints for pace, the 2026 count on each saved snapshot day, and the state's marquee forecast page.
 import fs from "node:fs";
 import path from "node:path";
-import { getModel } from "@/app/lib/forecastData";
+import { getModel, isInd } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import type { EarlyVote } from "./server";
-import { STATE_NAME } from "./lib";
+import { STATE_NAME, stateOfFips } from "./lib";
 
 export type EvRow = {
   st: string; name: string; slug: string; total: number; mail: number; inperson: number; requested: number;
@@ -14,12 +14,24 @@ export type EvRow = {
   pace22: number | null; pace24: number | null;
   cps22: [number, number][]; cps24: [number, number][]; s26: [number, number][];
   fc: { href: string; label: string } | null;
+  /** the benchmark inputs: the state's Senate and governor forecasts, its poll range and the 2024 presidential result */
+  bench: Bench | null;
   /** the On Point party model: reported party where the state publishes it, modeled where it does not */
   pm: { d: number; r: number; o: number; est: number; xd: number; xr: number; delta: number; shift: number | null } | null;
 };
+type P3 = { d: number; r: number; o: number };
+export type BenchRace = { id: string; office: "senate" | "governor"; label: string; dem: string; gop: string; ind: boolean; href: string;
+  /** the forecast margin, Republican positive, and its 80 percent range */
+  F: number; p10: number; p90: number; prob: number; evShift: number;
+  /** polls of the last 30 days the site average counts, as margins */
+  polls: { lo: number; hi: number; loBy: string; hiBy: string; n: number; avg: number } | null };
+export type Bench = { races: BenchRace[]; pres24: number | null; expEarly: number; expTotal: number; ballots: number; now: P3; expNow: P3; expFull: P3 };
+/** how On Point Polling likely voters of each party registration vote: shares of 2024 Trump, Harris and new voters, and their crossover */
+export type Crossover = { trumpToD: number; harrisToR: number; newD: number; partyToGroup: Record<"Democrat" | "Republican" | "Independent", number[]> };
 export type EvConsole = { snapshot: string; daysOut: number; total: number; mail: number; inperson: number; requested: number; dem: number; rep: number; ind: number; partyTotal: number;
   t22: number; e22: number; t24: number; e24: number; rows: EvRow[]; s26: [number, number][];
-  pm: { d: number; r: number; o: number; est: number; delta: number } | null; signalsDate: string | null };
+  pm: { d: number; r: number; o: number; est: number; delta: number } | null; signalsDate: string | null;
+  xo: Crossover | null; pres24: number | null };
 
 type Hist = { us: Record<"2022" | "2024", { turnout: number; early: number }>; states: Record<string, Partial<Record<"2022" | "2024", { turnout: number; early: number; cps?: [number, number, string?][] }>>> };
 type Feed = { snapshot_date: string; regions: Record<string, Record<string, { votes: number }>> };
@@ -58,7 +70,7 @@ function dailySeries(): Record<string, [number, number][]> {
   return out;
 }
 
-type Sig = { ballots: number; estimatedShare: number; party: { d: number; r: number; o: number }; expectedParty?: { d: number; r: number; o: number }; actualMargin: number; expectedMargin: number; delta: number };
+type Sig = { ballots: number; estimatedShare: number; party: P3; expectedParty?: P3; expectedPartyFull?: P3; expectedEarly?: number; expectedTotal?: number; actualMargin: number; expectedMargin: number; delta: number };
 function signals(): { date: string | null; states: Record<string, Sig> } {
   try {
     const dir = path.join(process.cwd(), "scripts/forecast/earlyvote/snapshots");
@@ -80,6 +92,41 @@ function evShifts(): Record<string, number> {
   return out;
 }
 
+// the site poll average leaves these pollsters out, so the poll range does too
+const POLL_OUT = /rasmussen|activote|wedgewood/i;
+function benchRaces(): Record<string, BenchRace[]> {
+  const out: Record<string, BenchRace[]> = {};
+  for (const r of getModel().races) {
+    if (r.office === "house" || !r.est) continue;
+    const ps = (r.polls ?? []).filter((p) => p.age <= 30 && !POLL_OUT.test(p.pollster) && Number.isFinite(p.margin));
+    const lo = ps.length ? ps.reduce((a, b) => (b.margin < a.margin ? b : a)) : null, hi = ps.length ? ps.reduce((a, b) => (b.margin > a.margin ? b : a)) : null;
+    (out[r.st] ??= []).push({ id: r.id, office: r.office, label: r.office === "senate" ? "Senate" : "Governor", dem: r.dem, gop: r.gop, ind: isInd(r), href: raceHref(r.id),
+      F: r.est.margin, p10: r.est.p10, p90: r.est.p90, prob: r.est.prob, evShift: r.ev?.shift ?? 0,
+      polls: lo && hi ? { lo: lo.margin, hi: hi.margin, loBy: lo.pollster, hiBy: hi.pollster, n: ps.length, avg: ps.reduce((a, p) => a + p.margin, 0) / ps.length } : null });
+  }
+  for (const L of Object.values(out)) L.sort((a, b) => (a.office === b.office ? 0 : a.office === "senate" ? -1 : 1));
+  return out;
+}
+// the 2024 presidential margin by state, Republican positive, from the certified county vote
+function pres24(): Record<string, number> {
+  const out: Record<string, number> = {};
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/forecast/pres24_counties.json"), "utf8")) as { c: Record<string, [number, number, number]> };
+    const t: Record<string, [number, number, number]> = {};
+    for (const [f, v] of Object.entries(j.c)) { const st = stateOfFips(f); if (!st) continue; const a = (t[st] ??= [0, 0, 0]); a[0] += v[0]; a[1] += v[1]; a[2] += v[2]; }
+    let D = 0, R = 0, T = 0;
+    for (const [st, [d, r, o]] of Object.entries(t)) { const n = d + r + o; if (n > 0) out[st] = ((r - d) / n) * 100; D += d; R += r; T += n; }
+    if (T > 0) out.US = ((R - D) / T) * 100;
+  } catch { /* no county file on this server */ }
+  return out;
+}
+function crossover(): Crossover | null {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/earlyvote-electorate.json"), "utf8")) as { meta: { crossover: Crossover; partyToGroup: Crossover["partyToGroup"] } };
+    return { trumpToD: j.meta.crossover.trumpToD, harrisToR: j.meta.crossover.harrisToR, newD: j.meta.crossover.newD, partyToGroup: j.meta.partyToGroup };
+  } catch { return null; }
+}
+
 function forecastLinks(): Record<string, { href: string; label: string }> {
   const ids = new Set(getModel().races.map((r) => r.id)), out: Record<string, { href: string; label: string }> = {};
   for (const st of Object.keys(STATE_NAME)) {
@@ -94,7 +141,7 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
   const daysOut = daysOutOf(ev.snapshot);
   const series = dailySeries();
   const fc = forecastLinks();
-  const sig = signals(), shifts = evShifts();
+  const sig = signals(), shifts = evShifts(), BR = benchRaces(), P24 = pres24();
   const rows: EvRow[] = ev.states.map((s) => {
     const h = hist.states[s.st] ?? {};
     const cp = (y: "2022" | "2024") => (h[y]?.cps ?? []).map((c) => [c[0], c[1]] as [number, number]);
@@ -105,6 +152,8 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
     return { st: s.st, name: s.name, slug: s.slug, total: s.total, mail: s.mail, inperson: s.inperson, requested: s.requested, dem: s.dem, rep: s.rep, ind: s.ind, partyShare: s.partyShare,
       t22: h["2022"]?.turnout ?? null, t24: h["2024"]?.turnout ?? null, e22: h["2022"]?.early ?? null, e24: h["2024"]?.early ?? null,
       pace22: a22 ? s.total / a22 : null, pace24: a24 ? s.total / a24 : null, cps22: c22, cps24: c24, s26, fc: fc[s.st] ?? null,
+      bench: (() => { const g = sig.states[s.st]; if (!g || !g.expectedParty || !g.expectedPartyFull || !g.expectedEarly || !g.expectedTotal) return null;
+        return { races: BR[s.st] ?? [], pres24: P24[s.st] ?? null, expEarly: g.expectedEarly, expTotal: g.expectedTotal, ballots: g.ballots, now: g.party, expNow: g.expectedParty, expFull: g.expectedPartyFull }; })(),
       pm: sig.states[s.st] ? { d: sig.states[s.st].party.d, r: sig.states[s.st].party.r, o: sig.states[s.st].party.o, est: sig.states[s.st].estimatedShare ?? 0,
         xd: sig.states[s.st].expectedParty?.d ?? 0, xr: sig.states[s.st].expectedParty?.r ?? 0, delta: sig.states[s.st].delta ?? 0, shift: shifts[s.st] ?? null } : null };
   });
@@ -115,5 +164,5 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
   const pm = B ? { d: pmRows.reduce((a, r) => a + r.total * r.pm!.d, 0) / B, r: pmRows.reduce((a, r) => a + r.total * r.pm!.r, 0) / B, o: pmRows.reduce((a, r) => a + r.total * r.pm!.o, 0) / B,
     est: pmRows.reduce((a, r) => a + r.total * r.pm!.est, 0) / B, delta: pmRows.reduce((a, r) => a + r.total * r.pm!.delta, 0) / B } : null;
   return { pm, signalsDate: sig.date, snapshot: ev.snapshot, daysOut, total: ev.total, mail: ev.mail, inperson: ev.inperson, requested: ev.requested, dem: ev.dem, rep: ev.rep, ind: ev.ind, partyTotal: ev.partyTotal,
-    t22: hist.us["2022"].turnout, e22: hist.us["2022"].early, t24: hist.us["2024"].turnout, e24: hist.us["2024"].early, rows, s26: us26 };
+    t22: hist.us["2022"].turnout, e22: hist.us["2022"].early, t24: hist.us["2024"].turnout, e24: hist.us["2024"].early, rows, s26: us26, xo: crossover(), pres24: P24.US ?? null };
 }
