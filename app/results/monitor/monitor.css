@@ -69,3 +69,15 @@
 }
 @media (prefers-reduced-motion: reduce) { .mon-title .eye i.on { animation: none; } }
 :root:has(.mon) .cam-foot { display: none; }
+/* election night pass */
+.mon-row { width: 100%; background: none; border: 0; cursor: pointer; text-align: left; font: inherit; }
+.mon-row .lv { color: var(--ink2); min-width: 0; } .mon-row .lv.i { color: #c9a8ff; }
+.mon-row .pr { font: 700 11px var(--font-m); color: var(--mute); white-space: nowrap; min-width: 58px; text-align: right; }
+.mon-row:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.mon-test { margin: 8px 0 0 !important; padding: 7px 10px; border-radius: 8px; border: 1px solid rgba(231, 179, 65, .45); background: rgba(231, 179, 65, .1); color: #ffe2a3 !important; font-size: 12px !important; }
+.mon-test a { color: var(--gold); font-weight: 700; text-decoration: underline; }
+.mon-ch .bar .lead { opacity: .45; } .mon-ch .bar .gap { flex: 1; }
+.mon-feed li button { all: unset; cursor: pointer; color: var(--ink2); } .mon-feed li button:hover { color: #fff; text-decoration: underline; }
+.mon-desk { position: absolute; inset: 0; z-index: 8; overflow: auto; background: rgba(6, 4, 14, .94); backdrop-filter: blur(6px); }
+.mon:fullscreen .mon-desk { background: #07050f; }
+@media (max-width: 1100px) { .mon-desk { position: fixed; inset: 0; z-index: 1300; } }

@@ -3,7 +3,7 @@
 // every minute, matching each civicAPI race to its forecast race. Keeps the previous read so the monitor can show
 // what changed between reads.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { civicSearch, matchCivic, TYPE_SETS, type CRace, type XIndex } from "./live";
+import { beforeClose, civicSearch, matchCivic, showTest, TYPE_SETS, type CRace, type XIndex } from "./live";
 
 let INDEX: Promise<XIndex> | null = null;
 export function loadIndex() { INDEX ??= fetch("/results/2026/index.json").then((r) => r.json()); return INDEX; }
@@ -14,10 +14,10 @@ export function useIndex() {
   return ix;
 }
 
-export type LiveState = { at: Date | null; byId: Record<string, CRace>; prev: Record<string, CRace>; raw: CRace[]; error: string | null; loading: boolean };
+export type LiveState = { at: Date | null; byId: Record<string, CRace>; prev: Record<string, CRace>; raw: CRace[]; error: string | null; loading: boolean; hidden: number; test: boolean };
 
 export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = 60_000): LiveState {
-  const [st, setSt] = useState<LiveState>({ at: null, byId: {}, prev: {}, raw: [], error: null, loading: true });
+  const [st, setSt] = useState<LiveState>({ at: null, byId: {}, prev: {}, raw: [], error: null, loading: true, hidden: 0, test: false });
   const key = sets.join(",");
   const last = useRef<Record<string, CRace>>({});
   useEffect(() => {
@@ -30,8 +30,11 @@ export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], eve
         try { got.push(...(await civicSearch(t, ac.signal))); } catch (e) { if ((e as Error).name === "AbortError") return; err = "Live returns are not reachable right now; showing the forecast."; }
       }
       if (dead) return;
-      const byId = matchCivic(ix.races, got);
-      setSt({ at: new Date(), byId, prev: last.current, raw: got, error: got.length ? null : err, loading: false });
+      // before polls close civicAPI publishes test returns; they are blanked unless the page asks for them
+      let hidden = 0; const test = beforeClose();
+      const clean = test && !showTest() ? got.map((c) => { const has = c.pr > 0 || c.c.some((x) => x[2] > 0 || x[4]); if (has) hidden++; return has ? { ...c, pr: 0, c: c.c.map((x) => [x[0], x[1], 0, 0, 0, null] as typeof x) } : c; }) : got;
+      const byId = matchCivic(ix.races, clean);
+      setSt({ at: new Date(), byId, prev: last.current, raw: clean, error: got.length ? null : err, loading: false, hidden, test });
       last.current = byId;
     };
     tick();

@@ -17,8 +17,9 @@ export const RATING_LABEL: Record<Rating, string> = {
 
 /** Rating bands: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe. */
 export function rating(m: number, ind = false): Rating {
-  if (ind) return "ind";
+  // an independent in the anti Republican lane is purple only while they lead; a Republican lead is rated like any other
   const a = Math.abs(m);
+  if (ind && a >= 2 && m < 0) return "ind";
   if (a < 2) return "toss";
   const s = m < 0 ? "D" : "R";
   return ((a < 6 ? "lean" : a < 12 ? "likely" : "safe") + s) as Rating;

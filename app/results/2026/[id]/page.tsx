@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
-import RaceLive from "./RaceLive";
+import NightDesk from "../NightDesk";
 import "../results2026.css";
 
 type R = { id: string; nm: string; k: string; st: string };
@@ -21,5 +21,5 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <RaceLive id={decodeURIComponent(id)} />;
+  return <NightDesk id={decodeURIComponent(id)} />;
 }
