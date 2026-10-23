@@ -9,7 +9,7 @@ dots.json. Every part is on a 0 to 100 scale where 100 is better:
   cross    crossing the aisle: eight interest group scorecards, four that lean left and four that lean right.
            Each scorecard is rescaled so the average Democrat and the average Republican sit at the same points,
            0 for the party it opposes and 100 for the party it backs, so no party starts ahead. The left cards
-           are averaged, the right cards are averaged with the America First Foundation counted twice, and the
+           are averaged, the right cards are averaged, every card counting the same, and the
            part is the mean of the two sides. A typical member of either party lands near 50; a member who
            earns credit from both sides scores higher.
 
@@ -32,7 +32,7 @@ W = {"lobby": 22, "pac": 22, "trading": 16, "cross": 40}
 # the scorecards: id, file, lean, weight inside its side
 CARDS = [
     ("lcv", "League of Conservation Voters", "L", 1), ("ppunch", "ProgressivePunch", "L", 1), ("aflcio", "AFL-CIO", "L", 1), ("hrc", "Human Rights Campaign", "L", 1),
-    ("heritage", "Heritage Action", "R", 1), ("acu", "CPAC ratings", "R", 1), ("cfg", "Club for Growth", "R", 1), ("aff", "America First Foundation", "R", 2),
+    ("heritage", "Heritage Action", "R", 1), ("acu", "CPAC ratings", "R", 1), ("cfg", "Club for Growth", "R", 1), ("aff", "America First Foundation", "R", 1),
 ]
 CARD_RAW = {}
 for cid, nm, lean, w in CARDS:
