@@ -5,7 +5,9 @@ import { getDesk } from "../../data";
 import { CATS, LEAN_LABEL, OUTLET, type Lean } from "../../sources";
 import { LeanBar, LeanTag, outletLean, outletName } from "../../ui";
 import LiveWire from "../../LiveWire";
+import { RumpleDefs, ScrollFx } from "../../NewsFront";
 import "../../news.css";
+import "../../paper.css";
 
 export function generateStaticParams() { return getDesk().stories.map((s) => ({ id: s.id })); }
 export const dynamicParams = false;
@@ -23,7 +25,11 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
   const n = { L: 0, C: 0, R: 0 }; const seen = new Set<string>(); for (const c of s.coverage) { const k = c.o + (c.n ?? ""); if (!seen.has(k)) { seen.add(k); n[outletLean(c.o)]++; } }
   const updated = new Date(desk.updated).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });
   return (
-    <div className="opp nw nw-story">
+    <div className="opp nw nw-story nwp-desk">
+      <ScrollFx font="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" />
+      <RumpleDefs />
+      <div className="nwp np-storyp">
+      <div className="np-fold np-sheet">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/news">News</Link><span className="sep">/</span><span>{CATS.find((c) => c.k === s.cat)?.l}</span></nav>
       <article>
         <header className="nw-st-h">
@@ -54,7 +60,9 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
           </aside>
         </div>
       </article>
-      <LiveWire keys={s.keys} limit={10} title="New headlines on this story" compact />
+      </div>
+      <div className="np-body np-sheet"><div data-rv><LiveWire keys={s.keys} limit={10} title="New headlines on this story" compact /></div></div>
+      </div>
     </div>
   );
 }

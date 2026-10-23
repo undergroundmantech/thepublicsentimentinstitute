@@ -91,19 +91,64 @@ export function Edition() {
   return <span>{d || "Today"}</span>;
 }
 
-/** Cards rise into place as they scroll into view. Without script, or with reduced motion, everything just shows. */
+/** The filter the front page unfolds through: a crumpled sheet whose folds flatten out over a second and a half.
+ * It animates with SMIL inside the filter, so it runs from first paint without waiting for script. */
+export function RumpleDefs() {
+  return (
+    <svg className="np-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="np-unrumple" x="-6%" y="-6%" width="112%" height="112%" colorInterpolationFilters="sRGB">
+        <feTurbulence type="turbulence" baseFrequency="0.0065 0.011" numOctaves="3" seed="11" result="folds" />
+        <feDisplacementMap in="SourceGraphic" in2="folds" scale="0" xChannelSelector="R" yChannelSelector="G">
+          <animate attributeName="scale" values="150;96;44;16;5;0" keyTimes="0;0.18;0.42;0.66;0.85;1" dur="1.5s" fill="freeze" />
+        </feDisplacementMap>
+      </filter>
+    </svg>
+  );
+}
+
+let rumpleN = 0;
+/** Crumple one element and smooth it flat: a displacement map of sharp folds whose strength falls to nothing,
+ * with a little crinkle on the way, then the filter is removed so scrolling stays smooth. */
+function rumple(el: HTMLElement, from = 58, dur = 1150) {
+  const defs = document.querySelector("svg.np-defs"); if (!defs) return;
+  const NS = "http://www.w3.org/2000/svg", id = `np-rmp-${++rumpleN}`;
+  const f = document.createElementNS(NS, "filter"); f.setAttribute("id", id);
+  for (const [k, v] of [["x", "-8%"], ["y", "-8%"], ["width", "116%"], ["height", "116%"], ["color-interpolation-filters", "sRGB"]]) f.setAttribute(k, v);
+  const t = document.createElementNS(NS, "feTurbulence");
+  t.setAttribute("type", "turbulence"); t.setAttribute("baseFrequency", `${(0.008 + Math.random() * 0.006).toFixed(4)} ${(0.012 + Math.random() * 0.008).toFixed(4)}`);
+  t.setAttribute("numOctaves", "3"); t.setAttribute("seed", String(1 + Math.floor(Math.random() * 900))); t.setAttribute("result", "folds");
+  const d = document.createElementNS(NS, "feDisplacementMap");
+  d.setAttribute("in", "SourceGraphic"); d.setAttribute("in2", "folds"); d.setAttribute("xChannelSelector", "R"); d.setAttribute("yChannelSelector", "G"); d.setAttribute("scale", String(from));
+  f.append(t, d); defs.appendChild(f);
+  el.style.filter = `url(#${id})`;
+  const t0 = performance.now(), delay = parseFloat(el.style.getPropertyValue("--d")) || 0;
+  const step = (now: number) => {
+    const k = Math.min(1, Math.max(0, (now - t0 - delay) / dur));
+    const e = 1 - Math.pow(1 - k, 3);
+    const crinkle = 1 + 0.22 * Math.sin(k * 26) * (1 - k);
+    d.setAttribute("scale", (from * (1 - e) * crinkle).toFixed(2));
+    if (k < 1) requestAnimationFrame(step); else { el.style.filter = ""; f.remove(); }
+  };
+  requestAnimationFrame(step);
+}
+
+/** Cards rumple into place as they scroll into view. Without script, or with reduced motion, everything just shows. */
 export function ScrollFx({ font }: { font?: string }) {
   useEffect(() => {
     if (font && !document.querySelector(`link[data-np-font]`)) { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = font; l.setAttribute("data-np-font", "1"); document.head.appendChild(l); }
     const root = document.querySelector(".nwp"); if (!root) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
     root.classList.add("np-fx");
-    const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { (e.target as HTMLElement).classList.add("in"); io.unobserve(e.target); } }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    const show = (el: Element) => { el.classList.add("in"); rumple(el as HTMLElement); };
+    const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
     const seen = new WeakSet<Element>();
     const scan = () => root.querySelectorAll("[data-rv]").forEach((el, i) => {
       if (seen.has(el)) return; seen.add(el);
-      (el as HTMLElement).style.setProperty("--d", `${(i % 4) * 70}ms`);
-      const r = el.getBoundingClientRect(); if (r.top < window.innerHeight * 0.92) requestAnimationFrame(() => el.classList.add("in")); else io.observe(el);
+      const h = el as HTMLElement;
+      h.style.setProperty("--d", `${(i % 4) * 80}ms`);
+      h.style.setProperty("--rz", `${(Math.random() * 4 - 2).toFixed(2)}deg`);
+      h.style.setProperty("--rx", `${(6 + Math.random() * 8).toFixed(1)}deg`);
+      const r = el.getBoundingClientRect(); if (r.top < window.innerHeight * 0.9) requestAnimationFrame(() => show(el)); else io.observe(el);
     });
     scan(); const mo = new MutationObserver(scan); mo.observe(root, { childList: true, subtree: true });
     return () => { io.disconnect(); mo.disconnect(); };

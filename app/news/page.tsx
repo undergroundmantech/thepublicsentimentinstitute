@@ -6,7 +6,7 @@ import { getDesk, type Cov } from "./data";
 import { CATS, OUTLETS, type Lean } from "./sources";
 import { LeanBar, LeanTag, outletLean, outletName } from "./ui";
 import LiveWire from "./LiveWire";
-import { Blindspots, Compass, Edition, LeadPhoto, ScrollFx, SideBySide, WireCards, WireStats, WireTicker } from "./NewsFront";
+import { Blindspots, Compass, Edition, LeadPhoto, RumpleDefs, ScrollFx, SideBySide, WireCards, WireStats, WireTicker } from "./NewsFront";
 import { getAx } from "../accountability/data";
 import "./news.css";
 import "./paper.css";
@@ -46,7 +46,9 @@ export default function NewsPage() {
   return (
     <div className="opp nw nw-front nwp-desk">
       <ScrollFx font={FONT} />
+      <RumpleDefs />
       <article className="nwp">
+        <div className="np-fold np-sheet">
         <header className="np-mast">
           <div className="np-ear l" aria-label="Forecast">
             <b>The forecast</b>
@@ -96,7 +98,9 @@ export default function NewsPage() {
             <WireStats />
           </aside>
         </section>
+        </div>
 
+        <div className="np-body np-sheet">
         <section className="np-desk" aria-labelledby="np-desk-h">
           <div className="np-sec"><h2 id="np-desk-h">From the news desk</h2><span>Neutral summaries, every fact attributed</span></div>
           <div className="np-desk-g">
@@ -151,6 +155,7 @@ export default function NewsPage() {
           </div>
           <div className="nw-legend"><LeanTag lean="L" /><LeanTag lean="C" /><LeanTag lean="R" /><span>The bar under each story is the share of outlets on each side carrying it.</span></div>
         </section>
+        </div>
       </article>
     </div>
   );
