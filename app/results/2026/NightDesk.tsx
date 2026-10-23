@@ -18,6 +18,17 @@ const signed = (m: number) => `${m >= 0 ? "+" : "−"}${Math.abs(m).toFixed(1)}`
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 function bbox(paths: { d: string }[]) { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of paths) { const re = /(-?\d+\.?\d*)[ ,](-?\d+\.?\d*)/g; let m; while ((m = re.exec(p.d))) { const x = +m[1], y = +m[2]; if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } } const pad = Math.max(x1 - x0, y1 - y0) * 0.03; return [x0 - pad, y0 - pad, x1 - x0 + 2 * pad, y1 - y0 + 2 * pad]; }
 const fmtClock = (d: Date | null) => (d ? d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " ET" : "—");
+/** A figure that counts up to its value when it first appears, and glides to each new value after. */
+function Count({ v, fmt }: { v: number; fmt: (x: number) => string }) {
+  const [x, setX] = useState(0); const from = React.useRef(0);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setX(v); from.current = v; return; }
+    const a = from.current, t0 = performance.now(), dur = 900; let raf = 0;
+    const step = (t: number) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); const y = a + (v - a) * e; setX(y); if (k < 1) raf = requestAnimationFrame(step); else from.current = v; };
+    raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
+  }, [v]);
+  return <>{fmt(x)}</>;
+}
 function countdown(ms: number) { if (ms <= 0) return "now"; const h = Math.floor(ms / 3600000), d = Math.floor(h / 24); return d > 0 ? `${d}d ${h % 24}h` : `${h}h ${Math.floor((ms % 3600000) / 60000)}m`; }
 
 export default function NightDesk({ id, embedded = false, onClose }: { id: string; embedded?: boolean; onClose?: () => void }) {
@@ -29,12 +40,22 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const sf = useStateFile(r?.st ?? null);
   const [paths, setPaths] = useState<Paths | null>(null);
   const [det, setDet] = useState<CDetail | null>(null);
-  const [view, setView] = useState<"forecast" | "results">("forecast");
+  const [view, setView] = useState<"forecast" | "results">("results");
   const [mode, setMode] = useState<"margin" | "turnout">("margin");
   const [tip, setTip] = useState<{ x: number; y: number; f: string } | null>(null);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<"votes" | "az" | "reporting" | "margin" | "gap">("votes");
   const [now, setNow] = useState(0);
+  const [tab, setTab] = useState("nd-results");
+  // section tabs scroll the desk itself, never the page behind it, and never change the address
+  const jump = (k: string) => {
+    setTab(k); const el = document.getElementById(k); if (!el) return;
+    let box: HTMLElement | null = el.parentElement;
+    while (box && !(box.scrollHeight > box.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(box).overflowY))) box = box.parentElement;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (box) box.scrollTo({ top: box.scrollTop + el.getBoundingClientRect().top - box.getBoundingClientRect().top - 12, behavior: reduce ? "auto" : "smooth" });
+    else window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 140, behavior: reduce ? "auto" : "smooth" });
+  };
   useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 30000); return () => clearInterval(t); }, []);
   useEffect(() => { if (!r) return; setPaths(null); fetch(`/forecast/states/${r.st}.json`).then((x) => (x.ok ? x.json() : null)).then(setPaths).catch(() => {}); }, [r]);
   const c: CRace | undefined = r ? live.byId[r.id] : undefined;
@@ -88,7 +109,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const regM = (f: string) => { const g = det?.regions[f]; if (!g) return null; const s = sides(r, g.c); return s.t ? { m: (100 * (s.b - s.a)) / s.t, t: s.t, pr: g.pr, s } : null; };
   const expCM = (f: string) => { const e = exp?.[f]; return e && e[3] ? (100 * (e[1] - e[0])) / e[3] : null; };
   const fillOf = (f: string) => {
-    if (view === "results") { const g = regM(f); return g ? shade(g.m) : "var(--map-blank)"; }
+    if (view === "results") { const g = regM(f); return g ? shade(g.m) : "var(--map-await)"; }
     const e = exp?.[f]; if (!e) return "var(--map-blank)";
     if (mode === "turnout") { const k = (Math.log(e[3]) - Math.log(tMin)) / Math.max(0.01, Math.log(tMax) - Math.log(tMin)); return `rgba(15,95,85,${(0.12 + 0.85 * k).toFixed(3)})`; }
     return shade(expCM(f) ?? 0);
@@ -120,14 +141,16 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           </div>
           <div className="race-meta" aria-label="Race update summary">
             <div className="meta-block"><span>Last updated</span><b>{fmtClock(live.at)}</b></div>
-            <div className="meta-block"><span>Reported votes</span><b>{fmtN(counted)}</b></div>
-            <div className="meta-block"><span>Estimated reporting</span><b>{pctLabel(P.pctIn)}%</b></div>
+            <div className="meta-block"><span>Reported votes</span><b><Count v={counted} fmt={(x) => fmtN(Math.round(x))} /></b></div>
+            <div className="meta-block"><span>Estimated reporting</span><b><Count v={P.pctIn} fmt={(x) => `${pctLabel(x)}%`} /></b></div>
             <div className="meta-block"><span>civicAPI reporting</span><b>{pctLabel(repPct)}%</b></div>
             <div className="meta-block"><span>Race status</span><b>{status}</b></div>
           </div>
         </div>
         <nav className="race-tabs" aria-label="Race sections">
-          <a href="#nd-results" aria-current="page">Overview</a><a href="#nd-forecast">Forecast</a>{exp ? <a href="#nd-counties">Counties</a> : null}{legD.length ? <a href="#nd-districts">Districts</a> : null}
+          {([["nd-results", "Overview"], ["nd-forecast", "Forecast"], ...(exp ? [["nd-counties", "Counties"]] : []), ...(legD.length ? [["nd-districts", "Districts"]] : [])] as [string, string][]).map(([k, l]) => (
+            <a key={k} href={`#${k}`} aria-current={tab === k ? "page" : undefined} onClick={(e) => { e.preventDefault(); jump(k); }}>{l}</a>
+          ))}
           <Link href={forecastHref(r)}>The forecast page</Link>{!embedded ? <Link href="/results/monitor">Situation monitor</Link> : null}
         </nav>
       </section>
@@ -190,7 +213,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               <div className="forecast-hero">
                 <div className="model-label">{r.k === "leg" ? "Democratic control" : "Win probability"}</div>
                 <div className="prob-ring" style={{ ["--value" as string]: r.k === "leg" ? 100 * (r.pD ?? 0) : leadP, ["--ring" as string]: civWinner || projected ? "var(--called)" : r.k === "leg" ? "var(--dem)" : leadCol } as React.CSSProperties} role="img" aria-label={`Win probability ${pctLabel(leadP)} percent`}>
-                  <div className="ring-center"><b>{pctLabel(r.k === "leg" ? 100 * (r.pD ?? 0) : leadP)}%</b><span>{r.k === "leg" ? "Democrats" : leadName}</span></div>
+                  <div className="ring-center"><b><Count v={r.k === "leg" ? 100 * (r.pD ?? 0) : leadP} fmt={(x) => `${pctLabel(x)}%`} /></b><span>{r.k === "leg" ? "Democrats" : leadName}</span></div>
                 </div>
               </div>
               <div className="forecast-support">
@@ -225,7 +248,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                   <div className="projected-name">{projected ? `${leadName} wins` : `${isM ? (lead === "A" ? "Yes" : "No") : leadName} projected ahead`}</div>
                   <p className="projection-headline prose">{headline}</p>
                 </div>
-                <div className="projected-margin-wrap"><span>Projected margin</span><b style={{ color: leadCol }}>{signed(margin)}</b><small>{isM ? (lead === "A" ? "Yes over No" : "No over Yes") : `${leadName} over ${trailName}`}</small></div>
+                <div className="projected-margin-wrap"><span>Projected margin</span><b style={{ color: leadCol }}><Count v={margin} fmt={signed} /></b><small>{isM ? (lead === "A" ? "Yes over No" : "No over Yes") : `${leadName} over ${trailName}`}</small></div>
               </div>
               <div className="projection-head"><div><strong>Projected final vote share</strong><small>Muted bars are an estimate, not reported votes: counted votes plus each county&apos;s outstanding vote{exp ? `, summed over ${rows.length} counties` : ""}.</small></div><span className="model-label">Forecast only</span></div>
               <div className="projected-bars">
@@ -266,10 +289,10 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           </div>
           <div className="rd-map">
             <svg viewBox={vb.join(" ")} preserveAspectRatio="xMidYMid meet" className="nd-svg" role="img" aria-label={`${STN[r.st]} counties`} onMouseLeave={() => setTip(null)}>
-              {cPaths.map((p) => <path key={p.id} d={p.d} style={{ fill: fillOf(p.id), fillOpacity: opac(p.id) }} className={tip?.f === p.id ? "on" : ""} onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, f: p.id })} />)}
+              {cPaths.map((p, i) => <path key={p.id} d={p.d} style={{ fill: fillOf(p.id), fillOpacity: opac(p.id), animationDelay: `${Math.min(900, i * 6)}ms` }} className={tip?.f === p.id ? "on" : ""} onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, f: p.id })} />)}
             </svg>
             {view === "results" && !Object.keys(det?.regions ?? {}).some((f) => regM(f)) ? (
-              <div className="map-empty"><p>No county has reported yet.</p><p className="map-empty-sub">Counties fill in as their votes land. Until then, the forecast view is the one carrying information.</p></div>
+              <div className="map-empty"><p><i className="live-dot sm" /> No county has reported yet</p><p className="map-empty-sub">Counties fill in here as their votes land. Switch to forecast to see the expected vote.</p></div>
             ) : null}
           </div>
           <div className="rd-map-legend">
@@ -344,6 +367,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
     <div className={`desk nd${embedded ? " nd-embed" : ""}`}>
       <style>{DESK_CSS}</style>
       <style>{ND_CSS}</style>
+      <style>{THEME_CSS}</style>
       {body}
     </div>
   );
@@ -363,4 +387,71 @@ const ND_CSS = `
 .desk.nd .race-tabs a{cursor:pointer}
 .desk.nd.nd-embed{min-height:0}
 .desk.nd.nd-embed .shell{padding-top:16px}
+`;
+
+// the site's own look on the board layout: glass cards, the display face, gold for what is selected, and motion that
+// plays once as the desk opens and whenever a number changes
+const THEME_CSS = `
+@property --value{syntax:'<number>';inherits:true;initial-value:0}
+.desk.nd{--sans:var(--font-b),system-ui,sans-serif;--mono:var(--font-m),ui-monospace,monospace;--map-await:rgba(150,130,230,.13);--panel3:rgba(var(--line-rgb),.08);
+  background:radial-gradient(70% 50% at 10% 0%,rgba(61,123,255,.12),transparent 60%),radial-gradient(60% 50% at 100% 10%,rgba(255,59,92,.1),transparent 60%)}
+.desk.nd h1,.desk.nd h2,.desk.nd h3,.desk.nd .projected-name,.desk.nd .snapshot-heading strong{font-family:var(--font-d)}
+.desk.nd .race-header h1{font-size:clamp(30px,3.4vw,54px);line-height:1;letter-spacing:-.04em;background:linear-gradient(90deg,#fff,#c9c3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desk.nd .race-kicker{color:var(--gold);font-size:10px}
+.desk.nd .meta-block{padding:10px 14px;border-radius:14px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.04)}
+.desk.nd .meta-block span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.desk.nd .meta-block b{font-size:22px;color:var(--hi)}
+.desk.nd .race-tabs a{font-family:var(--font-b);font-weight:700;font-size:13px;position:relative;border-bottom:0}
+.desk.nd .race-tabs a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--gold);transform-origin:left;animation:nd-grow .5s cubic-bezier(.2,.8,.2,1) both}
+.desk.nd .card{position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--line2);
+  background:linear-gradient(170deg,rgba(var(--line-rgb),.075),rgba(var(--line-rgb),.02));backdrop-filter:blur(12px);box-shadow:0 30px 60px -40px rgba(0,0,0,.85);
+  animation:nd-rise .7s cubic-bezier(.2,.8,.2,1) both}
+.desk.nd .card::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,var(--dem),var(--ind) 50%,var(--gop));opacity:.7}
+.desk.nd .dashboard-grid>.card:nth-child(2){animation-delay:.08s}.desk.nd .dashboard-grid>.card:nth-child(3){animation-delay:.16s}
+.desk.nd #nd-counties{animation-delay:.22s}
+.desk.nd .card h2{font-size:22px;color:var(--hi)}
+.desk.nd .topline-row{transition:background .3s}.desk.nd .topline-row:hover{background:rgba(var(--line-rgb),.04)}
+.desk.nd .topline-copy strong{font-family:var(--font-d);font-size:16px}
+.desk.nd .topline-pct{font-size:22px;color:var(--hi)}
+.desk.nd .topline-bar{height:8px;background:rgba(var(--line-rgb),.08)}
+.desk.nd .topline-bar span,.desk.nd .projected-bar-fill{transform-origin:left;animation:nd-grow 1.1s cubic-bezier(.2,.8,.2,1) .25s both;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.desk.nd .topline-bar span{box-shadow:0 0 14px -2px currentColor}
+.desk.nd .winner-band{background:linear-gradient(90deg,rgba(255,217,138,.18),transparent);border-bottom:1px solid rgba(255,217,138,.3)}
+.desk.nd .prob-ring,.desk.nd .rep-ring{animation:nd-ring 1.3s cubic-bezier(.2,.8,.2,1) .2s both;filter:drop-shadow(0 0 18px color-mix(in srgb,var(--ring,var(--live)) 35%,transparent))}
+.desk.nd .prob-ring::before,.desk.nd .rep-ring::before{background:rgb(var(--bg2-rgb))}
+.desk.nd .ring-center b{font-family:var(--font-d);font-size:28px;letter-spacing:-.03em}
+.desk.nd .ring-center.sm b,.desk.nd .prob-ring.sm .ring-center b{font-size:17px}
+.desk.nd .rep-ring .ring-center b{font-size:16px}
+.desk.nd .race-rule-pill{border-radius:999px;border-color:var(--line2);color:var(--mute)}
+.desk.nd .projection-zone{border-top:1px solid var(--line)}
+.desk.nd .projected-name{font-size:24px}
+.desk.nd .projected-margin-wrap b{font-family:var(--font-d);font-size:40px;letter-spacing:-.03em}
+.desk.nd .model-stats>div{padding:8px 10px;border-radius:12px;background:rgba(var(--line-rgb),.04)}
+.desk.nd .rd-view-toggles,.desk.nd .rd-map-toggles{padding:3px;border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05)}
+.desk.nd .rd-view-toggles button,.desk.nd .rd-map-toggles button{border-radius:9px;font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:capitalize;transition:background .25s,color .25s}
+.desk.nd .rd-view-toggles button.on,.desk.nd .rd-map-toggles button.on{background:var(--gold);color:#1a1200}
+.desk.nd .rd-map{border-radius:16px;background:radial-gradient(80% 80% at 50% 40%,rgba(120,90,255,.08),transparent 70%),rgba(var(--line-rgb),.02);border:1px solid var(--line)}
+.desk.nd .nd-svg path{animation:nd-pop .6s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center;transition:fill .6s ease,fill-opacity .6s ease}
+.desk.nd .map-empty{top:auto;bottom:14px;left:50%;right:auto;transform:translateX(-50%);padding:10px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(var(--bg2-rgb),.85);backdrop-filter:blur(8px);text-align:center;pointer-events:none;inset:auto auto 14px 50%;position:absolute}
+.desk.nd .map-empty p{font:700 13px var(--font-b);color:var(--hi);display:flex;align-items:center;justify-content:center;gap:8px}
+.desk.nd .map-empty .map-empty-sub{font:500 12px var(--font-b);color:var(--mute);margin-top:3px}
+.desk.nd .rd-county-search{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05)}
+.desk.nd .rd-county-search input{border:0;background:none;outline:0;font-family:var(--font-b)}
+.desk.nd .rd-county-sorts{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05);padding:3px}
+.desk.nd .rd-county-sorts button{border-radius:9px;font-family:var(--font-b);font-weight:700;text-transform:capitalize;letter-spacing:0;font-size:12px}
+.desk.nd .rd-county-sorts button.on{background:var(--gold);color:#1a1200}
+.desk.nd .rd-county-tablewrap{border-radius:14px;border-color:var(--line2);background:rgba(var(--line-rgb),.02)}
+.desk.nd .rd-county-tablewrap thead th{background:rgb(var(--bg2-rgb));backdrop-filter:blur(8px)}
+.desk.nd .rd-county-tablewrap tbody tr{animation:nd-fade .5s ease both;transition:background .2s}
+.desk.nd .rd-county-tablewrap tbody tr:nth-child(-n+20){animation-delay:calc(var(--r,0)*1ms)}
+.desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(255,217,138,.06)}
+.desk.nd .mech-box,.desk.nd .gatebox{border-radius:14px}
+.desk.nd .live-dot{box-shadow:0 0 0 0 rgba(255,59,92,.6);animation:nd-pulse 1.8s ease-out infinite}
+@keyframes nd-rise{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes nd-grow{from{transform:scaleX(0)}to{transform:none}}
+@keyframes nd-ring{from{--value:0}}
+@keyframes nd-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes nd-fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes nd-pulse{0%{box-shadow:0 0 0 0 rgba(255,59,92,.55)}80%,100%{box-shadow:0 0 0 9px rgba(255,59,92,0)}}
+@media (prefers-reduced-motion:reduce){.desk.nd *{animation:none!important;transition:none!important}}
 `;
