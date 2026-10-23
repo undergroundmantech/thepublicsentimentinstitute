@@ -135,7 +135,7 @@ export default function NewsPage() {
           <div className="np-ax-l">
             <span className="np-kicker">New · Accountability Index</span>
             <h2 id="np-ax-h">Who do they answer to?</h2>
-            <p>All {ax.count} members of Congress, scored from 0 to 100 for independence from special interest money: pro-Israel lobby money, PAC money and stock trading, with the America First Foundation, LCV and Heritage Action scorecards beside it.</p>
+            <p>All {ax.count} members of Congress, scored from 0 to 100 for independence from special interest money: pro-Israel lobby money, PAC money, stock trading and eight left and right scorecards blended so neither party starts ahead.</p>
             <Link href="/accountability" className="np-btn">See every member</Link>
           </div>
           <div className="np-ax-r">

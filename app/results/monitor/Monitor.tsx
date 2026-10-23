@@ -14,6 +14,7 @@ import { STN, KIND_LABEL, FIRST_CLOSE, fmtM, isInd, sides, expSides, type CRace,
 import { useIndex, useLive, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
+import RaceBrief from "./RaceBrief";
 
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 type SF = Feature<Geometry, { name: string }> & { st: string };
@@ -41,6 +42,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const [sel, setSel] = useState<string | null>(null);
   const [pick, setPick] = useState<string | null>(null);
   const [desk, setDesk] = useState<string | null>(null);
+  const [focus, setFocus] = useState<string | null>(null);
   const [geo, setGeo] = useState<{ land: Feature<Geometry>; states: SF[] } | null>(null);
   const [cll, setCll] = useState<Record<string, number[][][]> | null>(null);
   const [hov, setHov] = useState<{ st: string; f?: string; d?: string; x: number; y: number } | null>(null);
@@ -109,6 +111,13 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const cands = selRaces.filter((r) => r.cty);
     return cands.find((r) => r.id === pick) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
   }, [sel, selRaces, pick, mode]);
+  // the race shown in brief in the side panel: the state's race for this view when a state is picked
+  useEffect(() => {
+    // keep a race picked in this state, such as a clicked district; otherwise show the state's race for this view
+    const all = ix?.races ?? [];
+    setFocus((f) => { const cur = f ? all.find((x) => x.id === f) : null; if (cur && cur.st === sel && cur.k === mode) return f; const r = sel ? all.find((x) => x.st === sel && x.k === mode) : null; return r ? r.id : null; });
+  }, [sel, mode]); // eslint-disable-line react-hooks/exhaustive-deps
+  const focusRace = useMemo(() => (focus ? (ix?.races ?? []).find((r) => r.id === focus) ?? null : null), [ix, focus]);
   const expC: Record<string, Exp> | null = layerRace && sf ? sf.counties[layerRace.id] ?? null : null;
   const [liveC, setLiveC] = useState<Record<string, { m: number | null; pr: number; c: CCand[] }> | null>(null);
   useEffect(() => {
@@ -238,8 +247,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       const d = drag.current; drag.current = null; if (d?.moved) return;
       const b = box.getBoundingClientRect(); const h = hit(e.clientX - b.left, e.clientY - b.top);
       if (!h) return;
-      if (h.d) setDesk(h.d);
-      else if (h.st === sel && layerRace) { setDesk(layerRace.id); return; }
+      if (h.d) setFocus(h.d);
+      else if (h.st === sel && layerRace) { setFocus(layerRace.id); return; }
       if (h.d && h.st === sel) return; // a second click on the state opens its race desk
       const f = geo.states.find((s) => s.st === h.st)!; const bb = geoBounds(f as GeoPermissibleObjects); const ll = geoCentroid(f as GeoPermissibleObjects);
       const span = Math.max(bb[1][0] - bb[0][0], (bb[1][1] - bb[0][1]) * 1.4, 3);
@@ -277,7 +286,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]);
     return (
       <li key={r.id}>
-        <button type="button" className="mon-row" onClick={() => setDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
+        <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => setDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
           <span className="nm">{label(r, inState)}</span>
           <span className={`lv ${lm == null ? "" : lm < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{!c ? "Not linked" : lm == null ? "No returns" : fmtM(lm, r.k, isInd(r))}</span>
           <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : ""}</span>
@@ -325,16 +334,17 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         </div>
         <div className="mon-feed">
           <h3>// Feed</h3>
-          {feed.length ? <ul>{feed.slice(0, 14).map((f, i) => <li key={i}><time>{clockET(f.t)}</time><button type="button" onClick={() => setDesk(f.id)}>{f.text}</button></li>)}</ul>
+          {feed.length ? <ul>{feed.slice(0, 14).map((f, i) => <li key={i}><time>{clockET(f.t)}</time><button type="button" onClick={() => setFocus(f.id)}>{f.text}</button></li>)}</ul>
             : <p>{anyLive ? "Returns are in. New counts and calls appear here as each read lands." : "New counts and calls appear here as civicAPI reports them. Nothing has been counted yet."}</p>}
         </div>
       </aside>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
+        {focusRace ? <RaceBrief key={focusRace.id} r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
         {sel ? (
           <>
             <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
-            <p className="mon-note">{layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}Click any race for its full results desk.</p>
+            <p className="mon-note">{layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}Click any race to see it here; open the full desk from it.</p>
             {(["sen", "gov", "house", "state", "measure", "leg", "other"] as Kind[]).map((k) => { const rs = selRaces.filter((r) => r.k === k); if (!rs.length) return null; return (
               <div key={k} className="mon-grp"><h3>{KIND_LABEL[k]} <em>{rs.length}</em></h3><ul>{rs.slice(0, k === "other" ? 8 : 60).map((r) => raceRow(r, true))}</ul></div>
             ); })}
@@ -364,22 +374,22 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         const dr = hov.d ? races.find((r) => r.id === hov.d) : null;
         return (
           <FloatTip x={hov.x} y={hov.y} className="mon-tip" scope="opp">
-            {dr ? <RaceTip r={dr} c={live.byId[dr.id]} title={`${STN[dr.st]} ${(byState[dr.st]?.length ?? 0) > 1 ? `District ${Number(dr.id.split("-")[2])}` : "at large"}`} hint="Click for the results desk" />
+            {dr ? <RaceTip r={dr} c={live.byId[dr.id]} title={`${STN[dr.st]} ${(byState[dr.st]?.length ?? 0) > 1 ? `District ${Number(dr.id.split("-")[2])}` : "at large"}`} hint="Click to see it beside the globe" />
             : cr ? (
               <>
                 <h4>{sf?.names?.[hov.f!] ?? "County"} · {STN[hov.st]}</h4>
                 <div className="sub">{cr.nm}</div>
                 <Cands r={cr} c={lv?.c ?? null} exp={e ? [["D", e[0]], ["R", e[1]], ["O", e[2]]] : null} />
                 <div className="meta"><span>{lv ? `${lv.pr.toFixed(0)}% reporting` : "No returns yet"}</span>{e ? <span>Expected {Math.round(e[3]).toLocaleString("en-US")} votes</span> : null}</div>
-                <small>Click for the results desk</small>
+                <small>Click to see the race beside the globe</small>
               </>
-            ) : rs.length === 1 ? <RaceTip r={rs[0]} c={live.byId[rs[0].id]} title={STN[hov.st]} hint={hov.st === sel ? "Click for the results desk" : "Click to zoom in"} />
+            ) : rs.length === 1 ? <RaceTip r={rs[0]} c={live.byId[rs[0].id]} title={STN[hov.st]} hint={hov.st === sel ? "Click to see it beside the globe" : "Click to zoom in and see it beside the globe"} />
             : (
               <>
                 <h4>{STN[hov.st]}</h4>
                 {rs.length ? rs.slice(0, 5).map((r) => { const c = live.byId[r.id]; const lm = liveMargin(r, c); return <div key={r.id} className="row"><span>{label(r, true)}</span><b>{lm != null ? `${fmtM(lm, r.k, isInd(r))} · ${c!.pr.toFixed(0)}% in` : `Expected ${fmtM(expM(r), r.k, isInd(r))}`}</b></div>; }) : <div>No {MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} race here</div>}
                 {rs.length > 5 ? <div className="sub">and {rs.length - 5} more</div> : null}
-                <small>{hov.st === sel ? "Click a race for its results desk" : "Click to zoom in"}</small>
+                <small>{hov.st === sel ? "Click a race in the list to see it" : "Click to zoom in"}</small>
               </>
             )}
           </FloatTip>

@@ -10,5 +10,6 @@ Source files, each read on Oct 22 2026 from public pages:
 - `trades.json` Quiver Quantitative last year trading table
 - `aff.json` America First Foundation total grade
 - `scorecards.json` LCV and Heritage Action scores
+- `card_acu.json`, `card_cfg.json`, `card_ppunch.json`, `card_aflcio.json`, `card_hrc.json` CPAC, Club for Growth, ProgressivePunch, AFL-CIO and Human Rights Campaign scores, each keyed by bioguide
 
 To refresh, replace a source file with a newer read in the same shape and rerun the script. Weights, scales and grade cutoffs sit at the top of the script; the method page reads the weights and coverage counts from the output, so update its formula text if a scale changes.

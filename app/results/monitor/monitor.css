@@ -100,3 +100,30 @@
 .mon-tc em { margin-left: 6px; font: 700 9px var(--font-m); font-style: normal; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); }
 .mon-tip .meta { display: flex; justify-content: space-between; gap: 12px; font: 600 11px var(--font-m); color: var(--mute); }
 .mon-tip .meta b { color: #fff; }
+
+/* a race at a glance in the side panel */
+.mon-brief { position: sticky; top: -14px; z-index: 2; margin: -2px -4px 14px -6px; padding: 14px 14px 12px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .16); background: linear-gradient(170deg, rgba(40, 30, 80, .96), rgba(14, 10, 28, .98)); box-shadow: 0 20px 40px -24px #000; display: grid; gap: 10px; animation: mon-brief .25s ease-out; }
+@keyframes mon-brief { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.mon-brief .bh { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.mon-brief .k { font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.mon-brief h3 { margin: 2px 0 0; font: 800 19px/1.15 var(--font-d); color: #fff; letter-spacing: -.01em; }
+.mon-brief .x { border: 0; background: rgba(255, 255, 255, .08); color: #fff; width: 26px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 16px; line-height: 1; }
+.mon-brief .st { justify-self: start; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; padding: 3px 9px; border-radius: 999px; font: 700 10.5px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); background: rgba(255, 255, 255, .08); }
+.mon-brief .st.live { color: #fff; background: rgba(255, 59, 92, .25); } .mon-brief .st.proj { color: #120d00; background: var(--gold); } .mon-brief .st.called { color: #062; background: #7fe3b1; }
+.mon-brief .nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.mon-brief .nums div { display: grid; gap: 1px; padding: 7px 8px; border-radius: 10px; background: rgba(255, 255, 255, .05); }
+.mon-brief .nums b { font: 800 17px var(--font-d); color: #fff; } .mon-brief .nums span { font-size: 10.5px; color: var(--mute); line-height: 1.25; }
+.mon-brief .cands { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.mon-brief .cands th { font: 700 9.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); text-align: right; padding-bottom: 3px; } .mon-brief .cands th:first-child { text-align: left; }
+.mon-brief .cands td { padding: 5px 0; border-top: 1px solid rgba(255, 255, 255, .07); color: #fff; vertical-align: top; }
+.mon-brief .cands td:nth-child(2), .mon-brief .cands td:nth-child(3) { text-align: right; font: 600 11.5px var(--font-m); padding-left: 8px; color: var(--ink2); white-space: nowrap; } .mon-brief .cands td:nth-child(3) { color: #fff; font-weight: 800; }
+.mon-brief .cands i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 7px; }
+.mon-brief .cands em { margin-left: 6px; font: 700 9px var(--font-m); font-style: normal; color: var(--gold); text-transform: uppercase; }
+.mon-brief .cands .bar { display: block; height: 4px; margin-top: 4px; border-radius: 2px; background: rgba(255, 255, 255, .07); overflow: hidden; } .mon-brief .cands .bar u { display: block; height: 100%; }
+.mon-brief .oh { display: flex; justify-content: space-between; gap: 8px; font: 600 11px var(--font-m); color: var(--mute); margin-bottom: 4px; }
+.mon-brief .ob { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px; } .mon-brief .ob i { display: block; height: 100%; }
+.mon-brief .proj { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.mon-brief .proj div { display: grid; gap: 1px; } .mon-brief .proj span { font-size: 10.5px; color: var(--mute); } .mon-brief .proj b { font: 800 13.5px var(--font-m); color: #fff; }
+.mon-brief .open { padding: 9px 12px; border: 0; border-radius: 10px; background: var(--gold); color: #120d00; font: 800 12.5px var(--font-b); cursor: pointer; }
+.mon-brief .open:hover { filter: brightness(1.08); }
+.mon-row.on { background: rgba(255, 217, 138, .12); box-shadow: inset 3px 0 0 var(--gold); }

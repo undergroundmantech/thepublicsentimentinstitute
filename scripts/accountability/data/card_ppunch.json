@@ -1,0 +1,2676 @@
+{
+ "id": "ppunch",
+ "name": "ProgressivePunch",
+ "lean": "left",
+ "source": "https://progressivepunch.org/scores.htm?house=senate and https://progressivepunch.org/scores.htm?house=house",
+ "year": "2025-26 (119th Congress, votes since January 2025)",
+ "scale": "percent",
+ "notes": "Left-leaning scorecard (Progressive Punch). Its House and Senate score tables have two column groups, '2025-26 Progressive Scores' and 'Lifetime Progressive Scores', each with Overall Votes %, Crucial Votes % and a vs. State/District Tilt rank. score is the 2025-26 CRUCIAL Votes % (close votes where a small group of Democrats could swing the outcome), and lifetime is the Lifetime CRUCIAL Votes %. Overall Votes % was not stored. For first-term members lifetime equals the 2025-26 value. Collected from the two chamber tables (100 senators, 433 House rows), matched to the roster by chamber, state, district and last name; every match checked, no ambiguity. Gaps: 6 non-voting delegates and resident commissioner (Norton DC, Plaskett VI, Radewagen AS, Moylan GU, King-Hinds MP, Hernandez PR) are not in the table, so they are absent from members. Table has 433 House rows vs 439 roster House entries. All urls are the chamber table page, not member pages. Table text was read through WebFetch's summarizer and copied in 6 chunks with the row count (433) confirming no gaps; no per-row spot check against the live page beyond the first 10 rows of each chamber. The 2025-26 column reflects scores as of the fetch date (Oct 2026, updated nightly while in session).",
+ "members": {
+  "C000127": {
+   "score": 95.32,
+   "lifetime": 90.21,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000367": {
+   "score": 87.53,
+   "lifetime": 87.56,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S000033": {
+   "score": 96.33,
+   "lifetime": 95.03,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000802": {
+   "score": 90.12,
+   "lifetime": 91.77,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001261": {
+   "score": 0.0,
+   "lifetime": 0.79,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000437": {
+   "score": 0.24,
+   "lifetime": 0.87,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001035": {
+   "score": 22.95,
+   "lifetime": 24.14,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001056": {
+   "score": 0.0,
+   "lifetime": 0.8,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "D000563": {
+   "score": 88.1,
+   "lifetime": 93.75,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M000355": {
+   "score": 2.9,
+   "lifetime": 1.71,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001176": {
+   "score": 99.53,
+   "lifetime": 97.34,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "R000122": {
+   "score": 88.76,
+   "lifetime": 93.58,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "R000584": {
+   "score": 0.0,
+   "lifetime": 0.51,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001181": {
+   "score": 75.12,
+   "lifetime": 79.93,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000805": {
+   "score": 80.42,
+   "lifetime": 78.09,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "G000555": {
+   "score": 89.93,
+   "lifetime": 94.88,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001088": {
+   "score": 86.34,
+   "lifetime": 84.25,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001230": {
+   "score": 95.08,
+   "lifetime": 95.02,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001267": {
+   "score": 89.74,
+   "lifetime": 83.82,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001243": {
+   "score": 0.0,
+   "lifetime": 0.55,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001277": {
+   "score": 97.18,
+   "lifetime": 94.87,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001236": {
+   "score": 0.0,
+   "lifetime": 0.73,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001047": {
+   "score": 0.0,
+   "lifetime": 1.11,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001075": {
+   "score": 0.95,
+   "lifetime": 1.4,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C000880": {
+   "score": 0.0,
+   "lifetime": 1.23,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "G000386": {
+   "score": 0.0,
+   "lifetime": 3.73,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001046": {
+   "score": 85.38,
+   "lifetime": 91.41,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001042": {
+   "score": 97.89,
+   "lifetime": 98.1,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001061": {
+   "score": 0.0,
+   "lifetime": 1.65,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "J000293": {
+   "score": 0.0,
+   "lifetime": 1.03,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "L000575": {
+   "score": 0.0,
+   "lifetime": 0.76,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "L000577": {
+   "score": 0.71,
+   "lifetime": 4.66,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "L000570": {
+   "score": 94.34,
+   "lifetime": 94.42,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M000133": {
+   "score": 99.77,
+   "lifetime": 98.24,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M000934": {
+   "score": 0.48,
+   "lifetime": 2.25,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001153": {
+   "score": 20.19,
+   "lifetime": 12.28,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001169": {
+   "score": 98.11,
+   "lifetime": 89.95,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001111": {
+   "score": 94.06,
+   "lifetime": 90.06,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "P000603": {
+   "score": 14.15,
+   "lifetime": 11.43,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "P000595": {
+   "score": 89.57,
+   "lifetime": 88.29,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001150": {
+   "score": 89.88,
+   "lifetime": 89.24,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S000148": {
+   "score": 97.42,
+   "lifetime": 92.31,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001184": {
+   "score": 0.0,
+   "lifetime": 0.86,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "T000250": {
+   "score": 0.0,
+   "lifetime": 1.67,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "V000128": {
+   "score": 99.3,
+   "lifetime": 96.26,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000800": {
+   "score": 93.05,
+   "lifetime": 94.38,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000779": {
+   "score": 98.1,
+   "lifetime": 90.18,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "Y000064": {
+   "score": 0.23,
+   "lifetime": 0.88,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001194": {
+   "score": 97.18,
+   "lifetime": 95.99,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001095": {
+   "score": 0.0,
+   "lifetime": 0.35,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "D000622": {
+   "score": 93.35,
+   "lifetime": 91.43,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000817": {
+   "score": 100.0,
+   "lifetime": 98.72,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000383": {
+   "score": 79.38,
+   "lifetime": 77.31,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "D000618": {
+   "score": 0.24,
+   "lifetime": 2.23,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001096": {
+   "score": 0.24,
+   "lifetime": 1.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "F000463": {
+   "score": 0.24,
+   "lifetime": 0.33,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001098": {
+   "score": 0.0,
+   "lifetime": 2.14,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000384": {
+   "score": 80.94,
+   "lifetime": 83.15,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001288": {
+   "score": 93.08,
+   "lifetime": 95.25,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "G000574": {
+   "score": 82.8,
+   "lifetime": 82.8,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001198": {
+   "score": 3.09,
+   "lifetime": 2.94,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "E000295": {
+   "score": 0.0,
+   "lifetime": 0.62,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "T000476": {
+   "score": 2.44,
+   "lifetime": 1.34,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "R000605": {
+   "score": 0.0,
+   "lifetime": 1.12,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000393": {
+   "score": 0.47,
+   "lifetime": 1.99,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001076": {
+   "score": 75.29,
+   "lifetime": 79.46,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001113": {
+   "score": 86.65,
+   "lifetime": 88.4,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001303": {
+   "score": 99.06,
+   "lifetime": 99.06,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001299": {
+   "score": 0.24,
+   "lifetime": 0.24,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001198": {
+   "score": 0.0,
+   "lifetime": 0.96,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001305": {
+   "score": 0.47,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "R000608": {
+   "score": 80.05,
+   "lifetime": 83.29,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "C001114": {
+   "score": 0.47,
+   "lifetime": 0.47,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001203": {
+   "score": 98.27,
+   "lifetime": 95.74,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001079": {
+   "score": 0.24,
+   "lifetime": 0.25,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001208": {
+   "score": 84.32,
+   "lifetime": 84.32,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000394": {
+   "score": 91.78,
+   "lifetime": 91.78,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001217": {
+   "score": 0.23,
+   "lifetime": 1.08,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001089": {
+   "score": 6.22,
+   "lifetime": 4.1,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "K000377": {
+   "score": 83.01,
+   "lifetime": 86.65,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "L000571": {
+   "score": 0.24,
+   "lifetime": 1.62,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "T000278": {
+   "score": 0.24,
+   "lifetime": 1.09,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H000273": {
+   "score": 89.65,
+   "lifetime": 91.11,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H000601": {
+   "score": 0.0,
+   "lifetime": 0.76,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "P000145": {
+   "score": 95.4,
+   "lifetime": 95.21,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "O000174": {
+   "score": 91.0,
+   "lifetime": 92.48,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "W000790": {
+   "score": 89.29,
+   "lifetime": 92.27,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "B001319": {
+   "score": 0.23,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001227": {
+   "score": 0.23,
+   "lifetime": 0.96,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "F000479": {
+   "score": 70.87,
+   "lifetime": 75.79,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "R000618": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "A000382": {
+   "score": 95.53,
+   "lifetime": 95.53,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "S001232": {
+   "score": 0.24,
+   "lifetime": 0.24,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001242": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001243": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "J000312": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "H001104": {
+   "score": 0.47,
+   "lifetime": 0.47,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "M001244": {
+   "score": 0.24,
+   "lifetime": 0.24,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "A000383": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "G000608": {
+   "score": 3.57,
+   "lifetime": 3.57,
+   "url": "https://progressivepunch.org/scores.htm?house=senate"
+  },
+  "A000055": {
+   "score": 0.32,
+   "lifetime": 2.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001257": {
+   "score": 0.32,
+   "lifetime": 2.75,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B000490": {
+   "score": 89.71,
+   "lifetime": 62.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001260": {
+   "score": 0.99,
+   "lifetime": 5.05,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C000059": {
+   "score": 0.32,
+   "lifetime": 1.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001072": {
+   "score": 97.43,
+   "lifetime": 89.31,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001051": {
+   "score": 0.64,
+   "lifetime": 1.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001066": {
+   "score": 91.99,
+   "lifetime": 87.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001080": {
+   "score": 99.04,
+   "lifetime": 97.08,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001067": {
+   "score": 97.41,
+   "lifetime": 96.88,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001061": {
+   "score": 94.5,
+   "lifetime": 87.72,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C000537": {
+   "score": 94.52,
+   "lifetime": 83.44,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001068": {
+   "score": 95.42,
+   "lifetime": 91.2,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001053": {
+   "score": 0.32,
+   "lifetime": 2.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001059": {
+   "score": 82.68,
+   "lifetime": 56.91,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001069": {
+   "score": 87.5,
+   "lifetime": 80.59,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001087": {
+   "score": 0.32,
+   "lifetime": 1.65,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001063": {
+   "score": 70.19,
+   "lifetime": 51.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000096": {
+   "score": 99.03,
+   "lifetime": 93.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000197": {
+   "score": 99.03,
+   "lifetime": 92.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000216": {
+   "score": 96.46,
+   "lifetime": 88.24,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000616": {
+   "score": 0.65,
+   "lifetime": 2.43,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000600": {
+   "score": 0.65,
+   "lifetime": 5.7,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000399": {
+   "score": 98.38,
+   "lifetime": 88.97,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000459": {
+   "score": 0.32,
+   "lifetime": 1.16,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000450": {
+   "score": 0.32,
+   "lifetime": 2.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000559": {
+   "score": 92.57,
+   "lifetime": 84.54,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000565": {
+   "score": 1.62,
+   "lifetime": 5.86,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000546": {
+   "score": 0.0,
+   "lifetime": 2.3,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000553": {
+   "score": 99.04,
+   "lifetime": 84.43,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000568": {
+   "score": 0.96,
+   "lifetime": 9.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000558": {
+   "score": 0.64,
+   "lifetime": 0.98,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001052": {
+   "score": 2.91,
+   "lifetime": 5.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001047": {
+   "score": 91.0,
+   "lifetime": 78.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H000874": {
+   "score": 91.64,
+   "lifetime": 78.9,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001058": {
+   "score": 0.0,
+   "lifetime": 2.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000288": {
+   "score": 98.07,
+   "lifetime": 89.91,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000289": {
+   "score": 0.0,
+   "lifetime": 4.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000009": {
+   "score": 83.6,
+   "lifetime": 76.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000375": {
+   "score": 93.85,
+   "lifetime": 85.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000376": {
+   "score": 0.0,
+   "lifetime": 1.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000560": {
+   "score": 93.53,
+   "lifetime": 78.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000557": {
+   "score": 95.51,
+   "lifetime": 86.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000566": {
+   "score": 0.0,
+   "lifetime": 0.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000397": {
+   "score": 96.1,
+   "lifetime": 88.14,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000491": {
+   "score": 0.0,
+   "lifetime": 1.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000562": {
+   "score": 90.97,
+   "lifetime": 80.85,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001163": {
+   "score": 99.04,
+   "lifetime": 92.17,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001157": {
+   "score": 0.66,
+   "lifetime": 1.86,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001177": {
+   "score": 2.24,
+   "lifetime": 9.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001143": {
+   "score": 96.47,
+   "lifetime": 90.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M000312": {
+   "score": 99.35,
+   "lifetime": 97.25,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001137": {
+   "score": 94.21,
+   "lifetime": 86.22,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001160": {
+   "score": 98.06,
+   "lifetime": 93.81,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000002": {
+   "score": 93.67,
+   "lifetime": 95.01,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000015": {
+   "score": 93.51,
+   "lifetime": 86.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000034": {
+   "score": 97.1,
+   "lifetime": 88.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000197": {
+   "score": 95.05,
+   "lifetime": 93.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000597": {
+   "score": 98.04,
+   "lifetime": 94.53,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "Q000023": {
+   "score": 92.53,
+   "lifetime": 86.78,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000395": {
+   "score": 0.0,
+   "lifetime": 2.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000575": {
+   "score": 0.0,
+   "lifetime": 2.82,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001176": {
+   "score": 0.64,
+   "lifetime": 1.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001145": {
+   "score": 98.06,
+   "lifetime": 96.67,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001183": {
+   "score": 0.96,
+   "lifetime": 5.94,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001189": {
+   "score": 0.64,
+   "lifetime": 1.69,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000185": {
+   "score": 98.72,
+   "lifetime": 86.82,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001185": {
+   "score": 90.38,
+   "lifetime": 77.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000344": {
+   "score": 95.47,
+   "lifetime": 83.56,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001148": {
+   "score": 0.64,
+   "lifetime": 3.54,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000510": {
+   "score": 95.74,
+   "lifetime": 77.11,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001172": {
+   "score": 0.0,
+   "lifetime": 1.02,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000522": {
+   "score": 1.6,
+   "lifetime": 14.05,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001156": {
+   "score": 97.1,
+   "lifetime": 95.16,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000193": {
+   "score": 95.18,
+   "lifetime": 83.83,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000460": {
+   "score": 94.23,
+   "lifetime": 83.91,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000467": {
+   "score": 0.0,
+   "lifetime": 3.19,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000469": {
+   "score": 98.39,
+   "lifetime": 93.12,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000463": {
+   "score": 2.27,
+   "lifetime": 4.07,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000081": {
+   "score": 99.03,
+   "lifetime": 95.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000798": {
+   "score": 0.32,
+   "lifetime": 1.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000797": {
+   "score": 92.28,
+   "lifetime": 84.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000187": {
+   "score": 95.81,
+   "lifetime": 93.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000806": {
+   "score": 0.32,
+   "lifetime": 2.41,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000795": {
+   "score": 0.0,
+   "lifetime": 1.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000808": {
+   "score": 78.16,
+   "lifetime": 87.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000804": {
+   "score": 0.0,
+   "lifetime": 2.81,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000809": {
+   "score": 0.66,
+   "lifetime": 1.53,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000369": {
+   "score": 0.32,
+   "lifetime": 2.1,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001278": {
+   "score": 99.36,
+   "lifetime": 95.99,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000617": {
+   "score": 95.16,
+   "lifetime": 85.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001184": {
+   "score": 16.99,
+   "lifetime": 19.23,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000454": {
+   "score": 92.95,
+   "lifetime": 79.81,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000468": {
+   "score": 88.71,
+   "lifetime": 83.9,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001068": {
+   "score": 98.39,
+   "lifetime": 95.02,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001287": {
+   "score": 93.2,
+   "lifetime": 76.6,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001285": {
+   "score": 96.12,
+   "lifetime": 81.49,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000599": {
+   "score": 95.15,
+   "lifetime": 78.42,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000472": {
+   "score": 99.36,
+   "lifetime": 96.24,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000130": {
+   "score": 96.77,
+   "lifetime": 89.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000608": {
+   "score": 90.71,
+   "lifetime": 73.06,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000462": {
+   "score": 93.09,
+   "lifetime": 88.44,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001282": {
+   "score": 0.33,
+   "lifetime": 1.21,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000812": {
+   "score": 0.32,
+   "lifetime": 1.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001067": {
+   "score": 0.0,
+   "lifetime": 1.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001188": {
+   "score": 96.45,
+   "lifetime": 91.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000294": {
+   "score": 96.15,
+   "lifetime": 94.13,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001281": {
+   "score": 93.73,
+   "lifetime": 90.79,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000295": {
+   "score": 1.29,
+   "lifetime": 4.24,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000605": {
+   "score": 3.23,
+   "lifetime": 6.18,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000814": {
+   "score": 0.0,
+   "lifetime": 1.95,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001091": {
+   "score": 98.7,
+   "lifetime": 91.49,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000816": {
+   "score": 0.33,
+   "lifetime": 0.95,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000131": {
+   "score": 88.71,
+   "lifetime": 82.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000607": {
+   "score": 99.04,
+   "lifetime": 98.23,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000385": {
+   "score": 98.07,
+   "lifetime": 94.07,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001195": {
+   "score": 0.0,
+   "lifetime": 1.44,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001101": {
+   "score": 96.47,
+   "lifetime": 96.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000188": {
+   "score": 93.41,
+   "lifetime": 84.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000370": {
+   "score": 98.4,
+   "lifetime": 93.41,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000609": {
+   "score": 0.64,
+   "lifetime": 1.59,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001072": {
+   "score": 0.64,
+   "lifetime": 1.66,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000821": {
+   "score": 0.32,
+   "lifetime": 1.03,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000623": {
+   "score": 98.06,
+   "lifetime": 97.62,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000371": {
+   "score": 94.21,
+   "lifetime": 83.08,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000582": {
+   "score": 93.2,
+   "lifetime": 90.33,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000474": {
+   "score": 94.5,
+   "lifetime": 88.21,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001103": {
+   "score": 0.65,
+   "lifetime": 1.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000583": {
+   "score": 0.65,
+   "lifetime": 2.09,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000372": {
+   "score": 0.0,
+   "lifetime": 0.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001295": {
+   "score": 0.32,
+   "lifetime": 2.31,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001196": {
+   "score": 90.17,
+   "lifetime": 84.1,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001194": {
+   "score": 0.0,
+   "lifetime": 1.27,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000624": {
+   "score": 96.42,
+   "lifetime": 92.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000294": {
+   "score": 0.0,
+   "lifetime": 2.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000603": {
+   "score": 0.0,
+   "lifetime": 1.11,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000822": {
+   "score": 98.72,
+   "lifetime": 97.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001196": {
+   "score": 0.0,
+   "lifetime": 5.41,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001296": {
+   "score": 92.48,
+   "lifetime": 87.2,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001291": {
+   "score": 0.65,
+   "lifetime": 1.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001292": {
+   "score": 96.14,
+   "lifetime": 91.95,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000189": {
+   "score": 0.32,
+   "lifetime": 2.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000576": {
+   "score": 0.0,
+   "lifetime": 2.8,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000388": {
+   "score": 0.0,
+   "lifetime": 0.82,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000585": {
+   "score": 0.32,
+   "lifetime": 1.1,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000626": {
+   "score": 4.18,
+   "lifetime": 5.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001108": {
+   "score": 0.32,
+   "lifetime": 3.07,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000296": {
+   "score": 97.73,
+   "lifetime": 87.62,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001190": {
+   "score": 88.75,
+   "lifetime": 76.8,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001302": {
+   "score": 2.27,
+   "lifetime": 7.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000389": {
+   "score": 97.43,
+   "lifetime": 97.01,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000613": {
+   "score": 85.26,
+   "lifetime": 81.3,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001112": {
+   "score": 92.95,
+   "lifetime": 87.05,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001300": {
+   "score": 98.71,
+   "lifetime": 96.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001110": {
+   "score": 87.62,
+   "lifetime": 84.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000628": {
+   "score": 0.0,
+   "lifetime": 0.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000609": {
+   "score": 1.0,
+   "lifetime": 1.01,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001200": {
+   "score": 86.54,
+   "lifetime": 84.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001199": {
+   "score": 0.0,
+   "lifetime": 3.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000391": {
+   "score": 95.48,
+   "lifetime": 89.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001077": {
+   "score": 1.29,
+   "lifetime": 2.48,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000299": {
+   "score": 0.35,
+   "lifetime": 1.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000606": {
+   "score": 97.76,
+   "lifetime": 97.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001301": {
+   "score": 0.32,
+   "lifetime": 1.9,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001298": {
+   "score": 3.85,
+   "lifetime": 3.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000583": {
+   "score": 76.82,
+   "lifetime": 68.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000297": {
+   "score": 98.38,
+   "lifetime": 97.01,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000466": {
+   "score": 12.5,
+   "lifetime": 19.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001199": {
+   "score": 0.32,
+   "lifetime": 1.27,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000392": {
+   "score": 0.32,
+   "lifetime": 0.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000581": {
+   "score": 75.24,
+   "lifetime": 75.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000375": {
+   "score": 1.3,
+   "lifetime": 1.73,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000298": {
+   "score": 94.44,
+   "lifetime": 95.97,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000298": {
+   "score": 0.32,
+   "lifetime": 0.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000190": {
+   "score": 2.0,
+   "lifetime": 3.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000585": {
+   "score": 95.74,
+   "lifetime": 95.81,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001115": {
+   "score": 1.61,
+   "lifetime": 3.17,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001306": {
+   "score": 0.0,
+   "lifetime": 0.31,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001082": {
+   "score": 0.32,
+   "lifetime": 0.83,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001206": {
+   "score": 91.67,
+   "lifetime": 87.93,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001205": {
+   "score": 99.35,
+   "lifetime": 95.82,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001055": {
+   "score": 91.64,
+   "lifetime": 77.86,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001066": {
+   "score": 87.74,
+   "lifetime": 82.91,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001211": {
+   "score": 87.7,
+   "lifetime": 83.72,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001090": {
+   "score": 87.5,
+   "lifetime": 80.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000593": {
+   "score": 91.03,
+   "lifetime": 87.59,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000191": {
+   "score": 98.08,
+   "lifetime": 96.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001121": {
+   "score": 96.79,
+   "lifetime": 89.97,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001081": {
+   "score": 97.74,
+   "lifetime": 92.78,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001214": {
+   "score": 1.62,
+   "lifetime": 2.55,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001208": {
+   "score": 88.1,
+   "lifetime": 87.02,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000469": {
+   "score": 1.6,
+   "lifetime": 1.67,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000586": {
+   "score": 98.71,
+   "lifetime": 96.62,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001117": {
+   "score": 96.15,
+   "lifetime": 93.21,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "U000040": {
+   "score": 98.71,
+   "lifetime": 93.3,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001307": {
+   "score": 0.0,
+   "lifetime": 0.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000629": {
+   "score": 87.46,
+   "lifetime": 83.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000482": {
+   "score": 94.48,
+   "lifetime": 94.97,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000617": {
+   "score": 98.07,
+   "lifetime": 97.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001215": {
+   "score": 92.28,
+   "lifetime": 89.14,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000481": {
+   "score": 99.35,
+   "lifetime": 97.79,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001119": {
+   "score": 90.68,
+   "lifetime": 79.08,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000173": {
+   "score": 98.4,
+   "lifetime": 97.7,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001212": {
+   "score": 0.32,
+   "lifetime": 1.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000591": {
+   "score": 0.0,
+   "lifetime": 0.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000614": {
+   "score": 83.01,
+   "lifetime": 79.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000133": {
+   "score": 1.93,
+   "lifetime": 3.24,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000590": {
+   "score": 81.41,
+   "lifetime": 77.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000172": {
+   "score": 98.72,
+   "lifetime": 97.7,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000631": {
+   "score": 96.78,
+   "lifetime": 95.41,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001085": {
+   "score": 88.03,
+   "lifetime": 82.62,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001204": {
+   "score": 0.65,
+   "lifetime": 1.16,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000302": {
+   "score": 0.0,
+   "lifetime": 0.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000610": {
+   "score": 0.32,
+   "lifetime": 0.84,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000480": {
+   "score": 0.64,
+   "lifetime": 0.84,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000301": {
+   "score": 0.0,
+   "lifetime": 0.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001309": {
+   "score": 3.21,
+   "lifetime": 5.01,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000612": {
+   "score": 0.97,
+   "lifetime": 0.84,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001120": {
+   "score": 0.0,
+   "lifetime": 0.84,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000589": {
+   "score": 0.96,
+   "lifetime": 1.77,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000468": {
+   "score": 96.79,
+   "lifetime": 87.16,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000299": {
+   "score": 99.03,
+   "lifetime": 96.54,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000614": {
+   "score": 4.53,
+   "lifetime": 5.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000587": {
+   "score": 95.79,
+   "lifetime": 94.76,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001118": {
+   "score": 0.32,
+   "lifetime": 2.09,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001216": {
+   "score": 85.9,
+   "lifetime": 80.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001213": {
+   "score": 0.0,
+   "lifetime": 1.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001205": {
+   "score": 0.32,
+   "lifetime": 0.74,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000592": {
+   "score": 73.72,
+   "lifetime": 66.88,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001210": {
+   "score": 0.0,
+   "lifetime": 0.45,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M000687": {
+   "score": 96.09,
+   "lifetime": 92.93,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000165": {
+   "score": 0.65,
+   "lifetime": 2.05,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "I000056": {
+   "score": 0.32,
+   "lifetime": 1.94,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000250": {
+   "score": 0.96,
+   "lifetime": 1.03,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000129": {
+   "score": 0.96,
+   "lifetime": 2.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001212": {
+   "score": 0.96,
+   "lifetime": 1.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000019": {
+   "score": 0.32,
+   "lifetime": 1.16,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000397": {
+   "score": 0.64,
+   "lifetime": 1.73,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000305": {
+   "score": 99.04,
+   "lifetime": 97.11,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B000825": {
+   "score": 1.93,
+   "lifetime": 3.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001039": {
+   "score": 0.97,
+   "lifetime": 1.74,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000472": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000032": {
+   "score": 2.0,
+   "lifetime": 2.24,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000593": {
+   "score": 0.33,
+   "lifetime": 0.59,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000168": {
+   "score": 0.66,
+   "lifetime": 1.53,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000788": {
+   "score": 95.5,
+   "lifetime": 97.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001116": {
+   "score": 0.97,
+   "lifetime": 1.39,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001091": {
+   "score": 0.32,
+   "lifetime": 0.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001215": {
+   "score": 0.32,
+   "lifetime": 0.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000446": {
+   "score": 0.0,
+   "lifetime": 0.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001211": {
+   "score": 0.33,
+   "lifetime": 1.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001214": {
+   "score": 85.44,
+   "lifetime": 83.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S000929": {
+   "score": 1.95,
+   "lifetime": 2.56,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M000871": {
+   "score": 0.0,
+   "lifetime": 1.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000148": {
+   "score": 89.71,
+   "lifetime": 92.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001136": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000470": {
+   "score": 0.0,
+   "lifetime": 1.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000305": {
+   "score": 96.47,
+   "lifetime": 94.23,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000273": {
+   "score": 92.76,
+   "lifetime": 94.3,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000597": {
+   "score": 1.29,
+   "lifetime": 1.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M000317": {
+   "score": 1.28,
+   "lifetime": 1.74,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000486": {
+   "score": 91.67,
+   "lifetime": 92.13,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B000740": {
+   "score": 0.64,
+   "lifetime": 0.46,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B000668": {
+   "score": 0.0,
+   "lifetime": 0.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M000194": {
+   "score": 0.66,
+   "lifetime": 4.78,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001086": {
+   "score": 0.64,
+   "lifetime": 1.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000246": {
+   "score": 0.64,
+   "lifetime": 0.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000048": {
+   "score": 0.32,
+   "lifetime": 0.12,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000304": {
+   "score": 0.97,
+   "lifetime": 0.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000026": {
+   "score": 0.65,
+   "lifetime": 1.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000134": {
+   "score": 0.96,
+   "lifetime": 0.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001213": {
+   "score": 0.32,
+   "lifetime": 1.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000086": {
+   "score": 0.32,
+   "lifetime": 1.04,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001159": {
+   "score": 94.79,
+   "lifetime": 91.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000471": {
+   "score": 0.32,
+   "lifetime": 1.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000478": {
+   "score": 0.0,
+   "lifetime": 1.39,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000595": {
+   "score": 0.0,
+   "lifetime": 0.12,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001125": {
+   "score": 95.81,
+   "lifetime": 94.07,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001218": {
+   "score": 98.06,
+   "lifetime": 96.56,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000071": {
+   "score": 0.32,
+   "lifetime": 0.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001313": {
+   "score": 98.08,
+   "lifetime": 96.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001126": {
+   "score": 0.0,
+   "lifetime": 1.03,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000474": {
+   "score": 0.64,
+   "lifetime": 0.54,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000475": {
+   "score": 0.0,
+   "lifetime": 1.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000579": {
+   "score": 88.78,
+   "lifetime": 83.02,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "Y000067": {
+   "score": 0.0,
+   "lifetime": 0.72,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "Z000018": {
+   "score": 0.32,
+   "lifetime": 2.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001220": {
+   "score": 0.0,
+   "lifetime": 0.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001132": {
+   "score": 2.89,
+   "lifetime": 4.67,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001133": {
+   "score": 0.65,
+   "lifetime": 0.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000401": {
+   "score": 2.57,
+   "lifetime": 1.75,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001225": {
+   "score": 97.67,
+   "lifetime": 94.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000400": {
+   "score": 98.06,
+   "lifetime": 97.06,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000598": {
+   "score": 98.7,
+   "lifetime": 97.18,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000620": {
+   "score": 96.47,
+   "lifetime": 89.94,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001314": {
+   "score": 0.64,
+   "lifetime": 1.9,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001216": {
+   "score": 0.98,
+   "lifetime": 1.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000476": {
+   "score": 99.68,
+   "lifetime": 98.98,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000596": {
+   "score": 3.37,
+   "lifetime": 3.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000597": {
+   "score": 0.33,
+   "lifetime": 0.44,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001217": {
+   "score": 82.52,
+   "lifetime": 77.65,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001218": {
+   "score": 0.96,
+   "lifetime": 0.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001129": {
+   "score": 0.32,
+   "lifetime": 2.05,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000487": {
+   "score": 99.36,
+   "lifetime": 98.83,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "N000193": {
+   "score": 0.65,
+   "lifetime": 2.2,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000309": {
+   "score": 93.18,
+   "lifetime": 94.28,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000617": {
+   "score": 98.39,
+   "lifetime": 98.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001315": {
+   "score": 89.42,
+   "lifetime": 84.69,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001225": {
+   "score": 86.82,
+   "lifetime": 82.21,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001093": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001220": {
+   "score": 98.4,
+   "lifetime": 97.23,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "I000058": {
+   "score": 96.78,
+   "lifetime": 96.2,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001221": {
+   "score": 85.48,
+   "lifetime": 82.75,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000307": {
+   "score": 0.0,
+   "lifetime": 0.88,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000488": {
+   "score": 95.18,
+   "lifetime": 93.87,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000379": {
+   "score": 0.0,
+   "lifetime": 0.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001316": {
+   "score": 3.23,
+   "lifetime": 3.37,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000235": {
+   "score": 0.0,
+   "lifetime": 0.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000230": {
+   "score": 74.92,
+   "lifetime": 72.08,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000477": {
+   "score": 98.71,
+   "lifetime": 97.51,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000246": {
+   "score": 0.0,
+   "lifetime": 0.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000398": {
+   "score": 0.0,
+   "lifetime": 2.39,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001226": {
+   "score": 97.76,
+   "lifetime": 94.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000136": {
+   "score": 85.26,
+   "lifetime": 82.07,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000598": {
+   "score": 0.97,
+   "lifetime": 1.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000599": {
+   "score": 93.69,
+   "lifetime": 90.34,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000599": {
+   "score": 2.59,
+   "lifetime": 3.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000600": {
+   "score": 0.65,
+   "lifetime": 1.33,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000601": {
+   "score": 83.65,
+   "lifetime": 79.65,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001222": {
+   "score": 0.32,
+   "lifetime": 1.33,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001223": {
+   "score": 89.35,
+   "lifetime": 87.12,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001317": {
+   "score": 2.61,
+   "lifetime": 3.1,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001094": {
+   "score": 94.53,
+   "lifetime": 93.52,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001226": {
+   "score": 96.15,
+   "lifetime": 91.39,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000602": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000530": {
+   "score": 97.44,
+   "lifetime": 93.59,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001223": {
+   "score": 91.96,
+   "lifetime": 86.18,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000478": {
+   "score": 0.96,
+   "lifetime": 2.19,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000175": {
+   "score": 1.62,
+   "lifetime": 2.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001224": {
+   "score": 0.64,
+   "lifetime": 0.44,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001224": {
+   "score": 3.24,
+   "lifetime": 2.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000603": {
+   "score": 0.64,
+   "lifetime": 1.17,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000594": {
+   "score": 0.32,
+   "lifetime": 0.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001130": {
+   "score": 96.73,
+   "lifetime": 95.86,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001131": {
+   "score": 88.41,
+   "lifetime": 94.23,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001095": {
+   "score": 0.33,
+   "lifetime": 1.36,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000399": {
+   "score": 0.64,
+   "lifetime": 1.02,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001318": {
+   "score": 100.0,
+   "lifetime": 99.56,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000600": {
+   "score": 76.6,
+   "lifetime": 72.74,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000135": {
+   "score": 0.0,
+   "lifetime": 0.88,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001096": {
+   "score": 1.92,
+   "lifetime": 2.78,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001227": {
+   "score": 97.12,
+   "lifetime": 96.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000380": {
+   "score": 96.79,
+   "lifetime": 96.27,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001228": {
+   "score": 0.32,
+   "lifetime": 1.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001201": {
+   "score": 80.45,
+   "lifetime": 75.34,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000402": {
+   "score": 93.91,
+   "lifetime": 91.94,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000480": {
+   "score": 0.32,
+   "lifetime": 0.25,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000619": {
+   "score": 1.32,
+   "lifetime": 1.06,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001229": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000829": {
+   "score": 0.32,
+   "lifetime": 0.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000110": {
+   "score": 92.88,
+   "lifetime": 86.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001188": {
+   "score": 0.0,
+   "lifetime": 3.89,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001123": {
+   "score": 94.87,
+   "lifetime": 88.34,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001323": {
+   "score": 0.64,
+   "lifetime": 0.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000481": {
+   "score": 90.35,
+   "lifetime": 90.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "A000381": {
+   "score": 99.03,
+   "lifetime": 99.03,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001098": {
+   "score": 0.64,
+   "lifetime": 0.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001231": {
+   "score": 98.06,
+   "lifetime": 98.06,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000605": {
+   "score": 75.4,
+   "lifetime": 75.4,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000607": {
+   "score": 95.82,
+   "lifetime": 95.82,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000830": {
+   "score": 86.08,
+   "lifetime": 86.08,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000620": {
+   "score": 98.71,
+   "lifetime": 98.71,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000483": {
+   "score": 98.39,
+   "lifetime": 98.39,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000491": {
+   "score": 85.9,
+   "lifetime": 85.9,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001241": {
+   "score": 92.93,
+   "lifetime": 92.93,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001100": {
+   "score": 0.96,
+   "lifetime": 0.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001137": {
+   "score": 0.64,
+   "lifetime": 0.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000300": {
+   "score": 1.92,
+   "lifetime": 1.92,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001238": {
+   "score": 95.5,
+   "lifetime": 95.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001099": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000311": {
+   "score": 0.32,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001229": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001233": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001228": {
+   "score": 0.32,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000176": {
+   "score": 95.5,
+   "lifetime": 95.5,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "E000301": {
+   "score": 96.15,
+   "lifetime": 96.15,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001232": {
+   "score": 90.97,
+   "lifetime": 90.97,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001321": {
+   "score": 1.61,
+   "lifetime": 1.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001237": {
+   "score": 84.14,
+   "lifetime": 84.14,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001234": {
+   "score": 95.83,
+   "lifetime": 95.83,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001324": {
+   "score": 94.19,
+   "lifetime": 94.19,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "O000177": {
+   "score": 1.29,
+   "lifetime": 1.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000634": {
+   "score": 1.28,
+   "lifetime": 1.28,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001240": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001102": {
+   "score": 0.64,
+   "lifetime": 0.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "H001101": {
+   "score": 1.29,
+   "lifetime": 1.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000405": {
+   "score": 0.96,
+   "lifetime": 0.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001236": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000482": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000604": {
+   "score": 85.26,
+   "lifetime": 85.26,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "C001136": {
+   "score": 91.61,
+   "lifetime": 91.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000621": {
+   "score": 92.95,
+   "lifetime": 92.95,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000602": {
+   "score": 79.61,
+   "lifetime": 79.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "L000606": {
+   "score": 92.58,
+   "lifetime": 92.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000622": {
+   "score": 82.26,
+   "lifetime": 82.26,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001231": {
+   "score": 89.42,
+   "lifetime": 89.42,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "T000490": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "D000635": {
+   "score": 99.68,
+   "lifetime": 99.68,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001326": {
+   "score": 90.38,
+   "lifetime": 90.38,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001230": {
+   "score": 1.61,
+   "lifetime": 1.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001327": {
+   "score": 1.93,
+   "lifetime": 1.93,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001325": {
+   "score": 0.32,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000601": {
+   "score": 0.32,
+   "lifetime": 0.32,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000603": {
+   "score": 1.61,
+   "lifetime": 1.61,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "J000310": {
+   "score": 91.96,
+   "lifetime": 91.96,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "K000403": {
+   "score": 1.29,
+   "lifetime": 1.29,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001239": {
+   "score": 0.64,
+   "lifetime": 0.64,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000138": {
+   "score": 83.6,
+   "lifetime": 83.6,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "S001230": {
+   "score": 93.27,
+   "lifetime": 93.27,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001322": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "R000621": {
+   "score": 98.7,
+   "lifetime": 98.7,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001235": {
+   "score": 0.65,
+   "lifetime": 0.65,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "P000622": {
+   "score": 1.09,
+   "lifetime": 1.09,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000484": {
+   "score": 1.47,
+   "lifetime": 1.47,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000831": {
+   "score": 94.17,
+   "lifetime": 94.17,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000606": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "V000139": {
+   "score": 0.58,
+   "lifetime": 0.58,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001245": {
+   "score": 98.35,
+   "lifetime": 98.35,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "F000485": {
+   "score": 1.12,
+   "lifetime": 1.12,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "M001246": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "G000607": {
+   "score": 2.63,
+   "lifetime": 2.63,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "B001328": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  },
+  "W000832": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://progressivepunch.org/scores.htm?house=house"
+  }
+ }
+}

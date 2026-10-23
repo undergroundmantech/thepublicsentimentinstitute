@@ -1,0 +1,2596 @@
+{
+ "id": "acu",
+ "name": "CPAC Center for Legislative Accountability (formerly American Conservative Union ratings)",
+ "lean": "right",
+ "source": "https://www.cpac.org/us/ratings",
+ "year": "2025",
+ "scale": "percent",
+ "notes": "2025 congressional rating (percent of votes matching the conservative position) as 'score' and lifetime rating as 'lifetime', from the CPAC Center for Legislative Accountability (formerly American Conservative Union ratings). COVERAGE: 517 of 539 roster members. METHOD: 51 members came from the first server-rendered entries of the All Lawmakers list at cpac.org/us/ratings (url field = that list page); the other 466 were read one page at a time from the per-member pages https://www.cpac.org/bio/<bioguide id lowercase> (url field = that page), fetched in batches of about 12 with WebFetch. Each page's name and state were checked against the roster (chamber, state, last name) before storing; the 2025 value was taken only from a block labeled 2025. Values were model-extracted from the fetched page text, so spot check. GAPS (22 members not stored, none rated zero): no 2025 rating on the page, only a 2024 block: Brad Sherman S000344 (lifetime 7), Diana Harshbarger H001086 (lifetime 93); N/A for 2025 with lifetime shown: Brittany Pettersen P000620 (lifetime 1); N/A or blank for both ratings (nonvoting delegates and commissioner): Eleanor Holmes Norton N000147, Stacey Plaskett P000610, Amata Radewagen R000600, James Moylan M001219, Kimberlyn King-Hinds K000404, Pablo Jose Hernandez H001103; N/A for both (special election winners seated after the rating window): Jimmy Patronis P000622, Randy Fine F000484, James Walkinshaw W000831, Adelita Grijalva G000606, Matt Van Epps V000139; page returned a client error, no CPAC page (newest members): Christian Menefee M001245, Alan Armstrong A000383, Clay Fuller F000485, Analilia Mejia M001246, James Gallagher G000607, Darline Graham G000608, Everton Blair B001328, Aisha Wahab W000832. Some members seated mid-2025 or later show identical 2025 and lifetime values because they have only one year of ratings. ratings.conservative.org refused automated access (robots_disallowed) and was not used. Former members shown with 2024 ratings (Dan Bishop, Bob Good, Debbie Lesko, Earl Blumenauer, Jamaal Bowman, Cori Bush) are not in the roster.",
+ "members": {
+  "B001314": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001302": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001325": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B000825": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001317": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001309": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001316": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "C001118": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "C001116": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "C001132": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "D000626": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "F000478": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "G000603": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "W000795": {
+   "score": 89,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001261": {
+   "score": 88,
+   "lifetime": 88,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001319": {
+   "score": 88,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "D000634": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "G000601": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "G000589": {
+   "score": 87,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "H001102": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "K000403": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "K000405": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "M001184": {
+   "score": 87,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "M001199": {
+   "score": 87,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "M001240": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "M001205": {
+   "score": 87,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "S001228": {
+   "score": 87,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000370": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000371": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000380": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000381": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001318": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001300": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001281": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001324": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001287": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001292": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001278": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001313": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000055": {
+   "score": 70,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000379": {
+   "score": 70,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000372": {
+   "score": 77,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000382": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000369": {
+   "score": 75,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000375": {
+   "score": 94,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "A000148": {
+   "score": 6,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001291": {
+   "score": 83,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001298": {
+   "score": 68,
+   "lifetime": 64,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001307": {
+   "score": 70,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "B001306": {
+   "score": 84,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/us/ratings"
+  },
+  "C001056": {
+   "score": 85,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/c001056"
+  },
+  "C000127": {
+   "score": 3,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/c000127"
+  },
+  "K000367": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/k000367"
+  },
+  "S000033": {
+   "score": 3,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/s000033"
+  },
+  "W000802": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/w000802"
+  },
+  "W000437": {
+   "score": 68,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/w000437"
+  },
+  "C001035": {
+   "score": 50,
+   "lifetime": 43,
+   "url": "https://www.cpac.org/bio/c001035"
+  },
+  "D000563": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/d000563"
+  },
+  "M000355": {
+   "score": 76,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/m000355"
+  },
+  "M001176": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/m001176"
+  },
+  "R000122": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/r000122"
+  },
+  "R000584": {
+   "score": 94,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/r000584"
+  },
+  "S001181": {
+   "score": 6,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/s001181"
+  },
+  "W000805": {
+   "score": 3,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/w000805"
+  },
+  "G000555": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/g000555"
+  },
+  "C001088": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001088"
+  },
+  "B001230": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/b001230"
+  },
+  "B001267": {
+   "score": 3,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/b001267"
+  },
+  "B001257": {
+   "score": 73,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/b001257"
+  },
+  "B000490": {
+   "score": 16,
+   "lifetime": 21,
+   "url": "https://www.cpac.org/bio/b000490"
+  },
+  "B001243": {
+   "score": 91,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/b001243"
+  },
+  "B001277": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/b001277"
+  },
+  "B001236": {
+   "score": 71,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/b001236"
+  },
+  "B001260": {
+   "score": 75,
+   "lifetime": 72,
+   "url": "https://www.cpac.org/bio/b001260"
+  },
+  "C000059": {
+   "score": 71,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/c000059"
+  },
+  "C001047": {
+   "score": 67,
+   "lifetime": 67,
+   "url": "https://www.cpac.org/bio/c001047"
+  },
+  "C001072": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001072"
+  },
+  "C001051": {
+   "score": 84,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/c001051"
+  },
+  "C001075": {
+   "score": 86,
+   "lifetime": 78,
+   "url": "https://www.cpac.org/bio/c001075"
+  },
+  "C001066": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001066"
+  },
+  "C001080": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001080"
+  },
+  "C001067": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001067"
+  },
+  "C001061": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001061"
+  },
+  "C000537": {
+   "score": 4,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/c000537"
+  },
+  "C001068": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001068"
+  },
+  "C001053": {
+   "score": 71,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/c001053"
+  },
+  "C001059": {
+   "score": 23,
+   "lifetime": 14,
+   "url": "https://www.cpac.org/bio/c001059"
+  },
+  "C001069": {
+   "score": 16,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001069"
+  },
+  "C000880": {
+   "score": 85,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/c000880"
+  },
+  "C001087": {
+   "score": 77,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/c001087"
+  },
+  "C001063": {
+   "score": 61,
+   "lifetime": 25,
+   "url": "https://www.cpac.org/bio/c001063"
+  },
+  "D000096": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/d000096"
+  },
+  "D000197": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/d000197"
+  },
+  "D000216": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/d000216"
+  },
+  "D000616": {
+   "score": 93,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/d000616"
+  },
+  "D000600": {
+   "score": 69,
+   "lifetime": 61,
+   "url": "https://www.cpac.org/bio/d000600"
+  },
+  "D000399": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/d000399"
+  },
+  "F000459": {
+   "score": 71,
+   "lifetime": 78,
+   "url": "https://www.cpac.org/bio/f000459"
+  },
+  "F000450": {
+   "score": 81,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/f000450"
+  },
+  "G000559": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/g000559"
+  },
+  "G000565": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/g000565"
+  },
+  "G000386": {
+   "score": 76,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/g000386"
+  },
+  "G000546": {
+   "score": 80,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/g000546"
+  },
+  "G000553": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/g000553"
+  },
+  "G000568": {
+   "score": 74,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/g000568"
+  },
+  "G000558": {
+   "score": 71,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/g000558"
+  },
+  "H001052": {
+   "score": 97,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/h001052"
+  },
+  "H001046": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/h001046"
+  },
+  "H001047": {
+   "score": 7,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/h001047"
+  },
+  "H001042": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/h001042"
+  },
+  "H001061": {
+   "score": 76,
+   "lifetime": 72,
+   "url": "https://www.cpac.org/bio/h001061"
+  },
+  "H000874": {
+   "score": 3,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/h000874"
+  },
+  "H001058": {
+   "score": 70,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/h001058"
+  },
+  "J000288": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/j000288"
+  },
+  "J000293": {
+   "score": 100,
+   "lifetime": 92,
+   "url": "https://www.cpac.org/bio/j000293"
+  },
+  "J000289": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://www.cpac.org/bio/j000289"
+  },
+  "K000009": {
+   "score": 19,
+   "lifetime": 12,
+   "url": "https://www.cpac.org/bio/k000009"
+  },
+  "K000375": {
+   "score": 7,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/k000375"
+  },
+  "K000376": {
+   "score": 70,
+   "lifetime": 72,
+   "url": "https://www.cpac.org/bio/k000376"
+  },
+  "L000575": {
+   "score": 85,
+   "lifetime": 88,
+   "url": "https://www.cpac.org/bio/l000575"
+  },
+  "L000560": {
+   "score": 3,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/l000560"
+  },
+  "L000557": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/l000557"
+  },
+  "L000566": {
+   "score": 77,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/l000566"
+  },
+  "L000577": {
+   "score": 97,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/bio/l000577"
+  },
+  "L000397": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/l000397"
+  },
+  "L000491": {
+   "score": 70,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/l000491"
+  },
+  "L000570": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/l000570"
+  },
+  "L000562": {
+   "score": 13,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/l000562"
+  },
+  "M000133": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m000133"
+  },
+  "M001163": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/m001163"
+  },
+  "M001157": {
+   "score": 75,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/m001157"
+  },
+  "M001177": {
+   "score": 90,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/m001177"
+  },
+  "M001143": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m001143"
+  },
+  "M000312": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m000312"
+  },
+  "M001137": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/m001137"
+  },
+  "M001160": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m001160"
+  },
+  "M000934": {
+   "score": 70,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/m000934"
+  },
+  "M001153": {
+   "score": 50,
+   "lifetime": 54,
+   "url": "https://www.cpac.org/bio/m001153"
+  },
+  "M001169": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/m001169"
+  },
+  "M001111": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/m001111"
+  },
+  "N000002": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/n000002"
+  },
+  "N000015": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/n000015"
+  },
+  "P000034": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://www.cpac.org/bio/p000034"
+  },
+  "P000603": {
+   "score": 97,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/p000603"
+  },
+  "P000197": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/p000197"
+  },
+  "P000595": {
+   "score": 6,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/p000595"
+  },
+  "P000597": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/p000597"
+  },
+  "Q000023": {
+   "score": 4,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/q000023"
+  },
+  "R000395": {
+   "score": 70,
+   "lifetime": 78,
+   "url": "https://www.cpac.org/bio/r000395"
+  },
+  "R000575": {
+   "score": 76,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/r000575"
+  },
+  "S001176": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/s001176"
+  },
+  "S001145": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001145"
+  },
+  "S001150": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001150"
+  },
+  "S000148": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s000148"
+  },
+  "S001183": {
+   "score": 90,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/s001183"
+  },
+  "S001189": {
+   "score": 90,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/s001189"
+  },
+  "S000185": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s000185"
+  },
+  "S001184": {
+   "score": 76,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/s001184"
+  },
+  "S001185": {
+   "score": 7,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s001185"
+  },
+  "S001148": {
+   "score": 72,
+   "lifetime": 73,
+   "url": "https://www.cpac.org/bio/s001148"
+  },
+  "S000510": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://www.cpac.org/bio/s000510"
+  },
+  "S001172": {
+   "score": 70,
+   "lifetime": 86,
+   "url": "https://www.cpac.org/bio/s001172"
+  },
+  "S000522": {
+   "score": 77,
+   "lifetime": 57,
+   "url": "https://www.cpac.org/bio/s000522"
+  },
+  "S001156": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001156"
+  },
+  "T000193": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/t000193"
+  },
+  "T000460": {
+   "score": 3,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/t000460"
+  },
+  "T000467": {
+   "score": 71,
+   "lifetime": 72,
+   "url": "https://www.cpac.org/bio/t000467"
+  },
+  "T000250": {
+   "score": 76,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/t000250"
+  },
+  "T000469": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/t000469"
+  },
+  "T000463": {
+   "score": 71,
+   "lifetime": 65,
+   "url": "https://www.cpac.org/bio/t000463"
+  },
+  "V000128": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/v000128"
+  },
+  "V000081": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/v000081"
+  },
+  "W000798": {
+   "score": 74,
+   "lifetime": 88,
+   "url": "https://www.cpac.org/bio/w000798"
+  },
+  "W000797": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/w000797"
+  },
+  "W000187": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/w000187"
+  },
+  "W000806": {
+   "score": 84,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/w000806"
+  },
+  "W000800": {
+   "score": 3,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/w000800"
+  },
+  "W000808": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/w000808"
+  },
+  "W000804": {
+   "score": 74,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/w000804"
+  },
+  "W000809": {
+   "score": 70,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/w000809"
+  },
+  "W000779": {
+   "score": 3,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/w000779"
+  },
+  "Y000064": {
+   "score": 71,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/y000064"
+  },
+  "D000617": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/d000617"
+  },
+  "S001194": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001194"
+  },
+  "F000454": {
+   "score": 3,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/f000454"
+  },
+  "T000468": {
+   "score": 11,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/t000468"
+  },
+  "C001095": {
+   "score": 76,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/c001095"
+  },
+  "H001068": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/h001068"
+  },
+  "B001285": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/b001285"
+  },
+  "R000599": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/r000599"
+  },
+  "T000472": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/t000472"
+  },
+  "V000130": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/v000130"
+  },
+  "P000608": {
+   "score": 6,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/p000608"
+  },
+  "F000462": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/f000462"
+  },
+  "D000622": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/d000622"
+  },
+  "B001282": {
+   "score": 97,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/b001282"
+  },
+  "W000817": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/w000817"
+  },
+  "K000383": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/k000383"
+  },
+  "W000812": {
+   "score": 71,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/w000812"
+  },
+  "D000618": {
+   "score": 91,
+   "lifetime": 86,
+   "url": "https://www.cpac.org/bio/d000618"
+  },
+  "H001067": {
+   "score": 80,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/h001067"
+  },
+  "C001096": {
+   "score": 70,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/c001096"
+  },
+  "F000463": {
+   "score": 71,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/f000463"
+  },
+  "M001188": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/m001188"
+  },
+  "J000294": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/j000294"
+  },
+  "J000295": {
+   "score": 70,
+   "lifetime": 55,
+   "url": "https://www.cpac.org/bio/j000295"
+  },
+  "P000605": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/p000605"
+  },
+  "C001098": {
+   "score": 97,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/c001098"
+  },
+  "W000814": {
+   "score": 97,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/w000814"
+  },
+  "C001091": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001091"
+  },
+  "W000816": {
+   "score": 83,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/w000816"
+  },
+  "V000131": {
+   "score": 7,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/v000131"
+  },
+  "K000384": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/k000384"
+  },
+  "P000607": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/p000607"
+  },
+  "K000385": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/k000385"
+  },
+  "S001195": {
+   "score": 83,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/s001195"
+  },
+  "B001288": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/b001288"
+  },
+  "C001101": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/c001101"
+  },
+  "N000188": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/n000188"
+  },
+  "P000609": {
+   "score": 90,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/p000609"
+  },
+  "H001072": {
+   "score": 71,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/h001072"
+  },
+  "W000821": {
+   "score": 74,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/w000821"
+  },
+  "G000574": {
+   "score": 7,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/g000574"
+  },
+  "D000623": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/d000623"
+  },
+  "L000582": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/l000582"
+  },
+  "T000474": {
+   "score": 6,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/t000474"
+  },
+  "C001103": {
+   "score": 77,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/c001103"
+  },
+  "L000583": {
+   "score": 77,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/l000583"
+  },
+  "B001295": {
+   "score": 77,
+   "lifetime": 66,
+   "url": "https://www.cpac.org/bio/b001295"
+  },
+  "M001196": {
+   "score": 4,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m001196"
+  },
+  "M001194": {
+   "score": 71,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/m001194"
+  },
+  "D000624": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/d000624"
+  },
+  "E000294": {
+   "score": 84,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/e000294"
+  },
+  "R000603": {
+   "score": 83,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/r000603"
+  },
+  "W000822": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/w000822"
+  },
+  "S001196": {
+   "score": 75,
+   "lifetime": 58,
+   "url": "https://www.cpac.org/bio/s001196"
+  },
+  "B001296": {
+   "score": 11,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/b001296"
+  },
+  "N000189": {
+   "score": 69,
+   "lifetime": 69,
+   "url": "https://www.cpac.org/bio/n000189"
+  },
+  "G000576": {
+   "score": 90,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/g000576"
+  },
+  "S001198": {
+   "score": 68,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/s001198"
+  },
+  "E000295": {
+   "score": 94,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/e000295"
+  },
+  "T000476": {
+   "score": 74,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/t000476"
+  },
+  "R000605": {
+   "score": 71,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/r000605"
+  },
+  "K000388": {
+   "score": 90,
+   "lifetime": 86,
+   "url": "https://www.cpac.org/bio/k000388"
+  },
+  "L000585": {
+   "score": 77,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/l000585"
+  },
+  "C001108": {
+   "score": 90,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/bio/c001108"
+  },
+  "E000296": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/e000296"
+  },
+  "K000393": {
+   "score": 97,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/k000393"
+  },
+  "H001076": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/h001076"
+  },
+  "C001113": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/c001113"
+  },
+  "S001190": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s001190"
+  },
+  "K000389": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/k000389"
+  },
+  "P000613": {
+   "score": 16,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/p000613"
+  },
+  "C001112": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/c001112"
+  },
+  "C001110": {
+   "score": 12,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/c001110"
+  },
+  "B001303": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/b001303"
+  },
+  "D000628": {
+   "score": 72,
+   "lifetime": 78,
+   "url": "https://www.cpac.org/bio/d000628"
+  },
+  "R000609": {
+   "score": 71,
+   "lifetime": 73,
+   "url": "https://www.cpac.org/bio/r000609"
+  },
+  "S001200": {
+   "score": 19,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/s001200"
+  },
+  "K000391": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/k000391"
+  },
+  "B001299": {
+   "score": 97,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/b001299"
+  },
+  "M001198": {
+   "score": 85,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/m001198"
+  },
+  "H001077": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/h001077"
+  },
+  "J000299": {
+   "score": 95,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/j000299"
+  },
+  "R000606": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/r000606"
+  },
+  "B001301": {
+   "score": 74,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/b001301"
+  },
+  "B001305": {
+   "score": 97,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/b001305"
+  },
+  "G000583": {
+   "score": 19,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/g000583"
+  },
+  "R000608": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/r000608"
+  },
+  "E000297": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/e000297"
+  },
+  "F000466": {
+   "score": 45,
+   "lifetime": 33,
+   "url": "https://www.cpac.org/bio/f000466"
+  },
+  "S001199": {
+   "score": 81,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/s001199"
+  },
+  "K000392": {
+   "score": 77,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/k000392"
+  },
+  "G000581": {
+   "score": 67,
+   "lifetime": 18,
+   "url": "https://www.cpac.org/bio/g000581"
+  },
+  "J000298": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/j000298"
+  },
+  "E000298": {
+   "score": 90,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/e000298"
+  },
+  "N000190": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/n000190"
+  },
+  "G000585": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/g000585"
+  },
+  "C001114": {
+   "score": 94,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/c001114"
+  },
+  "S001203": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001203"
+  },
+  "H001079": {
+   "score": 74,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/h001079"
+  },
+  "C001115": {
+   "score": 94,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/c001115"
+  },
+  "H001082": {
+   "score": 97,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/h001082"
+  },
+  "M001206": {
+   "score": 7,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/m001206"
+  },
+  "S001205": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001205"
+  },
+  "C001055": {
+   "score": 13,
+   "lifetime": 12,
+   "url": "https://www.cpac.org/bio/c001055"
+  },
+  "H001066": {
+   "score": 17,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/h001066"
+  },
+  "S001211": {
+   "score": 24,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/s001211"
+  },
+  "H001090": {
+   "score": 16,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/h001090"
+  },
+  "L000593": {
+   "score": 13,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/l000593"
+  },
+  "N000191": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/n000191"
+  },
+  "C001121": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/c001121"
+  },
+  "H001081": {
+   "score": 6,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/h001081"
+  },
+  "S001214": {
+   "score": 94,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/s001214"
+  },
+  "M001208": {
+   "score": 11,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/m001208"
+  },
+  "F000469": {
+   "score": 94,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/f000469"
+  },
+  "G000586": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/g000586"
+  },
+  "C001117": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001117"
+  },
+  "U000040": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/u000040"
+  },
+  "D000629": {
+   "score": 23,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/d000629"
+  },
+  "T000482": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/t000482"
+  },
+  "P000617": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/p000617"
+  },
+  "S001208": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/s001208"
+  },
+  "S001215": {
+   "score": 10,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s001215"
+  },
+  "T000481": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/t000481"
+  },
+  "C001119": {
+   "score": 10,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/c001119"
+  },
+  "O000173": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/o000173"
+  },
+  "S001212": {
+   "score": 84,
+   "lifetime": 73,
+   "url": "https://www.cpac.org/bio/s001212"
+  },
+  "G000591": {
+   "score": 77,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/g000591"
+  },
+  "P000614": {
+   "score": 23,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/p000614"
+  },
+  "V000133": {
+   "score": 84,
+   "lifetime": 65,
+   "url": "https://www.cpac.org/bio/v000133"
+  },
+  "K000394": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/k000394"
+  },
+  "L000590": {
+   "score": 19,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/l000590"
+  },
+  "O000172": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/o000172"
+  },
+  "D000631": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/d000631"
+  },
+  "H001085": {
+   "score": 10,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/h001085"
+  },
+  "M001204": {
+   "score": 73,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/m001204"
+  },
+  "J000302": {
+   "score": 100,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/j000302"
+  },
+  "R000610": {
+   "score": 84,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/r000610"
+  },
+  "T000480": {
+   "score": 90,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/t000480"
+  },
+  "J000301": {
+   "score": 74,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/j000301"
+  },
+  "R000612": {
+   "score": 79,
+   "lifetime": 89,
+   "url": "https://www.cpac.org/bio/r000612"
+  },
+  "C001120": {
+   "score": 73,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/c001120"
+  },
+  "F000468": {
+   "score": 3,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/f000468"
+  },
+  "E000299": {
+   "score": 3,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/e000299"
+  },
+  "R000614": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/r000614"
+  },
+  "G000587": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/g000587"
+  },
+  "S001216": {
+   "score": 23,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/s001216"
+  },
+  "S001213": {
+   "score": 71,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/s001213"
+  },
+  "S001217": {
+   "score": 100,
+   "lifetime": 92,
+   "url": "https://www.cpac.org/bio/s001217"
+  },
+  "H001089": {
+   "score": 79,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/h001089"
+  },
+  "G000592": {
+   "score": 45,
+   "lifetime": 24,
+   "url": "https://www.cpac.org/bio/g000592"
+  },
+  "M001210": {
+   "score": 77,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/m001210"
+  },
+  "M000687": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/m000687"
+  },
+  "T000165": {
+   "score": 94,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/t000165"
+  },
+  "K000377": {
+   "score": 6,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/k000377"
+  },
+  "L000571": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/l000571"
+  },
+  "I000056": {
+   "score": 71,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/i000056"
+  },
+  "S000250": {
+   "score": 81,
+   "lifetime": 92,
+   "url": "https://www.cpac.org/bio/s000250"
+  },
+  "V000129": {
+   "score": 68,
+   "lifetime": 56,
+   "url": "https://www.cpac.org/bio/v000129"
+  },
+  "T000278": {
+   "score": 91,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/t000278"
+  },
+  "H000273": {
+   "score": 3,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/h000273"
+  },
+  "H000601": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/h000601"
+  },
+  "M001212": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/m001212"
+  },
+  "O000019": {
+   "score": 71,
+   "lifetime": 70,
+   "url": "https://www.cpac.org/bio/o000019"
+  },
+  "K000397": {
+   "score": 70,
+   "lifetime": 63,
+   "url": "https://www.cpac.org/bio/k000397"
+  },
+  "J000305": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/j000305"
+  },
+  "C001039": {
+   "score": 97,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/c001039"
+  },
+  "F000472": {
+   "score": 90,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/f000472"
+  },
+  "D000032": {
+   "score": 96,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/d000032"
+  },
+  "G000593": {
+   "score": 70,
+   "lifetime": 64,
+   "url": "https://www.cpac.org/bio/g000593"
+  },
+  "S000168": {
+   "score": 79,
+   "lifetime": 61,
+   "url": "https://www.cpac.org/bio/s000168"
+  },
+  "W000788": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/w000788"
+  },
+  "H001091": {
+   "score": 71,
+   "lifetime": 69,
+   "url": "https://www.cpac.org/bio/h001091"
+  },
+  "M001215": {
+   "score": 71,
+   "lifetime": 69,
+   "url": "https://www.cpac.org/bio/m001215"
+  },
+  "F000446": {
+   "score": 77,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/f000446"
+  },
+  "M001211": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/m001211"
+  },
+  "M001214": {
+   "score": 14,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/m001214"
+  },
+  "S000929": {
+   "score": 94,
+   "lifetime": 87,
+   "url": "https://www.cpac.org/bio/s000929"
+  },
+  "M000871": {
+   "score": 100,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/m000871"
+  },
+  "M001136": {
+   "score": 71,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/m001136"
+  },
+  "F000470": {
+   "score": 84,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/f000470"
+  },
+  "R000305": {
+   "score": 3,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/r000305"
+  },
+  "L000273": {
+   "score": 4,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/l000273"
+  },
+  "G000597": {
+   "score": 67,
+   "lifetime": 58,
+   "url": "https://www.cpac.org/bio/g000597"
+  },
+  "M000317": {
+   "score": 65,
+   "lifetime": 66,
+   "url": "https://www.cpac.org/bio/m000317"
+  },
+  "T000486": {
+   "score": 6,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/t000486"
+  },
+  "B000740": {
+   "score": 73,
+   "lifetime": 73,
+   "url": "https://www.cpac.org/bio/b000740"
+  },
+  "B000668": {
+   "score": 71,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/b000668"
+  },
+  "M000194": {
+   "score": 79,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/m000194"
+  },
+  "F000246": {
+   "score": 94,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/f000246"
+  },
+  "P000048": {
+   "score": 77,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/p000048"
+  },
+  "J000304": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/j000304"
+  },
+  "N000026": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/n000026"
+  },
+  "V000134": {
+   "score": 97,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/v000134"
+  },
+  "M001213": {
+   "score": 77,
+   "lifetime": 69,
+   "url": "https://www.cpac.org/bio/m001213"
+  },
+  "O000086": {
+   "score": 73,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/o000086"
+  },
+  "S001159": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/s001159"
+  },
+  "F000471": {
+   "score": 86,
+   "lifetime": 86,
+   "url": "https://www.cpac.org/bio/f000471"
+  },
+  "P000145": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/p000145"
+  },
+  "O000174": {
+   "score": 6,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/o000174"
+  },
+  "W000790": {
+   "score": 6,
+   "lifetime": 4,
+   "url": "https://www.cpac.org/bio/w000790"
+  },
+  "T000478": {
+   "score": 84,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/t000478"
+  },
+  "L000595": {
+   "score": 74,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/l000595"
+  },
+  "C001125": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/c001125"
+  },
+  "S001218": {
+   "score": 4,
+   "lifetime": 8,
+   "url": "https://www.cpac.org/bio/s001218"
+  },
+  "E000071": {
+   "score": 71,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/e000071"
+  },
+  "C001126": {
+   "score": 71,
+   "lifetime": 72,
+   "url": "https://www.cpac.org/bio/c001126"
+  },
+  "F000474": {
+   "score": 74,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/f000474"
+  },
+  "F000475": {
+   "score": 83,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/f000475"
+  },
+  "R000579": {
+   "score": 19,
+   "lifetime": 10,
+   "url": "https://www.cpac.org/bio/r000579"
+  },
+  "Y000067": {
+   "score": 87,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/y000067"
+  },
+  "Z000018": {
+   "score": 77,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/z000018"
+  },
+  "S001227": {
+   "score": 94,
+   "lifetime": 96,
+   "url": "https://www.cpac.org/bio/s001227"
+  },
+  "F000479": {
+   "score": 6,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/f000479"
+  },
+  "S001220": {
+   "score": 70,
+   "lifetime": 76,
+   "url": "https://www.cpac.org/bio/s001220"
+  },
+  "C001133": {
+   "score": 68,
+   "lifetime": 62,
+   "url": "https://www.cpac.org/bio/c001133"
+  },
+  "K000401": {
+   "score": 71,
+   "lifetime": 61,
+   "url": "https://www.cpac.org/bio/k000401"
+  },
+  "M001225": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/m001225"
+  },
+  "K000400": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/k000400"
+  },
+  "G000598": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/g000598"
+  },
+  "M001216": {
+   "score": 97,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/m001216"
+  },
+  "F000476": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/f000476"
+  },
+  "L000596": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/l000596"
+  },
+  "L000597": {
+   "score": 76,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/l000597"
+  },
+  "M001217": {
+   "score": 27,
+   "lifetime": 13,
+   "url": "https://www.cpac.org/bio/m001217"
+  },
+  "M001218": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://www.cpac.org/bio/m001218"
+  },
+  "C001129": {
+   "score": 90,
+   "lifetime": 95,
+   "url": "https://www.cpac.org/bio/c001129"
+  },
+  "T000487": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/t000487"
+  },
+  "N000193": {
+   "score": 77,
+   "lifetime": 66,
+   "url": "https://www.cpac.org/bio/n000193"
+  },
+  "J000309": {
+   "score": 3,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/j000309"
+  },
+  "R000617": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/r000617"
+  },
+  "B001315": {
+   "score": 19,
+   "lifetime": 10,
+   "url": "https://www.cpac.org/bio/b001315"
+  },
+  "S001225": {
+   "score": 19,
+   "lifetime": 10,
+   "url": "https://www.cpac.org/bio/s001225"
+  },
+  "H001093": {
+   "score": 76,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/h001093"
+  },
+  "M001220": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/m001220"
+  },
+  "I000058": {
+   "score": 3,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/i000058"
+  },
+  "S001221": {
+   "score": 23,
+   "lifetime": 10,
+   "url": "https://www.cpac.org/bio/s001221"
+  },
+  "J000307": {
+   "score": 76,
+   "lifetime": 66,
+   "url": "https://www.cpac.org/bio/j000307"
+  },
+  "T000488": {
+   "score": 3,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/t000488"
+  },
+  "E000235": {
+   "score": 90,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/e000235"
+  },
+  "D000230": {
+   "score": 50,
+   "lifetime": 7,
+   "url": "https://www.cpac.org/bio/d000230"
+  },
+  "F000477": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/f000477"
+  },
+  "E000246": {
+   "score": 74,
+   "lifetime": 67,
+   "url": "https://www.cpac.org/bio/e000246"
+  },
+  "K000398": {
+   "score": 68,
+   "lifetime": 56,
+   "url": "https://www.cpac.org/bio/k000398"
+  },
+  "M001226": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/m001226"
+  },
+  "V000136": {
+   "score": 23,
+   "lifetime": 12,
+   "url": "https://www.cpac.org/bio/v000136"
+  },
+  "L000598": {
+   "score": 69,
+   "lifetime": 61,
+   "url": "https://www.cpac.org/bio/l000598"
+  },
+  "G000599": {
+   "score": 4,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/g000599"
+  },
+  "L000599": {
+   "score": 68,
+   "lifetime": 55,
+   "url": "https://www.cpac.org/bio/l000599"
+  },
+  "L000600": {
+   "score": 90,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/l000600"
+  },
+  "L000601": {
+   "score": 23,
+   "lifetime": 12,
+   "url": "https://www.cpac.org/bio/l000601"
+  },
+  "M001222": {
+   "score": 74,
+   "lifetime": 73,
+   "url": "https://www.cpac.org/bio/m001222"
+  },
+  "S001223": {
+   "score": 10,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/s001223"
+  },
+  "H001094": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/h001094"
+  },
+  "S001226": {
+   "score": 6,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/s001226"
+  },
+  "L000602": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/l000602"
+  },
+  "D000530": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://www.cpac.org/bio/d000530"
+  },
+  "M001223": {
+   "score": 7,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/m001223"
+  },
+  "O000175": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/o000175"
+  },
+  "M001224": {
+   "score": 84,
+   "lifetime": 83,
+   "url": "https://www.cpac.org/bio/m001224"
+  },
+  "S001224": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/s001224"
+  },
+  "L000603": {
+   "score": 94,
+   "lifetime": 91,
+   "url": "https://www.cpac.org/bio/l000603"
+  },
+  "D000594": {
+   "score": 80,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/d000594"
+  },
+  "C001130": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/c001130"
+  },
+  "C001131": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://www.cpac.org/bio/c001131"
+  },
+  "H001095": {
+   "score": 96,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/h001095"
+  },
+  "K000399": {
+   "score": 71,
+   "lifetime": 63,
+   "url": "https://www.cpac.org/bio/k000399"
+  },
+  "G000600": {
+   "score": 52,
+   "lifetime": 37,
+   "url": "https://www.cpac.org/bio/g000600"
+  },
+  "V000135": {
+   "score": 83,
+   "lifetime": 80,
+   "url": "https://www.cpac.org/bio/v000135"
+  },
+  "H001096": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://www.cpac.org/bio/h001096"
+  },
+  "R000618": {
+   "score": 76,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/r000618"
+  },
+  "M001227": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/m001227"
+  },
+  "M001228": {
+   "score": 70,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/m001228"
+  },
+  "S001201": {
+   "score": 29,
+   "lifetime": 15,
+   "url": "https://www.cpac.org/bio/s001201"
+  },
+  "K000402": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/k000402"
+  },
+  "F000480": {
+   "score": 75,
+   "lifetime": 75,
+   "url": "https://www.cpac.org/bio/f000480"
+  },
+  "R000619": {
+   "score": 70,
+   "lifetime": 70,
+   "url": "https://www.cpac.org/bio/r000619"
+  },
+  "M001229": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/m001229"
+  },
+  "W000829": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/w000829"
+  },
+  "F000110": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://www.cpac.org/bio/f000110"
+  },
+  "S001188": {
+   "score": 90,
+   "lifetime": 98,
+   "url": "https://www.cpac.org/bio/s001188"
+  },
+  "C001123": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/c001123"
+  },
+  "S001232": {
+   "score": 85,
+   "lifetime": 85,
+   "url": "https://www.cpac.org/bio/s001232"
+  },
+  "M001242": {
+   "score": 94,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/m001242"
+  },
+  "M001243": {
+   "score": 79,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/m001243"
+  },
+  "B001323": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/b001323"
+  },
+  "F000481": {
+   "score": 10,
+   "lifetime": 10,
+   "url": "https://www.cpac.org/bio/f000481"
+  },
+  "H001098": {
+   "score": 97,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/h001098"
+  },
+  "S001231": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/s001231"
+  },
+  "G000605": {
+   "score": 45,
+   "lifetime": 45,
+   "url": "https://www.cpac.org/bio/g000605"
+  },
+  "L000607": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/l000607"
+  },
+  "W000830": {
+   "score": 25,
+   "lifetime": 25,
+   "url": "https://www.cpac.org/bio/w000830"
+  },
+  "R000620": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/r000620"
+  },
+  "F000483": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/f000483"
+  },
+  "T000491": {
+   "score": 23,
+   "lifetime": 23,
+   "url": "https://www.cpac.org/bio/t000491"
+  },
+  "M001241": {
+   "score": 13,
+   "lifetime": 13,
+   "url": "https://www.cpac.org/bio/m001241"
+  },
+  "H001100": {
+   "score": 74,
+   "lifetime": 74,
+   "url": "https://www.cpac.org/bio/h001100"
+  },
+  "C001137": {
+   "score": 97,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/c001137"
+  },
+  "E000300": {
+   "score": 71,
+   "lifetime": 71,
+   "url": "https://www.cpac.org/bio/e000300"
+  },
+  "M001238": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/m001238"
+  },
+  "H001099": {
+   "score": 77,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/h001099"
+  },
+  "J000311": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/j000311"
+  },
+  "S001229": {
+   "score": 81,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/s001229"
+  },
+  "M001233": {
+   "score": 81,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/m001233"
+  },
+  "O000176": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/o000176"
+  },
+  "E000301": {
+   "score": 3,
+   "lifetime": 3,
+   "url": "https://www.cpac.org/bio/e000301"
+  },
+  "M001232": {
+   "score": 16,
+   "lifetime": 16,
+   "url": "https://www.cpac.org/bio/m001232"
+  },
+  "B001321": {
+   "score": 84,
+   "lifetime": 84,
+   "url": "https://www.cpac.org/bio/b001321"
+  },
+  "M001237": {
+   "score": 23,
+   "lifetime": 23,
+   "url": "https://www.cpac.org/bio/m001237"
+  },
+  "M001234": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/m001234"
+  },
+  "O000177": {
+   "score": 94,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/o000177"
+  },
+  "H001101": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://www.cpac.org/bio/h001101"
+  },
+  "M001236": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/m001236"
+  },
+  "F000482": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/f000482"
+  },
+  "G000604": {
+   "score": 23,
+   "lifetime": 23,
+   "url": "https://www.cpac.org/bio/g000604"
+  },
+  "C001136": {
+   "score": 13,
+   "lifetime": 13,
+   "url": "https://www.cpac.org/bio/c001136"
+  },
+  "P000621": {
+   "score": 6,
+   "lifetime": 6,
+   "url": "https://www.cpac.org/bio/p000621"
+  },
+  "G000602": {
+   "score": 32,
+   "lifetime": 32,
+   "url": "https://www.cpac.org/bio/g000602"
+  },
+  "L000606": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/l000606"
+  },
+  "R000622": {
+   "score": 21,
+   "lifetime": 21,
+   "url": "https://www.cpac.org/bio/r000622"
+  },
+  "M001231": {
+   "score": 16,
+   "lifetime": 16,
+   "url": "https://www.cpac.org/bio/m001231"
+  },
+  "T000490": {
+   "score": 77,
+   "lifetime": 77,
+   "url": "https://www.cpac.org/bio/t000490"
+  },
+  "D000635": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/d000635"
+  },
+  "B001326": {
+   "score": 16,
+   "lifetime": 16,
+   "url": "https://www.cpac.org/bio/b001326"
+  },
+  "M001230": {
+   "score": 81,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/m001230"
+  },
+  "B001327": {
+   "score": 68,
+   "lifetime": 68,
+   "url": "https://www.cpac.org/bio/b001327"
+  },
+  "J000310": {
+   "score": 13,
+   "lifetime": 13,
+   "url": "https://www.cpac.org/bio/j000310"
+  },
+  "M001239": {
+   "score": 90,
+   "lifetime": 90,
+   "url": "https://www.cpac.org/bio/m001239"
+  },
+  "V000138": {
+   "score": 26,
+   "lifetime": 26,
+   "url": "https://www.cpac.org/bio/v000138"
+  },
+  "S001230": {
+   "score": 13,
+   "lifetime": 13,
+   "url": "https://www.cpac.org/bio/s001230"
+  },
+  "B001322": {
+   "score": 81,
+   "lifetime": 81,
+   "url": "https://www.cpac.org/bio/b001322"
+  },
+  "R000621": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://www.cpac.org/bio/r000621"
+  },
+  "M001235": {
+   "score": 94,
+   "lifetime": 94,
+   "url": "https://www.cpac.org/bio/m001235"
+  },
+  "J000312": {
+   "score": 79,
+   "lifetime": 79,
+   "url": "https://www.cpac.org/bio/j000312"
+  },
+  "H001104": {
+   "score": 82,
+   "lifetime": 82,
+   "url": "https://www.cpac.org/bio/h001104"
+  },
+  "M001244": {
+   "score": 97,
+   "lifetime": 97,
+   "url": "https://www.cpac.org/bio/m001244"
+  }
+ }
+}

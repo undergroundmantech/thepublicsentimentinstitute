@@ -1,0 +1,2436 @@
+{
+ "id": "hrc",
+ "name": "Human Rights Campaign",
+ "lean": "left",
+ "source": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf",
+ "year": "119th Congress",
+ "scale": "percent",
+ "notes": "Human Rights Campaign Congressional Scorecard, 119th Congress (2025 to date), scores on LGBTQ+ equality votes and cosponsorships, 0 to 100 percent, read from the published PDF (the only per-member listing; the HRC web page just links to it). Collected with WebFetch on the PDF, which returned the Senate table in full (100 rows) and the House tables for Alabama through Texas district 28; the fetched text is cut off after Texas 28, so House members from Texas district 29 onward (Texas 29 to 38, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming) and delegates (DC, territories) are missing, and offset did not reach past the cut. The PDF reader summarised the tables, so values were read in several passes; Senate rows were consistent across passes. Matched by chamber, state, district and last name. 'N/A' in the scorecard (newly seated or vacant-seat members not eligible) stored as null. Ohio 14 Joyce (6) came from run-together text in the PDF and is moderately confident; Ohio 15 Carey was skipped as ambiguous (text read '36 N/A'; likely 3). The PDF also shows 118th and 117th scores for some members but no lifetime score, so lifetime is null for everyone. Vacant rows (FL-20, TX-23) skipped.",
+ "members": {
+  "C000127": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000367": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000033": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000802": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001261": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000437": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001035": {
+   "score": 28.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001056": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000563": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000355": {
+   "score": 9.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001176": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000122": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000584": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001181": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000805": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000555": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001088": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000055": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001230": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001267": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001257": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B000490": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001243": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001277": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001236": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001260": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C000059": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001047": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001072": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001075": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001066": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001080": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001067": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001061": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C000537": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001068": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001053": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001059": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001069": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C000880": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001087": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001063": {
+   "score": 36.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000096": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000197": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000216": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000616": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000600": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000459": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000450": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000559": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000565": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000386": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000546": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000553": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000558": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001052": {
+   "score": 4.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001046": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001047": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001042": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001061": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H000874": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001058": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000288": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000293": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000289": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000009": {
+   "score": 87.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000375": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000376": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000575": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000557": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000566": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000577": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000397": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000491": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000570": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000562": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000133": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001163": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001157": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001177": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001143": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000312": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001137": {
+   "score": 96.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000934": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001153": {
+   "score": 27.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001169": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001111": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000002": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000015": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000034": {
+   "score": 96.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000603": {
+   "score": 16.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000197": {
+   "score": 92.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000595": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000597": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "Q000023": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000395": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000575": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001176": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001145": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001150": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000148": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001183": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001189": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001184": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001185": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000344": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001148": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001172": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000522": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001156": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000193": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000460": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000467": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000250": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000469": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000463": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000128": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000081": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000798": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000797": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000187": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000806": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000800": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000795": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000808": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000809": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000779": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "Y000064": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000369": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001278": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001184": {
+   "score": 26.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001194": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000454": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000468": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001095": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001068": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001287": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001285": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000599": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000472": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000130": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000608": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000462": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000622": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001282": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000817": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000383": {
+   "score": 89.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000812": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000618": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001067": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001096": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000463": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001188": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000294": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001281": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000295": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000605": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001098": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000814": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001091": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000816": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000384": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000385": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001195": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001288": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001101": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000188": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000370": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000609": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001072": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000821": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000574": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000623": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000371": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000582": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000474": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001103": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000583": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000372": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001295": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001196": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001194": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000624": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000294": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000603": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000822": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001196": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001296": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001198": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000295": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000476": {
+   "score": 5.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000605": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000388": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000585": {
+   "score": 4.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000626": {
+   "score": 7.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001108": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000296": {
+   "score": 92.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000393": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001076": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001113": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001190": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001302": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000389": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000613": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001112": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001300": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001110": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001303": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000628": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000609": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001200": {
+   "score": 96.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001199": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000391": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001299": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001198": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001077": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000299": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000606": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001301": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001305": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001298": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000583": {
+   "score": 97.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000608": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000297": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000466": {
+   "score": 24.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001199": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000392": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000375": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000298": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000190": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000585": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001114": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001203": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001079": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001115": {
+   "score": 4.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001306": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001082": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001206": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001205": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001055": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001066": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001211": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001090": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000593": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000191": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001121": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001081": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001214": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001208": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000469": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000586": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001117": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "U000040": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001307": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000629": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000482": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000617": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001208": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001215": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000481": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001119": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000173": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001212": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000591": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000614": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000133": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000394": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000590": {
+   "score": 92.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000172": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000631": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001085": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001204": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000302": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000610": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000480": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000301": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001309": {
+   "score": 13.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000612": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001120": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000589": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000468": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000299": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000614": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001217": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001089": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000592": {
+   "score": 67.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001210": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000687": {
+   "score": 96.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000377": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000571": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "I000056": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000250": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000129": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000278": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H000273": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H000601": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001212": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000019": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000397": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000305": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B000825": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001039": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000472": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000032": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000593": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000168": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000788": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001116": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001091": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001215": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000446": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001211": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001214": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S000929": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000871": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000148": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001136": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000470": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000305": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000273": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000597": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000317": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000486": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B000740": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B000668": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M000194": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001086": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000246": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000048": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000304": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000026": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000134": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000145": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000174": {
+   "score": 87.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000790": {
+   "score": 89.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000478": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000595": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001125": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001218": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000071": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001313": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000474": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000475": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000579": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "Y000067": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "Z000018": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001319": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001227": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000479": {
+   "score": 91.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001220": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001132": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001133": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000401": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001225": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000400": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000598": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000620": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001314": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001216": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000476": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000596": {
+   "score": 10.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000597": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001217": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001218": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001129": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000487": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "N000193": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000309": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000617": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001315": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001225": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001093": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001220": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "I000058": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001221": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000307": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000488": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000379": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001316": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000235": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000230": {
+   "score": 35.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000477": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000246": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000398": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001226": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000136": {
+   "score": 96.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000598": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000599": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000599": {
+   "score": 13.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000600": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000601": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001222": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001223": {
+   "score": 97.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001317": {
+   "score": 7.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001094": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001226": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000602": {
+   "score": 94.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000530": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001223": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000478": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000175": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001224": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001224": {
+   "score": 4.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000603": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000594": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000618": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000380": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001201": {
+   "score": 97.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000402": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000480": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000619": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001229": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000110": {
+   "score": 84.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001188": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001123": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000382": {
+   "score": 95.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001232": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001242": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001243": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001323": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000481": {
+   "score": 83.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000381": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001098": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001231": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000605": {
+   "score": 63.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000607": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000830": {
+   "score": 97.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000620": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000483": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000491": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001241": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001100": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001137": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000300": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001238": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001099": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000311": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001229": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001233": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "S001228": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000176": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "E000301": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001232": {
+   "score": 97.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001321": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001237": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001234": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001324": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "O000177": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000634": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001240": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001102": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001101": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "K000405": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001236": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000482": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000604": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "C001136": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000621": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000602": {
+   "score": 83.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "L000606": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "R000622": {
+   "score": 98.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001231": {
+   "score": 93.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "T000490": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "D000635": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001326": {
+   "score": 100.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001230": {
+   "score": 3.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001327": {
+   "score": 6.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001325": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000601": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000603": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "J000312": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "H001104": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001244": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "P000622": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000484": {
+   "score": 0.0,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000606": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "V000139": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001245": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "A000383": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "F000485": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "M001246": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000607": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "G000608": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "B001328": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  },
+  "W000832": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://hrc-prod-requests.s3-us-west-2.amazonaws.com/files/documents/119th-Congressional-Scorecard.pdf"
+  }
+ }
+}

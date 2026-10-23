@@ -1,0 +1,2706 @@
+{
+ "id": "cfg",
+ "name": "Club for Growth Foundation",
+ "lean": "right",
+ "source": "https://www.clubforgrowth.org/scorecards/app/",
+ "year": "2025",
+ "scale": "percent",
+ "notes": "Club for Growth Foundation 2025 Congressional Economic Scorecard: Economic Growth Score from 0 to 100 based on votes on economic legislation. score is the 2025 annual score; lifetime is the Foundation's lifetime score. Collected from the interactive scorecard app list pages (chamber, party and state filters), which show every member at once; the page text is capped near 140k characters so House was read in pieces (R and D sorted by state, then per state for later states: NY OH OR PA RI SC SD TN TX UT VA VT WA WI WV WY). Matched by bioguide ID taken from each row's legislator link, then checked against roster chamber, state, district and last name. Gaps: 14 roster members have score null and lifetime null because they are not on the 2025 scorecard: 6 non-voting delegates (DC, VI, AS, GU, MP, PR; state=PR and DC pages return no rows) and 8 members who took office after 2025 or are replacements (Menefee TX-18, Fuller GA-14, Mejia NJ-11, Gallagher CA-1, Blair GA-13, Wahab CA-14, and senators Armstrong OK and Darline Graham SC). Menendez NJ-8 (roster M001226) is listed by the site under the bioguide ID M000639 with district 08, scores 16 and lifetime 7, matched by state, district and name. Where the site shows n.a. the value is null (3 more members, so 522 of 539 have scores): Adelita Grijalva AZ-7 (both), Van Epps TN-7 (both), Walkinshaw VA-11 (both). Site rows for departed members (Lindsey Graham, Marjorie Taylor Greene, Mark Green, Raul Grijalva, Connolly, Sylvester Turner, Swalwell, Sherrill etc.) were ignored if not in the roster. Scores are published as percent numbers, no letter grades.",
+ "members": {
+  "C000127": {
+   "score": 16.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C000127/Maria-Cantwell"
+  },
+  "K000367": {
+   "score": 12.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000367/Amy-Klobuchar"
+  },
+  "S000033": {
+   "score": 12.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000033/Bernie-Sanders"
+  },
+  "W000802": {
+   "score": 13.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000802/Sheldon-Whitehouse"
+  },
+  "B001261": {
+   "score": 80.0,
+   "lifetime": 82.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001261/John-Barrasso"
+  },
+  "W000437": {
+   "score": 68.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000437/Roger-Wicker"
+  },
+  "C001035": {
+   "score": 43.0,
+   "lifetime": 34.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001035/Susan-Collins"
+  },
+  "C001056": {
+   "score": 90.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001056/John-Cornyn"
+  },
+  "D000563": {
+   "score": 15.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000563/Dick-Durbin"
+  },
+  "M000355": {
+   "score": 75.0,
+   "lifetime": 70.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000355/Mitch-McConnell"
+  },
+  "M001176": {
+   "score": 12.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001176/Jeff-Merkley"
+  },
+  "R000122": {
+   "score": 12.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000122/Jack-Reed"
+  },
+  "R000584": {
+   "score": 100.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000584/Jim-Risch"
+  },
+  "S001181": {
+   "score": 22.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001181/Jeanne-Shaheen"
+  },
+  "W000805": {
+   "score": 21.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000805/Mark-Warner"
+  },
+  "G000555": {
+   "score": 31.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000555/Kirsten-Gillibrand"
+  },
+  "C001088": {
+   "score": 16.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001088/Chris-Coons"
+  },
+  "A000055": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000055/Robert-Aderholt"
+  },
+  "B001230": {
+   "score": 12.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001230/Tammy-Baldwin"
+  },
+  "B001267": {
+   "score": 12.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001267/Michael-Bennet"
+  },
+  "B001257": {
+   "score": 90.0,
+   "lifetime": 70.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001257/Gus-Bilirakis"
+  },
+  "B000490": {
+   "score": 0.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B000490/Sanford-Bishop"
+  },
+  "B001243": {
+   "score": 100.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001243/Marsha-Blackburn"
+  },
+  "B001277": {
+   "score": 12.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001277/Richard-Blumenthal"
+  },
+  "B001236": {
+   "score": 80.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001236/John-Boozman"
+  },
+  "B001260": {
+   "score": 89.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001260/Vern-Buchanan"
+  },
+  "C000059": {
+   "score": 84.0,
+   "lifetime": 63.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C000059/Ken-Calvert"
+  },
+  "C001047": {
+   "score": 68.0,
+   "lifetime": 52.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001047/Shelley-Capito"
+  },
+  "C001072": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001072/Andre-Carson"
+  },
+  "C001051": {
+   "score": 90.0,
+   "lifetime": 74.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001051/John-Carter"
+  },
+  "C001075": {
+   "score": 76.0,
+   "lifetime": 70.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001075/Bill-Cassidy"
+  },
+  "C001066": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001066/Kathy-Castor"
+  },
+  "C001080": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001080/Judy-Chu"
+  },
+  "C001067": {
+   "score": 0.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001067/Yvette-Clarke"
+  },
+  "C001061": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001061/Emanuel-Cleaver"
+  },
+  "C000537": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C000537/James-Clyburn"
+  },
+  "C001068": {
+   "score": 6.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001068/Steve-Cohen"
+  },
+  "C001053": {
+   "score": 84.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001053/Tom-Cole"
+  },
+  "C001059": {
+   "score": 34.0,
+   "lifetime": 15.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001059/Jim-Costa"
+  },
+  "C001069": {
+   "score": 13.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001069/Joe-Courtney"
+  },
+  "C000880": {
+   "score": 90.0,
+   "lifetime": 81.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C000880/Mike-Crapo"
+  },
+  "C001087": {
+   "score": 90.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001087/Rick-Crawford"
+  },
+  "C001063": {
+   "score": 40.0,
+   "lifetime": 23.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001063/Henry-Cuellar"
+  },
+  "D000096": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000096/Danny-Davis"
+  },
+  "D000197": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000197/Diana-DeGette"
+  },
+  "D000216": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000216/Rosa-DeLauro"
+  },
+  "D000616": {
+   "score": 95.0,
+   "lifetime": 91.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000616/Scott-DesJarlais"
+  },
+  "D000600": {
+   "score": 84.0,
+   "lifetime": 57.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000600/Mario-Diaz-Balart"
+  },
+  "D000399": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000399/Lloyd-Doggett"
+  },
+  "F000459": {
+   "score": 84.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000459/Chuck-Fleischmann"
+  },
+  "F000450": {
+   "score": 90.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000450/Virginia-Foxx"
+  },
+  "G000559": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000559/John-Garamendi"
+  },
+  "G000565": {
+   "score": 100.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000565/Paul-Gosar"
+  },
+  "G000386": {
+   "score": 80.0,
+   "lifetime": 76.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000386/Chuck-Grassley"
+  },
+  "G000546": {
+   "score": 90.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000546/Sam-Graves"
+  },
+  "G000553": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000553/Al-Green"
+  },
+  "G000568": {
+   "score": 83.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000568/H.-Morgan-Griffith"
+  },
+  "G000558": {
+   "score": 84.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000558/Brett-Guthrie"
+  },
+  "H001052": {
+   "score": 93.0,
+   "lifetime": 91.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001052/Andy-Harris"
+  },
+  "H001046": {
+   "score": 27.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001046/Martin-Heinrich"
+  },
+  "H001047": {
+   "score": 19.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001047/James-Himes"
+  },
+  "H001042": {
+   "score": 12.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001042/Mazie-Hirono"
+  },
+  "H001061": {
+   "score": 80.0,
+   "lifetime": 63.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001061/John-Hoeven"
+  },
+  "H000874": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H000874/Steny-Hoyer"
+  },
+  "H001058": {
+   "score": 90.0,
+   "lifetime": 79.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001058/Bill-Huizenga"
+  },
+  "J000288": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000288/Henry-Johnson"
+  },
+  "J000293": {
+   "score": 100.0,
+   "lifetime": 91.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000293/Ron-Johnson"
+  },
+  "J000289": {
+   "score": 100.0,
+   "lifetime": 97.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000289/Jim-Jordan"
+  },
+  "K000009": {
+   "score": 6.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000009/Marcy-Kaptur"
+  },
+  "K000375": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000375/Bill-Keating"
+  },
+  "K000376": {
+   "score": 83.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000376/Mike-Kelly"
+  },
+  "L000575": {
+   "score": 90.0,
+   "lifetime": 86.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000575/James-Lankford"
+  },
+  "L000560": {
+   "score": 13.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000560/Rick-Larsen"
+  },
+  "L000557": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000557/John-Larson"
+  },
+  "L000566": {
+   "score": 90.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000566/Bob-Latta"
+  },
+  "L000577": {
+   "score": 100.0,
+   "lifetime": 99.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000577/Mike-Lee"
+  },
+  "L000397": {
+   "score": 20.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000397/Zoe-Lofgren"
+  },
+  "L000491": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000491/Frank-Lucas"
+  },
+  "L000570": {
+   "score": 27.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000570/Ben-Lujan"
+  },
+  "L000562": {
+   "score": 6.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000562/Stephen-Lynch"
+  },
+  "M000133": {
+   "score": 12.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000133/Edward-Markey"
+  },
+  "M001163": {
+   "score": 7.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001163/Doris-Matsui"
+  },
+  "M001157": {
+   "score": 83.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001157/Michael-McCaul"
+  },
+  "M001177": {
+   "score": 100.0,
+   "lifetime": 96.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001177/Tom-McClintock"
+  },
+  "M001143": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001143/Betty-McCollum"
+  },
+  "M000312": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000312/Jim-McGovern"
+  },
+  "M001137": {
+   "score": 16.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001137/Gregory-Meeks"
+  },
+  "M001160": {
+   "score": 6.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001160/Gwen-Moore"
+  },
+  "M000934": {
+   "score": 68.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000934/Jerry-Moran"
+  },
+  "M001153": {
+   "score": 58.0,
+   "lifetime": 50.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001153/Lisa-Murkowski"
+  },
+  "M001169": {
+   "score": 12.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001169/Christopher-Murphy"
+  },
+  "M001111": {
+   "score": 12.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001111/Patty-Murray"
+  },
+  "N000002": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000002/Jerrold-Nadler"
+  },
+  "N000015": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000015/Richard-Neal"
+  },
+  "P000034": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000034/Frank-Pallone"
+  },
+  "P000603": {
+   "score": 69.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000603/Rand-Paul"
+  },
+  "P000197": {
+   "score": 13.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000197/Nancy-Pelosi"
+  },
+  "P000595": {
+   "score": 16.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000595/Gary-Peters"
+  },
+  "P000597": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000597/Chellie-Pingree"
+  },
+  "Q000023": {
+   "score": 20.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/Q000023/Mike-Quigley"
+  },
+  "R000395": {
+   "score": 84.0,
+   "lifetime": 61.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000395/Hal-Rogers"
+  },
+  "R000575": {
+   "score": 84.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000575/Mike-Rogers"
+  },
+  "S001176": {
+   "score": 90.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001176/Steve-Scalise"
+  },
+  "S001145": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001145/Janice-Schakowsky"
+  },
+  "S001150": {
+   "score": 27.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001150/Adam-Schiff"
+  },
+  "S000148": {
+   "score": 17.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000148/Chuck-Schumer"
+  },
+  "S001183": {
+   "score": 95.0,
+   "lifetime": 94.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001183/David-Schweikert"
+  },
+  "S001189": {
+   "score": 88.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001189/Austin-Scott"
+  },
+  "S000185": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000185/Robert-Scott"
+  },
+  "S001184": {
+   "score": 80.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001184/Tim-Scott"
+  },
+  "S001185": {
+   "score": 19.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001185/Terri-Sewell"
+  },
+  "S000344": {
+   "score": 6.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000344/Brad-Sherman"
+  },
+  "S001148": {
+   "score": 84.0,
+   "lifetime": 59.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001148/Mike-Simpson"
+  },
+  "S000510": {
+   "score": 6.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000510/Adam-Smith"
+  },
+  "S001172": {
+   "score": 90.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001172/Adrian-Smith"
+  },
+  "S000522": {
+   "score": 84.0,
+   "lifetime": 45.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000522/Christopher-Smith"
+  },
+  "S001156": {
+   "score": 6.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001156/Linda-Sanchez"
+  },
+  "T000193": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000193/Bennie-Thompson"
+  },
+  "T000460": {
+   "score": 13.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000460/Mike-Thompson"
+  },
+  "T000467": {
+   "score": 84.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000467/Glenn-Thompson"
+  },
+  "T000250": {
+   "score": 80.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000250/John-Thune"
+  },
+  "T000469": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000469/Paul-Tonko"
+  },
+  "T000463": {
+   "score": 77.0,
+   "lifetime": 55.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000463/Michael-Turner"
+  },
+  "V000128": {
+   "score": 12.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000128/Chris-Van-Hollen"
+  },
+  "V000081": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000081/Nydia-Velazquez"
+  },
+  "W000798": {
+   "score": 90.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000798/Tim-Walberg"
+  },
+  "W000797": {
+   "score": 19.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000797/Debbie-Wasserman-Schultz"
+  },
+  "W000187": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000187/Maxine-Waters"
+  },
+  "W000806": {
+   "score": 90.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000806/Daniel-Webster"
+  },
+  "W000800": {
+   "score": 13.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000800/Peter-Welch"
+  },
+  "W000795": {
+   "score": 89.0,
+   "lifetime": 79.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000795/Joe-Wilson"
+  },
+  "W000808": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000808/Frederica-Wilson"
+  },
+  "W000804": {
+   "score": 90.0,
+   "lifetime": 76.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000804/Bob-Wittman"
+  },
+  "W000809": {
+   "score": 83.0,
+   "lifetime": 63.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000809/Steve-Womack"
+  },
+  "W000779": {
+   "score": 12.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000779/Ron-Wyden"
+  },
+  "Y000064": {
+   "score": 68.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/Y000064/Todd-Young"
+  },
+  "A000369": {
+   "score": 77.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000369/Mark-Amodei"
+  },
+  "B001278": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001278/Suzanne-Bonamici"
+  },
+  "D000617": {
+   "score": 19.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000617/Suzan-DelBene"
+  },
+  "M001184": {
+   "score": 73.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001184/Thomas-Massie"
+  },
+  "S001194": {
+   "score": 17.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001194/Brian-Schatz"
+  },
+  "F000454": {
+   "score": 12.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000454/Bill-Foster"
+  },
+  "T000468": {
+   "score": 13.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000468/Dina-Titus"
+  },
+  "C001095": {
+   "score": 89.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001095/Tom-Cotton"
+  },
+  "H001068": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001068/Jared-Huffman"
+  },
+  "B001287": {
+   "score": 25.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001287/Ami-Bera"
+  },
+  "B001285": {
+   "score": 7.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001285/Julia-Brownley"
+  },
+  "R000599": {
+   "score": 16.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000599/Raul-Ruiz"
+  },
+  "T000472": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000472/Mark-Takano"
+  },
+  "V000130": {
+   "score": 0.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000130/Juan-Vargas"
+  },
+  "P000608": {
+   "score": 19.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000608/Scott-Peters"
+  },
+  "F000462": {
+   "score": 18.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000462/Lois-Frankel"
+  },
+  "D000622": {
+   "score": 12.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000622/Tammy-Duckworth"
+  },
+  "B001282": {
+   "score": 95.0,
+   "lifetime": 73.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001282/Andy-Barr"
+  },
+  "W000817": {
+   "score": 12.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000817/Elizabeth-Warren"
+  },
+  "K000383": {
+   "score": 15.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000383/Angus-King"
+  },
+  "W000812": {
+   "score": 84.0,
+   "lifetime": 68.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000812/Ann-Wagner"
+  },
+  "D000618": {
+   "score": 100.0,
+   "lifetime": 85.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000618/Steve-Daines"
+  },
+  "H001067": {
+   "score": 100.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001067/Richard-Hudson"
+  },
+  "C001096": {
+   "score": 80.0,
+   "lifetime": 60.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001096/Kevin-Cramer"
+  },
+  "F000463": {
+   "score": 68.0,
+   "lifetime": 74.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000463/Deb-Fischer"
+  },
+  "M001188": {
+   "score": 7.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001188/Grace-Meng"
+  },
+  "J000294": {
+   "score": 7.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000294/Hakeem-Jeffries"
+  },
+  "B001281": {
+   "score": 0.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001281/Joyce-Beatty"
+  },
+  "J000295": {
+   "score": 84.0,
+   "lifetime": 56.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000295/David-Joyce"
+  },
+  "P000605": {
+   "score": 93.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000605/Scott-Perry"
+  },
+  "C001098": {
+   "score": 100.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001098/Ted-Cruz"
+  },
+  "W000814": {
+   "score": 95.0,
+   "lifetime": 89.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000814/Randy-Weber"
+  },
+  "C001091": {
+   "score": 0.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001091/Joaquin-Castro"
+  },
+  "W000816": {
+   "score": 95.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000816/Roger-Williams"
+  },
+  "V000131": {
+   "score": 28.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000131/Marc-Veasey"
+  },
+  "K000384": {
+   "score": 21.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000384/Tim-Kaine"
+  },
+  "P000607": {
+   "score": 0.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000607/Mark-Pocan"
+  },
+  "K000385": {
+   "score": 7.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000385/Robin-Kelly"
+  },
+  "S001195": {
+   "score": 95.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001195/Jason-Smith"
+  },
+  "B001288": {
+   "score": 31.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001288/Cory-Booker"
+  },
+  "C001101": {
+   "score": 7.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001101/Katherine-Clark"
+  },
+  "N000188": {
+   "score": 7.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000188/Donald-Norcross"
+  },
+  "A000370": {
+   "score": 0.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000370/Alma-Adams"
+  },
+  "P000609": {
+   "score": 100.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000609/Gary-Palmer"
+  },
+  "H001072": {
+   "score": 84.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001072/French-Hill"
+  },
+  "W000821": {
+   "score": 84.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000821/Bruce-Westerman"
+  },
+  "G000574": {
+   "score": 34.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000574/Ruben-Gallego"
+  },
+  "D000623": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000623/Mark-DeSaulnier"
+  },
+  "A000371": {
+   "score": 22.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000371/Pete-Aguilar"
+  },
+  "L000582": {
+   "score": 16.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000582/Ted-Lieu"
+  },
+  "T000474": {
+   "score": 6.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000474/Norma-Torres"
+  },
+  "C001103": {
+   "score": 89.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001103/Buddy-Carter"
+  },
+  "L000583": {
+   "score": 90.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000583/Barry-Loudermilk"
+  },
+  "A000372": {
+   "score": 90.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000372/Rick-Allen"
+  },
+  "B001295": {
+   "score": 90.0,
+   "lifetime": 66.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001295/Mike-Bost"
+  },
+  "M001196": {
+   "score": 20.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001196/Seth-Moulton"
+  },
+  "M001194": {
+   "score": 90.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001194/John-Moolenaar"
+  },
+  "D000624": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000624/Debbie-Dingell"
+  },
+  "E000294": {
+   "score": 90.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000294/Tom-Emmer"
+  },
+  "R000603": {
+   "score": 94.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000603/David-Rouzer"
+  },
+  "W000822": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000822/Bonnie-Watson-Coleman"
+  },
+  "S001196": {
+   "score": 89.0,
+   "lifetime": 54.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001196/Elise-Stefanik"
+  },
+  "B001296": {
+   "score": 22.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001296/Brendan-Boyle"
+  },
+  "B001291": {
+   "score": 89.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001291/Brian-Babin"
+  },
+  "B001292": {
+   "score": 6.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001292/Don-Beyer"
+  },
+  "N000189": {
+   "score": 84.0,
+   "lifetime": 68.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000189/Dan-Newhouse"
+  },
+  "G000576": {
+   "score": 100.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000576/Glenn-Grothman"
+  },
+  "S001198": {
+   "score": 68.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001198/Dan-Sullivan"
+  },
+  "E000295": {
+   "score": 100.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000295/Joni-Ernst"
+  },
+  "T000476": {
+   "score": 65.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000476/Thom-Tillis"
+  },
+  "R000605": {
+   "score": 80.0,
+   "lifetime": 62.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000605/Mike-Rounds"
+  },
+  "K000388": {
+   "score": 90.0,
+   "lifetime": 85.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000388/Trent-Kelly"
+  },
+  "L000585": {
+   "score": 90.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000585/Darin-LaHood"
+  },
+  "D000626": {
+   "score": 93.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000626/Warren-Davidson"
+  },
+  "C001108": {
+   "score": 100.0,
+   "lifetime": 82.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001108/James-Comer"
+  },
+  "E000296": {
+   "score": 0.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000296/Dwight-Evans"
+  },
+  "K000393": {
+   "score": 88.0,
+   "lifetime": 81.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000393/John-Kennedy"
+  },
+  "H001076": {
+   "score": 29.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001076/Maggie-Hassan"
+  },
+  "C001113": {
+   "score": 30.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001113/Catherine-Cortez-Masto"
+  },
+  "S001190": {
+   "score": 22.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001190/Bradley-Schneider"
+  },
+  "B001302": {
+   "score": 93.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001302/Andy-Biggs"
+  },
+  "K000389": {
+   "score": 16.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000389/Ro-Khanna"
+  },
+  "P000613": {
+   "score": 28.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000613/Jimmy-Panetta"
+  },
+  "C001112": {
+   "score": 28.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001112/Salud-Carbajal"
+  },
+  "B001300": {
+   "score": 6.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001300/Nanette-Barragan"
+  },
+  "C001110": {
+   "score": 24.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001110/Luis-Correa"
+  },
+  "B001303": {
+   "score": 16.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001303/Lisa-Blunt-Rochester"
+  },
+  "D000628": {
+   "score": 90.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000628/Neal-Dunn"
+  },
+  "R000609": {
+   "score": 89.0,
+   "lifetime": 66.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000609/John-Rutherford"
+  },
+  "S001200": {
+   "score": 28.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001200/Darren-Soto"
+  },
+  "M001199": {
+   "score": 90.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001199/Brian-Mast"
+  },
+  "K000391": {
+   "score": 16.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000391/Raja-Krishnamoorthi"
+  },
+  "B001299": {
+   "score": 100.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001299/Jim-Banks"
+  },
+  "M001198": {
+   "score": 88.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001198/Roger-Marshall"
+  },
+  "H001077": {
+   "score": 100.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001077/Clay-Higgins"
+  },
+  "J000299": {
+   "score": 100.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000299/Mike-Johnson"
+  },
+  "R000606": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000606/Jamie-Raskin"
+  },
+  "B001301": {
+   "score": 84.0,
+   "lifetime": 70.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001301/Jack-Bergman"
+  },
+  "B001305": {
+   "score": 100.0,
+   "lifetime": 97.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001305/Ted-Budd"
+  },
+  "B001298": {
+   "score": 84.0,
+   "lifetime": 64.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001298/Don-Bacon"
+  },
+  "G000583": {
+   "score": 30.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000583/Josh-Gottheimer"
+  },
+  "R000608": {
+   "score": 30.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000608/Jacky-Rosen"
+  },
+  "E000297": {
+   "score": 10.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000297/Adriano-Espaillat"
+  },
+  "F000466": {
+   "score": 55.0,
+   "lifetime": 35.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000466/Brian-Fitzpatrick"
+  },
+  "S001199": {
+   "score": 95.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001199/Lloyd-Smucker"
+  },
+  "K000392": {
+   "score": 90.0,
+   "lifetime": 74.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000392/David-Kustoff"
+  },
+  "G000581": {
+   "score": 37.0,
+   "lifetime": 15.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000581/Vicente-Gonzalez"
+  },
+  "A000375": {
+   "score": 95.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000375/Jodey-Arrington"
+  },
+  "J000298": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000298/Pramila-Jayapal"
+  },
+  "E000298": {
+   "score": 84.0,
+   "lifetime": 81.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000298/Ron-Estes"
+  },
+  "N000190": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000190/Ralph-Norman"
+  },
+  "G000585": {
+   "score": 16.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000585/Jimmy-Gomez"
+  },
+  "C001114": {
+   "score": 88.0,
+   "lifetime": 82.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001114/John-Curtis"
+  },
+  "S001203": {
+   "score": 13.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001203/Tina-Smith"
+  },
+  "H001079": {
+   "score": 68.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001079/Cindy-Hyde-Smith"
+  },
+  "C001115": {
+   "score": 88.0,
+   "lifetime": 96.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001115/Michael-Cloud"
+  },
+  "B001306": {
+   "score": 89.0,
+   "lifetime": 73.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001306/Troy-Balderson"
+  },
+  "H001082": {
+   "score": 100.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001082/Kevin-Hern"
+  },
+  "M001206": {
+   "score": 6.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001206/Joseph-Morelle"
+  },
+  "S001205": {
+   "score": 0.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001205/Mary-Scanlon"
+  },
+  "C001055": {
+   "score": 12.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001055/Ed-Case"
+  },
+  "H001066": {
+   "score": 28.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001066/Steven-Horsford"
+  },
+  "S001211": {
+   "score": 28.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001211/Greg-Stanton"
+  },
+  "H001090": {
+   "score": 22.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001090/Josh-Harder"
+  },
+  "L000593": {
+   "score": 28.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000593/Mike-Levin"
+  },
+  "N000191": {
+   "score": 0.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000191/Joseph-Neguse"
+  },
+  "C001121": {
+   "score": 0.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001121/Jason-Crow"
+  },
+  "H001081": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001081/Jahana-Hayes"
+  },
+  "S001214": {
+   "score": 95.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001214/Greg-Steube"
+  },
+  "M001208": {
+   "score": 23.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001208/Lucy-McBath"
+  },
+  "F000469": {
+   "score": 88.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000469/Russ-Fulcher"
+  },
+  "G000586": {
+   "score": 0.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000586/Jesus-Garcia"
+  },
+  "C001117": {
+   "score": 6.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001117/Sean-Casten"
+  },
+  "U000040": {
+   "score": 0.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/U000040/Lauren-Underwood"
+  },
+  "B001307": {
+   "score": 90.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001307/James-Baird"
+  },
+  "D000629": {
+   "score": 6.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000629/Sharice-Davids"
+  },
+  "T000482": {
+   "score": 13.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000482/Lori-Trahan"
+  },
+  "P000617": {
+   "score": 0.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000617/Ayanna-Pressley"
+  },
+  "S001208": {
+   "score": 27.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001208/Elissa-Slotkin"
+  },
+  "S001215": {
+   "score": 28.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001215/Haley-Stevens"
+  },
+  "T000481": {
+   "score": 0.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000481/Rashida-Tlaib"
+  },
+  "C001119": {
+   "score": 22.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001119/Angela-Craig"
+  },
+  "O000173": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000173/Ilhan-Omar"
+  },
+  "S001212": {
+   "score": 84.0,
+   "lifetime": 67.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001212/Pete-Stauber"
+  },
+  "G000591": {
+   "score": 89.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000591/Michael-Guest"
+  },
+  "P000614": {
+   "score": 28.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000614/Chris-Pappas"
+  },
+  "V000133": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000133/Jeff-Van-Drew"
+  },
+  "K000394": {
+   "score": 27.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000394/Andy-Kim"
+  },
+  "L000590": {
+   "score": 28.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000590/Susie-Lee"
+  },
+  "O000172": {
+   "score": 0.0,
+   "lifetime": 14.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000172/Alexandria-Ocasio-Cortez"
+  },
+  "D000631": {
+   "score": 6.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000631/Madeleine-Dean"
+  },
+  "H001085": {
+   "score": 25.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001085/Chrissy-Houlahan"
+  },
+  "M001204": {
+   "score": 89.0,
+   "lifetime": 76.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001204/Dan-Meuser"
+  },
+  "J000302": {
+   "score": 100.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000302/John-Joyce"
+  },
+  "R000610": {
+   "score": 90.0,
+   "lifetime": 76.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000610/Guy-Reschenthaler"
+  },
+  "T000480": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000480/William-Timmons"
+  },
+  "J000301": {
+   "score": 90.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000301/Dusty-Johnson"
+  },
+  "B001309": {
+   "score": 100.0,
+   "lifetime": 97.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001309/Tim-Burchett"
+  },
+  "R000612": {
+   "score": 90.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000612/John-Rose"
+  },
+  "C001120": {
+   "score": 90.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001120/Dan-Crenshaw"
+  },
+  "G000589": {
+   "score": 95.0,
+   "lifetime": 94.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000589/Lance-Gooden"
+  },
+  "F000468": {
+   "score": 12.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000468/Lizzie-Fletcher"
+  },
+  "E000299": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000299/Veronica-Escobar"
+  },
+  "R000614": {
+   "score": 93.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000614/Chip-Roy"
+  },
+  "G000587": {
+   "score": 0.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000587/Sylvia-Garcia"
+  },
+  "C001118": {
+   "score": 100.0,
+   "lifetime": 96.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001118/Ben-Cline"
+  },
+  "S001216": {
+   "score": 25.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001216/Kim-Schrier"
+  },
+  "S001213": {
+   "score": 90.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001213/Bryan-Steil"
+  },
+  "M001205": {
+   "score": 95.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001205/Carol-Miller"
+  },
+  "S001217": {
+   "score": 100.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001217/Rick-Scott"
+  },
+  "H001089": {
+   "score": 73.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001089/Josh-Hawley"
+  },
+  "G000592": {
+   "score": 41.0,
+   "lifetime": 21.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000592/Jared-Golden"
+  },
+  "M001210": {
+   "score": 89.0,
+   "lifetime": 82.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001210/Greg-Murphy"
+  },
+  "M000687": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000687/Kweisi-Mfume"
+  },
+  "T000165": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000165/Tom-Tiffany"
+  },
+  "K000377": {
+   "score": 18.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000377/Mark-Kelly"
+  },
+  "L000571": {
+   "score": 100.0,
+   "lifetime": 86.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000571/Cynthia-Lummis"
+  },
+  "I000056": {
+   "score": 84.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/I000056/Darrell-Issa"
+  },
+  "S000250": {
+   "score": 95.0,
+   "lifetime": 83.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000250/Pete-Sessions"
+  },
+  "V000129": {
+   "score": 84.0,
+   "lifetime": 56.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000129/David-Valadao"
+  },
+  "T000278": {
+   "score": 90.0,
+   "lifetime": 94.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000278/Tommy-Tuberville"
+  },
+  "H000273": {
+   "score": 31.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H000273/John-Hickenlooper"
+  },
+  "H000601": {
+   "score": 100.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H000601/Bill-Hagerty"
+  },
+  "M001212": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001212/Barry-Moore"
+  },
+  "O000019": {
+   "score": 83.0,
+   "lifetime": 76.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000019/Jay-Obernolte"
+  },
+  "K000397": {
+   "score": 84.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000397/Young-Kim"
+  },
+  "J000305": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000305/Sara-Jacobs"
+  },
+  "B000825": {
+   "score": 100.0,
+   "lifetime": 99.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B000825/Lauren-Boebert"
+  },
+  "C001039": {
+   "score": 100.0,
+   "lifetime": 96.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001039/Kat-Cammack"
+  },
+  "F000472": {
+   "score": 90.0,
+   "lifetime": 86.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000472/Scott-Franklin"
+  },
+  "D000032": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000032/Byron-Donalds"
+  },
+  "G000593": {
+   "score": 83.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000593/Carlos-Gimenez"
+  },
+  "S000168": {
+   "score": 94.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000168/Maria-Salazar"
+  },
+  "W000788": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000788/Nikema-Williams"
+  },
+  "C001116": {
+   "score": 100.0,
+   "lifetime": 99.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001116/Andrew-Clyde"
+  },
+  "H001091": {
+   "score": 84.0,
+   "lifetime": 74.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001091/Ashley-Hinson"
+  },
+  "M001215": {
+   "score": 84.0,
+   "lifetime": 73.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001215/Mariannette-Miller-Meeks"
+  },
+  "F000446": {
+   "score": 84.0,
+   "lifetime": 79.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000446/Randy-Feenstra"
+  },
+  "M001211": {
+   "score": 100.0,
+   "lifetime": 99.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001211/Mary-Miller"
+  },
+  "M001214": {
+   "score": 12.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001214/Frank-Mrvan"
+  },
+  "S000929": {
+   "score": 95.0,
+   "lifetime": 91.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S000929/Victoria-Spartz"
+  },
+  "M000871": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000871/Tracey-Mann"
+  },
+  "A000148": {
+   "score": 15.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000148/Jake-Auchincloss"
+  },
+  "M001136": {
+   "score": 83.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001136/Lisa-McClain"
+  },
+  "F000470": {
+   "score": 90.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000470/Michelle-Fischbach"
+  },
+  "R000305": {
+   "score": 6.0,
+   "lifetime": 1.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000305/Deborah-Ross"
+  },
+  "L000273": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000273/Teresa-Leger-Fernandez"
+  },
+  "G000597": {
+   "score": 84.0,
+   "lifetime": 66.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000597/Andrew-Garbarino"
+  },
+  "M000317": {
+   "score": 77.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000317/Nicole-Malliotakis"
+  },
+  "T000486": {
+   "score": 22.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000486/Ritchie-Torres"
+  },
+  "B000740": {
+   "score": 84.0,
+   "lifetime": 74.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B000740/Stephanie-Bice"
+  },
+  "B000668": {
+   "score": 84.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B000668/Cliff-Bentz"
+  },
+  "M000194": {
+   "score": 89.0,
+   "lifetime": 94.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M000194/Nancy-Mace"
+  },
+  "H001086": {
+   "score": 100.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001086/Diana-Harshbarger"
+  },
+  "F000246": {
+   "score": 95.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000246/Pat-Fallon"
+  },
+  "P000048": {
+   "score": 90.0,
+   "lifetime": 85.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000048/August-Pfluger"
+  },
+  "J000304": {
+   "score": 95.0,
+   "lifetime": 93.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000304/Ronny-Jackson"
+  },
+  "N000026": {
+   "score": 100.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000026/Troy-Nehls"
+  },
+  "V000134": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000134/Beth-Van-Duyne"
+  },
+  "M001213": {
+   "score": 95.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001213/Blake-Moore"
+  },
+  "O000086": {
+   "score": 84.0,
+   "lifetime": 81.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000086/Burgess-Owens"
+  },
+  "S001159": {
+   "score": 22.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001159/Marilyn-Strickland"
+  },
+  "F000471": {
+   "score": 95.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000471/Scott-Fitzgerald"
+  },
+  "P000145": {
+   "score": 28.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000145/Alex-Padilla"
+  },
+  "O000174": {
+   "score": 18.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000174/Thomas-Ossoff"
+  },
+  "W000790": {
+   "score": 17.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000790/Raphael-Warnock"
+  },
+  "T000478": {
+   "score": 90.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000478/Claudia-Tenney"
+  },
+  "L000595": {
+   "score": 90.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000595/Julia-Letlow"
+  },
+  "C001125": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001125/Troy-Carter"
+  },
+  "S001218": {
+   "score": 0.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001218/Melanie-Stansbury"
+  },
+  "E000071": {
+   "score": 84.0,
+   "lifetime": 73.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000071/Jake-Ellzey"
+  },
+  "B001313": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001313/Shontel-Brown"
+  },
+  "C001126": {
+   "score": 84.0,
+   "lifetime": 67.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001126/Mike-Carey"
+  },
+  "F000474": {
+   "score": 95.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000474/Mike-Flood"
+  },
+  "F000475": {
+   "score": 89.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000475/Brad-Finstad"
+  },
+  "R000579": {
+   "score": 28.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000579/Pat-Ryan"
+  },
+  "Y000067": {
+   "score": 95.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/Y000067/Rudolph-Yakym"
+  },
+  "Z000018": {
+   "score": 90.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/Z000018/Ryan-Zinke"
+  },
+  "B001319": {
+   "score": 90.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001319/Katie-Britt"
+  },
+  "S001227": {
+   "score": 90.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001227/Eric-Schmitt"
+  },
+  "F000479": {
+   "score": 34.0,
+   "lifetime": 20.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000479/John-Fetterman"
+  },
+  "S001220": {
+   "score": 84.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001220/Dale-Strong"
+  },
+  "C001132": {
+   "score": 93.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001132/Eli-Crane"
+  },
+  "C001133": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001133/Juan-Ciscomani"
+  },
+  "K000401": {
+   "score": 84.0,
+   "lifetime": 66.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000401/Kevin-Kiley"
+  },
+  "M001225": {
+   "score": 13.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001225/Kevin-Mullin"
+  },
+  "K000400": {
+   "score": 10.0,
+   "lifetime": 13.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000400/Sydney-Kamlager-Dove"
+  },
+  "G000598": {
+   "score": 10.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000598/Robert-Garcia"
+  },
+  "P000620": {
+   "score": 18.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000620/Brittany-Pettersen"
+  },
+  "B001314": {
+   "score": 100.0,
+   "lifetime": 89.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001314/Aaron-Bean"
+  },
+  "M001216": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001216/Cory-Mills"
+  },
+  "F000476": {
+   "score": 0.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000476/Maxwell-Frost"
+  },
+  "L000596": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000596/Anna-Paulina-Luna"
+  },
+  "L000597": {
+   "score": 88.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000597/Laurel-Lee"
+  },
+  "M001217": {
+   "score": 34.0,
+   "lifetime": 16.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001217/Jared-Moskowitz"
+  },
+  "M001218": {
+   "score": 95.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001218/Rich-McCormick"
+  },
+  "C001129": {
+   "score": 95.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001129/Mike-Collins"
+  },
+  "T000487": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000487/Jill-Tokuda"
+  },
+  "N000193": {
+   "score": 89.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/N000193/Zach-Nunn"
+  },
+  "J000309": {
+   "score": 16.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000309/Jonathan-Jackson"
+  },
+  "R000617": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000617/Delia-Ramirez"
+  },
+  "B001315": {
+   "score": 28.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001315/Nikki-Budzinski"
+  },
+  "S001225": {
+   "score": 28.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001225/Eric-Sorensen"
+  },
+  "H001093": {
+   "score": 95.0,
+   "lifetime": 77.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001093/Erin-Houchin"
+  },
+  "M001220": {
+   "score": 7.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001220/Morgan-McGarvey"
+  },
+  "I000058": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/I000058/Glenn-Ivey"
+  },
+  "S001221": {
+   "score": 22.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001221/Hillary-Scholten"
+  },
+  "J000307": {
+   "score": 84.0,
+   "lifetime": 66.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000307/John-James"
+  },
+  "T000488": {
+   "score": 28.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000488/Shri-Thanedar"
+  },
+  "A000379": {
+   "score": 84.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000379/Mark-Alford"
+  },
+  "B001316": {
+   "score": 93.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001316/Eric-Burlison"
+  },
+  "E000235": {
+   "score": 84.0,
+   "lifetime": 79.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000235/Mike-Ezell"
+  },
+  "D000230": {
+   "score": 40.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000230/Donald-Davis"
+  },
+  "F000477": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000477/Valerie-Foushee"
+  },
+  "E000246": {
+   "score": 84.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000246/Charles-Edwards"
+  },
+  "K000398": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000398/Thomas-Kean"
+  },
+  "M001226": {
+   "score": 16.0,
+   "lifetime": 7.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001226/Robert-Menendez"
+  },
+  "V000136": {
+   "score": 28.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000136/Gabriel-Vasquez"
+  },
+  "L000598": {
+   "score": 84.0,
+   "lifetime": 60.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000598/Nick-LaLota"
+  },
+  "G000599": {
+   "score": 17.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000599/Daniel-Goldman"
+  },
+  "L000599": {
+   "score": 83.0,
+   "lifetime": 61.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000599/Mike-Lawler"
+  },
+  "L000600": {
+   "score": 89.0,
+   "lifetime": 69.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000600/Nicholas-Langworthy"
+  },
+  "L000601": {
+   "score": 22.0,
+   "lifetime": 8.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000601/Greg-Landsman"
+  },
+  "M001222": {
+   "score": 89.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001222/Max-Miller"
+  },
+  "S001223": {
+   "score": 16.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001223/Emilia-Sykes"
+  },
+  "B001317": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001317/Josh-Brecheen"
+  },
+  "H001094": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001094/Val-Hoyle"
+  },
+  "S001226": {
+   "score": 6.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001226/Andrea-Salinas"
+  },
+  "L000602": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000602/Summer-Lee"
+  },
+  "D000530": {
+   "score": 6.0,
+   "lifetime": 2.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000530/Christopher-Deluzio"
+  },
+  "M001223": {
+   "score": 13.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001223/Seth-Magaziner"
+  },
+  "F000478": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000478/Russell-Fry"
+  },
+  "O000175": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000175/Andy-Ogles"
+  },
+  "M001224": {
+   "score": 90.0,
+   "lifetime": 92.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001224/Nathaniel-Moran"
+  },
+  "S001224": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001224/Keith-Self"
+  },
+  "L000603": {
+   "score": 95.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000603/Morgan-Luttrell"
+  },
+  "D000594": {
+   "score": 90.0,
+   "lifetime": 71.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000594/Monica-De-La-Cruz"
+  },
+  "C001130": {
+   "score": 7.0,
+   "lifetime": 12.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001130/Jasmine-Crockett"
+  },
+  "C001131": {
+   "score": 0.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001131/Greg-Casar"
+  },
+  "H001095": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001095/Wesley-Hunt"
+  },
+  "K000399": {
+   "score": 84.0,
+   "lifetime": 65.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000399/Jen-Kiggans"
+  },
+  "B001318": {
+   "score": 0.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001318/Becca-Balint"
+  },
+  "G000600": {
+   "score": 31.0,
+   "lifetime": 25.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000600/Marie-Gluesenkamp-Perez"
+  },
+  "V000135": {
+   "score": 95.0,
+   "lifetime": 75.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000135/Derrick-Van-Orden"
+  },
+  "H001096": {
+   "score": 100.0,
+   "lifetime": 98.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001096/Harriet-Hageman"
+  },
+  "R000618": {
+   "score": 80.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000618/Pete-Ricketts"
+  },
+  "M001227": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001227/Jennifer-McClellan"
+  },
+  "A000380": {
+   "score": 10.0,
+   "lifetime": 5.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000380/Gabe-Amo"
+  },
+  "M001228": {
+   "score": 84.0,
+   "lifetime": 72.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001228/Celeste-Maloy"
+  },
+  "S001201": {
+   "score": 33.0,
+   "lifetime": 11.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001201/Tom-Suozzi"
+  },
+  "K000402": {
+   "score": 16.0,
+   "lifetime": 13.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000402/Timothy-Kennedy"
+  },
+  "F000480": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000480/Vince-Fong"
+  },
+  "R000619": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000619/Michael-Rulli"
+  },
+  "M001229": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001229/LaMonica-McIver"
+  },
+  "W000829": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000829/Tony-Wied"
+  },
+  "F000110": {
+   "score": 17.0,
+   "lifetime": 17.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000110/Cleo-Fields"
+  },
+  "S001188": {
+   "score": 100.0,
+   "lifetime": 94.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001188/Marlin-Stutzman"
+  },
+  "C001123": {
+   "score": 0.0,
+   "lifetime": 4.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001123/Gil-Cisneros"
+  },
+  "A000382": {
+   "score": 27.0,
+   "lifetime": 27.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000382/Angela-Alsobrooks"
+  },
+  "S001232": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001232/Tim-Sheehy"
+  },
+  "M001242": {
+   "score": 88.0,
+   "lifetime": 88.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001242/Bernie-Moreno"
+  },
+  "M001243": {
+   "score": 80.0,
+   "lifetime": 80.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001243/Dave-McCormick"
+  },
+  "B001323": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001323/Nick-Begich"
+  },
+  "F000481": {
+   "score": 22.0,
+   "lifetime": 22.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000481/Shomari-Figures"
+  },
+  "A000381": {
+   "score": 9.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/A000381/Yassamin-Ansari"
+  },
+  "H001098": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001098/Abraham-Hamadeh"
+  },
+  "S001231": {
+   "score": 9.0,
+   "lifetime": 9.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001231/Lateefah-Simon"
+  },
+  "G000605": {
+   "score": 40.0,
+   "lifetime": 40.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000605/Adam-Gray"
+  },
+  "L000607": {
+   "score": 17.0,
+   "lifetime": 17.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000607/Sam-Liccardo"
+  },
+  "W000830": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000830/George-Whitesides"
+  },
+  "R000620": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000620/Luz-Rivas"
+  },
+  "F000483": {
+   "score": 3.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000483/Laura-Friedman"
+  },
+  "T000491": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000491/Derek-Tran"
+  },
+  "M001241": {
+   "score": 19.0,
+   "lifetime": 19.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001241/Dave-Min"
+  },
+  "H001100": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001100/Jeff-Hurd"
+  },
+  "C001137": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001137/Jeff-Crank"
+  },
+  "E000300": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000300/Gabe-Evans"
+  },
+  "M001238": {
+   "score": 21.0,
+   "lifetime": 21.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001238/Sarah-McBride"
+  },
+  "H001099": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001099/Mike-Haridopolos"
+  },
+  "J000311": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000311/Brian-Jack"
+  },
+  "S001229": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001229/Jefferson-Shreve"
+  },
+  "M001233": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001233/Mark-Messmer"
+  },
+  "S001228": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001228/Derek-Schmidt"
+  },
+  "O000176": {
+   "score": 10.0,
+   "lifetime": 10.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000176/Johnny-Olszewski"
+  },
+  "E000301": {
+   "score": 3.0,
+   "lifetime": 3.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/E000301/Sarah-Elfreth"
+  },
+  "M001232": {
+   "score": 22.0,
+   "lifetime": 22.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001232/April-McClain-Delaney"
+  },
+  "B001321": {
+   "score": 89.0,
+   "lifetime": 89.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001321/Tom-Barrett"
+  },
+  "M001237": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001237/Kristen-McDonald-Rivet"
+  },
+  "M001234": {
+   "score": 6.0,
+   "lifetime": 6.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001234/Kelly-Morrison"
+  },
+  "B001324": {
+   "score": 13.0,
+   "lifetime": 13.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001324/Wesley-Bell"
+  },
+  "O000177": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/O000177/Bob-Onder"
+  },
+  "D000634": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000634/Troy-Downing"
+  },
+  "M001240": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001240/Addison-McDowell"
+  },
+  "H001102": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001102/Mark-Harris"
+  },
+  "H001101": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001101/Pat-Harrigan"
+  },
+  "K000405": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000405/Brad-Knott"
+  },
+  "M001236": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001236/Tim-Moore"
+  },
+  "F000482": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000482/Julie-Fedorchak"
+  },
+  "G000604": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000604/Maggie-Goodlander"
+  },
+  "C001136": {
+   "score": 20.0,
+   "lifetime": 20.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/C001136/Herbert-Conaway"
+  },
+  "P000621": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000621/Nellie-Pou"
+  },
+  "G000602": {
+   "score": 27.0,
+   "lifetime": 27.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000602/Laura-Gillen"
+  },
+  "L000606": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/L000606/George-Latimer"
+  },
+  "R000622": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000622/Josh-Riley"
+  },
+  "M001231": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001231/John-Mannion"
+  },
+  "T000490": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/T000490/David-Taylor"
+  },
+  "D000635": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/D000635/Maxine-Dexter"
+  },
+  "B001326": {
+   "score": 31.0,
+   "lifetime": 31.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001326/Janelle-Bynum"
+  },
+  "M001230": {
+   "score": 81.0,
+   "lifetime": 81.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001230/Ryan-Mackenzie"
+  },
+  "B001327": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001327/Robert-Bresnahan"
+  },
+  "B001325": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001325/Sheri-Biggs"
+  },
+  "G000601": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000601/Craig-Goldman"
+  },
+  "G000603": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000603/Brandon-Gill"
+  },
+  "J000310": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000310/Julie-Johnson"
+  },
+  "K000403": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/K000403/Mike-Kennedy"
+  },
+  "M001239": {
+   "score": 95.0,
+   "lifetime": 95.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001239/John-McGuire"
+  },
+  "V000138": {
+   "score": 31.0,
+   "lifetime": 31.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000138/Eugene-Vindman"
+  },
+  "S001230": {
+   "score": 28.0,
+   "lifetime": 28.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/S001230/Suhas-Subramanyam"
+  },
+  "B001322": {
+   "score": 90.0,
+   "lifetime": 90.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/B001322/Michael-Baumgartner"
+  },
+  "R000621": {
+   "score": 0.0,
+   "lifetime": 0.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/R000621/Emily-Randall"
+  },
+  "M001235": {
+   "score": 84.0,
+   "lifetime": 84.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001235/Riley-Moore"
+  },
+  "J000312": {
+   "score": 89.0,
+   "lifetime": 89.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/J000312/Jim-Justice"
+  },
+  "H001104": {
+   "score": 78.0,
+   "lifetime": 78.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/H001104/Jon-Husted"
+  },
+  "M001244": {
+   "score": 100.0,
+   "lifetime": 100.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/M001244/Ashley-Moody"
+  },
+  "P000622": {
+   "score": 87.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/P000622/Jimmy-Patronis"
+  },
+  "F000484": {
+   "score": 87.0,
+   "lifetime": 87.0,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/F000484/Randy-Fine"
+  },
+  "W000831": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/W000831/James-Walkinshaw"
+  },
+  "G000606": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/G000606/Adelita-Grijalva"
+  },
+  "V000139": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/legislator/V000139/Matt-Van-Epps"
+  },
+  "N000147": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "P000610": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "R000600": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "M001219": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "K000404": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "H001103": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "M001245": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "A000383": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "F000485": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "M001246": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "G000607": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "G000608": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "B001328": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  },
+  "W000832": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://www.clubforgrowth.org/scorecards/app/"
+  }
+ }
+}

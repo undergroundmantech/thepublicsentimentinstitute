@@ -1,0 +1,2706 @@
+{
+ "id": "aflcio",
+ "name": "AFL-CIO Legislative Scorecard",
+ "lean": "left",
+ "source": "https://aflcio.org/scorecard/legislators (2025 House list pages 0-21; senators from individual pages https://aflcio.org/scorecard/legislators/<first-last>)",
+ "year": "2025",
+ "scale": "percent",
+ "notes": "Score is the share of 2025 AFL-CIO key votes where the member voted with the AFL-CIO position (published percent). Lifetime is the AFL-CIO lifetime score percent from the same site. House read from the 22 page legislators table (2025 House scorecard), matched to the roster by state, district and last name. The site Senate table is not reachable by URL (chamber toggle is not a query parameter), so each senator was read from an individual member page. Gaps (score and lifetime null): Senate Ashley Moody (FL), Alan Armstrong (OK), Darline Graham (SC) (page not found, likely new or appointed, or slug unknown); House members not in the 2025 list because they took office after it (special elections): Christian Menefee TX-18, Clay Fuller GA-14, Analilia Mejia NJ-11, James Gallagher CA-1, Everton Blair Jr. GA-13, Aisha Wahab CA-14; and the six non-voting delegates (DC, VI, AS, GU, MP, PR) which the scorecard does not list (Norton page not found; Menefee page fetch errored once, not retried). The list also carries members who have left (Cherfilus-McCormick, Gonzales, Connolly, Green, Greene, LaMalfa, Scott, Sherrill, Swalwell, Turner, Waltz) who are not on the current roster and were skipped. The House list parse showed 437 rows from 438 expected, one row (Carol Miller WV-1) was recovered via her member page.",
+ "members": {
+  "A000370": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000055": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000371": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000379": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000372": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000380": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000369": {
+   "score": 8,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000381": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000375": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000148": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001291": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001298": {
+   "score": 8,
+   "lifetime": 27,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001307": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001306": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001318": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001282": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001300": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001321": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001322": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001314": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001281": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001323": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001324": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B000668": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001287": {
+   "score": 92,
+   "lifetime": 91,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001301": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001292": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B000740": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001325": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001302": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001257": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B000490": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B000825": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001278": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001295": {
+   "score": 8,
+   "lifetime": 32,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001296": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001317": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001327": {
+   "score": 8,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001313": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001285": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001260": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001315": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001309": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001316": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001326": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C000059": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001039": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001112": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001126": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001072": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001051": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001125": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001103": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001131": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001055": {
+   "score": 92,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001117": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001066": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001091": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001080": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001133": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001123": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001101": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001067": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001061": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001118": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001115": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C000537": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001116": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001068": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001053": {
+   "score": 0,
+   "lifetime": 18,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001129": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001108": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001136": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001110": {
+   "score": 92,
+   "lifetime": 91,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001059": {
+   "score": 92,
+   "lifetime": 86,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001069": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001119": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001132": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001137": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001087": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001120": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001130": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001121": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001063": {
+   "score": 77,
+   "lifetime": 73,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000629": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000626": {
+   "score": 8,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000230": {
+   "score": 92,
+   "lifetime": 82,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000096": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000594": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000631": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000197": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000216": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000617": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000530": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000623": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000616": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000635": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000600": {
+   "score": 0,
+   "lifetime": 35,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000624": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000399": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000032": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000634": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000628": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000246": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000301": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000071": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000294": {
+   "score": 0,
+   "lifetime": 18,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000299": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000297": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000298": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000300": {
+   "score": 8,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000296": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000235": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000246": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000482": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000446": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000273": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000110": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000481": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000484": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000475": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000470": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000471": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000466": {
+   "score": 46,
+   "lifetime": 58,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000459": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000468": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000474": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000480": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000454": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000477": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000450": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000462": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000472": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000483": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000476": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000478": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000469": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000559": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000597": {
+   "score": 8,
+   "lifetime": 23,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000598": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000587": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000586": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000603": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000602": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000593": {
+   "score": 0,
+   "lifetime": 18,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000600": {
+   "score": 85,
+   "lifetime": 77,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000592": {
+   "score": 85,
+   "lifetime": 85,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000601": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000599": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000585": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000581": {
+   "score": 85,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000589": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000604": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000565": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000583": {
+   "score": 92,
+   "lifetime": 91,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000546": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000605": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000553": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000568": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000606": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000576": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000591": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000558": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001096": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001098": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001090": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001099": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001101": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001052": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001102": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001086": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001081": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001082": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001077": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001072": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001047": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001091": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001066": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001093": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001085": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H000874": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001094": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001067": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001068": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001058": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001095": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001100": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "I000056": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "I000058": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000311": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000309": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000304": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000305": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000307": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000298": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000294": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000310": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000301": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000299": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000288": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000289": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000302": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000295": {
+   "score": 8,
+   "lifetime": 36,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000400": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000009": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000398": {
+   "score": 8,
+   "lifetime": 23,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000375": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000388": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000385": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000376": {
+   "score": 0,
+   "lifetime": 19,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000403": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000402": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000389": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000399": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000401": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000397": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000405": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000391": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000392": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000585": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000598": {
+   "score": 8,
+   "lifetime": 19,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000601": {
+   "score": 92,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000600": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000560": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000557": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000606": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000566": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000599": {
+   "score": 8,
+   "lifetime": 23,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000602": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000597": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000590": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000595": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000593": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000607": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000582": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000397": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000583": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000491": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000596": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000603": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000562": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000194": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001230": {
+   "score": 8,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001223": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000317": {
+   "score": 15,
+   "lifetime": 24,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001228": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000871": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001231": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001184": {
+   "score": 42,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001199": {
+   "score": 0,
+   "lifetime": 19,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001163": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001208": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001238": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001157": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001136": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001232": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001227": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001177": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001143": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001218": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001237": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001240": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001220": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000312": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001239": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001229": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001137": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001226": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001188": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001233": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001204": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000687": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001222": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001211": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001215": {
+   "score": 8,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001216": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001241": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001194": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001236": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001235": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001160": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001213": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001212": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001224": {
+   "score": 0,
+   "lifetime": 2,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001206": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001234": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001217": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001196": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001214": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001225": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001210": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000002": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000015": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000191": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000026": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000189": {
+   "score": 0,
+   "lifetime": 22,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000188": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000190": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000193": {
+   "score": 8,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000019": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000172": {
+   "score": 100,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000175": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000176": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000173": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000177": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000086": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000034": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000609": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000613": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000614": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000622": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000197": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000605": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000608": {
+   "score": 100,
+   "lifetime": 90,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000620": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000048": {
+   "score": 0,
+   "lifetime": 3,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000597": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000607": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000621": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000617": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "Q000023": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000617": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000621": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000606": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000610": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000622": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000620": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000575": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000395": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000612": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000305": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000603": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000614": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000599": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000619": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000609": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000579": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000168": {
+   "score": 0,
+   "lifetime": 24,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001226": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001156": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001176": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001205": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001145": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001228": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001190": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001221": {
+   "score": 92,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001216": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001183": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000185": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001189": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001224": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000250": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001185": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000344": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001229": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001231": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001148": {
+   "score": 0,
+   "lifetime": 20,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001172": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000522": {
+   "score": 8,
+   "lifetime": 49,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000510": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001195": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001199": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001225": {
+   "score": 92,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001200": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000929": {
+   "score": 8,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001218": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001211": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001212": {
+   "score": 8,
+   "lifetime": 30,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001196": {
+   "score": 0,
+   "lifetime": 29,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001213": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001214": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001215": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001159": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001220": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001188": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001230": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001201": {
+   "score": 92,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001223": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000472": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000490": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000478": {
+   "score": 0,
+   "lifetime": 15,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000488": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000467": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000460": {
+   "score": 92,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000193": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000165": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000480": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000468": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000481": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000487": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000469": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000486": {
+   "score": 92,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000474": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000482": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000491": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000463": {
+   "score": 31,
+   "lifetime": 31,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "U000040": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000129": {
+   "score": 9,
+   "lifetime": 26,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000133": {
+   "score": 8,
+   "lifetime": 44,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000134": {
+   "score": 0,
+   "lifetime": 1,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000139": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000135": {
+   "score": 8,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000130": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000136": {
+   "score": 92,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000131": {
+   "score": 92,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000081": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000138": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000812": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000798": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000831": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000797": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000187": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000822": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000814": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000806": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000821": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000830": {
+   "score": 92,
+   "lifetime": 92,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000829": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000816": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000788": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000808": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000795": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000804": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000809": {
+   "score": 0,
+   "lifetime": 12,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "Y000067": {
+   "score": 0,
+   "lifetime": 4,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "Z000018": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001205": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators/carol-miller"
+  },
+  "C000127": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000367": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000802": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001261": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000437": {
+   "score": 0,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001035": {
+   "score": 44,
+   "lifetime": 49,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001056": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000563": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000355": {
+   "score": 11,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001176": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000122": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000033": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001181": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000805": {
+   "score": 100,
+   "lifetime": 91,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000555": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001088": {
+   "score": 100,
+   "lifetime": 95,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001230": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001267": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001243": {
+   "score": 0,
+   "lifetime": 6,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001277": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001236": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000584": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001075": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001046": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001042": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001061": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000293": {
+   "score": 0,
+   "lifetime": 10,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000575": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000577": {
+   "score": 11,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001047": {
+   "score": 0,
+   "lifetime": 29,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C000880": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000386": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000133": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M000934": {
+   "score": 0,
+   "lifetime": 17,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001153": {
+   "score": 33,
+   "lifetime": 39,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001169": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001111": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000603": {
+   "score": 56,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000595": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000570": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001150": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S000148": {
+   "score": 100,
+   "lifetime": 96,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001184": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000250": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "V000128": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000800": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000779": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "Y000064": {
+   "score": 0,
+   "lifetime": 13,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001194": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001095": {
+   "score": 0,
+   "lifetime": 11,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000817": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000622": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000383": {
+   "score": 100,
+   "lifetime": 97,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "D000618": {
+   "score": 0,
+   "lifetime": 15,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001096": {
+   "score": 0,
+   "lifetime": 20,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000463": {
+   "score": 0,
+   "lifetime": 15,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001098": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000384": {
+   "score": 100,
+   "lifetime": 94,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001288": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000574": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001198": {
+   "score": 11,
+   "lifetime": 22,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "E000295": {
+   "score": 0,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000476": {
+   "score": 11,
+   "lifetime": 19,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000605": {
+   "score": 0,
+   "lifetime": 18,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000393": {
+   "score": 0,
+   "lifetime": 15,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001076": {
+   "score": 100,
+   "lifetime": 99,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001113": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001303": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001299": {
+   "score": 0,
+   "lifetime": 8,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001198": {
+   "score": 0,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001305": {
+   "score": 0,
+   "lifetime": 7,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000608": {
+   "score": 100,
+   "lifetime": 93,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "C001114": {
+   "score": 11,
+   "lifetime": 14,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001203": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001079": {
+   "score": 0,
+   "lifetime": 16,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001208": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000394": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001217": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000377": {
+   "score": 100,
+   "lifetime": 98,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "L000571": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "T000278": {
+   "score": 0,
+   "lifetime": 5,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H000273": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H000601": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000145": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001089": {
+   "score": 11,
+   "lifetime": 15,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "O000174": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000790": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001319": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001227": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000479": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000618": {
+   "score": 0,
+   "lifetime": 9,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000382": {
+   "score": 100,
+   "lifetime": 100,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "S001232": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001242": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001243": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "J000312": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001104": {
+   "score": 0,
+   "lifetime": 0,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "N000147": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "P000610": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "R000600": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001219": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "K000404": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "H001103": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001244": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001245": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "A000383": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "F000485": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "M001246": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000607": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "G000608": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "B001328": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  },
+  "W000832": {
+   "score": null,
+   "lifetime": null,
+   "url": "https://aflcio.org/scorecard/legislators"
+  }
+ }
+}
