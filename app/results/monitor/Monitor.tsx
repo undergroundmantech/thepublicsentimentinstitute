@@ -15,6 +15,8 @@ import { useIndex, useLive, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
 import RaceBrief from "./RaceBrief";
+import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, type Seat, type SeatState, type Tile } from "./Chambers";
+import { frameGap } from "@/app/lib/lite";
 import { useSiteTheme } from "@/app/lib/useSiteTheme";
 
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
@@ -26,6 +28,8 @@ const SETS: Record<Mode, ("fed" | "leg" | "ballot" | "state")[]> = { sen: ["fed"
 export type Chambers = { sen: { notD: number; notR: number; dS: number; pD: number }; house: { dS: number; pD: number }; gov: { notD: number; notR: number; dS: number; pD: number } };
 type Feed = { t: Date; id: string; text: string };
 const NO_RACE = "#16122a", AWAIT = "#2c2547";
+// governorships not on the ballot this year and the party that holds each
+const GOV_HOLD: Record<string, "D" | "R"> = { DE: "D", NC: "D", WA: "D", NJ: "D", VA: "D", KY: "D", IN: "R", MO: "R", MT: "R", ND: "R", UT: "R", WV: "R", LA: "R", MS: "R" };
 
 const hasReturns = (c?: CRace) => !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
 const liveMargin = (r: XRace, c: CRace | undefined) => { if (!c) return null; const s = sides(r, c.c); return s.t > 0 ? (100 * (s.b - s.a)) / s.t : null; };
@@ -57,8 +61,13 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const sf = useStateFile(sel);
   const stage = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null);
   const view = useRef({ rot: [97, -39, 0] as [number, number, number], k: 2.2, target: null as null | { rot: [number, number, number]; k: number } });
-  const deskOpen = useRef(false);
-  useEffect(() => { deskOpen.current = !!desk; }, [desk]);
+  // the stage's size, so the home view fits the country to whatever room the map has
+  const dims = useRef({ W: 0, H: 0, base: 1 });
+  const fitted = useRef(false);
+  const autoFit = useRef(true);
+  const homeK = () => { const d = dims.current; if (!d.W || !d.H) return 2.2; return Math.max(1.2, Math.min(7, Math.min(1.16 * d.W, 2.0 * d.H) / d.base)); };
+  const fly = useRef<(st: string) => void>(() => {});
+  const wake = useRef<() => void>(() => {});
   const drag = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
 
   useEffect(() => { setNow(new Date()); const t = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(t); }, []);
@@ -77,6 +86,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const g = { type: "MultiPolygon", coordinates: rings.map((r) => [r]) } as unknown as GeoPermissibleObjects;
     return { id, st: id.split("-")[1], g, c: geoCentroid(g) as [number, number] };
   }), [dll]);
+  useEffect(() => { if (!desk) return; const r = (ix?.races ?? []).find((x) => x.id === desk); if (r) fly.current(r.st); }, [desk]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === "Escape") setDesk(null); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
 
   const races = useMemo(() => (ix?.races ?? []).filter((r) => r.k === mode), [ix, mode]);
@@ -86,7 +96,17 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const out: Record<string, string> = {};
     for (const [st, rs] of Object.entries(byState)) {
       const rep = rs.filter((r) => hasReturns(live.byId[r.id]));
-      if (!rep.length) { out[st] = AWAIT; continue; }
+      if (!rep.length) {
+        out[st] = AWAIT;
+        // nothing counted yet: the forecast, drawn faintly, so the map reads as the forecast until votes land
+        const em = rs.filter((r) => expM(r) != null);
+        if (color === "results" && em.length) {
+          const wf = (r: XRace) => (r.k === "house" ? 1 : r.tot || 1);
+          const e0 = mode === "house" ? (100 * (em.filter((r) => (expM(r) ?? 0) > 0).length - em.filter((r) => (expM(r) ?? 0) < 0).length)) / em.length : em.reduce((s, r) => s + (expM(r) ?? 0) * wf(r), 0) / em.reduce((s, r) => s + wf(r), 0);
+          out["~" + st] = shade(e0, mode === "measure" ? "measure" : undefined, em.length === 1 && isInd(em[0]));
+        }
+        continue;
+      }
       const w = (r: XRace) => (r.k === "house" ? 1 : r.tot || 1);
       const l = rep.reduce((s, r) => s + (liveMargin(r, live.byId[r.id]) ?? 0) * w(r), 0) / rep.reduce((s, r) => s + w(r), 0);
       const lm = mode === "house" ? (100 * (rep.filter((r) => (liveMargin(r, live.byId[r.id]) ?? 0) > 0).length - rep.filter((r) => (liveMargin(r, live.byId[r.id]) ?? 0) < 0).length)) / rep.length : l;
@@ -101,7 +121,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     if (mode !== "house") return out;
     for (const r of races) {
       const c = live.byId[r.id];
-      if (!hasReturns(c)) { out[r.id] = { fill: AWAIT, a: 1 }; continue; }
+      if (!hasReturns(c)) { const e = expM(r); out[r.id] = color === "results" && e != null ? { fill: shade(e, undefined, isInd(r)), a: 0.32 } : { fill: AWAIT, a: 1 }; continue; }
       const m = liveMargin(r, c) ?? 0, e = expM(r);
       out[r.id] = { fill: color === "results" ? shade(m, undefined, isInd(r)) : e != null ? vsColor(m - e) : AWAIT, a: 0.45 + 0.55 * Math.min(1, (c!.pr || 0) / 100) };
     }
@@ -165,10 +185,15 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const ctx = c.getContext("2d"); if (!ctx) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    let W = 0, H = 0, raf = 0, base = 1;
+    let W = 0, H = 0, raf = 0, base = 1, running = false, lastF = 0; const gap = frameGap();
     const proj = geoOrthographic().clipAngle(90).precision(0.4);
     const path = geoPath(proj, ctx), grat = geoGraticule10();
-    const size = () => { W = box.clientWidth; H = box.clientHeight; c.width = W * dpr; c.height = H * dpr; c.style.width = W + "px"; c.style.height = H + "px"; base = Math.min(W, H) * 0.46; };
+    const size = () => {
+      W = box.clientWidth; H = box.clientHeight; c.width = W * dpr; c.height = H * dpr; c.style.width = W + "px"; c.style.height = H + "px"; base = Math.min(W, H) * 0.46;
+      dims.current = { W, H, base };
+      // the first time the stage has a size, open on the whole country filling it
+      if (W && H && (!fitted.current || autoFit.current)) { fitted.current = true; view.current.k = homeK(); setZoomK(view.current.k); }
+    };
     size();
     const stSel = sel ? geo.states.find((s) => s.st === sel) : null;
     // each county as its own polygons; any ring that reads as the rest of the globe is turned around
@@ -179,15 +204,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const LT = theme === "light";
     const fx = (c: string) => (!LT ? c : c === AWAIT ? "#d8d2ea" : c === NO_RACE ? "#ebe8f3" : c);
     const GOLD = LT ? "176,122,0" : "255,217,138";
-    const draw = () => {
+    // frames run only while something moves: a flight, a drag, the count sweep or a call glowing; otherwise the
+    // globe is drawn once and waits, which keeps a laptop or phone cool on a long election night
+    const draw = (now = performance.now()) => {
       const v = view.current;
+      const busy = !!v.target || !!drag.current || (!reduce && (sweepOn || calledSt.size > 0 || feed.some((x) => live.at && x.t.getTime() === live.at.getTime())));
+      if (gap && busy && now - lastF < gap) { raf = requestAnimationFrame(draw); return; }
+      lastF = now;
       if (v.target) {
         const t = v.target; v.rot = v.rot.map((x, i) => x + (t.rot[i] - x) * 0.14) as [number, number, number]; v.k += (t.k - v.k) * 0.14;
         if (Math.abs(v.k - t.k) < 0.002 && v.rot.every((x, i) => Math.abs(x - t.rot[i]) < 0.02)) v.target = null;
       }
-      // with a race desk open on the right, the globe centres in the space left of it
-      const dw = deskOpen.current && W > 1100 ? Math.min(1180, W * 0.64) : 0;
-      proj.rotate(v.rot).scale(base * v.k).translate([(W - dw) / 2, H / 2]);
+      proj.rotate(v.rot).scale(base * v.k).translate([W / 2, H / 2]);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const R = proj.scale(), [cx, cy] = proj.translate();
       const atm = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.1); atm.addColorStop(0, LT ? "rgba(120,90,255,.2)" : "rgba(120,90,255,.32)"); atm.addColorStop(1, "rgba(120,90,255,0)");
@@ -199,7 +227,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       const hv = hovRef.current;
       for (const f of geo.states) {
         ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = sel && sel !== f.st ? 0.45 : 1; ctx.fill(); ctx.globalAlpha = 1;
+        const dim = sel && sel !== f.st ? 0.45 : 1, gh = stateColor["~" + f.st];
+        ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = dim; ctx.fill();
+        if (gh) { ctx.fillStyle = gh; ctx.globalAlpha = dim * (LT ? 0.42 : 0.34); ctx.fill(); }
+        ctx.globalAlpha = 1;
         ctx.strokeStyle = hv?.st === f.st && !hv.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
       }
       if (mode === "house" && dGeo.length) {
@@ -227,7 +258,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           const e = expC?.[x.f]; const lv = liveC?.[x.f];
           const em = e && e[3] ? (100 * (e[1] - e[0])) / e[3] : null;
           const fill = lv?.m != null ? (color === "results" ? shade(lv.m, layerRace.k, ind) : em != null ? vsColor(lv.m - em) : AWAIT) : AWAIT;
-          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill();
+          // a county not counted yet shows its expected margin faintly
+          if (lv?.m == null && em != null && color === "results") { ctx.fillStyle = shade(em, layerRace.k, ind); ctx.globalAlpha = LT ? 0.45 : 0.38; ctx.fill(); }
+          ctx.globalAlpha = 1;
           ctx.strokeStyle = hv?.f === x.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
         }
       }
@@ -258,10 +292,12 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         const ll = geoCentroid(f as GeoPermissibleObjects) as [number, number]; if (geoDistance(ll, [-v.rot[0], -v.rot[1]]) > 1.35) continue;
         const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 30) continue; const p = proj(ll); if (p) { if (LT) ctx.strokeText(f.st, p[0], p[1]); ctx.fillText(f.st, p[0], p[1]); }
       }
-      if (!reduce || v.target) raf = requestAnimationFrame(draw);
+      if (busy) raf = requestAnimationFrame(draw); else running = false;
     };
-    raf = requestAnimationFrame(draw);
-    const ro = new ResizeObserver(() => size()); ro.observe(box);
+    const kick = () => { if (running) return; running = true; raf = requestAnimationFrame(draw); };
+    kick();
+    wake.current = () => { running = false; cancelAnimationFrame(raf); kick(); };
+    const ro = new ResizeObserver(() => { size(); running = false; cancelAnimationFrame(raf); kick(); }); ro.observe(box);
     const hit = (x: number, y: number) => {
       const ll = proj.invert?.([x, y]); if (!ll || geoDistance(ll, [-view.current.rot[0], -view.current.rot[1]]) > 1.57) return null;
       const s = geo.states.find((f) => geoContains(f as GeoPermissibleObjects, ll)); if (!s) return null;
@@ -272,8 +308,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const down = (e: PointerEvent) => { drag.current = { x: e.clientX, y: e.clientY, r: [...view.current.rot] as [number, number, number], moved: false }; view.current.target = null; box.setPointerCapture?.(e.pointerId); };
     const move = (e: PointerEvent) => {
       const b = box.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top, d = drag.current;
-      if (d) { const dx = e.clientX - d.x, dy = e.clientY - d.y; if (Math.abs(dx) + Math.abs(dy) > 4) d.moved = true; const k = 70 / proj.scale(); view.current.rot = [d.r[0] + dx * k, Math.max(-85, Math.min(85, d.r[1] - dy * k)), 0]; if (reduce) draw(); return; }
-      const h = hit(x, y); hovRef.current = h; setHov(h ? { ...h, x: e.clientX, y: e.clientY } : null); box.style.cursor = h ? "pointer" : "grab";
+      if (d) { const dx = e.clientX - d.x, dy = e.clientY - d.y; if (Math.abs(dx) + Math.abs(dy) > 4) d.moved = true; const k = 70 / proj.scale(); view.current.rot = [d.r[0] + dx * k, Math.max(-85, Math.min(85, d.r[1] - dy * k)), 0]; kick(); return; }
+      const h = hit(x, y); const was = hovRef.current; hovRef.current = h; setHov(h ? { ...h, x: e.clientX, y: e.clientY } : null); box.style.cursor = h ? "pointer" : "grab";
+      if (was?.st !== h?.st || was?.f !== h?.f || was?.d !== h?.d) { running = false; cancelAnimationFrame(raf); kick(); }
     };
     const up = (e: PointerEvent) => {
       const d = drag.current; drag.current = null; if (d?.moved) return;
@@ -282,20 +319,25 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       if (h.d) setFocus(h.d);
       else if (h.st === sel && layerRace) { setFocus(layerRace.id); return; }
       if (h.d && h.st === sel) return; // a second click on the state opens its race desk
-      const f = geo.states.find((s) => s.st === h.st)!; const bb = geoBounds(f as GeoPermissibleObjects); const ll = geoCentroid(f as GeoPermissibleObjects);
+      fly.current(h.st);
+    };
+    fly.current = (st: string) => {
+      autoFit.current = false;
+      const f = geo.states.find((s) => s.st === st); if (!f) return; const bb = geoBounds(f as GeoPermissibleObjects); const ll = geoCentroid(f as GeoPermissibleObjects);
       const span = Math.max(bb[1][0] - bb[0][0], (bb[1][1] - bb[0][1]) * 1.4, 3);
       view.current.target = { rot: [-ll[0], -ll[1], 0], k: Math.max(1.6, Math.min(14, 60 / span)) }; setZoomK(view.current.target.k);
-      setSel(h.st); setPick(null); if (reduce) draw(); else { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
+      setSel(st); setPick(null); running = false; cancelAnimationFrame(raf); kick();
     };
-    const wheel = (e: WheelEvent) => { e.preventDefault(); const k = Math.max(0.7, Math.min(16, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); if (reduce) draw(); };
-    const leave = () => { hovRef.current = null; setHov(null); };
+    const wheel = (e: WheelEvent) => { e.preventDefault(); autoFit.current = false; const k = Math.max(0.7, Math.min(16, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); running = false; cancelAnimationFrame(raf); kick(); };
+    const leave = () => { hovRef.current = null; setHov(null); running = false; cancelAnimationFrame(raf); kick(); };
     box.addEventListener("pointerdown", down); box.addEventListener("pointermove", move); box.addEventListener("pointerup", up); box.addEventListener("wheel", wheel, { passive: false }); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); box.removeEventListener("pointerdown", down); box.removeEventListener("pointermove", move); box.removeEventListener("pointerup", up); box.removeEventListener("wheel", wheel); box.removeEventListener("pointerleave", leave); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme]);
 
-  const home = () => { view.current.target = { rot: [97, -39, 0], k: 2.2 }; setZoomK(2.2); setSel(null); setPick(null); };
-  const zoomBy = (f: number) => { const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); };
+  const home = () => { autoFit.current = true; const k = homeK(); view.current.target = { rot: [97, -39, 0], k }; setZoomK(k); setSel(null); setPick(null); wake.current(); };
+  const zoomBy = (f: number) => { autoFit.current = false;
+    const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); wake.current(); };
   const full = () => { const el = stage.current?.parentElement; if (!el) return; if (document.fullscreenElement) document.exitFullscreen(); else el.requestFullscreen?.().catch(() => {}); };
 
   // chambers from the returns: seats not up, races civicAPI has called, races being counted
@@ -310,30 +352,83 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   };
   const T = { sen: tally("sen"), house: tally("house"), gov: tally("gov") };
   const anyLive = T.sen.counting + T.house.counting + T.gov.counting > 0;
+  // every race of a chamber as one seat: called, leading, not counted yet with its forecast lean, or not up
+  const seatOf = (r: XRace): Seat & Tile => {
+    const c = live.byId[r.id]; const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
+    let st: SeatState = "aw", txt = `forecast ${fmtM(expM(r), r.k, ind)}`;
+    if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
+    else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${c!.pr.toFixed(0)}% in`; }
+    const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
+    return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? label(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w };
+  };
+  const seats = useMemo(() => {
+    const all = ix?.races ?? [];
+    const of = (k: Kind) => all.filter((r) => r.k === k).map(seatOf);
+    const hold = (n: number, s: SeatState, l: string): Seat[] => Array.from({ length: n }, () => ({ s, label: l }));
+    const sen = [...hold(chambers.sen.notD, "nd", "Democratic seat not up this year"), ...of("sen"), ...hold(chambers.sen.notR, "nr", "Republican seat not up this year")];
+    const house = of("house");
+    const gov = of("gov") as Tile[];
+    for (const [st, p] of Object.entries(GOV_HOLD)) if (!gov.some((t) => t.st === st)) gov.push({ st, s: p === "D" ? "nd" : "nr", label: `${STN[st]}: ${p === "D" ? "Democratic" : "Republican"} governor, not up this year` });
+    return { sen, house, gov };
+  }, [ix, live.byId, chambers]); // eslint-disable-line react-hooks/exhaustive-deps
+  const pickSeat = (x: { id?: string; st?: string }) => { if (!x.id) return; if (x.st) fly.current(x.st); setFocus(x.id); };
   const reportingNow = useMemo(() => races.filter((r) => hasReturns(live.byId[r.id])).sort((a, b) => Math.abs(liveMargin(a, live.byId[a.id]) ?? 99) - Math.abs(liveMargin(b, live.byId[b.id]) ?? 99)), [races, live.byId]);
+  // before returns, the list opens on the closest races by the forecast
+  const closest = useMemo(() => races.slice().sort((a, b) => Math.abs(expM(a) ?? 99) - Math.abs(expM(b) ?? 99)), [races]);
   const left = now ? FIRST_CLOSE - now.getTime() : 0;
   const clock = now ? now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", timeZone: "America/New_York" }) : "";
+  const big: "sen" | "house" | "gov" = mode === "house" || mode === "gov" ? mode : "sen";
+  const pctf = (p: number) => `${Math.round((p > 1 ? p : p * 100))}%`;
 
   const raceRow = (r: XRace, inState: boolean) => {
-    const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]);
+    const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const e = expM(r);
     return (
       <li key={r.id}>
         <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => setDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
           <span className="nm">{label(r, inState)}</span>
-          <span className={`lv ${lm == null ? "" : lm < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{!c ? "Not linked" : lm == null ? "No returns" : fmtM(lm, r.k, isInd(r))}</span>
-          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : ""}</span>
+          {lm == null
+            ? <span className={`lv ex ${e == null ? "" : e < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{e == null ? "" : fmtM(e, r.k, isInd(r))}</span>
+            : <span className={`lv ${lm < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{fmtM(lm, r.k, isInd(r))}</span>}
+          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : c ? "Forecast" : "Not linked"}</span>
         </button>
       </li>
     );
   };
 
-  return (
-    <div className="mon">
-      <div className="mon-stage" ref={stage} aria-label="Globe of every November 3 race. Drag to turn it, scroll or use the buttons to zoom, click a state to open it." role="application">
-        <canvas ref={cv} />
-        <div className="mon-reticle" aria-hidden="true"><i /><i /></div>
-      </div>
+  const chamber = (k: "sen" | "house" | "gov") => {
+    const list = seats[k]; const ct = countSeats(list); const t = T[k];
+    const name = k === "sen" ? "Senate" : k === "house" ? "House" : "Governors";
+    const maj = k === "sen" ? 51 : k === "house" ? 218 : 26;
+    const fc = k === "sen" ? chambers.sen : k === "house" ? chambers.house : chambers.gov;
+    const open = big === k;
+    const dTot = ct.dW + ct.iW;
+    const note = k === "sen" ? "51 for control, 50 with the vice president for Republicans" : k === "house" ? "218 for a majority" : "26 for a majority of governorships";
+    return (
+      <section key={k} className={`mon-cp${open ? " open" : ""}`} aria-label={`${name} control`}>
+        <button type="button" className="mon-cp-h" onClick={() => { setMode(k); setPick(null); }} aria-pressed={open}>
+          <b>{name}</b><span>{t.cD + t.cR} of {t.n} called · {t.counting} counting</span>
+        </button>
+        <div className="mon-cp-score">
+          <div className="d"><b>{dTot}</b><span>Democrats{ct.iW ? `, ${ct.iW} independent` : ""}{ct.dL + ct.iL ? ` · ${ct.dL + ct.iL} leading` : ""}</span></div>
+          <div className="mid"><b>{ct.aw}</b><span>not counted</span></div>
+          <div className="r"><b>{ct.rW}</b><span>Republicans{ct.rL ? ` · ${ct.rL} leading` : ""}</span></div>
+        </div>
+        {open ? (k === "gov"
+          ? <GovTiles tiles={list as Tile[]} onPick={pickSeat} />
+          : <SeatArc seats={list} onPick={pickSeat} label={`${name}: ${dTot} Democratic and ${ct.rW} Republican seats held or won, ${ct.aw} not counted yet`} />) : null}
+        <MajorityBar c={ct} maj={maj} majLabel={String(maj)} />
+        {open ? (() => { const dN = Math.max(0, maj - dTot), rN = Math.max(0, (k === "sen" ? 50 : maj) - ct.rW); return (
+          <div className="mon-cp-need">
+            <span className="d">{dN ? <>Democrats need <b>{dN}</b> of {ct.aw + ct.dL + ct.rL + ct.iL} still open</> : <b>Democrats have a majority</b>}</span>
+            <span className="r">{rN ? <>Republicans need <b>{rN}</b></> : <b>Republicans have a majority</b>}</span>
+          </div>); })() : null}
+        <p className="mon-cp-f"><span>{note}</span><span>Forecast <b className="d">D {pctf(fc.pD)}</b> · {fc.dS.toFixed(1)} D {k === "gov" ? "governors" : "seats"} on average</span></p>
+      </section>
+    );
+  };
 
+  return (
+    <div className={`mon${desk ? " desk-on" : ""}`}>
       <section className="mon-top" aria-label="Monitor controls">
         <div className="mon-title">
           <span className="eye"><i className={anyLive ? "on" : ""} />Situation monitor · November 3, 2026</span>
@@ -342,34 +437,46 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           {live.test && live.hidden > 0 ? <p className="mon-test">civicAPI is publishing test returns before Election Day; they are hidden. <a href="?test=1">Preview with test returns</a></p> : null}
           {live.test && live.hidden === 0 && anyLive ? <p className="mon-test">Showing civicAPI test returns for preview. These are not real votes. <a href="?">Hide them</a></p> : null}
         </div>
-        <div className="mon-seg" role="group" aria-label="Races">{MODES.map(([k, l]) => <button key={k} aria-pressed={mode === k} onClick={() => { setMode(k); setPick(null); }}>{l}</button>)}</div>
-        <div className="mon-seg sm" role="group" aria-label="Colour by">{(["results", "versus"] as Color[]).map((k) => <button key={k} aria-pressed={color === k} onClick={() => setColor(k)}>{k === "results" ? "Results" : "Versus expected vote"}</button>)}</div>
+        <div className="mon-ctl">
+          <div className="mon-seg" role="group" aria-label="Races">{MODES.map(([k, l]) => <button key={k} aria-pressed={mode === k} onClick={() => { setMode(k); setPick(null); }}>{l}</button>)}</div>
+          <div className="mon-seg sm" role="group" aria-label="Colour by">{(["results", "versus"] as Color[]).map((k) => <button key={k} aria-pressed={color === k} onClick={() => setColor(k)}>{k === "results" ? "Results" : "Versus expected vote"}</button>)}</div>
+        </div>
+        <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
       </section>
 
-      <aside className="mon-left" aria-label="Chambers">
-        {([["sen", "Senate", 100, chambers.sen.notD, chambers.sen.notR], ["house", "House", 435, 0, 0], ["gov", "Governors", 50, chambers.gov.notD, chambers.gov.notR]] as const).map(([k, l, N, nd, nr]) => {
-          const t = T[k]; const dW = nd + t.cD, rW = nr + t.cR;
-          return (
-            <div className="mon-ch" key={k}>
-              <div className="h"><b>{l}</b><span>{t.cD + t.cR} of {t.n} called · {t.counting} counting</span></div>
-              <div className="bar" aria-hidden="true">
-                <i className="d" style={{ width: `${(100 * dW) / N}%` }} /><i className="d lead" style={{ width: `${(100 * t.lD) / N}%` }} />
-                <span className="gap" />
-                <i className="r lead" style={{ width: `${(100 * t.lR) / N}%` }} /><i className="r" style={{ width: `${(100 * rW) / N}%` }} /><span className="mid" />
-              </div>
-              <div className="n"><span className="d">D {dW}{t.lD ? ` + ${t.lD} leading` : ""}</span><span className="r">{t.lR ? `${t.lR} leading + ` : ""}R {rW}</span></div>
-            </div>
-          );
-        })}
-        <div className="mon-legend">
-          {color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
-        </div>
+      <aside className="mon-left" aria-label="Control of the Senate, the House and the governorships">
+        {chamber(big)}
+        {(["sen", "house", "gov"] as const).filter((k) => k !== big).map((k) => chamber(k))}
+        <SeatKey />
         <div className="mon-feed">
-          <h3>// Feed</h3>
+          <h3>Feed</h3>
           {feed.length ? <ul>{feed.slice(0, 14).map((f, i) => <li key={i}><time>{clockET(f.t)}</time><button type="button" onClick={() => setFocus(f.id)}>{f.text}</button></li>)}</ul>
             : <p>{anyLive ? "Returns are in. New counts and calls appear here as each read lands." : "New counts and calls appear here as civicAPI reports them. Nothing has been counted yet."}</p>}
         </div>
       </aside>
+
+      <div className="mon-map">
+        <div className="mon-stage" ref={stage} aria-label="Globe of every November 3 race. Drag to turn it, scroll or use the buttons to zoom, click a state to open it." role="application">
+          <canvas ref={cv} />
+          <div className="mon-reticle" aria-hidden="true"><i /><i /></div>
+        </div>
+        {sel ? <button type="button" className="mon-back" onClick={home}>{STN[sel]} · Back to the country</button> : null}
+        <div className="mon-legend">
+          {color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
+        </div>
+        <div className="mon-hud" aria-hidden="true">{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
+        <div className="mon-zoom">
+          <button onClick={() => zoomBy(1.5)} aria-label="Zoom in">+</button>
+          <button onClick={() => zoomBy(1 / 1.5)} aria-label="Zoom out">−</button>
+          <button onClick={home} aria-label="Show the whole country" className="t">US</button>
+          <button onClick={full} aria-label="Full screen" className="t">Full</button>
+        </div>
+        {toast ? (
+          <button type="button" className="mon-toast" onClick={() => { setFocus(toast.id); setToast(null); }}>
+            <span className="k">civicAPI call</span><b>{toast.race}</b><span className="w">{toast.who}</span>
+          </button>
+        ) : null}
+      </div>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
         {focusRace ? <RaceBrief key={focusRace.id} r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
@@ -383,27 +490,14 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           </>
         ) : (
           <>
-            <div className="mon-rh"><b>{reportingNow.length ? `${MODES.find((m) => m[0] === mode)?.[1]} races counting` : `${MODES.find((m) => m[0] === mode)?.[1]} races`}</b><span>Returns · in</span></div>
-            {!reportingNow.length ? <p className="mon-note">No returns yet. {races.length} races are linked; each fills in as its first votes are counted. Click a state or a race to open its results desk.</p> : null}
-            <ul>{(reportingNow.length ? reportingNow : races.slice().sort((a, b) => a.nm.localeCompare(b.nm))).slice(0, 80).map((r) => raceRow(r, false))}</ul>
+            <div className="mon-rh"><b>{reportingNow.length ? `${MODES.find((m) => m[0] === mode)?.[1]} races counting` : `Closest ${MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} races`}</b><span>{reportingNow.length ? "Now · in" : "Forecast"}</span></div>
+            {!reportingNow.length ? <p className="mon-note">No returns yet. Each race fills in as its first votes are counted; until then the list shows the forecast, closest first. Click a race or a state to open it.</p> : null}
+            <ul>{(reportingNow.length ? reportingNow : closest).slice(0, 80).map((r) => raceRow(r, false))}</ul>
             <Link className="mon-all" href="/results/2026">Every race as a list</Link>
           </>
         )}
       </aside>
 
-      <div className="mon-hud" aria-hidden="true"><span className="vin"><i />{votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span>{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>{clock} ET</span><span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
-      <div className="mon-zoom">
-        <button onClick={() => zoomBy(1.5)} aria-label="Zoom in">+</button>
-        <button onClick={() => zoomBy(1 / 1.5)} aria-label="Zoom out">−</button>
-        <button onClick={home} aria-label="Show the whole country" className="t">US</button>
-        <button onClick={full} aria-label="Full screen" className="t">Full</button>
-      </div>
-
-      {toast ? (
-        <button type="button" className="mon-toast" onClick={() => { setFocus(toast.id); setToast(null); }}>
-          <span className="k">civicAPI call</span><b>{toast.race}</b><span className="w">{toast.who}</span>
-        </button>
-      ) : null}
       {hov ? (() => {
         const rs = byState[hov.st] ?? [];
         const cr = hov.f && layerRace ? layerRace : null;
