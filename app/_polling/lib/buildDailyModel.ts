@@ -250,11 +250,31 @@ export const LEAN_FIRMS: { id: string; label: string; re: RegExp; dir: LeanDir }
   { id: "trafalgar", label: "Trafalgar", re: /trafalgar/i, dir: "R" },
   { id: "insideradvantage", label: "InsiderAdvantage", re: /insider\s*advantage/i, dir: "R" },
   { id: "impactresearch", label: "Impact Research", re: /impact\s*research/i, dir: "D" },
+  // Oct 23 2026, set by the publisher: Democratic leaning firms get the same measured treatment. Each is moved only
+  // if its own polls run to the left of the other polls of the same races, by as much as they do.
+  { id: "ppp", label: "Public Policy Polling", re: /public\s*policy\s*polling|\bppp\b/i, dir: "D" },
+  { id: "changeresearch", label: "Change Research", re: /change\s*research/i, dir: "D" },
+  { id: "gsg", label: "Global Strategy Group", re: /global\s*strategy\s*group|\bgsg\b/i, dir: "D" },
+  { id: "gbao", label: "GBAO", re: /\bgbao\b/i, dir: "D" },
+  { id: "dataforprogress", label: "Data for Progress", re: /data\s*for\s*progress/i, dir: "D" },
+  { id: "hart", label: "Hart Research", re: /hart\s*research/i, dir: "D" },
+  { id: "gqr", label: "GQR", re: /\bgqr\b|greenberg\s*quinlan/i, dir: "D" },
+  { id: "lake", label: "Lake Research Partners", re: /lake\s*research/i, dir: "D" },
+  { id: "tulchin", label: "Tulchin Research", re: /tulchin/i, dir: "D" },
+  { id: "tavern", label: "Tavern Research", re: /tavern\s*research/i, dir: "D" },
+  { id: "civiqs", label: "Civiqs", re: /civiqs/i, dir: "D" },
+  { id: "navigator", label: "Navigator Research", re: /navigator\s*research/i, dir: "D" },
+  { id: "tpor", label: "Texas Public Opinion Research", re: /texas\s*public\s*opinion\s*research/i, dir: "D" },
+  { id: "ztoa", label: "Z to A Research", re: /z\s*to\s*a\s*research/i, dir: "D" },
+  { id: "mdw", label: "MDW Communications", re: /mdw\s*communications/i, dir: "D" },
+  { id: "clarity", label: "Clarity Campaign Labs", re: /clarity\s*campaign/i, dir: "D" },
 ];
 export const R_LEAN_FIRMS = LEAN_FIRMS;
 // a bipartisan release, like Fabrizio Ward with Impact Research, is not a partisan internal
-const BIPARTISAN = /fabrizio|bipartisan/i;
-export function leanFirms(name: string): string[] { return LEAN_FIRMS.filter((f) => f.re.test(name || "") && !(f.dir === "D" && BIPARTISAN.test(name || ""))).map((f) => f.id); }
+// a bipartisan release, a Democratic firm paired with a Republican one, is not moved either way
+const BIPARTISAN = /fabrizio|bipartisan|north\s*star|nsor|shaw|cygnal|\bpos\b|public\s*opinion\s*strategies/i;
+const bipartisan = (n: string) => BIPARTISAN.test(n) || (/\(D\)/.test(n) && /\(R\)/.test(n));
+export function leanFirms(name: string): string[] { const n = name || ""; return LEAN_FIRMS.filter((f) => f.re.test(n) && !(f.dir === "D" && bipartisan(n))).map((f) => f.id); }
 export const rLeanFirms = leanFirms;
 export const leanDirOf = (id: string): LeanDir => LEAN_FIRMS.find((f) => f.id === id)?.dir ?? "R";
 

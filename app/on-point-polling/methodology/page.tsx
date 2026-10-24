@@ -74,14 +74,14 @@ export default function Page() {
                 <li><b>Keep the slope honest.</b> The slope is shrunk toward flat when only a few polls carry the weight and the lift it can add is capped at 1.5 points, so one fresh poll cannot tilt the line.</li>
                 <li><b>Three robustness passes.</b> Each poll&rsquo;s distance from the fit is scored against the weighted median miss with bisquare weights, and the line is refit three times. A poll far from the rest is weighed down in proportion to how far out it sits, and ordinary sampling noise of a point or so is never cut.</li>
               </ol>
-              <p style={{ fontSize: 13.5 }}>Excluded firms are dropped before the fit and the measured R lean comes off before the fit, so the robustness passes judge every poll on the same footing.</p>
+              <p style={{ fontSize: 13.5 }}>Excluded firms are dropped before the fit and the measured lean of a Republican or Democratic leaning firm comes off before the fit, so the robustness passes judge every poll on the same footing.</p>
             </div>
           </div>
           <div className="card">
             <div className="card-h"><h3>How upweighting works</h3></div>
             <div className="card-b">
               <p style={{ fontSize: 13.5 }}>Gold Standard pollsters carry the top pollster grade, <span className="mono">6×</span> the weight of a baseline B grade firm, in every Senate, governor, House and national average. In the national generic ballot, approval and right track averages they also get an effective sample size inflation of <span className="mono">n′ = n × m²</span> where <span className="mono">m = 2</span>.</p>
-              <p style={{ fontSize: 13.5 }}>Rasmussen Reports and ActiVote are not counted in any average. Trafalgar and InsiderAdvantage are labelled Republican leaning: each of their polls is compared with the other polls of the same race ended within three weeks of it, the gap is pooled across every race and shrunk toward zero, and that many points come off their margin before they enter the average. The adjusted figures are what the poll tables show, marked R lean.</p>
+              <p style={{ fontSize: 13.5 }}>Rasmussen Reports and ActiVote are not counted in any average. Trafalgar and InsiderAdvantage are labelled Republican leaning, and Democratic firms such as Public Policy Polling, Change Research, Global Strategy Group, GBAO, Data for Progress, GQR, Hart Research, Lake Research, Civiqs and Navigator are labelled Democratic leaning. Each of their polls is compared with the other polls of the same race ended within three weeks of it, the gap is pooled across every race and shrunk toward zero, and that many points come off the margin toward the other side before the poll enters the average. A firm whose polls do not actually run toward its side is not moved. Joint releases by a Democratic and a Republican firm are not moved. The poll tables show every poll as published, marked R lean or D lean, and the chart draws the published poll as a hollow dot joined to the point the average counts.</p>
             </div>
           </div>
           <div className="card"><div className="card-b">
