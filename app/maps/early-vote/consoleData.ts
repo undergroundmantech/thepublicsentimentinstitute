@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getModel, isInd } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
-import type { EarlyVote } from "./server";
+import type { EarlyVote, EvState } from "./server";
 import { STATE_NAME, stateOfFips } from "./lib";
 
 export type EvRow = {
@@ -144,8 +144,22 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
   const series = dailySeries();
   const fc = forecastLinks();
   const sig = signals(), shifts = evShifts(), BR = benchRaces(), P24 = pres24();
+  // Oct 24: where a state reports the party of its ballots, the party split is read from the live feed this page just
+  // loaded, not from the saved snapshot the party model last ran on, so it moves with every new count. The model's
+  // expected split for this point stays as it was, and the gap against it is worked out again from the live split.
+  const reported = (s: EvState): Sig["party"] | null => {
+    const T = s.dem + s.rep + s.ind;
+    return s.partyShare >= 0.9 && T > 0 ? { d: s.dem / T, r: s.rep / T, o: s.ind / T } : null;
+  };
+  const sigOf = (s: EvState): Sig | undefined => {
+    const g = sig.states[s.st], live = reported(s);
+    if (!g || !live) return g;
+    const actualMargin = (live.r - live.d) * 100;
+    return { ...g, party: live, estimatedShare: Math.max(0, 1 - s.partyShare), ballots: s.total, actualMargin, delta: actualMargin - g.expectedMargin };
+  };
   const rows: EvRow[] = ev.states.map((s) => {
     const h = hist.states[s.st] ?? {};
+    const g0 = sigOf(s);
     const cp = (y: "2022" | "2024") => (h[y]?.cps ?? []).map((c) => [c[0], c[1]] as [number, number]);
     const c22 = cp("2022"), c24 = cp("2024");
     const a22 = at(c22, daysOut), a24 = at(c24, daysOut);
@@ -154,10 +168,10 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
     return { st: s.st, name: s.name, slug: s.slug, total: s.total, mail: s.mail, inperson: s.inperson, requested: s.requested, dem: s.dem, rep: s.rep, ind: s.ind, partyShare: s.partyShare,
       t22: h["2022"]?.turnout ?? null, t24: h["2024"]?.turnout ?? null, e22: h["2022"]?.early ?? null, e24: h["2024"]?.early ?? null,
       pace22: a22 ? s.total / a22 : null, pace24: a24 ? s.total / a24 : null, cps22: c22, cps24: c24, s26, fc: fc[s.st] ?? null,
-      bench: (() => { const g = sig.states[s.st]; if (!g || !g.expectedParty || !g.expectedPartyFull || !g.expectedEarly || !g.expectedTotal) return null;
+      bench: (() => { const g = g0; if (!g || !g.expectedParty || !g.expectedPartyFull || !g.expectedEarly || !g.expectedTotal) return null;
         return { races: BR[s.st] ?? [], pres24: P24[s.st] ?? null, expEarly: g.expectedEarly, expTotal: g.expectedTotal, ballots: g.ballots, now: g.party, expNow: g.expectedParty, expFull: g.expectedPartyFull, gExp: g.expGroups, gFc: g.forecastElectorate }; })(),
-      pm: sig.states[s.st] ? { d: sig.states[s.st].party.d, r: sig.states[s.st].party.r, o: sig.states[s.st].party.o, est: sig.states[s.st].estimatedShare ?? 0,
-        xd: sig.states[s.st].expectedParty?.d ?? 0, xr: sig.states[s.st].expectedParty?.r ?? 0, delta: sig.states[s.st].delta ?? 0, shift: shifts[s.st] ?? null } : null };
+      pm: g0 ? { d: g0.party.d, r: g0.party.r, o: g0.party.o, est: g0.estimatedShare ?? 0,
+        xd: g0.expectedParty?.d ?? 0, xr: g0.expectedParty?.r ?? 0, delta: g0.delta ?? 0, shift: shifts[s.st] ?? null } : null };
   });
   const us26 = (series.US ?? []).filter((p) => p[0] >= daysOut).sort((a, b) => b[0] - a[0]);
   if (!us26.some((p) => p[0] === daysOut)) us26.push([daysOut, ev.total]);

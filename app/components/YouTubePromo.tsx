@@ -11,7 +11,7 @@ import YouTubeIcon from "./YouTubeIcon";
 import "./youtube.css";
 
 const KEY = "opp.yt.until";
-const SKIP = [/^\/results\/monitor/, /^\/maps\/electoral/, /^\/embed/, /^\/on-point-polling\/portal/, /^\/swingometer\/studio/];
+const SKIP = [/^\/results\/monitor/, /^\/brasil/, /^\/maps\/electoral/, /^\/embed/, /^\/on-point-polling\/portal/, /^\/swingometer\/studio/];
 const day = 864e5;
 
 function copy(path: string) {

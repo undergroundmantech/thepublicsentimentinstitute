@@ -18,6 +18,10 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/measures", label: "Ballot measures", note: "145 statewide questions" },
         { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
       ] },
+      { h: "Around the world", links: [
+        { href: "/brasil", label: "Brasil 2026", note: "Runoff forecast, Flávio Bolsonaro x Lula", badge: "New" },
+        { href: "/brasil/estados", label: "Brasil por município", note: "Every state and town" },
+      ] },
       { h: "Scenarios and method", links: [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
         { href: "/swingometer", label: "Swingometer", note: "Move any group of voters" },
@@ -48,8 +52,13 @@ export const MENU: NavGroup[] = [
       ] },
     ] },
   { key: "results", label: "Results", href: "/results", go: "/results/monitor", live: true,
-    feature: { href: "/results/monitor", eyebrow: "New", title: "Situation monitor", note: "Every November 3 race on one globe, live from civicAPI against our forecast." },
+    feature: { href: "/brasil/monitor", eyebrow: "Brasil · 25 de outubro", title: "Sala de situação", note: "The Brazil runoff count live in every municipality, in Portuguese, with our projection." },
     cols: [
+      { h: "Brasil, 2º turno", links: [
+        { href: "/brasil/resultados", label: "Apuração ao vivo", note: "Flávio Bolsonaro x Lula, live from the TSE", badge: "Live" },
+        { href: "/brasil/monitor", label: "Sala de situação", note: "Every municipality on one map" },
+        { href: "/brasil", label: "Previsão do 2º turno", note: "The On Point Brazil forecast" },
+      ] },
       { h: "November 3", links: [
         { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race", badge: "New" },
         { href: "/results/2026", label: "Every race", note: "Expected and reported vote, county by county" },

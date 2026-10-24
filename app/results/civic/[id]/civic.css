@@ -1,0 +1,25 @@
+/* A results page for a race the forecast does not cover: the count, a county map and a county table. */
+.cr { display: grid; gap: 18px; padding-block: clamp(18px, 2.4vw, 36px) 48px; max-width: 1400px; margin: 0 auto; }
+.cr-h .eye { font: 700 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.cr-h h1 { margin: 6px 0; font: 800 clamp(26px, 3vw, 42px)/1.08 var(--font-d); letter-spacing: -.03em; text-wrap: balance; }
+.cr-h p { margin: 0; color: var(--ink2); max-width: 70ch; line-height: 1.55; }
+.cr-card { background: var(--glass); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(14px, 1.6vw, 22px); min-width: 0; }
+.cr-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.cr-c li { display: grid; grid-template-columns: 10px minmax(140px, 1.2fr) minmax(80px, 2fr) 64px 96px; gap: 12px; align-items: center; }
+.cr-c .sw { width: 10px; height: 10px; border-radius: 3px; }
+.cr-c .nm { font: 700 15px var(--font-b); } .cr-c .nm small { display: block; font: 600 11.5px var(--font-b); color: var(--mute); }
+.cr-c .win { font: 800 10px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: #0a0711; background: var(--win); padding: 2px 6px; border-radius: 999px; margin-left: 6px; }
+.cr-c .bar { height: 10px; border-radius: 5px; background: var(--glass2); overflow: hidden; } .cr-c .bar i { display: block; height: 100%; transition: width .8s; }
+.cr-c .pc, .cr-c .vt { font: 800 14px var(--font-m); text-align: right; font-variant-numeric: tabular-nums; } .cr-c .vt { font-weight: 600; color: var(--mute); font-size: 12.5px; }
+.cr-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.cr-map svg { width: 100%; height: auto; display: block; }
+.cr-map path { transition: fill .5s; } .cr-map path:hover { filter: brightness(1.25); }
+.cr-hov { margin-top: 8px; font: 600 12.5px var(--font-m); color: var(--ink2); min-height: 18px; }
+.cr-tbl { max-height: 620px; overflow: auto; padding: 0; }
+.cr-tbl table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.cr-tbl th { position: sticky; top: 0; background: var(--bg2); text-align: left; font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); padding: 10px 12px; border-bottom: 1px solid var(--line2); }
+.cr-tbl td { padding: 7px 12px; border-bottom: 1px solid var(--line); }
+.cr-tbl .n { text-align: right; font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.cr-tbl tr.on td { background: var(--glass2); }
+.cr-foot { font-size: 13px; color: var(--mute); } .cr-foot a { color: var(--gold); }
+@media (max-width: 900px) { .cr-grid { grid-template-columns: 1fr; } .cr-c li { grid-template-columns: 10px minmax(0, 1fr) 56px; } .cr-c .bar, .cr-c .vt { display: none; } }

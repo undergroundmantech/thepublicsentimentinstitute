@@ -108,7 +108,7 @@ function StatePage({ st }: { st: string }) {
           {gov ? <Link className="btn sm" href={forecastHref(gov)}>Governor forecast</Link> : null}
         </div>
       </header>
-      <StateLive groups={groups} />
+      <StateLive groups={groups} st={st} />
       <AlertSignup from="results" title={`${name} results in your inbox`} note="The On Point newsletter: the final forecast before Election Day and the results as races are called. Free, and you can leave any time." />
       <section className="srs-faq" aria-labelledby="srs-faq">
         <h2 id="srs-faq">{name} results, answered</h2>
