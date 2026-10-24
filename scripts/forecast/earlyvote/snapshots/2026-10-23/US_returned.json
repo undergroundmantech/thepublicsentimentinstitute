@@ -2,131 +2,131 @@
  "state": "US",
  "category": "returned",
  "election_name": "2026 General",
- "snapshot_date": "2026-10-22",
+ "snapshot_date": "2026-10-23",
  "regions": {
   "AK": {
    "Unspecified": {
-    "votes": 6699,
+    "votes": 10563,
     "color": ""
    }
   },
   "AR": {
    "Democratic": {
-    "votes": 477,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 369,
+    "votes": 564,
     "color": ""
    },
    "Other": {
-    "votes": 3003,
+    "votes": 3782,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 457,
     "color": ""
    }
   },
   "AZ": {
    "Democratic": {
-    "votes": 255884,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 251787,
+    "votes": 325366,
     "color": ""
    },
    "Other": {
-    "votes": 148509,
+    "votes": 193366,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 324722,
     "color": ""
    }
   },
   "CA": {
    "Unspecified": {
-    "votes": 1973289,
+    "votes": 2478771,
     "color": ""
    }
   },
   "CO": {
    "Democratic": {
-    "votes": 216321,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 159933,
+    "votes": 236947,
     "color": ""
    },
    "Other": {
-    "votes": 278555,
+    "votes": 307937,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 177400,
     "color": ""
    }
   },
   "CT": {
    "Democratic": {
-    "votes": 13191,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 4788,
+    "votes": 15752,
     "color": ""
    },
    "Other": {
-    "votes": 7472,
+    "votes": 8930,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 5661,
     "color": ""
    }
   },
   "DE": {
    "Democratic": {
-    "votes": 8945,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 2688,
+    "votes": 28683,
     "color": ""
    },
    "Other": {
-    "votes": 2184,
+    "votes": 8774,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 12755,
     "color": ""
    }
   },
   "FL": {
    "Democratic": {
-    "votes": 480986,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 405206,
-    "color": ""
-   },
-   "Other": {
-    "votes": 27169,
+    "votes": 556140,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 211468,
+    "votes": 245681,
+    "color": ""
+   },
+   "Other": {
+    "votes": 31520,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 469178,
     "color": ""
    }
   },
   "GA": {
    "Unspecified": {
-    "votes": 62716,
+    "votes": 71081,
     "color": ""
    }
   },
   "HI": {
    "Unspecified": {
-    "votes": 57976,
+    "votes": 97005,
     "color": ""
    }
   },
   "IA": {
    "Democratic": {
-    "votes": 16301,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 8558,
+    "votes": 37096,
     "color": ""
    },
    "Other": {
-    "votes": 3709,
+    "votes": 9682,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 24367,
     "color": ""
    }
   },
@@ -135,102 +135,102 @@
     "votes": 8538,
     "color": ""
    },
-   "Republican": {
-    "votes": 20179,
-    "color": ""
-   },
    "Other": {
     "votes": 228,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 20179,
     "color": ""
    }
   },
   "IL": {
    "Unspecified": {
-    "votes": 371536,
+    "votes": 443833,
     "color": ""
    }
   },
   "IN": {
    "Unspecified": {
-    "votes": 225827,
+    "votes": 292616,
     "color": ""
    }
   },
   "KS": {
    "Democratic": {
-    "votes": 4200,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 2425,
+    "votes": 16996,
     "color": ""
    },
    "Other": {
-    "votes": 1009,
+    "votes": 4186,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 10959,
     "color": ""
    }
   },
   "KY": {
    "Democratic": {
-    "votes": 12977,
+    "votes": 15342,
     "color": ""
    },
    "Republican": {
-    "votes": 8203,
+    "votes": 9825,
     "color": ""
    },
    "Unspecified": {
-    "votes": 1941,
+    "votes": 2268,
     "color": ""
    }
   },
   "LA": {
    "Unspecified": {
-    "votes": 56477,
+    "votes": 59522,
     "color": ""
    }
   },
   "MD": {
    "Democratic": {
-    "votes": 150153,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 35938,
+    "votes": 177411,
     "color": ""
    },
    "Other": {
-    "votes": 32378,
+    "votes": 38185,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 41401,
     "color": ""
    }
   },
   "ME": {
    "Democratic": {
-    "votes": 36397,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 12190,
-    "color": ""
-   },
-   "Other": {
-    "votes": 1714,
+    "votes": 45015,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 17542,
+    "votes": 23136,
+    "color": ""
+   },
+   "Other": {
+    "votes": 2272,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 16613,
     "color": ""
    }
   },
   "MI": {
    "Unspecified": {
-    "votes": 861072,
+    "votes": 986207,
     "color": ""
    }
   },
   "MN": {
    "Unspecified": {
-    "votes": 121382,
+    "votes": 177841,
     "color": ""
    }
   },
@@ -242,256 +242,262 @@
   },
   "MT": {
    "Unspecified": {
-    "votes": 137265,
+    "votes": 171981,
     "color": ""
    }
   },
   "NC": {
    "Democratic": {
-    "votes": 21742,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 9042,
-    "color": ""
-   },
-   "Other": {
-    "votes": 141,
+    "votes": 23245,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 20171,
+    "votes": 21676,
+    "color": ""
+   },
+   "Other": {
+    "votes": 157,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 9810,
     "color": ""
    }
   },
   "ND": {
    "Unspecified": {
-    "votes": 28240,
+    "votes": 31805,
     "color": ""
    }
   },
   "NE": {
    "Democratic": {
-    "votes": 43498,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 40079,
+    "votes": 49357,
     "color": ""
    },
    "Other": {
-    "votes": 16359,
+    "votes": 18950,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 47751,
     "color": ""
    }
   },
   "NJ": {
    "Democratic": {
-    "votes": 266355,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 76663,
+    "votes": 285229,
     "color": ""
    },
    "Other": {
-    "votes": 61443,
+    "votes": 67749,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 82380,
     "color": ""
    }
   },
   "NM": {
    "Democratic": {
-    "votes": 22616,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 6835,
+    "votes": 27763,
     "color": ""
    },
    "Other": {
-    "votes": 5909,
+    "votes": 7421,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 8669,
     "color": ""
    }
   },
   "NV": {
    "Democratic": {
-    "votes": 47554,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 37912,
+    "votes": 80823,
     "color": ""
    },
    "Other": {
-    "votes": 31950,
+    "votes": 54151,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 62692,
     "color": ""
    }
   },
   "OH": {
    "Unspecified": {
-    "votes": 319992,
+    "votes": 395061,
     "color": ""
    }
   },
   "OK": {
    "Democratic": {
-    "votes": 10007,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 10043,
-    "color": ""
-   },
-   "Other": {
-    "votes": 64,
+    "votes": 10759,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 2765,
+    "votes": 3012,
+    "color": ""
+   },
+   "Other": {
+    "votes": 73,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 11127,
     "color": ""
    }
   },
   "OR": {
    "Democratic": {
-    "votes": 81232,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 39494,
+    "votes": 225708,
     "color": ""
    },
    "Other": {
-    "votes": 34411,
+    "votes": 119548,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 144038,
     "color": ""
    }
   },
   "PA": {
    "Democratic": {
-    "votes": 455637,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 161039,
-    "color": ""
-   },
-   "Other": {
-    "votes": 1617,
+    "votes": 483009,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 58003,
+    "votes": 62549,
+    "color": ""
+   },
+   "Other": {
+    "votes": 1745,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 173361,
     "color": ""
    }
   },
   "RI": {
    "Democratic": {
-    "votes": 5978,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 734,
+    "votes": 8160,
     "color": ""
    },
    "Other": {
-    "votes": 4210,
+    "votes": 5981,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 1042,
+    "color": ""
+   }
+  },
+  "SC": {
+   "Unspecified": {
+    "votes": 26106,
     "color": ""
    }
   },
   "SD": {
    "Democratic": {
-    "votes": 10033,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 16285,
-    "color": ""
-   },
-   "Other": {
-    "votes": 3978,
+    "votes": 14986,
     "color": ""
    },
    "No Party Affiliation": {
-    "votes": 1266,
+    "votes": 2115,
+    "color": ""
+   },
+   "Other": {
+    "votes": 6309,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 26028,
     "color": ""
    }
   },
   "TX": {
    "Unspecified": {
-    "votes": 98008,
+    "votes": 122385,
     "color": ""
    }
   },
   "UT": {
    "Democratic": {
-    "votes": 25981,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 58899,
+    "votes": 33070,
     "color": ""
    },
    "Other": {
-    "votes": 29536,
+    "votes": 38143,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 76240,
     "color": ""
    }
   },
   "VA": {
    "Unspecified": {
-    "votes": 238793,
+    "votes": 253390,
     "color": ""
    }
   },
   "VT": {
    "Unspecified": {
-    "votes": 79651,
+    "votes": 95513,
     "color": ""
    }
   },
   "WA": {
    "Unspecified": {
-    "votes": 485886,
+    "votes": 773792,
     "color": ""
    }
   },
   "WI": {
    "Unspecified": {
-    "votes": 257777,
+    "votes": 377058,
     "color": ""
    }
   },
   "WY": {
    "Democratic": {
-    "votes": 4920,
-    "color": ""
-   },
-   "Republican": {
-    "votes": 19090,
+    "votes": 6054,
     "color": ""
    },
    "Other": {
-    "votes": 1908,
+    "votes": 2392,
+    "color": ""
+   },
+   "Republican": {
+    "votes": 24324,
     "color": ""
    }
   }
  },
  "statewide_total": {
-  "Democratic": {
-   "votes": 2199923,
+  "Unspecified": {
+   "votes": 6896445,
    "color": ""
   },
-  "Republican": {
-   "votes": 1388379,
+  "Democratic": {
+   "votes": 2712013,
    "color": ""
   },
   "Other": {
-   "votes": 697456,
+   "votes": 931481,
    "color": ""
   },
-  "Unspecified": {
-   "votes": 5414174,
+  "Republican": {
+   "votes": 1780979,
    "color": ""
   },
   "No Party Affiliation": {
-   "votes": 311215,
+   "votes": 358169,
    "color": ""
   }
  }

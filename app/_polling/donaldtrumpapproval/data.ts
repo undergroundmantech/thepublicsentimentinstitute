@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 23, 2026 evening ──
+  { pollster: "RMG Research", endDate: "2026-10-20", sampleSize: 2000, sampleType: "RV", results: { Approve: 42, Disapprove: 57 } },   // Napolitan News, Oct 12 to 20
   // ── Added Oct 22, 2026 evening ──
   { pollster: "CNBC", endDate: "2026-10-18", sampleSize: 1000, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },   // Oct 14 to 18
   { pollster: "Economist/YouGov", endDate: "2026-10-20", sampleSize: 1501, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },   // Oct 19 to 20

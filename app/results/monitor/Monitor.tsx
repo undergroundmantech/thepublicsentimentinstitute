@@ -38,6 +38,15 @@ const vsColor = (d: number) => { const a = Math.min(1, Math.abs(d) / 12); return
 // results colour: purple where an independent leads the Republican, as on every forecast map
 const shade = (m: number, k?: Kind, ind = false) => (k === "measure" ? (m < 0 ? `rgba(47,191,155,${0.25 + Math.min(1, -m / 40) * 0.7})` : `rgba(231,121,74,${0.25 + Math.min(1, m / 40) * 0.7})`) : ind ? marginColorInd(m) : marginColor(m));
 const label = (r: XRace, inState: boolean) => (r.k === "house" ? `${r.st}-${r.id.split("-")[2]}` : inState ? r.nm.replace(STN[r.st] + " ", "") : r.nm);
+// statewide offices grouped the way readers look for them, so the map can show one office across every state
+const OFFICE_GROUPS: [string, string, RegExp][] = [
+  ["lg", "Lieutenant governor", /lieutenant/i], ["ag", "Attorney general", /attorney general/i], ["sos", "Secretary of state", /secretary of state/i],
+  ["treas", "Treasurer", /treasurer/i], ["aud", "Auditor", /auditor/i], ["comp", "Comptroller and controller", /comptroller|controller/i],
+  ["edu", "Education", /superintendent|education|school/i], ["agri", "Agriculture", /agricultur/i], ["ins", "Insurance", /insurance/i],
+  ["labor", "Labor", /labor/i], ["land", "Land", /land/i], ["util", "Commissions", /commission|railroad|mine inspector|utilit/i],
+  ["court", "Courts", /justice|court/i], ["univ", "Universities", /universit|regents|trustees|board of governors/i],
+];
+const officeGroup = (off: string) => OFFICE_GROUPS.find((g) => g[2].test(off))?.[0] ?? "other";
 const clockET = (d: Date) => d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });
 
 export default function Monitor({ chambers }: { chambers: Chambers }) {
@@ -57,6 +66,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const [feed, setFeed] = useState<Feed[]>([]);
   const [now, setNow] = useState<Date | null>(null);
   const [zoomK, setZoomK] = useState(2.2);
+  const [office, setOffice] = useState<string>("all");
+  const [q, setQ] = useState("");
   const live = useLive(ix, SETS[mode]);
   const sf = useStateFile(sel);
   const stage = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null);
@@ -87,9 +98,12 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return { id, st: id.split("-")[1], g, c: geoCentroid(g) as [number, number] };
   }), [dll]);
   useEffect(() => { if (!desk) return; const r = (ix?.races ?? []).find((x) => x.id === desk); if (r) fly.current(r.st); }, [desk]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === "Escape") setDesk(null); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
+  const escRef = useRef<() => void>(() => {});
+  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === "Escape") escRef.current(); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
 
-  const races = useMemo(() => (ix?.races ?? []).filter((r) => r.k === mode), [ix, mode]);
+  const allMode = useMemo(() => (ix?.races ?? []).filter((r) => r.k === mode), [ix, mode]);
+  const officeCounts = useMemo(() => { const m: Record<string, number> = {}; if (mode === "state") for (const r of allMode) { const g = officeGroup(r.off); m[g] = (m[g] ?? 0) + 1; } return m; }, [allMode, mode]);
+  const races = useMemo(() => (mode === "state" && office !== "all" ? allMode.filter((r) => officeGroup(r.off) === office) : allMode), [allMode, mode, office]);
   const byState = useMemo(() => { const m: Record<string, XRace[]> = {}; for (const r of races) (m[r.st] ??= []).push(r); return m; }, [races]);
   // one colour per state: the returns in the mode's races there, or how far they run from the expected vote
   const stateColor = useMemo(() => {
@@ -121,7 +135,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     if (mode !== "house") return out;
     for (const r of races) {
       const c = live.byId[r.id];
-      if (!hasReturns(c)) { const e = expM(r); out[r.id] = color === "results" && e != null ? { fill: shade(e, undefined, isInd(r)), a: 0.32 } : { fill: AWAIT, a: 1 }; continue; }
+      if (!hasReturns(c)) { const e = expM(r); out[r.id] = color === "results" && e != null ? { fill: shade(e, undefined, isInd(r)), a: 0.2 } : { fill: AWAIT, a: 1 }; continue; }
       const m = liveMargin(r, c) ?? 0, e = expM(r);
       out[r.id] = { fill: color === "results" ? shade(m, undefined, isInd(r)) : e != null ? vsColor(m - e) : AWAIT, a: 0.45 + 0.55 * Math.min(1, (c!.pr || 0) / 100) };
     }
@@ -131,25 +145,34 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const layerRace = useMemo(() => {
     if (!sel) return null;
     const cands = selRaces.filter((r) => r.cty);
-    return cands.find((r) => r.id === pick) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
-  }, [sel, selRaces, pick, mode]);
+    return cands.find((r) => r.id === pick) ?? (mode === "state" && office !== "all" ? cands.find((r) => r.k === "state" && officeGroup(r.off) === office) : undefined) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
+  }, [sel, selRaces, pick, mode, office]);
   // the race shown in brief in the side panel: the state's race for this view when a state is picked
   useEffect(() => {
     // keep a race picked in this state, such as a clicked district; otherwise show the state's race for this view
     const all = ix?.races ?? [];
-    setFocus((f) => { const cur = f ? all.find((x) => x.id === f) : null; if (cur && cur.st === sel && cur.k === mode) return f; const r = sel ? all.find((x) => x.st === sel && x.k === mode) : null; return r ? r.id : null; });
-  }, [sel, mode]); // eslint-disable-line react-hooks/exhaustive-deps
+    setFocus((f) => { const cur = f ? all.find((x) => x.id === f) : null; if (cur && cur.st === sel && cur.k === mode) return f; const r = sel ? (mode === "state" && office !== "all" ? all.find((x) => x.st === sel && x.k === "state" && officeGroup(x.off) === office) : undefined) ?? all.find((x) => x.st === sel && x.k === mode) : null; return r ? r.id : null; });
+  }, [sel, mode, office]); // eslint-disable-line react-hooks/exhaustive-deps
   const focusRace = useMemo(() => (focus ? (ix?.races ?? []).find((r) => r.id === focus) ?? null : null), [ix, focus]);
   const expC: Record<string, Exp> | null = layerRace && sf ? sf.counties[layerRace.id] ?? null : null;
   const [liveC, setLiveC] = useState<Record<string, { m: number | null; pr: number; c: CCand[] }> | null>(null);
+  // the county returns stay on screen between reads, so a new read never blanks the map; they clear only when the
+  // race changes. A county whose count moved since the last read is marked fresh and shines for a moment.
+  const liveCFor = useRef<string | null>(null);
+  const freshC = useRef<Map<string, { t: number; m: number | null; pr: number }>>(new Map());
   useEffect(() => {
-    setLiveC(null); if (!layerRace) return;
+    const id = layerRace?.id ?? null;
+    if (liveCFor.current !== id) { liveCFor.current = id; freshC.current = new Map(); setLiveC(null); }
+    if (!layerRace) return;
     const c = live.byId[layerRace.id]; if (!hasReturns(c)) return;
     let dead = false;
     import("../2026/live").then(({ civicRace }) => civicRace(c!.id)).then((d) => {
-      if (dead) return; const o: Record<string, { m: number | null; pr: number; c: CCand[] }> = {};
+      if (dead || liveCFor.current !== layerRace.id) return; const o: Record<string, { m: number | null; pr: number; c: CCand[] }> = {};
       for (const [f, g] of Object.entries(d.regions)) { const s = sides(layerRace, g.c); o[f] = { m: s.t ? (100 * (s.b - s.a)) / s.t : null, pr: g.pr, c: g.c }; }
-      setLiveC(o);
+      setLiveC((prev) => {
+        if (prev) { const t = performance.now(); for (const [f, x] of Object.entries(o)) { const a = prev[f]; const va = a ? a.c.reduce((s2, y) => s2 + y[2], 0) : 0, vb = x.c.reduce((s2, y) => s2 + y[2], 0); if (vb > va || (a && x.pr > a.pr)) freshC.current.set(f, { t, m: x.m, pr: x.pr }); } }
+        return o;
+      });
     }).catch(() => {});
     return () => { dead = true; };
   }, [layerRace, live.at, live.byId]);
@@ -160,12 +183,25 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   // the share of this view's races reporting, read by read, for the sparkline
   const [hist, setHist] = useState<number[]>([]);
   useEffect(() => { if (!live.at || !races.length) return; const rep = races.filter((r) => hasReturns(live.byId[r.id])).length / races.length; setHist((h) => [...h.slice(-39), rep]); }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
-  // a banner for each new call
-  const [toast, setToast] = useState<{ id: string; who: string; race: string } | null>(null);
+  // a call card for each new call of a statewide race or a House seat, one after another, and the state flashes on
+  // the map as its race is called
+  type Call = { id: string; who: string; race: string; kind: Kind; st: string; p: string; m: number | null; pr: number };
+  const [calls, setCalls] = useState<Call[]>([]);
+  const callFlash = useRef<Map<string, number>>(new Map());
   useEffect(() => {
     if (!live.at || !ix) return;
-    for (const r of ix.races) { const a = live.byId[r.id], b = live.prev[r.id]; const w = a?.c.find((c) => c[4]); if (w && b && !b.c.some((c) => c[4]) && (r.k === "sen" || r.k === "gov" || r.k === "house")) { setToast({ id: r.id, who: w[0], race: r.nm }); const t = window.setTimeout(() => setToast(null), 7000); return () => window.clearTimeout(t); } }
+    const add: Call[] = [];
+    for (const r of ix.races) {
+      if (r.k === "leg" || r.k === "other") continue;
+      const a = live.byId[r.id], b = live.prev[r.id]; const w = a?.c.find((c) => c[4]);
+      if (w && b && !b.c.some((c) => c[4])) { add.push({ id: r.id, who: w[0], race: r.nm, kind: r.k, st: r.st, p: (w[1] || "O")[0].toUpperCase(), m: liveMargin(r, a), pr: a!.pr }); if (r.k !== "house") callFlash.current.set(r.st, performance.now()); }
+    }
+    // statewide calls first, the biggest offices first
+    const rank: Record<string, number> = { sen: 0, gov: 1, state: 2, measure: 3, house: 4 };
+    if (add.length) setCalls((q0) => [...q0, ...add.sort((x, y) => (rank[x.kind] ?? 9) - (rank[y.kind] ?? 9))].slice(0, 30));
   }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
+  const toast = calls[0] ?? null;
+  useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setCalls((q0) => q0.slice(1)), calls.length > 4 ? 3800 : 6500); return () => window.clearTimeout(t); }, [toast, calls.length]);
   // what changed between reads
   useEffect(() => {
     if (!live.at || !ix) return;
@@ -189,7 +225,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const proj = geoOrthographic().clipAngle(90).precision(0.4);
     const path = geoPath(proj, ctx), grat = geoGraticule10();
     const size = () => {
-      W = box.clientWidth; H = box.clientHeight; c.width = W * dpr; c.height = H * dpr; c.style.width = W + "px"; c.style.height = H + "px"; base = Math.min(W, H) * 0.46;
+      // resizing a canvas wipes it, so only touch its size when the stage really changed; otherwise switching a race
+      // would blank the globe for a frame, the black flash
+      W = box.clientWidth; H = box.clientHeight;
+      if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); c.style.width = W + "px"; c.style.height = H + "px"; }
+      base = Math.min(W, H) * 0.46;
       dims.current = { W, H, base };
       // the first time the stage has a size, open on the whole country filling it
       if (W && H && (!fitted.current || autoFit.current)) { fitted.current = true; view.current.k = homeK(); setZoomK(view.current.k); }
@@ -199,7 +239,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     // each county as its own polygons; any ring that reads as the rest of the globe is turned around
     const cGeo = sel && cll ? Object.entries(cll).filter(([f]) => FIPS[f.slice(0, 2)] === sel).map(([f, rings]) => ({
       f, g: { type: "MultiPolygon", coordinates: rings.map((r) => [geoArea({ type: "Polygon", coordinates: [r] } as GeoPermissibleObjects) > 2 * Math.PI ? [...r].reverse() : r]) } as unknown as GeoPermissibleObjects,
-    })) : [];
+    })).map((x) => ({ ...x, c: geoCentroid(x.g) as [number, number] })) : [];
     // the globe by night, or by day in the light theme
     const LT = theme === "light";
     const fx = (c: string) => (!LT ? c : c === AWAIT ? "#d8d2ea" : c === NO_RACE ? "#ebe8f3" : c);
@@ -208,7 +248,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     // globe is drawn once and waits, which keeps a laptop or phone cool on a long election night
     const draw = (now = performance.now()) => {
       const v = view.current;
-      const busy = !!v.target || !!drag.current || (!reduce && (sweepOn || calledSt.size > 0 || feed.some((x) => live.at && x.t.getTime() === live.at.getTime())));
+      const SHINE = 2600, FLASH = 3200;
+      for (const [f, x] of freshC.current) if (now - x.t > SHINE) freshC.current.delete(f);
+      for (const [st, t0] of callFlash.current) if (now - t0 > FLASH) callFlash.current.delete(st);
+      const busy = !!v.target || !!drag.current || (!reduce && (sweepOn || calledSt.size > 0 || freshC.current.size > 0 || callFlash.current.size > 0 || feed.some((x) => live.at && x.t.getTime() === live.at.getTime())));
       if (gap && busy && now - lastF < gap) { raf = requestAnimationFrame(draw); return; }
       lastF = now;
       if (v.target) {
@@ -229,7 +272,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         ctx.beginPath(); path(f as GeoPermissibleObjects);
         const dim = sel && sel !== f.st ? 0.45 : 1, gh = stateColor["~" + f.st];
         ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = dim; ctx.fill();
-        if (gh) { ctx.fillStyle = gh; ctx.globalAlpha = dim * (LT ? 0.42 : 0.34); ctx.fill(); }
+        if (gh) { ctx.fillStyle = gh; ctx.globalAlpha = dim * (LT ? 0.26 : 0.2); ctx.fill(); }
         ctx.globalAlpha = 1;
         ctx.strokeStyle = hv?.st === f.st && !hv.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
       }
@@ -260,9 +303,32 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           const fill = lv?.m != null ? (color === "results" ? shade(lv.m, layerRace.k, ind) : em != null ? vsColor(lv.m - em) : AWAIT) : AWAIT;
           ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill();
           // a county not counted yet shows its expected margin faintly
-          if (lv?.m == null && em != null && color === "results") { ctx.fillStyle = shade(em, layerRace.k, ind); ctx.globalAlpha = LT ? 0.45 : 0.38; ctx.fill(); }
+          if (lv?.m == null && em != null && color === "results") { ctx.fillStyle = shade(em, layerRace.k, ind); ctx.globalAlpha = LT ? 0.28 : 0.22; ctx.fill(); }
           ctx.globalAlpha = 1;
           ctx.strokeStyle = hv?.f === x.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
+        }
+      }
+      // a county whose count just moved shines: a white glow that fades, a gold outline, a ring that opens out from its
+      // centre and the share now in
+      if (mode !== "house" && cGeo.length && freshC.current.size && !reduce) {
+        const tn = performance.now();
+        for (const x of cGeo) {
+          const fr = freshC.current.get(x.f); if (!fr) continue; const k = Math.min(1, (tn - fr.t) / SHINE), fade = 1 - k;
+          ctx.beginPath(); path(x.g);
+          ctx.fillStyle = `rgba(255,255,255,${0.55 * fade * fade})`; ctx.fill();
+          ctx.strokeStyle = `rgba(${GOLD},${0.95 * fade})`; ctx.lineWidth = 2.4; ctx.shadowColor = `rgba(${GOLD},.9)`; ctx.shadowBlur = 14 * fade; ctx.stroke(); ctx.shadowBlur = 0;
+          const p = proj(x.c); if (!p) continue;
+          ctx.strokeStyle = `rgba(255,255,255,${0.8 * fade})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(p[0], p[1], 4 + 26 * Math.sqrt(k), 0, 6.283); ctx.stroke();
+          if (k < 0.85 && v.k > 3.2) { ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "bottom"; ctx.fillStyle = `rgba(255,255,255,${Math.min(1, fade * 1.6)})`; ctx.fillText(`${Math.round(fr.pr)}% in`, p[0], p[1] - 8 - 10 * k); }
+        }
+      }
+      // a state whose statewide race was just called flashes gold
+      if (callFlash.current.size && !reduce) {
+        const tn = performance.now();
+        for (const f of geo.states) {
+          const t0 = callFlash.current.get(f.st); if (t0 == null) continue; const k = Math.min(1, (tn - t0) / FLASH), pulse = (1 - k) * (0.6 + 0.4 * Math.sin(k * 18));
+          ctx.beginPath(); path(f as GeoPermissibleObjects); ctx.fillStyle = `rgba(${GOLD},${0.35 * pulse})`; ctx.fill();
+          ctx.strokeStyle = `rgba(${GOLD},${pulse})`; ctx.lineWidth = 3.4; ctx.shadowColor = `rgba(${GOLD},1)`; ctx.shadowBlur = 22 * (1 - k); ctx.stroke(); ctx.shadowBlur = 0;
         }
       }
       if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = `rgb(${GOLD})`; ctx.lineWidth = 2.2; ctx.stroke(); }
@@ -295,7 +361,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       if (busy) raf = requestAnimationFrame(draw); else running = false;
     };
     const kick = () => { if (running) return; running = true; raf = requestAnimationFrame(draw); };
-    kick();
+    // the first picture is drawn at once, so the globe never shows an empty frame when a race or state changes
+    running = true; draw();
     wake.current = () => { running = false; cancelAnimationFrame(raf); kick(); };
     const ro = new ResizeObserver(() => { size(); running = false; cancelAnimationFrame(raf); kick(); }); ro.observe(box);
     const hit = (x: number, y: number) => {
@@ -335,6 +402,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme]);
 
+  escRef.current = () => { if (desk) setDesk(null); else if (sel) home(); };
   const home = () => { autoFit.current = true; const k = homeK(); view.current.target = { rot: [97, -39, 0], k }; setZoomK(k); setSel(null); setPick(null); wake.current(); };
   const zoomBy = (f: number) => { autoFit.current = false;
     const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); wake.current(); };
@@ -377,6 +445,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const closest = useMemo(() => races.slice().sort((a, b) => Math.abs(expM(a) ?? 99) - Math.abs(expM(b) ?? 99)), [races]);
   const left = now ? FIRST_CLOSE - now.getTime() : 0;
   const clock = now ? now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", timeZone: "America/New_York" }) : "";
+  const modeName = mode === "state" && office !== "all" ? (OFFICE_GROUPS.find((g) => g[0] === office)?.[1] ?? "Other statewide") : MODES.find((m) => m[0] === mode)?.[1] ?? "";
+  const found = useMemo(() => { const t = q.trim().toLowerCase(); if (!t) return []; return races.filter((r) => r.nm.toLowerCase().includes(t) || (STN[r.st] ?? "").toLowerCase().includes(t) || r.st.toLowerCase() === t || (r.c ?? []).some((x) => x[0].toLowerCase().includes(t))); }, [q, races]);
   const big: "sen" | "house" | "gov" = mode === "house" || mode === "gov" ? mode : "sen";
   const pctf = (p: number) => `${Math.round((p > 1 ? p : p * 100))}%`;
 
@@ -439,8 +509,23 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         </div>
         <div className="mon-ctl">
           <div className="mon-seg" role="group" aria-label="Races">{MODES.map(([k, l]) => <button key={k} aria-pressed={mode === k} onClick={() => { setMode(k); setPick(null); }}>{l}</button>)}</div>
+          <label className="mon-jump"><span className="sr">Jump to a state</span>
+            <select value={sel ?? ""} onChange={(e) => { const v = e.target.value; if (v) fly.current(v); else home(); }} aria-label="Jump to a state">
+              <option value="">Jump to a state</option>
+              {Object.keys(byState).sort((a, b) => (STN[a] ?? a).localeCompare(STN[b] ?? b)).map((st) => <option key={st} value={st}>{STN[st] ?? st} · {byState[st].length}</option>)}
+            </select>
+          </label>
           <div className="mon-seg sm" role="group" aria-label="Colour by">{(["results", "versus"] as Color[]).map((k) => <button key={k} aria-pressed={color === k} onClick={() => setColor(k)}>{k === "results" ? "Results" : "Versus expected vote"}</button>)}</div>
         </div>
+        {mode === "state" ? (
+          <div className="mon-office" role="group" aria-label="Statewide office">
+            <span className="lb">Office</span>
+            <button aria-pressed={office === "all"} onClick={() => { setOffice("all"); setPick(null); }}>All <em>{allMode.length}</em></button>
+            {[...OFFICE_GROUPS.map((g) => [g[0], g[1]] as [string, string]), ["other", "Other"] as [string, string]].filter(([k]) => officeCounts[k]).map(([k, l]) => (
+              <button key={k} aria-pressed={office === k} onClick={() => { setOffice(k); setPick(null); }}>{l} <em>{officeCounts[k]}</em></button>
+            ))}
+          </div>
+        ) : null}
         <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
       </section>
 
@@ -472,14 +557,16 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           <button onClick={full} aria-label="Full screen" className="t">Full</button>
         </div>
         {toast ? (
-          <button type="button" className="mon-toast" onClick={() => { setFocus(toast.id); setToast(null); }}>
-            <span className="k">civicAPI call</span><b>{toast.race}</b><span className="w">{toast.who}</span>
+          <button type="button" key={toast.id} className={`mon-toast p-${toast.p}`} onClick={() => { setFocus(toast.id); fly.current(toast.st); setCalls((q0) => q0.slice(1)); }}>
+            <span className="k">civicAPI call · {KIND_LABEL[toast.kind]}</span><b>{toast.race}</b>
+            <span className="w"><i />{toast.who}{toast.m != null && toast.kind !== "measure" && Math.abs(toast.m) >= 0.05 ? <>, ahead by {Math.abs(toast.m).toFixed(1)} points</> : null}</span>
+            <span className="s">{toast.pr.toFixed(0)}% reporting{calls.length > 1 ? ` · ${calls.length - 1} more calls` : ""}</span>
           </button>
         ) : null}
       </div>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
-        {focusRace ? <RaceBrief key={focusRace.id} r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
+        {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
         {sel ? (
           <>
             <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
@@ -490,9 +577,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           </>
         ) : (
           <>
-            <div className="mon-rh"><b>{reportingNow.length ? `${MODES.find((m) => m[0] === mode)?.[1]} races counting` : `Closest ${MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} races`}</b><span>{reportingNow.length ? "Now · in" : "Forecast"}</span></div>
-            {!reportingNow.length ? <p className="mon-note">No returns yet. Each race fills in as its first votes are counted; until then the list shows the forecast, closest first. Click a race or a state to open it.</p> : null}
-            <ul>{(reportingNow.length ? reportingNow : closest).slice(0, 80).map((r) => raceRow(r, false))}</ul>
+            <div className="mon-rh"><b>{reportingNow.length ? `${modeName} races counting` : `Closest ${modeName.toLowerCase()} races`}</b><span>{reportingNow.length ? "Now · in" : "Forecast"}</span></div>
+            <input className="mon-q" type="search" id="mon-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a race, state or candidate" aria-label="Find a race, state or candidate" />
+            {!reportingNow.length && !q ? <p className="mon-note">No returns yet. Each race fills in as its first votes are counted; until then the list shows the forecast, closest first, in gray. Click a race or a state to open it.</p> : null}
+            <ul>{(q ? found : reportingNow.length ? reportingNow : closest).slice(0, 80).map((r) => raceRow(r, false))}</ul>
+            {q && !found.length ? <p className="mon-note">No {modeName.toLowerCase()} race matches that. Try a state name or a last name.</p> : null}
             <Link className="mon-all" href="/results/2026">Every race as a list</Link>
           </>
         )}

@@ -10,11 +10,14 @@ const last = (n: string) => n.split(" ").filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv
 export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace; c?: CRace; sf: StFile | null; at: Date | null; onOpen: () => void; onClose: () => void }) {
   const [det, setDet] = useState<CDetail | null>(null);
   const reporting = !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
+  // the county detail stays on screen between reads and clears only when another race is opened
+  const detFor = React.useRef<string | null>(null);
   useEffect(() => {
-    setDet(null); if (!c || !reporting) return; let dead = false;
-    civicRace(c.id).then((d) => { if (!dead) setDet(d); }).catch(() => {});
+    if (detFor.current !== r.id) { detFor.current = r.id; setDet(null); }
+    if (!c || !reporting) return; let dead = false; const id = r.id;
+    civicRace(c.id).then((d) => { if (!dead && detFor.current === id) setDet(d); }).catch(() => {});
     return () => { dead = true; };
-  }, [c, reporting, at]);
+  }, [r.id, c, reporting, at]);
   const exp = sf?.counties[r.id] ?? null;
   const P = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
   const odds = liveOdds(r, P);
@@ -34,7 +37,7 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
   const pc = (p: string) => (p === "D" ? "var(--dem)" : p === "R" ? "var(--gop)" : p === "I" ? "var(--ind)" : p === "Y" ? "#2fbf9b" : p === "N" ? "#e7794a" : "#8a84a3");
   const counted = reporting ? sides(r, c!.c).t : 0;
   return (
-    <section className="mon-brief" aria-label={`${r.nm} at a glance`}>
+    <section className={`mon-brief${reporting ? "" : " expd"}`} aria-label={`${r.nm} at a glance`}>
       <div className="bh">
         <div><span className="k">{KIND_LABEL[r.k]} · {STN[r.st] ?? r.st}</span><h3>{r.nm}</h3></div>
         <button className="x" onClick={onClose} aria-label="Close this race">×</button>

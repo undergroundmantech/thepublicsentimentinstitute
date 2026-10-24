@@ -16,8 +16,8 @@ const sortSeats = (seats: Seat[]) => [...seats].sort((a, b) => ORDER[a.s] - ORDE
 /** The faint forecast colour of a seat nobody has counted yet: bluer or redder by how sure the forecast is. */
 export function leanFill(pR: number | null | undefined) {
   const p = pR ?? 0.5, d = Math.abs(p - 0.5) * 2;
-  if (d < 0.2) return "rgba(231, 179, 65, .42)";
-  return p < 0.5 ? `rgba(61, 123, 255, ${0.14 + d * 0.3})` : `rgba(255, 59, 92, ${0.14 + d * 0.3})`;
+  if (d < 0.2) return "rgba(231, 179, 65, .3)";
+  return p < 0.5 ? `rgba(61, 123, 255, ${0.1 + d * 0.2})` : `rgba(255, 59, 92, ${0.1 + d * 0.2})`;
 }
 
 export type Count = { dW: number; dL: number; iW: number; iL: number; aw: number; rL: number; rW: number; n: number };
