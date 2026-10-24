@@ -1,7 +1,7 @@
 {
  "snapshot": "2026-10-23",
  "daysOut": 11,
- "applied": "2026-10-23",
+ "applied": "2026-10-24",
  "settings": {
   "kappa": 0.5,
   "rho": 0.85,
@@ -82,7 +82,7 @@
    "ballots": 2478771,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 1.23,
+   "comp": 1.27,
    "level": -0.0
   },
   "CO": {
@@ -412,7 +412,7 @@
    "ballots": 133896,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 1.65,
+   "comp": 1.68,
    "level": -0.01
   },
   "NH": {
@@ -708,22 +708,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.0,
-   "dem_control_before": 0.8769,
-   "dem_control": 0.8769,
-   "dem_seats": 28.27
+   "seat_change": 0.01,
+   "dem_control_before": 0.8806,
+   "dem_control": 0.8809,
+   "dem_seats": 28.34
   },
   "senate": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.809,
-   "dem_control": 0.809,
-   "dem_seats": 53.15
+   "seat_change": 0.0,
+   "dem_control_before": 0.8062,
+   "dem_control": 0.8064,
+   "dem_seats": 53.12
   },
   "house": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.9187,
-   "dem_control": 0.9187,
-   "dem_seats": 244.25
+   "seat_change": 0.0,
+   "dem_control_before": 0.9171,
+   "dem_control": 0.9171,
+   "dem_seats": 244.1
   }
  }
 }
