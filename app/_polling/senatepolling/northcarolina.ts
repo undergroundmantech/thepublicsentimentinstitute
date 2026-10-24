@@ -80,6 +80,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Change Research for Carolina Forward (D)", "startDate": "2026-10-01", "endDate": "2026-10-07", "sampleSize": 829, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 40.0, "Undecided": 10.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Elon University/YouGov", "startDate": "2026-09-29", "endDate": "2026-10-08", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 52.0, "Michael Whatley (R)": 39.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "WRAL/SurveyUSA", "startDate": "2026-10-07", "endDate": "2026-10-11", "sampleSize": 650, "sampleType": "LV", "results": {"Roy Cooper (D)": 54.0, "Michael Whatley (R)": 40.0, "Other": 1.0, "Undecided": 5.0}},
-    {"raceId": "NC-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-08", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Roy Cooper (D)": 56.9, "Michael Whatley (R)": 43.1}}
+    {"raceId": "NC-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-08", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Roy Cooper (D)": 56.9, "Michael Whatley (R)": 43.1}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 39.0, "Other": 5.0, "Undecided": 7.0}}
   ],
 };

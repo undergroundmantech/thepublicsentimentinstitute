@@ -36,6 +36,6 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   OK: [
-
+    {"raceId": "OK-GOV-2026", "pollster": "Workbench Strategy (D)", "startDate": "2026-10-08", "endDate": "2026-10-13", "sampleSize": 600, "sampleType": "LV", "results": {"Cyndi Munson (D)": 45.0, "Mike Mazzei (R)": 49.0, "Undecided": 6.0}}
   ],
 };

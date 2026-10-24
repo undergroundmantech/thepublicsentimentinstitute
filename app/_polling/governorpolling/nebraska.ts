@@ -2,7 +2,7 @@
 // Nebraska — 2026 Governor: Lynne Walz (D) vs. Jim Pillen (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-14.
+// ballot were dropped. Newest poll: 2026-10-18.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -44,6 +44,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1113, "sampleType": "LV", "results": {"Lynne Walz (D)": 38.0, "Jim Pillen (R)": 43.0, "Other": 8.0, "Undecided": 11.0}, "notes": "Sample R57, D27."},
     {"raceId": "NE-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-24", "endDate": "2026-10-03", "sampleSize": 1809, "sampleType": "LV", "results": {"Jim Pillen (R)": 44.0, "Lynne Walz (D)": 43.0, "Other": 2.0, "Undecided": 11.0}},
     {"raceId": "NE-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-02", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 44.0, "Other": 12.0, "Undecided": 6.0}},
-    {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 571, "sampleType": "RV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 44.0, "Other": 8.0, "Undecided": 5.0}}
+    {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 571, "sampleType": "RV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 44.0, "Other": 8.0, "Undecided": 5.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 598, "sampleType": "LV", "results": {"Lynne Walz (D)": 41.0, "Jim Pillen (R)": 47.0, "Other": 8.0, "Undecided": 4.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "Global Strategy Group for Walz (D)", "startDate": "2026-10-13", "endDate": "2026-10-18", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.8, "Jim Pillen (R)": 44.9, "Other": 5.6, "Undecided": 5.7}}
   ],
 };

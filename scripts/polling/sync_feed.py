@@ -74,7 +74,7 @@ for r in model["races"]:
     if DRY: continue
     i = src.rindex("\n  ],\n};")
     body = src[:i].rstrip()
-    if not body.endswith(","): body += ","
+    if not body.endswith(",") and not body.endswith("["): body += ","   # an empty list takes no leading comma
     src = body + "\n" + ",\n".join("    " + json.dumps(x, ensure_ascii=False) for x in new) + src[i:]
     newest = max([x["endDate"] for x in new] + [e for e, _, _ in have])
     src = re.sub(r"Newest poll: \d{4}-\d{2}-\d{2}\.", f"Newest poll: {newest}.", src, count=1)

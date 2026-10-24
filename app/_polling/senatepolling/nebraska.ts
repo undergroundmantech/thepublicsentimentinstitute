@@ -2,7 +2,7 @@
 // Nebraska — 2026 U.S. Senate: Dan Osborn (I) vs. Pete Ricketts (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-05.
+// ballot were dropped. Newest poll: 2026-10-22.
 // Osborn runs as an independent. The Democratic nominee withdrew, so he holds the
 // only non Republican line on the ballot and the forecast models him in that column.
 
@@ -48,6 +48,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "SurveyUSA", "startDate": "2026-09-08", "endDate": "2026-09-13", "sampleSize": 503, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 42.0, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "NE-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1113, "sampleType": "LV", "results": {"Dan Osborn (I)": 40.0, "Pete Ricketts (R)": 45.0, "Other": 4.0, "Undecided": 11.0}, "notes": "Head to head: Ricketts 48, Osborn 43. Sample R57, D27."},
     {"raceId": "NE-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-24", "endDate": "2026-10-03", "sampleSize": 1809, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 47.0, "Undecided": 5.0}},
-    {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-02", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 46.0, "Other": 6.0, "Undecided": 5.0}}
+    {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-02", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 46.0, "Other": 6.0, "Undecided": 5.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 598, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 46.0, "Other": 5.0, "Undecided": 5.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-10-22", "endDate": "2026-10-22", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 45.0, "Undecided": 7.0}}
   ],
 };

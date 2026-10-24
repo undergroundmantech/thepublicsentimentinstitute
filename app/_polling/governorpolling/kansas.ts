@@ -42,6 +42,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-GOV-2026", "pollster": "Global Strategy Group (D)", "startDate": "2026-09-13", "endDate": "2026-09-16", "sampleSize": 800, "sampleType": "LV", "results": {"Cindy Holscher (D)": 49.0, "Ty Masterson (R)": 46.0, "Undecided": 5.0}},
     {"raceId": "KS-GOV-2026", "pollster": "New York Times/Siena College", "startDate": "2026-09-22", "endDate": "2026-09-30", "sampleSize": 605, "sampleType": "LV", "results": {"Cindy Holscher (D)": 44.0, "Ty Masterson (R)": 49.0, "Undecided": 7.0}},
     {"raceId": "KS-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-24", "endDate": "2026-10-04", "sampleSize": 2255, "sampleType": "LV", "results": {"Ty Masterson (R)": 47.0, "Cindy Holscher (D)": 44.0, "Other": 1.0, "Undecided": 8.0}},
-    {"raceId": "KS-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 479, "sampleType": "LV", "results": {"Cindy Holscher (D)": 46.3, "Ty Masterson (R)": 52.8, "Other": 0.9}}
+    {"raceId": "KS-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 479, "sampleType": "LV", "results": {"Cindy Holscher (D)": 46.3, "Ty Masterson (R)": 52.8, "Other": 0.9}},
+    {"raceId": "KS-GOV-2026", "pollster": "Global Strategy Group (D)", "startDate": "2026-10-18", "endDate": "2026-10-21", "sampleSize": 600, "sampleType": "LV", "results": {"Cindy Holscher (D)": 47.0, "Ty Masterson (R)": 47.0, "Undecided": 6.0}}
   ],
 };

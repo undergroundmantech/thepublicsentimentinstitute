@@ -2,7 +2,7 @@
 // Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-19.
+// ballot were dropped. Newest poll: 2026-10-21.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -94,6 +94,10 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "University of Houston Hobby School", "startDate": "2026-10-10", "endDate": "2026-10-14", "sampleSize": 2000, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "TX-SEN-2026", "pollster": "CBS News/YouGov", "startDate": "2026-10-08", "endDate": "2026-10-16", "sampleSize": 1458, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 49.0}},
     {"raceId": "TX-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-17", "endDate": "2026-10-18", "sampleSize": 385, "sampleType": "LV", "results": {"James Talarico (D)": 48.8, "Ken Paxton (R)": 43.0, "Other": 2.8, "Undecided": 5.5}},
-    {"raceId": "TX-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1398, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 49.0, "Undecided": 2.0}}
+    {"raceId": "TX-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1398, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 49.0, "Undecided": 2.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 969, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 47.0, "Other": 2.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-10-17", "endDate": "2026-10-19", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Other": 1.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 509, "sampleType": "LV", "results": {"James Talarico (D)": 47.6, "Ken Paxton (R)": 45.2, "Other": 1.4, "Undecided": 5.4}},
+    {"raceId": "TX-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-20", "endDate": "2026-10-21", "sampleSize": 965, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 45.0, "Other": 5.0, "Undecided": 5.0}}
   ],
 };

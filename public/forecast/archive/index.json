@@ -499,17 +499,17 @@
    "n_sims": 2000,
    "chambers": {
     "senate": {
-     "d_control": 74.1,
+     "d_control": 77.8,
      "d_seats_median": 53.0,
-     "p10": 48.0,
-     "p90": 56.0,
-     "d_control_without_osborn": 70.6
+     "p10": 49.0,
+     "p90": 57.0,
+     "d_control_without_osborn": 74.3
     },
     "governors": {
-     "d_majority": 84.5,
+     "d_majority": 86.5,
      "d_median": 28.0,
      "p10": 25.0,
-     "p90": 31.0
+     "p90": 32.0
     },
     "house": {
      "d_majority": 93.0,

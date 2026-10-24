@@ -1,0 +1,9419 @@
+{
+ "FL-01": {
+  "D": {
+   "fec_id": [
+    "H4FL01197"
+   ],
+   "name": [
+    "VALIMONT, JENNIFER GAY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL01390"
+   ],
+   "name": [
+    "PATRONIS, JIMMY JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-02": {
+  "D": {
+   "fec_id": [
+    "H6FL02299"
+   ],
+   "name": [
+    "GREEN, AMANDA MARIE"
+   ],
+   "primary_money_removed": [
+    [
+     "FREEDOM AGAINST FEDERAL OVERREACH",
+     91203
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6FL02331"
+   ],
+   "name": [
+    "ROGERS, AUSTIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-03": {
+  "D": {
+   "fec_id": [
+    "H6FL03099"
+   ],
+   "name": [
+    "HARP, SETH ALLAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0FL03175"
+   ],
+   "name": [
+    "CAMMACK, KAT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-04": {
+  "D": {
+   "fec_id": [
+    "H6FL05193"
+   ],
+   "name": [
+    "HOLLOWAY, LASHONDA J"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2FL04211"
+   ],
+   "name": [
+    "BEAN, AARON P."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-05": {
+  "D": {
+   "fec_id": [
+    "H6FL05250"
+   ],
+   "name": [
+    "GRAGE, RACHEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL04105"
+   ],
+   "name": [
+    "RUTHERFORD, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-06": {
+  "D": {
+   "fec_id": [
+    "H6FL06340"
+   ],
+   "name": [
+    "YONCE, ERIC"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL06258"
+   ],
+   "name": [
+    "FINE, RANDY"
+   ],
+   "primary_money_removed": [
+    [
+     "HOUSE FREEDOM ACTION",
+     13500
+    ]
+   ]
+  }
+ },
+ "FL-07": {
+  "D": {
+   "fec_id": [
+    "H6FL07215"
+   ],
+   "name": [
+    "DALTON, BALE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL07231"
+   ],
+   "name": [
+    "ELIJAH, RYAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-08": {
+  "D": {
+   "fec_id": [
+    "H6FL06399"
+   ],
+   "name": [
+    "JENKINS, JENNIFER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4FL08168"
+   ],
+   "name": [
+    "HARIDOPOLOS, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-09": {
+  "D": {
+   "fec_id": [
+    "H6FL09179"
+   ],
+   "name": [
+    "SOTO, DARREN"
+   ],
+   "primary_money_removed": [
+    [
+     "WINNING RIGHT PAC",
+     37424
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6FL09294"
+   ],
+   "name": [
+    "GREEN, DAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-10": {
+  "D": {
+   "fec_id": [
+    "H2FL10259"
+   ],
+   "name": [
+    "FROST, MAXWELL ALEJANDRO"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "FL-11": {
+  "D": {
+   "fec_id": [
+    "H6FL11357"
+   ],
+   "name": [
+    "PERICOLA, JAMES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL11332"
+   ],
+   "name": [
+    "STRADA, JOE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-12": {
+  "D": {
+   "fec_id": [
+    "H6FL15200"
+   ],
+   "name": [
+    "OVERMAN, KIMBERLY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL09070"
+   ],
+   "name": [
+    "BILIRAKIS, GUS M"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-13": {
+  "D": {
+   "fec_id": [
+    "H6FL13312"
+   ],
+   "name": [
+    "GRAY, LEELA J"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0FL13158"
+   ],
+   "name": [
+    "PAULINA LUNA, ANNA"
+   ],
+   "primary_money_removed": [
+    [
+     "Win it Back PAC",
+     624445
+    ]
+   ]
+  }
+ },
+ "FL-14": {
+  "D": {
+   "fec_id": [
+    "H6FL11126"
+   ],
+   "name": [
+    "CASTOR, KATHY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL14237"
+   ],
+   "name": [
+    "BELTRAN, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-15": {
+  "D": {
+   "fec_id": [
+    "H6FL15168"
+   ],
+   "name": [
+    "PEOPLE, ROBERT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2FL15241"
+   ],
+   "name": [
+    "LEE, LAUREL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-16": {
+  "D": {
+   "fec_id": [
+    "H6FL16158"
+   ],
+   "name": [
+    "KIRSCHNER, KELLY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL16141"
+   ],
+   "name": [
+    "GRUTERS, SYDNEY"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     1107940
+    ],
+    [
+     "STAND FOR FREEDOM PAC",
+     10833
+    ]
+   ]
+  }
+ },
+ "FL-17": {
+  "D": {
+   "fec_id": [
+    "H4FL17060"
+   ],
+   "name": [
+    "MONTAVON, MATTHEW"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8FL17053"
+   ],
+   "name": [
+    "STEUBE, GREG"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-18": {
+  "D": {
+   "fec_id": [
+    "H6FL18212"
+   ],
+   "name": [
+    "GIBSON, CURTIS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0FL15104"
+   ],
+   "name": [
+    "FRANKLIN, SCOTT MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-19": {
+  "D": {
+   "fec_id": [
+    "H6FL19277"
+   ],
+   "name": [
+    "ARIAS, VICTOR M."
+   ],
+   "primary_money_removed": [
+    [
+     "Love America Uphold Freedom PAC",
+     18846
+    ],
+    [
+     "SAVE AMERICAN FREEDOM",
+     16500
+    ],
+    [
+     "Protect Freedom Political Action Committee",
+     12533
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6FL19137"
+   ],
+   "name": [
+    "SCHWARTZEL, JIM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-20": {
+  "D": {
+   "fec_id": [
+    "H4FL20023"
+   ],
+   "name": [
+    "WASSERMAN SCHULTZ, DEBBIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL20143"
+   ],
+   "name": [
+    "ANDERSEN, BRENT"
+   ],
+   "primary_money_removed": [
+    [
+     "AMERICA'S RENEWAL PAC, INC.",
+     66500
+    ]
+   ]
+  }
+ },
+ "FL-21": {
+  "D": {
+   "fec_id": [
+    "H6FL21075"
+   ],
+   "name": [
+    "MARTIN, JAMES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL18097"
+   ],
+   "name": [
+    "MAST, BRIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-22": {
+  "D": {
+   "fec_id": [
+    "H6FL21059"
+   ],
+   "name": [
+    "DANDIYA, PIA"
+   ],
+   "primary_money_removed": [
+    [
+     "Club for Growth Action",
+     704806
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6FL22248"
+   ],
+   "name": [
+    "ASKAR, CASEY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-23": {
+  "D": {
+   "fec_id": [
+    "H2FL14053"
+   ],
+   "name": [
+    "FRANKEL, LOIS J."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2FL21132"
+   ],
+   "name": [
+    "ADEIMY, DEBORAH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-24": {
+  "D": {
+   "fec_id": [
+    "H6FL24095"
+   ],
+   "name": [
+    "GILBERT, OLIVER G. III"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6FL14203"
+   ],
+   "name": [
+    "BROWN, TE"
+   ],
+   "primary_money_removed": [
+    [
+     "Protect Progress",
+     2056912
+    ],
+    [
+     "SD 2026",
+     163638
+    ],
+    [
+     "Good Growth",
+     83333
+    ]
+   ]
+  }
+ },
+ "FL-25": {
+  "D": {
+   "fec_id": [
+    "H2FL22171"
+   ],
+   "name": [
+    "MOSKOWITZ, JARED"
+   ],
+   "primary_money_removed": [
+    [
+     "THINK BIG",
+     309574
+    ],
+    [
+     "New Democrat Majority",
+     250000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6FL23188"
+   ],
+   "name": [
+    "SINGER, SCOTT M."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-26": {
+  "D": {
+   "fec_id": [
+    "H6FL26058"
+   ],
+   "name": [
+    "LOCKLIN, NICOLE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2FL25018"
+   ],
+   "name": [
+    "DIAZ-BALART, MARIO"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-27": {
+  "D": {
+   "fec_id": [
+    "H6FL27098"
+   ],
+   "name": [
+    "RODRIGUEZ, ELIOTT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8FL27185"
+   ],
+   "name": [
+    "SALAZAR, MARIA ELVIRA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "FL-28": {
+  "D": {
+   "fec_id": [
+    "H4FL28042"
+   ],
+   "name": [
+    "EHR, PHIL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0FL26036"
+   ],
+   "name": [
+    "GIMENEZ, CARLOS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-01": {
+  "D": {
+   "fec_id": [
+    "H6TX01352"
+   ],
+   "name": [
+    "PRINCE, YOLANDA RENA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX01112"
+   ],
+   "name": [
+    "MORAN, NATHANIEL QUENTIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-02": {
+  "D": {
+   "fec_id": [
+    "H6TX02251"
+   ],
+   "name": [
+    "FINNIE, SHAUN"
+   ],
+   "primary_money_removed": [
+    [
+     "FIGHT TO WIN AMERICA, INC.",
+     1842767
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX08175"
+   ],
+   "name": [
+    "TOTH, STEVE"
+   ],
+   "primary_money_removed": [
+    [
+     "FIGHT TO WIN AMERICA, INC.",
+     824510
+    ]
+   ]
+  }
+ },
+ "TX-03": {
+  "D": {
+   "fec_id": [
+    "H6TX03234"
+   ],
+   "name": [
+    "HUNT, EVAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX00064"
+   ],
+   "name": [
+    "SELF, KEITH ALAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-04": {
+  "D": {
+   "fec_id": [
+    "H6TX04174"
+   ],
+   "name": [
+    "PEARCE, JASON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TX04219"
+   ],
+   "name": [
+    "FALLON, PATRICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-05": {
+  "D": {
+   "fec_id": [
+    "H6TX05189"
+   ],
+   "name": [
+    "HOCKETT, CHELSEY ALEXANDRA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8TX05144"
+   ],
+   "name": [
+    "GOODEN, LANCE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-06": {
+  "D": {
+   "fec_id": [
+    "H6TX25203"
+   ],
+   "name": [
+    "MINTON, DANNY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8TX06266"
+   ],
+   "name": [
+    "ELLZEY, JOHN KEVIN SR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-07": {
+  "D": {
+   "fec_id": [
+    "H8TX07140"
+   ],
+   "name": [
+    "FLETCHER, ELIZABETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX07151"
+   ],
+   "name": [
+    "HALE, ALEXANDER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-08": {
+  "D": {
+   "fec_id": [
+    "H0TX08145"
+   ],
+   "name": [
+    "JONES, LAURA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX08209"
+   ],
+   "name": [
+    "STEINMANN, JESSICA HART"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-09": {
+  "D": {
+   "fec_id": [
+    "H6TX09231"
+   ],
+   "name": [
+    "GUTIERREZ, LETICIA"
+   ],
+   "primary_money_removed": [
+    [
+     "COURAGEOUS CONSERVATIVES PAC",
+     7389
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX09140"
+   ],
+   "name": [
+    "MEALER, ALEXANDRA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-10": {
+  "D": {
+   "fec_id": [
+    "H6TX31102"
+   ],
+   "name": [
+    "ROURK, CAITLIN MCCLAY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX10221"
+   ],
+   "name": [
+    "GOBER, CHRIS"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     473788
+    ],
+    [
+     "Charter Schools Action PAC",
+     28437
+    ]
+   ]
+  }
+ },
+ "TX-11": {
+  "D": {
+   "fec_id": [
+    "H6TX11112"
+   ],
+   "name": [
+    "REYNOLDS, CLAIRE ANNE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TX11230"
+   ],
+   "name": [
+    "PFLUGER, AUGUST LEE II"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-12": {
+  "D": {
+   "fec_id": [
+    "H6TX12169"
+   ],
+   "name": [
+    "RODRIGUEZ PRILLIMAN, ANGELA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4TX12065"
+   ],
+   "name": [
+    "GOLDMAN, CRAIG"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-13": {
+  "D": {
+   "fec_id": [
+    "H6TX13159"
+   ],
+   "name": [
+    "NAIR, MARK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TX13228"
+   ],
+   "name": [
+    "JACKSON, RONNY LYNN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-14": {
+  "D": {
+   "fec_id": [
+    "H6TX14181"
+   ],
+   "name": [
+    "BARTIE, THURMAN BILL MR"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX14149"
+   ],
+   "name": [
+    "WEBER, RANDY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-15": {
+  "D": {
+   "fec_id": [
+    "H6TX15246"
+   ],
+   "name": [
+    "PULIDO, BOBBY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TX15124"
+   ],
+   "name": [
+    "DE LA CRUZ, MONICA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-16": {
+  "D": {
+   "fec_id": [
+    "H8TX16109"
+   ],
+   "name": [
+    "ESCOBAR, VERONICA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX16152"
+   ],
+   "name": [
+    "BAUMAN, ADAM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-17": {
+  "D": {
+   "fec_id": [
+    "H6TX17168"
+   ],
+   "name": [
+    "SHEPARD, CASEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX03126"
+   ],
+   "name": [
+    "SESSIONS, PETE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-18": {
+  "D": {
+   "fec_id": [
+    "H6TX18232"
+   ],
+   "name": [
+    "MENEFEE, CHRISTIAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX18497"
+   ],
+   "name": [
+    "WHITFIELD, RONALD DWAYNE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-19": {
+  "D": {
+   "fec_id": [
+    "H6TX19198"
+   ],
+   "name": [
+    "RABLE, KYLE"
+   ],
+   "primary_money_removed": [
+    [
+     "AMERICA FIRST RESCUE PAC",
+     80633
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX19206"
+   ],
+   "name": [
+    "SELL, TOM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-20": {
+  "D": {
+   "fec_id": [
+    "H2TX35011"
+   ],
+   "name": [
+    "CASTRO, JOAQUIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX20113"
+   ],
+   "name": [
+    "BAEZ, EDGARDO RAFAEL DR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-21": {
+  "D": {
+   "fec_id": [
+    "H4TX21108"
+   ],
+   "name": [
+    "HOOK, KRISTIN A DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX21301"
+   ],
+   "name": [
+    "TEIXEIRA, MARK CHARLES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-22": {
+  "D": {
+   "fec_id": [
+    "H4TX22197"
+   ],
+   "name": [
+    "GREENE-SCOTT, MARQUETTE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX22283"
+   ],
+   "name": [
+    "NEHLS, TREVER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-23": {
+  "D": {
+   "fec_id": [
+    "H6TX23273"
+   ],
+   "name": [
+    "STOUT, KATY PADILLA"
+   ],
+   "primary_money_removed": [
+    [
+     "HISPANIC LEADERSHIP TRUST",
+     75200
+    ],
+    [
+     "HISPANIC LEADERSHIP ALLIANCE",
+     72919
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4TX23120"
+   ],
+   "name": [
+    "HERRERA, BRANDON"
+   ],
+   "primary_money_removed": [
+    [
+     "HISPANIC LEADERSHIP ALLIANCE",
+     79494
+    ],
+    [
+     "HISPANIC LEADERSHIP TRUST",
+     75200
+    ],
+    [
+     "National Association of Realtors Political Action Committee",
+     40090
+    ]
+   ]
+  }
+ },
+ "TX-24": {
+  "D": {
+   "fec_id": [
+    "H6TX24172"
+   ],
+   "name": [
+    "BURGE, KEVIN BERYL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TX24209"
+   ],
+   "name": [
+    "VAN DUYNE, ELIZABETH ANN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-25": {
+  "D": {
+   "fec_id": [
+    "H6TX25237"
+   ],
+   "name": [
+    "SIMS, DIONE MICHELLE MRS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX33040"
+   ],
+   "name": [
+    "WILLIAMS, ROGER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-26": {
+  "D": {
+   "fec_id": [
+    "H6TX26144"
+   ],
+   "name": [
+    "SHOOK, STEVEN JAMES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4TX26149"
+   ],
+   "name": [
+    "GILL, BRANDON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-27": {
+  "D": {
+   "fec_id": [
+    "H4TX27089"
+   ],
+   "name": [
+    "LLOYD, TANYA W"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8TX27049"
+   ],
+   "name": [
+    "CLOUD, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-28": {
+  "D": {
+   "fec_id": [
+    "H2TX23082"
+   ],
+   "name": [
+    "CUELLAR, HENRY R."
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     49652
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX28124"
+   ],
+   "name": [
+    "TIJERINA, TANO"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-29": {
+  "D": {
+   "fec_id": [
+    "H8TX29052"
+   ],
+   "name": [
+    "GARCIA, SYLVIA R"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX29122"
+   ],
+   "name": [
+    "FIERRO, MARTHA ELENA,"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-30": {
+  "D": {
+   "fec_id": [
+    "H6TX30245"
+   ],
+   "name": [
+    "HAYNES, FREDERICK III"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX30211"
+   ],
+   "name": [
+    "JACKSON, EVERETT HONORABLE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-31": {
+  "D": {
+   "fec_id": [
+    "H6TX31094"
+   ],
+   "name": [
+    "EARLY, JUSTIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX31044"
+   ],
+   "name": [
+    "CARTER, JOHN R REP."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-32": {
+  "D": {
+   "fec_id": [
+    "H6TX32217"
+   ],
+   "name": [
+    "BARRIOS, DAN F."
+   ],
+   "primary_money_removed": [
+    [
+     "Texas Path To Freedom PAC",
+     2125
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX32225"
+   ],
+   "name": [
+    "YARBROUGH, JACE"
+   ],
+   "primary_money_removed": [
+    [
+     "Win it Back PAC",
+     280161
+    ]
+   ]
+  }
+ },
+ "TX-33": {
+  "D": {
+   "fec_id": [
+    "H8TX32098"
+   ],
+   "name": [
+    "ALLRED, COLIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TX33248"
+   ],
+   "name": [
+    "GILLESPIE, PATRICK DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-34": {
+  "D": {
+   "fec_id": [
+    "H6TX15162"
+   ],
+   "name": [
+    "GONZALEZ, VICENTE"
+   ],
+   "primary_money_removed": [
+    [
+     "BOLD America",
+     725542
+    ],
+    [
+     "America's Credit Unions PAC",
+     699932
+    ],
+    [
+     "National Association of Realtors Political Action Committee",
+     40734
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX34080"
+   ],
+   "name": [
+    "FLORES, ERIC"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-35": {
+  "D": {
+   "fec_id": [
+    "H6TX35095"
+   ],
+   "name": [
+    "GARCIA, JOHNNY"
+   ],
+   "primary_money_removed": [
+    [
+     "DMFI PAC",
+     163756
+    ],
+    [
+     "PROTECT AND SERVE PAC",
+     12285
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX35087"
+   ],
+   "name": [
+    "DE LA CRUZ, CARLOS JR."
+   ],
+   "primary_money_removed": [
+    [
+     "LEAD LEFT PAC",
+     113924
+    ]
+   ]
+  }
+ },
+ "TX-36": {
+  "D": {
+   "fec_id": [
+    "H4TX14111"
+   ],
+   "name": [
+    "HART, RHONDA J"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX02079"
+   ],
+   "name": [
+    "BABIN, BRIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-37": {
+  "D": {
+   "fec_id": [
+    "H2TX35144"
+   ],
+   "name": [
+    "CASAR, GREG"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TX35038"
+   ],
+   "name": [
+    "PENA, LAUREN B."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TX-38": {
+  "D": {
+   "fec_id": [
+    "H4TX38011"
+   ],
+   "name": [
+    "MCDONOUGH, MELISSA A"
+   ],
+   "primary_money_removed": [
+    [
+     "FIGHT TO WIN AMERICA, INC.",
+     26782
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TX02244"
+   ],
+   "name": [
+    "BONCK, JON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-01": {
+  "D": {
+   "fec_id": [
+    "H6NY01159"
+   ],
+   "name": [
+    "GALLANT, CHRISTOPHER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NY01190"
+   ],
+   "name": [
+    "NICK, LALOTA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-02": {
+  "D": {
+   "fec_id": [
+    "H6NY02140"
+   ],
+   "name": [
+    "HALPIN, PATRICK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0NY02234"
+   ],
+   "name": [
+    "GARBARINO, ANDREW"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-03": {
+  "D": {
+   "fec_id": [
+    "H6NY03247"
+   ],
+   "name": [
+    "SUOZZI, THOMAS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0NY02267"
+   ],
+   "name": [
+    "LIPETRI, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-04": {
+  "D": {
+   "fec_id": [
+    "H2NY04244"
+   ],
+   "name": [
+    "GILLEN, LAURA"
+   ],
+   "primary_money_removed": [
+    [
+     "ROLLING SEA ACTION FUND",
+     150000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6NY04211"
+   ],
+   "name": [
+    "DRISCOLL, JEANINE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-05": {
+  "D": {
+   "fec_id": [
+    "H8NY06048"
+   ],
+   "name": [
+    "MEEKS, GREGORY W."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY05127"
+   ],
+   "name": [
+    "MARSH, GEORGE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-06": {
+  "D": {
+   "fec_id": [
+    "H2NY06116"
+   ],
+   "name": [
+    "MENG, GRACE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NY06047"
+   ],
+   "name": [
+    "CHOU, JOSEPH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-07": {
+  "D": {
+   "fec_id": [
+    "H6NY07214"
+   ],
+   "name": [
+    "VALDEZ, CLAIRE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY07271"
+   ],
+   "name": [
+    "RIVERA, MELVIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-08": {
+  "D": {
+   "fec_id": [
+    "H2NY10092"
+   ],
+   "name": [
+    "JEFFRIES, HAKEEM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY08188"
+   ],
+   "name": [
+    "MIZRAHI, LEWIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-09": {
+  "D": {
+   "fec_id": [
+    "H4NY11138"
+   ],
+   "name": [
+    "CLARKE, YVETTE D"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY09145"
+   ],
+   "name": [
+    "ANABILAH-AZUMAH, JOEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-10": {
+  "D": {
+   "fec_id": [
+    "H6NY10176"
+   ],
+   "name": [
+    "LANDER, BRAD MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY10218"
+   ],
+   "name": [
+    "MOORE, JENNIFER E"
+   ],
+   "primary_money_removed": [
+    [
+     "NEW YORKERS FIGHTING BACK",
+     189039
+    ],
+    [
+     "New Engagement PAC",
+     30000
+    ]
+   ]
+  }
+ },
+ "NY-11": {
+  "D": {
+   "fec_id": [
+    "H6NY11265"
+   ],
+   "name": [
+    "DECILLIS, MICHAEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0NY11078"
+   ],
+   "name": [
+    "MALLIOTAKIS, NICOLE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-12": {
+  "D": {
+   "fec_id": [
+    "H6NY12172"
+   ],
+   "name": [
+    "LASHER, MICAH CHARLES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY12404"
+   ],
+   "name": [
+    "SHINKLE, CAROLINE"
+   ],
+   "primary_money_removed": [
+    [
+     "Nuestro PAC",
+     3017410
+    ]
+   ]
+  }
+ },
+ "NY-13": {
+  "D": {
+   "fec_id": [
+    "H6NY13279"
+   ],
+   "name": [
+    "AVILA CHEVALIER, DARIALIZA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY13303"
+   ],
+   "name": [
+    "WILLIAMS, JOMO"
+   ],
+   "primary_money_removed": [
+    [
+     "BOLD America",
+     1524107
+    ],
+    [
+     "CatholicVote.org",
+     12161
+    ],
+    [
+     "Latino Victory Fund",
+     3950
+    ]
+   ]
+  }
+ },
+ "NY-14": {
+  "D": {
+   "fec_id": [
+    "H8NY15148"
+   ],
+   "name": [
+    "OCASIO-CORTEZ, ALEXANDRIA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY14251"
+   ],
+   "name": [
+    "HYSENAJ, DIAMANT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-15": {
+  "D": {
+   "fec_id": [
+    "H0NY15160"
+   ],
+   "name": [
+    "TORRES, RITCHIE JOHN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY16140"
+   ],
+   "name": [
+    "SAPASKIS, STYLO ADONIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-16": {
+  "D": {
+   "fec_id": [
+    "H4NY16087"
+   ],
+   "name": [
+    "LATIMER, GEORGE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NY07052"
+   ],
+   "name": [
+    "CINQUEMANI, JOSEPH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-17": {
+  "D": {
+   "fec_id": [
+    "H6NY17171"
+   ],
+   "name": [
+    "CONLEY, CAIT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NY17162"
+   ],
+   "name": [
+    "LAWLER, MICHAEL VINCENT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-18": {
+  "D": {
+   "fec_id": [
+    "H8NY19223"
+   ],
+   "name": [
+    "RYAN, PATRICK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY18252"
+   ],
+   "name": [
+    "AURINGER, JACKIE MARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-19": {
+  "D": {
+   "fec_id": [
+    "H8NY22177"
+   ],
+   "name": [
+    "RILEY, JOSH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY19268"
+   ],
+   "name": [
+    "OBERACKER, PETER KARL JR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-20": {
+  "D": {
+   "fec_id": [
+    "H8NY21203"
+   ],
+   "name": [
+    "TONKO, PAUL DAVID"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY20225"
+   ],
+   "name": [
+    "AMBROSIO, RALPH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-21": {
+  "D": {
+   "fec_id": [
+    "H6NY21199"
+   ],
+   "name": [
+    "GENDEBIEN, BLAKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY21157"
+   ],
+   "name": [
+    "CONSTANTINO, ANTHONY THOMAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-22": {
+  "D": {
+   "fec_id": [
+    "H4NY22085"
+   ],
+   "name": [
+    "MANNION, JOHN W"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY22213"
+   ],
+   "name": [
+    "BULLER, KAILEE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-23": {
+  "D": {
+   "fec_id": [
+    "H6NY23559"
+   ],
+   "name": [
+    "GIES, AARON DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NY23228"
+   ],
+   "name": [
+    "LANGWORTHY, NICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-24": {
+  "D": {
+   "fec_id": [
+    "H6NY24219"
+   ],
+   "name": [
+    "ELLMAN, ALISSA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NY22051"
+   ],
+   "name": [
+    "TENNEY, CLAUDIA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-25": {
+  "D": {
+   "fec_id": [
+    "H8NY25105"
+   ],
+   "name": [
+    "MORELLE, JOSEPH D"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY25208"
+   ],
+   "name": [
+    "MCINTYRE, VIRGINIA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NY-26": {
+  "D": {
+   "fec_id": [
+    "H4NY26078"
+   ],
+   "name": [
+    "KENNEDY, TIMOTHY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NY26131"
+   ],
+   "name": [
+    "HANNON, DENNIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-01": {
+  "D": {
+   "fec_id": [
+    "H6VA01299"
+   ],
+   "name": [
+    "TAYLOR, SHANNON LEIGH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8VA01147"
+   ],
+   "name": [
+    "WITTMAN, ROBERT J. MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-02": {
+  "D": {
+   "fec_id": [
+    "H6VA02198"
+   ],
+   "name": [
+    "LURIA, ELAINE"
+   ],
+   "primary_money_removed": [
+    [
+     "DMFI PAC",
+     900000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2VA02064"
+   ],
+   "name": [
+    "KIGGANS, JENNIFER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-03": {
+  "D": {
+   "fec_id": [
+    "H6VA01117"
+   ],
+   "name": [
+    "SCOTT, ROBERT C"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VA03121"
+   ],
+   "name": [
+    "RIVERA, EDWIN MR. JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-04": {
+  "D": {
+   "fec_id": [
+    "H4VA04066"
+   ],
+   "name": [
+    "MCCLELLAN, JENNIFER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VA04129"
+   ],
+   "name": [
+    "MURRAY, ROBERT P."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-05": {
+  "D": {
+   "fec_id": [
+    "H6VA05217"
+   ],
+   "name": [
+    "PERRIELLO, THOMAS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0VA07133"
+   ],
+   "name": [
+    "MCGUIRE, JOHN J. MR. III"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-06": {
+  "D": {
+   "fec_id": [
+    "H6VA06173"
+   ],
+   "name": [
+    "MACY, BETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8VA06104"
+   ],
+   "name": [
+    "CLINE, BENJAMIN LEE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-07": {
+  "D": {
+   "fec_id": [
+    "H4VA07234"
+   ],
+   "name": [
+    "VINDMAN, YEVGENY 'EUGENE'"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VA07205"
+   ],
+   "name": [
+    "OLLIVANT, DOUGLAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-08": {
+  "D": {
+   "fec_id": [
+    "H4VA08224"
+   ],
+   "name": [
+    "BEYER, DONALD STERNOFF JR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VA08252"
+   ],
+   "name": [
+    "SABIO, TONY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-09": {
+  "D": {
+   "fec_id": [
+    "H6VA09136"
+   ],
+   "name": [
+    "POWERS, JOY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0VA09055"
+   ],
+   "name": [
+    "GRIFFITH, H MORGAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-10": {
+  "D": {
+   "fec_id": [
+    "H4VA10279"
+   ],
+   "name": [
+    "SUBRAMANYAM, SUHAS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2VA10273"
+   ],
+   "name": [
+    "BECKWITH, DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VA-11": {
+  "D": {
+   "fec_id": [
+    "H6VA11066"
+   ],
+   "name": [
+    "WALKINSHAW, JAMES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VA11249"
+   ],
+   "name": [
+    "PURVES, ARTHUR GRAHAME MR."
+   ],
+   "primary_money_removed": [
+    [
+     "Heritage Action for America",
+     2790
+    ]
+   ]
+  }
+ },
+ "CA-01": {
+  "D": {
+   "fec_id": [
+    "H6CA01269"
+   ],
+   "name": [
+    "MCGUIRE, MIKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA01285"
+   ],
+   "name": [
+    "GALLAGHER, JAMES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-02": {
+  "D": {
+   "fec_id": [
+    "H2CA06259"
+   ],
+   "name": [
+    "HUFFMAN, JARED"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA02309"
+   ],
+   "name": [
+    "LITTAU, ROBIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-03": {
+  "D": {
+   "fec_id": [
+    "H0CA03078"
+   ],
+   "name": [
+    "BERA, AMERISH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA03174"
+   ],
+   "name": [
+    "TUCKER, ROBB"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-04": {
+  "D": {
+   "fec_id": [
+    "H8CA01109"
+   ],
+   "name": [
+    "THOMPSON, MIKE MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA04222"
+   ],
+   "name": [
+    "JONES, ERIC"
+   ],
+   "primary_money_removed": [
+    [
+     "NEW LEADERSHIP NOW",
+     2834146
+    ],
+    [
+     "CALIFORNIA LEADERSHIP FUND",
+     33341
+    ]
+   ]
+  }
+ },
+ "CA-05": {
+  "D": {
+   "fec_id": [
+    "H6CA05377"
+   ],
+   "name": [
+    "MASUDA, MICHAEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8CA04152"
+   ],
+   "name": [
+    "MCCLINTOCK, THOMAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-06": {
+  "D": {
+   "fec_id": [
+    "H6CA03158"
+   ],
+   "name": [
+    "PAN, RICHARD DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2CA03157"
+   ],
+   "name": [
+    "KILEY, KEVIN"
+   ],
+   "primary_money_removed": [
+    [
+     "Rolling Sea Action Fund",
+     50000
+    ]
+   ]
+  }
+ },
+ "CA-07": {
+  "D": {
+   "fec_id": [
+    "H6CA05195"
+   ],
+   "name": [
+    "MATSUI, DORIS"
+   ],
+   "primary_money_removed": [
+    [
+     "AFFORDABLE CALIFORNIA 2026",
+     485800
+    ],
+    [
+     "CatholicVote.org",
+     12161
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6CA07175"
+   ],
+   "name": [
+    "VANG, MAI"
+   ],
+   "primary_money_removed": [
+    [
+     "Justice Democrats PAC",
+     197000
+    ],
+    [
+     "Working Families Party PAC",
+     120000
+    ]
+   ]
+  }
+ },
+ "CA-08": {
+  "D": {
+   "fec_id": [
+    "H0CA10149"
+   ],
+   "name": [
+    "GARAMENDI, JOHN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2CA00153"
+   ],
+   "name": [
+    "RECILE, RUDY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-09": {
+  "D": {
+   "fec_id": [
+    "H8CA10126"
+   ],
+   "name": [
+    "HARDER, JOSH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA09101"
+   ],
+   "name": [
+    "MCBRIDE, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-10": {
+  "D": {
+   "fec_id": [
+    "H0CA10073"
+   ],
+   "name": [
+    "DESAULNIER, MARK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA10187"
+   ],
+   "name": [
+    "FRESE, JEFFREY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-11": {
+  "D": {
+   "fec_id": [
+    "H8CA11116"
+   ],
+   "name": [
+    "WIENER, SCOTT"
+   ],
+   "primary_money_removed": [
+    [
+     "A FIGHT WORTH HAVING",
+     10945
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6CA11268"
+   ],
+   "name": [
+    "CHAN, CONNIE"
+   ],
+   "primary_money_removed": [
+    [
+     "RISING TIDE COLLECTIVE",
+     100000
+    ],
+    [
+     "PEACE, ACCOUNTABILITY, AND LEADERSHIP POLITICAL ACTION COMMITTEE",
+     51111
+    ],
+    [
+     "Common Sense SF",
+     30200
+    ]
+   ]
+  }
+ },
+ "CA-12": {
+  "D": {
+   "fec_id": [
+    "H4CA12154"
+   ],
+   "name": [
+    "SIMON, LATEEFAH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA12209"
+   ],
+   "name": [
+    "JOYCE, JAMIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-13": {
+  "D": {
+   "fec_id": [
+    "H2CA13115"
+   ],
+   "name": [
+    "GRAY, ADAM C."
+   ],
+   "primary_money_removed": [
+    [
+     "BDA PAC",
+     450000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4CA09093"
+   ],
+   "name": [
+    "LINCOLN, KEVIN J II"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-14": {
+  "D": {
+   "fec_id": [
+    "H0CA15213"
+   ],
+   "name": [
+    "WAHAB, AISHA"
+   ],
+   "primary_money_removed": [
+    [
+     "AMERICAN PRIORITIES (AP)",
+     210300
+    ],
+    [
+     "PROGRESSIVE PROMISE",
+     200000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6CA14163"
+   ],
+   "name": [
+    "HERNANDEZ, MELISSA"
+   ],
+   "primary_money_removed": [
+    [
+     "UNITED DEMOCRACY PROJECT (UDP)",
+     1642140
+    ],
+    [
+     "BOLD America",
+     610970
+    ],
+    [
+     "SAFER ALAMEDA COUNTY PAC",
+     437221
+    ]
+   ]
+  }
+ },
+ "CA-15": {
+  "D": {
+   "fec_id": [
+    "H2CA14162"
+   ],
+   "name": [
+    "MULLIN, KEVIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA15194"
+   ],
+   "name": [
+    "HOELTER, CHARLES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-16": {
+  "D": {
+   "fec_id": [
+    "H4CA16197"
+   ],
+   "name": [
+    "LICCARDO, SAM T."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA16176"
+   ],
+   "name": [
+    "SOULE, PETER SUNDIN MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-17": {
+  "D": {
+   "fec_id": [
+    "H4CA12055"
+   ],
+   "name": [
+    "KHANNA, ROHIT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0CA17193"
+   ],
+   "name": [
+    "TANDON, RITESH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-18": {
+  "D": {
+   "fec_id": [
+    "H4CA16049"
+   ],
+   "name": [
+    "LOFGREN, ZOE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA18172"
+   ],
+   "name": [
+    "LEWIS, SHANE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-19": {
+  "D": {
+   "fec_id": [
+    "H6CA20152"
+   ],
+   "name": [
+    "PANETTA, JIMMY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA19154"
+   ],
+   "name": [
+    "VERBICA, PETER COE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-20": {
+  "D": {
+   "fec_id": [
+    "H6CA20228"
+   ],
+   "name": [
+    "VAN SCOTTER, SANDRA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA20181"
+   ],
+   "name": [
+    "FONG, VINCE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-21": {
+  "D": {
+   "fec_id": [
+    "H4CA20082"
+   ],
+   "name": [
+    "COSTA, JIM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA13199"
+   ],
+   "name": [
+    "KIRKLAND, KYLE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-22": {
+  "D": {
+   "fec_id": [
+    "H6CA22190"
+   ],
+   "name": [
+    "VILLEGAS, RANDY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2CA20094"
+   ],
+   "name": [
+    "VALADAO, DAVID"
+   ],
+   "primary_money_removed": [
+    [
+     "New Democrat Majority",
+     750946
+    ],
+    [
+     "BDA PAC",
+     600000
+    ],
+    [
+     "DMFI PAC",
+     500000
+    ]
+   ]
+  }
+ },
+ "CA-23": {
+  "D": {
+   "fec_id": [
+    "H6CA23230"
+   ],
+   "name": [
+    "HODGE, TESSA LYNN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0CA08135"
+   ],
+   "name": [
+    "OBERNOLTE, JAY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-24": {
+  "D": {
+   "fec_id": [
+    "H6CA24303"
+   ],
+   "name": [
+    "CARBAJAL, SALUD O."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA24345"
+   ],
+   "name": [
+    "SMITH, ROBERT BOB J"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-25": {
+  "D": {
+   "fec_id": [
+    "H2CA36439"
+   ],
+   "name": [
+    "RUIZ, RAUL DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA25219"
+   ],
+   "name": [
+    "MALES, JOE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-26": {
+  "D": {
+   "fec_id": [
+    "H6CA26266"
+   ],
+   "name": [
+    "IRWIN, JACQUI V"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA26241"
+   ],
+   "name": [
+    "GALLUCCI, SAMUEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-27": {
+  "D": {
+   "fec_id": [
+    "H4CA27111"
+   ],
+   "name": [
+    "WHITESIDES, GEORGE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA27306"
+   ],
+   "name": [
+    "GIBBS, JASON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-28": {
+  "D": {
+   "fec_id": [
+    "H0CA32101"
+   ],
+   "name": [
+    "CHU, JUDY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA28127"
+   ],
+   "name": [
+    "VERLATO, APRIL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-29": {
+  "D": {
+   "fec_id": [
+    "H4CA29141"
+   ],
+   "name": [
+    "RIVAS, LUZ"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8CA29100"
+   ],
+   "name": [
+    "DUENAS, ANGELICA MARIA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-30": {
+  "D": {
+   "fec_id": [
+    "H4CA30149"
+   ],
+   "name": [
+    "FRIEDMAN, LAURA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA30250"
+   ],
+   "name": [
+    "MEYERS, SCOTT ALAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-31": {
+  "D": {
+   "fec_id": [
+    "H8CA39174"
+   ],
+   "name": [
+    "CISNEROS, GILBERT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2CA39151"
+   ],
+   "name": [
+    "CHING, ERIC J"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-32": {
+  "D": {
+   "fec_id": [
+    "H6CA24113"
+   ],
+   "name": [
+    "SHERMAN, BRAD"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA32137"
+   ],
+   "name": [
+    "THOMPSON, LARRY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-33": {
+  "D": {
+   "fec_id": [
+    "H2CA31125"
+   ],
+   "name": [
+    "AGUILAR, PETE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA33114"
+   ],
+   "name": [
+    "VARGAS, STEPHANIE M."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-34": {
+  "D": {
+   "fec_id": [
+    "H8CA34266"
+   ],
+   "name": [
+    "GOMEZ, JIMMY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA34286"
+   ],
+   "name": [
+    "GONZALES-TORRES, ANGELA"
+   ],
+   "primary_money_removed": [
+    [
+     "Guardrails Alliance",
+     412000
+    ],
+    [
+     "Progress Action Fund",
+     25000
+    ]
+   ]
+  }
+ },
+ "CA-35": {
+  "D": {
+   "fec_id": [
+    "H4CA35031"
+   ],
+   "name": [
+    "TORRES, NORMA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0CA35146"
+   ],
+   "name": [
+    "CARGILE, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-36": {
+  "D": {
+   "fec_id": [
+    "H4CA33119"
+   ],
+   "name": [
+    "LIEU, TED"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA36208"
+   ],
+   "name": [
+    "BRIGNANO, HOUSTON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-37": {
+  "D": {
+   "fec_id": [
+    "H2CA37304"
+   ],
+   "name": [
+    "KAMLAGER-DOVE, SYDNEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA37339"
+   ],
+   "name": [
+    "MOTA, SAMANTHA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-38": {
+  "D": {
+   "fec_id": [
+    "H6CA38139"
+   ],
+   "name": [
+    "SOLIS, HILDA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA31212"
+   ],
+   "name": [
+    "CASAS, PEDRO ANTONIO"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-39": {
+  "D": {
+   "fec_id": [
+    "H2CA43245"
+   ],
+   "name": [
+    "TAKANO, MARK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA39145"
+   ],
+   "name": [
+    "MANOS, STEVE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-40": {
+  "D": {
+   "fec_id": [
+    "H2CA37023"
+   ],
+   "name": [
+    "CALVERT, KEN"
+   ],
+   "primary_money_removed": [
+    [
+     "Americans 4 Security PAC",
+     5119868
+    ],
+    [
+     "CALIFORNIA CONSERVATIVES PAC",
+     1345474
+    ],
+    [
+     "CALIFORNIA BLUE PAC",
+     701515
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H8CA39240"
+   ],
+   "name": [
+    "KIM, YOUNG"
+   ],
+   "primary_money_removed": [
+    [
+     "CFF",
+     769141
+    ],
+    [
+     "Youth Save Democracy PAC",
+     3669
+    ]
+   ]
+  }
+ },
+ "CA-41": {
+  "D": {
+   "fec_id": [
+    "H2CA39078"
+   ],
+   "name": [
+    "SANCHEZ, LINDA"
+   ],
+   "primary_money_removed": [
+    [
+     "BOLD America",
+     300000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2CA38260"
+   ],
+   "name": [
+    "CLEMMONS, MITCHELL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-42": {
+  "D": {
+   "fec_id": [
+    "H2CA47188"
+   ],
+   "name": [
+    "GARCIA, ROBERT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0CA48172"
+   ],
+   "name": [
+    "BURLEY, BRIAN J MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-43": {
+  "D": {
+   "fec_id": [
+    "H4CA23011"
+   ],
+   "name": [
+    "WATERS, MAXINE MS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA43188"
+   ],
+   "name": [
+    "MORALES, CRISTIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-44": {
+  "D": {
+   "fec_id": [
+    "H6CA44103"
+   ],
+   "name": [
+    "BARRAGAN, NANETTE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA44210"
+   ],
+   "name": [
+    "ANGEL, GENEVIEVE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-45": {
+  "D": {
+   "fec_id": [
+    "H4CA45170"
+   ],
+   "name": [
+    "TRAN, DEREK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA45191"
+   ],
+   "name": [
+    "VO, CHUONG"
+   ],
+   "primary_money_removed": [
+    [
+     "Orange County PAC",
+     5642
+    ]
+   ]
+  }
+ },
+ "CA-46": {
+  "D": {
+   "fec_id": [
+    "H6CA46116"
+   ],
+   "name": [
+    "CORREA, LOU"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CA46137"
+   ],
+   "name": [
+    "PAN, DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-47": {
+  "D": {
+   "fec_id": [
+    "H4CA47085"
+   ],
+   "name": [
+    "MIN, DAVE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA47114"
+   ],
+   "name": [
+    "LE ROUX, JENNY RAE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-48": {
+  "D": {
+   "fec_id": [
+    "H6CA48310"
+   ],
+   "name": [
+    "VON WILPERT, MARNI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA49128"
+   ],
+   "name": [
+    "DESMOND, JIM"
+   ],
+   "primary_money_removed": [
+    [
+     "Serving CA",
+     653454
+    ]
+   ]
+  }
+ },
+ "CA-49": {
+  "D": {
+   "fec_id": [
+    "H8CA49058"
+   ],
+   "name": [
+    "LEVIN, MIKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA49169"
+   ],
+   "name": [
+    "KURDIAN, ARMEN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-50": {
+  "D": {
+   "fec_id": [
+    "H2CA52089"
+   ],
+   "name": [
+    "PETERS, SCOTT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA50324"
+   ],
+   "name": [
+    "COHEN, STEPHEN JAY MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-51": {
+  "D": {
+   "fec_id": [
+    "H8CA49074"
+   ],
+   "name": [
+    "JACOBS, SARA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA51140"
+   ],
+   "name": [
+    "CABRERA, RICARDO"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CA-52": {
+  "D": {
+   "fec_id": [
+    "H2CA50026"
+   ],
+   "name": [
+    "VARGAS, JUAN C."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CA52163"
+   ],
+   "name": [
+    "BELLE, JEFFERY MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-01": {
+  "D": {
+   "fec_id": [
+    "H6PA01181"
+   ],
+   "name": [
+    "HARVIE, ROBERT J"
+   ],
+   "primary_money_removed": [
+    [
+     "Associated Builders and Contractors, Inc. Political Action Committee (ABC PAC)",
+     14238
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6PA08277"
+   ],
+   "name": [
+    "FITZPATRICK, BRIAN"
+   ],
+   "primary_money_removed": [
+    [
+     "EDF Action Votes",
+     215470
+    ]
+   ]
+  }
+ },
+ "PA-02": {
+  "D": {
+   "fec_id": [
+    "H4PA13199"
+   ],
+   "name": [
+    "BOYLE, BRENDAN F"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA02205"
+   ],
+   "name": [
+    "ARRIAGA, JESSICA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-03": {
+  "D": {
+   "fec_id": [
+    "H6PA03203"
+   ],
+   "name": [
+    "RABB, CHRISTOPHER M."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "PA-04": {
+  "D": {
+   "fec_id": [
+    "H8PA04116"
+   ],
+   "name": [
+    "DEAN, MADELEINE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA04169"
+   ],
+   "name": [
+    "STUSKI, AURORA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-05": {
+  "D": {
+   "fec_id": [
+    "H8PA07200"
+   ],
+   "name": [
+    "SCANLON, MARY GAY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA05216"
+   ],
+   "name": [
+    "MANGANARO, NICHOLAS WALN MORRIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-06": {
+  "D": {
+   "fec_id": [
+    "H8PA06087"
+   ],
+   "name": [
+    "HOULAHAN, CHRISSY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA06156"
+   ],
+   "name": [
+    "YOUNG, MARTIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-07": {
+  "D": {
+   "fec_id": [
+    "H6PA07188"
+   ],
+   "name": [
+    "BROOKS, BOB"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8PA15195"
+   ],
+   "name": [
+    "MACKENZIE, RYAN EDWARD"
+   ],
+   "primary_money_removed": [
+    [
+     "LEAD LEFT PAC",
+     312372
+    ]
+   ]
+  }
+ },
+ "PA-08": {
+  "D": {
+   "fec_id": [
+    "H6PA08293"
+   ],
+   "name": [
+    "COGNETTI, PAIGE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4PA08124"
+   ],
+   "name": [
+    "BRESNAHAN, ROB"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-09": {
+  "D": {
+   "fec_id": [
+    "H6PA09127"
+   ],
+   "name": [
+    "WALLACE, RACHEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8PA10147"
+   ],
+   "name": [
+    "MEUSER, DANIEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-10": {
+  "D": {
+   "fec_id": [
+    "H4PA10104"
+   ],
+   "name": [
+    "STELSON, JANELLE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2PA04135"
+   ],
+   "name": [
+    "PERRY, SCOTT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-11": {
+  "D": {
+   "fec_id": [
+    "H6PA11099"
+   ],
+   "name": [
+    "MANNION, NANCY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA16320"
+   ],
+   "name": [
+    "SMUCKER, LLOYD K."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-12": {
+  "D": {
+   "fec_id": [
+    "H2PA18200"
+   ],
+   "name": [
+    "LEE, SUMMER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4PA12068"
+   ],
+   "name": [
+    "HAYES, JAMES DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-13": {
+  "D": {
+   "fec_id": [
+    "H4PA13298"
+   ],
+   "name": [
+    "FARNHAM, ELIZABETH RHOADS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8PA13125"
+   ],
+   "name": [
+    "JOYCE, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-14": {
+  "D": {
+   "fec_id": [
+    "H6PA14200"
+   ],
+   "name": [
+    "BRADSTOCK, DAVID ALAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8PA18199"
+   ],
+   "name": [
+    "RESCHENTHALER, GUY MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-15": {
+  "D": {
+   "fec_id": [
+    "H6PA15181"
+   ],
+   "name": [
+    "BILGER, RAYMOND ALLEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8PA05071"
+   ],
+   "name": [
+    "THOMPSON, GLENN MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-16": {
+  "D": {
+   "fec_id": [
+    "H6PA16379"
+   ],
+   "name": [
+    "WAGNER, JUSTIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0PA03271"
+   ],
+   "name": [
+    "KELLY, GEORGE J JR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "PA-17": {
+  "D": {
+   "fec_id": [
+    "H2PA17103"
+   ],
+   "name": [
+    "DELUZIO, CHRISTOPHER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6PA17203"
+   ],
+   "name": [
+    "GUY, TONY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-01": {
+  "D": {
+   "fec_id": [
+    "H2OH01194"
+   ],
+   "name": [
+    "LANDSMAN, GREG"
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     41575
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6OH01138"
+   ],
+   "name": [
+    "CONROY, ERIC"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-02": {
+  "D": {
+   "fec_id": [
+    "H6OH02326"
+   ],
+   "name": [
+    "MAZZUCKELLI, JEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4OH02248"
+   ],
+   "name": [
+    "TAYLOR, DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-03": {
+  "D": {
+   "fec_id": [
+    "H2OH03125"
+   ],
+   "name": [
+    "BEATTY, JOYCE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0OH03137"
+   ],
+   "name": [
+    "DULANEY, CLEOPHUS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-04": {
+  "D": {
+   "fec_id": [
+    "H6OH04181"
+   ],
+   "name": [
+    "KOLASINSKI, JOSHUA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OH04082"
+   ],
+   "name": [
+    "JORDAN, JAMES D."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-05": {
+  "D": {
+   "fec_id": [
+    "H6OH05154"
+   ],
+   "name": [
+    "SHAVER, BRIAN ALAN MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8OH05036"
+   ],
+   "name": [
+    "LATTA, ROBERT EDWARD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-06": {
+  "D": {
+   "fec_id": [
+    "H6OH06244"
+   ],
+   "name": [
+    "KIRTLEY, ELIZABETH ANN MRS."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4OH06165"
+   ],
+   "name": [
+    "RULLI, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-07": {
+  "D": {
+   "fec_id": [
+    "H6OH07168"
+   ],
+   "name": [
+    "POINDEXTER, BRIAN"
+   ],
+   "primary_money_removed": [
+    [
+     "Associated Builders and Contractors, Inc. Political Action Committee (ABC PAC)",
+     14300
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2OH16051"
+   ],
+   "name": [
+    "MILLER, MAX"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-08": {
+  "D": {
+   "fec_id": [
+    "H8OH08097"
+   ],
+   "name": [
+    "ENOCH, VANESSA L. DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OH08315"
+   ],
+   "name": [
+    "DAVIDSON, WARREN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-09": {
+  "D": {
+   "fec_id": [
+    "H2OH09031"
+   ],
+   "name": [
+    "KAPTUR, MARCY HON. M.C."
+   ],
+   "primary_money_removed": [
+    [
+     "AMERICAN RESOLVE PAC INC.",
+     77000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4OH09169"
+   ],
+   "name": [
+    "MERRIN, DEREK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-10": {
+  "D": {
+   "fec_id": [
+    "H6OH10121"
+   ],
+   "name": [
+    "KNICKERBOCKER, KRISTINA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OH03067"
+   ],
+   "name": [
+    "TURNER, MICHAEL R REP."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-11": {
+  "D": {
+   "fec_id": [
+    "H2OH11169"
+   ],
+   "name": [
+    "BROWN, M SHONTEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OH11210"
+   ],
+   "name": [
+    "KIRCHNER, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-12": {
+  "D": {
+   "fec_id": [
+    "H4OH12080"
+   ],
+   "name": [
+    "CHRISTIAN, JERRAD SHANE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8OH12180"
+   ],
+   "name": [
+    "BALDERSON, WILLIAM TROY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-13": {
+  "D": {
+   "fec_id": [
+    "H2OH13264"
+   ],
+   "name": [
+    "SYKES, EMILIA"
+   ],
+   "primary_money_removed": [
+    [
+     "THINK BIG",
+     332071
+    ],
+    [
+     "ROLLING SEA ACTION FUND",
+     115000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6OH13307"
+   ],
+   "name": [
+    "COLEMAN, CAREY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-14": {
+  "D": {
+   "fec_id": [
+    "H6OH14248"
+   ],
+   "name": [
+    "JUKIC, MARIA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OH14064"
+   ],
+   "name": [
+    "JOYCE, DAVID P."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OH-15": {
+  "D": {
+   "fec_id": [
+    "H6OH15112"
+   ],
+   "name": [
+    "LEONARD, DON RALPH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OH15228"
+   ],
+   "name": [
+    "CAREY, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-01": {
+  "D": {
+   "fec_id": [
+    "H2NC02287"
+   ],
+   "name": [
+    "DAVIS, DON"
+   ],
+   "primary_money_removed": [
+    [
+     "ROLLING SEA ACTION FUND",
+     360000
+    ],
+    [
+     "Rolling Sea Action Fund",
+     120000
+    ],
+    [
+     "National Association of Realtors Political Action Committee",
+     100652
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4NC01137"
+   ],
+   "name": [
+    "BUCKHOUT, LAURIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-02": {
+  "D": {
+   "fec_id": [
+    "H0NC02125"
+   ],
+   "name": [
+    "ROSS, DEBORAH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC02135"
+   ],
+   "name": [
+    "DOUGLASS, EUGENE FARLEY DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-03": {
+  "D": {
+   "fec_id": [
+    "H6NC03229"
+   ],
+   "name": [
+    "SMITH, RAYMOND EDWARD DR. JR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0NC03172"
+   ],
+   "name": [
+    "MURPHY, GREGORY FRANCIS DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-04": {
+  "D": {
+   "fec_id": [
+    "H2NC06114"
+   ],
+   "name": [
+    "FOUSHEE, VALERIE"
+   ],
+   "primary_money_removed": [
+    [
+     "Justice Democrats PAC",
+     171600
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2NC06106"
+   ],
+   "name": [
+    "GANORKAR, MAHESH"
+   ],
+   "primary_money_removed": [
+    [
+     "Justice Democrats PAC",
+     218400
+    ],
+    [
+     "CITIZENS AGAINST AIPAC CORRUPTION",
+     23500
+    ]
+   ]
+  }
+ },
+ "NC-05": {
+  "D": {
+   "fec_id": [
+    "H4NC05294"
+   ],
+   "name": [
+    "HUBBARD, CHUCK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC05146"
+   ],
+   "name": [
+    "FOXX, VIRGINIA ANN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-06": {
+  "D": {
+   "fec_id": [
+    "H6NC06164"
+   ],
+   "name": [
+    "JEFFERSON, CYRIL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC06177"
+   ],
+   "name": [
+    "MCDOWELL, ADDISON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-07": {
+  "D": {
+   "fec_id": [
+    "H6NC07196"
+   ],
+   "name": [
+    "HARDY, KIMBERLY DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NC07096"
+   ],
+   "name": [
+    "ROUZER, DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-08": {
+  "D": {
+   "fec_id": [
+    "H6NC08202"
+   ],
+   "name": [
+    "WATSON, COLBY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC08066"
+   ],
+   "name": [
+    "HARRIS, MARK E"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-09": {
+  "D": {
+   "fec_id": [
+    "H6NC09218"
+   ],
+   "name": [
+    "OJEDA, RICHARD N."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NC08185"
+   ],
+   "name": [
+    "HUDSON, RICHARD L. JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-10": {
+  "D": {
+   "fec_id": [
+    "H6NC10174"
+   ],
+   "name": [
+    "BELL, ASHLEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NC13243"
+   ],
+   "name": [
+    "HARRIGAN, PAT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-11": {
+  "D": {
+   "fec_id": [
+    "H6NC11248"
+   ],
+   "name": [
+    "AGER, JAMIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NC11321"
+   ],
+   "name": [
+    "BALKCOM, JENNIFER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-12": {
+  "D": {
+   "fec_id": [
+    "H4NC12100"
+   ],
+   "name": [
+    "ADAMS, ALMA SHEALEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NC12113"
+   ],
+   "name": [
+    "CODIGA, JOHN JACK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-13": {
+  "D": {
+   "fec_id": [
+    "H6NC13228"
+   ],
+   "name": [
+    "BARRINGER, PAUL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC13116"
+   ],
+   "name": [
+    "KNOTT, BRAD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NC-14": {
+  "D": {
+   "fec_id": [
+    "H6NC14069"
+   ],
+   "name": [
+    "WOMACK, LAKESHA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NC14015"
+   ],
+   "name": [
+    "MOORE, TIM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-01": {
+  "D": {
+   "fec_id": [
+    "H4MI01155"
+   ],
+   "name": [
+    "BARR, CALLIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI01226"
+   ],
+   "name": [
+    "BERGMAN, JOHN"
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     12633
+    ]
+   ]
+  }
+ },
+ "MI-02": {
+  "D": {
+   "fec_id": [
+    "H6MI02216"
+   ],
+   "name": [
+    "AMBROSE, BENJAMIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MI04126"
+   ],
+   "name": [
+    "MOOLENAAR, JOHN MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-03": {
+  "D": {
+   "fec_id": [
+    "H0MI03316"
+   ],
+   "name": [
+    "SCHOLTEN, HILLARY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI03198"
+   ],
+   "name": [
+    "DEBOER, TERRI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-04": {
+  "D": {
+   "fec_id": [
+    "H6MI04204"
+   ],
+   "name": [
+    "MCCANN, SEAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0MI02094"
+   ],
+   "name": [
+    "HUIZENGA, WILLIAM P"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-05": {
+  "D": {
+   "fec_id": [
+    "H6MI05227"
+   ],
+   "name": [
+    "VUKASOVICH, CHRISTIAN A"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MI07103"
+   ],
+   "name": [
+    "WALBERG, TIMOTHY L REP"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-06": {
+  "D": {
+   "fec_id": [
+    "H4MI12079"
+   ],
+   "name": [
+    "DINGELL, DEBBIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MI06154"
+   ],
+   "name": [
+    "SMILEY, HEATHER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-07": {
+  "D": {
+   "fec_id": [
+    "H6MI07298"
+   ],
+   "name": [
+    "LAWRENCE, WILLIAM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MI07123"
+   ],
+   "name": [
+    "BARRETT, THOMAS MORE"
+   ],
+   "primary_money_removed": [
+    [
+     "Rolling Sea Action Fund",
+     1024952
+    ],
+    [
+     "Crush MAGA PAC",
+     909204
+    ],
+    [
+     "New Democrat Majority",
+     50000
+    ]
+   ]
+  }
+ },
+ "MI-08": {
+  "D": {
+   "fec_id": [
+    "H4MI08218"
+   ],
+   "name": [
+    "MCDONALD RIVET, KRISTEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI08312"
+   ],
+   "name": [
+    "SMITH, THOMAS JAMES MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-09": {
+  "D": {
+   "fec_id": [
+    "H6MI09245"
+   ],
+   "name": [
+    "POOLEY, STEVEN RAYMOND"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0MI10287"
+   ],
+   "name": [
+    "MCCLAIN, LISA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-10": {
+  "D": {
+   "fec_id": [
+    "H6MI10276"
+   ],
+   "name": [
+    "HINES, CHRISTINA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI10359"
+   ],
+   "name": [
+    "BOUCHARD, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-11": {
+  "D": {
+   "fec_id": [
+    "H6MI11191"
+   ],
+   "name": [
+    "MOSS, JEREMY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI11290"
+   ],
+   "name": [
+    "BAKER, ETHAN D"
+   ],
+   "primary_money_removed": [
+    [
+     "INTEGRITY PAC",
+     20000
+    ]
+   ]
+  }
+ },
+ "MI-12": {
+  "D": {
+   "fec_id": [
+    "H8MI13250"
+   ],
+   "name": [
+    "TLAIB, RASHIDA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MI12198"
+   ],
+   "name": [
+    "HOOPER, JAMES D"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MI-13": {
+  "D": {
+   "fec_id": [
+    "H6MI13254"
+   ],
+   "name": [
+    "MCKINNEY, DONAVAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MI13312"
+   ],
+   "name": [
+    "NYKORIAK, T.P."
+   ],
+   "primary_money_removed": [
+    [
+     "Protect Progress",
+     268690
+    ]
+   ]
+  }
+ },
+ "GA-01": {
+  "D": {
+   "fec_id": [
+    "H6GA01158"
+   ],
+   "name": [
+    "HOLLOWELL, AMANDA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6GA01109"
+   ],
+   "name": [
+    "KINGSTON, JAMES MORRIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-02": {
+  "D": {
+   "fec_id": [
+    "H2GA02031"
+   ],
+   "name": [
+    "BISHOP, SANFORD"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6GA01182"
+   ],
+   "name": [
+    "DAY, MATT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-03": {
+  "D": {
+   "fec_id": [
+    "H4GA03100"
+   ],
+   "name": [
+    "KELLER, MAURA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4GA03126"
+   ],
+   "name": [
+    "JACK, BRIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-04": {
+  "D": {
+   "fec_id": [
+    "H6GA04129"
+   ],
+   "name": [
+    "JOHNSON, HENRY C. 'HANK'"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6GA04194"
+   ],
+   "name": [
+    "DUFFIE, JIM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-05": {
+  "D": {
+   "fec_id": [
+    "H0GA05301"
+   ],
+   "name": [
+    "WILLIAMS, NIKEMA N."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4GA05063"
+   ],
+   "name": [
+    "O SALVESEN, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-06": {
+  "D": {
+   "fec_id": [
+    "H8GA06393"
+   ],
+   "name": [
+    "MCBATH, LUCIA KAY MS."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6GA06181"
+   ],
+   "name": [
+    "MARTIN, KEVIN EUGENE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-07": {
+  "D": {
+   "fec_id": [
+    "H6GA07221"
+   ],
+   "name": [
+    "KOZYCKI, ANTHONY LAWRENCE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0GA07273"
+   ],
+   "name": [
+    "MCCORMICK, RICHARD DEAN DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-08": {
+  "D": {
+   "fec_id": [
+    "H6GA08138"
+   ],
+   "name": [
+    "ESTI, KELLY DR"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0GA08099"
+   ],
+   "name": [
+    "SCOTT, JAMES AUSTIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-09": {
+  "D": {
+   "fec_id": [
+    "H6GA09284"
+   ],
+   "name": [
+    "GEGEN, CAITLYN"
+   ],
+   "primary_money_removed": [
+    [
+     "GEORGIA CONSERVATIVE ALLIANCE INC.",
+     44440
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H0GA09246"
+   ],
+   "name": [
+    "CLYDE, ANDREW"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-10": {
+  "D": {
+   "fec_id": [
+    "H6GA10183"
+   ],
+   "name": [
+    "DELANCY, PAMELA MRS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6GA10175"
+   ],
+   "name": [
+    "GAINES, HOUSTON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-11": {
+  "D": {
+   "fec_id": [
+    "H6GA11116"
+   ],
+   "name": [
+    "HARDEN, CHRISTOPHER MATTHEW"
+   ],
+   "primary_money_removed": [
+    [
+     "Tea Party Patriots Citizens Fund",
+     22514
+    ],
+    [
+     "GEORGIANS FOR COMMON SENSE",
+     17582
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H0GA14048"
+   ],
+   "name": [
+    "COWAN, JOHN"
+   ],
+   "primary_money_removed": [
+    [
+     "American Values First",
+     9138
+    ]
+   ]
+  }
+ },
+ "GA-12": {
+  "D": {
+   "fec_id": [
+    "H6GA12080"
+   ],
+   "name": [
+    "SMITH, CERETTA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2GA12121"
+   ],
+   "name": [
+    "ALLEN, RICHARD W"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-13": {
+  "D": {
+   "fec_id": [
+    "H6GA13070"
+   ],
+   "name": [
+    "CLARK, JASMINE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2GA04201"
+   ],
+   "name": [
+    "CHAVEZ, JONATHAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "GA-14": {
+  "D": {
+   "fec_id": [
+    "H4GA14057"
+   ],
+   "name": [
+    "HARRIS, SHAWN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0GA14030"
+   ],
+   "name": [
+    "FULLER, CLAY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-01": {
+  "D": {
+   "fec_id": [
+    "H2IL01349"
+   ],
+   "name": [
+    "JACKSON, JONATHAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL01191"
+   ],
+   "name": [
+    "MAXWELL, CHRISTIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-02": {
+  "D": {
+   "fec_id": [
+    "H6IL02355"
+   ],
+   "name": [
+    "MILLER, DONNA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL02389"
+   ],
+   "name": [
+    "NOACK, MICHAEL SCOTT"
+   ],
+   "primary_money_removed": [
+    [
+     "THE PEOPLE'S LOBBY",
+     1635
+    ]
+   ]
+  }
+ },
+ "IL-03": {
+  "D": {
+   "fec_id": [
+    "H2IL03162"
+   ],
+   "name": [
+    "RAMIREZ, DELIA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL03163"
+   ],
+   "name": [
+    "OAKLEY, ANGEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-04": {
+  "D": {
+   "fec_id": [
+    "H6IL04153"
+   ],
+   "name": [
+    "GARCIA, PATTY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4IL04117"
+   ],
+   "name": [
+    "CASTILLO, LUPE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-05": {
+  "D": {
+   "fec_id": [
+    "H0IL05096"
+   ],
+   "name": [
+    "QUIGLEY, MIKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2IL05241"
+   ],
+   "name": [
+    "HANSON, TOMMY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-06": {
+  "D": {
+   "fec_id": [
+    "H8IL06139"
+   ],
+   "name": [
+    "CASTEN, SEAN"
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     12087
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2IL06090"
+   ],
+   "name": [
+    "CONFORTI, NIKI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-07": {
+  "D": {
+   "fec_id": [
+    "H6IL07354"
+   ],
+   "name": [
+    "FORD, LA SHAWN K"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2IL08203"
+   ],
+   "name": [
+    "KOPPIE, CHAD"
+   ],
+   "primary_money_removed": [
+    [
+     "Fairshake",
+     2475786
+    ]
+   ]
+  }
+ },
+ "IL-08": {
+  "D": {
+   "fec_id": [
+    "H6IL08329"
+   ],
+   "name": [
+    "BEAN, MELISSA LUBURICH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL08311"
+   ],
+   "name": [
+    "DAVIS, JENNIFER"
+   ],
+   "primary_money_removed": [
+    [
+     "Justice Democrats PAC",
+     56750
+    ]
+   ]
+  }
+ },
+ "IL-09": {
+  "D": {
+   "fec_id": [
+    "H6IL09228"
+   ],
+   "name": [
+    "BISS, DANIEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8IL09208"
+   ],
+   "name": [
+    "ELLESON, JOHN D."
+   ],
+   "primary_money_removed": [
+    [
+     "ELECT CHICAGO WOMEN AKA ECW",
+     1426379
+    ]
+   ]
+  }
+ },
+ "IL-10": {
+  "D": {
+   "fec_id": [
+    "H2IL10068"
+   ],
+   "name": [
+    "SCHNEIDER, BRADLEY S."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL10176"
+   ],
+   "name": [
+    "LAMBRECHT, CARL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-11": {
+  "D": {
+   "fec_id": [
+    "H8IL14067"
+   ],
+   "name": [
+    "FOSTER, G. WILLIAM (BILL)"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL11166"
+   ],
+   "name": [
+    "WALTER, JEFFREY D"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-12": {
+  "D": {
+   "fec_id": [
+    "H6IL12131"
+   ],
+   "name": [
+    "FORTIER, JULIE DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4IL12060"
+   ],
+   "name": [
+    "BOST, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-13": {
+  "D": {
+   "fec_id": [
+    "H2IL13153"
+   ],
+   "name": [
+    "BUDZINSKI, NIKKI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL13154"
+   ],
+   "name": [
+    "WILSON, JEFF"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-14": {
+  "D": {
+   "fec_id": [
+    "H8IL14174"
+   ],
+   "name": [
+    "UNDERWOOD, LAUREN"
+   ],
+   "primary_money_removed": [
+    [
+     "American Association of Nurse Anesthetists Separate Segregated Fund (CRNA-PAC)",
+     60568
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H8IL16153"
+   ],
+   "name": [
+    "MARTER, JAMES THOMAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-15": {
+  "D": {
+   "fec_id": [
+    "H6IL15092"
+   ],
+   "name": [
+    "TODD, JENNIFER ANN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0IL15129"
+   ],
+   "name": [
+    "MILLER, MARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-16": {
+  "D": {
+   "fec_id": [
+    "H6IL16108"
+   ],
+   "name": [
+    "NOLLEY, PAUL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL18088"
+   ],
+   "name": [
+    "LAHOOD, DARIN MCKAY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IL-17": {
+  "D": {
+   "fec_id": [
+    "H2IL17147"
+   ],
+   "name": [
+    "SORENSEN, ERIC"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IL17247"
+   ],
+   "name": [
+    "VANCIL, DILLAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-01": {
+  "D": {
+   "fec_id": [
+    "H4NJ01084"
+   ],
+   "name": [
+    "NORCROSS, DONALD W"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NJ01187"
+   ],
+   "name": [
+    "GALDO, DAMON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-02": {
+  "D": {
+   "fec_id": [
+    "H6NJ02251"
+   ],
+   "name": [
+    "MULLOCK, ZACK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8NJ02166"
+   ],
+   "name": [
+    "VAN DREW, JEFF MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-03": {
+  "D": {
+   "fec_id": [
+    "H4NJ03080"
+   ],
+   "name": [
+    "CONAWAY, HERB MD"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NJ03184"
+   ],
+   "name": [
+    "MCGUIRE, MICHAEL PATRICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-04": {
+  "D": {
+   "fec_id": [
+    "H6NJ04257"
+   ],
+   "name": [
+    "PEACE, RACHEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8NJ04014"
+   ],
+   "name": [
+    "SMITH, CHRISTOPHER H"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-05": {
+  "D": {
+   "fec_id": [
+    "H6NJ05171"
+   ],
+   "name": [
+    "GOTTHEIMER, JOSH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NJ05221"
+   ],
+   "name": [
+    "KIRRANE, SEAN JOSEPH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-06": {
+  "D": {
+   "fec_id": [
+    "H8NJ03073"
+   ],
+   "name": [
+    "PALLONE, FRANK JR"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NJ06286"
+   ],
+   "name": [
+    "HERZIG, HILLARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-07": {
+  "D": {
+   "fec_id": [
+    "H6NJ07201"
+   ],
+   "name": [
+    "BENNETT, REBECCA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0NJ07261"
+   ],
+   "name": [
+    "KEAN, THOMAS H. JR."
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     70751
+    ]
+   ]
+  }
+ },
+ "NJ-08": {
+  "D": {
+   "fec_id": [
+    "H2NJ08232"
+   ],
+   "name": [
+    "MENENDEZ, ROBERT J."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-09": {
+  "D": {
+   "fec_id": [
+    "H4NJ09194"
+   ],
+   "name": [
+    "POU, NELIDA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NJ09264"
+   ],
+   "name": [
+    "PINO, ROSEMARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-10": {
+  "D": {
+   "fec_id": [
+    "H4NJ10176"
+   ],
+   "name": [
+    "MCIVER, LAMONICA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4NJ10135"
+   ],
+   "name": [
+    "BUCCO, CARMEN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-11": {
+  "D": {
+   "fec_id": [
+    "H6NJ11286"
+   ],
+   "name": [
+    "MEJIA, ANALILIA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NJ11211"
+   ],
+   "name": [
+    "HATHAWAY, JOE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NJ-12": {
+  "D": {
+   "fec_id": [
+    "H6NJ12417"
+   ],
+   "name": [
+    "HAMAWY, ADAM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NJ06210"
+   ],
+   "name": [
+    "MELE, GREGG"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-01": {
+  "D": {
+   "fec_id": [
+    "H0WA08046"
+   ],
+   "name": [
+    "DELBENE, SUZAN K"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WA01282"
+   ],
+   "name": [
+    "SILVA, MARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-02": {
+  "D": {
+   "fec_id": [
+    "H0WA02080"
+   ],
+   "name": [
+    "LARSEN, RICK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA02228"
+   ],
+   "name": [
+    "FELLER, EDWIN HAROLD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-03": {
+  "D": {
+   "fec_id": [
+    "H2WA03217"
+   ],
+   "name": [
+    "GLUESENKAMP PEREZ, MARIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA03275"
+   ],
+   "name": [
+    "BRAUN, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-04": {
+  "D": {
+   "fec_id": [
+    "H6WA04190"
+   ],
+   "name": [
+    "DURESKY, JOHN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA04216"
+   ],
+   "name": [
+    "MCKINNEY, AMANDA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-05": {
+  "D": {
+   "fec_id": [
+    "H4WA05168"
+   ],
+   "name": [
+    "CONROY, CARMELA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WA05234"
+   ],
+   "name": [
+    "BAUMGARTNER, MICHAEL JAMES"
+   ],
+   "primary_money_removed": [
+    [
+     "FIRE HOUSE PAC",
+     95808
+    ]
+   ]
+  }
+ },
+ "WA-06": {
+  "D": {
+   "fec_id": [
+    "H4WA06117"
+   ],
+   "name": [
+    "RANDALL, EMILY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA06286"
+   ],
+   "name": [
+    "FOX, TERESA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-07": {
+  "D": {
+   "fec_id": [
+    "H6WA07458"
+   ],
+   "name": [
+    "JAYAPAL, PRAMILA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WA08147"
+   ],
+   "name": [
+    "SHETH, NIRAV"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-08": {
+  "D": {
+   "fec_id": [
+    "H8WA08189"
+   ],
+   "name": [
+    "SCHRIER, KIM DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA08167"
+   ],
+   "name": [
+    "MELINE, SPENCER HARRISON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-09": {
+  "D": {
+   "fec_id": [
+    "H6WA09025"
+   ],
+   "name": [
+    "SMITH, D. ADAM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WA09061"
+   ],
+   "name": [
+    "BASLER, DOUGLAS MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WA-10": {
+  "D": {
+   "fec_id": [
+    "H0WA10034"
+   ],
+   "name": [
+    "STRICKLAND, MARILYN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WA10031"
+   ],
+   "name": [
+    "CHUNG, CHRIS D."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-01": {
+  "D": {
+   "fec_id": [
+    "H4AZ01194"
+   ],
+   "name": [
+    "SHAH, AMISH DR."
+   ],
+   "primary_money_removed": [
+    [
+     "Guardrails Alliance",
+     412500
+    ],
+    [
+     "Crush MAGA PAC",
+     367117
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6AZ05190"
+   ],
+   "name": [
+    "FEELY, THOMAS JAMES"
+   ],
+   "primary_money_removed": [
+    [
+     "BOLD America",
+     1745053
+    ],
+    [
+     "Pro-Choice Majority Action",
+     695053
+    ],
+    [
+     "Crush MAGA PAC",
+     275197
+    ]
+   ]
+  }
+ },
+ "AZ-02": {
+  "D": {
+   "fec_id": [
+    "H4AZ02184"
+   ],
+   "name": [
+    "NEZ, JONATHAN MICHAEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2AZ01354"
+   ],
+   "name": [
+    "CRANE, ELI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-03": {
+  "D": {
+   "fec_id": [
+    "H4AZ03109"
+   ],
+   "name": [
+    "Yassamin Ansari"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-04": {
+  "D": {
+   "fec_id": [
+    "H8AZ09040"
+   ],
+   "name": [
+    "STANTON, GREG"
+   ],
+   "primary_money_removed": [
+    [
+     "THINK BIG",
+     592221
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4AZ04115"
+   ],
+   "name": [
+    "JASSER, M. ZUHDI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-05": {
+  "D": {
+   "fec_id": [
+    "H6AZ05240"
+   ],
+   "name": [
+    "LEE, ELIZABETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6AZ05265"
+   ],
+   "name": [
+    "LAMB, MARK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-06": {
+  "D": {
+   "fec_id": [
+    "H6AZ06099"
+   ],
+   "name": [
+    "MENDOZA, JOANNA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2AZ02360"
+   ],
+   "name": [
+    "CISCOMANI, JUAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-07": {
+  "D": {
+   "fec_id": [
+    "H6AZ07121"
+   ],
+   "name": [
+    "GRIJALVA, ADELITA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4AZ07134"
+   ],
+   "name": [
+    "BUTIEREZ, DANIEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-08": {
+  "D": {
+   "fec_id": [
+    "H4AZ08082"
+   ],
+   "name": [
+    "GREENE PLACENTIA, BERNADETTE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4AZ08108"
+   ],
+   "name": [
+    "HAMADEH, ABRAHAM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AZ-09": {
+  "D": {
+   "fec_id": [
+    "H6AZ09085"
+   ],
+   "name": [
+    "STERBINSKY, DANIELLE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0AZ01259"
+   ],
+   "name": [
+    "GOSAR, PAUL DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-01": {
+  "D": {
+   "fec_id": [
+    "H6TN01537"
+   ],
+   "name": [
+    "BURKE, KRISTI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TN01118"
+   ],
+   "name": [
+    "HARSHBARGER, DIANA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-02": {
+  "D": {
+   "fec_id": [
+    "H6TN02170"
+   ],
+   "name": [
+    "BARNETT, MICHAELA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8TN02119"
+   ],
+   "name": [
+    "BURCHETT, TIM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-03": {
+  "D": {
+   "fec_id": [
+    "H6TN03228"
+   ],
+   "name": [
+    "GOLLADAY, ANNA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TN03254"
+   ],
+   "name": [
+    "FLEISCHMANN, CHARLES J"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-04": {
+  "D": {
+   "fec_id": [
+    "H4TN04270"
+   ],
+   "name": [
+    "BRODERICK, VICTORIA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0TN04195"
+   ],
+   "name": [
+    "DESJARLAIS, SCOTT HON."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-05": {
+  "D": {
+   "fec_id": [
+    "H6TN05397"
+   ],
+   "name": [
+    "MOLDER, CHAZ"
+   ],
+   "primary_money_removed": [
+    [
+     "FREEDOM CAUCUS FUND",
+     273014
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TN05405"
+   ],
+   "name": [
+    "HATCHER, CHARLIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-06": {
+  "D": {
+   "fec_id": [
+    "H6TN06171"
+   ],
+   "name": [
+    "CROLEY, MIKE"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVE FUTURE FUND",
+     252636
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6TN06213"
+   ],
+   "name": [
+    "GARRETT, JOHNNY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-07": {
+  "D": {
+   "fec_id": [
+    "H6TN07286"
+   ],
+   "name": [
+    "COPELAND, DARDEN HUNTER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TN07161"
+   ],
+   "name": [
+    "VAN EPPS, MATTHEW ROBERT"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     297317
+    ],
+    [
+     "School Freedom Fund",
+     62634
+    ],
+    [
+     "HOUSE FREEDOM ACTION",
+     129
+    ]
+   ]
+  }
+ },
+ "TN-08": {
+  "D": {
+   "fec_id": [
+    "H6TN08367"
+   ],
+   "name": [
+    "KUHN, HEIDI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2TN07103"
+   ],
+   "name": [
+    "KUSTOFF, DAVID"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "TN-09": {
+  "D": {
+   "fec_id": [
+    "H6TN09449"
+   ],
+   "name": [
+    "PEARSON, JUSTIN J."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6TN09464"
+   ],
+   "name": [
+    "TAYLOR, BRENT"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     467582
+    ],
+    [
+     "Charter Schools Action PAC",
+     24776
+    ],
+    [
+     "COURAGEOUS CONSERVATIVES PAC",
+     3456
+    ]
+   ]
+  }
+ },
+ "MA-01": {
+  "D": {
+   "fec_id": [
+    "H8MA02041"
+   ],
+   "name": [
+    "NEAL, RICHARD E"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "MA-02": {
+  "D": {
+   "fec_id": [
+    "H4MA03022"
+   ],
+   "name": [
+    "MCGOVERN, JAMES P"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "MA-03": {
+  "D": {
+   "fec_id": [
+    "H8MA03106"
+   ],
+   "name": [
+    "TRAHAN, LORI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MA03100"
+   ],
+   "name": [
+    "GROSSI, GARY J."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MA-04": {
+  "D": {
+   "fec_id": [
+    "H0MA04192"
+   ],
+   "name": [
+    "AUCHINCLOSS, JAKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MA04140"
+   ],
+   "name": [
+    "STALCUP, THOMAS PHD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MA-05": {
+  "D": {
+   "fec_id": [
+    "H4MA05084"
+   ],
+   "name": [
+    "CLARK, KATHERINE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "MA-06": {
+  "D": {
+   "fec_id": [
+    "H8MA03072"
+   ],
+   "name": [
+    "KOH, DANIEL ARRIGG"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MA06202"
+   ],
+   "name": [
+    "JONES, MICAH Q."
+   ],
+   "primary_money_removed": [
+    [
+     "Guardrails Alliance",
+     35000
+    ]
+   ]
+  }
+ },
+ "MA-07": {
+  "D": {
+   "fec_id": [
+    "H8MA07032"
+   ],
+   "name": [
+    "PRESSLEY, AYANNA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "MA-08": {
+  "D": {
+   "fec_id": [
+    "H2MA09072"
+   ],
+   "name": [
+    "LYNCH, STEPHEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MA08090"
+   ],
+   "name": [
+    "BURKE, ROBERT G."
+   ],
+   "primary_money_removed": [
+    [
+     "Leaders We Deserve",
+     213732
+    ]
+   ]
+  }
+ },
+ "MA-09": {
+  "D": {
+   "fec_id": [
+    "H0MA10082"
+   ],
+   "name": [
+    "KEATING, WILLIAM R"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MA09206"
+   ],
+   "name": [
+    "MACALLISTER, ROBERT TYLER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-01": {
+  "D": {
+   "fec_id": [
+    "H4MO01134"
+   ],
+   "name": [
+    "BELL, WESLEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MO02219"
+   ],
+   "name": [
+    "BERRY, PAUL"
+   ],
+   "primary_money_removed": [
+    [
+     "Working Families Party PAC",
+     27360
+    ],
+    [
+     "INSTITUTE FOR MIDDLE EAST UNDERSTANDING POLICY PROJECT",
+     20903
+    ]
+   ]
+  }
+ },
+ "MO-02": {
+  "D": {
+   "fec_id": [
+    "H6MO02343"
+   ],
+   "name": [
+    "WELLMAN, FREDERICK PAUL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MO02102"
+   ],
+   "name": [
+    "WAGNER, ANN L."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-03": {
+  "D": {
+   "fec_id": [
+    "H2MO03167"
+   ],
+   "name": [
+    "MANN, BETHANY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MO03221"
+   ],
+   "name": [
+    "ONDER, ROBERT FOR JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-04": {
+  "D": {
+   "fec_id": [
+    "H6MO05254"
+   ],
+   "name": [
+    "HERRERA, JORDAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MO04207"
+   ],
+   "name": [
+    "ALFORD, MARK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-05": {
+  "D": {
+   "fec_id": [
+    "H4MO05234"
+   ],
+   "name": [
+    "CLEAVER II, EMANUEL"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     1213054
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2MO04199"
+   ],
+   "name": [
+    "BRATTIN, RICHARD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-06": {
+  "D": {
+   "fec_id": [
+    "H6MO06260"
+   ],
+   "name": [
+    "SMEAD, JOSH"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVE FUTURE FUND",
+     153220
+    ],
+    [
+     "AMERICAN WORKERS FIRST PAC",
+     28779
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6MO06310"
+   ],
+   "name": [
+    "STIGALL, CHRIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-07": {
+  "D": {
+   "fec_id": [
+    "H4MO07156"
+   ],
+   "name": [
+    "HESKETH, MISSI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MO07143"
+   ],
+   "name": [
+    "BURLISON, ERIC"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MO-08": {
+  "D": {
+   "fec_id": [
+    "H6MO08183"
+   ],
+   "name": [
+    "REICHARD, CHRISTOPHER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MO08162"
+   ],
+   "name": [
+    "SMITH, JASON T"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-01": {
+  "D": {
+   "fec_id": [
+    "H6MD01320"
+   ],
+   "name": [
+    "SCHWARTZ, DANIEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8MD01094"
+   ],
+   "name": [
+    "HARRIS, ANDREW P"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-02": {
+  "D": {
+   "fec_id": [
+    "H4MD02232"
+   ],
+   "name": [
+    "OLSZEWSKI, JOHN ANTHONY JR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MD06138"
+   ],
+   "name": [
+    "WALLACE, DAVID DRAIN II"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-03": {
+  "D": {
+   "fec_id": [
+    "H4MD03156"
+   ],
+   "name": [
+    "ELFRETH, SARAH KELLY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MD03149"
+   ],
+   "name": [
+    "FLOWERS, BERNARD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-04": {
+  "D": {
+   "fec_id": [
+    "H2MD04232"
+   ],
+   "name": [
+    "Glenn Ivey"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "MD-05": {
+  "D": {
+   "fec_id": [
+    "H6MD05321"
+   ],
+   "name": [
+    "BOAFO, ADRIAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MD05169"
+   ],
+   "name": [
+    "CHAFFEE, CHRISTOPHER PARRY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-06": {
+  "D": {
+   "fec_id": [
+    "H4MD06340"
+   ],
+   "name": [
+    "DELANEY, APRIL MCCLAIN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MD06287"
+   ],
+   "name": [
+    "FICKER, ROBIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-07": {
+  "D": {
+   "fec_id": [
+    "H6MD07020"
+   ],
+   "name": [
+    "MFUME, KWEISI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0MD02255"
+   ],
+   "name": [
+    "COLLIER, SCOTT M"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MD-08": {
+  "D": {
+   "fec_id": [
+    "H6MD08457"
+   ],
+   "name": [
+    "RASKIN, JAMIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MD08213"
+   ],
+   "name": [
+    "RILEY, CHERYL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-01": {
+  "D": {
+   "fec_id": [
+    "H6MN01190"
+   ],
+   "name": [
+    "JOHNSON, JACOB"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MN01223"
+   ],
+   "name": [
+    "FINSTAD, BRAD"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-02": {
+  "D": {
+   "fec_id": [
+    "H6MN02230"
+   ],
+   "name": [
+    "LITTLE, MATT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MN02263"
+   ],
+   "name": [
+    "PRATT, ERIC"
+   ],
+   "primary_money_removed": [
+    [
+     "IN UNION USA",
+     17393
+    ]
+   ]
+  }
+ },
+ "MN-03": {
+  "D": {
+   "fec_id": [
+    "H4MN03118"
+   ],
+   "name": [
+    "MORRISON, KELLY LOUISE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MN03170"
+   ],
+   "name": [
+    "BASS, TYLER MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-04": {
+  "D": {
+   "fec_id": [
+    "H0MN04049"
+   ],
+   "name": [
+    "MCCOLLUM, BETTY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MN04293"
+   ],
+   "name": [
+    "WIKSTROM, PAUL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-05": {
+  "D": {
+   "fec_id": [
+    "H8MN05239"
+   ],
+   "name": [
+    "OMAR, ILHAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MN05357"
+   ],
+   "name": [
+    "NAGEL, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-06": {
+  "D": {
+   "fec_id": [
+    "H6MN06215"
+   ],
+   "name": [
+    "CHAPIN, DOUG"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MN06087"
+   ],
+   "name": [
+    "EMMER, THOMAS EARL JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-07": {
+  "D": {
+   "fec_id": [
+    "H6MN07312"
+   ],
+   "name": [
+    "OSBERG, ERIK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0MN07091"
+   ],
+   "name": [
+    "FISCHBACH, MICHELLE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MN-08": {
+  "D": {
+   "fec_id": [
+    "H6MN08179"
+   ],
+   "name": [
+    "SWANSON, TRINA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8MN08043"
+   ],
+   "name": [
+    "STAUBER, PETER ALLEN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-01": {
+  "D": {
+   "fec_id": [
+    "H6WI01283"
+   ],
+   "name": [
+    "BERMAN, MITCHELL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8WI01156"
+   ],
+   "name": [
+    "STEIL, BRYAN GEORGE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-02": {
+  "D": {
+   "fec_id": [
+    "H2WI02124"
+   ],
+   "name": [
+    "POCAN, MARK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [],
+   "name": [],
+   "primary_money_removed": []
+  }
+ },
+ "WI-03": {
+  "D": {
+   "fec_id": [
+    "H4WI03169"
+   ],
+   "name": [
+    "COOKE, REBECCA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0WI03175"
+   ],
+   "name": [
+    "VAN ORDEN, DERRICK F. MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-04": {
+  "D": {
+   "fec_id": [
+    "H4WI04183"
+   ],
+   "name": [
+    "MOORE, GWEN S"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WI04274"
+   ],
+   "name": [
+    "ROGERS, TIM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-05": {
+  "D": {
+   "fec_id": [
+    "H6WI05136"
+   ],
+   "name": [
+    "BECK, ANDREW"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0WI05113"
+   ],
+   "name": [
+    "FITZGERALD, SCOTT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-06": {
+  "D": {
+   "fec_id": [
+    "H6WI06191"
+   ],
+   "name": [
+    "SMITH, BRADLEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WI06048"
+   ],
+   "name": [
+    "GROTHMAN, GLENN S."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-07": {
+  "D": {
+   "fec_id": [
+    "H6WI07207"
+   ],
+   "name": [
+    "CLARK, FREDERIC"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6WI07223"
+   ],
+   "name": [
+    "ALFONSO, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WI-08": {
+  "D": {
+   "fec_id": [
+    "H6WI08205"
+   ],
+   "name": [
+    "CROSSON, RICK"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WI08119"
+   ],
+   "name": [
+    "WIED, TONY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-01": {
+  "D": {
+   "fec_id": [
+    "H6CO01273"
+   ],
+   "name": [
+    "KIROS, MELAT"
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     11041
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6CO01331"
+   ],
+   "name": [
+    "PETERSON, CHRISTY"
+   ],
+   "primary_money_removed": [
+    [
+     "Project 218",
+     400000
+    ],
+    [
+     "Pro-Choice Majority Action",
+     275000
+    ]
+   ]
+  }
+ },
+ "CO-02": {
+  "D": {
+   "fec_id": [
+    "H8CO02160"
+   ],
+   "name": [
+    "NEGUSE, JOSEPH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CO02206"
+   ],
+   "name": [
+    "DENNISON, KELLEY ANNE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-03": {
+  "D": {
+   "fec_id": [
+    "H6CO03253"
+   ],
+   "name": [
+    "ROMERO, DWAYNE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CO03357"
+   ],
+   "name": [
+    "HURD, JEFFREY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-04": {
+  "D": {
+   "fec_id": [
+    "H6CO04202"
+   ],
+   "name": [
+    "LAUBACHER, EILEEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0CO03165"
+   ],
+   "name": [
+    "BOEBERT, LAUREN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-05": {
+  "D": {
+   "fec_id": [
+    "H6CO05324"
+   ],
+   "name": [
+    "KILLIN, JESSICA WILLOW"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CO05142"
+   ],
+   "name": [
+    "CRANK, JEFF"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-06": {
+  "D": {
+   "fec_id": [
+    "H8CO06229"
+   ],
+   "name": [
+    "CROW, JASON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CO06165"
+   ],
+   "name": [
+    "CLARK, JASON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-07": {
+  "D": {
+   "fec_id": [
+    "H8CO07045"
+   ],
+   "name": [
+    "PETTERSEN, BRITTANY LOUISE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CO07122"
+   ],
+   "name": [
+    "BENNETT, TIMOTHY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CO-08": {
+  "D": {
+   "fec_id": [
+    "H6CO08013"
+   ],
+   "name": [
+    "RUTINEL, MANNY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4CO08034"
+   ],
+   "name": [
+    "EVANS, TIMOTHY GABRIEL JOSEPH"
+   ],
+   "primary_money_removed": [
+    [
+     "Women Vote",
+     653885
+    ],
+    [
+     "Pro-Choice Majority 2026",
+     116622
+    ],
+    [
+     "National Association of Realtors Political Action Committee",
+     61793
+    ]
+   ]
+  }
+ },
+ "IN-01": {
+  "D": {
+   "fec_id": [
+    "H0IN01150"
+   ],
+   "name": [
+    "MRVAN, FRANK J."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IN01231"
+   ],
+   "name": [
+    "REGNITZ, BARB"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-02": {
+  "D": {
+   "fec_id": [
+    "H6IN02189"
+   ],
+   "name": [
+    "DECIO, JAMEE MS."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2IN02295"
+   ],
+   "name": [
+    "YAKYM, RUDY C. III"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-03": {
+  "D": {
+   "fec_id": [
+    "H6IN03294"
+   ],
+   "name": [
+    "THOMPSON, KELLY ELIZABETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0IN03198"
+   ],
+   "name": [
+    "STUTZMAN, MARLIN A"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-04": {
+  "D": {
+   "fec_id": [
+    "H6IN04193"
+   ],
+   "name": [
+    "COX, DREW"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8IN04199"
+   ],
+   "name": [
+    "BAIRD, JAMES R DR."
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     11777
+    ]
+   ]
+  }
+ },
+ "IN-05": {
+  "D": {
+   "fec_id": [
+    "H6IN05307"
+   ],
+   "name": [
+    "FORD, JAMES (J.D.) DAVID"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0IN05326"
+   ],
+   "name": [
+    "SPARTZ, VICTORIA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-06": {
+  "D": {
+   "fec_id": [
+    "H6IN06230"
+   ],
+   "name": [
+    "WIRTH, CYNTHIA (CINDE)"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4IN06185"
+   ],
+   "name": [
+    "SHREVE, JEFFERSON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-07": {
+  "D": {
+   "fec_id": [
+    "H8IN07184"
+   ],
+   "name": [
+    "CARSON, ANDRE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IN07444"
+   ],
+   "name": [
+    "MCAULEY, PATRICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-08": {
+  "D": {
+   "fec_id": [
+    "H6IN08293"
+   ],
+   "name": [
+    "ALLEN, MARY THERESA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4IN08249"
+   ],
+   "name": [
+    "MESSMER, MARK MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IN-09": {
+  "D": {
+   "fec_id": [
+    "H6IN09242"
+   ],
+   "name": [
+    "MEYER, BRADLEY ALLEN MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IN09143"
+   ],
+   "name": [
+    "HOUCHIN, ERIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-01": {
+  "D": {
+   "fec_id": [
+    "H2OR01133"
+   ],
+   "name": [
+    "BONAMICI, SUZANNE MS."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OR01308"
+   ],
+   "name": [
+    "KAHL, BARBARA J DR DVM"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-02": {
+  "D": {
+   "fec_id": [
+    "H6OR02322"
+   ],
+   "name": [
+    "BECK, CHRIS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0OR02127"
+   ],
+   "name": [
+    "BENTZ, CLIFF"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-03": {
+  "D": {
+   "fec_id": [
+    "H4OR03192"
+   ],
+   "name": [
+    "DEXTER, MAXINE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OR03197"
+   ],
+   "name": [
+    "AYLES, LORAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-04": {
+  "D": {
+   "fec_id": [
+    "H2OR04095"
+   ],
+   "name": [
+    "HOYLE, VALERIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OR04260"
+   ],
+   "name": [
+    "DESPAIN, MONIQUE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-05": {
+  "D": {
+   "fec_id": [
+    "H4OR05304"
+   ],
+   "name": [
+    "BYNUM, JANELLE"
+   ],
+   "primary_money_removed": [
+    [
+     "Fairshake",
+     1020173
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6OR05242"
+   ],
+   "name": [
+    "ADAIR, PATTI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OR-06": {
+  "D": {
+   "fec_id": [
+    "H2OR06066"
+   ],
+   "name": [
+    "SALINAS, ANDREA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OR01240"
+   ],
+   "name": [
+    "RUSS, DAVID HONORABLE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NV-01": {
+  "D": {
+   "fec_id": [
+    "H8NV03036"
+   ],
+   "name": [
+    "TITUS, DINA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NV01331"
+   ],
+   "name": [
+    "BUCK, CARRIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NV-02": {
+  "D": {
+   "fec_id": [
+    "H6NV02362"
+   ],
+   "name": [
+    "BENITEZ-THOMPSON, TERESA"
+   ],
+   "primary_money_removed": [
+    [
+     "CONSERVATIVES FOR AMERICAN EXCELLENCE INC.",
+     219266
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H4NV04108"
+   ],
+   "name": [
+    "FLIPPO, DAVID"
+   ],
+   "primary_money_removed": [
+    [
+     "Win it Back PAC",
+     420136
+    ]
+   ]
+  }
+ },
+ "NV-03": {
+  "D": {
+   "fec_id": [
+    "H6NV04020"
+   ],
+   "name": [
+    "LEE, SUSIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NV03204"
+   ],
+   "name": [
+    "O'DONNELL, MARTY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NV-04": {
+  "D": {
+   "fec_id": [
+    "H2NV04011"
+   ],
+   "name": [
+    "HORSFORD, STEVEN ALEXZANDER"
+   ],
+   "primary_money_removed": [
+    [
+     "Fairshake",
+     1015019
+    ],
+    [
+     "THINK BIG",
+     321319
+    ],
+    [
+     "ROLLING SEA ACTION FUND",
+     150000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6NV04111"
+   ],
+   "name": [
+    "WHIPPLE, CODY K"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "UT-01": {
+  "D": {
+   "fec_id": [
+    "H8UT04053"
+   ],
+   "name": [
+    "MCADAMS, BEN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6UT01244"
+   ],
+   "name": [
+    "OWEN, RILEY MONTGOMERY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "UT-02": {
+  "D": {
+   "fec_id": [
+    "H6UT01160"
+   ],
+   "name": [
+    "CROSBY, PETER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0UT01205"
+   ],
+   "name": [
+    "MOORE, BLAKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "UT-03": {
+  "D": {
+   "fec_id": [
+    "H6UT03182"
+   ],
+   "name": [
+    "UDELL, KENT DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4UT02296"
+   ],
+   "name": [
+    "MALOY, CELESTE"
+   ],
+   "primary_money_removed": [
+    [
+     "DEFENDING UTAH VALUES FEDERAL SUPER PAC",
+     30000
+    ]
+   ]
+  }
+ },
+ "UT-04": {
+  "D": {
+   "fec_id": [
+    "H6UT02424"
+   ],
+   "name": [
+    "LARSEN, JONNY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4UT03260"
+   ],
+   "name": [
+    "KENNEDY, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AK-01": {
+  "D": {
+   "fec_id": [
+    "H6AK01092"
+   ],
+   "name": [
+    "HILL, BILL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2AK01083"
+   ],
+   "name": [
+    "BEGICH, NICHOLAS III"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "HI-01": {
+  "D": {
+   "fec_id": [
+    "H2HI02128"
+   ],
+   "name": [
+    "CASE, EDWARD"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6HI01360"
+   ],
+   "name": [
+    "LAM, ADRIEL C"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "HI-02": {
+  "D": {
+   "fec_id": [
+    "H2HI02581"
+   ],
+   "name": [
+    "TOKUDA, JILL NAOMI"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6HI02426"
+   ],
+   "name": [
+    "AWA, BRENTON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "ID-01": {
+  "D": {
+   "fec_id": [
+    "H2ID01192"
+   ],
+   "name": [
+    "PETERSON, KAYLEE JADE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8ID01124"
+   ],
+   "name": [
+    "FULCHER, RUSSELL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "ID-02": {
+  "D": {
+   "fec_id": [
+    "H6ID02274"
+   ],
+   "name": [
+    "GILBREATH, ELINOR"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8ID02064"
+   ],
+   "name": [
+    "SIMPSON, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WY-01": {
+  "D": {
+   "fec_id": [
+    "H6WY01173"
+   ],
+   "name": [
+    "KINNEY, LISA"
+   ],
+   "primary_money_removed": [
+    [
+     "Wyoming Way Action PAC",
+     723633
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6WY00217"
+   ],
+   "name": [
+    "GRAY, CHUCK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MT-01": {
+  "D": {
+   "fec_id": [
+    "H6MT01137"
+   ],
+   "name": [
+    "FORSTAG, SAMUEL KELLEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MT01152"
+   ],
+   "name": [
+    "FLINT, AARON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MT-02": {
+  "D": {
+   "fec_id": [
+    "H6MT02150"
+   ],
+   "name": [
+    "MILLER, BRIAN JAMES"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4MT02098"
+   ],
+   "name": [
+    "DOWNING, TROY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "ND-01": {
+  "D": {
+   "fec_id": [
+    "H6ND01049"
+   ],
+   "name": [
+    "HAMMER, TRYGVE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4ND00061"
+   ],
+   "name": [
+    "FEDORCHAK, JULIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SD-01": {
+  "D": {
+   "fec_id": [
+    "H6SD01141"
+   ],
+   "name": [
+    "GRONLI, NICOLE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6SD01109"
+   ],
+   "name": [
+    "JACKLEY, MARTY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NE-01": {
+  "D": {
+   "fec_id": [
+    "H6NE01143"
+   ],
+   "name": [
+    "BACKEMEYER, CHRISTOPHER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2NE01118"
+   ],
+   "name": [
+    "FLOOD, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NE-02": {
+  "D": {
+   "fec_id": [
+    "H6NE02174"
+   ],
+   "name": [
+    "POWELL, DENISE"
+   ],
+   "primary_money_removed": [
+    [
+     "FIGHT FOR NEBRASKA PAC",
+     1347462
+    ],
+    [
+     "BOLD America",
+     418816
+    ],
+    [
+     "ROLLING SEA ACTION FUND",
+     150000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6NE02208"
+   ],
+   "name": [
+    "HARDING, BRINKER"
+   ],
+   "primary_money_removed": [
+    [
+     "PROGRESSIVE PROMISE",
+     100001
+    ]
+   ]
+  }
+ },
+ "NE-03": {
+  "D": {
+   "fec_id": [
+    "H6NE03180"
+   ],
+   "name": [
+    "STILLE, BECKY LYNN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NE03115"
+   ],
+   "name": [
+    "SMITH, ADRIAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KS-01": {
+  "D": {
+   "fec_id": [
+    "H6KS01203"
+   ],
+   "name": [
+    "REINHOLD, LAUREN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0KS01123"
+   ],
+   "name": [
+    "MANN, TRACEY ROBERT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KS-02": {
+  "D": {
+   "fec_id": [
+    "H6KS02276"
+   ],
+   "name": [
+    "COOVER, DON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4KS02164"
+   ],
+   "name": [
+    "SCHMIDT, DEREK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KS-03": {
+  "D": {
+   "fec_id": [
+    "H8KS03155"
+   ],
+   "name": [
+    "DAVIDS, SHARICE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6KS03308"
+   ],
+   "name": [
+    "JENKINS, ERIC"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KS-04": {
+  "D": {
+   "fec_id": [
+    "H6KS04272"
+   ],
+   "name": [
+    "TYNDELL, KATY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8KS04112"
+   ],
+   "name": [
+    "ESTES, RON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OK-01": {
+  "D": {
+   "fec_id": [
+    "H6OK01201"
+   ],
+   "name": [
+    "CROISANT, JOHN THOMAS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6OK01235"
+   ],
+   "name": [
+    "TEDFORD, MARK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OK-02": {
+  "D": {
+   "fec_id": [
+    "H4OK02196"
+   ],
+   "name": [
+    "WADE, BRANDON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OK02315"
+   ],
+   "name": [
+    "BRECHEEN, JOSH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OK-03": {
+  "D": {
+   "fec_id": [
+    "H6OK03272"
+   ],
+   "name": [
+    "BYRD, SUZANNE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4OK06056"
+   ],
+   "name": [
+    "LUCAS, FRANK D."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "OK-04": {
+  "D": {
+   "fec_id": [
+    "H6OK04155"
+   ],
+   "name": [
+    "JACOB, MITCHELL LEIGH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2OK04055"
+   ],
+   "name": [
+    "COLE, TOM"
+   ],
+   "primary_money_removed": [
+    [
+     "Americans 4 Security PAC",
+     250000
+    ]
+   ]
+  }
+ },
+ "OK-05": {
+  "D": {
+   "fec_id": [
+    "H6OK05293"
+   ],
+   "name": [
+    "NELSON, JENA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0OK05205"
+   ],
+   "name": [
+    "BICE, STEPHANIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-01": {
+  "D": {
+   "fec_id": [
+    "H6AL01094"
+   ],
+   "name": [
+    "JONES, CLYDE W MR. JR"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0AL01055"
+   ],
+   "name": [
+    "CARL, JERRY LEE, JR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-02": {
+  "D": {
+   "fec_id": [
+    "H4AL02170"
+   ],
+   "name": [
+    "FIGURES, SHOMARI C."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6AL01086"
+   ],
+   "name": [
+    "MARQUES, RHETT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-03": {
+  "D": {
+   "fec_id": [
+    "H6AL03199"
+   ],
+   "name": [
+    "MCINNIS, VICTOR LEE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2AL03032"
+   ],
+   "name": [
+    "ROGERS, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-04": {
+  "D": {
+   "fec_id": [
+    "H6AL05228"
+   ],
+   "name": [
+    "PUSCZEK, AMANDA NOELLE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6AL04098"
+   ],
+   "name": [
+    "ADERHOLT, ROBERT B. REP."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-05": {
+  "D": {
+   "fec_id": [
+    "H6AL05244"
+   ],
+   "name": [
+    "SNEED, ANDREW RANKIN GUYTON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2AL05102"
+   ],
+   "name": [
+    "STRONG, DALE WHITNEY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-06": {
+  "D": {
+   "fec_id": [
+    "H6AL06184"
+   ],
+   "name": [
+    "MERCER, MAURICE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4AL06098"
+   ],
+   "name": [
+    "PALMER, GARY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AL-07": {
+  "D": {
+   "fec_id": [
+    "H0AL07086"
+   ],
+   "name": [
+    "SEWELL, TERRI A."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6AL07208"
+   ],
+   "name": [
+    "AKIN, AMMIE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-01": {
+  "D": {
+   "fec_id": [
+    "H6LA01258"
+   ],
+   "name": [
+    "JEWETT, LAUREN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0LA01087"
+   ],
+   "name": [
+    "SCALISE, STEVE MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-02": {
+  "D": {
+   "fec_id": [
+    "H2LA02149"
+   ],
+   "name": [
+    "CARTER, TROY A. SR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4LA05171"
+   ],
+   "name": [
+    "WILLIAMS, PETER"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-03": {
+  "D": {
+   "fec_id": [
+    "H6LA03205"
+   ],
+   "name": [
+    "DAY, JOHN DAVID"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6LA03148"
+   ],
+   "name": [
+    "HIGGINS, CLAY CAPTAIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-04": {
+  "D": {
+   "fec_id": [
+    "H6LA04187"
+   ],
+   "name": [
+    "CABLE, CONRAD ROBERTS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6LA04138"
+   ],
+   "name": [
+    "JOHNSON, JAMES MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-05": {
+  "D": {
+   "fec_id": [
+    "H6LA05341"
+   ],
+   "name": [
+    "MOORE, PATRICIA ANN"
+   ],
+   "primary_money_removed": [
+    [
+     "BUILDING A STRONG AMERICA",
+     85000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6LA05242"
+   ],
+   "name": [
+    "ECHOLS, MICHAEL CHARLES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "LA-06": {
+  "D": {
+   "fec_id": [
+    "H6LA06174"
+   ],
+   "name": [
+    "BANKS, CHAUNA MS."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6LA05234"
+   ],
+   "name": [
+    "MIGUEZ, BLAKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-01": {
+  "D": {
+   "fec_id": [
+    "H6SC01359"
+   ],
+   "name": [
+    "LACORE, NANCY"
+   ],
+   "primary_money_removed": [
+    [
+     "LOWCOUNTRY PATRIOT FUND",
+     49618
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6SC01334"
+   ],
+   "name": [
+    "HONEYCUTT, JENNY COSTA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-02": {
+  "D": {
+   "fec_id": [
+    "H6SC02159"
+   ],
+   "name": [
+    "KHALIFA, ZYON DESHON"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2SC02059"
+   ],
+   "name": [
+    "WILSON, JOE THE HON."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-03": {
+  "D": {
+   "fec_id": [
+    "H6SC03090"
+   ],
+   "name": [
+    "LEHMACHER, EUNICE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4SC01313"
+   ],
+   "name": [
+    "BIGGS, SHERI"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-04": {
+  "D": {
+   "fec_id": [
+    "H6SC04171"
+   ],
+   "name": [
+    "MCCLAIN, COURTNEY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8SC04250"
+   ],
+   "name": [
+    "TIMMONS, WILLIAM R IV"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-05": {
+  "D": {
+   "fec_id": [
+    "H6SC05228"
+   ],
+   "name": [
+    "DITTMER, MALLORY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6SC05202"
+   ],
+   "name": [
+    "CLIMER, WES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-06": {
+  "D": {
+   "fec_id": [
+    "H2SC02042"
+   ],
+   "name": [
+    "CLYBURN, JAMES E"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6SC06184"
+   ],
+   "name": [
+    "PETERSON, JOHN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SC-07": {
+  "D": {
+   "fec_id": [
+    "H6SC07034"
+   ],
+   "name": [
+    "VINCENT, JOHN GREGORY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2SC07280"
+   ],
+   "name": [
+    "FRY, RUSSELL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KY-01": {
+  "D": {
+   "fec_id": [
+    "H6KY01169"
+   ],
+   "name": [
+    "WILLIAMS, JOHN ANDREW"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6KY01110"
+   ],
+   "name": [
+    "COMER, JAMES"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KY-02": {
+  "D": {
+   "fec_id": [
+    "H6KY02068"
+   ],
+   "name": [
+    "WINGFIELD, MEGAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8KY02031"
+   ],
+   "name": [
+    "GUTHRIE, S. BRETT BRETT HON."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KY-03": {
+  "D": {
+   "fec_id": [
+    "H2KY03206"
+   ],
+   "name": [
+    "MCGARVEY, MORGAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6KY03223"
+   ],
+   "name": [
+    "RODRIGUEZ, MARIA TERESA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KY-04": {
+  "D": {
+   "fec_id": [
+    "H6KY04189"
+   ],
+   "name": [
+    "STRANGE, MELISSA CLAIRE"
+   ],
+   "primary_money_removed": [
+    [
+     "KENTUCKY 4TH PAC",
+     6698000
+    ],
+    [
+     "HOLD THE LINE PAC",
+     285000
+    ],
+    [
+     "Gun Rights America",
+     23952
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H6KY04171"
+   ],
+   "name": [
+    "GALLREIN, ED"
+   ],
+   "primary_money_removed": [
+    [
+     "HOLD THE LINE PAC",
+     45000
+    ]
+   ]
+  }
+ },
+ "KY-05": {
+  "D": {
+   "fec_id": [
+    "H6KY05152"
+   ],
+   "name": [
+    "PILLERSDORF, NED"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0KY05015"
+   ],
+   "name": [
+    "ROGERS, HAROLD DALLAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "KY-06": {
+  "D": {
+   "fec_id": [
+    "H6KY06184"
+   ],
+   "name": [
+    "DEMBO, ZACH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6KY06192"
+   ],
+   "name": [
+    "ALVARADO, RALPH A"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MS-01": {
+  "D": {
+   "fec_id": [
+    "H6MS01313"
+   ],
+   "name": [
+    "JOHNSON, CLIFF"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6MS01131"
+   ],
+   "name": [
+    "KELLY, JOHN TRENT"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MS-02": {
+  "D": {
+   "fec_id": [
+    "H4MS02068"
+   ],
+   "name": [
+    "THOMPSON, BENNIE G."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MS02203"
+   ],
+   "name": [
+    "ELLER, RON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MS-03": {
+  "D": {
+   "fec_id": [
+    "H6MS03228"
+   ],
+   "name": [
+    "CHIARADIO, MICHAEL ALEXIS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8MS03125"
+   ],
+   "name": [
+    "GUEST, MICHAEL PATRICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "MS-04": {
+  "D": {
+   "fec_id": [
+    "H6MS04242"
+   ],
+   "name": [
+    "HULUM, JEFFREY III"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2MS04258"
+   ],
+   "name": [
+    "EZELL, WALTER MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AR-01": {
+  "D": {
+   "fec_id": [
+    "H6AR01155"
+   ],
+   "name": [
+    "GREEN, TERRI YARBROUGH DR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0AR01083"
+   ],
+   "name": [
+    "CRAWFORD, ERIC ALAN RICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AR-02": {
+  "D": {
+   "fec_id": [
+    "H6AR02286"
+   ],
+   "name": [
+    "JONES, CHRIS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4AR02141"
+   ],
+   "name": [
+    "HILL, JAMES FRENCH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AR-03": {
+  "D": {
+   "fec_id": [
+    "H6AR03128"
+   ],
+   "name": [
+    "RYERSE, ROBB"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H0AR03055"
+   ],
+   "name": [
+    "WOMACK, STEPHEN A THE HON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "AR-04": {
+  "D": {
+   "fec_id": [
+    "H6AR04084"
+   ],
+   "name": [
+    "RUSSELL, JAMES RICHARD MR III"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4AR04048"
+   ],
+   "name": [
+    "WESTERMAN, BRUCE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IA-01": {
+  "D": {
+   "fec_id": [
+    "H2IA02111"
+   ],
+   "name": [
+    "BOHANNAN, CHRISTINA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8IA02043"
+   ],
+   "name": [
+    "MILLER-MEEKS, MARIANNETTE JANE"
+   ],
+   "primary_money_removed": [
+    [
+     "Neighbor Voices",
+     356
+    ]
+   ]
+  }
+ },
+ "IA-02": {
+  "D": {
+   "fec_id": [
+    "H6IA02211"
+   ],
+   "name": [
+    "JAMES, LINDSAY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IA02237"
+   ],
+   "name": [
+    "MITCHELL, JOE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IA-03": {
+  "D": {
+   "fec_id": [
+    "H6IA03268"
+   ],
+   "name": [
+    "TRONE GARRIOTT, SARAH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2IA03119"
+   ],
+   "name": [
+    "NUNN, ZACH"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "IA-04": {
+  "D": {
+   "fec_id": [
+    "H6IA04217"
+   ],
+   "name": [
+    "DAWSON, DAVE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6IA04167"
+   ],
+   "name": [
+    "MCGOWAN, CHRIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WV-01": {
+  "D": {
+   "fec_id": [
+    "H6WV01160"
+   ],
+   "name": [
+    "GEORGE, VINCENT RAYMOND MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H8WV03097"
+   ],
+   "name": [
+    "MILLER, CAROL DEVINE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "WV-02": {
+  "D": {
+   "fec_id": [
+    "H6WV02150"
+   ],
+   "name": [
+    "PARSI, AHSAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4WV02205"
+   ],
+   "name": [
+    "MOORE, RILEY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NM-01": {
+  "D": {
+   "fec_id": [
+    "H2NM01144"
+   ],
+   "name": [
+    "STANSBURY, MELANIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NM01129"
+   ],
+   "name": [
+    "OKPAREKE, NDIDIAMAKA"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NM-02": {
+  "D": {
+   "fec_id": [
+    "H2NM02191"
+   ],
+   "name": [
+    "VASQUEZ, GABRIEL"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NM02127"
+   ],
+   "name": [
+    "CUNNINGHAM, GREG"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NM-03": {
+  "D": {
+   "fec_id": [
+    "H0NM03102"
+   ],
+   "name": [
+    "LEGER FERNANDEZ, TERESA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NM03083"
+   ],
+   "name": [
+    "ZAMORA, MARTIN R"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CT-01": {
+  "D": {
+   "fec_id": [
+    "H6CT01206"
+   ],
+   "name": [
+    "BRONIN, LUKE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H2CT03102"
+   ],
+   "name": [
+    "CHAI, AMY FOGELSTROM DR"
+   ],
+   "primary_money_removed": [
+    [
+     "Defend The Vote",
+     515672
+    ],
+    [
+     "Count On Connecticut",
+     92262
+    ],
+    [
+     "Working Families Party PAC",
+     1500
+    ]
+   ]
+  }
+ },
+ "CT-02": {
+  "D": {
+   "fec_id": [
+    "H2CT02112"
+   ],
+   "name": [
+    "COURTNEY, JOSEPH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CT02196"
+   ],
+   "name": [
+    "AUSTIN, GEORGE PATRICK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CT-03": {
+  "D": {
+   "fec_id": [
+    "H0CT03072"
+   ],
+   "name": [
+    "DELAURO, ROSA L"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CT03178"
+   ],
+   "name": [
+    "LANCIA, CHRISTOPHER JOHN MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CT-04": {
+  "D": {
+   "fec_id": [
+    "H8CT04172"
+   ],
+   "name": [
+    "HIMES, JIM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CT04143"
+   ],
+   "name": [
+    "GOLDSTEIN, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "CT-05": {
+  "D": {
+   "fec_id": [
+    "H8CT05245"
+   ],
+   "name": [
+    "HAYES, JAHANA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6CT05231"
+   ],
+   "name": [
+    "SHEA, CHRIS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "RI-01": {
+  "D": {
+   "fec_id": [
+    "H4RI01265"
+   ],
+   "name": [
+    "AMO, GABRIEL F"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6RI01153"
+   ],
+   "name": [
+    "KEENAN, KELLIE ELEANOR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "RI-02": {
+  "D": {
+   "fec_id": [
+    "H2RI02184"
+   ],
+   "name": [
+    "MAGAZINER, SETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6RI02318"
+   ],
+   "name": [
+    "MELLOR, VICTOR G."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "VT-01": {
+  "D": {
+   "fec_id": [
+    "H2VT01076"
+   ],
+   "name": [
+    "BALINT, REBECCA 'BECCA'"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6VT01085"
+   ],
+   "name": [
+    "MALLOY, GERALD MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "NH-01": {
+  "D": {
+   "fec_id": [
+    "H6NH01321"
+   ],
+   "name": [
+    "SHAHEEN, STEFANY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6NH01420"
+   ],
+   "name": [
+    "DILORENZO, ANTHONY"
+   ],
+   "primary_money_removed": [
+    [
+     "Future Progress",
+     598025
+    ],
+    [
+     "VoteVets",
+     320434
+    ]
+   ]
+  }
+ },
+ "NH-02": {
+  "D": {
+   "fec_id": [
+    "H4NH02399"
+   ],
+   "name": [
+    "GOODLANDER, MAGGIE"
+   ],
+   "primary_money_removed": [
+    [
+     "FELLOWSHIP PAC",
+     150000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "H2NH02260"
+   ],
+   "name": [
+    "WILLIAMS, LILY TANG"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "ME-01": {
+  "D": {
+   "fec_id": [
+    "H8ME01120"
+   ],
+   "name": [
+    "PINGREE, CHELLIE M"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H4ME01160"
+   ],
+   "name": [
+    "RUSSELL, RONALD CHARLES MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "ME-02": {
+  "D": {
+   "fec_id": [
+    "H6ME02171"
+   ],
+   "name": [
+    "DUNLAP, MATT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6ME02148"
+   ],
+   "name": [
+    "LEPAGE, PAUL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "DE-01": {
+  "D": {
+   "fec_id": [
+    "H4DE00045"
+   ],
+   "name": [
+    "MCBRIDE, SARAH ELIZABETH"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "H6DE01121"
+   ],
+   "name": [
+    "ARMINIO, JOSEPH DR. JOE PH.D."
+   ],
+   "primary_money_removed": []
+  }
+ }
+}

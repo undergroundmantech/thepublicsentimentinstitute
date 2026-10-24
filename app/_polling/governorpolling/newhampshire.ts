@@ -2,7 +2,7 @@
 // New Hampshire — 2026 Governor: Cinde Warmington (D) vs. Kelly Ayotte (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-12.
+// ballot were dropped. Newest poll: 2026-10-20.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -45,6 +45,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Cinde Warmington (D)": 41.0, "Kelly Ayotte (R)": 52.0, "Undecided": 7.0}, "notes": "Other and undecided combined."},
     {"raceId": "NH-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-28", "endDate": "2026-10-05", "sampleSize": 1520, "sampleType": "LV", "results": {"Kelly Ayotte (R)": 49.0, "Cinde Warmington (D)": 40.0, "Undecided": 11.0}},
     {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College for AARP", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1042, "sampleType": "LV", "results": {"Kelly Ayotte (R)": 52.0, "Cinde Warmington (D)": 45.0, "Undecided": 3.0}, "notes": "New Hampshire Institute of Politics at Saint Anselm College, commissioned by AARP."},
-    {"raceId": "NH-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 38.0, "Kelly Ayotte (R)": 54.0, "Other": 3.0, "Undecided": 5.0}}
+    {"raceId": "NH-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 38.0, "Kelly Ayotte (R)": 54.0, "Other": 3.0, "Undecided": 5.0}},
+    {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 1672, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 50.0, "Undecided": 8.0}}
   ],
 };

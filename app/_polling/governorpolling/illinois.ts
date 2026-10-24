@@ -2,7 +2,7 @@
 // Illinois — 2026 Governor: JB Pritzker (D) vs. Darren Bailey (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2025-11-25.
+// ballot were dropped. Newest poll: 2026-10-22.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   IL: [
     {"raceId": "IL-GOV-2026", "pollster": "Victory Research", "startDate": "2025-11-25", "endDate": "2025-11-25", "sampleSize": 1208, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Undecided": 12.0}},
-    {"raceId": "IL-GOV-2026", "pollster": "Public Policy Polling for Chicago News Weekly", "startDate": "2026-09-30", "endDate": "2026-10-01", "sampleSize": 569, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Other": 6.0, "Undecided": 6.0}, "notes": "Other is Collin Corbett, independent. Voter type not published."}
+    {"raceId": "IL-GOV-2026", "pollster": "Public Policy Polling for Chicago News Weekly", "startDate": "2026-09-30", "endDate": "2026-10-01", "sampleSize": 569, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Other": 6.0, "Undecided": 6.0}, "notes": "Other is Collin Corbett, independent. Voter type not published."},
+    {"raceId": "IL-GOV-2026", "pollster": "ActiVote", "startDate": "2026-10-02", "endDate": "2026-10-22", "sampleSize": 400, "sampleType": "LV", "results": {"JB Pritzker (D)": 58.7, "Darren Bailey (R)": 41.3}}
   ],
 };
