@@ -12,6 +12,7 @@ import { getCategory, getPartyModel, matchCounty, simulate, stateOfFips, type Ca
 import type { EvConsole, EvRow } from "./consoleData";
 import ThenNow, { useEvView } from "./ThenNow";
 import Benchmarks, { BenchBoard } from "./Benchmarks";
+import CastElectorate from "./CastElectorate";
 import "./evconsole.css";
 
 type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
@@ -405,6 +406,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
       </div>
 
       {scope === "US" ? <BenchBoard data={data} onOpen={go} /> : row ? <Benchmarks row={row} data={data} m24={view?.p24 ? (view.p24.r - view.p24.d) * 100 : null} m26={view?.p26 ? (view.p26.r - view.p26.d) * 100 : null} geo24={geo24} /> : null}
+
+      <CastElectorate scope={scope} name={scope === "US" ? "the nation" : row?.name ?? scope} rows={data.rows} counties={counties} cPaths={cPaths} cBox={cBox} states={states} W={W} H={H} onOpen={go} />
 
       <div className="evd">
         <div className="evd-c">

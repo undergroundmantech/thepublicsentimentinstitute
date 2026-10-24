@@ -35,7 +35,7 @@ function valueAt(daily: TLData["daily"], t: number): [number, number] {
 
 type Seg = { kind: "travel" | "hold"; t0: number; t1: number; w: number; ev: number; c0: number };
 
-export default function Timeline({ data }: { data: TLData }) {
+export default function Timeline({ data, embedded = false }: { data: TLData; embedded?: boolean }) {
   const { daily, polls } = data;
   const T0 = daily[0]?.[0] ?? 0, T1 = daily[daily.length - 1]?.[0] ?? 1;
   const events = useMemo(() => data.events.map((e) => ({ ...e, t: tsOf(e.date) })).filter((e) => e.t >= T0 - DAY && e.t <= T1), [data.events, T0, T1]);
@@ -144,12 +144,12 @@ export default function Timeline({ data }: { data: TLData }) {
   const runnerX = Math.max(30, Math.min(sz.w - 30, cx));
 
   return (
-    <div className="opp tl">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span><Link href={data.avgHref}>{data.title}</Link><span className="sep">/</span><span>Timeline</span></nav>
+    <div className={`opp tl${embedded ? " tl-emb" : ""}`}>
+      {embedded ? null : <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span><Link href={data.avgHref}>{data.title}</Link><span className="sep">/</span><span>Timeline</span></nav>}
       <header className="tl-hero">
         <div>
           <div className="eye g">{data.kicker}</div>
-          <h1>{data.title}, <em>the story so far.</em></h1>
+          {embedded ? <h2>{data.title}, <em>the story so far.</em></h2> : <h1>{data.title}, <em>the story so far.</em></h1>}
           <p className="lede">{data.lede}</p>
           <p className="tl-cue"><span aria-hidden="true" className="tl-mouse"><i /></span>Scroll to walk the line with Pointy. Every stop is a moment that made news; the numbers show where the average stood that day and two weeks later.</p>
         </div>
@@ -161,7 +161,7 @@ export default function Timeline({ data }: { data: TLData }) {
         </dl>
       </header>
 
-      <section ref={wrap} className="tl-scroll" style={{ height: `calc(${Math.round(segs.total * VH_PER_UNIT)}vh + 100vh)` }} aria-label={`${data.title} timeline`}>
+      <section ref={wrap} className="tl-scroll" style={{ height: `calc(${Math.round(segs.total * (embedded ? VH_PER_UNIT * 0.6 : VH_PER_UNIT))}vh + 100vh)` }} aria-label={`${data.title} timeline`}>
         <div className="tl-stick">
           <div className="tl-read">
             <div className="tl-date"><span>{at.hold && ev ? "Stop" : "On the trail"}</span><b>{fmtDate(at.t)}</b></div>

@@ -221,8 +221,8 @@ const CSS = `
   background: radial-gradient(80% 50% at 50% 0%, rgba(255,246,222,.75), rgba(255,246,222,0) 70%), linear-gradient(112deg, transparent 58%, rgba(255,255,255,.28) 66%, transparent 74%), radial-gradient(120% 120% at 50% 10%, #efeee8 40%, #dedcd3 100%);
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), inset 0 -30px 60px rgba(0,0,0,.05); }
 .wbr-intro { margin: 0 0 8px; }
-.wbr-intro h1 { margin: 0; font: 400 clamp(30px, 3.4vw, 52px)/1.05 var(--font-mark); color: #1f57c8; transform: rotate(-.8deg); transform-origin: left; }
-.wbr-intro h1 em { font-style: normal; color: #d3243c; }
+.wbr-intro h1, .wbr-intro h2 { margin: 0; font: 400 clamp(30px, 3.4vw, 52px)/1.05 var(--font-mark); color: #1f57c8; transform: rotate(-.8deg); transform-origin: left; }
+.wbr-intro h1 em, .wbr-intro h2 em { font-style: normal; color: #d3243c; }
 .wbr-intro p { margin: 6px 0 0; max-width: 820px; font: 400 17px/1.35 var(--font-hand); color: #3d4048; }
 .wbr-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
 .wbr-title { font: 400 28px/1 var(--font-mark); color: #1f57c8; transform: rotate(-1.5deg); }

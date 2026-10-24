@@ -157,3 +157,27 @@ html[data-theme="light"] .emk-bar2 button.hot { color: #fff; }
 .bg-green .emk-map path.off, .bg-green .emk-map polygon.off, .bg-blue .emk-map path.off, .bg-blue .emk-map polygon.off { fill: #2a2340; }
 .bg-green .emk-map text.off, .bg-blue .emk-map text.off { fill: rgba(255, 255, 255, .5); }
 .a-9x16 .emk-f-map { margin-inline: -2.4cqw; }
+
+/* Oct 23 evening: the dock sits beside the frame, in its own column, so it never covers the map. Hiding or idling
+   only fades it; its room stays, so the frame never moves while you record. */
+.emk-studio-root { --rail: 268px; display: flex; align-items: center; justify-content: center; gap: 18px; padding: 14px; box-sizing: border-box; }
+.emk-frame { width: min(calc(100vw - var(--rail) - 60px), calc(94vh * var(--ar))); max-height: 94vh; flex: 0 0 auto; }
+.emk-dock { position: relative; left: auto; bottom: auto; transform: none; flex: 0 0 var(--rail); width: var(--rail); max-height: 94vh; overflow: auto; box-sizing: border-box; align-content: start; }
+.emk-studio-root.idle .emk-dock { opacity: 0; transform: none; }
+.emk-dock.gone { display: grid; visibility: hidden; }
+.emk-dock .emk-pal.mini { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.emk-dock .emk-pal.mini button { min-width: 0; }
+.emk-dock .row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.emk-dock .row select { grid-column: 1 / -1; }
+.emk-dock .row button.hot, .emk-dock .row button.gold { grid-column: 1 / -1; margin-left: 0; }
+.emk-dock p { font-size: 11px; line-height: 1.4; }
+.emk-dock-show { right: 14px; top: 14px; bottom: auto; }
+/* a narrow or tall screen: the dock goes under the frame instead, and the frame shrinks to leave it room */
+@media (max-aspect-ratio: 4/3), (max-width: 900px) {
+  .emk-studio-root { --dockh: 210px; flex-direction: column; gap: 10px; }
+  .emk-frame { width: min(96vw, calc((100vh - var(--dockh) - 40px) * var(--ar))); max-height: calc(100vh - var(--dockh) - 40px); }
+  .emk-dock { flex: 0 0 auto; width: min(1100px, 96vw); max-height: var(--dockh); }
+  .emk-dock .emk-pal.mini { grid-template-columns: repeat(5, 1fr); }
+  .emk-dock .row { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+  .emk-dock .row select, .emk-dock .row button.hot, .emk-dock .row button.gold { grid-column: auto; }
+}
