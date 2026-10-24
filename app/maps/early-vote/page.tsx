@@ -5,6 +5,7 @@ import JsonLd from "@/app/components/JsonLd";
 import { seo, graph, pageLd, datasetLd, crumbsLd, abs } from "@/app/lib/seo";
 import { getEarlyVote, commas, longDate, millions, EV_KEYWORDS } from "./server";
 import { nationalFaq, faqLd } from "./Summary";
+import YouTubeBand from "@/app/components/YouTubeBand";
 
 // Rebuilt at most once an hour, so the count in search results and share cards stays current without a deploy.
 export const revalidate = 3600;
@@ -43,6 +44,9 @@ export default async function EarlyVotePage() {
           <EarlyVoteConsole data={buildEvConsole(ev)} faq={nationalFaq(ev)}
             lede={<p>As of {longDate(ev.snapshot)}, {commas(ev.total)} ballots have been cast in the 2026 midterms across {ev.states.length} reporting states: {millions(ev.mail)} mail ballots returned and {millions(ev.inperson)} cast in person.
               {ev.partyTotal > 0 ? ` In the states that publish party, registered Democrats cast ${((100 * ev.dem) / ev.partyTotal).toFixed(1)} percent of those ballots and registered Republicans ${((100 * ev.rep) / ev.partyTotal).toFixed(1)} percent.` : ""}</p>} />
+          <div style={{ maxWidth: 1180, margin: "18px auto 0", padding: "0 clamp(16px, 2.6vw, 36px)" }}>
+            <YouTubeBand from="early-vote-hub" title="The early vote, explained on YouTube" note="Which states are running bluer or redder than 2022 and 2024, in a few minutes, on the On Point channel." />
+          </div>
         </div>
       ) : null}
     </>

@@ -83,6 +83,7 @@ export function orgLd(): LD[] {
       parentOrganization: { "@id": PUB_ID },
       publishingPrinciples: abs("/forecast/methodology"),
       actionableFeedbackPolicy: abs("/contact"),
+      sameAs: ["https://www.youtube.com/@onpointpoliticsofficial", "https://onpointpolitics.substack.com"],
       knowsAbout: ["Elections", "Public opinion polling", "Election forecasting", "United States Congress", "State legislatures", "Ballot measures"],
     },
     {

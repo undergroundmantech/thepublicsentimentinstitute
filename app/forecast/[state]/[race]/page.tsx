@@ -21,6 +21,7 @@ import Ambient from "@/app/components/opp/Ambient";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { raceLd, raceMeta } from "../../seo";
+import YouTubeBand from "@/app/components/YouTubeBand";
 
 export const dynamicParams = false;
 
@@ -431,6 +432,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
             </section>
           ) : null}
 
+          <YouTubeBand from="race" title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "governor" ? "governor" : r.office === "senate" ? "Senate" : "House"} race, explained on YouTube`} note="Forecast breakdowns, the polls and election night coverage on the On Point channel." />
           <div className="callout">
             <div className="eye">Methodology</div>
             Every county is rebuilt by simulating voters going to the polls, 2,000 times, from On Point Polling survey data, past results, and the polling average. <Link href="/forecast/methodology" style={{ textDecoration: "underline" }}>How the model works</Link>.

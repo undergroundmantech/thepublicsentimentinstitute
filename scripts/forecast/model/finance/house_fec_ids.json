@@ -9415,5 +9415,852 @@
    ],
    "primary_money_removed": []
   }
+ },
+ "SEN-AK": {
+  "D": {
+   "fec_id": [
+    "S6AK00276"
+   ],
+   "name": [
+    "PELTOLA, MARY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4AK00214"
+   ],
+   "name": [
+    "SULLIVAN, DAN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-AL": {
+  "D": {
+   "fec_id": [
+    "S6AL00518"
+   ],
+   "name": [
+    "WESS, EVERETT W"
+   ],
+   "primary_money_removed": [
+    [
+     "ALABAMA CONSERVATIVES",
+     3019
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6AL00476"
+   ],
+   "name": [
+    "MOORE, FELIX BARRY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-AR": {
+  "D": {
+   "fec_id": [
+    "S6AR00199"
+   ],
+   "name": [
+    "SHOFFNER, HALLIE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4AR00103"
+   ],
+   "name": [
+    "COTTON, THOMAS"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-CO": {
+  "D": {
+   "fec_id": [
+    "S0CO00575"
+   ],
+   "name": [
+    "HICKENLOOPER, JOHN W."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6CO00507"
+   ],
+   "name": [
+    "BAISLEY, MARK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-DE": {
+  "D": {
+   "fec_id": [
+    "S0DE00092"
+   ],
+   "name": [
+    "COONS, CHRISTOPHER A."
+   ],
+   "primary_money_removed": [
+    [
+     "National Association of Realtors Political Action Committee",
+     11559
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6DE00206"
+   ],
+   "name": [
+    "KATZ, MICHAEL S DR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-FL": {
+  "D": {
+   "fec_id": [
+    "S6FL00830"
+   ],
+   "name": [
+    "NIXON, ANGELA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6FL00640"
+   ],
+   "name": [
+    "MOODY, ASHLEY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-GA": {
+  "D": {
+   "fec_id": [
+    "S8GA00180"
+   ],
+   "name": [
+    "OSSOFF, T. JONATHAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6GA00390"
+   ],
+   "name": [
+    "COLLINS, MICHAEL A JR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-IA": {
+  "D": {
+   "fec_id": [
+    "S6IA00298"
+   ],
+   "name": [
+    "TUREK, JOSHUA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6IA00314"
+   ],
+   "name": [
+    "ARENHOLZ, ASHLEY HINSON"
+   ],
+   "primary_money_removed": [
+    [
+     "Government That Works PAC",
+     131250
+    ]
+   ]
+  }
+ },
+ "SEN-ID": {
+  "D": {
+   "fec_id": [
+    "S6ID00146"
+   ],
+   "name": [
+    "ACHILLES, TODD BAKER"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S8ID00092"
+   ],
+   "name": [
+    "RISCH, JAMES E MR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-IL": {
+  "D": {
+   "fec_id": [
+    "S6IL00458"
+   ],
+   "name": [
+    "STRATTON, JULIANA"
+   ],
+   "primary_money_removed": [
+    [
+     "Progressive Values Illinois",
+     197726
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6IL00615"
+   ],
+   "name": [
+    "TRACY, DON"
+   ],
+   "primary_money_removed": [
+    [
+     "Progressive Values Illinois",
+     197726
+    ],
+    [
+     "The Impact Fund (FEC)",
+     171122
+    ],
+    [
+     "Protect Progress",
+     119644
+    ]
+   ]
+  }
+ },
+ "SEN-KS": {
+  "D": {
+   "fec_id": [
+    "S6KS00312"
+   ],
+   "name": [
+    "HAMILTON, ADAM"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S0KS00315"
+   ],
+   "name": [
+    "MARSHALL, ROGER W"
+   ],
+   "primary_money_removed": [
+    [
+     "Win it Back PAC",
+     519951
+    ]
+   ]
+  }
+ },
+ "SEN-KY": {
+  "D": {
+   "fec_id": [
+    "S6KY00385"
+   ],
+   "name": [
+    "BOOKER, CHARLES"
+   ],
+   "primary_money_removed": [
+    [
+     "Win it Back PAC",
+     4439887
+    ],
+    [
+     "FIGHT FOR KENTUCKY",
+     3841709
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6KY00286"
+   ],
+   "name": [
+    "BARR, GARLAND ANDY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-LA": {
+  "D": {
+   "fec_id": [
+    "S6LA00615"
+   ],
+   "name": [
+    "DAVIS, JAMIE"
+   ],
+   "primary_money_removed": [
+    [
+     "RED BAYOU PAC",
+     45025
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6LA00664"
+   ],
+   "name": [
+    "LETLOW, JULIA"
+   ],
+   "primary_money_removed": [
+    [
+     "RED BAYOU PAC",
+     14016
+    ]
+   ]
+  }
+ },
+ "SEN-MA": {
+  "D": {
+   "fec_id": [
+    "S4MA00028"
+   ],
+   "name": [
+    "MARKEY, EDWARD SEN."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6MA00304"
+   ],
+   "name": [
+    "DEATON, JOHN"
+   ],
+   "primary_money_removed": [
+    [
+     "ADVANCE PROGRESS",
+     3329005
+    ]
+   ]
+  }
+ },
+ "SEN-ME": {
+  "D": {
+   "fec_id": [
+    "S6ME00464"
+   ],
+   "name": [
+    "JACKSON, TROY DALE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6ME00159"
+   ],
+   "name": [
+    "COLLINS, SUSAN M."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-MI": {
+  "D": {
+   "fec_id": [
+    "S6MI00418"
+   ],
+   "name": [
+    "EL-SAYED, ABDUL"
+   ],
+   "primary_money_removed": [
+    [
+     "The Sentinel Action Fund",
+     42000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S4MI00595"
+   ],
+   "name": [
+    "ROGERS, MICHAEL J"
+   ],
+   "primary_money_removed": [
+    [
+     "UNITED DEMOCRACY PROJECT (UDP)",
+     20234525
+    ],
+    [
+     "RJC Victory Fund",
+     1275816
+    ],
+    [
+     "A Stronger Michigan",
+     150000
+    ]
+   ]
+  }
+ },
+ "SEN-MN": {
+  "D": {
+   "fec_id": [
+    "S6MN00440"
+   ],
+   "name": [
+    "FLANAGAN, MARGARET"
+   ],
+   "primary_money_removed": [
+    [
+     "NORTH STAR DAWN PAC",
+     7152819
+    ],
+    [
+     "Sheepdog PAC",
+     444287
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6MN00556"
+   ],
+   "name": [
+    "TAFOYA, MICHELE"
+   ],
+   "primary_money_removed": [
+    [
+     "NORTH STAR DAWN PAC",
+     6648910
+    ],
+    [
+     "UNITE TO WIN",
+     1000000
+    ]
+   ]
+  }
+ },
+ "SEN-MS": {
+  "D": {
+   "fec_id": [
+    "S6MS00133"
+   ],
+   "name": [
+    "COLOM, SCOTT"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S8MS00261"
+   ],
+   "name": [
+    "HYDE-SMITH, CINDY"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-MT": {
+  "D": {
+   "fec_id": [
+    "S6MT00287",
+    "S6MT00253"
+   ],
+   "name": [
+    "BODNAR, SETH",
+    "BANKHEAD, ALANI INES"
+   ],
+   "primary_money_removed": [
+    [
+     "MONTANA FREEDOM PAC",
+     1032157
+    ],
+    [
+     "WILD MONTANA ACTION FUND",
+     5447
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6MT00295"
+   ],
+   "name": [
+    "ALME, KURT"
+   ],
+   "primary_money_removed": [
+    [
+     "MONTANA FREEDOM PAC",
+     337937
+    ]
+   ]
+  }
+ },
+ "SEN-NC": {
+  "D": {
+   "fec_id": [
+    "S6NC00407"
+   ],
+   "name": [
+    "COOPER, ROY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6NC00415"
+   ],
+   "name": [
+    "WHATLEY, MICHAEL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-NE": {
+  "D": {
+   "fec_id": [
+    "S4NE00207"
+   ],
+   "name": [
+    "OSBORN, DAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6NE00129"
+   ],
+   "name": [
+    "RICKETTS, PETE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-NH": {
+  "D": {
+   "fec_id": [
+    "S6NH00141"
+   ],
+   "name": [
+    "PAPPAS, CHRIS"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6NH00208"
+   ],
+   "name": [
+    "SUNUNU, JOHN E"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-NJ": {
+  "D": {
+   "fec_id": [
+    "S4NJ00185"
+   ],
+   "name": [
+    "BOOKER, CORY A."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4NJ00532"
+   ],
+   "name": [
+    "MURPHY, JUSTIN MICHAEL LL.M."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-NM": {
+  "D": {
+   "fec_id": [
+    "S0NM00058"
+   ],
+   "name": [
+    "LUJAN, BEN RAY"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6NM01186"
+   ],
+   "name": [
+    "MARKER, LARRY E"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-OH": {
+  "D": {
+   "fec_id": [
+    "S6OH00163"
+   ],
+   "name": [
+    "BROWN, SHERROD"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6OH00304"
+   ],
+   "name": [
+    "HUSTED, JON"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-OK": {
+  "D": {
+   "fec_id": [
+    "S6OK04163"
+   ],
+   "name": [
+    "THOMAS, N'KIYLA JASMINE - ANN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6OK04247"
+   ],
+   "name": [
+    "HERN, KEVIN"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-OR": {
+  "D": {
+   "fec_id": [
+    "S8OR00207"
+   ],
+   "name": [
+    "MERKLEY, JEFFREY ALAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6OR05218"
+   ],
+   "name": [
+    "SMITH, DAVID BROCK"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-RI": {
+  "D": {
+   "fec_id": [
+    "S6RI00163"
+   ],
+   "name": [
+    "REED, JOHN F."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4RI00051"
+   ],
+   "name": [
+    "MCKAY, RAYMOND TYLER MR"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-SC": {
+  "D": {
+   "fec_id": [
+    "S6SC04239"
+   ],
+   "name": [
+    "ANDREWS, ANNIE"
+   ],
+   "primary_money_removed": [
+    [
+     "PALMETTO FIRST PAC",
+     297501
+    ],
+    [
+     "FREEDOM CAUCUS FUND",
+     45576
+    ],
+    [
+     "Gun Rights America",
+     7000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6SC04437"
+   ],
+   "name": [
+    "GRAHAM, DARLINE"
+   ],
+   "primary_money_removed": [
+    [
+     "PALMETTO ACTION",
+     78331
+    ]
+   ]
+  }
+ },
+ "SEN-SD": {
+  "D": {
+   "fec_id": [
+    "S6SD01117"
+   ],
+   "name": [
+    "BENGS, BRIAN"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4SD00049"
+   ],
+   "name": [
+    "ROUNDS, MIKE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-TN": {
+  "D": {
+   "fec_id": [
+    "S4TN00542"
+   ],
+   "name": [
+    "BRADSHAW, MARQUITA"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S0TN00169"
+   ],
+   "name": [
+    "HAGERTY, BILL"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-TX": {
+  "D": {
+   "fec_id": [
+    "S6TX00479"
+   ],
+   "name": [
+    "TALARICO, JAMES"
+   ],
+   "primary_money_removed": [
+    [
+     "American Principles Project PAC",
+     100000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S6TX00388"
+   ],
+   "name": [
+    "PAXTON, WARREN KENNETH JR."
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-VA": {
+  "D": {
+   "fec_id": [
+    "S6VA00093"
+   ],
+   "name": [
+    "WARNER, MARK ROBERT"
+   ],
+   "primary_money_removed": [
+    [
+     "FELLOWSHIP PAC",
+     150000
+    ]
+   ]
+  },
+  "R": {
+   "fec_id": [
+    "S8VA00321"
+   ],
+   "name": [
+    "MIZUSAWA, BERT K"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-WV": {
+  "D": {
+   "fec_id": [
+    "S6WV00188"
+   ],
+   "name": [
+    "FETTY ANDERSON, RACHEL LEE"
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S4WV00159"
+   ],
+   "name": [
+    "CAPITO, SHELLEY MOORE"
+   ],
+   "primary_money_removed": []
+  }
+ },
+ "SEN-WY": {
+  "D": {
+   "fec_id": [
+    "S6WY00217"
+   ],
+   "name": [
+    "BYRD, JAMES WILLARD MR."
+   ],
+   "primary_money_removed": []
+  },
+  "R": {
+   "fec_id": [
+    "S6WY00209"
+   ],
+   "name": [
+    "HAGEMAN, HARRIET"
+   ],
+   "primary_money_removed": [
+    [
+     "A STRONG INNOVATION ECONOMY REQUIRES STRONG IP PROTECTION",
+     31485
+    ]
+   ]
+  }
  }
 }

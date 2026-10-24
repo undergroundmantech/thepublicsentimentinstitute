@@ -3,7 +3,7 @@
 Run it where api.open.fec.gov is reachable, such as the Codespace:
     export FEC_API_KEY=your_key        free at https://api.data.gov/signup/ ; DEMO_KEY works but is very slow
     python3 scripts/forecast/model/finance/pull_fec_house.py
-It reads house_fec_ids.json beside it, the FEC candidate IDs of both nominees in all 435 districts, and writes
+It reads house_fec_ids.json beside it, the FEC candidate IDs of both nominees in all 435 districts and every Senate race (keys SEN-XX), and writes
 fec_house_pull.json beside it: each candidate's cycle totals, the outside spending FEC has processed for and against
 them by committee, and the 24 and 48 hour outside spending notices filed since Oct 1. About 60 to 120 calls. Then
 commit and push that one file; the forecast side converts it into the House finance books.

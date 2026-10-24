@@ -8,6 +8,7 @@ import { raceHref } from "@/app/lib/opp";
 import { getDownballot } from "./statewide/data";
 import JsonLd from "@/app/components/JsonLd";
 import { hubLd, hubMeta } from "./seo";
+import YouTubeBand from "@/app/components/YouTubeBand";
 
 export function generateMetadata(): Metadata { return hubMeta(); }
 
@@ -52,6 +53,7 @@ export default function ForecastPage() {
       <JsonLd data={hubLd()} />
       <div className="opp fc-page fc-xl fx-dark"><ForecastConsole data={data} initial="senate" /></div>
       <div className="opp fc-page fc-wide">
+        <YouTubeBand from="forecast-hub" title="The 2026 forecast, explained on YouTube" note="Every week: which races moved and why, the Senate and House maps, and election night live on November 3." />
         <details className="fcx-index">
           <summary>Browse every forecast page as a plain index</summary>
           <ForecastIndex />

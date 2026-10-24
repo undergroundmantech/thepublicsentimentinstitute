@@ -21,7 +21,7 @@ export default function Footer() {
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
                 Polling averages, election forecasts and live results. Fieldwork and modeling by On Point Polling, Miami.
               </p>
-              <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/maps/early-vote">Early vote tracker</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link></p>
+              <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/maps/early-vote">Early vote tracker</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link><a href="https://www.youtube.com/@onpointpoliticsofficial?sub_confirmation=1" target="_blank" rel="noopener" data-ev="YouTube subscribe" data-ev-d='{"from":"footer"}'>YouTube</a><a href="https://onpointpolitics.substack.com" target="_blank" rel="noopener">Newsletter</a></p>
             </div>
             {COLS.map((c) => (
               // a collapsible group: always open on a wide screen, folded on a phone by LiteMotion so the footer is one screen
