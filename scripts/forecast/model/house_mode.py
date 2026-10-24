@@ -580,6 +580,68 @@ DE = [
 # Oct 12 2026 sweep: NY-21 Siena Oct 6 (46 to 42) and Impact Research for Gendebien (D) Oct 4 (45 to 48), SC-1 co/efficient (R)
 # Oct 1 (40 to 46); /tmp/hpolls/build_1012.py, the 1008b rule.
 POLLS = {
+         # Oct 22 2026 8 PM sweep: FL-25 is a new district, National Research Inc. for Singer and the NRCC (R) Oct 12-15, 400 LV,
+         # Singer 49 Moskowitz 42, moved 1.5 points against the Republican as an internal; WA-03 Change Research for the Northwest
+         # Progressive Institute Oct 19-21, 551 LV, Gluesenkamp Perez 45 Braun 44, averaged evenly with the prior entry.
+         # Oct 22 2026 8 AM sweep: House Majority PAC memo of Oct 21, district polls released with toplines, each a Democratic
+         # aligned internal moved 1.5 points against the Democrat then averaged evenly with the prior entry: PPP MO-02 Oct 19-20 631
+         # Wellman 46 Wagner 45, NC-09 Oct 19-20 526 Ojeda 42 Hudson 46, NE-01 Oct 19-20 536 Backemeyer 45 Flood 46, KY-06 Oct 19-20
+         # 572 Dembo 47 Alvarado 41, NV-02 Oct 12-13 Benitez-Thompson 44 Flippo 46, MT-01 Oct 12-14 Forstag 48 Flint 45, NY-21 Oct 12-13
+         # 613 Gendebien 44 Constantino 46, MN-01 Oct 13-14 588 Johnson 43 Finstad 43, FL-13 Oct 14-15 Gray 47 Luna 46; Hart OH-15
+         # Oct 9-12 503 Leonard 48 Carey 45; Expedition Strategies IN-05 Sep 30-Oct 4 600 Ford 47 Spartz 48; Normington Petts TX-23
+         # Oct 5-7 400 Padilla Stout 46 Herrera 46 and TX-35 Oct 12-14 400 Garcia 47 De La Cruz 45.
+         # Oct 22 2026: PollVault/Emerson Oct 12-14 LV, FL-14 Castor 48 Beltran 43, PA-08 Cognetti 52 Bresnahan 48, AR-02 Jones 48
+         # Hill 52, TX-35 Garcia 51 De La Cruz 49, IA-02 James 50 Mitchell 47, AZ-02 Nez 50 Crane 48, MI-07 Lawrence 53 Barrett 45,
+         # NC-11 Ager 56 Balkcom 43, MT-01 Forstag 50 Flint 46, MO-02 Wellman 51 Wagner 46, each averaged evenly with the prior
+         # entry; the statewide crosstabs inside these districts were not added.
+         # Oct 21 2026 8 PM sweep: TX-15 Texas Southern Barbara Jordan Center for the San Antonio Express-News Oct 13-16, LV, Pulido 51
+         # De La Cruz 44, averaged evenly with the prior entry; FL-21 is a new district, Upswing Research (D) Sep 21-25, 402 LV, initial
+         # ballot Mast 49 Martin 38, moved 1.5 points against the Democrat.
+         # Oct 24 2026, supplied by the user: OH-01 Quantus Insights Oct 19-21, 561 LV, Landsman 46.6 Conroy 42.4, nonpartisan,
+         # averaged evenly with the prior entry of 47.17 to 42.83.
+         # Oct 24 2026, added at the user's request though so far only on aggregators: TX-34 and TX-35 Washington Post/Schar School
+         # Oct 14-19, Gonzalez 50 Flores 43 at 626 LV and Garcia 47 De La Cruz 48 at 605 LV, averaged evenly with the prior entry;
+         # VA-01 and FL-25 Public Policy Polling (D) Oct 21-22, Taylor 47 Wittman 46 at 570 LV and Moskowitz 47 Singer 42 at 592 LV,
+         # each moved 1.5 points against the Democrat, then averaged evenly with the prior entry.
+         # Oct 24 2026 8 AM sweep: NJ-02 Impact Research for House Majority PAC (D) Oct 7-10, n not published, Van Drew 50
+         # Mullock 40, reported by New Jersey Globe Oct 22; CO-05 Global Strategy Group for Killin (D) Oct 14-18, Killin 46 Crank 44,
+         # from the campaign release, n not published; each moved 1.5 points against the Democrat, then averaged evenly with the prior entry.
+         # Oct 23 2026, supplied by the user: MN-06 Public Policy Polling for the Chapin campaign (D) Aug 18-19, 643 voters,
+         # released Aug 25, Emmer 51 Chapin 39, a new district, moved 1.5 points against the Democrat as in FL-07. The
+         # Oct 8 full sweep missed it.
+         # Oct 23 2026 8 PM sweep: CO-03 DCCC Analytics (D) Oct 20-21, 402 LV, Romero 47 Hurd 46, moved 1.5 points against the
+         # Democrat then averaged evenly with the prior entry; NH-01 and NH-02 Saint Anselm College Oct 19-20, 1,672 LV statewide,
+         # Shaheen 46 DiLorenzo 42 and Goodlander 54 Williams 38, district n not published, about 861 and 811 from the margins of
+         # error, each averaged evenly with the prior entry.
+         # Oct 21 2026 full gap audit, requested by the user: KY-06 GQR for Dembo (D) Sep 25-30, 401 LV, Dembo 42 Alvarado 37, and
+         # VA-06 co/efficient (R) Sep 28-30, 791 LV, Cline 59 Macy 29, each moved 1.5 points against its own side and averaged evenly
+         # with the prior entry; new entries IL-04 Independent Center Voice/Bullfinch Jul 31-Aug 4, 653 RV, Garcia 34 Castillo 15, and
+         # MT-02 Rutgers Eagleton for Montana Free Press through Sep 7, 470 RV, Downing 48 Miller 26. Earlier August and September district
+         # polls the audit found were left out because the Sep 29 and Oct 8 full sweeps already took every poll from Aug 15 on.
+         # Oct 21 2026 8 AM sweep: SD-AL Mason-Dixon for South Dakota News Watch Oct 12-14, 500 LV, Jackley 60 Gronli 32, averaged
+         # evenly with the prior entry; FL-09 SEA Polling for Soto (D), Soto 44 Green 44, n about 400 from the 4.9 point margin, and
+         # OH-10 DCCC Analytics (D) Oct 12-13, 535 LV, Knickerbocker 47 Turner 44, each moved 1.5 points against the Democrat then averaged
+         # with the prior entry; FL-07 is a new district, DCCC Analytics (D) Oct 17-19, 414 LV, Dalton 45 Elijah 45, moved 1.5 points
+         # against the Democrat as in TX-28.
+         # Oct 20 2026 8 PM sweep, each averaged evenly with the prior entry: AK-AL Data for Progress Oct 8-16, 694 LV, final
+         # round Begich 51 Hill 49; TX-28 DCCC Analytics (D) Oct 7-13, 536 LV, Cuellar 54 Tijerina 34, moved 1.5 points against
+         # the Democrat first; RI-01 and RI-02 Salve Regina Pell Center/Embold Oct 5-8, Amo 52 Keenan 33 and Magaziner 52 Mellor 39.
+         # Oct 19 2026 gap audit, requested by the user to add every potential poll, each averaged evenly with the prior entry,
+         # campaign internals moved 1.5 points against their own side first: NY-21 Impact Research for Gendebien (D) Sep 29-Oct 4,
+         # 500 LV, Constantino 48 Gendebien 45, then Siena Sep 30-Oct 6, 496 LV, Gendebien 46 Constantino 42; ME-02 Tulchin for
+         # Dunlap (D) Oct 12-14, 500 LV, Dunlap 50 LePage 46; SC-01 GQR (D) through Oct 4, 400 LV, Lacore 48 Honeycutt 45; KY-06 Lake
+         # Research (D) Sep 30-Oct 4, 400 LV, Dembo 48 Alvarado 45; CA-48 SurveyUSA through Oct 7, 518 LV, von Wilpert 47 Desmond 38;
+         # OH-01 Torchlight (R) about Oct 2, 400 LV, Landsman 45.8 Conroy 44.2, callthemap only; VT-AL Braun Research for Vermont
+         # Public Sep 10-21, 732 LV, Balint 46.9 Malloy 30.3.
+         # Oct 18 2026 8 PM sweep: PA-10 Susquehanna Polling & Research Oct 5-11, 300 LV, Stelson 49 Perry 46, released Oct 16,
+         # averaged evenly with the prior entry (46.5 to 44.8).
+         # Oct 17 2026 8 AM sweep: PA-01 Global Strategy Group, a Democratic firm with its client unnamed, Oct 1-8, 1,032 LV,
+         # Fitzpatrick 46 Harvie 46, moved 1.5 points against the Democrat as an internal and averaged evenly with the prior entry.
+         # Oct 17 2026 aggregator sweep, pollingsource and callthemap: NC-01 co/efficient (R) ending Oct 8, 623 LV, Buckhout 43
+         # Davis 42, and KY-06 Change Research for Kentuckians Not Corruption (D aligned) Sept 29-Oct 5, 524 LV, Dembo 47 Alvarado 38,
+         # each averaged evenly with the prior entry; NM-01 and NM-03 Research & Polling for the Albuquerque Journal Oct 1-9,
+         # 380 and 362 LV, Stansbury 53 Okpareke 35 and Leger Fernandez 53 Zamora 39, entered with the same 0.8 point pollster
+         # adjustment as NM-02 from that wave.
          # Oct 15 2026 8 PM sweep: RI-1 and RI-2 Emerson/WPRI Oct 8-11, NM-2 Research & Polling for the Albuquerque Journal Oct 1-9,
          # GA-3 VoteNexus for Keller (D) and GA-7 20/20 Insight for Kozycki (D), NE-2 National Public Affairs (R), and the SC-1
          # co/efficient duplicate dropped; /tmp/hpolls/build_1015.py.
@@ -608,58 +670,58 @@ POLLS = {
          # for Dunlap Sept 27-30, Dunlap 50 LePage 48; each blended against the prior entry as a 500 sample poll two weeks
          # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
          # 20 percent undecided or more.
-         "FL": {8: dict(d=43.5, r=49.5), 9: dict(d=39.5, r=42.5), 11: dict(d=41.9, r=42.1), 13: dict(d=44.0, r=47.1), 14: dict(d=45.5, r=38.5), 16: dict(d=39.0, r=43.0), 22: dict(d=47.7, r=47.9), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
-         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=40.5, r=47.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.7, r=44.4), 23: dict(d=40.8, r=46.7), 28: dict(d=43.8, r=36.4), 34: dict(d=43.8, r=42.0), 35: dict(d=42.5, r=46.5)},
-         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.3, r=46.0), 23: dict(d=32.8, r=54.2)},
-         "VA": {1: dict(d=48.1, r=46.9), 2: dict(d=45.9, r=43.8), 5: dict(d=44.2, r=49.6), 6: dict(d=29.9, r=58.1)},
-         "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=45.4, r=43.6)},
-         "PAG": {1: dict(d=44.1, r=48.5), 7: dict(d=45.0, r=41.3), 8: dict(d=46.4, r=45.2), 10: dict(d=46.5, r=44.8)},
-         "OH": {1: dict(d=47.8, r=42.2), 7: dict(d=46.7, r=41.0), 9: dict(d=46.3, r=49.2), 10: dict(d=39.5, r=48.9), 15: dict(d=41.3, r=45.5)},
-         "NC": {1: dict(d=46.9, r=41.5), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=45.5, r=45.5), 14: dict(d=40.0, r=48.0)},
-         "MI": {4: dict(d=46.7, r=46.2), 7: dict(d=47.7, r=47.3), 10: dict(d=43.5, r=46.3)},
+         "FL": {7: dict(d=43.5, r=46.5), 8: dict(d=43.5, r=49.5), 9: dict(d=41.0, r=44.0), 11: dict(d=41.9, r=42.1), 13: dict(d=44.75, r=47.3), 14: dict(d=46.75, r=40.75), 16: dict(d=39.0, r=43.0), 21: dict(d=36.5, r=50.5), 22: dict(d=47.7, r=47.9), 25: dict(d=44.5, r=45.5), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
+         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=40.5, r=47.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.9, r=44.2), 23: dict(d=42.65, r=47.1), 28: dict(d=48.2, r=36.0), 34: dict(d=46.9, r=42.5), 35: dict(d=46.56, r=47.56)},
+         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.695, r=46.095), 23: dict(d=32.8, r=54.2)},
+         "VA": {1: dict(d=46.8, r=47.2), 2: dict(d=45.9, r=43.8), 5: dict(d=44.2, r=49.6), 6: dict(d=30.2, r=57.8)},
+         "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=46.2, r=40.8)},
+         "PAG": {1: dict(d=44.3, r=48.0), 7: dict(d=45.0, r=41.3), 8: dict(d=49.2, r=46.6), 10: dict(d=47.75, r=45.4)},
+         "OH": {1: dict(d=46.885, r=42.615), 7: dict(d=46.7, r=41.0), 9: dict(d=46.3, r=49.2), 10: dict(d=42.5, r=47.2), 15: dict(d=43.9, r=46.0)},
+         "NC": {1: dict(d=44.5, r=42.3), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=50.75, r=44.25), 14: dict(d=40.0, r=48.0)},
+         "MI": {4: dict(d=46.7, r=46.2), 7: dict(d=50.35, r=46.15), 10: dict(d=43.5, r=46.3)},
          "GA": {3: dict(d=43.5, r=51.5), 7: dict(d=45.5, r=46.5)},   # Oct 15 8 PM sweep: GA-3 VoteNexus for Keller (D), GA-7 20/20 Insight for Kozycki (D), /tmp/hpolls/build_1015.py
-         "IL": {},
-         "NJ": {2: dict(d=39.3, r=47.7), 7: dict(d=46.8, r=42.3)},
-         "WA": {3: dict(d=44.7, r=46.6), 5: dict(d=47.2, r=52.8)},
-         "AZG": {1: dict(d=44.4, r=41.6), 2: dict(d=41.3, r=46.9), 6: dict(d=46.1, r=45.8)},
+         "IL": {4: dict(d=34.0, r=15.0)},
+         "NJ": {2: dict(d=38.9, r=49.6), 7: dict(d=46.8, r=42.3)},
+         "WA": {3: dict(d=44.85, r=45.3), 5: dict(d=47.2, r=52.8)},
+         "AZG": {1: dict(d=44.4, r=41.6), 2: dict(d=45.65, r=47.45), 6: dict(d=46.1, r=45.8)},
          "TN": {5: dict(d=39.2, r=48.2), 9: dict(d=42.5, r=49.5)},
          "MA": {},
-         "MO": {2: dict(d=41.7, r=43.3)},
+         "MO": {2: dict(d=45.425, r=45.575)},
          "MDG": {1: dict(d=39.2, r=51.8)},
-         "MN": {1: dict(d=45.7, r=45.3), 2: dict(d=50.2, r=40.4)},   # Oct 13: MN-1 SurveyUSA Oct 4-9, Johnson 46 Finstad 44, /tmp/hpolls/build_1013.py
+         "MN": {1: dict(d=43.6, r=44.9), 2: dict(d=50.2, r=40.4), 6: dict(d=37.5, r=52.5)},   # Oct 13: MN-1 SurveyUSA Oct 4-9, Johnson 46 Finstad 44, /tmp/hpolls/build_1013.py
          "WIG": {1: dict(d=46.4, r=49.2), 3: dict(d=48.4, r=47.7), 6: dict(d=39.2, r=60.8)},
-         "CO": {3: dict(d=43.5, r=47.5), 5: dict(d=42.5, r=46.5), 8: dict(d=47.5, r=46.5), 4: dict(d=38.5, r=46.5)},
-         "IN": {5: dict(d=44.5, r=49.5)},
+         "CO": {3: dict(d=44.5, r=47.5), 5: dict(d=43.5, r=46.0), 8: dict(d=47.5, r=46.5), 4: dict(d=38.5, r=46.5)},
+         "IN": {5: dict(d=45.0, r=49.5)},
          "OR": {},
-         "NVG": {2: dict(d=40.6, r=43.0)},
+         "NVG": {2: dict(d=41.55, r=45.25)},
          "UT": {1: dict(d=62.7, r=21.2), 2: dict(d=34.0, r=39.0), 3: dict(d=26.4, r=44.5), 4: dict(d=32.9, r=41.7)},
-         "AK": {1: dict(d=45.4, r=53.6)},
+         "AK": {1: dict(d=47.2, r=52.3)},
          "HIG": {},
          "ID": {},
          "WY": {},
-         "MT": {1: dict(d=43.5, r=44.4)},
+         "MT": {1: dict(d=46.625, r=45.85), 2: dict(d=26.0, r=48.0)},
          "ND": {},
-         "SD": {1: dict(d=43.0, r=47.0)},
-         "NE": {1: dict(d=45.3, r=45.9), 2: dict(d=49.1, r=38.9)},
+         "SD": {1: dict(d=37.5, r=53.5)},
+         "NE": {1: dict(d=44.4, r=46.7), 2: dict(d=49.1, r=38.9)},
          "KS": {},
          "OK": {5: dict(d=40.3, r=46.8)},
-         "NM": {2: dict(d=47.2, r=43.2)},
-         "AR": {2: dict(d=41.7, r=49.8)},
-         "IA": {1: dict(d=38.6, r=36.4), 2: dict(d=44.5, r=46.5), 3: dict(d=43.5, r=46.5)},
+         "NM": {1: dict(d=52.2, r=34.2), 2: dict(d=47.2, r=43.2), 3: dict(d=52.2, r=38.2)},
+         "AR": {2: dict(d=44.85, r=50.9)},
+         "IA": {1: dict(d=38.6, r=36.4), 2: dict(d=47.25, r=46.75), 3: dict(d=43.5, r=46.5)},
          "LA": {},
          "MS": {},
          "AL": {2: dict(d=44.6, r=47.8)},
-         "SC": {1: dict(d=42.4, r=44.9)},
-         "KY": {6: dict(d=43.7, r=41.5)},
+         "SC": {1: dict(d=44.83, r=45.33)},
+         "KY": {6: dict(d=44.45, r=41.55)},
          "WV": {},
          "CTG": {},
-         "RI": {1: dict(d=54.3, r=25.7), 2: dict(d=55.4, r=38.6)},   # Oct 15 8 PM sweep: Emerson/WPRI Oct 8-11
-         "VTG": {1: dict(d=63.5, r=27.7)},
-         "NH": {1: dict(d=46.1, r=41.9), 2: dict(d=53.0, r=34.6)},
+         "RI": {1: dict(d=53.2, r=29.0), 2: dict(d=53.7, r=38.8)},   # Oct 15 8 PM sweep: Emerson/WPRI Oct 8-11; Oct 20 8 PM: Salve Regina averaged in
+         "VTG": {1: dict(d=55.2, r=29.0)},
+         "NH": {1: dict(d=46.05, r=41.95), 2: dict(d=53.5, r=36.3)},
          # UNH Sept 17-21 2026: ME-01 Pingree 57 Russell 35, ME-02 Dunlap 51 LePage 45. ME-02 blends
          # the new reading at 0.6 against the prior entry of unknown vintage, because it is both the
          # newest and from the largest sample; ME-01 had no entry, so it takes the poll outright.
-         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.6, r=48.2)},
+         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.92, r=47.48)},
          "DE": {}}
 UNCONTESTED = {"FL": {10: "D"}, "TX": {}, "NYG": {}, "VA": {}, "CAG": {}, "PAG": {},
                "OH": {}, "NC": {}, "MI": {}, "GA": {}, "IL": {}, "NJ": {}, "WA": {},

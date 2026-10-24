@@ -501,8 +501,12 @@ def inc_strength(st, cfg, prim, party, side=None):
                              local=round(loc, 3), carry_scale=round(scale, 3), weak_primary_logit=round(weak, 4))
 FIN_K_MULT, FIN_BETA, FIN_CAP2, FIN_LOCK_MAX = (float(os.environ.get("FIN_K_MULT", "2.0")), float(os.environ.get("FIN_BETA", "0.6")),
                                                  float(os.environ.get("FIN_CAP2", "0.25")), float(os.environ.get("FIN_LOCK_MAX", "0.30")))
-_FREF_P = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fin_ref.json")
-FIN_REF = json.load(open(_FREF_P)) if os.path.exists(_FREF_P) else {}
+# Oct 24 2026 fix: fin_ref.json sits in finance/, not beside this file, so until today every race read no spending
+# reference, z came back None and the Oct 13 spending multiplier and lock never ran. FIN_REF_PATH names the file;
+# without it the model looks beside this file and then in finance/.
+_FREF_P = os.environ.get("FIN_REF_PATH") or next((p for p in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "fin_ref.json"),
+                                                              os.path.join(os.path.dirname(os.path.abspath(__file__)), "finance", "fin_ref.json")) if os.path.exists(p)), "")
+FIN_REF = json.load(open(_FREF_P)) if (_FREF_P and _FREF_P != "none" and os.path.exists(_FREF_P)) else {}
 FIN_LAST = {}
 def fin_spend_z(key):
     grp = "house" if "-" in key else "statewide"
@@ -663,6 +667,19 @@ AK_RCV = dict(to_R=0.503, to_D=0.288, exhaust=0.209)
 # Governor: the eliminated candidates are two Republicans, not a moderate Republican facing Sarah Palin, so more of their
 # ballots rank the remaining Republican. Central assumption, with the Senate transfers kept as the published sensitivity.
 AKG_RCV = dict(to_R=0.70, to_D=0.08, exhaust=0.22)
+
+def _rcv_fc_equiv(cfg, F):
+    """Oct 18 2026. In a ranked choice race read as a first choice split (rcv_fc), the polls are first choice, but the
+    fundamentals, census and seat history legs are two party shares, a head to head in which every Republican ballot counts
+    for the Republican: the same thing as the final round. Blending them in as if they were first choice and then running
+    the count forward added the Democrat's transfer gain a second time, which put the Alaska governor's race 6 points to
+    the left of every final round poll. Each two party leg is turned into the first choice share that produces it once
+    the eliminated Republicans' ballots transfer: F = (d + a f (1 - d)) / (1 - e f (1 - d)) solved for d."""
+    T = cfg.get("rcv_transfers", AK_RCV); f = float(cfg["rcv_fc"]); a, e = T["to_D"], T["exhaust"]
+    Fa = np.clip(np.asarray(F, float), 1e-4, 1 - 1e-4)
+    u = (1 - Fa) / (1 - a * f - Fa * e * f)
+    out = np.clip(1 - u, 1e-4, 1 - 1e-4)
+    return pd.Series(out, index=F.index) if isinstance(F, pd.Series) else out
 # Alaska statewide totals (Division of Elections certified): President 2016, 2020, 2024; Governor 2018; Senate 2022 first choice
 AK_TOTALS = dict(p16=318_608, p20=359_530, p24=338_177, h24=140_026, t24=184_458, g18=283_134, s22=261_705)
 
@@ -782,8 +799,9 @@ STATES = {
     "KSG": dict(name="Kansas", office="governor", D="Cindy Holscher", R="Ty Masterson", third=[("Other / write-in", "O", 1.0)], polls_csv="polls_ksg.csv", third_floor=0.01),
     "NEG": dict(name="Nebraska", office="governor", base="NE", D="Lynne Walz", R="Jim Pillen",
                 third=[("Brett Lindstrom", "AF", 1.03), ("Rick Beard", "LMN", 1.0)], polls_csv="polls_neg.csv"),
+    # Oct 24 2026, at the user's request: the race's first poll, Workbench Strategy (D) Oct 8-13, so it reads polls now
     "OKG": dict(name="Oklahoma", office="governor", D="Cyndi Munson", R="Mike Mazzei", third=[("Other", "O", 1.0)],
-                no_polls=dict(third=(31896 / 1153284 + 40833 / 1186385) / 2)),
+                polls_csv="polls_okg.csv", third_floor=0.01),
     "ALG": dict(name="Alabama", office="governor", D="Doug Jones", R="Tommy Tuberville", third=[("Other / write-in", "O", 1.0)], polls_csv="polls_alg.csv", third_floor=0.01),
     "SDG": dict(name="South Dakota", office="governor", D="Dan Ahlers", R="Larry Rhoden", third=[("Other", "O", 1.0)],
                 # Oct 13 2026: Lake Research (D) Aug 26-30, the only public general election poll
@@ -808,11 +826,19 @@ STATES = {
     # primary votes (Bronson 13,349 and Taylor 11,924 against Wilson 16,456)
     "AKG": dict(name="Alaska", office="governor", D="Jonathan Kreiss-Tomkins", R="Bernadette Wilson",
                 third=[("Dave Bronson", "R", 13.349), ("Treg Taylor", "R", 11.924)], rcv=True,
-                rcv_fc=(13349 + 11924) / (13349 + 11924 + 16456), rcv_transfers=AKG_RCV, trend_carry=0.0, base="AK",
+                # Oct 18 2026: the bloc split now comes from the four general election polls that publish every Republican's
+                # first choice, weighted by sample: Bronson and Taylor hold 49 percent of the Republican first choice vote
+                # (NYT/Siena 26 of 46, Alaska Survey Research 25 of 52, Cygnal 17 of 41, Fabrizio Ward/Impact 21 of 41),
+                # not the 61 percent of the primary, when far more Republicans were on the ballot
+                rcv_fc=0.49, rcv_transfers=AKG_RCV, trend_carry=0.0, base="AK",
                 # Sept 25 2026: the first two general election polls with the final field. The rcv_fc path reads the
                 # blend as the FIRST CHOICE split between Kreiss-Tomkins and the whole Republican bloc and runs the count
                 # forward itself, so each poll enters as that split: D is Kreiss-Tomkins, R is Wilson + Bronson + Taylor.
                 # Fabrizio Ward/Impact's own final round (55-45) is therefore not the number used; its first choice is.
+                # Oct 18 2026: Alaska Survey Research and NYT/Siena had been entered with their FINAL rounds, 54-46 and 52-48,
+                # as if they were first choice, which pushed the first choice blend to 53 percent and the final round to
+                # D+18 against final round polls of D+4 to D+10. Both now enter as first choice: ASR Kreiss-Tomkins 48,
+                # Wilson 27, Bronson 15, Taylor 10; NYT/Siena 40, 20, 15, 11 with 14 undecided.
                 polls_csv="polls_akg.csv"),
     "MEG": dict(name="Maine", office="governor", D="Hannah Pingree", R="Bobby Charles",
                 third=[("Rick Bennett", "I", 1.0)], polls_csv="polls_meg.csv"),
@@ -3971,7 +3997,8 @@ def run_state(st, model, shift, nat_turn_rate):
             GALLUP_AUDIT[st] = dict(before=_before, after=dict(polls=round(_wp, 4), seat=round(_wh, 4), approval=round(w_fund, 4), gallup=round(w_census, 4)))
             _sa.update(poll_weight_final=round(_wp, 4))
         w_hist = _wp
-        d2 = w_fund * m1 + w_census * m2 + _wp * m3 + _wh * m3h
+        m1c, m2c, m3hc = (_rcv_fc_equiv(cfg, m1), _rcv_fc_equiv(cfg, m2), _rcv_fc_equiv(cfg, m3h)) if cfg.get("rcv_fc") else (m1, m2, m3h)
+        d2 = w_fund * m1c + w_census * m2c + _wp * m3 + _wh * m3hc
         if POLL_SWING:
             _tw = np.asarray(turnout, float)
             def _zs(x):
@@ -3991,7 +4018,7 @@ def run_state(st, model, shift, nat_turn_rate):
             _sw = 0.5 * _zs(_el) + 0.5 * _zs(_vol)
             _mult = np.clip(1.0 + POLL_SWING_K * _sw, 0.6, 1.6); _mult = _mult / float((_mult * _tw).sum() / _tw.sum())
             _wpc = np.minimum(POLL_CAP, _wp * _mult); _rs = (1.0 - _wpc) / max(1.0 - _wp, 1e-9)
-            _d2s = (w_fund * _rs) * np.asarray(m1, float) + (w_census * _rs) * np.asarray(m2, float) + _wpc * np.asarray(m3, float) + (_wh * _rs) * np.asarray(m3h, float)
+            _d2s = (w_fund * _rs) * np.asarray(m1c, float) + (w_census * _rs) * np.asarray(m2c, float) + _wpc * np.asarray(m3, float) + (_wh * _rs) * np.asarray(m3hc, float)
             _lv_u = float((np.asarray(d2, float) * _tw).sum() / _tw.sum())
             lo_, hi_ = -0.5, 0.5
             for _ in range(60):
@@ -4013,7 +4040,7 @@ def run_state(st, model, shift, nat_turn_rate):
         if GALLUP_FULL and w_census < _GLW:
             _sc_g = (1.0 - _GLW) / max(w_fund + w_hist, 1e-9)
             w_fund, w_hist, w_census = w_fund * _sc_g, w_hist * _sc_g, _GLW
-        d2 = w_fund * m1 + w_census * m2 + w_hist * m3
+        d2 = w_fund * (_rcv_fc_equiv(cfg, m1) if cfg.get("rcv_fc") else m1) + w_census * (_rcv_fc_equiv(cfg, m2) if cfg.get("rcv_fc") else m2) + w_hist * m3
     if LOCAL_COND and not (LEG_INT and SEAT_HIST):
         _ls = LOCAL_W * LOCAL_SHIFT.reindex([str(f) for f in fl]).fillna(0.0).values.astype(float)
         _tw = np.asarray(turnout, float); _d2a = np.clip(np.asarray(d2, float), 1e-4, 1 - 1e-4)

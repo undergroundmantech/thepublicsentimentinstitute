@@ -62,7 +62,8 @@ def load(base):
     # out of the census cell fits, which are fitted on national generic ballot answers, and reach the model only through
     # five_state.py (group swing offsets, House state effects, parameters). FIVE_STATE_IN_FITS=1 puts them in the fits.
     if "source_dataset" in r:
-        _five = r.source_dataset.eq("onpoint_five_state_oct2026")
+        # Oct 24 2026: the On Point Iowa and Kansas respondents (source_dataset onpoint_ia_ks_oct2026) join them the same way
+        _five = r.source_dataset.astype(str).str.startswith("onpoint_")
         FIVE_ROWS.clear(); FIVE_ROWS.append(r[_five].copy())
         if True:   # every consumer keeps the national rows; FIVE_STATE_IN_FITS adds the five state rows in fit_frame
             _blank5 = {c for c in r.columns if r[c].isna().any()}
