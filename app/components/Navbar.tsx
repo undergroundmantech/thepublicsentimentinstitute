@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
+import LangPicker from "./LangPicker";
 import { MENU, type NavGroup } from "./navMenu";
 import { daysOut } from "@/app/lib/opp";
 
@@ -95,7 +96,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
       ) : null}
       <div className="top" ref={bar}>
         <div className="wrap">
-          <Link className="logo" href="/" aria-label="On Point Politics home"><Lockup height={40} /></Link>
+          <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={40} /></Link>
           <nav className="nav mmenu" aria-label="Primary">
             {MENU.map((g) => {
               const has = g.cols.length > 0, on = inGroup(g), op = menu === g.key;
@@ -138,6 +139,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
           </nav>
           <div className="right">
             <Link className="btn ghost search" href="/search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" /></svg>Search</Link>
+            <LangPicker />
             <ThemeToggle />
             <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
@@ -147,7 +149,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
       {open && (
         <div className="mnav" id="opp-mnav" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="mhead">
-            <Link className="logo" href="/" aria-label="On Point Politics home"><Lockup height={36} /></Link>
+            <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={36} /></Link>
             <button type="button" className="btn sm" onClick={() => setOpen(false)}>Close</button>
           </div>
           <nav aria-label="Menu" className="macc">
@@ -170,6 +172,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
             <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <Link className="btn" href="/contact">Contact</Link>
             <ThemeToggle className="btn" />
+            <LangPicker className="btn" inMenu />
           </div>
         </div>
       )}

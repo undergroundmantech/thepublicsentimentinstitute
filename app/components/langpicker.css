@@ -1,0 +1,25 @@
+/* The language picker in the masthead and the phone menu, and Google's translator kept out of sight */
+.langp { position: relative; display: inline-flex; }
+.opp .btn.icon.lang { width: auto; min-width: 38px; padding: 9px 10px; gap: 6px; }
+.langp .lc { font: 800 11px var(--font-m); letter-spacing: .06em; }
+.langp-pop { position: absolute; z-index: 1400; top: calc(100% + 8px); right: 0; width: min(440px, calc(100vw - 24px)); padding: 12px; border-radius: 16px;
+  background: rgba(14, 9, 26, .98); border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 30px 70px -24px #000; color: #f3eff8; animation: langp-in .18s ease-out; }
+@keyframes langp-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.langp-h { font: 800 10px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin: 2px 4px 10px; }
+.langp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; max-height: min(60vh, 460px); overflow: auto; }
+.langp-grid button { display: grid; gap: 1px; text-align: start; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; background: rgba(255, 255, 255, .04); color: #fff; cursor: pointer; font: inherit; }
+.langp-grid button b { font: 700 14px var(--font-b); } .langp-grid button span { font-size: 11px; color: #a79fbd; }
+.langp-grid button:hover { background: rgba(255, 255, 255, .09); }
+.langp-grid button.on { border-color: var(--gold); background: rgba(231, 179, 65, .14); }
+.langp-grid button:focus-visible, .langp > button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.langp-n { margin: 10px 4px 2px; font-size: 11.5px; line-height: 1.45; color: #a79fbd; }
+.langp.in-menu .langp-pop { position: fixed; top: auto; bottom: 16px; left: 12px; right: 12px; width: auto; }
+html[data-theme="light"] .langp-pop { background: rgba(255, 255, 255, .98); border-color: rgba(17, 0, 25, .12); color: var(--ink); box-shadow: 0 30px 70px -30px rgba(40, 20, 80, .45); }
+html[data-theme="light"] .langp-grid button { background: rgba(17, 0, 25, .04); color: var(--ink); } html[data-theme="light"] .langp-grid button span, html[data-theme="light"] .langp-n { color: #6b6384; }
+@media (max-width: 860px) { .opp .top .right .langp { display: none; } }
+
+/* Google's translator: its bar, tooltips and spinner stay hidden, and the page never shifts down for its bar */
+#opp-gt, .skiptranslate > iframe, iframe.skiptranslate, .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame, .goog-tooltip, .goog-te-spinner-pos, .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; visibility: hidden !important; }
+body { top: 0 !important; }
+.goog-text-highlight { background: none !important; box-shadow: none !important; }
+font[style*="vertical-align: inherit"] { vertical-align: baseline !important; }
