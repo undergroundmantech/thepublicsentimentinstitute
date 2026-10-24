@@ -1,0 +1,12 @@
+.alrt { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 22px; padding: 16px 18px; border-radius: 18px;
+  border: 1px solid rgba(231, 179, 65, .4); background: linear-gradient(110deg, rgba(231, 179, 65, .1), rgba(var(--line-rgb), .03)); }
+.alrt-t { display: grid; gap: 3px; flex: 1 1 320px; min-width: 0; }
+.alrt-t .eye { font: 800 10px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.alrt-t b { font: 800 18px var(--font-d); letter-spacing: -.01em; color: var(--hi); }
+.alrt-t p { margin: 0; font-size: 13px; color: var(--ink2); line-height: 1.45; }
+.alrt-f { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 340px; }
+.alrt-f input { flex: 1 1 200px; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: rgba(var(--line-rgb), .06); color: var(--hi); font: 600 14px var(--font-b); }
+.alrt-f input:focus-visible, .alrt-f button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.alrt-f button:disabled { opacity: .55; cursor: not-allowed; }
+.alrt-ok { margin: 0; font-size: 13.5px; color: var(--hi); }
+.alrt .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

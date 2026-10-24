@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     "/forecast": ["./public/forecast/model.json", "./public/forecast/downballot.json", "./public/forecast/statehouse_hub.json", "./public/forecast/measures_hub.json", "./public/forecast/measures.json"],
     "/on-point-polling": ["./public/forecast/model.json"],
     "/on-point-polling/polls": ["./public/forecast/model.json"],
-    "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
+    "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json", "./public/results/2026/index.json"],
   },
   // Force the flag into the bundler's define map even when the env var is
   // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which

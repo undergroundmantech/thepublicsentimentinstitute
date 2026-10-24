@@ -16,6 +16,7 @@ import { getStatehouse, slHref } from "@/app/forecast/legislatures/data";
 import { bmHref, getMeasures } from "@/app/forecast/measures/data";
 import { ELECTION_DATES, RACE_REGISTRY } from "@/app/results/_data/raceRegistry";
 import { DEDICATED_BOARDS, RACE_PAGES } from "@/app/results/archive/nightBoards";
+import { STN as STATE_NAMES } from "@/app/results/2026/live";
 
 type Entry = MetadataRoute.Sitemap[number];
 const u = (path: string, lastModified: string | Date, changeFrequency: Entry["changeFrequency"], priority: number): Entry => ({
@@ -108,6 +109,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // election nights already counted, and the two races with pages of their own
   for (const date of ELECTION_DATES) add(u(DEDICATED_BOARDS[date] ?? `/results/archive/${date}`, date, "yearly", 0.4));
   for (const r of RACE_REGISTRY) if (RACE_PAGES.has(r.slug)) add(u(`/results/${r.date}/${r.slug}`, r.date, "yearly", 0.5));
+
+  // November 3, 2026: a results page for every state and every federal, statewide and ballot race, listed now so
+  // search engines have them before election night
+  try {
+    const nov = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/results/2026/index.json"), "utf8")).races as { id: string; k: string; st: string }[];
+    for (const st of [...new Set(nov.map((r) => r.st))]) { const n = STATE_NAMES[st]; if (n) add(u(`/results/2026/${n.toLowerCase().replace(/[^a-z]+/g, "-")}`, today, "hourly", 0.9)); }
+    for (const r of nov) if (["sen", "gov", "house", "state", "measure"].includes(r.k)) add(u(`/results/2026/${encodeURIComponent(r.id)}`, today, "daily", r.k === "sen" || r.k === "gov" ? 0.8 : 0.6));
+  } catch { /* no results index on this build */ }
 
   return out;
 }

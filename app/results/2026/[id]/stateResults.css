@@ -1,0 +1,37 @@
+/* A state's election night results page, and the plain text block under each race desk */
+.srs { max-width: 1180px; margin: 0 auto; padding: 18px clamp(16px, 2.6vw, 36px) 40px; display: grid; gap: 22px; }
+.srs-hero { display: grid; gap: 10px; }
+.srs-hero .eye { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; }
+.srs-hero h1 { margin: 0; font: 800 clamp(30px, 4.4vw, 56px)/1.02 var(--font-d); letter-spacing: -.035em; color: var(--hi); text-wrap: balance; }
+.srs-hero .lede, .srs-about p { margin: 0; max-width: 78ch; font-size: 15.5px; line-height: 1.6; color: var(--ink2); }
+.srs-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.srs-groups { display: grid; gap: 18px; }
+.srs-g { border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; background: linear-gradient(170deg, rgba(var(--line-rgb), .05), rgba(var(--line-rgb), .015)); }
+.srs-g h2 { margin: 0 0 8px; font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.srs-g h2 em { font-style: normal; color: var(--mute); letter-spacing: 0; margin-left: 4px; }
+.srs-g ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.srs-g li { display: grid; grid-template-columns: minmax(0, 12em) minmax(0, 1fr) auto auto; gap: 12px; align-items: baseline; padding: 9px 2px; border-top: 1px solid rgba(var(--line-rgb), .08); font-size: 14px; }
+.srs-g li:first-child { border-top: 0; }
+.srs-g .nm { font-weight: 700; color: var(--hi); text-decoration: none; }
+.srs-g .nm:hover { text-decoration: underline; }
+.srs-g .who { color: var(--ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srs-g .ex, .srs-g .lv { display: grid; justify-items: end; font: 800 13.5px var(--font-m); font-variant-numeric: tabular-nums; min-width: 6.5em; }
+.srs-g .ex { color: #8a83a3; font-weight: 600; } .srs-g small { font: 600 10.5px var(--font-m); color: var(--mute); letter-spacing: .04em; }
+.srs-g .lv.d { color: #7fa6ff; } .srs-g .lv.r { color: #ff7f95; } .srs-g .lv.i { color: #c9a8ff; }
+.srs-g .fc { font-size: 12px; color: var(--mute); }
+.srs-more { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--gold); }
+.srs-live { margin: 0; font-size: 12.5px; color: var(--mute); }
+.srs-faq { display: grid; gap: 6px; }
+.srs-faq h2, .srs-states h2, .srs-about h2 { margin: 0 0 6px; font: 800 clamp(20px, 2vw, 26px) var(--font-d); letter-spacing: -.02em; color: var(--hi); }
+.srs-faq details { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: rgba(var(--line-rgb), .03); }
+.srs-faq summary { cursor: pointer; font-weight: 700; color: var(--hi); }
+.srs-faq p { margin: 8px 0 2px; color: var(--ink2); line-height: 1.55; }
+.srs-states > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.srs-states a { font-size: 13px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink2); text-decoration: none; }
+.srs-states a:hover, .srs-states a[aria-current="page"] { border-color: var(--gold); color: var(--hi); }
+.srs-about { max-width: 1180px; margin: 10px auto 40px; padding: 18px clamp(16px, 2.6vw, 36px); display: grid; gap: 10px; }
+@media (max-width: 720px) {
+  .srs-g li { grid-template-columns: minmax(0, 1fr) auto; }
+  .srs-g .who { grid-column: 1 / -1; grid-row: 2; white-space: normal; font-size: 13px; }
+  .srs-g .fc { display: none; }
+}

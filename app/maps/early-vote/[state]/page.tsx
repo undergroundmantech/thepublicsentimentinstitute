@@ -10,6 +10,7 @@ import { raceHref } from "@/app/lib/opp";
 import { STATE_NAME } from "../lib";
 import { getEarlyVote, commas, longDate, pct, slugOf, type EarlyVote } from "../server";
 import { stateFaq, faqLd } from "../Summary";
+import AlertSignup from "@/app/components/AlertSignup";
 
 // The same hourly rebuild as the national tracker. Reporting states are built ahead; any other state is built
 // the first time it is asked for, once it reports.
@@ -81,7 +82,10 @@ export default async function StateEarlyVotePage({ params }: Props) {
           <EarlyVoteConsole data={buildEvConsole(ev)} initial={s ? f.st : undefined} faq={s ? stateFaq(ev, s) : undefined}
             lede={s ? <p>As of {longDate(ev.snapshot)}, {commas(s.total)} ballots have been cast in {f.name}: {commas(s.mail)} by mail and {commas(s.inperson)} in person.
               {s.partyShare > 0.5 ? ` Registered Democrats cast ${pct(s.dem, s.total)} of them and registered Republicans ${pct(s.rep, s.total)}.` : ` ${f.name} does not publish the party of its early voters.`}{" "}
-              See the <Link href={fc.href}>{fc.label}</Link>.</p> : <p>{f.name} has not reported any 2026 early ballots yet. The count appears here the day it does.</p>} />
+              See the <Link href={fc.href}>{fc.label}</Link>, and on election night the live <Link href={`/results/2026/${state}`}>{f.name} election results</Link>.</p> : <p>{f.name} has not reported any 2026 early ballots yet. The count appears here the day it does.</p>} />
+          <div style={{ maxWidth: 1180, margin: "18px auto 0", padding: "0 clamp(16px, 2.6vw, 36px)" }}>
+            <AlertSignup from="early-vote" title={`${f.name} early vote and results by email`} note="The On Point newsletter: the early vote as it comes in, the final forecast and the results on election night. Free, and you can leave any time." />
+          </div>
         </div>
       ) : null}
     </>

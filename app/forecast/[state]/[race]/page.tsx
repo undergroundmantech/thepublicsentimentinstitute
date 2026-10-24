@@ -366,7 +366,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
                 {r.ev.source === "early vote"
                   ? `Read from ${Number(r.ev.ballots ?? 0).toLocaleString("en-US")} ballots cast so far in ${r.state}, against the party mix the forecast expected of them, with similar states and primary turnout.`
                   : `${r.state} has no early vote reported yet, so its turnout correction comes from similar states that do and from its primary turnout.`}{" "}
-                <Link href="/maps/early-vote" style={{ textDecoration: "underline" }}>Early vote tracker</Link>
+                <Link href={`/maps/early-vote/${(STATE_NAME[r.st] ?? r.st).toLowerCase().replace(/[^a-z]+/g, "-")}`} style={{ textDecoration: "underline" }}>{STATE_NAME[r.st] ?? r.st} early vote</Link>{" · "}
+                <Link href={`/results/2026/${(STATE_NAME[r.st] ?? r.st).toLowerCase().replace(/[^a-z]+/g, "-")}`} style={{ textDecoration: "underline" }}>{STATE_NAME[r.st] ?? r.st} results on election night</Link>
               </p>
             ) : null}
           </div>
