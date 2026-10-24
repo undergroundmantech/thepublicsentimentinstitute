@@ -5,7 +5,7 @@
 import { SITE_V2, SHOW_FORECAST, SHOW_SITUATION_ROOM } from "./flags";
 
 // Bump on each release so a change in behavior can be read against the build that shipped it.
-export const RELEASE = "2026-10-23g";
+export const RELEASE = "2026-10-23h";
 
 export const FLAG_VALUES = {
   "site-v2": SITE_V2,

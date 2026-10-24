@@ -1,6 +1,6 @@
 {
  "date": "2026-10-23",
- "statewide_run": "poll sweep 2026-10-23: S1023PM against S1023AM, change applied to 2026-10-23",
+ "statewide_run": "poll sweep 2026-10-23: S1023MN against S1023PM, change applied to 2026-10-23",
  "house_run": "S1021ALL full House rerun after the gap audit, applied against S1019FX with S1020PM for AK, TX and RI and S1021AM for SD, FL and OH",
  "n_sims": 2000,
  "chambers": {

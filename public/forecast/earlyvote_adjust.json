@@ -708,20 +708,20 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.04,
-   "dem_control_before": 0.881,
+   "seat_change": 0.0,
+   "dem_control_before": 0.8769,
    "dem_control": 0.8769,
    "dem_seats": 28.27
   },
   "senate": {
-   "seat_change": -0.12,
-   "dem_control_before": 0.8202,
+   "seat_change": -0.0,
+   "dem_control_before": 0.809,
    "dem_control": 0.809,
    "dem_seats": 53.15
   },
   "house": {
-   "seat_change": -0.26,
-   "dem_control_before": 0.9213,
+   "seat_change": -0.0,
+   "dem_control_before": 0.9187,
    "dem_control": 0.9187,
    "dem_seats": 244.25
   }

@@ -386,10 +386,12 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             if lean is None:
                 # no lean at all: a seat that was uncontested and unprinted; it stays with its last winner
                 party = (last["won"][0] if last else None)
+                filed = status
                 status = f"uncontested, last held by {party}" if party else "no data"
                 if not party: party = "D" if P24[st] > 0.5 else "R"
-                if status == "no Democrat filed": party = "R"
-                elif status == "no Republican filed": party = "D"
+                # Oct 23 2026: a seat only one party filed for goes to that party, whatever the state leans
+                if filed == "no Democrat filed": party = "R"; status = filed
+                elif filed == "no Republican filed": party = "D"; status = filed
                 rows.append(dict(d=d, seats=seats, lean=None, leanSrc=None, last=None, L=None, status=status, hold=party, winner=winner, info=info))
                 continue
             L = lean + delta + K_CAND * cand
