@@ -180,7 +180,7 @@
    "ballots": 187052,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.89,
+   "comp": -1.92,
    "level": -0.05
   },
   "ID": {
@@ -234,7 +234,7 @@
    "ballots": 130330,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 3.22,
+   "comp": 3.28,
    "level": -0.0
   },
   "KY": {
@@ -708,22 +708,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.01,
-   "dem_control_before": 0.8453,
-   "dem_control": 0.8443,
-   "dem_seats": 27.97
+   "seat_change": 0.0,
+   "dem_control_before": 0.8447,
+   "dem_control": 0.8449,
+   "dem_seats": 27.98
   },
   "senate": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.7398,
-   "dem_control": 0.7394,
-   "dem_seats": 52.42
+   "seat_change": 0.0,
+   "dem_control_before": 0.7405,
+   "dem_control": 0.7407,
+   "dem_seats": 52.43
   },
   "house": {
-   "seat_change": -0.01,
-   "dem_control_before": 0.93,
-   "dem_control": 0.9299,
-   "dem_seats": 245.43
+   "seat_change": 0.0,
+   "dem_control_before": 0.9298,
+   "dem_control": 0.9298,
+   "dem_seats": 245.41
   }
  }
 }

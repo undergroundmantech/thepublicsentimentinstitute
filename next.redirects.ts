@@ -11,6 +11,9 @@ export const redirects: Redirect[] = [
   p("/early-voting", "/maps/early-vote"),
   p("/early-vote-tracker", "/maps/early-vote"),
   p("/early-vote/:state", "/maps/early-vote/:state"),
+  // Oct 24 2026: Indiana's comptroller race was listed twice, as auditor and as comptroller; one page now
+  p("/forecast/statewide/in/comptroller", "/forecast/statewide/in/auditor"),
+  p("/results/2026/comp-IN", "/results/2026/aud-IN"),
   // Oct 23 2026: retired and unfinished pages fold into the pages that replaced them
   p("/on-point-polling/situation-room", "/results/monitor", false),
   p("/results/forecast", "/forecast", false),

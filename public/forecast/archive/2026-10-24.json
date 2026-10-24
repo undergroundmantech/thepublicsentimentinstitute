@@ -1,18 +1,18 @@
 {
  "date": "2026-10-24",
- "statewide_run": "S1024DB full rerun of every race: On Point Iowa and Kansas respondents added to the unified dataset and the census fits, finance refreshed to the watchdog's Oct 23 outside money, spending reference fixed; change applied against S1024HD and earlier runs",
- "house_run": "S1024DB full House rerun, same changes plus the Quantus OH-01 poll, applied against HBASE1024HD",
+ "statewide_run": "S1024DB full rerun of every race with the Iowa and Kansas respondents, refreshed outside money and the spending reference fixed; then S1024WT for IA, IAG, KS and KSG with the Iowa and Kansas respondents reweighted by On Point's own desk code",
+ "house_run": "S1024DB full House rerun applied against HBASE1024HD, then S1024WT for Iowa and Kansas",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 73.9,
+   "d_control": 74.1,
    "d_seats_median": 53.0,
    "p10": 48.0,
    "p90": 56.0,
-   "d_control_without_osborn": 70.4
+   "d_control_without_osborn": 70.6
   },
   "governors": {
-   "d_majority": 84.4,
+   "d_majority": 84.5,
    "d_median": 28.0,
    "p10": 25.0,
    "p90": 31.0
@@ -704,10 +704,10 @@
   "IA": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": -0.58,
-   "win_d": 43.78,
-   "p10": -7.15,
-   "p90": 6.55,
+   "margin": -0.5,
+   "win_d": 44.39,
+   "p10": -7.07,
+   "p90": 6.63,
    "deterministic_margin": 1.623670307677294,
    "n_polls": 36,
    "poll_house_index": 12.0,
@@ -749,10 +749,10 @@
   "IAG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 9.66,
-   "win_d": 96.71,
-   "p10": 2.64,
-   "p90": 16.84,
+   "margin": 9.89,
+   "win_d": 97.05,
+   "p10": 2.87,
+   "p90": 17.07,
    "deterministic_margin": 11.016310546284018,
    "n_polls": 21,
    "poll_house_index": 9.5,
@@ -942,10 +942,10 @@
   "KS": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 1.5,
-   "win_d": 58.61,
-   "p10": -6.03,
-   "p90": 9.18,
+   "margin": 1.61,
+   "win_d": 59.45,
+   "p10": -5.92,
+   "p90": 9.29,
    "deterministic_margin": -1.8461809590613854,
    "n_polls": 15,
    "poll_house_index": 5.0,
@@ -987,10 +987,10 @@
   "KSG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 2.51,
-   "win_d": 65.09,
-   "p10": -5.88,
-   "p90": 10.69,
+   "margin": 2.6,
+   "win_d": 65.62,
+   "p10": -5.79,
+   "p90": 10.78,
    "deterministic_margin": 0.41452200051620025,
    "n_polls": 8,
    "poll_house_index": 4.0,
