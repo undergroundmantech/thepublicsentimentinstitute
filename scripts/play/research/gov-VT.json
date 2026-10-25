@@ -1,0 +1,66 @@
+{
+  "id": "gov-VT",
+  "checked": "2026-10-25",
+  "summary": "Five term Republican Phil Scott led Democrat Amanda Janoo 44 to 34 among likely voters in a late September Vermont Public poll, with his approval down to 45 percent. Seven Days reports Janoo has outraised Scott while a Republican Governors Association funded super PAC runs ads against her, and the debates have focused on affordability, taxes, schools and health care.",
+  "issues": [
+    {"issue": "Affordability and property taxes", "why": "Both candidates call cost of living the top issue, with Scott arguing education spending must be fixed before property tax cuts.", "src": "https://www.wamc.org/news/2026-10-22/vermont-gubernatorial-candidates-face-off-in-debate"},
+    {"issue": "Taxing high earners", "why": "Janoo proposes income surcharges above $250,000 and $500,000, while Scott says Vermont's tax burden is already too high.", "src": "https://www.vermontpublic.org/show/vermont-edition/2026-10-20/vermont-publics-2026-governor-debate"},
+    {"issue": "School funding overhaul", "why": "Scott's foundation formula would shift spending control toward the state, and polling shows strong opposition to losing local control.", "src": "https://www.vermontpublic.org/local-news/2026-09-28/poll-shows-amanda-janoo-closing-on-phil-scott-governors-race"},
+    {"issue": "Health care", "why": "Janoo backs universal primary and preventive care, while Scott points to the failed Shumlin era single payer effort and prefers Affordable Care Act tools.", "src": "https://www.wamc.org/news/2026-10-22/vermont-gubernatorial-candidates-face-off-in-debate"},
+    {"issue": "Data centers and energy", "why": "Janoo cites Scott's veto of a bill to restrict data center construction, and the two split on small nuclear power.", "src": "https://www.vermontpublic.org/local-news/2026-09-28/poll-shows-amanda-janoo-closing-on-phil-scott-governors-race"}
+  ],
+  "storylines": [
+    {"title": "First debate on Vermont Public", "date": "2026-10-21", "what": "Scott pressed Janoo on her talk of economic decline, and Janoo asked Scott to condemn outside spending on negative ads.", "helps": "mixed", "kind": "debate", "src": "https://www.wamc.org/news/2026-10-22/vermont-gubernatorial-candidates-face-off-in-debate"},
+    {"title": "Janoo outraises Scott again", "date": "2026-10-16", "what": "Janoo reported $888,000 raised in total, mostly from small donors, compared with $590,000 for Scott.", "helps": "D", "kind": "local", "src": "https://www.sevendaysvt.com/news/janoo-again-leads-gov-scott-in-fundraising-as-campaign-hits-home-stretch/"},
+    {"title": "Sanders endorses Janoo", "date": "2026-10-14", "what": "Sen. Bernie Sanders backed Janoo in a video message as ballots were mailed, joining Sen. Peter Welch and Rep. Becca Balint.", "helps": "D", "kind": "endorsement", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"},
+    {"title": "RGA backed PAC hits Janoo", "date": "2026-10-12", "what": "A Stronger Vermont, funded with $400,000 from the Republican Governors Association, began ads calling Janoo's agenda too far left even for fellow Democrats.", "helps": "R", "kind": "ad", "src": "https://www.vermontpublic.org/local-news/2026-10-12/pro-phil-scott-super-pac-launches-ad-blitz-targeting-amanda-janoo"},
+    {"title": "Scott keeps distance from Trump", "date": "2026-10-14", "what": "Scott has spoken out against the Trump administration and says he voted for Democrats in the last two presidential races, keeping his crossover appeal.", "helps": "R", "kind": "national", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"},
+    {"title": "Poll shows race narrowing", "date": "2026-09-28", "what": "A Vermont Public poll found Scott ahead by 10 points but his approval down from 60 to 45 percent since 2022.", "helps": "mixed", "kind": "local", "src": "https://www.vermontpublic.org/local-news/2026-09-28/poll-shows-amanda-janoo-closing-on-phil-scott-governors-race"}
+  ],
+  "events": [
+    {"title": "Tax the top earners", "prompt": "A plan to add income surcharges on households earning over $250,000 and $500,000 to fund property tax relief is on the table. Where does the campaign stand?", "issue": "econ", "src": "https://www.vermontpublic.org/show/vermont-edition/2026-10-20/vermont-publics-2026-governor-debate",
+     "opts": [
+       {"label": "Surcharge the wealthy", "say": "Back the surcharges and second home taxes and pledge no increase for working families.", "pos": -0.8, "trump": null, "tone": "fiery"},
+       {"label": "Targeted relief", "say": "Expand the earned income credit and Social Security exemption without raising rates.", "pos": 0.2, "trump": null, "tone": "calm"},
+       {"label": "No new taxes", "say": "Say Vermont is already overtaxed and cut spending before any new revenue.", "pos": 0.8, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Outside money ads", "prompt": "A super PAC funded by the Republican Governors Association is spending heavily on TV ads in the governor's race, and Democrats want the incumbent to condemn it. How does the campaign respond?", "issue": "corruption", "src": "https://www.vermontpublic.org/local-news/2026-10-12/pro-phil-scott-super-pac-launches-ad-blitz-targeting-amanda-janoo",
+     "opts": [
+       {"label": "Condemn dark money", "say": "Denounce the outside spending and name its billionaire donors.", "pos": -0.6, "trump": -0.4, "tone": "fiery"},
+       {"label": "Ask all to stay out", "say": "Say every outside group should stay out but note no candidate can stop them.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Defend the message", "say": "Argue the ads simply quote Democrats and highlight real policy differences.", "pos": 0.6, "trump": null, "tone": "calm"}
+     ]},
+    {"title": "Universal primary care", "prompt": "One candidate proposes state paid universal primary and preventive care, and the other points to the collapse of the Shumlin single payer effort. What is the campaign's health care pitch?", "issue": "health", "src": "https://www.wamc.org/news/2026-10-22/vermont-gubernatorial-candidates-face-off-in-debate",
+     "opts": [
+       {"label": "Universal primary care", "say": "Guarantee state paid primary and preventive care as a first step to universal coverage.", "pos": -0.9, "trump": null, "tone": "fiery"},
+       {"label": "Public option study", "say": "Consider a public option and use federal tools to lower premiums.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "No state takeover", "say": "Say Vermont cannot afford a state run system and focus on cutting costs.", "pos": 0.7, "trump": null, "tone": "calm"}
+     ]},
+    {"title": "School district control", "prompt": "A school funding overhaul would shift spending decisions toward the state, but polls show most Vermonters want local control. How does the campaign handle education reform?", "issue": "other", "src": "https://www.vermontpublic.org/local-news/2026-09-28/poll-shows-amanda-janoo-closing-on-phil-scott-governors-race",
+     "opts": [
+       {"label": "Community schools", "say": "Keep local boards in charge and invest in community schools with property tax reform.", "pos": -0.6, "trump": null, "tone": "calm"},
+       {"label": "Slow the overhaul", "say": "Pause consolidation and seek a compromise with the Legislature.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "State foundation formula", "say": "Push the state formula to rein in costs as enrollment falls.", "pos": 0.6, "trump": null, "tone": "fiery"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-21", "where": "Vermont Public", "src": "https://www.wamc.org/news/2026-10-22/vermont-gubernatorial-candidates-face-off-in-debate"},
+    {"date": "2026-10-22", "where": "Vermont, televised", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"},
+    {"date": "2026-10-28", "where": "Vermont, televised", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"}
+  ],
+  "endorsements": [
+    {"who": "Bernie Sanders", "for": "D", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"},
+    {"who": "Peter Welch", "for": "D", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"},
+    {"who": "Becca Balint", "for": "D", "src": "https://www.sevendaysvt.com/news/can-amanda-janoo-pull-off-an-upset-in-the-race-for-governor/"}
+  ],
+  "ads": [
+    {"by": "A Stronger Vermont, RGA funded", "for": "R", "theme": "TV and online ads cast Janoo as far left, quoting a primary rival calling her platform magical thinking.", "src": "https://www.vermontpublic.org/local-news/2026-10-12/pro-phil-scott-super-pac-launches-ad-blitz-targeting-amanda-janoo"}
+  ],
+  "regions": [
+    {"name": "Chittenden County and Burlington", "counties": ["Chittenden"], "note": "The state's population center and Janoo's strongest area, with many college educated voters."},
+    {"name": "Champlain Valley and northwest", "counties": ["Addison", "Franklin", "Grand Isle"], "note": "A mix of Democratic leaning Middlebury and more conservative farm country near the Canadian border."},
+    {"name": "Central Vermont", "counties": ["Washington", "Lamoille", "Orange"], "note": "Scott's home turf around Barre and Berlin, where the poll found him leading."},
+    {"name": "Northeast Kingdom", "counties": ["Orleans", "Essex", "Caledonia"], "note": "The most rural and conservative corner of the state, where Janoo says voters feel unheard."},
+    {"name": "Southern Vermont", "counties": ["Windham", "Windsor", "Bennington", "Rutland"], "note": "Progressive Brattleboro and the Upper Valley contrast with more Republican Rutland County."}
+  ]
+}

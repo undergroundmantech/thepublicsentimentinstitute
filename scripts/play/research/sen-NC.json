@@ -1,0 +1,62 @@
+{
+ "id": "sen-NC",
+ "checked": "2026-10-25",
+ "summary": "Former Democratic Gov. Roy Cooper leads former RNC chair Michael Whatley 54 to 40 in an Oct. 7 to 11 WSOC and WRAL SurveyUSA poll, and GOP groups including the Senate Leadership Fund have paused ads while Whatley's campaign went dark on TV for a stretch, per WSOC and the Daily Wire. The race is about costs, tariffs and health care on Cooper's side and crime, taxes and Cooper's record as governor on Whatley's, per ABC11 and Spectrum News.",
+ "issues": [
+  {"issue": "Cost of living and tariffs", "why": "Cooper says Congress should reclaim power over tariffs that hurt consumers, while Whatley promises lower taxes and higher take home pay.", "src": "https://abc11.com/post/cooper-whatley-meet-voters-discuss-affordability-public-safety/19679596/"},
+  {"issue": "Crime and public safety", "why": "Whatley attacks a 2021 COVID era settlement that led to early prison releases, and Cooper cites his record prosecuting criminals as attorney general.", "src": "https://www.wspa.com/news/politics/elections/whatley-cooper-clash-in-dueling-campaign-stops-on-crime-cost-of-living-in-central-nc/amp/"},
+  {"issue": "Health care costs", "why": "Cooper says the One Big Beautiful Bill Act Whatley backed cut ACA subsidies, while Whatley blames Cooper for rising premiums and rural closures.", "src": "https://spectrumlocalnews.com/nc/charlotte/news/2026/09/11/nc-senate-race-cooper-whatley-"},
+  {"issue": "Hurricane Helene recovery", "why": "Whatley served as Trump's recovery czar for western North Carolina, and Cooper's campaign calls his tenure a failure while Whatley's side cites billions in federal aid.", "src": "https://www.theassemblync.com/news/politics/elections/michael-whatley-helene-czar-senate-2026/"},
+  {"issue": "Energy and utility rates", "why": "Cooper opposes Duke Energy rate hikes and says Whatley lobbied for utilities, while Whatley backs gas and nuclear and faults Cooper for the Atlantic Coast Pipeline.", "src": "https://abc11.com/post/cooper-whatley-meet-voters-discuss-affordability-public-safety/19679596/"}
+ ],
+ "storylines": [
+  {"title": "Whatley campaign goes dark on TV", "date": "2026-10-15", "what": "Whatley's last broadcast ad aired Oct. 7 and his campaign had no future TV reservations, though it called the pause temporary, while Cooper's side held about a four to one booking edge.", "helps": "D", "kind": "ad", "src": "https://www.dailywire.com/news/gop-senate-campaign-goes-dark-during-home-stretch"},
+  {"title": "Poll shows Cooper up 14", "date": "2026-10-13", "what": "A WSOC and WRAL SurveyUSA poll had Cooper at 54 percent and Whatley at 40, though a local analyst said he expects the final margin to be closer.", "helps": "D", "kind": "local", "src": "https://www.wsoctv.com/news/local/roy-cooper-leads-michael-whatley-wsocwral-poll/2X632IFVOFC3XCC2KKQSVURQGE/"},
+  {"title": "Whatley calls poll trash", "date": "2026-09-28", "what": "Whatley dismissed a poll showing Cooper up 15, said other surveys show a tight race, and said he has visited all 100 counties.", "helps": "R", "kind": "local", "src": "https://www.wfae.org/2026-09-28/whatley-blasts-trash-poll-for-showing-big-cooper-lead-in-u-s-senate-race"},
+  {"title": "MAGA Inc offshoot spends 8 million attacking Cooper", "date": "2026-09-28", "what": "The No Going Back PAC, tied to Trump's super PAC, spent close to 8 million dollars in early September mostly on TV ads attacking Cooper.", "helps": "R", "kind": "ad", "src": "https://www.wfae.org/2026-09-28/whatley-blasts-trash-poll-for-showing-big-cooper-lead-in-u-s-senate-race"},
+  {"title": "Health care clash", "date": "2026-09-11", "what": "Whatley said premiums rose and rural facilities closed under Cooper, and Cooper said Whatley backed a bill that stripped ACA subsidies from North Carolinians.", "helps": "mixed", "kind": "attack", "src": "https://spectrumlocalnews.com/nc/charlotte/news/2026/09/11/nc-senate-race-cooper-whatley-"},
+  {"title": "No debate agreed", "date": "2026-09-10", "what": "Spectrum News, the state broadcasters association and WUNC invited both candidates to debate, but neither had accepted.", "helps": "mixed", "kind": "debate", "src": "https://www.wunc.org/politics/2026-09-10/nc-us-senate-race-debates-local-interviews-whatley-cooper"},
+  {"title": "Dueling stops on crime and costs", "date": "2026-08-14", "what": "Whatley, flanked by law enforcement, hit Cooper over COVID era prison releases, while Cooper said Trump has not delivered on costs and touted his prosecutor record.", "helps": "mixed", "kind": "rally", "src": "https://www.wspa.com/news/politics/elections/whatley-cooper-clash-in-dueling-campaign-stops-on-crime-cost-of-living-in-central-nc/amp/"}
+ ],
+ "events": [
+  {"title": "Prison release attack", "prompt": "Ads say thousands of inmates were released early under a COVID era settlement while Cooper was governor. How does your campaign handle crime?", "issue": "other", "src": "https://www.wspa.com/news/politics/elections/whatley-cooper-clash-in-dueling-campaign-stops-on-crime-cost-of-living-in-central-nc/amp/",
+   "opts": [
+    {"label": "Reform and prevention", "say": "Defend criminal justice reform and invest in prevention and reentry programs.", "pos": -0.7, "trump": -0.5, "tone": "calm"},
+    {"label": "Cite the prosecutor record", "say": "Point to years prosecuting violent criminals and passing tougher bail and gang laws.", "pos": 0.1, "trump": -0.2, "tone": "calm"},
+    {"label": "Back the blue hard", "say": "Stand with sheriffs and say we need to enforce the law, not reimagine it.", "pos": 0.8, "trump": 0.6, "tone": "fiery"}
+   ]},
+  {"title": "Tariffs and prices", "prompt": "Voters say prices for housing, health care and essentials are squeezing them, and tariffs are a live issue. What is your cost of living message?", "issue": "econ", "src": "https://abc11.com/post/cooper-whatley-meet-voters-discuss-affordability-public-safety/19679596/",
+   "opts": [
+    {"label": "Rein in tariffs", "say": "Say Congress should take back tariff power and block utility rate hikes.", "pos": -0.6, "trump": -0.8, "tone": "fiery"},
+    {"label": "Make stuff cost less", "say": "Run a pocketbook tour on child care, housing and drug prices without attacking anyone.", "pos": -0.1, "trump": -0.2, "tone": "calm"},
+    {"label": "Cut taxes and rates", "say": "Promise lower taxes, lower interest rates and more jobs under Trump's agenda.", "pos": 0.7, "trump": 0.8, "tone": "calm"}
+   ]},
+  {"title": "Health insurance subsidies", "prompt": "Many families lost ACA subsidies after the One Big Beautiful Bill Act, and premiums are a top complaint. Where do you stand?", "issue": "health", "src": "https://spectrumlocalnews.com/nc/charlotte/news/2026/09/11/nc-senate-race-cooper-whatley-",
+   "opts": [
+    {"label": "Restore subsidies", "say": "Vow to restore ACA subsidies and protect Medicaid expansion.", "pos": -0.7, "trump": -0.6, "tone": "fiery"},
+    {"label": "Fix rural care", "say": "Focus on keeping rural hospitals open with bipartisan funding.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Credit Trump on drugs", "say": "Credit Trump for lower drug prices and blame Cooper for premium hikes as governor.", "pos": 0.7, "trump": 0.8, "tone": "fiery"}
+   ]},
+  {"title": "Money gap late in race", "prompt": "Outside groups on your side have paused TV ads with polls showing a double digit gap. How do you spend the final weeks?", "issue": "other", "src": "https://www.dailywire.com/news/gop-senate-campaign-goes-dark-during-home-stretch",
+   "opts": [
+    {"label": "Flood the airwaves", "say": "Book heavy TV and digital to close the deal with a broad message.", "pos": -0.2, "trump": null, "tone": "calm"},
+    {"label": "Ground game", "say": "Pull ads and invest in visiting all 100 counties and turnout.", "pos": 0.2, "trump": null, "tone": "calm"},
+    {"label": "Bring in Trump", "say": "Hold rallies with Trump and Vance to energize the base.", "pos": 0.6, "trump": 1, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [],
+ "endorsements": [],
+ "ads": [
+  {"by": "No Going Back PAC", "for": "R", "theme": "Close to 8 million dollars in TV ads attacking Cooper.", "src": "https://www.wfae.org/2026-09-28/whatley-blasts-trash-poll-for-showing-big-cooper-lead-in-u-s-senate-race"},
+  {"by": "Cooper campaign and allies", "for": "D", "theme": "About 18.6 million dollars in booked TV time for the closing weeks.", "src": "https://www.dailywire.com/news/gop-senate-campaign-goes-dark-during-home-stretch"},
+  {"by": "Whatley campaign", "for": "R", "theme": "Whatley says a closing message ad is coming after a temporary pause.", "src": "https://www.dailywire.com/news/gop-senate-campaign-goes-dark-during-home-stretch"}
+ ],
+ "regions": [
+  {"name": "Research Triangle", "counties": ["Wake", "Durham", "Orange", "Johnston"], "note": "Raleigh, Durham and Chapel Hill form the fastest growing Democratic stronghold, with Johnston as a Republican exurb."},
+  {"name": "Charlotte metro", "counties": ["Mecklenburg", "Union", "Cabarrus", "Gaston"], "note": "Deep blue Mecklenburg surrounded by Republican suburban and exurban counties."},
+  {"name": "Piedmont Triad", "counties": ["Guilford", "Forsyth", "Davidson", "Randolph"], "note": "Greensboro and Winston Salem lean Democratic while surrounding counties are solidly Republican."},
+  {"name": "Western North Carolina", "counties": ["Buncombe", "Henderson", "Haywood", "Watauga", "Catawba"], "note": "Mountain region still recovering from Hurricane Helene, Republican overall with a Democratic hub in Asheville."},
+  {"name": "Northeast and Black Belt", "counties": ["Pitt", "Edgecombe", "Halifax", "Nash", "Vance"], "note": "Rural counties with large Black populations that anchor Democratic votes in the east."},
+  {"name": "Southeast and coast", "counties": ["New Hanover", "Brunswick", "Onslow", "Cumberland", "Robeson"], "note": "Military towns, beach retirees and Robeson's swing Lumbee vote, leaning Republican outside Wilmington and Fayetteville."}
+ ]
+}

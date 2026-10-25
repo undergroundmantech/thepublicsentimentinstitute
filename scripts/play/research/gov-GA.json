@@ -1,0 +1,68 @@
+{
+ "id": "gov-GA",
+ "checked": "2026-10-25",
+ "summary": "An AJC and UGA poll taken Oct. 7 to 15 found Republican businessman Rick Jackson at 46 percent and Democrat Keisha Lance Bottoms at 45 percent for the open governor's seat, a statistical deadlock. The AJC reports Jackson holds a huge self funded money edge and the backing of Gov. Brian Kemp, while Bottoms leans on Democratic enthusiasm and ties Jackson to Trump, health care profits and data centers.",
+ "issues": [
+  {"issue": "Crime and public safety", "why": "Jackson attacks Bottoms' record as Atlanta mayor during the 2020 unrest, while Bottoms says the attacks distort her record.", "src": "https://www.ajc.com/politics/2026/10/secoriea-turner-family-condemns-rick-jackson-ad/"},
+  {"issue": "Health care and Medicaid", "why": "Bottoms wants full Medicaid expansion and says Jackson profited from a broken health system, while Jackson backs a state waiver with work requirements.", "src": "https://www.atlantanewsfirst.com/2026/09/17/bottoms-airs-first-true-attack-ad-linking-jackson-rigged-system/"},
+  {"issue": "Data centers", "why": "Bottoms calls for a pause on new data centers and questions Jackson's investments, while Jackson notes she approved a Midtown project with incentives.", "src": "https://www.ajc.com/politics/2026/10/georgia-governors-race-follow-along-as-the-candidates-debate-on-tuesday/"},
+  {"issue": "Affordability and taxes", "why": "Jackson says voters care about gas prices, bills and property taxes, while Bottoms pledges to repeal the state grocery tax.", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/"},
+  {"issue": "Abortion", "why": "Bottoms used the debate he skipped to press Jackson on how rape exceptions work under Georgia's six week ban, which his campaign says mischaracterizes him.", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/"}
+ ],
+ "storylines": [
+  {"title": "Bottoms reports 23 million dollar haul", "date": "2026-10-22", "what": "Bottoms raised 23.2 million dollars since August with big DGA help, though Jackson has bought 87 million dollars in general election airtime from mostly his own money.", "helps": "mixed", "kind": "national", "src": "https://www.ajc.com/politics/2026/10/keisha-lance-bottoms-fundraising/"},
+  {"title": "AJC poll finds a dead heat", "date": "2026-10-20", "what": "Jackson led 46 to 45 among likely voters, with Bottoms ahead among independents and Democrats far more enthusiastic than Republicans.", "helps": "mixed", "kind": "national", "src": "https://www.wsbtv.com/news/local/ajcuga-poll-bottoms-jackson-dead-heat-georgia-governor-race/76TN3NROXRG4HDILVYDUMJS4RQ/"},
+  {"title": "Jackson keeps distance from Trump", "date": "2026-10-20", "what": "Jackson, who once promised to be Trump's favorite governor, skipped a Trump rally for a Cherokee County event and casts himself as Kemp's heir.", "helps": "R", "kind": "national", "src": "https://www.ajc.com/politics/2026/10/rick-jackson-has-outspent-keisha-lance-bottoms-but-democratic-enthusiasm-has-the-race-knotted/"},
+  {"title": "Jackson skips Atlanta Press Club debate", "date": "2026-10-12", "what": "Bottoms debated an empty podium and called Jackson a coward, while Jackson campaigned with Kemp and said voters care about costs, not debates.", "helps": "mixed", "kind": "debate", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/"},
+  {"title": "Family condemns Jackson crime ad", "date": "2026-10-08", "what": "The family of Secoriea Turner asked Jackson to pull an ad using her mother's 911 call, and his campaign said it will keep highlighting Bottoms' record as mayor.", "helps": "D", "kind": "ad", "src": "https://www.ajc.com/politics/2026/10/secoriea-turner-family-condemns-rick-jackson-ad/"},
+  {"title": "Lone debate clash over data centers", "date": "2026-10-06", "what": "Bottoms said Jackson cannot be trusted on data centers and tied him to Trump, and Jackson hit her public safety record and her own data center approvals.", "helps": "mixed", "kind": "debate", "src": "https://www.ajc.com/politics/2026/10/georgia-governors-race-follow-along-as-the-candidates-debate-on-tuesday/"},
+  {"title": "Bottoms launches rigged system ad", "date": "2026-09-17", "what": "Bottoms' first on camera attack ad says Jackson made his fortune off a broken health system and touts her grocery tax repeal and Medicaid expansion.", "helps": "D", "kind": "ad", "src": "https://www.atlantanewsfirst.com/2026/09/17/bottoms-airs-first-true-attack-ad-linking-jackson-rigged-system/"}
+ ],
+ "events": [
+  {"title": "Skip the televised debate", "prompt": "The Atlanta Press Club debate is set on public TV, and the race is tied. Does the campaign show up, and how does it frame the choice?", "issue": "other", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/",
+   "opts": [
+    {"label": "Debate and hit absence", "say": "Take the stage and call any no show a coward hiding from voters on a private jet.", "pos": -0.5, "trump": -0.3, "tone": "fiery"},
+    {"label": "Debate on the issues", "say": "Show up and stick to a cost of living message without attacking the opponent's choice.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Skip for the trail", "say": "Skip the debate and campaign with Gov. Kemp, saying voters ask about bills, not debates.", "pos": 0.6, "trump": 0.2, "tone": "calm"}
+   ]},
+  {"title": "Data center boom", "prompt": "Data centers are spreading across Georgia and raising worries about power bills and water. What is the policy?", "issue": "econ", "src": "https://www.ajc.com/politics/2026/10/georgia-governors-race-follow-along-as-the-candidates-debate-on-tuesday/",
+   "opts": [
+    {"label": "Pause new projects", "say": "Call for a pause on new data center construction until ratepayers are protected.", "pos": -0.7, "trump": -0.3, "tone": "fiery"},
+    {"label": "Make them pay their way", "say": "Allow growth but require data centers to cover their own power and water costs.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Keep Georgia open", "say": "Defend incentives as job creators and attack the opponent's past approvals as hypocrisy.", "pos": 0.7, "trump": 0.3, "tone": "fiery"}
+   ]},
+  {"title": "Atlanta crime record", "prompt": "Ads are replaying crime from the 2020 unrest in Atlanta, and a victim's family has asked that one be pulled. How does the campaign handle public safety?", "issue": "other", "src": "https://www.ajc.com/politics/2026/10/secoriea-turner-family-condemns-rick-jackson-ad/",
+   "opts": [
+    {"label": "Condemn the ad", "say": "Stand with the family, call the ad exploitation and point to police hiring as mayor.", "pos": -0.6, "trump": -0.4, "tone": "fiery"},
+    {"label": "Own regrets, look ahead", "say": "Acknowledge the delayed crackdown was a regret and lay out a public safety plan.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Stay on offense", "say": "Keep the ad up and argue the record shows the opponent abandoned police when needed.", "pos": 0.8, "trump": 0.4, "tone": "fiery"}
+   ]},
+  {"title": "Medicaid expansion", "prompt": "Georgia has not fully expanded Medicaid and health costs are a central attack in the race. What is the plan?", "issue": "health", "src": "https://www.atlantanewsfirst.com/2026/09/17/bottoms-airs-first-true-attack-ad-linking-jackson-rigged-system/",
+   "opts": [
+    {"label": "Full expansion", "say": "Opt into full federal Medicaid expansion and repeal the grocery tax.", "pos": -0.8, "trump": -0.5, "tone": "fiery"},
+    {"label": "Waiver with work rules", "say": "Pursue a state designed expansion waiver with work, education or training requirements.", "pos": 0.4, "trump": 0.2, "tone": "calm"},
+    {"label": "No expansion", "say": "Reject new Medicaid spending and focus on lowering costs through competition.", "pos": 0.9, "trump": 0.6, "tone": "calm"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-06", "where": "Georgia televised debate, host not confirmed", "src": "https://www.ajc.com/politics/2026/10/georgia-governors-race-follow-along-as-the-candidates-debate-on-tuesday/"},
+  {"date": "2026-10-12", "where": "Atlanta Press Club and GPB, Jackson absent", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/"}
+ ],
+ "endorsements": [
+  {"who": "Gov. Brian Kemp", "for": "R", "src": "https://www.wabe.org/bottoms-faces-empty-podium-on-debate-stage-while-jackson-campaigns-with-kemp/"},
+  {"who": "Democratic Governors Association, 11.5 million dollars", "for": "D", "src": "https://www.ajc.com/politics/2026/10/keisha-lance-bottoms-fundraising/"},
+  {"who": "Michael Bloomberg, at least 1 million dollars", "for": "D", "src": "https://www.ajc.com/politics/2026/10/keisha-lance-bottoms-fundraising/"}
+ ],
+ "ads": [
+  {"by": "Jackson campaign", "for": "R", "theme": "Attacks Bottoms' public safety record as mayor using a 911 call from the Secoriea Turner shooting.", "src": "https://www.ajc.com/politics/2026/10/secoriea-turner-family-condemns-rick-jackson-ad/"},
+  {"by": "Bottoms campaign", "for": "D", "theme": "Says Jackson made his fortune off a rigged health system and promises Medicaid expansion and a grocery tax repeal.", "src": "https://www.atlantanewsfirst.com/2026/09/17/bottoms-airs-first-true-attack-ad-linking-jackson-rigged-system/"},
+  {"by": "Jackson campaign", "for": "R", "theme": "An 87 million dollar general election TV buy, largely self funded.", "src": "https://www.ajc.com/politics/2026/10/keisha-lance-bottoms-fundraising/"}
+ ],
+ "regions": [
+  {"name": "Atlanta core", "counties": ["Fulton", "DeKalb", "Clayton"], "note": "Deep blue urban counties and Bottoms' home base, where turnout drives Democratic hopes."},
+  {"name": "Inner suburbs", "counties": ["Cobb", "Gwinnett", "Henry", "Douglas", "Rockdale"], "note": "Diverse suburbs that flipped Democratic over the last decade and decide statewide races."},
+  {"name": "North Georgia exurbs", "counties": ["Cherokee", "Forsyth", "Hall", "Paulding", "Whitfield"], "note": "Fast growing and strongly Republican, the core of Jackson's vote."},
+  {"name": "Middle Georgia and Augusta", "counties": ["Bibb", "Richmond", "Columbia", "Houston", "Muscogee"], "note": "A mix of Democratic leaning cities and Republican suburbs and military communities."},
+  {"name": "Coast and South Georgia", "counties": ["Chatham", "Glynn", "Lowndes", "Dougherty", "Tift"], "note": "Savannah and Albany lean Democratic while the rural south is solidly Republican."}
+ ]
+}

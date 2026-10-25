@@ -1,0 +1,66 @@
+{
+  "id": "sen-MN",
+  "checked": "2026-10-25",
+  "summary": "DFL Lt. Gov. Peggy Flanagan led former sportscaster Michele Tafoya 47 to 43 in a mid October poll cited by MPR News, in an open seat race that has drawn less national money than other contests. Tafoya presents herself as an independent minded, abortion rights Republican and hits Flanagan over fraud in state programs, while Flanagan casts Tafoya as another vote for Trump.",
+  "issues": [
+    {"issue": "Social services fraud", "why": "Tafoya says Flanagan failed to stop fraud in state programs under the Walz administration, and Flanagan says more should have been done sooner.", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"},
+    {"issue": "Immigration enforcement", "why": "After the deaths of Renee Good and Alex Pretti, Flanagan accused Tafoya of shifting on ICE while Tafoya said she backs both immigration and law and order.", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men"},
+    {"issue": "Iran war and Israel", "why": "Flanagan opposes more war funding for Iran and offensive weapons for Israel, while Tafoya wants a quick strategic end to the war and stands with Israel.", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men"},
+    {"issue": "Social Security and Medicare", "why": "Flanagan would lift the Social Security tax cap and restore Medicaid and Medicare cuts, and Tafoya calls Medicare for All a pipedream.", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men"},
+    {"issue": "Abortion", "why": "Tafoya supports reasonable access in the first 12 weeks and runs ads as a pro choice Republican.", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"}
+  ],
+  "storylines": [
+    {"title": "Only debate at MPR", "date": "2026-10-16", "what": "Tafoya said Flanagan should be fired, not promoted, over fraud, while Flanagan pressed Tafoya on Trump era corruption; both dodged questions about Trump and Walz.", "helps": "mixed", "kind": "debate", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men"},
+    {"title": "Tafoya shrugs off Trump nod", "date": "2026-10-13", "what": "Trump urged Ohio rallygoers to vote for Tafoya, who said only that she heard about it, while Flanagan's campaign tied her to Trump's Iran war, tariffs and ICE agenda.", "helps": "D", "kind": "endorsement", "src": "https://minnesotareformer.com/2026/10/13/michele-tafoya-shrugs-off-trump-endorsement-in-close-senate-race-in-minnesota/"},
+    {"title": "Poll shows a close race", "date": "2026-10-12", "what": "A poll cited by MPR had Flanagan ahead 47 to 43 with 9 percent undecided, as national Republican money has been slow to arrive.", "helps": "mixed", "kind": "local", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"},
+    {"title": "Flanagan rallies with labor", "date": "2026-10-08", "what": "Flanagan spoke with labor leaders in St. Paul during a 30 event statewide tour.", "helps": "D", "kind": "rally", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"},
+    {"title": "Thune visits Le Sueur farm", "date": "2026-10-05", "what": "Senate Majority Leader John Thune campaigned with Tafoya but was noncommittal on Senate Leadership Fund spending.", "helps": "R", "kind": "rally", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"},
+    {"title": "Police groups back Tafoya", "date": "2026-08-24", "what": "The Minnesota Police and Peace Officers Association, which had backed Amy Klobuchar before, endorsed Tafoya along with the Minneapolis police federation.", "helps": "R", "kind": "endorsement", "src": "https://alphanews.org/law-enforcement-organizations-endorse-tafoya-over-flanagan-in-high-stakes-senate-race/"}
+  ],
+  "events": [
+    {"title": "Fraud in state programs", "prompt": "Fraud cases in state social service programs under the Walz administration are a central attack in the race. How does the campaign respond?", "issue": "corruption", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota",
+     "opts": [
+       {"label": "Oversight and pivot", "say": "Back tougher oversight and penalties, then turn to corruption in the Trump administration.", "pos": -0.5, "trump": -0.8, "tone": "fiery"},
+       {"label": "Own the failures", "say": "Admit the state acted too slowly and propose an independent inspector general.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Fire, not promote", "say": "Say the people in charge let fraud happen and should be fired, not promoted.", "pos": 0.7, "trump": 0.2, "tone": "fiery"}
+     ]},
+    {"title": "ICE after the Minneapolis deaths", "prompt": "The deaths of Renee Good and Alex Pretti during immigration enforcement have shaken Minnesota. What is the campaign's stance on ICE?", "issue": "immig", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men",
+     "opts": [
+       {"label": "Rein in ICE", "say": "Demand accountability for the deaths and sharp limits on ICE tactics.", "pos": -0.8, "trump": -0.9, "tone": "fiery"},
+       {"label": "Reform and rebrand", "say": "Call the deaths devastating and back reforms while keeping enforcement.", "pos": 0.2, "trump": -0.2, "tone": "calm"},
+       {"label": "Back enforcement", "say": "Stand with law enforcement and stress violent crime and border security.", "pos": 0.8, "trump": 0.8, "tone": "fiery"}
+     ]},
+    {"title": "Trump's endorsement", "prompt": "Trump endorsed the Republican at an Ohio rally in a state where he is unpopular. How does the campaign handle it?", "issue": "other", "src": "https://minnesotareformer.com/2026/10/13/michele-tafoya-shrugs-off-trump-endorsement-in-close-senate-race-in-minnesota/",
+     "opts": [
+       {"label": "Another Trump vote", "say": "Say the Republican would be one more vote for Trump's war, tariffs and abortion limits.", "pos": -0.5, "trump": -1, "tone": "fiery"},
+       {"label": "Trump not on ballot", "say": "Say Trump isn't on the ballot and stress independence on abortion and guns.", "pos": 0.3, "trump": -0.1, "tone": "calm"},
+       {"label": "Embrace it", "say": "Welcome the endorsement and promise to protect the president's Senate majority.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Social Security fix", "prompt": "At the debate one candidate proposed lifting the Social Security tax cap and the other would not commit on taxes or the retirement age. What is the campaign's plan?", "issue": "health", "src": "https://www.kaxe.org/local-news/2026-10-23/in-senate-debate-tafoya-and-flanagan-cant-shake-ties-to-unpopular-men",
+     "opts": [
+       {"label": "Scrap the cap", "say": "Make high earners pay in and restore Medicare and Medicaid cuts.", "pos": -0.8, "trump": -0.4, "tone": "fiery"},
+       {"label": "Bipartisan deal", "say": "Protect current benefits and seek a bipartisan solvency plan.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "No new taxes", "say": "Rule out tax hikes and look at long term reforms for younger workers.", "pos": 0.7, "trump": null, "tone": "calm"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-16", "where": "MPR News, St. Paul", "src": "https://www.mprnews.org/story/2026/10/16/peggy-flanagan-michele-tafoya-debate-ahead-of-minnesota-us-senate-election"}
+  ],
+  "endorsements": [
+    {"who": "Donald Trump", "for": "R", "src": "https://minnesotareformer.com/2026/10/13/michele-tafoya-shrugs-off-trump-endorsement-in-close-senate-race-in-minnesota/"},
+    {"who": "Minnesota Police and Peace Officers Association", "for": "R", "src": "https://alphanews.org/law-enforcement-organizations-endorse-tafoya-over-flanagan-in-high-stakes-senate-race/"},
+    {"who": "Police Officers Federation of Minneapolis", "for": "R", "src": "https://alphanews.org/law-enforcement-organizations-endorse-tafoya-over-flanagan-in-high-stakes-senate-race/"}
+  ],
+  "ads": [
+    {"by": "Tafoya campaign", "for": "R", "theme": "Ads present Tafoya as an independent voice and a pro choice Republican.", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"},
+    {"by": "Pro Flanagan outside groups", "for": "D", "theme": "About $1.3 million in freeway billboards backing Flanagan.", "src": "https://www.mprnews.org/story/2026/10/12/peggy-flanagan-michele-tafoya-senate-race-stays-quiet-in-minnesota"}
+  ],
+  "regions": [
+    {"name": "Minneapolis and St. Paul", "counties": ["Hennepin", "Ramsey"], "note": "The DFL base, where Flanagan needs huge margins and high turnout."},
+    {"name": "Inner and outer suburbs", "counties": ["Anoka", "Dakota", "Washington", "Scott", "Carver"], "note": "The swing collar around the Twin Cities, with suburban moderates who may weigh Tafoya's independent pitch."},
+    {"name": "Southern Minnesota", "counties": ["Olmsted", "Blue Earth", "Le Sueur", "Rice", "Mower"], "note": "Farm country that leans Republican, with Rochester and Mankato as DFL leaning pockets."},
+    {"name": "Central Minnesota", "counties": ["Stearns", "Sherburne", "Wright", "Benton", "Crow Wing"], "note": "The most reliably Republican part of the state around St. Cloud."},
+    {"name": "Arrowhead and Iron Range", "counties": ["St. Louis", "Carlton", "Itasca", "Lake", "Cook"], "note": "Historic DFL labor country around Duluth where the Range has drifted Republican."},
+    {"name": "Western prairie and Red River", "counties": ["Clay", "Otter Tail", "Polk", "Kandiyohi", "Lyon"], "note": "Rural and strongly Republican outside Moorhead."}
+  ]
+}

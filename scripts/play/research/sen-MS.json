@@ -1,0 +1,308 @@
+{
+ "id": "sen-MS",
+ "checked": "2026-10-25",
+ "summary": "Republican Sen. Cindy Hyde-Smith faces Democrat Scott Colom, a north Mississippi district attorney, in a race WLBT says pundits now call increasingly competitive though most forecasters still rate it solid or likely Republican. Colom is running on rural hospitals, health care cuts and rising prices, while Hyde-Smith points to her record on infrastructure, tax relief and border security and has avoided debates.",
+ "issues": [
+  {
+   "issue": "Rural hospitals and Medicaid",
+   "why": "Colom says Medicaid cuts could close eight rural hospitals in a state that has not expanded Medicaid, and Harris attacked Hyde-Smith's vote for the cuts.",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/"
+  },
+  {
+   "issue": "Prices, tariffs and the Iran war",
+   "why": "Colom calls Hyde-Smith Cindy High Prices and ties gas and grocery costs to tariffs and the Iran war.",
+   "src": "https://mississippitoday.org/2026/10/22/kamala-harris-says-mississippi-matters-at-columbus-rally-for-scott-colom"
+  },
+  {
+   "issue": "Hyde-Smith's record",
+   "why": "Her campaign cites federal money for infrastructure and rural health care, tax relief, border security and conservative judges.",
+   "src": "https://www.wlbt.com/2026/09/30/colom-challenges-hyde-smith-three-debates-senate-race/"
+  },
+  {
+   "issue": "Transgender policy",
+   "why": "Hyde-Smith's ads label Colom a transgender defender, while Colom says he supports fairness in girls' sports and opposes gender surgery for minors.",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/"
+  },
+  {
+   "issue": "Farm policy",
+   "why": "Colom accuses Hyde-Smith of betraying farmers through support for tariffs.",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Colom pulls AI ad after AG threat",
+   "date": "2026-10-23",
+   "what": "Attorney General Lynn Fitch said Colom's unlabeled AI ad showing Hyde-Smith fleeing reporters likely broke state law. Colom agreed to delete it, calling it parody and accusing Republicans of weaponizing the justice system.",
+   "helps": "R",
+   "kind": "scandal",
+   "src": "https://mississippitoday.org/2026/10/23/scott-colom-says-hell-delete-ai-generated-cindy-hyde-smith-ad-after-ag-fitch-threatens-legal-action/"
+  },
+  {
+   "title": "Harris rallies for Colom in Columbus",
+   "date": "2026-10-22",
+   "what": "Kamala Harris campaigned with Colom and held a health care roundtable in Clarksdale, attacking Hyde-Smith's vote for Medicaid cuts.",
+   "helps": "D",
+   "kind": "rally",
+   "src": "https://mississippitoday.org/2026/10/22/kamala-harris-says-mississippi-matters-at-columbus-rally-for-scott-colom"
+  },
+  {
+   "title": "Trump to rally in Corinth",
+   "date": "2026-10-21",
+   "what": "Trump is set to campaign for Hyde-Smith in Corinth, as a Schumer aligned super PAC put 1.2 million dollars behind Colom. Hyde-Smith called the polls just noise and said Mississippi is pretty red.",
+   "helps": "R",
+   "kind": "rally",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/"
+  },
+  {
+   "title": "Colom's viral homemade ad",
+   "date": "2026-10-21",
+   "what": "Colom's Pick Another Senator ad, made cheaply in Mississippi, has drawn more than a million views, he says.",
+   "helps": "D",
+   "kind": "ad",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/"
+  },
+  {
+   "title": "Poll touted by Colom was fabricated",
+   "date": "2026-10-20",
+   "what": "Colom's campaign promoted a Wedgewood poll showing a near tie, and the firm later admitted it staged the poll to expose weak polling standards.",
+   "helps": "R",
+   "kind": "scandal",
+   "src": "https://magnoliatribune.com/2026/10/20/poll-pushed-by-colom-claiming-senate-race-with-hyde-smith-is-tied-was-fake-fabricated/"
+  },
+  {
+   "title": "Colom calls Hyde-Smith chicken over debates",
+   "date": "2026-09-29",
+   "what": "Colom accepted TV debate invitations and offered a third on her terms. Hyde-Smith's campaign said losing candidates always want a debate about debates.",
+   "helps": "mixed",
+   "kind": "debate",
+   "src": "https://www.wlbt.com/2026/09/30/colom-challenges-hyde-smith-three-debates-senate-race/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Rural hospital closures",
+   "prompt": "Medicaid cuts threaten several rural hospitals in a state that never expanded Medicaid. You are asked what you would do in Washington.",
+   "issue": "health",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/",
+   "opts": [
+    {
+     "label": "Reverse the cuts",
+     "say": "Fight to reverse the Medicaid and ACA subsidy cuts that threaten hospitals.",
+     "pos": -0.8,
+     "trump": -0.7,
+     "tone": "fiery"
+    },
+    {
+     "label": "Rural hospital fund",
+     "say": "Push targeted federal money for rural hospitals without reopening the whole law.",
+     "pos": 0.1,
+     "trump": 0.1,
+     "tone": "calm"
+    },
+    {
+     "label": "Defend the reforms",
+     "say": "Stand by the spending reforms and point to federal rural health dollars you secured.",
+     "pos": 0.8,
+     "trump": 0.8,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "AI ad complaint",
+   "prompt": "The attorney general says an unlabeled AI campaign ad likely broke state election law and threatens an injunction 11 days before the election.",
+   "issue": "corruption",
+   "src": "https://mississippitoday.org/2026/10/23/scott-colom-says-hell-delete-ai-generated-cindy-hyde-smith-ad-after-ag-fitch-threatens-legal-action/",
+   "opts": [
+    {
+     "label": "Call it weaponization",
+     "say": "Pull the ad but accuse the other side of using the justice system for politics.",
+     "pos": -0.5,
+     "trump": -0.5,
+     "tone": "fiery"
+    },
+    {
+     "label": "Pull it quietly",
+     "say": "Delete the ad, label future content and move on to health care.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Demand accountability",
+     "say": "Call for a full investigation and say voters were deceived.",
+     "pos": 0.7,
+     "trump": 0.4,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Trump comes to Corinth",
+   "prompt": "President Trump is coming to north Mississippi to rally for the Republican ticket as tariffs and the Iran war push up prices.",
+   "issue": "econ",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/",
+   "opts": [
+    {
+     "label": "Challenge Trump to debate",
+     "say": "Say the incumbent is scared and challenge the president himself to debate.",
+     "pos": -0.6,
+     "trump": -0.9,
+     "tone": "fiery"
+    },
+    {
+     "label": "Talk local costs",
+     "say": "Focus on gas, groceries and farm prices instead of the visit.",
+     "pos": 0,
+     "trump": -0.2,
+     "tone": "calm"
+    },
+    {
+     "label": "Stand with Trump",
+     "say": "Welcome the president and say Mississippi stands with his agenda.",
+     "pos": 0.8,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Debate invitations",
+   "prompt": "Two TV stations have invited both candidates to debate and one side calls the other chicken for declining.",
+   "issue": "other",
+   "src": "https://www.wlbt.com/2026/09/30/colom-challenges-hyde-smith-three-debates-senate-race/",
+   "opts": [
+    {
+     "label": "Accept every debate",
+     "say": "Accept all invitations and offer a third debate on the opponent's terms.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "One debate",
+     "say": "Agree to a single televised debate.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Run on the record",
+     "say": "Decline and say the record speaks for itself while the Senate is in session.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  }
+ ],
+ "debates": [],
+ "endorsements": [
+  {
+   "who": "Donald Trump",
+   "for": "R",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/"
+  },
+  {
+   "who": "Barack Obama",
+   "for": "D",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/"
+  },
+  {
+   "who": "Kamala Harris",
+   "for": "D",
+   "src": "https://mississippitoday.org/2026/10/22/kamala-harris-says-mississippi-matters-at-columbus-rally-for-scott-colom"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Colom campaign",
+   "for": "D",
+   "theme": "Pick Another Senator, a homemade spot urging voters to replace Hyde-Smith.",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/"
+  },
+  {
+   "by": "Colom campaign",
+   "for": "D",
+   "theme": "An AI depiction of Hyde-Smith running from reporters, later deleted.",
+   "src": "https://mississippitoday.org/2026/10/23/scott-colom-says-hell-delete-ai-generated-cindy-hyde-smith-ad-after-ag-fitch-threatens-legal-action/"
+  },
+  {
+   "by": "Hyde-Smith campaign",
+   "for": "R",
+   "theme": "Labels Colom a transgender defender.",
+   "src": "https://www.mpbonline.org/blogs/news/qa-scott-colom-on-mississippi-senate-race-healthcare-his-viral-campaign-ad-and-more/"
+  },
+  {
+   "by": "Senate Majority PAC",
+   "for": "D",
+   "theme": "A 1.2 million dollar late buy backing Colom.",
+   "src": "https://www.wlbt.com/2026/10/21/trump-rallying-mississippi-monday-support-hyde-smith/"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Jackson metro",
+   "counties": [
+    "Hinds",
+    "Madison",
+    "Rankin"
+   ],
+   "note": "Majority Black Hinds is the Democratic anchor, offset by Republican suburban Rankin and Madison."
+  },
+  {
+   "name": "Mississippi Delta",
+   "counties": [
+    "Bolivar",
+    "Washington",
+    "Sunflower",
+    "Coahoma",
+    "Leflore",
+    "Humphreys"
+   ],
+   "note": "Majority Black farm counties where Democrats need big turnout."
+  },
+  {
+   "name": "North Mississippi",
+   "counties": [
+    "DeSoto",
+    "Lafayette",
+    "Lee",
+    "Alcorn",
+    "Marshall"
+   ],
+   "note": "Republican Memphis suburbs and Tupelo and Corinth, plus Colom's home base near Oxford."
+  },
+  {
+   "name": "Golden Triangle",
+   "counties": [
+    "Lowndes",
+    "Oktibbeha",
+    "Clay",
+    "Noxubee"
+   ],
+   "note": "Competitive area around Columbus and Starkville where Harris rallied."
+  },
+  {
+   "name": "Gulf Coast",
+   "counties": [
+    "Harrison",
+    "Jackson",
+    "Hancock"
+   ],
+   "note": "Populous and strongly Republican coastal counties with shipbuilding and casinos."
+  },
+  {
+   "name": "Pine Belt and Southwest",
+   "counties": [
+    "Forrest",
+    "Lamar",
+    "Jones",
+    "Adams",
+    "Pike"
+   ],
+   "note": "Mostly Republican piney woods with Democratic pockets in Natchez and McComb."
+  }
+ ]
+}

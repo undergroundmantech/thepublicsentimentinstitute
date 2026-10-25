@@ -1,11 +1,11 @@
-"""On Point Polling Dynamic House Mode: the House on the same method as Dynamic Senate Mode and Dynamic Governor Mode.
+"""TPSI Dynamic House Mode: the House on the same method as Dynamic Senate Mode and Dynamic Governor Mode.
 
 Everything House Mode already did stays: the district spine on the lines in force, the incumbent and redrawn terms,
 measured ticket splitting, district primary participation, district polls, FEC money, top two one party generals and
 unopposed seats. On top of it, each state now runs the Senate machinery:
 
-  M1       On Point Polling county by county Trump approval alone, calibrated and converted with the On Point Polling respondent crosstab
-  M2       the certified 2024 county result moved by the On Point Polling demographic swing, then carried from the 2024 presidential
+  M1       TPSI county by county Trump approval alone, calibrated and converted with the TPSI respondent crosstab
+  M2       the certified 2024 county result moved by the TPSI demographic swing, then carried from the 2024 presidential
            electorate to the 2026 electorate built by Vote History Mode
   M3       the 2024 level moved by the national swing to the generic ballot
   turnout  Vote History Mode: every county's 2026 turnout is the sum of its 384 groups' own turnout chances, and each
@@ -122,9 +122,6 @@ def run(st, table, slug, name):
     df["d2_spine"] = np.where(df.pvi_imputed.values == 1, df.d2_24.values, df.d2_pvi.values)
     unc = H["UNCONTESTED"][st]; same = H["SAMEPARTY"].get(st, {})
     INC_PTS, REDRAWN_PTS, CROSSOVER_PTS = H["INC_PTS"], H["REDRAWN_PTS"], H["CROSSOVER_PTS"]
-    # Oct 20 2026, by the user's choice: incumbency loosened, the same INC_CARRY_SCALE as the statewide personal vote,
-    # 0.5 taking an incumbent from 2 points to 1 and a crossover incumbent from 3 to 1.5; the redrawn term is unchanged
-    _ics = float(os.environ.get("INC_CARRY_SCALE", "1.0")); INC_PTS, CROSSOVER_PTS = INC_PTS * _ics, CROSSOVER_PTS * _ics
     def cand_points(r):
         if r.district in unc or r.district in same: return 0.0
         if r.inc == "D*": return CROSSOVER_PTS
@@ -259,15 +256,18 @@ def run(st, table, slug, name):
             v = float((inv(base + e_d * mid + extra) * tshare).sum())
             lo, hi_ = (mid, hi_) if v < target else (lo, mid)
         return (lo + hi_) / 2
-    fin = np.zeros(Dn)
+    fin = np.zeros(Dn); don = np.zeros(Dn)
     for j, r in enumerate(df.itertuples()):
         key = "%s-%02d" % (st[:2], int(r.district))
         sh_, why_ = sm.finance_term(key, 0, float(r.d2_24), book=H["HOUSE_FINANCE"], k=H["K_FINANCE_HOUSE"], max_polls=999)
         fin[j] = sh_ * (sm.W_FUND + sm.W_CENSUS)
+        dsh_, _ = sm.donor_term(key, house=True)
+        don[j] = dsh_ * (sm.W_FUND + sm.W_CENSUS)
     df["finance_term"] = fin
+    df["donor_term"] = don
     cand = ush * (sm.W_FUND + sm.W_CENSUS)
     x0 = level_shift(LEVEL, 0.0)
-    df["model_d2"] = inv(base + e_d * x0 + fin + cand)
+    df["model_d2"] = inv(base + e_d * x0 + fin + don + cand)
 
     # district polls, and candidate strength where a poll sits away from the fundamentals
     df["poll_d2"] = np.nan

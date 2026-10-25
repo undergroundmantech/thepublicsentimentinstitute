@@ -1,0 +1,294 @@
+{
+ "id": "gov-ME",
+ "checked": "2026-10-25",
+ "summary": "Democrat Hannah Pingree has consistently led Republican Bobby Charles by double digits for the open governor's seat, with independent former GOP chair Rick Bennett on a narrow path, per the Portland Press Herald. The race turns on energy and housing costs, a projected 1 billion dollar budget gap, tariffs and the Iran war, with Charles tying Pingree to Gov. Janet Mills while distancing himself from Trump on tariffs, per the Bangor Daily News and Press Herald.",
+ "issues": [
+  {
+   "issue": "Budget gap and taxes",
+   "why": "Maine faces a projected 1.085 billion dollar gap, and Charles wants deep cuts and to phase out the income tax while Pingree would raise taxes on nonresident second homes.",
+   "src": "https://www.pressherald.com/2026/10/12/how-candidates-for-maine-governor-say-theyll-fill-a-projected-1b-budget-gap/"
+  },
+  {
+   "issue": "Energy costs",
+   "why": "Charles blames Pingree and Mills for high energy bills while Pingree ties rising fuel prices to the Iran war.",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/"
+  },
+  {
+   "issue": "Housing",
+   "why": "All three candidates agree Maine is building homes too slowly but differ on the fix.",
+   "src": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  },
+  {
+   "issue": "Tariffs on Canada",
+   "why": "Maine's economy is tied to Canada, and even Charles breaks with Trump on broad tariffs, calling Canada a friend.",
+   "src": "https://www.bangordailynews.com/2026/10/01/politics/maine-gubernatorial-debate/"
+  },
+  {
+   "issue": "Rural hospitals and health workers",
+   "why": "The candidates agree Maine struggles to keep rural hospitals open and health care workers in the state.",
+   "src": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Charles invites critics to grill him",
+   "date": "2026-10-22",
+   "what": "Trailing in polls, Charles scheduled an open event in Auburn where Pingree supporters and Harris voters can challenge him.",
+   "helps": "R",
+   "kind": "local",
+   "src": "https://www.pressherald.com/2026/10/22/bobby-charles-is-set-to-debate-critics-next-week-you-can-be-one-of-them/"
+  },
+  {
+   "title": "Final debate leaves Pingree in front",
+   "date": "2026-10-14",
+   "what": "At the WMTW debate Charles again called Pingree and Mills insiders, and Pingree said Bennett is a lifelong Republican, with no major moments.",
+   "helps": "D",
+   "kind": "debate",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/"
+  },
+  {
+   "title": "GOP donor PAC boosts Bennett instead",
+   "date": "2026-10-14",
+   "what": "A PAC formed by Republican donors to help Charles spent 70,000 dollars boosting Bennett, and promised RGA money for Charles has not appeared.",
+   "helps": "D",
+   "kind": "national",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/"
+  },
+  {
+   "title": "Budget gap plans laid out",
+   "date": "2026-10-12",
+   "what": "Charles pledged to cut at least 1 billion dollars through fraud reduction and a hiring freeze, while Pingree proposed doubling the homestead exemption and taxing nonresident second homes.",
+   "helps": "mixed",
+   "kind": "policy",
+   "src": "https://www.pressherald.com/2026/10/12/how-candidates-for-maine-governor-say-theyll-fill-a-projected-1b-budget-gap/"
+  },
+  {
+   "title": "Wabanaki chiefs back Pingree",
+   "date": "2026-10-09",
+   "what": "Four Wabanaki chiefs endorsed Pingree after she pledged to sign tribal sovereignty legislation in her first 100 days.",
+   "helps": "D",
+   "kind": "endorsement",
+   "src": "https://www.pressherald.com/2026/10/09/4-wabanaki-chiefs-back-hannah-pingree-in-maine-governors-race/"
+  },
+  {
+   "title": "Charles hits grant to Pingree's former nonprofit",
+   "date": "2026-10-08",
+   "what": "In the Bangor debate Charles questioned an 840,000 dollar state award to a nonprofit Pingree once led and tied her to Mills.",
+   "helps": "R",
+   "kind": "debate",
+   "src": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  },
+  {
+   "title": "First debate turns on Trump and the Iran war",
+   "date": "2026-10-01",
+   "what": "Pingree tied rising prices to the Iran war and Trump, while Charles broke with Trump on the war and broad tariffs and attacked Pingree's record in Augusta.",
+   "helps": "mixed",
+   "kind": "debate",
+   "src": "https://www.bangordailynews.com/2026/10/01/politics/maine-gubernatorial-debate/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Close the 1 billion dollar gap",
+   "prompt": "Maine projects a gap of more than 1 billion dollars in the next budget. How do you close it?",
+   "issue": "econ",
+   "src": "https://www.pressherald.com/2026/10/12/how-candidates-for-maine-governor-say-theyll-fill-a-projected-1b-budget-gap/",
+   "opts": [
+    {
+     "label": "Tax second homes",
+     "say": "Raise taxes on nonresident second homes and double the homestead exemption for locals.",
+     "pos": -0.6,
+     "trump": -0.5,
+     "tone": "calm"
+    },
+    {
+     "label": "Line by line review",
+     "say": "Form a bipartisan finance team and an inspector general to root out misspending.",
+     "pos": 0.1,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Cut 1 billion now",
+     "say": "Freeze hiring, cut 2,000 vacant jobs and start phasing out the income tax.",
+     "pos": 0.9,
+     "trump": 0.4,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Tariffs on Canada",
+   "prompt": "Broad federal tariffs are hitting trade with Canada, Maine's biggest partner. How do you respond?",
+   "issue": "econ",
+   "src": "https://www.bangordailynews.com/2026/10/01/politics/maine-gubernatorial-debate/",
+   "opts": [
+    {
+     "label": "Fight the tariffs",
+     "say": "Call the tariffs a tax on Mainers and pledge to fight the administration.",
+     "pos": -0.6,
+     "trump": -0.9,
+     "tone": "fiery"
+    },
+    {
+     "label": "Targeted only",
+     "say": "Oppose broad tariffs on Canada while backing some targeted ones.",
+     "pos": 0.2,
+     "trump": -0.3,
+     "tone": "calm"
+    },
+    {
+     "label": "Back the president",
+     "say": "Defend tariffs as leverage that will bring better deals for Maine.",
+     "pos": 0.8,
+     "trump": 0.9,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "Tribal sovereignty",
+   "prompt": "Wabanaki leaders want full tribal sovereignty legislation signed early in the next term. Do you commit?",
+   "issue": "other",
+   "src": "https://www.pressherald.com/2026/10/09/4-wabanaki-chiefs-back-hannah-pingree-in-maine-governors-race/",
+   "opts": [
+    {
+     "label": "Sign in 100 days",
+     "say": "Pledge to sign full sovereignty legislation in your first 100 days.",
+     "pos": -0.7,
+     "trump": -0.4,
+     "tone": "calm"
+    },
+    {
+     "label": "Negotiate step by step",
+     "say": "Support talks on sovereignty issues one at a time.",
+     "pos": 0.1,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Decline to commit",
+     "say": "Avoid a commitment and focus on economic issues instead.",
+     "pos": 0.6,
+     "trump": 0.2,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "Running against Augusta",
+   "prompt": "Your rival says you are part of the Mills insider machine that raised energy and housing costs. How do you answer?",
+   "issue": "corruption",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/",
+   "opts": [
+    {
+     "label": "Own the record",
+     "say": "Defend Democratic leadership and blame Trump's war and tariffs for prices.",
+     "pos": -0.6,
+     "trump": -0.8,
+     "tone": "fiery"
+    },
+    {
+     "label": "Pitch independence",
+     "say": "Say both parties are a political industrial complex and promise compromise.",
+     "pos": 0,
+     "trump": -0.2,
+     "tone": "calm"
+    },
+    {
+     "label": "Hammer the insiders",
+     "say": "Attack state grants and spending as insider deals and promise to clean house.",
+     "pos": 0.7,
+     "trump": 0.3,
+     "tone": "fiery"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-10-01",
+   "where": "Portland, News Center Maine and State Chamber",
+   "src": "https://www.bangordailynews.com/2026/10/01/politics/maine-gubernatorial-debate/"
+  },
+  {
+   "date": "2026-10-08",
+   "where": "Bangor, Husson University, Maine Public and Press Herald",
+   "src": "https://www.pressherald.com/2026/10/08/3-takeaways-on-the-2nd-maine-gubernatorial-debate/"
+  },
+  {
+   "date": "2026-10-14",
+   "where": "WMTW",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Penobscot, Maliseet, Mi'kmaq and Passamaquoddy chiefs",
+   "for": "D",
+   "src": "https://www.pressherald.com/2026/10/09/4-wabanaki-chiefs-back-hannah-pingree-in-maine-governors-race/"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Republican donor PAC",
+   "for": "I",
+   "theme": "A PAC formed to back Charles instead spent 70,000 dollars boosting independent Rick Bennett.",
+   "src": "https://www.pressherald.com/2026/10/14/after-final-debate-heres-where-things-stand-in-the-race-to-become-maines-next-governor/"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Greater Portland and York",
+   "counties": [
+    "Cumberland",
+    "York"
+   ],
+   "note": "The state's population center, strongly Democratic in Portland and its suburbs."
+  },
+  {
+   "name": "Midcoast",
+   "counties": [
+    "Knox",
+    "Lincoln",
+    "Waldo",
+    "Sagadahoc"
+   ],
+   "note": "Coastal towns, including Pingree's home base of North Haven, that lean Democratic."
+  },
+  {
+   "name": "Kennebec and Androscoggin",
+   "counties": [
+    "Kennebec",
+    "Androscoggin"
+   ],
+   "note": "Augusta and Lewiston Auburn, a classic swing area of mill towns and suburbs."
+  },
+  {
+   "name": "Bangor and the North",
+   "counties": [
+    "Penobscot",
+    "Piscataquis",
+    "Aroostook"
+   ],
+   "note": "The 2nd District heartland, Republican outside Bangor and Orono."
+  },
+  {
+   "name": "Western foothills",
+   "counties": [
+    "Oxford",
+    "Franklin",
+    "Somerset"
+   ],
+   "note": "Rural, working class counties near Bennett's Oxford base that lean Republican."
+  },
+  {
+   "name": "Downeast",
+   "counties": [
+    "Hancock",
+    "Washington"
+   ],
+   "note": "Fishing and tourism communities, with Democratic Mount Desert Island and Republican Washington County."
+  }
+ ]
+}

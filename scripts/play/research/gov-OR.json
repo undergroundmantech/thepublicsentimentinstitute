@@ -1,0 +1,63 @@
+{
+  "id": "gov-OR",
+  "checked": "2026-10-25",
+  "summary": "In a rematch of 2022, Republican Christine Drazan led Democratic Gov. Tina Kotek 46 to 44 in a late September OPB poll, with Kotek's favorability at 38 percent and most voters saying the state is on the wrong track. Drazan blames Kotek for taxes, homelessness and housing costs, while Kotek ties Drazan to Trump and federal cuts to health coverage.",
+  "issues": [
+    {"issue": "Cost of living and taxes", "why": "Over half of likely voters named affordability, housing or taxes as the top problem, and Drazan says Kotek's answer to every problem is a new tax.", "src": "https://www.opb.org/article/2026/09/30/opb-poll-shows-oregon-governors-race-virtually-deadlocked/"},
+    {"issue": "Housing and land use", "why": "Drazan wants to cut building rules and overhaul land use laws, while Kotek points to an upturn in new units.", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/"},
+    {"issue": "Homelessness and addiction", "why": "Kotek credits her policies for a 19 percent drop in Central Oregon homelessness, while Drazan wants people steered into detox and treatment.", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/"},
+    {"issue": "Data centers", "why": "A Drazan ad says Kotek rolled out the red carpet for data centers with over $1 billion in tax breaks, and Democrats call her Data Center Drazan.", "src": "https://www.wweek.com/news/state/2026/09/05/drazan-kotek-lob-data-center-attacks-at-each-other/"},
+    {"issue": "Medicaid and federal cuts", "why": "Kotek says she is protecting the Oregon Health Plan from federal cuts and accuses Drazan of voting to defund it.", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/"}
+  ],
+  "storylines": [
+    {"title": "Final debate in Bend", "date": "2026-10-13", "what": "Drazan said Kotek's solution to every problem is a new tax and cast her as out of touch with rural Oregon, while Kotek said Drazan would side with Trump over Oregon.", "helps": "mixed", "kind": "debate", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/"},
+    {"title": "RGA steps in for Drazan", "date": "2026-10-12", "what": "Drazan said the Republican Governors Association is now investing in the race, while Democrats called her campaign broke and say Kotek has the money edge.", "helps": "R", "kind": "national", "src": "https://www.foxnews.com/politics/blue-state-governors-race-defies-expectations-republican-closes-in-power-rankings"},
+    {"title": "Feisty first debate in Eugene", "date": "2026-10-01", "what": "Drazan called Kotek's housing record an abysmal failure, and Kotek said Drazan was in lockstep with Trump as the two traded charges over donors.", "helps": "mixed", "kind": "debate", "src": "https://katu.com/news/local/incumbent-democrat-kotek-republican-challenger-drazan-face-off-in-oregon-governor-debate-watch-tina-christine-eugene-oregon-university-stream-live-streaming-kunp-october-2026"},
+    {"title": "OPB poll shows dead heat", "date": "2026-09-30", "what": "A DHM poll for OPB had Drazan 46 and Kotek 44, with Kotek's Portland area margin well below her 2022 showing.", "helps": "R", "kind": "local", "src": "https://www.opb.org/article/2026/09/30/opb-poll-shows-oregon-governors-race-virtually-deadlocked/"},
+    {"title": "Kotek's cash advantage", "date": "2026-09-15", "what": "Kotek had $8.2 million on hand to Drazan's $2.4 million, and pollsters noted Democrats came from behind in late 2018 and 2022.", "helps": "D", "kind": "local", "src": "https://www.oregonjournalismproject.org/new-poll-shows-drazan-with-slight-lead-in-governors-race"},
+    {"title": "Data center ad fight", "date": "2026-09-05", "what": "A Drazan online ad attacked Kotek over data center tax breaks, and the state Democratic Party answered by calling her Data Center Drazan.", "helps": "mixed", "kind": "ad", "src": "https://www.wweek.com/news/state/2026/09/05/drazan-kotek-lob-data-center-attacks-at-each-other/"}
+  ],
+  "events": [
+    {"title": "New taxes question", "prompt": "Voters rank taxes and affordability near the top, and the challenger says the governor's answer to every problem is a new tax. What is the campaign's position on state revenue?", "issue": "econ", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/",
+     "opts": [
+       {"label": "Fund services", "say": "Defend new revenue for roads, schools and health care and ask corporations to pay more.", "pos": -0.7, "trump": null, "tone": "calm"},
+       {"label": "Pause and audit", "say": "Promise no new broad taxes until a full audit of state spending.", "pos": 0.2, "trump": null, "tone": "calm"},
+       {"label": "Veto any increase", "say": "Pledge to veto every tax increase and fund priorities with existing money.", "pos": 0.8, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Data center boom", "prompt": "Data centers have expanded rapidly with large tax breaks, and each side accuses the other of enabling them. What does the campaign propose?", "issue": "econ", "src": "https://www.wweek.com/news/state/2026/09/05/drazan-kotek-lob-data-center-attacks-at-each-other/",
+     "opts": [
+       {"label": "Make them pay", "say": "Make data centers pay their fair share of power costs and limit new tax breaks.", "pos": -0.6, "trump": null, "tone": "fiery"},
+       {"label": "Review the breaks", "say": "Review every data center incentive and protect ratepayers.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "End special deals", "say": "Stop special deals for big tech while cutting taxes for everyone else.", "pos": 0.6, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Homeless camps", "prompt": "Homelessness remains a top concern, with one side pointing to falling numbers and the other calling the record a failure. What is the campaign's plan?", "issue": "other", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/",
+     "opts": [
+       {"label": "Housing first", "say": "Expand shelter beds and permanent housing and keep the current strategy.", "pos": -0.7, "trump": null, "tone": "calm"},
+       {"label": "Shelter plus treatment", "say": "Pair shelter with required case management and addiction services.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "Treatment and order", "say": "Clear camps and steer people into detox, treatment and recovery.", "pos": 0.8, "trump": 0.3, "tone": "fiery"}
+     ]},
+    {"title": "Trump and the Oregon Health Plan", "prompt": "Federal cuts to health coverage and food aid are hitting Oregon, and the governor says the challenger is in lockstep with Trump. How does the campaign handle it?", "issue": "health", "src": "https://katu.com/news/local/incumbent-democrat-kotek-republican-challenger-drazan-face-off-in-oregon-governor-debate-watch-tina-christine-eugene-oregon-university-stream-live-streaming-kunp-october-2026",
+     "opts": [
+       {"label": "Fight Washington", "say": "Promise to backfill Medicaid and food aid and sue over federal cuts.", "pos": -0.8, "trump": -1, "tone": "fiery"},
+       {"label": "Oregon first", "say": "Say Oregon's problems are made in Salem and stay focused on state issues.", "pos": 0.3, "trump": 0, "tone": "calm"},
+       {"label": "Back the reforms", "say": "Support federal work requirements and say Oregon must spend smarter.", "pos": 0.8, "trump": 0.7, "tone": "calm"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-01", "where": "Eugene, KVAL", "src": "https://katu.com/news/local/incumbent-democrat-kotek-republican-challenger-drazan-face-off-in-oregon-governor-debate-watch-tina-christine-eugene-oregon-university-stream-live-streaming-kunp-october-2026"},
+    {"date": "2026-10-13", "where": "Bend, KTVZ", "src": "https://www.opb.org/article/2026/10/13/kotek-drazan-square-off-in-final-debate-of-governors-race/"}
+  ],
+  "endorsements": [
+    {"who": "Republican Governors Association", "for": "R", "src": "https://www.foxnews.com/politics/blue-state-governors-race-defies-expectations-republican-closes-in-power-rankings"}
+  ],
+  "ads": [
+    {"by": "Drazan campaign", "for": "R", "theme": "Says Kotek rolled out the red carpet for data centers with $1 billion in tax breaks while raising taxes $6 billion.", "src": "https://www.wweek.com/news/state/2026/09/05/drazan-kotek-lob-data-center-attacks-at-each-other/"}
+  ],
+  "regions": [
+    {"name": "Portland tri county", "counties": ["Multnomah", "Washington", "Clackamas"], "note": "Kotek led here 54 to 40 in the OPB poll, below her 2022 margin, and Clackamas is the key swing county."},
+    {"name": "Willamette Valley", "counties": ["Lane", "Marion", "Polk", "Linn", "Benton", "Yamhill"], "note": "Democratic Eugene and Corvallis balance Republican leaning Salem suburbs and farm towns."},
+    {"name": "Central Oregon", "counties": ["Deschutes", "Crook", "Jefferson"], "note": "Fast growing Bend has turned purple while the surrounding counties stay red."},
+    {"name": "Southern Oregon", "counties": ["Jackson", "Josephine", "Douglas", "Klamath", "Coos"], "note": "Republican territory around Medford and Roseburg with rural frustration over water and land use."},
+    {"name": "Eastern Oregon", "counties": ["Umatilla", "Malheur", "Union", "Baker", "Harney"], "note": "The most Republican part of the state, focused on agriculture, water rights and rural services."}
+  ]
+}

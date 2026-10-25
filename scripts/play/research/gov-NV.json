@@ -1,0 +1,283 @@
+{
+ "id": "gov-NV",
+ "checked": "2026-10-25",
+ "summary": "Republican Gov. Joe Lombardo faces Democratic Attorney General Aaron Ford, who would be Nevada's first Black governor, in a race the Nevada Current describes as a virtual tie by prediction market odds. Ford is running against what he calls the Lombardo Trump economy and data center tax breaks, while Lombardo, with a large money edge, is hitting Ford over a clemency request and crime.",
+ "issues": [
+  {
+   "issue": "Cost of living",
+   "why": "Ford says Nevadans cannot afford gas, groceries or rent and proposes rent deposit caps and limits on corporate home buying, while both candidates oppose raising taxes.",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/"
+  },
+  {
+   "issue": "Data centers and power bills",
+   "why": "Ford would end data center tax breaks over energy and drought concerns, while Lombardo championed them and then curtailed some incentives by executive order in September.",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  },
+  {
+   "issue": "Crime and clemency",
+   "why": "Lombardo allies attack Ford for sponsoring a clemency request for a man convicted of killing a pregnant woman, which Ford says he would have voted against.",
+   "src": "https://thenevadaindependent.com/article/how-one-inmates-clemency-request-took-over-the-nevadas-governor-race"
+  },
+  {
+   "issue": "Ballot questions",
+   "why": "Ford supports Question 6 to enshrine abortion rights and opposes Question 7 on voter ID.",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/"
+  },
+  {
+   "issue": "Prescription drugs",
+   "why": "Ford would let the state negotiate some drug prices, citing a bill Lombardo vetoed.",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Lombardo ad features Democratic DA",
+   "date": "2026-10-15",
+   "what": "A new Lombardo ad features Clark County DA Steve Wolfson, a Democrat, saying Ford cares more about criminals than victims. Ford says Lombardo is stooping to this level.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  },
+  {
+   "title": "Lombardo's big money edge",
+   "date": "2026-10-15",
+   "what": "Lombardo raised about 17 million dollars in the third quarter, mostly through Better Nevada PAC, compared with 2.28 million for Ford.",
+   "helps": "R",
+   "kind": "local",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  },
+  {
+   "title": "Ford ties Lombardo to Trump",
+   "date": "2026-10-15",
+   "what": "Ford argues Lombardo will not stand up to Trump and notes Lombardo acknowledged the Trump agenda benefits billionaires, as prediction markets show momentum for Ford.",
+   "helps": "D",
+   "kind": "attack",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  },
+  {
+   "title": "Clemency case takes over the race",
+   "date": "2026-10-12",
+   "what": "Pro Lombardo ads hit Ford for sponsoring a clemency petition for an inmate convicted in a pregnant woman's death, and Democrat Nicole Cannizzaro said she would not have sponsored it. Ford calls the attack a Willie Horton redo.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://thenevadaindependent.com/article/how-one-inmates-clemency-request-took-over-the-nevadas-governor-race"
+  },
+  {
+   "title": "Ford debates an empty podium",
+   "date": "2026-10-08",
+   "what": "Lombardo skipped a Carson City forum and Ford took questions alone for about 45 minutes, accusing the governor of being too scared to debate.",
+   "helps": "D",
+   "kind": "debate",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/"
+  },
+  {
+   "title": "Lombardo curbs data center incentives",
+   "date": "2026-09",
+   "what": "Lombardo issued an executive order curtailing some data center tax incentives, while Ford says he would pause them entirely.",
+   "helps": "mixed",
+   "kind": "policy",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  }
+ ],
+ "events": [
+  {
+   "title": "The clemency attack",
+   "prompt": "Ads are hammering the attorney general for sponsoring a clemency request for a man convicted of manslaughter in a pregnant woman's death. You must decide how to handle the issue.",
+   "issue": "other",
+   "src": "https://thenevadaindependent.com/article/how-one-inmates-clemency-request-took-over-the-nevadas-governor-race",
+   "opts": [
+    {
+     "label": "Call it race baiting",
+     "say": "Label the attack a Willie Horton redo and point to Trump's January 6 pardons.",
+     "pos": -0.6,
+     "trump": -0.8,
+     "tone": "fiery"
+    },
+    {
+     "label": "Explain the process",
+     "say": "Say the request came from the inmate's mother and the vote would have been no.",
+     "pos": -0.1,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Make it about victims",
+     "say": "Put victims and prosecutors on air to say the other side cares more about criminals.",
+     "pos": 0.8,
+     "trump": null,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Data center tax breaks",
+   "prompt": "Data centers are drawing water and power during a drought, and voters fear higher bills. You must say what happens to their tax incentives.",
+   "issue": "econ",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/",
+   "opts": [
+    {
+     "label": "End the tax breaks",
+     "say": "End incentives and require data centers to build grid capacity and use clean energy.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Trim by order",
+     "say": "Curtail some incentives while keeping Nevada open to the investment.",
+     "pos": 0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Keep courting them",
+     "say": "Keep incentives in place to win jobs and diversify the economy.",
+     "pos": 0.7,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "Debate or skip",
+   "prompt": "A Northern Nevada forum offers a podium for both candidates, and the frontrunner's campaign is weighing whether to show up.",
+   "issue": "other",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/",
+   "opts": [
+    {
+     "label": "Show up and spar",
+     "say": "Attend and challenge the opponent on the record directly.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Propose a TV debate",
+     "say": "Skip the forum but offer a single televised debate on your terms.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Skip it",
+     "say": "Decline and spend the time on paid media and rural stops.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "Rent and housing costs",
+   "prompt": "Las Vegas and Reno renters are squeezed by rising rents and deposits. You must offer a housing plan.",
+   "issue": "econ",
+   "src": "https://www.kolotv.com/2026/10/09/ford-debates-an-empty-podium-alleges-republicans-tried-cancel-candidate-forum-altogether/",
+   "opts": [
+    {
+     "label": "Cap deposits, limit buyers",
+     "say": "Cap rent deposits at one month and limit corporate home purchases.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Build more units",
+     "say": "Speed permits and open federal land for more housing.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Cut red tape only",
+     "say": "Oppose rent rules and let the market build its way out.",
+     "pos": 0.8,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-10-08",
+   "where": "Carson City forum, Ford only",
+   "src": "https://www.kunr.org/local-stories/2026-10-21/watch-kunr-gubernatorial-candidate-forum"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Clark County DA Steve Wolfson",
+   "for": "R",
+   "src": "https://thenevadaindependent.com/article/how-one-inmates-clemency-request-took-over-the-nevadas-governor-race"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Lombardo campaign",
+   "for": "R",
+   "theme": "DA Steve Wolfson says Ford cares more about criminals than victims.",
+   "src": "https://nevadacurrent.com/2026/10/15/ford-seeks-to-upset-lombardo-become-nevadas-first-black-governor/"
+  },
+  {
+   "by": "Pro Lombardo groups",
+   "for": "R",
+   "theme": "Attacks Ford over the Norman Smith clemency request, with about 2.1 million dollars behind it.",
+   "src": "https://thenevadaindependent.com/article/how-one-inmates-clemency-request-took-over-the-nevadas-governor-race"
+  },
+  {
+   "by": "Ford campaign",
+   "for": "D",
+   "theme": "Enough ad blames the Lombardo Trump economy and touts Ford's suits against power and drug companies.",
+   "src": "https://thenevadaindependent.com/article/ford-hits-nevada-airwaves-for-first-time-in-governors-race-with-seven-figure-ad-campaign"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Las Vegas Valley",
+   "counties": [
+    "Clark"
+   ],
+   "note": "About three quarters of the vote, Democratic leaning with a large Latino and union hospitality workforce."
+  },
+  {
+   "name": "Reno and Sparks",
+   "counties": [
+    "Washoe"
+   ],
+   "note": "The state's true swing county, with a growing tech and data center economy."
+  },
+  {
+   "name": "Carson City and nearby",
+   "counties": [
+    "Carson City",
+    "Douglas",
+    "Lyon",
+    "Storey"
+   ],
+   "note": "The capital region leans Republican with growing exurbs."
+  },
+  {
+   "name": "Rural north and east",
+   "counties": [
+    "Elko",
+    "Humboldt",
+    "White Pine",
+    "Lander",
+    "Eureka",
+    "Pershing",
+    "Churchill"
+   ],
+   "note": "Mining and ranching country that votes overwhelmingly Republican."
+  },
+  {
+   "name": "Rural south",
+   "counties": [
+    "Nye",
+    "Lincoln",
+    "Mineral",
+    "Esmeralda"
+   ],
+   "note": "Sparse desert counties that are heavily Republican, led by fast growing Pahrump in Nye."
+  }
+ ]
+}

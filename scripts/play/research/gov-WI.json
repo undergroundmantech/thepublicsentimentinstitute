@@ -1,0 +1,67 @@
+{
+ "id": "gov-WI",
+ "checked": "2026-10-25",
+ "summary": "In Wisconsin's first open governor's race since 2010, Democratic Milwaukee County Executive David Crowley led Republican Rep. Tom Tiffany 49 to 46 among likely voters in a late September Marquette poll, a narrowing lead. Tiffany and his allies have outspent Crowley's side about 2.5 to 1 according to WisPolitics, and the race turns on taxes and the 3 billion dollar surplus, data centers, abortion and Milwaukee crime.",
+ "issues": [
+  {"issue": "Taxes and the surplus", "why": "Tiffany wants to return the 3 billion dollar surplus through lasting income and property tax cuts and attacks Crowley's county sales tax increase, while Crowley calls for a broader tax overhaul.", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion"},
+  {"issue": "Data centers", "why": "Both back restrictions, with Crowley supporting a pause during a statewide environmental review and Tiffany accusing him of shifting on tech tax incentives.", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion"},
+  {"issue": "Abortion", "why": "Crowley proposes a constitutional amendment protecting abortion rights, while Tiffany pledges to keep the 20 week limit and Democrats cite his past six week ban cosponsorship.", "src": "https://www.wpr.org/news/crowley-tiffany-abortion-issue-2026-election"},
+  {"issue": "Schools and vouchers", "why": "Neither would end private school vouchers, but Tiffany may raise income caps while Crowley wants more public school funding.", "src": "https://wisconsinwatch.org/2026/10/david-crowley-tom-tiffany-clash-on-taxes-abortion-and-private-school-vouchers-in-wisconsin-governor-debate/"},
+  {"issue": "Immigration enforcement", "why": "Tiffany wants local police to coordinate with ICE, while Crowley opposes detainer agreements and wants masked ICE agents banned.", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion"}
+ ],
+ "storylines": [
+  {"title": "Only debate in Milwaukee", "date": "2026-10-21", "what": "Tiffany hammered county tax hikes and Crowley's dodge on abortion limits, while Crowley tied Tiffany to Trump's tax law and his role in a 2020 election lawsuit.", "helps": "mixed", "kind": "debate", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion"},
+  {"title": "Ad spending tops 82 million dollars", "date": "2026-10-15", "what": "About 50 million dollars backs Tiffany, though spending was nearly even in the most recent week as new spots on taxes, health care and crime launched.", "helps": "R", "kind": "ad", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/"},
+  {"title": "Poll for school choice group shows Crowley up 4", "date": "2026-10-15", "what": "A YouGov poll of adults for City Forward Collective had Crowley at 46 and Tiffany at 42.", "helps": "D", "kind": "national", "src": "https://www.wispolitics.com/2026/city-forward-collection-cfc-action-fund-new-wisconsin-poll-crowley-leads-tiffany-46-to-42-in-governors-race/"},
+  {"title": "Tiffany side outspends Crowley 2.5 to 1", "date": "2026-10-07", "what": "Tiffany and allies, funded by donors including Diane Hendricks and the Uihleins, spent 54.8 million dollars to Crowley's 21.6 million since the primary.", "helps": "R", "kind": "national", "src": "https://www.wispolitics.com/2026/tiffany-allies-outspending-crowley-his-backers-2-5-to-1/"},
+  {"title": "Crowley pushes abortion amendment", "date": "2026-10-06", "what": "With Sen. Tammy Baldwin, Crowley pledged to pursue a state constitutional amendment on abortion rights, and Tiffany said he would uphold current law and accused Crowley of backing abortion up to birth.", "helps": "D", "kind": "policy", "src": "https://www.wpr.org/news/crowley-tiffany-abortion-issue-2026-election"},
+  {"title": "Marquette shows race tightening", "date": "2026-09-30", "what": "Crowley led 49 to 46 among likely voters, down from 5 points, as his unfavorable rating jumped to 44 percent.", "helps": "R", "kind": "national", "src": "https://www.wisn.com/article/wisconsin-governor-election-poll-marquette-tiffany-crowley/73960441"}
+ ],
+ "events": [
+  {"title": "The 3 billion dollar surplus", "prompt": "Wisconsin has a projected 3 billion dollar surplus and voters rank affordability far above other issues. What does the campaign do with it?", "issue": "econ", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion",
+   "opts": [
+    {"label": "Invest in schools and care", "say": "Put the surplus into public schools, child care and a fairer tax code for working families.", "pos": -0.7, "trump": -0.5, "tone": "calm"},
+    {"label": "Split the difference", "say": "Return some as targeted middle class relief and save the rest for roads and schools.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Permanent tax cuts", "say": "Return it all through a 10 percent income tax cut and property tax relief, not one time checks.", "pos": 0.8, "trump": 0.5, "tone": "fiery"}
+   ]},
+  {"title": "Data center boom", "prompt": "Large data centers are coming to Wisconsin with tax breaks, and residents worry about power and water. What is the stance?", "issue": "econ", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion",
+   "opts": [
+    {"label": "Pause and review", "say": "Pause new projects during a statewide environmental review and repeal tech tax incentives.", "pos": -0.7, "trump": -0.3, "tone": "fiery"},
+    {"label": "Local say", "say": "Let communities approve projects and require them to pay their own utility costs.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Hit the flip flop", "say": "Back limits but attack the opponent for shifting positions on incentives.", "pos": 0.5, "trump": 0.2, "tone": "fiery"}
+   ]},
+  {"title": "Abortion limits", "prompt": "The candidates were asked whether they would sign a bill with no gestational limits or a six week ban. What is the answer?", "issue": "health", "src": "https://www.wpr.org/news/crowley-tiffany-abortion-issue-2026-election",
+   "opts": [
+    {"label": "Constitutional right", "say": "Push a constitutional amendment protecting reproductive freedom and say the decision belongs to patients and doctors.", "pos": -0.8, "trump": -0.6, "tone": "fiery"},
+    {"label": "Keep current law", "say": "Promise to uphold the existing 20 week law and not sign stricter bans.", "pos": 0.3, "trump": 0, "tone": "calm"},
+    {"label": "Go on offense", "say": "Accuse the opponent of supporting abortion up to birth based on a 2019 vote.", "pos": 0.8, "trump": 0.5, "tone": "fiery"}
+   ]},
+  {"title": "Milwaukee crime record", "prompt": "Republican ads attack homicides and taxes in Milwaukee County under the Democrat's watch. How does the campaign respond?", "issue": "other", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/",
+   "opts": [
+    {"label": "Defend the record", "say": "Point to bipartisan deals that funded police and services and call the attacks distortions.", "pos": -0.4, "trump": -0.3, "tone": "calm"},
+    {"label": "Public safety plan", "say": "Offer a statewide plan for police hiring and violence prevention.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "You pay the price", "say": "Make Milwaukee crime and the sales tax hike the closing argument.", "pos": 0.8, "trump": 0.5, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-21", "where": "WISN 12, Marquette Law School, Milwaukee", "src": "https://www.wpr.org/news/crowley-tiffany-wisconsin-governors-debate-2026-taxes-data-centers-abortion"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://wisconsinwatch.org/2026/10/david-crowley-tom-tiffany-clash-on-taxes-abortion-and-private-school-vouchers-in-wisconsin-governor-debate/"},
+  {"who": "Sen. Tammy Baldwin campaigned with Crowley", "for": "D", "src": "https://www.wpr.org/news/crowley-tiffany-abortion-issue-2026-election"}
+ ],
+ "ads": [
+  {"by": "Tiffany campaign", "for": "R", "theme": "Promises a 10 percent income tax cut, returning the surplus and ending a property tax increase.", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/"},
+  {"by": "Democratic Governors Association", "for": "D", "theme": "An Eau Claire hops farmer says Tiffany follows Trump and voted to cut health care for tax breaks.", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/"},
+  {"by": "Republican Governors Association", "for": "R", "theme": "Attacks Crowley over a sales tax increase, housing costs and Milwaukee County homicides.", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/"},
+  {"by": "Restoration of America PAC", "for": "R", "theme": "Calls Crowley a complete failure and frames the race as common sense versus incompetence.", "src": "https://www.wispolitics.com/2026/new-spots-launch-in-guvs-race-as-ad-spending-tops-82-million/"}
+ ],
+ "regions": [
+  {"name": "Milwaukee", "counties": ["Milwaukee"], "note": "Crowley's home county and the Democratic vote engine, where turnout is decisive."},
+  {"name": "WOW suburbs", "counties": ["Waukesha", "Ozaukee", "Washington"], "note": "Traditionally Republican suburbs where Democrats have chipped away at margins."},
+  {"name": "Madison and south central", "counties": ["Dane", "Rock", "Sauk", "Jefferson"], "note": "Dane County delivers huge Democratic margins and is growing fast."},
+  {"name": "Fox Valley and Green Bay", "counties": ["Brown", "Outagamie", "Winnebago", "Fond du Lac"], "note": "The classic swing region of mid sized cities and Republican rural towns."},
+  {"name": "Western Wisconsin", "counties": ["La Crosse", "Eau Claire", "Chippewa", "Grant", "St. Croix"], "note": "Swingy river and farm counties with Democratic college towns."},
+  {"name": "Northwoods", "counties": ["Marathon", "Oneida", "Lincoln", "Price", "Douglas"], "note": "Tiffany's congressional turf, rural and strongly Republican outside Superior."}
+ ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "gov-NH",
+  "checked": "2026-10-25",
+  "summary": "First term Republican Gov. Kelly Ayotte led Democrat Cinde Warmington 54 to 38 in an Oct. 16 poll cited by the Cabinet, though NHPR described UNH polling as showing a competitive race. Warmington argues the economy is broken and ties Ayotte to Trump's tariffs and cuts, while Ayotte defends the state's low tax model and hits Warmington over her past lobbying for Purdue Pharma.",
+  "issues": [
+    {"issue": "Cost of living and housing", "why": "Warmington says the economy is fundamentally broken and wants a state housing coordinator, while Ayotte points to bipartisan housing laws and a local property tax cap.", "src": "https://www.nhpr.org/nh-news/2026-10-23/ayotte-warmington-debate-nh-newhampshire-governor"},
+    {"issue": "Education Freedom Accounts", "why": "Warmington calls the school voucher program a pickpocket scheme draining public schools, and Ayotte defends it alongside higher per pupil aid.", "src": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/"},
+    {"issue": "Energy costs and data centers", "why": "Both back a temporary data center moratorium, but Warmington says Ayotte took $137,790 from data center interests and the two split on solar and small nuclear.", "src": "https://www.cabinet.com/news/cabinet-news/2026/10/21/warmington-fighting-to-stay-in-governors-race/"},
+    {"issue": "Opioid lobbying record", "why": "Ayotte's ad says Warmington lobbied for Purdue Pharma and called OxyContin a miracle drug, which PolitiFact rated true.", "src": "https://politifact.com/factchecks/2026/oct/22/kelly-ayotte/warmington-opioid-purdue-pharma-new-hampshire/"},
+    {"issue": "Trump tariffs and tourism", "why": "Warmington says Ayotte will not stand up to Trump as Canadian tourism to the North Country has fallen.", "src": "https://www.cabinet.com/news/cabinet-news/2026/10/21/warmington-fighting-to-stay-in-governors-race/"}
+  ],
+  "storylines": [
+    {"title": "NHPR forum in Manchester", "date": "2026-10-22", "what": "Warmington said Ayotte was rearranging the furniture on housing, and Ayotte said Warmington never explained how she would pay for her plans without new taxes.", "helps": "mixed", "kind": "debate", "src": "https://www.nhpr.org/nh-news/2026-10-23/ayotte-warmington-debate-nh-newhampshire-governor"},
+    {"title": "PolitiFact confirms Purdue attack", "date": "2026-10-22", "what": "PolitiFact rated true Ayotte's claim that Warmington was a Purdue lobbyist who called OxyContin a miracle drug, while Warmington says she regrets the work.", "helps": "R", "kind": "attack", "src": "https://politifact.com/factchecks/2026/oct/22/kelly-ayotte/warmington-opioid-purdue-pharma-new-hampshire/"},
+    {"title": "Chamber debate at Saint Anselm", "date": "2026-10-20", "what": "Warmington said Ayotte lives in a bubble and cited her Blackstone board seat, while Ayotte said Warmington wants California style policy after stops with Gavin Newsom.", "helps": "mixed", "kind": "debate", "src": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/"},
+    {"title": "Warmington pitches Nashua Rotary", "date": "2026-10-19", "what": "Trailing in a new poll, Warmington argued prescription prices and rents have soared and that Ayotte will not stand up to Trump on tariffs.", "helps": "D", "kind": "local", "src": "https://www.cabinet.com/news/cabinet-news/2026/10/21/warmington-fighting-to-stay-in-governors-race/"},
+    {"title": "Poll gives Ayotte big lead", "date": "2026-10-16", "what": "A National Public Affairs poll had Ayotte at 54 percent and Warmington at 38.", "helps": "R", "kind": "local", "src": "https://www.cabinet.com/news/cabinet-news/2026/10/21/warmington-fighting-to-stay-in-governors-race/"},
+    {"title": "Ayotte's vulnerabilities", "date": "2026-10-02", "what": "NHPR noted dysfunction at the youth detention center and a chief justice resignation as soft spots for Ayotte, and her refusal to join a 2018 Purdue lawsuit as a Democratic counterattack.", "helps": "D", "kind": "local", "src": "https://www.nhpr.org/politics/2026-10-02/nh-governor-race-what-to-know-midterm-elections"}
+  ],
+  "events": [
+    {"title": "Purdue Pharma past", "prompt": "Ads highlight that the Democratic nominee once lobbied for Purdue Pharma and called OxyContin a miracle drug, while Democrats note the governor did not join a lawsuit against Purdue as attorney general. How does the campaign handle the opioid issue?", "issue": "corruption", "src": "https://politifact.com/factchecks/2026/oct/22/kelly-ayotte/warmington-opioid-purdue-pharma-new-hampshire/",
+     "opts": [
+       {"label": "Own it and pivot", "say": "Express regret, point to treatment funding secured since, and hit the other side's lawsuit record.", "pos": -0.3, "trump": null, "tone": "calm"},
+       {"label": "Stay on economy", "say": "Refuse to relitigate decades old history and return to costs.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Press the attack", "say": "Air the miracle drug quote statewide and question the opponent's judgment.", "pos": 0.5, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "School vouchers", "prompt": "Education Freedom Accounts have grown, and a school tax cap question is on the ballot. Where does the campaign land?", "issue": "other", "src": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/",
+     "opts": [
+       {"label": "End the vouchers", "say": "End voucher funding and comply with court rulings on school aid.", "pos": -0.8, "trump": null, "tone": "fiery"},
+       {"label": "Income limits", "say": "Keep the program for low income families but cap its growth.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Choice and the cap", "say": "Defend school choice and back the tax cap so voters can rein in spending.", "pos": 0.8, "trump": null, "tone": "calm"}
+     ]},
+    {"title": "Data center moratorium", "prompt": "Data centers are pushing up energy demand, and both candidates now favor a pause. How far does the campaign go?", "issue": "econ", "src": "https://www.nhpr.org/nh-news/2026-10-23/ayotte-warmington-debate-nh-newhampshire-governor",
+     "opts": [
+       {"label": "Ban and renewables", "say": "Back a moratorium, refuse data center money and invest in solar and efficiency.", "pos": -0.7, "trump": null, "tone": "fiery"},
+       {"label": "Pause by law", "say": "Pass a temporary moratorium through the Legislature while rules are written.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "All of the above", "say": "Add gas and small nuclear to keep power affordable and welcome investment.", "pos": 0.6, "trump": 0.2, "tone": "calm"}
+     ]},
+    {"title": "Tariffs and Canada", "prompt": "Canadian tourism to northern New Hampshire is down sharply amid Trump's trade fight, and the state did not join a 25 state tariff lawsuit. How does the campaign respond?", "issue": "econ", "src": "https://www.cabinet.com/news/cabinet-news/2026/10/21/warmington-fighting-to-stay-in-governors-race/",
+     "opts": [
+       {"label": "Join the lawsuit", "say": "Join the multistate suit and stand up to Trump on tariffs.", "pos": -0.4, "trump": -1, "tone": "fiery"},
+       {"label": "Quiet diplomacy", "say": "Work directly with Canadian provinces to win back visitors.", "pos": 0.1, "trump": -0.2, "tone": "calm"},
+       {"label": "Back the president", "say": "Say fair trade deals will pay off and defend the administration.", "pos": 0.7, "trump": 0.9, "tone": "calm"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-20", "where": "Saint Anselm College, Goffstown", "src": "https://manchester.inklink.news/ayotte-warmington-trade-blows-in-contentious-greater-manchester-chamber-of-commerce-debate/"},
+    {"date": "2026-10-22", "where": "NHPR, Manchester", "src": "https://www.nhpr.org/nh-news/2026-10-23/ayotte-warmington-debate-nh-newhampshire-governor"}
+  ],
+  "endorsements": [],
+  "ads": [
+    {"by": "Ayotte campaign", "for": "R", "theme": "Uses a 2024 Joyce Craig debate clip to say Warmington was a Purdue lobbyist who called OxyContin a miracle drug.", "src": "https://politifact.com/factchecks/2026/oct/22/kelly-ayotte/warmington-opioid-purdue-pharma-new-hampshire/"},
+    {"by": "Warmington campaign", "for": "D", "theme": "A TV ad expresses regret over her Purdue work and attacks Ayotte.", "src": "https://www.unionleader.com/news/politics/warmington-airs-tv-ad-expressing-regret-over-purdue-work-9012f7a5"}
+  ],
+  "regions": [
+    {"name": "Manchester and Merrimack Valley", "counties": ["Hillsborough"], "note": "The largest county, with Democratic Manchester and Nashua and swing suburbs."},
+    {"name": "Seacoast and southeast", "counties": ["Rockingham", "Strafford"], "note": "Democratic Portsmouth and Dover offset Republican Salem area border towns."},
+    {"name": "Concord and the Lakes Region", "counties": ["Merrimack", "Belknap"], "note": "Democratic leaning Concord next to the reliably Republican Lakes Region."},
+    {"name": "Upper Valley and Monadnock", "counties": ["Grafton", "Cheshire", "Sullivan"], "note": "Hanover and Keene anchor a Democratic leaning west side."},
+    {"name": "North Country", "counties": ["Coos", "Carroll"], "note": "Rural and Republican leaning, hit by the drop in Canadian tourism."}
+  ]
+}

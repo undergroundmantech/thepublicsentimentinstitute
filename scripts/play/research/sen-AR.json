@@ -1,0 +1,66 @@
+{
+ "id": "sen-AR",
+ "checked": "2026-10-25",
+ "summary": "Republican Sen. Tom Cotton leads Democratic farmer Hallie Shoffner 50 to 41 in an October Talk Business and Hendrix College poll, after an August poll from the same pollster had Shoffner narrowly ahead, per Political Wire and Talk Business. Shoffner is running on the farm crisis, tariffs and fuel prices tied to the Iran war, while Cotton, who has vastly outspent her, has focused on her past comments about defunding ICE and her Democratic donations, per Newsweek and Fox News.",
+ "issues": [
+  {"issue": "Farm crisis and the farm bill", "why": "Arkansas leads the nation in farm bankruptcies and Congress has not passed a full farm bill since 2018.", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"},
+  {"issue": "Tariffs and fuel prices", "why": "Shoffner blames Trump's trade wars and the Iran war for higher prices at the pump that squeeze farmers and families.", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"},
+  {"issue": "Immigration and ICE", "why": "Cotton's ads feature Shoffner saying she would defund ICE as it exists, and she now says she wants to reform the agency.", "src": "https://www.foxnews.com/politics/dem-senate-nominee-changes-tune-ice-after-vowing-not-one-more-dime-agency"},
+  {"issue": "Corporate consolidation in agriculture", "why": "Shoffner targets monopolies in seed, fertilizer and meatpacking that she says squeeze Arkansas growers.", "src": "https://prospect.org/2026/10/08/prairie-populist-crimson-red-arkansas-hallie-shoffner/"},
+  {"issue": "Data centers and utility rates", "why": "Shoffner raised concerns about data centers driving up power use and utility bills.", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"}
+ ],
+ "storylines": [
+  {"title": "October poll shows Cotton up nine", "date": "2026-10-16", "what": "A Talk Business and Hendrix College poll had Cotton at 50 percent, Shoffner at 41 and Libertarian Jeff Wadlin at 5.", "helps": "R", "kind": "local", "src": "https://politicalwire.com/2026/10/16/tom-cotton-leads-comfortably-in-arkansas/"},
+  {"title": "No Cotton Shoffner debate", "date": "2026-10-14", "what": "Salem Media withdrew its offer to host the only debate Cotton accepted, and Shoffner said Cotton is either too good or too scared to face her.", "helps": "D", "kind": "debate", "src": "https://www.newsfromthestates.com/article/debate-arkansas-us-senate-race-wont-take-place-cotton-and-shoffner-campaigns-say"},
+  {"title": "Cotton skips Arkansas TV debate", "date": "2026-10-12", "what": "Shoffner and Wadlin debated in Conway without Cotton, with Shoffner tying him to the Iran war and votes against past farm bills.", "helps": "D", "kind": "debate", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"},
+  {"title": "Shoffner ad features former Cotton voter", "date": "2026-10-08", "what": "A Shoffner ad features a former Cotton voter criticizing him for voting down the farm bill twice.", "helps": "D", "kind": "ad", "src": "https://prospect.org/2026/10/08/prairie-populist-crimson-red-arkansas-hallie-shoffner/"},
+  {"title": "Cotton outspending Shoffner 65 to 1", "date": "2026-09-29", "what": "Cotton and allies had spent about 13.6 million dollars on ads to roughly 209,000 for Shoffner, with no national Democratic money in the race.", "helps": "R", "kind": "ad", "src": "https://newsweek.com/gops-tom-cotton-outspending-dem-rival-65-1-in-state-trump-won-by-31-points-12503483"},
+  {"title": "Shoffner shifts on ICE", "date": "2026-09-03", "what": "After Cotton ads used her June pledge to defund ICE, Shoffner wrote that she does not want to defund ICE but reform it.", "helps": "R", "kind": "attack", "src": "https://www.foxnews.com/politics/dem-senate-nominee-changes-tune-ice-after-vowing-not-one-more-dime-agency"},
+  {"title": "August poll shows Shoffner ahead", "date": "2026-08-19", "what": "A Talk Business and Hendrix poll had Shoffner at 47 percent and Cotton at 44, within the margin of error.", "helps": "D", "kind": "local", "src": "https://talkbusiness.net/?p=300296"}
+ ],
+ "events": [
+  {"title": "Defund ICE clip", "prompt": "Attack ads are replaying a recorded pledge to defund ICE as it exists today, and early voting has begun. How do you handle immigration enforcement?", "issue": "immig", "src": "https://www.foxnews.com/politics/dem-senate-nominee-changes-tune-ice-after-vowing-not-one-more-dime-agency",
+   "opts": [
+    {"label": "Stand by defunding", "say": "Say ICE as it exists is abusive and should not get another dime.", "pos": -0.9, "trump": -0.9, "tone": "fiery"},
+    {"label": "Reform, not defund", "say": "Back deporting violent criminals while requiring visible badges and no masks for agents.", "pos": -0.2, "trump": -0.3, "tone": "calm"},
+    {"label": "Fund full enforcement", "say": "Promise more money for ICE and back the president's deportation push.", "pos": 0.9, "trump": 0.9, "tone": "fiery"}
+   ]},
+  {"title": "Farm bill and tariffs", "prompt": "Arkansas leads the nation in farm bankruptcies, there is no new farm bill, and tariffs and fuel prices are squeezing growers. What is your answer?", "issue": "econ", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/",
+   "opts": [
+    {"label": "End blanket tariffs", "say": "Oppose blanket tariffs, pass a farm bill and break up agriculture monopolies.", "pos": -0.6, "trump": -0.8, "tone": "fiery"},
+    {"label": "Targeted aid and tariffs", "say": "Back targeted tariffs and bridge payments to farmers until markets recover.", "pos": 0.2, "trump": 0.2, "tone": "calm"},
+    {"label": "Back the trade fight", "say": "Defend the president's tariffs as leverage that will open markets for Arkansas crops.", "pos": 0.8, "trump": 0.9, "tone": "calm"}
+   ]},
+  {"title": "Debate invitations", "prompt": "Your only agreed debate host withdrew and a public TV station is holding a debate with the third party candidate. Do you show up?", "issue": "other", "src": "https://www.newsfromthestates.com/article/debate-arkansas-us-senate-race-wont-take-place-cotton-and-shoffner-campaigns-say",
+   "opts": [
+    {"label": "Debate anywhere", "say": "Accept every invitation and call out anyone who refuses.", "pos": -0.3, "trump": -0.3, "tone": "fiery"},
+    {"label": "One head to head", "say": "Offer new dates for a single two way debate on a friendly outlet.", "pos": 0.3, "trump": null, "tone": "calm"},
+    {"label": "Skip debates", "say": "Skip debates and campaign at local events, relying on paid ads.", "pos": 0.6, "trump": 0.4, "tone": "calm"}
+   ]},
+  {"title": "Iran war and gas prices", "prompt": "Fuel prices have spiked since the Iran war began in February, and your opponent says the war is driving up costs. How do you respond?", "issue": "econ", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/",
+   "opts": [
+    {"label": "Blame the war hawks", "say": "Say the war was a mistake pushed for years and Arkansans pay at the pump.", "pos": -0.7, "trump": -0.8, "tone": "fiery"},
+    {"label": "Focus on relief", "say": "Avoid the war debate and push relief for fuel and fertilizer costs.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Defend strength abroad", "say": "Argue that confronting Iran keeps America safe and prices will ease.", "pos": 0.8, "trump": 0.8, "tone": "calm"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-12", "where": "Conway, Arkansas TV, Cotton absent", "src": "https://talkbusiness.net/2026/10/shoffner-wadlin-hold-senate-debate-cotton-a-no-show/"}
+ ],
+ "endorsements": [
+  {"who": "Former Sen. Jon Tester", "for": "D", "src": "https://prospect.org/2026/10/08/prairie-populist-crimson-red-arkansas-hallie-shoffner/"}
+ ],
+ "ads": [
+  {"by": "Cotton campaign", "for": "R", "theme": "Uses Shoffner's own recorded remarks, including a pledge to defund ICE, to argue she is extreme.", "src": "https://newsweek.com/gops-tom-cotton-outspending-dem-rival-65-1-in-state-trump-won-by-31-points-12503483"},
+  {"by": "America One and Arkansans for Democracy and Justice", "for": "R", "theme": "Pro Cotton super PACs spent over 3 million dollars on ads and texts.", "src": "https://newsweek.com/gops-tom-cotton-outspending-dem-rival-65-1-in-state-trump-won-by-31-points-12503483"},
+  {"by": "Shoffner campaign", "for": "D", "theme": "A former Cotton voter says Cotton voted down the farm bill twice.", "src": "https://prospect.org/2026/10/08/prairie-populist-crimson-red-arkansas-hallie-shoffner/"}
+ ],
+ "regions": [
+  {"name": "Central Arkansas", "counties": ["Pulaski", "Saline", "Faulkner", "Lonoke"], "note": "Little Rock in Pulaski is the Democratic anchor, ringed by fast growing Republican suburbs."},
+  {"name": "Northwest Arkansas", "counties": ["Benton", "Washington", "Sebastian", "Crawford"], "note": "A booming, more diverse region where Fayetteville leans left and Benton County is Republican but trending less so."},
+  {"name": "The Delta", "counties": ["Phillips", "Lee", "St. Francis", "Crittenden", "Jefferson", "Mississippi"], "note": "Heavily agricultural and majority Black in places, the Democratic base outside Little Rock and the heart of the farm crisis."},
+  {"name": "Northeast Arkansas", "counties": ["Craighead", "Greene", "Jackson", "Poinsett", "White"], "note": "Rice and soybean country around Jonesboro, near Shoffner's home, that has become solidly Republican."},
+  {"name": "Ozarks and the north", "counties": ["Baxter", "Boone", "Marion", "Searcy", "Van Buren"], "note": "Rural, older and deeply Republican mountain counties."},
+  {"name": "South Arkansas", "counties": ["Union", "Columbia", "Ouachita", "Miller", "Garland"], "note": "Timber and oil towns plus Hot Springs, mostly Republican with Democratic pockets in Black communities."}
+ ]
+}

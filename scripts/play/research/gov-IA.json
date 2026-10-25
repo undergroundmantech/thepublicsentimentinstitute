@@ -1,0 +1,68 @@
+{
+ "id": "gov-IA",
+ "checked": "2026-10-25",
+ "summary": "Democrat Rob Sand and Trump endorsed Republican Zach Lahn are running the most expensive governor race in Iowa history, with a Marist poll in mid October showing Sand ahead 52 to 45 and forecasters rating it lean Democrat, per Newsweek. The campaign has turned on residency and authenticity, school funding, taxes and the state's rising cancer rate, per PolitiFact and local TV.",
+ "issues": [
+  {"issue": "Taxes and the budget", "why": "Lahn says Sand would raise taxes, while Sand says he will keep the income tax cuts but calls the budget a fiscal time bomb.", "src": "https://politifact.com/factchecks/2026/sep/17/zach-lahn/rob-sand-7500-tax-increase-iowa-governor/"},
+  {"issue": "Cancer and water quality", "why": "Iowa has a rising cancer rate and both candidates debated nitrate levels in water.", "src": "https://politifact.com/article/2026/oct/06/zach-lahn-rob-sand-iowa-governor-midterm-elections/"},
+  {"issue": "School funding", "why": "Lawmakers passed a 2 percent increase many school officials call too low, and Iowa fell to 26th in K 12 rankings.", "src": "https://www.dakotanewsnow.com/2026/10/15/lahn-sand-face-off-running-mates-school-funding-visas-second-debate/?outputType=amp"},
+  {"issue": "Jobs and H 1B visas", "why": "Lahn wants to ban H 1B visas at public universities and state jobs while Sand says Iowa needs more workers.", "src": "https://www.dakotanewsnow.com/2026/10/15/lahn-sand-face-off-running-mates-school-funding-visas-second-debate/?outputType=amp"},
+  {"issue": "Rural hospitals and Medicaid", "why": "Sand argues federal Medicaid cuts in the One Big Beautiful Bill Act hurt rural hospitals.", "src": "https://politifact.com/article/2026/oct/06/zach-lahn-rob-sand-iowa-governor-midterm-elections/"}
+ ],
+ "storylines": [
+  {"title": "Race becomes most expensive in Iowa history", "date": "2026-10-21", "what": "The two campaigns have raised about 81 million dollars combined, with heavy DGA money for Sand and RGA money for Lahn.", "helps": "mixed", "kind": "national", "src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752"},
+  {"title": "Marist poll has Sand up seven", "date": "2026-10-21", "what": "A Marist poll of registered voters taken Oct. 8 to 11 showed Sand at 52 percent and Lahn at 45.", "helps": "D", "kind": "national", "src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752"},
+  {"title": "Second debate on schools and visas", "date": "2026-10-14", "what": "Lahn called for banning H 1B visas in public jobs while Sand defended immigrant workers, and both backed more school aid.", "helps": "mixed", "kind": "debate", "src": "https://www.dakotanewsnow.com/2026/10/15/lahn-sand-face-off-running-mates-school-funding-visas-second-debate/?outputType=amp"},
+  {"title": "First debate becomes authenticity fight", "date": "2026-10-06", "what": "In Davenport Sand called Lahn a part time Iowan with ties to Kansas, and Lahn said Sand is bankrolled by his wife's wealthy family.", "helps": "mixed", "kind": "debate", "src": "https://politifact.com/article/2026/oct/06/zach-lahn-rob-sand-iowa-governor-midterm-elections/"},
+  {"title": "Lahn tax ad rated False", "date": "2026-09-17", "what": "PolitiFact rated False a Lahn ad claim that Sand wants to raise taxes by 7,500 dollars a year.", "helps": "D", "kind": "ad", "src": "https://politifact.com/factchecks/2026/sep/17/zach-lahn/rob-sand-7500-tax-increase-iowa-governor/"},
+  {"title": "Trump endorses Lahn", "date": "2026-07-10", "what": "President Trump gave Lahn his complete and total endorsement in a Truth Social post.", "helps": "R", "kind": "endorsement", "src": "https://cbs2iowa.com/news/local/president-trump-endorses-zach-lahn-in-iowa-governors-race"},
+  {"title": "Sand ad hits Lahn's Kansas home", "date": "2026-06-05", "what": "Sand's first general election ad argued Lahn is not a full time Iowan because his family home is in Kansas.", "helps": "D", "kind": "ad", "src": "https://www.thegazette.com/news/elections/state/sand-s-first-iowa-general-election-ad-criticizes-lahn-s-dual-residency/article_08d14dd3-1caa-4d47-89a7-a6574748e1d5.html"}
+ ],
+ "events": [
+  {"title": "Answer the tax hike charge", "prompt": "An opposing ad says you will raise taxes on families by thousands of dollars, and the state budget faces a shortfall. How do you answer?", "issue": "econ", "src": "https://politifact.com/factchecks/2026/sep/17/zach-lahn/rob-sand-7500-tax-increase-iowa-governor/",
+   "opts": [
+    {"label": "Defend fiscal caution", "say": "Say the flat tax cuts left a fiscal time bomb and schools and hospitals need funding.", "pos": -0.6, "trump": -0.5, "tone": "calm"},
+    {"label": "Pledge to keep cuts", "say": "Promise to keep the income tax cuts and target waste instead.", "pos": 0.2, "trump": null, "tone": "calm"},
+    {"label": "Go to zero income tax", "say": "Push to eliminate the state income tax and cut spending to match.", "pos": 0.9, "trump": 0.6, "tone": "fiery"}
+   ]},
+  {"title": "Residency and money attacks", "prompt": "Debates have turned into fights over who is a real Iowan and whose family money is funding whom. Do you engage?", "issue": "corruption", "src": "https://politifact.com/article/2026/oct/06/zach-lahn-rob-sand-iowa-governor-midterm-elections/",
+   "opts": [
+    {"label": "Hit residency hard", "say": "Run ads saying your opponent is a part time Iowan who votes and lives elsewhere.", "pos": -0.2, "trump": -0.3, "tone": "fiery"},
+    {"label": "Stay on issues", "say": "Decline the personal fight and talk about costs, schools and cancer rates.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Hit the megadonors", "say": "Say your opponent is bought by his in-laws and coastal Democratic money.", "pos": 0.5, "trump": 0.4, "tone": "fiery"}
+   ]},
+  {"title": "H 1B visas and Iowa jobs", "prompt": "A proposal to ban H 1B visas at public universities and state government jobs is now a debate topic. Where do you land?", "issue": "immig", "src": "https://www.dakotanewsnow.com/2026/10/15/lahn-sand-face-off-running-mates-school-funding-visas-second-debate/?outputType=amp",
+   "opts": [
+    {"label": "Keep the door open", "say": "Oppose a ban and say Iowa needs more workers to grow.", "pos": -0.6, "trump": -0.6, "tone": "calm"},
+    {"label": "Favor trades training", "say": "Back apprenticeships for Iowans in the trades without a blanket ban.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Ban the visas", "say": "Ban H 1B hiring at public universities and state jobs so Iowa jobs go to Iowans.", "pos": 0.8, "trump": 0.7, "tone": "fiery"}
+   ]},
+  {"title": "Cancer and water quality", "prompt": "Iowa is the only state with a rising cancer rate, and nitrates in water are part of the debate. What is your plan?", "issue": "health", "src": "https://politifact.com/article/2026/oct/06/zach-lahn-rob-sand-iowa-governor-midterm-elections/",
+   "opts": [
+    {"label": "Regulate farm runoff", "say": "Set enforceable limits on nitrate runoff and fund cancer research.", "pos": -0.7, "trump": -0.4, "tone": "calm"},
+    {"label": "Voluntary conservation", "say": "Pay farmers to adopt conservation practices and expand screening.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "MAHA approach", "say": "Frame it as a Make America Healthy Again fight over chemicals and food.", "pos": 0.5, "trump": 0.7, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-06", "where": "Davenport, KWQC at St. Ambrose University", "src": "https://www.wowt.com/2026/10/06/here-are-takeaways-iowas-governor-debate/"},
+  {"date": "2026-10-14", "where": "Sioux City, KTIV", "src": "https://www.kttc.com/2026/10/14/live-iowa-gubernatorial-debate-hosted-by-ktiv/"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://cbs2iowa.com/news/local/president-trump-endorses-zach-lahn-in-iowa-governors-race"},
+  {"who": "MAHA Action PAC", "for": "R", "src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752"},
+  {"who": "Democratic Governors Association", "for": "D", "src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752"},
+  {"who": "Republican Governors Association", "for": "R", "src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752"}
+ ],
+ "ads": [
+  {"by": "Sand campaign", "for": "D", "theme": "Lahn is not a full time Iowan because his family home is in Kansas.", "src": "https://www.thegazette.com/news/elections/state/sand-s-first-iowa-general-election-ad-criticizes-lahn-s-dual-residency/article_08d14dd3-1caa-4d47-89a7-a6574748e1d5.html"},
+  {"by": "Lahn campaign", "for": "R", "theme": "Sand wants to raise Iowans' taxes by 7,500 dollars a year, a claim PolitiFact rated False.", "src": "https://politifact.com/factchecks/2026/sep/17/zach-lahn/rob-sand-7500-tax-increase-iowa-governor/"}
+ ],
+ "regions": [
+  {"name": "Des Moines metro", "counties": ["Polk", "Dallas", "Warren", "Story"], "note": "The fast growing capital region and Ames, where Democrats run up margins in the core and suburbs are competitive."},
+  {"name": "Eastern Iowa cities", "counties": ["Linn", "Johnson", "Scott", "Black Hawk", "Dubuque"], "note": "Cedar Rapids, Iowa City, the Quad Cities, Waterloo and Dubuque form the Democratic leaning east."},
+  {"name": "Northeast Iowa", "counties": ["Winneshiek", "Allamakee", "Clayton", "Fayette", "Howard"], "note": "Former swing farm country around Sand's hometown of Decorah that shifted right under Trump."},
+  {"name": "Northwest Iowa", "counties": ["Sioux", "Lyon", "Plymouth", "O'Brien", "Woodbury"], "note": "The most Republican part of the state, anchored by deeply conservative rural counties and Sioux City."},
+  {"name": "Southern Iowa", "counties": ["Wapello", "Decatur", "Lucas", "Appanoose", "Wayne"], "note": "Older, rural and heavily Republican small town counties along the Missouri border."}
+ ]
+}

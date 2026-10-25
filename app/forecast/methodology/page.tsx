@@ -75,6 +75,15 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
     ),
   },
   {
+    id: "donors", eye: "Step 4c", title: "Donor coalitions",
+    body: (
+      <>
+        <p>Since October 25 the model reads the 2026 donor map: every itemized individual gift to a House or Senate campaign and every ActBlue and WinRed line through September 30, about two billion dollars placed in the counties where the donors live. For each race with both nominees on file it measures four things: the Democrat&rsquo;s share of the two nominees&rsquo; in state dollars, the share of donations, a count of people giving rather than dollars, how much more of one side&rsquo;s money comes in gifts under $200, and how far each side&rsquo;s donors reach into the other side&rsquo;s counties.</p>
+        <p>Each is set against what a race with the same partisan lean and the same incumbency normally shows, from a fit across more than 400 races, so ActBlue&rsquo;s national size and a state&rsquo;s lean never count as an edge. The parts are averaged into one score in units of the normal spread. Inside one spread of normal the term is zero; past it the shift is 0.02 logit per unit, capped at 0.05, and it enters the fundamentals and census legs the way the money term does, so a race with deep polling barely moves. Governors file with the states, not the FEC, so they carry no donor term. <Link href="/forecast/donors">See every race&rsquo;s donor coalition.</Link></p>
+      </>
+    ),
+  },
+  {
     id: "sims", eye: "Step 5", title: "2,000 correlated simulations",
     body: (
       <>

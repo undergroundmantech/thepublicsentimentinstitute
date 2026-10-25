@@ -1,0 +1,63 @@
+{
+ "id": "gov-MI",
+ "checked": "2026-10-25",
+ "summary": "Democratic Secretary of State Jocelyn Benson led Republican Rep. John James 46 to 39 in an Oct. 1 Mitchell Research poll for the open governor's seat, per Hoodline. Benson has tried to tie James to Trump, the Iran war and Canada tariffs while James, who now says he would break with Trump on some issues, blames years of Democratic control in Lansing and attacks Benson's record running the Secretary of State office, per Michigan Public and WDIV.",
+ "issues": [
+  {"issue": "Gas prices and tariffs", "why": "Benson backs suspending the state gas tax and a Michigan deal with Canada to avoid tariffs, while James says the state has no role in trade deals.", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"issue": "Income taxes", "why": "James pledges deep income tax cuts starting in year one, while Benson promises a broad revenue review to allow tax breaks.", "src": "https://www.clickondetroit.com/news/local/2026/10/16/benson-and-james-clash-over-health-care-trump-and-lansing-record-in-final-michigan-governor-debate/"},
+  {"issue": "Data centers and electric bills", "why": "Benson backs a statewide data center moratorium and tighter utility rules, while James says communities should decide and favors all of the above energy.", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"issue": "Literacy and schools", "why": "James cites Michigan's fourth grade reading ranking and is open to holding back struggling third graders, while Benson says teachers and parents should decide.", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"issue": "Health care costs", "why": "Benson pitches an affordability plan while James points to his price transparency bill in Congress.", "src": "https://www.clickondetroit.com/news/local/2026/10/16/benson-and-james-clash-over-health-care-trump-and-lansing-record-in-final-michigan-governor-debate/"}
+ ],
+ "storylines": [
+  {"title": "Final debate on Trump and Lansing", "date": "2026-10-15", "what": "At the WDIV debate Benson said James does everything Trump asks, and James said Democrats in Lansing have not improved lives, after which Benson conceded they have not done enough on schools.", "helps": "mixed", "kind": "debate", "src": "https://www.clickondetroit.com/news/local/2026/10/16/benson-and-james-clash-over-health-care-trump-and-lansing-record-in-final-michigan-governor-debate/"},
+  {"title": "Poll shows Benson up seven", "date": "2026-10-07", "what": "A Mitchell Research poll of likely voters had Benson at 46 percent and James at 39, with Trump's Michigan approval at 27 percent.", "helps": "D", "kind": "local", "src": "https://hoodline.com/2026/10/benson-opens-7-point-lead-over-james-in-michigan-governor-poll/"},
+  {"title": "James breaks with Trump on Iran war", "date": "2026-10-06", "what": "In the Grand Rapids debate James called for ending the Iran war and a new trade approach, while Benson said for the first time she would suspend the gas tax.", "helps": "mixed", "kind": "debate", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"title": "Data center profit charges", "date": "2026-10-06", "what": "Benson questioned James's data center stock holdings, and James pointed to Benson's husband's role at a company behind a Saline Township data center, which she says did not profit her family.", "helps": "mixed", "kind": "attack", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"title": "James 9/11 themed ad", "date": "2026-09-10", "what": "A James video said Benson stands with a radical left that says America deserved 9/11, citing streamer Hasan Piker, and Benson said she would never campaign with anyone who says that.", "helps": "mixed", "kind": "ad", "src": "https://www.fox2detroit.com/news/john-james-jocelyn-benson-hasan-piker-campaign-ad-september-11th"},
+  {"title": "James hits Secretary of State record", "date": "2026-09-09", "what": "James cited misprinted driver's licenses and noncitizens found on voter rolls under Benson, and her campaign blamed a vendor and said errors were fixed.", "helps": "R", "kind": "attack", "src": "https://www.michiganpublic.org/politics-government/2026-09-10/republicans-and-democrats-hurling-attacks-and-counter-attacks-in-michigan-governors-race"},
+  {"title": "Democrats hit James on stock disclosures", "date": "2026-09-09", "what": "Michigan Democrats said James failed to disclose 145 stock trades on time, and James said he made no trades himself and is now compliant.", "helps": "D", "kind": "scandal", "src": "https://www.michiganpublic.org/politics-government/2026-09-10/republicans-and-democrats-hurling-attacks-and-counter-attacks-in-michigan-governors-race"}
+ ],
+ "events": [
+  {"title": "Gas tax holiday", "prompt": "Gas prices are up with the Iran war and voters want relief. Do you back suspending Michigan's gas tax?", "issue": "econ", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate",
+   "opts": [
+    {"label": "Suspend and blame the war", "say": "Suspend the gas tax and say Trump's war and tariffs drove prices up.", "pos": -0.4, "trump": -0.9, "tone": "fiery"},
+    {"label": "Temporary relief", "say": "Back a short gas tax pause while protecting road funding.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Cut income taxes", "say": "Skip the gimmick and promise permanent income tax cuts in year one.", "pos": 0.8, "trump": 0.3, "tone": "calm"}
+   ]},
+  {"title": "Data center moratorium", "prompt": "Data centers are coming to Michigan townships and electric bills are rising. Do you pause them?", "issue": "econ", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate",
+   "opts": [
+    {"label": "Statewide moratorium", "say": "Pause new data centers statewide and tighten utility regulation.", "pos": -0.7, "trump": -0.4, "tone": "calm"},
+    {"label": "Local control", "say": "Let each community decide and require developers to pay for grid upgrades.", "pos": 0.2, "trump": null, "tone": "calm"},
+    {"label": "Welcome investment", "say": "Court data centers with an all of the above energy plan and lower taxes.", "pos": 0.7, "trump": 0.5, "tone": "calm"}
+   ]},
+  {"title": "Distance from Trump", "prompt": "Trump's approval in Michigan is low and your rival keeps tying you to his war and tariffs. How close do you stay to the president?", "issue": "other", "src": "https://www.clickondetroit.com/news/local/2026/10/16/benson-and-james-clash-over-health-care-trump-and-lansing-record-in-final-michigan-governor-debate/",
+   "opts": [
+    {"label": "Run against Trump", "say": "Make the race a referendum on Trump's war, tariffs and costs.", "pos": -0.6, "trump": -1, "tone": "fiery"},
+    {"label": "Break on some issues", "say": "Say you would break with the president on Iran and trade while keeping his tax agenda.", "pos": 0.4, "trump": -0.2, "tone": "calm"},
+    {"label": "Stand with Trump", "say": "Embrace the president and say his policies will help Michigan.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+   ]},
+  {"title": "Voter rolls and license errors", "prompt": "An audit found misprinted licenses and noncitizens on voter rolls before they were removed. How do you handle election integrity?", "issue": "corruption", "src": "https://www.michiganpublic.org/politics-government/2026-09-10/republicans-and-democrats-hurling-attacks-and-counter-attacks-in-michigan-governors-race",
+   "opts": [
+    {"label": "Defend the system", "say": "Say the errors were caught and fixed and Michigan is a model for secure elections.", "pos": -0.5, "trump": -0.6, "tone": "calm"},
+    {"label": "Promise an audit", "say": "Call for an independent review of vendor contracts and voter list upkeep.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Call it corruption", "say": "Say the problems show incompetence or corruption and require proof of citizenship.", "pos": 0.8, "trump": 0.8, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-06", "where": "Grand Rapids, WOOD TV", "src": "https://www.michiganpublic.org/politics-government/2026-10-07/james-distances-himself-from-trump-as-benson-tries-to-connect-them-in-gubernatorial-debate"},
+  {"date": "2026-10-15", "where": "Detroit, WDIV Local 4", "src": "https://www.clickondetroit.com/news/local/2026/10/12/live-updates-john-james-jocelyn-benson-face-off-in-gubernatorial-debate-hosted-by-wdiv/"}
+ ],
+ "endorsements": [],
+ "ads": [
+  {"by": "James campaign", "for": "R", "theme": "A 9/11 themed video says Benson stands with a radical left that says America deserved 9/11.", "src": "https://www.fox2detroit.com/news/john-james-jocelyn-benson-hasan-piker-campaign-ad-september-11th"}
+ ],
+ "regions": [
+  {"name": "Metro Detroit", "counties": ["Wayne", "Oakland", "Macomb"], "note": "Democratic Detroit and Oakland suburbs against swingy, working class Macomb, home to James's base."},
+  {"name": "Ann Arbor and Lansing", "counties": ["Washtenaw", "Ingham"], "note": "University and capital counties that deliver big Democratic margins."},
+  {"name": "West Michigan", "counties": ["Kent", "Ottawa", "Kalamazoo", "Muskegon"], "note": "Grand Rapids and Kalamazoo have trended Democratic while Ottawa remains a Republican stronghold."},
+  {"name": "Flint, Saginaw and the Thumb", "counties": ["Genesee", "Saginaw", "Bay", "Tuscola"], "note": "Old auto towns that swing between parties and rural Thumb counties that are solidly Republican."},
+  {"name": "Northern Lower Peninsula", "counties": ["Grand Traverse", "Antrim", "Otsego", "Roscommon"], "note": "Rural and resort counties that lean Republican, with Traverse City more competitive."},
+  {"name": "Upper Peninsula", "counties": ["Marquette", "Houghton", "Delta", "Chippewa"], "note": "Remote, heavily Republican region with a Democratic pocket in Marquette."}
+ ]
+}

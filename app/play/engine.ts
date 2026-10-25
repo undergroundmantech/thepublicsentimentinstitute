@@ -8,7 +8,15 @@ export type Side = "D" | "R";
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export type Intel = { l: string | null; t: string; u: string | null };
 export type Cand = { side: Side; name: string; party: string; inc: boolean; file: string | null; intel: Intel[]; blocs: string[];
-  money: { receipts: number | null; cash: number | null; outside_for: number | null; spent: number | null; google_ads: number | null; as_of: string | null }; health: number | null };
+  money: { receipts: number | null; cash: number | null; outside_for: number | null; spent: number | null; google_ads: number | null; as_of: string | null }; health: number | null;
+  donors?: { donations: number | null; raised: number | null; home: number | null; small: number | null; big: number | null; pacs: number | null; self: number | null } | null };
+export type Research = {
+  summary: string | null; issues: { issue: string; why: string; src: string }[];
+  storylines: { title: string; date: string; what: string; helps: string; kind: string; src: string }[];
+  events: { title: string; prompt: string; issue: string; src: string; opts: { label: string; say: string; pos: number; trump: number | null; tone: string | null }[] }[];
+  debates: { date: string; where: string; src: string }[]; endorsements: { who: string; for: string; src: string }[];
+  ads: { by: string; for: string; theme: string; src: string }[]; regions: { name: string; f: string[]; note: string }[];
+};
 export type CountyRow = [string, string, number, number, number, number, number | null]; // fips, name, margin R minus D, D, R, total, 2024 pres margin
 export type GroupRow = [string, string, number, number, number, number]; // dimension, label, share, D, R, other
 export type RaceFile = {
@@ -18,6 +26,7 @@ export type RaceFile = {
   groups: GroupRow[]; counties: CountyRow[]; outside: { total: number | null; groups: { name: string; side: string; kind: string; target: string; amount: number }[] };
   earlyVote: { ballots: number; party: { d: number; r: number; o: number }; estimatedShare: number; date: string } | null;
   news: { id: string; title: string; dek: string; date: string }[]; media: { who: string; what: string; when: string; lean: string }[];
+  research?: Research; donorSignal?: { z: number; shift_logit: number } | null;
 };
 
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; opp: number; fund: number; neg: number; drift: number; noise: number }> = {
@@ -36,6 +45,15 @@ export const weekLabel = (w: number) => {
   return `${f(a)} to ${f(b)}`;
 };
 export const DEBATE_WEEK = 6;
+/** The game week a real date falls in, or null outside the eight weeks. */
+export const weekOf = (iso: string) => { const t = Date.parse(iso + "T12:00:00Z"); if (!isFinite(t)) return null; const w = Math.floor((t - WEEK0) / (7 * 864e5)) + 1; return w >= 1 && w <= 8 ? w : null; };
+/** The debate falls in the week of the race's first real debate; with none on record, week 6. */
+export function debateWeek(r: RaceFile) {
+  const ws = (r.research?.debates ?? []).map((d) => weekOf(d.date)).filter((w): w is number => w != null && w >= 2);
+  return ws.length ? Math.min(...ws) : DEBATE_WEEK;
+}
+/** TV costs more as Election Day nears: stations raise rates and inventory runs short. Reserving early locks today's rate. */
+export const RATE = [1, 1, 1, 1.05, 1.1, 1.15, 1.25, 1.4];
 export const EARLY_FROM = 5;
 
 export type Staff = { pollster: 0 | 1 | 2 | 3; media: boolean; field: boolean; oppo: boolean; digital: boolean };
@@ -45,8 +63,8 @@ export const STAFF_COST = { media: { hire: 150000, wk: 25000, name: "Media consu
   oppo: { hire: 120000, wk: 0, name: "Opposition research firm", what: "Turns the other side's record into ads and debate lines, and attacks stop backfiring." },
   digital: { hire: 60000, wk: 15000, name: "Digital director", what: "Online fundraising and targeted digital ads go further." } };
 
-export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; need?: "oppo"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" };
-export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number };
+export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; need?: "oppo" | "pollster"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" | "amplify" | "push" | "pivot" | "rally" | "blast" | "tout" | "forum" | "dodge"; fx?: number };
+export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string };
 export type Part = { label: string; share: number; lean: number; fx: number };
 export type LogItem = { w: number; kind: "you" | "opp" | "air" | "event" | "money" | "poll" | "gaffe" | "news"; t: string; fx?: number; parts?: Part[] };
 export type Poll = { w: number; src: string; m: number; n: number; internal: boolean; groups?: { label: string; m: number }[] };
@@ -61,6 +79,8 @@ export type State = {
   spent: number; raised: number; pending: string[]; used: string[]; resolved: { id: string; choice: number; fx: number }[];
   polls: Poll[]; log: LogItem[]; trend: { w: number; m: number }[]; done: boolean; result?: Result;
   cur: Ev[]; evw: number; // this week's decisions, and the last week they were dealt
+  buzz: number; volunteers: number; reserved: { w: number; amt: number; tone: string }[]; tests: Record<string, number[]>; endorsed: string[];
+  dweek: number; knocks: number; flashes: string[]; weekly: { w: number; m: number; cash: number; buzz: number; vol: number }[];
 };
 export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number };
 
@@ -73,6 +93,11 @@ export function rand(s: State) { // mulberry32 kept in the state
 export const gauss = (s: State) => { const u = Math.max(1e-9, rand(s)), v = rand(s); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 export const usd = (n: number) => (Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : Math.abs(n) >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n)}`);
+/** Older saves get the fields added since. */
+export function migrate(s: State, r: RaceFile): State {
+  s.buzz ??= 35; s.volunteers ??= 60; s.reserved ??= []; s.tests ??= {}; s.endorsed ??= []; s.dweek ??= debateWeek(r); s.knocks ??= 0; s.flashes ??= []; s.weekly ??= [];
+  return s;
+}
 export const lead = (m: number, me: string, op: string) => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
 
 // ------------------------------------------------------------- the race seen from the player's chair
@@ -82,6 +107,7 @@ export type Ctx = {
   groups: { dim: string; label: string; share: number; L: number; d: number; r: number }[];
   g: (label: string, dim?: string) => { dim: string; label: string; share: number; L: number; d: number; r: number } | undefined;
   approve: number; costsHard: number; small: number; weekly: number; oppWeekly: number; outMe: number; outOp: number;
+  smallShare: number; bigShare: number; // the share of the player's itemized money in gifts under $200 and $2,500 and up, from the donor map
 };
 export function ctx(r: RaceFile, side: Side): Ctx {
   const me = r.cands[side === "D" ? 0 : 1], op = r.cands[side === "D" ? 1 : 0], sign = side === "R" ? 1 : -1;
@@ -94,6 +120,7 @@ export function ctx(r: RaceFile, side: Side): Ctx {
     r, side, me, op, sign, total, cost: total * 0.55, base: r.counties.map((c) => sign * c[2]), groups, g,
     approve: g("Approve")?.share ?? 45, costsHard: g("Difficult")?.share ?? 55, small: g("Small, under 50K")?.share ?? 15,
     weekly: recMe * 0.035, oppWeekly: recOp * 0.035, outMe: (me.money.outside_for || 0) * 0.08, outOp: (op.money.outside_for || 0) * 0.08,
+    smallShare: me.donors?.small ?? (me.party === "R" ? 0.3 : 0.45), bigShare: me.donors?.big ?? 0.2,
   };
 }
 
@@ -107,6 +134,7 @@ export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(M
     pers: Array(n).fill(0), xme: Array(n).fill(0), xop: Array(n).fill(0), glob: 0, adStock: 0, perm: 0, nat: DIFF[diff].start,
     ledger: {}, visits: {}, oppVisits: {}, offices: [], staff: { pollster: 0, media: false, field: false, oppo: false, digital: false },
     tvWeek: 0, digWeek: 0, weekCash: Math.round(cash0), prep: 0, banked: 0, gotv: 0, spent: 0, raised: 0, pending: [], used: [], resolved: [], polls: [], log: [], trend: [], done: false, cur: [], evw: 0,
+    buzz: 35, volunteers: 60 + Math.round(Math.sqrt(c.me.donors?.donations ?? 20000) * 0.6), reserved: [], tests: {}, endorsed: [], dweek: debateWeek(r), knocks: 0, flashes: [], weekly: [],
   };
   s.trend.push({ w: 0, m: margin(r, s) });
   publicPolls(r, s, true);
@@ -223,6 +251,7 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
   s.glob += media; s.ledger["Local news viewers"] = (s.ledger["Local news viewers"] ?? 0) + media;
   const fx = (co[5] / c.total) * (pm >= 8 ? 0 : (pm > -8 ? 2.6 : 1.7) * e) + media;
   s.log.push({ w: s.week, kind: "you", t, fx });
+  s.buzz = clamp(s.buzz + 5 * e, 0, 100); s.volunteers += Math.round(18 * e);
   return tire(c, s, 13) ?? { ok: true, t, fx };
 }
 
@@ -238,6 +267,7 @@ export function townHall(c: Ctx, s: State, f: string): ActResult {
   let t = `Town hall in ${co[1]}: an hour of questions from undecided voters.`;
   if (rand(s) < 0.15) { const good = rand(s) < 0.55; const k = (good ? 1 : -1.2) * (0.1 + rand(s) * 0.15); fx += k; t += good ? " A tough exchange with a heckler went viral the good way." : " A testy answer to a voter became the clip of the day."; }
   applyGlobal(s, fx, [{ label: "Independents", share: ind, lean: 0, fx }], 0.7);
+  s.buzz = clamp(s.buzz + 2, 0, 100); s.volunteers += 8;
   s.log.push({ w: s.week, kind: "you", t, fx });
   return tire(c, s, 9) ?? { ok: true, t, fx };
 }
@@ -246,9 +276,10 @@ export function fundraise(c: Ctx, s: State, kind: "call" | "donors" | "email"): 
   const fm = DIFF[s.diff].fund * (1 + 0.3 * s.momentum);
   if (kind === "email") {
     if (s.fatigue >= 3) return { ok: false, t: "Your list is tapped out this week. Try again next week." };
-    const amt = Math.round(c.weekly * 0.22 * fm * (s.staff.digital ? 1.6 : 1) * Math.pow(0.7, s.fatigue));
+    // the list's size and habits come from the donor map: a campaign that raises more in gifts under $200 gets more from a blast
+    const amt = Math.round(c.weekly * 0.22 * fm * (s.staff.digital ? 1.6 : 1) * Math.pow(0.7, s.fatigue) * (0.55 + c.smallShare) * (0.75 + s.buzz / 200));
     s.fatigue += 1; s.cash += amt; s.raised += amt;
-    const t = `An email and text blast to small donors brought in ${usd(amt)}.`; s.log.push({ w: s.week, kind: "money", t }); return { ok: true, t };
+    const t = `An email and text blast to small donors brought in ${usd(amt)}. ${Math.round(c.smallShare * 100)}% of your itemized money comes in gifts under $200.`; s.log.push({ w: s.week, kind: "money", t }); return { ok: true, t };
   }
   if (s.days < 1) return { ok: false, t: "No days left this week." };
   s.days -= 1;
@@ -257,7 +288,7 @@ export function fundraise(c: Ctx, s: State, kind: "call" | "donors" | "email"): 
     s.cash += amt; s.raised += amt; const t = `A day of call time: ${usd(amt)} raised.`; s.log.push({ w: s.week, kind: "money", t });
     return tire(c, s, 6) ?? { ok: true, t };
   }
-  const amt = Math.round(c.weekly * 0.85 * fm);
+  const amt = Math.round(c.weekly * 0.85 * fm * (0.7 + c.bigShare * 1.5));
   s.cash += amt; s.raised += amt;
   let t = `A big dollar fundraiser: ${usd(amt)} raised.`;
   if (c.costsHard > 50 && rand(s) < 0.22) {
@@ -276,6 +307,7 @@ export function media(c: Ctx, s: State): ActResult {
   const fx = 0.05 + rand(s) * 0.05;
   applyGlobal(s, fx, [{ label: "Local news viewers", share: 60, lean: 0, fx }], 0.5);
   const t = "A media tour: local TV, talk radio and two podcasts."; s.log.push({ w: s.week, kind: "you", t, fx });
+  s.buzz = clamp(s.buzz + 8, 0, 100);
   return tire(c, s, 8) ?? { ok: true, t, fx };
 }
 export function rest(s: State): ActResult {
@@ -285,7 +317,7 @@ export function rest(s: State): ActResult {
 }
 export function debatePrep(c: Ctx, s: State): ActResult {
   if (s.days < 1) return { ok: false, t: "No days left this week." };
-  if (s.week > DEBATE_WEEK) return { ok: false, t: "The debate is over." };
+  if (s.week > s.dweek) return { ok: false, t: "The debate is over." };
   s.days -= 1; s.prep += 1;
   const t = `Debate prep with a stand in for ${c.op.name}.`; s.log.push({ w: s.week, kind: "you", t });
   return tire(c, s, 5) ?? { ok: true, t };
@@ -298,11 +330,32 @@ export const NORMAL_WEEK = 0.13;
 export const airFx = (spend: number, cost: number) => 0.45 * Math.log(1 + Math.max(0, spend) / cost);
 export function buyTV(c: Ctx, s: State, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
+  const rate = RATE[s.week - 1] ?? 1;
   s.cash -= amt; s.spent += amt; s.tvWeek += amt;
-  const pending = `tv:${amt}:${tone}`;
-  s.pending.push(pending);
-  const t = `${usd(amt)} of ${tone} television booked for this week across ${c.r.state}.`; s.log.push({ w: s.week, kind: "you", t });
+  s.pending.push(`tv:${Math.round(amt / rate)}:${tone}`);
+  const t = `${usd(amt)} of ${tone} television booked for this week across ${c.r.state}${rate > 1 ? `, at late rates ${Math.round((rate - 1) * 100)}% above September` : ""}.`; s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
+}
+export function reserveTV(c: Ctx, s: State, w: number, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
+  if (w <= s.week || w > WEEKS) return { ok: false, t: "Reserve a future week." };
+  if (s.cash < amt) return { ok: false, t: "Not enough cash." };
+  s.cash -= amt; s.spent += amt; s.reserved.push({ w, amt, tone });
+  const t = `Reserved ${usd(amt)} of ${tone} television for week ${w} at today's rate, ${Math.round(((RATE[w - 1] ?? 1) - 1) * 100)}% cheaper than buying it then.`; s.log.push({ w: s.week, kind: "you", t });
+  return { ok: true, t };
+}
+/** A weekend of door knocking: volunteers from your field offices contact voters in those counties. */
+export function canvass(c: Ctx, s: State): ActResult {
+  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (!s.offices.length) return { ok: false, t: "Open a field office first; volunteers need somewhere to pick up their walk lists." };
+  s.days -= 1;
+  const votes = s.volunteers * 3 * (s.staff.field ? 1.4 : 1) * (s.week >= EARLY_FROM ? 1.25 : 1);
+  const idx = s.offices.map((f) => ci(c.r, f)).filter((i) => i >= 0);
+  const tot = idx.reduce((a, i) => a + c.r.counties[i][5], 0) || 1;
+  for (const i of idx) s.xme[i] += votes * (c.r.counties[i][5] / tot);
+  s.knocks += Math.round(s.volunteers * 60);
+  const t = `Door knocking weekend: ${s.volunteers.toLocaleString()} volunteers knocked about ${Math.round(s.volunteers * 60).toLocaleString()} doors and turned out roughly ${Math.round(votes).toLocaleString()} more of your voters.`;
+  s.log.push({ w: s.week, kind: "you", t });
+  return tire(c, s, 7) ?? { ok: true, t };
 }
 export function buyDigital(c: Ctx, s: State, amt: number, label: string): ActResult {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
@@ -368,6 +421,13 @@ function internalPoll(c: Ctx, s: State) {
     const moved = (s.ledger[g!.label] ?? 0) * (100 / Math.max(1, g!.share)) + (truth - s.trend[0].m);
     return { label: g!.label, m: baseM + moved + gauss(s) * tier.sd * 2 };
   });
+  // regions from the race research: each region's margin from its counties, with more noise than the statewide number
+  const g0 = globalShift(s);
+  for (const reg of c.r.research?.regions ?? []) {
+    let me = 0, op = 0, t = 0;
+    for (const f of reg.f) { const i = ci(c.r, f); if (i < 0) continue; const v = countyVotes(c.r, s, i, g0); me += v.me; op += v.op; t += v.t; }
+    if (t > 0) groups.push({ label: `Region: ${reg.name}`, m: (100 * (me - op)) / t + gauss(s) * tier.sd * 1.6 });
+  }
   s.polls.push({ w: s.week, src: `Your ${tier.name}`, m: truth + gauss(s) * tier.sd, n: 800, internal: true, groups });
 }
 
@@ -406,6 +466,8 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   // the air war: your television, theirs, and the outside groups, against what the forecast already expects both sides to spend
   const opTV = opponentWeek(c, s);
   let mineTV = 0;
+  for (const x of s.reserved.filter((x) => x.w === s.week)) { s.pending.push(`tv:${x.amt}:${x.tone}`); s.tvWeek += x.amt; }
+  s.reserved = s.reserved.filter((x) => x.w !== s.week);
   for (const p of s.pending) { const [, a, tone] = p.split(":"); mineTV += Number(a) * (tone === "positive" ? 0.85 : tone === "contrast" ? 1.05 : 1.3); }
   const attacks = s.pending.filter((p) => p.endsWith("attack")).length;
   s.pending = [];
@@ -438,6 +500,10 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   const m1 = margin(r, s);
   s.momentum = clamp((m1 - m0) / 0.8, -1, 1);
   s.trend.push({ w: s.week, m: m1 });
+  // buzz fades toward normal, and volunteers follow offices, buzz and momentum
+  s.buzz = clamp(s.buzz * 0.85 + 30 * 0.15 + 6 * s.momentum, 0, 100);
+  s.volunteers = Math.max(20, Math.round(s.volunteers * 0.95 + s.offices.length * 55 * (s.staff.field ? 1.4 : 1) + 40 * s.momentum + s.buzz * 0.8));
+  s.weekly.push({ w: s.week, m: m1, cash: s.cash, buzz: Math.round(s.buzz), vol: s.volunteers });
   s.stamina = clamp(s.stamina + 18, 0, 100);
   s.tvWeek = 0; s.digWeek = 0; s.fatigue = 0;
   s.week += 1; s.days = DAYS; s.weekCash = Math.max(0, s.cash);

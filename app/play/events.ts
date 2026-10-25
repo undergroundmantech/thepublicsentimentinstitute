@@ -3,7 +3,7 @@
 // message and the vulnerabilities opponents are running on are written down with sources.
 // A stance's pos runs from -1, the most progressive answer, to +1, the most conservative; trump runs from -1, distance
 // from the president, to +1, embrace. How voters take it is worked out in engine.react from the race's own voter data.
-import { type Ctx, type State, type Part, type Ev, react, applyGlobal, usd, DIFF, rand } from "./engine";
+import { type Ctx, type State, type Part, type Ev, type Stance, react, applyGlobal, usd, DIFF, rand, gauss, weekOf, POLLSTERS } from "./engine";
 export type { Ev, Opt } from "./engine";
 
 const FARM = ["IA", "NE", "KS", "SD", "MN", "WI", "OH", "MI", "GA", "AR", "MS", "LA", "TN", "OK", "TX", "ME", "VT", "NC", "SC"];
@@ -92,10 +92,14 @@ function vuln(x: { intel: { l: string | null; t: string; u: string | null }[] })
   return x.intel.find((i) => /vulnerab/i.test(i.l ?? "")) ?? x.intel.find((i) => /attack|criticiz|ad |ads |hit/i.test(i.t)) ?? null;
 }
 /** The other side runs on your record: the vulnerability your people file says opponents are using. */
-export function attack(c: Ctx): Ev {
+export function attack(c: Ctx, w = 3): Ev {
+  // a real ad against you from the race research first, then the vulnerability in your people file
+  const theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
+  const ads = (c.r.research?.ads ?? []).filter((a) => a.for === theirs);
+  const ad = ads[w === 7 ? 1 : 0] ?? ads[0];
   const v = vuln(c.me);
-  const what = v ? v.t : `${c.op.name}'s campaign calls you out of step with ${c.r.state} in a new ad.`;
-  return { id: "attack", kind: "attack", title: `${c.op.name} goes on the attack`, src: v?.u, prompt: `A new ad from ${c.op.name} and allied groups is running statewide. From your people file, what they are hitting you on: ${what}`,
+  const what = ad ? `${ad.by}: ${ad.theme}` : v ? v.t : `${c.op.name}'s campaign calls you out of step with ${c.r.state} in a new ad.`;
+  return { id: `attack:${w}`, kind: "attack", real: !!(ad || v), title: `${c.op.name} goes on the attack`, src: ad?.src ?? v?.u, prompt: ad ? `A real ad in this race is running statewide. ${what}` : `A new ad from ${c.op.name} and allied groups is running statewide. From your people file, what they are hitting you on: ${what}`,
     opts: [
       { label: "Answer with an ad", say: "Cut a response ad and put it up within 48 hours.", cash: 300000, kind: "respond" },
       { label: "Clear it up in interviews", say: "Spend a day on local TV and radio answering it directly.", days: 1, kind: "clarify" },
@@ -125,23 +129,93 @@ export function newsEv(c: Ctx, s: State): Ev | null {
   ] };
 }
 
-/** This week's decision. */
+/** Real decisions from the race research: each was built from a sourced storyline or issue in this race. */
+function realEvents(c: Ctx): Ev[] {
+  const R = c.r.research; if (!R) return [];
+  const iss: Record<string, string> = { econ: "econ", health: "health", immig: "immig", corruption: "corruption", other: "other" };
+  return R.events.map((e, k) => ({ id: `real:${k}`, kind: "real" as const, real: true, title: e.title, prompt: e.prompt, src: e.src,
+    opts: e.opts.map((o) => ({ label: o.label, say: o.say, st: { issue: iss[e.issue] ?? "other", pos: o.pos, trump: o.trump ?? undefined, tone: (o.tone === "fiery" || o.tone === "calm") ? o.tone : undefined } as Stance })) }));
+}
+/** A real moment from the campaign, dated: if it helped you, amplify it; if it helped them, push back or change the subject. */
+function flashFor(c: Ctx, s: State): Ev | null {
+  const R = c.r.research; if (!R) return null;
+  const mine = c.me.party === "I" ? "I" : c.side, theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
+  const fit = R.storylines.map((x, k) => ({ x, k, w: weekOf(x.date) })).filter((y) => y.w != null && y.w <= s.week && !s.flashes.includes(`flash:${y.k}`))
+    .sort((a, b) => (b.w! - a.w!));
+  const y = fit[0]; if (!y) return null;
+  const helps = y.x.helps === mine ? "you" : y.x.helps === theirs ? "them" : "mixed";
+  const base = { id: `flash:${y.k}`, kind: "flash" as const, real: true, title: y.x.title, prompt: `${y.x.what}`, src: y.x.src, helps, date: y.x.date };
+  if (helps === "you") return { ...base, opts: [
+    { label: "Amplify it", say: "Put digital money and your surrogates behind it for a week.", cash: 75000, kind: "amplify" },
+    { label: "Mention it, move on", say: "One press release and back to your message.", kind: "pivot" },
+    { label: "Let it ride", say: "Do nothing; the press already has it.", kind: "skip" }] };
+  if (helps === "them") return { ...base, opts: [
+    { label: "Push back hard", say: "Rapid response: statement, surrogates and a fact sheet the same day.", cash: 60000, kind: "push" },
+    { label: "Change the subject", say: "Drop a new policy plan to own the next news cycle.", days: 1, kind: "pivot" },
+    { label: "Ignore it", say: "Do not give it oxygen.", kind: "ignore" }] };
+  return { ...base, opts: [
+    { label: "Spin your side of it", say: "Tell reporters what it means for your campaign.", kind: "pivot" },
+    { label: "Stay out of it", say: "Let the story run its course.", kind: "skip" }] };
+}
+/** A real endorsement for your side, from the research, as an event to court and accept. */
+function endorseEv(c: Ctx, s: State): Ev | null {
+  const R = c.r.research; if (!R) return null;
+  const mine = c.me.party === "I" ? "I" : c.side;
+  const e = R.endorsements.find((x, k) => x.for === mine && !s.endorsed.includes(String(k)));
+  if (!e) return null;
+  const k = R.endorsements.indexOf(e);
+  return { id: `endorse:${k}`, kind: "endorse", real: true, title: `${e.who} is ready to endorse you`, src: e.src,
+    prompt: `${e.who} backed ${c.me.name} in real life. Roll it out big, or keep it low key.`, opts: [
+      { label: "Big rollout", say: "A joint event and an ad featuring the endorsement.", cash: 120000, days: 1, kind: "accept" },
+      { label: "Press release", say: "Announce it and move on.", kind: "pivot" }] };
+}
+/** The end of the third quarter: FEC reports cover through Sep 30, and the money race becomes a story. */
+function quarterEv(c: Ctx): Ev {
+  return { id: "quarter", kind: "quarter", title: "End of quarter deadline", prompt: `Reports covering through September 30 are due October 15. ${c.op.name}'s team will tout their number; donors who give before midnight count in yours.`, opts: [
+    { label: "All out deadline push", say: "Five emails and three texts a day until midnight. Big money, some list fatigue.", kind: "blast" },
+    { label: "Tout your number", say: "Release your total early to win the money story.", kind: "tout" },
+    { label: "Skip the hype", say: "Business as usual.", kind: "skip" }] };
+}
+/** No debate on the calendar: real when the other side declined. */
+function chairEv(c: Ctx): Ev {
+  return { id: "chair", kind: "chair", title: "No debate on the calendar", prompt: `There is no debate between ${c.me.name} and ${c.op.name} on the calendar. You can hold your own forum and dare them to show, or not.`, opts: [
+    { label: "Empty chair forum", say: "Hold a televised forum with an empty podium for your opponent.", cash: 50000, days: 1, kind: "forum" },
+    { label: "Attack them for dodging", say: "Make the missing debate an ad.", cash: 150000, kind: "hit" },
+    { label: "Fine by us", say: "No debate suits you.", kind: "dodge" }] };
+}
+/** Things that happen to campaigns, labeled as game scenarios, not real events. */
+const SCENARIOS: Ev[] = [
+  { id: "sc:post", kind: "scenario", title: "A staffer's old posts surface", prompt: "Scenario: a reporter found crude posts a mid level staffer wrote years ago.", opts: [
+    { label: "Fire the staffer", say: "Same day, with an apology.", kind: "respond" }, { label: "Stand by them", say: "They have apologized; you move on.", kind: "ignore" }] },
+  { id: "sc:storm", kind: "scenario", title: "Severe storm damage", prompt: "Scenario: storms knocked out power across part of the state. Campaigning through it could look tone deaf.", opts: [
+    { label: "Pause and volunteer", say: "Suspend ads in the area for three days and help with cleanup.", days: 1, kind: "respond" }, { label: "Keep campaigning", say: "Stick to the schedule.", kind: "ignore" }] },
+  { id: "sc:complaint", kind: "scenario", title: "A campaign finance complaint", prompt: "Scenario: a watchdog group files an FEC complaint about how one of your events was paid for.", opts: [
+    { label: "Lawyer up quietly", say: "Respond through counsel and refund anything questionable.", cash: 40000, kind: "respond" }, { label: "Call it a smear", say: "Attack the group's funding.", kind: "ignore" }] },
+  { id: "sc:viral", kind: "scenario", title: "Your clip is going viral", prompt: "Scenario: a clip of you fixing a voter's flat tire on the way to an event is all over social media.", opts: [
+    { label: "Ride the wave", say: "Cut it into an ad and a fundraising email.", cash: 50000, kind: "amplify" }, { label: "Stay humble", say: "No comment beyond a thank you.", kind: "skip" }] },
+];
+
+/** This week's decisions: a main event, plus a real dated story from the campaign when one fits the week. */
 export function eventFor(c: Ctx, s: State): Ev | null {
   const w = s.week;
-  if (w === 3 || w === 7) return attack(c);
+  if (w === 4 && !s.used.includes("quarter")) return quarterEv(c);
+  if (w === 3 || w === 7) return attack(c, w);
   if (w === 5) return opening(c);
-  if (w === 4 || w === 8) { if (!s.used.includes("surrogate") && (w === 8 || rand(s) < 0.6)) return surrogate(c); const n = newsEv(c, s); if (n) return n; }
+  if (w === 8) { const e = endorseEv(c, s); if (e) return e; if (!s.used.includes("surrogate")) return surrogate(c); }
+  const real = realEvents(c).filter((e) => !s.used.includes(e.id));
+  if (real.length && (w <= 2 || rand(s) < 0.75)) return real[0];
+  const n = w >= 6 ? newsEv(c, s) : null; if (n) return n;
   const pool = ISSUES.filter((e) => !s.used.includes(e.id) && (!e.states || e.states.includes(c.r.st)));
   if (!pool.length) return null;
   const firsts = ["costs", "health", "tariffs-farm", "power"];
-  const pick = w <= 2 ? pool.find((e) => firsts.includes(e.id)) ?? pool[0] : pool[Math.floor(rand(s) * pool.length)];
-  return pick;
+  return w <= 2 ? pool.find((e) => firsts.includes(e.id)) ?? pool[0] : pool[Math.floor(rand(s) * pool.length)];
 }
 
 export type Outcome = { t: string; fx: number; parts: Part[] };
 export function resolve(c: Ctx, s: State, ev: Ev, i: number, debate = false): Outcome {
   const o = ev.opts[i];
   s.used.push(ev.id);
+  if (ev.kind === "flash") s.flashes.push(ev.id);
   if (o.cash) { s.cash -= o.cash; s.spent += o.cash; }
   if (o.days) s.days = Math.max(0, s.days - o.days);
   let fx = 0, parts: Part[] = [], t = "";
@@ -157,6 +231,33 @@ export function resolve(c: Ctx, s: State, ev: Ev, i: number, debate = false): Ou
     else if (o.kind === "hold") { s.prep += 1; t = "Saved for the debate. It makes your prep sharper."; }
     else { fx = 0.04; t = "You stayed positive. A few voters noticed."; }
     parts = [{ label: "Independents", share: c.g("Independent", "Party ID")?.share ?? 30, lean: 0, fx }];
+  } else if (ev.kind === "flash") {
+    const sal = 0.12 + 0.12 * rand(s);
+    if (ev.helps === "you") fx = o.kind === "amplify" ? sal * 1.6 : o.kind === "pivot" ? sal * 0.7 : sal * 0.4;
+    else if (ev.helps === "them") fx = o.kind === "push" ? -sal * 0.35 : o.kind === "pivot" ? -sal * 0.55 : -sal * DIFF[s.diff].neg;
+    else fx = o.kind === "pivot" ? sal * 0.3 * (rand(s) < 0.6 ? 1 : -1) : 0;
+    s.buzz = Math.min(100, s.buzz + (fx > 0 ? 6 : 2));
+    parts = [{ label: "Voters following the race", share: 55, lean: 0, fx }];
+    t = fx >= 0.08 ? "It became your story of the week." : fx <= -0.08 ? "It stuck, and it cost you." : "A one day story.";
+  } else if (ev.kind === "endorse") {
+    s.endorsed.push(ev.id.split(":")[1]);
+    fx = o.kind === "accept" ? 0.12 + 0.12 * rand(s) : 0.05;
+    parts = [{ label: "Independents", share: c.g("Independent", "Party ID")?.share ?? 30, lean: 0, fx: fx * 0.6 }, { label: "Your base", share: 35, lean: 0, fx: fx * 0.4 }];
+    t = o.kind === "accept" ? "The rollout led the local news." : "A nice line in the clips.";
+  } else if (ev.kind === "quarter") {
+    if (o.kind === "blast") { const amt = Math.round(c.weekly * 1.6 * (0.55 + c.smallShare) * DIFF[s.diff].fund); s.cash += amt; s.raised += amt; s.fatigue = 3; t = `The deadline push raised ${usd(amt)}; your list needs a rest this week.`; }
+    else if (o.kind === "tout") { const ahead = (c.me.money.receipts ?? 0) >= (c.op.money.receipts ?? 0); fx = ahead ? 0.08 : -0.05; s.momentum = Math.max(-1, Math.min(1, s.momentum + (ahead ? 0.3 : -0.2))); t = ahead ? "You won the money story; donors and reporters took note." : "Their number was bigger, and the story wrote itself."; }
+    else t = "Business as usual.";
+  } else if (ev.kind === "chair") {
+    if (o.kind === "forum") { fx = 0.1 + 0.1 * rand(s); s.buzz = Math.min(100, s.buzz + 10); t = "The empty podium photo ran everywhere."; }
+    else if (o.kind === "hit") { fx = 0.06 + 0.1 * rand(s); t = "The dodging ad ran all week."; }
+    else { fx = -0.03; t = "Voters who wanted a debate noticed."; }
+    parts = [{ label: "Independents", share: c.g("Independent", "Party ID")?.share ?? 30, lean: 0, fx }];
+  } else if (ev.kind === "scenario") {
+    const good = o.kind === "respond" || o.kind === "amplify";
+    fx = ev.id === "sc:viral" ? (o.kind === "amplify" ? 0.12 : 0.06) : good ? -0.03 : (rand(s) < 0.5 ? -0.18 : 0.02) * DIFF[s.diff].neg;
+    t = fx >= 0.05 ? "It worked." : fx <= -0.08 ? "It got worse before it got better." : "It passed.";
+    parts = [{ label: "Voters following the race", share: 55, lean: 0, fx }];
   } else if (ev.kind === "surrogate" && o.kind === "skip") {
     const amt = Math.round(c.weekly * 0.6); s.cash += amt; s.raised += amt; t = `A closed door fundraiser raised ${usd(amt)} and made no news.`;
   } else if (o.st) {
@@ -188,11 +289,32 @@ export function debateQs(c: Ctx, s: State): Ev[] {
   return out.map((e) => ({ ...e, kind: "debate" as const }));
 }
 
-/** Deal this week's decisions once: the debate's three questions in debate week, otherwise one event. */
+/** Deal this week's decisions once: the debate's three questions in debate week, otherwise the main event, then a real
+ * dated story from the campaign when one fits the week, and now and then a scenario. */
 export function dealWeek(c: Ctx, s: State) {
   if (s.done || s.evw >= s.week) return;
   s.evw = s.week;
-  if (s.week === 6) { s.cur = debateQs(c, s); return; }
-  const e = eventFor(c, s);
-  s.cur = e ? [e] : [];
+  const out: Ev[] = [];
+  if (s.week === s.dweek) {
+    const declined = !(c.r.research?.debates ?? []).length && (c.r.research?.storylines ?? []).some((x) => /declin|skip|refus|no debate|won.t debate|will not debate/i.test(x.title + " " + x.what));
+    if (declined) out.push(chairEv(c)); else out.push(...debateQs(c, s));
+  } else { const e = eventFor(c, s); if (e) out.push(e); }
+  const f = flashFor(c, s); if (f) out.push(f);
+  if (s.week >= 2 && rand(s) < 0.22) { const sc = SCENARIOS.filter((x) => !s.used.includes(x.id)); if (sc.length) out.push(sc[Math.floor(rand(s) * sc.length)]); }
+  s.cur = out;
+}
+
+/** Message testing: your pollster tests each answer with a quick online panel before you choose. The read is the real
+ * expected effect plus the pollster's error, so a better pollster gives a truer read. Costs $25,000. */
+export function testEvent(c: Ctx, s: State, ev: Ev): number[] | null {
+  const tier = POLLSTERS[s.staff.pollster]; if (!tier) return null;
+  if (s.tests[ev.id]) return s.tests[ev.id];
+  if (s.cash < 25000) return null;
+  s.cash -= 25000; s.spent += 25000;
+  const st = ev.opts.map((o) => (o.st ? react(c, s, o.st, ev.kind === "debate" ? 1.5 : 1, false).fx : null));
+  const vals = st.filter((x): x is number => x != null);
+  const mean = vals.reduce((a, b) => a + b, 0) / Math.max(1, vals.length);
+  const out = st.map((x) => (x == null ? NaN : Math.round(((x - mean) * 0.65 + gauss(s) * tier.sd * 0.04) * 100) / 100));
+  s.tests[ev.id] = out;
+  return out;
 }

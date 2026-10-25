@@ -1,0 +1,62 @@
+{
+ "id": "gov-TN",
+ "checked": "2026-10-25",
+ "summary": "Republican Sen. Marsha Blackburn is the frontrunner for the open governor's seat against Democratic Memphis council member Jerri Green, with a poll paid for by a pro Green PAC in September showing Blackburn up 45 to 36 and independent David Hatley at 10, per Tennessee Lookout. Green is running on affordability, the grocery tax, public schools and rural hospitals and has hit Blackburn for refusing to debate, while Blackburn calls Green a socialist and stresses deportations and school choice, per WSMV and NewsChannel 5.",
+ "issues": [
+  {"issue": "Grocery tax and affordability", "why": "Green wants to end the state sales tax on groceries and redirect unspent welfare funds to family relief.", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/"},
+  {"issue": "School vouchers and public schools", "why": "Blackburn backs school choice while Green says vouchers are failing public school students.", "src": "https://www.wsmv.com/2026/08/07/marsha-blackburn-wins-tennessee-gop-gubernatorial-primary/"},
+  {"issue": "Rural hospitals and Medicaid", "why": "Green warns of more rural hospital closures and wants Medicaid expansion to cover about 300,000 uninsured Tennesseans.", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/"},
+  {"issue": "Immigration enforcement", "why": "Blackburn pledges to deport people here illegally and back ICE, while Green would end Highway Patrol cooperation with ICE.", "src": "https://www.wsmv.com/2026/08/07/marsha-blackburn-wins-tennessee-gop-gubernatorial-primary/"},
+  {"issue": "Data centers", "why": "Green opposes state incentives for data centers and says Blackburn would favor corporations and billionaires.", "src": "https://www.newschannel5.com/plus/inside-politics/election-2026-tn-governors-race-jerri-green"}
+ ],
+ "storylines": [
+  {"title": "Green makes her pitch as Blackburn declines", "date": "2026-10-16", "what": "On NewsChannel 5, Green pitched ending the grocery tax and fully funding schools, and said Blackburn follows Trump uncritically, while Blackburn declined to appear.", "helps": "D", "kind": "local", "src": "https://www.newschannel5.com/plus/inside-politics/election-2026-tn-governors-race-jerri-green"},
+  {"title": "Blackburn skips press association forum", "date": "2026-10-12", "what": "Green and independents Hatley and Pinkston agreed to an Oct. 27 forum at MTSU while Blackburn did not respond, consistent with her no forum strategy as the frontrunner.", "helps": "mixed", "kind": "debate", "src": "https://www.newsfromthestates.com/article/green-hatley-pinkston-participate-tennessee-press-association-governors-forum"},
+  {"title": "Poll shows Blackburn ahead by nine", "date": "2026-09-28", "what": "A September poll paid for by a pro Green PAC showed Blackburn 45, Green 36 and Hatley 10.", "helps": "R", "kind": "local", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/"},
+  {"title": "Blackburn camp targets independent Hatley", "date": "2026-09-28", "what": "Blackburn's campaign funded a website attacking independent David Hatley over a 1998 felony conviction, aiming to keep conservative voters in line.", "helps": "R", "kind": "attack", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/"},
+  {"title": "Blackburn rejects debates, calls Green socialist", "date": "2026-09-08", "what": "Green proposed four debates across the state, and Blackburn said she would not give a platform to a socialist candidate.", "helps": "mixed", "kind": "debate", "src": "https://www.wsmv.com/2026/09/08/jerri-green-formally-challenges-marsha-blackburn-series-gubernatorial-debates-ahead-tn-midterms/"},
+  {"title": "Blackburn wins GOP primary", "date": "2026-08-06", "what": "Blackburn won the Republican nomination after skipping debates with rivals, running ads promising to deport illegal immigrants and stop the flow of drugs.", "helps": "R", "kind": "ad", "src": "https://www.wsmv.com/2026/08/07/marsha-blackburn-wins-tennessee-gop-gubernatorial-primary/"}
+ ],
+ "events": [
+  {"title": "Debate or not", "prompt": "Your opponent has proposed debates in four cities and a statewide press forum is scheduled, but the frontrunner has held no public forums. What do you do?", "issue": "other", "src": "https://www.wsmv.com/2026/09/08/jerri-green-formally-challenges-marsha-blackburn-series-gubernatorial-debates-ahead-tn-midterms/",
+   "opts": [
+    {"label": "Debate every city", "say": "Accept all debate dates and challenge your opponent to show up.", "pos": -0.4, "trump": -0.3, "tone": "fiery"},
+    {"label": "One forum only", "say": "Agree to the single statewide press association forum.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Refuse, stay on message", "say": "Decline and say you will not give a platform to a socialist.", "pos": 0.7, "trump": 0.6, "tone": "fiery"}
+   ]},
+  {"title": "Grocery tax", "prompt": "Grocery costs are a top worry and Tennessee taxes food at the register. Do you cut the grocery tax, and how do you pay for it?", "issue": "econ", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/",
+   "opts": [
+    {"label": "End it, cut business rebates", "say": "Eliminate the grocery tax and end tax rebates for large businesses.", "pos": -0.7, "trump": -0.5, "tone": "fiery"},
+    {"label": "Phase it down", "say": "Lower the food tax gradually as the budget allows.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Cut taxes across the board", "say": "Promise broad tax cuts and less spending rather than a targeted break.", "pos": 0.7, "trump": 0.5, "tone": "calm"}
+   ]},
+  {"title": "ICE cooperation", "prompt": "Tennessee Highway Patrol works with ICE on immigration enforcement. Do you keep, expand or end that partnership?", "issue": "immig", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/",
+   "opts": [
+    {"label": "End the partnership", "say": "End Highway Patrol cooperation with ICE and focus troopers on road safety.", "pos": -0.8, "trump": -0.9, "tone": "fiery"},
+    {"label": "Limit to criminals", "say": "Cooperate only on people charged with violent crimes.", "pos": 0, "trump": -0.2, "tone": "calm"},
+    {"label": "Expand deportations", "say": "Pledge to deport illegal immigrants and stop the flow of drugs and drug money.", "pos": 0.9, "trump": 0.9, "tone": "fiery"}
+   ]},
+  {"title": "Rural hospitals and Medicaid", "prompt": "Tennessee has lost many rural hospitals and more are at risk. Do you expand Medicaid?", "issue": "health", "src": "https://www.newschannel5.com/plus/inside-politics/election-2026-tn-governors-race-jerri-green",
+   "opts": [
+    {"label": "Expand Medicaid", "say": "Push the legislature to adopt ACA Medicaid expansion for about 300,000 people.", "pos": -0.8, "trump": -0.6, "tone": "calm"},
+    {"label": "Rural hospital fund", "say": "Create a state grant fund to keep rural hospitals open without expansion.", "pos": 0.2, "trump": null, "tone": "calm"},
+    {"label": "Reject expansion", "say": "Oppose expansion as government overreach and push market reforms.", "pos": 0.8, "trump": 0.5, "tone": "calm"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-27", "where": "Murfreesboro, MTSU press association forum, Blackburn not confirmed", "src": "https://www.newsfromthestates.com/article/green-hatley-pinkston-participate-tennessee-press-association-governors-forum"}
+ ],
+ "endorsements": [],
+ "ads": [
+  {"by": "Blackburn campaign", "for": "R", "theme": "Blackburn promises to deport illegal immigrants and stop the flow of drugs and drug money.", "src": "https://www.wsmv.com/2026/08/07/marsha-blackburn-wins-tennessee-gop-gubernatorial-primary/"},
+  {"by": "Blackburn campaign", "for": "R", "theme": "A campaign funded website attacks independent David Hatley over a 1998 felony conviction.", "src": "https://tennesseelookout.com/2026/09/28/democratic-gubernatorial-contender-jerri-green-talks-affordability-republican-supermajority/"}
+ ],
+ "regions": [
+  {"name": "Memphis and Shelby County", "counties": ["Shelby", "Fayette", "Tipton"], "note": "Green's home base, where majority Black Memphis is the state's largest Democratic vote bank."},
+  {"name": "Nashville metro", "counties": ["Davidson", "Williamson", "Rutherford", "Sumner", "Wilson"], "note": "Democratic Nashville surrounded by fast growing, affluent Republican suburbs."},
+  {"name": "East Tennessee", "counties": ["Knox", "Blount", "Sevier", "Sullivan", "Washington"], "note": "Historically Republican mountain region with Democratic pockets in Knoxville."},
+  {"name": "Chattanooga area", "counties": ["Hamilton", "Bradley", "Marion"], "note": "A swingier city surrounded by strongly Republican suburbs."},
+  {"name": "Rural West Tennessee", "counties": ["Madison", "Gibson", "Dyer", "Weakley", "Hardeman"], "note": "Farm counties around Jackson that have shifted heavily Republican."},
+  {"name": "Upper Cumberland", "counties": ["Putnam", "White", "Overton", "Warren", "Coffee"], "note": "Rural Middle Tennessee counties that were once Democratic and are now deeply Republican."}
+ ]
+}

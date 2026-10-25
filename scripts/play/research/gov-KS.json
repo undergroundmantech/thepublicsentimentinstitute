@@ -1,0 +1,322 @@
+{
+ "id": "gov-KS",
+ "checked": "2026-10-25",
+ "summary": "Republican Senate President Ty Masterson and Democratic state Sen. Cindy Holscher are vying to succeed term limited Democratic Gov. Laura Kelly, and Kansas News Service reports Masterson leading in recent public polls while Holscher calls the race neck and neck. KCUR reports both are courting unaffiliated voters and each calls the other extreme, with property taxes and school funding at the center.",
+ "issues": [
+  {
+   "issue": "Property taxes",
+   "why": "Masterson backs a constitutional cap of 3 percent on yearly assessed value growth while Holscher backs cutting the residential assessment rate instead.",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "issue": "School funding",
+   "why": "Holscher pledges to fully fund special education while Masterson stresses literacy, a spending review and private school tax credits.",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "issue": "Cost of living and tariffs",
+   "why": "Holscher blames tariffs and higher diesel prices for squeezing farmers and families.",
+   "src": "https://www.kmuw.org/politics/2026-10-21/trump-affirms-endorsement-of-ty-masterson-in-kansas-governors-race-belittles-cindy-holscher"
+  },
+  {
+   "issue": "Brownback tax legacy",
+   "why": "Holscher ties Masterson to the 2012 income tax cuts that lawmakers largely repealed in 2017.",
+   "src": "https://kansasreflector.com/2026/10/05/democrat-cindy-holschers-campaign-for-kansas-governor-highlights-distinctions-from-gop-rival/"
+  },
+  {
+   "issue": "Abortion and Medicaid",
+   "why": "Holscher supports abortion rights and Medicaid expansion and warns Masterson would revive efforts like the 2022 amendment.",
+   "src": "https://kansasreflector.com/2026/10/05/democrat-cindy-holschers-campaign-for-kansas-governor-highlights-distinctions-from-gop-rival/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Former KCK mayor backs Masterson",
+   "date": "2026-10-23",
+   "what": "Tyrone Garner, a Democrat and former Kansas City, Kansas mayor, endorsed Masterson, citing his economic and property tax plans.",
+   "helps": "R",
+   "kind": "endorsement",
+   "src": "https://hoodline.com/2026/10/ex-kck-mayor-tyrone-garner-a-democrat-backs-gop-s-ty-masterson-for-governor"
+  },
+  {
+   "title": "Trump rallies for Masterson near Wichita",
+   "date": "2026-10-19",
+   "what": "At a Park City rally Trump reaffirmed his endorsement of Masterson and called Holscher the most radical candidate ever to run for governor. Holscher answered that she is fighting for everyday Kansans.",
+   "helps": "R",
+   "kind": "rally",
+   "src": "https://www.kmuw.org/politics/2026-10-21/trump-affirms-endorsement-of-ty-masterson-in-kansas-governors-race-belittles-cindy-holscher"
+  },
+  {
+   "title": "Dueling property tax plans",
+   "date": "2026-10-13",
+   "what": "Masterson pitches a homeowners bill of rights capping value growth, while Holscher proposes a lower residential assessment rate. Critics say each plan shifts burden to other property owners.",
+   "helps": "mixed",
+   "kind": "policy",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "title": "RGA linked group says Holscher would make Kansas California",
+   "date": "2026-10-13",
+   "what": "A super PAC linked to the Republican Governors Association ran an ad claiming Holscher wants to turn Kansas into California, while a Democratic billboard in Wichita ties Masterson to Sam Brownback.",
+   "helps": "mixed",
+   "kind": "ad",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "title": "Farm Bureau and Teamsters split",
+   "date": "2026-10-12",
+   "what": "The Kansas Farm Bureau PAC endorsed Masterson while the Teamsters regional conference backed Holscher, adding to her list of union endorsements.",
+   "helps": "mixed",
+   "kind": "endorsement",
+   "src": "https://kansasreflector.com/2026/10/12/cindy-holscher-ty-masterson-gain-gubernatorial-endorsements-from-labor-ag-interests/"
+  },
+  {
+   "title": "Holscher says Masterson is hiding from debates",
+   "date": "2026-10-05",
+   "what": "After a September joint appearance at the State Fair, Masterson called off two televised debates. Holscher says she would welcome another debate.",
+   "helps": "D",
+   "kind": "debate",
+   "src": "https://kansasreflector.com/2026/10/05/democrat-cindy-holschers-campaign-for-kansas-governor-highlights-distinctions-from-gop-rival/"
+  },
+  {
+   "title": "Masterson labels Holscher a socialist",
+   "date": "2026-10-05",
+   "what": "Masterson has called Holscher a socialist. She rejects the label and points to her wins in competitive Johnson County districts.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://kansasreflector.com/2026/10/05/democrat-cindy-holschers-campaign-for-kansas-governor-highlights-distinctions-from-gop-rival/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Property tax relief plan",
+   "prompt": "Homeowners are angry about rising valuations and both parties back a constitutional amendment. You must say which approach you would push in your first session.",
+   "issue": "econ",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/",
+   "opts": [
+    {
+     "label": "Fund special ed fully",
+     "say": "Ease local levies by having the state fully fund special education as the law requires.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Lower residential rate",
+     "say": "Cut the residential assessment rate without a hard cap on value growth.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Hard 3 percent cap",
+     "say": "Cap yearly assessed value growth at 3 percent in the constitution as a homeowners bill of rights.",
+     "pos": 0.7,
+     "trump": null,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Trump comes to Wichita",
+   "prompt": "President Trump holds a rally near Wichita and calls one candidate a radical lunatic. Unaffiliated voters outnumber Democrats in Kansas, and the campaign must decide how to respond.",
+   "issue": "other",
+   "src": "https://www.kmuw.org/politics/2026-10-21/trump-affirms-endorsement-of-ty-masterson-in-kansas-governors-race-belittles-cindy-holscher",
+   "opts": [
+    {
+     "label": "Hit tariffs and costs",
+     "say": "Answer that tariffs and diesel prices are hurting Kansas farmers and families.",
+     "pos": -0.6,
+     "trump": -0.8,
+     "tone": "fiery"
+    },
+    {
+     "label": "Stay on local issues",
+     "say": "Avoid the national fight and talk about taxes and schools in Kansas.",
+     "pos": 0,
+     "trump": 0,
+     "tone": "calm"
+    },
+    {
+     "label": "Share the stage",
+     "say": "Embrace the president and say a vote for the other side is a vote for socialists.",
+     "pos": 0.8,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Debate schedule",
+   "prompt": "Two televised debates were called off after a single State Fair appearance. Reporters ask whether you will commit to another debate before November 3.",
+   "issue": "other",
+   "src": "https://kansasreflector.com/2026/10/05/democrat-cindy-holschers-campaign-for-kansas-governor-highlights-distinctions-from-gop-rival/",
+   "opts": [
+    {
+     "label": "Demand more debates",
+     "say": "Challenge the opponent to debate on live television in every media market.",
+     "pos": -0.3,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Offer one forum",
+     "say": "Agree to a single moderated forum and keep the rest of the schedule on the road.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Skip debates",
+     "say": "Say voters have heard enough and spend the time visiting county parties and businesses.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "School choice question",
+   "prompt": "Educators ask whether the state should expand private school tax credit programs or put new money into public schools.",
+   "issue": "other",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/",
+   "opts": [
+    {
+     "label": "Public schools first",
+     "say": "Oppose vouchers and promise full funding with more teacher input.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Literacy and audits",
+     "say": "Focus on reading results and a review of school spending before new money.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Expand tax credits",
+     "say": "Grow private school tax credit programs to create competition.",
+     "pos": 0.8,
+     "trump": null,
+     "tone": "fiery"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-09",
+   "where": "Kansas State Fair, Hutchinson",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Donald Trump",
+   "for": "R",
+   "src": "https://www.kmuw.org/politics/2026-10-21/trump-affirms-endorsement-of-ty-masterson-in-kansas-governors-race-belittles-cindy-holscher"
+  },
+  {
+   "who": "Kansas Farm Bureau PAC",
+   "for": "R",
+   "src": "https://kansasreflector.com/2026/10/12/cindy-holscher-ty-masterson-gain-gubernatorial-endorsements-from-labor-ag-interests/"
+  },
+  {
+   "who": "Gov. Laura Kelly",
+   "for": "D",
+   "src": "https://kansasreflector.com/2026/10/12/cindy-holscher-ty-masterson-gain-gubernatorial-endorsements-from-labor-ag-interests/"
+  },
+  {
+   "who": "Kansas AFL-CIO",
+   "for": "D",
+   "src": "https://kansasreflector.com/2026/10/12/cindy-holscher-ty-masterson-gain-gubernatorial-endorsements-from-labor-ag-interests/"
+  }
+ ],
+ "ads": [
+  {
+   "by": "RGA linked super PAC",
+   "for": "R",
+   "theme": "Claims Holscher wants to turn Kansas into California.",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "by": "Kansas Democratic Party",
+   "for": "D",
+   "theme": "A Wichita billboard ties Masterson to former Gov. Sam Brownback.",
+   "src": "https://lawrencekstimes.com/2026/10/13/kns-race-gov-taxes-ed-funding/"
+  },
+  {
+   "by": "Masterson campaign",
+   "for": "R",
+   "theme": "A biographical ad says he left college to put food on the table.",
+   "src": "https://www.kcur.org/politics-elections-and-government/2026-10-14/kansas-governor-race-2026-election-candidates-masterson-holscher"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Johnson County suburbs",
+   "counties": [
+    "Johnson",
+    "Miami",
+    "Leavenworth"
+   ],
+   "note": "Populous and well educated suburbs that have trended Democratic and are Holscher's home base."
+  },
+  {
+   "name": "Kansas City, Kansas and Lawrence",
+   "counties": [
+    "Wyandotte",
+    "Douglas"
+   ],
+   "note": "The most Democratic counties in the state, anchored by KCK and the University of Kansas."
+  },
+  {
+   "name": "Topeka and Manhattan",
+   "counties": [
+    "Shawnee",
+    "Riley",
+    "Geary",
+    "Pottawatomie",
+    "Lyon"
+   ],
+   "note": "Swingy capital region mixing state workers, Fort Riley and Kansas State."
+  },
+  {
+   "name": "Wichita metro",
+   "counties": [
+    "Sedgwick",
+    "Butler",
+    "Harvey",
+    "Sumner",
+    "Reno"
+   ],
+   "note": "The largest swing prize, Republican leaning overall with a competitive core in Wichita."
+  },
+  {
+   "name": "Southeast Kansas",
+   "counties": [
+    "Crawford",
+    "Cherokee",
+    "Montgomery",
+    "Labette",
+    "Allen",
+    "Neosho"
+   ],
+   "note": "Old mining and manufacturing country that has swung hard to Republicans."
+  },
+  {
+   "name": "Western Kansas",
+   "counties": [
+    "Finney",
+    "Ford",
+    "Seward",
+    "Ellis",
+    "Saline",
+    "Barton"
+   ],
+   "note": "Rural farm and ranch country that is heavily Republican, with growing Latino communities in the meatpacking towns."
+  }
+ ]
+}

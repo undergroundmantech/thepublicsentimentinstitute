@@ -1,0 +1,70 @@
+{
+  "id": "sen-NH",
+  "checked": "2026-10-25",
+  "summary": "Democratic Rep. Chris Pappas and former Republican Sen. John E. Sununu are fighting for the open seat left by Jeanne Shaheen, and WGME reported in mid October that recent polls showed Pappas ahead by seven to eight points after a closer September. Pappas ties Sununu to Trump, the Iran war and tariffs, while Sununu argues Pappas has accomplished little in eight years in Washington.",
+  "issues": [
+    {"issue": "Cost of living", "why": "Pappas says the economy is rigged for billionaires and blames Trump's tariffs for rising costs, while Sununu says Pappas has not delivered for the state.", "src": "https://www.wcax.com/2026/10/20/campaign-countdown-pappas-sununu-face-off-nh-senate-seat/"},
+    {"issue": "Trump, Iran and tariffs", "why": "Sununu has voiced disagreement with the Iran war and the trade war with Canada as Democrats call him Trump's hand picked candidate.", "src": "https://wgme.com/news/local/democrat-chris-pappas-appears-to-hold-narrow-lead-over-gop-republican-john-sununu-in-new-hampshire-senate-race"},
+    {"issue": "Health care and Social Security", "why": "The Pappas campaign says Sununu backed health care cuts and once proposed privatizing Social Security.", "src": "https://chrispappas.org/2026/10/at-first-debate-chris-pappas-highlights-record-of-lowering-costs-for-families-john-sununu-runs-away-from-his-own-words/"},
+    {"issue": "Highway funding", "why": "Sununu says New Hampshire is last in New England in highway funding, and Pappas points to his Highway Fair Share Act.", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered"},
+    {"issue": "Housing and child care", "why": "Pappas makes building more homes and child care his priorities in a state with tight housing.", "src": "https://www.wcax.com/2026/10/20/campaign-countdown-pappas-sununu-face-off-nh-senate-seat/"}
+  ],
+  "storylines": [
+    {"title": "Sununu skips Dartmouth forum", "date": "2026-10-22", "what": "NHPR canceled its Oct. 29 Senate forum in Hanover after Sununu declined, citing his schedule, leaving the WMUR debate on Oct. 28.", "helps": "D", "kind": "debate", "src": "https://www.nhpr.org/inside-nhpr/2026-10-22/sununu-pappas-senate-race-nhpr-forum-debate-election-2026"},
+    {"title": "Closing pitches", "date": "2026-10-20", "what": "Sununu says Pappas has attempted very little and accomplished even less, while Pappas calls Sununu a failed politician from the past.", "helps": "mixed", "kind": "attack", "src": "https://www.wcax.com/2026/10/20/campaign-countdown-pappas-sununu-face-off-nh-senate-seat/"},
+    {"title": "Salem chamber forum", "date": "2026-10-14", "what": "The two met at a Southern New Hampshire Chamber of Commerce forum in Salem a day after their first debate.", "helps": "mixed", "kind": "debate", "src": "https://indepthnh.org/2026/10/14/u-s-senate-candidates-john-sununu-and-rep-chris-pappas-debate-in-salem/"},
+    {"title": "First debate in Conway", "date": "2026-10-13", "what": "The Pappas campaign says Sununu ran from his past remark that the race matters to Trump's agenda and would not detail Social Security changes.", "helps": "D", "kind": "debate", "src": "https://chrispappas.org/2026/10/at-first-debate-chris-pappas-highlights-record-of-lowering-costs-for-families-john-sununu-runs-away-from-his-own-words/"},
+    {"title": "Pappas lead grows in polls", "date": "2026-10-12", "what": "Recent polls show Pappas up seven to eight points after a two point edge a month earlier, with about $50 million spent so far.", "helps": "D", "kind": "local", "src": "https://wgme.com/news/local/democrat-chris-pappas-appears-to-hold-narrow-lead-over-gop-republican-john-sununu-in-new-hampshire-senate-race"},
+    {"title": "SLF ad calls Pappas insider", "date": "2026-09-21", "what": "Senate Leadership Fund argues Pappas voted on bills his partner lobbied on and calls him a corrupt political insider.", "helps": "R", "kind": "ad", "src": "https://senateleadershipfund.org/press-releases/new-ad-whose-pocket-is-chris-pappas-in/"},
+    {"title": "Trump aligned PAC reserves $10 million", "date": "2026-09-17", "what": "No Going Back PAC, backed by MAGA Inc., reserved about $10 million in ads to elect Sununu.", "helps": "R", "kind": "ad", "src": "https://granitepostnews.com/news/politics/trump-super-pac-sununu/"},
+    {"title": "Race moves to toss up", "date": "2026-09-17", "what": "Cook shifted the race to toss up as Sununu hit Pappas on highway funding, while Sununu says he has never met Trump.", "helps": "R", "kind": "national", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered"}
+  ],
+  "events": [
+    {"title": "Trump's endorsement", "prompt": "Trump has endorsed the Republican, and his approval is negative in New Hampshire while the Iran war and Canada tariffs are unpopular. How does the campaign handle Trump?", "issue": "other", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered",
+     "opts": [
+       {"label": "Make it a referendum", "say": "Call the race a check on Trump's reckless leadership and back a war powers resolution.", "pos": -0.6, "trump": -1, "tone": "fiery"},
+       {"label": "Independent voice", "say": "Break with Trump on tariffs and Iran but say you can work with the administration.", "pos": 0.2, "trump": 0, "tone": "calm"},
+       {"label": "Run with Trump", "say": "Embrace the endorsement and promise to pass the president's agenda.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Social Security question", "prompt": "At the first debate the Republican would not lay out specific Social Security changes, and Democrats say he once proposed privatizing it. How does the campaign answer?", "issue": "health", "src": "https://chrispappas.org/2026/10/at-first-debate-chris-pappas-highlights-record-of-lowering-costs-for-families-john-sununu-runs-away-from-his-own-words/",
+     "opts": [
+       {"label": "No cuts, expand it", "say": "Pledge no benefit cuts and lift the payroll cap on high earners.", "pos": -0.8, "trump": null, "tone": "fiery"},
+       {"label": "Bipartisan commission", "say": "Promise to protect current retirees and back a bipartisan solvency deal.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "Reform for the young", "say": "Argue the program needs structural reform and personal accounts for younger workers.", "pos": 0.8, "trump": null, "tone": "calm"}
+     ]},
+    {"title": "Lobbying attacks", "prompt": "Ads from both sides center on lobbying, one saying the Democrat voted on bills his partner lobbied on and another saying the Republican cashed in at lobbying firms. How does the campaign respond?", "issue": "corruption", "src": "https://senateleadershipfund.org/press-releases/new-ad-whose-pocket-is-chris-pappas-in/",
+     "opts": [
+       {"label": "Ban stock and lobby ties", "say": "Back a ban on members trading stock and a lifetime lobbying ban.", "pos": -0.4, "trump": -0.3, "tone": "fiery"},
+       {"label": "Release records", "say": "Release ethics and client records and challenge the other side to do the same.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Hit the insider", "say": "Call the opponent a creature of Washington who has delivered nothing.", "pos": 0.4, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Highway funding gap", "prompt": "New Hampshire gets some of the lowest federal road funding per person in the country, and both candidates are claiming the issue. What is the campaign's pitch?", "issue": "econ", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered",
+     "opts": [
+       {"label": "Fair share mandate", "say": "Push a guaranteed floor of federal highway money for small states.", "pos": -0.3, "trump": null, "tone": "calm"},
+       {"label": "Seniority pitch", "say": "Argue a Senate majority seat will deliver more road money to the state.", "pos": 0.3, "trump": 0.3, "tone": "calm"},
+       {"label": "Blame the incumbent", "say": "Say eight years in Congress produced no new roads money.", "pos": 0.5, "trump": null, "tone": "fiery"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-13", "where": "Conway, Mount Washington Valley Economic Council", "src": "https://www.bostonglobe.com/2026/10/22/metro/nh-senate-debate-nhpr-canceled/"},
+    {"date": "2026-10-14", "where": "Salem, Southern NH Chamber forum", "src": "https://indepthnh.org/2026/10/14/u-s-senate-candidates-john-sununu-and-rep-chris-pappas-debate-in-salem/"},
+    {"date": "2026-10-28", "where": "WMUR", "src": "https://www.bostonglobe.com/2026/10/22/metro/nh-senate-debate-nhpr-canceled/"}
+  ],
+  "endorsements": [
+    {"who": "Donald Trump", "for": "R", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered"},
+    {"who": "Sentinel Action Fund", "for": "R", "src": "https://sentinelactionfund.com/press/sentinel-action-fund-endorses-john-sununu-for-u-s-senate-in-new-hampshire-announces-3-5-million-combined-spend-with-right-vote"},
+    {"who": "Don Bolduc, former GOP Senate nominee", "for": "D", "src": "https://thehill.com/homenews/campaign/6151294-bolduc-backs-pappas-nh-senate/"}
+  ],
+  "ads": [
+    {"by": "Senate Leadership Fund", "for": "R", "theme": "Calls Pappas a corrupt insider who voted on bills his partner lobbied on.", "src": "https://senateleadershipfund.org/press-releases/new-ad-whose-pocket-is-chris-pappas-in/"},
+    {"by": "No Going Back PAC", "for": "R", "theme": "A MAGA Inc. backed group reserved about $10 million to elect Sununu.", "src": "https://granitepostnews.com/news/politics/trump-super-pac-sununu/"},
+    {"by": "Democratic aligned super PAC", "for": "D", "theme": "Ads say Sununu cashed in by working for lobbying firms after leaving the Senate.", "src": "https://www.foxnews.com/politics/political-insider-turns-anti-incumbent-table-8-year-dem-key-senate-race-hasnt-delivered"}
+  ],
+  "regions": [
+    {"name": "Manchester and Merrimack Valley", "counties": ["Hillsborough"], "note": "The largest county, with Democratic Manchester and Nashua and swingy suburbs."},
+    {"name": "Seacoast and southeast", "counties": ["Rockingham", "Strafford"], "note": "Pappas's 1st District base, where Democratic Portsmouth and Dover offset Republican Salem and border towns."},
+    {"name": "Concord and the Lakes Region", "counties": ["Merrimack", "Belknap"], "note": "Democratic leaning Concord next to the reliably Republican Lakes Region."},
+    {"name": "Upper Valley and Monadnock", "counties": ["Grafton", "Cheshire", "Sullivan"], "note": "Dartmouth and Keene anchor a Democratic leaning west side of the state."},
+    {"name": "North Country", "counties": ["Coos", "Carroll"], "note": "Rural, older and increasingly Republican, with tourism towns around Conway."}
+  ]
+}

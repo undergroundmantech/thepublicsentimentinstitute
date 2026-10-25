@@ -1,0 +1,229 @@
+{
+ "id": "gov-AK",
+ "checked": "2026-10-25",
+ "summary": "Former Democratic legislator Jonathan Kreiss-Tomkins leads a ranked choice field against three Republicans, with Alaska Public Media reporting two recent surveys showing him beating Bernadette Wilson by 6 to 10 points after tabulation. Trump endorsed Wilson at an October 13 Wasilla rally and urged Republicans to unite behind her, while Republican rivals Treg Taylor and Dave Bronson remain in the race.",
+ "issues": [
+  {
+   "issue": "State budget and taxes",
+   "why": "Kreiss-Tomkins opposes a sales tax but backs taxing Hilcorp and out of state sellers, while Republicans cite his 2017 income tax vote and call him Just Keep Taxing.",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  },
+  {
+   "issue": "Permanent Fund dividend",
+   "why": "Kreiss-Tomkins calls a 4,000 dollar dividend without new revenue magical thinking.",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  },
+  {
+   "issue": "Resource development",
+   "why": "Wilson frames the race as a choice to advance Alaska LNG and the Ambler Road with the Trump administration.",
+   "src": "https://thealaskastory.com/wilson-takes-fight-against-kreiss-tomkins-to-national-audiences-as-alaska-voting-begins/"
+  },
+  {
+   "issue": "School funding",
+   "why": "Kreiss-Tomkins wants school budgets finalized by March to end layoff cycles and backs a new pension plan for teachers.",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  },
+  {
+   "issue": "Ranked choice repeal",
+   "why": "Wilson and Trump back Ballot Measure 2 to repeal open primaries and ranked choice voting.",
+   "src": "https://alaskabeacon.com/2026/10/14/at-alaska-rally-trump-endorses-wilson-and-seeks-to-boost-sullivan-and-begich/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Kreiss-Tomkins pitches change",
+   "date": "2026-10-20",
+   "what": "Kreiss-Tomkins says balancing the budget requires sober thinking and pledges to grow state savings, while Republicans hammer his past income tax vote.",
+   "helps": "D",
+   "kind": "policy",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  },
+  {
+   "title": "Conservatives fear Trump visit backfired",
+   "date": "2026-10-19",
+   "what": "Some conservatives worry Trump's attacks on Taylor and Bronson could split Republican voters, though Wilson says the rally sparked enthusiasm.",
+   "helps": "D",
+   "kind": "local",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-19/conservatives-worry-trumps-alaska-visit-may-have-done-more-harm-than-good"
+  },
+  {
+   "title": "Wilson goes national as voting begins",
+   "date": "2026-10-18",
+   "what": "Wilson took her message to Fox News, Newsmax and other national outlets, urging voters to rank her first and the other Republicans behind her.",
+   "helps": "R",
+   "kind": "national",
+   "src": "https://thealaskastory.com/wilson-takes-fight-against-kreiss-tomkins-to-national-audiences-as-alaska-voting-begins/"
+  },
+  {
+   "title": "Trump endorses Wilson in Wasilla",
+   "date": "2026-10-13",
+   "what": "Trump endorsed Wilson and told Republicans to unite behind her, calling her rivals lesser candidates. Kreiss-Tomkins's campaign said the visit shows the race is neck and neck.",
+   "helps": "R",
+   "kind": "endorsement",
+   "src": "https://alaskabeacon.com/2026/10/14/at-alaska-rally-trump-endorses-wilson-and-seeks-to-boost-sullivan-and-begich/"
+  },
+  {
+   "title": "Wilson skips public radio for rally",
+   "date": "2026-10-13",
+   "what": "Wilson canceled a Talk of Alaska appearance to attend Trump's Wasilla rally.",
+   "helps": "mixed",
+   "kind": "local",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  },
+  {
+   "title": "Republican poll shows Wilson surging",
+   "date": "2026-10-01",
+   "what": "A Cygnal poll had Kreiss-Tomkins at 44 percent first choice and Wilson at 24, up sharply from the primary, with Republicans combined at 41.",
+   "helps": "mixed",
+   "kind": "local",
+   "src": "https://thealaskastory.com/poll-bernadette-wilson-surges-among-alaska-republicans-kreiss-tomkins-holds-a-narrow-edge-in-governors-race/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Paying for the dividend",
+   "prompt": "Voters want a big Permanent Fund dividend, but the state relies on volatile oil revenue. You are asked how to balance the budget.",
+   "issue": "econ",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race",
+   "opts": [
+    {
+     "label": "New targeted taxes",
+     "say": "Tax Hilcorp and out of state sellers and keep the dividend sustainable.",
+     "pos": -0.6,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Save the surplus",
+     "say": "Put any surplus into savings and school needs and avoid broad new taxes.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "No new taxes",
+     "say": "Cut spending and grow oil and gas revenue instead of taxing Alaskans.",
+     "pos": 0.8,
+     "trump": 0.5,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Trump's endorsement",
+   "prompt": "Trump comes to Wasilla and endorses one Republican while belittling the others. Ranked choice means every second choice vote matters.",
+   "issue": "other",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-19/conservatives-worry-trumps-alaska-visit-may-have-done-more-harm-than-good",
+   "opts": [
+    {
+     "label": "Run as independent voice",
+     "say": "Say Alaska needs a governor who answers to Alaskans, not Washington.",
+     "pos": -0.3,
+     "trump": -0.7,
+     "tone": "calm"
+    },
+    {
+     "label": "Ask for all rankings",
+     "say": "Urge voters to rank every candidate who shares their values.",
+     "pos": 0.2,
+     "trump": 0.2,
+     "tone": "calm"
+    },
+    {
+     "label": "Unite behind Trump",
+     "say": "Embrace the endorsement and ask Republicans to bullet vote for one candidate.",
+     "pos": 0.8,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "LNG and Ambler Road",
+   "prompt": "The federal government is pushing Alaska LNG and the Ambler Road mining corridor. You must say how fast the state should move.",
+   "issue": "econ",
+   "src": "https://thealaskastory.com/wilson-takes-fight-against-kreiss-tomkins-to-national-audiences-as-alaska-voting-begins/",
+   "opts": [
+    {
+     "label": "Protect communities first",
+     "say": "Require strong tribal consultation and environmental review before new roads.",
+     "pos": -0.7,
+     "trump": -0.5,
+     "tone": "calm"
+    },
+    {
+     "label": "LNG with tax tweaks",
+     "say": "Back tax changes to land the LNG project while weighing Ambler on its merits.",
+     "pos": 0.1,
+     "trump": 0,
+     "tone": "calm"
+    },
+    {
+     "label": "Build it all now",
+     "say": "Partner with the Trump administration to fast track every project.",
+     "pos": 0.9,
+     "trump": 0.9,
+     "tone": "fiery"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-10-08",
+   "where": "Debate for the State, Anchorage",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-20/democrat-jonathan-kreiss-tomkins-pitches-himself-as-a-changemaker-in-alaska-governors-race"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Donald Trump",
+   "for": "R",
+   "src": "https://alaskabeacon.com/2026/10/14/at-alaska-rally-trump-endorses-wilson-and-seeks-to-boost-sullivan-and-begich/"
+  }
+ ],
+ "ads": [],
+ "regions": [
+  {
+   "name": "Anchorage",
+   "counties": [
+    "Municipality of Anchorage"
+   ],
+   "note": "The largest city and the main battleground, split between Democratic and Republican neighborhoods."
+  },
+  {
+   "name": "Mat Su Valley",
+   "counties": [
+    "Matanuska-Susitna Borough"
+   ],
+   "note": "Fast growing and the most reliably Republican population center, where Trump rallied."
+  },
+  {
+   "name": "Fairbanks and the Kenai",
+   "counties": [
+    "Fairbanks North Star Borough",
+    "Kenai Peninsula Borough"
+   ],
+   "note": "Republican leaning road system communities with oil and military ties."
+  },
+  {
+   "name": "Southeast",
+   "counties": [
+    "City and Borough of Juneau",
+    "City and Borough of Sitka",
+    "Ketchikan Gateway Borough"
+   ],
+   "note": "Juneau and Sitka, Kreiss-Tomkins's home, lean Democratic."
+  },
+  {
+   "name": "Rural Bush",
+   "counties": [
+    "Bethel Census Area",
+    "Nome Census Area",
+    "North Slope Borough",
+    "Northwest Arctic Borough"
+   ],
+   "note": "Predominantly Alaska Native regions that often favor Democrats and independents."
+  }
+ ]
+}

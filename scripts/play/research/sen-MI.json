@@ -1,0 +1,322 @@
+{
+ "id": "sen-MI",
+ "checked": "2026-10-25",
+ "summary": "Democrat Abdul El-Sayed and Republican Mike Rogers are fighting for the open seat of retiring Sen. Gary Peters, with Newsweek reporting most October polls showing El-Sayed narrowly ahead and Cook and Sabato rating it a toss up. Republicans have outspent Democrats with ads casting El-Sayed as too extreme on policing, immigration and health care, while El-Sayed ties Rogers to Trump, the Iran war and AIPAC money.",
+ "issues": [
+  {
+   "issue": "Health care",
+   "why": "El-Sayed backs Medicare for All with guaranteed coverage, while Rogers says it would strip private insurance and proposes expanding TrumpRx drug pricing.",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "issue": "Iran war",
+   "why": "El-Sayed says Rogers backs an aimless war voters pay for at the pump, while Rogers says El-Sayed will not condemn the IRGC.",
+   "src": "https://www.foxnews.com/politics/el-sayed-rogers-clash-over-muslim-brotherhood-trump-guns-5-fiery-debate-moments"
+  },
+  {
+   "issue": "Tariffs and autos",
+   "why": "Rogers backs tariffs that work for Michigan, wants to wrap up the Canada dispute and keep Chinese automakers out, while El-Sayed favors targeted tariffs.",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "issue": "Immigration enforcement",
+   "why": "El-Sayed wants to abolish ICE, which Republicans feature in attack ads, while Rogers defends Trump's immigration strategy.",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "issue": "Data centers",
+   "why": "Rogers says he would back a one year moratorium on new data centers, while El-Sayed wants AI firms regulated like utilities.",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Obama and Democratic stars rally for El-Sayed",
+   "date": "2026-10-24",
+   "what": "Obama was scheduled to campaign with El-Sayed in Detroit to bank early votes, after Kamala Harris held a roundtable with him, as he works to shore up Black voters who favored Haley Stevens in the primary.",
+   "helps": "D",
+   "kind": "rally",
+   "src": "https://www.newsweek.com/obama-michigan-el-sayed-sherrod-brown-ohio-campaign-12612309"
+  },
+  {
+   "title": "Final debate turns fiery",
+   "date": "2026-10-21",
+   "what": "In the second and final debate El-Sayed attacked Rogers over the Iran war and Trump, while Rogers raised El-Sayed's past defund the police posts and the cost of Medicare for All.",
+   "helps": "mixed",
+   "kind": "debate",
+   "src": "https://www.foxnews.com/politics/el-sayed-rogers-clash-over-muslim-brotherhood-trump-guns-5-fiery-debate-moments"
+  },
+  {
+   "title": "Rogers presses on IRGC and ideology",
+   "date": "2026-10-21",
+   "what": "Rogers said El-Sayed cannot condemn the IRGC and his campaign renewed claims tying El-Sayed donors to the Muslim Brotherhood, which El-Sayed denies and calls shameful.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "title": "Marist shows El-Sayed up two",
+   "date": "2026-10-18",
+   "what": "A Marist poll of likely voters had El-Sayed at 50 percent and Rogers at 48, while a Rogers aligned poll showed Rogers ahead by two.",
+   "helps": "D",
+   "kind": "national",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  },
+  {
+   "title": "Republicans make El-Sayed the target",
+   "date": "2026-10-12",
+   "what": "Republicans outspent Democrats 78 million to 63 million on ads calling El-Sayed dangerously radical, and Trump and Vance attacked him personally. El-Sayed says he is not shying away from the fight.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://bridgemi.com/michigan-government/republicans-put-spotlight-on-abdul-el-sayed-he-welcomes-the-fight/"
+  },
+  {
+   "title": "AIPAC super PAC mails against El-Sayed",
+   "date": "2026-10-12",
+   "what": "The United Democracy Project spent about 95,000 dollars on mail to Jewish voters attacking El-Sayed over a remark he later apologized for, after Rogers said he would take any help.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://prospect.org/2026/10/12/aipac-tiny-expenditure-michigan-senate-race-el-sayed-rogers/"
+  },
+  {
+   "title": "Grand Rapids debate",
+   "date": "2026-10-08",
+   "what": "The candidates met in a televised debate at WOOD TV in Grand Rapids, their first of two.",
+   "helps": "mixed",
+   "kind": "debate",
+   "src": "https://bridgemi.com/michigan-government/republicans-put-spotlight-on-abdul-el-sayed-he-welcomes-the-fight/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Medicare for All question",
+   "prompt": "Attack ads say single payer health care would take away private insurance from millions of Michiganders. You are asked to state your health plan.",
+   "issue": "health",
+   "src": "https://www.foxnews.com/politics/el-sayed-rogers-clash-over-muslim-brotherhood-trump-guns-5-fiery-debate-moments",
+   "opts": [
+    {
+     "label": "Defend Medicare for All",
+     "say": "Make the case for guaranteed coverage for all, with union plans as a supplement.",
+     "pos": -0.9,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Expand the ACA",
+     "say": "Extend premium tax credits and add a public option instead of single payer.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Price transparency",
+     "say": "Expand TrumpRx and penalize insurers that hide prices or deny care unfairly.",
+     "pos": 0.6,
+     "trump": 0.7,
+     "tone": "calm"
+    }
+   ]
+  },
+  {
+   "title": "Iran war and gas prices",
+   "prompt": "Gas and grocery prices are up and voters connect them to the war with Iran. A debate moderator asks whether you support the war.",
+   "issue": "econ",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649",
+   "opts": [
+    {
+     "label": "Oppose the war",
+     "say": "Call the war aimless and say tax dollars should be spent at home.",
+     "pos": -0.8,
+     "trump": -0.9,
+     "tone": "fiery"
+    },
+    {
+     "label": "Seek a quick end",
+     "say": "Say Iran is a threat but Congress must press for a fast resolution.",
+     "pos": 0.2,
+     "trump": 0,
+     "tone": "calm"
+    },
+    {
+     "label": "Back the mission",
+     "say": "Support the administration and demand the other side condemn the IRGC.",
+     "pos": 0.8,
+     "trump": 0.9,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Auto tariffs",
+   "prompt": "Michigan automakers and suppliers are caught in tariff fights with Canada and competition from China. You must lay out a trade position.",
+   "issue": "econ",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649",
+   "opts": [
+    {
+     "label": "Targeted, pro worker",
+     "say": "Use targeted tariffs tied to union jobs and end corporate tax breaks for offshoring.",
+     "pos": -0.5,
+     "trump": -0.4,
+     "tone": "calm"
+    },
+    {
+     "label": "End Canada fight",
+     "say": "Keep China out of US auto production but wrap up the tariff dispute with Canada.",
+     "pos": 0.3,
+     "trump": 0.3,
+     "tone": "calm"
+    },
+    {
+     "label": "Full tariff push",
+     "say": "Back the president's tariffs as leverage to bring auto jobs home.",
+     "pos": 0.8,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "ICE and immigration",
+   "prompt": "Republican ads highlight a call to abolish ICE. Voters in Macomb and Oakland ask what you would do on immigration enforcement.",
+   "issue": "immig",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/",
+   "opts": [
+    {
+     "label": "Abolish ICE",
+     "say": "Replace ICE, which you call a paramilitary force, with a new enforcement system.",
+     "pos": -0.9,
+     "trump": -1,
+     "tone": "fiery"
+    },
+    {
+     "label": "Reform enforcement",
+     "say": "Keep enforcement but add oversight and focus on serious criminals.",
+     "pos": -0.1,
+     "trump": -0.2,
+     "tone": "calm"
+    },
+    {
+     "label": "Back Trump's approach",
+     "say": "Defend the administration's strategy as a former FBI agent focused on security.",
+     "pos": 0.8,
+     "trump": 0.9,
+     "tone": "calm"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-10-08",
+   "where": "WOOD TV, Grand Rapids",
+   "src": "https://bridgemi.com/michigan-government/republicans-put-spotlight-on-abdul-el-sayed-he-welcomes-the-fight/"
+  },
+  {
+   "date": "2026-10-21",
+   "where": "WXYZ, Southfield",
+   "src": "https://www.newsweek.com/michigan-senate-debate-mike-rogers-abdul-el-sayed-12596649"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Bernie Sanders",
+   "for": "D",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "who": "Rep. Haley Stevens",
+   "for": "D",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "who": "Senate Leadership Fund",
+   "for": "R",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "who": "Rabbi Asher Lopatin",
+   "for": "R",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Senate Leadership Fund",
+   "for": "R",
+   "theme": "Calls El-Sayed uniquely dangerous and unqualified.",
+   "src": "https://bridgemi.com/michigan-government/mike-rogers-vs-abdul-el-sayed-7-issues-defining-michigans-us-senate-race/"
+  },
+  {
+   "by": "Republican groups",
+   "for": "R",
+   "theme": "Paint El-Sayed as too extreme over defund the police and ICE comments.",
+   "src": "https://bridgemi.com/michigan-government/republicans-put-spotlight-on-abdul-el-sayed-he-welcomes-the-fight/"
+  },
+  {
+   "by": "United Democracy Project",
+   "for": "R",
+   "theme": "Mail to Jewish voters attacking El-Sayed over a remark after a synagogue attack.",
+   "src": "https://prospect.org/2026/10/12/aipac-tiny-expenditure-michigan-senate-race-el-sayed-rogers/"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Detroit and Wayne County",
+   "counties": [
+    "Wayne"
+   ],
+   "note": "The Democratic anchor, home to Detroit's Black electorate and Dearborn's large Arab American community."
+  },
+  {
+   "name": "Oakland and Macomb suburbs",
+   "counties": [
+    "Oakland",
+    "Macomb",
+    "Livingston"
+   ],
+   "note": "Blue Oakland and swing Macomb are the classic suburban battleground."
+  },
+  {
+   "name": "College towns and Lansing",
+   "counties": [
+    "Washtenaw",
+    "Ingham",
+    "Eaton",
+    "Jackson"
+   ],
+   "note": "Ann Arbor and Lansing deliver big Democratic margins with Republican rural surroundings."
+  },
+  {
+   "name": "West Michigan",
+   "counties": [
+    "Kent",
+    "Ottawa",
+    "Kalamazoo",
+    "Muskegon",
+    "Allegan"
+   ],
+   "note": "Traditionally conservative, but Grand Rapids and Kalamazoo have trended Democratic."
+  },
+  {
+   "name": "Flint and the Tri Cities",
+   "counties": [
+    "Genesee",
+    "Saginaw",
+    "Bay",
+    "Midland"
+   ],
+   "note": "Old auto union country that has swung toward Republicans."
+  },
+  {
+   "name": "Northern Michigan and the UP",
+   "counties": [
+    "Grand Traverse",
+    "Marquette",
+    "Houghton",
+    "Alpena",
+    "Chippewa"
+   ],
+   "note": "Rural and Republican leaning, with Democratic pockets in Traverse City and Marquette."
+  }
+ ]
+}

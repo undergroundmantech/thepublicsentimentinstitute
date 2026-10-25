@@ -1,0 +1,63 @@
+{
+ "id": "sen-LA",
+ "checked": "2026-10-25",
+ "summary": "Trump endorsed Rep. Julia Letlow is the heavy favorite for the open seat over Democratic Tensas Parish farmer Jamie Davis after Sen. Bill Cassidy was eliminated in the GOP primary, per The Advocate and WAFB. Davis is running on the cost of living, tariffs and farm policy and says his internal polling has him within 4 points, while Letlow has a money edge, skipped an Oct. 19 forum and casts Democrats as socialists, per WAFB and The Advocate.",
+ "issues": [
+  {"issue": "Cost of living and diesel prices", "why": "Davis blames tariffs, the federal budget law and the Iran war for higher costs, including diesel prices that hit farmers.", "src": "https://www.wwno.org/2026-10-19/nov-3-election-guide-meet-the-u-s-senate-candidates"},
+  {"issue": "Homeowners insurance crisis", "why": "Davis ties coastal restoration and mitigation grants to bringing down Louisiana's high insurance costs.", "src": "https://www.wwno.org/2026-10-19/nov-3-election-guide-meet-the-u-s-senate-candidates"},
+  {"issue": "Farm economy and tariffs", "why": "Letlow touts a farm focused bill while farmers blame tariffs for weaker Chinese demand for their crops.", "src": "https://veritenews.org/2026/09/08/jamie-davis-julia-letlow-senate/"},
+  {"issue": "Election integrity", "why": "Letlow highlights the SAVE Act on voter fraud safeguards, which Democrats say would discourage voting.", "src": "https://www.theadvocate.com/baton_rouge/news/politics/louisiana-senate-julia-letlow-jamie-davis/article_0cde8e22-ed6d-5098-9068-d68826494a6d.html"},
+  {"issue": "Data centers", "why": "Davis backs a federal moratorium on new data centers over water and electricity worries.", "src": "https://www.wwno.org/2026-10-19/nov-3-election-guide-meet-the-u-s-senate-candidates"}
+ ],
+ "storylines": [
+  {"title": "Letlow skips Senate forum", "date": "2026-10-19", "what": "Letlow declined to attend a candidate forum, and a consultant said frontrunners gain little from debating.", "helps": "mixed", "kind": "debate", "src": "https://wafb.com/2026/10/19/breaking-down-dollars-us-senate-race/"},
+  {"title": "Davis touts grassroots money", "date": "2026-10-19", "what": "Davis has raised about 4 million dollars mostly from individuals, refuses corporate PAC money and cites an internal poll showing him 4 points back.", "helps": "D", "kind": "local", "src": "https://wafb.com/2026/10/19/breaking-down-dollars-us-senate-race/"},
+  {"title": "National Democrats stay out", "date": "2026-10-19", "what": "The national Democratic Party has spent nothing to help Davis, a sign consultants say it does not see Louisiana as winnable.", "helps": "R", "kind": "national", "src": "https://wafb.com/2026/10/19/breaking-down-dollars-us-senate-race/"},
+  {"title": "Letlow frames race against socialists", "date": "2026-09-09", "what": "Letlow's campaign says she will contrast her record with a Democratic Party it calls overrun by socialists, while Cassidy and Fleming have not endorsed her.", "helps": "mixed", "kind": "attack", "src": "https://www.theadvocate.com/baton_rouge/news/politics/louisiana-senate-julia-letlow-jamie-davis/article_0cde8e22-ed6d-5098-9068-d68826494a6d.html"},
+  {"title": "PPP poll shows a single digit race", "date": "2026-09-08", "what": "A Public Policy Polling survey had Letlow at 41 percent and Davis at 37 with 22 percent undecided.", "helps": "D", "kind": "local", "src": "https://veritenews.org/2026/09/08/jamie-davis-julia-letlow-senate/"},
+  {"title": "Letlow and Davis win runoffs", "date": "2026-06-27", "what": "Trump endorsed Letlow beat Treasurer John Fleming after Sen. Bill Cassidy was eliminated in May, and Davis beat Gary Crockett.", "helps": "R", "kind": "endorsement", "src": "https://www.wafb.com/2026/06/28/julia-letlow-jamie-davis-advance-louisiana-us-senate-race-ap-projects/"}
+ ],
+ "events": [
+  {"title": "Tariffs and the farm economy", "prompt": "Farmers are struggling with weak crop demand and high diesel prices, and tariffs are part of the debate. What do you tell rural Louisiana?", "issue": "econ", "src": "https://veritenews.org/2026/09/08/jamie-davis-julia-letlow-senate/",
+   "opts": [
+    {"label": "Blame the tariffs", "say": "Say tariffs and the Iran war drove up costs and pledge to reopen markets.", "pos": -0.6, "trump": -0.8, "tone": "fiery"},
+    {"label": "Pass a farm bill", "say": "Focus on a farm bill with better crop insurance and safety nets.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Trust the trade deals", "say": "Defend Trump's trade strategy and tout farm aid you helped pass.", "pos": 0.7, "trump": 0.9, "tone": "calm"}
+   ]},
+  {"title": "Insurance costs", "prompt": "Louisiana homeowners face some of the highest insurance costs in the nation. What is your federal answer?", "issue": "econ", "src": "https://www.wwno.org/2026-10-19/nov-3-election-guide-meet-the-u-s-senate-candidates",
+   "opts": [
+    {"label": "Fund coastal restoration", "say": "Fully fund the Coastal Master Plan and restore canceled mitigation grants.", "pos": -0.5, "trump": -0.5, "tone": "calm"},
+    {"label": "Fortify homes", "say": "Push federal tax credits for roof upgrades and home hardening.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Cut regulations", "say": "Blame regulation and lawsuits and push market reforms to lure insurers back.", "pos": 0.7, "trump": 0.4, "tone": "calm"}
+   ]},
+  {"title": "Skip or debate", "prompt": "A Senate forum is set and the frontrunner has declined. Your strategist says debates only help the trailing candidate. What do you do?", "issue": "other", "src": "https://wafb.com/2026/10/19/breaking-down-dollars-us-senate-race/",
+   "opts": [
+    {"label": "Empty chair them", "say": "Show up and hammer your opponent for refusing to face voters.", "pos": -0.3, "trump": -0.3, "tone": "fiery"},
+    {"label": "Town halls instead", "say": "Hold your own town halls across the state on your terms.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Skip it", "say": "Skip the forum and rely on paid ads and endorsements.", "pos": 0.5, "trump": 0.5, "tone": "calm"}
+   ]},
+  {"title": "Immigration raids", "prompt": "A federal immigration operation in New Orleans has drawn protests while employers worry about farm labor. Where do you stand?", "issue": "immig", "src": "https://www.wwno.org/2026-10-19/nov-3-election-guide-meet-the-u-s-senate-candidates",
+   "opts": [
+    {"label": "End the raids", "say": "Oppose community raids and back a path to citizenship and Dreamer protections.", "pos": -0.8, "trump": -0.9, "tone": "fiery"},
+    {"label": "Guest workers", "say": "Back a guest worker program for farms while targeting criminals.", "pos": 0, "trump": -0.2, "tone": "calm"},
+    {"label": "Support enforcement", "say": "Back the operation and Trump's deportation agenda fully.", "pos": 0.9, "trump": 0.9, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-19", "where": "Senate candidate forum, Letlow absent", "src": "https://wafb.com/2026/10/19/breaking-down-dollars-us-senate-race/"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://www.wafb.com/2026/06/28/julia-letlow-jamie-davis-advance-louisiana-us-senate-race-ap-projects/"},
+  {"who": "Gov. Jeff Landry", "for": "R", "src": "https://www.theadvocate.com/baton_rouge/news/politics/louisiana-senate-julia-letlow-jamie-davis/article_0cde8e22-ed6d-5098-9068-d68826494a6d.html"},
+  {"who": "Nick Albares, former Democratic primary candidate", "for": "D", "src": "https://www.theadvocate.com/baton_rouge/news/politics/louisiana-senate-julia-letlow-jamie-davis/article_0cde8e22-ed6d-5098-9068-d68826494a6d.html"}
+ ],
+ "ads": [],
+ "regions": [
+  {"name": "New Orleans metro", "counties": ["Orleans", "Jefferson", "St. Tammany", "St. Bernard"], "note": "Heavily Democratic New Orleans balanced by Republican suburbs, especially St. Tammany."},
+  {"name": "Baton Rouge area", "counties": ["East Baton Rouge", "Ascension", "Livingston", "West Baton Rouge"], "note": "A Democratic capital city surrounded by fast growing Republican suburbs."},
+  {"name": "Acadiana", "counties": ["Lafayette", "Iberia", "Vermilion", "Acadia", "St. Landry"], "note": "Cajun country, once Democratic, now solidly Republican outside some Black communities."},
+  {"name": "Northeast Delta", "counties": ["Ouachita", "Tensas", "Madison", "East Carroll", "Richland"], "note": "Home turf for both Letlow of Monroe and Davis of Tensas Parish, mixing Republican farm parishes and majority Black Delta parishes."},
+  {"name": "Northwest Louisiana", "counties": ["Caddo", "Bossier", "Lincoln", "Webster"], "note": "Shreveport in Caddo leans Democratic while Bossier and the rural parishes are strongly Republican."},
+  {"name": "Southwest Louisiana", "counties": ["Calcasieu", "Beauregard", "Jefferson Davis", "Cameron"], "note": "Lake Charles and energy country, strongly Republican and hit hard by insurance costs after hurricanes."}
+ ]
+}

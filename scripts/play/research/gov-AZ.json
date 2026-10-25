@@ -1,0 +1,64 @@
+{
+  "id": "gov-AZ",
+  "checked": "2026-10-25",
+  "summary": "Democratic Gov. Katie Hobbs led Trump endorsed Rep. Andy Biggs by 17 points in a mid October HighGround poll, with the pollster saying many Republican voters are not backing their nominees. Hobbs is skipping debates and running on her record with a Republican Legislature while blaming Trump's tariffs and the Iran war for costs, and Biggs promises to phase out the income tax and cut waste.",
+  "issues": [
+    {"issue": "Income tax and spending", "why": "Biggs would phase out the state income tax and run a DOGE style program to cut waste, fraud and abuse.", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off"},
+    {"issue": "Medicaid", "why": "Biggs says delayed audits put nearly $18 billion in federal AHCCCS money at risk and alleges fraud, while critics warn of cuts to care.", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off"},
+    {"issue": "Water and data centers", "why": "Biggs wants to end all data center tax breaks and back desalination and storage as the state faces water limits.", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off"},
+    {"issue": "Tariffs and cost of living", "why": "Hobbs says Trump's tariffs and the Iran war are raising costs, while Trump says she made Arizona one of the least affordable states.", "src": "https://www.kjzz.org/elections/2026-10-15/trump-doesnt-mention-competitive-congressional-candidates-in-arizona-rally"},
+    {"issue": "Border and drug policy", "why": "Trump accused Hobbs of siding with cartels over her actions on border and drug bills.", "src": "https://www.kjzz.org/elections/2026-10-15/trump-doesnt-mention-competitive-congressional-candidates-in-arizona-rally"}
+  ],
+  "storylines": [
+    {"title": "Trump rallies for Biggs", "date": "2026-10-14", "what": "In Bullhead City, Trump called Hobbs a failed radical left governor and said Biggs would slash property taxes, while Biggs vowed to DOGE the heck out of Arizona.", "helps": "R", "kind": "rally", "src": "https://www.kjzz.org/elections/2026-10-15/trump-doesnt-mention-competitive-congressional-candidates-in-arizona-rally"},
+    {"title": "Hobbs shrugs off insults", "date": "2026-10-14", "what": "Hobbs said Trump can call her whatever he wants and argued Biggs backed Trump's tariffs and Iran war every step of the way.", "helps": "D", "kind": "national", "src": "https://ktar.com/arizona-politics-news/election/trump-rally-katie-hobbs"},
+    {"title": "Hobbs up 17 in new poll", "date": "2026-10-13", "what": "A HighGround poll found Hobbs ahead by 17 points, with voters citing Trump as a driving force.", "helps": "D", "kind": "local", "src": "https://www.azfamily.com/2026/10/14/new-arizona-poll-shows-democrats-leading-several-key-races/"},
+    {"title": "Biggs blames ads for threats", "date": "2026-10-08", "what": "Biggs said Hobbs ads tying him to a failed 2013 Colorado City police bill led to death threats, and Hobbs's campaign called his claims false and dangerous.", "helps": "mixed", "kind": "attack", "src": "https://www.azfamily.com/2026/10/09/biggs-says-gov-hobbs-ads-led-death-threats-against-him/"},
+    {"title": "Biggs debates without Hobbs", "date": "2026-10-06", "what": "At the Clean Elections debate, Biggs faced No Labels nominee Teri Hourihan, who attacked his thin record of passed bills while Biggs went after Medicaid fraud.", "helps": "mixed", "kind": "debate", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off"},
+    {"title": "Biggs and GOP launch ad buy", "date": "2026-10-01", "what": "The Biggs campaign announced a $1.75 million ad buy with the state Republican Party as polls showed him trailing.", "helps": "R", "kind": "ad", "src": "https://cronkitenews.azpbs.org/2026/10/01/andy-biggs-katie-hobbs-arizona-polls-kalshi/"},
+    {"title": "Hobbs declines to debate", "date": "2026-07-31", "what": "Hobbs's campaign said town halls beat a stage built for soundbites, and Biggs's team said she was ducking a tradition dating to 1954.", "helps": "R", "kind": "debate", "src": "https://www.azfamily.com/2026/07/31/gov-katie-hobbs-declines-debating-andy-biggs-governors-race/"}
+  ],
+  "events": [
+    {"title": "Debate or skip", "prompt": "The Clean Elections Commission is holding the only governor's debate, and the incumbent skipped a debate in 2022 too. What does the campaign do?", "issue": "other", "src": "https://www.azfamily.com/2026/07/31/gov-katie-hobbs-declines-debating-andy-biggs-governors-race/",
+     "opts": [
+       {"label": "Town halls instead", "say": "Skip the stage and hold open town halls and press events across the state.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Show up", "say": "Take part in the debate and dare the opponent to join.", "pos": 0.0, "trump": null, "tone": "fiery"},
+       {"label": "Empty chair attack", "say": "Debate and run ads hitting the opponent for hiding from voters.", "pos": 0.0, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Phase out income tax", "prompt": "A plan to phase out Arizona's income tax and DOGE the state budget is on the table while Medicaid funding is under scrutiny. Where does the campaign stand?", "issue": "econ", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off",
+     "opts": [
+       {"label": "Protect services", "say": "Oppose the tax phase out and protect Medicaid, schools and child care.", "pos": -0.7, "trump": -0.3, "tone": "calm"},
+       {"label": "Targeted relief", "say": "Offer targeted credits for families while keeping the budget balanced.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "DOGE Arizona", "say": "Eliminate the income tax and root out waste and fraud in state programs.", "pos": 0.9, "trump": 0.9, "tone": "fiery"}
+     ]},
+    {"title": "Trump attacks the governor", "prompt": "At a Bullhead City rally Trump insulted the governor and accused her of siding with cartels, while she blamed his tariffs and Iran war for higher prices. How does the campaign respond?", "issue": "immig", "src": "https://ktar.com/arizona-politics-news/election/trump-rally-katie-hobbs",
+     "opts": [
+       {"label": "Hit tariffs and war", "say": "Shrug off the insults and blame Trump's tariffs and war for Arizona's costs.", "pos": -0.5, "trump": -1, "tone": "calm"},
+       {"label": "Talk border record", "say": "Point to border security work and fentanyl seizures to blunt the cartel charge.", "pos": 0.2, "trump": -0.2, "tone": "calm"},
+       {"label": "Stand with Trump", "say": "Echo the president that Arizona needs a governor who backs his border agenda.", "pos": 0.9, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Data center tax breaks", "prompt": "More than 100 new data center applications are pending as Arizona faces water limits. What is the campaign's plan?", "issue": "econ", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off",
+     "opts": [
+       {"label": "Moratorium", "say": "Pause new data center applications until water standards are set.", "pos": -0.6, "trump": null, "tone": "fiery"},
+       {"label": "Keep the pause", "say": "Keep the current pause on sales tax breaks and review each project.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "End breaks, local zoning", "say": "End all state tax breaks and let local governments decide zoning.", "pos": 0.6, "trump": null, "tone": "calm"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-06", "where": "Citizens Clean Elections Commission, Hobbs absent", "src": "https://www.fox10phoenix.com/election/2026-election-debate-arizona-gubernatorial-candidates-face-off"}
+  ],
+  "endorsements": [
+    {"who": "Donald Trump", "for": "R", "src": "https://ktar.com/arizona-politics-news/election/trump-rally-katie-hobbs"}
+  ],
+  "ads": [
+    {"by": "Hobbs campaign", "for": "D", "theme": "Ties Biggs to a failed 2013 bill to decertify the Colorado City police, accusing him of shielding child predators.", "src": "https://www.azfamily.com/2026/10/09/biggs-says-gov-hobbs-ads-led-death-threats-against-him/"},
+    {"by": "Biggs campaign and Arizona GOP", "for": "R", "theme": "A $1.75 million coordinated ad buy in the closing weeks.", "src": "https://cronkitenews.azpbs.org/2026/10/01/andy-biggs-katie-hobbs-arizona-polls-kalshi/"}
+  ],
+  "regions": [
+    {"name": "Phoenix metro", "counties": ["Maricopa"], "note": "Over 60 percent of the vote, with Democratic Phoenix and Tempe against Republican East Valley suburbs like Biggs's Gilbert."},
+    {"name": "Tucson and the south", "counties": ["Pima", "Santa Cruz", "Cochise"], "note": "Democratic Tucson and border county Santa Cruz offset Republican Cochise."},
+    {"name": "Pinal and the exurbs", "counties": ["Pinal", "Yavapai", "Gila"], "note": "Fast growing Republican exurbs and retiree areas north and south of Phoenix."},
+    {"name": "Western Arizona", "counties": ["Mohave", "Yuma", "La Paz"], "note": "Deep red along the Colorado River, site of Trump's Bullhead City rally."},
+    {"name": "Northern Arizona and tribal lands", "counties": ["Coconino", "Apache", "Navajo"], "note": "Flagstaff and the Navajo Nation give Democrats a strong base in the northeast."}
+  ]
+}

@@ -24,6 +24,11 @@ cross = J(P("public/forecast/crosstabs.json"), {})
 pres = J(P("public/forecast/pres24_counties.json"), {"c": {}})["c"]
 cname = counties.get("_n", {})
 news = J(P("public/news/stories.json"), {"stories": []})["stories"]
+donors = J(P("public/forecast/donors.json"), {"races": []})
+DON = {r["id"]: r for r in donors.get("races", [])}
+RES = os.path.join(SITE, "scripts", "play", "research")  # race research, Oct 25 2026, every item sourced
+import re, unicodedata
+def nkey(x): return re.sub(r"[^a-z]", "", unicodedata.normalize("NFKD", x).encode("ascii", "ignore").decode().lower().replace("saint", "st").replace("county", "").replace("borough", "").replace("censusarea", ""))
 
 
 def party_of(race, name, dflt):
@@ -73,6 +78,24 @@ for race in model["races"]:
         "news": [{"id": s["id"], "title": s["title"], "dek": s.get("dek", ""), "date": s["date"]} for s in news if about(s)][:5],
         "media": [{"who": a["who"], "what": a["what"], "when": a["when"], "lean": a.get("lean")} for a in (wr.get("media") or [])][:8],
     }
+    # the donor map: who gives to each nominee, how small, from where
+    dn = DON.get(race["id"]) or {}
+    for k, side in ((0, "D"), (1, "R")):
+        x = dn.get(side) or {}
+        b = x.get("bands")
+        rec["cands"][k]["donors"] = None if not x else {"donations": x.get("donations"), "raised": x.get("raised"), "home": x.get("home"),
+            "small": round(b[0] / sum(b), 3) if b and sum(b) else None, "big": round(b[3] / sum(b), 3) if b and sum(b) else None,
+            "pacs": ((x.get("sources") or {}).get("pacs")), "self": ((x.get("sources") or {}).get("self_funding"))}
+    rec["donorSignal"] = dn.get("sig")
+    # the race research: real storylines, decisions, debates, endorsements, ads and regions
+    rs = J(os.path.join(RES, race["id"] + ".json"), {}) or {}
+    byname = {nkey(c[1]): c[0] for c in rows}
+    regions = []
+    for g in rs.get("regions") or []:
+        fs = [byname[nkey(n)] for n in g.get("counties") or [] if nkey(n) in byname]
+        if fs: regions.append({"name": g["name"], "f": fs, "note": g.get("note", "")})
+    rec["research"] = {"summary": rs.get("summary"), "issues": rs.get("issues") or [], "storylines": rs.get("storylines") or [], "events": rs.get("events") or [],
+                       "debates": rs.get("debates") or [], "endorsements": rs.get("endorsements") or [], "ads": rs.get("ads") or [], "regions": regions}
     json.dump(rec, open(os.path.join(OUT, "r", race["id"] + ".json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     index.append({"id": race["id"], "office": race["office"], "st": race["st"], "state": race["state"], "name": race["name"],
                   "m": race["est"]["margin"], "p": race["est"]["prob"],

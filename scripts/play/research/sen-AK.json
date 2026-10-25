@@ -1,0 +1,297 @@
+{
+ "id": "sen-AK",
+ "checked": "2026-10-25",
+ "summary": "A Data for Progress poll from mid October shows Democrat Mary Peltola narrowly ahead of two term Republican Sen. Dan Sullivan after ranked choice tabulation, with cost of living the top concern. The closing stretch is dominated by personal attacks, heavy PAC spending and a Justice Department lawsuit, which PBS reports Trump says he ordered, seeking to block certification over a second candidate named Dan Sullivan.",
+ "issues": [
+  {
+   "issue": "Cost of living",
+   "why": "About seven in ten Alaska voters worry about affording gas, utilities and groceries, and most want to hear more about fuel prices.",
+   "src": "https://www.dataforprogress.org/blog/2026/10/20/every-statewide-race-in-alaska-is-close-as-7-in-10-voters-worry-about-affording-gas-and-food"
+  },
+  {
+   "issue": "Oil, gas and energy",
+   "why": "Sullivan campaigns on more oil and gas drilling, and Peltola also backs expanded drilling while rural villages pay high diesel costs for power and heat.",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "issue": "Fisheries and subsistence",
+   "why": "Peltola says restoring fisheries is central to her work, a top concern for Alaska Native and coastal communities.",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "issue": "Iran war",
+   "why": "Peltola says Alaskans are hit hard by war driven costs, while Sullivan calls the war temporary and blames Democrats for a forever war on Alaska energy.",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "issue": "Election integrity and ballot confusion",
+   "why": "A second Daniel Sullivan on the ballot prompted a federal lawsuit and a fight over whether voters can tell the candidates apart.",
+   "src": "https://alaskapublic.org/news/politics/2026-10-24/peltola-democratic-party-move-to-intervene-in-doj-election-lawsuit"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Both court Alaska Native voters",
+   "date": "2026-10-24",
+   "what": "At the AFN convention, Sullivan highlighted work on land allotments for Native Vietnam era veterans while Peltola stressed fisheries and missing and murdered Indigenous people.",
+   "helps": "mixed",
+   "kind": "local",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "title": "Peltola and Democrats move to join DOJ suit",
+   "date": "2026-10-23",
+   "what": "Peltola's campaign and the DSCC asked to intervene in federal court in Anchorage, with Peltola calling the suit corruption and Sullivan's campaign saying Alaskans can tell the candidates apart.",
+   "helps": "D",
+   "kind": "national",
+   "src": "https://alaskapublic.org/news/politics/2026-10-24/peltola-democratic-party-move-to-intervene-in-doj-election-lawsuit"
+  },
+  {
+   "title": "DOJ sues to block certification",
+   "date": "2026-10-22",
+   "what": "The Justice Department sued Alaska to stop certification of a Peltola win if the second Sullivan stays on the ballot, and Trump said he ordered it, while a law professor said it will likely be dismissed.",
+   "helps": "mixed",
+   "kind": "national",
+   "src": "https://www.pbs.org/newshour/politics/trump-administration-files-lawsuit-to-block-possible-democratic-win-in-alaska-senate-race"
+  },
+  {
+   "title": "Poll shows Peltola lead narrowing",
+   "date": "2026-10-20",
+   "what": "Data for Progress found Peltola ahead 51 to 49 after ranked choice rounds, down from 53 to 47 in August, with Sullivan's favorability at a low.",
+   "helps": "mixed",
+   "kind": "national",
+   "src": "https://www.dataforprogress.org/blog/2026/10/20/every-statewide-race-in-alaska-is-close-as-7-in-10-voters-worry-about-affording-gas-and-food"
+  },
+  {
+   "title": "Debate for the State turns personal",
+   "date": "2026-10-15",
+   "what": "Sullivan accused Peltola of lying in ads tying him to Epstein linked donors and raised staff mistreatment reports, and Peltola called those reports fabrications or exaggerations.",
+   "helps": "mixed",
+   "kind": "debate",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-15/sullivan-and-peltola-trade-verbal-blows-accuse-the-other-of-lying-during-debate-for-the-state"
+  },
+  {
+   "title": "Fact check faults Democratic payout ad",
+   "date": "2026-10-15",
+   "what": "FactCheck.org said a WinSenate ad falsely suggested Sullivan took a 500,000 dollar payout, noting he voted to repeal the provision and received nothing.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://www.factcheck.org/2026/10/alaska-ad-criticizing-sullivans-votes-leaves-out-context-makes-false-suggestion/"
+  },
+  {
+   "title": "GOP PAC ad on Peltola staff reports",
+   "date": "2026-09-28",
+   "what": "The pro Sullivan Last Frontier PAC began airing an ad citing reports of angry outbursts toward aides, and Peltola's campaign said she struggled with grief after losing her husband and mother.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://www.axios.com/2026/09/28/peltola-expose-gop-attack-ad-sullivan-senate-alaska"
+  }
+ ],
+ "events": [
+  {
+   "title": "The second Sullivan lawsuit",
+   "prompt": "The Justice Department has sued to block certification if the incumbent narrowly loses, citing possible confusion over a second Daniel Sullivan on the ballot. How does the campaign respond?",
+   "issue": "corruption",
+   "src": "https://www.pbs.org/newshour/politics/trump-administration-files-lawsuit-to-block-possible-democratic-win-in-alaska-senate-race",
+   "opts": [
+    {
+     "label": "Call it corruption",
+     "say": "Denounce the suit as an attempt to overturn Alaskans' votes and join the case in court.",
+     "pos": -0.6,
+     "trump": -0.9,
+     "tone": "fiery"
+    },
+    {
+     "label": "Let it run its course",
+     "say": "Say Alaskans can tell the candidates apart and refocus on the record without taking a side on the suit.",
+     "pos": 0.3,
+     "trump": 0,
+     "tone": "calm"
+    },
+    {
+     "label": "Back the challenge",
+     "say": "Argue the name confusion is a real threat to a fair count and support the federal review.",
+     "pos": 0.8,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Staff mistreatment ad",
+   "prompt": "A super PAC ad is citing news reports that the Democrat mistreated staff, and the topic came up in the final debate. How does the campaign handle character attacks?",
+   "issue": "other",
+   "src": "https://www.axios.com/2026/09/28/peltola-expose-gop-attack-ad-sullivan-senate-alaska",
+   "opts": [
+    {
+     "label": "Personal and contrite",
+     "say": "Acknowledge a hard period of grief after family losses while disputing the worst claims.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Turn to the record",
+     "say": "Say the election is about costs and fisheries, not anyone's worst day, and change the subject.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Keep the pressure on",
+     "say": "Make temperament a closing argument and question whether the candidate is fit to serve.",
+     "pos": 0.6,
+     "trump": 0.3,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Fuel costs and drilling",
+   "prompt": "Rural villages depend on diesel and voters rank fuel and groceries as top worries during the Iran war. What is the energy message?",
+   "issue": "econ",
+   "src": "https://www.dataforprogress.org/blog/2026/10/20/every-statewide-race-in-alaska-is-close-as-7-in-10-voters-worry-about-affording-gas-and-food",
+   "opts": [
+    {
+     "label": "Make oil companies pay",
+     "say": "Back requiring all major oil and gas firms to pay state corporate income tax and blame the war for prices.",
+     "pos": -0.6,
+     "trump": -0.5,
+     "tone": "fiery"
+    },
+    {
+     "label": "Drill and work across aisles",
+     "say": "Support expanded drilling and offer to work with Trump on permits while pushing rural energy relief.",
+     "pos": 0.2,
+     "trump": 0.3,
+     "tone": "calm"
+    },
+    {
+     "label": "Unleash Alaska energy",
+     "say": "Call the war temporary and blame Democrats for a forever war on Alaska's oil industry.",
+     "pos": 0.9,
+     "trump": 0.8,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Health costs and ACA subsidies",
+   "prompt": "An outside ad says the incumbent voted to raise health costs when enhanced ACA subsidies lapsed, while fact checkers say it lacks context. What is the health care position?",
+   "issue": "health",
+   "src": "https://www.factcheck.org/2026/10/alaska-ad-criticizing-sullivans-votes-leaves-out-context-makes-false-suggestion/",
+   "opts": [
+    {
+     "label": "Extend subsidies fully",
+     "say": "Promise to restore enhanced ACA subsidies and press the attack on the shutdown vote.",
+     "pos": -0.8,
+     "trump": -0.5,
+     "tone": "fiery"
+    },
+    {
+     "label": "Targeted extension",
+     "say": "Point to amendments for a limited subsidy extension aimed at Alaska's high premiums.",
+     "pos": 0.1,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Market reforms",
+     "say": "Oppose new subsidy spending and back competition and cost cutting reforms instead.",
+     "pos": 0.8,
+     "trump": 0.6,
+     "tone": "calm"
+    }
+   ]
+  }
+ ],
+ "debates": [
+  {
+   "date": "2026-10-15",
+   "where": "Alaska Public Media, Anchorage",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-15/sullivan-and-peltola-trade-verbal-blows-accuse-the-other-of-lying-during-debate-for-the-state"
+  }
+ ],
+ "endorsements": [
+  {
+   "who": "Sealaska Corp., which endorsed both candidates",
+   "for": "D",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "who": "Sealaska Corp., which endorsed both candidates",
+   "for": "R",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  },
+  {
+   "who": "Chugach Alaska Corp. board chair Sheri Buretta",
+   "for": "R",
+   "src": "https://abcnews.com/US/wireStory/sullivan-peltola-seek-support-alaska-native-voters-ahead-137545216"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Last Frontier PAC",
+   "for": "R",
+   "theme": "Cites reports that Peltola mistreated aides and asks what she would do to voters.",
+   "src": "https://www.axios.com/2026/09/28/peltola-expose-gop-attack-ad-sullivan-senate-alaska"
+  },
+  {
+   "by": "WinSenate",
+   "for": "D",
+   "theme": "Says Sullivan raised health costs and took a payout, which FactCheck.org called a false suggestion.",
+   "src": "https://www.factcheck.org/2026/10/alaska-ad-criticizing-sullivans-votes-leaves-out-context-makes-false-suggestion/"
+  },
+  {
+   "by": "Pro Peltola PAC",
+   "for": "D",
+   "theme": "Links Sullivan to donors tied to Jeffrey Epstein, which Sullivan called a lie.",
+   "src": "https://alaskapublic.org/news/politics/elections/2026-10-15/sullivan-and-peltola-trade-verbal-blows-accuse-the-other-of-lying-during-debate-for-the-state"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Anchorage",
+   "counties": [
+    "Municipality of Anchorage"
+   ],
+   "note": "The largest vote center, closely divided with Democratic leaning midtown and Republican leaning outer areas."
+  },
+  {
+   "name": "Mat Su and Kenai",
+   "counties": [
+    "Matanuska-Susitna Borough",
+    "Kenai Peninsula Borough"
+   ],
+   "note": "Fast growing and strongly Republican, the base of Sullivan's coalition."
+  },
+  {
+   "name": "Fairbanks and Interior",
+   "counties": [
+    "Fairbanks North Star Borough",
+    "Southeast Fairbanks Census Area"
+   ],
+   "note": "Military bases and a conservative lean outside the college area of Fairbanks."
+  },
+  {
+   "name": "Southeast",
+   "counties": [
+    "City and Borough of Juneau",
+    "Sitka City and Borough",
+    "Ketchikan Gateway Borough"
+   ],
+   "note": "The capital and fishing towns lean Democratic or swing, with fisheries a top concern."
+  },
+  {
+   "name": "Rural Bush",
+   "counties": [
+    "Bethel Census Area",
+    "Kusilvak Census Area",
+    "Nome Census Area",
+    "North Slope Borough",
+    "Northwest Arctic Borough"
+   ],
+   "note": "Largely Alaska Native communities where Peltola has run strongly and diesel costs and ballot access matter."
+  }
+ ]
+}

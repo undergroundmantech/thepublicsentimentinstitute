@@ -1,0 +1,67 @@
+{
+  "id": "gov-FL",
+  "checked": "2026-10-25",
+  "summary": "Republican Byron Donalds holds a huge money edge and the backing of Trump and DeSantis, while CBS Miami reported in early October that polls ranged from a clear Donalds lead to a tie or a Jolly edge. The race has centered on home insurance costs, affordability and school funding, with no debates after the two sides failed to agree on terms.",
+  "issues": [
+    {"issue": "Home insurance", "why": "Jolly wants a state fund to cover all wind risk while Donalds wants to keep the Cat Fund as a reinsurer and protect the 2022 lawsuit limits.", "src": "https://www.fox13news.com/news/florida-governor-candidates-clash-over-home-insurance-accuse-each-other-supporting-hurricane-tax"},
+    {"issue": "Affordability and taxes", "why": "Donalds says Jolly would raise taxes and costs, while Jolly ties rising gas, grocery and insurance prices to Trump and Donalds.", "src": "https://floridianpress.com/2026/10/byron-donalds-says-david-jolly-will-erase-desantis-agenda-if-elected-governor/"},
+    {"issue": "Public school funding", "why": "Jolly proposes moving tourism tax dollars toward classrooms, while Donalds argues current policies fueled the state's growth.", "src": "https://www.mysuncoast.com/2026/10/03/florida-governors-race-intensifies-donalds-jolly-court-voters-statewide/"},
+    {"issue": "Offshore drilling and energy", "why": "Donalds says Jolly lobbied for offshore drilling in 2011 and fact checkers found the claim technically true, while Donalds' stance on AI data centers has shifted.", "src": "https://www.wuft.org/politics/2026-10-16/fact-checking-claims-from-florida-governor-candidates-david-jolly-and-byron-donalds"}
+  ],
+  "storylines": [
+    {"title": "Obama backs Jolly", "date": "2026-10-23", "what": "Former President Barack Obama endorsed Jolly as Trump stepped up his involvement in Florida.", "helps": "D", "kind": "endorsement", "src": "https://floridapolitics.com/archives/826788-as-donald-trump-doubles-down-on-florida-barack-obama-backs-david-jolly/"},
+    {"title": "Jolly ad ties Donalds to Trump", "date": "2026-10-23", "what": "A Jolly ad called Daddy's Back argues that gas, grocery and insurance costs rose under Trump and that Donalds shows Trump blind loyalty.", "helps": "D", "kind": "ad", "src": "https://floridianpress.com/2026/10/david-jolly-slams-byron-donalds-loyalty-to-trump-in-new-ad/"},
+    {"title": "Fact checks hit both sides", "date": "2026-10-16", "what": "WUFT found Jolly's claim of 60 to 70 percent premium cuts likely false and Donalds' $1,000 hurricane tax figure not correct as stated.", "helps": "mixed", "kind": "attack", "src": "https://www.wuft.org/politics/2026-10-16/fact-checking-claims-from-florida-governor-candidates-david-jolly-and-byron-donalds"},
+    {"title": "Donalds launches Fighter and Never ads", "date": "2026-10-06", "what": "Donalds aired an ad featuring Trump's praise and another arguing Jolly would raise taxes and insurance costs, backed by a fundraising haul of over $134 million.", "helps": "R", "kind": "ad", "src": "https://www.cbsnews.com/miami/news/byron-donalds-new-ads-florida-governor-race-david-jolly/"},
+    {"title": "Insurance plans collide", "date": "2026-10-06", "what": "Donalds calls Jolly's state wind fund socialism, while Jolly says the current system already imposes a hurricane tax on Citizens policyholders.", "helps": "mixed", "kind": "policy", "src": "https://www.fox13news.com/news/florida-governor-candidates-clash-over-home-insurance-accuse-each-other-supporting-hurricane-tax"},
+    {"title": "Dueling tours on the Suncoast", "date": "2026-10-03", "what": "Donalds praised Republican leadership on his Defending the Florida Dream tour while Jolly met with the Sarasota school board about education funding.", "helps": "mixed", "kind": "rally", "src": "https://www.mysuncoast.com/2026/10/03/florida-governors-race-intensifies-donalds-jolly-court-voters-statewide/"},
+    {"title": "FAMU debate canceled", "date": "2026-09-24", "what": "Florida A&M canceled a planned gubernatorial debate after the campaigns could not agree.", "helps": "mixed", "kind": "debate", "src": "https://www.wctv.tv/2026/09/24/disappointed-famu-cancels-gubernatorial-debate/"},
+    {"title": "Jolly says no to debates", "date": "2026-09-21", "what": "Jolly's campaign said he would not debate, arguing the Donalds camp tried to control the moderator, location and timing, and each side blamed the other.", "helps": "R", "kind": "debate", "src": "https://cbs12.com/news/cbs12-news-i-team/david-jolly-declines-debate-byron-donalds-florida-governor-race-general-election-florida-politics-gubernational-debate-florida-news"}
+  ],
+  "events": [
+    {"title": "Hurricane tax attack", "prompt": "The two campaigns are trading charges over home insurance, with Republicans calling a state wind fund a hurricane tax and Democrats saying Citizens surcharges already are one. How does the campaign answer on insurance?", "issue": "econ", "src": "https://www.fox13news.com/news/florida-governor-candidates-clash-over-home-insurance-accuse-each-other-supporting-hurricane-tax",
+     "opts": [
+       {"label": "State wind fund", "say": "Back a public fund that covers all wind risk so private premiums fall.", "pos": -0.8, "trump": -0.5, "tone": "fiery"},
+       {"label": "Scorecard and grants", "say": "Keep the current market but add a consumer insurance scorecard and fix the home hardening grants.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "Defend 2022 reforms", "say": "Protect the lawsuit limits, keep Citizens small and call any state takeover socialism.", "pos": 0.8, "trump": 0.4, "tone": "fiery"}
+     ]},
+    {"title": "Debate standoff", "prompt": "Talks on three televised debates broke down over moderators, venues and dates, and a FAMU debate was canceled. What does the campaign do?", "issue": "other", "src": "https://cbs12.com/news/cbs12-news-i-team/david-jolly-declines-debate-byron-donalds-florida-governor-race-general-election-florida-politics-gubernational-debate-florida-news",
+     "opts": [
+       {"label": "Accept any debate", "say": "Publicly accept any neutral debate offer and dare the other side to show up.", "pos": 0.0, "trump": null, "tone": "fiery"},
+       {"label": "Town halls instead", "say": "Skip debates and hold separate televised town halls with voters.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Blame and move on", "say": "Say the other side sabotaged the talks and focus on paid ads.", "pos": 0.0, "trump": null, "tone": "fiery"}
+     ]},
+    {"title": "Trump and rising prices", "prompt": "A new ad argues gas, groceries and insurance costs rose under Trump and that the Republican nominee gave him an A on the economy. How does the campaign handle Trump on cost of living?", "issue": "econ", "src": "https://floridianpress.com/2026/10/david-jolly-slams-byron-donalds-loyalty-to-trump-in-new-ad/",
+     "opts": [
+       {"label": "Blame Trump", "say": "Say Trump's tariffs and the Iran war raised prices and Floridians are paying the bill.", "pos": -0.6, "trump": -1, "tone": "fiery"},
+       {"label": "Talk state costs", "say": "Stay on state level fixes for insurance and housing and avoid national fights.", "pos": 0.0, "trump": 0, "tone": "calm"},
+       {"label": "Embrace Trump", "say": "Run on Trump's endorsement and the tax cut bill as proof of results.", "pos": 0.7, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Schools and tourist taxes", "prompt": "A proposal to move tourism tax dollars from convention centers and promotion to public schools is drawing attention. Where does the campaign land?", "issue": "other", "src": "https://www.mysuncoast.com/2026/10/03/florida-governors-race-intensifies-donalds-jolly-court-voters-statewide/",
+     "opts": [
+       {"label": "Shift to classrooms", "say": "Redirect tourist tax money to teacher pay and classrooms.", "pos": -0.7, "trump": null, "tone": "calm"},
+       {"label": "Local choice", "say": "Let counties decide how to spend their own tourist tax revenue.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "Keep the model", "say": "Say low taxes and school choice built Florida and the current system works.", "pos": 0.8, "trump": null, "tone": "fiery"}
+     ]}
+  ],
+  "debates": [],
+  "endorsements": [
+    {"who": "Donald Trump", "for": "R", "src": "https://www.cbsnews.com/miami/news/byron-donalds-new-ads-florida-governor-race-david-jolly/"},
+    {"who": "Ron DeSantis", "for": "R", "src": "https://floridianpress.com/2026/10/byron-donalds-says-david-jolly-will-erase-desantis-agenda-if-elected-governor/"},
+    {"who": "Everglades Trust", "for": "R", "src": "https://www.cbsnews.com/miami/news/byron-donalds-new-ads-florida-governor-race-david-jolly/"},
+    {"who": "Barack Obama", "for": "D", "src": "https://floridapolitics.com/archives/826788-as-donald-trump-doubles-down-on-florida-barack-obama-backs-david-jolly/"}
+  ],
+  "ads": [
+    {"by": "Donalds campaign", "for": "R", "theme": "The Never ad argues liberal David Jolly would raise taxes, insurance and everyday costs.", "src": "https://floridianpress.com/2026/10/byron-donalds-says-david-jolly-will-erase-desantis-agenda-if-elected-governor/"},
+    {"by": "Donalds campaign", "for": "R", "theme": "The Fighter ad features Trump praising Donalds.", "src": "https://www.cbsnews.com/miami/news/byron-donalds-new-ads-florida-governor-race-david-jolly/"},
+    {"by": "Donalds campaign", "for": "R", "theme": "An ad claims Jolly's insurance plan is a $1,000 a year hurricane tax, a figure fact checkers dispute.", "src": "https://www.fox13news.com/news/florida-governor-candidates-clash-over-home-insurance-accuse-each-other-supporting-hurricane-tax"},
+    {"by": "Jolly campaign", "for": "D", "theme": "The Daddy's Back ad says prices rose under Trump and Donalds gives him blind loyalty.", "src": "https://floridianpress.com/2026/10/david-jolly-slams-byron-donalds-loyalty-to-trump-in-new-ad/"}
+  ],
+  "regions": [
+    {"name": "South Florida", "counties": ["Miami-Dade", "Broward", "Palm Beach", "Monroe"], "note": "The Democratic base in Broward and Palm Beach, while Miami-Dade's Hispanic voters swung sharply right in recent cycles."},
+    {"name": "I-4 corridor and Orlando", "counties": ["Orange", "Osceola", "Seminole", "Volusia", "Lake", "Brevard"], "note": "Orange and Osceola lean Democratic with large Puerto Rican communities, while the surrounding suburbs and Space Coast lean Republican."},
+    {"name": "Tampa Bay", "counties": ["Hillsborough", "Pinellas", "Pasco", "Polk", "Hernando"], "note": "Jolly's home turf in Pinellas, a historic swing area that has drifted Republican."},
+    {"name": "Southwest Florida and Suncoast", "counties": ["Lee", "Collier", "Sarasota", "Manatee", "Charlotte"], "note": "Donalds' home base around Naples and Fort Myers, heavily Republican with many retirees."},
+    {"name": "North Florida and Panhandle", "counties": ["Duval", "St. Johns", "Clay", "Leon", "Alachua", "Escambia", "Okaloosa", "Bay"], "note": "Deep red rural and military areas, offset by Democratic Tallahassee, Gainesville and a competitive Jacksonville."}
+  ]
+}

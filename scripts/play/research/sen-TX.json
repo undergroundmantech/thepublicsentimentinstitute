@@ -1,0 +1,65 @@
+{
+ "id": "sen-TX",
+ "checked": "2026-10-25",
+ "summary": "Democratic state Rep. James Talarico and Republican Attorney General Ken Paxton, who ousted Sen. John Cornyn in the primary with Trump's backing, are essentially tied, with an Emerson poll at 48 to 46 for Talarico and a Fox News poll at 49 each. KBTX reports spending has passed 500 million dollars, with Republicans attacking Talarico on faith, gender and taxes and Democrats attacking Paxton's impeachment and handling of a child predator case.",
+ "issues": [
+  {"issue": "Economy and taxes", "why": "Economy tops Texas voters' concerns at 39 percent, and Paxton says Talarico voted for a state income tax and would tax tips, overtime and Social Security.", "src": "https://www.courthousenews.com/poll-puts-talarico-a-step-ahead-of-paxton-in-race-for-us-senate/"},
+  {"issue": "Paxton's ethics record", "why": "Democratic ads cite Paxton's 2023 impeachment for bribery and abuse of power and a light plea deal in the Hoffman child assault case.", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/"},
+  {"issue": "Faith, gender and social issues", "why": "Republican ads replay Talarico saying God is nonbinary and there are six biological sexes, which he now calls cringey.", "src": "https://www.ksat.com/news/texas/2026/10/16/pro-cruz-pac-launches-seven-figure-spanish-language-ad-buy-attacking-talarico/"},
+  {"issue": "Immigration", "why": "Immigration ranks second among likely voters' top issues in a state with a long border.", "src": "https://www.courthousenews.com/poll-puts-talarico-a-step-ahead-of-paxton-in-race-for-us-senate/"},
+  {"issue": "Hispanic voters", "why": "Talarico leads Hispanic voters 64 to 34 in the Fox News poll, and a Cruz aligned PAC is targeting Hispanic Christians in Spanish.", "src": "https://www.fox7austin.com/news/texas-senate-race-talarico-paxton-tied-new-poll-debate-disagreement-continues"}
+ ],
+ "storylines": [
+  {"title": "Fox News poll shows a 49 to 49 tie", "date": "2026-10-22", "what": "Paxton gained among rural voters, suburban women and Cornyn primary backers to erase Talarico's September lead, while the two sparred over whether to debate.", "helps": "R", "kind": "national", "src": "https://www.fox7austin.com/news/texas-senate-race-talarico-paxton-tied-new-poll-debate-disagreement-continues"},
+  {"title": "Emerson poll has Talarico up 2", "date": "2026-10-22", "what": "Emerson found Talarico at 48 and Paxton at 46 with Libertarian voters possibly decisive, as early voting opened with record turnout in big counties.", "helps": "D", "kind": "national", "src": "https://www.courthousenews.com/poll-puts-talarico-a-step-ahead-of-paxton-in-race-for-us-senate/"},
+  {"title": "Spending passes 500 million dollars", "date": "2026-10-19", "what": "Musk's Texas PAC and Thune aligned groups have poured hundreds of millions into ads, while a Talarico ad calls the Hoffman plea an Epstein style sweetheart deal.", "helps": "mixed", "kind": "ad", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/"},
+  {"title": "Pro Cruz PAC targets Hispanic Christians", "date": "2026-10-16", "what": "Truth and Courage PAC launched a seven figure Spanish language ad calling Talarico a wolf in sheep's clothing over comments on gender and God.", "helps": "R", "kind": "ad", "src": "https://www.ksat.com/news/texas/2026/10/16/pro-cruz-pac-launches-seven-figure-spanish-language-ad-buy-attacking-talarico/"},
+  {"title": "False mental hospital rumor about Talarico", "date": "2026-10-13", "what": "The Texas Tribune reported Paxton allies spread a false claim that Talarico was in an Ohio mental facility, while Paxton ran ads calling him mentally fragile and the facility said he was never a patient.", "helps": "D", "kind": "scandal", "src": "https://www.texastribune.org/2026/10/13/james-talarico-ken-paxton-senate-texas-mental-hospital/"},
+  {"title": "Paxton's King James ad", "date": "2026-09-10", "what": "Paxton released an AI made ad of Talarico scribbling in a Bible over his gender comments, and Talarico ran an ad with a former Paxton aide whose claims led to impeachment.", "helps": "mixed", "kind": "ad", "src": "https://thetexan.news/elections/2026/paxton-talarico-attack-ads-home-in-on-social-issues-impeachment-record/article_e5adcc6a-b84a-47de-ab52-d73759e74c10.html"}
+ ],
+ "events": [
+  {"title": "The debate standoff", "prompt": "No debate is scheduled, the race is tied, and one side has dared the other to debate on Fox News. What does the campaign do?", "issue": "other", "src": "https://www.fox7austin.com/news/texas-senate-race-talarico-paxton-tied-new-poll-debate-disagreement-continues",
+   "opts": [
+    {"label": "Dare him on Fox", "say": "Challenge the opponent to debate on conservative home turf and call any refusal hiding.", "pos": -0.3, "trump": -0.4, "tone": "fiery"},
+    {"label": "Debate on fair terms", "say": "Agree to debate under neutral conditions and a statewide broadcaster.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Skip the hostile media", "say": "Decline a network debate and reach voters through rallies and friendly outlets.", "pos": 0.6, "trump": 0.6, "tone": "fiery"}
+   ]},
+  {"title": "Faith and gender comments", "prompt": "Ads in English and Spanish replay past comments that God is nonbinary and there are six biological sexes. How does the campaign respond?", "issue": "other", "src": "https://www.ksat.com/news/texas/2026/10/16/pro-cruz-pac-launches-seven-figure-spanish-language-ad-buy-attacking-talarico/",
+   "opts": [
+    {"label": "Stand by the theology", "say": "Defend the point that God defies human categories and call the ads hateful.", "pos": -0.8, "trump": -0.6, "tone": "fiery"},
+    {"label": "Admit and move on", "say": "Call the old comments cringey, talk about personal faith and pivot to costs.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Make it the closer", "say": "Spend heavily reminding Hispanic Christian voters of the comments in the final week.", "pos": 0.9, "trump": 0.6, "tone": "fiery"}
+   ]},
+  {"title": "Impeachment and the Hoffman case", "prompt": "Ads hit the attorney general's impeachment and a short sentence for a man who assaulted a child, while his office says the victim would not testify again. How is it handled?", "issue": "corruption", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/",
+   "opts": [
+    {"label": "Make him the issue", "say": "Run on the Epstein style sweetheart deal and his own party's impeachment.", "pos": -0.6, "trump": -0.6, "tone": "fiery"},
+    {"label": "Clean government pitch", "say": "Raise ethics through a broad anticorruption plan without leaning on the child case.", "pos": -0.1, "trump": -0.2, "tone": "calm"},
+    {"label": "Defend and counter", "say": "Explain the plea was needed to protect the child and call the attacks smears from the left.", "pos": 0.8, "trump": 0.8, "tone": "fiery"}
+   ]},
+  {"title": "Income tax charge", "prompt": "The Republican says the Democrat voted for a state income tax and would tax tips, overtime and Social Security. What is the tax message?", "issue": "econ", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/",
+   "opts": [
+    {"label": "Tax the rich", "say": "Argue billionaires and big donors like Musk should pay more while working families pay less.", "pos": -0.8, "trump": -0.7, "tone": "fiery"},
+    {"label": "No new taxes pledge", "say": "Promise no income tax and no tax on tips or overtime and call the attack false.", "pos": 0.2, "trump": 0, "tone": "calm"},
+    {"label": "Hammer the income tax", "say": "Make the income tax vote the centerpiece of the closing ads.", "pos": 0.9, "trump": 0.7, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://www.fox7austin.com/news/texas-senate-race-talarico-paxton-tied-new-poll-debate-disagreement-continues"},
+  {"who": "David Maxwell, former Paxton aide", "for": "D", "src": "https://thetexan.news/elections/2026/paxton-talarico-attack-ads-home-in-on-social-issues-impeachment-record/article_e5adcc6a-b84a-47de-ab52-d73759e74c10.html"}
+ ],
+ "ads": [
+  {"by": "Talarico campaign", "for": "D", "theme": "Calls Paxton's handling of the Hoffman case an Epstein style sweetheart deal for a child predator.", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/"},
+  {"by": "Truth and Courage PAC", "for": "R", "theme": "Spanish language ad calling Talarico a wolf in sheep's clothing over comments on God and gender.", "src": "https://www.ksat.com/news/texas/2026/10/16/pro-cruz-pac-launches-seven-figure-spanish-language-ad-buy-attacking-talarico/"},
+  {"by": "Texas PAC", "for": "R", "theme": "Musk funded ads saying Talarico would charge parents with child abuse over gender transitions.", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/"},
+  {"by": "Lone Star Rising PAC", "for": "D", "theme": "Says Paxton let child predators off the hook and was impeached by his own party.", "src": "https://www.kbtx.com/2026/10/20/toss-up-texas-senate-race-tops-500-million-spending-talarico-paxton-trade-attacks/"}
+ ],
+ "regions": [
+  {"name": "Houston metro", "counties": ["Harris", "Fort Bend", "Montgomery", "Brazoria"], "note": "Democratic Harris and Fort Bend against Republican Montgomery and Brazoria in the biggest metro."},
+  {"name": "Dallas Fort Worth", "counties": ["Dallas", "Tarrant", "Collin", "Denton"], "note": "Blue Dallas plus swing suburbs where suburban women may decide the race."},
+  {"name": "Austin and San Antonio", "counties": ["Travis", "Williamson", "Hays", "Bexar"], "note": "Talarico's central Texas base and the fastest growing Democratic region."},
+  {"name": "Border and Rio Grande Valley", "counties": ["Hidalgo", "Cameron", "Webb", "El Paso"], "note": "Heavily Hispanic counties that shifted right in 2024 and are a top target for both sides."},
+  {"name": "West Texas and Panhandle", "counties": ["Lubbock", "Midland", "Ector", "Potter", "Randall"], "note": "Oil and farm country that is overwhelmingly Republican."},
+  {"name": "East Texas", "counties": ["Smith", "Gregg", "Jefferson", "Angelina"], "note": "Rural and small city counties that are deeply Republican outside Beaumont."}
+ ]
+}

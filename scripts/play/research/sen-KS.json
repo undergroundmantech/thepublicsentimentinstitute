@@ -1,0 +1,69 @@
+{
+ "id": "sen-KS",
+ "checked": "2026-10-25",
+ "summary": "Republican Sen. Roger Marshall faces Adam Hamilton, a centrist United Methodist megachurch pastor who left the GOP in April, in a race Cook rates a toss up and that KCUR reports is neck and neck. Hamilton is running on fuel costs, tariffs and the Iran war plus Marshall's medical debt lawsuits, while Marshall, endorsed by Trump, ties Hamilton to Chuck Schumer and attacks his church's handling of a 2005 abuse report.",
+ "issues": [
+  {"issue": "Fuel and diesel prices", "why": "Diesel is up 79 percent from a year ago during the Iran war, squeezing farmers and ranchers, and Marshall predicts prices will fall once the war ends.", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/"},
+  {"issue": "Tariffs and farm trade", "why": "Hamilton calls tariffs an unpredictable tax that hurts business, while Marshall says they bring jobs home.", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"issue": "Health care costs", "why": "Hamilton would expand ACA subsidies, while Marshall says Medicaid is broken and the ACA is unaffordable.", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"issue": "Immigration enforcement", "why": "Unannounced ICE raids in southwest Kansas drew criticism, and Marshall said ICE needs to coordinate with local police.", "src": "https://time.com/article/2026/10/07/why-kansas-has-emerged-as-a-new-battleground-state-and-why-it-matters/"},
+  {"issue": "Beef imports and ranchers", "why": "Ranchers were angered by Trump's plan to import foreign beef, and the Kansas Livestock Association PAC declined to endorse Marshall.", "src": "https://time.com/article/2026/10/07/why-kansas-has-emerged-as-a-new-battleground-state-and-why-it-matters/"}
+ ],
+ "storylines": [
+  {"title": "Final debate on FOX4", "date": "2026-10-21", "what": "Marshall said control of the Senate goes through Kansas and tied Hamilton to Schumer, while Hamilton called tariffs and the Iran war sources of chaos and corruption.", "helps": "mixed", "kind": "debate", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"title": "Marshall ad on 2005 church abuse case", "date": "2026-10-21", "what": "A Marshall ad called Hamilton a pedophile protector over how his church handled a 2005 abuse report, and Hamilton said the church helped imprison the perpetrator but he should have checked more.", "helps": "R", "kind": "ad", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"title": "Trump rallies near Wichita", "date": "2026-10-19", "what": "Trump campaigned for Marshall in Park City as early polls showed a 45 to 45 tie.", "helps": "R", "kind": "rally", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"title": "Cook moves race to toss up", "date": "2026-10-06", "what": "Cook shifted the race to toss up, as the Senate Leadership Fund reserved 8.2 million dollars and Marshall's side held a large ad money edge.", "helps": "D", "kind": "national", "src": "https://time.com/article/2026/10/07/why-kansas-has-emerged-as-a-new-battleground-state-and-why-it-matters/"},
+  {"title": "Billboards mock Marshall's Florida home", "date": "2026-09-30", "what": "A super PAC put up billboards in Kansas City and Wichita about Marshall's Florida vacation home, and Marshall says he visits to see his grandchildren.", "helps": "D", "kind": "ad", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/"},
+  {"title": "Marshall threatens suit over medical debt ad", "date": "2026-09-28", "what": "Marshall's lawyers called a Hamilton ad about a pregnant former patient arrested over medical debt defamatory, noting she was arrested for failing to appear in court, and Hamilton refused to pull it.", "helps": "mixed", "kind": "ad", "src": "https://kansasreflector.com/2026/09/28/roger-marshall-alleges-defamation-in-new-ad-about-former-kansas-patient-arrested-while-in-debt/"}
+ ],
+ "events": [
+  {"title": "Medical debt lawsuits", "prompt": "An ad features a former patient arrested while pregnant after the senator's old practice sued her over debt, and his lawyers call it defamatory. How does the campaign handle it?", "issue": "health", "src": "https://kansasreflector.com/2026/09/28/roger-marshall-alleges-defamation-in-new-ad-about-former-kansas-patient-arrested-while-in-debt/",
+   "opts": [
+    {"label": "Keep the ad up", "say": "Refuse to pull it and say the senator preyed on low income families.", "pos": -0.6, "trump": -0.4, "tone": "fiery"},
+    {"label": "Medical debt reform", "say": "Propose limits on medical debt collection without leaning on one patient's story.", "pos": -0.2, "trump": null, "tone": "calm"},
+    {"label": "Threaten legal action", "say": "Send a cease and desist, call the ad a lie and say debt collection was common practice.", "pos": 0.6, "trump": 0.4, "tone": "fiery"}
+   ]},
+  {"title": "Diesel prices and the Iran war", "prompt": "Diesel is up nearly 80 percent in a year and farmers are hurting. What is the plan?", "issue": "econ", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/",
+   "opts": [
+    {"label": "Exit the war", "say": "Push to end the Iran war quickly and crack down on price gouging.", "pos": -0.6, "trump": -0.7, "tone": "fiery"},
+    {"label": "Relief for farmers", "say": "Back targeted diesel relief and clean fuel credits for corn and soy growers.", "pos": 0.1, "trump": 0, "tone": "calm"},
+    {"label": "Back the president", "say": "Support the war strategy and the Russian diesel deal and blame the Green New Deal.", "pos": 0.9, "trump": 1, "tone": "fiery"}
+   ]},
+  {"title": "Schumer and national Democrats", "prompt": "The Republican says a Schumer linked PAC is funding the challenger and the race decides Senate control. How does the campaign answer?", "issue": "other", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate",
+   "opts": [
+    {"label": "Flip the Senate", "say": "Embrace the stakes and argue Kansas can check Trump by changing control.", "pos": -0.8, "trump": -0.9, "tone": "fiery"},
+    {"label": "Not voting for Schumer", "say": "Pledge not to back Schumer for leader and stress former Republican governors' support.", "pos": -0.1, "trump": -0.3, "tone": "calm"},
+    {"label": "Nationalize it", "say": "Tell Kansans a vote for the challenger is a vote for Schumer's agenda.", "pos": 0.8, "trump": 0.7, "tone": "fiery"}
+   ]},
+  {"title": "ICE raids in western Kansas", "prompt": "Unannounced ICE raids in southwest Kansas meatpacking country drew local criticism. What is the immigration stance?", "issue": "immig", "src": "https://time.com/article/2026/10/07/why-kansas-has-emerged-as-a-new-battleground-state-and-why-it-matters/",
+   "opts": [
+    {"label": "Rein in ICE", "say": "Call the raids reckless for workers and employers and demand limits.", "pos": -0.7, "trump": -0.6, "tone": "fiery"},
+    {"label": "Coordinate locally", "say": "Support strong borders but require ICE to coordinate with local law enforcement.", "pos": 0.3, "trump": 0, "tone": "calm"},
+    {"label": "Full enforcement", "say": "Back the raids as enforcing the law and keeping communities safe.", "pos": 0.9, "trump": 0.9, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-21", "where": "FOX4", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://news.ballotpedia.org/2026/10/20/incumbent-roger-marshall-r-and-adam-hamilton-d-face-off-in-a-toss-up-race-for-kansas-u-s-senate-seat/"},
+  {"who": "Former Gov. Bill Graves, a Republican", "for": "D", "src": "https://news.ballotpedia.org/2026/10/20/incumbent-roger-marshall-r-and-adam-hamilton-d-face-off-in-a-toss-up-race-for-kansas-u-s-senate-seat/"},
+  {"who": "Former Gov. Mike Hayden, a Republican", "for": "D", "src": "https://news.ballotpedia.org/2026/10/20/incumbent-roger-marshall-r-and-adam-hamilton-d-face-off-in-a-toss-up-race-for-kansas-u-s-senate-seat/"},
+  {"who": "Arch Naramore, Marshall's GOP primary opponent", "for": "D", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/"}
+ ],
+ "ads": [
+  {"by": "Hamilton campaign", "for": "D", "theme": "A former patient says she was arrested while pregnant after Marshall's practice sued her over medical debt.", "src": "https://kansasreflector.com/2026/09/28/roger-marshall-alleges-defamation-in-new-ad-about-former-kansas-patient-arrested-while-in-debt/"},
+  {"by": "Marshall campaign", "for": "R", "theme": "Calls Hamilton a pedophile protector over his church's handling of a 2005 abuse report.", "src": "https://www.kcur.org/politics-elections-and-government/2026-10-21/control-of-the-senate-goes-through-kansas-marshall-and-hamilton-clash-at-last-debate"},
+  {"by": "United Futures PAC", "for": "D", "theme": "Billboards in Kansas City and Wichita mocking Marshall's Florida vacation home.", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/"},
+  {"by": "Anti Hamilton advertisers", "for": "R", "theme": "Call Hamilton a snake oil salesman over his megachurch.", "src": "https://www.cbsnews.com/news/kansas-senate-adam-hamilton-roger-marshall-campaign-iran-gas-prices/"}
+ ],
+ "regions": [
+  {"name": "Kansas City suburbs", "counties": ["Johnson", "Wyandotte", "Leavenworth", "Miami"], "note": "Hamilton's home base and the swing suburban heart of any Democratic win, with Wyandotte solidly blue."},
+  {"name": "Wichita area", "counties": ["Sedgwick", "Butler", "Harvey"], "note": "The largest city leans Republican overall but is competitive, and Trump rallied nearby."},
+  {"name": "Topeka, Lawrence and Manhattan", "counties": ["Shawnee", "Douglas", "Riley"], "note": "The capital and university towns lean Democratic."},
+  {"name": "Central Kansas", "counties": ["Reno", "Saline", "Barton", "McPherson"], "note": "Republican small cities and farm counties including Marshall's old Great Bend home."},
+  {"name": "Western Kansas", "counties": ["Finney", "Ford", "Seward", "Ellis", "Thomas"], "note": "Deeply Republican farm and meatpacking country hit by fuel costs and ICE raids."},
+  {"name": "Southeast Kansas", "counties": ["Crawford", "Montgomery", "Labette", "Cherokee"], "note": "Working class former mining towns that have trended strongly Republican."}
+ ]
+}

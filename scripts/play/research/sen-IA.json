@@ -1,0 +1,69 @@
+{
+ "id": "sen-IA",
+ "checked": "2026-10-25",
+ "summary": "WOWT reports the open seat race to replace retiring Sen. Joni Ernst has tightened, with recent polls split between Republican Rep. Ashley Hinson and Democratic state Rep. Josh Turek. Coverage centers on rising costs, tariffs and the Iran war, Medicaid cuts in the One Big Beautiful Bill Act, Hinson's family wealth and Turek's missed legislative votes.",
+ "issues": [
+  {"issue": "Cost of living", "why": "Hinson says Iowans have been priced out of the American dream while Turek ties higher costs to tariffs and the Iran war.", "src": "https://www.wowt.com/2026/10/22/iowa-senate-race-tightens-with-less-than-two-weeks-election-day/"},
+  {"issue": "Medicaid and rural health care", "why": "Clinic closures like MercyOne in Ottumwa feed a fight over Medicaid cuts in the One Big Beautiful Bill Act, which Hinson backed.", "src": "https://www.iowapublicradio.org/political-news/2026-10-12/senate-hinson-turek-healthcare-election"},
+  {"issue": "Tariffs and farmers", "why": "Turek says Hinson voted five times for tariffs that hurt farm communities, and Hinson calls a plan to raise beef imports a bad idea for Iowa farmers.", "src": "https://iowacapitaldispatch.com/2026/10/07/turek-hinson-talk-legislative-track-records-at-us-senate-debate/"},
+  {"issue": "Iran war and fuel prices", "why": "Turek links the war to diesel and fertilizer costs and backs a war powers resolution, while Hinson opposes it but wants an orderly end.", "src": "https://www.kwwl.com/news/decision-2026-hinson-and-turek-meet-in-the-final-iowa-senate-debate/article_81ab81a9-6f8f-40ba-90aa-5d34cc7b48fa.html"},
+  {"issue": "Water quality", "why": "Both candidates were asked about nitrates and cancer concerns, with Hinson stressing infrastructure and Turek favoring conservation incentives over mandates.", "src": "https://www.kwwl.com/news/decision-2026-hinson-and-turek-meet-in-the-final-iowa-senate-debate/article_81ab81a9-6f8f-40ba-90aa-5d34cc7b48fa.html"}
+ ],
+ "storylines": [
+  {"title": "Fact check faults wealth ad against Hinson", "date": "2026-10-23", "what": "PolitiFact rated Mostly False a WinSenate ad saying Hinson is 8 million dollars richer after five years in Congress, finding the gain was closer to 4 million and mostly from her husband's business sale.", "helps": "R", "kind": "ad", "src": "https://politifact.com/factchecks/2026/oct/23/winsenate/ashley-hinson-8-million-richer-iowa-senate"},
+  {"title": "Trump rallies with Hinson in Sioux City", "date": "2026-10-22", "what": "Trump called Turek a woke far left radical at a Sioux City rally, while Hinson now bills herself as a bipartisan fighter who pushes back on him over beef imports and Russian diesel.", "helps": "mixed", "kind": "rally", "src": "https://www.cbsnews.com/minnesota/news/iowa-senate-race-hinson-trump-sioux-city-rally/"},
+  {"title": "Gazette editorial board backs Turek", "date": "2026-10-21", "what": "The Cedar Rapids Gazette editorial board endorsed Turek, citing his opposition to Medicaid cuts and arguing Hinson aligned too closely with Trump on tariffs and Iran.", "helps": "D", "kind": "endorsement", "src": "https://turek4iowa.com/news/icymi-the-gazettes-editorial-board-iowa-should-send-josh-turek-to-the-u-s-senate/"},
+  {"title": "Ernst campaigns with Hinson in Glenwood", "date": "2026-10-21", "what": "Retiring Sen. Joni Ernst joined Hinson in southwest Iowa as an analyst said spending is on pace for a state record and polls show no clear leader.", "helps": "R", "kind": "rally", "src": "https://www.wowt.com/2026/10/22/iowa-senate-race-tightens-with-less-than-two-weeks-election-day/"},
+  {"title": "Final debate at WHO 13", "date": "2026-10-13", "what": "Hinson said Turek showed up for 42 percent of House votes this year, which PolitiFact found accurate, while Turek called her husband a shadow lobbyist, a claim PolitiFact called misleading.", "helps": "R", "kind": "debate", "src": "https://politifact.com/article/2026/oct/14/hinson-turek-iowa-senate-farm-bill-shadow-lobbyist/"},
+  {"title": "First debate on Iowa Press", "date": "2026-10-07", "what": "Turek attacked Hinson's per diem use and votes on tariffs and the Iran war, and Hinson said Turek was lying about her family's wealth and should refund his own per diem.", "helps": "mixed", "kind": "debate", "src": "https://iowacapitaldispatch.com/2026/10/07/turek-hinson-talk-legislative-track-records-at-us-senate-debate/"},
+  {"title": "Pro Turek PAC hits Hinson on donors", "date": "2026-10-05", "what": "Government Works PAC aired an ad accusing Hinson of putting special interests and donors ahead of Iowans and skipping chances to face constituents.", "helps": "D", "kind": "ad", "src": "https://iowastartingline.com/news/politics/video/new-ad-from-pro-turek-pac-takes-a-swing-at-politicians-not-showing-up-in-iowa/"},
+  {"title": "Marist poll shows Turek up 8", "date": "2026-09-20", "what": "A Marist survey of registered voters had Turek at 50 percent to Hinson's 42, while an Emerson poll weeks earlier had Hinson ahead by 5.", "helps": "D", "kind": "national", "src": "https://www.fox9.com/news/iowa-2026-senate-josh-turek-ashley-hinson"}
+ ],
+ "events": [
+  {"title": "Missed votes attack", "prompt": "Records show the Democrat missed most Iowa House floor votes this year while campaigning, and the Republican is hammering it in debates. How does the campaign handle attendance?", "issue": "other", "src": "https://politifact.com/article/2026/oct/14/hinson-turek-iowa-senate-farm-bill-shadow-lobbyist/",
+   "opts": [
+    {"label": "Own it, pivot to results", "say": "Admit the absences and point to a bipartisan effectiveness ranking and bills passed.", "pos": -0.3, "trump": null, "tone": "calm"},
+    {"label": "Counter on Hinson's record", "say": "Hit back on congressional per diem and committee absences to say both sides have attendance questions.", "pos": -0.6, "trump": -0.4, "tone": "fiery"},
+    {"label": "Press the attack", "say": "Make missed votes, including the Iowa farm bill vote, the closing message about who shows up for Iowans.", "pos": 0.6, "trump": 0.2, "tone": "fiery"}
+   ]},
+  {"title": "Trump comes to Sioux City", "prompt": "Trump is rallying in northwest Iowa and returns to the state Nov. 1, while polls show his tariffs and the Iran war weigh on rural voters. How close should the campaign stand to him?", "issue": "econ", "src": "https://www.cbsnews.com/minnesota/news/iowa-senate-race-hinson-trump-sioux-city-rally/",
+   "opts": [
+    {"label": "Run against tariffs", "say": "Say Trump's tariffs and war have hurt Iowa more than any state and call the opponent a rubber stamp.", "pos": -0.6, "trump": -0.8, "tone": "fiery"},
+    {"label": "Ally with independence", "say": "Stand with Trump on the border but publicly oppose beef imports and Russian diesel deals that hurt farmers.", "pos": 0.3, "trump": 0.2, "tone": "calm"},
+    {"label": "Full embrace", "say": "Take the stage with Trump and promise to be his top ally in the Senate.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+   ]},
+  {"title": "Medicaid cuts and rural clinics", "prompt": "A rural clinic closure in Ottumwa has voters asking about Medicaid cuts in the One Big Beautiful Bill Act. What is the health care plan?", "issue": "health", "src": "https://www.iowapublicradio.org/political-news/2026-10-12/senate-hinson-turek-healthcare-election",
+   "opts": [
+    {"label": "Repeal the cuts", "say": "Promise to reverse the Medicaid cuts and extend ACA marketplace subsidies, keeping tax cuts on tips and overtime.", "pos": -0.8, "trump": -0.6, "tone": "fiery"},
+    {"label": "Targeted clinic fixes", "say": "Back telehealth and community health center funding for small towns without reopening the whole law.", "pos": 0.1, "trump": null, "tone": "calm"},
+    {"label": "Defend the law", "say": "Argue the law cut taxes and protects Medicaid for the truly needy while ending benefits for people here illegally.", "pos": 0.8, "trump": 0.7, "tone": "calm"}
+   ]},
+  {"title": "Diesel prices and Russia", "prompt": "Diesel prices are squeezing farmers and the administration has eased Russia sanctions for fuel. What does the campaign propose?", "issue": "econ", "src": "https://www.kwwl.com/news/decision-2026-hinson-and-turek-meet-in-the-final-iowa-senate-debate/article_81ab81a9-6f8f-40ba-90aa-5d34cc7b48fa.html",
+   "opts": [
+    {"label": "End the war now", "say": "Vote for the war powers resolution and say ending the Iran war is the fastest way to lower fuel costs.", "pos": -0.7, "trump": -0.7, "tone": "fiery"},
+    {"label": "Gas tax holiday", "say": "Call for a temporary gas tax cut and a diesel rebate for biofuel producers while rejecting Russian fuel deals.", "pos": 0.2, "trump": -0.2, "tone": "calm"},
+    {"label": "Back the president", "say": "Defend the administration's energy moves as necessary to get fuel to farmers during the war.", "pos": 0.8, "trump": 0.9, "tone": "calm"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-07", "where": "Iowa PBS, Johnston", "src": "https://iowacapitaldispatch.com/2026/10/07/turek-hinson-talk-legislative-track-records-at-us-senate-debate/"},
+  {"date": "2026-10-13", "where": "WHO 13, Des Moines", "src": "https://politifact.com/article/2026/oct/14/hinson-turek-iowa-senate-farm-bill-shadow-lobbyist/"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://www.cbsnews.com/minnesota/news/iowa-senate-race-hinson-trump-sioux-city-rally/"},
+  {"who": "Sen. Joni Ernst campaigned with Hinson", "for": "R", "src": "https://www.wowt.com/2026/10/22/iowa-senate-race-tightens-with-less-than-two-weeks-election-day/"},
+  {"who": "The Gazette editorial board", "for": "D", "src": "https://turek4iowa.com/news/icymi-the-gazettes-editorial-board-iowa-should-send-josh-turek-to-the-u-s-senate/"}
+ ],
+ "ads": [
+  {"by": "WinSenate", "for": "D", "theme": "Says Hinson got 8 million dollars richer in Congress, a claim PolitiFact rated Mostly False.", "src": "https://politifact.com/factchecks/2026/oct/23/winsenate/ashley-hinson-8-million-richer-iowa-senate"},
+  {"by": "Government Works PAC", "for": "D", "theme": "Accuses Hinson of putting donors and special interests ahead of Iowans.", "src": "https://iowastartingline.com/news/politics/video/new-ad-from-pro-turek-pac-takes-a-swing-at-politicians-not-showing-up-in-iowa/"},
+  {"by": "Turek campaign", "for": "D", "theme": "Names Trump directly, saying his tariffs and the Iran war hurt Iowa while promising to work with him on the border.", "src": "https://www.cbsnews.com/minnesota/news/iowa-senate-race-hinson-trump-sioux-city-rally/"}
+ ],
+ "regions": [
+  {"name": "Des Moines metro", "counties": ["Polk", "Dallas", "Warren", "Story"], "note": "Fast growing suburbs and Ames make this the largest Democratic leaning vote center, with Dallas County a key swing suburb."},
+  {"name": "Eastern Iowa cities", "counties": ["Linn", "Johnson", "Scott", "Black Hawk", "Dubuque"], "note": "Cedar Rapids, Iowa City, the Quad Cities, Waterloo and Dubuque supply much of the Democratic base and Hinson's House district."},
+  {"name": "Northwest Iowa", "counties": ["Sioux", "Plymouth", "Lyon", "O'Brien", "Woodbury"], "note": "The most Republican part of the state, where Trump rallied in Sioux City."},
+  {"name": "Southwest Iowa", "counties": ["Pottawattamie", "Mills", "Fremont", "Page", "Cass"], "note": "Turek's Council Bluffs home base sits in a strongly Republican rural region."},
+  {"name": "Rural central and south", "counties": ["Wapello", "Marshall", "Webster", "Cerro Gordo", "Muscatine"], "note": "Small cities and farm counties that swung right over the past decade and feel rural health and farm costs most."}
+ ]
+}

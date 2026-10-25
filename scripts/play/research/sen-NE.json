@@ -1,0 +1,66 @@
+{
+ "id": "sen-NE",
+ "checked": "2026-10-25",
+ "summary": "Independent Dan Osborn, a former Kellogg's mechanic and union leader, is in what IVN calls a toss up with Republican Sen. Pete Ricketts, with recent polls ranging from a one point Osborn edge to a four point Ricketts lead. Ricketts and national Republicans brand him Democrat Dan and press his leaked Red Cloud remarks, while Osborn hits the Iran war, costs and money in politics and says he will caucus with neither party.",
+ "issues": [
+  {"issue": "Cost of living", "why": "Ricketts touts the tax law's cuts and a housing bill, while Osborn says the law favors the wealthy and the Iran war is raising gas, diesel and grocery prices.", "src": "https://nebraskaexaminer.com/?p=45109"},
+  {"issue": "Tariffs and beef imports", "why": "Both oppose Trump's plan to let in foreign beef without high tariffs, but Ricketts backs tariffs broadly while Osborn wants targeted ones and congressional control.", "src": "https://nebraskaexaminer.com/?p=45109"},
+  {"issue": "Rural health care and Medicaid", "why": "Ricketts defends new Medicaid rules while Osborn cites a dialysis closure in Chadron as proof the changes hurt rural Nebraska.", "src": "https://flatwaterfreepress.org/pete-ricketts-dan-osborn-go-head-to-head-in-nebraska-u-s-senate-debate/"},
+  {"issue": "Party independence", "why": "Ricketts says Osborn is a Democrat in disguise, and Osborn pledges not to caucus with either party.", "src": "https://ivn.us/ricketts-calls-him-a-democrat-osborn-says-thats-the-problem-with-politics/"},
+  {"issue": "Fertilizer and farm input costs", "why": "Fertilizer prices spiked with the Iran war, and Vance announced a federal ammonia plant investment in Nebraska while campaigning for Ricketts.", "src": "https://www.yankton.net/community/article_b1a5c00f-eb4d-4912-9f6f-ceb371670a0c.html"}
+ ],
+ "storylines": [
+  {"title": "Fresh money and polls show a toss up", "date": "2026-10-23", "what": "Osborn has raised 9.8 million dollars and Ricketts 14.5 million, with Ricketts holding less cash on hand, and recent polls split narrowly.", "helps": "mixed", "kind": "national", "src": "https://ivn.us/7-independent-campaigns-to-watch-in-the-final-two-weeks/"},
+  {"title": "Vance campaigns in North Platte", "date": "2026-10-22", "what": "Vance called Osborn a far left partisan Democrat and announced a fertilizer plant investment, and Osborn's campaign said Ricketts needs Trump, Vance and Thune to save him.", "helps": "R", "kind": "rally", "src": "https://www.yankton.net/community/article_b1a5c00f-eb4d-4912-9f6f-ceb371670a0c.html"},
+  {"title": "Osborn ad hits Trump beef import plan", "date": "2026-10-13", "what": "Osborn aired an ad attacking Trump's plan to bring in foreign beef, a plan Ricketts also opposes.", "helps": "I", "kind": "ad", "src": "https://nebraskaexaminer.com/?p=45109"},
+  {"title": "Trump rallies in Grand Island", "date": "2026-10-05", "what": "Trump held a rally for Ricketts in Grand Island, an unusual move for a Republican incumbent in Nebraska.", "helps": "R", "kind": "rally", "src": "https://ivn.us/ricketts-calls-him-a-democrat-osborn-says-thats-the-problem-with-politics/"},
+  {"title": "Osborn apologizes in Red Cloud", "date": "2026-10-01", "what": "After leaked audio of Osborn mocking a hypothetical Red Cloud Trump voter became a Ricketts ad, Osborn returned to apologize and residents gave mixed reactions.", "helps": "mixed", "kind": "scandal", "src": "https://nebraskaexaminer.com/2026/10/02/what-red-cloud-residents-said-when-dan-osborn-returned-after-shoving-them-into-national-spotlight/"},
+  {"title": "Only debate at the State Fair", "date": "2026-09-01", "what": "Ricketts repeatedly called Osborn Democrat Dan and defended tariffs and Medicaid changes, while Osborn hit grocery costs, super PACs and rural health cuts.", "helps": "mixed", "kind": "debate", "src": "https://flatwaterfreepress.org/pete-ricketts-dan-osborn-go-head-to-head-in-nebraska-u-s-senate-debate/"}
+ ],
+ "events": [
+  {"title": "The Red Cloud tape", "prompt": "Leaked audio of the independent mocking a hypothetical small town Trump voter is now in an attack ad. How does the campaign handle it?", "issue": "other", "src": "https://nebraskaexaminer.com/2026/10/02/what-red-cloud-residents-said-when-dan-osborn-returned-after-shoving-them-into-national-spotlight/",
+   "opts": [
+    {"label": "Dismiss as distraction", "say": "Say the tape was taken out of context and turn to the incumbent's family money.", "pos": -0.4, "trump": -0.4, "tone": "fiery"},
+    {"label": "Go back and apologize", "say": "Return to the town, apologize face to face and take questions on property taxes and veterans.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Run it statewide", "say": "Air the audio everywhere as proof the opponent looks down on rural Nebraska.", "pos": 0.7, "trump": 0.5, "tone": "fiery"}
+   ]},
+  {"title": "Democrat Dan label", "prompt": "The Republican says the independent is a Democrat in disguise, citing ActBlue fundraising and the state party's backing. How does the campaign define itself?", "issue": "other", "src": "https://ivn.us/ricketts-calls-him-a-democrat-osborn-says-thats-the-problem-with-politics/",
+   "opts": [
+    {"label": "Embrace the coalition", "say": "Welcome Democratic support and argue a broad anti establishment coalition is needed to win.", "pos": -0.6, "trump": -0.5, "tone": "calm"},
+    {"label": "Caucus with nobody", "say": "Pledge to answer to neither party and work with a bloc of independents.", "pos": 0, "trump": 0, "tone": "fiery"},
+    {"label": "Tie him to Schumer", "say": "Argue a vote for the independent is a vote for a Democratic Senate majority.", "pos": 0.8, "trump": 0.7, "tone": "fiery"}
+   ]},
+  {"title": "Beef imports and tariffs", "prompt": "The president plans to let in foreign beef with lower tariffs, angering cattle ranchers. What is the trade stance?", "issue": "econ", "src": "https://flatwaterfreepress.org/pete-ricketts-dan-osborn-go-head-to-head-in-nebraska-u-s-senate-debate/",
+   "opts": [
+    {"label": "Congress takes tariffs back", "say": "Call the beef plan a colossal mistake and say Congress should control tariff power.", "pos": -0.3, "trump": -0.6, "tone": "fiery"},
+    {"label": "Oppose beef plan only", "say": "Back tariffs generally but push a herd rebuilding plan and oppose the beef waiver.", "pos": 0.4, "trump": 0.2, "tone": "calm"},
+    {"label": "Stand with the president", "say": "Defend the president's trade agenda as fair to farmers in the long run.", "pos": 0.8, "trump": 1, "tone": "calm"}
+   ]},
+  {"title": "Rural clinic closures", "prompt": "A dialysis center closed in Chadron as Medicaid rules change. What is the health care position?", "issue": "health", "src": "https://flatwaterfreepress.org/pete-ricketts-dan-osborn-go-head-to-head-in-nebraska-u-s-senate-debate/",
+   "opts": [
+    {"label": "Reverse the cuts", "say": "Say the Medicaid changes are closing rural care and must be undone.", "pos": -0.7, "trump": -0.6, "tone": "fiery"},
+    {"label": "Rural care fund", "say": "Keep the reforms but push dedicated funding for rural hospitals and clinics.", "pos": 0.2, "trump": null, "tone": "calm"},
+    {"label": "Defend reforms", "say": "Argue the changes protect Medicaid for people who are truly eligible.", "pos": 0.8, "trump": 0.6, "tone": "calm"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-09-01", "where": "Nebraska State Fair, Grand Island", "src": "https://flatwaterfreepress.org/pete-ricketts-dan-osborn-go-head-to-head-in-nebraska-u-s-senate-debate/"}
+ ],
+ "endorsements": [
+  {"who": "Nebraska Democratic Party", "for": "I", "src": "https://ivn.us/ricketts-calls-him-a-democrat-osborn-says-thats-the-problem-with-politics/"},
+  {"who": "Legal Marijuana NOW nominee, who dropped out", "for": "I", "src": "https://ivn.us/7-independent-campaigns-to-watch-in-the-final-two-weeks/"},
+  {"who": "Vice President JD Vance", "for": "R", "src": "https://www.yankton.net/community/article_b1a5c00f-eb4d-4912-9f6f-ceb371670a0c.html"},
+  {"who": "Donald Trump", "for": "R", "src": "https://ivn.us/ricketts-calls-him-a-democrat-osborn-says-thats-the-problem-with-politics/"}
+ ],
+ "ads": [
+  {"by": "Ricketts campaign and Republicans", "for": "R", "theme": "Uses leaked audio of Osborn mocking a Red Cloud Trump voter to argue he looks down on rural Nebraska.", "src": "https://nebraskaexaminer.com/2026/10/02/what-red-cloud-residents-said-when-dan-osborn-returned-after-shoving-them-into-national-spotlight/"},
+  {"by": "Osborn campaign", "for": "I", "theme": "Attacks Trump's plan to import foreign beef as bad for Nebraska ranchers.", "src": "https://nebraskaexaminer.com/?p=45109"}
+ ],
+ "regions": [
+  {"name": "Omaha metro", "counties": ["Douglas", "Sarpy", "Washington"], "note": "The largest vote center, with Democratic leaning Omaha and Republican suburbs that Osborn needs to win big."},
+  {"name": "Lincoln", "counties": ["Lancaster", "Saunders", "Seward"], "note": "The capital and university town leans Democratic, with Republican rural neighbors."},
+  {"name": "Northeast Nebraska", "counties": ["Dodge", "Platte", "Madison", "Dixon", "Dakota"], "note": "Manufacturing and meatpacking towns where Osborn's union message is tested."},
+  {"name": "Central and Tri Cities", "counties": ["Hall", "Buffalo", "Adams", "Webster", "Lincoln"], "note": "Republican farm and ranch country including Grand Island, Kearney, North Platte and Red Cloud."},
+  {"name": "Panhandle and Sandhills", "counties": ["Scotts Bluff", "Dawes", "Box Butte", "Cherry", "Keith"], "note": "The most Republican part of the state, where rural health access and cattle prices dominate."}
+ ]
+}

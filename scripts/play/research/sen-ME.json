@@ -1,0 +1,66 @@
+{
+ "id": "sen-ME",
+ "checked": "2026-10-25",
+ "summary": "Five term Republican Sen. Susan Collins faces Democrat Troy Jackson, a former logger and state Senate president who became the nominee after Graham Platner withdrew, in a race a Marist poll from early October put at 51 to 47 for Jackson. PBS reports over 200 million dollars has been spent, with Collins running on bipartisanship and federal money for Maine and Jackson running against Trump, billionaires and Collins' record.",
+ "issues": [
+  {"issue": "Heating and energy costs", "why": "Heating oil prices have spiked, with Jackson citing 6 dollar oil and voters relying on heating assistance that was briefly cut off.", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race"},
+  {"issue": "Trump and independence", "why": "Trump's approval in Maine is 40 percent, and Jackson says Collins enables his agenda while Collins says confrontation stops results.", "src": "https://maristpoll.marist.edu/polls/midterm-elections-in-maine-october-2026/"},
+  {"issue": "Federal money for Maine", "why": "Collins says she has brought about 1.5 billion dollars to the state for fire stations, water and health projects.", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race"},
+  {"issue": "Health care", "why": "Jackson backs Medicare for All, a sharp contrast with Collins' incremental approach.", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race"},
+  {"issue": "Tax cuts and inequality", "why": "Jackson wants to revoke tax cuts for the rich under a students versus billionaires message, while Collins touts tariff carve outs and a military shoe contract.", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"}
+ ],
+ "storylines": [
+  {"title": "Manchin and Ocasio-Cortez make closing pitches", "date": "2026-10-23", "what": "Joe Manchin called Collins the soul of the Senate at a New Balance factory, while Alexandria Ocasio-Cortez rallied with Jackson in Portland.", "helps": "mixed", "kind": "rally", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"},
+  {"title": "Collins ads use shut up clip", "date": "2026-10-23", "what": "Collins ads replay Jackson telling her to shut up, portraying him as a bully, while Jackson calls Collins corrupt and hits her Kavanaugh vote.", "helps": "R", "kind": "ad", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"},
+  {"title": "Voters split on Collins record", "date": "2026-10-22", "what": "PBS found longtime Collins voters divided, some crediting her help with federal benefits and others saying she has not stood up to Trump.", "helps": "mixed", "kind": "local", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race"},
+  {"title": "Jackson tells Collins to shut up", "date": "2026-10-15", "what": "At the final debate in Bangor, Collins said a data center protester was a Jackson supporter and Jackson snapped shut up, later saying he would not be talked down to.", "helps": "R", "kind": "debate", "src": "https://www.pbs.org/newshour/politics/jackson-doesnt-regret-telling-collins-to-shut-up-after-protester-interrupted-maine-senate-debate"},
+  {"title": "Debate on WMTW", "date": "2026-10-08", "what": "Collins and Jackson met in Westbrook in a debate that PolitiFact fact checked live, after earlier fact checks of PAC ads on both sides.", "helps": "mixed", "kind": "debate", "src": "http://politifact.com/article/2026/oct/08/live-fact-check-debate-maine-collins-jackson/"},
+  {"title": "Marist poll has Jackson up 4", "date": "2026-10-06", "what": "Marist found Jackson at 51 and Collins at 47 among registered voters, though most voters still expect Collins to win.", "helps": "D", "kind": "national", "src": "https://maristpoll.marist.edu/polls/midterm-elections-in-maine-october-2026/"}
+ ],
+ "events": [
+  {"title": "The shut up moment", "prompt": "In the final debate a protester interrupted, the Republican blamed the Democrat's side, and the Democrat told her to shut up. Ads now replay it. How does the campaign respond?", "issue": "other", "src": "https://www.pbs.org/newshour/politics/jackson-doesnt-regret-telling-collins-to-shut-up-after-protester-interrupted-maine-senate-debate",
+   "opts": [
+    {"label": "No apology", "say": "Refuse to apologize and say Mainers are tired of being talked down to.", "pos": -0.5, "trump": -0.4, "tone": "fiery"},
+    {"label": "Express regret", "say": "Say the moment was heated, express regret for the tone and pivot to heating costs.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Make it about temperament", "say": "Run the clip statewide and argue the opponent is a bully unfit to represent Maine.", "pos": 0.5, "trump": 0, "tone": "fiery"}
+   ]},
+  {"title": "Standing up to Trump", "prompt": "Six in ten Maine voters disapprove of Trump and many longtime Collins voters want more pushback. How does the campaign position itself?", "issue": "other", "src": "https://maristpoll.marist.edu/polls/midterm-elections-in-maine-october-2026/",
+   "opts": [
+    {"label": "End his majority", "say": "Argue the only way to check Trump is to flip the Senate.", "pos": -0.8, "trump": -1, "tone": "fiery"},
+    {"label": "Independent voice", "say": "Point to votes against the president and bipartisan deals as proof of independence.", "pos": 0.1, "trump": -0.3, "tone": "calm"},
+    {"label": "Work with the White House", "say": "Argue working with the administration delivers tariff carve outs and contracts for Maine.", "pos": 0.5, "trump": 0.4, "tone": "calm"}
+   ]},
+  {"title": "Heating oil crisis", "prompt": "Heating oil is near 6 dollars a gallon heading into winter and heating aid was briefly cut. What does the campaign promise?", "issue": "econ", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race",
+   "opts": [
+    {"label": "Tax billionaires for relief", "say": "Revoke tax cuts for the rich and fully fund heating aid.", "pos": -0.8, "trump": -0.7, "tone": "fiery"},
+    {"label": "Protect LIHEAP", "say": "Secure bipartisan funding for heating assistance and weatherization.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "More energy supply", "say": "Push for more domestic fuel and pipeline capacity to lower prices.", "pos": 0.7, "trump": 0.5, "tone": "calm"}
+   ]},
+  {"title": "Medicare for All", "prompt": "The Democrat backs Medicare for All while rural hospitals struggle. What is the health care stance?", "issue": "health", "src": "https://www.pbs.org/newshour/show/what-maine-voters-are-saying-about-the-collins-jackson-senate-race",
+   "opts": [
+    {"label": "Medicare for All", "say": "Champion a single payer system as the fix for rural care and costs.", "pos": -1, "trump": -0.6, "tone": "fiery"},
+    {"label": "Protect what works", "say": "Shore up rural hospitals and ACA subsidies without overhauling the system.", "pos": 0, "trump": null, "tone": "calm"},
+    {"label": "Warn of government takeover", "say": "Attack single payer as a government takeover that would end private plans.", "pos": 0.8, "trump": 0.4, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-10-08", "where": "WMTW, Westbrook", "src": "http://politifact.com/article/2026/oct/08/live-fact-check-debate-maine-collins-jackson/"},
+  {"date": "2026-10-15", "where": "Bangor", "src": "https://www.pbs.org/newshour/politics/jackson-doesnt-regret-telling-collins-to-shut-up-after-protester-interrupted-maine-senate-debate"}
+ ],
+ "endorsements": [
+  {"who": "Former Sen. Joe Manchin", "for": "R", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"},
+  {"who": "Rep. Alexandria Ocasio-Cortez", "for": "D", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"}
+ ],
+ "ads": [
+  {"by": "Collins campaign", "for": "R", "theme": "Uses the debate clip of Jackson saying shut up to paint him as a bully who endangers women.", "src": "https://www.semafor.com/article/10/23/2026/manchin-ocasio-cortez-make-maine-senate-race-closing-argument"},
+  {"by": "Senate Leadership Fund", "for": "R", "theme": "Ad about Jackson throwing a water bottle in frustration at a lawmaker.", "src": "http://politifact.com/article/2026/oct/08/live-fact-check-debate-maine-collins-jackson/"},
+  {"by": "WinSenate", "for": "D", "theme": "Ties Collins to donors named in the Epstein files.", "src": "http://politifact.com/article/2026/oct/08/live-fact-check-debate-maine-collins-jackson/"}
+ ],
+ "regions": [
+  {"name": "Greater Portland and York", "counties": ["Cumberland", "York"], "note": "The most populous and most Democratic part of the state, key to Jackson's margin."},
+  {"name": "Midcoast and Downeast coast", "counties": ["Sagadahoc", "Lincoln", "Knox", "Waldo", "Hancock"], "note": "Coastal towns that lean Democratic but have long split tickets for Collins."},
+  {"name": "Central Maine", "counties": ["Kennebec", "Androscoggin", "Somerset"], "note": "Augusta and Lewiston Auburn swing areas with many working class ticket splitters."},
+  {"name": "Bangor and Penobscot", "counties": ["Penobscot", "Piscataquis"], "note": "Collins' home turf around Bangor, competitive in the city and Republican in the woods."},
+  {"name": "Northern and Western Maine", "counties": ["Aroostook", "Washington", "Oxford", "Franklin"], "note": "Rural, Republican leaning 2nd District territory, including Jackson's Aroostook home."}
+ ]
+}

@@ -1,5 +1,5 @@
 """
-On Point Polling / On Point Politics  Senate Mode county forecast, rerun of Sept 16 2026
+TPSI / On Point Politics  Senate Mode county forecast, rerun of Sept 16 2026
 Deterministic: no random draws. Same inputs produce identical outputs.
 
 Final county two party share = 0.40 * M1 fundamental + 0.40 * M2 national/census + 0.20 * M3 history/polling
@@ -126,14 +126,14 @@ def poll_weights(polls, pavg):
 #   GALLUP_TIED=1   party identification even instead of 50 D to 39 R
 #   POLL_SHIFT=x    uniform logit shift applied to every race's polling average
 # Oct 5 2026: Gallup party identification updated to 50 D to 39 R, and the census leg is anchored to it again
-# (M2_ANCHOR=gallup, converted to likely voters through the On Point Polling database in anchors.gallup_lv_d2).
+# (M2_ANCHOR=gallup, converted to likely voters through the TPSI database in anchors.gallup_lv_d2).
 GALLUP_D, GALLUP_R = (44.5, 44.5) if os.environ.get("GALLUP_TIED") else (50.0, 39.0)
 POLL_SHIFT = float(os.environ.get("POLL_SHIFT", "0.0"))
 # National vote anchor. Party identification is not a vote, and Gallup's 49 D to 39 R counts adults, so it ran the
 # fundamentals about three points of margin more Democratic than likely voters. The anchor is now the public likely
 # voter generic ballot: Silver Bulletin's likely voter adjusted average of D+8.2 on Sept. 21, 2026, on the 88.9 percent
 # decided in DDHQ's average of 48.1 D to 40.8 R that day. NAT_ANCHOR=gallup restores the old anchor.
-# Default since Sept. 22, 2026: the On Point Polling respondent database itself is the national poll. Every 2026 wave is raked on
+# Default since Sept. 22, 2026: the TPSI respondent database itself is the national poll. Every 2026 wave is raked on
 # DSMeridian Model 13R3 Stage 2 and weighted by each respondent's Stage 3 likely voter propensity; the anchor is the two
 # party share of decided likely voters (tpsi_national.py). NAT_ANCHOR=generic restores the public likely voter average.
 # Since Sept. 22, 2026 the default is "meridian": DSMeridian Model 13R3 run on every wave of the database, Stages 2 to 4
@@ -375,7 +375,7 @@ FIN_MAX_POLLS_SEN = int(os.environ.get("FIN_MAX_POLLS_SEN", "999"))   # Senate: 
 # not locked, since they measure the race as it stands.
 FIN_EXP = os.environ.get("FIN_EXP") == "1"
 # Oct 14 2026 local conditions, by the user's choice (LOCAL_COND=1): AAA county gas prices, QCEW jobs, wages and tariff
-# exposure, Census growth and migration, data center sites, religion, rurality and news deserts. Fit two ways: the On Point Polling
+# exposure, Census growth and migration, data center sites, religion, rurality and news deserts. Fit two ways: the TPSI
 # respondents, their 2026 vote and turnout against their county's conditions with their own 2024 vote, party and
 # demographics held fixed, and the real county swings from the 2024 presidential vote to the 2025 Virginia and New Jersey
 # governor races. Pooled by precision, shrunk toward zero, and a condition enters only when the pooled estimate is a
@@ -415,7 +415,7 @@ DC_OFFICE_W = dict(governor=float(os.environ.get("DC_W_GOV", "1.15")), senate=fl
 _DC_TAB = (pd.read_csv(f"{os.path.dirname(os.path.abspath(__file__))}/local_cond/dc_term{_CXS}.csv", dtype={"fips": str}).set_index("fips")
            if DC_TERM else None)
 DC_AUDIT = {}
-# Oct 14 2026 later, by the user's choice (GAS_TERM=1): gas prices through financial strain, from the On Point Polling respondents:
+# Oct 14 2026 later, by the user's choice (GAS_TERM=1): gas prices through financial strain, from the TPSI respondents:
 # strained Trump 2024 voters in high gas places vote more Democratic and strained Harris voters hold, at 0.6 of the
 # fitted size (local_cond/gas_term.csv, built by /tmp/gasx/gas_strain.py). Same split as the data center term; the old
 # gas slope leaves the local conditions term.
@@ -440,7 +440,7 @@ POLL_SWING_AUDIT = {}
 # the president's party in a midterm, and whether their state's local conditions run with or against their party.
 # An incumbent held under 75 percent in the primary also takes a direct penalty. A strong overperformer such as Collins
 # keeps most of the gap; a weak one keeps little. Constants are judgement, set out in INC_STRENGTH_K.
-# Oct 14 2026, by the user's choice (SEG_TERM=1): On Point Polling voter segments. Respondents split into high and low propensity
+# Oct 14 2026, by the user's choice (SEG_TERM=1): TPSI voter segments. Respondents split into high and low propensity
 # Trump and Harris voters, 2024 nonvoters leaning each way and third party voters, placed in every county from the
 # census cells and raked to its 2024 result; the 2026 county primaries then say how each party's low propensity base
 # is engaging (segments/mobilize.py). A state whose low propensity base of one party engaged better than that party's
@@ -508,6 +508,21 @@ _FREF_P = os.environ.get("FIN_REF_PATH") or next((p for p in (os.path.join(os.pa
                                                               os.path.join(os.path.dirname(os.path.abspath(__file__)), "finance", "fin_ref.json")) if os.path.exists(p)), "")
 FIN_REF = json.load(open(_FREF_P)) if (_FREF_P and _FREF_P != "none" and os.path.exists(_FREF_P)) else {}
 FIN_LAST = {}
+# Oct 25 2026 donor coalitions, at the user's request: the 2026 House and Senate donor map (itemized individual gifts and
+# every ActBlue and WinRed line through Sep 30 2026, placed in counties) as its own part of the model. Built by the site's
+# scripts/forecast/donors/build_donors.py: each race's in state dollar share, donor count share, small dollar share and
+# donor reach, measured against what a race of the same lean and incumbency shows. Inside one spread of normal the term
+# is zero; past it 0.02 logit per unit, capped at 0.05, entering with the money term. No file, no term.
+_DON_P = os.environ.get("DONOR_SIGNALS", "")
+DONOR = json.load(open(_DON_P)) if (_DON_P and os.path.exists(_DON_P)) else {}
+DONOR_LAST = {}
+def donor_term(key, house=False):
+    rec = (DONOR.get("house" if house else "statewide") or {}).get(key)
+    if not rec:
+        return 0.0, "no donor signal"
+    sh = float(rec.get("shift_logit") or 0.0)
+    DONOR_LAST[key] = dict(z=rec.get("z"), parts=rec.get("parts"), shift_logit=sh)
+    return sh, ("applied" if sh else "inside the normal range")
 def fin_spend_z(key):
     grp = "house" if "-" in key else "statewide"
     rec = (FIN_REF.get(grp) or {}).get(key); ref = FIN_REF.get(grp + "_ref")
@@ -656,7 +671,7 @@ FIPS = {"IA": "19", "MI": "26", "OH": "39", "TX": "48", "GA": "13", "NC": "37", 
 NAMES = dict(json.load(open(f"{BASE}/county_names.json")))
 # governor states whose previous results live in <prefix>_gov<year>_county.csv inside their own package folder
 GOV_PRE = {"NMG": "nm", "ARG": "ar", "ILG": "il", "MEG": "me", "CTG": "ct", "RIG": "ri", "MAG": "ma", "MDG": "md"}
-# Alaska: 30 boroughs and census areas as used by ACS 2024, the On Point Polling approval file and the 2026 primary (Chugach 02063 and
+# Alaska: 30 boroughs and census areas as used by ACS 2024, the TPSI approval file and the 2026 primary (Chugach 02063 and
 # Copper River 02066 replaced Valdez-Cordova 02261 in 2019)
 AK_UNITS = pd.read_csv(f"{BASE}/AK/ak_primary_2026_borough.csv", dtype={"fips": str})
 AK_FULLNAME = dict(zip(AK_UNITS.fips, AK_UNITS.borough)); AK_UNITS = sorted(AK_FULLNAME)
@@ -937,8 +952,8 @@ def _ct_counties(df, f):
 
 APPROVAL = pd.read_csv(f"{PKG['TX']}/TPSI_Trump_Approval_By_County_Combined_FULL.csv")
 APPROVAL["f"] = APPROVAL.county_fips.astype(int).astype(str).str.zfill(5)
-# APPROVAL_SRC=tpsi reads the On Point Polling county estimates alone. The published TRUMP APPROVE and TRUMP DISAPPROVE
-# columns are the straight average of the On Point Polling aligned estimate and the ElectIndex estimate.
+# APPROVAL_SRC=tpsi reads the TPSI county estimates alone. The published TRUMP APPROVE and TRUMP DISAPPROVE
+# columns are the straight average of the TPSI aligned estimate and the ElectIndex estimate.
 APPROVAL_SRC = os.environ.get("APPROVAL_SRC", "combined")
 if APPROVAL_SRC == "tpsi":
     APPROVAL["TRUMP APPROVE"] = APPROVAL.tpsi_approve_aligned
@@ -3086,7 +3101,7 @@ _M1K = {}
 _MODEL, _SHIFT = None, None
 _T26 = None
 # census leg anchor. Since Sept. 22, 2026 the default is "meridian": the Gallup party identification anchor is removed and
-# the census leg takes the same On Point Polling Meridian ballot as the other two legs; M2_ANCHOR=gallup restores Gallup.
+# the census leg takes the same TPSI Meridian ballot as the other two legs; M2_ANCHOR=gallup restores Gallup.
 M2_ANCHOR = os.environ.get("M2_ANCHOR", "gallup")   # Oct 5 2026 default: Gallup 50 D 39 R; M2_ANCHOR=meridian restores the Sept 22 setting
 ELASTIC_ANCHORS = os.environ.get("ELASTIC_ANCHORS", "1") == "1"
 
@@ -3100,7 +3115,7 @@ def m1_anchor(fl=None):
 
 def m1_county(fl, D=None, R=None):
     """Approval leg county log odds before candidate terms. Voter File Mode: the simulated 2026 electorate's
-    preference with each voter's On Point Polling Trump approval; otherwise county approval through the On Point Polling crosstab."""
+    preference with each voter's TPSI Trump approval; otherwise county approval through the TPSI crosstab."""
     import anchors as _an
     if ELASTIC_ANCHORS and _MODEL is not None and _an.vf_on():
         import voters as _vf
@@ -3112,8 +3127,8 @@ def m1_county(fl, D=None, R=None):
 
 def m1_anchor_flat():
     """One national log odds constant so the approval leg's 2024 vote weighted national two party share equals the
-    likely voter generic ballot anchor. The county pattern of approval and the On Point Polling crosstab are untouched; only the
-    national level, which the On Point Polling respondents alone put about a point of two party share more Democratic than the
+    likely voter generic ballot anchor. The county pattern of approval and the TPSI crosstab are untouched; only the
+    national level, which the TPSI respondents alone put about a point of two party share more Democratic than the
     public likely voter average, is set to the same anchor as the other two legs."""
     if NAT_ANCHOR == "gallup": return 0.0
     if "k" in _M1K: return _M1K["k"]
@@ -3135,16 +3150,16 @@ def m1_anchor_flat():
 APPROVAL_INPUT = {}
 
 def calibrated_approval(fl):
-    """County approval pattern from the published On Point Polling county file (TRUMP APPROVE / DISAPPROVE / no_opinion),
+    """County approval pattern from the published TPSI county file (TRUMP APPROVE / DISAPPROVE / no_opinion),
     shifted by one national logit constant so the 2024 vote weighted national two way approval equals the
-    On Point Polling 2026 likely voter approval that the approval to vote crosstab is built on. Neutral share is scaled the same way."""
+    TPSI 2026 likely voter approval that the approval to vote crosstab is built on. Neutral share is scaled the same way."""
     if not _CAL:
         r = RESP; w = r.turnout_propensity
         lv = pd.Series(w.values, index=r.trump_approve_2way).groupby(level=0).sum() / w.sum()
         tA, tD, tN = lv["Approve"], lv["Disapprove"], lv["Neutral"]
         _rvnet = os.environ.get("APPROVAL_RV_NET")
         if _rvnet is not None:
-            # Oct 1 2026: a stated registered voter net approval sets the level. On Point Polling supplies the two things the net
+            # Oct 1 2026: a stated registered voter net approval sets the level. TPSI supplies the two things the net
             # alone does not: the registered voter no opinion share, and the gap between registered and likely voters,
             # the turnout propensity weighted two way approval against the registered respondents' own, in log odds.
             reg = (r.registered_to_vote == "Yes").astype(float).values
@@ -3413,7 +3428,7 @@ SEAT_NOTREND = {"NE"}
 # now reach the seat history part as well as the approval and census legs.
 SEAT_W_FUND = os.environ.get("SEAT_W_FUND")
 # Oct 14 2026 night, by the user's choice (GALLUP_FULL=1): Gallup at full strength. The census leg is the Gallup leg: the
-# certified 2024 county vote moved by the On Point Polling demographic swing shape and by each county's elasticity times one national
+# certified 2024 county vote moved by the TPSI demographic swing shape and by each county's elasticity times one national
 # constant solved to Gallup's 50 D to 39 R, then the electorate, local conditions, data center and gas terms, with the
 # polls weighted county by county by swing history. It now carries at least GALLUP_LEG_W of every Senate and governor
 # blend, the other legs scaled down in proportion, and governor races take Gallup's national environment at full
@@ -3586,7 +3601,7 @@ def run_state(st, model, shift, nat_turn_rate):
     w_fund, w_census, w_hist, poll_tier, n_houses, newest_days, house_index = poll_weights(polls, pavg)
     ap = APPROVAL.reindex(fl)
 
-    # M1 fundamental: county approval calibrated to the On Point Polling 2026 likely voter approval level, converted to vote with On Point Polling respondent crosstab, plus primary structure
+    # M1 fundamental: county approval calibrated to the TPSI 2026 likely voter approval level, converted to vote with TPSI respondent crosstab, plus primary structure
     r = RESP; w = r.turnout_propensity
     ct = pd.crosstab(r.trump_approve_2way, r.generic_ballot, values=w, aggfunc="sum", normalize="index")
     app, dis, noop, cal = calibrated_approval(fl)
@@ -3669,6 +3684,9 @@ def run_state(st, model, shift, nat_turn_rate):
             FIN_LAST.setdefault(st, {}).update(county_weight_min=round(float(_pw.min()), 3), county_weight_max=round(float(_pw.max()), 3))
         elif fin_shift:
             cand_effect = cand_effect + fin_shift
+    if cfg.get("office", "senate") == "senate" and DONOR:
+        _dsh, _dwhy = donor_term(st)
+        cand_effect = cand_effect + _dsh
     cand_prof = None
     if os.environ.get("CANDIDATE"):
         # Candidate Mode: party unity behind each nominee moves the race; demographic strength enters the voter groups
@@ -3752,7 +3770,7 @@ def run_state(st, model, shift, nat_turn_rate):
         _ce = cand_effect if isinstance(cand_effect, pd.Series) else pd.Series(float(cand_effect), index=fl)
         m1 = inv(_L24 + (1 - _lock) * (logit(m1) - _L24 - _ce) + _ce)
 
-    # M2 national/census: On Point Polling respondent model on ACS 2024 composition, anchored to Gallup 49 D 39 R
+    # M2 national/census: TPSI respondent model on ACS 2024 composition, anchored to Gallup 49 D 39 R
     reg = model["state_region"][cfg.get("base", st[:2])]
     comps = census_components(model, fl, lambda f: reg)
     g26, turn_idx, adults = census_predict(model, fl, lambda f: reg, shift[0], comps)
@@ -3842,7 +3860,7 @@ def run_state(st, model, shift, nat_turn_rate):
         if _ps:
             m1 = inv(logit(m1) + _ps); m2 = inv(logit(m2) + _ps)
 
-    # turnout: national midterm ratio anchor x state relative midterm factor, distributed by 2022 county votes grown to 2024 and On Point Polling demographic turnout
+    # turnout: national midterm ratio anchor x state relative midterm factor, distributed by 2022 county votes grown to 2024 and TPSI demographic turnout
     m22, t18 = midterm_totals(st)
     sp = lambda P: P.reindex(fl).total_votes.sum()
     nat_ratio = np.mean([v / {2016: 136_669_276, 2020: 158_429_631}[py] for v, py in NAT_MIDTERM.values()])
@@ -3987,7 +4005,7 @@ def run_state(st, model, shift, nat_turn_rate):
             if POLL_COUNT_W:
                 w_fund = w_fund * _scale_rest
             w_census = _rest - w_fund
-        _sa.update(poll_count_factor=round(_pg, 3), poll_weight_final=round(_wp, 4), finance=FIN_LAST.get(st), lock=round(_lock, 3))
+        _sa.update(poll_count_factor=round(_pg, 3), poll_weight_final=round(_wp, 4), finance=FIN_LAST.get(st), donor=DONOR_LAST.get(st), lock=round(_lock, 3))
         _sa.update(race_profile=RACE_TYPE.get(st, "inc") if RACE_PROFILE else None, primary_scale=race_prim_scale(st))
         _GLW = _gallup_floor((_nrec if (POLL_DEPTH and "_nrec" in locals()) else (len(polls) if polls is not None else 0)), st)
         if GALLUP_FULL and w_census < _GLW:

@@ -1,0 +1,303 @@
+{
+ "id": "sen-FL",
+ "checked": "2026-10-25",
+ "summary": "Appointed Republican Sen. Ashley Moody faces Democratic state Rep. Angie Nixon of Jacksonville in the special election for the rest of Marco Rubio's term, with a Stetson poll showing Moody holding a double digit lead in a state where Republicans have about 1.5 million more registered voters. Moody casts Nixon as a socialist who is soft on crime, while Nixon, who outraised Moody last quarter, attacks Moody over the Hope Florida settlement and health care cuts.",
+ "issues": [
+  {
+   "issue": "Hope Florida settlement",
+   "why": "Democrats say Moody's office approved a Medicaid settlement that routed 10 million dollars to political committees, while Moody has not been charged and denies wrongdoing.",
+   "src": "https://www.wusf.org/politics-issues/2026-10-01/democrats-slam-ashley-moody-amid-heated-us-senate-race"
+  },
+  {
+   "issue": "Crime and policing",
+   "why": "Moody runs on her record as a judge and attorney general and says Nixon quotes cop killers, which Nixon disputes.",
+   "src": "https://floridianpress.com/2026/10/ashley-moody-puts-tough-on-crime-resume-against-angie-nixons-radical-approach/"
+  },
+  {
+   "issue": "Socialism label",
+   "why": "Nixon joined the Democratic Socialists of America in June but calls herself a capitalist who supports regulation, while Moody frames the race as freedom versus socialism.",
+   "src": "https://flvoicenews.com/trump-send-ashley-moody-back-to-the-senate-defeat-communist-angie-nixon/"
+  },
+  {
+   "issue": "Cost of living and student debt",
+   "why": "Nixon focuses on rising costs, student debt and low paying jobs for graduates.",
+   "src": "https://www.wuft.org/politics/2026-10-19/bernie-sanders-and-angie-nixon-rally-thousands-at-uf-encouraging-young-voters-to-head-to-polls"
+  },
+  {
+   "issue": "Health coverage",
+   "why": "Nixon says Moody voted to end health care for over 440,000 Floridians.",
+   "src": "https://www.foxnews.com/media/florida-senate-candidate-angie-nixon-calls-jailing-gop-opponent-ashley-moody"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Sanders rallies thousands with Nixon at UF",
+   "date": "2026-10-18",
+   "what": "Bernie Sanders and Nixon drew more than 2,800 people in Gainesville, urging young voters to turn out on costs and student debt.",
+   "helps": "D",
+   "kind": "rally",
+   "src": "https://www.wuft.org/politics/2026-10-19/bernie-sanders-and-angie-nixon-rally-thousands-at-uf-encouraging-young-voters-to-head-to-polls"
+  },
+  {
+   "title": "Nixon outraises Moody",
+   "date": "2026-10-17",
+   "what": "Nixon raised about 2 million dollars more than Moody in the third quarter on a jump in small donors, but still has less cash on hand.",
+   "helps": "D",
+   "kind": "local",
+   "src": "https://www.tampabay.com/news/florida-politics/elections/2026/10/17/nixon-moody-senate-campaign-donors/"
+  },
+  {
+   "title": "Nixon says Moody should be jailed",
+   "date": "2026-10-14",
+   "what": "In a TV interview Nixon said she wants Moody locked up over Hope Florida and would seek an investigation. Moody's campaign called it a tactic from the communist playbook.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://www.foxnews.com/media/florida-senate-candidate-angie-nixon-calls-jailing-gop-opponent-ashley-moody"
+  },
+  {
+   "title": "Moody ad touts tough on crime record",
+   "date": "2026-10-14",
+   "what": "A Moody ad says she spent her career putting criminals behind bars and that her opponent quotes cop killers, citing Nixon's past praise of Assata Shakur.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://floridianpress.com/2026/10/ashley-moody-puts-tough-on-crime-resume-against-angie-nixons-radical-approach/"
+  },
+  {
+   "title": "Democrats hit Moody on Hope Florida and access",
+   "date": "2026-10-01",
+   "what": "Florida Democrats accused Moody of dodging reporters and town halls and revived the Hope Florida controversy. Moody declined to debate Nixon, calling her a self proclaimed socialist.",
+   "helps": "D",
+   "kind": "scandal",
+   "src": "https://www.wusf.org/politics-issues/2026-10-01/democrats-slam-ashley-moody-amid-heated-us-senate-race"
+  },
+  {
+   "title": "Moody ad labels Nixon a socialist",
+   "date": "2026-09-28",
+   "what": "Moody's ad shows Nixon discussing joining the DSA and frames the race as freedom versus socialism.",
+   "helps": "R",
+   "kind": "ad",
+   "src": "https://floridianpress.com/2026/09/ashley-moody-releases-ad-attacking-angie-nixon-as-a-socialist-ties-to-dsa/"
+  },
+  {
+   "title": "Trump endorses Moody",
+   "date": "2026-09-18",
+   "what": "Trump released a video fully endorsing Moody, crediting her tax cut and border votes, and called Nixon a communist.",
+   "helps": "R",
+   "kind": "endorsement",
+   "src": "https://flvoicenews.com/trump-send-ashley-moody-back-to-the-senate-defeat-communist-angie-nixon/"
+  }
+ ],
+ "events": [
+  {
+   "title": "The socialist label",
+   "prompt": "Attack ads hammer one candidate's membership in the Democratic Socialists of America. Reporters ask whether the label fits.",
+   "issue": "other",
+   "src": "https://floridianpress.com/2026/09/ashley-moody-releases-ad-attacking-angie-nixon-as-a-socialist-ties-to-dsa/",
+   "opts": [
+    {
+     "label": "Own the left lane",
+     "say": "Embrace a progressive agenda on wages, housing and health care.",
+     "pos": -0.9,
+     "trump": -0.8,
+     "tone": "fiery"
+    },
+    {
+     "label": "Capitalist who regulates",
+     "say": "Say you believe in markets with rules and focus on costs.",
+     "pos": -0.2,
+     "trump": -0.3,
+     "tone": "calm"
+    },
+    {
+     "label": "Freedom versus socialism",
+     "say": "Frame the race as a choice between freedom and socialism.",
+     "pos": 0.9,
+     "trump": 0.8,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Hope Florida questions",
+   "prompt": "A 10 million dollar Medicaid settlement routed to political committees is back in the news, and reporters ask what should happen.",
+   "issue": "corruption",
+   "src": "https://www.foxnews.com/media/florida-senate-candidate-angie-nixon-calls-jailing-gop-opponent-ashley-moody",
+   "opts": [
+    {
+     "label": "Call for prosecution",
+     "say": "Say those responsible should be punished and promise an investigation.",
+     "pos": -0.6,
+     "trump": -0.6,
+     "tone": "fiery"
+    },
+    {
+     "label": "Demand transparency",
+     "say": "Call for full release of records and let investigators do their work.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Dismiss as smear",
+     "say": "Note no one was charged and call the attacks a political smear.",
+     "pos": 0.7,
+     "trump": 0.5,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Debate request",
+   "prompt": "One candidate refuses to debate, saying the other does not deserve a platform. The other accuses her of hiding from voters.",
+   "issue": "other",
+   "src": "https://www.wusf.org/politics-issues/2026-10-01/democrats-slam-ashley-moody-amid-heated-us-senate-race",
+   "opts": [
+    {
+     "label": "Hold open town halls",
+     "say": "Hold town halls across the state and challenge the opponent to show up.",
+     "pos": -0.3,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "One televised debate",
+     "say": "Agree to a single debate with a mainstream moderator.",
+     "pos": 0,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "No platform",
+     "say": "Decline and say an extreme opponent should not get a stage.",
+     "pos": 0.6,
+     "trump": 0.5,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Policing and public safety",
+   "prompt": "An ad says one candidate quotes cop killers and wants to empty prisons. You need a public safety message.",
+   "issue": "other",
+   "src": "https://floridianpress.com/2026/10/ashley-moody-puts-tough-on-crime-resume-against-angie-nixons-radical-approach/",
+   "opts": [
+    {
+     "label": "Reform and prevention",
+     "say": "Call for justice reform and investment in prevention, and reject the ad as false.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Fund police and reform",
+     "say": "Back funding for police along with accountability measures.",
+     "pos": 0.1,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Lock up criminals",
+     "say": "Run on a record of putting criminals behind bars and backing law enforcement.",
+     "pos": 0.9,
+     "trump": 0.6,
+     "tone": "fiery"
+    }
+   ]
+  }
+ ],
+ "debates": [],
+ "endorsements": [
+  {
+   "who": "Donald Trump",
+   "for": "R",
+   "src": "https://flvoicenews.com/trump-send-ashley-moody-back-to-the-senate-defeat-communist-angie-nixon/"
+  },
+  {
+   "who": "Bernie Sanders",
+   "for": "D",
+   "src": "https://www.wuft.org/politics/2026-10-19/bernie-sanders-and-angie-nixon-rally-thousands-at-uf-encouraging-young-voters-to-head-to-polls"
+  },
+  {
+   "who": "Rep. Alexandria Ocasio-Cortez",
+   "for": "D",
+   "src": "https://floridianpress.com/2026/10/ashley-moody-puts-tough-on-crime-resume-against-angie-nixons-radical-approach/"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Moody campaign",
+   "for": "R",
+   "theme": "Labels Nixon a socialist and frames the race as freedom versus socialism.",
+   "src": "https://floridianpress.com/2026/09/ashley-moody-releases-ad-attacking-angie-nixon-as-a-socialist-ties-to-dsa/"
+  },
+  {
+   "by": "Moody campaign",
+   "for": "R",
+   "theme": "Touts her record putting criminals behind bars and says Nixon quotes cop killers.",
+   "src": "https://floridianpress.com/2026/10/ashley-moody-puts-tough-on-crime-resume-against-angie-nixons-radical-approach/"
+  }
+ ],
+ "regions": [
+  {
+   "name": "South Florida",
+   "counties": [
+    "Miami-Dade",
+    "Broward",
+    "Palm Beach"
+   ],
+   "note": "The Democratic base in Broward and Palm Beach, while Miami-Dade's Hispanic voters have swung sharply Republican."
+  },
+  {
+   "name": "Orlando and the I 4 east",
+   "counties": [
+    "Orange",
+    "Osceola",
+    "Seminole",
+    "Volusia"
+   ],
+   "note": "Growing, diverse Orlando metro with a large Puerto Rican community, flanked by Republican Volusia."
+  },
+  {
+   "name": "Tampa Bay",
+   "counties": [
+    "Hillsborough",
+    "Pinellas",
+    "Pasco",
+    "Polk"
+   ],
+   "note": "The classic swing region, now leaning Republican outside Tampa and St. Petersburg."
+  },
+  {
+   "name": "Northeast Florida",
+   "counties": [
+    "Duval",
+    "St. Johns",
+    "Clay",
+    "Alachua"
+   ],
+   "note": "Nixon's Jacksonville base is competitive, with Gainesville Democratic and the suburbs strongly Republican."
+  },
+  {
+   "name": "Southwest Gulf Coast",
+   "counties": [
+    "Lee",
+    "Collier",
+    "Sarasota",
+    "Manatee",
+    "Charlotte"
+   ],
+   "note": "Retiree heavy and among the most Republican areas of the state."
+  },
+  {
+   "name": "Panhandle and Big Bend",
+   "counties": [
+    "Escambia",
+    "Okaloosa",
+    "Bay",
+    "Leon",
+    "Santa Rosa"
+   ],
+   "note": "Military heavy Deep South politics, with Democratic Tallahassee in Leon."
+  }
+ ]
+}

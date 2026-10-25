@@ -1,0 +1,307 @@
+{
+ "id": "gov-OH",
+ "checked": "2026-10-25",
+ "summary": "Democrat Amy Acton, the former state health director, faces Republican Vivek Ramaswamy for the open governor's seat, and Time reports a Marist poll released the week of October 21 showed Acton up seven points. The final stretch is dominated by a Ramaswamy ad featuring Acton's estranged mother that drew criticism from Gov. Mike DeWine and other Republicans, alongside a sharp contrast on taxes and data centers.",
+ "issues": [
+  {
+   "issue": "Income tax",
+   "why": "Ramaswamy wants to phase out the state income tax starting with capital gains, while Acton opposes ending it and proposes a working families tax cut with child credits.",
+   "src": "https://www.statenews.org/government-politics/2026-10-21/2026-race-for-ohio-governor-the-candidates-on-tax-policies-theyd-put-in-place"
+  },
+  {
+   "issue": "Property taxes",
+   "why": "Ramaswamy would roll bills back to pre pandemic levels and cap growth, while Acton would expand the homestead exemption and offer rebates when bills jump more than 4 percent.",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/"
+  },
+  {
+   "issue": "Data centers",
+   "why": "Acton backs a conditional moratorium and full utility cost recovery, while Ramaswamy wants them on old industrial sites generating their own power.",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/"
+  },
+  {
+   "issue": "Gas prices",
+   "why": "Both backed a state gas tax holiday that the Legislature passed in September as fuel prices climbed.",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/"
+  },
+  {
+   "issue": "Death penalty",
+   "why": "Ramaswamy supports executions for the worst cases while Acton would continue DeWine's moratorium.",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/"
+  }
+ ],
+ "storylines": [
+  {
+   "title": "Obama rallies for Acton in Cleveland",
+   "date": "2026-10-24",
+   "what": "Acton focused on affordability at a Cleveland rally with Barack Obama and drew boos from the crowd when she criticized the ad featuring her mother.",
+   "helps": "D",
+   "kind": "rally",
+   "src": "https://signalohio.org/barack-obama-ohio-democrats-campaign-against-trumpothers-in-cleveland-rally/"
+  },
+  {
+   "title": "Trump defends the ad, DeWine says pull it",
+   "date": "2026-10-22",
+   "what": "Trump called the Ramaswamy ad very powerful and said he urged him to keep it up. DeWine said it is wrong and should come down but kept his endorsement.",
+   "helps": "mixed",
+   "kind": "national",
+   "src": "https://www.cbsnews.com/news/ramaswamy-ad-amy-acton-mother-trump/"
+  },
+  {
+   "title": "Acton answers with counter ad",
+   "date": "2026-10-21",
+   "what": "Acton's campaign released an ad featuring her brother, and the Columbus Dispatch endorsed Acton while condemning the Ramaswamy ad.",
+   "helps": "D",
+   "kind": "ad",
+   "src": "https://time.com/article/2026/10/21/ramaswamy-s-ad-of-acton-s-estranged-mom-jolts-ohio-races-across-the-ballot/"
+  },
+  {
+   "title": "Dueling tax plans",
+   "date": "2026-10-21",
+   "what": "Ramaswamy pitches eliminating the income tax and a property tax rollback, while Acton offers child credits and targeted property tax rebates. Neither campaign has fully explained how to pay for its plan.",
+   "helps": "mixed",
+   "kind": "policy",
+   "src": "https://www.statenews.org/government-politics/2026-10-21/2026-race-for-ohio-governor-the-candidates-on-tax-policies-theyd-put-in-place"
+  },
+  {
+   "title": "Ramaswamy claims ad with Acton's mother",
+   "date": "2026-10-20",
+   "what": "Ramaswamy confirmed his campaign made an ad in which Acton's estranged mother calls her a liar, saying it shows a pattern and that Acton will not debate him. Acton's campaign called it despicable.",
+   "helps": "mixed",
+   "kind": "scandal",
+   "src": "https://ohiocapitaljournal.com/2026/10/21/ramaswamy-takes-responsibility-for-controversial-ad-featuring-actons-estranged-mother/"
+  },
+  {
+   "title": "Ramaswamy questions Acton's resume",
+   "date": "2026-10-17",
+   "what": "Ramaswamy said Acton has not held a job longer than her stint as health director. Acton pointed to running a 1.6 billion dollar agency and said she faces over 100 million dollars in attack ads.",
+   "helps": "R",
+   "kind": "attack",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Income tax future",
+   "prompt": "One plan would phase out Ohio's income tax over about a decade, which brings in billions a year. You are asked whether Ohio should go to zero.",
+   "issue": "econ",
+   "src": "https://www.statenews.org/government-politics/2026-10-21/2026-race-for-ohio-governor-the-candidates-on-tax-policies-theyd-put-in-place",
+   "opts": [
+    {
+     "label": "Working family credits",
+     "say": "Keep the income tax and add child and earned income credits for families under 85,000 dollars.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Modest rate cut",
+     "say": "Trim rates gradually only as revenue allows.",
+     "pos": 0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Go to zero",
+     "say": "Start with capital gains and phase out the income tax entirely, betting on growth.",
+     "pos": 0.9,
+     "trump": 0.5,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Property tax relief",
+   "prompt": "Homeowners saw bills jump after pandemic era revaluations. You must choose how to bring them relief.",
+   "issue": "econ",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/",
+   "opts": [
+    {
+     "label": "Fund schools fully",
+     "say": "Fully fund the school funding plan and expand the homestead exemption for seniors.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Targeted rebates",
+     "say": "Send rebates of up to 1,000 dollars to households whose bills spike more than 4 percent.",
+     "pos": -0.2,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Roll back and cap",
+     "say": "Reset bills to 2021 levels and cap future growth.",
+     "pos": 0.8,
+     "trump": null,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "The estranged mother ad",
+   "prompt": "A 4 million dollar ad featuring the Democratic nominee's estranged mother is drawing criticism from both parties, and the governor has asked that it come down.",
+   "issue": "other",
+   "src": "https://www.cbsnews.com/news/ramaswamy-ad-amy-acton-mother-trump/",
+   "opts": [
+    {
+     "label": "Condemn and counter",
+     "say": "Call it a new low and answer with a family member's testimonial.",
+     "pos": -0.4,
+     "trump": -0.6,
+     "tone": "fiery"
+    },
+    {
+     "label": "Pull the ad",
+     "say": "Take the ad down and return to taxes and costs.",
+     "pos": 0.2,
+     "trump": -0.2,
+     "tone": "calm"
+    },
+    {
+     "label": "Ride with it",
+     "say": "Keep the ad on air and say voters deserve to know.",
+     "pos": 0.7,
+     "trump": 1,
+     "tone": "fiery"
+    }
+   ]
+  },
+  {
+   "title": "Data center boom",
+   "prompt": "Communities are fighting data centers over power and water. You must say whether Ohio should keep approving them.",
+   "issue": "econ",
+   "src": "https://www.tribtoday.com/news/local-news/2026/10/ramaswamy-acton-discuss-property-taxes-other-issues/",
+   "opts": [
+    {
+     "label": "Conditional moratorium",
+     "say": "Pause new projects unless they cover all utility costs and use union labor.",
+     "pos": -0.7,
+     "trump": null,
+     "tone": "fiery"
+    },
+    {
+     "label": "Brownfields only",
+     "say": "Steer them to old industrial sites with full property taxes and strict standards.",
+     "pos": 0.3,
+     "trump": null,
+     "tone": "calm"
+    },
+    {
+     "label": "Welcome investment",
+     "say": "Approve projects quickly to win jobs and tax base.",
+     "pos": 0.8,
+     "trump": null,
+     "tone": "calm"
+    }
+   ]
+  }
+ ],
+ "debates": [],
+ "endorsements": [
+  {
+   "who": "Donald Trump",
+   "for": "R",
+   "src": "https://www.cbsnews.com/news/ramaswamy-ad-amy-acton-mother-trump/"
+  },
+  {
+   "who": "Gov. Mike DeWine",
+   "for": "R",
+   "src": "https://www.cbsnews.com/news/ramaswamy-ad-amy-acton-mother-trump/"
+  },
+  {
+   "who": "Columbus Dispatch editorial board",
+   "for": "D",
+   "src": "https://time.com/article/2026/10/21/ramaswamy-s-ad-of-acton-s-estranged-mom-jolts-ohio-races-across-the-ballot/"
+  },
+  {
+   "who": "Barack Obama",
+   "for": "D",
+   "src": "https://signalohio.org/barack-obama-ohio-democrats-campaign-against-trumpothers-in-cleveland-rally/"
+  }
+ ],
+ "ads": [
+  {
+   "by": "Ramaswamy campaign",
+   "for": "R",
+   "theme": "Acton's estranged mother calls her a liar, backed by a reported 4 million dollar buy.",
+   "src": "https://ohiocapitaljournal.com/2026/10/21/ramaswamy-takes-responsibility-for-controversial-ad-featuring-actons-estranged-mother/"
+  },
+  {
+   "by": "Acton campaign",
+   "for": "D",
+   "theme": "Her brother responds to the Ramaswamy ad.",
+   "src": "https://time.com/article/2026/10/21/ramaswamy-s-ad-of-acton-s-estranged-mom-jolts-ohio-races-across-the-ballot/"
+  }
+ ],
+ "regions": [
+  {
+   "name": "Cleveland and Akron",
+   "counties": [
+    "Cuyahoga",
+    "Summit",
+    "Lorain",
+    "Lake",
+    "Medina",
+    "Portage"
+   ],
+   "note": "The Democratic base vote, anchored by Cleveland, with swingy collar suburbs."
+  },
+  {
+   "name": "Columbus metro",
+   "counties": [
+    "Franklin",
+    "Delaware",
+    "Licking",
+    "Fairfield",
+    "Union"
+   ],
+   "note": "Fast growing and increasingly Democratic core with Republican leaning exurbs."
+  },
+  {
+   "name": "Cincinnati and Dayton",
+   "counties": [
+    "Hamilton",
+    "Butler",
+    "Warren",
+    "Clermont",
+    "Montgomery",
+    "Greene"
+   ],
+   "note": "Hamilton County has turned blue while the surrounding suburbs remain strongly Republican."
+  },
+  {
+   "name": "Mahoning Valley",
+   "counties": [
+    "Mahoning",
+    "Trumbull",
+    "Ashtabula",
+    "Columbiana"
+   ],
+   "note": "Old union steel country that swung hard to Trump."
+  },
+  {
+   "name": "Northwest Ohio",
+   "counties": [
+    "Lucas",
+    "Wood",
+    "Hancock",
+    "Sandusky",
+    "Defiance"
+   ],
+   "note": "Toledo leans Democratic while farm counties to the south and west are deep red."
+  },
+  {
+   "name": "Appalachian Ohio",
+   "counties": [
+    "Athens",
+    "Washington",
+    "Belmont",
+    "Muskingum",
+    "Scioto",
+    "Lawrence"
+   ],
+   "note": "Rural southeast that has become heavily Republican apart from Athens."
+  }
+ ]
+}

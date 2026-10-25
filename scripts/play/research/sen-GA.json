@@ -1,0 +1,64 @@
+{
+  "id": "sen-GA",
+  "checked": "2026-10-25",
+  "summary": "Democratic Sen. Jon Ossoff has led Trump endorsed Rep. Mike Collins in every recent public poll, including a 51 to 43 Trafalgar survey in early October cited by Newsweek, and Cook moved the race to Likely Democrat. Ossoff runs against Trump's tariffs, the Iran war and Medicaid cuts while attacking Collins over extremist associates and an ethics probe, and Collins casts Ossoff as a trust fund elite weak on the border.",
+  "issues": [
+    {"issue": "Tariffs and gas prices", "why": "Ossoff says Democrats would repeal Trump's tariffs and end the Iran war he blames for high gas prices, while Collins says tariffs level the field with China.", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"},
+    {"issue": "Medicaid and rural hospitals", "why": "Ossoff cites a hospital in Collins's district that closed its labor and delivery unit, and Collins points to $218 million in rural health funds.", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"},
+    {"issue": "Immigration and the Laken Riley Act", "why": "Collins, the act's main author, blames Ossoff for weak border policy, while Ossoff says he backed the bill but opposes detaining people without criminal records.", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/"},
+    {"issue": "Iran war", "why": "Collins argues the war stopped Iran from getting a nuclear weapon, and Ossoff accuses Defense Secretary Hegseth of lying about it as service member deaths mount.", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/"},
+    {"issue": "Farm aid after Helene", "why": "Ossoff highlights $531 million in federal aid for South Georgia farmers after Hurricane Helene.", "src": "https://www.pbs.org/newshour/show/inside-georgias-senate-race-and-collinss-uphill-battle-against-ossoff"}
+  ],
+  "storylines": [
+    {"title": "Trump heads to Dalton", "date": "2026-10-15", "what": "Trump planned a Friday stop in Dalton to campaign for Collins as PBS described Collins's fundraising as lackluster.", "helps": "R", "kind": "rally", "src": "https://www.pbs.org/newshour/show/inside-georgias-senate-race-and-collinss-uphill-battle-against-ossoff"},
+    {"title": "Republican mayor backs Ossoff", "date": "2026-10-15", "what": "Valdosta Mayor Scott James Matheson, a Republican, is supporting Ossoff in a deeply conservative part of South Georgia.", "helps": "D", "kind": "endorsement", "src": "https://www.pbs.org/newshour/show/inside-georgias-senate-race-and-collinss-uphill-battle-against-ossoff"},
+    {"title": "Second debate turns bitter", "date": "2026-10-13", "what": "Collins blamed Ossoff for Laken Riley's death and called it a race between Georgia and Georgetown, while Ossoff called Collins a Trump puppet and pressed him on an ethics probe and associates with Klan ties.", "helps": "mixed", "kind": "debate", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/"},
+    {"title": "Ossoff leads in polls", "date": "2026-10-13", "what": "A Trafalgar poll had Ossoff up 51 to 43, and Cook moved the race to Likely Democrat.", "helps": "D", "kind": "local", "src": "https://www.newsweek.com/jon-ossoff-vs-mike-collins-latest-polls-and-odds-ahead-of-georgia-debate-12562649"},
+    {"title": "First debate gets personal", "date": "2026-10-08", "what": "Ossoff said Collins brought dishonor to Georgia through personal bigotry, and Collins called Ossoff a trust fund kid who never had a job.", "helps": "mixed", "kind": "debate", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"},
+    {"title": "GOP doubts over Georgia", "date": "2026-10-08", "what": "Some Republicans reportedly want to shift resources elsewhere, which the Collins campaign denies by pointing to Senate GOP ad buys over $1 million.", "helps": "D", "kind": "national", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"}
+  ],
+  "events": [
+    {"title": "Laken Riley attack", "prompt": "The killing of nursing student Laken Riley is central to the immigration debate, and one side accuses the other of weak border policy. How does the campaign handle immigration?", "issue": "immig", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/",
+     "opts": [
+       {"label": "Condemn the detentions", "say": "Stand by border security votes but condemn detaining people with no criminal records.", "pos": -0.5, "trump": -0.7, "tone": "fiery"},
+       {"label": "Fentanyl and order", "say": "Focus on fentanyl seizures and border staffing without talking about mass deportation.", "pos": 0.2, "trump": 0, "tone": "calm"},
+       {"label": "Full enforcement", "say": "Tout the Laken Riley Act and back Trump's deportation push.", "pos": 0.9, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Tariffs on Georgia farms", "prompt": "Farmers in South Georgia are squeezed by tariffs and still recovering from Hurricane Helene. What is the campaign's trade message?", "issue": "econ", "src": "https://www.wtoc.com/2026/10/09/ossoff-collins-discuss-tariffs-data-centers-georgia-senate-debate/",
+     "opts": [
+       {"label": "Repeal the tariffs", "say": "Promise to repeal Trump's tariffs and deliver more disaster aid to farmers.", "pos": -0.5, "trump": -1, "tone": "fiery"},
+       {"label": "Targeted relief", "say": "Seek tariff exemptions for farm inputs and push for Helene aid.", "pos": 0.1, "trump": -0.2, "tone": "calm"},
+       {"label": "Stand firm on China", "say": "Defend tariffs as leveling the field with China and credit the tax cuts.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+     ]},
+    {"title": "Ethics and extremism charges", "prompt": "One candidate faces a House ethics probe over use of government funds and questions about associates who posted antisemitic material. How does the campaign handle it?", "issue": "corruption", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/",
+     "opts": [
+       {"label": "Press it hard", "say": "Make the ethics probe and extremist ties a closing argument about character.", "pos": -0.4, "trump": -0.4, "tone": "fiery"},
+       {"label": "Denounce and move on", "say": "Denounce all hate clearly and return to kitchen table issues.", "pos": 0.0, "trump": null, "tone": "calm"},
+       {"label": "Call it a smear", "say": "Call the probe a politically motivated nothingburger and attack the opponent as an elite.", "pos": 0.6, "trump": 0.5, "tone": "fiery"}
+     ]},
+    {"title": "Medicaid cuts", "prompt": "Rural hospitals are closing services after federal Medicaid cuts in the 2025 tax law. What does the campaign promise?", "issue": "health", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/",
+     "opts": [
+       {"label": "Reverse the cuts", "say": "Promise to reverse the Medicaid cuts and push for full expansion.", "pos": -0.8, "trump": -0.6, "tone": "fiery"},
+       {"label": "Rural fund", "say": "Expand the rural health fund and protect labor and delivery units.", "pos": 0.1, "trump": null, "tone": "calm"},
+       {"label": "Blame Obamacare", "say": "Say the Affordable Care Act drove up costs and point to new rural funding.", "pos": 0.8, "trump": 0.6, "tone": "calm"}
+     ]}
+  ],
+  "debates": [
+    {"date": "2026-10-08", "where": "Atlanta News First, Doraville", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"},
+    {"date": "2026-10-13", "where": "Atlanta Press Club at GPB, Atlanta", "src": "https://georgiarecorder.com/2026/10/13/collins-ossoff-clash-in-a-second-heated-debate-as-early-voting-begins-in-georgia/"}
+  ],
+  "endorsements": [
+    {"who": "Donald Trump", "for": "R", "src": "https://www.pbs.org/newshour/show/inside-georgias-senate-race-and-collinss-uphill-battle-against-ossoff"},
+    {"who": "Valdosta Mayor Scott James Matheson", "for": "D", "src": "https://www.pbs.org/newshour/show/inside-georgias-senate-race-and-collinss-uphill-battle-against-ossoff"}
+  ],
+  "ads": [
+    {"by": "Senate Republicans", "for": "R", "theme": "Ad buys over $1 million that the Collins campaign cites as proof national Republicans are still invested.", "src": "https://georgiarecorder.com/2026/10/08/collins-ossoff-trade-personal-insults-during-georgias-first-u-s-senate-debate/"}
+  ],
+  "regions": [
+    {"name": "Metro Atlanta core", "counties": ["Fulton", "DeKalb", "Clayton", "Cobb", "Gwinnett"], "note": "The Democratic base, where Ossoff needs heavy turnout among Black and suburban voters."},
+    {"name": "Exurban Atlanta", "counties": ["Cherokee", "Forsyth", "Henry", "Paulding", "Hall"], "note": "Fast growing suburbs that still lean Republican, with Henry trending Democratic."},
+    {"name": "Collins's northeast Georgia base", "counties": ["Barrow", "Jackson", "Newton", "Walton", "Clarke"], "note": "Collins's 10th District, deeply Republican apart from Athens."},
+    {"name": "North Georgia mountains", "counties": ["Whitfield", "Floyd", "Bartow", "Gordon", "Catoosa"], "note": "Trump country around Dalton, where he rallied for Collins."},
+    {"name": "Middle and South Georgia", "counties": ["Bibb", "Lowndes", "Dougherty", "Chatham", "Muscogee"], "note": "Democratic cities like Savannah, Macon and Albany surrounded by rural Republican farm counties."}
+  ]
+}

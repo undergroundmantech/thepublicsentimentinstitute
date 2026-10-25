@@ -1,0 +1,55 @@
+{
+ "id": "gov-SD",
+ "checked": "2026-10-25",
+ "summary": "Republican Gov. Larry Rhoden, endorsed by Trump, leads Democrat Dan Ahlers 56 to 36 in an Oct. 12 to 14 Mason Dixon poll for South Dakota News Watch, though Ahlers leads among independents and 35 percent of voters do not know him, per Dakota News Now. The race centers on property taxes, data centers, school funding, rural health care and the cost of living, per South Dakota Searchlight.",
+ "issues": [
+  {"issue": "Property taxes", "why": "Rhoden touts the largest property tax cut in state history, while Ahlers says shifting to county sales taxes could leave renters and lower income residents behind.", "src": "https://www.newsfromthestates.com/node/429715"},
+  {"issue": "Data centers", "why": "Rhoden signed a law making large data centers cover their power costs, while Ahlers wants more local control over siting and resources.", "src": "https://www.newsfromthestates.com/node/429715"},
+  {"issue": "School funding and teacher pay", "why": "Ahlers wants more state school aid to cut property taxes, while Rhoden says funding is above the formula and teacher pay is up about 10,000 dollars.", "src": "https://www.newsfromthestates.com/node/429715"},
+  {"issue": "Rural health care and costs", "why": "Ahlers names rural health care access and the cost of living as top concerns, and Rhoden also lists rural health care as a priority.", "src": "https://www.dakotanewsnow.com/2026/09/16/inside-race-dan-ahlers-larry-rhoden-talk-key-issues-with-dakota-news-now/"},
+  {"issue": "Economic development", "why": "Ahlers says the Future Fund should favor South Dakota owned businesses, while Rhoden points to new plants near Mitchell and in Sioux Falls.", "src": "https://www.newsfromthestates.com/node/429715"}
+ ],
+ "storylines": [
+  {"title": "Poll shows Rhoden up 20", "date": "2026-10-19", "what": "A Mason Dixon poll had Rhoden at 56 percent and Ahlers at 36, though Ahlers led independents 51 to 35.", "helps": "R", "kind": "local", "src": "https://www.dakotanewsnow.com/2026/10/19/poll-gov-rhoden-leads-challenger-ahlers-56-36/"},
+  {"title": "Final debate in Sioux Falls", "date": "2026-09-28", "what": "On SDPB the candidates clashed on data centers, school funding and property taxes, with Rhoden touting a 36 percent average homeowner tax cut and Ahlers pressing for renter and senior relief.", "helps": "mixed", "kind": "debate", "src": "https://www.newsfromthestates.com/node/429715"},
+  {"title": "Ahlers opposes income tax", "date": "2026-09-16", "what": "Ahlers said he opposes a state income tax given budget surpluses and argued divided government would make the Legislature more independent.", "helps": "D", "kind": "policy", "src": "https://www.dakotanewsnow.com/2026/09/16/inside-race-dan-ahlers-larry-rhoden-talk-key-issues-with-dakota-news-now/"},
+  {"title": "Rhoden touts defense jobs and new prison", "date": "2026-09-16", "what": "Rhoden highlighted the Data Center Bill of Rights, a new women's prison in Pierre and plans to grow defense manufacturing.", "helps": "R", "kind": "policy", "src": "https://www.dakotanewsnow.com/2026/09/16/inside-race-dan-ahlers-larry-rhoden-talk-key-issues-with-dakota-news-now/"},
+  {"title": "Trump endorses Rhoden", "date": "2026-08-27", "what": "Trump endorsed Rhoden, and Ahlers responded that the voters' endorsement matters most and that Trump's policies are why costs are high.", "helps": "R", "kind": "endorsement", "src": "https://www.dakotanewsnow.com/2026/08/28/dan-ahlers-responds-trumps-endorsement-rhoden-governor/"},
+  {"title": "Rhoden wins GOP runoff", "date": "2026-07-28", "what": "Rhoden beat businessman Toby Doeden about 70 to 30 percent in the Republican runoff, running on property tax cuts and experience.", "helps": "R", "kind": "local", "src": "https://wtam.iheart.com/content/2026-07-28-rhoden-wins-sd-primary-runoff-for-governor/"}
+ ],
+ "events": [
+  {"title": "Property tax relief", "prompt": "A new law cuts average homeowner property taxes sharply by shifting to county sales taxes, but renters may not benefit. What is your property tax plan?", "issue": "econ", "src": "https://www.newsfromthestates.com/node/429715",
+   "opts": [
+    {"label": "Relief for renters", "say": "Expand relief to renters, seniors, veterans and people with disabilities and reassess residential property.", "pos": -0.5, "trump": -0.3, "tone": "calm"},
+    {"label": "Fund schools instead", "say": "Put more state aid into schools to bring local property taxes down.", "pos": -0.1, "trump": null, "tone": "calm"},
+    {"label": "Defend the big cut", "say": "Tout the largest property tax cut in state history and promise more.", "pos": 0.7, "trump": 0.4, "tone": "fiery"}
+   ]},
+  {"title": "Data center siting", "prompt": "Large data centers want to locate in South Dakota, raising power cost and land use concerns. How do you regulate them?", "issue": "econ", "src": "https://www.newsfromthestates.com/node/429715",
+   "opts": [
+    {"label": "Local control", "say": "Give counties more power to decide where data centers go and how they use water and power.", "pos": -0.4, "trump": -0.2, "tone": "calm"},
+    {"label": "Make them pay", "say": "Require data centers to cover their power costs and any cleanup if they leave.", "pos": 0.3, "trump": null, "tone": "calm"},
+    {"label": "America first build out", "say": "Welcome US owned data centers and keep foreign owners out.", "pos": 0.7, "trump": 0.7, "tone": "fiery"}
+   ]},
+  {"title": "Answer the Trump endorsement", "prompt": "The president has endorsed in the governor's race, and voters say costs are their top issue. How do you talk about Trump?", "issue": "other", "src": "https://www.dakotanewsnow.com/2026/08/28/dan-ahlers-responds-trumps-endorsement-rhoden-governor/",
+   "opts": [
+    {"label": "Blame his policies", "say": "Say Trump's policies are why costs are so high in South Dakota.", "pos": -0.5, "trump": -0.9, "tone": "fiery"},
+    {"label": "Voters decide", "say": "Say the only endorsement that matters is the voters' and stay local.", "pos": 0, "trump": -0.2, "tone": "calm"},
+    {"label": "Embrace the endorsement", "say": "Campaign on the president's backing and his agenda for rural America.", "pos": 0.8, "trump": 1, "tone": "fiery"}
+   ]}
+ ],
+ "debates": [
+  {"date": "2026-09-28", "where": "Sioux Falls, SDPB and South Dakota News Watch", "src": "https://www.newsfromthestates.com/node/429715"}
+ ],
+ "endorsements": [
+  {"who": "Donald Trump", "for": "R", "src": "https://www.dakotanewsnow.com/2026/08/28/dan-ahlers-responds-trumps-endorsement-rhoden-governor/"}
+ ],
+ "ads": [],
+ "regions": [
+  {"name": "Sioux Falls metro", "counties": ["Minnehaha", "Lincoln"], "note": "The state's largest and fastest growing area, Republican but more competitive in the city itself."},
+  {"name": "Black Hills", "counties": ["Pennington", "Meade", "Lawrence", "Custer"], "note": "Rapid City and the Hills, a conservative West River base near Rhoden's Sturgis area home."},
+  {"name": "East River farm country", "counties": ["Brookings", "Codington", "Brown", "Davison", "Beadle"], "note": "Agricultural counties around Brookings, Watertown, Aberdeen and Mitchell that lean Republican."},
+  {"name": "Southeast corner", "counties": ["Clay", "Union", "Yankton"], "note": "Includes Democratic leaning Vermillion and swingier Yankton."},
+  {"name": "Tribal nations", "counties": ["Oglala Lakota", "Todd", "Buffalo", "Dewey", "Corson"], "note": "Reservation counties that vote heavily Democratic but with low turnout."},
+  {"name": "West River ranch country", "counties": ["Butte", "Harding", "Perkins", "Fall River", "Haakon"], "note": "Sparsely populated ranching counties that are among the most Republican in the nation."}
+ ]
+}
