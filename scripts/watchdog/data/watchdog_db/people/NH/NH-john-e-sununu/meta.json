@@ -8,11 +8,33 @@
   "opponents": [
     "NH-chris-pappas"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Sununu Senate campaign committee",
+      "id": "not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "No Going Back PAC Inc.",
+      "id": "FEC C00960435",
+      "kind": "super PAC backed by MAGA Inc., not controlled by the candidate",
+      "treasurer": "shared with MAGA Inc., name not verified"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "Trump world",
+    "Wall Street and banking"
+  ],
+  "headline_total": {
+    "amount_usd": 5681528,
+    "label": "raised cycle to date per VoteLog reading FEC, cumulative; outside groups spent $36.1M benefiting him, not summed",
+    "as_of": "2026-10-14",
+    "source": "https://votelog.org/investigations/new-hampshire-senate-general-money"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Lean D",

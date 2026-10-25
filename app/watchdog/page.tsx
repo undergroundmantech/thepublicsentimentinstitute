@@ -7,6 +7,7 @@ import PersonToken from "./PersonToken";
 import fs from "node:fs";
 import path from "node:path";
 import "./desk.css";
+import { getWarIndex } from "./war-room/data";
 
 export const metadata: Metadata = { title: { absolute: "Watchdog: follow the money and the people | On Point Politics" }, description: "Outside money in every close 2026 race, the donors and super PACs behind it, the firms they pay, where Trump, Vance, Obama and others are campaigning, and every county's data." };
 
@@ -40,6 +41,7 @@ export default function Page() {
   // what each Start here card shows: the number that answers its question, and one sentence of what is inside
   const START: Record<ToolKey, { stat: string; unit: string; line: string } | undefined> = {
     desk: undefined,
+    warroom: (() => { const w = getWarIndex(); const close = w.races.filter((r) => r.p > 0.1 && r.p < 0.9); return { stat: `${w.races.length} races`, unit: "with a health score for both campaigns and a path to victory for each side", line: `${close.length} are competitive. Brief yourself as either side's operative.` }; })(),
     money: { stat: usd(total), unit: `in outside money across ${m.races.length} Senate and governor races`, line: topRace ? `${STN[topRace.st] ?? topRace.st} draws the most, ${usd(topRace.total)}.` : "" },
     paid: { stat: `${vend.size} firms`, unit: `paid ${usd(vendTotal)} by the groups and campaigns we track`, line: topVend[0] ? `${name(topVend[0][0])} was paid the most, ${usd(topVend[0][1])}.` : "" },
     people: (() => { const pp = getPeople(); return { stat: `${num(pp.n)} files`, unit: "on every member of Congress, governor and 2026 nominee", line: `${pp.hand} researched in full, with every money tie sourced.` }; })(),
@@ -56,7 +58,7 @@ export default function Page() {
           <div className="eye gold">Watchdog · On Point Politics</div>
           <h1>Follow the money. <em>Follow the people.</em></h1>
           <p className="lede">Watchdog tracks who is paying for the 2026 midterms, where that money goes, which firms get paid and which national figures are out campaigning. Every tie is sourced. Pick a question below to start.</p>
-          <div className="dk-cta"><a className="btn g" href="#start">Pick a question</a><Link className="btn" href="/watchdog/connections">See who is tied to whom</Link></div>
+          <div className="dk-cta"><a className="btn g" href="#start">Pick a question</a><Link className="btn" href="/watchdog/war-room">Open the War Room</Link><Link className="btn" href="/watchdog/connections">See who is tied to whom</Link></div>
         </div>
         <div className="dk-badge" aria-hidden="true">
           <div className="dk-radar"><i /><i /><i /><span className="dk-sweep" /></div>

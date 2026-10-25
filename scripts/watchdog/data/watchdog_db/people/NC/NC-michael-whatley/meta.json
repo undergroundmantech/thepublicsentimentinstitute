@@ -8,11 +8,39 @@
   "opponents": [
     "NC-roy-cooper"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Whatley for Senate",
+      "id": "FEC C00913996; candidate S6NC00415 from FEC URL only",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Whatley Victory Committee",
+      "id": "not verified",
+      "kind": "joint fundraising committee with the state party and national Republican funds",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Two affiliated PACs, names not stated in sources read",
+      "id": "not verified",
+      "kind": "affiliated PACs",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Oil and gas",
+    "Utilities and data centers",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 13410000,
+    "label": "total receipts of Whatley for Senate including $5.10M in transfers, cumulative",
+    "as_of": "2026-09-30",
+    "source": "https://ncpoliticalnews.com/news/fec-cooper-whatley-cash-on-hand-september-2026/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Likely D; Sabato: Lean D; Inside: Lean D",

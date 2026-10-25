@@ -21,8 +21,9 @@ export function raceHref(st: string, office: string, district: string) {
 export type PFileX = PFile & { inGraph?: boolean; oppN?: [string, string, boolean][] };
 export const fileHref = (id: string, hand: boolean) => (hand ? `/watchdog/people/${id}` : `/watchdog/people/view?id=${encodeURIComponent(id)}`);
 
-export default function PersonFile({ p }: { p: PFileX }) {
+export default function PersonFile({ p, war }: { p: PFileX; war?: string | null }) {
   const fc = raceHref(p.st, p.office, p.district);
+
   const inGraph = !!p.inGraph;
   const money = [...p.edgesRows].sort((a, b) => (Number(b.amount_usd) || 0) - (Number(a.amount_usd) || 0));
   const levers = p.leversRows.filter((l) => l.decision);
@@ -57,6 +58,8 @@ export default function PersonFile({ p }: { p: PFileX }) {
         <div className="pf-acts">
           {inGraph ? <Link className="wd-btn" href={`/watchdog/connections?name=${encodeURIComponent(`c:${p.name}`)}`}>See the Connections map</Link> : null}
           {fc ? <Link className="wd-btn" href={fc}>Race forecast</Link> : null}
+          {war ? <Link className="wd-btn" href={`/watchdog/war-room/${war}`}>War Room</Link> : null}
+          <Link className="wd-btn" href={`/watchdog/people/web?p=${p.id}`}>People web</Link>
           {p.board ? <a className="wd-btn" href={`/watchdog/people/boards/${p.id}.html`} target="_blank" rel="noopener">Open the full research board</a> : null}
           {(p.oppN ?? []).map(([oid, on, oh]) => <Link key={oid} className="wd-btn" href={fileHref(oid, oh)}>Opponent: {on}</Link>)}
         </div>

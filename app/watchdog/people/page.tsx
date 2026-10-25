@@ -24,7 +24,7 @@ export default function Page() {
         <Pointy className="pf-pty keep" pose="think" prop="magnifier" size={116} look={-1} flip detective say={<>Start with the money, then look at what is on their desk next year.</>} />
       </header>
       <section className="pf-deep" aria-label="Researched in full">
-        <div className="pf-deep-h"><span className="eye">Researched in full</span><span className="pf-mute">Governor races in Georgia, Michigan, Arizona, Pennsylvania, Ohio and Wisconsin, plus Florida&apos;s Byron Donalds</span></div>
+        <div className="pf-deep-h"><span className="eye">Researched in full</span><span className="pf-mute">Both nominees in the closest Senate races and the governor races in Georgia, Michigan, Arizona, Pennsylvania, Ohio and Wisconsin, plus Florida&apos;s Byron Donalds</span><Link className="wd-btn pf-web" href="/watchdog/people/web">See who is tied to whom</Link></div>
         <div className="pf-cards">
           {deep.map((p) => (
             <Link key={p.id} href={`/watchdog/people/${p.id}`} className={`pf-card ${p.party.toLowerCase()}`} data-ev="People file opened" data-ev-d={JSON.stringify({ id: p.id, from: "researched cards" })}>

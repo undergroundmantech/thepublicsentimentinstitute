@@ -17,7 +17,7 @@ import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
 import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
-import BrasilHomeBand from "@/app/brasil/HomeBand";
+import HomeDeck from "@/app/components/home/HomeDeck";
 const APPROVAL_POLLS = aggPolls("trump-approval");
 const GENERIC_POLLS = aggPolls("generic-ballot");
 
@@ -84,7 +84,7 @@ export default function Home() {
   return (
     <div className="opp">
       <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
-      <BrasilHomeBand />
+      <HomeDeck />
       <HomeWhatIf />
 
       <section className="sec">

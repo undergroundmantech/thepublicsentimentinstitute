@@ -8,11 +8,27 @@
   "opponents": [
     "GA-mike-collins"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Ossoff Senate campaign committee",
+      "id": "FEC candidate S8GA00180; committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; campaign manager Ellen Foster"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Party and leadership",
+    "Enforcement and disclosure"
+  ],
+  "headline_total": {
+    "amount_usd": 33000000,
+    "label": "raised in the third quarter alone, July to September 2026; $26M cash at Sept 30; cycle total not verified",
+    "as_of": "2026-09-30",
+    "source": "https://georgiarecorder.com/2026/10/15/ossoff-reports-raising-another-33-million-for-homestretch-of-u-s-senate-reelection-bid/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Likely Democrat",

@@ -8,11 +8,33 @@
   "opponents": [
     "NC-michael-whatley"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Cooper for North Carolina",
+      "id": "FEC C00913566",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; campaign manager Jeff Allen"
+    },
+    {
+      "name": "Cooper Victory Fund",
+      "id": "FEC C00913574, from FEC URL only",
+      "kind": "joint fundraising committee with the DSCC and the North Carolina Democratic Party",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Party and leadership",
+    "Utilities and energy"
+  ],
+  "headline_total": {
+    "amount_usd": 47190000,
+    "label": "total receipts of Cooper for North Carolina including $27.15M in transfers, cumulative since launch",
+    "as_of": "2026-09-30",
+    "source": "https://ncpoliticalnews.com/news/fec-cooper-whatley-cash-on-hand-september-2026/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Likely D; Sabato: Lean D; Inside: Lean D",

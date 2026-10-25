@@ -8,11 +8,45 @@
   "opponents": [
     "TX-james-talarico"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Paxton Senate campaign committee",
+      "id": "FEC ID not verified in this pass",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; spokesperson Madison Cercy, senior adviser Nick Maddux"
+    },
+    {
+      "name": "Paxton joint fundraising committee",
+      "id": "name and ID not verified",
+      "kind": "joint fundraising committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Lone Star Liberty PAC",
+      "id": "FEC ID not verified",
+      "kind": "super PAC supporting Paxton",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Texas PAC",
+      "id": "FEC ID not verified",
+      "kind": "independent expenditure committee created by Senate Leadership Fund, registered August 2026",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Billionaire megadonor",
+    "Party and leadership",
+    "Trump world"
+  ],
+  "headline_total": {
+    "amount_usd": 18000000,
+    "label": "campaign raised July to September 2026; not a cycle total; outside groups led by SLF spent over $217M on ads by end of September",
+    "as_of": "2026-09-30",
+    "source": "https://www.texastribune.org/2026/10/15/james-talarico-64-million-fundraising-texas-senate/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss-up",

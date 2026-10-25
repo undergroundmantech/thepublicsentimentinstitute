@@ -8,11 +8,33 @@
   "opponents": [
     "MI-abdul-el-sayed"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Rogers Senate campaign committee",
+      "id": "FEC candidate S4MI00595 per search result; committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Together for Michigan, formerly Democrats for Mike Rogers",
+      "id": "not verified",
+      "kind": "aligned super PAC",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Trump world",
+    "Pro-Israel"
+  ],
+  "headline_total": {
+    "amount_usd": 20565706,
+    "label": "raised cycle to date, VoteLog compilation of FEC data; nearly $2.5M more Oct 1 to 14 per CQ Roll Call, not summed",
+    "as_of": "2026-09-30",
+    "source": "https://votelog.org/investigations/michigan-senate-general-money"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss Up",

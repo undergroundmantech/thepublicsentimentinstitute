@@ -1,0 +1,65 @@
+/* People web: a radial map around one person. Ties are diamonds coloured by kind, people are circles in party colour. */
+.wd { --pw-race: #ffb547; --pw-c: #39ff9c; --pw-s: #7fd1ff; --pw-b: #ff9a5c; --pw-m: #f4c430; --pw-d: #3d7bff; --pw-r: #ff3b5c; --pw-i: #b78cff; --pw-o: #8e86a3; }
+html[data-theme="light"] .wd { --pw-race: #a66300; --pw-c: #0a8a4c; --pw-s: #1f7bb8; --pw-b: #c25515; --pw-m: #8a6a00; --pw-d: #1f5fe0; --pw-r: #d6223f; --pw-i: #7b4fd1; --pw-o: #6f6880; }
+.wd .pw { display: grid; grid-template-columns: 260px minmax(0, 1fr) 300px; gap: 12px; margin: 0 0 16px; align-items: start; }
+.wd .pw-side, .wd .pw-info { padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.wd .pw-k { font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--wa); }
+.wd .pw-search { position: relative; }
+.wd .pw-hits { position: absolute; z-index: 6; left: 0; right: 0; top: calc(100% + 4px); list-style: none; margin: 0; padding: 4px; background: var(--wbg); border: 1px solid var(--wline2); }
+.wd .pw-hits button, .wd .pw-list li button { all: unset; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; width: 100%; padding: 6px 6px; cursor: pointer; font-size: 13px; color: var(--ink); }
+.wd .pw-hits button:hover, .wd .pw-hits button:focus-visible, .wd .pw-list li button:hover, .wd .pw-list li button:focus-visible { background: rgba(var(--wd-e), .06); outline: none; }
+.wd .pw-hits small, .wd .pw-list li small { color: var(--mute); font-size: 11.5px; }
+.wd .pw-list li small { flex-basis: 100%; padding-left: 17px; }
+.wd .pw-kinds { display: grid; gap: 6px; }
+.wd .pw-kind { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink2); cursor: pointer; }
+.wd .pw-kind input { accent-color: var(--wt); }
+.wd .pw-kind i { width: 9px; height: 9px; transform: rotate(45deg); background: var(--pw-c); }
+.wd .pw-kind.race i { background: var(--pw-race); } .wd .pw-kind.s i { background: var(--pw-s); } .wd .pw-kind.b i { background: var(--pw-b); } .wd .pw-kind.m i { background: var(--pw-m); }
+.wd .pw-feat { display: flex; flex-wrap: wrap; gap: 5px; max-height: 260px; overflow-y: auto; }
+.wd .pw-feat button { appearance: none; font: 700 11.5px var(--font-m); padding: 4px 7px; border: 1px solid var(--line2); background: transparent; color: var(--ink2); cursor: pointer; }
+.wd .pw-feat button small { color: var(--mute); font-weight: 600; }
+.wd .pw-feat button.d { border-left: 3px solid var(--pw-d); } .wd .pw-feat button.r { border-left: 3px solid var(--pw-r); } .wd .pw-feat button.i { border-left: 3px solid var(--pw-i); }
+.wd .pw-feat button.on, .wd .pw-feat button:hover { color: var(--ink); border-color: var(--wline2); }
+.wd .pw-feat button:focus-visible { outline: 2px solid var(--wt); outline-offset: 1px; }
+.wd .pw-stage { padding: 6px; min-width: 0; }
+.wd .pw-stage svg { display: block; width: 100%; height: auto; }
+.wd .pw-orbit { fill: none; stroke: var(--line); stroke-dasharray: 2 5; }
+.wd .pw-e1, .wd .pw-e2 { stroke: var(--pw-c); stroke-opacity: .45; stroke-width: 1.4; transition: opacity .25s; }
+.wd .pw-e2 { stroke-width: 1; stroke-opacity: .28; }
+.wd .pw-e1.race, .wd .pw-e2.race { stroke: var(--pw-race); } .wd .pw-e1.s, .wd .pw-e2.s { stroke: var(--pw-s); } .wd .pw-e1.b, .wd .pw-e2.b { stroke: var(--pw-b); } .wd .pw-e1.m, .wd .pw-e2.m { stroke: var(--pw-m); }
+.wd .pw-e2.lit { stroke-opacity: .95; stroke-width: 1.8; }
+.wd .pw-stage .dim { opacity: .18; }
+.wd .pw-p, .wd .pw-h, .wd .pw-c { transition: transform .55s cubic-bezier(.3, .7, .2, 1), opacity .25s; }
+.wd .pw-p { cursor: pointer; }
+.wd .pw-p circle { fill: var(--pw-o); stroke: var(--wbg); stroke-width: 1.5; }
+.wd .pw-p.d circle { fill: var(--pw-d); } .wd .pw-p.r circle { fill: var(--pw-r); } .wd .pw-p.i circle { fill: var(--pw-i); }
+.wd .pw-p circle.hand { stroke: var(--ink); stroke-width: 2; }
+.wd .pw-p text { font: 600 10.5px var(--font-m); fill: var(--ink2); paint-order: stroke; stroke: var(--wbg); stroke-width: 3px; stroke-linejoin: round; }
+.wd .pw-p:hover text, .wd .pw-p:focus text { fill: var(--ink); }
+.wd .pw-p:focus, .wd .pw-h:focus { outline: none; }
+.wd .pw-p:focus-visible circle, .wd .pw-h:focus-visible rect { stroke: var(--wt); stroke-width: 3; }
+.wd .pw-h { cursor: pointer; }
+.wd .pw-h rect { fill: var(--wbg); stroke: var(--pw-c); stroke-width: 2; }
+.wd .pw-h.race rect { stroke: var(--pw-race); } .wd .pw-h.s rect { stroke: var(--pw-s); } .wd .pw-h.b rect { stroke: var(--pw-b); } .wd .pw-h.m rect { stroke: var(--pw-m); }
+.wd .pw-h.on rect { fill: var(--pw-c); } .wd .pw-h.race.on rect { fill: var(--pw-race); } .wd .pw-h.s.on rect { fill: var(--pw-s); } .wd .pw-h.b.on rect { fill: var(--pw-b); } .wd .pw-h.m.on rect { fill: var(--pw-m); }
+.wd .pw-h .nm { font: 800 11px var(--font-m); fill: var(--ink); paint-order: stroke; stroke: var(--wbg); stroke-width: 3px; stroke-linejoin: round; }
+.wd .pw-h .sub { font: 600 9px var(--font-m); fill: var(--mute); paint-order: stroke; stroke: var(--wbg); stroke-width: 3px; stroke-linejoin: round; }
+.wd .pw-c circle { fill: var(--wbg); stroke: var(--pw-o); stroke-width: 3; }
+.wd .pw-c.d circle { stroke: var(--pw-d); } .wd .pw-c.r circle { stroke: var(--pw-r); } .wd .pw-c.i circle { stroke: var(--pw-i); }
+.wd .pw-c .nm { font: 800 12.5px var(--font-m); fill: var(--ink); }
+.wd .pw-c .sub { font: 600 8.5px var(--font-m); fill: var(--mute); }
+.wd .pw-empty { font: 600 12px var(--font-m); fill: var(--mute); }
+.wd .pw-cap { margin: 4px 10px 8px; font-size: 12px; color: var(--mute); }
+.wd .pw-who { display: grid; gap: 4px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.wd .pw-who b { font: 800 22px/1.1 var(--font-d); color: var(--ink); }
+.wd .pw-who.d b { color: var(--pw-d); } .wd .pw-who.r b { color: var(--pw-r); } .wd .pw-who.i b { color: var(--pw-i); }
+.wd .pw-who small { font-size: 12px; color: var(--ink2); }
+.wd .pw-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.wd .pw-acts .wd-btn { text-decoration: none; }
+.wd .pw-list { display: grid; gap: 6px; }
+.wd .pw-list ul { list-style: none; margin: 0; padding: 0; max-height: 440px; overflow-y: auto; }
+.wd .pw-list li { border-top: 1px solid var(--line); }
+@media (max-width: 1180px) { .wd .pw { grid-template-columns: 240px minmax(0, 1fr); } .wd .pw-info { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .wd .pw { grid-template-columns: minmax(0, 1fr); } .wd .pw-feat { max-height: 120px; } }
+@media (prefers-reduced-motion: reduce) { .wd .pw-p, .wd .pw-h, .wd .pw-c { transition: none; } }
+@media (max-width: 760px) { .wd .pw-stage { overflow-x: auto; } .wd .pw-stage svg { min-width: 640px; } }

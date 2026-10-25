@@ -8,11 +8,33 @@
   "opponents": [
     "TX-ken-paxton"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Talarico principal Senate campaign committee",
+      "id": "FEC ID not verified in this pass",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; campaign manager Seth Krasne"
+    },
+    {
+      "name": "Lone Star Rising PAC",
+      "id": "FEC ID not verified",
+      "kind": "super PAC described as pro-Talarico by The Katy News",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Billionaire megadonor",
+    "Ideological groups"
+  ],
+  "headline_total": {
+    "amount_usd": 134000000,
+    "label": "raised since launch per campaign, cumulative; FEC summary relayed by The Katy News shows $128,772,835",
+    "as_of": "2026-09-30",
+    "source": "https://www.texastribune.org/2026/10/15/james-talarico-64-million-fundraising-texas-senate/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss-up",

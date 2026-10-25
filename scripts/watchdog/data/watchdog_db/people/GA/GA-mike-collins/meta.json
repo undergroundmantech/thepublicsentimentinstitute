@@ -8,11 +8,33 @@
   "opponents": [
     "GA-jon-ossoff"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Collins Senate campaign committee",
+      "id": "FEC candidate S6GA00390; committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Collins House committee",
+      "id": "FEC candidate H4GA10071; committee ID not verified",
+      "kind": "prior House campaign committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Crypto and finance",
+    "Trump world"
+  ],
+  "headline_total": {
+    "amount_usd": 2700000,
+    "label": "receipts in the third quarter alone, July to September 2026; cash just over $1.1M; cycle total not verified",
+    "as_of": "2026-09-30",
+    "source": "https://georgiarecorder.com/2026/10/15/ossoff-reports-raising-another-33-million-for-homestretch-of-u-s-senate-reelection-bid/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Likely Democrat",

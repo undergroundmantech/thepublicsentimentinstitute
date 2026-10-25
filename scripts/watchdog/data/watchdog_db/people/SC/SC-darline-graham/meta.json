@@ -8,11 +8,39 @@
   "opponents": [
     "SC-annie-andrews"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Darline Graham Senate campaign committee",
+      "id": "FEC ID not verified; bioguide G000608",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; spokesman T.W. Arrighi"
+    },
+    {
+      "name": "Darline Graham Senate Majority Fund",
+      "id": "FEC ID not verified",
+      "kind": "campaign tied PAC",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Security Is Strength PAC",
+      "id": "FEC C00573733",
+      "kind": "super PAC, formerly backing Lindsey Graham",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Billionaire megadonor",
+    "Trump world"
+  ],
+  "headline_total": {
+    "amount_usd": 2400000,
+    "label": "raised July to September 2026 across campaign and campaign tied PAC",
+    "as_of": "2026-09-30",
+    "source": "https://scdailygazette.com/2026/10/20/sc-republicans-and-democrats-tout-their-fundraising-hauls-as-proof-of-momentum/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Lean Republican",

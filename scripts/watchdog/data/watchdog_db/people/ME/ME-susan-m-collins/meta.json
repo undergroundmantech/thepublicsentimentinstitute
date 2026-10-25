@@ -8,11 +8,39 @@
   "opponents": [
     "ME-troy-jackson"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Collins principal Senate campaign committee",
+      "id": "candidate ID S6ME00159; committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; spokesperson Blake Kernen"
+    },
+    {
+      "name": "Collins joint fundraising committee",
+      "id": "name and ID not verified",
+      "kind": "joint fundraising committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Pine Tree Results PAC",
+      "id": "FEC ID not verified",
+      "kind": "super PAC run by Scott Reed, shares limited fundraising functions with the campaign",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Billionaire megadonor",
+    "Ideological groups"
+  ],
+  "headline_total": {
+    "amount_usd": 18000000,
+    "label": "campaign raised through June 30, 2026, cumulative; Q3 adds $5.2M per BDN or $3.9M per Press Herald, not summed",
+    "as_of": "2026-06-30",
+    "source": "https://www.boston.com/news/politics/2026/10/15/troy-jackson-tells-susan-collins-to-shut-up-during-heated-maine-senate-debate/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Toss Up",

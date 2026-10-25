@@ -2,7 +2,7 @@
 // "Start here" cards all read, so a tool is named and explained the same way everywhere.
 import React from "react";
 
-export type ToolKey = "desk" | "money" | "paid" | "connections" | "trail" | "endorsements" | "media" | "counties" | "people";
+export type ToolKey = "desk" | "warroom" | "money" | "paid" | "connections" | "trail" | "endorsements" | "media" | "counties" | "people";
 export type Tool = { key: ToolKey; href: string; label: string; question: string; desc: string };
 export type ToolGroup = { key: string; label: string; tools: Tool[] };
 
@@ -13,6 +13,11 @@ export const WD_DESK: Tool = {
 };
 
 export const WD_GROUPS: ToolGroup[] = [
+  {
+    key: "command", label: "Command center", tools: [
+      { key: "warroom", href: "/watchdog/war-room", label: "War Room", question: "How healthy is each campaign, and how does each side win?", desc: "A health score for both campaigns in every Senate, governor and contested House race, and the path to victory for each side." },
+    ],
+  },
   {
     key: "money", label: "Follow the money", tools: [
       { key: "money", href: "/watchdog/money", label: "Money flow", question: "Who is paying for the closest races?", desc: "Where outside money comes from, which groups it funds and which races it lands in." },
@@ -48,6 +53,7 @@ export function ToolIcon({ k, size = 16 }: { k: ToolKey; size?: number }) {
   const s = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true, className: "wd-ico" };
   switch (k) {
     case "desk": return <svg {...s}><path d="M4 11l8-6 8 6" /><path d="M6 10v9h12v-9" /><path d="M10 19v-5h4v5" /></svg>;
+    case "warroom": return <svg {...s}><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><path d="M12 2v4M12 18v4M2 12h4M18 12h4" /><circle cx="12" cy="12" r="1" /></svg>;
     case "money": return <svg {...s}><path d="M3 7c4 0 4 4 9 4s5-4 9-4" /><path d="M3 13c4 0 4 4 9 4s5-4 9-4" /><path d="M18 4l3 3-3 3" /></svg>;
     case "paid": return <svg {...s}><rect x="3" y="7" width="18" height="12" rx="1.5" /><path d="M8 7V5h8v2" /><path d="M12 11v4M10.5 12.2c0-.7.7-1.2 1.5-1.2s1.5.5 1.5 1.1-.7.9-1.5.9-1.5.4-1.5 1 .7 1.1 1.5 1.1 1.5-.5 1.5-1.2" /></svg>;
     case "connections": return <svg {...s}><circle cx="6" cy="6" r="2.4" /><circle cx="18" cy="7" r="2.4" /><circle cx="12" cy="18" r="2.4" /><path d="M8.2 6.4l7.5.5M7.2 8.1l3.7 7.8M16.9 9.1l-3.7 6.8" /></svg>;

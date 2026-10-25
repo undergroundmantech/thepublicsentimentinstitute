@@ -4,15 +4,37 @@
   "party": "Democrat",
   "state": "KS",
   "office_sought": "U.S. Senate",
-  "current_office": "",
+  "current_office": "none",
   "opponents": [
     "KS-roger-marshall"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Hamilton for Senate campaign committee",
+      "id": "FEC committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified; campaign manager Mike Phillips"
+    },
+    {
+      "name": "Adam Hamilton Exploratory Committee",
+      "id": "not registered per Kansas Reflector",
+      "kind": "exploratory committee, pre launch",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Party and leadership",
+    "Ideological groups"
+  ],
+  "headline_total": {
+    "amount_usd": 13533711,
+    "label": "raised cycle to date, VoteLog compilation of FEC data; $5.6M more raised Oct 1 to 14 per CQ Roll Call, not summed",
+    "as_of": "2026-09-30",
+    "source": "https://votelog.org/investigations/kansas-senate-general-money"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss Up",

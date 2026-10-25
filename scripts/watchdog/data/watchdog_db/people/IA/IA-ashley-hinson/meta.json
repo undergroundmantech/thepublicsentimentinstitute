@@ -8,11 +8,33 @@
   "opponents": [
     "IA-josh-turek"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Hinson U.S. Senate campaign committee",
+      "id": "Senate committee ID not verified; roster House candidate ID H0IA01174",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Joint fundraising committee funded by GOP leadership PACs",
+      "id": "not verified",
+      "kind": "joint fundraising committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Agribusiness",
+    "Insurance and tort"
+  ],
+  "headline_total": {
+    "amount_usd": 10262866,
+    "label": "raised by the campaign this cycle through June 30, 2026; third quarter not found",
+    "as_of": "2026-06-30",
+    "source": "https://littlevillagemag.com/turek-democrats-outraise-republicans/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Toss Up; Sabato: Toss-up; IE: Tilt R",

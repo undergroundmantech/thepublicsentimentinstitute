@@ -1,49 +1,85 @@
 # Pete Ricketts Watchdog File
 
-Subject: Pete Ricketts, Republican, NE, running for U.S. Senate in 2026
-Current office: U.S. Senate NE
-Compiled: 2026-10-23 for the On Point Politics watchdog database, onpointpolitics.us
-Status: queued for hand research, priority 2. This file holds the roster facts, the office levers, and FEC pipeline data when the pipeline has run. It is not yet a finished Tier 2 profile.
+**Subject:** Pete Ricketts, Republican, U.S. Senator from Nebraska, appointed in 2023 and seeking a full term, 2026, former governor
+**Compiled:** October 25, 2026 for the On Point Politics watchdog database, onpointpolitics.us
+**Data cutoff:** October 24, 2026. Candidate figures run through June 30, 2026; outside spending through October 17, 2026.
+**Next scheduled data drop:** FEC pre-general report covering through October 14, 2026, not read in this pass, then the post-general report due December 3, 2026.
 
-## Race
+## Bottom line up front
 
-Race status: nominee. Rating: Cook: Likely Republican. Current holder of the seat: Pete Ricketts.
-Opponents: Dan Osborn, Independent.
+Ricketts is his own biggest donor. He put $5.2 million of his own money into the campaign from April through June 2026, nearly five times what he raised from others that quarter, per the Nebraska Examiner on July 28, 2026, https://nebraskaexaminer.com/?p=43009. His cycle total was $11 million through June 30. The Senate Leadership Fund committed $15 million through Cornhusker Majority, per Newsweek on October 17, 2026, https://newsweek.com/pete-ricketts-nebraska-state-trump-won-12567170.
 
-## Committee assignments
+Four interests combine money with a decision he holds:
 
-- Senate Committee on Banking, Housing, and Urban Affairs
-- Senate Committee on Environment and Public Works
-- Senate Committee on Foreign Relations
-- Senate Committee on the Budget
+1. **Self funding.** He was an executive at his family's business, Ameritrade. His own money makes him independent of any single donor and let him outraise Osborn in the second quarter.
+2. **Senate Republican leadership.** His joint fundraising committee feeds the NRSC and his leadership PAC, and the Senate Leadership Fund carries his air war.
+3. **Tech PACs.** Google's NetPAC and Microsoft's PAC gave $5,000 each. He sits on Banking, which handles crypto market structure and financial nominations.
+4. **Agriculture.** The Nebraska Farm Bureau backs him. He defends tariffs but breaks with Trump on a beef import waiver.
 
-## Money
+## Committee structure and treasurer
 
-Not yet pulled. Run pipeline/fec_pull.py for federal subjects. Governors and other state candidates need hand research in the state campaign finance system.
+The roster gives FEC candidate ID S6NE00129 and bioguide R000618. The campaign committee ID and treasurer were not verified. He runs a joint fundraising committee, the Ricketts Victory Committee, and a leadership PAC, American Excellence PAC. The JFC raised $895,856 in the first quarter and $566,137 in the second and sent about $233,374 to the campaign in the second. It also feeds American Excellence PAC and the NRSC, per the Nebraska Examiner on April 28 and July 28, 2026, https://nebraskaexaminer.com/?p=40405. The leadership PAC raised $190,596 and then $154,637.
 
-## Levers this office controls
+Vendors. Axiom Strategies received $39,000 for consulting in the first quarter, and $13,750 went to direct mail.
 
-Template rows from the office and committee assignments. Each needs the specific decision, the date, and the subject position before it counts as a finding.
+## Self funding
 
-| Decision | Where it sits | Which blocs care |
-|---|---|---|
-| Confirmation votes for cabinet, judges, regulators and ambassadors | U.S. Senate | Every bloc with a regulator; Wall Street and banking; Crypto and finance; Health care and pharma |
-| Filibuster and cloture votes on major legislation | U.S. Senate | Party and leadership |
-| Crypto market structure, bank regulation, nominations to the Fed, SEC and FDIC | Senate Committee on Banking, Housing, and Urban Affairs | Crypto and finance; Wall Street and banking; Real estate |
-| Highway bill, EPA rules, water projects, nuclear regulation | Senate Committee on Environment and Public Works | Developers and construction; Utilities and energy; Oil and gas |
-| Arms sales, Israel aid, sanctions, ambassador confirmations | Senate Committee on Foreign Relations | Pro-Israel; Defense contractors |
-| Budget resolutions and reconciliation instructions | Senate Committee on the Budget | Billionaire megadonor; Party and leadership |
+Documented. $5.2 million of his own money in the second quarter, per the Nebraska Examiner, and $5.25 million per Quiver Quantitative on July 17, 2026, https://www.quiverquant.com/news/Fundraising+Update%3A+Senator+Pete+Ricketts+just+disclosed+%246.0M+of+new+fundraising. Quiver reports $6.0 million raised and $6.9 million in cash; the Examiner reports $6.3 million and $6 million. The difference was not resolved. Individual donors were 7.8 percent of his quarter, per Quiver.
 
-## Where to start
+What it buys. Freedom from donor asks, and a line he uses at debates: "The truth is, I can't be bought. He already has," per the Nebraska Examiner on September 1, 2026, https://www.newsfromthestates.com/node/425405.
 
-- FEC candidate S6NE00129: https://www.fec.gov/data/candidate/S6NE00129/
-- OpenSecrets: https://www.opensecrets.org/members-of-congress/summary?cid=N00027695
-- Congress.gov: https://www.congress.gov/member/R000618
-- Capitol Trades: https://www.capitoltrades.com/politicians/R000618
-- Quiver Quantitative: https://www.quiverquant.com/congresstrading/politician/R000618
-- Ballotpedia: https://ballotpedia.org/Pete_Ricketts
-- Roster source: https://www.thegreenpapers.com/G26/NE
+Inference: Self funding removes the usual donor leverage but not the family's own interests. Osborn says the Ricketts family funds dark money groups. That claim was not documented with amounts in sources read.
+
+## Party and leadership
+
+Documented. The Senate Leadership Fund committed $15 million, with $7 million spent through Cornhusker Majority and $8 million more planned through Election Day. FEC records through October 1 show $7.9 million spent against Osborn or for Ricketts. Trump campaigned for him in Grand Island on October 5, per Newsweek.
+
+## Tech and corporate PACs
+
+Documented. In the first quarter Google's NetPAC and Microsoft's Stakeholders Voluntary PAC each gave $5,000 and Walmart's PAC gave $3,000, per the Nebraska Examiner.
+
+Inference: These are small, routine incumbent checks. The lever that matters to them is his Banking seat and broader tech regulation, where no position was found.
+
+## Agriculture
+
+Documented. The Nebraska Farm Bureau endorsed him. He defends Trump tariffs as protecting agriculture but opposes the 90 day waiver for up to 300,000 metric tons of imported ground beef, calling short term fixes bad for ranchers.
+
+## Own finances and disclosure history
+
+His Senate disclosure was not read and no reliable dated net worth estimate was found; several search results were low quality aggregator pages and are not used. Newsweek notes he was an executive at his family's business, Ameritrade.
+
+## Enforcement and controversies
+
+- No FEC or Senate Ethics matter against Ricketts was found in sources read.
+- His appointee as Nebraska Accountability and Disclosure Commission chair, Jeffrey Davis, filed an FEC complaint against Osborn in April 2026, saying he acted privately, per Nebraska Public Media, https://nebraskapublicmedia.org/en/news/news-articles/us-senate-candidate-dan-osborn-faces-another-election-spending-complaint/.
+- Osborn accused him of sending people to follow him at town halls. His response was not reported in the debate story.
+- He claims footage of Osborn comparing law enforcement to Nazi Germany; Osborn said he did not know what that meant.
+
+## Deal table
+
+| Interest | Money in | Ask | Lever | Stake | Decision date |
+|---|---|---|---|---|---|
+| Self funding | $5.2M of his own Q2 2026 | Not applicable | Independence from donors | Not quantified | Not applicable |
+| Senate GOP leadership | SLF $15M committed; JFC to NRSC | Senate majority | Organizing vote | Senate control | January 2027 |
+| Tech PACs | Google $5K, Microsoft $5K | Light regulation | Banking votes | Not quantified | 2027 to 2028 |
+| Agriculture | Farm Bureau endorsement | Tariff protection, no beef waiver | Floor votes, trade oversight | 300,000 metric ton waiver | Ongoing |
+
+## Levers and calendar
+
+| Decision | Who holds it now | When | Which donors care |
+|---|---|---|---|
+| Crypto and bank rules, nominations | Banking | 2027 to 2028 | Finance, crypto, tech |
+| Tariffs and beef imports | President, Congress | Ongoing | Ranchers |
+| Tax law changes | Budget, Finance | 2027 to 2028 | Wealthy donors |
+| Iran sanctions | Foreign Relations | 2027 | Not measured |
+| Highway bill | EPW | 2027 to 2028 | Construction |
+
+Calendar. November 3, 2026 election. FEC post-general report December 3, 2026. New Congress January 2027, then budget and reconciliation fights and the next highway bill.
 
 ## What we could not verify
 
-Everything beyond the roster row. This subject has not been hand researched yet.
+- Campaign committee ID and treasurer; FEC IDs for the JFC and American Excellence PAC.
+- Whether the $5.2 million is a contribution or a loan.
+- Third quarter and pre-general totals.
+- Net worth, trades, and Ricketts family giving to outside groups this cycle.
+- Bodies not read: https://nebraskaexaminer.com/2025/05/23/ricketts-gets-early-ads-from-group-tied-to-senate-gop-in-potential-osborn-race/ and https://www.yahoo.com/news/articles/team-ricketts-republicans-won-t-101505143.html and https://www.wowt.com/2026/03/25/conservative-group-files-fec-complaint-against-senate-candidate-dan-osborn and https://www.foxnews.com/politics/senate-hopefuls-treading-water-narrative-crumbles-500k-payouts-family and https://www.klkntv.com/sen-pete-ricketts-talks-2026-race-calls-independent-dan-osborn-a-fake/

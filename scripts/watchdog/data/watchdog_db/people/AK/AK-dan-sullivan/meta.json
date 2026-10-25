@@ -10,11 +10,27 @@
     "AK-gerald-heikes",
     "AK-mary-peltola"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Alaskans For Dan Sullivan",
+      "id": "FEC C00570994",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Pro-Israel",
+    "Oil and gas"
+  ],
+  "headline_total": {
+    "amount_usd": 9140000,
+    "label": "principal committee receipts this cycle as reported August 19, 2026; outlet gave no end date",
+    "as_of": "2026-07-29",
+    "source": "https://legis1.com/news/sullivan-peltola-campaign-donors-follow-the-money-1"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Toss Up",

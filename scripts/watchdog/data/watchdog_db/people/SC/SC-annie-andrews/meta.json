@@ -8,11 +8,32 @@
   "opponents": [
     "SC-darline-graham"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Andrews Senate campaign committee",
+      "id": "FEC ID not verified in this pass",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Fresh Start SC PAC",
+      "id": "FEC C00948869",
+      "kind": "super PAC aligned with Andrews",
+      "treasurer": "not verified; run by Jalisa Washington-Price"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Ideological groups"
+  ],
+  "headline_total": {
+    "amount_usd": 19700000,
+    "label": "raised since May 2025 launch, cumulative",
+    "as_of": "2026-09-30",
+    "source": "https://scdailygazette.com/2026/10/20/sc-republicans-and-democrats-tout-their-fundraising-hauls-as-proof-of-momentum/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Lean Republican",

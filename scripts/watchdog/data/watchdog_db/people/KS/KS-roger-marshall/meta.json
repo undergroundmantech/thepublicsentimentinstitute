@@ -8,11 +8,27 @@
   "opponents": [
     "KS-adam-hamilton"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Marshall Senate campaign committee",
+      "id": "FEC candidate S0KS00315; committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "Billionaire megadonor",
+    "Sugar and agriculture"
+  ],
+  "headline_total": {
+    "amount_usd": 4809692,
+    "label": "raised per VoteLog compilation of FEC data; may cover only part of the cycle",
+    "as_of": "2026-09-30",
+    "source": "https://votelog.org/investigations/kansas-senate-general-money"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee; Sitting Congress",
   "competitive_rating": "Cook: Toss Up",

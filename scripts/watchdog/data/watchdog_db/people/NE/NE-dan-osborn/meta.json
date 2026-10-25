@@ -8,11 +8,39 @@
   "opponents": [
     "NE-pete-ricketts"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Osborn U.S. Senate campaign committee",
+      "id": "FEC committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Working Class Heroes Fund",
+      "id": "FEC ID not verified",
+      "kind": "hybrid PAC founded by Osborn",
+      "treasurer": "a sister-in-law per an April 2026 FEC complaint; name not recorded"
+    },
+    {
+      "name": "League of Labor Voters",
+      "id": "FEC ID not verified",
+      "kind": "PAC the March 2026 complaint says Osborn controls",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Ideological groups",
+    "Labor unions"
+  ],
+  "headline_total": {
+    "amount_usd": 5700000,
+    "label": "raised by the campaign January 2025 through June 30, 2026",
+    "as_of": "2026-06-30",
+    "source": "https://nebraskaexaminer.com/?p=43009"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Likely Republican",

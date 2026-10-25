@@ -86,3 +86,4 @@ html[data-theme="light"] .wd .pf-st.ok { color: #0a8a5c; } html[data-theme="ligh
   .wd .pf-list td:nth-child(4):empty, .wd .pf-list td:nth-child(3):empty { display: none; }
   .wd .pf-list .wd-empty { grid-column: 1 / -1; }
 }
+.wd .pf-deep-h .pf-web { margin-left: auto; text-decoration: none; }

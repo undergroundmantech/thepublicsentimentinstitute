@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-23",
+ "asOf": "2026-10-25",
  "note": "Researched Oct 22 2026 in two passes from Wikipedia race pages, Ballotpedia, campaign, party, union and group endorsement pages and local news; every row has the page it came from.",
  "endorsements": [
   {
@@ -32843,6 +32843,48 @@
    "role": "podcaster",
    "show": "Pod Save America",
    "lean": "D"
+  },
+  {
+   "name": "Nathan Gonzales",
+   "role": "analyst",
+   "show": "Inside Elections; Roll Call",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Jessica Taylor",
+   "role": "analyst",
+   "show": "Cook Political Report",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Nick Gillespie",
+   "role": "podcaster",
+   "show": "The Reason Interview With Nick Gillespie",
+   "lean": "other"
+  },
+  {
+   "name": "Robby Soave",
+   "role": "commentator",
+   "show": "Reason",
+   "lean": "other"
+  },
+  {
+   "name": "Mark McKinnon",
+   "role": "commentator",
+   "show": "CNN guest; former George W. Bush adviser",
+   "lean": "other"
+  },
+  {
+   "name": "Mehdi Hasan",
+   "role": "commentator",
+   "show": "Zeteo",
+   "lean": "D"
+  },
+  {
+   "name": "Aishah Hasnie",
+   "role": "reporter",
+   "show": "Fox News",
+   "lean": "nonpartisan"
   }
  ],
  "media_attention": [
@@ -35745,6 +35787,406 @@
    "what": "The singer, younger sister of Dolly Parton, claimed in a Facebook post that a Nashville area voting machine kept defaulting to Marsha Blackburn when she tried to vote for the Democrat, and said she would never vote for Blackburn; no official response was reported.",
    "when": "2026-10-21",
    "source": "https://www.mediaite.com/media/news/dolly-partons-sister-claims-nashville-area-voting-machine-flipped-her-ballot-to-gop-candidate-marsha-blackburn-i-kept-punching-for-the-democrat/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Inside Elections moved the open Texas Senate race between Ken Paxton and James Talarico from Tilt Republican to Toss Up, part of 30 rating changes all toward Democrats.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "KS",
+   "race": "KS Senate",
+   "what": "Inside Elections moved the Kansas Senate race between Roger Marshall and Adam Hamilton from Likely Republican to Tilt Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "NH",
+   "race": "NH Senate",
+   "what": "Inside Elections moved the open New Hampshire Senate race from Toss Up to Tilt Democratic.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "SC",
+   "race": "SC Senate",
+   "what": "Inside Elections moved the South Carolina Senate race against Darline Graham from Likely Republican to Lean Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "FL",
+   "race": "FL Senate",
+   "what": "Inside Elections moved the Florida Senate race for Ashley Moody's seat from Solid Republican to Likely Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Governor",
+   "what": "Inside Elections moved the Texas governor race between Greg Abbott and Gina Hinojosa from Likely Republican to Lean Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "NE",
+   "race": "NE Governor",
+   "what": "Inside Elections moved Jim Pillen's Nebraska governor race from Solid Republican to Likely Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "VT",
+   "race": "VT Governor",
+   "what": "Inside Elections moved Phil Scott's Vermont governor race from Solid Republican to Likely Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "AZ",
+   "race": "AZ-01",
+   "what": "Inside Elections moved the open Arizona 1st District from Toss Up to Tilt Democratic.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "IA",
+   "race": "IA-02",
+   "what": "Inside Elections moved the open Iowa 2nd District left by Ashley Hinson from Tilt Republican to Toss Up.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "NC",
+   "race": "NC-01",
+   "what": "Inside Elections moved Rep. Don Davis's North Carolina 1st District from Tilt Republican to Toss Up.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "NC",
+   "race": "NC-11",
+   "what": "Inside Elections moved the open North Carolina 11th District from Lean Republican to Toss Up.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "OH",
+   "race": "OH-09",
+   "what": "Inside Elections moved Rep. Marcy Kaptur's Ohio 9th District from Tilt Republican to Toss Up.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "PA",
+   "race": "PA-07",
+   "what": "Inside Elections moved Rep. Ryan Mackenzie's Pennsylvania 7th District from Toss Up to Tilt Democratic.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "PA",
+   "race": "PA-08",
+   "what": "Inside Elections moved Rep. Rob Bresnahan's Pennsylvania 8th District from Toss Up to Tilt Democratic.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX-15",
+   "what": "Inside Elections moved Rep. Monica De La Cruz's Texas 15th District from Tilt Republican to Toss Up.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "NE",
+   "race": "NE-02",
+   "what": "Inside Elections moved the open Nebraska 2nd District from Tilt Democratic to Lean Democratic.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "MT",
+   "race": "MT-01",
+   "what": "Inside Elections moved the open Montana 1st District from Lean Republican to Tilt Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "ME",
+   "race": "ME-02",
+   "what": "Inside Elections moved the open Maine 2nd District from Likely Republican to Lean Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Nathan Gonzales",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "KY",
+   "race": "KY-06",
+   "what": "Inside Elections moved the open Kentucky 6th District from Lean Republican to Tilt Republican.",
+   "when": "2026-10-20",
+   "source": "https://rollcall.com/2026/10/20/rating-changes-democrats-inside-elections/"
+  },
+  {
+   "person": "Steve Kornacki",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Joined the Texas Tribune's TribCast election preview to walk through what the polls say in the Paxton versus Talarico Senate race and what he will watch on election night.",
+   "when": "2026-10-20",
+   "source": "https://www.texastribune.org/2026/10/20/tribcast-election-preview-kornacki/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "On CNN he walked through James Talarico's steady but narrow polling lead over Ken Paxton and how often candidates leading within the margin of error go on to win.",
+   "when": "2026-10-22",
+   "source": "https://www.youtube.com/watch?v=D_9y-s0kkRQ"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "KS",
+   "race": "KS Senate",
+   "what": "On Anderson Cooper 360 he said polling in the Kansas Senate race is tied and listed it among the races that could hand Democrats a majority.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "IA",
+   "race": "IA Senate",
+   "what": "On Anderson Cooper 360 he said Democrats lead the Iowa Senate race by one point but warned Republicans have beaten their final polls in Trump states.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "ME",
+   "race": "ME Senate",
+   "what": "On Anderson Cooper 360 he said Democrats lead the Maine Senate race by two points.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "OH",
+   "race": "OH Senate",
+   "what": "On Anderson Cooper 360 he said Sherrod Brown holds a four point lead over Jon Husted in Ohio.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "On Anderson Cooper 360 he called the Michigan Senate race between Mike Rogers and Abdul El-Sayed very tight.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Harry Enten",
+   "role": "analyst",
+   "lean": "nonpartisan",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "On Anderson Cooper 360 he said polling in the Alaska Senate race is tilting toward Democrats.",
+   "when": "2026-10-22",
+   "source": "https://www.rawstory.com/senate-midterm-races/"
+  },
+  {
+   "person": "Mark McKinnon",
+   "role": "commentator",
+   "lean": "other",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "The former George W. Bush adviser discussed with CNN's Audie Cornish members of the Bush family breaking with Ken Paxton, including a Bush brother reportedly voting for Talarico.",
+   "when": "2026-10-22",
+   "source": "https://www.youtube.com/watch?v=D_9y-s0kkRQ"
+  },
+  {
+   "person": "Jesse Watters",
+   "role": "host",
+   "lean": "R",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "On The Five he said El-Sayed spent the month defending himself against terrorism smears and quipped that it is kind of silly to have an FBI agent running against a Muslim.",
+   "when": "2026-10-22",
+   "source": "https://www.mediamatters.org/jesse-watters/jesse-watters-race-between-rogers-and-el-sayed-its-kind-silly-you-have-fbi-agent"
+  },
+  {
+   "person": "Mehdi Hasan",
+   "role": "commentator",
+   "lean": "D",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Responded to Jesse Watters' FBI agent versus a Muslim remark about the Rogers and El-Sayed race by calling it Fox racism on display as ever.",
+   "when": "2026-10-22",
+   "source": "https://www.soapcentral.com/entertainment/mehdi-hasan-calls-fox-news-alleged-racism-host-s-comment-fbi-agent-running-muslim"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "In a Reason column predicting Democrats retake the Senate, he said he expects Republicans to lose the Texas seat.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "Predicted in Reason that Republicans will lose the Alaska Senate seat.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Predicted in Reason that Republicans will likely fall short in Michigan.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "OH",
+   "race": "OH Senate",
+   "what": "Predicted in Reason that Republicans will likely lose the Ohio Senate seat.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "ME",
+   "race": "ME Senate",
+   "what": "Predicted in Reason that Susan Collins will hold her seat because polls have underestimated her before.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Robby Soave",
+   "role": "commentator",
+   "lean": "other",
+   "state": "IA",
+   "race": "IA Senate",
+   "what": "Predicted in Reason that the Iowa Senate seat is a bridge too far for Democrats.",
+   "when": "2026-10-22",
+   "source": "https://reason.com/2026/10/22/i-predict-the-gop-will-lose-its-senate-majority-and-magically-regain-it"
+  },
+  {
+   "person": "Nick Gillespie",
+   "role": "podcaster",
+   "lean": "other",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Interviewed Libertarian Senate candidate Ted Brown on The Reason Interview about whether he could swing the close Paxton versus Talarico race, covering Paxton's scandals and Talarico's stance on billionaires.",
+   "when": "2026-10-23",
+   "source": "https://reason.com/podcast/2026/10/23/could-a-libertarian-swing-the-texas-senate-race/"
+  },
+  {
+   "person": "Bill Maher",
+   "role": "host",
+   "lean": "other",
+   "state": "CA",
+   "race": "CA Governor",
+   "what": "Hosted California Republican governor candidate Steve Hilton on Real Time and warned that many Democrats are getting a false positive from the midterms.",
+   "when": "2026-10-23",
+   "source": "https://www.mediaite.com/media/tv/bill-maher-predicts-democrats-fumble-2028-after-learning-all-the-wrong-lessons-from-the-midterms/"
+  },
+  {
+   "person": "Aishah Hasnie",
+   "role": "reporter",
+   "lean": "nonpartisan",
+   "state": "OH",
+   "race": "OH Senate",
+   "what": "Interviewed Sen. Jon Husted on Fox News about Trump's repeated comments on his physique, which Husted said motivated him to hit the gym.",
+   "when": "2026-10-24",
+   "source": "https://www.mediaite.com/media/news/got-to-get-down-to-the-gym-jon-husted-admits-hes-motivated-by-trumps-comments-about-his-rump/"
   }
  ],
  "unconfirmed": [

@@ -8,11 +8,27 @@
   "opponents": [
     "ME-susan-m-collins"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Jackson Senate campaign committee",
+      "id": "FEC ID not verified in this pass",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Labor unions",
+    "Party and leadership"
+  ],
+  "headline_total": {
+    "amount_usd": 20400000,
+    "label": "raised July 1 to September 30, 2026, his first quarter as nominee",
+    "as_of": "2026-09-30",
+    "source": "https://www.bangordailynews.com/2026/10/15/politics/elections/troy-jackson-fundraising-disclosure/"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss Up",

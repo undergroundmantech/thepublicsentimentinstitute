@@ -10,11 +10,27 @@
     "AK-daniel-j-sullivan-jr",
     "AK-gerald-heikes"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
+  "vehicles": [
+    {
+      "name": "Peltola U.S. Senate campaign committee",
+      "id": "FEC committee ID not verified",
+      "kind": "principal campaign committee",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Small donors",
+    "Party and leadership",
+    "Mining and resources"
+  ],
+  "headline_total": {
+    "amount_usd": 18550000,
+    "label": "principal committee receipts through July 29, 2026; campaign later reported $17M for the third quarter, not summed",
+    "as_of": "2026-07-29",
+    "source": "https://legis1.com/news/sullivan-peltola-campaign-donors-follow-the-money-1"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-25",
   "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
   "groups": "2026 Senate nominee",
   "competitive_rating": "Cook: Toss Up",

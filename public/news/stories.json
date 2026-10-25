@@ -1,7 +1,557 @@
 {
- "updated": "2026-10-23T12:30:00-04:00",
+ "updated": "2026-10-25T10:00:00-04:00",
  "note": "Written by the On Point Politics news desk from the reporting linked under each story. Every fact is attributed to the outlet that reported it; claims made by candidates and officials are given as their claims.",
  "stories": [
+  {
+   "id": "brazil-runoff-lula-flavio-bolsonaro",
+   "cat": "world",
+   "date": "2026-10-25",
+   "title": "Brazil votes in a presidential runoff that final polls show is too close to call between Lula and Flávio Bolsonaro",
+   "dek": "A CNT/MDA poll released Saturday had Flávio Bolsonaro at 46.3% and Lula at 45%, inside the margin of error. Bolsonaro finished first in the Oct. 4 first round after outrunning his polls.",
+   "summary": [
+    "Brazilians vote Sunday in a runoff between President Luiz Inácio Lula da Silva of the Workers' Party and Sen. Flávio Bolsonaro, son of former President Jair Bolsonaro. A CNT/MDA poll released Oct. 24 had Bolsonaro at 46.3% and Lula at 45%, from 2,032 interviews taken Oct. 21 to 23 with a margin of error of 2.2 points, Al Jazeera reported, citing Reuters. The same poll a week earlier had Bolsonaro at 46.8% and Lula at 45.9%, and a Datafolha survey published Thursday had the two tied at 50% each, two weeks after Bolsonaro led it by four points.",
+    "Bolsonaro finished first in the Oct. 4 first round with about 47% to Lula's 45%, beating most final polls, which had Lula about three points ahead, Al Jazeera reported. Analysts told Al Jazeera that right leaning voters consolidated behind Bolsonaro early, and pointed to frustration over food prices and household debt and to the Banco Master banking scandal. Bolsonaro is under investigation over claims he sought money from the banker, which he denies. About 9 million first round votes went to other candidates, and more than 33.4 million registered voters, 28%, did not vote.",
+    "In their final debate on Oct. 23, Bolsonaro accused Lula of letting organized crime expand, pushing families into debt and failing to address the high cost of living, and Lula said Bolsonaro \"doesn't know what hunger is\" and does not know Brazil, Al Jazeera reported. Bolsonaro's Liberal Party won the largest Senate bloc in the first round, according to Al Jazeera."
+   ],
+   "facts": [
+    "CNT/MDA had Flávio Bolsonaro at 46.3% and Lula at 45%, with a 2.2 point margin of error.",
+    "Datafolha's poll published Oct. 22 had the two tied at 50%.",
+    "Bolsonaro led the first round about 47% to 45%; most final polls had shown Lula ahead.",
+    "About 28% of registered voters abstained in the first round, Al Jazeera reported."
+   ],
+   "sides": [
+    {
+     "who": "Flávio Bolsonaro",
+     "says": "Lula let organized crime expand, pushed families into debt and has not addressed the high cost of living."
+    },
+    {
+     "who": "President Lula",
+     "says": "Bolsonaro \"doesn't know what hunger is\" and does not know Brazil."
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera led with a dead heat in the final polls and the crime and cost of living arguments from the last debate, after explaining why the first round polls underestimated the right."
+   },
+   "related": [
+    {
+     "href": "/brasil",
+     "label": "Brazil runoff desk"
+    }
+   ],
+   "keys": [
+    "brazil",
+    "lula",
+    "bolsonaro",
+    "runoff",
+    "polls"
+   ],
+   "coverage": [
+    {
+     "o": "aljazeera",
+     "t": "Brazil's Lula and Bolsonaro about even ahead of election run-off: Poll",
+     "u": "https://www.aljazeera.com/news/2026/10/24/brazils-lula-and-bolsonaro-about-even-ahead-of-election-run-off-poll",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Why Flavio Bolsonaro outperformed the polls in Brazil's election",
+     "u": "https://www.aljazeera.com/news/2026/10/6/why-flavio-bolsonaro-outperformed-the-polls-in-brazils-election",
+     "d": "2026-10-06"
+    }
+   ]
+  },
+  {
+   "id": "doj-california-noncitizen-ballots",
+   "cat": "politics",
+   "date": "2026-10-24",
+   "title": "Justice Department tells California counties to set aside ballots of suspected noncitizens and asks an appeals court to step in",
+   "dek": "A federal prosecutor warned county officials they risk becoming \"aiders and abettors to a federal crime\" if they count those ballots. Sen. Alex Padilla says the department has offered no evidence of mass fraud.",
+   "summary": [
+    "The Justice Department on Oct. 23 ordered California election officials to identify suspected noncitizens on their voter rolls and set aside their mail ballots, warning that officials who knowingly count them could face criminal liability, CNN reported. In a letter to San Bernardino County, First Assistant U.S. Attorney Bill Essayli wrote that if officials \"knowingly tabulate ballots cast by individuals identified by federal agencies as noncitizens,\" they \"risk becoming aiders and abettors to a federal crime,\" according to CNN. NBC News also reported the demand to the counties.",
+    "The department sued California and Los Angeles County last week to stop the counting of more than 20,000 mail ballots tied to people it believes are likely noncitizens, CNN reported. A federal judge set a hearing for next week, and on Friday the department asked the 9th Circuit Court of Appeals to intervene sooner, CNN and NBC News reported. An Oct. 13 letter to Los Angeles County came with a password protected thumb drive of names, and an Oct. 14 demand from Acting Deputy Attorney General Trent McCotter gave the county and Secretary of State Shirley Weber 48 hours to review the list, according to CNN.",
+    "Los Angeles County Clerk Dean C. Logan said \"Federal and state laws are clear on how voter eligibility is established,\" CNN reported. Sen. Alex Padilla, a California Democrat, called the administration \"afraid and desperate\" and said the department \"has not provided any evidence for their claims of massive voter fraud.\" CNN noted that in Nevada, an initial Homeland Security figure of 15,900 potential noncitizen registrants fell to 185 after manual review, and that state officials later said all 185 were citizens, a conclusion the department disputes."
+   ],
+   "facts": [
+    "The Justice Department's lawsuit covers more than 20,000 mail ballots in California, CNN reported.",
+    "The department asked the 9th Circuit to act before a district court hearing set for next week.",
+    "In August, Homeland Security Secretary Markwayne Mullin said the department had identified 250,000 people it believed were noncitizens registered in four states, including California, CNN reported.",
+    "A Nevada review cut an initial count of 15,900 potential noncitizen registrants to 185, and state officials said all 185 were citizens."
+   ],
+   "sides": [
+    {
+     "who": "Justice Department",
+     "says": "Ballots of people on a federal list of suspected noncitizens should be held until citizenship is checked, and officials who knowingly count them risk aiding a federal crime."
+    },
+    {
+     "who": "Sen. Alex Padilla",
+     "says": "The administration is \"afraid and desperate\" and has given no evidence of massive voter fraud."
+    },
+    {
+     "who": "Los Angeles County Clerk Dean C. Logan",
+     "says": "Federal and state laws are clear on how voter eligibility is established."
+    }
+   ],
+   "framing": {
+    "L": "CNN led with the threat of criminal liability for election officials and set it beside a Nevada review in which nearly all of a Homeland Security noncitizen list turned out to be citizens."
+   },
+   "related": [],
+   "keys": [
+    "california",
+    "noncitizen voting",
+    "justice department",
+    "mail ballots",
+    "9th circuit"
+   ],
+   "coverage": [
+    {
+     "o": "cnn",
+     "t": "Justice Department orders California counties to set aside ballots from suspected noncitizens",
+     "u": "https://www.cnn.com/2026/10/24/politics/us-midterm-elections-california-hnk",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "nbc",
+     "t": "DOJ demands that California counties help identify noncitizen voters",
+     "u": "https://www.nbcnews.com/politics/2026-election/doj-demands-california-counties-help-identify-noncitizen-voters-rcna605356",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "nbc",
+     "t": "Justice Department asks appeals court to intervene in California ballot case",
+     "u": "https://www.nbcnews.com/politics/2026-election/justice-department-asks-appeals-court-intervene-california-ballot-case-rcna605157",
+     "d": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "id": "georgia-trump-rally-collins-kfile",
+   "cat": "politics",
+   "date": "2026-10-24",
+   "title": "Trump rallies in Georgia for Mike Collins as CNN reports Collins joked about pushing Pelosi from a plane",
+   "dek": "It was Trump's second Georgia rally in eight days. A mid October poll had Sen. Jon Ossoff ahead of Collins 52% to 45%, while the governor's race is within two points.",
+   "summary": [
+    "Trump held a rally Saturday night at Guardian Centers in Perry, Georgia, a stop first planned for Macon, 41NBC reported. He came to back Rep. Mike Collins, the Republican challenging Democratic Sen. Jon Ossoff, and Rick Jackson, the Republican nominee for governor, in his second Georgia rally in eight days after one in Dalton on Oct. 16, Newsweek reported. In a Truth Social post, Trump called his opponents \"Radical Left Lowlifes and Lunatics\" and wrote, \"I Won Georgia in a Record Vote,\" according to Newsweek. Jackson, who had planned to skip the rally to campaign with Gov. Brian Kemp, decided to attend both events, Fox News reported, citing the Atlanta Journal-Constitution.",
+    "CNN's KFile reported on Oct. 23 that in a July 2021 radio interview, after a guest joked about getting a ride from then Speaker Nancy Pelosi, Collins said \"Might push her out,\" then said \"I was joking\" when the host objected. CNN also reported that in August 2021 Collins commented on an image purportedly showing the Taliban hanging someone from a helicopter, writing that anyone who said that should happen to some U.S. military and political leaders would \"probably get banned,\" adding, \"So good thing no one says that.\" CNN reported that Collins repeatedly praised Arizona state Sen. Wendy Rogers after she spoke at a 2022 white nationalist conference, and that his campaign did not respond to a request for comment.",
+    "At their debate the week before, Ossoff accused Collins of calling for immigrants to be thrown from helicopters, citing a 2024 post, and Collins said he condemns hate speech and antisemitism, CNN reported. Collins told a radio show that polls \"don't really tell the true story\" and that the race \"is winnable,\" Newsweek reported. A Quantus Insights poll taken Oct. 15 to 17 had Ossoff ahead 52% to 45%, and surveys by InsiderAdvantage and Quantus Insights had Jackson within two points of former Atlanta Mayor Keisha Lance Bottoms in the open governor's race, according to Newsweek."
+   ],
+   "facts": [
+    "Perry was Trump's second Georgia rally in eight days, Newsweek reported.",
+    "A Quantus Insights poll taken Oct. 15 to 17 had Ossoff leading Collins 52% to 45%.",
+    "The governor's seat is open because Gov. Brian Kemp is term limited.",
+    "CNN's KFile report covered remarks and posts from 2021 through 2025."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "Collins is a hardworking congressman, Jackson is a strong candidate for governor, and \"I Won Georgia in a Record Vote.\""
+    },
+    {
+     "who": "Rep. Mike Collins",
+     "says": "The race is winnable and polls \"don't really tell the true story\"; he condemns hate speech and antisemitism."
+    },
+    {
+     "who": "Sen. Jon Ossoff",
+     "says": "Collins called for immigrants to be thrown from helicopters, citing a 2024 post."
+    }
+   ],
+   "framing": {
+    "L": "CNN led with Collins's past remarks about political violence and his praise for a lawmaker who spoke at a white nationalist conference.",
+    "C": "Newsweek led with Trump's return to Georgia and polls showing Ossoff ahead and the governor's race close.",
+    "R": "Fox covered the rally as part of Trump's weekend swing, including his arrival with Jason Aldean and Jackson's decision to attend."
+   },
+   "related": [
+    {
+     "href": "/forecast/ga/senate",
+     "label": "Georgia Senate forecast"
+    },
+    {
+     "href": "/forecast/ga/governor",
+     "label": "Georgia governor forecast"
+    },
+    {
+     "href": "/maps/early-vote/georgia",
+     "label": "Georgia early vote"
+    }
+   ],
+   "keys": [
+    "georgia",
+    "mike collins",
+    "jon ossoff",
+    "trump rally",
+    "rick jackson"
+   ],
+   "coverage": [
+    {
+     "o": "newsweek",
+     "t": "Trump returns to Georgia for second rally in just eight days",
+     "u": "https://www.newsweek.com/donald-trump-georgia-rally-midterms-collins-jackson-12614867",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "cnn",
+     "t": "KFile: Mike Collins joked about pushing Pelosi from a plane, suggested hanging US leaders",
+     "u": "https://www.cnn.com/2026/10/23/politics/kfile-mike-collins-calls-for-violence",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "fox",
+     "t": "Trump to spend weekend rallying for Republicans 10 days ahead of midterm elections",
+     "u": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "local",
+     "n": "41NBC",
+     "t": "Live updates: President Donald Trump holds rally in Perry ahead of Election Day",
+     "u": "https://www.41nbc.com/live-updates-president-donald-trump-holds-rally-in-perry-ahead-of-election-day/",
+     "d": "2026-10-24"
+    }
+   ]
+  },
+  {
+   "id": "obama-rallies-ohio-michigan",
+   "cat": "politics",
+   "date": "2026-10-24",
+   "title": "Obama rallies Democrats in Cleveland and Detroit as Mike Rogers calls Abdul El-Sayed the most extreme candidate in the country",
+   "dek": "Obama campaigned for Sherrod Brown and Amy Acton in Ohio and for El-Sayed and Jocelyn Benson in Michigan. Trump voted early in Palm Beach and rallies in Port Huron, Michigan, on Sunday.",
+   "summary": [
+    "Former President Barack Obama campaigned Saturday in Cleveland for Senate candidate Sherrod Brown and governor nominee Amy Acton, then in Detroit for Senate nominee Abdul El-Sayed and governor candidate Jocelyn Benson, Fox News reported. It was his first Detroit rally since October 2024, when he campaigned for Kamala Harris, Fox reported. At the \"Fighting for Ohio\" rally, Obama said, \"We are looking for change right here in Ohio,\" WSYX ABC6 reported.",
+    "Acton told the crowd, \"Mr. Ramaswamy you are out for yourself,\" and called her Republican opponent \"a danger to my state,\" WSYX reported. She has accused Vivek Ramaswamy of exploiting her childhood trauma in an ad featuring her estranged mother; Gov. Mike DeWine urged Ramaswamy to pull the ad and Trump defended it, Fox reported. Brown, who is challenging Sen. Jon Husted, said \"Today, corruption is woven into everything,\" according to WSYX. A Fox News poll had Brown at 52% to Husted's 47% and Acton at 50% to Ramaswamy's 48%, Fox reported. WSYX noted Trump carried Ohio by 11 points in 2024.",
+    "In Michigan, Republican Mike Rogers told Fox News Digital that El-Sayed is the \"most extreme candidate\" and a Democratic Socialists of America aligned candidate, and at a Lansing rally called him the most radical, extreme and anti business candidate in the country while again linking him to the Muslim Brotherhood, Fox reported. In an interview with Fox's Bret Baier, El-Sayed called the attacks on his loyalty unfair and said Rogers was making an issue of his Muslim faith. A Sept. 30 Fox News poll had El-Sayed at 50% and Rogers at 49%. Trump, who cast an early ballot in Palm Beach, Florida, with first lady Melania Trump on Saturday, is scheduled to rally in Port Huron, Michigan, on Sunday, Fox reported."
+   ],
+   "facts": [
+    "Obama last rallied in Detroit in October 2024, Fox reported.",
+    "A Fox News poll had Brown leading Husted 52% to 47% and Acton leading Ramaswamy 50% to 48%.",
+    "A Sept. 30 Fox News poll had El-Sayed at 50% and Rogers at 49% in Michigan.",
+    "Trump carried Ohio by 11 points in 2024."
+   ],
+   "sides": [
+    {
+     "who": "Mike Rogers",
+     "says": "El-Sayed is the most radical, extreme and anti business candidate in the country, with ties to the Muslim Brotherhood."
+    },
+    {
+     "who": "Abdul El-Sayed",
+     "says": "Attacks on his loyalty are unfair, and Rogers is making an issue of his Muslim faith."
+    },
+    {
+     "who": "Amy Acton",
+     "says": "Ramaswamy is out for himself and is \"a danger to my state.\""
+    },
+    {
+     "who": "Sherrod Brown",
+     "says": "\"Today, corruption is woven into everything.\""
+    }
+   ],
+   "framing": {
+    "C": "Local TV in Columbus framed the Cleveland rally around inflation, gas prices and Democrats' hopes of regaining ground in a state Trump won by 11 points.",
+    "R": "Fox paired Obama's return to the trail with Rogers's attacks on El-Sayed and noted Joe Biden's absence from the campaign."
+   },
+   "related": [
+    {
+     "href": "/forecast/mi/senate",
+     "label": "Michigan Senate forecast"
+    },
+    {
+     "href": "/forecast/oh/senate",
+     "label": "Ohio Senate forecast"
+    },
+    {
+     "href": "/forecast/oh/governor",
+     "label": "Ohio governor forecast"
+    }
+   ],
+   "keys": [
+    "obama",
+    "michigan",
+    "ohio",
+    "el-sayed",
+    "sherrod brown",
+    "amy acton"
+   ],
+   "coverage": [
+    {
+     "o": "fox",
+     "t": "Trump to spend weekend rallying for Republicans 10 days ahead of midterm elections",
+     "u": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "local",
+     "n": "WSYX ABC6",
+     "t": "Obama joins Sherrod Brown, Amy Acton at 'Fighting for Ohio' rally in Cleveland",
+     "u": "https://abc6onyourside.com/news/local/obama-joins-sherrod-brown-amy-acton-at-fighting-for-ohio-rally-in-cleveland-election-midterm-democrat-today-city-speech-event",
+     "d": "2026-10-24"
+    }
+   ]
+  },
+  {
+   "id": "iran-warns-us-warships-strike-threat",
+   "cat": "world",
+   "date": "2026-10-24",
+   "title": "Iran says it will not let U.S. warships into the Gulf as Trump floats another round of strikes",
+   "dek": "Iran's military chief said Trump \"will take that dream to his grave.\" A U.S. ambassador said a strike this weekend is possible, and the Houthis said they targeted three Saudi airports.",
+   "summary": [
+    "Iran's armed forces chief of staff, Ali Abdollahi, said Oct. 24, \"We will not allow U.S. military ships in the Persian Gulf under any circumstances and at any time,\" and that Trump \"will take that dream to his grave,\" CBS News reported. Al Jazeera reported that Iran's forces say they are ready to fire on U.S. warships, and that the Revolutionary Guard said two supertankers struck mines on Friday, after claiming seven tankers were attacked or hit mines overnight into Thursday.",
+    "At a Florida rally Friday, Trump said the U.S. military \"may do another Epic Fury,\" referring to the bombing campaign that opened the war on Feb. 28, Al Jazeera reported. U.S. Ambassador to Turkey Tom Barrack said, \"Could there be a strike this weekend? Absolutely,\" CBS reported, noting Trump has said strikes would wait until after the Nov. 3 midterms. Guard spokesman Hossein Mohebbi called the threats \"largely for media consumption\" and said Iran would answer any new strikes with a far larger response, and President Masoud Pezeshkian said many Iranians are struggling to afford food and called for an end to a \"state of neither war nor peace,\" according to CBS.",
+    "Yemen's Houthis said they launched new attacks on Saudi Arabia, targeting three airports including Riyadh's King Khalid International, after blaming Saudi strikes they said killed 17 people, CBS reported; Riyadh's airport said it would resume flights Sunday. The State Department updated travel advisories for 14 Middle East countries, CBS reported. On Wall Street, the Dow fell 652.82 points, or 1.2%, on Friday to 52,215.16, and the S&P 500 fell 0.5%, according to Associated Press figures."
+   ],
+   "facts": [
+    "Iran's Revolutionary Guard said two supertankers struck mines on Oct. 23; the claim has not been independently confirmed.",
+    "The State Department updated travel advisories for 14 Middle East countries, CBS reported.",
+    "The Dow fell 1.2% on Friday, Oct. 23, to 52,215.16, the AP reported.",
+    "The war began on Feb. 28."
+   ],
+   "sides": [
+    {
+     "who": "Iran's armed forces",
+     "says": "U.S. warships will not be allowed in the Persian Gulf at any time, and any new strikes will bring a far larger response."
+    },
+    {
+     "who": "President Trump",
+     "says": "The U.S. military \"may do another Epic Fury.\""
+    }
+   ],
+   "framing": {
+    "L": "CBS and Al Jazeera led with Iran's vow to keep U.S. ships out of the Gulf and with Trump's talk of a new bombing campaign, alongside the Houthi attacks on Saudi Arabia."
+   },
+   "related": [],
+   "keys": [
+    "iran",
+    "persian gulf",
+    "houthis",
+    "saudi arabia",
+    "oil"
+   ],
+   "coverage": [
+    {
+     "o": "cbs",
+     "t": "Live Updates: Iran warns that U.S. military not allowed in Gulf \"under any circumstance\"",
+     "u": "https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Iran says won't allow US warships to get close as Trump ponders new attacks",
+     "u": "https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "ap",
+     "t": "How major US stock indexes fared Friday 10/23/2026",
+     "u": "https://krmg.com/2026/10/23/how-major-us-stock-indexes-fared-friday-10-23-2026/",
+     "d": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "id": "ukraine-starlink-oleshky-ceasefire",
+   "cat": "world",
+   "date": "2026-10-24",
+   "title": "Ukraine says Starlink is restored, and a local ceasefire credited to Melania Trump is set for an occupied Kherson town",
+   "dek": "Kyiv says its military's satellite links are working again after more than a week of disruption. A ceasefire in Oleshky is to start Oct. 27, with an aid operation on Oct. 29.",
+   "summary": [
+    "Ukrainian Defense Minister Yevhenii Khmara said Saturday that restrictions on the military's Starlink and Starshield connections had been lifted after more than a week of disruption that hampered drone operations, crediting talks with Washington and President Zelenskyy's diplomacy, Al Jazeera reported. Elon Musk wrote that Ukraine's military \"violated Starlink terms of service and used it for offensive drone strikes to kill people\" and that \"That loophole was closed last week,\" Al Jazeera reported. It was unclear who ordered the restrictions; Trump denied responsibility while defending Musk.",
+    "Kyiv and Moscow agreed Friday to a local ceasefire so aid can reach a stranded town in the Kherson region, after secret consultations between first lady Melania Trump and civilian negotiators from both countries, the Associated Press reported. Al Jazeera reported that Trump credited his wife with the ceasefire in Oleshky, occupied by Russia since 2022, which is set to begin Oct. 27, with a humanitarian operation planned for Oct. 29. A Kremlin spokesman said the next round of U.S. brokered talks will likely be held in Abu Dhabi around mid November, which would be the fourth round, the AP reported.",
+    "Putin said on state television that Moscow is \"ready to negotiate and seek solutions\" but that \"all the objectives of the special military operation will be achieved,\" and Zelenskyy said \"real pressure on Russia is needed,\" the AP reported. Russia demands all of Donetsk, Luhansk, Zaporizhzhia and Kherson plus Crimea and has rejected a halt in fighting before a full agreement, according to the AP. Attacks went on Saturday: a Russian drone attack in the Dnipropetrovsk region killed at least three people and a missile strike on Lozova killed one, while Ukraine hit petrochemical plants in Togliatti and Omsk and the governor of Russia's Oryol region reported three deaths, Al Jazeera reported. Moscow said it destroyed more than 800 Ukrainian drones, the AP reported."
+   ],
+   "facts": [
+    "The Oleshky ceasefire is set to begin Oct. 27, with an aid operation on Oct. 29, Al Jazeera reported.",
+    "Talks in Abu Dhabi would be the fourth round brokered by the Trump administration, the AP reported.",
+    "Russia occupies about 20% of Ukraine, according to the AP.",
+    "The Starlink disruption lasted more than a week, Ukraine's defense minister said."
+   ],
+   "sides": [
+    {
+     "who": "Vladimir Putin",
+     "says": "Moscow is \"ready to negotiate and seek solutions,\" but \"all the objectives of the special military operation will be achieved.\""
+    },
+    {
+     "who": "Volodymyr Zelenskyy",
+     "says": "\"Real pressure on Russia is needed\" after Russia answered talks with ballistic missiles."
+    },
+    {
+     "who": "Elon Musk",
+     "says": "Ukraine's military broke Starlink's terms of service by using it for offensive drone strikes, and that loophole was closed."
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera led with the restored Starlink service and the toll of strikes on both sides of the border.",
+    "C": "AP led with the opening for new talks and laid out the territorial and security demands that stand in the way."
+   },
+   "related": [],
+   "keys": [
+    "ukraine",
+    "russia",
+    "starlink",
+    "ceasefire",
+    "melania trump"
+   ],
+   "coverage": [
+    {
+     "o": "aljazeera",
+     "t": "Kyiv says Starlink restored as attacks in Ukraine and Russia continue",
+     "u": "https://www.aljazeera.com/news/2026/10/24/ukraine-says-starlink-restored-as-attacks-continue-in-russia-and-ukraine",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "ap",
+     "t": "Ukraine and Russia eye new peace talks, but steep obstacles remain",
+     "u": "https://www.mprnews.org/story/2026/10/24/ukraine-and-russia-eye-new-peace-talks-but-steep-obstacles-remain",
+     "d": "2026-10-24"
+    }
+   ]
+  },
+  {
+   "id": "doj-alaska-senate-sullivan-lawsuit",
+   "cat": "politics",
+   "date": "2026-10-23",
+   "title": "Justice Department sues to block certification in Alaska's Senate race if Sen. Dan Sullivan loses to Mary Peltola",
+   "dek": "Trump said \"I'm the one that said do it.\" The suit targets a second candidate named Daniel J. Sullivan, whom Republicans call a Democratic plant; legal experts doubt it will succeed.",
+   "summary": [
+    "The Justice Department sued Thursday in federal court in Alaska, asking that the state be blocked from certifying a win by Democrat Mary Peltola if a second candidate, Daniel J. Sullivan, remains on the ballot, the Associated Press reported. Al Jazeera reported the suit, which cites the National Voter Registration Act, asks that certification be barred if Republican Sen. Dan Sullivan loses by fewer votes than his namesake receives, pending an investigation into voter confusion. Trump said, \"I'm the one that said do it,\" and called the second Sullivan's candidacy \"CHEATING,\" the AP reported.",
+    "Daniel J. Sullivan, a retired teacher from Petersburg, says he is running independently, while Republicans contend he is a Democratic plant meant to draw votes from the incumbent, the AP reported. The Alaska Supreme Court rejected an earlier Republican effort to remove him, and he appears with no party label. In the August primary, Sen. Sullivan got more than 68,000 votes and Daniel J. Sullivan got 4,107, about 2%, while Peltola was the top vote getter, according to the AP. Al Jazeera put the primary result at 49.5% for Peltola and about 41% for Sen. Sullivan, and noted Trump won Alaska by about 13 points in 2024.",
+    "The department said it is \"taking the necessary steps to ensure that this frivolous candidacy does not undermine the integrity of Alaska's election,\" and Attorney General Todd Blanche said it is never the department's intention \"to improperly interfere with elections,\" the AP reported. Notre Dame law professor Derek Muller told the AP that \"The statute simply doesn't let the Department of Justice enjoin certification,\" and wrote that the argument was \"so absurdly thin\" it had essentially no chance, Al Jazeera reported. Sullivan campaign spokesman Nate Adams said, \"We'll let the DOJ complaint run its course,\" and DSCC executive director Devan Barber said, \"Donald Trump knows that Dan Sullivan is going to lose the election.\" CNBC reported on Oct. 24 that Democrats and voting rights groups are challenging the bid in court."
+   ],
+   "facts": [
+    "The suit was filed 11 days before the Nov. 3 election, the AP reported.",
+    "Daniel J. Sullivan won 4,107 votes, about 2%, in the August primary.",
+    "Alaska uses ranked choice voting in its general election.",
+    "No federal court had ordered Alaska to halt certification as of Oct. 24, Al Jazeera reported."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "He ordered the suit, and the second Sullivan's candidacy is \"CHEATING.\""
+    },
+    {
+     "who": "Justice Department",
+     "says": "It is acting so a \"frivolous candidacy does not undermine the integrity of Alaska's election\" and does not intend to improperly interfere."
+    },
+    {
+     "who": "Sen. Dan Sullivan's campaign",
+     "says": "It will let the complaint run its course, and Alaskans can tell the difference."
+    },
+    {
+     "who": "Democratic Senatorial Campaign Committee",
+     "says": "Trump knows Sullivan is going to lose the election."
+    }
+   ],
+   "framing": {
+    "C": "AP and CNBC led with Trump saying he ordered the suit, and AP quoted legal experts who expect it to be dismissed.",
+    "L": "Al Jazeera explained how two Sullivans ended up on the ballot and quoted scholars calling the federal case thin."
+   },
+   "related": [
+    {
+     "href": "/forecast/ak/senate",
+     "label": "Alaska Senate forecast"
+    }
+   ],
+   "keys": [
+    "alaska",
+    "dan sullivan",
+    "mary peltola",
+    "justice department",
+    "certification"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Trump says he ordered DOJ lawsuit over Alaska Senate race",
+     "u": "https://www.pbs.org/newshour/politics/trump-administration-files-lawsuit-to-block-possible-democratic-win-in-alaska-senate-race",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "aljazeera",
+     "t": "Dan Sullivan vs Dan Sullivan: Why is Trump's DOJ suing in Alaska?",
+     "u": "https://www.aljazeera.com/news/2026/10/24/dan-sullivan-vs-dan-sullivan-why-is-trumps-doj-suing-in-alaska",
+     "d": "2026-10-24"
+    },
+    {
+     "o": "cnbc",
+     "t": "Trump says he ordered DOJ suit to block Alaska Senate race certification if Republican loses",
+     "u": "https://www.cnbc.com/2026/10/23/alaska-senate-election-doj-lawsuit-sullivan.html",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "cnbc",
+     "t": "Democrats, voting-rights groups challenge Trump's bid to block Alaska Senate certification",
+     "u": "https://www.cnbc.com/2026/10/24/alaska-senate-doj-certification-lawsuit.html",
+     "d": "2026-10-24"
+    }
+   ]
+  },
+  {
+   "id": "collins-canada-tariffs-maine",
+   "cat": "politics",
+   "date": "2026-10-23",
+   "title": "Trump lifts tariffs on some Canadian goods after Susan Collins asks for relief for Maine growers",
+   "dek": "Packaging, machinery and other goods Maine blueberry, potato, apple and seaweed producers rely on come off the list, while valves, carpets and waste products go on. The changes take effect Oct. 30.",
+   "summary": [
+    "Trump signed an order Friday removing 50% tariffs on some Canadian agricultural and forestry products, Reuters reported in a story published by KSL.com. The White House exempted plywood sheets, some paper products, certain machinery and refrigeration equipment, and packing crates and boxes, while adding certain valves, carpets and waste products to the list, according to Reuters. The National News Desk reported that the changes take effect Oct. 30, four days before the Nov. 3 election.",
+    "Sen. Susan Collins, a Maine Republican in a close race, said she secured the exemptions after asking U.S. Trade Representative Jamieson Greer and Commerce Secretary Howard Lutnick for relief, The National News Desk reported. Collins said the relief will help Maine's blueberry, potato, apple and seaweed producers, adding, \"Many of our farmers and growers rely on specialized equipment, packaging materials, and other products from Canada,\" Reuters reported. Her Democratic opponent, former state Senate President Troy Jackson, criticized Collins for seeking credit and said she helped enable tariffs that raised costs for Mainers, according to The National News Desk. An October Fox News poll had Collins and Jackson tied at 49%, Fox reported.",
+    "Reuters reported that Trump imposed 50% tariffs on $20 billion of Canadian imports in August after talks collapsed, and that he said Friday that Canada is working on a deal; Fox News dated the tariff to July. In Michigan, Republican Senate candidate Mike Rogers has called for an end to the trade war with Canada, The National News Desk reported. Reuters said Republicans will likely need to win both Maine and Michigan to hold the Senate."
+   ],
+   "facts": [
+    "The tariff changes take effect Oct. 30, The National News Desk reported.",
+    "The tariffs at issue are up to 50% on certain Canadian products.",
+    "An October Fox News poll had Collins and Jackson tied at 49%.",
+    "Reports differ on whether the 50% tariff began in July or August."
+   ],
+   "sides": [
+    {
+     "who": "Sen. Susan Collins",
+     "says": "The relief she sought will help Maine's farmers and growers, who rely on equipment and packaging from Canada."
+    },
+    {
+     "who": "Troy Jackson",
+     "says": "Collins is seeking credit for relief from tariffs she helped enable, which raised costs for Mainers."
+    }
+   ],
+   "framing": {
+    "C": "Wire and local coverage listed the goods added to the tariff list as well as those removed, and carried Jackson's criticism.",
+    "R": "Fox presented the move as relief Collins lobbied for and paired it with a poll showing the race tied."
+   },
+   "related": [
+    {
+     "href": "/forecast/me/senate",
+     "label": "Maine Senate forecast"
+    },
+    {
+     "href": "/forecast/mi/senate",
+     "label": "Michigan Senate forecast"
+    }
+   ],
+   "keys": [
+    "maine",
+    "susan collins",
+    "tariffs",
+    "canada",
+    "troy jackson"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "KSL.com, from Reuters",
+     "t": "Trump removes 50% tariffs on Canadian products to try to boost to Maine companies",
+     "u": "https://www.ksl.com/article/51640327/trump-removes-50-tariffs-on-canadian-products-to-try-to-boost-to-maine-companies",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "local",
+     "n": "The National News Desk",
+     "t": "Trump lifts tariffs on some Canadian imports, adds others in sweeping revision",
+     "u": "https://thenationaldesk.com/news/americas-news-now/trump-lifts-tariffs-on-some-canadian-imports-adds-others-in-sweeping-revision",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "fox",
+     "t": "Trump to spend weekend rallying for Republicans 10 days ahead of midterm elections",
+     "u": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections",
+     "d": "2026-10-24"
+    }
+   ]
+  },
   {
    "id": "early-vote-surge-senate-states",
    "cat": "politics",
