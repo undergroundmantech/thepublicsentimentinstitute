@@ -472,3 +472,6 @@
 @media (max-width: 900px) { .opp.pg .px-diffs.len, .opp.pg .px-mgrs { grid-template-columns: minmax(0, 1fr); } .opp.pg .px-netg li { grid-template-columns: minmax(0, 1fr) auto; } .opp.pg .px-netg li .src { display: none; } .opp.pg .px-progs li { grid-template-columns: minmax(0, 1fr); } }
 .opp.pg .px-mgrtip { margin: 8px 0 0; padding: 8px 10px; font-size: 15px; line-height: 1.4; color: var(--px-text); background: var(--px-deep); box-shadow: 0 0 0 2px #000; }
 .opp.pg .px-mgrtip b { color: var(--px-gold); font-weight: 600; }
+/* election night: the county card follows the mouse */
+.opp.pg .px-ntip.follow { pointer-events: none; transition: none; width: min(300px, 80%); }
+@media (max-width: 640px) { .opp.pg .px-ntip.follow { position: static; transform: none !important; width: auto; } }

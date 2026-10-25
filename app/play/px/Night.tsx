@@ -69,6 +69,12 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
   const [hov, setHov] = useState<string | null>(null);
   const [pin, setPin] = useState<string | null>(null);
   const focus = hov ?? pin;
+  // the tooltip rides next to the mouse; a pinned county keeps it where you clicked
+  type At = { x: number; y: number; w: number; h: number };
+  const [mp, setMp] = useState<At | null>(null);
+  const [pinAt, setPinAt] = useState<At | null>(null);
+  const at = hov && mp ? mp : pin ? pinAt : null;
+  const tipStyle = at ? ({ left: at.x, top: at.y, transform: `translate(${at.x > at.w * 0.55 ? "calc(-100% - 18px)" : "18px"}, ${at.y > at.h * 0.5 ? "calc(-100% - 14px)" : "14px"})` } as React.CSSProperties) : undefined;
   const fi = focus ? r.counties.findIndex((x) => x[0] === focus) : -1;
   // where the vote still out is: counties that lean each way by the 2024 presidential vote, as analysts would read it
   const out = useMemo(() => {
@@ -160,12 +166,12 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
       </header>
       <div className="px-ngrid">
         <section className="px-nmap">
-          <div className="px-mapbox night">
-            <PixelMap r={r} s={s} geo={geo} mode="night" night={county} hover={focus} onHover={setHov} onSel={(f) => setPin((x) => (x === f ? null : f))} sel={pin} labels={5} flash={flash} />
+          <div className="px-mapbox night" onMouseMove={(e) => { const b = e.currentTarget.getBoundingClientRect(); setMp({ x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); }} onMouseLeave={() => setMp(null)}>
+            <PixelMap r={r} s={s} geo={geo} mode="night" night={county} hover={focus} onHover={setHov} onSel={(f) => { setPin((x) => (x === f ? null : f)); setPinAt(mp); }} sel={pin} labels={5} flash={flash} />
             {fi >= 0 ? (() => {
               const co = r.counties[fi], v = inc.get(fi), fv = finals.get(fi), all = fv ? fv[0] + fv[1] : 0, got = v ? v[0] + v[1] : 0;
               return (
-                <div className="px-ntip" role="status">
+                <div className={cls("px-ntip", at && "follow")} role="status" style={tipStyle}>
                   <b>{co[1]}</b>
                   <span className="px-k">{all ? Math.round((100 * got) / all) : 0}% in{co[6] != null ? ` · 2024 ${co[6] > 0 ? "Trump" : "Harris"} +${Math.abs(co[6]).toFixed(0)}` : ""}</span>
                   {v && got ? (
