@@ -344,6 +344,9 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
   const [tab, setTab] = useState<Tab>("trail");
   const [layer, setLayer] = useState<Layer>("read");
   const [names, setNames] = useState(true);
+  const [busy, setBusyS] = useState(false);
+  useEffect(() => { try { setBusyS(localStorage.getItem("opp_play_busy") === "1"); } catch { /* storage blocked */ } }, []);
+  const setBusy = (v: boolean) => { setBusyS(v); try { localStorage.setItem("opp_play_busy", v ? "1" : "0"); } catch { /* storage blocked */ } };
   const [toast, setToast] = useState<{ t: string; ok: boolean; k: number } | null>(null);
   const [out, setOut] = useState<{ ev: E.Ev; o: Outcome; choice: number } | null>(null);
   const [week, setWeek] = useState<{ items: E.LogItem[]; before: { avg: number | null; cash: number; buzz: number; vol: number } } | null>(null);
@@ -443,13 +446,14 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
             <div className="px-chips" role="group" aria-label="Map layer">
               {([["read", "Your read"], ["regions", "Regions"], ["ground", "Ground game"], ["rival", "Their stops"]] as [Layer, string][]).map(([k, l]) => <button key={k} type="button" className={layer === k ? "on" : ""} aria-pressed={layer === k} onClick={() => { setLayer(k); sfx("click"); }}>{l}</button>)}
               <button type="button" className={names ? "on" : ""} aria-pressed={names} onClick={() => setNames((v) => !v)}>Names</button>
+              <button type="button" className={busy ? "on" : ""} aria-pressed={busy} onClick={() => setBusy(!busy)} title="Show walking volunteers, every rival stop and the full effects">Busy map</button>
             </div>
           </div>
           <div className="px-mapbox">
-            <PixelMap r={r} s={s} geo={geo} mode="plan" layer={layer} sel={sel} onSel={(f) => { setSel(f); sfx("click"); }} hover={hov} onHover={setHov} fx={fx} bus={bus} labels={names ? 7 : 0} clear={clear} />
+            <PixelMap r={r} s={s} geo={geo} mode="plan" layer={layer} sel={sel} onSel={(f) => { setSel(f); sfx("click"); }} hover={hov} onHover={setHov} fx={fx} bus={bus} labels={names ? (busy ? 7 : 5) : 0} clear={clear} detail={busy ? "full" : "clean"} />
             {hoverCo && !co ? <div className="px-hover">{hoverCo[1]} · {hoverRd ? `${E.readLabel(hoverRd.est, hoverRd.sd)}, ${E.confLabel(hoverRd.sd).toLowerCase()}` : "no read"}</div> : null}
           </div>
-          <div className="px-legend"><span><i className="me" />Leans you</span><span><i className="toss" />Toss up</span><span><i className="op" />Leans them</span><span><i className="fog" />{clear ? "Faded means a fuzzy read" : "Dither means a fuzzy read"}</span></div>
+          <div className="px-legend"><span><i className="me" />Leans you</span><span><i className="toss" />Toss up</span><span><i className="op" />Leans them</span><span><i className="fog" />{clear ? "Faded means a fuzzy read" : "Dither means a fuzzy read"}</span><span><i className="office" />Field office</span></div>
           {co ? (
             <div className="px-county" key={co[0]}>
               <div className="px-ch">

@@ -52,10 +52,11 @@ export function useMapGeo(paths: CountyPath[] | null, maxW = 300, maxH = 220): G
   }, [paths, maxW, maxH]);
 }
 
-export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, hover, onHover, fx = [], night, bus, oppPath, oppT0, className, labels = 0, flash, clear = false }: {
+export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, hover, onHover, fx = [], night, bus, oppPath, oppT0, className, labels = 0, flash, clear = false, detail = "clean" }: {
   r: E.RaceFile; s: E.State; geo: Geo | null; mode: "plan" | "night" | "preview"; layer?: Layer; sel?: string | null; onSel?: (f: string) => void;
   hover?: string | null; onHover?: (f: string | null) => void; fx?: MapFx[]; night?: Map<string, number>; bus?: string | null; oppPath?: string[] | null; oppT0?: number; className?: string;
   /** how many of the biggest counties get a name tag */ labels?: number; /** counties that just reported, outlined for a moment */ flash?: string[]; /** clear view: tint fuzzy reads instead of dithering */ clear?: boolean;
+  /** how busy the map's markers and effects are: clean keeps one small pin per office and short effects */ detail?: "clean" | "full";
 }) {
   const base = useRef<HTMLCanvasElement>(null), over = useRef<HTMLCanvasElement>(null);
   const meP = r.cands[s.side === "D" ? 0 : 1].party, opP = r.cands[s.side === "D" ? 1 : 0].party;
@@ -113,7 +114,7 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
     const prev = lastBus.current ? geo.cen.get(lastBus.current) : null;
     busRef.current = { from: prev ?? to, to, t0: performance.now() }; lastBus.current = bus;
   }, [bus, geo]);
-  const live = useRef({ s, fx, sel, hover, oppPath, oppT0, flash }); useEffect(() => { live.current = { s, fx, sel, hover, oppPath, oppT0, flash }; });
+  const live = useRef({ s, fx, sel, hover, oppPath, oppT0, flash, detail, layer }); useEffect(() => { live.current = { s, fx, sel, hover, oppPath, oppT0, flash, detail, layer }; });
   useEffect(() => {
     const cv = over.current; if (!cv || !geo) return;
     const { LW, LH, id, cen } = geo; cv.width = LW; cv.height = LH;
@@ -135,15 +136,22 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
       if (L.flash) for (const f of L.flash) { const k = geo.idx.get(f); if (k != null) outline(k, PAL.gold, 0, true); }
       if (L.hover && mode !== "preview") { const k = geo.idx.get(L.hover); if (k != null) outline(k, "#ffffff", 0, true); }
       if (L.sel) { const k = geo.idx.get(L.sel); if (k != null) outline(k, PAL.gold, Math.floor(t / 120)); }
+      const full = L.detail === "full";
       if (mode === "plan") {
-        // the other side's stops: a red marker that blinks
-        Object.keys(L.s.oppVisits).forEach((f) => { const c = cen.get(f); if (c && fr) { g.fillStyle = "#0b0716"; g.fillRect(Math.round(c[0]) - 2, Math.round(c[1]) - 2, 5, 5); g.fillStyle = partyCol(opP, 1); g.fillRect(Math.round(c[0]) - 1, Math.round(c[1]) - 1, 3, 3); } });
-        // volunteers walking their turf around each field office, and the office flag
+        // the other side's stops: on the Their stops layer every stop, otherwise only last week's, and only in full detail
+        const opStops = L.layer === "rival" ? Object.keys(L.s.oppVisits) : full ? [...(L.s.oppLast?.stops ?? []), ...(L.s.oppLast?.base ?? [])] : [];
+        opStops.forEach((f) => { const c = cen.get(f); if (!c) return; g.fillStyle = "#0b0716"; g.fillRect(Math.round(c[0]) - 2, Math.round(c[1]) - 2, 5, 5); g.fillStyle = partyCol(opP, 1); g.fillRect(Math.round(c[0]) - 1, Math.round(c[1]) - 1, 3, 3); });
+        // field offices: a small pin; volunteers walking their turf only in full detail or on the Ground game layer
         L.s.offices.forEach((f, oi) => {
           const c = cen.get(f); if (!c) return;
-          const n = Math.min(5, 2 + Math.floor(L.s.volunteers / 500));
-          for (let k = 0; k < n; k++) { const a = t / 1500 + k * 2.4 + oi; put(PERSON[(Math.floor(t / 220) + k) % 2], c[0] + Math.cos(a) * (6 + k * 1.5), c[1] + 4 + Math.sin(a * 1.3) * 3, { h: "#3a2a1a", s: "#e8b48f", c: partyCol(meP, 2), l: "#222" }, false, 1); }
-          put(FLAG[fr], c[0] + 2, c[1], { P: "#eee", f: partyCol(meP, 1) });
+          if (full || L.layer === "ground") {
+            const n = Math.min(full ? 5 : 2, 2 + Math.floor(L.s.volunteers / 500));
+            for (let k = 0; k < n; k++) { const a = t / 1500 + k * 2.4 + oi; put(PERSON[(Math.floor(t / 220) + k) % 2], c[0] + Math.cos(a) * (6 + k * 1.5), c[1] + 4 + Math.sin(a * 1.3) * 3, { h: "#3a2a1a", s: "#e8b48f", c: partyCol(meP, 2), l: "#222" }, false, 1); }
+            put(FLAG[fr], c[0] + 2, c[1], { P: "#eee", f: partyCol(meP, 1) });
+          } else {
+            const x = Math.round(c[0]), y = Math.round(c[1]);
+            g.fillStyle = "#0b0716"; g.fillRect(x - 2, y - 2, 5, 5); g.fillStyle = PAL.gold; g.fillRect(x - 1, y - 1, 3, 3);
+          }
         });
       }
       // your bus
@@ -152,7 +160,9 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
         const k = Math.min(1, (t - b.t0) / 1100), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
         const x = b.from[0] + (b.to[0] - b.from[0]) * e, y = b.from[1] + (b.to[1] - b.from[1]) * e - (k < 1 ? Math.abs(Math.sin(k * Math.PI * 6)) * 2 : 0);
         if (k < 1) { g.fillStyle = "#d9bf84"; for (let j = 1; j < 5; j++) g.fillRect(Math.round(x - (b.to[0] > b.from[0] ? 1 : -1) * (j * 3 + 12)), Math.round(y - 2 + (j % 2)), 2, 2); }
-        put(BUS, x, y + 2, busPal, b.to[0] < b.from[0]);
+        // in clean detail the bus is smaller and parks beside the county, so its name tag stays readable
+        if (L.detail === "full") put(BUS, x, y + 2, busPal, b.to[0] < b.from[0]);
+        else put(BUS, x + 10, y + 8, busPal, b.to[0] < b.from[0], 1);
       }
       // their bus on its route, during the replay of their week
       if (L.oppPath && L.oppPath.length && L.oppT0 != null) {
@@ -162,20 +172,23 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
       }
       // effects
       for (const e of L.fx) {
-        const age = t - e.t0; if (age > 2600 || age < 0) continue;
+        const age = t - e.t0; if (age > (full ? 2600 : 1400) || age < 0) continue;
         const c = e.f ? cen.get(e.f) : null;
-        if (e.kind === "rally" && c) {
+        if (e.kind === "rally" && c && !full) {
+          for (let k = 0; k < 8; k++) { const a = k * 0.8 + age / 300; const rr = age / 60; g.fillStyle = [PAL.gold, partyCol(meP, 1)][k % 2]; g.fillRect(Math.round(c[0] + Math.cos(a) * rr), Math.round(c[1] - 6 + Math.sin(a) * rr * 0.6), 2, 2); }
+        }
+        if (e.kind === "rally" && c && full) {
           for (let k = 0; k < 7; k++) { const jx = c[0] - 12 + k * 4, jy = c[1] + 6 - (Math.floor((t + k * 90) / 150) % 2) * 2; put(PERSON[(Math.floor(t / 150) + k) % 2], jx, jy, { h: "#3a2a1a", s: k % 2 ? "#e8b48f" : "#a8693f", c: k % 3 ? partyCol(meP, 1) : PAL.hi, l: "#222" }, false, 1); }
           for (let k = 0; k < 18; k++) { const a = k * 0.35 + age / 300; const rr = age / 45; g.fillStyle = [PAL.gold, partyCol(meP, 1), PAL.hi][k % 3]; g.fillRect(Math.round(c[0] + Math.cos(a) * rr), Math.round(c[1] - 10 + Math.sin(a) * rr * 0.6 + age / 160), 2, 2); }
         }
-        if (e.kind === "hall" && c) put(BUBBLE, c[0], c[1] - 4 - (age / 400 | 0), { w: PAL.hi, k: "#333" });
+        if (e.kind === "hall" && c) put(BUBBLE, c[0] + (full ? 0 : 12), c[1] - (full ? 4 : 10) - (age / 400 | 0), { w: PAL.hi, k: "#333" }, false, full ? K : 1);
         if (e.kind === "office" && c) { const drop = Math.max(0, 16 - age / 30); put(FLAG[fr], c[0] + 2, c[1] - drop, { P: "#eee", f: PAL.gold }); }
-        if (e.kind === "knock" && c) for (let k = 0; k < 4; k++) put(HEART, c[0] - 12 + k * 8, c[1] - ((age / 80 + k * 3) % 14), { r: "#ff5a7a" });
+        if (e.kind === "knock" && c) for (let k = 0; k < (full ? 4 : 2); k++) put(HEART, c[0] - 12 + k * 8, c[1] - ((age / 80 + k * 3) % 14), { r: "#ff5a7a" });
         if (e.kind === "reg" && c) put(CLIP, c[0], c[1] - (age / 300 | 0), { k: "#333", w: "#fff", b: partyCol(meP, 1) });
-        if (e.kind === "money") { const cc = c ?? [LW / 2, LH / 2]; for (let k = 0; k < 6; k++) put(DOLLAR, cc[0] - 20 + k * 8, cc[1] - (age / 30 + k * 6) % 28, { g: PAL.green }); }
+        if (e.kind === "money") { const cc = c ?? [LW / 2, LH / 2]; for (let k = 0; k < (full ? 6 : 3); k++) put(DOLLAR, cc[0] - 20 + k * 8, cc[1] - (age / 30 + k * 6) % 28, { g: PAL.green }); }
         if (e.kind === "bad" && c) { if (Math.floor(age / 150) % 2) put(XMARK, c[0], c[1] + 4, { r: PAL.gop }); }
         if ((e.kind === "poll" || e.kind === "air" || e.kind === "opp") && e.fs) {
-          for (const f of e.fs.slice(0, 30)) {
+          for (const f of e.fs.slice(0, full ? 30 : 6)) {
             const p = cen.get(f); if (!p) continue;
             if (e.kind === "poll") { if ((Math.floor(age / 120) + Math.round(p[0])) % 3 === 0) put(RADAR, p[0], p[1] + 3, { g: PAL.green }, false, 1); }
             else { const fall = Math.min(1, age / 700); put(TV, p[0], p[1] - 14 + fall * 14, { a: "#bbb", k: "#111", s: e.kind === "air" ? partyCol(meP, 2) : partyCol(opP, 2), S: "#fff" }, false, 1); if (fall >= 1) { const rr = (age - 700) / 90; g.fillStyle = e.kind === "air" ? partyCol(meP, 1) : partyCol(opP, 1); for (let a = 0; a < 14; a++) g.fillRect(Math.round(p[0] + Math.cos(a / 2.2) * rr), Math.round(p[1] + Math.sin(a / 2.2) * rr * 0.7), 1, 1); } }
