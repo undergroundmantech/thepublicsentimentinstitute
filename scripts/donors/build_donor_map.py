@@ -66,7 +66,7 @@ for cy in CYCLES:
         for f, ws in C["counties"].items():
             for w, offs in ws.items():
                 for o, cell in offs.items():
-                    if o == "top": continue
+                    if o == "top" or (o == "P" and cy % 4): continue  # no presidential race in a midterm
                     ok = add(res["cells"].setdefault(f"{w}|{o}", {}), f, [sum(cell["n"]), cell["n"][0], sum(cell["usd"]), sum(cell["D"]), sum(cell["R"])])
                     miss += 0 if ok else 1
                 if "top" in offs and fx(f):

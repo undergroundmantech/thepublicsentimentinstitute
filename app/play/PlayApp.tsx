@@ -1,135 +1,84 @@
 "use client";
-// Campaign 2026, the game. Pick a close Senate or governor race, pick a side and a year, and run the last eight weeks of
-// the campaign: raise the money, work the counties, staff up, fight the air war, build the turnout operation and answer
-// what the week throws at you, much of it real, from the race research. Voters respond the way the site's own data says
-// they would: the forecast, the county map, the voter group estimates, the polls, the money books, the donor map and the
-// people files. Then election night, county by county.
+// Campaign 2026, pixel edition. Pick a close Senate or governor race, pick a side and a year, and run the last eight
+// weeks: work the counties from a campaign bus, meet the people who matter, fight the air war, build a real turnout
+// operation, take the debate stage and sweat out a long election night. You never see the true county numbers, only
+// your campaign's read of them, as foggy as your polling and your ground team. Voters respond the way the site's own
+// data says they would, and much of what happens is real, from the race research.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { marginColor, marginColorInd, raceHref } from "@/app/lib/opp";
-import { fit, pathsBox, type CountyPath } from "@/app/components/home/countyGeo";
+import type { CountyPath } from "@/app/components/home/countyGeo";
 import { ev as track } from "@/app/lib/ev";
 import * as E from "./engine";
-import { dealWeek, resolve, testEvent, type Outcome } from "./events";
+import { dealWeek, dealInvites, resolve, testEvent, ROLE_NAME, type Outcome } from "./events";
+import PixelMap, { useMapGeo, type MapFx, type Layer } from "./px/PixelMap";
+import Debate from "./px/Debate";
+import Meeting from "./px/Meeting";
+import Night from "./px/Night";
+import { Portrait, Type, Roll, cls, sur, fxs } from "./px/ui";
+import { seedOf, partyCol } from "./px/sprites";
+import { sfx, music, setSound, soundState, unlock } from "./px/sound";
 
 export type PIndex = { asOf: string; election: string; races: { id: string; office: string; st: string; state: string; name: string; m: number; p: number; c: [string, string, boolean][] }[] };
 type Save = { s: E.State };
-const KEY = "opp_play_v1";
+const KEY = "opp_play_v2";
 const DIFFS: E.Diff[] = ["safe", "lean", "tossup", "wave"];
 const PARTY: Record<string, string> = { D: "Democrat", R: "Republican", I: "Independent" };
-const sur = (n: string) => n.replace(/,?\s+(Jr\.?|Sr\.?|II|III|IV)$/i, "").split(" ").slice(-1)[0];
-const initials = (n: string) => n.split(" ").filter((x) => /^[A-Z]/.test(x)).map((x) => x[0]).slice(0, 2).join("");
 const pct = (p: number) => `${Math.round(p * 100)}%`;
-const fxs = (v: number) => `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(2)}`;
-const cls = (...a: (string | false | null | undefined)[]) => a.filter(Boolean).join(" ");
-
 function load(): Save | null { try { const j = localStorage.getItem(KEY); return j ? (JSON.parse(j) as Save) : null; } catch { return null; } }
 function store(x: Save | null) { try { if (x) localStorage.setItem(KEY, JSON.stringify(x)); else localStorage.removeItem(KEY); } catch { /* storage blocked */ } }
 
-/** A number that rolls to its new value. */
-function Roll({ v, fmt = (x: number) => Math.round(x).toLocaleString() }: { v: number; fmt?: (x: number) => string }) {
-  const [d, setD] = useState(v); const from = useRef(v);
-  useEffect(() => {
-    const a = from.current, b = v; if (a === b) return;
-    let raf = 0; const t0 = performance.now();
-    const step = (t: number) => { const k = Math.min(1, (t - t0) / 650); const e = 1 - Math.pow(1 - k, 3); setD(a + (b - a) * e); if (k < 1) raf = requestAnimationFrame(step); else from.current = b; };
-    raf = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(raf); from.current = b; };
-  }, [v]);
-  return <>{fmt(d)}</>;
-}
-
-// ============================================================ map geometry
-type Geo = { paths: CountyPath[]; box: { sc: number; ox: number; oy: number }; cen: Map<string, [number, number]> };
-const W = 760, H = 470;
-function useGeo(paths: CountyPath[] | null): Geo | null {
-  return useMemo(() => {
-    if (!paths || !paths.length) return null;
-    const box = fit(pathsBox(paths), W, H, 24, 24);
-    const cen = new Map<string, [number, number]>();
-    const re = /(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g;
-    for (const p of paths) {
-      let x = 0, y = 0, n = 0, m: RegExpExecArray | null; re.lastIndex = 0;
-      while ((m = re.exec(p.d))) { x += +m[1]; y += +m[2]; n++; }
-      if (n) cen.set(p.id, [x / n, y / n]);
-    }
-    return { paths, box, cen };
-  }, [paths]);
-}
-
-type Fx = { id: number; f: string; kind: "rally" | "hall" | "office" | "knock" | "opp" };
-type Layer = "margin" | "regions" | "ground";
-function StateMap({ r, s, geo, sel, onSel, mode, fxs: effects, layer = "margin", shown }: { r: E.RaceFile; s: E.State; geo: Geo | null; sel: string | null; onSel: (f: string) => void; mode: "plan" | "night" | "preview"; fxs?: Fx[]; layer?: Layer; shown?: Set<string> }) {
-  const byF = useMemo(() => new Map(r.counties.map((c, i) => [c[0], i])), [r]);
-  const regionOf = useMemo(() => { const m = new Map<string, number>(); (r.research?.regions ?? []).forEach((g, k) => g.f.forEach((f) => m.set(f, k))); return m; }, [r]);
-  const ind = r.cands[0].party === "I";
-  if (!geo) return <div className="pg-map-ph"><span className="pg-spin" />Loading {r.state}</div>;
-  const { box, cen } = geo, sc = box.sc;
-  const g = E.globalShift(s);
-  const night = mode === "night" && s.result ? new Map(s.result.counties.map((x) => [x.f, x])) : null;
-  const col = (pm: number) => (ind ? marginColorInd : marginColor)(s.side === "R" ? pm : -pm);
-  const REG = ["#ffb547", "#7fd1ff", "#b78cff", "#5ee0a0", "#ff8fb0", "#f4e06b"];
-  return (
-    <svg className={cls("pg-map", mode === "night" && "night")} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Map of ${r.state}'s counties`}>
-      <defs>
-        <radialGradient id="pg-glow"><stop offset="0%" stopColor="#fff" stopOpacity=".9" /><stop offset="100%" stopColor="#fff" stopOpacity="0" /></radialGradient>
-      </defs>
-      <g transform={`translate(${box.ox},${box.oy}) scale(${sc})`}>
-        {geo.paths.map((p) => {
-          const i = byF.get(p.id);
-          let fill = "var(--pg-none)";
-          if (i != null) {
-            if (night) { const x = night.get(p.id); fill = x && (!shown || shown.has(p.id)) ? col(x.m) : "var(--pg-none)"; }
-            else if (layer === "regions") { const k = regionOf.get(p.id); fill = k == null ? "var(--pg-none)" : REG[k % REG.length]; }
-            else if (layer === "ground") { const v = (s.visits[p.id] ?? 0) + (s.offices.includes(p.id) ? 2 : 0); fill = v ? `rgba(255,181,71,${Math.min(0.9, 0.2 + v * 0.18)})` : "var(--pg-none)"; }
-            else { const v = E.countyVotes(r, s, i, g); fill = col((100 * (v.me - v.op)) / Math.max(1, v.t)); }
-          }
-          return <path key={p.id} d={p.d} fill={fill} className={cls("pg-c", sel === p.id && "sel", night && shown?.has(p.id) && "in")} strokeWidth={(sel === p.id ? 2.4 : 0.6) / sc}
-            onClick={() => i != null && mode === "plan" && onSel(p.id)} />;
-        })}
-        {mode === "plan" ? s.offices.map((f) => { const c = cen.get(f); return c ? <g key={"o" + f} transform={`translate(${c[0]},${c[1]}) scale(${1 / sc})`} className="pg-flag"><path d="M0 0 V-16 L11 -12 L0 -8" /><circle r="2.2" /></g> : null; }) : null}
-        {mode === "plan" ? Object.entries(s.oppVisits).map(([f]) => { const c = cen.get(f); return c ? <circle key={"x" + f} cx={c[0]} cy={c[1]} r={5 / sc} className="pg-oppdot" /> : null; }) : null}
-        {mode === "plan" && layer === "regions" ? (r.research?.regions ?? []).map((reg, k) => {
-          const pts = reg.f.map((f) => cen.get(f)).filter(Boolean) as [number, number][]; if (!pts.length) return null;
-          const x = pts.reduce((a, p) => a + p[0], 0) / pts.length, y = pts.reduce((a, p) => a + p[1], 0) / pts.length;
-          return <text key={"r" + k} x={x} y={y} textAnchor="middle" className="pg-reglabel" style={{ fontSize: 12 / sc, strokeWidth: 3 / sc }}>{reg.name}</text>;
-        }) : null}
-        {(effects ?? []).map((e) => { const c = cen.get(e.f); return c ? <g key={e.id} transform={`translate(${c[0]},${c[1]}) scale(${1 / sc})`} className={cls("pg-burst", e.kind)}><circle r="10" /><circle r="10" className="b2" /><circle r="4" className="core" /></g> : null; })}
-      </g>
-    </svg>
-  );
-}
-
-// ============================================================ title and lobby
+// ============================================================ title
 function Title({ onGo, saved, onResume, savedLabel }: { onGo: () => void; saved: boolean; onResume: () => void; savedLabel: string }) {
+  const cv = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const g = cv.current?.getContext("2d"); if (!g) return;
+    const W = 200, H = 90; let raf = 0, lt = 0;
+    const stars = Array.from({ length: 60 }, (_, i) => [(i * 53) % W, (i * 29) % 50, i % 3]);
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop); if (t - lt < 80) return; lt = t;
+      for (let y = 0; y < H; y++) { g.fillStyle = y < 30 ? "#0b0716" : y < 55 ? "#1a0f36" : "#2a1450"; g.fillRect(0, y, W, 1); }
+      for (const [x, y, k] of stars) { g.fillStyle = (Math.floor(t / 300) + k) % 3 ? "#fff6e0" : "#6a5aa8"; g.fillRect((x - t / (60 + k * 40)) % W < 0 ? W + ((x - t / (60 + k * 40)) % W) : (x - t / (60 + k * 40)) % W, y, 1, 1); }
+      // the capitol dome
+      g.fillStyle = "#e8e0f8"; for (let y = 0; y < 16; y++) { const w = Math.round(Math.sqrt(Math.max(0, 256 - (16 - y) ** 2)) * 1.1); g.fillRect(100 - w, 44 + y, w * 2, 1); }
+      g.fillRect(98, 34, 4, 10); g.fillRect(99, 30, 2, 4); g.fillStyle = "#c8bce8"; g.fillRect(70, 60, 60, 10); for (let i = 0; i < 9; i++) { g.fillStyle = "#a89cd0"; g.fillRect(73 + i * 6.5, 62, 2, 8); }
+      // skyline and searchlights
+      for (let i = 0; i < 20; i++) { const h = 8 + ((i * 37) % 22); const x = i * 10 - (i > 6 && i < 13 ? 999 : 0); g.fillStyle = "#140c26"; g.fillRect(x, 70 - h, 9, h + 20); for (let w = 0; w < h / 4; w++) { g.fillStyle = (w + i + Math.floor(t / 900)) % 4 ? "#ffcc4d" : "#3a2a5a"; g.fillRect(x + 2, 72 - h + w * 4, 1, 1); g.fillRect(x + 6, 72 - h + w * 4, 1, 1); } }
+      g.fillStyle = "#3d7bff22"; const a = Math.sin(t / 1400) * 30; for (let y = 0; y < 60; y++) g.fillRect(40 + a * (y / 60) - y * 0.1, 70 - y, 2 + y * 0.12, 1);
+      g.fillStyle = "#ff3b5c22"; const b = Math.cos(t / 1600) * 30; for (let y = 0; y < 60; y++) g.fillRect(160 + b * (y / 60) - y * 0.1, 70 - y, 2 + y * 0.12, 1);
+      g.fillStyle = "#1a1030"; g.fillRect(0, 78, W, 12);
+    };
+    raf = requestAnimationFrame(loop); return () => cancelAnimationFrame(raf);
+  }, []);
   return (
-    <section className="pg-title">
-      <div className="pg-title-bg" aria-hidden="true"><i /><i /><i /></div>
-      <div className="pg-logo"><span className="a">CAMPAIGN</span><span className="b">2026</span></div>
-      <p className="pg-tag">Eight weeks. One race. Every vote is real data.</p>
-      <div className="pg-title-acts">
-        <button type="button" className="pg-press" onClick={onGo}>New campaign</button>
-        {saved ? <button type="button" className="pg-press ghost" onClick={onResume}>Continue: {savedLabel}</button> : null}
+    <section className="px-title">
+      <canvas ref={cv} width={200} height={90} className="px-title-cv" aria-hidden="true" />
+      <div className="px-title-in">
+        <div className="px-logo"><span className="a">CAMPAIGN</span><span className="b">2026</span></div>
+        <p className="px-tag2">Eight weeks. One race. Every vote is real data.</p>
+        <div className="px-title-acts">
+          <button type="button" className="px-press blink" onClick={() => { unlock(); sfx("coin"); onGo(); }}>Press start</button>
+          {saved ? <button type="button" className="px-press ghost" onClick={() => { unlock(); sfx("click"); onResume(); }}>Continue: {savedLabel}</button> : null}
+        </div>
+        <ul className="px-feat" aria-label="What is new"><li>Campaign bus</li><li>Debate stage</li><li>Meetings</li><li>Fog of war</li><li>Real turnout</li><li>Long election night</li><li>Sound</li></ul>
       </div>
-      <ul className="pg-ticker" aria-hidden="true"><li>FUNDRAISE</li><li>RALLY</li><li>POLL</li><li>ADVERTISE</li><li>KNOCK DOORS</li><li>DEBATE</li><li>WIN</li></ul>
     </section>
   );
 }
 
+// ============================================================ lobby
 function Bar({ v, max, label, val, tone }: { v: number; max: number; label: string; val: string; tone?: string }) {
-  return (
-    <div className="pg-stat-bar"><span>{label}</span><span className="bar"><i className={tone} style={{ width: `${Math.max(3, Math.min(100, (100 * v) / Math.max(1e-9, max)))}%` }} /></span><b>{val}</b></div>
-  );
+  const n = Math.max(1, Math.min(10, Math.round((10 * v) / Math.max(1e-9, max))));
+  return <div className="px-stat"><span>{label}</span><span className="px-pips">{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < n ? cls("f", tone) : ""} />)}</span><b>{val}</b></div>;
 }
-
-function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E.Side, d: E.Diff) => void }) {
+function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E.Side, d: E.Diff, seed?: number) => void }) {
   const [office, setOffice] = useState<"all" | "senate" | "governor">("all");
   const [pick, setPick] = useState<string | null>(null);
   const [rf, setRf] = useState<E.RaceFile | null>(null);
   const [paths, setPaths] = useState<CountyPath[] | null>(null);
   const [side, setSide] = useState<E.Side | null>(null);
   const [diff, setDiff] = useState<E.Diff>("lean");
-  const geo = useGeo(paths);
+  const [seed, setSeed] = useState("");
+  const geo = useMapGeo(paths, 160, 110);
   const list = idx.races.filter((r) => office === "all" || r.office === office);
   const race = idx.races.find((r) => r.id === pick);
   useEffect(() => {
@@ -139,85 +88,81 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
   }, [pick]);
   const preview = useMemo(() => (rf ? E.newGame(rf, "D", "lean", 1) : null), [rf]);
   return (
-    <div className="pg-lobby">
-      <section className="pg-step">
-        <div className="pg-sh"><span className="pg-n">1</span><h2>Choose your battleground</h2>
-          <div className="pg-chips" role="group" aria-label="Office">{(["all", "senate", "governor"] as const).map((o) => <button key={o} type="button" aria-pressed={office === o} className={office === o ? "on" : ""} onClick={() => setOffice(o)}>{o === "all" ? "All" : o === "senate" ? "Senate" : "Governor"}</button>)}</div>
+    <div className="px-lobby">
+      <section className="px-step">
+        <div className="px-sh"><span className="px-n">1</span><h2>Choose your battleground</h2>
+          <div className="px-chips" role="group" aria-label="Office">{(["all", "senate", "governor"] as const).map((o) => <button key={o} type="button" aria-pressed={office === o} className={office === o ? "on" : ""} onClick={() => { setOffice(o); sfx("click"); }}>{o === "all" ? "All" : o === "senate" ? "Senate" : "Governor"}</button>)}</div>
         </div>
-        <div className="pg-sel-grid">
-          <div className="pg-races">
-            {list.map((r, k) => {
-              const ind = r.c.some((x) => x[1] === "I"), close = Math.max(0, 1 - Math.abs(r.m) / 15);
+        <div className="px-sel-grid">
+          <div className="px-races">
+            {list.map((r) => {
+              const close = Math.max(0, 1 - Math.abs(r.m) / 15);
               return (
-                <button key={r.id} type="button" className={cls("pg-race", pick === r.id && "on")} aria-pressed={pick === r.id} onClick={() => { setPick(r.id); setSide(null); }} style={{ animationDelay: `${Math.min(k, 20) * 25}ms` }}>
-                  <span className="k">{r.office === "senate" ? "Senate" : "Governor"} · {r.st}</span>
+                <button key={r.id} type="button" className={cls("px-race", pick === r.id && "on")} aria-pressed={pick === r.id} onClick={() => { setPick(r.id); setSide(null); sfx("card"); }}>
+                  <span className="k">{r.office === "senate" ? "SEN" : "GOV"} {r.st}</span>
                   <b>{r.state}</b>
-                  <span className="who"><i className={(r.c[0][1] || "D").toLowerCase()}>{sur(r.c[0][0])}</i> vs <i className={(r.c[1][1] || "R").toLowerCase()}>{sur(r.c[1][0])}</i></span>
-                  <span className="heat" aria-label={`Closeness ${Math.round(close * 100)} of 100`}><i style={{ width: `${close * 100}%` }} /></span>
-                  <span className="m" style={{ color: r.m > 0 ? "var(--gop2)" : ind ? "#b78cff" : "var(--dem2)" }}>{Math.abs(r.m) < 0.05 ? "Even" : r.m > 0 ? `R +${r.m.toFixed(1)}` : `${r.c[0][1]} +${Math.abs(r.m).toFixed(1)}`}</span>
+                  <span className="who"><i className={(r.c[0][1] || "D").toLowerCase()}>{sur(r.c[0][0])}</i> v <i className={(r.c[1][1] || "R").toLowerCase()}>{sur(r.c[1][0])}</i></span>
+                  <span className="heat" aria-label={`Closeness ${Math.round(close * 100)} of 100`}>{Array.from({ length: 5 }, (_, i) => <i key={i} className={i < Math.round(close * 5) ? "f" : ""} />)}</span>
                 </button>
               );
             })}
           </div>
-          <aside className="pg-preview glass">
+          <aside className="px-preview">
             {race && rf && preview ? (
               <>
-                <span className="pg-k">{race.office === "senate" ? "Senate" : "Governor"} · scouting report</span>
+                <span className="px-k">{race.office === "senate" ? "Senate" : "Governor"} scouting report</span>
                 <h3>{race.state}</h3>
-                <div className="pg-prev-map"><StateMap r={rf} s={preview} geo={geo} sel={null} onSel={() => {}} mode="preview" /></div>
-                {rf.research?.summary ? <p className="pg-note">{rf.research.summary}</p> : null}
-                {rf.research?.issues?.length ? <div className="pg-issues">{rf.research.issues.slice(0, 5).map((x) => <span key={x.issue} title={x.why}>{x.issue}</span>)}</div> : null}
+                <PixelMap r={rf} s={preview} geo={geo} mode="preview" layer="regions" />
+                {rf.research?.summary ? <p className="px-note">{rf.research.summary}</p> : null}
+                {rf.research?.issues?.length ? <div className="px-issues">{rf.research.issues.slice(0, 5).map((x) => <span key={x.issue} title={x.why}>{x.issue}</span>)}</div> : null}
               </>
-            ) : <div className="pg-prev-empty"><b>Pick a race</b><span>The scouting report, the map and the issues show up here.</span></div>}
+            ) : <div className="px-prev-empty"><b>Pick a race</b><span>The scouting report shows up here.</span></div>}
           </aside>
         </div>
       </section>
       {race && rf ? (
-        <section className="pg-step">
-          <div className="pg-sh"><span className="pg-n">2</span><h2>Choose your candidate</h2></div>
-          <div className="pg-fight">
+        <section className="px-step">
+          <div className="px-sh"><span className="px-n">2</span><h2>Choose your candidate</h2></div>
+          <div className="px-fight">
             {rf.cands.map((cd, k) => {
               const sd: E.Side = k === 0 ? "D" : "R"; const o = rf.cands[1 - k];
-              const odds = sd === "R" ? rf.est.prob : 1 - rf.est.prob;
-              const dn = cd.donors;
+              const odds = sd === "R" ? rf.est.prob : 1 - rf.est.prob; const dn = cd.donors;
               const mx = (a: number | null | undefined, b: number | null | undefined) => Math.max(a ?? 0, b ?? 0, 1);
               return (
-                <button key={cd.name} type="button" className={cls("pg-fighter", cd.party.toLowerCase(), side === sd && "on")} aria-pressed={side === sd} onClick={() => setSide(sd)}>
-                  <span className="pg-avatar" aria-hidden="true">{initials(cd.name)}</span>
-                  <span className="k">{PARTY[cd.party] ?? cd.party}{cd.inc ? " · incumbent" : ""}</span>
+                <button key={cd.name} type="button" className={cls("px-fighter", cd.party.toLowerCase(), side === sd && "on")} aria-pressed={side === sd} onClick={() => { setSide(sd); sfx("coin"); }}>
+                  <Portrait seed={seedOf(cd.name)} role="cand" party={cd.party} size={96} talking={side === sd} />
+                  <span className="k">{PARTY[cd.party] ?? cd.party}{cd.inc ? ", incumbent" : ""}</span>
                   <b>{cd.name}</b>
                   <span className="odds">Chance to win <strong>{pct(odds)}</strong></span>
-                  <span className="pg-stats">
-                    <Bar label="Cash on hand" v={cd.money.cash ?? 0} max={mx(cd.money.cash, o.money.cash)} val={E.usd(cd.money.cash ?? 0)} tone="gold" />
-                    <Bar label="Raised" v={dn?.raised ?? cd.money.receipts ?? 0} max={mx(dn?.raised ?? cd.money.receipts, o.donors?.raised ?? o.money.receipts)} val={E.usd(dn?.raised ?? cd.money.receipts ?? 0)} />
-                    <Bar label="Donations" v={dn?.donations ?? 0} max={mx(dn?.donations, o.donors?.donations)} val={dn?.donations ? dn.donations.toLocaleString() : "n/a"} />
-                    <Bar label="Small dollar share" v={dn?.small ?? 0} max={1} val={dn?.small != null ? pct(dn.small) : "n/a"} tone="green" />
-                    <Bar label="From home state" v={dn?.home ?? 0} max={1} val={dn?.home != null ? pct(dn.home) : "n/a"} tone="green" />
-                    <Bar label="Outside air cover" v={cd.money.outside_for ?? 0} max={mx(cd.money.outside_for, o.money.outside_for)} val={E.usd(cd.money.outside_for ?? 0)} />
-                    <Bar label="Campaign health" v={cd.health ?? 0} max={100} val={cd.health != null ? String(cd.health) : "n/a"} tone="green" />
+                  <span className="px-stats">
+                    <Bar label="Cash" v={cd.money.cash ?? 0} max={mx(cd.money.cash, o.money.cash)} val={E.usd(cd.money.cash ?? 0)} tone="gold" />
+                    <Bar label="Raised" v={dn?.raised ?? cd.money.receipts ?? 0} max={mx(dn?.raised ?? cd.money.receipts, o.donors?.raised ?? o.money.receipts)} val={E.usd(dn?.raised ?? cd.money.receipts ?? 0)} tone="gold" />
+                    <Bar label="Donors" v={dn?.donations ?? 0} max={mx(dn?.donations, o.donors?.donations)} val={dn?.donations ? dn.donations.toLocaleString() : "n/a"} tone="green" />
+                    <Bar label="Small $" v={dn?.small ?? 0} max={1} val={dn?.small != null ? pct(dn.small) : "n/a"} tone="green" />
+                    <Bar label="Air cover" v={cd.money.outside_for ?? 0} max={mx(cd.money.outside_for, o.money.outside_for)} val={E.usd(cd.money.outside_for ?? 0)} />
                   </span>
                 </button>
               );
             })}
-            <span className="pg-vs" aria-hidden="true">VS</span>
+            <span className="px-vs" aria-hidden="true">VS</span>
           </div>
-          <p className="pg-note">Money from the FEC and state filings; donations, small dollar and home state shares from the On Point donor map through September 30; health from the War Room.</p>
         </section>
       ) : null}
       {race && rf && side ? (
-        <section className="pg-step">
-          <div className="pg-sh"><span className="pg-n">3</span><h2>Choose the year you are running in</h2></div>
-          <div className="pg-diffs">
+        <section className="px-step">
+          <div className="px-sh"><span className="px-n">3</span><h2>Choose the year you are running in</h2></div>
+          <div className="px-diffs">
             {DIFFS.map((d, i) => (
-              <button key={d} type="button" className={cls("pg-diff", diff === d && "on")} aria-pressed={diff === d} onClick={() => setDiff(d)}>
-                <span className="pg-bars" aria-hidden="true">{[0, 1, 2, 3].map((j) => <i key={j} className={j <= i ? "f" : ""} />)}</span>
+              <button key={d} type="button" className={cls("px-diff", diff === d && "on")} aria-pressed={diff === d} onClick={() => { setDiff(d); sfx("click"); }}>
+                <span className="px-pips">{[0, 1, 2, 3].map((j) => <i key={j} className={j <= i ? "f hot" : ""} />)}</span>
                 <b>{E.DIFF[d].name}</b><small>{E.DIFF[d].blurb}</small>
               </button>
             ))}
           </div>
-          <div className="pg-go">
-            <button type="button" className="pg-press" onClick={() => onStart(rf, side, diff)}>Launch the campaign</button>
-            <span className="pg-note">Labor Day to Election Day. Six days on the trail a week. Debate week {E.debateWeek(rf)}.</span>
+          <div className="px-go">
+            <button type="button" className="px-press" onClick={() => { unlock(); sfx("fanfare"); onStart(rf, side, diff, seed && /^\d+$/.test(seed) ? Number(seed) : undefined); }}>Launch the campaign</button>
+            <label className="px-seed" htmlFor="px-seed-in">Seed <input id="px-seed-in" inputMode="numeric" placeholder="random" value={seed} onChange={(e) => setSeed(e.target.value.replace(/\D/g, "").slice(0, 10))} /></label>
+            <span className="px-note">Debate in week {E.debateWeek(rf)}. Registration closes after week {E.REG_DEADLINE}. Early voting opens week {E.EARLY_FROM}.</span>
           </div>
         </section>
       ) : null}
@@ -229,251 +174,337 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
 function Parts({ parts }: { parts: E.Part[] }) {
   const max = Math.max(0.01, ...parts.map((p) => Math.abs(p.fx)));
   return (
-    <ul className="pg-parts">
-      {parts.slice(0, 6).map((p, i) => (
-        <li key={i} style={{ animationDelay: `${i * 70}ms` }}>
-          <span className="l">{p.label} <small>{Math.round(p.share)}% of voters{p.lean ? `, lean ${p.lean > 0 ? "R" : "D"} +${Math.round(Math.abs(p.lean) * 100)}` : ""}</small></span>
-          <span className="bar"><i className={p.fx >= 0 ? "up" : "dn"} style={{ width: `${(50 * Math.abs(p.fx)) / max}%`, [p.fx >= 0 ? "left" : "right"]: "50%", animationDelay: `${i * 70 + 120}ms` } as React.CSSProperties} /></span>
-          <b className={p.fx >= 0 ? "up" : "dn"}>{fxs(p.fx)}</b>
-        </li>
+    <ul className="px-parts">
+      {parts.slice(0, 5).map((p, i) => (
+        <li key={i}><span className="l">{p.label}</span>
+          <span className="bar"><i className={p.fx >= 0 ? "up" : "dn"} style={{ width: `${(50 * Math.abs(p.fx)) / max}%`, [p.fx >= 0 ? "left" : "right"]: "50%" } as React.CSSProperties} /></span>
+          <b className={p.fx >= 0 ? "up" : "dn"}>{fxs(p.fx)}</b></li>
       ))}
     </ul>
   );
 }
-
 function PollChart({ s, me, op }: { s: E.State; me: string; op: string }) {
-  const Wc = 520, Hc = 190, P = 34;
-  const ps = s.polls;
-  const vals = [...ps.map((p) => p.m), 0];
+  const Wc = 300, Hc = 120, P = 18; const ps = s.polls; const vals = [...ps.map((p) => p.m), 0];
   const lo = Math.min(-4, ...vals) - 1, hi = Math.max(4, ...vals) + 1;
-  const X = (w: number) => P + (w * (Wc - 2 * P)) / E.WEEKS, Y = (m: number) => 10 + ((hi - m) * (Hc - 34)) / (hi - lo);
-  const avg: { w: number; m: number }[] = [];
-  for (let w = 0; w < s.week; w++) { const near = ps.filter((p) => p.w <= w && p.w >= w - 2); if (near.length) avg.push({ w, m: near.reduce((a, p) => a + p.m * (p.internal ? 1.6 : 1), 0) / near.reduce((a, p) => a + (p.internal ? 1.6 : 1), 0) }); }
+  const X = (w: number) => P + (w * (Wc - 2 * P)) / E.WEEKS, Y = (m: number) => 6 + ((hi - m) * (Hc - 22)) / (hi - lo);
   return (
-    <svg className="pg-pc" viewBox={`0 0 ${Wc} ${Hc}`} role="img" aria-label="Polls of the race by week">
+    <svg className="px-pc" viewBox={`0 0 ${Wc} ${Hc}`} role="img" aria-label="Polls of the race by week" shapeRendering="crispEdges">
       <rect x={P} y={Y(hi)} width={Wc - 2 * P} height={Y(0) - Y(hi)} className="zone me" /><rect x={P} y={Y(0)} width={Wc - 2 * P} height={Y(lo) - Y(0)} className="zone op" />
       <line x1={P} x2={Wc - P} y1={Y(0)} y2={Y(0)} className="z" />
-      <text x={4} y={Y(hi - 1) + 4} className="ax">{sur(me)} +{Math.round(hi - 1)}</text>
-      <text x={4} y={Y(lo + 1)} className="ax">{sur(op)} +{Math.round(-(lo + 1))}</text>
-      {Array.from({ length: E.WEEKS + 1 }, (_, w) => <text key={w} x={X(w)} y={Hc - 4} textAnchor="middle" className="ax">{w === 0 ? "Start" : `W${w}`}</text>)}
-      {avg.length > 1 ? <path d={avg.map((a, i) => `${i ? "L" : "M"}${X(a.w).toFixed(1)} ${Y(a.m).toFixed(1)}`).join(" ")} className="avg" pathLength={1} /> : null}
-      {ps.map((p, i) => <circle key={i} cx={X(p.w) + ((i * 7) % 11) - 5} cy={Y(p.m)} r={p.internal ? 4.5 : 3.2} className={p.internal ? "int" : "pub"}><title>{`${p.src}: ${E.lead(p.m, sur(me), sur(op))}`}</title></circle>)}
+      <text x={2} y={12} className="ax">{sur(me)}</text><text x={2} y={Hc - 14} className="ax">{sur(op)}</text>
+      {Array.from({ length: E.WEEKS + 1 }, (_, w) => <text key={w} x={X(w)} y={Hc - 2} textAnchor="middle" className="ax">{w === 0 ? "S" : w}</text>)}
+      {ps.map((p, i) => <rect key={i} x={X(p.w) + ((i * 7) % 9) - 4} y={Y(p.m) - 2} width={p.internal ? 5 : 4} height={p.internal ? 5 : 4} className={p.internal ? "int" : "pub"}><title>{`${p.src}: ${E.lead(p.m, sur(me), sur(op))}`}</title></rect>)}
     </svg>
   );
 }
-
 function Meter({ label, v, tone }: { label: string; v: number; tone: string }) {
-  return <div className="pg-meter"><span>{label}</span><b className={cls("pg-mbar", tone)}><i style={{ width: `${Math.max(0, Math.min(100, v))}%` }} /></b></div>;
+  const n = Math.round(Math.max(0, Math.min(100, v)) / 10);
+  return <div className="px-meter2"><span>{label}</span><b className="px-pips">{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < n ? cls("f", tone) : ""} />)}</b></div>;
+}
+
+// ============================================================ cutscenes
+function NewsRoll({ r, s, onDone }: { r: E.RaceFile; s: E.State; onDone: () => void }) {
+  const items = useMemo(() => {
+    const out: string[] = [];
+    for (const x of r.research?.storylines ?? []) out.push(x.title);
+    for (const m of r.media ?? []) out.push(`${m.who}: ${m.what.slice(0, 80)}`);
+    for (const n of r.news ?? []) out.push(n.title);
+    return out.length ? out : ["Quiet week on the trail"];
+  }, [r]);
+  const flash = s.cur.find((e) => e.kind === "flash");
+  const land = flash?.title ?? items[(s.week * 7) % items.length];
+  const [i, setI] = useState(0); const [stop, setStop] = useState(false);
+  useEffect(() => {
+    if (stop) return; let n = 0; let id = 0;
+    const tick = () => { n++; setI((x) => x + 1); sfx("tick"); if (n < 16) id = window.setTimeout(tick, 60 + n * 14); else { setStop(true); sfx(flash ? "alarm" : "bell"); } };
+    id = window.setTimeout(tick, 80); return () => clearTimeout(id);
+  }, [stop, flash]);
+  useEffect(() => { if (!stop) return; const id = setTimeout(onDone, 2600); return () => clearTimeout(id); }, [stop, onDone]);
+  return (
+    <button type="button" className="px-cut news" onClick={onDone}>
+      <span className="px-tag">Week {s.week} · {E.weekLabel(s.week)}</span>
+      <b className="px-cut-h">The news cycle</b>
+      <span className={cls("px-slot", stop && "stop")}>{stop ? land : items[i % items.length]}</span>
+      {stop ? <em>{flash ? (flash.helps === "you" ? "Breaking: good news for you" : flash.helps === "them" ? "Breaking: trouble" : "Breaking") : s.week === s.dweek ? "Debate week" : s.week >= E.EARLY_FROM ? "Early voting is open" : "The week begins"}</em> : <em>Rolling</em>}
+    </button>
+  );
+}
+function OppReplay({ r, s, geo, onDone }: { r: E.RaceFile; s: E.State; geo: ReturnType<typeof useMapGeo>; onDone: () => void }) {
+  const c = useMemo(() => E.ctx(r, s.side), [r, s.side]);
+  const o = s.oppLast; const path = useMemo(() => (o ? [...o.base, ...o.stops] : []), [o]);
+  const [t0] = useState(() => performance.now());
+  const [fx, setFx] = useState<MapFx[]>([]);
+  useEffect(() => {
+    const ids: number[] = [];
+    path.forEach((_, k) => ids.push(window.setTimeout(() => sfx("step"), k * 1300 + 200)));
+    ids.push(window.setTimeout(() => { sfx("airstrike"); setFx([{ id: 1, kind: "opp", fs: E.regionsOf(r)[0]?.f.concat(E.regionsOf(r)[1]?.f ?? []) ?? [], t0: performance.now() }]); }, path.length * 1300 + 300));
+    return () => ids.forEach(clearTimeout);
+  }, [path, r]);
+  const names = [...new Set(path.map((f) => r.counties.find((x) => x[0] === f)?.[1]).filter(Boolean))];
+  return (
+    <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-opp-h">
+      <div className="px-card opp">
+        <div className="px-row"><Portrait seed={seedOf(c.op.name)} role="cand" party={c.op.party} size={56} talking /><div><span className="px-tag">Meanwhile</span><h3 id="px-opp-h">{c.op.name}&apos;s week</h3></div></div>
+        <PixelMap r={r} s={s} geo={geo} mode="plan" layer="rival" oppPath={path} oppT0={t0} fx={fx} />
+        <p>Their bus stopped in {names.length ? names.join(", ") : "no counties you could track"}. {o?.tv ? `They ran about ${E.usd(o.tv)} of television.` : ""} {o?.ad ? <><br /><b>On the air:</b> {o.ad}</> : null}</p>
+        <button type="button" className="px-btn go" onClick={onDone}>See your week report</button>
+      </div>
+    </div>
+  );
+}
+function Final72({ r, s, onDone }: { r: E.RaceFile; s: E.State; onDone: (x: E.State) => void }) {
+  const c = useMemo(() => E.ctx(r, s.side), [r, s.side]);
+  const cand = useMemo(() => r.counties.map((co) => ({ f: co[0], n: co[1], v: (s.side === "R" ? co[4] : co[3]), rd: E.readOf(s, co[0]) })).sort((a, b) => b.v - a.v).slice(0, 8), [r, s]);
+  const [alloc, setAlloc] = useState<Record<string, number>>(() => Object.fromEntries(cand.slice(0, 4).map((x) => [x.f, 2])));
+  const [closing, setClosing] = useState<"positive" | "contrast" | "attack" | "base">("contrast");
+  const [law, setLaw] = useState(s.lawyers);
+  const total = Object.values(alloc).reduce((a, b) => a + b, 0);
+  const go = () => { const x = structuredClone(s); if (law && !x.lawyers) E.hireLawyers(x); E.finalPush(c, x, alloc, closing); sfx("fanfare"); onDone(x); };
+  return (
+    <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-f72-h">
+      <div className="px-card wide">
+        <span className="px-tag">Election eve</span><h3 id="px-f72-h">The final 72 hours</h3>
+        <p className="px-note">Put your {s.volunteers.toLocaleString()} volunteers on shifts. Shifts work your own lists, so they pay most where you have the most voters to turn out. Ten shifts to place.</p>
+        <ul className="px-alloc">{cand.map((x) => (
+          <li key={x.f}><span>{x.n}<small>{x.rd ? `${E.readLabel(x.rd.est, x.rd.sd)}, ${E.confLabel(x.rd.sd).toLowerCase()}` : "no read"}</small></span>
+            <button type="button" className="px-btn sm" disabled={!alloc[x.f]} onClick={() => { setAlloc((a) => ({ ...a, [x.f]: Math.max(0, (a[x.f] ?? 0) - 1) })); sfx("click"); }}>-</button>
+            <b className="px-pips">{Array.from({ length: 5 }, (_, i) => <i key={i} className={i < (alloc[x.f] ?? 0) ? "f gold" : ""} />)}</b>
+            <button type="button" className="px-btn sm" disabled={total >= 10 || (alloc[x.f] ?? 0) >= 5} onClick={() => { setAlloc((a) => ({ ...a, [x.f]: (a[x.f] ?? 0) + 1 })); sfx("click"); }}>+</button></li>
+        ))}</ul>
+        <span className="px-k">Closing message</span>
+        <div className="px-chips">{([["positive", "Positive"], ["contrast", "Contrast"], ["attack", "Last minute attack"], ["base", "Fire up the base"]] as const).map(([k, l]) => <button key={k} type="button" className={closing === k ? "on" : ""} onClick={() => setClosing(k)}>{l}</button>)}</div>
+        <label className="px-check" htmlFor="px-law"><input id="px-law" type="checkbox" checked={law} disabled={s.lawyers || s.cash < 150000} onChange={(e) => setLaw(e.target.checked)} />Voter protection team, $150K: lawyers and poll watchers so long lines do not cost you votes{s.lawyers ? " (hired)" : ""}</label>
+        <button type="button" className="px-press" onClick={go} disabled={total === 0}>Polls open</button>
+      </div>
+    </div>
+  );
 }
 
 // ============================================================ headquarters
-type Tab = "trail" | "air" | "staff" | "ground" | "polls" | "intel" | "log";
-const TABS: [Tab, string][] = [["trail", "Campaign"], ["air", "Air war"], ["staff", "Staff"], ["ground", "Turnout"], ["polls", "Polls"], ["intel", "Intel"], ["log", "Wire"]];
+type Tab = "trail" | "meet" | "air" | "ground" | "staff" | "polls" | "intel" | "log";
+const TABS: [Tab, string][] = [["trail", "Trail"], ["meet", "Meetings"], ["air", "Air war"], ["ground", "Turnout"], ["staff", "Staff"], ["polls", "Polls"], ["intel", "Intel"], ["log", "Wire"]];
 
-function HQ({ r, s, commit, paths, onNight, quit }: { r: E.RaceFile; s: E.State; commit: (x: E.State) => void; paths: CountyPath[] | null; onNight: () => void; quit: () => void }) {
+function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull, rolled, setRolled }: { r: E.RaceFile; s: E.State; commit: (x: E.State) => void; geo: ReturnType<typeof useMapGeo>; onNight: () => void; onDebate: () => void; quit: () => void; immersive: boolean; toggleFull: () => void; rolled: number; setRolled: (w: number) => void }) {
   const c = useMemo(() => E.ctx(r, s.side), [r, s.side]);
-  const geo = useGeo(paths);
   const [sel, setSel] = useState<string | null>(null);
+  const [hov, setHov] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("trail");
-  const [layer, setLayer] = useState<Layer>("margin");
+  const [layer, setLayer] = useState<Layer>("read");
   const [toast, setToast] = useState<{ t: string; ok: boolean; k: number } | null>(null);
   const [out, setOut] = useState<{ ev: E.Ev; o: Outcome; choice: number } | null>(null);
   const [week, setWeek] = useState<{ items: E.LogItem[]; before: { avg: number | null; cash: number; buzz: number; vol: number } } | null>(null);
-  const [banner, setBanner] = useState<number | null>(s.week);
-  const [effects, setEffects] = useState<Fx[]>([]);
+  const roll = rolled < s.week; const setRoll = (v: boolean) => setRolled(v ? s.week - 1 : s.week);
+  const [replay, setReplay] = useState(false);
+  const [meet, setMeet] = useState<E.Meet | null>(null);
+  const [f72, setF72] = useState(false);
+  const [fx, setFx] = useState<MapFx[]>([]);
+  const [bus, setBus] = useState<string | null>(null);
   const [tone, setTone] = useState<"positive" | "contrast" | "attack">("contrast");
   const [resW, setResW] = useState(Math.min(E.WEEKS, s.week + 2));
-  const [dg, setDg] = useState<string>("");
+  const [dg, setDg] = useState("");
+  const [snd, setSnd] = useState(soundState());
   const fxId = useRef(1);
-  useEffect(() => { if (s.evw < s.week && !s.done) { const x = structuredClone(s); dealWeek(c, x); commit(x); } }, [s, c, commit]);
-  useEffect(() => { if (banner == null) return; const id = setTimeout(() => setBanner(null), 1700); return () => clearTimeout(id); }, [banner]);
-  const burst = (f: string, kind: Fx["kind"]) => { const id = fxId.current++; setEffects((e) => [...e, { id, f, kind }]); setTimeout(() => setEffects((e) => e.filter((x) => x.id !== id)), 1400); };
-  const run = (f: (x: E.State) => E.ActResult, evName?: string, at?: { f: string; kind: Fx["kind"] }) => {
-    const x = structuredClone(s); const res = f(x);
-    if (res.ok) { commit(x); if (at) burst(at.f, at.kind); }
-    setToast({ t: res.t, ok: res.ok, k: Date.now() }); if (res.ok && evName) track("Play action", { a: evName, race: r.id });
+  useEffect(() => { if (!s.done && (s.evw < s.week || s.invw < s.week)) { const x = structuredClone(s); dealWeek(c, x); dealInvites(c, x); commit(x); } }, [s, c, commit]);
+  useEffect(() => { music("trail"); }, []);
+  const burst = (k: MapFx["kind"], f?: string, fs?: string[]) => { const id = fxId.current++; setFx((e) => [...e.filter((x) => performance.now() - x.t0 < 2500), { id, kind: k, f, fs, t0: performance.now() }]); };
+  const run = (fn: (x: E.State) => E.ActResult, name?: string, at?: { f?: string; kind: MapFx["kind"]; fs?: string[] }, snd2: Parameters<typeof sfx>[0] = "good") => {
+    const x = structuredClone(s); const res = fn(x);
+    if (res.ok) { commit(x); if (at) { burst(at.kind, at.f, at.fs); if (at.f && (at.kind === "rally" || at.kind === "hall" || at.kind === "reg")) setBus(at.f); } sfx(res.t.includes("Running on fumes") ? "bad" : snd2); }
+    else sfx("buzz");
+    setToast({ t: res.t, ok: res.ok, k: Date.now() }); if (res.ok && name) track("Play action", { a: name, race: r.id });
   };
   const ci = sel ? r.counties.findIndex((x) => x[0] === sel) : -1;
   const co = ci >= 0 ? r.counties[ci] : null;
+  const rd = co ? E.readOf(s, co[0]) : null;
   const avg = E.polledAvg(s);
   const me = c.me, op = c.op;
   const pend = s.cur[0];
-  const debate = pend?.kind === "debate";
+  const regs = useMemo(() => E.regionsOf(r), [r]);
+  const regOfSel = co ? regs.findIndex((g) => g.f.includes(co[0])) : -1;
+  const debateNow = s.week === s.dweek && s.debated == null && !s.used.includes("chair") && !s.cur.some((e) => e.kind === "chair");
   const rate = E.RATE[Math.min(E.WEEKS, s.week) - 1] ?? 1;
   const tvSteps = [0.25, 0.5, 1, 2].map((k) => Math.round((k * c.cost) / 50000) * 50000).filter((v, i, a) => v > 0 && a.indexOf(v) === i);
   const digGroups = c.groups.filter((g) => !["Party ID", "2024 presidential vote", "Trump job approval", "Direction of the country", "Race and gender", "Race and education"].includes(g.dim) && g.share >= 5);
-  const regionOfSel = co ? (r.research?.regions ?? []).find((g) => g.f.includes(co[0])) : null;
   const endWeek = () => {
+    if (s.week >= E.WEEKS && !s.final) { setF72(true); return; }
     const before = { avg, cash: s.cash, buzz: s.buzz, vol: s.volunteers };
     const x = structuredClone(s); const items = E.endWeek(c, x); commit(x);
-    setWeek({ items, before }); track("Play week", { race: r.id, week: s.week });
+    setWeek({ items, before }); track("Play week", { race: r.id, week: s.week }); sfx("whoosh");
+    if (!x.done) setReplay(true);
   };
-  const choose = (i: number) => {
-    const x = structuredClone(s); const e = x.cur.shift()!; const o = resolve(c, x, e, i, e.kind === "debate"); commit(x);
-    setOut({ ev: e, o, choice: i });
-  };
-  const test = () => { const x = structuredClone(s); const r2 = testEvent(c, x, x.cur[0]); if (r2) { commit(x); track("Play action", { a: "test", race: r.id }); } else setToast({ t: s.staff.pollster ? "Not enough cash to test." : "Hire a pollster to test messages.", ok: false, k: Date.now() }); };
+  const choose = (i: number) => { const x = structuredClone(s); const e = x.cur.shift()!; const o = resolve(c, x, e, i); commit(x); setOut({ ev: e, o, choice: i }); sfx(o.fx > 0.03 ? "good" : o.fx < -0.03 ? "bad" : "click"); };
+  const test = () => { const x = structuredClone(s); const r2 = testEvent(c, x, x.cur[0]); if (r2) { commit(x); sfx("coin"); } else setToast({ t: s.staff.pollster ? "Not enough cash to test." : "Hire a pollster to test messages.", ok: false, k: Date.now() }); };
   const tests = pend ? s.tests[pend.id] : undefined;
-  const wire = [...s.log].reverse().slice(0, 14);
+  const ticker = useMemo(() => [...(r.media ?? []).map((m) => `${m.who}: ${m.what}`), ...(r.research?.storylines ?? []).map((x) => `${x.date}: ${x.title}`)], [r]);
+  const wire = [...s.log].reverse().slice(0, 8).map((l) => l.t);
+  const hoverCo = hov ? r.counties.find((x) => x[0] === hov) : null; const hoverRd = hov ? E.readOf(s, hov) : null;
+  const flipSnd = (k: "sfx" | "music") => { const n = { ...snd, [k]: !snd[k] }; setSnd(n); setSound(n); if (k === "music" && n.music) music("trail"); };
   return (
-    <div className="pg-hq">
-      {banner != null && !s.done ? <div className="pg-banner" aria-live="polite"><span>Week {banner}</span><b>{E.weekLabel(Math.min(banner, E.WEEKS))}</b>{banner === s.dweek ? <em>Debate week</em> : banner >= E.EARLY_FROM ? <em>Early voting is open</em> : null}</div> : null}
-      <header className="pg-top">
-        <div className={cls("pg-id", me.party.toLowerCase())}>
-          <span className="pg-avatar sm" aria-hidden="true">{initials(me.name)}</span>
-          <div><span className="pg-k">{r.name} · {E.DIFF[s.diff].name}</span><b>{me.name}</b></div>
+    <div className="px-hq" style={{ "--px-me": partyCol(me.party), "--px-op": partyCol(op.party) } as React.CSSProperties}>
+      <header className="px-hud">
+        <div className={cls("px-id", me.party.toLowerCase())}>
+          <Portrait seed={seedOf(me.name)} role="cand" party={me.party} size={40} />
+          <div><span className="px-k">{r.name} · {E.DIFF[s.diff].name}</span><b>{me.name}</b></div>
         </div>
-        <div className="pg-stat"><span>Week {Math.min(s.week, E.WEEKS)} / {E.WEEKS}</span><b>{E.weekLabel(Math.min(s.week, E.WEEKS)).split(" to ")[0]}</b></div>
-        <div className="pg-stat"><span>Days</span><b className="pg-days" aria-label={`${s.days} days left`}>{Array.from({ length: E.DAYS }, (_, i) => <i key={i} className={i < s.days ? "f" : ""} />)}</b></div>
-        <div className="pg-stat"><span>War chest</span><b className={s.cash < 0 ? "dn" : "cash"}><Roll v={s.cash} fmt={E.usd} /></b></div>
-        <div className="pg-stat"><span>Volunteers</span><b><Roll v={s.volunteers} /></b></div>
-        <div className="pg-stat wide"><Meter label="Energy" v={s.stamina} tone={s.stamina < 30 ? "lo" : s.stamina < 60 ? "md" : "hi"} /><Meter label="Buzz" v={s.buzz} tone="buzz" /></div>
-        <div className="pg-stat"><span>Poll average</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "No poll" : E.lead(avg, sur(me.name), sur(op.name))}</b></div>
-        <div className="pg-acts">
-          <button type="button" className="pg-press sm" onClick={endWeek} disabled={!!pend}>{s.week >= E.WEEKS ? "Election Day" : "End week"}</button>
-          <button type="button" className="pg-ghost" onClick={quit}>Menu</button>
+        <div className="px-hs"><span>Week</span><b>{Math.min(s.week, E.WEEKS)}/{E.WEEKS}</b><small>{E.weekLabel(Math.min(s.week, E.WEEKS)).split(" to ")[0]}</small></div>
+        <div className="px-hs"><span>Days</span><b className="px-pips days">{Array.from({ length: E.DAYS }, (_, i) => <i key={i} className={i < s.days ? "f gold" : ""} />)}</b></div>
+        <div className="px-hs"><span>Cash</span><b className={s.cash < 0 ? "dn" : "cash"}><Roll v={s.cash} fmt={E.usd} /></b></div>
+        <div className="px-hs"><span>Volunteers</span><b><Roll v={s.volunteers} /></b></div>
+        <div className="px-hs meters"><Meter label="Energy" v={s.stamina} tone={s.stamina < 30 ? "hot" : "green"} /><Meter label="Base" v={s.enth[0]} tone="gold" /><Meter label="Buzz" v={s.buzz} tone="pink" /></div>
+        <div className="px-hs"><span>Poll avg</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "None" : E.lead(avg, sur(me.name), sur(op.name))}</b></div>
+        <div className="px-hacts">
+          {debateNow ? <button type="button" className="px-press sm hot" onClick={() => { sfx("alarm"); onDebate(); }}>Debate night</button>
+            : <button type="button" className="px-press sm" onClick={endWeek} disabled={!!pend}>{s.week >= E.WEEKS ? "Election eve" : "End week"}</button>}
+          <button type="button" className={cls("px-icon", !snd.sfx && "off")} onClick={() => flipSnd("sfx")} aria-label="Sound effects" title="Sound effects">SFX</button>
+          <button type="button" className={cls("px-icon", !snd.music && "off")} onClick={() => flipSnd("music")} aria-label="Music" title="Music">MUS</button>
+          <button type="button" className="px-icon" onClick={toggleFull} aria-label="Full screen" title="Full screen">{immersive ? "WIN" : "FULL"}</button>
+          <button type="button" className="px-icon" onClick={quit} aria-label="Menu">MENU</button>
         </div>
       </header>
 
-      <div className="pg-main">
-        <section className="pg-mapw">
-          <div className="pg-mh">
+      <div className="px-main">
+        <section className="px-mapw">
+          <div className="px-mh">
             <b>{r.state}</b>
-            <div className="pg-chips" role="group" aria-label="Map layer">
-              {([["margin", "Where you stand"], ["regions", "Regions"], ["ground", "Your ground game"]] as [Layer, string][]).map(([k, l]) => <button key={k} type="button" className={layer === k ? "on" : ""} aria-pressed={layer === k} onClick={() => setLayer(k)} disabled={k === "regions" && !(r.research?.regions ?? []).length}>{l}</button>)}
+            <div className="px-chips" role="group" aria-label="Map layer">
+              {([["read", "Your read"], ["regions", "Regions"], ["ground", "Ground game"], ["rival", "Their stops"]] as [Layer, string][]).map(([k, l]) => <button key={k} type="button" className={layer === k ? "on" : ""} aria-pressed={layer === k} onClick={() => { setLayer(k); sfx("click"); }}>{l}</button>)}
             </div>
           </div>
-          <StateMap r={r} s={s} geo={geo} sel={sel} onSel={setSel} mode="plan" fxs={effects} layer={layer} />
-          <div className="pg-legend"><span><i className="flag" />Your field office</span><span><i className="opp" />{sur(op.name)} has campaigned there</span><span className="pg-note">Click a county to campaign.</span></div>
+          <div className="px-mapbox">
+            <PixelMap r={r} s={s} geo={geo} mode="plan" layer={layer} sel={sel} onSel={(f) => { setSel(f); sfx("click"); }} hover={hov} onHover={setHov} fx={fx} bus={bus} />
+            {hoverCo && !co ? <div className="px-hover">{hoverCo[1]} · {hoverRd ? `${E.readLabel(hoverRd.est, hoverRd.sd)}, ${E.confLabel(hoverRd.sd).toLowerCase()}` : "no read"}</div> : null}
+          </div>
+          <div className="px-legend"><span><i className="me" />Leans you</span><span><i className="toss" />Toss up</span><span><i className="op" />Leans them</span><span><i className="fog" />Dither means a fuzzy read</span></div>
           {co ? (
-            <div className="pg-county" key={co[0]}>
-              <div className="pg-ch"><b>{co[1]}</b>{regionOfSel ? <span className="pg-chip">{regionOfSel.name}</span> : null}
-                <span>{((100 * co[5]) / c.total).toFixed(1)}% of the vote · forecast {E.lead(c.sign * co[2] + s.pers[ci], sur(me.name), sur(op.name))}{co[6] != null ? ` · 2024 president ${co[6] > 0 ? "R" : "D"} +${Math.abs(co[6]).toFixed(1)}` : ""}</span>
-                <span>Your visits {s.visits[co[0]] ?? 0} · theirs {s.oppVisits[co[0]] ?? 0}{s.offices.includes(co[0]) ? " · field office open" : ""}</span>
-                {regionOfSel?.note ? <span className="pg-note">{regionOfSel.note}</span> : null}</div>
-              <div className="pg-cacts">
-                <button type="button" className="pg-btn" disabled={s.days < 1} onClick={() => run((x) => E.rally(c, x, co[0]), "rally", { f: co[0], kind: "rally" })}>Rally <small>1 day · $35K</small></button>
-                <button type="button" className="pg-btn" disabled={s.days < 1} onClick={() => run((x) => E.townHall(c, x, co[0]), "town hall", { f: co[0], kind: "hall" })}>Town hall <small>1 day · $12K</small></button>
-                <button type="button" className="pg-btn" disabled={s.offices.includes(co[0])} onClick={() => run((x) => E.openOffice(c, x, co[0]), "office", { f: co[0], kind: "office" })}>Field office <small>$60K</small></button>
+            <div className="px-county" key={co[0]}>
+              <div className="px-ch">
+                <b>{co[1]}</b>{regOfSel >= 0 ? <span className="px-chip">{regs[regOfSel].name}</span> : null}
+                <span>{((100 * co[5]) / c.total).toFixed(1)}% of the state&apos;s vote{co[6] != null ? ` · 2024 president ${co[6] > 0 ? "R" : "D"} +${Math.abs(co[6]).toFixed(0)}` : ""}</span>
+                <span className="px-read">Your read: <b className={rd ? (rd.est >= 0 ? "up" : "dn") : ""}>{rd ? E.readLabel(rd.est, rd.sd) : "No idea"}</b> · {rd ? `${E.confLabel(rd.sd)}, from ${rd.src.toLowerCase()}${rd.w ? `, week ${rd.w}` : ""}` : "send someone"}</span>
+                <span>Your stops {s.visits[co[0]] ?? 0} · theirs {s.oppVisits[co[0]] ?? 0}{s.offices.includes(co[0]) ? " · field office" : ""}</span>
+                {regOfSel >= 0 && regs[regOfSel].note ? <span className="px-note">{regs[regOfSel].note}</span> : null}
+              </div>
+              <div className="px-cacts">
+                <button type="button" className="px-btn" disabled={s.days < 1} onClick={() => run((x) => E.rally(c, x, co[0]), "rally", { f: co[0], kind: "rally" }, "crowd")}>Bus tour rally<small>1 day · $35K</small></button>
+                <button type="button" className="px-btn" disabled={s.days < 1} onClick={() => run((x) => E.townHall(c, x, co[0]), "town hall", { f: co[0], kind: "hall" })}>Town hall<small>1 day · $12K</small></button>
+                <button type="button" className="px-btn" disabled={s.offices.includes(co[0])} onClick={() => run((x) => E.openOffice(c, x, co[0]), "office", { f: co[0], kind: "office" }, "coin")}>Field office<small>$60K</small></button>
+                <button type="button" className="px-btn" disabled={s.days < 1 || s.week > E.REG_DEADLINE} onClick={() => run((x) => E.regDrive(c, x, co[0]), "register", { f: co[0], kind: "reg" })}>Register voters<small>{s.week > E.REG_DEADLINE ? "closed" : "1 day · $15K"}</small></button>
+                {regOfSel >= 0 ? <button type="button" className="px-btn" onClick={() => run((x) => E.regionPoll(c, x, regOfSel), "region poll", { kind: "poll", fs: regs[regOfSel].f }, "coin")}>Poll this region<small>$30K</small></button> : null}
               </div>
             </div>
-          ) : null}
+          ) : <p className="px-note pad">Click a county to send the bus. You only see your campaign&apos;s read of each county: polls and ground teams sharpen it, and it goes stale.</p>}
         </section>
 
-        <section className="pg-side">
-          <div className="pg-tabs" role="tablist">
-            {TABS.map(([k, l]) => <button key={k} role="tab" type="button" aria-selected={tab === k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{l}</button>)}
+        <section className="px-side">
+          <div className="px-tabs" role="tablist">
+            {TABS.map(([k, l]) => <button key={k} role="tab" type="button" aria-selected={tab === k} className={tab === k ? "on" : ""} onClick={() => { setTab(k); sfx("click"); }}>{l}{k === "meet" && s.invites.length ? <i className="px-badge">{s.invites.length}</i> : null}</button>)}
           </div>
-          <div className="pg-pane" key={tab}>
+          <div className="px-pane" key={tab}>
             {tab === "trail" ? (
-              <div className="pg-grid">
-                <button type="button" className="pg-act" disabled={s.days < 1} onClick={() => run((x) => E.fundraise(c, x, "call"), "call")}><b>Call time</b><span>1 day. Dial donors for about {E.usd(c.weekly * 0.38 * E.DIFF[s.diff].fund)}.</span></button>
-                <button type="button" className="pg-act" disabled={s.days < 1} onClick={() => run((x) => E.fundraise(c, x, "donors"), "donors")}><b>Big dollar fundraiser</b><span>1 day. {pct(c.bigShare)} of your money comes in gifts of $2,500 and up. {Math.round(c.costsHard)}% of voters say daily costs are hard to afford, so a bad photo can hurt.</span></button>
-                <button type="button" className="pg-act" disabled={s.fatigue >= 3} onClick={() => run((x) => E.fundraise(c, x, "email"), "email")}><b>Small dollar blast</b><span>No days. {pct(c.smallShare)} of your money comes in gifts under $200; buzz makes blasts pay more. Each blast in a week brings in less.</span></button>
-                <button type="button" className="pg-act" disabled={s.days < 1} onClick={() => run((x) => E.media(c, x), "media")}><b>Media tour</b><span>1 day. Local TV, talk radio and podcasts. Raises buzz.</span></button>
-                {s.week <= s.dweek ? <button type="button" className="pg-act" disabled={s.days < 1} onClick={() => run((x) => E.debatePrep(c, x), "prep")}><b>Debate prep</b><span>1 day. The debate is week {s.dweek}; prep sessions so far: {s.prep}.</span></button> : null}
-                <button type="button" className="pg-act" disabled={s.days < 1} onClick={() => run((x) => E.rest(x))}><b>Day off</b><span>1 day. Restores energy. Below 30 the candidate starts making mistakes.</span></button>
+              <div className="px-grid">
+                <button type="button" className="px-act" disabled={s.days < 1} onClick={() => run((x) => E.fundraise(c, x, "call"), "call", { kind: "money" }, "coin")}><b>Call time</b><span>1 day. About {E.usd(c.weekly * 0.38 * E.DIFF[s.diff].fund)}.</span></button>
+                <button type="button" className="px-act" disabled={s.days < 1} onClick={() => run((x) => E.fundraise(c, x, "donors"), "donors", { kind: "money" }, "coin")}><b>Big dollar fundraiser</b><span>1 day. {pct(c.bigShare)} of your money is $2,500 and up. A bad photo can hurt.</span></button>
+                <button type="button" className="px-act" disabled={s.fatigue >= 3} onClick={() => run((x) => E.fundraise(c, x, "email"), "email", { kind: "money" }, "coin")}><b>Small dollar blast</b><span>No days. {pct(c.smallShare)} of your money is under $200; buzz pays.</span></button>
+                <button type="button" className="px-act" disabled={s.days < 1} onClick={() => run((x) => E.media(c, x), "media")}><b>Media tour</b><span>1 day. Local TV and podcasts. Raises buzz.</span></button>
+                {s.week <= s.dweek && s.debated == null ? <button type="button" className="px-act" disabled={s.days < 1} onClick={() => run((x) => E.debatePrep(c, x), "prep")}><b>Debate prep</b><span>1 day. Widens your delivery zone. Sessions: {s.prep}. Debate in week {s.dweek}.</span></button> : null}
+                <button type="button" className="px-act" disabled={s.days < 1} onClick={() => run((x) => E.rest(x), "rest", undefined, "click")}><b>Day off</b><span>1 day. Restores energy. Below 30 the candidate slips.</span></button>
+              </div>
+            ) : null}
+            {tab === "meet" ? (
+              <div className="px-meets">
+                {s.invites.length ? s.invites.map((m) => (
+                  <button key={m.id} type="button" className="px-invite" disabled={s.days < 1} onClick={() => { setMeet(m); sfx("card"); }}>
+                    <Portrait seed={m.seed} role={m.role} party={m.role === "chair" || m.role === "endorser" ? me.party : m.role === "mole" ? op.party : ""} size={48} />
+                    <span><em>{ROLE_NAME[m.role]}{m.real ? " · Real" : ""}</em><b>{m.title}</b><small>{m.who}</small></span>
+                  </button>
+                )) : <p className="px-note">No more invitations this week. New ones come Monday.</p>}
+                <p className="px-note">Each meeting costs a day. Some pay off in volunteers, money or endorsements; some leak.</p>
               </div>
             ) : null}
             {tab === "air" ? (
-              <div className="pg-air">
-                <p className="pg-note">A week of statewide television in {r.state} runs about {E.usd(c.cost)} at September rates; this week stations charge {rate > 1 ? `${Math.round((rate - 1) * 100)}% more` : "the base rate"}. A normal campaign with your money would run about {E.usd(s.weekCash * E.SCHED[Math.min(E.WEEKS, s.week) - 1])} this week. Booked: {E.usd(s.tvWeek)}{s.reserved.length ? `; reserved ahead: ${s.reserved.map((x) => `week ${x.w} ${E.usd(x.amt)}`).join(", ")}` : ""}.</p>
-                <div className="pg-row"><span className="pg-k">Tone</span>{(["positive", "contrast", "attack"] as const).map((t) => <button key={t} type="button" className={cls("chip", tone === t && "on")} aria-pressed={tone === t} onClick={() => setTone(t)}>{t === "positive" ? "Positive bio" : t === "contrast" ? "Contrast" : "Attack"}</button>)}</div>
-                <div className="pg-row"><span className="pg-k">Air it now</span>{tvSteps.map((v) => <button key={v} type="button" className="pg-btn" disabled={s.cash < v} onClick={() => run((x) => E.buyTV(c, x, v, tone), "tv")}>{E.usd(v)}</button>)}</div>
-                {s.week < E.WEEKS ? <div className="pg-row"><span className="pg-k">Reserve week</span>
-                  <select className="pg-sel sm" value={resW} onChange={(e) => setResW(Number(e.target.value))} aria-label="Week to reserve">{Array.from({ length: E.WEEKS - s.week }, (_, k) => s.week + 1 + k).map((w) => <option key={w} value={w}>Week {w}, saves {Math.round(((E.RATE[w - 1] ?? 1) - 1) * 100)}%</option>)}</select>
-                  {tvSteps.slice(0, 3).map((v) => <button key={v} type="button" className="pg-btn" disabled={s.cash < v} onClick={() => run((x) => E.reserveTV(c, x, Math.max(resW, s.week + 1), v, tone), "reserve")}>{E.usd(v)}</button>)}</div> : null}
-                <p className="pg-note">Attack ads hit hardest but can draw a fact check unless you have an opposition research firm. Outside groups spend for both sides on their own: {E.usd(c.outMe)} a week for you, {E.usd(c.outOp)} for {sur(op.name)}.</p>
-                <div className="pg-sep" />
-                <span className="pg-k">Targeted digital</span>
-                <div className="pg-row">
-                  <select className="pg-sel" value={dg} onChange={(e) => setDg(e.target.value)} aria-label="Voter group to target">
-                    <option value="">Pick a voter group</option>
-                    {digGroups.map((g) => <option key={g.dim + g.label} value={g.label}>{g.label}: {Math.round(g.share)}% of voters, {Math.round(g.d)} D to {Math.round(g.r)} R</option>)}
-                  </select>
-                  {[100000, 250000].map((v) => <button key={v} type="button" className="pg-btn" disabled={!dg || s.cash < v} onClick={() => run((x) => E.buyDigital(c, x, v, dg), "digital")}>{E.usd(v)}</button>)}
+              <div className="px-air">
+                <p className="px-note">Statewide TV runs about {E.usd(c.cost)} a week; this week stations charge {rate > 1 ? `${Math.round((rate - 1) * 100)}% more` : "the base rate"}. A normal campaign with your money runs about {E.usd(s.weekCash * E.SCHED[Math.min(E.WEEKS, s.week) - 1])} now. Booked: {E.usd(s.tvWeek)}.</p>
+                <div className="px-chips">{(["positive", "contrast", "attack"] as const).map((t) => <button key={t} type="button" className={tone === t ? "on" : ""} onClick={() => setTone(t)}>{t === "positive" ? "Positive" : t === "contrast" ? "Contrast" : "Attack"}</button>)}</div>
+                <div className="px-row"><span className="px-k">Air it</span>{tvSteps.map((v) => <button key={v} type="button" className="px-btn" disabled={s.cash < v} onClick={() => run((x) => E.buyTV(c, x, v, tone), "tv", { kind: "air", fs: r.counties.slice(0, 30).map((k) => k[0]) }, "airstrike")}>{E.usd(v)}</button>)}</div>
+                {s.week < E.WEEKS ? <div className="px-row"><span className="px-k">Reserve</span>
+                  <select className="px-sel" value={resW} onChange={(e) => setResW(Number(e.target.value))} aria-label="Week to reserve">{Array.from({ length: E.WEEKS - s.week }, (_, k) => s.week + 1 + k).map((w) => <option key={w} value={w}>Week {w}, saves {Math.round(((E.RATE[w - 1] ?? 1) - 1) * 100)}%</option>)}</select>
+                  {tvSteps.slice(0, 3).map((v) => <button key={v} type="button" className="px-btn" disabled={s.cash < v} onClick={() => run((x) => E.reserveTV(c, x, Math.max(resW, s.week + 1), v, tone), "reserve", undefined, "coin")}>{E.usd(v)}</button>)}</div> : null}
+                <span className="px-k">Targeted digital</span>
+                <div className="px-row">
+                  <select className="px-sel" value={dg} onChange={(e) => setDg(e.target.value)} aria-label="Voter group to target"><option value="">Pick a voter group</option>{digGroups.map((g) => <option key={g.dim + g.label} value={g.label}>{g.label}: {Math.round(g.share)}%, {Math.round(g.d)}D {Math.round(g.r)}R</option>)}</select>
+                  {[100000, 250000].map((v) => <button key={v} type="button" className="px-btn" disabled={!dg || s.cash < v} onClick={() => run((x) => E.buyDigital(c, x, v, dg), "digital")}>{E.usd(v)}</button>)}
                 </div>
-              </div>
-            ) : null}
-            {tab === "staff" ? (
-              <div className="pg-grid">
-                <div className="pg-act static"><b>Pollster</b><span>{s.staff.pollster ? `${E.POLLSTERS[s.staff.pollster]!.name}, ${E.usd(E.POLLSTERS[s.staff.pollster]!.wk)} a poll each week. Shows every voter group and region, and lets you test messages before you answer.` : "None. You only see public polls, when they come out, and you cannot test messages."}</span>
-                  <span className="pg-row">{([1, 2, 3] as const).map((t) => <button key={t} type="button" className={cls("chip", s.staff.pollster === t && "on")} onClick={() => run((x) => E.hire(c, x, "pollster", t), "pollster")}>{["C", "B", "A"][t - 1]} rated, {E.usd(E.POLLSTERS[t]!.wk)}/wk</button>)}</span></div>
-                {(Object.keys(E.STAFF_COST) as (keyof typeof E.STAFF_COST)[]).map((k) => (
-                  <button key={k} type="button" className={cls("pg-act", s.staff[k] && "done")} disabled={s.staff[k]} onClick={() => run((x) => E.hire(c, x, k), k)}>
-                    <b>{E.STAFF_COST[k].name}{s.staff[k] ? ", on staff" : ""}</b><span>{E.STAFF_COST[k].what} {E.usd(E.STAFF_COST[k].hire)} to hire{E.STAFF_COST[k].wk ? `, ${E.usd(E.STAFF_COST[k].wk)} a week` : ""}.</span>
-                  </button>
-                ))}
+                <p className="px-note">Attack ads hit hardest but can draw a fact check without opposition research. Outside groups add {E.usd(c.outMe)} a week for you, {E.usd(c.outOp)} for {sur(op.name)}.</p>
               </div>
             ) : null}
             {tab === "ground" ? (
-              <div className="pg-air">
-                <p className="pg-note">{r.earlyVote ? `${r.earlyVote.ballots.toLocaleString()} ballots were already cast in ${r.state} by ${r.earlyVote.date} in real life. ` : ""}Early voting opens in week {E.EARLY_FROM}; from then every dollar of turnout work also banks votes, which protects you from a late polling miss.</p>
-                <div className="pg-bank"><span className="pg-k">Votes banked</span><span className="bar"><i style={{ width: `${Math.round(s.banked * 100)}%` }} /></span><b>{Math.round(s.banked * 100)}%</b></div>
-                <button type="button" className="pg-act wide" disabled={s.days < 1 || !s.offices.length} onClick={() => run((x) => E.canvass(c, x), "knock", s.offices[0] ? { f: s.offices[0], kind: "knock" } : undefined)}><b>Door knocking weekend</b><span>1 day. Your {s.volunteers.toLocaleString()} volunteers knock doors in the counties with field offices. {s.knocks ? `${s.knocks.toLocaleString()} doors so far.` : ""}{!s.offices.length ? " Open a field office first." : ""}</span></button>
-                <div className="pg-row"><span className="pg-k">Turnout program</span>{[0.15, 0.4, 0.8].map((k) => { const v = Math.round((k * c.total) / 10000) * 10000; return <button key={k} type="button" className="pg-btn" disabled={s.cash < v} onClick={() => run((x) => E.fundGotv(c, x, v), "gotv")}>{E.usd(v)}</button>; })}</div>
-                <p className="pg-note">Paid canvassers, rides to the polls and ballot chase in the counties you win. It pays out at the end of the week; a field director makes it go 40 percent further. Field offices: {s.offices.length ? s.offices.map((f) => r.counties.find((x) => x[0] === f)?.[1]).join(", ") : "none yet, open them from the map"}.</p>
+              <div className="px-air">
+                <div className="px-turnout">
+                  <div><span className="px-k">Your base</span><Meter label="" v={s.enth[0]} tone="gold" /></div>
+                  <div><span className="px-k">Their base, your read</span><Meter label="" v={Math.round(s.enth[1] / 10) * 10} tone="hot" /></div>
+                  <div><span className="px-k">Ballots banked</span><Meter label="" v={s.banked * 100} tone="green" /></div>
+                </div>
+                <p className="px-note">Enthusiasm moves turnout on each side. Registration closes after week {E.REG_DEADLINE}; {s.regs.toLocaleString()} new voters so far. Early voting opens week {E.EARLY_FROM}, and banked ballots are safe from rain and late news.{r.earlyVote ? ` In real life ${r.earlyVote.ballots.toLocaleString()} ballots were cast in ${r.state} by ${r.earlyVote.date}.` : ""}</p>
+                <button type="button" className="px-act wide" disabled={s.days < 1 || !s.offices.length} onClick={() => run((x) => E.canvass(c, x), "knock", s.offices[0] ? { f: s.offices[0], kind: "knock" } : undefined)}><b>Door knocking weekend</b><span>1 day. Volunteers knock in field office counties. {s.knocks.toLocaleString()} doors so far.{!s.offices.length ? " Open a field office first." : ""}</span></button>
+                <div className="px-row"><span className="px-k">Turnout program</span>{[0.15, 0.4, 0.8].map((k) => { const v = Math.round((k * c.total) / 10000) * 10000; return <button key={k} type="button" className="px-btn" disabled={s.cash < v} onClick={() => run((x) => E.fundGotv(c, x, v), "gotv", undefined, "coin")}>{E.usd(v)}</button>; })}</div>
+                <button type="button" className="px-act wide" disabled={s.lawyers} onClick={() => run((x) => E.hireLawyers(x), "lawyers", undefined, "coin")}><b>Voter protection team{s.lawyers ? ", hired" : ""}</b><span>$150K. Lawyers and poll watchers, so long lines in a big county on Election Day do not cost you.</span></button>
+              </div>
+            ) : null}
+            {tab === "staff" ? (
+              <div className="px-grid">
+                <div className="px-act static"><b>Pollster</b><span>{s.staff.pollster ? `${E.POLLSTERS[s.staff.pollster]!.name}: a poll every week with regions, which sharpens your county read.` : "None. Your county read only comes from your ground team, and it goes stale."}</span>
+                  <span className="px-row">{([1, 2, 3] as const).map((t) => <button key={t} type="button" className={cls("px-chipb", s.staff.pollster === t && "on")} onClick={() => run((x) => E.hire(c, x, "pollster", t), "pollster", undefined, "coin")}>{["C", "B", "A"][t - 1]} {E.usd(E.POLLSTERS[t]!.wk)}/wk</button>)}</span></div>
+                {(Object.keys(E.STAFF_COST) as (keyof typeof E.STAFF_COST)[]).map((k) => (
+                  <button key={k} type="button" className={cls("px-act", s.staff[k] && "done")} disabled={s.staff[k]} onClick={() => run((x) => E.hire(c, x, k), k, undefined, "coin")}><b>{E.STAFF_COST[k].name}{s.staff[k] ? ", hired" : ""}</b><span>{E.STAFF_COST[k].what} {E.usd(E.STAFF_COST[k].hire)}{E.STAFF_COST[k].wk ? ` plus ${E.usd(E.STAFF_COST[k].wk)}/wk` : ""}.</span></button>
+                ))}
               </div>
             ) : null}
             {tab === "polls" ? (
-              <div className="pg-air">
+              <div className="px-air">
                 <PollChart s={s} me={me.name} op={op.name} />
-                <ul className="pg-plist">{[...s.polls].reverse().slice(0, 8).map((p, i) => <li key={i} className={p.internal ? "int" : ""}><span>{p.w === 0 ? "Before you started" : `Week ${p.w}`}</span><span>{p.src}</span><b className={p.m >= 0 ? "up" : "dn"}>{E.lead(p.m, sur(me.name), sur(op.name))}</b></li>)}</ul>
-                {s.polls.filter((p) => p.internal).slice(-1).map((p) => (
-                  <div key="x"><span className="pg-k">Your internal crosstabs, week {p.w}</span>
-                    <ul className="pg-plist">{(p.groups ?? []).map((g) => <li key={g.label}><span>{g.label.replace(/^Region: /, "")}</span><span>{g.label.startsWith("Region: ") ? "Region" : "Group"}</span><b className={g.m >= 0 ? "up" : "dn"}>{E.lead(g.m, sur(me.name), sur(op.name))}</b></li>)}</ul></div>
-                ))}
-                {!s.staff.pollster ? <p className="pg-note">Hire a pollster to see a poll every week, every group and region, and to test messages.</p> : null}
+                <ul className="px-plist">{[...s.polls].reverse().slice(0, 6).map((p, i) => <li key={i} className={p.internal ? "int" : ""}><span>{p.w === 0 ? "Start" : `W${p.w}`}</span><span>{p.src}</span><b className={p.m >= 0 ? "up" : "dn"}>{E.lead(p.m, sur(me.name), sur(op.name))}</b></li>)}</ul>
+                <span className="px-k">Regional polls, $30K each</span>
+                <div className="px-row wrap">{regs.map((g, k) => <button key={g.name} type="button" className="px-btn sm" onClick={() => run((x) => E.regionPoll(c, x, k), "region poll", { kind: "poll", fs: g.f }, "coin")}>{g.name}</button>)}</div>
               </div>
             ) : null}
             {tab === "intel" ? (
-              <div className="pg-air">
-                {r.research?.summary ? <div className="pg-intel"><span className="pg-k">The race, from the research</span><p className="pg-note">{r.research.summary}</p></div> : null}
+              <div className="px-air">
+                {r.research?.summary ? <p className="px-note">{r.research.summary}</p> : null}
                 {[me, op].map((x) => (
-                  <div key={x.side} className="pg-intel">
-                    <span className="pg-k">{x === me ? "Your candidate" : "The opponent"}: {x.name}</span>
-                    <ul>{x.intel.slice(0, 4).map((it, i) => <li key={i}>{it.l ? <b>{it.l}. </b> : null}{it.t} {it.u ? <a href={it.u} target="_blank" rel="noopener noreferrer">Source</a> : null}</li>)}</ul>
-                    {!x.intel.length ? <p className="pg-note">No researched file yet.</p> : null}
-                    <small className="pg-note">Raised {E.usd(x.donors?.raised ?? x.money.receipts ?? 0)}, cash {E.usd(x.money.cash ?? 0)}{x.money.as_of ? ` as of ${x.money.as_of}` : ""}, outside groups {E.usd(x.money.outside_for ?? 0)}{x.donors?.donations ? `, ${x.donors.donations.toLocaleString()} donations` : ""}.{x.file ? <> <Link href={`/watchdog/people/${x.file}`}>People file</Link></> : null}</small>
-                  </div>
+                  <div key={x.side} className="px-intel"><span className="px-k">{x === me ? "You" : "Them"}: {x.name}</span>
+                    <ul>{x.intel.slice(0, 3).map((it, i) => <li key={i}>{it.l ? <b>{it.l}. </b> : null}{it.t} {it.u ? <a href={it.u} target="_blank" rel="noopener noreferrer">Source</a> : null}</li>)}</ul></div>
                 ))}
-                {(r.research?.ads ?? []).length ? <div className="pg-intel"><span className="pg-k">Real ads in this race</span><ul>{r.research!.ads.map((a, i) => <li key={i}><b>{a.by}</b>: {a.theme} <a href={a.src} target="_blank" rel="noopener noreferrer">Source</a></li>)}</ul></div> : null}
-                <Link className="pg-note" href={`/watchdog/war-room/${r.id}`}>Open this race in the War Room</Link>
+                {(r.research?.ads ?? []).length ? <div className="px-intel"><span className="px-k">Real ads in this race</span><ul>{r.research!.ads.slice(0, 6).map((a, i) => <li key={i}><b>{a.by}</b>: {a.theme}</li>)}</ul></div> : null}
+                <Link className="px-note" href={`/watchdog/war-room/${r.id}`}>This race in the War Room</Link>
               </div>
             ) : null}
-            {tab === "log" ? (
-              <ul className="pg-log">{[...s.log].reverse().slice(0, 40).map((l, i) => <li key={i} className={l.kind}><span>W{l.w}</span><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
-            ) : null}
+            {tab === "log" ? <ul className="px-log">{[...s.log].reverse().slice(0, 40).map((l, i) => <li key={i} className={l.kind}><span>W{l.w}</span><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul> : null}
           </div>
         </section>
       </div>
+      <div className="px-ticker" aria-hidden="true"><span className="lbl">On the wire</span><div className="run">{[...wire, ...ticker].concat([...wire, ...ticker]).map((t, i) => <span key={i}>{t}</span>)}</div></div>
+      {toast ? <div key={toast.k} className={cls("px-toast", !toast.ok && "bad")} role="status" onAnimationEnd={() => setToast(null)}>{toast.t}</div> : null}
 
-      <div className="pg-wire" aria-hidden="true"><span className="lbl">Campaign wire</span><div className="run">{wire.concat(wire).map((l, i) => <span key={i} className={l.kind}>{l.t}</span>)}</div></div>
-      {toast ? <div key={toast.k} className={cls("pg-toast", !toast.ok && "bad")} role="status" onAnimationEnd={() => setToast(null)}>{toast.t}</div> : null}
-
-      {pend && !out ? (
-        <div className="pg-modal" role="dialog" aria-modal="true" aria-labelledby="pg-ev-h">
-          <div className={cls("pg-card", "ev", pend.kind)}>
-            <div className="pg-evtags">
-              <span className={cls("pg-tagx", debate ? "debate" : pend.kind === "attack" ? "hot" : pend.kind === "flash" ? "news" : pend.kind === "scenario" ? "sc" : "")}>{debate ? `Debate night · question ${4 - s.cur.filter((x) => x.kind === "debate").length} of 3` : pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : `Week ${s.week} decision`}</span>
-              {pend.real ? <span className="pg-tagx real">Real{pend.date ? `, ${pend.date}` : ""}</span> : null}
-              {s.cur.length > 1 ? <span className="pg-tagx dim">{s.cur.length - 1} more this week</span> : null}
+      {roll && !s.done && !week && !replay && !f72 ? <NewsRoll r={r} s={s} onDone={() => setRoll(false)} /> : null}
+      {!roll && pend && !out && !meet && !week && !replay && !f72 ? (
+        <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-ev-h">
+          <div className={cls("px-card", "ev", pend.kind)}>
+            <div className="px-evtags">
+              <span className={cls("px-tag", pend.kind === "attack" ? "hot" : pend.kind === "flash" ? "news" : "")}>{pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : `Week ${s.week} card`}</span>
+              {pend.real ? <span className="px-tag real">Real{pend.date ? `, ${pend.date}` : ""}</span> : null}
+              {s.cur.length > 1 ? <span className="px-tag dim">{s.cur.length - 1} more</span> : null}
             </div>
-            <h3 id="pg-ev-h">{pend.title}</h3>
-            <p>{pend.prompt} {pend.src ? (pend.src.startsWith("/") ? <Link href={pend.src}>Read it</Link> : <a href={pend.src} target="_blank" rel="noopener noreferrer">Source</a>) : null}</p>
-            {debate ? <p className="pg-note">Prep sessions: {s.prep}. Answers count half again as much on a debate stage, and prep sharpens them.</p> : null}
-            {pend.opts.some((o) => o.st) ? (
-              tests ? <p className="pg-note">Your pollster&apos;s message test is in: the bars under each answer show how it tested, with the pollster&apos;s margin of error.</p>
-                : <button type="button" className="pg-ghost" onClick={test} disabled={!s.staff.pollster}>Test the answers with your pollster, $25K{!s.staff.pollster ? ", hire one first" : ""}</button>
-            ) : null}
-            <div className="pg-opts">
+            <h3 id="px-ev-h">{pend.title}</h3>
+            <p><Type key={pend.id} text={pend.prompt} speed={12} /> {pend.src ? (pend.src.startsWith("/") ? <Link href={pend.src}>Read it</Link> : <a href={pend.src} target="_blank" rel="noopener noreferrer">Source</a>) : null}</p>
+            {pend.opts.some((o) => o.st) ? (tests ? <p className="px-note">Your pollster tested the answers: bars show how each tested, with error.</p> : <button type="button" className="px-ghost" onClick={test} disabled={!s.staff.pollster}>Test the answers, $25K{!s.staff.pollster ? ": hire a pollster" : ""}</button>) : null}
+            <div className="px-opts">
               {pend.opts.map((o, i) => {
                 const blocked = (o.need === "oppo" && !s.staff.oppo) || (o.cash != null && s.cash < o.cash) || (o.days != null && s.days < o.days);
                 const tv = tests?.[i];
                 return (
-                  <button key={i} type="button" className="pg-opt" disabled={blocked} onClick={() => choose(i)} style={{ animationDelay: `${i * 60}ms` }}>
-                    <b>{o.label}</b><span>{o.say}{o.cash ? ` ${E.usd(o.cash)}.` : ""}{o.days ? ` ${o.days} day.` : ""}{o.need === "oppo" && !s.staff.oppo ? " Needs an opposition research firm." : ""}</span>
-                    {tv != null && !Number.isNaN(tv) ? <span className="pg-test"><i className={tv >= 0 ? "up" : "dn"} style={{ width: `${Math.min(50, Math.abs(tv) * 120)}%`, [tv >= 0 ? "left" : "right"]: "50%" } as React.CSSProperties} /><em className={tv >= 0 ? "up" : "dn"}>{fxs(tv)}</em></span> : null}
+                  <button key={i} type="button" className="px-opt" disabled={blocked} onClick={() => choose(i)}>
+                    <b>{o.label}</b><span>{o.say}{o.cash ? ` ${E.usd(o.cash)}.` : ""}{o.days ? ` ${o.days} day.` : ""}{o.need === "oppo" && !s.staff.oppo ? " Needs opposition research." : ""}</span>
+                    {tv != null && !Number.isNaN(tv) ? <span className="px-test"><i className={tv >= 0 ? "up" : "dn"} style={{ width: `${Math.min(50, Math.abs(tv) * 120)}%`, [tv >= 0 ? "left" : "right"]: "50%" } as React.CSSProperties} /><em className={tv >= 0 ? "up" : "dn"}>{fxs(tv)}</em></span> : null}
                   </button>
                 );
               })}
@@ -482,155 +513,91 @@ function HQ({ r, s, commit, paths, onNight, quit }: { r: E.RaceFile; s: E.State;
         </div>
       ) : null}
       {out ? (
-        <div className="pg-modal" role="dialog" aria-modal="true" aria-labelledby="pg-out-h">
-          <div className="pg-card">
-            <span className="pg-tagx">How it played</span>
-            <h3 id="pg-out-h">{out.ev.opts[out.choice].label}</h3>
-            <div className={cls("pg-bigfx", out.o.fx >= 0 ? "up" : "dn")}><Roll v={out.o.fx} fmt={(x) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(2)}`} /><small>points</small></div>
+        <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-out-h">
+          <div className="px-card">
+            <span className="px-tag">How it played</span>
+            <h3 id="px-out-h">{out.ev.opts[out.choice].label}</h3>
+            <div className={cls("px-big", out.o.fx >= 0 ? "up" : "dn")}><Roll v={out.o.fx} fmt={(x) => `${x >= 0 ? "+" : "-"}${Math.abs(x).toFixed(2)}`} /><small>points</small></div>
             <p>{out.o.t}</p>
-            {out.o.parts.length ? <><span className="pg-k">Who moved, from {r.state}&apos;s voter data</span><Parts parts={out.o.parts} /></> : null}
-            <button type="button" className="pg-press sm" onClick={() => setOut(null)}>{s.cur.length ? "Next" : "Back to work"}</button>
+            {out.o.parts.length ? <Parts parts={out.o.parts} /> : null}
+            <button type="button" className="px-btn go" onClick={() => { setOut(null); sfx("click"); }}>{s.cur.length ? "Next card" : "Back to work"}</button>
           </div>
         </div>
       ) : null}
-      {week ? (() => {
+      {meet ? <Meeting r={r} s={s} m={meet} onClose={() => setMeet(null)} onDone={(x, res) => { commit(x); setMeet(null); setToast({ t: res.caught ? (res.fx >= 0 ? "A lucky break." : "It leaked.") : "Meeting done.", ok: res.fx >= 0, k: Date.now() }); }} /> : null}
+      {replay && week ? <OppReplay r={r} s={s} geo={geo} onDone={() => { setReplay(false); sfx("click"); }} /> : null}
+      {!replay && week ? (() => {
         const na = E.polledAvg(s);
-        const d = (a: number, b: number) => a - b;
         return (
-          <div className="pg-modal" role="dialog" aria-modal="true" aria-labelledby="pg-wk-h">
-            <div className="pg-card report">
-              <span className="pg-tagx">{s.done ? "The polls are closed" : `Week ${s.week - 1} report`}</span>
-              <h3 id="pg-wk-h">{s.done ? "Election Day is here" : "The week in review"}</h3>
-              <div className="pg-deltas">
-                <div><span>Poll average</span><b className={na == null ? "" : na >= 0 ? "up" : "dn"}>{na == null ? "n/a" : E.lead(na, sur(me.name), sur(op.name))}</b>{na != null && week.before.avg != null ? <small className={na - week.before.avg >= 0 ? "up" : "dn"}>{fxs(na - week.before.avg)}</small> : null}</div>
-                <div><span>War chest</span><b>{E.usd(s.cash)}</b><small className={d(s.cash, week.before.cash) >= 0 ? "up" : "dn"}>{d(s.cash, week.before.cash) >= 0 ? "+" : "−"}{E.usd(Math.abs(d(s.cash, week.before.cash)))}</small></div>
-                <div><span>Buzz</span><b>{Math.round(s.buzz)}</b><small className={s.buzz - week.before.buzz >= 0 ? "up" : "dn"}>{s.buzz - week.before.buzz >= 0 ? "+" : "−"}{Math.abs(Math.round(s.buzz - week.before.buzz))}</small></div>
-                <div><span>Volunteers</span><b>{s.volunteers.toLocaleString()}</b><small className={s.volunteers - week.before.vol >= 0 ? "up" : "dn"}>{s.volunteers - week.before.vol >= 0 ? "+" : "−"}{Math.abs(s.volunteers - week.before.vol).toLocaleString()}</small></div>
+          <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-wk-h">
+            <div className="px-card report">
+              <span className="px-tag">{s.done ? "The polls are closed" : `Week ${s.week - 1} report`}</span>
+              <h3 id="px-wk-h">{s.done ? "Election Day is here" : "The week in review"}</h3>
+              <div className="px-deltas">
+                <div><span>Poll avg</span><b className={na == null ? "" : na >= 0 ? "up" : "dn"}>{na == null ? "n/a" : E.lead(na, sur(me.name), sur(op.name))}</b>{na != null && week.before.avg != null ? <small className={na - week.before.avg >= 0 ? "up" : "dn"}>{fxs(na - week.before.avg)}</small> : null}</div>
+                <div><span>Cash</span><b>{E.usd(s.cash)}</b><small className={s.cash - week.before.cash >= 0 ? "up" : "dn"}>{s.cash - week.before.cash >= 0 ? "+" : "-"}{E.usd(Math.abs(s.cash - week.before.cash))}</small></div>
+                <div><span>Buzz</span><b>{Math.round(s.buzz)}</b><small className={s.buzz - week.before.buzz >= 0 ? "up" : "dn"}>{s.buzz - week.before.buzz >= 0 ? "+" : "-"}{Math.abs(Math.round(s.buzz - week.before.buzz))}</small></div>
+                <div><span>Volunteers</span><b>{s.volunteers.toLocaleString()}</b><small className={s.volunteers - week.before.vol >= 0 ? "up" : "dn"}>{s.volunteers - week.before.vol >= 0 ? "+" : "-"}{Math.abs(s.volunteers - week.before.vol).toLocaleString()}</small></div>
               </div>
-              <ul className="pg-log">{week.items.map((l, i) => <li key={i} className={l.kind} style={{ animationDelay: `${i * 60}ms` }}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
-              {(() => { const p = s.polls.filter((x) => x.w === s.week - 1); return p.length ? <p>New polling: {p.map((x) => `${x.src}, ${E.lead(x.m, sur(me.name), sur(op.name))}`).join("; ")}.</p> : <p className="pg-note">No new polls this week{s.staff.pollster ? "" : "; you do not have a pollster"}.</p>; })()}
-              <button type="button" className="pg-press sm" onClick={() => { setWeek(null); if (s.done) onNight(); else setBanner(s.week); }}>{s.done ? "Watch the returns" : `On to week ${s.week}`}</button>
+              <ul className="px-log">{week.items.map((l, i) => <li key={i} className={l.kind}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
+              <button type="button" className="px-btn go" onClick={() => { setWeek(null); if (s.done) onNight(); else { setRoll(true); sfx("bell"); } }}>{s.done ? "Watch the returns" : `On to week ${s.week}`}</button>
             </div>
           </div>
         );
       })() : null}
-    </div>
-  );
-}
-
-// ============================================================ election night
-function Night({ r, s, paths, again, menu }: { r: E.RaceFile; s: E.State; paths: CountyPath[] | null; again: () => void; menu: () => void }) {
-  const res = s.result!;
-  const c = useMemo(() => E.ctx(r, s.side), [r, s.side]);
-  const geo = useGeo(paths);
-  const [n, setN] = useState(0);
-  const total = res.order.length;
-  useEffect(() => {
-    if (n >= total) return;
-    const id = setTimeout(() => setN((x) => Math.min(total, x + Math.max(1, Math.ceil(total / 70)))), 150);
-    return () => clearTimeout(id);
-  }, [n, total]);
-  const shown = useMemo(() => new Set(res.order.slice(0, n)), [res.order, n]);
-  const tally = useMemo(() => {
-    let me = 0, op = 0, t = 0;
-    for (const x of res.counties) if (shown.has(x.f)) { me += (x.t * (1 + x.m / 100)) / 2; op += (x.t * (1 - x.m / 100)) / 2; t += x.t; }
-    return { me, op, t };
-  }, [shown, res.counties]);
-  const allT = res.counties.reduce((a, x) => a + x.t, 0) || 1;
-  const rep = tally.t / allT;
-  const lead = tally.me - tally.op;
-  const called = n >= total || (rep > 0.55 && Math.abs(lead) / allT > (1 - rep) * 0.35 && (lead > 0) === res.win);
-  const g = E.grade(s);
-  const done = n >= total;
-  const share = `I ran ${c.me.name}'s campaign for ${r.name} on ${E.DIFF[s.diff].name} and ${res.win ? "won" : "lost"} by ${Math.abs(res.m).toFixed(1)} points. Grade: ${g.letter}. Play at onpointpolitics.com/play`;
-  const [copied, setCopied] = useState(false);
-  const latest = res.order.slice(Math.max(0, n - 4), n).map((f) => res.counties.find((x) => x.f === f)).filter(Boolean).reverse();
-  useEffect(() => { if (done) track("Play finished", { race: r.id, side: s.side, diff: s.diff, win: res.win, m: Math.round(res.m * 10) / 10 }); }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
-  return (
-    <div className="pg-night">
-      {called && res.win ? <div className="pg-confetti" aria-hidden="true">{Array.from({ length: 36 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * 0.12}s`, background: ["#ffb547", "#3d7bff", "#ff3b5c", "#5ee0a0", "#b78cff"][i % 5] }} />)}</div> : null}
-      <div className="pg-nh">
-        <span className="pg-k pg-live"><i />Election night · {r.state}</span>
-        <h2>{called ? (res.win ? `${c.me.name} wins` : `${c.op.name} wins`) : "Too early to call"}</h2>
-        {called ? <span className={cls("pg-stamp", res.win ? "win" : "loss")}>{res.win ? "Projected winner" : "Race called"}</span> : null}
-      </div>
-      <div className="pg-nmain">
-        <section className="pg-mapw"><StateMap r={r} s={s} geo={geo} sel={null} onSel={() => {}} mode="night" shown={shown} /></section>
-        <section className="pg-tally">
-          <span className="pg-k">{Math.round(rep * 100)}% of the vote counted</span>
-          <span className="pg-rep"><i style={{ width: `${rep * 100}%` }} /></span>
-          {[{ n: c.me.name, v: tally.me, p: c.me.party, me: true }, { n: c.op.name, v: tally.op, p: c.op.party, me: false }].sort((a, b) => b.v - a.v).map((x) => (
-            <div key={x.n} className={cls("pg-tl", x.p.toLowerCase())}>
-              <div><b>{x.n}{called && ((x.me && res.win) || (!x.me && !res.win)) ? " ✓" : ""}</b><span><Roll v={x.v} /></span></div>
-              <span className="bar"><i style={{ width: `${tally.t ? (100 * x.v) / tally.t : 0}%` }} /></span>
-              <small>{tally.t ? ((100 * x.v) / tally.t).toFixed(1) : "0.0"}%</small>
-            </div>
-          ))}
-          {!done ? <ul className="pg-feed">{latest.map((x) => x && <li key={x.f}><span>{r.counties.find((k) => k[0] === x.f)?.[1]}</span><b className={x.m >= 0 ? "up" : "dn"}>{E.lead(x.m, sur(c.me.name), sur(c.op.name))}</b></li>)}</ul> : null}
-          {done ? (
-            <div className="pg-final">
-              <div className="pg-grade"><b>{g.letter}</b><span>{res.win ? "You won" : "You lost"} by {Math.abs(res.m).toFixed(1)} points. {g.line}</span></div>
-              <dl>
-                <div><dt>The forecast had you at</dt><dd>{E.lead(res.forecast, sur(c.me.name), sur(c.op.name))}</dd></div>
-                <div><dt>You started at</dt><dd>{E.lead(res.start, sur(c.me.name), sur(c.op.name))}</dd></div>
-                <div><dt>Raised and spent</dt><dd>{E.usd(s.raised)} · {E.usd(s.spent)}</dd></div>
-                <div><dt>Counties visited, doors knocked</dt><dd>{Object.keys(s.visits).length} · {s.knocks.toLocaleString()}</dd></div>
-              </dl>
-              <div className="pg-row">
-                <button type="button" className="pg-btn" onClick={() => { navigator.clipboard?.writeText(share).then(() => setCopied(true)).catch(() => {}); }}>{copied ? "Copied" : "Copy your result"}</button>
-                <button type="button" className="pg-press sm" onClick={again}>Run it again</button>
-                <button type="button" className="pg-btn" onClick={menu}>Pick another race</button>
-              </div>
-              <p className="pg-note">Now watch the real one: <Link href={raceHref(r.id)}>the {r.name} forecast</Link> · <Link href={`/watchdog/war-room/${r.id}`}>War Room</Link> · <Link href="/results">results desk on November 3</Link></p>
-            </div>
-          ) : <button type="button" className="pg-ghost" onClick={() => setN(total)}>Skip to the end</button>}
-        </section>
-      </div>
+      {f72 ? <Final72 r={r} s={s} onDone={(x) => { setF72(false); const before = { avg, cash: x.cash, buzz: x.buzz, vol: x.volunteers }; const items = E.endWeek(c, x); commit(x); setWeek({ items, before }); }} /> : null}
     </div>
   );
 }
 
 // ============================================================ the app
 export default function PlayApp({ idx }: { idx: PIndex }) {
-  const [screen, setScreen] = useState<"title" | "lobby" | "intro" | "hq" | "night">("title");
+  const [screen, setScreen] = useState<"title" | "lobby" | "intro" | "hq" | "debate" | "night">("title");
   const [race, setRace] = useState<E.RaceFile | null>(null);
   const [st, setSt] = useState<E.State | null>(null);
   const [paths, setPaths] = useState<CountyPath[] | null>(null);
   const [saved, setSaved] = useState<Save | null>(null);
   const [err, setErr] = useState("");
-  const top = useRef<HTMLDivElement>(null);
+  const [imm, setImm] = useState(false);
+  const [rolled, setRolled] = useState(0);
+  const root = useRef<HTMLDivElement>(null);
+  const geo = useMapGeo(paths);
   useEffect(() => { setSaved(load()); }, []);
   useEffect(() => { if (st) store({ s: st }); }, [st]);
-  const loadPaths = (r: E.RaceFile) => { setPaths(null); fetch(`/forecast/states/${r.st}.json`).then((x) => x.json()).then((j) => setPaths(j.counties as CountyPath[])).catch(() => setPaths([])); };
-  const start = (r: E.RaceFile, side: E.Side, d: E.Diff) => {
-    setRace(r); loadPaths(r); setSt(E.newGame(r, side, d)); setScreen("intro"); track("Play start", { race: r.id, side, diff: d });
-    top.current?.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => { if (!imm) return; const o = document.body.style.overflow; document.body.style.overflow = "hidden"; return () => { document.body.style.overflow = o; }; }, [imm]);
+  const goImm = (on: boolean) => {
+    setImm(on);
+    try { if (on && root.current?.requestFullscreen && !document.fullscreenElement) root.current.requestFullscreen().catch(() => {}); else if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {}); } catch { /* not allowed */ }
   };
+  const loadPaths = (r: E.RaceFile) => { setPaths(null); fetch(`/forecast/states/${r.st}.json`).then((x) => x.json()).then((j) => setPaths(j.counties as CountyPath[])).catch(() => setPaths([])); };
+  const start = (r: E.RaceFile, side: E.Side, d: E.Diff, seed?: number) => { setRace(r); loadPaths(r); setSt(E.newGame(r, side, d, seed)); setScreen("intro"); goImm(true); track("Play start", { race: r.id, side, diff: d }); };
   const resume = async () => {
     if (!saved) return;
-    try { const r = (await fetch(`/play/r/${saved.s.race}.json`).then((x) => x.json())) as E.RaceFile; setRace(r); loadPaths(r); setSt(E.migrate(saved.s, r)); setScreen(saved.s.done ? "night" : "hq"); }
+    try { const r = (await fetch(`/play/r/${saved.s.race}.json`).then((x) => x.json())) as E.RaceFile; setRace(r); loadPaths(r); setSt(E.migrate(saved.s, r)); setScreen(saved.s.done ? "night" : "hq"); goImm(true); }
     catch { setErr("The saved campaign could not load."); }
   };
   const commit = useCallback((x: E.State) => setSt(x), []);
-  const menu = () => { setScreen("lobby"); setSaved(load()); };
+  const menu = () => { setScreen("lobby"); setSaved(load()); music("off"); };
   const sr = saved ? idx.races.find((r) => r.id === saved.s.race) : null;
-  useEffect(() => { if (screen !== "intro") return; const id = setTimeout(() => setScreen("hq"), 4200); return () => clearTimeout(id); }, [screen]);
-  const meC = race && st ? race.cands[st.side === "D" ? 0 : 1] : null;
+  const meC = race && st ? race.cands[st.side === "D" ? 0 : 1] : null, opC = race && st ? race.cands[st.side === "D" ? 1 : 0] : null;
   return (
-    <div ref={top} className="pg-app">
-      {err ? <p className="pg-err" role="alert">{err}</p> : null}
+    <div ref={root} className={cls("px-app", imm && screen !== "title" && "imm")}>
+      {err ? <p className="px-err" role="alert">{err}</p> : null}
       {screen === "title" ? <Title onGo={() => setScreen("lobby")} saved={!!(saved && sr && !saved.s.done)} onResume={resume} savedLabel={saved && sr ? `${sr.c[saved.s.side === "D" ? 0 : 1][0]}, week ${saved.s.week}` : ""} /> : null}
       {screen === "lobby" ? <Lobby idx={idx} onStart={start} /> : null}
-      {screen === "intro" && race && st && meC ? (
-        <button type="button" className="pg-intro" onClick={() => setScreen("hq")}>
-          <span className="pg-k">Labor Day · September 7, 2026</span>
-          <b>You are running {meC.name}&apos;s campaign for {race.name}.</b>
-          <span>The race starts at {E.lead(E.margin(race, st), sur(meC.name), sur(race.cands[st.side === "D" ? 1 : 0].name))}. You have {E.usd(st.cash)} in the bank and eight weeks.</span>
-          <em>Click to start</em>
+      {screen === "intro" && race && st && meC && opC ? (
+        <button type="button" className="px-cut intro" onClick={() => { setScreen("hq"); sfx("click"); }}>
+          <div className="px-vsrow"><Portrait seed={seedOf(meC.name)} role="cand" party={meC.party} size={120} talking /><b className="px-vsb">VS</b><Portrait seed={seedOf(opC.name)} role="cand" party={opC.party} size={120} /></div>
+          <span className="px-tag">Labor Day · September 7, 2026</span>
+          <b className="px-cut-h">{meC.name}: {race.name}</b>
+          <span><Type text={`You start at ${E.lead(E.margin(race, st), sur(meC.name), sur(opC.name))} with ${E.usd(st.cash)} in the bank, eight weeks, and a campaign bus. Your county map is only as good as your polling, so keep it fresh.`} /></span>
+          <em>Click to begin</em>
         </button>
       ) : null}
-      {screen === "hq" && race && st ? <HQ r={race} s={st} commit={commit} paths={paths} onNight={() => setScreen("night")} quit={menu} /> : null}
-      {screen === "night" && race && st?.result ? <Night r={race} s={st} paths={paths} again={() => start(race, st.side, st.diff)} menu={() => { store(null); menu(); }} /> : null}
+      {screen === "hq" && race && st ? <HQ r={race} s={st} commit={commit} geo={geo} onNight={() => setScreen("night")} onDebate={() => setScreen("debate")} quit={() => { goImm(false); menu(); }} immersive={imm} toggleFull={() => goImm(!imm)} rolled={rolled} setRolled={setRolled} /> : null}
+      {screen === "debate" && race && st ? <Debate r={race} s={st} onDone={(x) => { commit(x); setScreen("hq"); }} /> : null}
+      {screen === "night" && race && st?.result ? <Night r={race} s={st} geo={geo} again={() => start(race, st.side, st.diff)} menu={() => { store(null); goImm(false); menu(); }} /> : null}
+      {imm && screen !== "title" && screen !== "hq" ? <button type="button" className="px-exit" onClick={() => goImm(false)} aria-label="Leave full screen">WIN</button> : null}
     </div>
   );
 }

@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
+import { Press_Start_2P, Pixelify_Sans } from "next/font/google";
 import PlayApp, { type PIndex } from "./PlayApp";
 import "./play.css";
 
+const head = Press_Start_2P({ weight: "400", subsets: ["latin"], variable: "--px-d", display: "swap" });
+const body = Pixelify_Sans({ subsets: ["latin"], variable: "--px-b", display: "swap" });
+
 export const metadata: Metadata = {
   title: "Campaign 2026: run a Senate or governor campaign",
-  description: "A campaign game built on the On Point Politics forecast. Pick a close Senate or governor race, pick a candidate and a difficulty, then raise money, work the counties, hire pollsters and consultants, buy the air war, build the turnout operation and answer the week's news. Voters react the way the site's own data says they would.",
+  description: "A pixel campaign game built on the On Point Politics forecast. Pick a close Senate or governor race and run the last eight weeks from a campaign bus: meet the people who matter, fight the air war, build a real turnout operation, take the debate stage and sweat out a long election night, with the real events of each race.",
   alternates: { canonical: "/play" },
 };
 
 export default function Page() {
   const idx = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "play", "index.json"), "utf8")) as PIndex;
   return (
-    <div className="opp pg">
+    <div className={`opp pg ${head.variable} ${body.variable}`}>
       <PlayApp idx={idx} />
-      <section className="pg-hero">
-        <h1 className="sr">Campaign 2026</h1>
-        <p>Take over a real campaign on Labor Day and run it to Election Day. Raise the money, work the counties, hire your pollster and consultants, fight the air war, build the turnout operation and decide what to say when the news breaks. Voters react the way On Point&apos;s data says they would: the forecast, every county, the voter groups, the polls, the donor map and the money are the real ones for your race, and the decisions come from what is really happening in it, each with its source.</p>
-        <ul className="pg-how">
-          <li><b>Eight weeks</b><span>Six days on the trail each week, and only so much energy.</span></li>
+      <section className="px-about">
+        <h1>Campaign 2026</h1>
+        <p>Take over a real campaign on Labor Day and run it to Election Day. Send the bus county to county, meet party chairs, union bosses, megadonors and podcasters, fight the air war, register voters and bank early ballots, take the debate stage and watch the returns come in past midnight. You never see the true county numbers, only your campaign&apos;s read of them, as sharp as your polling and as fresh as your last visit. Voters react the way On Point&apos;s data says they would, and the events, ads, endorsements and debates come from what is really happening in each race, with sources.</p>
+        <ul className="px-how">
           <li><b>{idx.races.length} races</b><span>Every Senate and governor race within 15 points.</span></li>
-          <li><b>Four levels</b><span>From Safe Seat to Wave Against You.</span></li>
-          <li><b>Election night</b><span>Watch your counties come in, one by one.</span></li>
+          <li><b>Fog of war</b><span>Polls and ground teams sharpen your county read; it goes stale.</span></li>
+          <li><b>Real turnout</b><span>Enthusiasm, registration, early votes, Election Day weather and lines.</span></li>
+          <li><b>Debate stage</b><span>Real issues, a delivery meter, comebacks and a live dial.</span></li>
+          <li><b>Election night</b><span>Mail and Election Day votes in batches, a needle, and the call.</span></li>
         </ul>
       </section>
     </div>

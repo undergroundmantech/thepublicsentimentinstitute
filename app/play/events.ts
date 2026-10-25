@@ -3,7 +3,7 @@
 // message and the vulnerabilities opponents are running on are written down with sources.
 // A stance's pos runs from -1, the most progressive answer, to +1, the most conservative; trump runs from -1, distance
 // from the president, to +1, embrace. How voters take it is worked out in engine.react from the race's own voter data.
-import { type Ctx, type State, type Part, type Ev, type Stance, react, applyGlobal, usd, DIFF, rand, gauss, weekOf, POLLSTERS } from "./engine";
+import { type Ctx, type State, type Part, type Ev, type Stance, type Meet, type Role, react, applyGlobal, usd, DIFF, rand, gauss, weekOf, POLLSTERS } from "./engine";
 export type { Ev, Opt } from "./engine";
 
 const FARM = ["IA", "NE", "KS", "SD", "MN", "WI", "OH", "MI", "GA", "AR", "MS", "LA", "TN", "OK", "TX", "ME", "VT", "NC", "SC"];
@@ -297,7 +297,7 @@ export function dealWeek(c: Ctx, s: State) {
   const out: Ev[] = [];
   if (s.week === s.dweek) {
     const declined = !(c.r.research?.debates ?? []).length && (c.r.research?.storylines ?? []).some((x) => /declin|skip|refus|no debate|won.t debate|will not debate/i.test(x.title + " " + x.what));
-    if (declined) out.push(chairEv(c)); else out.push(...debateQs(c, s));
+    if (declined) out.push(chairEv(c)); // otherwise debate night is its own scene, on the stage
   } else { const e = eventFor(c, s); if (e) out.push(e); }
   const f = flashFor(c, s); if (f) out.push(f);
   if (s.week >= 2 && rand(s) < 0.22) { const sc = SCENARIOS.filter((x) => !s.used.includes(x.id)); if (sc.length) out.push(sc[Math.floor(rand(s) * sc.length)]); }
@@ -318,3 +318,127 @@ export function testEvent(c: Ctx, s: State, ev: Ev): number[] | null {
   s.tests[ev.id] = out;
   return out;
 }
+
+// ============================================================ the debate stage
+export type DOpt = { label: string; say: string; st: Stance };
+export type DRound = { q: string; topic: string; src?: string; real: boolean; opts: DOpt[]; opp: string };
+const ISSUE_RE: [RegExp, string][] = [[/health|medic|insur|drug|hospital|aca\b|premium|social security/i, "health"], [/immigra|border|ice\b|deport/i, "immig"], [/corrupt|ethic|stock|lobby|epstein|scandal|truth|integrity/i, "corruption"], [/price|cost|tariff|tax|job|wage|econom|gas|fuel|diesel|housing|rent|grocer|farm|energy|power|inflation/i, "econ"]];
+const issueOf = (t: string) => ISSUE_RE.find(([re]) => re.test(t))?.[1] ?? "other";
+export function debateRounds(c: Ctx, s: State): DRound[] {
+  const p0 = c.me.party === "R" ? 0.65 : c.me.party === "D" ? -0.65 : 0;
+  const theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
+  const oppAds = (c.r.research?.ads ?? []).filter((a) => a.for === theirs).map((a) => a.theme);
+  const oppMsg = c.op.intel.find((i) => /main message/i.test(i.l ?? ""))?.t;
+  const lines = [...oppAds, ...(oppMsg ? [oppMsg] : [])];
+  const out: DRound[] = [];
+  for (const x of (c.r.research?.issues ?? []).slice(0, 3)) {
+    const iss = issueOf(x.issue + " " + x.why);
+    out.push({ topic: x.issue, real: true, src: x.src, q: `${x.issue}. ${x.why} What would you do?`, opp: lines[out.length % Math.max(1, lines.length)] ?? `${c.op.name} says you are out of step with ${c.r.state}.`, opts: [
+      { label: "Your party's answer", say: "Give the answer your base wants to hear, without hedging.", st: { issue: iss, pos: p0 * 1.2 } },
+      { label: "Meet in the middle", say: "Name what both sides get right and offer a practical fix.", st: { issue: iss, pos: p0 * 0.2, tone: "calm" } },
+      { label: "Turn it on them", say: "Make the answer about your opponent's record on it.", st: { issue: iss, pos: p0 * 0.8, tone: "fiery" } },
+      { label: "Tell a story", say: "Talk about a family you met on the trail.", st: { issue: iss, pos: p0 * 0.5, sal: 0.75, tone: "calm" } },
+    ] });
+  }
+  const pool = ISSUES.filter((e) => !s.used.includes(e.id) && (!e.states || e.states.includes(c.r.st)));
+  while (out.length < 4 && pool.length) {
+    const e = pool.splice(Math.floor(rand(s) * pool.length), 1)[0];
+    out.push({ topic: e.title, real: false, q: e.prompt, opp: lines[out.length % Math.max(1, lines.length)] ?? `${c.op.name} answers with the party line.`, opts: e.opts.filter((o) => o.st).map((o) => ({ label: o.label, say: o.say, st: o.st! })) });
+  }
+  return out;
+}
+
+// ============================================================ meetings
+const FIRST = ["Dana", "Marcus", "Linda", "Ray", "Teresa", "Hank", "Priya", "Luis", "Carol", "Dwayne", "Mei", "Frank", "Rosa", "Earl", "Janelle", "Bud", "Keisha", "Tom", "Ana", "Walt", "Gloria", "Darnell", "Becky", "Omar"];
+const LAST = ["Hollister", "Ortega", "Banks", "Kowalski", "Nguyen", "Whitfield", "Reyes", "Lindqvist", "Okafor", "McAllister", "Brandt", "Castillo", "Pruitt", "Yoder", "Delgado", "Haskins", "Albright", "Soto", "Fairbanks", "Mahoney"];
+const TRIBAL = ["AK", "AZ", "NM", "SD", "OK", "MN", "WI", "NE", "MI", "MT", "NV", "ME"];
+const hash = (t: string) => { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+export function invitesFor(c: Ctx, s: State): Meet[] {
+  const r = c.r, R = c.me.party === "R", I = c.me.party === "I";
+  const own = (x: number) => (R ? x : I ? x * 0.3 : -x);
+  const idx = r.counties.map((_, i) => i);
+  const bySize = (f: (i: number) => boolean) => idx.filter(f).sort((a, b) => r.counties[b][5] - r.counties[a][5]);
+  const base = bySize((i) => c.base[i] >= 8), swing = bySize((i) => Math.abs(c.base[i]) < 8), theirs = bySize((i) => c.base[i] <= -8), all = bySize(() => true);
+  const pick = <T,>(a: T[]) => a[Math.floor(rand(s) * a.length)];
+  const name = () => `${pick(FIRST)} ${pick(LAST)}`;
+  const cn = (i: number | undefined) => (i != null ? r.counties[i][1] : r.state);
+  const reg = (i: number | undefined) => (i != null ? [r.counties[i][0]] : []);
+  const party = R ? "Republican" : I ? "independent" : "Democratic";
+  const w = c.weekly;
+  const T: (() => Meet | null)[] = [
+    () => { const i = pick(base.slice(0, 5)); const n = name(); return { id: `chair:${s.week}`, who: `${n}, ${cn(i)} County ${party} chair`, role: "chair", seed: hash(n), place: cn(i), f: r.counties[i ?? 0]?.[0], title: "The county party fish fry", intro: `"Folks here knock the doors that win this thing. Come to the fish fry Saturday and give them a reason to."`, opts: [
+      { label: "Work the room", say: "Shake every hand and pose for every photo.", out: { enth: 3, vol: 70, t: "The volunteers went home fired up." } },
+      { label: "Give them red meat", say: "A fiery speech about the other side.", out: { enth: 6, vol: 40, st: { pos: own(0.9), tone: "fiery" }, risk: 0.18, riskT: "A phone video of the hottest line went statewide.", riskFx: -0.14, t: "The crowd roared." } },
+      { label: "Send your spouse", say: "Stay on the road and send family instead.", out: { enth: 1, vol: 20, days: 0, t: "A warm welcome, but they wanted you." } }] }; },
+    () => { const n = name(); const i = pick(swing.slice(0, 6)); return { id: `union:${s.week}`, who: R ? `${n}, a Teamsters local president` : `${n}, president of the state AFL-CIO`, role: "union", seed: hash(n), place: cn(i), title: R ? "The Teamsters are listening" : "The labor endorsement", intro: R ? `"Our members voted for Trump. They also want their pensions safe and their jobs here. Convince me."` : `"Our members knock more doors than anybody. They want to know you will be there on the PRO Act and on trade."`, opts: [
+      { label: R ? "Back them on trade and pensions" : "Sign the labor pledge", say: R ? "Promise to protect pensions and fight offshoring." : "Commit to the PRO Act and to walking picket lines.", out: { vol: R ? 90 : 220, enth: 2, st: { issue: "econ", pos: own(R ? -0.1 : 0.9), extra: ["No college degree"] }, region: reg(i), pers: 1.2, t: "Members will be on doors for you." } },
+      { label: "Talk jobs, sign nothing", say: "Stay friendly and general.", out: { vol: 40, st: { issue: "econ", pos: own(0.3), tone: "calm" }, t: "A polite meeting. Some members will help." } },
+      { label: "Skip it", say: "Business groups would notice.", out: { days: 0, enth: -1, t: "The union sat this one out." } }] }; },
+    () => (["IA", "NE", "KS", "SD", "MN", "WI", "OH", "MI", "GA", "TX", "OK", "AR", "TN", "NC", "ME", "MT", "ID", "WY"].includes(r.st) ? (() => { const n = name(); const rural = idx.filter((i) => r.counties[i][5] < (all[Math.floor(all.length / 3)] != null ? r.counties[all[Math.floor(all.length / 3)]][5] : 1e9)).map((i) => r.counties[i][0]); return { id: `farm:${s.week}`, who: `${n}, head of the state Farm Bureau`, role: "farm", seed: hash(n), place: "a grain elevator", title: "Out on the farm", intro: `"Soybean prices are in the tank and diesel is up. My members want to hear one thing: are you with us on trade?"`, opts: [
+      { label: "End the tariffs", say: "Call them a tax on farmers.", out: { st: { issue: "econ", pos: -0.4, trump: -0.6, extra: ["Small, under 50K"] }, region: rural, pers: R ? 0.2 : 0.7, t: "The farmers nodded. Some of them anyway." } },
+      { label: "Ask for relief, keep the strategy", say: "Back the trade fight with aid payments.", out: { st: { issue: "econ", pos: 0.3, trump: 0.3, extra: ["Small, under 50K"] }, region: rural, pers: R ? 0.6 : 0.2, t: "A careful answer for a careful crowd." } },
+      { label: "Drive a combine for the cameras", say: "Skip the policy and make the evening news.", out: { buzz: 8, risk: 0.2, riskT: "You stalled the combine on camera.", riskFx: -0.06, t: "Good pictures." } }] }; })() : null),
+    () => { const n = name(); return { id: `donor:${s.week}`, who: `${n}, a private equity founder`, role: "donor", seed: hash(n), place: "a lake house", title: "A very big check", intro: `"I can raise you a fortune by Friday. I just need to know you will look out for the carried interest break. Between us."`, opts: [
+      { label: "Say what they want to hear", say: "Wink and take the money.", out: { cash: Math.round(w * 1.4), risk: 0.3, riskT: "A guest recorded your remarks, and a reporter has the tape.", riskFx: -0.28, t: `They raised ${usd(Math.round(w * 1.4))} by Friday.` } },
+      { label: "Take the money, promise nothing", say: "Thank them, commit to nothing.", out: { cash: Math.round(w * 0.6), risk: 0.08, riskT: "The guest list made the papers.", riskFx: -0.08, t: `A smaller night: ${usd(Math.round(w * 0.6))}.` } },
+      { label: "Walk out", say: "Tell them you cannot be bought, and tell your small donors about it.", out: { cash: Math.round(w * 0.25), buzz: 8, days: 0, t: "Your small dollar email about it did well." } }] }; },
+    () => { const i = all[0]; const n = name(); const same = i != null && c.base[i] > 0; return { id: `mayor:${s.week}`, who: `Mayor ${n} of ${cn(i)}`, role: "mayor", seed: hash(n), place: cn(i), f: r.counties[i ?? 0]?.[0], title: same ? "The big city mayor" : "A mayor from the other party", intro: same ? `"Turnout in my city decides your race. Come do a bus tour with me and the neighborhood groups."` : `"I am not voting for you. But I will stand next to you to talk about the bridge money if you are serious about it."`, opts: [
+      { label: same ? "Do the bus tour" : "Joint appearance on the bridge", say: same ? "A day in the neighborhoods." : "Stand together on infrastructure.", out: same ? { region: reg(i), pers: 1, enth: 3, vol: 60, t: "Big crowds, and the mayor's machine is now yours." } : { st: { pos: 0, tone: "calm", extra: ["Independent"] }, region: reg(i), pers: 1.5, enth: -2, t: "Independents liked it. Your base grumbled." } },
+      { label: "Private meeting only", say: "No cameras.", out: { region: reg(i), pers: 0.5, t: "Quietly useful." } },
+      { label: "Decline", say: "Not worth the day.", out: { days: 0, t: "Fine." } }] }; },
+    () => { const i = pick(swing.concat(base).slice(0, 8)); const n = name(); return { id: `faith:${s.week}`, who: `Pastor ${n}`, role: "faith", seed: hash(n), place: `a church in ${cn(i)}`, title: "Sunday service", intro: `"Our congregation is three thousand strong and they vote. They want to know what you believe, not what you poll."`, opts: [
+      { label: "Speak about faith and family", say: "Speak from the pulpit about your own faith.", out: { st: { pos: own(0.4), extra: ["65+"] }, region: reg(i), pers: 0.8, risk: 0.15, riskT: "A line about a hot button issue drew a protest.", riskFx: -0.1, t: "A standing ovation." } },
+      { label: "Talk about service", say: "Talk about community and helping neighbors.", out: { st: { pos: 0, tone: "calm" }, region: reg(i), pers: 0.5, t: "Warm, and safe." } },
+      { label: "Just attend", say: "Sit in a pew and shake hands after.", out: { region: reg(i), pers: 0.3, t: "People noticed you came." } }] }; },
+    () => { const n = name(); return { id: `podcast:${s.week}`, who: `${n}, host of a podcast with two million subscribers`, role: "podcast", seed: hash(n), place: "a studio full of neon", title: "Three hours, no notes", intro: `"No handlers, no time limit. My audience is young guys who do not trust either party. You in?"`, opts: [
+      { label: "Go long and loose", say: "Three hours. Talk about anything.", out: { buzz: 22, st: { pos: 0, extra: ["18 to 29", "Men"] }, risk: 0.3, riskT: "Hour two produced a clip you will be answering for all week.", riskFx: -0.18, t: "Millions of views overnight." } },
+      { label: "Stick to talking points", say: "Stay on message for an hour.", out: { buzz: 7, st: { pos: own(0.2), sal: 0.7 }, t: "The comments called you robotic, but no damage." } },
+      { label: "Decline", say: "Too risky.", out: { days: 0, buzz: -3, t: "The host mocked you for it on the next show." } }] }; },
+    () => { const n = name(); return { id: `editor:${s.week}`, who: `${n}, editorial page editor`, role: "editor", seed: hash(n), place: "the newspaper's conference room", title: "The editorial board", intro: `"We endorse in this race on Sunday. Convince us you would be more than a party vote."`, opts: [
+      { label: "Show your independent streak", say: "Name where you break with your party.", out: { st: { pos: own(0.1), tone: "calm", extra: ["College graduate"] }, risk: 0.55, riskT: "On Sunday, the board endorsed you.", riskFx: 0.14, t: "They took a lot of notes." } },
+      { label: "Make the partisan case", say: "Say the stakes are control of the chamber.", out: { st: { pos: own(0.8) }, risk: 0.2, riskT: "The board endorsed you anyway.", riskFx: 0.1, t: "They looked unconvinced." } }] }; },
+    () => { const n = name(); const i = pick(swing.concat(theirs).slice(0, 6)); return { id: `sheriff:${s.week}`, who: `Sheriff ${n} of ${cn(i)} County`, role: "sheriff", seed: hash(n), place: cn(i), title: "A ride along", intro: `"Fentanyl is killing kids in my county and I am short twelve deputies. Ride with me Friday night."`, opts: [
+      { label: "Do the ride along", say: "Spend a night with the deputies.", out: { st: { issue: "other", pos: 0.45, extra: ["65+"] }, region: reg(i), pers: 1, t: "The sheriff said nice things to the local paper." } },
+      { label: "Promise funding, skip the ride", say: "A press release backing more deputies.", out: { st: { issue: "other", pos: 0.3, sal: 0.6 }, days: 0, t: "A one day story." } }] }; },
+    () => { const n = name(); return { id: `teacher:${s.week}`, who: `${n}, president of the state teachers union`, role: "teacher", seed: hash(n), place: "a middle school gym", title: "Back to school", intro: `"Vouchers are draining our schools. Where are you?"`, opts: [
+      { label: "Oppose vouchers", say: "Stand with public schools.", out: { st: { pos: -0.6, extra: ["Women", "College graduate"] }, vol: R ? 0 : 160, t: "Teachers are in." } },
+      { label: "Back school choice", say: "Say parents should choose.", out: { st: { pos: 0.6, extra: ["Women"] }, vol: R ? 30 : -40, t: "The union walked out." } },
+      { label: "Talk teacher pay", say: "Promise higher pay and dodge vouchers.", out: { st: { pos: 0, tone: "calm" }, vol: 50, t: "Applause, and a follow up question you did not answer." } }] }; },
+    () => { const n = name(); return { id: `vet:${s.week}`, who: `${n}, commander of a VFW post`, role: "vet", seed: hash(n), place: "the VFW hall", title: "Veterans hall", intro: `"Wait times at the VA clinic are three months. Come hear it from the guys."`, opts: [
+      { label: "Listen for two hours", say: "No speech. Just listen.", out: { st: { issue: "health", pos: 0, tone: "calm", extra: ["65+", "Men"] }, enth: 1, t: "They talked about it for weeks." } },
+      { label: "Bring a plan", say: "Unveil a VA plan.", out: { st: { issue: "health", pos: own(0.3), extra: ["65+"] }, buzz: 4, t: "Solid coverage." } }] }; },
+    () => { const n = name(); return { id: `student:${s.week}`, who: `${n}, a campus organizer`, role: "student", seed: hash(n), place: "the main quad", title: "Campus rally", intro: `"We registered four thousand students. They will vote if you give them a reason."`, opts: [
+      { label: "Rally on the quad", say: "A loud evening rally.", out: { vol: 240, enth: R ? 1 : 4, st: { pos: own(R ? 0.5 : 0.9), extra: ["18 to 29"] }, t: "Students signed up by the hundreds." } },
+      { label: "Talk about costs", say: "Rent, loans and jobs.", out: { vol: 120, st: { issue: "econ", pos: own(0.2), extra: ["18 to 29"] }, t: "Polite, real interest." } }] }; },
+    () => { const n = name(); return { id: `biz:${s.week}`, who: `${n}, who owns three diners`, role: "biz", seed: hash(n), place: "a diner counter", title: "Small business roundtable", intro: `"Eggs doubled, insurance doubled and I cannot find cooks. What are you going to do for people like me?"`, opts: [
+      { label: "Cut taxes and red tape", say: "Promise relief from regulations.", out: { st: { issue: "econ", pos: 0.5 }, cash: Math.round(w * 0.15), t: "The owners liked it." } },
+      { label: "Go after the big chains", say: "Say giant corporations are crushing small business.", out: { st: { issue: "econ", pos: -0.3, tone: "fiery", extra: ["Under $50K"] }, t: "The waitress cheered." } }] }; },
+    () => { const n = name(); return { id: `mole:${s.week}`, who: `A former aide to ${c.op.name}`, role: "mole", seed: hash(n), place: "a parking garage", title: "A tip from the inside", intro: `"I worked for ${c.op.name.split(" ").slice(-1)[0]} for two years. You would not believe what I have. Meet me."`, opts: [
+      { label: "Take the meeting", say: "Hear them out yourself.", out: { prep: 2, risk: 0.25, riskT: "A reporter learned you met with a disgruntled ex staffer.", riskFx: -0.15, t: "Plenty of material for the debate." } },
+      { label: "Hand them to opposition research", say: "Keep your distance.", need: "oppo", out: { prep: 2, days: 0, t: "Your researchers verified most of it." } },
+      { label: "Refuse", say: "Not how you run.", out: { days: 0, t: "You may regret it, or not." } }] }; },
+    () => (TRIBAL.includes(r.st) ? (() => { const n = name(); return { id: `tribal:${s.week}`, who: `${n}, a tribal council chair`, role: "tribal", seed: hash(n), place: "the tribal council chambers", title: "Nation to nation", intro: `"Our polling places are fifty miles apart and the roads are bad. Will you fight for our voters and our sovereignty?"`, opts: [
+      { label: "Fund rides and polling sites", say: "Promise money for rides and new polling places.", out: { vol: 80, enth: 2, st: { pos: own(0), tone: "calm" }, t: "The council said it would help turn out its members." } },
+      { label: "Listen and learn", say: "A long listening session.", out: { enth: 1, t: "Respectful and useful." } }] }; })() : null),
+  ];
+  // real endorsers for your side who are not yet on board
+  const mine = I ? "I" : c.side;
+  const endorsers = (r.research?.endorsements ?? []).map((e, k) => ({ e, k })).filter(({ e, k }) => e.for === mine && !s.endorsed.includes(String(k)) && !s.met.includes(`end:${k}`));
+  const out: Meet[] = [];
+  if (endorsers.length && s.week >= 2) {
+    const { e, k } = endorsers[0];
+    out.push({ id: `end:${k}`, who: e.who, role: "endorser", seed: hash(e.who), place: r.state, title: `${e.who.split(",")[0]} wants to talk`, real: true, src: e.src,
+      intro: `In real life, ${e.who} backed ${c.me.name}. They want to hear it from you first.`, opts: [
+        { label: "Ask for it on camera", say: "A joint event and an ad.", out: { endorse: String(k), st: { pos: own(0.2), extra: ["Independent"] }, buzz: 8, t: "The endorsement led the local news." } },
+        { label: "Ask them to call donors", say: "Quiet help with money.", out: { endorse: String(k), cash: Math.round(w * 0.5), t: `Their calls brought in ${usd(Math.round(w * 0.5))}.` } }] });
+  }
+  const fns = T.map((f, j) => ({ f, j })).sort(() => rand(s) - 0.5);
+  for (const { f } of fns) { if (out.length >= 3) break; const m = f(); if (m && !s.met.some((x) => x.split(":")[0] === m.id.split(":")[0] && s.met.filter((y) => y.startsWith(m.id.split(":")[0])).length >= 2)) out.push(m); }
+  return out;
+}
+/** Deal this week's meeting invitations once. */
+export function dealInvites(c: Ctx, s: State) {
+  if (s.done || s.invw >= s.week) return;
+  s.invw = s.week; s.invites = invitesFor(c, s);
+}
+export const ROLE_NAME: Record<Role, string> = { chair: "Party chair", union: "Labor", farm: "Farm country", donor: "Big money", mayor: "City hall", faith: "Faith leader", podcast: "Podcaster", editor: "Editorial board", sheriff: "Law enforcement", teacher: "Teachers", vet: "Veterans", student: "Students", biz: "Small business", endorser: "Real endorsement", mole: "Inside source", tribal: "Tribal nation" };

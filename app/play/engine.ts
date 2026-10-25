@@ -24,7 +24,7 @@ export type RaceFile = {
   est: { margin: number; prob: number; p10: number | null; p90: number | null }; pollAvg: number | null; votes: { dem: number; rep: number; other: number; total: number } | null;
   polls: { pollster: string; kind: string; age: number; n: number; margin: number }[]; cands: [Cand, Cand]; third: { name: string; party: string; pct: number }[];
   groups: GroupRow[]; counties: CountyRow[]; outside: { total: number | null; groups: { name: string; side: string; kind: string; target: string; amount: number }[] };
-  earlyVote: { ballots: number; party: { d: number; r: number; o: number }; estimatedShare: number; date: string } | null;
+  earlyVote: { ballots: number; party: { d: number; r: number; o: number }; estimatedShare: number; date: string; expectedEarly?: number; expectedTotal?: number } | null;
   news: { id: string; title: string; dek: string; date: string }[]; media: { who: string; what: string; when: string; lean: string }[];
   research?: Research; donorSignal?: { z: number; shift_logit: number } | null;
 };
@@ -81,8 +81,20 @@ export type State = {
   cur: Ev[]; evw: number; // this week's decisions, and the last week they were dealt
   buzz: number; volunteers: number; reserved: { w: number; amt: number; tone: string }[]; tests: Record<string, number[]>; endorsed: string[];
   dweek: number; knocks: number; flashes: string[]; weekly: { w: number; m: number; cash: number; buzz: number; vol: number }[];
+  // added in the pixel edition
+  enth: [number, number]; reads: Record<string, Read>; met: string[]; invites: Meet[]; invw: number; debated: number | null;
+  lawyers: boolean; regs: number; final: boolean; oppLast: { stops: string[]; base: string[]; tv: number; ad: string | null } | null;
+  low: number; rested: number; zingers: number; dodged: number; closing: string | null;
 };
-export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number };
+export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number;
+  /** election night: [tick, county index, your votes, their votes, kind 0 early or mail, 1 Election Day, 2 late mail] */
+  batches?: [number, number, number, number, number][]; ticks?: number; close?: number; weather?: string; mailLate?: boolean; turnout?: number; lines?: string | null };
+/** How a campaign reads a county: its estimate of your margin, how sure it is, the week it last looked and who looked. */
+export type Read = [number, number, number, string];
+export type Role = "chair" | "union" | "farm" | "donor" | "mayor" | "faith" | "podcast" | "editor" | "sheriff" | "teacher" | "vet" | "student" | "biz" | "endorser" | "mole" | "tribal";
+export type MeetOut = { cash?: number; vol?: number; enth?: number; oppEnth?: number; buzz?: number; st?: Stance; region?: string[]; pers?: number; risk?: number; riskT?: string; riskFx?: number; prep?: number; endorse?: string; t: string; days?: number };
+export type MeetOpt = { label: string; say: string; out: MeetOut; need?: "oppo" };
+export type Meet = { id: string; who: string; role: Role; seed: number; place: string; f?: string; title: string; intro: string; opts: MeetOpt[]; real?: boolean; src?: string };
 
 // ------------------------------------------------------------- randomness
 export function rand(s: State) { // mulberry32 kept in the state
@@ -96,6 +108,9 @@ export const usd = (n: number) => (Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(1)
 /** Older saves get the fields added since. */
 export function migrate(s: State, r: RaceFile): State {
   s.buzz ??= 35; s.volunteers ??= 60; s.reserved ??= []; s.tests ??= {}; s.endorsed ??= []; s.dweek ??= debateWeek(r); s.knocks ??= 0; s.flashes ??= []; s.weekly ??= [];
+  s.enth ??= [50, 50]; s.met ??= []; s.invites ??= []; s.invw ??= 0; s.debated ??= null; s.lawyers ??= false; s.regs ??= 0; s.final ??= false; s.oppLast ??= null;
+  s.low ??= 99; s.rested ??= 0; s.zingers ??= 0; s.dodged ??= 0; s.closing ??= null;
+  if (!s.reads) { s.reads = {}; seedReads(r, s); }
   return s;
 }
 export const lead = (m: number, me: string, op: string) => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
@@ -135,7 +150,9 @@ export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(M
     ledger: {}, visits: {}, oppVisits: {}, offices: [], staff: { pollster: 0, media: false, field: false, oppo: false, digital: false },
     tvWeek: 0, digWeek: 0, weekCash: Math.round(cash0), prep: 0, banked: 0, gotv: 0, spent: 0, raised: 0, pending: [], used: [], resolved: [], polls: [], log: [], trend: [], done: false, cur: [], evw: 0,
     buzz: 35, volunteers: 60 + Math.round(Math.sqrt(c.me.donors?.donations ?? 20000) * 0.6), reserved: [], tests: {}, endorsed: [], dweek: debateWeek(r), knocks: 0, flashes: [], weekly: [],
+    enth: [50, 50], reads: {}, met: [], invites: [], invw: 0, debated: null, lawyers: false, regs: 0, final: false, oppLast: null, low: 99, rested: 0, zingers: 0, dodged: 0, closing: null,
   };
+  seedReads(r, s);
   s.trend.push({ w: 0, m: margin(r, s) });
   publicPolls(r, s, true);
   return s;
@@ -146,7 +163,9 @@ export function countyVotes(r: RaceFile, s: State, i: number, glob: number) {
   const c = r.counties[i], sign = s.side === "R" ? 1 : -1;
   const meV0 = sign > 0 ? c[4] : c[3], opV0 = sign > 0 ? c[3] : c[4];
   const shift = ((s.pers[i] + glob) / 200) * c[5];
-  const me = Math.max(0, meV0 + shift + s.xme[i]), op = Math.max(0, opV0 - shift + s.xop[i]);
+  // enthusiasm moves turnout: each side's voters show up a little more or less than the forecast expects
+  const tm = 1 + ((s.enth?.[0] ?? 50) - 50) / 450, to = 1 + ((s.enth?.[1] ?? 50) - 50) / 450;
+  const me = Math.max(0, (meV0 + shift) * tm + s.xme[i]), op = Math.max(0, (opV0 - shift) * to + s.xop[i]);
   const other = Math.max(0, c[5] - c[3] - c[4]);
   return { me, op, t: me + op + other };
 }
@@ -252,6 +271,8 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
   const fx = (co[5] / c.total) * (pm >= 8 ? 0 : (pm > -8 ? 2.6 : 1.7) * e) + media;
   s.log.push({ w: s.week, kind: "you", t, fx });
   s.buzz = clamp(s.buzz + 5 * e, 0, 100); s.volunteers += Math.round(18 * e);
+  s.enth[0] = clamp(s.enth[0] + (pm >= 8 ? 1.6 : 0.8) * e, 0, 100);
+  groundRead(c, s, i, "Your advance team");
   return tire(c, s, 13) ?? { ok: true, t, fx };
 }
 
@@ -269,6 +290,7 @@ export function townHall(c: Ctx, s: State, f: string): ActResult {
   applyGlobal(s, fx, [{ label: "Independents", share: ind, lean: 0, fx }], 0.7);
   s.buzz = clamp(s.buzz + 2, 0, 100); s.volunteers += 8;
   s.log.push({ w: s.week, kind: "you", t, fx });
+  groundRead(c, s, i, "Questions at your town hall");
   return tire(c, s, 9) ?? { ok: true, t, fx };
 }
 
@@ -312,7 +334,7 @@ export function media(c: Ctx, s: State): ActResult {
 }
 export function rest(s: State): ActResult {
   if (s.days < 1) return { ok: false, t: "No days left this week." };
-  s.days -= 1; s.stamina = clamp(s.stamina + 32, 0, 100);
+  s.days -= 1; s.stamina = clamp(s.stamina + 32, 0, 100); s.rested += 1;
   return { ok: true, t: "A day off the trail. The candidate sleeps in and calls home." };
 }
 export function debatePrep(c: Ctx, s: State): ActResult {
@@ -397,6 +419,176 @@ export function hire(c: Ctx, s: State, who: keyof typeof STAFF_COST | "pollster"
   return { ok: true, t };
 }
 
+
+// ------------------------------------------------------------- what the campaign knows: county reads
+/** Regions of the state: the research's own, and everything else as one more. */
+export function regionsOf(r: RaceFile): { name: string; f: string[]; note?: string }[] {
+  const regs = (r.research?.regions ?? []).map((g) => ({ name: g.name, f: g.f.filter((f) => r.counties.some((c) => c[0] === f)), note: g.note })).filter((g) => g.f.length);
+  const inR = new Set(regs.flatMap((g) => g.f));
+  const rest = r.counties.filter((c) => !inR.has(c[0])).map((c) => c[0]);
+  if (!regs.length) {
+    const big = [...r.counties].sort((a, b) => b[5] - a[5]);
+    const top = big.slice(0, Math.min(4, big.length)).map((c) => ({ name: c[1], f: [c[0]] }));
+    const left = big.slice(4).map((c) => c[0]);
+    return left.length ? [...top, { name: "Rest of the state", f: left }] : top;
+  }
+  return rest.length ? [...regs, { name: "Everywhere else", f: rest }] : regs;
+}
+export function truthAt(r: RaceFile, s: State, i: number) { const v = countyVotes(r, s, i, globalShift(s)); return (100 * (v.me - v.op)) / Math.max(1, v.t); }
+function setRead(s: State, f: string, est: number, sd: number, src: string) {
+  const old = s.reads[f];
+  // a fresh, sharper read replaces an older or blurrier one
+  if (!old || sd <= old[1] + 1.1 * (s.week - old[2]) + 0.01) s.reads[f] = [Math.round(est * 10) / 10, Math.round(sd * 10) / 10, s.week, src];
+}
+export function seedReads(r: RaceFile, s: State) {
+  r.counties.forEach((co, i) => { setRead(s, co[0], truthAt(r, s, i) + gauss(s) * 4.5, 6.5, "The pre campaign model"); });
+}
+function groundRead(c: Ctx, s: State, i: number, src: string, sd = 3.6) { setRead(s, c.r.counties[i][0], truthAt(c.r, s, i) + gauss(s) * sd, sd, src); }
+function pollRegion(c: Ctx, s: State, f: string[], sd: number, src: string) {
+  const e = gauss(s) * sd;
+  for (const x of f) { const i = ci(c.r, x); if (i >= 0) setRead(s, x, truthAt(c.r, s, i) + e + gauss(s) * 2, sd + 2, src); }
+}
+/** The campaign's read of a county, blurred by how long ago anyone looked. */
+export function readOf(s: State, f: string): { est: number; sd: number; w: number; src: string } | null {
+  const x = s.reads?.[f]; if (!x) return null;
+  return { est: x[0], sd: x[1] + 1.1 * Math.max(0, s.week - x[2]), w: x[2], src: x[3] };
+}
+export function readLabel(est: number, sd: number) {
+  const k = Math.abs(est) / Math.max(1, sd);
+  const side = est >= 0 ? "you" : "them";
+  if (k < 0.35) return "Toss up";
+  if (k < 1) return `Lean ${side}`;
+  if (k < 2) return `Likely ${side}`;
+  return `Safe ${side}`;
+}
+export const confLabel = (sd: number) => (sd < 4 ? "Good read" : sd < 7 ? "Fuzzy" : "Guesswork");
+
+// ------------------------------------------------------------- more of the campaign
+export const REG_DEADLINE = 4;
+/** A voter registration drive: volunteers sign up new voters in one county, before the deadline. About half of new
+ * registrants vote, and they split the way the county leans, a little better for whoever signed them up. */
+export function regDrive(c: Ctx, s: State, f: string): ActResult {
+  if (s.week > REG_DEADLINE) return { ok: false, t: "Registration closed at the end of week 4." };
+  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (s.cash < 15000) return { ok: false, t: "Not enough cash." };
+  const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
+  const co = c.r.counties[i], pm = c.base[i] + s.pers[i];
+  s.days -= 1; s.cash -= 15000; s.spent += 15000;
+  const n = Math.round(Math.min(co[5] * 0.03, s.volunteers * 9 * (s.staff.field ? 1.3 : 1) * dim(s.visits["reg:" + f] ?? 0)));
+  s.visits["reg:" + f] = (s.visits["reg:" + f] ?? 0) + 1;
+  const pMe = Math.max(0.1, Math.min(0.9, 0.5 + pm / 200 + 0.06));
+  const net = n * 0.5 * (2 * pMe - 1);
+  s.xme[i] += Math.max(0, net); if (net < 0) s.xop[i] += -net;
+  s.regs += n;
+  const t = `Registration drive in ${co[1]}: ${n.toLocaleString()} new voters signed up. About half will vote, and in a county like this they net you about ${Math.round(net).toLocaleString()}.`;
+  s.log.push({ w: s.week, kind: "you", t });
+  return tire(c, s, 6) ?? { ok: true, t };
+}
+/** A quick poll of one region; sharper with a better pollster on staff. */
+export function regionPoll(c: Ctx, s: State, k: number): ActResult {
+  const reg = regionsOf(c.r)[k]; if (!reg) return { ok: false, t: "Unknown region." };
+  const cost = 30000; if (s.cash < cost) return { ok: false, t: "Not enough cash." };
+  s.cash -= cost; s.spent += cost;
+  const sd = s.staff.pollster ? POLLSTERS[s.staff.pollster]!.sd * 1.3 + 0.8 : 3.8;
+  pollRegion(c, s, reg.f, sd, `A poll of ${reg.name}`);
+  const t = `A poll of ${reg.name} is in. Your read on its counties is fresh.`; s.log.push({ w: s.week, kind: "poll", t });
+  return { ok: true, t };
+}
+export function hireLawyers(s: State): ActResult {
+  if (s.lawyers) return { ok: false, t: "Your voter protection team is already set." };
+  if (s.cash < 150000) return { ok: false, t: "Not enough cash." };
+  s.cash -= 150000; s.spent += 150000; s.lawyers = true;
+  const t = "Voter protection team hired: lawyers and poll watchers in every big county, and a hotline for voters in line."; s.log.push({ w: s.week, kind: "you", t });
+  return { ok: true, t };
+}
+/** The last 72 hours: volunteer shifts by county, and the closing message. */
+export function finalPush(c: Ctx, s: State, alloc: Record<string, number>, closing: "positive" | "contrast" | "attack" | "base"): ActResult {
+  if (s.final) return { ok: false, t: "Already done." };
+  const tot = Object.values(alloc).reduce((a, b) => a + b, 0) || 1;
+  const vols = s.volunteers * (s.staff.field ? 1.4 : 1);
+  let made = 0;
+  for (const [f, k] of Object.entries(alloc)) {
+    const i = ci(c.r, f); if (i < 0 || k <= 0) continue;
+    const co = c.r.counties[i], pm = c.base[i] + s.pers[i];
+    const pMe = Math.max(0.1, Math.min(0.9, 0.5 + pm / 200));
+    const contacts = vols * 25 * (k / tot); // doors and calls across the weekend
+    const turned = Math.min(co[5] * 0.04, contacts * 0.06);
+    const net = turned * (2 * pMe - 1) * 1.6; // shifts go to your own lists, so most of them are your voters
+    if (net > 0) s.xme[i] += net; else s.xop[i] += -net * 0.4;
+    made += net;
+  }
+  const g = closing === "attack" ? -0.05 + 0.25 * rand(s) : closing === "contrast" ? 0.08 : closing === "positive" ? 0.06 : 0.02;
+  if (closing === "base") s.enth[0] = clamp(s.enth[0] + 6, 0, 100);
+  applyGlobal(s, g, [{ label: "Late deciding voters", share: 8, lean: 0, fx: g }], 1);
+  s.final = true; s.closing = closing;
+  const t = `The final weekend: ${Math.round(vols).toLocaleString()} volunteers worked their shifts and turned out about ${Math.round(Math.max(0, made)).toLocaleString()} more of your voters.`;
+  s.log.push({ w: s.week, kind: "you", t });
+  return { ok: true, t };
+}
+
+// ------------------------------------------------------------- the debate stage
+export const debateMult = (s: State) => 1.5 * (1 + 0.12 * Math.min(4, s.prep));
+/** One answer: how it lands against the average of the answers on offer, times the delivery (0 to 1, 0.5 is average). */
+export function debateAnswer(c: Ctx, s: State, st: Stance, all: Stance[], delivery: number): { fx: number; parts: Part[] } {
+  const mult = debateMult(s);
+  const others = all.map((x) => react(c, s, x, mult, false));
+  const meanFx = others.reduce((a, x) => a + x.fx, 0) / Math.max(1, others.length);
+  const r = react(c, s, st, mult);
+  const d = 0.5 + Math.max(0, Math.min(1, delivery));
+  // good delivery makes a good answer land harder and softens a bad one
+  const base = (r.fx - meanFx) * 0.55, k = base >= 0 ? d : 1.5 - d * 0.7;
+  const fx = base * k + (delivery - 0.5) * 0.08;
+  const parts = r.parts.slice(0, 4).map((p) => ({ ...p, fx: (p.fx - meanFx / 4) * 0.55 * k }));
+  return { fx, parts };
+}
+/** A comeback after the other candidate's answer. */
+export function rebuttal(c: Ctx, s: State, kind: "counter" | "zinger" | "calm"): { fx: number; good: boolean; t: string } {
+  if (kind === "calm") return { fx: 0.015, good: true, t: "You let it go and looked steady." };
+  if (kind === "counter") { const fx = 0.03 + (s.staff.oppo ? 0.05 : 0) + gauss(s) * 0.02; return { fx, good: fx > 0, t: s.staff.oppo ? "Your opposition research gave you the exact vote to cite." : "A solid answer, if a little general." }; }
+  s.zingers += 1;
+  const p = 0.42 + 0.07 * Math.min(4, s.prep) + (s.staff.oppo ? 0.1 : 0) - (s.stamina < 35 ? 0.15 : 0);
+  if (rand(s) < p) { s.buzz = clamp(s.buzz + 14, 0, 100); return { fx: 0.16 + rand(s) * 0.06, good: true, t: "The line of the night. It will be on every channel by midnight." }; }
+  return { fx: -(0.12 + rand(s) * 0.06) * DIFF[s.diff].neg, good: false, t: "It landed with a thud, and the clip is already going around." };
+}
+/** Debate night is over: apply what happened, plus the snap poll on who won. */
+export function finishDebate(c: Ctx, s: State, total: number, oppTotal: number): { won: boolean; snap: number; fx: number } {
+  const net = total - oppTotal;
+  const snap = Math.max(8, Math.min(92, Math.round(50 + net * 45 + gauss(s) * 4)));
+  const won = snap >= 50;
+  const fx = net * 0.6 + (won ? 0.05 : -0.05);
+  applyGlobal(s, fx, [{ label: "Debate watchers", share: 25, lean: 0, fx }], 0.7);
+  s.enth[0] = clamp(s.enth[0] + (won ? 4 : -2), 0, 100); s.enth[1] = clamp(s.enth[1] + (won ? -2 : 3), 0, 100);
+  s.buzz = clamp(s.buzz + (won ? 10 : 4), 0, 100);
+  s.debated = fx; s.used.push("debate");
+  s.log.push({ w: s.week, kind: "event", t: `Debate night: the snap poll had ${won ? "you" : c.op.name} winning, ${Math.max(snap, 100 - snap)} to ${Math.min(snap, 100 - snap)}.`, fx });
+  return { won, snap, fx };
+}
+
+// ------------------------------------------------------------- meetings
+export function resolveMeet(c: Ctx, s: State, m: Meet, k: number): { t: string; fx: number; parts: Part[]; caught: boolean } {
+  const o = m.opts[k], x = o.out;
+  s.met.push(m.id); s.invites = s.invites.filter((y) => y.id !== m.id);
+  s.days = Math.max(0, s.days - (x.days ?? 1));
+  let fx = 0, parts: Part[] = [], t = x.t, caught = false;
+  if (x.cash) { s.cash += x.cash; if (x.cash > 0) s.raised += x.cash; else s.spent -= x.cash; }
+  if (x.vol) s.volunteers = Math.max(10, s.volunteers + x.vol);
+  if (x.enth) s.enth[0] = clamp(s.enth[0] + x.enth, 0, 100);
+  if (x.oppEnth) s.enth[1] = clamp(s.enth[1] + x.oppEnth, 0, 100);
+  if (x.buzz) s.buzz = clamp(s.buzz + x.buzz, 0, 100);
+  if (x.prep) s.prep += x.prep;
+  if (x.endorse) s.endorsed.push(x.endorse);
+  if (x.region && x.pers) for (const f of x.region) { const i = ci(c.r, f); if (i >= 0) s.pers[i] += x.pers; }
+  if (x.st) { const r = react(c, s, x.st, 0.6); fx += r.fx * 0.5; parts = r.parts.map((p) => ({ ...p, fx: p.fx * 0.5 })); }
+  if (x.risk && rand(s) < x.risk) {
+    caught = true; const hit = (x.riskFx ?? -0.2) * DIFF[s.diff].neg; fx += hit;
+    parts = [{ label: "Voters following the race", share: 55, lean: 0, fx: hit }, ...parts];
+    t += " " + (x.riskT ?? "Then a recording of the meeting leaked.");
+  }
+  if (fx) applyGlobal(s, fx, parts, 0.7);
+  s.log.push({ w: s.week, kind: "event", t: `Met with ${m.who}: ${o.label}. ${t}`, fx: fx || undefined });
+  return { t, fx, parts: parts.slice(0, 5), caught };
+}
+
 // ------------------------------------------------------------- polls
 function publicPolls(r: RaceFile, s: State, first = false) {
   const truth = margin(r, s), sign = s.side === "R" ? 1 : -1;
@@ -428,6 +620,7 @@ function internalPoll(c: Ctx, s: State) {
     for (const f of reg.f) { const i = ci(c.r, f); if (i < 0) continue; const v = countyVotes(c.r, s, i, g0); me += v.me; op += v.op; t += v.t; }
     if (t > 0) groups.push({ label: `Region: ${reg.name}`, m: (100 * (me - op)) / t + gauss(s) * tier.sd * 1.6 });
   }
+  for (const reg of regionsOf(c.r)) pollRegion(c, s, reg.f, tier.sd * 1.6 + 1.5, `Your ${tier.name}`);
   s.polls.push({ w: s.week, src: `Your ${tier.name}`, m: truth + gauss(s) * tier.sd, n: 800, internal: true, groups });
 }
 
@@ -439,14 +632,15 @@ function opponentWeek(c: Ctx, s: State) {
   const idx = r.counties.map((_, i) => i);
   const opBase = idx.filter((i) => c.base[i] <= -8).sort((a, b) => r.counties[b][5] - r.counties[a][5]).slice(0, 6);
   const swing = idx.filter((i) => Math.abs(c.base[i]) < 8).sort((a, b) => r.counties[b][5] - r.counties[a][5]).slice(0, 6);
-  const stops: string[] = [];
+  const stops: string[] = [], fips: string[] = [], bases: string[] = [];
   const go = (i: number, base: boolean) => {
     const f = r.counties[i][0], e = dim(s.oppVisits[f] ?? 0) * k;
     s.oppVisits[f] = (s.oppVisits[f] ?? 0) + 1;
     if (base) { s.xop[i] += (s.side === "R" ? r.counties[i][3] : r.counties[i][4]) * 0.008 * e; s.glob -= 0.1 * e; }
     else s.pers[i] -= 2.6 * e;
     s.glob -= 0.06 * e;
-    stops.push(r.counties[i][1]);
+    stops.push(r.counties[i][1]); (base ? bases : fips).push(f);
+    s.enth[1] = clamp(s.enth[1] + (base ? 1.2 : 0.6) * dim(s.oppVisits[f] - 1), 0, 100);
   };
   for (let j = 0; j < 2; j++) { if (opBase.length) go(opBase[Math.floor(rand(s) * opBase.length)], true); if (swing.length) go(swing[Math.floor(rand(s) * swing.length)], false); }
   // money in, money out
@@ -456,6 +650,9 @@ function opponentWeek(c: Ctx, s: State) {
   s.oppCash -= opTV / 0.8;
   if (s.week >= 4) for (const i of opBase.slice(0, 4)) s.xop[i] += (s.side === "R" ? r.counties[i][3] : r.counties[i][4]) * 0.003 * Math.max(0, k);
   if (stops.length) s.log.push({ w: s.week, kind: "opp", t: `${c.op.name} campaigned in ${[...new Set(stops)].join(", ")}.` });
+  const theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
+  const ads = (r.research?.ads ?? []).filter((a) => a.for === theirs);
+  s.oppLast = { stops: fips, base: bases, tv: Math.round(opTV), ad: ads.length ? `${ads[s.week % ads.length].by}: ${ads[s.week % ads.length].theme}` : null };
   return opTV;
 }
 
@@ -495,8 +692,13 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   s.nat += DIFF[s.diff].drift - NORMAL_WEEK;
   s.cash += Math.round(c.weekly * 0.55 * DIFF[s.diff].fund * (1 + 0.3 * s.momentum));
   for (const k of ["media", "field", "digital"] as const) if (s.staff[k]) { s.cash -= STAFF_COST[k].wk; s.spent += STAFF_COST[k].wk; }
+  // enthusiasm fades back toward normal; the forecast already expects both bases to be about as fired up as usual
+  s.enth[0] = clamp(50 + (s.enth[0] - 50) * 0.82 - 0.9, 0, 100);
+  s.enth[1] = clamp(50 + (s.enth[1] - 50) * 0.82 + (DIFF[s.diff].opp - 1) * 3 - 0.9, 0, 100);
+  for (const f of s.offices) { const i = ci(r, f); if (i >= 0) groundRead(c, s, i, "Your field office", 4.2); }
   internalPoll(c, s);
   publicPolls(r, s);
+  const pa = polledAvg(s); if (pa != null && s.week >= 5) s.low = Math.min(s.low, pa);
   const m1 = margin(r, s);
   s.momentum = clamp((m1 - m0) / 0.8, -1, 1);
   s.trend.push({ w: s.week, m: m1 });
@@ -513,22 +715,75 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
 }
 
 // ------------------------------------------------------------- election night
+/** States that cannot count mail ballots before Election Day, so mail comes in late on the night. */
+const MAIL_LATE = new Set(["PA", "WI"]);
+/** Poll closing time in the state's last time zone, as Eastern hours. */
+const CLOSE: Record<string, number> = { GA: 19, SC: 19, VT: 19, NH: 20, ME: 20, FL: 20, MI: 21, OH: 19.5, NC: 19.5, PA: 20, TN: 21, AL: 21, MS: 21, IL: 21, OK: 21, TX: 21, KS: 21, NE: 22, SD: 22, MN: 22, WI: 22, IA: 23, LA: 22, AR: 20.5, NM: 22, AZ: 22, CO: 22, NV: 23, NY: 22, OR: 24, WY: 22, AK: 25, HI: 24, RI: 20, MA: 20, MD: 20, CT: 20 };
+export const NIGHT_TICKS = 170;
+export const WEATHER = ["Clear and cool", "Rain across the state", "Sunny and mild", "Cold and windy", "Storms in the afternoon"];
+
 export function electionNight(c: Ctx, s: State) {
   const r = c.r;
   const spread = r.est.p10 != null && r.est.p90 != null ? Math.abs(r.est.p90 - r.est.p10) / 2.56 : 4;
-  const err = gauss(s) * Math.max(1.4, spread * 0.55) * (1 - 0.3 * s.banked);
-  const g = globalShift(s) + err;
+  const bank = Math.min(1, s.banked);
+  const err = gauss(s) * Math.max(1.4, spread * 0.55) * (1 - 0.3 * bank);
+  // Election Day itself: the weather, and lines at the polls in a big county if nobody is watching them
+  const wx = Math.floor(rand(s) * WEATHER.length), wet = wx === 1 || wx === 4;
+  const wxFx = wet ? -0.35 * (1 - bank) + 0.2 : 0; // rain keeps more of the voters who had not voted yet home
+  let lines: string | null = null, linesFx = 0;
+  if (!s.lawyers && rand(s) < 0.35) {
+    const big = r.counties.map((x, i) => i).filter((i) => c.base[i] > 0).sort((a, b) => r.counties[b][5] - r.counties[a][5])[0];
+    if (big != null) { lines = r.counties[big][1]; linesFx = -0.25; }
+  }
+  const g = globalShift(s) + err + wxFx + linesFx;
   let me = 0, op = 0, t = 0;
   const counties = r.counties.map((co, i) => {
     const v = countyVotes(r, s, i, g + gauss(s) * 1.6);
     me += v.me; op += v.op; t += v.t;
-    return { f: co[0], m: (100 * (v.me - v.op)) / Math.max(1, v.t), t: Math.round(v.t) };
+    return { f: co[0], m: (100 * (v.me - v.op)) / Math.max(1, v.t), t: Math.round(v.t), vm: v.me, vo: v.op };
   });
   if (!r.counties.length) { const m = c.sign * r.est.margin + g; me = 50 + m / 2; op = 50 - m / 2; t = 100; }
-  // small and rural places report first, the big cities and their mail ballots last
   const order = counties.map((x, i) => ({ f: x.f, k: Math.log(x.t + 10) + rand(s) * 2.2 + (i % 3) * 0.2 })).sort((a, b) => a.k - b.k).map((x) => x.f);
   const m = (100 * (me - op)) / Math.max(1, t);
-  s.result = { m, win: m > 0, me: Math.round(me), op: Math.round(op), counties, order, start: s.trend[0].m, forecast: c.sign * r.est.margin };
+  // How the count comes in: early and mail ballots, then Election Day, then late mail. Early ballots lean toward the
+  // party whose voters cast more of them in the state's real early vote, so the lead can swing during the night.
+  const ev = r.earlyVote, mailLate = MAIL_LATE.has(r.st);
+  const share = Math.max(0.3, Math.min(0.7, ev?.expectedTotal && ev.expectedEarly ? ev.expectedEarly / ev.expectedTotal : 0.45));
+  const delta = (ev as unknown as { delta?: number } | null)?.delta;
+  const dr = ev ? (ev.party.d - ev.party.r) * 100 : 8;
+  // early ballots this many points more Democratic than the county, from the state's real early vote against expectations
+  const skewD = Math.max(-18, Math.min(26, delta != null && isFinite(delta) ? -delta : 4 + dr * 0.7));
+  const skew = (c.me.party === "R" ? -1 : 1) * skewD; // in the player's favor
+  const batches: [number, number, number, number, number][] = [];
+  const T = NIGHT_TICKS;
+  const rank = new Map([...counties.keys()].sort((a, b) => counties[a].t - counties[b].t).map((i, k) => [i, k / Math.max(1, counties.length - 1)]));
+  const split3 = (n: number) => { const w = Array.from({ length: n }, () => 0.6 + rand(s)); const t = w.reduce((a, b) => a + b, 0); return w.map((x) => x / t); };
+  counties.forEach((x, i) => {
+    const big = rank.get(i) ?? 0.5; // bigger counties count slower
+    const e = Math.max(0.15, Math.min(0.8, share + bank * 0.08 + gauss(s) * 0.05));
+    const late = 0.05;
+    const tot = x.vm + x.vo;
+    const split = (w: number, mm: number) => { const v = tot * w; const meV = v * (0.5 + Math.max(-99, Math.min(99, mm)) / 200); return [meV, v - meV]; };
+    const mm = (100 * (x.vm - x.vo)) / Math.max(1, tot);
+    let [eMe, eOp] = split(e, mm + skew * (1 - e));
+    let [lMe, lOp] = split(late, mm + skew * 0.6);
+    if (x.vm - eMe - lMe < 0 || x.vo - eOp - lOp < 0) { [eMe, eOp] = split(e, mm); [lMe, lOp] = split(late, mm); } // a one sided county: no room for a skew
+    const dMe = Math.max(0, x.vm - eMe - lMe), dOp = Math.max(0, x.vo - eOp - lOp);
+    // when each part comes in, as a share of the night: small counties first, big ones later
+    const j = () => rand(s) * 0.05;
+    const sz = big * big;
+    const tE = mailLate ? 0.3 + sz * 0.42 + j() : 0.01 + sz * 0.14 + j();
+    const tD = mailLate ? 0.04 + sz * 0.3 + j() : 0.1 + sz * 0.32 + j();
+    const parts = 2 + Math.floor(sz * 4);
+    const at = (x: number) => Math.max(1, Math.min(T - 3, Math.round(x * T)));
+    const we = split3(parts), wd = split3(parts + 1);
+    for (let k = 0; k < parts; k++) batches.push([at(tE + k * 0.03), i, eMe * we[k], eOp * we[k], 0]);
+    for (let k = 0; k < parts + 1; k++) batches.push([at(tD + k * (0.03 + sz * 0.03)), i, dMe * wd[k], dOp * wd[k], 1]);
+    batches.push([at(0.8 + sz * 0.12 + j()), i, lMe, lOp, 2]);
+  });
+  batches.sort((a, b) => a[0] - b[0]);
+  s.result = { m, win: m > 0, me: Math.round(me), op: Math.round(op), counties: counties.map(({ f, m: cm, t: ct }) => ({ f, m: cm, t: ct })), order, start: s.trend[0].m, forecast: c.sign * r.est.margin,
+    batches: batches.map((b) => [b[0], b[1], Math.round(b[2]), Math.round(b[3]), b[4]] as [number, number, number, number, number]), ticks: T, close: CLOSE[r.st] ?? 20, weather: WEATHER[wx], mailLate, turnout: Math.round(t), lines };
   s.done = true;
 }
 
