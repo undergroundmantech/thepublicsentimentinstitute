@@ -22,6 +22,10 @@ async function race(id: number) {
   if (!r.ok) throw new Error(String(r.status));
   return r.json();
 }
+// TSE and IBGE spell a few towns differently, Arês and Arez, Assu and Açu; a looser key ties those to the model's name
+const loose = (k: string) => k.replace(/z/g, "s").replace(/y/g, "i").replace(/ph/g, "f").replace(/h/g, "").replace(/(.)\1/g, "$1");
+const ALIAS: Record<string, Record<string, string>> = Object.fromEntries(Object.entries(exp.mun).map(([uf, m]) => [uf, Object.fromEntries(Object.keys(m).map((k) => [loose(k), k]))]));
+const munKey = (uf: string, name: string) => { const k = key(name); return exp.mun[uf]?.[k] ? k : ALIAS[uf]?.[loose(k)] ?? k; };
 const STATE_KEY: Record<string, string> = Object.fromEntries(Object.entries(exp.states).map(([uf, s]) => [key(s[4]), uf]));
 
 const CLOSE = Date.parse("2026-10-25T20:00:00Z");   // 17h in Brasília: nothing is published before every poll closes
@@ -49,7 +53,7 @@ export async function GET() {
     for (const v of Object.values((j.region_results || {}) as Region[] | Record<string, Region>)) {
       const x = two(v.candidates);
       if (v.type === "State") { sp = Math.max(sp, v.percent_reporting ?? 0); continue; }
-      if (x.fv + x.lv > 0) m[key(v.name)] = [x.fv, x.lv, v.percent_reporting ?? 0];
+      if (x.fv + x.lv > 0) m[munKey(uf, v.name)] = [x.fv, x.lv, v.percent_reporting ?? 0];
     }
     const prev = raw[uf];
     // the state race and the national race's state row can update a moment apart; take whichever has counted more

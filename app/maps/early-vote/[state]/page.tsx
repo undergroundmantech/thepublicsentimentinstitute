@@ -12,6 +12,7 @@ import { getEarlyVote, commas, longDate, pct, slugOf, type EarlyVote } from "../
 import { stateFaq, faqLd } from "../Summary";
 import AlertSignup from "@/app/components/AlertSignup";
 import YouTubeBand from "@/app/components/YouTubeBand";
+import PrecinctRead from "../PrecinctRead";
 
 // The same hourly rebuild as the national tracker. Reporting states are built ahead; any other state is built
 // the first time it is asked for, once it reports.
@@ -85,6 +86,7 @@ export default async function StateEarlyVotePage({ params }: Props) {
               {s.partyShare > 0.5 ? ` Registered Democrats cast ${pct(s.dem, s.total)} of them and registered Republicans ${pct(s.rep, s.total)}.` : ` ${f.name} does not publish the party of its early voters.`}{" "}
               See the <Link href={fc.href}>{fc.label}</Link>, and on election night the live <Link href={`/results/2026/${state}`}>{f.name} election results</Link>.</p> : <p>{f.name} has not reported any 2026 early ballots yet. The count appears here the day it does.</p>} />
           <div style={{ maxWidth: 1180, margin: "18px auto 0", padding: "0 clamp(16px, 2.6vw, 36px)" }}>
+            <PrecinctRead st={f.st} />
             <AlertSignup from="early-vote" title={`${f.name} early vote and results by email`} note="The On Point newsletter: the early vote as it comes in, the final forecast and the results on election night. Free, and you can leave any time." />
             <YouTubeBand from="early-vote-state" title={`${f.name}'s early vote, explained on YouTube`} note="Short breakdowns of the ballots as they come in, the forecast and election night, on the On Point channel." />
           </div>

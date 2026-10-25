@@ -56,6 +56,22 @@ const sum = (g: Record<string, { votes: number }> | undefined, f: (k: string) =>
   Object.entries(g ?? {}).reduce((s, [k, v]) => s + (f(k) ? Number(v?.votes) || 0 : 0), 0);
 const isInd = (k: string) => k !== "Democratic" && k !== "Republican" && k !== "Unspecified";
 
+// Oct 24: party from a state's own reports where the national feed carries none, such as Ohio's daily early vote
+// report by party affiliation. public/earlyvote-party/<ST>.json holds the state's latest split; its shares are applied
+// to the feed's ballot count, so the totals stay the feed's and only the party split comes from the state report.
+type PartyFile = { asof: string; source: string; statewide: { dem: number; rep: number; una: number; oth?: number } };
+function partyFile(st: string): PartyFile | null {
+  try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/earlyvote-party", `${st}.json`), "utf8")) as PartyFile; } catch { return null; }
+}
+function withParty(s: EvState): EvState {
+  if (s.partyShare >= 0.5) return s;
+  const f = partyFile(s.st); if (!f) return s;
+  const { dem, rep, una, oth = 0 } = f.statewide, T = dem + rep + una + oth;
+  if (T <= 0) return s;
+  const d = Math.round((s.total * dem) / T), r = Math.round((s.total * rep) / T), i = s.total - d - r;
+  return { ...s, dem: d, rep: r, ind: i, unspecified: 0, partyShare: 1 };
+}
+
 let memo: { at: number; v: EarlyVote } | null = null;
 
 export async function getEarlyVote(): Promise<EarlyVote> {
@@ -72,7 +88,7 @@ export async function getEarlyVote(): Promise<EarlyVote> {
     const total = mail + inperson;
     return { st, name: STATE_NAME[st], slug: slugOf(st), mail, inperson, total, requested: sum(req?.regions[st], () => true),
       dem, rep, ind, unspecified: total - dem - rep - ind, partyShare: total ? (dem + rep + ind) / total : 0 };
-  }).filter((s) => s.total > 0).sort((a, b) => b.total - a.total);
+  }).filter((s) => s.total > 0).map(withParty).sort((a, b) => b.total - a.total);
   const add = (k: keyof EvState) => states.reduce((s, x) => s + (x[k] as number), 0);
   const snapshot = [ret?.snapshot_date, inp?.snapshot_date].filter(Boolean).sort().reverse()[0] as string;
   const v: EarlyVote = { snapshot, total: add("total"), mail: add("mail"), inperson: add("inperson"), requested: add("requested"),

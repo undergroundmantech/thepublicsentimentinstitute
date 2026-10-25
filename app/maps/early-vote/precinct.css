@@ -1,0 +1,12 @@
+/* early vote by precinct band */
+.pr-read { margin: 18px 0; padding: clamp(16px, 1.8vw, 26px); border-radius: var(--r, 14px); background: var(--glass); border: 1px solid var(--line); }
+.pr-eye { font: 700 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.pr-read h2 { margin: 6px 0 8px; font: 800 clamp(20px, 2vw, 28px)/1.15 var(--font-d); letter-spacing: -.02em; text-wrap: balance; }
+.pr-lede { margin: 0 0 16px; color: var(--ink2); max-width: 78ch; line-height: 1.55; font-size: 14.5px; }
+.pr-bands { display: grid; gap: 14px; }
+.pr-bh { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; } .pr-bh b { font: 800 14px var(--font-d); } .pr-bh span { color: var(--mute); font-family: var(--font-m); font-size: 11.5px; }
+.pr-bar { position: relative; height: 12px; margin: 6px 0; border-radius: 6px; background: var(--glass2); overflow: visible; }
+.pr-bar i { display: block; height: 100%; border-radius: 6px; }
+.pr-bar em { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--hi); opacity: .8; }
+.pr-bf { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font: 600 11.5px var(--font-m); color: var(--mute); }
+.pr-foot { margin: 14px 0 0; font-size: 12px; color: var(--mute); line-height: 1.5; }
