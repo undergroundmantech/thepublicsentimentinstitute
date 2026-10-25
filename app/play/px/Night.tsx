@@ -35,6 +35,12 @@ export function achievements(r: E.RaceFile, s: E.State) {
     ["Iron candidate", "Never take a day off", s.rested === 0],
     ["Coalition builder", "Meet 8 people who matter", s.met.length >= 8],
     ["War chest", "Raise $10 million in the game", s.raised >= 1e7],
+    ["Beat the polls", "Win when your own poll average had you losing", res.win && res.pollAvg != null && res.pollAvg < 0],
+    ["Storm chaser", "Spend a relief day in a county hit by disaster", Object.keys(s.visits).some((k) => k.startsWith("relief:"))],
+    ["The file", "Drop your opposition file on the other side", !!s.dumped],
+    ["Weathered it", "Win after an October surprise", res.win && s.used.includes("osurprise")],
+    ["Ground war", "Have 50,000 real conversations at the door", (s.contacts ?? 0) >= 50000],
+    ["Bootstrapped", "Win without writing yourself a check", res.win && !(s.selfIn ?? 0)],
   ];
   return list.map(([n, d, ok]) => ({ n, d, ok }));
 }
@@ -122,6 +128,7 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
     const prev = tick > 0 ? cum.me[tick - 1] - cum.op[tick - 1] : 0;
     if (tick > 2 && inV > tot * 0.02 && Math.sign(prev) !== Math.sign(lead) && Math.sign(prev) !== 0) { add.push({ k: tick, t: `LEAD CHANGE. ${lead > 0 ? c.me.name : c.op.name} moves ahead by ${Math.abs(Math.round(lead)).toLocaleString()} votes.`, tone: "hot" }); sfx("lead"); }
     for (const q of [25, 50, 75, 90, 99]) if (rep * 100 >= q) say(`q${q}`, `${q}% of the expected vote is counted.`);
+    if (rep >= 0.7 && res.pollAvg != null && Math.abs(res.m - res.pollAvg) >= 2.5) say("miss", `SURPRISE. The count is running ${Math.abs(res.m - res.pollAvg).toFixed(1)} points ${res.m - res.pollAvg >= 0 ? `better for ${c.me.name}` : `better for ${c.op.name}`} than the final polls. Pollsters will be explaining this for weeks.`, "hot");
     const p0 = tick > 0 ? needle(tick - 1) : 0.5;
     if (p0 < 0.8 && p >= 0.8) say(`n80u${tick}`, `The needle now leans ${c.me.name}: ${Math.round(p * 100)}% to win.`, "up");
     if (p0 > 0.2 && p <= 0.2) say(`n20d${tick}`, `The needle swings to ${c.op.name}: ${Math.round((1 - p) * 100)}% to win.`, "dn");
@@ -227,6 +234,9 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
               <div className="px-grade"><b>{g.letter}</b><span>{res.win ? "You won" : "You lost"} by {Math.abs(res.m).toFixed(1)} points. {g.line}</span></div>
               <dl className="px-dl">
                 <div><dt>Forecast had you at</dt><dd>{E.lead(res.forecast, meName, opName)}</dd></div>
+                {res.pollAvg != null ? <div><dt>Your final poll average</dt><dd>{E.lead(res.pollAvg, meName, opName)}</dd></div> : null}
+                {res.pollAvg != null ? <div className="miss"><dt>The polls missed by</dt><dd className={res.m - res.pollAvg >= 0 ? "up" : "dn"}>{Math.abs(res.m - res.pollAvg).toFixed(1)} points toward {res.m - res.pollAvg >= 0 ? meName : opName}</dd></div> : null}
+                {res.late != null && Math.abs(res.late) >= 0.1 ? <div><dt>Late deciders broke</dt><dd>{Math.abs(res.late).toFixed(1)} points toward {res.late >= 0 ? meName : opName}</dd></div> : null}
                 <div><dt>Turnout</dt><dd>{(res.turnout ?? 0).toLocaleString()}</dd></div>
                 <div><dt>Raised and spent</dt><dd>{E.usd(s.raised)} · {E.usd(s.spent)}</dd></div>
                 <div><dt>Doors and new voters</dt><dd>{s.knocks.toLocaleString()} · {s.regs.toLocaleString()}</dd></div>

@@ -378,8 +378,11 @@
 .opp.pg .px-ntip .lead { font: 400 12px var(--px-fd); color: var(--px-gold); } .opp.pg .px-ntip small { font-size: 12px; color: var(--px-mute); }
 .opp.pg .px-legend i.flash { background: transparent; box-shadow: inset 0 0 0 2px var(--px-gold), 0 0 0 1px #000; }
 .opp.pg .px-keys { margin-top: 8px; display: grid; gap: 6px; }
-.opp.pg .px-keys ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; }
-.opp.pg .px-keys button { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 60px auto; gap: 8px; align-items: center; padding: 6px 8px; background: var(--px-deep); box-shadow: 0 0 0 2px #000; font-size: 14px; }
+.opp.pg .px-keys ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
+.opp.pg .px-keys button { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "n l" "bar bar"; gap: 5px 8px; align-items: center; padding: 7px 9px; background: var(--px-deep); box-shadow: 0 0 0 2px #000; font-size: 14px; }
+.opp.pg .px-keys button > span { grid-area: n; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--px-hi); }
+.opp.pg .px-keys button > b { grid-area: l; }
+.opp.pg .px-keys button > i { grid-area: bar; display: block; height: 6px; }
 .opp.pg .px-keys button:hover, .opp.pg .px-keys button:focus-visible { background: var(--px-panel2); }
 .opp.pg .px-keys i { height: 8px; background: #120a24; } .opp.pg .px-keys em { display: block; height: 100%; background: var(--px-gold); }
 .opp.pg .px-keys b { font: 400 9px var(--px-fd); white-space: nowrap; }
@@ -475,3 +478,43 @@
 /* election night: the county card follows the mouse */
 .opp.pg .px-ntip.follow { pointer-events: none; transition: none; width: min(300px, 80%); }
 @media (max-width: 640px) { .opp.pg .px-ntip.follow { position: static; transform: none !important; width: auto; } }
+
+/* the polling room */
+.opp.pg .px-pollroom { display: grid; gap: 8px; }
+.opp.pg .px-pr-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: end; }
+.opp.pg .px-pr-head > div { display: grid; gap: 2px; }
+.opp.pg .px-pr-head b { font: 400 15px var(--px-fd); }
+.opp.pg .px-pr-head small { font-size: 12px; color: var(--px-mute); }
+.opp.pg .px-odds { min-width: 180px; }
+.opp.pg .px-odds .bar { display: block; height: 12px; background: var(--px-gop); box-shadow: 0 0 0 2px #000; position: relative; }
+.opp.pg .px-odds .bar i { display: block; height: 100%; background: var(--px-green); transition: width .6s steps(12); }
+.opp.pg .px-pc2 { width: 100%; height: auto; background: #0b0619; box-shadow: 0 0 0 2px #000, inset 0 0 30px rgba(0, 0, 0, .6); }
+.opp.pg .px-pc2 .zone.me { fill: rgba(65, 224, 143, .06); } .opp.pg .px-pc2 .zone.op { fill: rgba(255, 59, 92, .06); }
+.opp.pg .px-pc2 .g { stroke: #241848; stroke-width: .5; } .opp.pg .px-pc2 .z { stroke: var(--px-line); stroke-dasharray: 3 3; }
+.opp.pg .px-pc2 .ax { fill: var(--px-mute); font: 400 5.5px var(--px-fd); } .opp.pg .px-pc2 .ax.now { fill: var(--px-gold); }
+.opp.pg .px-pc2 .ed { stroke: var(--px-gold); stroke-dasharray: 2 2; }
+.opp.pg .px-pc2 .band { fill: rgba(255, 204, 77, .12); } .opp.pg .px-pc2 .band.in { fill: rgba(255, 204, 77, .14); }
+.opp.pg .px-pc2 .cone { fill: rgba(166, 155, 208, .08); } .opp.pg .px-pc2 .hatch { fill: rgba(166, 155, 208, .35); }
+.opp.pg .px-pc2 .avg { fill: none; stroke: var(--px-gold); stroke-width: 1.6; shape-rendering: geometricPrecision; } .opp.pg .px-pc2 .avg.fut { stroke-dasharray: 3 3; opacity: .7; }
+.opp.pg .px-pc2 .pt rect:first-of-type { fill: var(--px-hi); stroke: #000; stroke-width: .5; } .opp.pg .px-pc2 .pt.int rect:first-of-type { fill: var(--px-gold); }
+.opp.pg .px-pc2 .pt .err { stroke: rgba(241, 236, 255, .25); stroke-width: .8; } .opp.pg .px-pc2 .pt.int .err { stroke: rgba(255, 204, 77, .35); }
+.opp.pg .px-pc2 .pt.on rect:first-of-type { fill: var(--px-pink); } .opp.pg .px-pc2 .pt.on .err { stroke: var(--px-pink); }
+.opp.pg .px-pc2 .lbl { fill: var(--px-hi); font: 400 6px var(--px-fd); paint-order: stroke; stroke: #0b0619; stroke-width: 2px; }
+.opp.pg .px-pr-foot { display: grid; gap: 6px; }
+.opp.pg .px-pr-hov { font-size: 14px; color: var(--px-text); min-height: 2.8em; }
+.opp.pg .px-pr-leg { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--px-mute); }
+.opp.pg .px-pr-leg span { display: inline-flex; gap: 6px; align-items: center; }
+.opp.pg .px-pr-leg i { display: inline-block; width: 16px; height: 10px; box-shadow: 0 0 0 1px #000; }
+.opp.pg .px-pr-leg i.sw-avg { height: 3px; background: var(--px-gold); box-shadow: none; } .opp.pg .px-pr-leg i.sw-band { background: rgba(255, 204, 77, .3); } .opp.pg .px-pr-leg i.sw-cone { background: rgba(166, 155, 208, .3); }
+.opp.pg .px-pollroom.compact .px-pr-head b { font-size: 12px; }
+
+/* the world: events that last a few weeks */
+.opp.pg .px-world { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; padding: 6px 12px; background: #120a24; border-bottom: 3px solid #000; }
+.opp.pg .px-world .px-k { margin-right: 4px; }
+.opp.pg .px-wchip { display: inline-flex; gap: 6px; align-items: center; font: 400 8.5px var(--px-fd); text-transform: uppercase; padding: 6px 8px; background: var(--px-deep); box-shadow: 0 0 0 2px #000, inset 3px 0 0 var(--px-mute); color: var(--px-text); }
+.opp.pg .px-wchip.good { box-shadow: 0 0 0 2px #000, inset 3px 0 0 var(--px-green); } .opp.pg .px-wchip.bad { box-shadow: 0 0 0 2px #000, inset 3px 0 0 var(--px-gop); }
+.opp.pg .px-wchip.file { box-shadow: 0 0 0 2px #000, inset 3px 0 0 var(--px-gold); }
+.opp.pg .px-wchip em { font-style: normal; color: var(--px-gold); }
+.opp.pg .px-modnote { margin: 0; padding: 8px 10px; font-size: 14px; color: var(--px-hi); background: #1a0f30; box-shadow: inset 3px 0 0 var(--px-gold); }
+.opp.pg .px-btn.relief { background: #1f4a3a; } .opp.pg .px-btn.relief:hover:not(:disabled) { background: #2a6450; }
+.opp.pg .px-dl .miss dd { font-weight: 700; }

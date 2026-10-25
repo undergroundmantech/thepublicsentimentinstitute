@@ -98,7 +98,15 @@ export const STAFF_COST = { media: { hire: 150000, wk: 25000, name: "Media consu
   digital: { hire: 60000, wk: 15000, name: "Digital director", what: "Online fundraising and targeted digital ads go further." } };
 
 export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; out?: MeetOut; need?: "oppo" | "pollster"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" | "amplify" | "push" | "pivot" | "rally" | "blast" | "tout" | "forum" | "dodge"; fx?: number };
-export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario" | "fringe" | "star"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string };
+export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario" | "fringe" | "star" | "shock" | "osurprise"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string;
+  /** a change to the world that lasts a few weeks, whatever you answer */ mod?: Mod };
+/** Something happening in the world that changes the race for a while: a storm, a shutdown, a market drop. nat is points a
+ * week in the player's favor; econ makes cost of living answers matter more; tv scales what ads can do; block holds
+ * counties in disaster recovery, where campaigning as usual backfires. */
+export type Mod = { id: string; label: string; until: number; good?: boolean; nat?: number; econ?: number; tv?: number; fund?: number; enth?: [number, number]; vol?: number; block?: string[] };
+export const activeMods = (s: { mods?: Mod[]; week: number }) => (s.mods ?? []).filter((m) => m.until >= s.week);
+const modProd = (s: State, k: "econ" | "tv" | "fund") => activeMods(s).reduce((a, m) => a * (m[k] ?? 1), 1);
+export const blockedBy = (s: State, f: string) => activeMods(s).find((m) => m.block?.includes(f)) ?? null;
 export type Part = { label: string; share: number; lean: number; fx: number };
 export type LogItem = { w: number; kind: "you" | "opp" | "air" | "event" | "money" | "poll" | "gaffe" | "news"; t: string; fx?: number; parts?: Part[] };
 export type Poll = { w: number; src: string; m: number; n: number; internal: boolean; groups?: { label: string; m: number }[] };
@@ -120,10 +128,12 @@ export type State = {
   lawyers: boolean; regs: number; final: boolean; oppLast: { stops: string[]; base: string[]; tv: number; ad: string | null } | null;
   low: number; rested: number; zingers: number; dodged: number; closing: string | null;
   // added in the long campaign edition
+  pollBias?: number; mods?: Mod[]; dirt?: number; dumped?: boolean; shocks?: string[];
   len?: number; hd?: boolean; mgr?: Mgr; programs?: Prog[]; voterFile?: boolean; contacts?: number; doorsWk?: number;
   reach?: Record<string, number>; jfc?: boolean; merch?: boolean; selfIn?: number; asked?: string[]; redbox?: number; outPlus?: number; vfat?: number; partyW?: number; celebW?: number; pods?: string[]; fringe?: string | null;
 };
 export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number;
+  /** the campaign's final poll average, and the late break of undecided voters */ pollAvg?: number | null; late?: number;
   /** election night: [tick, county index, your votes, their votes, kind 0 early or mail, 1 Election Day, 2 late mail] */
   batches?: [number, number, number, number, number][]; ticks?: number; close?: number; weather?: string; mailLate?: boolean; turnout?: number; lines?: string | null };
 /** How a campaign reads a county: its estimate of your margin, how sure it is, the week it last looked and who looked. */
@@ -150,6 +160,7 @@ export function migrate(s: State, r: RaceFile): State {
   s.enth ??= [50, 50]; s.met ??= []; s.invites ??= []; s.invw ??= 0; s.debated ??= null; s.lawyers ??= false; s.regs ??= 0; s.final ??= false; s.oppLast ??= null;
   s.low ??= 99; s.rested ??= 0; s.zingers ??= 0; s.dodged ??= 0; s.closing ??= null;
   if (!s.reads) { s.reads = {}; seedReads(r, s); }
+  s.pollBias ??= 0; s.mods ??= []; s.dirt ??= 0; s.dumped ??= false; s.shocks ??= [];
   s.len ??= 8; s.mgr ??= "vet"; s.programs ??= []; s.contacts ??= 0; s.doorsWk ??= 0; s.selfIn ??= 0; s.asked ??= []; s.redbox ??= 0; s.outPlus ??= 0; s.vfat ??= 0; s.partyW ??= -9; s.celebW ??= -9; s.pods ??= []; s.fringe ??= null;
   if (!s.hd) { s.days = Math.min(DAYS, s.days * 2); s.hd = true; }
   return s;
@@ -200,6 +211,11 @@ export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(M
   // the county map and the forecast can disagree, as in a race with strong third candidates: start where the forecast is
   const gap = c.sign * r.est.margin + DIFF[diff].start - margin(r, s);
   if (Math.abs(gap) > 0.5) s.nat += gap;
+  // Polls in every race share an error nobody can see: the people who answer are not quite the people who vote. The polls
+  // start where the forecast is; the truth sits off by this much, and only election night shows which way.
+  s.pollBias = Math.round(gauss(s) * 2.2 * DIFF[diff].noise * 100) / 100;
+  s.nat -= s.pollBias;
+  s.mods = []; s.dirt = 0; s.dumped = false; s.shocks = [];
   seedReads(r, s);
   s.trend.push({ w: 0, m: margin(r, s) });
   publicPolls(r, s, true);
@@ -274,7 +290,7 @@ export function react(c: Ctx, s: State, st: Stance, mult = 1, noisy = true): { f
   }
   let fx = parts.reduce((a, p) => a + p.fx, 0) / Math.max(1, aud.length / 3);
   parts.forEach((p) => (p.fx /= Math.max(1, aud.length / 3)));
-  const amp = st.tone === "fiery" ? 1.3 : 1;
+  const amp = (st.tone === "fiery" ? 1.3 : 1) * (st.issue === "econ" ? modProd(s, "econ") : 1);
   const noise = noisy ? 1 + gauss(s) * (st.tone === "fiery" ? 0.35 : 0.18) : 1;
   fx *= amp * noise; parts.forEach((p) => (p.fx *= amp * noise));
   if (noisy && fx < 0) { fx *= DIFF[s.diff].neg; parts.forEach((p) => (p.fx *= DIFF[s.diff].neg)); }
@@ -308,6 +324,7 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
   if (s.days < COST.rally) return { ok: false, t: "Not enough time left this week: a rally takes a full day." };
   if (s.cash < 35000) return { ok: false, t: "Not enough cash for a rally." };
   const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
+  const bk = blockedBy(s, f); if (bk) return { ok: false, t: `${c.r.counties[i][1]} is recovering from ${bk.label.toLowerCase()}. A rally there would look tone deaf; hold a relief day instead.` };
   const co = c.r.counties[i], pm = c.base[i] + s.pers[i], e = dim(s.visits[f] ?? 0) * (0.75 + s.stamina / 400) * att(s);
   s.days -= COST.rally; s.cash -= 35000; s.spent += 35000; s.visits[f] = (s.visits[f] ?? 0) + 1;
   let t: string;
@@ -328,6 +345,7 @@ export function townHall(c: Ctx, s: State, f: string): ActResult {
   if (s.days < COST.hall) return { ok: false, t: "No time left this week." };
   if (s.cash < 12000) return { ok: false, t: "Not enough cash." };
   const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
+  if (blockedBy(s, f)) return { ok: false, t: `${c.r.counties[i][1]} is in recovery. Hold a relief day there instead.` };
   const co = c.r.counties[i], e = dim(s.visits[f] ?? 0) * att(s);
   s.days -= COST.hall; s.cash -= 12000; s.spent += 12000; s.visits[f] = (s.visits[f] ?? 0) + 1;
   s.pers[i] += 1.15 * e;
@@ -522,12 +540,13 @@ function setRead(s: State, f: string, est: number, sd: number, src: string) {
   if (!old || sd <= old[1] + 1.1 * (s.week - old[2]) + 0.01) s.reads[f] = [Math.round(est * 10) / 10, Math.round(sd * 10) / 10, s.week, src];
 }
 export function seedReads(r: RaceFile, s: State) {
-  r.counties.forEach((co, i) => { setRead(s, co[0], truthAt(r, s, i) + gauss(s) * 4.5, 6.5, "The pre campaign model"); });
+  r.counties.forEach((co, i) => { setRead(s, co[0], truthAt(r, s, i) + (s.pollBias ?? 0) + gauss(s) * 4.5, 6.5, "The pre campaign model"); });
 }
 function groundRead(c: Ctx, s: State, i: number, src: string, sd = 3.6) { setRead(s, c.r.counties[i][0], truthAt(c.r, s, i) + gauss(s) * sd, sd, src); }
 function pollRegion(c: Ctx, s: State, f: string[], sd: number, src: string) {
   const e = gauss(s) * sd;
-  for (const x of f) { const i = ci(c.r, x); if (i >= 0) setRead(s, x, truthAt(c.r, s, i) + e + gauss(s) * 2, sd + 2, src); }
+  // polls carry the shared polling error; your own canvassers and field offices do not
+  for (const x of f) { const i = ci(c.r, x); if (i >= 0) setRead(s, x, truthAt(c.r, s, i) + (s.pollBias ?? 0) + e + gauss(s) * 2, sd + 2, src); }
 }
 /** The campaign's read of a county, blurred by how long ago anyone looked. */
 export function readOf(s: State, f: string): { est: number; sd: number; w: number; src: string } | null {
@@ -605,6 +624,50 @@ export function finalPush(c: Ctx, s: State, alloc: Record<string, number>, closi
   const t = `The final weekend: ${Math.round(vols).toLocaleString()} volunteers worked their shifts and turned out about ${Math.round(Math.max(0, made)).toLocaleString()} more of your voters.`;
   s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
+}
+
+// ------------------------------------------------------------- the world, the oppo file and the odds
+/** A day helping in a county hit by a storm or fire: no speeches, sandbags and supply runs. Voters notice. */
+export function reliefDay(c: Ctx, s: State, f: string): ActResult {
+  const i = ci(c.r, f), bk = blockedBy(s, f);
+  if (i < 0 || !bk) return { ok: false, t: "Only counties in recovery need a relief day." };
+  if (s.days < COST.rally) return { ok: false, t: "A relief day takes a full day." };
+  if (s.visits["relief:" + f]) return { ok: false, t: "You already helped there; another photo op would look staged." };
+  s.days -= COST.rally; s.visits["relief:" + f] = 1;
+  s.pers[i] += 1.6 * att(s);
+  const fx = (0.03 + rand(s) * 0.04) * att(s);
+  applyGlobal(s, fx, [{ label: "Voters following the storm coverage", share: 50, lean: 0, fx }], 0.8);
+  s.buzz = clamp(s.buzz + 6, 0, 100); s.volunteers += 25;
+  const t = `A relief day in ${c.r.counties[i][1]}: sandbags, supply runs and no speeches. The local news ran it without a word from your campaign.`;
+  s.log.push({ w: s.week, kind: "you", t, fx });
+  return tire(c, s, 12) ?? { ok: true, t, fx };
+}
+/** Your opposition research builds a file on the other side, a bit every week. Drop it once: late is stronger, since
+ * there is less time to answer, but it can turn out to be old news. */
+export function dropOppo(c: Ctx, s: State): ActResult {
+  if (!s.staff.oppo) return { ok: false, t: "Hire an opposition research firm first." };
+  if (s.dumped) return { ok: false, t: "You already dropped the file." };
+  if ((s.dirt ?? 0) < 2) return { ok: false, t: "The file is too thin. Give your researchers another week or two." };
+  if (s.cash < 200000) return { ok: false, t: "Rolling it out with ads and a press push costs $200K." };
+  s.cash -= 200000; s.spent += 200000; s.dumped = true;
+  const late = cal(s) >= 6 ? 1.2 : 1;
+  let fx = Math.min(0.75, 0.075 * (s.dirt ?? 0)) * (0.75 + rand(s) * 0.5) * late * att(s) * (s.mgr === "brawler" ? 1.15 : 1);
+  let t = `You dropped the opposition file on ${c.op.name}: ${Math.round(s.dirt ?? 0)} weeks of research, a press call and ads behind it.`;
+  if (rand(s) < 0.15) { fx *= 0.25; t += " Reporters had seen most of it before. Old news."; } else t += late > 1 ? " So close to the election, there is no time left to answer it." : " It led the news for days.";
+  applyGlobal(s, fx, [{ label: "Voters following the race", share: 55, lean: 0, fx }], 0.75);
+  s.enth[1] = clamp(s.enth[1] - 3, 0, 100); s.buzz = clamp(s.buzz + 12, 0, 100);
+  s.log.push({ w: s.week, kind: "you", t, fx });
+  return { ok: true, t, fx };
+}
+const PHI = (z: number) => 1 / (1 + Math.exp(-1.702 * z));
+/** The campaign's own odds: its poll average against the shared polling error, the noise in its polls and the weeks
+ * left for things to change. It never sees the truth, only the polls. */
+export function winOdds(s: State): { p: number; sd: number; avg: number } | null {
+  const avg = polledAvg(s); if (avg == null) return null;
+  const left = Math.max(0, lenOf(s) - s.week + 1);
+  const tier = POLLSTERS[s.staff.pollster];
+  const sd = Math.sqrt(2.4 ** 2 + (tier ? tier.sd ** 2 / 2 : 4) + 0.55 * left);
+  return { p: PHI(avg / sd), sd, avg };
 }
 
 // ------------------------------------------------------------- the field program
@@ -831,7 +894,7 @@ function publicPolls(r: RaceFile, s: State, first = false) {
   if (rand(s) < chance) {
     const p = r.polls[Math.floor(rand(s) * Math.max(1, r.polls.length))];
     const house = ((p?.pollster.length ?? 7) % 5 - 2) * 0.6 * (p?.pollster.includes("(R)") ? sign : p?.pollster.includes("(D)") ? -sign : 1);
-    s.polls.push({ w: s.week, src: p?.pollster ?? "Local university poll", m: truth + house + gauss(s) * 3 * DIFF[s.diff].noise, n: p?.n || 600, internal: false });
+    s.polls.push({ w: s.week, src: p?.pollster ?? "Local university poll", m: truth + (s.pollBias ?? 0) + house + gauss(s) * 3 * DIFF[s.diff].noise, n: p?.n || 600, internal: false });
   }
 }
 function internalPoll(c: Ctx, s: State) {
@@ -852,7 +915,10 @@ function internalPoll(c: Ctx, s: State) {
     if (t > 0) groups.push({ label: `Region: ${reg.name}`, m: (100 * (me - op)) / t + gauss(s) * tier.sd * 1.6 });
   }
   for (const reg of regionsOf(c.r)) pollRegion(c, s, reg.f, tier.sd * 1.6 + 1.5, `Your ${tier.name}`);
-  s.polls.push({ w: s.week, src: `Your ${tier.name}`, m: truth + gauss(s) * tier.sd, n: 800, internal: true, groups });
+  // a better pollster cuts the random error, and a little of the shared one with a better likely voter screen
+  const shared = (s.pollBias ?? 0) * (s.staff.pollster === 3 ? 0.8 : s.staff.pollster === 2 ? 0.9 : 1);
+  groups.forEach((g) => (g.m += shared));
+  s.polls.push({ w: s.week, src: `Your ${tier.name}`, m: truth + shared + gauss(s) * tier.sd, n: [0, 500, 800, 1200][s.staff.pollster], internal: true, groups });
 }
 
 // ------------------------------------------------------------- the other campaign
@@ -909,7 +975,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   const extra = (DIFF[s.diff].opp - 1) * (airFx(opTV, c.cost) + 0.7 * airFx(c.outOp, c.cost));
   // allies: extra outside money you brought in, and a redbox that tells the groups what to say
   const allies = 0.6 * airFx((s.outPlus ?? 0) * 0.08, c.cost) + ((s.redbox ?? 0) > 0 ? 0.2 * airFx(c.outMe, c.cost) : 0);
-  let air = (myAir - expMy - extra + allies) * att(s);
+  let air = (myAir - expMy - extra + allies) * att(s) * modProd(s, "tv");
   if (attacks && !s.staff.oppo && rand(s) < (s.mgr === "brawler" ? 0.15 : 0.3)) { const back = -0.12 * attacks * DIFF[s.diff].neg; air += back; s.log.push({ w: s.week, kind: "air", t: "Your attack ad drew a fact check that says it stretches the record. Independents noticed.", fx: back }); }
   s.adStock = s.adStock * 0.55 + air * 0.75; s.perm += air * 0.25;
   s.log.push({ w: s.week, kind: "air", t: `Air war this week: ${usd(s.tvWeek)} of your television against about ${usd(opTV)} from ${c.op.name}; outside groups spent about ${usd(c.outMe + (s.outPlus ?? 0) * 0.08)} for you and ${usd(c.outOp)} for ${c.op.name}.${(s.redbox ?? 0) > 0 ? " Your redbox kept your allies on message." : ""}${cal(s) <= 0 ? " It is summer: fewer voters are watching." : ""}`, fx: air });
@@ -929,7 +995,14 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   // The forecast is the race as it stands, summer included, so a summer week only has to balance the other side's summer
   // stops; a fall week has to beat a normal campaign week.
   s.nat += DIFF[s.diff].drift * (8 / lenOf(s)) + (cal(s) <= 0 ? 0.05 : -NORMAL_WEEK);
-  const inc = Math.round(c.weekly * 0.55 * DIFF[s.diff].fund * (1 + 0.3 * s.momentum) * (s.jfc ? 1.15 : 1));
+  const inc = Math.round(c.weekly * 0.55 * DIFF[s.diff].fund * (1 + 0.3 * s.momentum) * (s.jfc ? 1.15 : 1) * modProd(s, "fund"));
+  // the world: storms, shutdowns and market drops push the race for as long as they last
+  for (const m of activeMods(s)) {
+    if (m.nat) s.nat += m.nat;
+    if (m.enth) { s.enth[0] = clamp(s.enth[0] + m.enth[0], 0, 100); s.enth[1] = clamp(s.enth[1] + m.enth[1], 0, 100); }
+    if (m.vol) s.volunteers = Math.max(20, s.volunteers + m.vol);
+  }
+  if (s.staff.oppo) s.dirt = (s.dirt ?? 0) + (s.mgr === "brawler" ? 1.5 : 1);
   s.cash += inc;
   if (s.merch) { const m = Math.round(c.weekly * 0.035 * (0.4 + s.buzz / 60)); s.cash += m; s.raised += m; s.buzz = clamp(s.buzz + 0.6, 0, 100); }
   for (const k of ["media", "field", "digital"] as const) if (s.staff[k]) { s.cash -= STAFF_COST[k].wk; s.spent += STAFF_COST[k].wk; }
@@ -954,6 +1027,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   for (const k of Object.keys(s.visits)) s.visits[k] *= 0.85;
   for (const k of Object.keys(s.oppVisits)) s.oppVisits[k] *= 0.85;
   s.week += 1; s.days = DAYS; s.weekCash = Math.max(0, s.cash);
+  s.mods = (s.mods ?? []).filter((m) => m.until >= s.week);
   if (s.cash < 0) { s.log.push({ w: s.week - 1, kind: "money", t: "The campaign ended the week in the red; vendors want to be paid before they book more." }); }
   if (s.week > lenOf(s)) electionNight(c, s);
   return s.log.slice(before);
@@ -971,7 +1045,10 @@ export function electionNight(c: Ctx, s: State) {
   const r = c.r;
   const spread = r.est.p10 != null && r.est.p90 != null ? Math.abs(r.est.p90 - r.est.p10) / 2.56 : 4;
   const bank = Math.min(1, s.banked);
-  const err = gauss(s) * Math.max(1.4, spread * 0.55) * (1 - 0.3 * bank);
+  // the polling error is already in the truth; what is left is the night's own chaos, plus late deciders, who break a
+  // little toward whoever has the momentum
+  const err = gauss(s) * Math.max(1.0, spread * 0.36) * (1 - 0.3 * bank);
+  const late = Math.round((gauss(s) * 0.55 + 0.35 * s.momentum) * 100) / 100;
   // Election Day itself: the weather, and lines at the polls in a big county if nobody is watching them
   const wx = Math.floor(rand(s) * WEATHER.length), wet = wx === 1 || wx === 4;
   const wxFx = wet ? -0.35 * (1 - bank) + 0.2 : 0; // rain keeps more of the voters who had not voted yet home
@@ -980,7 +1057,7 @@ export function electionNight(c: Ctx, s: State) {
     const big = r.counties.map((x, i) => i).filter((i) => c.base[i] > 0).sort((a, b) => r.counties[b][5] - r.counties[a][5])[0];
     if (big != null) { lines = r.counties[big][1]; linesFx = -0.25; }
   }
-  const g = globalShift(s) + err + wxFx + linesFx;
+  const g = globalShift(s) + err + wxFx + linesFx + late;
   let me = 0, op = 0, t = 0;
   const counties = r.counties.map((co, i) => {
     const v = countyVotes(r, s, i, g + gauss(s) * 1.6);
@@ -1027,7 +1104,7 @@ export function electionNight(c: Ctx, s: State) {
     batches.push([at(0.8 + sz * 0.12 + j()), i, lMe, lOp, 2]);
   });
   batches.sort((a, b) => a[0] - b[0]);
-  s.result = { m, win: m > 0, me: Math.round(me), op: Math.round(op), counties: counties.map(({ f, m: cm, t: ct }) => ({ f, m: cm, t: ct })), order, start: s.trend[0].m, forecast: c.sign * r.est.margin,
+  s.result = { pollAvg: polledAvg(s), late, m, win: m > 0, me: Math.round(me), op: Math.round(op), counties: counties.map(({ f, m: cm, t: ct }) => ({ f, m: cm, t: ct })), order, start: s.trend[0].m, forecast: c.sign * r.est.margin,
     batches: batches.map((b) => [b[0], b[1], Math.round(b[2]), Math.round(b[3]), b[4]] as [number, number, number, number, number]), ticks: T, close: CLOSE[r.st] ?? 20, weather: WEATHER[wx], mailLate, turnout: Math.round(t), lines };
   s.done = true;
 }

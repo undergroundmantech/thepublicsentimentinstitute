@@ -15,6 +15,7 @@ import Debate from "./px/Debate";
 import Meeting from "./px/Meeting";
 import Night from "./px/Night";
 import Podcast from "./px/Podcast";
+import PollChart from "./px/PollChart";
 import * as N from "./net";
 import { adviceFor, memoFor, mgrName, mgrSeed } from "./px/mgr";
 import { Portrait, Type, Roll, cls, sur, fxs } from "./px/ui";
@@ -211,21 +212,6 @@ function Parts({ parts }: { parts: E.Part[] }) {
     </ul>
   );
 }
-function PollChart({ s, me, op }: { s: E.State; me: string; op: string }) {
-  const Wc = 300, Hc = 120, P = 18; const ps = s.polls; const vals = [...ps.map((p) => p.m), 0];
-  const lo = Math.min(-4, ...vals) - 1, hi = Math.max(4, ...vals) + 1;
-  const L = E.lenOf(s);
-  const X = (w: number) => P + (w * (Wc - 2 * P)) / L, Y = (m: number) => 6 + ((hi - m) * (Hc - 22)) / (hi - lo);
-  return (
-    <svg className="px-pc" viewBox={`0 0 ${Wc} ${Hc}`} role="img" aria-label="Polls of the race by week" shapeRendering="crispEdges">
-      <rect x={P} y={Y(hi)} width={Wc - 2 * P} height={Y(0) - Y(hi)} className="zone me" /><rect x={P} y={Y(0)} width={Wc - 2 * P} height={Y(lo) - Y(0)} className="zone op" />
-      <line x1={P} x2={Wc - P} y1={Y(0)} y2={Y(0)} className="z" />
-      <text x={2} y={12} className="ax">{sur(me)}</text><text x={2} y={Hc - 14} className="ax">{sur(op)}</text>
-      {Array.from({ length: L + 1 }, (_, w) => w).filter((w) => L <= 8 || w % 2 === 0).map((w) => <text key={w} x={X(w)} y={Hc - 2} textAnchor="middle" className="ax">{w === 0 ? "S" : w}</text>)}
-      {ps.map((p, i) => <rect key={i} x={X(p.w) + ((i * 7) % 9) - 4} y={Y(p.m) - 2} width={p.internal ? 5 : 4} height={p.internal ? 5 : 4} className={p.internal ? "int" : "pub"}><title>{`${p.src}: ${E.lead(p.m, sur(me), sur(op))}`}</title></rect>)}
-    </svg>
-  );
-}
 function Meter({ label, v, tone }: { label: string; v: number; tone: string }) {
   const n = Math.round(Math.max(0, Math.min(100, v)) / 10);
   return <div className="px-meter2"><span>{label}</span><b className="px-pips">{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < n ? cls("f", tone) : ""} />)}</b></div>;
@@ -392,6 +378,8 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
   const co = ci >= 0 ? r.counties[ci] : null;
   const rd = co ? E.readOf(s, co[0]) : null;
   const avg = E.polledAvg(s);
+  const odds = E.winOdds(s);
+  const mods = E.activeMods(s);
   const me = c.me, op = c.op;
   const pend = s.cur[0];
   const regs = useMemo(() => E.regionsOf(r), [r]);
@@ -428,7 +416,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
         <div className="px-hs"><span>Cash</span><b className={s.cash < 0 ? "dn" : "cash"}><Roll v={s.cash} fmt={E.usd} /></b></div>
         <div className="px-hs"><span>Volunteers</span><b><Roll v={s.volunteers} /></b></div>
         <div className="px-hs meters"><Meter label="Energy" v={s.stamina} tone={s.stamina < 30 ? "hot" : "green"} /><Meter label="Base" v={s.enth[0]} tone="gold" /><Meter label="Buzz" v={s.buzz} tone="pink" /></div>
-        <div className="px-hs"><span>Poll avg</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "None" : E.lead(avg, sur(me.name), sur(op.name))}</b></div>
+        <div className="px-hs"><span>Poll avg</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "None" : E.lead(avg, sur(me.name), sur(op.name))}</b>{odds ? <small>{Math.round(odds.p * 100)}% to win, your read</small> : null}</div>
         <div className="px-hacts">
           {debateNow ? <button type="button" className="px-press sm hot" onClick={() => { sfx("alarm"); onDebate(); }}>Debate night</button>
             : <button type="button" className="px-press sm" onClick={endWeek} disabled={!!pend}>{s.week >= L ? "Election eve" : "End week"}</button>}
@@ -440,6 +428,13 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
         </div>
       </header>
       <Calendar s={s} />
+      {mods.length || (s.staff.oppo && !s.dumped) ? (
+        <div className="px-world" aria-label="What is happening in the world">
+          <span className="px-k">In the world</span>
+          {mods.map((m) => <span key={m.id} className={cls("px-wchip", m.good ? "good" : m.nat && m.nat < 0 ? "bad" : "")} title={[m.econ && m.econ !== 1 ? `cost of living answers count ${m.econ > 1 ? "more" : "less"}` : "", m.tv && m.tv < 1 ? "ads reach fewer voters" : "", m.block ? "some counties in recovery" : "", m.fund && m.fund < 1 ? "donors are nervous" : ""].filter(Boolean).join("; ")}>{m.label}<em>{m.until - s.week + 1} wk</em></span>)}
+          {s.staff.oppo && !s.dumped ? <span className="px-wchip file">Oppo file: {Math.round(s.dirt ?? 0)} wk of research</span> : null}
+        </div>
+      ) : null}
 
       <div className="px-main">
         <section className="px-mapw">
@@ -465,6 +460,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 {regOfSel >= 0 && regs[regOfSel].note ? <span className="px-note">{regs[regOfSel].note}</span> : null}
               </div>
               <div className="px-cacts">
+                {E.blockedBy(s, co[0]) ? <button type="button" className="px-btn relief" disabled={s.days < E.COST.rally || !!s.visits["relief:" + co[0]]} onClick={() => run((x) => E.reliefDay(c, x, co[0]), "relief", { f: co[0], kind: "hall" }, "good")}>Relief day<small>{s.visits["relief:" + co[0]] ? "done" : "1 day · in recovery"}</small></button> : null}
                 <button type="button" className="px-btn" disabled={s.days < E.COST.rally} onClick={() => run((x) => E.rally(c, x, co[0]), "rally", { f: co[0], kind: "rally" }, "crowd")}>Bus tour rally<small>1 day · $35K</small></button>
                 <button type="button" className="px-btn" disabled={s.days < E.COST.hall} onClick={() => run((x) => E.townHall(c, x, co[0]), "town hall", { f: co[0], kind: "hall" })}>Town hall<small>Half day · $12K</small></button>
                 <button type="button" className="px-btn" disabled={s.offices.includes(co[0])} onClick={() => run((x) => E.openOffice(c, x, co[0]), "office", { f: co[0], kind: "office" }, "coin")}>Field office<small>$60K</small></button>
@@ -557,6 +553,8 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                   <select className="px-sel" value={dg} onChange={(e) => setDg(e.target.value)} aria-label="Voter group to target"><option value="">Pick a voter group</option>{digGroups.map((g) => <option key={g.dim + g.label} value={g.label}>{g.label}: {Math.round(g.share)}%, {Math.round(g.d)}D {Math.round(g.r)}R</option>)}</select>
                   {[100000, 250000].map((v) => <button key={v} type="button" className="px-btn" disabled={!dg || s.cash < v} onClick={() => run((x) => E.buyDigital(c, x, v, dg), "digital")}>{E.usd(v)}</button>)}
                 </div>
+                <div className="px-act static wide"><b>The opposition file{s.dumped ? ", dropped" : ""}</b><span>{!s.staff.oppo ? "Hire an opposition research firm and it builds a file on " + op.name + " every week." : s.dumped ? "You used it. Every campaign gets one." : `${Math.round(s.dirt ?? 0)} weeks of research on ${op.name}. Drop it once: the bigger the file the harder it hits, and in the last three weeks they have no time to answer. Sometimes it turns out to be old news.`}</span>
+                  {s.staff.oppo && !s.dumped ? <span className="px-row"><button type="button" className="px-btn hot" disabled={(s.dirt ?? 0) < 2 || s.cash < 200000} onClick={() => run((x) => E.dropOppo(c, x), "oppo drop", { kind: "air", fs: r.counties.slice(0, 30).map((k) => k[0]) }, "airstrike")}>Drop the file<small>$200K{(s.dirt ?? 0) < 2 ? " · needs 2 weeks" : ""}</small></button></span> : null}</div>
                 <p className="px-note">Attack ads hit hardest but can draw a fact check without opposition research. Outside groups add {E.usd(c.outMe)} a week for you, {E.usd(c.outOp)} for {sur(op.name)}.</p>
               </div>
             ) : null}
@@ -625,11 +623,12 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
         <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-ev-h">
           <div className={cls("px-card", "ev", pend.kind)}>
             <div className="px-evtags">
-              <span className={cls("px-tag", pend.kind === "attack" || pend.kind === "fringe" ? "hot" : pend.kind === "flash" ? "news" : "")}>{pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "fringe" ? "An unwanted fan" : pend.kind === "star" ? "Celebrity" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : `Week ${s.week} card`}</span>
+              <span className={cls("px-tag", pend.kind === "attack" || pend.kind === "fringe" || pend.kind === "osurprise" ? "hot" : pend.kind === "shock" ? "news" : pend.kind === "flash" ? "news" : "")}>{pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "fringe" ? "An unwanted fan" : pend.kind === "shock" ? "The world moves" : pend.kind === "osurprise" ? "October surprise" : pend.kind === "star" ? "Celebrity" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : `Week ${s.week} card`}</span>
               {pend.real ? <span className="px-tag real">Real{pend.date ? `, ${pend.date}` : ""}</span> : null}
               {s.cur.length > 1 ? <span className="px-tag dim">{s.cur.length - 1} more</span> : null}
             </div>
             <h3 id="px-ev-h">{pend.title}</h3>
+            {pend.mod ? <p className="px-modnote">Whatever you say, for the next {Math.max(1, (E.activeMods(s).find((m) => m.id === pend.mod!.id)?.until ?? s.week) - s.week + 1)} week{(E.activeMods(s).find((m) => m.id === pend.mod!.id)?.until ?? s.week) > s.week ? "s" : ""}: {[pend.mod.block ? "rallies in the hit counties are off" : "", pend.mod.tv && pend.mod.tv < 1 ? "ads reach fewer voters" : "", pend.mod.econ && pend.mod.econ > 1 ? "cost of living answers count more" : "", pend.mod.fund && pend.mod.fund < 1 ? "donors give less" : "", pend.mod.nat ? (pend.mod.nat > 0 ? "the national mood drifts your way" : "the national mood drifts against you") : "", pend.mod.enth ? "turnout enthusiasm shifts" : ""].filter(Boolean).join(", ") || "the race feels it"}.</p> : null}
             <p><Type key={pend.id} text={pend.prompt} speed={12} /> {pend.src ? (pend.src.startsWith("/") ? <Link href={pend.src}>Read it</Link> : <a href={pend.src} target="_blank" rel="noopener noreferrer">Source</a>) : null}</p>
             {pend.opts.some((o) => o.st) ? (tests ? <p className="px-note">Your pollster tested the answers: bars show how each tested, with error.</p> : <button type="button" className="px-ghost" onClick={test} disabled={!s.staff.pollster}>Test the answers, $25K{!s.staff.pollster ? ": hire a pollster" : ""}</button>) : null}
             <div className="px-opts">
@@ -676,6 +675,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 <div><span>Buzz</span><b>{Math.round(s.buzz)}</b><small className={s.buzz - week.before.buzz >= 0 ? "up" : "dn"}>{s.buzz - week.before.buzz >= 0 ? "+" : "-"}{Math.abs(Math.round(s.buzz - week.before.buzz))}</small></div>
                 <div><span>Volunteers</span><b>{s.volunteers.toLocaleString()}</b><small className={s.volunteers - week.before.vol >= 0 ? "up" : "dn"}>{s.volunteers - week.before.vol >= 0 ? "+" : "-"}{Math.abs(s.volunteers - week.before.vol).toLocaleString()}</small></div>
               </div>
+              {!s.done && s.polls.length > 1 ? <PollChart s={s} me={me.name} op={op.name} compact /> : null}
               {!s.done ? <div className="px-memo"><Portrait seed={mgrSeed(r, s.mgr ?? "vet")} role="staff" party={me.party} size={48} talking /><p><span className="px-k">Memo from {mgrName(r, s.mgr ?? "vet")}</span>{memoFor(s, week.before, na)}</p></div> : null}
               <ul className="px-log">{week.items.map((l, i) => <li key={i} className={l.kind}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
               <button type="button" className="px-btn go" onClick={() => { setWeek(null); if (s.done) onNight(); else { setRoll(true); sfx("bell"); } }}>{s.done ? "Watch the returns" : `On to week ${s.week}`}</button>

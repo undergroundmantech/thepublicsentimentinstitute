@@ -320,6 +320,7 @@ export function dealWeek(c: Ctx, s: State) {
   // an unwanted fan, once a campaign, somewhere in the middle of it
   const fr = fringeEv(c); if (fr && !s.used.includes(fr.id) && s.week >= 3 && cal(s) <= 6 && (rand(s) < 0.3 || cal(s) === 6)) out.push(fr);
   const st = starEv(c, s); if (st && !s.used.includes(st.id) && s.week >= 2 && rand(s) < 0.18) out.push(st);
+  dealWorld(c, s, out);
   s.cur = out;
 }
 
@@ -573,3 +574,103 @@ function starEv(c: Ctx, s: State): Ev | null {
     { label: "A video and a post", say: "Cut a vertical video for their feeds.", out: { buzz: 9, cash: Math.round(c.weekly * 0.15), t: "Millions of views and a burst of small donations." } },
     { label: "Thanks, but no", say: "Keep the focus on the state.", out: { t: "Their fans did not notice." } }] };
 }
+
+// ============================================================ the world moves: shocks and October surprises
+const COAST = ["FL", "GA", "SC", "NC", "TX", "LA", "MS", "AL"];
+const FIRE = ["AZ", "NV", "OR", "CO", "NM", "AK", "MT", "ID", "CA", "WA"];
+const SNOW = ["MN", "WI", "MI", "ME", "NH", "VT", "IA", "NE", "SD", "AK", "ND"];
+/** Things that happen to everyone. Each one changes the race for a few weeks whatever you do, then asks how you answer.
+ * Labeled as scenarios: they are plausible, not real events. The president's party is Republican this fall. */
+export function shocksFor(c: Ctx, s: State): Ev[] {
+  const k = cal(s), st = c.r.st, R = c.me.party === "R";
+  const fav = (ben: "D" | "R") => (c.me.party === "I" ? 0 : c.me.party === ben ? 1 : -1);
+  const big = c.r.counties.map((x, i) => i).sort((a, b) => c.r.counties[b][5] - c.r.counties[a][5]);
+  const pick = (n: number) => big.slice(0, 12).sort(() => rand(s) - 0.5).slice(0, n).map((i) => c.r.counties[i][0]);
+  const names = (fs: string[]) => fs.map((f) => c.r.counties.find((x) => x[0] === f)?.[1]).filter(Boolean).join(", ");
+  const out: Ev[] = [];
+  if (COAST.includes(st) && k >= -6 && k <= 6) { const fs = pick(4); out.push({ id: "sh:storm", kind: "shock", title: "A hurricane makes landfall", prompt: `Scenario: a strong hurricane hit ${c.r.state} overnight. ${names(fs)} are without power and the storm owns every newscast. Rallies there would look tone deaf for two weeks; relief days are welcome.`,
+    mod: { id: "storm", label: "Hurricane recovery", until: 0, block: fs, tv: 0.8, enth: [-1, -1] }, opts: [
+      { label: "Pull your ads there and help", say: "Suspend ads in the storm zone and spend tomorrow on relief.", out: { days: 1, fx: 0.06, buzz: 6, fxLabel: "Voters following the storm coverage", t: "The local news noticed you showed up with water, not a camera crew." } },
+      { label: "Raise money for relief", say: "Turn your email list toward a relief fund.", out: { buzz: 5, fx: 0.03, t: "Your donors gave to the relief fund instead of you this week, and people noticed." } },
+      { label: "Keep the schedule", say: "Campaign everywhere else as planned.", out: { fx: -0.05, risk: 0.3, riskT: "An ad of yours aired between storm updates. Bad look.", riskFx: -0.08, t: "Business as usual elsewhere." } }] }); }
+  if (FIRE.includes(st) && k >= -7 && k <= 3) { const fs = pick(3); out.push({ id: "sh:fire", kind: "shock", title: "Wildfires near the suburbs", prompt: `Scenario: wildfires are forcing evacuations near ${names(fs)}. Smoke covers half the state.`,
+    mod: { id: "fire", label: "Wildfire evacuations", until: 0, block: fs, tv: 0.85 }, opts: [
+      { label: "Visit the evacuation centers", say: "Meet families and firefighters, no press conference.", out: { days: 1, fx: 0.05, buzz: 5, t: "Quiet, human and widely covered." } },
+      { label: "Call for federal disaster aid", say: "A letter and a statement.", out: { fx: 0.02, t: "Expected, and fine." } },
+      { label: "Talk about forest policy", say: "Use it to make your policy case.", out: { st: { pos: R ? 0.4 : -0.4, sal: 0.6 }, risk: 0.25, riskT: "Politicizing a fire while it burned went over badly.", riskFx: -0.08, t: "Some agreed. Some did not like the timing." } }] }); }
+  if (SNOW.includes(st) && k >= 6) out.push({ id: "sh:snow", kind: "shock", title: "An early blizzard", prompt: "Scenario: a foot of snow fell overnight, a month early. Early voting sites are struggling and rural roads are closed.",
+    mod: { id: "snow", label: "Early blizzard", until: 0, enth: [-3, -3], vol: -40 }, opts: [
+      { label: "Fund rides to the polls", say: "Four wheel drives and volunteers to get early voters there.", cash: 80000, out: { vol: 20, enth: 4, t: "Your rides program got thousands of ballots in." } },
+      { label: "Push vote by mail", say: "Tell supporters to request a mail ballot today.", out: { enth: 2, t: "Mail requests jumped." } },
+      { label: "Wait it out", say: "It will melt.", out: { t: "It melted. Some voters did not come back." } }] });
+  if (k >= 1 && k <= 6) out.push({ id: "sh:shutdown", kind: "shock", title: "The government shuts down", prompt: "Scenario: Congress missed the funding deadline and the government shut down. Federal workers are missing paychecks and most voters blame the party in power in Washington.",
+    mod: { id: "shutdown", label: "Government shutdown", until: 0, nat: 0.05 * fav("D"), econ: 1.2, good: fav("D") > 0 }, opts: [
+      { label: "Blame the other side", say: "Make it the message of the week.", out: { st: { pos: R ? 0.7 : -0.7, tone: "fiery", sal: 0.8 }, t: "Your base loved it." } },
+      { label: "Pay the workers, end it now", say: "Back a bill to pay federal workers and troops and reopen.", out: { st: { pos: 0, tone: "calm", extra: ["Independent"] }, t: "Independents liked the fix first answer." } },
+      { label: "Stay quiet", say: "It is Washington's mess.", out: { fx: -0.02, t: "Reporters kept asking." } }] });
+  out.push({ id: "sh:market", kind: "shock", title: "The stock market drops 9 percent", prompt: "Scenario: stocks fell 9 percent in three days on recession fears and the tariff fight. Retirement accounts are down and donors are nervous.",
+    mod: { id: "market", label: "Market slump", until: 0, nat: 0.04 * fav("D"), econ: 1.4, fund: 0.88, good: fav("D") > 0 }, opts: [
+      { label: "Blame the tariffs", say: "Call it a self inflicted wound.", out: { st: { issue: "econ", pos: -0.5, trump: -0.6 }, t: "It fit the moment." } },
+      { label: "Steady hands", say: "Talk about protecting retirees, not markets.", out: { st: { issue: "econ", pos: 0, tone: "calm", extra: ["65+"] }, t: "Older voters heard it." } },
+      { label: "Blame the Fed", say: "Say interest rates caused it.", out: { st: { issue: "econ", pos: 0.5, trump: 0.5 }, t: "Your base nodded." } }] });
+  out.push({ id: "sh:gas", kind: "shock", title: "Gas prices spike", prompt: "Scenario: a refinery fire and Gulf tensions pushed gas up 60 cents in a week. Cost of living is the only topic at every stop.",
+    mod: { id: "gas", label: "Gas price spike", until: 0, nat: 0.03 * fav("D"), econ: 1.35, good: fav("D") > 0 }, opts: [
+      { label: "Gas tax holiday", say: "Call for suspending the gas tax.", out: { st: { issue: "econ", pos: 0, sal: 1.1, extra: ["Under $50K"] }, t: "Popular, if not much of a plan." } },
+      { label: "Drill more", say: "More American energy, now.", out: { st: { issue: "econ", pos: 0.6 }, t: "Your side loved it." } },
+      { label: "Go after oil companies", say: "Name the profits.", out: { st: { issue: "econ", pos: -0.5, tone: "fiery" }, t: "It played well at the pump." } }] });
+  out.push({ id: "sh:jobs", kind: "shock", title: "A blowout jobs report", prompt: "Scenario: the economy added far more jobs than expected and wages beat inflation. The White House is taking a victory lap.",
+    mod: { id: "jobs", label: "Strong economy news", until: 0, nat: 0.03 * fav("R"), econ: 0.85, good: fav("R") > 0 }, opts: [
+      { label: "Take credit", say: R ? "Say the president's agenda is working." : "Say the good news is thanks to workers, not Washington.", out: { st: { issue: "econ", pos: R ? 0.5 : -0.2, sal: 0.7 }, t: "Fine." } },
+      { label: "Prices are still too high", say: "Say families do not feel it yet.", out: { st: { issue: "econ", pos: 0, extra: ["Under $50K"] }, t: "Many voters agreed." } }] });
+  out.push({ id: "sh:war", kind: "shock", title: "A crisis overseas", prompt: "Scenario: strikes on Iran escalated overnight and American bases came under fire. Every channel is wall to wall, and nobody is watching campaign ads.",
+    mod: { id: "war", label: "Foreign crisis coverage", until: 0, tv: 0.7, nat: 0.03 * fav("R"), good: false }, opts: [
+      { label: "Rally behind the troops", say: "Support the troops and the mission.", out: { st: { issue: "other", pos: 0.4, trump: 0.4, tone: "calm" }, t: "Somber and safe." } },
+      { label: "Congress must vote", say: "Demand a vote before any wider war.", out: { st: { issue: "other", pos: -0.3, trump: -0.4 }, t: "Your base agreed; some independents too." } },
+      { label: "Pause the campaign a day", say: "No events for 24 hours.", out: { days: 0.5, fx: 0.02, t: "A respectful pause." } }] });
+  out.push({ id: "sh:court", kind: "shock", title: "A Supreme Court bombshell", prompt: "Scenario: the Supreme Court struck down a major voting rights protection in a 6 to 3 ruling. Democrats are furious and energized; Republicans call it settled law.",
+    mod: { id: "court", label: "Court ruling backlash", until: 0, enth: R ? [-1, 4] : [4, -1], good: !R }, opts: [
+      { label: R ? "Respect the ruling" : "Make it a rallying cry", say: R ? "Say the court followed the Constitution." : "Fund rallies and a voter protection push.", out: R ? { st: { pos: 0.3, tone: "calm" }, t: "Calm, and your base was fine with it." } : { enth: 4, vol: 90, t: "Volunteers poured in." } },
+      { label: "Pivot to costs", say: "Say voters care about prices first.", out: { st: { issue: "econ", pos: 0, sal: 0.7 }, t: "A careful pivot." } }] });
+  out.push({ id: "sh:surge", kind: "shock", title: "A registration surge", prompt: "Scenario: a superstar posted a link to register to vote and the state site crashed from the traffic. Most of the new registrants are under 30.",
+    mod: { id: "surge", label: "Youth registration surge", until: 0, enth: R ? [0, 3] : [3, 0], good: !R }, opts: [
+      { label: "Campus blitz", say: "Two days on campuses.", out: { days: 1, vol: 150, st: { pos: R ? 0.3 : -0.5, extra: ["18 to 29"] }, t: "Students showed up." } },
+      { label: "Ignore it", say: "Young voters rarely turn out.", out: { t: "Maybe." } }] });
+  if (k >= 2) out.push({ id: "sh:oppscandal", kind: "shock", title: `${c.op.name} stumbles`, prompt: `Scenario: ${c.op.name} was caught on a hot mic calling voters in one part of the state "a lost cause". Their campaign is in cleanup mode.`,
+    mod: { id: "oppscandal", label: `${c.op.name.split(" ").slice(-1)[0]} hot mic`, until: 0, enth: [1, -4], good: true }, opts: [
+      { label: "Pile on", say: "Cut an ad tonight with the clip.", cash: 150000, out: { fx: 0.16, risk: 0.2, riskT: "Some voters found the ad petty.", riskFx: -0.05, t: "The ad ran everywhere." } },
+      { label: "Visit those voters", say: "Go to the part of the state they insulted.", out: { days: 1, fx: 0.1, buzz: 8, t: "Great pictures, and a great contrast." } },
+      { label: "High road", say: "No comment; let it speak.", out: { fx: 0.05, t: "Reporters did the work for you." } }] });
+  if (k >= 2) out.push({ id: "sh:hack", kind: "shock", title: "Your campaign was hacked", prompt: "Scenario: someone stole and posted a month of your campaign's internal emails, including blunt notes about donors and voters.",
+    mod: { id: "hack", label: "Email leak fallout", until: 0, fund: 0.9, good: false }, opts: [
+      { label: "Own it and apologize", say: "Apologize for the worst lines, fast.", out: { fx: -0.05, t: "It faded within days." } },
+      { label: "Call it foreign interference", say: "Focus on who did it.", out: { fx: -0.03, risk: 0.4, riskT: "Then the worst email went viral anyway.", riskFx: -0.1, t: "A partial deflection." } },
+      { label: "Say nothing", say: "Do not dignify it.", out: { fx: -0.1, t: "The emails defined your week." } }] });
+  return out;
+}
+
+/** The other side's October surprise: late, and harder to answer the closer it lands. More likely when you lead. */
+export function oSurprise(c: Ctx): Ev {
+  const what = vuln(c.me)?.t ?? `a decade old lawsuit involving ${c.me.name}'s business partner`;
+  return { id: "osurprise", kind: "osurprise", title: "An October surprise", prompt: `${c.op.name}'s allies dropped a story they have clearly held for months: ${what.replace(/\.$/, "")}. It leads every newscast tonight.`, opts: [
+    { label: "Rapid response ad", say: "Answer it on the air by tomorrow.", cash: 250000, out: { fx: -0.12, t: "You blunted it, mostly." } },
+    { label: "Counter with your own file", say: "Answer with what you have on them.", need: "oppo", out: { fx: -0.05, buzz: 6, risk: 0.3, riskT: "Voters tuned out the mud fight; both of you lost a little.", riskFx: -0.06, t: "You changed the subject." } },
+    { label: "Press conference", say: "Take every question until they run out.", out: { days: 1, fx: -0.15, risk: 0.3, riskT: "You stayed calm, and it worked.", riskFx: 0.1, t: "A long, hard afternoon." } },
+    { label: "Ignore it", say: "Close on your message.", out: { fx: -0.32, t: "It was the last thing many voters heard about you." } }] };
+}
+
+/** Deal the week's world events: a shock about one week in four, and the October surprise late in the race. */
+export function dealWorld(c: Ctx, s: State, out: Ev[]) {
+  const k = cal(s);
+  if (s.week >= 2 && rand(s) < 0.27) {
+    const pool = shocksFor(c, s).filter((e) => !(s.shocks ?? []).includes(e.id));
+    if (pool.length) {
+      const e = pool[Math.floor(rand(s) * pool.length)];
+      (s.shocks ??= []).push(e.id);
+      if (e.mod) { const dur = e.mod.id === "oppscandal" || e.mod.id === "court" ? 1 : e.mod.id === "market" || e.mod.id === "shutdown" ? 3 : 2; (s.mods ??= []).push({ ...e.mod, until: s.week + dur - 1 }); }
+      out.push(e);
+    }
+  }
+  const lead = polledAvgOf(s);
+  if (k >= 6 && k <= 7 && !s.used.includes("osurprise") && !out.some((e) => e.kind === "osurprise") && rand(s) < 0.28 + (lead > 2 ? 0.2 : 0) + (k === 7 ? 0.25 : 0)) out.push(oSurprise(c));
+}
+const polledAvgOf = (s: State) => { const ps = s.polls.filter((p) => p.w >= s.week - 3); return ps.length ? ps.reduce((a, p) => a + p.m, 0) / ps.length : 0; };
