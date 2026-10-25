@@ -373,7 +373,8 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
   const [pod, setPod] = useState<E.Meet | null>(null);
   const [preg, setPreg] = useState(0);
   const [pkind, setPkind] = useState<"pers" | "gotv">("pers");
-  const [selfAmt, setSelfAmt] = useState(1000000);
+  const selfInfo = useMemo(() => E.selfCap(c), [c]);
+  const selfSteps = E.selfSteps(c, s);
   const [more, setMore] = useState<string[]>([]);
   const [dg, setDg] = useState("");
   const [snd, setSnd] = useState(soundState());
@@ -499,8 +500,8 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 <button type="button" className="px-act" disabled={s.days < E.COST.celeb || s.week - (s.celebW ?? -9) < 3} onClick={() => run((x) => E.fundraise(c, x, "celeb"), "celeb", { kind: "money" }, "coin")}><b>Celebrity fundraiser</b><span>1 day. Big money and buzz; a leaked menu can sting. Every three weeks.</span></button>
                 <button type="button" className="px-act" disabled={!!s.merch || s.cash < 25000} onClick={() => run((x) => E.openMerch(c, x), "merch", undefined, "coin")}><b>Merch store{s.merch ? ", open" : ""}</b><span>$25K once. Hats and yard signs earn a little each week, more with buzz.</span></button>
                 <button type="button" className="px-act" disabled={!!s.jfc || s.days < E.COST.jfc} onClick={() => run((x) => E.setupJFC(c, x), "jfc", undefined, "coin")}><b>Joint fundraising committee{s.jfc ? ", running" : ""}</b><span>1 day, once. Big donors give one check split with the party; weekly money up 15%.</span></button>
-                <div className="px-act static"><b>Write yourself a check</b><span>No time. Past $1 million it becomes a story about buying the seat. {s.selfIn ? `In so far: ${E.usd(s.selfIn)}.` : ""}{r.net?.[s.side]?.self ? ` In real life ${me.name} put in ${E.usd(r.net[s.side].self!)}.` : ""}</span>
-                  <span className="px-row"><select className="px-sel" value={selfAmt} onChange={(e) => setSelfAmt(Number(e.target.value))} aria-label="Amount to self fund">{[250000, 1000000, 3000000, 5000000].map((v) => <option key={v} value={v}>{E.usd(v)}</option>)}</select><button type="button" className="px-btn sm" onClick={() => run((x) => E.selfFund(c, x, selfAmt), "self", { kind: "money" }, "coin")}>Write it</button></span></div>
+                <div className="px-act static wide"><b>Write yourself a check</b><span>No time. Past $1 million it becomes a story about buying the seat. {selfInfo.why} You can put in up to {E.usd(selfInfo.cap)}{s.selfIn ? `; ${E.usd(s.selfIn)} in so far` : ""}.{me.worth?.src ? <> <a href={me.worth.src} target="_blank" rel="noopener noreferrer">Source</a></> : null}</span>
+                  {selfSteps.length ? <span className="px-row wrap">{selfSteps.map((v) => <button key={v} type="button" className="px-btn sm" onClick={() => run((x) => E.selfFund(c, x, v), "self", { kind: "money" }, "coin")}>{E.usd(v)}</button>)}</span> : <span className="px-note">Tapped out.</span>}</div>
               </div>
             ) : null}
             {tab === "net" ? (

@@ -9,7 +9,9 @@ export type Diff = "safe" | "lean" | "tossup" | "wave";
 export type Intel = { l: string | null; t: string; u: string | null };
 export type Cand = { side: Side; name: string; party: string; inc: boolean; file: string | null; intel: Intel[]; blocs: string[];
   money: { receipts: number | null; cash: number | null; outside_for: number | null; spent: number | null; google_ads: number | null; as_of: string | null }; health: number | null;
-  donors?: { donations: number | null; raised: number | null; home: number | null; small: number | null; big: number | null; pacs: number | null; self: number | null } | null };
+  donors?: { donations: number | null; raised: number | null; home: number | null; small: number | null; big: number | null; pacs: number | null; self: number | null } | null;
+  /** reported net worth and real self funding this race, sourced */
+  worth?: { low: number | null; high: number | null; est: number | null; basis: string; self: number | null; past?: number | null; pastNote?: string | null; src: string; note: string } | null };
 export type Research = {
   summary: string | null; issues: { issue: string; why: string; src: string }[];
   storylines: { title: string; date: string; what: string; helps: string; kind: string; src: string }[];
@@ -141,7 +143,7 @@ export function rand(s: State) { // mulberry32 kept in the state
 }
 export const gauss = (s: State) => { const u = Math.max(1e-9, rand(s)), v = rand(s); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
-export const usd = (n: number) => (Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : Math.abs(n) >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n)}`);
+export const usd = (n: number) => (Math.abs(n) >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : Math.abs(n) >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n)}`);
 /** Older saves get the fields added since. */
 export function migrate(s: State, r: RaceFile): State {
   s.buzz ??= 35; s.volunteers ??= 60; s.reserved ??= []; s.tests ??= {}; s.endorsed ??= []; s.dweek ??= debateWeek(r); s.knocks ??= 0; s.flashes ??= []; s.weekly ??= [];
@@ -673,8 +675,31 @@ function fieldWeek(c: Ctx, s: State) {
 }
 
 // ------------------------------------------------------------- more ways to raise money
+const nice = (v: number) => { const p = Math.pow(10, Math.max(3, Math.floor(Math.log10(Math.max(1, v))) - 1)); return Math.max(1000, Math.floor(v / p) * p); };
+/** How much of their own money a candidate can put in: about a quarter of reported net worth, since most of a fortune is
+ * a house, a business or a retirement account, never less than what they really put in this race, and $250,000 when
+ * nothing has been reported, about what a candidate can borrow against a house and savings. */
+export function selfCap(c: Ctx): { cap: number; worth: number | null; real: number; why: string } {
+  const w = c.me.worth, real = Math.max(0, w?.self ?? 0), past = Math.max(0, w?.past ?? 0);
+  let worth: number | null = null;
+  if (w?.est) worth = w.est;
+  else if (w?.low != null && w?.high != null) worth = Math.sqrt(Math.max(1, w.low) * Math.max(1, w.high));
+  else if (w?.low != null || w?.high != null) worth = (w?.low ?? w?.high) as number;
+  const fromWorth = worth != null ? Math.min(worth * 0.25, 150e6) : 250000;
+  const cap = nice(Math.max(10000, fromWorth, real * 1.25, past * 1.25));
+  const range = w?.low != null && w?.high != null ? `${usd(w.low)} to ${usd(w.high)}` : worth != null ? `about ${usd(worth)}` : null;
+  const why = (range ? `Reported net worth ${range}${w?.basis === "disclosure range" ? " on financial disclosures" : ""}. Candidates rarely put in more than a quarter of what they are worth; most of it is a house, a business or a retirement account.` : `No net worth has been reported, so the cap is ${usd(250000)}, about what a candidate can borrow against a house and savings.`)
+    + (real > 1000 ? ` In real life ${c.me.name} has put ${usd(real)} into this race.` : "") + (past > 0 && w?.pastNote ? ` ${w.pastNote}.` : "");
+  return { cap, worth, real, why };
+}
+/** Self funding steps for the money tab: small, medium, large and everything that is left. */
+export function selfSteps(c: Ctx, s: State) {
+  const left = Math.max(0, selfCap(c).cap - (s.selfIn ?? 0));
+  return [...new Set([0.05, 0.15, 0.4, 1].map((k) => (k === 1 ? Math.floor(left) : nice(left * k))).filter((v) => v >= 1000 && v <= left))];
+}
 export function selfFund(c: Ctx, s: State, amt: number): ActResult {
-  if ((s.selfIn ?? 0) + amt > 25e6) return { ok: false, t: "Your accountant says that is everything you can liquidate." };
+  const cap = selfCap(c).cap;
+  if ((s.selfIn ?? 0) + amt > cap + 1) return { ok: false, t: (s.selfIn ?? 0) >= cap ? "Your accountant says that is everything you can liquidate." : `You can only put in ${usd(cap - (s.selfIn ?? 0))} more.` };
   s.cash += amt; s.selfIn = (s.selfIn ?? 0) + amt;
   let t = `You wrote your campaign a check for ${usd(amt)}.`, fx = 0;
   if ((s.selfIn ?? 0) > 1e6) {

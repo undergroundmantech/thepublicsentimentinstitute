@@ -29,6 +29,8 @@ DON = {r["id"]: r for r in donors.get("races", [])}
 RES = os.path.join(SITE, "scripts", "play", "research")  # race research, Oct 25 2026, every item sourced
 # the Watchdog connections: who endorses, funds, rallies for and talks about each candidate
 GRAPH = J(P("public/watchdog/graph.json"), {"nodes": [], "edges": []})
+# reported net worth and self funding of each nominee, sourced, for the game's cap on writing yourself checks
+WORTH = {x["name"]: x for x in (J(os.path.join(RES, "networth.json"), {"cands": []}) or {}).get("cands", [])}
 ENDS = {r["key"]: r for r in (J(P("public/watchdog/endorsements.json"), {"races": []}) or {}).get("races", [])}
 NODE = {n["id"]: n for n in GRAPH["nodes"]}
 EIN, EOUT = {}, {}
@@ -110,7 +112,8 @@ for race in model["races"]:
                 "inc": (race.get("inc") == (-1 if side == "D" else 1)), "file": pp.get("id") if pp.get("hand") else None,
                 "intel": pp.get("intel") or [], "blocs": pp.get("blocs") or [],
                 "money": {k: m.get(k) for k in ("receipts", "cash", "outside_for", "spent", "google_ads", "as_of")},
-                "health": (wr.get("health") or {}).get(side, {}).get("score")}
+                "health": (wr.get("health") or {}).get(side, {}).get("score"),
+                "worth": {k: WORTH[name].get(k) for k in ("low", "high", "est", "basis", "self", "past", "pastNote", "src", "note")} if name in WORTH else None}
     def about(s):
         txt = s["title"] + " " + s.get("dek", "")
         return any(race[k] in txt for k in ("dem", "gop")) or (race["state"] in txt and any(race[k].split()[-1] in txt for k in ("dem", "gop")))

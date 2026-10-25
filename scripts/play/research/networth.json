@@ -1,0 +1,772 @@
+{
+"asOf": "2026-10-25",
+"about": "Reported personal net worth of each playable nominee, for the game's cap on self funding. Disclosure ranges are as reported, often assets without liabilities. est is a published point estimate. self is reported self funding of the 2025-26 race. Every figure has a source; none is invented. past is self funding in an earlier race, used as proof of what the candidate can put in.",
+"cands": [
+{
+"name": "Josh Turek",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 0,
+"src": "https://www.fec.gov/data/candidate/S6IA00298/",
+"note": "No published disclosure figures found; he says he is not a millionaire"
+},
+{
+"name": "Ashley Hinson",
+"low": 2261083,
+"high": 8765000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://politifact.com/factchecks/2026/oct/23/winsenate/ashley-hinson-8-million-richer-iowa-senate/",
+"note": "2025 House disclosure filed Aug 2026, assets"
+},
+{
+"name": "Mary Peltola",
+"low": 62006,
+"high": 230000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://www.newsweek.com/sullivan-peltola-net-worth-compared-alaska-12498773",
+"note": "Net worth range from her 2025 House disclosure"
+},
+{
+"name": "Dan S. Sullivan",
+"low": 3000000,
+"high": 12000000,
+"est": 8400000,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://senatordb.com/senator/dan-sullivan",
+"note": "2025 Senate annual report; estimate from Quiver Quantitative"
+},
+{
+"name": "Keisha Lance Bottoms",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 200000,
+"src": "https://southeastpolitics.com/keisha-lance-bottoms-with-a-little-help-from-her-own-cash-exceeds-1m-raised-for-governors-race/",
+"note": "Loaned her campaign $200,000 in 2025; no net worth published"
+},
+{
+"name": "Rick Jackson",
+"low": null,
+"high": null,
+"est": 1000000000,
+"basis": "estimate",
+"self": 200000000,
+"src": "https://www.forbes.com/profile/rick-jackson/",
+"note": "Forbes, Oct 2026; nearly $200M of his own money in the race per AP"
+},
+{
+"name": "Dan Osborn",
+"low": 286000,
+"high": 740000,
+"est": null,
+"basis": "disclosure range",
+"self": 5,
+"src": "https://stockcircle.com/congress-stock-trades/daniel-osborn/net-worth",
+"note": "2025 Senate candidate report filed Aug 2026"
+},
+{
+"name": "Pete Ricketts",
+"low": 128000000,
+"high": 414000000,
+"est": 200000000,
+"basis": "disclosure range",
+"self": 6296348,
+"src": "https://uswealthwatcher.com/politicians/pete-ricketts",
+"note": "2025 Senate disclosure; $6.3M of his own money in this race per FEC"
+},
+{
+"name": "Annie Andrews",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 0,
+"src": "https://www.fec.gov/data/candidate/S6SC04239/",
+"note": "No asset totals published"
+},
+{
+"name": "Darline Graham",
+"low": 84000,
+"high": 260000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://www.congressstock.com/politicians/darline-graham-nordone/net-worth",
+"note": "2025 annual disclosure filed Aug 2026, assets"
+},
+{
+"name": "James Talarico",
+"low": 66010,
+"high": 290000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://freebeacon.com/wp-content/uploads/2026/06/Talarico-financial-disclosure.pdf",
+"note": "Senate candidate report, Jan 2026"
+},
+{
+"name": "Ken Paxton",
+"low": null,
+"high": null,
+"est": 13000000,
+"basis": "estimate",
+"self": 0,
+"src": "https://www.forbes.com/sites/andrew-balaban/2026/08/06/how-much-is-ken-paxton-worth-a-look-at-the-scandal-scarred-maga-senate-candidates-finances/",
+"note": "Forbes estimate, Aug 2026"
+},
+{
+"name": "Troy Jackson",
+"low": 147000,
+"high": 430000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://mainemorningstar.com/2026/10/08/new-filing-shows-how-collins-and-jacksons-wealth-compare/",
+"note": "First Senate disclosure, Oct 2026, assets"
+},
+{
+"name": "Susan Collins",
+"low": 4200000,
+"high": 10100000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://www.congressstock.com/politicians/susan-m-collins/net-worth",
+"note": "2025 annual disclosure, mostly her husband's assets"
+},
+{
+"name": "David Crowley",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "Wisconsin filings give no values"
+},
+{
+"name": "Tom Tiffany",
+"low": null,
+"high": null,
+"est": 296000,
+"basis": "estimate",
+"self": null,
+"src": "https://wisconsinwatch.org/2026/05/wisconsin-congressional-delegation-wealth-change-washington-lawmakers-net-worth/",
+"note": "Median net worth from his 2024 House disclosure"
+},
+{
+"name": "Gina Hinojosa",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No credible figure found"
+},
+{
+"name": "Greg Abbott",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No credible figure found"
+},
+{
+"name": "Adam Hamilton",
+"low": 7000000,
+"high": 20500000,
+"est": null,
+"basis": "disclosure range",
+"self": 50206,
+"src": "https://www.congressstock.com/politicians/adam-hamilton/net-worth",
+"note": "2025 annual disclosure, June 2026; loaned his campaign $50,000"
+},
+{
+"name": "Roger Marshall",
+"low": null,
+"high": null,
+"est": 6000000,
+"basis": "estimate",
+"self": null,
+"src": "https://www.quiverquant.com/news/Senator Roger Marshall has filed a new financial disclosure - here’s what we see",
+"note": "Quiver Quantitative estimate, Sep 2025"
+},
+{
+"name": "Cindy Holscher",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://kansasreflector.com/2026/01/19/millionaire-candidates-for-kansas-governor-burnish-fundraising-with-personal-loans/",
+"note": "Kansas filings give no values"
+},
+{
+"name": "Ty Masterson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://kansasreflector.com/2026/01/19/millionaire-candidates-for-kansas-governor-burnish-fundraising-with-personal-loans/",
+"note": "Kansas filings give no values"
+},
+{
+"name": "Lynne Walz",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://nebraskaexaminer.com/?p=40742",
+"note": "No figure published"
+},
+{
+"name": "Jim Pillen",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://nebraskaexaminer.com/?p=8074",
+"note": "Pork company owner; put $1.5M of his own money into his 2022 race; no total published",
+"past": 1500000,
+"pastNote": "Put $1.5M of his own money into his 2022 race"
+},
+{
+"name": "Sherrod Brown",
+"low": 497000,
+"high": 1180000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://signalcleveland.org/sherrod-brown-discloses-writing-teaching-income-from-his-post-senate-career/",
+"note": "2025 Senate candidate disclosure, assets"
+},
+{
+"name": "Jon Husted",
+"low": null,
+"high": null,
+"est": 2000000,
+"basis": "estimate",
+"self": null,
+"src": "https://www.notus.org/capitol-gains/ohio-congressional-delegation-wealth-assets-debt-money",
+"note": "NOTUS median estimate from his 2025 Senate disclosure"
+},
+{
+"name": "Aaron Ford",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "Nevada disclosure lists no values"
+},
+{
+"name": "Joe Lombardo",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "Nevada disclosure lists no values; eight household properties"
+},
+{
+"name": "Amy Acton",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://signalohio.org/one-ohio-governor-candidate-vivek-ramaswamy-made-more-than-1-1-million-last-year-the-other-amy-acton-made-62-cents-election-2026/",
+"note": "Ohio disclosure lists investments without totals"
+},
+{
+"name": "Vivek Ramaswamy",
+"low": null,
+"high": null,
+"est": 2200000000,
+"basis": "estimate",
+"self": 25000000,
+"src": "https://www.forbes.com/profile/vivek-ramaswamy/",
+"note": "Forbes, Oct 2026; $25M loan in Q1 2026, pledged at least $30M"
+},
+{
+"name": "Abdul El-Sayed",
+"low": 870000,
+"high": 2100000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://afrotech.com/abdul-el-sayed-net-worth",
+"note": "Senate disclosures, Sep 2026"
+},
+{
+"name": "Mike Rogers",
+"low": 7000000,
+"high": 14000000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://bridgemi.com/michigan-government/fact-check-millionaire-claims-in-abdul-el-sayed-haley-stevens-senate-race/",
+"note": "Joint with his wife, July 2026 Senate disclosure"
+},
+{
+"name": "Jonathan Kreiss-Tomkins",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://alaskabeacon.com/2026/09/07/what-previously-undisclosed-financial-dealings-are-in-alaskas-governor-candidate-records/",
+"note": "Alaska disclosure gives no values"
+},
+{
+"name": "Bernadette Wilson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 6600,
+"src": "https://www.adn.com/politics/2026/02/18/candidates-pour-money-into-alaska-governors-race/",
+"note": "About $6,600 of her own money as of Feb 2026"
+},
+{
+"name": "Jermaine Johnson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No figure published"
+},
+{
+"name": "Alan Wilson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "South Carolina statements give no values"
+},
+{
+"name": "Scott Colom",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://mississippitoday.org/2026/10/16/colom-hyde-smith-campaign-fundraising/",
+"note": "No figure published"
+},
+{
+"name": "Cindy Hyde-Smith",
+"low": null,
+"high": null,
+"est": 932000,
+"basis": "estimate",
+"self": null,
+"src": "https://mississippitoday.org/2026/04/22/congressional-delegation-wealthier-mississippi/",
+"note": "NOTUS median estimate from her 2024 Senate disclosure"
+},
+{
+"name": "Angie Nixon",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 0,
+"src": "https://freebeacon.com/democrats/socialist-senate-hopeful-angie-nixon-slapped-with-criminal-referral-for-concealing-back-taxes-and-student-loans-from-the-senate/",
+"note": "No net worth published; disclosures show tax and student loan debts"
+},
+{
+"name": "Ashley Moody",
+"low": null,
+"high": null,
+"est": 4430000,
+"basis": "estimate",
+"self": 0,
+"src": "https://www.wmnf.org/the-net-worth-of-florida-ag-ashley-moody-increases-to-4-4-million/",
+"note": "Florida Form 6 as attorney general, end of 2023"
+},
+{
+"name": "David Jolly",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No credible figure found"
+},
+{
+"name": "Byron Donalds",
+"low": 1527064,
+"high": 2966000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://finbold.com/guide/byron-donalds-net-worth-revealed/",
+"note": "2023 House disclosure; a 2025 amendment added $1M to $5M more"
+},
+{
+"name": "Amanda Janoo",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "Vermont disclosures give no values"
+},
+{
+"name": "Phil Scott",
+"low": null,
+"high": null,
+"est": 3100000,
+"basis": "estimate",
+"self": null,
+"src": "https://www.sevendaysvt.com/news/phil-scott-releases-tax-return-reports-31-million-net-worth-3331098/",
+"note": "Self reported in 2016; no newer figure"
+},
+{
+"name": "Chris Pappas",
+"low": 244026,
+"high": 5484997,
+"est": 4400000,
+"basis": "disclosure range",
+"self": null,
+"src": "https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2022/10054290.pdf",
+"note": "House disclosure net of liabilities; estimate from Quiver, Oct 2026"
+},
+{
+"name": "John E. Sununu",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 0,
+"src": "https://www.fec.gov/data/candidate/S6NH00208/",
+"note": "No published figure found"
+},
+{
+"name": "Cyndi Munson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 0,
+"src": "https://okcfox.com/news/local/gubernatorial-campaign-finance-reports-show-stark-contrasts-in-loans-donors-and-spending-mike-mazzei-gentner-drummond-cyndi-munson",
+"note": "Put in no personal money"
+},
+{
+"name": "Mike Mazzei",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 11000000,
+"src": "https://www.hppr.org/hppr-news/2026-10-20/oklahoma-lawmakers-want-more-scrutiny-of-campaign-loans",
+"note": "About $11M in loans with his wife, nearly 90 percent of his money"
+},
+{
+"name": "Peggy Flanagan",
+"low": 990000,
+"high": 2700000,
+"est": null,
+"basis": "disclosure range",
+"self": 7000,
+"src": "https://minnesotareformer.com/2026/09/03/gop-senate-candidate-michele-tafoya-reports-assets-totaling-10-7m-to-37-9m/",
+"note": "2026 Senate candidate disclosure, assets"
+},
+{
+"name": "Michele Tafoya",
+"low": 10700000,
+"high": 37900000,
+"est": null,
+"basis": "disclosure range",
+"self": 7878,
+"src": "https://minnesotareformer.com/2026/09/03/gop-senate-candidate-michele-tafoya-reports-assets-totaling-10-7m-to-37-9m/",
+"note": "Senate candidate disclosure, assets, homes excluded"
+},
+{
+"name": "Tina Kotek",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "Oregon statements give no values"
+},
+{
+"name": "Christine Drazan",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No figure published"
+},
+{
+"name": "Cinde Warmington",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No figure published"
+},
+{
+"name": "Kelly Ayotte",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://democraticgovernors.org/updates/new-nbc-report-kelly-ayotte-made-millions-after-losing-senate-reelection-campaign-in-2016/",
+"note": "No total; over $2.1M in board fees 2017 to 2023 per NBC"
+},
+{
+"name": "Katie Hobbs",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "",
+"note": "No credible figure found"
+},
+{
+"name": "Andy Biggs",
+"low": null,
+"high": null,
+"est": 6100000,
+"basis": "estimate",
+"self": null,
+"src": "https://www.quiverquant.com/news/Press+Release%3A+Andy+Biggs+Votes+for+House+Insider+Trading+Ban+Bill",
+"note": "Quiver estimate, July 2026"
+},
+{
+"name": "Jon Ossoff",
+"low": null,
+"high": null,
+"est": 3200000,
+"basis": "estimate",
+"self": null,
+"src": "https://www.quiverquant.com/news/Senator%2BJon%2BOssoff%2Bhas%2Bfiled%2Ba%2Bnew%2Bfinancial%2Bdisclosure%2B-%2Bhere%25E2%2580%2599s%2Bwhat%2Bwe%2Bsee",
+"note": "Quiver estimate, Sep 2025"
+},
+{
+"name": "Mike Collins",
+"low": 5000000,
+"high": 27000000,
+"est": null,
+"basis": "disclosure range",
+"self": 65000,
+"src": "https://senatordb.com/elections/2026/net-worth",
+"note": "2025 House annual disclosure, Aug 2026"
+},
+{
+"name": "Helena Foulkes",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://rhodeislandcurrent.com/2026/10/20/helena-buonanno-foulkes-has-always-been-unflappable-is-she-now-unbeatable/",
+"note": "No total; about $2.7M taxable income in 2025 and over $21M in CVS pay 2014 to 2017; carries a $1.8M loan from her 2022 race",
+"past": 1800000,
+"pastNote": "Still carries a $1.8M loan from her own money in 2022"
+},
+{
+"name": "Ken Block",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 200000,
+"src": "https://www.bostonglobe.com/2026/10/07/metro/rhode-island-campaign-finance-reports-october-2026/",
+"note": "Loaned himself $200,000 this race",
+"past": 1200000,
+"pastNote": "Outstanding loans to himself of $1.2M across his 2010, 2014 and 2026 races"
+},
+{
+"name": "Rob Sand",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://iowafirstcheck.com/fact-checks/is-rob-sand-a-billionaire/",
+"note": "Iowa disclosures list no values"
+},
+{
+"name": "Zach Lahn",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 2500000,
+"src": "https://www.newsweek.com/iowa-governors-race-is-most-expensive-in-state-history-whos-funding-it-12599752",
+"note": "Loaned his campaign $2.5M"
+},
+{
+"name": "Hallie Shoffner",
+"low": 408000,
+"high": 3000000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://senatordb.com/elections/2026/net-worth",
+"note": "Senate candidate disclosure, May 2026"
+},
+{
+"name": "Tom Cotton",
+"low": 368000,
+"high": 1000000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://senatordb.com/senator/tom-cotton",
+"note": "2025 Senate annual disclosure"
+},
+{
+"name": "Jerri Green",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 84,
+"src": "https://whofundstn.org/candidates/jerri-green/",
+"note": "No figure published"
+},
+{
+"name": "Marsha Blackburn",
+"low": 650000,
+"high": 1700000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://tennesseelookout.com/2026/03/25/fec-filings-reveal-how-blackburn-laid-the-groundwork-for-governor-campaign-without-personal-fortune/",
+"note": "Latest Senate disclosure, Mar 2026"
+},
+{
+"name": "Roy Cooper",
+"low": 4350000,
+"high": 9800000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://www.wral.com/news/nccapitol/congress-stock-trading-ban-nc-senate-cooper-whatley-worth-feb-2026/",
+"note": "Senate candidate disclosure, Feb 2026"
+},
+{
+"name": "Michael Whatley",
+"low": 3350000,
+"high": 10440000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://www.wral.com/news/nccapitol/congress-stock-trading-ban-nc-senate-cooper-whatley-worth-feb-2026/",
+"note": "Senate candidate disclosure, Feb 2026"
+},
+{
+"name": "Hannah Pingree",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://themainemonitor.org/bobby-charles-personal-finances-transparency-issue/",
+"note": "Maine disclosures give no values"
+},
+{
+"name": "Bobby Charles",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://themainemonitor.org/bobby-charles-personal-finances-transparency-issue/",
+"note": "About $165K of 2025 income and property over $600K"
+},
+{
+"name": "Jamie Davis",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": 54000,
+"src": "https://www.fec.gov/data/candidate/S6LA00615/",
+"note": "$54,000 in candidate loans; no disclosure on file"
+},
+{
+"name": "Julia Letlow",
+"low": 333000,
+"high": 3000000,
+"est": null,
+"basis": "disclosure range",
+"self": 0,
+"src": "https://senatordb.com/elections/2026/net-worth",
+"note": "2025 House disclosure, Aug 2026"
+},
+{
+"name": "Jocelyn Benson",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://bridgemi.com/michigan-government/fact-check-jocelyn-bensons-family-ties-to-saline-data-center/",
+"note": "No total published"
+},
+{
+"name": "John James",
+"low": 10800000,
+"high": 50800000,
+"est": null,
+"basis": "disclosure range",
+"self": null,
+"src": "https://bridgemi.com/michigan-government/fact-check-democrats-claim-john-james-has-used-congress-to-enrich-himself/",
+"note": "2025 House disclosure, Aug 2026"
+},
+{
+"name": "Dan Ahlers",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://www.sdnewswatch.org/south-dakota-governor-secretary-of-state-campaign-finance/",
+"note": "No figure published"
+},
+{
+"name": "Larry Rhoden",
+"low": null,
+"high": null,
+"est": null,
+"basis": "none",
+"self": null,
+"src": "https://www.kotatv.com/2026/07/14/rhodens-career-legislative-record-campaign-finances/",
+"note": "Disclosure names his ranch with no values"
+}
+]
+}
