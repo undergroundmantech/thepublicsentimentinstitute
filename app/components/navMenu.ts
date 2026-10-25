@@ -102,6 +102,10 @@ export const MENU: NavGroup[] = [
   { key: "watchdog", label: "Watchdog", href: "/watchdog",
     feature: { href: "/watchdog", eyebrow: "Investigations", title: "Follow the money", note: "Who pays for the midterms and where the money lands." },
     cols: [
+      { h: "Command center", links: [
+        { href: "/watchdog/war-room", label: "War Room", note: "Campaign health and paths to victory", badge: "New" },
+        { href: "/watchdog/people/web", label: "People web", note: "Who is tied to whom" },
+      ] },
       { h: "Money", links: [
         { href: "/watchdog/money", label: "Money flow" },
         { href: "/watchdog/paid", label: "Who gets paid" },
@@ -116,6 +120,7 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/counties", label: "County data center" },
       ] },
     ] },
+  { key: "play", label: "Play", href: "/play", cols: [] },
   { key: "opp", label: "On Point Polling", href: "/on-point-polling",
     cols: [
       { h: "Our polling", links: [

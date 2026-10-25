@@ -87,6 +87,13 @@ export default function HomeDeck() {
           <span className="hd-list">{desk.stories.slice(0, 3).map((s) => <span key={s.id}>{s.title}</span>)}</span>
         </Link>
 
+        <Link href="/play" className="hd-t hd-play glass" data-ev="Home tile" data-ev-d='{"tile":"play"}'>
+          <span className="hd-k">New · Play</span>
+          <b className="hd-title">Campaign 2026: run the race yourself</b>
+          <span className="hd-p">Take over a real Senate or governor campaign on Labor Day: raise the money, work the counties, hire your pollster, fight the air war and answer the news. Voters react the way our data says they would. Then watch your election night.</span>
+          <span className="hd-links"><span>{war.races.filter((r) => r.office !== "house" && Math.abs(r.m) < 15).length} close races</span><span>Four levels</span><span>Election night</span></span>
+        </Link>
+
         <Link href="/watchdog/people/web" className="hd-t hd-web glass" data-ev="Home tile" data-ev-d='{"tile":"people web"}'>
           <span className="hd-k">Watchdog · People files</span>
           <b className="hd-title">Who is tied to whom</b>
