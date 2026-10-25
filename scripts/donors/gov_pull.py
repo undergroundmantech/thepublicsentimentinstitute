@@ -200,13 +200,16 @@ def nom_regex(n):
     return lr, fr
 
 
+NEG = re.compile(r"\b(against|oppos\w*|stop|defeat|anti|dump|fire|not)\b", re.I)  # committees formed to beat a candidate
+
+
 def match_names(names, noms):
     """names: Series of committee or candidate text. returns Series of nominee index or -1"""
     out = pd.Series(-1, index=names.index)
     txt = names.fillna("").map(deacc)
     for i, n in enumerate(noms):
         lr, fr = nom_regex(n)
-        m = txt.str.contains(lr) & (txt.str.contains(fr) if fr is not None else True)
+        m = txt.str.contains(lr) & (txt.str.contains(fr) if fr is not None else True) & ~txt.str.contains(NEG)
         out = out.where(~(m & (out < 0)), i)
     return out
 
