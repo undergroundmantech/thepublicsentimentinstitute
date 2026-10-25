@@ -26,6 +26,7 @@ export const MENU: NavGroup[] = [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
         { href: "/swingometer", label: "Swingometer", note: "Move any group of voters" },
         { href: "/forecast/donors", label: "Donor coalitions", note: "Who funds each race, and where", badge: "New" },
+        { href: "/forecast/donors/map", label: "Donor map", note: "Every county's donors, 2022, 2024 and 2026", badge: "New" },
         { href: "/forecast/methodology", label: "Methodology", note: "How the model works" },
         { href: "/forecast/changelog", label: "Changelog", note: "Every update, dated" },
       ] },

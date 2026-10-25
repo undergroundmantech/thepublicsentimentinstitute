@@ -35,7 +35,7 @@ export default function Page() {
       <header className="dn-hero">
         <div className="eye g">Forecast · Donor coalitions</div>
         <h1>Who funds the midterms, <span className="grad">and where they live.</span></h1>
-        <p>{usd(d.meta.total)} in itemized gifts to 2026 House and Senate campaigns, {d.meta.contributions.toLocaleString()} donations through September 30, every ActBlue and WinRed line included and each one placed in the county the donor lives in. Here is each race&apos;s donor coalition, set against its voters, and how the forecast now reads it.</p>
+        <p>{usd(d.meta.total)} in itemized gifts to 2026 House and Senate campaigns, {d.meta.contributions.toLocaleString()} donations through September 30, every ActBlue and WinRed line included and each one placed in the county the donor lives in. Here is each race&apos;s donor coalition, set against its voters, and how the forecast now reads it. <Link href="/forecast/donors/map">See the national donor map across 2022, 2024 and 2026</Link>.</p>
       </header>
 
       <section className="dn-kpis">

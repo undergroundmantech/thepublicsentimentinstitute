@@ -1,0 +1,1855 @@
+{
+ "about": "Where each 2022 and 2026 governor nominee's itemized gifts come from. adapter table or socrata or calaccess runs on its own; manual means export each nominee's contributions from the state site and save them in the drop folder (see howto). Add committee ids under a nominee's ids, or a regular expression under re, when the name match picks up the wrong committee.",
+ "states": {
+  "AK": {
+   "name": "Alaska",
+   "agency": "Alaska Public Offices Commission (APOC)",
+   "portal": "https://aws.state.ak.us/ApocReports/Campaign/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Mike Dunleavy",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Les Gara",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Bill Walker",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Charlie Pierce",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Jonathan Kreiss-Tomkins",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Bernadette Wilson",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "No bulk file found. Script the APOC Campaign Disclosure income search (CDIncome.aspx) by Report Year 2021 to 2022 and 2025 to 2026 and each candidate name, scraping the results grid which includes Zip, Date, Amount and Filer.",
+   "search_export": "Unconfirmed. The income search at https://aws.state.ak.us/ApocReports/CampaignDisclosure/CDIncome.aspx shows a Zip column in results but no export button was seen; a script would have to drive the ASP.NET form by Report Year and Candidate Name, or open each filed report via https://aws.state.ak.us/ApocReports/Common/View.aspx?ID=...&ViewType=CD",
+   "limits": "Top four primary with ranked choice general, so 2026 has four general candidates, three of them Republican; Begich withdrew after the primary and Taylor advanced from fifth. No bulk download or documented API; ASP.NET postback form scraping needed; export option unconfirmed."
+  },
+  "AL": {
+   "name": "Alabama",
+   "agency": "Alabama Secretary of State, Fair Campaign Practices Act (FCPA) reporting system",
+   "portal": "https://fcpa.alabamavotes.gov/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Kay Ivey",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Yolanda Flowers",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Doug Jones",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Tommy Tuberville",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Download the annual Cash Contributions zipped CSVs from the FCPA Download Data page for 2021, 2022, 2025 and 2026 and filter on ORG ID or CANDIDATE NAME; fall back to the Contribution Search CSV export by candidate.",
+   "search_export": "Yes. Contribution Search https://fcpa.alabamavotes.gov/page.request.do?page=page.acfPublicContributionDonationSearch filters by Candidate name or Committee ID and date range and has CSV, Excel, PDF export buttons, limited to 20,000 results per export; result columns include Zip Code, Amount, Transaction Date, Recipient Name.",
+   "limits": "Download page renders its file list with JavaScript, so file URLs must be read from the live page. Older paper filings are on a separate system https://arc-sos.state.al.us/CGI/ELCNAME.MBR/INPUT. Search export capped at 20,000 rows."
+  },
+  "AR": {
+   "name": "Arkansas",
+   "agency": "Arkansas Secretary of State, Elections Division (financial disclosure)",
+   "portal": "https://www.sos.arkansas.gov/financial-disclosure-search/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Sarah Huckabee Sanders",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Chris Jones",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Fredrick Love",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Sarah Huckabee Sanders",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Use the SOS advanced contribution search filtered to Governor and each candidate for election years 2022 and 2026 and capture the results; whether results can be exported or include ZIP must be checked live.",
+   "search_export": "Unconfirmed. The advanced search lets you pick Office Sought, Election Year and Candidate(s) but no CSV export was seen.",
+   "limits": "No bulk download, no API, export and ZIP field unconfirmed; the financial-disclosures.sos.arkansas.gov app disallows robots. Expect HTML scraping or a records request."
+  },
+  "AZ": {
+   "name": "Arizona",
+   "agency": "Arizona Secretary of State (See The Money / Spotlight campaign finance site)",
+   "portal": "https://spotlightv2.arizona.vote/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Katie Hobbs",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Kari Lake",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Katie Hobbs",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Andy Biggs",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Call the Spotlight API: find each nominee's committee entityId via /api/entities/search, then page through /api/committees/{id}/transactions with the 2022 and 2026 cycleId, keeping income rows; confirm a zip field exists in the JSON on the first call.",
+   "search_export": "Yes, query results on spotlightv2.arizona.vote have a CSV button per the site's how-to page.",
+   "limits": "Transaction JSON field names, including whether contributor ZIP is returned, are undocumented; site is beta. Hobbs ran in both cycles and may use separate committees per cycle."
+  },
+  "CA": {
+   "name": "California",
+   "agency": "California Secretary of State, Political Reform Division (CAL-ACCESS)",
+   "portal": "https://www.sos.ca.gov/campaign-lobbying/helpful-resources/raw-data-campaign-finance-and-lobbying-activity",
+   "adapter": "calaccess",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Gavin Newsom",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Brian Dahle",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Xavier Becerra",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Steve Hilton",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://campaignfinance.cdn.sos.ca.gov/dbwebexport.zip"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://campaignfinance.cdn.sos.ca.gov/dbwebexport.zip"
+     }
+    ]
+   },
+   "howto": "Download dbwebexport.zip now, before the CARS cutover, and filter the receipts table to the nominees' filer IDs found in the filer tables; the docs zip gives the field names.",
+   "search_export": null,
+   "limits": "CAL-ACCESS is being replaced by CARS with a target of post election November 2026; the SOS says CAL-ACCESS will stop being available and does not say whether the raw export continues, so grab the file now. cal-access.sos.ca.gov candidate pages block automated fetching, so filer IDs were not confirmed. Top two system.",
+   "notes": "CAL-ACCESS is being replaced by CARS after the November 2026 election; download the export before then. Schedule A of Form 460, latest amendment of each filing, individuals only."
+  },
+  "CO": {
+   "name": "Colorado",
+   "agency": "Colorado Secretary of State, TRACER campaign finance system",
+   "portal": "https://tracer.sos.colorado.gov/PublicSite/DataDownload.aspx",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Jared Polis",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Heidi Ganahl",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Phil Weiser",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Victor Marx",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Greg Lopez",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://tracer.sos.colorado.gov/PublicSite/Docs/BulkDataDownloads/2021_ContributionData.csv.zip"
+     },
+     {
+      "url": "https://tracer.sos.colorado.gov/PublicSite/Docs/BulkDataDownloads/2022_ContributionData.csv.zip"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://tracer.sos.colorado.gov/PublicSite/Docs/BulkDataDownloads/2025_ContributionData.csv.zip"
+     },
+     {
+      "url": "https://tracer.sos.colorado.gov/PublicSite/Docs/BulkDataDownloads/2026_ContributionData.csv.zip"
+     }
+    ]
+   },
+   "howto": "Download the yearly ContributionData.csv.zip files for 2021, 2022, 2025 and 2026 and filter on CO_ID or CANDIDATE NAME for the nominees; ZIP is a column.",
+   "search_export": "Contribution search exists at https://Tracer.sos.colorado.gov/PublicSite/SearchPages/ContributionSearch.aspx; export not checked, bulk files make it unnecessary.",
+   "limits": "Files are by reporting year, not by cycle, so pull two years per cycle. 2022 file URL must be read from the paginated download page.",
+   "keep": {
+    "col": "CONTRIBUTOR TYPE",
+    "re": "individual"
+   },
+   "drop": {
+    "col": "AMENDED",
+    "re": "^Y$",
+    "why": "TRACER marks a gift that was later replaced by an amendment with AMENDED = Y; the amendment row is kept"
+   }
+  },
+  "CT": {
+   "name": "Connecticut",
+   "agency": "State Elections Enforcement Commission (SEEC), eCRIS",
+   "portal": "https://seec.ct.gov/Portal/eCRIS/CurPreYears",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Ned Lamont",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Bob Stefanowski",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Ned Lamont",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Ryan Fazio",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2026": [
+     {
+      "url": "https://seec.ct.gov/ecrisreporting/Data/eCrisDownloads/exportdatafiles/Receipts2026ElectionYearCandidateExploratoryCommittees.csv"
+     }
+    ],
+    "2022": [
+     {
+      "url": "https://seec.ct.gov/ecrisreporting/Data/eCrisDownloads/exportdatafiles/Receipts2022ElectionYearCandidateExploratoryCommittees.xlsx"
+     }
+    ]
+   },
+   "howto": "Download the Receipts<year>ElectionYearCandidateExploratoryCommittees file for 2022 (xlsx) and 2026 (csv) and filter on the governor committees; check the header for the contributor ZIP column.",
+   "search_export": "Receipt Search at https://seec.ct.gov/eCrisReporting/SearchingContribution.aspx; export format unconfirmed. Bulk files make it unnecessary.",
+   "limits": "Column names, including ZIP, not confirmed from documentation. 2022 file is xlsx not csv. Data covers committees that file electronically through eCRIS.",
+   "notes": "Lamont and Stefanowski raised under the Citizens' Election Program rules in some years; grants are not gifts and are dropped by the individual filter when the file marks them."
+  },
+  "FL": {
+   "name": "Florida",
+   "agency": "Florida Department of State, Division of Elections",
+   "portal": "https://dos.elections.myflorida.com/campaign-finance/contributions/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Ron DeSantis",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Charlie Crist",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "David Jolly",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Byron Donalds",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Run the Division of Elections contribution query per candidate with Office Governor and Election Year 2022 or 2026, returning the tab delimited file, and parse it; verify the ZIP column in the first file.",
+   "search_export": "Yes. On https://dos.elections.myflorida.com/campaign-finance/contributions/ choose Candidate Search, Election Year 2022 or 2026, Office Governor, candidate last name, and Return Results in a Tab Delimited Text File.",
+   "limits": "No static bulk file or API; output column layout unconfirmed. The candidate campaign account is separate from political committees tied to a candidate, which must be queried separately under Committee Search if wanted."
+  },
+  "GA": {
+   "name": "Georgia",
+   "agency": "Georgia Government Transparency and Campaign Finance Commission (State Ethics Commission)",
+   "portal": "https://efile.ethics.ga.gov/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Brian Kemp",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Stacey Abrams",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Keisha Lance Bottoms",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Rick Jackson",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "For 2022, export contribution search results to Excel from the legacy media.ethics.ga.gov site by candidate; for 2026, use PeachFile in a browser to find report data or export, which needs manual checking.",
+   "search_export": "2022: Excel export from the legacy contribution search at https://media.ethics.ga.gov/search/Campaign/Campaign_ByContributions.aspx by candidate name. 2026: unconfirmed in PeachFile.",
+   "limits": "System split: legacy site for pre 2026 data and new PeachFile for 2026 reports, which is a JavaScript app with unconfirmed export. 2026 money raised in 2025 sits in the legacy system."
+  },
+  "HI": {
+   "name": "Hawaii",
+   "agency": "Hawaii Campaign Spending Commission",
+   "portal": "https://opendata.hawaii.gov/organization/campaign-spending-commission",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Josh Green",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Duke Aiona",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Josh Green",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Gary Cordery",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://opendata.hawaii.gov/dataset/216f2bc1-0e32-4ce3-811a-27cc443827f1/resource/443bd998-1ef3-47da-9170-c2c376b2e41c/download/ccscha.csv"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://opendata.hawaii.gov/dataset/216f2bc1-0e32-4ce3-811a-27cc443827f1/resource/443bd998-1ef3-47da-9170-c2c376b2e41c/download/ccscha.csv"
+     }
+    ]
+   },
+   "howto": "Download the single ccscha.csv contributions file and filter by candidate name and office Governor plus date or election period; check the header for a ZIP column.",
+   "search_export": null,
+   "limits": "Column names not confirmed; data runs only to late September 2026 so the final pre election weeks will be missing until the next refresh. 2026 Republican nominee taken from Wikipedia candidate list, primary result not independently confirmed.",
+   "keep": {
+    "col": "Contributor Type",
+    "re": "individual"
+   }
+  },
+  "IA": {
+   "name": "Iowa",
+   "agency": "Iowa Ethics and Campaign Disclosure Board (data published on the Iowa Data Hub)",
+   "portal": "https://data.iowa.gov/catalog/dataset/917",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Kim Reynolds",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Deidre DeJear",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Rob Sand",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Zach Lahn",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://idh-be.iowa.gov/api/v1/datasets/917/rows.csv"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://idh-be.iowa.gov/api/v1/datasets/917/rows.csv"
+     }
+    ]
+   },
+   "howto": "Download the full contributions CSV from the Iowa Data Hub dataset 917 and filter by the nominees' committee names or codes and contribution_received_date in 2021 to 2022 and 2025 to 2026.",
+   "search_export": null,
+   "limits": "Large file; column names beyond the date are unconfirmed; data use is limited to noncommercial purposes, which matters if the output is used for a paid product.",
+   "license": "Iowa Ethics and Campaign Disclosure Board data is CC BY-NC 4.0 and the Board bars commercial use. Fine for analysis; check before publishing on a site with ads or paid tiers."
+  },
+  "ID": {
+   "name": "Idaho",
+   "agency": "Idaho Secretary of State, Elections Division (Sunshine campaign finance)",
+   "portal": "https://voteidaho.gov/campaign-finance-portal/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Brad Little",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Stephen Heidt",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Ammon Bundy",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Terri Pickens",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Brad Little",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Check manually whether the new Sunshine site (2026) and legacy Sunshine site (2022) offer a donations download for a candidate; if so, script those exports, otherwise scrape the donation listings.",
+   "search_export": "Unconfirmed for both Sunshine sites.",
+   "limits": "Data split across two JavaScript apps with no documented bulk file, API or confirmed CSV export; ZIP presence unconfirmed. Migration of legacy data was scheduled to finish early 2026."
+  },
+  "IL": {
+   "name": "Illinois",
+   "agency": "Illinois State Board of Elections (ISBE), Campaign Disclosure",
+   "portal": "https://elections.il.gov/campaigndisclosuredatafiles",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "JB Pritzker",
+      "party": "D",
+      "re": "JB for Governor|Pritzker",
+      "ids": []
+     },
+     {
+      "name": "Darren Bailey",
+      "party": "R",
+      "re": "Bailey for Illinois|Darren Bailey|BAILEY, DARREN",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "JB Pritzker",
+      "party": "D",
+      "re": "JB for Governor|Pritzker",
+      "ids": []
+     },
+     {
+      "name": "Darren Bailey",
+      "party": "R",
+      "re": "Bailey for Illinois|Darren Bailey|BAILEY, DARREN",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://elections.il.gov/campaigndisclosuredatafiles/Receipts.txt"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://elections.il.gov/campaigndisclosuredatafiles/Receipts.txt"
+     }
+    ]
+   },
+   "howto": "Download Receipts.txt plus Committees.txt, Candidates.txt, CanElections.txt and CmteCandidateLinks.txt from the ISBE data files folder; find governor candidates for ElectionYear 2022 and 2026, join to CommitteeID, then filter Receipts by CommitteeID and RcvDate window and use Zip.",
+   "search_export": "unconfirmed; ISBE web search exists but bulk file makes it unnecessary. Illinois Sunshine (illinoissunshine.org, Reform for Illinois) mirrors ISBE data per committee.",
+   "limits": "Data folder blocks robots, so a script must download manually or with a normal client; one large cumulative file; Zip present for donors. Committee IDs for 2022 Bailey unconfirmed.",
+   "filer": {
+    "url": "https://elections.il.gov/campaigndisclosuredatafiles/Committees.txt",
+    "id": "ID",
+    "link": "CommitteeID"
+   },
+   "keep": {
+    "col": "D2Part",
+    "re": "^1$"
+   },
+   "drop": {
+    "col": "Archived",
+    "re": "^(true|1|y)",
+    "why": "archived rows were replaced by an amended report"
+   },
+   "notes": "The ISBE folder blocks robots, so the direct file names are a best guess. If the download fails, save Receipts.txt and Committees.txt from https://elections.il.gov/campaigndisclosuredatafiles into the drop folder."
+  },
+  "KS": {
+   "name": "Kansas",
+   "agency": "Kansas Public Disclosure Commission (formerly Kansas Governmental Ethics Commission); reports are received via the Kansas Secretary of State",
+   "portal": "https://www.kansas.gov/campaign-finance/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Laura Kelly",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Derek Schmidt",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Cindy Holscher",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Ty Masterson",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Query the statewide itemized contributions search with Office = Governor, the candidate name, and the 2022 General preset cycle (or 2019 to 2022 custom dates) and 2023 to 2026 dates; scrape the results pages. Fallback is the filed report PDFs (electronically filed statewide reports, e.g. sos.ks.gov/srvimages/campaignfinance/filings/cy2026/...).",
+   "search_export": "Itemized contributions search for statewide races at https://www.kansas.gov/campaign-finance/statewide/itemized/index : filter Office = Governor, candidate last/first name, contribution type, contributor state, amount, and either preset election cycles (through the 2022 General) or custom From/To dates (years 1999 to 2026). Result columns, ZIP and any CSV export are unconfirmed (only the form was visible). Statewide candidates must file electronically, so 2026 governor data should be in this database.",
+   "limits": "No bulk file or API found; results layout, ZIP field and export unconfirmed; may require HTML scraping. Candidate reports are filed per candidate, not committee."
+  },
+  "MA": {
+   "name": "Massachusetts",
+   "agency": "Massachusetts Office of Campaign and Political Finance (OCPF)",
+   "portal": "https://www.ocpf.us/Data",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Maura Healey",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Geoff Diehl",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Maura Healey",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Michael Minogue",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Andrea James",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Muhammed Kokonezis-Hanino",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Pull the yearly report item downloads from the OCPF Data Center for 2021, 2022, 2025 and 2026, then filter by the candidates' CPF IDs; if the yearly files lack ZIP, fall back to the Search Report Items page filtered by FilerCpfId.",
+   "search_export": "https://www.ocpf.us/Reports/SearchItems : item search by contributor, employer, city, Zip and filer CPF ID (FilerCpfId parameter seen in indexed result URLs); CSV export option unconfirmed because the page needs JavaScript",
+   "limits": "Site is entirely JavaScript, so file links, format and columns are unconfirmed; CPF IDs for nominees not confirmed. Statewide candidates use depository bank reporting, which may itemize differently (unconfirmed)."
+  },
+  "MD": {
+   "name": "Maryland",
+   "agency": "Maryland State Board of Elections (SBE), Campaign Finance Division (MD CRIS)",
+   "portal": "https://campaignfinancemd.us/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Wes Moore",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Dan Cox",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Wes Moore",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Dan Cox",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Andy Ellis",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Cathy White",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Use the CRIS contribution search per receiving committee and export to CSV, once per committee and per cycle; check whether 2022 data was migrated into the January 2026 MD CRIS or remains in the legacy campaignfinance.maryland.gov viewer.",
+   "search_export": "Yes. Per SBE's public viewing transcript: on the CRIS main page click Disclosures, View Contributions/Loans, Continue; type the candidate last name in Receiving Committee Name and pick the committee; Search; filter by year, report or amount; download results as Excel, Word, PDF or CSV. That transcript describes the legacy MDCRIS (campaignfinance.maryland.gov, committee lookup https://campaignfinance.maryland.gov/Public/ViewCommiteesMain). The upgraded MD CRIS launched January 12 2026 with a public portal at https://campaignfinancemd.us/ (linked from the SBE database page); its export features are unconfirmed and the site did not load for my fetcher.",
+   "limits": "No documented bulk file or API; search export only, likely needs a browser automation step. New system launched Jan 2026 and did not load for my fetcher; ZIP field in export unconfirmed. Committee names and IDs unconfirmed."
+  },
+  "ME": {
+   "name": "Maine",
+   "agency": "Maine Commission on Governmental Ethics and Election Practices (Maine Ethics Commission)",
+   "portal": "https://www.mainecampaignfinancedisclosure.com/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Janet Mills",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Paul LePage",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Sam Hunkler",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Hannah Pingree",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Bobby Charles",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Rick Bennett",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "No bulk file was found. Open each candidate's filer page on mainecampaignfinancedisclosure.com and page through the activities list, or ask the Ethics Commission (ethics@maine.gov, 207 287 4179) for a contributions extract for the 2022 and 2026 governor committees.",
+   "search_export": "Contribution search at https://www.mainecampaignfinancedisclosure.com/public/activities (filtered view for contributions linked from the home page as 'View Contributions'); covers data since 2018. Fetched table showed Filer Name, Transaction Type, Source/Payee, Date, Amount, 20 rows per page, no visible CSV or export button and no ZIP column. Export unconfirmed.",
+   "limits": "New disclosure site shows no export button and no ZIP column in the list view; ZIP may only be in filed report detail. Paging 20 rows at a time; scripting will be slow and fragile. Committee ids not confirmed."
+  },
+  "MI": {
+   "name": "Michigan",
+   "agency": "Michigan Department of State, Bureau of Elections (campaign finance disclosure, MiTN system)",
+   "portal": "https://www.michigan.gov/sos/elections/disclosure/cfr/committee-search/intro/welcome-to-the-michigan-campaign-finance-searchable-database",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Gretchen Whitmer",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Tudor Dixon",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Jocelyn Benson",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "John James",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Anthony Hudson",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "For 2022, download the legacy 2021 and 2022 (and 2023) 7z archives from the MiTN page and filter the contribution CSV by committee ID. For 2026, use the MiTN contribution search by Committee ID with Spreadsheet format checked, one committee and date range at a time, since no bulk file exists for MiTN era data.",
+   "search_export": "MiTN contribution search https://mi-boe.entellitrak.com/etk-mi-boe-prod/page.request.do?page=page.miboeContributionPublicSearch : filter by Committee Name or Committee ID, Office Title, Statement Year, Date of Contribution range; check the 'Spreadsheet format' option to get a spreadsheet of results. Contributor Zip is a search field, so ZIP is captured; export column list and row cap unconfirmed. No captcha mentioned.",
+   "limits": "No bulk download for post April 2025 MiTN data, so 2026 requires search exports (row limits unconfirmed, entellitrak pages may be hard to script). 7z format needs py7zr or p7zip. Mike Duggan ran as an independent but withdrew per Wikipedia; his committee raised heavily and should be excluded."
+  },
+  "MN": {
+   "name": "Minnesota",
+   "agency": "Minnesota Campaign Finance and Public Disclosure Board (CFB)",
+   "portal": "https://cfb.mn.gov/reports-and-data/self-help/data-downloads/campaign-finance",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Tim Walz",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Scott Jensen",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Amy Klobuchar",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Lisa Demuth",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Download the CFB 'Candidates' itemized contributions received file (2015 to present) and filter by the recipient registration numbers of the four governor committees and by year; 2026 rows will be current through the latest filed report.",
+   "search_export": "unconfirmed",
+   "limits": "Only gifts over $200 are itemized, so ZIP coverage is partial by design. File format, columns and committee registration numbers unconfirmed from the page text."
+  },
+  "NE": {
+   "name": "Nebraska",
+   "agency": "Nebraska Accountability and Disclosure Commission (NADC)",
+   "portal": "https://nadc-e.nebraska.gov/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Jim Pillen",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Carol Blood",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Lynne Walz",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Jim Pillen",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Rick Beard",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Brett Lindstrom",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Download the Contributions and Loans zips for 2021 if present (not listed), 2022, 2025 and 2026 from DataDownload.aspx and filter by the governor committees' filer ids; supplement late 2026 activity from the public search if the extract is stale.",
+   "search_export": "unconfirmed",
+   "limits": "File layout and ZIP column unconfirmed; 2021 not listed, so early 2022 cycle gifts before the new system may be missing; extract dated June 2026; downloads are postback buttons."
+  },
+  "NH": {
+   "name": "New Hampshire",
+   "agency": "New Hampshire Secretary of State, Elections Division (Campaign Finance System)",
+   "portal": "https://cfs.sos.nh.gov/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Chris Sununu",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Tom Sherman",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Cinde Warmington",
+      "party": "D",
+      "committee_hint": "candidate profile https://cfs.sos.nh.gov/public/cf/candidateprofile?guid=142a74e9-2c3c-4dba-9ed3-54497d4026d2 (from 2024 cycle)",
+      "ids": []
+     },
+     {
+      "name": "Kelly Ayotte",
+      "party": "R",
+      "committee_hint": "candidate profile https://cfs.sos.nh.gov/public/cf/candidateprofile?guid=6779630e-1211-4448-91b9-b87bed43e459 (from 2024 cycle)",
+      "ids": []
+     },
+     {
+      "name": "Jon Kiper",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "For 2026, use cfs.sos.nh.gov candidate profiles and transaction search for Ayotte and Warmington, since online filing became mandatory for governor candidates from January 1 2025 under HB 1091. For 2022, the governor reports are largely scanned paper filings, so itemized data with ZIP would need OCR or manual entry.",
+   "search_export": "cfs.sos.nh.gov has candidate search, committee search and 'Search Transactions' for individual donations (reports list at https://cfs.sos.nh.gov/public/cf/reports). CSV export unconfirmed; the site did not load for my fetcher.",
+   "limits": "2022: online filing was voluntary and Sununu's campaigns filed scanned paper style reports (NHPR), so no machine readable ZIP data. 2026: data is online but no bulk download or documented export found; site did not load for my fetcher. Itemization threshold is $50 per NHPR."
+  },
+  "NM": {
+   "name": "New Mexico",
+   "agency": "New Mexico Secretary of State, Campaign Finance Information System (CFIS)",
+   "portal": "CFIS public site (URL not shown in the documents I read; legacy site https://www.cfis.state.nm.us/; current public site reached via 'Public Site' in CFIS; exact URL unconfirmed)",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Michelle Lujan Grisham",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Mark Ronchetti",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Deb Haaland",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Gregg Hull",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "From the CFIS public site Data Download page, pull the yearly contributions and loans CSV for 2021, 2022, 2025 and 2026 and filter by the governor committees; the Openness Project (opennessproject.com) also offers a full download of cleaned NM data as a fallback.",
+   "search_export": "unconfirmed",
+   "limits": "Exact download URL, columns and ZIP presence unconfirmed; committee names unconfirmed."
+  },
+  "NV": {
+   "name": "Nevada",
+   "agency": "Nevada Secretary of State, Elections Division (Aurora campaign finance)",
+   "portal": "https://www.nvsos.gov/sos/online-services/data-download",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Joe Lombardo",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Steve Sisolak",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Aaron Ford",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Joe Lombardo",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Register an NVSOS account, request the Full Unabridged Campaign Finance dump, then join Cntrbt to Cntrbtrs on ContributorID for ZIP and filter by the governor CandidateIDs from Cnddt and by contribution date.",
+   "search_export": "unconfirmed (Aurora CEFD search exists; export not verified)",
+   "limits": "Login and emailed one time link, so the download step cannot be fully automated in Codespaces; fixed width parsing. Nevada candidates file as individuals (CandidateID) rather than committees."
+  },
+  "NY": {
+   "name": "New York",
+   "agency": "New York State Board of Elections (NYSBOE), Campaign Finance",
+   "portal": "https://publicreporting.elections.ny.gov/",
+   "adapter": "socrata",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Kathy Hochul",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Lee Zeldin",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Kathy Hochul",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Bruce Blakeman",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://data.ny.gov/resource/e9ss-239a.csv",
+      "where": "upper(office_desc) like '%GOVERNOR%' AND filing_sched_abbrev = 'A'"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://data.ny.gov/resource/e9ss-239a.csv",
+      "where": "upper(office_desc) like '%GOVERNOR%' AND filing_sched_abbrev = 'A'"
+     }
+    ]
+   },
+   "howto": "Query the data.ny.gov Socrata dataset e9ss-239a by filer_id for each governor committee (found via the Filer Data commcand.csv or a cand_comm_name search), keeping contribution schedules and using flng_ent_zip; or download the STATE_CANDIDATE disclosure zip for 2021 to 2022 and 2025 to 2026.",
+   "search_export": null,
+   "limits": "Few. Big files; committee FILER_IDs unconfirmed; Hochul 2026 gifts also include public matching funds program data which may be reported separately (unconfirmed).",
+   "notes": "Schedule A is monetary gifts from individuals and partnerships. Hochul's public matching funds are not gifts and are not in Schedule A."
+  },
+  "OH": {
+   "name": "Ohio",
+   "agency": "Ohio Secretary of State, Campaign Finance section",
+   "portal": "https://data.ohiosos.gov/portal/campaign-finance",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Mike DeWine",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Nan Whaley",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Amy Acton",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Vivek Ramaswamy",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Don Kissick",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Use the Ohio SOS FTP/File Transfer bulk files reached from data.ohiosos.gov/portal/campaign-finance, filtered to the governor committees. Exact file names and columns need a manual check in a browser first.",
+   "search_export": "Advanced Search on https://data.ohiosos.gov/portal/campaign-finance (covers the past six years, so 2022 and 2026 are both in range). Whether results export to CSV is unconfirmed.",
+   "limits": "Bulk file names, format and ZIP column could not be confirmed because the new data portal is JavaScript only and older ORDS links fail for automated fetches. The search covers only the past six years."
+  },
+  "OK": {
+   "name": "Oklahoma",
+   "agency": "Oklahoma Ethics Commission (Guardian system)",
+   "portal": "https://guardian.ok.gov/PublicSite/Homepage.aspx",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Kevin Stitt",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Joy Hofmeister",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Natalie Bruno",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Ervin Yen",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Cyndi Munson",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Mike Mazzei",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://guardian.ok.gov/PublicSite/Docs/BulkDataDownloads/2021_ContributionLoanExtract.csv.zip"
+     },
+     {
+      "url": "https://guardian.ok.gov/PublicSite/Docs/BulkDataDownloads/2022_ContributionLoanExtract.csv.zip"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://guardian.ok.gov/PublicSite/Docs/BulkDataDownloads/2025_ContributionLoanExtract.csv.zip"
+     },
+     {
+      "url": "https://guardian.ok.gov/PublicSite/Docs/BulkDataDownloads/2026_ContributionLoanExtract.csv.zip"
+     }
+    ]
+   },
+   "howto": "Download the yearly ContributionLoanExtract.csv.zip files from the Guardian Data Download page and filter on CANDIDATE NAME or ORG ID for the governor committees; use ZIP for county mapping. For 2022, page through the listing to get the 2021 and 2022 extracts.",
+   "search_export": "Contributions/Loans/Transfers-In search at https://guardian.ok.gov/PublicSite/SearchPages/Search.aspx?SearchTypeCodeHook=F0FEA582-08C3-42BA-B008-0F5067C5791B; CSV export unconfirmed.",
+   "limits": "2022 extract existence not confirmed on page 1 of the paginated listing. Mazzei won the R runoff on Aug 25 2026 by about 2,000 votes, so his committee activity is mostly 2025 and 2026.",
+   "keep": {
+    "col": "RECEIPT / TRANSFER SOURCE TYPE",
+    "re": "individual"
+   },
+   "drop": {
+    "col": "AMENDED",
+    "re": "^Y$",
+    "why": "TRACER marks a gift that was later replaced by an amendment with AMENDED = Y; the amendment row is kept"
+   },
+   "notes": "The 2021 and 2022 extract names follow the 2023 to 2026 pattern but were not confirmed; if they fail, download them from the Data Download page into the drop folder."
+  },
+  "OR": {
+   "name": "Oregon",
+   "agency": "Oregon Secretary of State, Elections Division (ORESTAR)",
+   "portal": "https://secure.sos.state.or.us/orestar/gotoPublicTransactionSearch.do",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Tina Kotek",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Christine Drazan",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Betsy Johnson",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Tina Kotek",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Christine Drazan",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Brett Smith",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "No bulk file found. Look up each committee's Filer ID, then run the ORESTAR transaction search by Filer ID and contribution type in date windows and export each result set to Excel.",
+   "search_export": "ORESTAR Public Transaction Search https://secure.sos.state.or.us/orestar/gotoPublicTransactionSearch.do: filter by Filer/Committee ID or name, Transaction Type = Contribution, transaction date range. Oregon Capital Chronicle says the data can be downloaded to Excel; the export's column names and any row cap are unconfirmed. Contributor Zip Code is a search field, so ZIP is stored.",
+   "limits": "No bulk download or API found; export is per search and Excel based, and the row cap is unconfirmed. Oregon has no contribution limits, so very large gifts are common. Kotek and Drazan ran both cycles; split by transaction date."
+  },
+  "PA": {
+   "name": "Pennsylvania",
+   "agency": "Pennsylvania Department of State, Bureau of Campaign Finance",
+   "portal": "https://www.pa.gov/agencies/dos/resources/voting-and-elections-resources/campaign-finance-data",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Josh Shapiro",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Doug Mastriano",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Josh Shapiro",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Stacy Garrity",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Ken Krawchuk",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/campaign-finance/campaign-finance-data/2021.zip",
+      "members": "contrib",
+      "columns": [
+       "CampaignFinanceID",
+       "FilerID",
+       "EYEAR",
+       "SubmittedDate",
+       "CYCLE",
+       "Section",
+       "CONTRIBUTOR",
+       "ADDRESS1",
+       "ADDRESS2",
+       "CITY",
+       "STATE",
+       "ZIPCODE",
+       "OCCUPATION",
+       "ENAME",
+       "EADDRESS1",
+       "EADDRESS2",
+       "ECITY",
+       "ESTATE",
+       "EZIPCODE",
+       "CONTDATE1",
+       "CONTAMT1",
+       "CONTDATE2",
+       "CONTAMT2",
+       "CONTDATE3",
+       "CONTAMT3",
+       "CONTDESC"
+      ]
+     },
+     {
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/campaign-finance/campaign-finance-data/2022.zip",
+      "members": "contrib",
+      "columns": [
+       "CampaignFinanceID",
+       "FilerID",
+       "EYEAR",
+       "SubmittedDate",
+       "CYCLE",
+       "Section",
+       "CONTRIBUTOR",
+       "ADDRESS1",
+       "ADDRESS2",
+       "CITY",
+       "STATE",
+       "ZIPCODE",
+       "OCCUPATION",
+       "ENAME",
+       "EADDRESS1",
+       "EADDRESS2",
+       "ECITY",
+       "ESTATE",
+       "EZIPCODE",
+       "CONTDATE1",
+       "CONTAMT1",
+       "CONTDATE2",
+       "CONTAMT2",
+       "CONTDATE3",
+       "CONTAMT3",
+       "CONTDESC"
+      ]
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/campaign-finance/campaign-finance-data/2025.zip",
+      "members": "contrib",
+      "columns": [
+       "CampaignFinanceID",
+       "FilerID",
+       "EYEAR",
+       "SubmittedDate",
+       "CYCLE",
+       "Section",
+       "CONTRIBUTOR",
+       "ADDRESS1",
+       "ADDRESS2",
+       "CITY",
+       "STATE",
+       "ZIPCODE",
+       "OCCUPATION",
+       "ENAME",
+       "EADDRESS1",
+       "EADDRESS2",
+       "ECITY",
+       "ESTATE",
+       "EZIPCODE",
+       "CONTDATE1",
+       "CONTAMT1",
+       "CONTDATE2",
+       "CONTAMT2",
+       "CONTDATE3",
+       "CONTAMT3",
+       "CONTDESC"
+      ]
+     },
+     {
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/campaign-finance/campaign-finance-data/2026.zip",
+      "members": "contrib",
+      "columns": [
+       "CampaignFinanceID",
+       "FilerID",
+       "EYEAR",
+       "SubmittedDate",
+       "CYCLE",
+       "Section",
+       "CONTRIBUTOR",
+       "ADDRESS1",
+       "ADDRESS2",
+       "CITY",
+       "STATE",
+       "ZIPCODE",
+       "OCCUPATION",
+       "ENAME",
+       "EADDRESS1",
+       "EADDRESS2",
+       "ECITY",
+       "ESTATE",
+       "EZIPCODE",
+       "CONTDATE1",
+       "CONTAMT1",
+       "CONTDATE2",
+       "CONTAMT2",
+       "CONTDATE3",
+       "CONTAMT3",
+       "CONTDESC"
+      ]
+     }
+    ]
+   },
+   "howto": "Download the yearly zips (2021, 2022, 2025, 2026), find the governor committees' FilerIDs in the filer file, then unpivot the three date/amount pairs in the contribution file and keep ZIPCODE.",
+   "search_export": null,
+   "limits": "Wide format with up to three gifts per row; delimiter not documented; no column shows the receiving committee name in the contribution file, so you must join to the filer file. Shapiro committee exists in both cycles; split by date.",
+   "filer": {
+    "members": "filer",
+    "id": "FILERID",
+    "link": "FilerID",
+    "columns": [
+     "CampaignfinanceID",
+     "FILERID",
+     "EYEAR",
+     "SubmittedDate",
+     "CYCLE",
+     "AMMEND",
+     "TERMINATE",
+     "FILERTYPE",
+     "FILERNAME",
+     "OFFICE",
+     "DISTRICT",
+     "PARTY",
+     "ADDRESS1",
+     "ADDRESS2",
+     "CITY",
+     "STATE",
+     "ZIPCODE",
+     "COUNTY",
+     "PHONE",
+     "BEGINNING",
+     "MONETARY",
+     "INKIND"
+    ]
+   },
+   "notes": "Each contribution row can hold up to three dated amounts; they are split into separate gifts."
+  },
+  "RI": {
+   "name": "Rhode Island",
+   "agency": "Rhode Island Board of Elections, Campaign Finance Division (ERTS)",
+   "portal": "http://www.ricampaignfinance.com/RIPublic/Homepage.aspx",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Dan McKee",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Ashley Kalus",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Helena Foulkes",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Ken Block",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Jay Gotra",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "C.D. Reynolds",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Run the RIPublic Contributions search per governor committee (Organization dropdown) with a date range for each cycle and save the result table; check in a browser whether an export button appears on the results.",
+   "search_export": "Contributions ad hoc report at http://ricampaignfinance.com/RIPublic/Contributions.aspx: filter by Organization (dropdown), From/Through dates, contribution type, donor, City/State/Zip, employer. A CSV export button on the public page is unconfirmed (the ERTS manual documents 'Export to comma delimited file' only for logged-in filer reports). A third party notebook loaded RI BOE contribution data as CSV with a zip column, which suggests an export exists, but that is unconfirmed on the state site.",
+   "limits": "No bulk file or API found; public CSV export unconfirmed; ASP.NET form search. Guckian's nomination was not officially certified in the sources seen."
+  },
+  "SC": {
+   "name": "South Carolina",
+   "agency": "South Carolina State Ethics Commission",
+   "portal": "https://ethicsfiling.sc.gov/public/home",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Henry McMaster",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Joe Cunningham",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Morgan Bruce Reeves",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Jermaine Johnson",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Alan Wilson",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Open ethicsfiling.sc.gov public reporting in a browser and check per candidate contribution search and export; for 2022, The Accountability Project's cleaned SC file is a fallback.",
+   "search_export": "unconfirmed. The public reporting site https://ethicsfiling.sc.gov/public/home is a JavaScript app that could not be read; no export or download option is documented on ethics.sc.gov. Fallback: The Accountability Project dataset (via the Campaign Finance Explorer at https://state-campaign-finance.onconcourse.com/south-carolina) covers SC 2000 to 2023 with an Export CSV button; ZIP presence unconfirmed.",
+   "limits": "No documented bulk file or API; state portal is a JavaScript app; export and ZIP presence unconfirmed. 2026 SC data not in the third party set (ends 2023)."
+  },
+  "SD": {
+   "name": "South Dakota",
+   "agency": "South Dakota Secretary of State, Campaign Finance (CFR system)",
+   "portal": "https://sdcfr.sdsos.gov/",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Kristi Noem",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Jamie Smith",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Tracey Quint",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Dan Ahlers",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Larry Rhoden",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "No machine readable route found: search the committee at https://sdcfr.sdsos.gov/Search/Search.aspx and download each report PDF, then parse or OCR the itemized contribution schedules.",
+   "search_export": null,
+   "limits": "PDF only. South Dakota Searchlight reported that citizens must search by committee and download a PDF per report, that the system does not require donations in a searchable format, and that it had to convert the Noem and Smith donor lists from scanned images. No contribution search, CSV export or bulk file found. SDCL 12-27-33 bars commercial use or solicitation with the data."
+  },
+  "TN": {
+   "name": "Tennessee",
+   "agency": "Tennessee Bureau of Ethics and Campaign Finance, Registry of Election Finance",
+   "portal": "https://apps.tn.gov/tncamp-app/public/search.htm",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Bill Lee",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Jason Martin",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Jerri Green",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Marsha Blackburn",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Use the tncamp public Contributions search filtered to each governor candidate and election year, and download results as CSV.",
+   "search_export": "Yes per Tennessee Lookout: 'Search for Contributions and Expenditures' at https://apps.tn.gov/tncamp-app/public/search.htm (reached from https://apps.tn.gov/tncamp/ under Public); results can be downloaded as CSV or Excel. Export column names unconfirmed; site described as 'picky'.",
+   "limits": "No bulk file or API found; export column names and whether donor ZIP is included are unconfirmed; form based search. Blackburn is a sitting U.S. Senator, so ignore her federal FEC committee and use only her state gubernatorial committee."
+  },
+  "TX": {
+   "name": "Texas",
+   "agency": "Texas Ethics Commission (TEC)",
+   "portal": "https://www.ethics.state.tx.us/search/cf",
+   "adapter": "table",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Greg Abbott",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Beto O'Rourke",
+      "party": "D",
+      "re": "O.?ROURKE|Beto for Texas",
+      "ids": []
+     },
+     {
+      "name": "Mark Tippetts",
+      "party": "O",
+      "ids": []
+     },
+     {
+      "name": "Delilah Barrios",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Gina Hinojosa",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Greg Abbott",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Pat Dixon",
+      "party": "O",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [
+     {
+      "url": "https://prd.tecprd.ethicsefile.com/public/cf/public/TEC_CF_CSV.zip",
+      "members": "(^|/)contribs_\\d+\\.csv$"
+     }
+    ],
+    "2026": [
+     {
+      "url": "https://prd.tecprd.ethicsefile.com/public/cf/public/TEC_CF_CSV.zip",
+      "members": "(^|/)contribs_\\d+\\.csv$"
+     }
+    ]
+   },
+   "howto": "Download TEC_CF_CSV.zip, get the governor filers' filerIdent from filers.csv, and filter contribs_##.csv by filerIdent and contributionDt for each cycle, using contributorStreetPostalCode.",
+   "search_export": "Advanced Searches for individual transactions at https://www.ethics.state.tx.us/search/cf/AdvancedSearch.php (export not checked; bulk zip is better).",
+   "limits": "Very large file; Texas has no individual contribution limits; Abbott's one committee spans both cycles, so split by date. Contribution records have no candidate link other than filerIdent.",
+   "filer": {
+    "members": "(^|/)filers\\.csv$",
+    "id": "filerIdent",
+    "link": "filerIdent"
+   },
+   "keep": {
+    "col": "contributorPersentTypeCd",
+    "re": "^INDIVIDUAL$"
+   }
+  },
+  "VT": {
+   "name": "Vermont",
+   "agency": "Vermont Secretary of State, Elections Division",
+   "portal": "https://campaignfinance.vermont.gov",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Phil Scott",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Brenda Siegel",
+      "party": "D",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Amanda Janoo",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Phil Scott",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Open campaignfinance.vermont.gov in a browser and check its transaction search for an export; otherwise download each filed report. Vermont did hold a 2022 governor race (two year terms).",
+   "search_export": "unconfirmed. The new Vermont Financial Disclosure site (announced Jan 15 2025, holds 14,000+ reports from 2014 to 2024) is a JavaScript app that could not be read; the old system at https://campaignfinance.sec.state.vt.us/ blocks automated fetching (robots). No export or download is documented in the announcements.",
+   "limits": "No bulk file or API found; new portal is JavaScript only and old portal blocks robots; export and ZIP presence unconfirmed. Small dollar totals."
+  },
+  "WI": {
+   "name": "Wisconsin",
+   "agency": "Wisconsin Ethics Commission",
+   "portal": "https://campaignfinance.wi.gov",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Tony Evers",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Tim Michels",
+      "party": "R",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "David Crowley",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Tom Tiffany",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Use the campaignfinance.wi.gov transaction search per registrant committee and export to spreadsheet for each cycle.",
+   "search_export": "Transaction search at https://campaignfinance.wi.gov/browse-data/transactions (Sunshine dashboard, launched Aug 2025); the Ethics Commission page says you can 'export transactions to a spreadsheet'. Filter by Registrant (the governor committee). Export column names and whether 2022 transactions were migrated are unconfirmed. The older CFIS (cfis.wi.gov) 'View Receipts' offered CSV or XLS download at the bottom of results, per Wisconsin Watch 2019.",
+   "limits": "No bulk file or API found; export is per search; the page notes data may not be used for commercial purposes; Wisconsin Watch notes duplicate entity and data entry issues."
+  },
+  "WY": {
+   "name": "Wyoming",
+   "agency": "Wyoming Secretary of State, Election Division (WYCFIS)",
+   "portal": "https://www.wycampaignfinance.gov/WYCFWebApplication/GSF_SystemConfiguration/PublicSearch.aspx",
+   "adapter": "manual",
+   "nominees": {
+    "2022": [
+     {
+      "name": "Mark Gordon",
+      "party": "R",
+      "ids": []
+     },
+     {
+      "name": "Theresa Livingston",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Jared Baldes",
+      "party": "O",
+      "ids": []
+     }
+    ],
+    "2026": [
+     {
+      "name": "Kenneth Casner",
+      "party": "D",
+      "ids": []
+     },
+     {
+      "name": "Eric Barlow",
+      "party": "R",
+      "ids": []
+     }
+    ]
+   },
+   "sources": {
+    "2022": [],
+    "2026": []
+   },
+   "howto": "Run Search Contributions with Office Sought = Governor and Election Year Cycle 2022 and 2026, then use Export to save the text file.",
+   "search_export": "Search Contributions at https://www.wycampaignfinance.gov/WYCFWebApplication/GSF_SystemConfiguration/SearchContributions.aspx: filter by Committee Name or Office Sought = Governor plus Election Year Cycle (required for those filters), date range, contribution type. Help docs say an Export button saves results 'in a text file'; delimiter and columns unconfirmed. No ZIP search field on the form; whether ZIP is in the export is unconfirmed.",
+   "limits": "No bulk file or API; ASP.NET search with export; ZIP in export unconfirmed; results paginate 25 per page on screen."
+  }
+ }
+}

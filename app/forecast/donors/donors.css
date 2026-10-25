@@ -90,3 +90,4 @@
   .opp .dn-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .opp .dn-two, .opp .dn-cands, .opp .dn-sig, .opp .dn-tops { grid-template-columns: minmax(0, 1fr); }
 }
+.opp .dn-hero p a { color: var(--hi); }

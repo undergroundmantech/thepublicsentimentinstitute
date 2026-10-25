@@ -15,7 +15,8 @@ const TABS: { href: string; label: string; match?: (p: string) => boolean }[] = 
   { href: "/forecast/legislatures", label: "State legislatures" },
   { href: "/forecast/measures", label: "Ballot measures" },
   { href: "/forecast/other", label: "Every other race" },
-  { href: "/forecast/donors", label: "Donor coalitions" },
+  { href: "/forecast/donors", label: "Donor coalitions", match: (p) => p === "/forecast/donors" },
+  { href: "/forecast/donors/map", label: "Donor map" },
   { href: "/forecast/methodology", label: "Methodology" },
 ];
 
