@@ -1094,20 +1094,24 @@
     "2022": [
      {
       "url": "https://data.ny.gov/resource/e9ss-239a.csv",
-      "where": "upper(office_desc) like '%GOVERNOR%' AND filing_sched_abbrev = 'A'"
+      "where": ""
      }
     ],
     "2026": [
      {
       "url": "https://data.ny.gov/resource/e9ss-239a.csv",
-      "where": "upper(office_desc) like '%GOVERNOR%' AND filing_sched_abbrev = 'A'"
+      "where": ""
      }
     ]
    },
    "howto": "Query the data.ny.gov Socrata dataset e9ss-239a by filer_id for each governor committee (found via the Filer Data commcand.csv or a cand_comm_name search), keeping contribution schedules and using flng_ent_zip; or download the STATE_CANDIDATE disclosure zip for 2021 to 2022 and 2025 to 2026.",
    "search_export": null,
    "limits": "Few. Big files; committee FILER_IDs unconfirmed; Hochul 2026 gifts also include public matching funds program data which may be reported separately (unconfirmed).",
-   "notes": "Schedule A is monetary gifts from individuals and partnerships. Hochul's public matching funds are not gifts and are not in Schedule A."
+   "notes": "Schedule A is monetary gifts from individuals and partnerships. Hochul's public matching funds are not gifts and are not in Schedule A. Amended reports can repeat a gift; check the recipients list.",
+   "keep": {
+    "col": "filing_sched_abbrev",
+    "re": "^A$"
+   }
   },
   "OH": {
    "name": "Ohio",

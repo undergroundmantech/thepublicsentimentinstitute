@@ -719,7 +719,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
 const MAIL_LATE = new Set(["PA", "WI"]);
 /** Poll closing time in the state's last time zone, as Eastern hours. */
 const CLOSE: Record<string, number> = { GA: 19, SC: 19, VT: 19, NH: 20, ME: 20, FL: 20, MI: 21, OH: 19.5, NC: 19.5, PA: 20, TN: 21, AL: 21, MS: 21, IL: 21, OK: 21, TX: 21, KS: 21, NE: 22, SD: 22, MN: 22, WI: 22, IA: 23, LA: 22, AR: 20.5, NM: 22, AZ: 22, CO: 22, NV: 23, NY: 22, OR: 24, WY: 22, AK: 25, HI: 24, RI: 20, MA: 20, MD: 20, CT: 20 };
-export const NIGHT_TICKS = 170;
+export const NIGHT_TICKS = 480; // at 1.5 seconds a tick, twelve minutes at normal speed
 export const WEATHER = ["Clear and cool", "Rain across the state", "Sunny and mild", "Cold and windy", "Storms in the afternoon"];
 
 export function electionNight(c: Ctx, s: State) {

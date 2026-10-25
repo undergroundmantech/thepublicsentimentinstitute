@@ -280,6 +280,50 @@ function Final72({ r, s, onDone }: { r: E.RaceFile; s: E.State; onDone: (x: E.St
   );
 }
 
+// ============================================================ the campaign calendar and your campaign manager
+function Calendar({ s }: { s: E.State }) {
+  const marks = (w: number) => [
+    w <= E.REG_DEADLINE ? (w === E.REG_DEADLINE ? "Registration closes" : "Register voters") : null,
+    w === 4 ? "Q3 money deadline" : null,
+    w === s.dweek ? "Debate" : null,
+    w >= E.EARLY_FROM ? (w === E.EARLY_FROM ? "Early voting opens" : "Early voting") : null,
+    w === E.WEEKS ? "Election Day next" : null,
+  ].filter(Boolean) as string[];
+  return (
+    <ol className="px-cal" aria-label="The campaign calendar">
+      {Array.from({ length: E.WEEKS }, (_, k) => k + 1).map((w) => (
+        <li key={w} className={cls(w === s.week && "now", w < s.week && "past", w === s.dweek && "deb")}>
+          <b>W{w}</b><span>{E.weekLabel(w).split(" to ")[0]}</span>{marks(w).slice(0, 2).map((m) => <em key={m}>{m}</em>)}
+        </li>
+      ))}
+    </ol>
+  );
+}
+function adviceFor(r: E.RaceFile, s: E.State, c: E.Ctx): string {
+  const stale = r.counties.reduce((a, co) => { const rd = E.readOf(s, co[0]); return a + (!rd || rd.sd >= 7 ? co[5] : 0); }, 0) / Math.max(1, c.total);
+  const debate = s.week === s.dweek && s.debated == null;
+  if (debate) return `Debate night is this week. Every prep session widens your delivery zone, and you have had ${s.prep}. Hit the red Debate night button when you are ready.`;
+  if (s.stamina < 35) return "You are running on fumes. Below 30 energy the candidate starts making mistakes on camera. Take a day off.";
+  if (s.week === E.WEEKS && !s.final) return "Last week. Bank every ballot you can, then the final 72 hours: put your volunteers where you have the most voters to turn out.";
+  if (s.week <= E.REG_DEADLINE && s.regs < 3000) return `Registration closes after week ${E.REG_DEADLINE}. A drive in a county that leans your way adds voters who are not in anyone's polls yet.`;
+  if (!s.offices.length) return "You have no field offices. Volunteers need somewhere to pick up walk lists, and offices give you a steady read on their counties.";
+  if (!s.staff.pollster && stale > 0.5) return `About ${Math.round(stale * 100)}% of the vote is in counties you are guessing about. A pollster sharpens your whole map every week; a regional poll fixes one region now.`;
+  if (s.invites.length && s.days >= 2) return `${s.invites.length} people want a meeting this week. Some come with volunteers, money or an endorsement. Some leak.`;
+  if (s.week >= E.EARLY_FROM && s.banked < 0.25) return "Early voting is open. Money in the turnout program now banks ballots, which are safe from bad weather and late news.";
+  if (s.week >= 3 && s.cash > s.weekCash * 0.9 && s.tvWeek === 0 && s.cash > 500000) return "You are sitting on cash. Voters cannot see money in the bank: reserve TV for the last weeks before stations raise their rates.";
+  if (stale > 0.4) return "Your read is going stale in a lot of counties. Visit them or poll the region before you spend there.";
+  return s.week <= 2 ? "Early weeks are for money, staff and offices. Rallies in the counties that lean your way also fire up your base." : "Swing counties move the most per visit. Your base counties turn out more when you show up.";
+}
+function Advisor({ r, s, c }: { r: E.RaceFile; s: E.State; c: E.Ctx }) {
+  const tip = adviceFor(r, s, c);
+  return (
+    <div className="px-advisor">
+      <Portrait seed={seedOf("manager" + r.id)} role="staff" party={c.me.party} size={64} talking />
+      <div className="px-bubble"><span className="px-k">Your campaign manager</span><p><Type key={tip} text={tip} speed={14} sound={false} /></p><small>Click a county to send the bus there.</small></div>
+    </div>
+  );
+}
+
 // ============================================================ headquarters
 type Tab = "trail" | "meet" | "air" | "ground" | "staff" | "polls" | "intel" | "log";
 const TABS: [Tab, string][] = [["trail", "Trail"], ["meet", "Meetings"], ["air", "Air war"], ["ground", "Turnout"], ["staff", "Staff"], ["polls", "Polls"], ["intel", "Intel"], ["log", "Wire"]];
@@ -290,6 +334,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
   const [hov, setHov] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("trail");
   const [layer, setLayer] = useState<Layer>("read");
+  const [names, setNames] = useState(true);
   const [toast, setToast] = useState<{ t: string; ok: boolean; k: number } | null>(null);
   const [out, setOut] = useState<{ ev: E.Ev; o: Outcome; choice: number } | null>(null);
   const [week, setWeek] = useState<{ items: E.LogItem[]; before: { avg: number | null; cash: number; buzz: number; vol: number } } | null>(null);
@@ -361,6 +406,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
           <button type="button" className="px-icon" onClick={quit} aria-label="Menu">MENU</button>
         </div>
       </header>
+      <Calendar s={s} />
 
       <div className="px-main">
         <section className="px-mapw">
@@ -368,10 +414,11 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
             <b>{r.state}</b>
             <div className="px-chips" role="group" aria-label="Map layer">
               {([["read", "Your read"], ["regions", "Regions"], ["ground", "Ground game"], ["rival", "Their stops"]] as [Layer, string][]).map(([k, l]) => <button key={k} type="button" className={layer === k ? "on" : ""} aria-pressed={layer === k} onClick={() => { setLayer(k); sfx("click"); }}>{l}</button>)}
+              <button type="button" className={names ? "on" : ""} aria-pressed={names} onClick={() => setNames((v) => !v)}>Names</button>
             </div>
           </div>
           <div className="px-mapbox">
-            <PixelMap r={r} s={s} geo={geo} mode="plan" layer={layer} sel={sel} onSel={(f) => { setSel(f); sfx("click"); }} hover={hov} onHover={setHov} fx={fx} bus={bus} />
+            <PixelMap r={r} s={s} geo={geo} mode="plan" layer={layer} sel={sel} onSel={(f) => { setSel(f); sfx("click"); }} hover={hov} onHover={setHov} fx={fx} bus={bus} labels={names ? 7 : 0} />
             {hoverCo && !co ? <div className="px-hover">{hoverCo[1]} · {hoverRd ? `${E.readLabel(hoverRd.est, hoverRd.sd)}, ${E.confLabel(hoverRd.sd).toLowerCase()}` : "no read"}</div> : null}
           </div>
           <div className="px-legend"><span><i className="me" />Leans you</span><span><i className="toss" />Toss up</span><span><i className="op" />Leans them</span><span><i className="fog" />Dither means a fuzzy read</span></div>
@@ -392,7 +439,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 {regOfSel >= 0 ? <button type="button" className="px-btn" onClick={() => run((x) => E.regionPoll(c, x, regOfSel), "region poll", { kind: "poll", fs: regs[regOfSel].f }, "coin")}>Poll this region<small>$30K</small></button> : null}
               </div>
             </div>
-          ) : <p className="px-note pad">Click a county to send the bus. You only see your campaign&apos;s read of each county: polls and ground teams sharpen it, and it goes stale.</p>}
+          ) : <Advisor r={r} s={s} c={c} />}
         </section>
 
         <section className="px-side">
@@ -583,7 +630,7 @@ export default function PlayApp({ idx }: { idx: PIndex }) {
   return (
     <div ref={root} className={cls("px-app", imm && screen !== "title" && "imm")}>
       {err ? <p className="px-err" role="alert">{err}</p> : null}
-      {screen === "title" ? <Title onGo={() => setScreen("lobby")} saved={!!(saved && sr && !saved.s.done)} onResume={resume} savedLabel={saved && sr ? `${sr.c[saved.s.side === "D" ? 0 : 1][0]}, week ${saved.s.week}` : ""} /> : null}
+      {screen === "title" ? <Title onGo={() => setScreen("lobby")} saved={!!(saved && sr)} onResume={resume} savedLabel={saved && sr ? (saved.s.done ? `rewatch ${sr.state} election night` : `${sr.c[saved.s.side === "D" ? 0 : 1][0]}, week ${saved.s.week}`) : ""} /> : null}
       {screen === "lobby" ? <Lobby idx={idx} onStart={start} /> : null}
       {screen === "intro" && race && st && meC && opC ? (
         <button type="button" className="px-cut intro" onClick={() => { setScreen("hq"); sfx("click"); }}>

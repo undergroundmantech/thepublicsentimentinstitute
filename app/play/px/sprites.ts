@@ -10,23 +10,35 @@ export const partyCol = (p: string, k: 1 | 2 | 3 = 1) => (p === "R" ? [PAL.gop, 
 
 export type Bits = string[];
 /** Paint a bitmap at x, y; each character is a palette key, "." is clear. */
-export function bits(g: CanvasRenderingContext2D, b: Bits, x: number, y: number, pal: Record<string, string>, flip = false) {
-  const w = b[0].length;
+export function bits(g: CanvasRenderingContext2D, b: Bits, x: number, y: number, pal: Record<string, string>, flip = false, k = 1) {
+  const w = b[0].length, X = Math.round(x), Y = Math.round(y);
   for (let j = 0; j < b.length; j++) for (let i = 0; i < w; i++) {
     const ch = b[j][flip ? w - 1 - i : i]; if (ch === "." || ch === " ") continue;
     const c = pal[ch]; if (!c) continue;
-    g.fillStyle = c; g.fillRect(Math.round(x + i), Math.round(y + j), 1, 1);
+    g.fillStyle = c; g.fillRect(X + i * k, Y + j * k, k, k);
   }
+}
+/** A dark outline around a sprite so it reads on any county color. */
+export function bitsOutlined(g: CanvasRenderingContext2D, b: Bits, x: number, y: number, pal: Record<string, string>, flip = false, k = 1, line = "#0b0716") {
+  const w = b[0].length, X = Math.round(x), Y = Math.round(y);
+  g.fillStyle = line;
+  for (let j = 0; j < b.length; j++) for (let i = 0; i < w; i++) {
+    const ch = b[j][flip ? w - 1 - i : i]; if (ch === "." || ch === " " || !pal[ch]) continue;
+    g.fillRect(X + i * k - 1, Y + j * k - 1, k + 2, k + 2);
+  }
+  bits(g, b, x, y, pal, flip, k);
 }
 
 export const BUS: Bits = [
-  ".PPPPPPPPP.",
-  "PwwPwwPwwPP",
-  "PwwPwwPwwPP",
-  "PPPPPPPPPPP",
-  "PSSSSSSSSPP",
-  ".kk.....kk.",
+  ".PPPPPPPPPPP.",
+  "PwwPwwPwwPwwP",
+  "PwwPwwPwwPwwP",
+  "PPPPPPPPPPPPP",
+  "PSSSSSSSSSSSP",
+  "PPPPPPPPPPPPP",
+  ".kgk.....kgk.",
 ];
+export const PIN: Bits = [".yyy.", "yyyyy", "yyoyy", "yyyyy", ".yyy.", "..y..", "..y.."];
 export const FLAG: [Bits, Bits] = [["Pff.", "Pfff", "Pff.", "P...", "P...", "P..."], ["Pf..", "Pfff", "Pfff", "P...", "P...", "P..."]];
 export const TV: Bits = [".a.a.", "..a..", "kkkkk", "kssSk", "kSssk", "kkkkk"];
 export const PERSON: [Bits, Bits] = [[".h.", "hsh", ".s.", "ccc", ".c.", "l.l"], [".h.", "hsh", ".s.", "ccc", ".c.", ".l."]];

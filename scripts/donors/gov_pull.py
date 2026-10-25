@@ -214,7 +214,8 @@ def match_names(names, noms):
 def office_ok(df, cols):
     if not cols: return pd.Series(True, index=df.index)
     t = df[cols].fillna("").astype(str).agg(" ".join, axis=1)
-    return t.str.contains(r"gov", case=False) & ~t.str.contains(r"lieut|lt\.?\s*gov|ltgov", case=False)
+    blank = t.str.strip() == ""  # a row that does not say the office is kept; the name match decides
+    return blank | (t.str.contains(r"gov", case=False) & ~t.str.contains(r"lieut|lt\.?\s*gov|ltgov", case=False))
 
 
 # ------------------------------------------------------------- ZIP to county
@@ -387,7 +388,9 @@ def run_drop(st, cy, cfg, noms, acc, ids=None):
 
 def run_socrata(st, cy, cfg, noms, acc):
     for s in cfg["sources"][str(cy)]:
-        where = f"({s['where']}) AND sched_date between '{cy - 1}-01-01T00:00:00' and '{cy}-12-31T23:59:59'"
+        # match the nominees' committees by name; the date window is applied later, since the date column's type varies
+        names = " OR ".join(f"upper(cand_comm_name) like '%{deacc(n['name']).split()[-1].upper().replace(chr(39), '')}%'" for n in noms)
+        where = f"({s['where']}) AND ({names})" if s.get("where") else f"({names})"
         cache = os.path.join(DL, f"{st}_{cy}_socrata.csv")
         if not (os.path.exists(cache) and os.path.getsize(cache) > 0):
             parts = []; off = 0
@@ -401,7 +404,9 @@ def run_socrata(st, cy, cfg, noms, acc):
                 df = pd.read_csv(io.StringIO(txt), dtype=str, keep_default_na=False)
                 parts.append(df); off += len(df); log(f"  {off:,} rows")
                 if len(df) < 50000: break
-            pd.concat(parts, ignore_index=True).to_csv(cache, index=False)
+            allp = pd.concat(parts, ignore_index=True)
+            if not len(allp): acc.notes.append(f"the query returned no rows: {where}"); log("  no rows for", where); return
+            allp.to_csv(cache, index=False)
         acc.sources.append(s["url"] + " where " + where)
         for df in frames(cache): take(df, cfg, noms, acc)
     run_drop(st, cy, cfg, noms, acc)

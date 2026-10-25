@@ -57,12 +57,27 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
     for (let t = 0; t <= T; t++) { while (j < B.length && B[j][0] <= t) { a += B[j][2]; b += B[j][3]; j++; } me[t] = a; op[t] = b; }
     return { me, op };
   }, [B, T]);
-  const county = useMemo(() => {
-    const m = new Map<string, number>(); const acc = new Map<number, [number, number]>();
-    for (const b of B) { if (b[0] > tick) break; const v = acc.get(b[1]) ?? [0, 0]; v[0] += b[2]; v[1] += b[3]; acc.set(b[1], v); }
-    for (const [i, [a, b]] of acc) if (a + b > 0) m.set(r.counties[i][0], (100 * (a - b)) / (a + b));
-    return m;
+  // each county's final count, and what is in so far: [you, them, early and mail in, Election Day in, late mail in]
+  const finals = useMemo(() => { const f = new Map<number, [number, number]>(); for (const b of B) { const v = f.get(b[1]) ?? [0, 0]; v[0] += b[2]; v[1] += b[3]; f.set(b[1], v); } return f; }, [B]);
+  const { county, inc } = useMemo(() => {
+    const m = new Map<string, number>(); const acc = new Map<number, number[]>();
+    for (const b of B) { if (b[0] > tick) break; const v = acc.get(b[1]) ?? [0, 0, 0, 0, 0]; v[0] += b[2]; v[1] += b[3]; v[2 + b[4]] += b[2] + b[3]; acc.set(b[1], v); }
+    for (const [i, v] of acc) if (v[0] + v[1] > 0) m.set(r.counties[i][0], (100 * (v[0] - v[1])) / (v[0] + v[1]));
+    return { county: m, inc: acc };
   }, [B, tick, r.counties]);
+  const flash = useMemo(() => [...new Set(B.filter((b) => b[0] <= tick && b[0] > tick - 2).map((b) => r.counties[b[1]][0]))], [B, tick, r.counties]);
+  const [hov, setHov] = useState<string | null>(null);
+  const [pin, setPin] = useState<string | null>(null);
+  const focus = hov ?? pin;
+  const fi = focus ? r.counties.findIndex((x) => x[0] === focus) : -1;
+  // where the vote still out is: counties that lean each way by the 2024 presidential vote, as analysts would read it
+  const out = useMemo(() => {
+    let me = 0, op = 0;
+    finals.forEach((v, i) => { const got = inc.get(i); const rem = v[0] + v[1] - (got ? got[0] + got[1] : 0); if (rem <= 0) return; const p24 = r.counties[i][6] ?? 0; if (c.sign * p24 >= 0) me += rem; else op += rem; });
+    return { me, op };
+  }, [finals, inc, r.counties, c.sign]);
+  const keys = useMemo(() => [...r.counties.keys()].sort((a, b) => r.counties[b][5] - r.counties[a][5]).slice(0, 6), [r.counties]);
+  const exit = useMemo(() => { let h = seedOf("exit" + r.id + s.seed); h = Math.sin(h) * 10000; const e = (h - Math.floor(h) - 0.5) * 6; const two = (100 * res.me) / Math.max(1, res.me + res.op); return Math.round((two + e) * 10) / 10; }, [r.id, s.seed, res.me, res.op]);
   // the needle: what is in, plus a guess about what is out that gets sharper as the count goes
   const bias = useMemo(() => { let h = seedOf(r.id + s.seed); h = Math.sin(h) * 10000; return (h - Math.floor(h) - 0.5) * 2; }, [r.id, s.seed]);
   const needle = (t: number) => {
@@ -75,23 +90,23 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
   useEffect(() => { live.current = p; }, [p]);
   const inV = cum.me[tick] + cum.op[tick], rep = inV / Math.max(1, tot);
   const lead = cum.me[tick] - cum.op[tick];
-  const calledAt = useMemo(() => { if (Math.abs(res.m) < 0.5) return null; for (let t = 25; t <= T; t++) { const q = needle(t); const rp = (cum.me[t] + cum.op[t]) / Math.max(1, tot); if (rp >= 0.3 && (q > 0.995 || q < 0.005)) return t; } return T; }, [cum]); // eslint-disable-line react-hooks/exhaustive-deps
+  const calledAt = useMemo(() => { if (Math.abs(res.m) < 0.5) return null; for (let t = Math.round(T * 0.15); t <= T; t++) { const q = needle(t); const rp = (cum.me[t] + cum.op[t]) / Math.max(1, tot); if (rp >= 0.3 && (q > 0.995 || q < 0.005)) return t; } return T; }, [cum]); // eslint-disable-line react-hooks/exhaustive-deps
   const called = calledAt != null && tick >= calledAt;
   const done = tick >= T;
-  const clock = (t: number) => { const h0 = res.close ?? 20; const mins = Math.round(h0 * 60 + t * 2); const h = Math.floor(mins / 60) % 24, m = mins % 60; return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h >= 12 && h < 24 ? "PM" : "AM"} ET`; };
+  const clock = (t: number) => { const h0 = res.close ?? 20; const mins = Math.round(h0 * 60 + (t * 390) / T); const h = Math.floor(mins / 60) % 24, m = mins % 60; return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h >= 12 && h < 24 ? "PM" : "AM"} ET`; };
 
   useEffect(() => { music("night"); return () => music("off"); }, []);
   useEffect(() => {
     if (done || speed === 0) return;
-    const id = setTimeout(() => setTick((t) => Math.min(T, t + 1)), 1150 / speed);
+    const id = setTimeout(() => setTick((t) => Math.min(T, t + 1)), (T >= 300 ? 1500 : 4000) / speed);
     return () => clearTimeout(id);
   }, [tick, speed, done, T]);
   // the night's running commentary
   const told = useRef<Set<string>>(new Set());
   useEffect(() => {
     const add: Feed[] = []; const say = (key: string, t: string, tone?: Feed["tone"]) => { if (told.current.has(key)) return; told.current.add(key); add.push({ k: tick, t, tone }); };
-    if (tick === 0) { say("open", `Polls are closed in ${r.state}. Weather today: ${(res.weather ?? "clear").toLowerCase()}.`); if (res.mailLate) say("ml", `${r.state} cannot count mail ballots before Election Day, so the big mail counts come late tonight.`); }
-    if (tick === 6 && res.lines) say("lines", `Long lines reported in ${res.lines} County as polls closed. Some voters gave up and went home.`, "dn");
+    if (tick === 0) { say("open", `Polls are closed in ${r.state}. Weather today: ${(res.weather ?? "clear").toLowerCase()}.`); say("exit", `Early exit polls: ${c.me.name} ${exit}%, ${c.op.name} ${Math.round((100 - exit) * 10) / 10}%. Exit polls miss by a few points all the time.`); if (res.mailLate) say("ml", `${r.state} cannot count mail ballots before Election Day, so the big mail counts come late tonight.`); }
+    if (tick === Math.round(T * 0.03) && res.lines) say("lines", `Long lines reported in ${res.lines} County as polls closed. Some voters gave up and went home.`, "dn");
     const now = B.filter((b) => b[0] === tick);
     for (const b of now) {
       const co = r.counties[b[1]]; const share = (b[2] + b[3]) / Math.max(1, tot);
@@ -104,7 +119,7 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
     const p0 = tick > 0 ? needle(tick - 1) : 0.5;
     if (p0 < 0.8 && p >= 0.8) say(`n80u${tick}`, `The needle now leans ${c.me.name}: ${Math.round(p * 100)}% to win.`, "up");
     if (p0 > 0.2 && p <= 0.2) say(`n20d${tick}`, `The needle swings to ${c.op.name}: ${Math.round((1 - p) * 100)}% to win.`, "dn");
-    const media = r.media ?? []; if (tick % 24 === 12 && media.length) { const k = (tick / 24 | 0) % media.length; const m = media[k]; say(`m${k}`, `From the coverage this fall, ${m.who}: ${m.what}`); }
+    const every = Math.max(20, Math.round(T / 12)); const media = r.media ?? []; if (tick % every === Math.round(every / 2) && media.length) { const k = (tick / every | 0) % media.length; const m = media[k]; say(`m${k}`, `From the coverage this fall, ${m.who}: ${m.what}`); }
     if (called && calledAt === tick) { add.push({ k: tick, t: `RACE CALL: ${res.win ? c.me.name : c.op.name} wins ${r.name}.`, tone: "call" }); sfx(res.win ? "fanfare" : "lose"); track("Play finished", { race: r.id, side: s.side, diff: s.diff, win: res.win, m: Math.round(res.m * 10) / 10 }); }
     if (done && calledAt == null) say("recount", `It is too close to call. ${r.name} is headed for a recount.`, "hot");
     if (add.length) setFeed((f) => [...add.reverse(), ...f].slice(0, 40));
@@ -141,11 +156,38 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
         <span className="px-live"><i />Election night</span>
         <b className="px-clock">{clock(tick)}</b>
         <h2>{called ? (res.win ? `${c.me.name} wins` : `${c.op.name} wins`) : done ? "Too close to call" : "Too early to call"}</h2>
-        <div className="px-speed" role="group" aria-label="Speed">{[[0, "Pause"], [1, "1x"], [2, "2x"], [4, "4x"]].map(([v, l]) => <button key={l} type="button" className={speed === v ? "on" : ""} onClick={() => { setSpeed(v as number); sfx("click"); }}>{l}</button>)}<button type="button" onClick={() => setTick(T)}>Skip</button></div>
+        <div className="px-speed" role="group" aria-label="Speed">{[[0, "Pause"], [1, "1x"], [2, "2x"], [4, "4x"], [8, "8x"]].map(([v, l]) => <button key={l} type="button" className={speed === v ? "on" : ""} onClick={() => { setSpeed(v as number); sfx("click"); }}>{l}</button>)}<button type="button" onClick={() => setTick(T)}>Skip</button></div>
       </header>
       <div className="px-ngrid">
-        <section className="px-nmap"><PixelMap r={r} s={s} geo={geo} mode="night" night={county} />
-          <div className="px-legend"><span><i className="me" />{meName} counties</span><span><i className="op" />{opName} counties</span><span><i className="fog" />Not reporting yet</span></div>
+        <section className="px-nmap">
+          <div className="px-mapbox night">
+            <PixelMap r={r} s={s} geo={geo} mode="night" night={county} hover={focus} onHover={setHov} onSel={(f) => setPin((x) => (x === f ? null : f))} sel={pin} labels={5} flash={flash} />
+            {fi >= 0 ? (() => {
+              const co = r.counties[fi], v = inc.get(fi), fv = finals.get(fi), all = fv ? fv[0] + fv[1] : 0, got = v ? v[0] + v[1] : 0;
+              return (
+                <div className="px-ntip" role="status">
+                  <b>{co[1]}</b>
+                  <span className="px-k">{all ? Math.round((100 * got) / all) : 0}% in{co[6] != null ? ` · 2024 ${co[6] > 0 ? "Trump" : "Harris"} +${Math.abs(co[6]).toFixed(0)}` : ""}</span>
+                  {v && got ? (
+                    <>
+                      <div className={cls("row", c.me.party.toLowerCase())}><span>{meName}</span><b>{Math.round(v[0]).toLocaleString()}</b><em>{((100 * v[0]) / got).toFixed(1)}%</em></div>
+                      <div className={cls("row", c.op.party.toLowerCase())}><span>{opName}</span><b>{Math.round(v[1]).toLocaleString()}</b><em>{((100 * v[1]) / got).toFixed(1)}%</em></div>
+                      <span className="lead">{E.lead((100 * (v[0] - v[1])) / got, meName, opName)}</span>
+                      <span className="px-k">Early and mail {Math.round(v[2]).toLocaleString()} · Election Day {Math.round(v[3]).toLocaleString()} · Late mail {Math.round(v[4]).toLocaleString()}</span>
+                      <span className="px-k">About {Math.max(0, Math.round(all - got)).toLocaleString()} votes still to count</span>
+                    </>
+                  ) : <span>No votes reported yet. About {Math.round(all).toLocaleString()} expected.</span>}
+                  {pin ? <small>Click the county again to let go</small> : <small>Click to pin</small>}
+                </div>
+              );
+            })() : <div className="px-ntip hint">Point at a county for its count</div>}
+          </div>
+          <div className="px-legend"><span><i className="me" />{meName} counties</span><span><i className="op" />{opName} counties</span><span><i className="fog" />Not reporting yet</span><span><i className="flash" />Just reported</span></div>
+          <div className="px-keys"><span className="px-k">Counties to watch</span>
+            <ul>{keys.map((i) => { const v = inc.get(i), fv = finals.get(i), all = fv ? fv[0] + fv[1] : 0, got = v ? v[0] + v[1] : 0; return (
+              <li key={i}><button type="button" onClick={() => setPin(r.counties[i][0])}><span>{r.counties[i][1]}</span><i><em style={{ width: `${all ? (100 * got) / all : 0}%` }} /></i><b className={got ? (v![0] >= v![1] ? "up" : "dn") : ""}>{got ? E.lead((100 * (v![0] - v![1])) / got, meName, opName) : "Waiting"}</b></button></li>
+            ); })}</ul>
+          </div>
         </section>
         <section className="px-ntally">
           <div className="px-rep"><span>{Math.round(rep * 100)}% counted</span><i style={{ width: `${rep * 100}%` }} /></div>
@@ -160,6 +202,9 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
             <svg viewBox="0 0 200 110"><path d="M10 100 A90 90 0 0 1 190 100" className="arc" /><path d="M10 100 A90 90 0 0 1 100 10" className={cls("half", c.op.party.toLowerCase())} /><path d="M100 10 A90 90 0 0 1 190 100" className={cls("half", c.me.party.toLowerCase())} />
               <line x1="100" y1="100" x2={100 + 82 * Math.cos(Math.PI * (1 - p))} y2={100 - 82 * Math.sin(Math.PI * (1 - p))} className="hand" /><circle cx="100" cy="100" r="5" className="hub" /></svg>
             <b>{p >= 0.5 ? `${meName} ${Math.round(p * 100)}%` : `${opName} ${Math.round((1 - p) * 100)}%`}</b></div>
+          <div className="px-outv"><span className="px-k">Vote still out</span>
+            <div className="bar"><i className={c.me.party.toLowerCase()} style={{ width: `${(100 * out.me) / Math.max(1, out.me + out.op)}%` }} /><i className={c.op.party.toLowerCase()} style={{ width: `${(100 * out.op) / Math.max(1, out.me + out.op)}%` }} /></div>
+            <small>{Math.round(out.me).toLocaleString()} in counties that lean {meName} · {Math.round(out.op).toLocaleString()} in counties that lean {opName}</small></div>
           <canvas ref={wr} width={120} height={40} className="px-warroom" aria-label="Your war room" />
         </section>
         <section className="px-feed"><span className="px-k">Decision desk</span>
