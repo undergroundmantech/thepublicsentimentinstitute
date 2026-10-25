@@ -1,4 +1,5 @@
-// Brazil 2026 runoff: shared types, names, colors and formatting for the Portuguese pages. Margins are always
+// Brazil 2026 runoff: shared types, names, colors and formatting for the Brazil pages, in English by default with a
+// hand written Brazilian Portuguese version a reader can switch to. Margins are always
 // Flávio minus Lula, in points of the valid vote, the way the model writes them.
 export type BrState = {
   uf: string; name: string; region: string; flavio: number; lula: number; margin: number; rating: string; p: number;
@@ -24,18 +25,24 @@ const noAcc = (s: string) => s.normalize("NFKD").replace(/[̀-ͯ]/g, "");
 export const slugOf = (name: string) => noAcc(name).toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 export const keyOf = (name: string) => noAcc(name).toLowerCase().replace(/[^a-z]/g, "");
 
+export type Lang = "en" | "pt";
 export const UF_ORDER = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
-export const REGIAO: Record<string, string> = { Norte: "Norte", Nordeste: "Nordeste", "Centro-Oeste": "Centro-Oeste", Sudeste: "Sudeste", Sul: "Sul", Exterior: "Exterior" };
-export const PREP: Record<string, string> = {   // the preposition each state takes: em São Paulo, no Rio, na Bahia
+export const REGION_EN: Record<string, string> = { Norte: "North", Nordeste: "Northeast", "Centro-Oeste": "Center-West", Sudeste: "Southeast", Sul: "South", Exterior: "Abroad" };
+export const regionOf = (r: string, lang: Lang = "en") => (lang === "pt" ? r : REGION_EN[r] ?? r);
+export const PREP: Record<string, string> = {   // the preposition each state takes in Portuguese: em São Paulo, no Rio, na Bahia
   AC: "no", AL: "em", AP: "no", AM: "no", BA: "na", CE: "no", DF: "no", ES: "no", GO: "em", MA: "no", MT: "em", MS: "em", MG: "em",
   PA: "no", PB: "na", PR: "no", PE: "em", PI: "no", RJ: "no", RN: "no", RS: "no", RO: "em", RR: "em", SC: "em", SP: "em", SE: "em", TO: "no",
 };
-export const inState = (uf: string, name: string) => `${PREP[uf] ?? "em"} ${name}`;
+const OF: Record<string, string> = { no: "do", na: "da", em: "de" };
+export const inState = (uf: string, name: string, lang: Lang = "en") => (lang === "pt" ? `${PREP[uf] ?? "em"} ${name}` : `in ${name}`);
+export const ofState = (uf: string, name: string, lang: Lang = "en") => (lang === "pt" ? `${OF[PREP[uf] ?? "em"]} ${name}` : `of ${name}`);
 
-export function ratingPt(r: string) {
+export function rating(r: string, lang: Lang = "en") {
   const who = r.includes("Bolsonaro") ? "Flávio" : "Lula";
-  return r.startsWith("Safe") ? `${who} com folga` : r.startsWith("Likely") ? `Provável ${who}` : r.startsWith("Lean") ? `Tendência ${who}` : `Leve tendência ${who}`;
+  if (lang === "pt") return r.startsWith("Safe") ? `${who} com folga` : r.startsWith("Likely") ? `Provável ${who}` : r.startsWith("Lean") ? `Tendência ${who}` : `Leve tendência ${who}`;
+  return `${r.startsWith("Safe") ? "Safe" : r.startsWith("Likely") ? "Likely" : r.startsWith("Lean") ? "Lean" : "Tilt"} ${who}`;
 }
+export const ratingPt = (r: string) => rating(r, "pt");
 // rating pill colors: deep for one sided, pale for close, the same scale as the map
 export function ratingStyle(r: string) {
   const f = r.includes("Bolsonaro"), lvl = r.startsWith("Safe") ? 3 : r.startsWith("Likely") ? 2 : r.startsWith("Lean") ? 1 : 0;
@@ -47,12 +54,23 @@ export function ratingOf(m: number) {
   return `${a < 2 ? "Tilt" : a < 6 ? "Lean" : a < 12 ? "Likely" : "Safe"} ${w}`;
 }
 
-export const nf = (x: number, d = 1) => x.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
-export const nint = (x: number) => Math.round(x).toLocaleString("pt-BR");
-export const pct = (x: number, d = 1) => `${nf(x, d)}%`;
-export const mg = (m: number, d = 1) => (Math.abs(m) < 0.05 ? "Empate" : `${m > 0 ? "Flávio" : "Lula"} +${nf(Math.abs(m), d)}`);
-export const mgShort = (m: number, d = 1) => (Math.abs(m) < 0.05 ? "0" : `${m > 0 ? "F" : "L"}+${nf(Math.abs(m), d)}`);
-export const compact = (x: number) => (x >= 1e6 ? `${nf(x / 1e6, x >= 1e7 ? 1 : 2)} mi` : x >= 1e3 ? `${nf(x / 1e3, 0)} mil` : nint(x));
+const LOC = (lang: Lang) => (lang === "pt" ? "pt-BR" : "en-US");
+export const nf = (x: number, d = 1, lang: Lang = "en") => x.toLocaleString(LOC(lang), { minimumFractionDigits: d, maximumFractionDigits: d });
+export const nint = (x: number, lang: Lang = "en") => Math.round(x).toLocaleString(LOC(lang));
+export const pct = (x: number, d = 1, lang: Lang = "en") => `${nf(x, d, lang)}%`;
+export const mg = (m: number, d = 1, lang: Lang = "en") => (Math.abs(m) < 0.05 ? (lang === "pt" ? "Empate" : "Even") : `${m > 0 ? "Flávio" : "Lula"} +${nf(Math.abs(m), d, lang)}`);
+export const mgShort = (m: number, d = 1, lang: Lang = "en") => (Math.abs(m) < 0.05 ? "0" : `${m > 0 ? "F" : "L"}+${nf(Math.abs(m), d, lang)}`);
+export const compact = (x: number, lang: Lang = "en") => lang === "pt"
+  ? (x >= 1e6 ? `${nf(x / 1e6, x >= 1e7 ? 1 : 2, lang)} mi` : x >= 1e3 ? `${nf(x / 1e3, 0, lang)} mil` : nint(x, lang))
+  : (x >= 1e6 ? `${nf(x / 1e6, x >= 1e7 ? 1 : 2, lang)}M` : x >= 1e3 ? `${nf(x / 1e3, 0, lang)}K` : nint(x, lang));
+/** every formatter bound to one language, for components that render in the reader's choice */
+export const fmt = (lang: Lang) => ({
+  lang, nf: (x: number, d = 1) => nf(x, d, lang), nint: (x: number) => nint(x, lang), pct: (x: number, d = 1) => pct(x, d, lang),
+  mg: (m: number, d = 1) => mg(m, d, lang), compact: (x: number) => compact(x, lang), rating: (r: string) => rating(r, lang),
+  inState: (uf: string, name: string) => inState(uf, name, lang), ofState: (uf: string, name: string) => ofState(uf, name, lang),
+  region: (r: string) => regionOf(r, lang), t: (en: string, pt: string) => (lang === "pt" ? pt : en),
+});
+export type Fmt = ReturnType<typeof fmt>;
 
 // margin to color: pale near even, deep when one sided, on the same bands as the ratings
 export function marginColor(m: number | null | undefined, alpha = 1) {

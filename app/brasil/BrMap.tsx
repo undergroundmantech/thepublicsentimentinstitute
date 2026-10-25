@@ -5,6 +5,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { pathBounds, type BrState } from "./lib";
+import { useFmt } from "./i18n";
 
 export type MapState = Pick<BrState, "uf" | "name" | "d" | "cx" | "cy">;
 
@@ -13,6 +14,7 @@ export default function BrMap({ states, fill, tip, href, sel, onPick, glow, labe
   sel?: string | null; onPick?: (uf: string) => void; glow?: (uf: string) => boolean; labels?: boolean; className?: string;
 }) {
   const [hov, setHov] = useState<{ uf: string; x: number; y: number } | null>(null);
+  const t = useFmt().t;
   const shapes = useMemo(() => states.filter((s) => s.d), [states]);
   const vb = useMemo(() => {
     let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
@@ -26,7 +28,7 @@ export default function BrMap({ states, fill, tip, href, sel, onPick, glow, labe
   );
   return (
     <div className={`bm ${className}`}>
-      <svg viewBox={vb} role="img" aria-label="Mapa do Brasil por estado">
+      <svg viewBox={vb} role="img" aria-label={t("Map of Brazil by state", "Mapa do Brasil por estado")}>
         <defs>
           <filter id="bm-glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
         </defs>

@@ -5,6 +5,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState, forwardRef } from "react";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { keyOf, pathBounds, type MunRow } from "./lib";
+import { useFmt } from "./i18n";
 
 export type Muni = { uf: string; key: string; row: MunRow; p: Path2D; b: readonly [number, number, number, number] };
 export type CanvasHandle = { fly: (uf: string | null) => void; zoom: (k: number) => void };
@@ -38,6 +39,7 @@ type Props = {
 
 const NationCanvas = forwardRef<CanvasHandle, Props>(function NationCanvas({ munis, borders, fill, tip, onPick, glow, sel, border = "rgba(255,255,255,.75)", ctrlWheel = false, inset }, ref) {
   const wrap = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null);
+  const tr = useFmt().t;
   const [size, setSize] = useState({ w: 800, h: 600 });
   const bp = useMemo(() => (typeof Path2D === "undefined" ? [] : borders.map((b) => ({ uf: b.uf, p: new Path2D(b.d), b: pathBounds(b.d) }))), [borders]);
   const world = useMemo(() => {
@@ -136,7 +138,7 @@ const NationCanvas = forwardRef<CanvasHandle, Props>(function NationCanvas({ mun
   const pinch = useRef<{ d: number; v: View; cx: number; cy: number } | null>(null);
   return (
     <div ref={wrap} style={{ position: "absolute", inset: 0 }}>
-      <canvas ref={cv} style={{ width: size.w, height: size.h }} aria-label="Mapa do Brasil por município" role="img"
+      <canvas ref={cv} style={{ width: size.w, height: size.h }} aria-label={tr("Map of Brazil by municipality", "Mapa do Brasil por município")} role="img"
         onPointerDown={(e) => { (e.target as Element).setPointerCapture(e.pointerId); pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); drag.current = { x: e.clientX, y: e.clientY, v: vref.current, moved: false };
           if (pts.current.size === 2) { const [a, b] = [...pts.current.values()]; const r = cv.current!.getBoundingClientRect(); pinch.current = { d: Math.hypot(a.x - b.x, a.y - b.y), v: vref.current, cx: (a.x + b.x) / 2 - r.left, cy: (a.y + b.y) / 2 - r.top }; } }}
         onPointerMove={(e) => {

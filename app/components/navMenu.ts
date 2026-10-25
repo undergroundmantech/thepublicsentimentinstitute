@@ -19,8 +19,8 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
       ] },
       { h: "Around the world", links: [
-        { href: "/brasil", label: "Brasil 2026", note: "Runoff forecast, Flávio Bolsonaro x Lula", badge: "New" },
-        { href: "/brasil/estados", label: "Brasil por município", note: "Every state and town" },
+        { href: "/brasil", label: "Brazil 2026", note: "Runoff forecast, Flávio Bolsonaro vs Lula", badge: "New" },
+        { href: "/brasil/estados", label: "Brazil by municipality", note: "Every state and town" },
       ] },
       { h: "Scenarios and method", links: [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
@@ -52,12 +52,11 @@ export const MENU: NavGroup[] = [
       ] },
     ] },
   { key: "results", label: "Results", href: "/results", go: "/results/monitor", live: true,
-    feature: { href: "/brasil/monitor", eyebrow: "Brasil · 25 de outubro", title: "Sala de situação", note: "The Brazil runoff count live in every municipality, in Portuguese, with our projection." },
+    feature: { href: "/brasil/resultados", eyebrow: "Brazil · October 25", title: "Brazil runoff live", note: "The count in every municipality, a desk for every state and our projection." },
     cols: [
-      { h: "Brasil, 2º turno", links: [
-        { href: "/brasil/resultados", label: "Apuração ao vivo", note: "Flávio Bolsonaro x Lula, live from the TSE", badge: "Live" },
-        { href: "/brasil/monitor", label: "Sala de situação", note: "Every municipality on one map" },
-        { href: "/brasil", label: "Previsão do 2º turno", note: "The On Point Brazil forecast" },
+      { h: "Brazil runoff", links: [
+        { href: "/brasil/resultados", label: "Live results", note: "Flávio Bolsonaro vs Lula, every state and town", badge: "Live" },
+        { href: "/brasil", label: "Runoff forecast", note: "The On Point Brazil forecast" },
       ] },
       { h: "November 3", links: [
         { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race", badge: "New" },

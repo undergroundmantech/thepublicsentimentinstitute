@@ -4,6 +4,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { pathBounds, type MunRow } from "./lib";
+import { useFmt } from "./i18n";
 
 const cache = new Map<string, MunRow[]>();
 export function useMun(uf: string | null) {
@@ -32,6 +33,7 @@ export default function MunMap({ rows, fill, tip, sel, onPick, glow, stroke = "a
   const svg = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; vb: typeof vb; moved: boolean } | null>(null);
   const [hov, setHov] = useState<{ r: MunRow; x: number; y: number } | null>(null);
+  const t = useFmt().t;
   const zoomAt = (cx: number, cy: number, k: number) => setVb(([x, y, w, h]) => {
     const nw = Math.min(home[2] * 1.2, Math.max(home[2] / 40, w * k)), kk = nw / w, nh = h * kk;
     return [cx - (cx - x) * kk, cy - (cy - y) * kk, nw, nh];
@@ -50,7 +52,7 @@ export default function MunMap({ rows, fill, tip, sel, onPick, glow, stroke = "a
   const zoomed = vb[2] < home[2] * 0.98;
   return (
     <div className="mm">
-      <svg ref={svg} viewBox={vb.join(" ")} role="img" aria-label="Mapa por município" style={{ ["--sw" as string]: stroke === "none" ? 0 : sw }}
+      <svg ref={svg} viewBox={vb.join(" ")} role="img" aria-label={t("Map by municipality", "Mapa por município")} style={{ ["--sw" as string]: stroke === "none" ? 0 : sw }}
         onPointerDown={(e) => { drag.current = { x: e.clientX, y: e.clientY, vb, moved: false }; }}
         onPointerMove={(e) => {
           const d = drag.current; if (!d || e.buttons !== 1) return;
@@ -69,9 +71,9 @@ export default function MunMap({ rows, fill, tip, sel, onPick, glow, stroke = "a
         {sel != null && rows.find((r) => r[0] === sel)?.[5] && <path d={rows.find((r) => r[0] === sel)![5]} className="mm-sel" strokeWidth={sw * 3} />}
       </svg>
       <div className="mm-z">
-        <button type="button" aria-label="Aproximar" onClick={() => zoomAt(vb[0] + vb[2] / 2, vb[1] + vb[3] / 2, 0.6)}>+</button>
-        <button type="button" aria-label="Afastar" onClick={() => zoomAt(vb[0] + vb[2] / 2, vb[1] + vb[3] / 2, 1.6)}>−</button>
-        {zoomed && <button type="button" className="t" onClick={() => setVb(home)}>Ver tudo</button>}
+        <button type="button" aria-label={t("Zoom in", "Aproximar")} onClick={() => zoomAt(vb[0] + vb[2] / 2, vb[1] + vb[3] / 2, 0.6)}>+</button>
+        <button type="button" aria-label={t("Zoom out", "Afastar")} onClick={() => zoomAt(vb[0] + vb[2] / 2, vb[1] + vb[3] / 2, 1.6)}>−</button>
+        {zoomed && <button type="button" className="t" onClick={() => setVb(home)}>{t("Show all", "Ver tudo")}</button>}
       </div>
       {hov && tip && <FloatTip x={hov.x} y={hov.y} className="br-tip" scope="opp br">{tip(hov.r)}</FloatTip>}
     </div>
