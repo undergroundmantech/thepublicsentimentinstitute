@@ -7,7 +7,8 @@ reach fec.gov or census.gov.
   python3 scripts/donors/fec_cycle_map.py --cycle 2026      # the same method on this cycle, for a like for like comparison
 
 Method, the same rules as the October 20 2026 map:
-  candidate committees: each candidate's principal and authorized committees for the cycle (ccl, designation P or A)
+  candidate committees: each candidate's principal and authorized committees for the cycle (ccl, designation P or A), and
+                 joint fundraising committees linked to that candidate alone (designation J)
   campaign rows: receipts from individuals (entity IND) of type 15, 15E and refunds 22Y, memo rows (memo code X) dropped,
                  and earmark copies dropped: any 15E row, or any row whose memo or other id names ActBlue or WinRed, since
                  the platform's own line for the same gift is counted instead
@@ -86,7 +87,11 @@ cn = zread(paths["cn"], CN)
 cn = cn[cn.CAND_OFFICE.isin(OFFICES)]
 cn_cy = cn[cn.CAND_ELECTION_YR == str(CY)]
 ccl = zread(paths["ccl"], CCL)
-ccl = ccl[ccl.CMTE_DSGN.isin(["P", "A"]) & ccl.CAND_ID.isin(set(cn.CAND_ID))]
+# principal and authorized committees, plus joint fundraising committees tied to one candidate: presidential and many
+# Senate campaigns raise most of their money through them (Trump's through Trump National Committee JFC and Trump 47)
+ccl = ccl[ccl.CMTE_DSGN.isin(["P", "A", "J"]) & ccl.CAND_ID.isin(set(cn.CAND_ID))]
+_n = ccl.groupby("CMTE_ID").CAND_ID.nunique()
+ccl = ccl[(ccl.CMTE_DSGN != "J") | ccl.CMTE_ID.isin(_n[_n == 1].index)]
 cmte2cand = dict(zip(ccl.CMTE_ID, ccl.CAND_ID))
 CAND = {r.CAND_ID: r for r in cn.itertuples()}
 log(f"{len(cn_cy)} candidates on the {CY} ballot cycle, {len(cmte2cand)} committees linked")

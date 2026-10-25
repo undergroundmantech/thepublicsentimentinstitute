@@ -2,7 +2,7 @@
 // Idaho — 2026 U.S. Senate: Todd Achilles (I) vs. Jim Risch (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-15.
+// ballot were dropped. Newest poll: 2026-10-22.
 // Achilles runs as an independent after the Democratic nominee withdrew. Also on the
 // ballot: Natalie Fleming (I) and Matt Loesby (L).
 
@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ID-SEN-2026", "pollster": "Peak Insights (R)", "startDate": "2026-08-11", "endDate": "2026-08-13", "sampleSize": 500, "sampleType": "LV", "results": {"Todd Achilles (I)": 18.0, "Jim Risch (R)": 52.0, "Other": 12.0, "Undecided": 17.0}},
     {"raceId": "ID-SEN-2026", "pollster": "Advanced Targeting Research", "startDate": "2026-09-13", "endDate": "2026-09-16", "sampleSize": 700, "sampleType": "RV", "results": {"Todd Achilles (I)": 48.0, "Jim Risch (R)": 39.0, "Other": 2.5, "Undecided": 11.0}},
     {"raceId": "ID-SEN-2026", "pollster": "Peak Insights (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 500, "sampleType": "LV", "results": {"Todd Achilles (I)": 24.0, "Jim Risch (R)": 49.0, "Other": 11.0, "Undecided": 15.0}},
-    {"raceId": "ID-SEN-2026", "pollster": "Peak Insights (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 500, "sampleType": "LV", "results": {"Todd Achilles (I)": 27.0, "Jim Risch (R)": 54.0, "Other": 9.0, "Undecided": 10.0}}
+    {"raceId": "ID-SEN-2026", "pollster": "Peak Insights (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 500, "sampleType": "LV", "results": {"Todd Achilles (I)": 27.0, "Jim Risch (R)": 54.0, "Other": 9.0, "Undecided": 10.0}},
+    {"raceId": "ID-SEN-2026", "pollster": "VoteNexus (D)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 700, "sampleType": "LV", "results": {"Todd Achilles (I)": 43.0, "Jim Risch (R)": 49.0, "Undecided": 8.0}}
   ],
 };

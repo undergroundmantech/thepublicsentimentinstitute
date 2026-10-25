@@ -5,12 +5,12 @@
   "2026-12-31"
  ],
  "sep30": "2026-09-30",
- "built": "2026-10-25T04:51:08",
+ "built": "2026-10-25T07:19:03",
  "files": {
   "indiv": {
    "url": "https://www.fec.gov/files/bulk-downloads/2026/indiv26.zip",
    "bytes": 2331678889,
-   "modified": "Sun Oct 25 04:49:04 2026"
+   "modified": "Sun Oct 25 07:16:54 2026"
   },
   "cn": {
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip",
@@ -28,8 +28,8 @@
    "modified": "Sun Oct 25 04:49:06 2026"
   }
  },
- "candidates": 2755,
- "cand_county_candidates": 1078,
+ "candidates": 2757,
+ "cand_county_candidates": 1083,
  "counties": 3193,
  "layout": "cand_county: cand -> fips -> [full b1..b4, sep30 b1..b4] dollars",
  "bands": [
@@ -40,14 +40,29 @@
  ],
  "stats": {
   "rows_read": 34264742,
-  "platform_rows_unlinked": 4855763,
-  "campaign_earmark_copies_dropped_usd": 716859358,
-  "campaign_earmark_copies_dropped_n": 6029636,
-  "platform_usd": 506589893,
-  "campaign_usd": 433365520,
-  "unmatched_zip_usd": 20194018,
-  "matched_usd": 1097414728
+  "platform_rows_unlinked": 4855159,
+  "campaign_earmark_copies_dropped_usd": 721252242,
+  "campaign_earmark_copies_dropped_n": 6031677,
+  "platform_usd": 508538080,
+  "campaign_usd": 451718260,
+  "unmatched_zip_usd": 21080940,
+  "matched_usd": 1119893502
  },
- "unmatched_share": 0.0181,
- "method": "FEC donor map for one cycle: every itemized individual gift to House, Senate and presidential candidates, ActBlue and\nWinRed earmarks included, placed in the county the donor lives in. Run it in GitHub Codespaces; the On Point sandbox cannot\nreach fec.gov or census.gov.\n\n  python3 scripts/donors/fec_cycle_map.py --cycle 2024\n  python3 scripts/donors/fec_cycle_map.py --cycle 2022\n  python3 scripts/donors/fec_cycle_map.py --cycle 2026      # the same method on this cycle, for a like for like comparison\n\nMethod, the same rules as the October 20 2026 map:\n  candidate committees: each candidate's principal and authorized committees for the cycle (ccl, designation P or A)\n  campaign rows: receipts from individuals (entity IND) of type 15, 15E and refunds 22Y, memo rows (memo code X) dropped,\n                 and earmark copies dropped: any 15E row, or any row whose memo or other id names ActBlue or WinRed, since\n                 the platform's own line for the same gift is counted instead\n  platform rows: every ActBlue (C00401224) and WinRed (C00694323) individual line whose memo names the recipient committee,\n                 \"EARMARKED FOR ... (C00123456)\", credited to that committee's candidate\n  bands by the size of each gift: under $200, $200 to $999, $1,000 to $2,499, $2,500 and up; refunds come off the dollars\n  ZIP codes are placed in 2020 counties by the land area each ZIP code tabulation area has in each county (Census 2020\n  ZCTA to county relationship file); ZIP codes that are not ZCTAs, mostly PO boxes, are reported as unmatched\n  two windows: through Sep 30 of the election year, to compare with 2026 at the same point, and the full cycle"
+ "unmatched_share": 0.0185,
+ "method": "FEC donor map for one cycle: every itemized individual gift to House, Senate and presidential candidates, ActBlue and\nWinRed earmarks included, placed in the county the donor lives in. Run it in GitHub Codespaces; the On Point sandbox cannot\nreach fec.gov or census.gov.\n\n  python3 scripts/donors/fec_cycle_map.py --cycle 2024\n  python3 scripts/donors/fec_cycle_map.py --cycle 2022\n  python3 scripts/donors/fec_cycle_map.py --cycle 2026      # the same method on this cycle, for a like for like comparison\n\nMethod, the same rules as the October 20 2026 map:\n  candidate committees: each candidate's principal and authorized committees for the cycle (ccl, designation P or A), and\n                 joint fundraising committees linked to that candidate alone (designation J)\n  campaign rows: receipts from individuals (entity IND) of type 15, 15E and refunds 22Y, memo rows (memo code X) dropped,\n                 and earmark copies dropped: any 15E row, or any row whose memo or other id names ActBlue or WinRed, since\n                 the platform's own line for the same gift is counted instead\n  platform rows: every ActBlue (C00401224) and WinRed (C00694323) individual line whose memo names the recipient committee,\n                 \"EARMARKED FOR ... (C00123456)\", credited to that committee's candidate\n  bands by the size of each gift: under $200, $200 to $999, $1,000 to $2,499, $2,500 and up; refunds come off the dollars\n  ZIP codes are placed in 2020 counties by the land area each ZIP code tabulation area has in each county (Census 2020\n  ZCTA to county relationship file); ZIP codes that are not ZCTAs, mostly PO boxes, are reported as unmatched\n  two windows: through Sep 30 of the election year, to compare with 2026 at the same point, and the full cycle",
+ "conduit_small": {
+  "built": "2026-10-25T08:42:06",
+  "reports": 1,
+  "stats": {
+   "rows": 25132148,
+   "unlinked_usd": 190779629,
+   "kept": 5476079,
+   "kept_usd": 102549919,
+   "over_200_usd": 211737280,
+   "unmatched_zip_usd": 1239606
+  },
+  "usd": 102549919,
+  "gifts": 5476079,
+  "rule": "ActBlue and WinRed earmarked gifts whose donor's running total at the platform was $200 or less"
+ }
 }

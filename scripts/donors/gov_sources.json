@@ -1730,7 +1730,7 @@
    },
    "keep": {
     "col": "contributorPersentTypeCd",
-    "re": "^INDIVIDUAL$"
+    "re": "IND"
    }
   },
   "VT": {
