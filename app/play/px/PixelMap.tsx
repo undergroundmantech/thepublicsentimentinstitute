@@ -52,10 +52,10 @@ export function useMapGeo(paths: CountyPath[] | null, maxW = 300, maxH = 220): G
   }, [paths, maxW, maxH]);
 }
 
-export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, hover, onHover, fx = [], night, bus, oppPath, oppT0, className, labels = 0, flash }: {
+export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, hover, onHover, fx = [], night, bus, oppPath, oppT0, className, labels = 0, flash, clear = false }: {
   r: E.RaceFile; s: E.State; geo: Geo | null; mode: "plan" | "night" | "preview"; layer?: Layer; sel?: string | null; onSel?: (f: string) => void;
   hover?: string | null; onHover?: (f: string | null) => void; fx?: MapFx[]; night?: Map<string, number>; bus?: string | null; oppPath?: string[] | null; oppT0?: number; className?: string;
-  /** how many of the biggest counties get a name tag */ labels?: number; /** counties that just reported, outlined for a moment */ flash?: string[];
+  /** how many of the biggest counties get a name tag */ labels?: number; /** counties that just reported, outlined for a moment */ flash?: string[]; /** clear view: tint fuzzy reads instead of dithering */ clear?: boolean;
 }) {
   const base = useRef<HTMLCanvasElement>(null), over = useRef<HTMLCanvasElement>(null);
   const meP = r.cands[s.side === "D" ? 0 : 1].party, opP = r.cands[s.side === "D" ? 1 : 0].party;
@@ -83,6 +83,7 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
       const c = Math.abs(k) < 0.35 ? toss : Math.abs(k) < 1 ? pal[2] : Math.abs(k) < 2 ? pal[1] : pal[0];
       // a good read is solid; a fuzzy one gets a sparse dot texture; guesswork a denser one
       const dith = rd.sd < 4 ? 0 : rd.sd < 7 ? 2 : 5;
+      if (clear) return { c: dith ? mix(c, fog, dith >= 5 ? 0.5 : 0.28) : c, dith: 0, alt: c };
       return { c, dith, alt: mix(c, fog, 0.65) };
     });
     for (let y = 0; y < LH; y++) for (let x = 0; x < LW; x++) {
@@ -102,7 +103,7 @@ export default function PixelMap({ r, s, geo, mode, layer = "read", sel, onSel, 
       d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
     }
     g.putImageData(im, 0, 0);
-  }, [geo, s, r, mode, layer, night, byF, regOf, meP, opP]);
+  }, [geo, s, r, mode, layer, night, byF, regOf, meP, opP, clear]);
 
   // ---------------------------------------------------------------- sprites, animated, drawn at double size with an outline
   const busRef = useRef<{ from: [number, number]; to: [number, number]; t0: number } | null>(null);

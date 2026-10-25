@@ -27,6 +27,55 @@ news = J(P("public/news/stories.json"), {"stories": []})["stories"]
 donors = J(P("public/forecast/donors.json"), {"races": []})
 DON = {r["id"]: r for r in donors.get("races", [])}
 RES = os.path.join(SITE, "scripts", "play", "research")  # race research, Oct 25 2026, every item sourced
+# the Watchdog connections: who endorses, funds, rallies for and talks about each candidate
+GRAPH = J(P("public/watchdog/graph.json"), {"nodes": [], "edges": []})
+ENDS = {r["key"]: r for r in (J(P("public/watchdog/endorsements.json"), {"races": []}) or {}).get("races", [])}
+NODE = {n["id"]: n for n in GRAPH["nodes"]}
+EIN, EOUT = {}, {}
+for e in GRAPH["edges"]:
+    EIN.setdefault(e["t"], []).append(e); EOUT.setdefault(e["s"], []).append(e)
+
+
+def network(race, name, other):
+    """One candidate's connections from the Watchdog graph and the endorsement tracker, trimmed for the game."""
+    cid, oid = "c:" + name, "c:" + other
+    nm = lambda i: (NODE.get(i) or {}).get("name") or i.split(":", 1)[-1]
+    note = lambda e: (e.get("notes") or [""])[0][:220]
+    cmtes = [e["s"] for e in EIN.get(cid, []) if e["k"] == "campaign"]
+    AGG = re.compile(r"\bdonors\b|per diem|^state of|\bparty\b|committee|forecast|quarter|^all\b", re.I)
+    donors = sorted([e for k in cmtes for e in EIN.get(k, []) if e["k"] == "gave" and e.get("v")] + [e for e in EIN.get(cid, []) if e["k"] == "gave" and e.get("v")], key=lambda e: -e["v"])
+    selfv = sum(e["v"] for e in donors if nm(e["s"]) == name)
+    party = [e for e in donors if re.search(r"\bparty\b|committee", nm(e["s"]), re.I)]
+    donors = [e for e in donors if nm(e["s"]) != name and not AGG.search(nm(e["s"]))]
+    groups = sorted([dict(e, how="for") for e in EIN.get(cid, []) if e["k"] == "support" and e.get("v") and not AGG.search(nm(e["s"]))] + [dict(e, how="against") for e in EIN.get(oid, []) if e["k"] == "oppose" and e.get("v")], key=lambda e: -e["v"])
+    gnames, seen = [], set()
+    for g in groups:
+        if g["s"] in seen: continue
+        seen.add(g["s"]); gnames.append(g)
+    mega = sorted([dict(e, via=nm(g["s"])) for g in gnames[:4] for e in EIN.get(g["s"], []) if e["k"] == "gave" and e.get("v") and e["s"].startswith("d:")], key=lambda e: -e["v"])
+    rally = [e for e in EIN.get(cid, []) if e["k"] == "rally"]
+    key = f'{race["st"]}-{race["office"]}'
+    ends = next((c["list"] for c in (ENDS.get(key) or {}).get("cands", []) if c.get("name") == name), [])
+    return {
+        "endorsers": [{"by": x["by"], "role": x.get("byRole") or "", "kind": x.get("kind") or "organization", "src": x.get("src") or ""} for x in ends][:16],
+        "donors": [{"name": nm(e["s"]), "v": round(e["v"]), "note": note(e), "src": e.get("src") or ""} for e in donors[:8]],
+        "groups": [{"name": nm(e["s"]), "v": round(e["v"]), "how": e["how"], "src": e.get("src") or ""} for e in gnames[:8]],
+        "mega": [{"name": nm(e["s"]), "v": round(e["v"]), "via": e["via"], "src": e.get("src") or ""} for e in mega[:6]],
+        "surrogates": [{"name": nm(e["s"]), "n": e.get("n") or 1, "note": note(e), "src": e.get("src") or ""} for e in rally if nm(e["s"]) != name][:6],
+        "party": [{"name": nm(e["s"]), "v": round(e["v"]), "src": e.get("src") or ""} for e in party[:3]],
+        "self": round(selfv) if selfv else None,
+    }
+
+
+def attention(race):
+    rid = f'r:{race["st"]} {"Senate" if race["office"] == "senate" else "Governor"}'
+    out = []
+    for tgt, about in ((rid, None), ("c:" + race["dem"], race["dem"]), ("c:" + race["gop"], race["gop"])):
+        for e in EIN.get(tgt, []):
+            if e["k"] != "attention": continue
+            n = NODE.get(e["s"]) or {}
+            out.append({"who": n.get("name") or e["s"][2:], "role": n.get("role") or "", "side": n.get("side"), "about": about, "notes": [x[:240] for x in (e.get("notes") or [])][:3], "src": e.get("src") or ""})
+    return out[:10]
 import re, unicodedata
 def nkey(x): return re.sub(r"[^a-z]", "", unicodedata.normalize("NFKD", x).encode("ascii", "ignore").decode().lower().replace("saint", "st").replace("county", "").replace("borough", "").replace("censusarea", ""))
 
@@ -96,6 +145,7 @@ for race in model["races"]:
         if fs: regions.append({"name": g["name"], "f": fs, "note": g.get("note", "")})
     rec["research"] = {"summary": rs.get("summary"), "issues": rs.get("issues") or [], "storylines": rs.get("storylines") or [], "events": rs.get("events") or [],
                        "debates": rs.get("debates") or [], "endorsements": rs.get("endorsements") or [], "ads": rs.get("ads") or [], "regions": regions}
+    rec["net"] = {"D": network(race, race["dem"], race["gop"]), "R": network(race, race["gop"], race["dem"]), "attention": attention(race)}
     json.dump(rec, open(os.path.join(OUT, "r", race["id"] + ".json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     index.append({"id": race["id"], "office": race["office"], "st": race["st"], "state": race["state"], "name": race["name"],
                   "m": race["est"]["margin"], "p": race["est"]["prob"],

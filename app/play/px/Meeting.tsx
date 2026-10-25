@@ -1,6 +1,6 @@
 "use client";
 // A meeting with someone who matters in the state: a party chair, a union boss, a megadonor, a podcaster, a pastor, a
-// sheriff, or a real endorser from the research. Each one costs a day and can pay off or blow up.
+// sheriff, or a real endorser from the research. Each one usually costs half a day and can pay off or blow up.
 import React, { useMemo, useState } from "react";
 import * as E from "../engine";
 import { ROLE_NAME } from "../events";
@@ -27,15 +27,15 @@ export default function Meeting({ r, s, m, onDone, onClose }: { r: E.RaceFile; s
             <span className="px-tag">{ROLE_NAME[m.role]}{m.real ? <em className="px-real">Real</em> : null}</span>
             <h3 id="px-meet-h">{m.title}</h3>
             <b className="px-who">{m.who}</b>
-            <span className="px-k">{m.place} · costs a day</span>
+            <span className="px-k">{m.place} · usually half a day</span>
           </div>
         </div>
         <p className="px-line"><Type text={m.intro} onDone={() => setTyped(true)} /></p>
         {!res ? (
           <div className="px-opts">
             {m.opts.map((o, k) => {
-              const blocked = (o.need === "oppo" && !s.staff.oppo) || ((o.out.days ?? 1) > s.days);
-              return <button key={k} type="button" className="px-opt" disabled={blocked} onClick={() => pick(k)}><b>{o.label}</b><span>{o.say}{o.need === "oppo" && !s.staff.oppo ? " Needs an opposition research firm." : ""}{(o.out.days ?? 1) === 0 ? " No day spent." : ""}</span></button>;
+              const blocked = (o.need === "oppo" && !s.staff.oppo) || (E.meetCost(o.out) > s.days);
+              return <button key={k} type="button" className="px-opt" disabled={blocked} onClick={() => pick(k)}><b>{o.label}</b><span>{o.say}{o.need === "oppo" && !s.staff.oppo ? " Needs an opposition research firm." : ""}{` ${E.halfTxt(E.meetCost(o.out))}.`.replace(" No time.", " No time spent.")}</span></button>;
             })}
             <button type="button" className="px-ghost" onClick={onClose}>Not now</button>
           </div>

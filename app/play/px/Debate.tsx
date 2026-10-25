@@ -5,6 +5,7 @@
 // the bottom, and a snap poll decides who won.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as E from "../engine";
+import { mgrName, debateTip } from "./mgr";
 import { debateRounds, type DRound } from "../events";
 import { figure, paintGrid, partyCol, PAL, seedOf } from "./sprites";
 import { sfx, music } from "./sound";
@@ -120,6 +121,7 @@ export default function Debate({ r, s, onDone }: { r: E.RaceFile; s: E.State; on
       <div className="px-dbox">
         {stage === "intro" ? (
           <div className="px-say"><b className="who">Moderator</b><p><Type text={`Good evening and welcome to the ${deb?.where ?? r.state} debate for ${r.name}. ${c.me.name} and ${c.op.name}, you each get one answer and one comeback per question. Let us begin.`} /></p>
+            <p className="px-mgrtip"><b>{mgrName(r, x.current.mgr ?? "vet")}, in your ear:</b> {debateTip(x.current)}</p>
             <button type="button" className="px-btn go" onClick={() => { setStage("q"); sfx("bell"); }}>Take the stage</button></div>
         ) : null}
         {stage === "q" && q ? (

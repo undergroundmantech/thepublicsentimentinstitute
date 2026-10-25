@@ -3,7 +3,8 @@
 // message and the vulnerabilities opponents are running on are written down with sources.
 // A stance's pos runs from -1, the most progressive answer, to +1, the most conservative; trump runs from -1, distance
 // from the president, to +1, embrace. How voters take it is worked out in engine.react from the race's own voter data.
-import { type Ctx, type State, type Part, type Ev, type Stance, type Meet, type Role, react, applyGlobal, usd, DIFF, rand, gauss, weekOf, POLLSTERS } from "./engine";
+import { podInvite } from "./net";
+import { type Ctx, type State, type Part, type Ev, type Stance, type Meet, type Role, type MeetOut, react, applyGlobal, applyOut, usd, DIFF, rand, gauss, weekOf, POLLSTERS, cal, att } from "./engine";
 export type { Ev, Opt } from "./engine";
 
 const FARM = ["IA", "NE", "KS", "SD", "MN", "WI", "OH", "MI", "GA", "AR", "MS", "LA", "TN", "OK", "TX", "ME", "VT", "NC", "SC"];
@@ -140,7 +141,7 @@ function realEvents(c: Ctx): Ev[] {
 function flashFor(c: Ctx, s: State): Ev | null {
   const R = c.r.research; if (!R) return null;
   const mine = c.me.party === "I" ? "I" : c.side, theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
-  const fit = R.storylines.map((x, k) => ({ x, k, w: weekOf(x.date) })).filter((y) => y.w != null && y.w <= s.week && !s.flashes.includes(`flash:${y.k}`))
+  const fit = R.storylines.map((x, k) => ({ x, k, w: weekOf(x.date) })).filter((y) => y.w != null && y.w <= cal(s) && !s.flashes.includes(`flash:${y.k}`))
     .sort((a, b) => (b.w! - a.w!));
   const y = fit[0]; if (!y) return null;
   const helps = y.x.helps === mine ? "you" : y.x.helps === theirs ? "them" : "mixed";
@@ -197,7 +198,12 @@ const SCENARIOS: Ev[] = [
 
 /** This week's decisions: a main event, plus a real dated story from the campaign when one fits the week. */
 export function eventFor(c: Ctx, s: State): Ev | null {
-  const w = s.week;
+  const w = cal(s);
+  if (w <= 0) { // summer: a quieter news cycle, fairs and parades, and the July money report
+    const sm = summerEvent(c, s); if (sm) return sm;
+    const pool = ISSUES.filter((e) => !s.used.includes(e.id) && (!e.states || e.states.includes(c.r.st)));
+    return pool.length ? pool[Math.floor(rand(s) * pool.length)] : null;
+  }
   if (w === 4 && !s.used.includes("quarter")) return quarterEv(c);
   if (w === 3 || w === 7) return attack(c, w);
   if (w === 5) return opening(c);
@@ -217,8 +223,15 @@ export function resolve(c: Ctx, s: State, ev: Ev, i: number, debate = false): Ou
   s.used.push(ev.id);
   if (ev.kind === "flash") s.flashes.push(ev.id);
   if (o.cash) { s.cash -= o.cash; s.spent += o.cash; }
-  if (o.days) s.days = Math.max(0, s.days - o.days);
+  if (o.days) s.days = Math.max(0, s.days - o.days * 2);
   let fx = 0, parts: Part[] = [], t = "";
+  if (o.out) { // a scenario card with a full outcome: money, volunteers, a stance, a risk
+    s.days = Math.max(0, s.days - Math.round((o.out.days ?? 0) * 2));
+    const res = applyOut(c, s, o.out);
+    s.resolved.push({ id: ev.id, choice: i, fx: res.fx });
+    s.log.push({ w: s.week, kind: "event", t: `${ev.title}: ${o.label}. ${res.t}`, fx: res.fx || undefined, parts: res.parts });
+    return { t: res.t, fx: res.fx, parts: res.parts };
+  }
   const neg = DIFF[s.diff].neg, oppK = DIFF[s.diff].opp;
   if (ev.kind === "attack") {
     const hit = -(0.35 + 0.25 * rand(s)) * oppK * neg;
@@ -275,6 +288,7 @@ export function resolve(c: Ctx, s: State, ev: Ev, i: number, debate = false): Ou
   } else {
     t = "You stayed out of it.";
   }
+  if (!debate) { fx *= att(s); parts = parts.map((p) => ({ ...p, fx: p.fx * att(s) })); }
   applyGlobal(s, fx, parts, ev.kind === "attack" ? 0.6 : 0.7);
   s.resolved.push({ id: ev.id, choice: i, fx });
   s.log.push({ w: s.week, kind: "event", t: `${ev.title}: ${o.label}. ${t}`, fx, parts: parts.slice(0, 5) });
@@ -301,6 +315,11 @@ export function dealWeek(c: Ctx, s: State) {
   } else { const e = eventFor(c, s); if (e) out.push(e); }
   const f = flashFor(c, s); if (f) out.push(f);
   if (s.week >= 2 && rand(s) < 0.22) { const sc = SCENARIOS.filter((x) => !s.used.includes(x.id)); if (sc.length) out.push(sc[Math.floor(rand(s) * sc.length)]); }
+  // bigger dilemmas, each at most once a campaign: about one week in three
+  if (s.week >= 2 && rand(s) < 0.34) { const d = dilemmas(c).filter((x) => !s.used.includes(x.id)); if (d.length) out.push(d[Math.floor(rand(s) * d.length)]); }
+  // an unwanted fan, once a campaign, somewhere in the middle of it
+  const fr = fringeEv(c); if (fr && !s.used.includes(fr.id) && s.week >= 3 && cal(s) <= 6 && (rand(s) < 0.3 || cal(s) === 6)) out.push(fr);
+  const st = starEv(c, s); if (st && !s.used.includes(st.id) && s.week >= 2 && rand(s) < 0.18) out.push(st);
   s.cur = out;
 }
 
@@ -439,6 +458,118 @@ export function invitesFor(c: Ctx, s: State): Meet[] {
 /** Deal this week's meeting invitations once. */
 export function dealInvites(c: Ctx, s: State) {
   if (s.done || s.invw >= s.week) return;
-  s.invw = s.week; s.invites = invitesFor(c, s);
+  s.invw = s.week; s.invites = invitesFor(c, s).filter((m) => m.role !== "podcast");
+  if (rand(s) < 0.6) { const p = podInvite(c, s); if (p) s.invites.unshift(p); }
 }
 export const ROLE_NAME: Record<Role, string> = { chair: "Party chair", union: "Labor", farm: "Farm country", donor: "Big money", mayor: "City hall", faith: "Faith leader", podcast: "Podcaster", editor: "Editorial board", sheriff: "Law enforcement", teacher: "Teachers", vet: "Veterans", student: "Students", biz: "Small business", endorser: "Real endorsement", mole: "Inside source", tribal: "Tribal nation" };
+
+// ============================================================ the long campaign: summer, dilemmas, fans you did not ask for
+/** Summer cards, for the weeks before Labor Day in a longer campaign. */
+function summerEvent(c: Ctx, s: State): Ev | null {
+  const R = c.me.party === "R", fair = `the ${c.r.state} State Fair`;
+  const cards: Ev[] = [
+    { id: "su:report", kind: "quarter", title: "The July money report", prompt: `Second quarter reports are public on July 15. Reporters will write the money race off them, and ${c.op.name}'s team is already spinning.`, opts: [
+      { label: "Tout your number", say: "Release your total early to win the story.", kind: "tout" },
+      { label: "Deadline email push", say: "Five emails before midnight on June 30 to pad the number.", kind: "blast" },
+      { label: "Say nothing", say: "Let the filing speak.", kind: "skip" }] },
+    { id: "su:fair", kind: "scenario", title: `${c.r.state === "Iowa" || c.r.state === "Minnesota" ? "Pork chops and soapboxes" : "Corn dogs and handshakes"} at the fair`, prompt: `Every campaign in the state shows up to ${fair}. A day on the midway is a day of photos, voters and the chance of eating something on camera.`, opts: [
+      { label: "Work the whole fair", say: "A full day: the livestock barns, the soapbox, the food stands.", out: { days: 1, vol: 70, buzz: 8, enth: 2, risk: 0.18, riskT: "A photo of you struggling with a corn dog became the meme of the week.", riskFx: -0.05, t: "Thousands of handshakes and a good day of local news." } },
+      { label: "Soapbox speech only", say: "Twenty minutes on the stage, then back on the road.", out: { days: 0.5, buzz: 4, st: { issue: "econ", pos: R ? 0.5 : -0.5, sal: 0.6 }, t: "A solid speech to a sunburned crowd." } },
+      { label: "Skip it", say: "Spend the day raising money instead.", out: { days: 0, cash: Math.round(c.weekly * 0.15), fx: -0.03, fxLabel: "Rural voters", t: "The local paper noticed you were not there." } }] },
+    { id: "su:parade", kind: "scenario", title: "A small town parade", prompt: "A county parade committee invites you to march, and so is your opponent's team. The fire trucks go first.", opts: [
+      { label: "March and hand out candy", say: "Walk the route with a volunteer float.", out: { days: 0.5, vol: 40, enth: 2, t: "Kids loved the float. Parents took the yard signs." } },
+      { label: "Send volunteers", say: "Your float, without you.", out: { days: 0, vol: 15, t: "Fine, but people asked where you were." } }] },
+    { id: "su:recess", kind: "scenario", title: "August recess town halls", prompt: "Congress is home for August and every town hall in the state is packed. Activists from both sides are showing up with phones out.", opts: [
+      { label: "Hold an open town hall", say: "No screening, no time limit.", out: { days: 0.5, st: { pos: 0, tone: "calm", extra: ["Independent"] }, risk: 0.3, riskT: "A shouting match with a heckler went viral. The clip cut both ways.", riskFx: -0.06, buzz: 8, t: "Two hours of questions. Independents liked that you showed up." } },
+      { label: "Tele town hall", say: "A phone call with ten thousand voters, screened questions.", out: { days: 0.5, st: { pos: 0, tone: "calm", sal: 0.6 }, t: "Safe and useful." } },
+      { label: "Skip them", say: "Do private events instead.", out: { days: 0, fx: -0.04, fxLabel: "Independents", t: "The opponent ran a where is my senator style ad." } }] },
+    { id: "su:hire", kind: "scenario", title: "A top operative is on the market", prompt: "A field director who ran a winning statewide race two years ago is free and talking to both campaigns.", opts: [
+      { label: "Hire them now", say: "Pay their price before the other side does.", out: { cash: -90000, vol: 120, t: "They brought their old precinct captains with them." } },
+      { label: "Pass", say: "Your team is set.", out: { days: 0, t: "They signed with a super PAC instead." } }] },
+  ];
+  return cards.find((e) => !s.used.includes(e.id)) ?? null;
+}
+
+/** Hard calls campaigns really face, labeled as scenarios: each choice has a price. */
+export function dilemmas(c: Ctx): Ev[] {
+  const R = c.me.party === "R", w = c.weekly;
+  const own = (x: number) => (R ? x : -x);
+  return [
+    { id: "dl:crypto", kind: "scenario", title: "A crypto super PAC calls", prompt: "Scenario: a super PAC funded by cryptocurrency companies says it will spend millions for you this fall. Its lobbyists also want your support for their market structure bill.", opts: [
+      { label: "Welcome the help, promise nothing", say: "Outside groups can spend what they like. You do not coordinate.", out: { outPlus: 4e6, risk: 0.22, riskT: "A watchdog report tied the money to the bill, and your opponent ran with it.", riskFx: -0.1, t: "The super PAC booked its first flight of ads for you." } },
+      { label: "Endorse their bill", say: "Say the bill is good policy and you would vote for it.", out: { outPlus: 9e6, st: { issue: "corruption", pos: own(0.3), sal: 0.6 }, risk: 0.35, riskT: "The pledge became the story: bought and paid for.", riskFx: -0.16, t: "The group doubled its buy." } },
+      { label: "Ask them to stay out", say: "Say publicly you do not want their money.", out: { buzz: 6, fx: 0.03, fxLabel: "Voters who distrust big money", t: "A good day with reformers; the money went elsewhere." } }] },
+    { id: "dl:foreign", kind: "scenario", title: "A check you cannot cash", prompt: "Scenario: your finance director flags a $50,000 bundle at last night's fundraiser. Most of it came from a businessman who is not a citizen or green card holder. Federal law bans it.", opts: [
+      { label: "Refund it and report it", say: "Return every dollar today and tell the FEC.", out: { cash: -50000, t: "Your lawyers handled it. Nobody wrote a story about a campaign following the law." } },
+      { label: "Keep it quiet", say: "Nobody will notice.", out: { risk: 0.55, riskT: "A reporter matched the donor to a corporate filing abroad. Now it is a federal complaint and a week of bad headlines.", riskFx: -0.38, riskCash: -150000, t: "For now, the money is in the bank." } }] },
+    { id: "dl:deepfake", kind: "scenario", title: "A fake video of you", prompt: "Scenario: an AI made video of you saying something you never said is spreading in group chats and on social media. It looks real.", opts: [
+      { label: "Rapid response with proof", say: "Forensic experts, a press call and a takedown request the same day.", cash: 40000, out: { fx: -0.02, buzz: 4, t: "Most outlets called it fake by evening. Some people will always believe it." } },
+      { label: "Turn it into a fundraiser", say: "Email your list: they are lying about you.", out: { cash: Math.round(w * 0.3), fx: -0.05, buzz: 6, t: "Donors rallied. The video kept spreading." } },
+      { label: "Ignore it", say: "Do not give it oxygen.", out: { fx: -0.1, fxLabel: "Voters who saw the video", t: "It reached more people than your ads did that week." } }] },
+    { id: "dl:strike", kind: "scenario", title: "A strike at the biggest plant", prompt: "Scenario: workers at the largest manufacturer in the state walked out over pay and pensions. Both sides want you on their side by the evening news.", opts: [
+      { label: "Walk the picket line", say: "Bring coffee and stand with the workers.", out: { days: 0.5, vol: R ? 30 : 120, st: { issue: "econ", pos: -0.35, extra: ["No college degree"] }, t: "The union posted the photo everywhere." } },
+      { label: "Call for a fair deal", say: "Urge both sides back to the table.", out: { st: { issue: "econ", pos: 0, tone: "calm" }, t: "Nobody loved it. Nobody hated it." } },
+      { label: "Side with the company", say: "Say the strike threatens jobs and the state's economy.", out: { st: { issue: "econ", pos: 0.55, extra: ["College graduate"] }, cash: Math.round(w * 0.2), t: "Business groups noticed, and so did the strikers." } }] },
+    { id: "dl:taxes", kind: "scenario", title: "Release your tax returns?", prompt: `Scenario: ${c.op.name} released ten years of tax returns and dared you to do the same.`, opts: [
+      { label: "Release them all", say: "Ten years, today.", out: { fx: 0.03, risk: 0.2, riskT: "Reporters found a deduction that looked bad out of context.", riskFx: -0.08, t: "A one day story, mostly good." } },
+      { label: "Release two years", say: "Enough to answer the question.", out: { fx: 0, risk: 0.3, riskT: "The question became what are you hiding.", riskFx: -0.07, t: "Half an answer." } },
+      { label: "Refuse", say: "Say your finances are in your disclosure forms.", out: { fx: -0.08, fxLabel: "Independents", t: "It became an ad." } }] },
+    { id: "dl:rival", kind: "scenario", title: "Your primary rival will not endorse", prompt: "Scenario: the candidate you beat in the primary still has not endorsed you, and their voters are watching.", opts: [
+      { label: "Give them a policy win", say: "Adopt one of their signature ideas.", out: { enth: 5, vol: 80, st: { pos: own(0.9), sal: 0.5 }, t: "They endorsed you at a joint rally." } },
+      { label: "Ask quietly", say: "A private dinner, no concessions.", out: { days: 0.5, enth: 2, risk: 0.5, riskT: "They endorsed you after all.", riskFx: 0.05, t: "They said they would think about it." } },
+      { label: "Move on", say: "You won; their voters will come home.", out: { enth: -3, t: "Some of their voters are still on the fence." } }] },
+    { id: "dl:ally", kind: "scenario", title: "A scandal in your own party", prompt: `Scenario: a ${R ? "Republican" : "Democratic"} state official is accused of steering contracts to a donor. Reporters want to know if you think they should resign.`, opts: [
+      { label: "Call for resignation", say: "Corruption is corruption, whatever the party.", out: { fx: 0.06, fxLabel: "Independents", enth: -2, t: "Editorial boards praised you. Some party loyalists did not." } },
+      { label: "Let the process play out", say: "Wait for the facts.", out: { fx: -0.02, t: "It followed you to every event that week." } },
+      { label: "Defend them", say: "Call it a political hit job.", out: { enth: 2, fx: -0.07, risk: 0.3, riskT: "More documents came out the next day.", riskFx: -0.1, t: "The base cheered." } }] },
+    { id: "dl:robocall", kind: "scenario", title: "AI phone banking, at a discount", prompt: "Scenario: a vendor offers AI voice calls to a million voters for a tenth of what a phone bank costs. In 2024 the FCC ruled that AI generated voices in robocalls fall under the federal robocall law.", opts: [
+      { label: "Use it anyway", say: "It is cheap and nobody will check.", out: { cash: -30000, pers: 0.2, region: c.r.counties.slice(0, 6).map((x) => x[0]), risk: 0.45, riskT: "An FCC complaint and a front page story about illegal AI robocalls.", riskFx: -0.2, riskCash: -120000, t: "A million calls went out overnight." } },
+      { label: "Hire a real phone bank", say: "Pay humans to call, legally.", out: { cash: -120000, vol: 30, enth: 2, t: "Slower and pricier, and clean." } },
+      { label: "Pass", say: "Not worth the risk.", out: { t: "Your volunteers kept calling the old way." } }] },
+    { id: "dl:bus", kind: "scenario", title: "The bus broke down", prompt: "Scenario: the campaign bus threw a rod outside a truck stop. Tomorrow's stops are in jeopardy.", opts: [
+      { label: "Rent a new one tonight", say: "Pay whatever it costs.", out: { cash: -30000, t: "Back on the road by morning." } },
+      { label: "Make it a moment", say: "Livestream from the truck stop diner while you wait.", out: { days: 1, buzz: 9, enth: 1, t: "The truckers loved it, and so did the internet." } }] },
+  ];
+}
+
+const isFuentes = (n: string) => /fuentes/i.test(n);
+/** An endorsement nobody wants. Real when the Watchdog has the streamer talking about this race; otherwise a scenario. */
+export function fringeEv(c: Ctx): Ev | null {
+  const R = c.me.party === "R";
+  const real = (c.r.net?.attention ?? []).find((a) => isFuentes(a.who));
+  const id = "fringe";
+  const hurtsMe = (o: { label: string; say: string; out: MeetOut }) => o;
+  if (real) {
+    const note = real.notes.join(" ");
+    if (R) return { id, kind: "fringe", real: true, src: real.src, title: "Nick Fuentes is campaigning against you", prompt: `Nick Fuentes, the white nationalist livestreamer, has made your race his cause. ${note} Reporters want to know what you will do about it.`, opts: [
+      hurtsMe({ label: "Condemn him by name", say: "Call him a bigot and say you do not want votes from people who follow him.", out: { st: { pos: 0.2, tone: "calm", extra: ["Independent", "College graduate"] }, buzz: 6, enth: -1, t: "Most of the party backed you. His followers flooded your comments." } }),
+      hurtsMe({ label: "Ignore him", say: "Do not give him oxygen.", out: { fx: -0.02, t: "His posts kept drawing millions of views, and the press kept asking." } }),
+      hurtsMe({ label: "Mock him on camera", say: "A fiery line about losers in their basements.", out: { buzz: 12, enth: 2, st: { pos: 0.4, tone: "fiery" }, risk: 0.25, riskT: "The back and forth dragged on for days, and none of it was about your plans.", riskFx: -0.08, t: "The clip did numbers." } }),
+      hurtsMe({ label: "Court his followers", say: "Say you want every vote and some of his points have merit.", out: { fx: -0.55, fxLabel: "Moderates and independents", enth: 2, buzz: 20, quit: true, cash: -Math.round(c.weekly * 0.5), t: "Party leaders condemned you, donors called to cancel and it led the national news." } })] };
+    return { id, kind: "fringe", real: true, src: real.src, title: "Nick Fuentes is telling his followers to vote for you", prompt: `Nick Fuentes, the white nationalist livestreamer, is urging his followers to vote for you as a protest against ${c.op.name}. ${note} ${c.op.name}'s allies are already asking if you welcome it.`, opts: [
+      hurtsMe({ label: "Reject his support loudly", say: "Say you do not want and will not accept the support of a bigot.", out: { st: { pos: -0.2, tone: "calm", extra: ["Independent"] }, buzz: 5, t: "A clean answer. The story died in a day." } }),
+      hurtsMe({ label: "Stay quiet", say: "It is a distraction from your message.", out: { risk: 0.45, riskT: `${c.op.name}'s allies cut an ad asking why you would not reject him.`, riskFx: -0.1, t: "You stayed on message, for now." } }),
+      hurtsMe({ label: "Welcome every voter", say: "Say you will take votes from anyone.", out: { fx: -0.4, fxLabel: "Your base and independents", enth: -5, quit: true, t: "Your own party was furious, and it became the story of the race." } })] };
+  }
+  if (R) return { id, kind: "fringe", title: "Nick Fuentes wants you on his stream", prompt: "Scenario, not a real event in this race: Nick Fuentes, the white nationalist livestreamer, praised you on his show, offered his endorsement and invited you on for an hour. Half the internet is waiting to see what you say.", opts: [
+    hurtsMe({ label: "Decline quietly", say: "No interview, no comment.", out: { risk: 0.4, riskT: "Reporters asked why you would not denounce him, and the question followed you for days.", riskFx: -0.07, t: "You stayed out of it." } }),
+    hurtsMe({ label: "Denounce him publicly", say: "Reject the endorsement and call out his views by name.", out: { st: { pos: 0.25, tone: "calm", extra: ["Independent", "Moderate"] }, buzz: 6, enth: -1, t: "Editorials praised you. His followers spent a week attacking you online." } }),
+    hurtsMe({ label: "Say you do not know who he is", say: "Laugh it off.", out: { risk: 0.5, riskT: "A reporter found your old post quoting him. Now you look evasive and he has a new clip.", riskFx: -0.16, t: "It bought you a day." } }),
+    hurtsMe({ label: "Go on the stream", say: "An hour, live, with the chat running.", out: { fx: -0.85, fxLabel: "Moderates, independents and suburban women", enth: 3, buzz: 25, quit: true, cash: -Math.round(c.weekly * 0.8), oppEnth: 6, t: "It led every national broadcast. The party's Senate leaders condemned you, two endorsers withdrew, big donors canceled events and the other side's turnout operation had its best fundraising day of the year." } })] };
+  return { id, kind: "fringe", title: "A far left streamer wants you on", prompt: "Scenario, not a real event in this race: a far left livestreamer with a huge young audience, and a record of excusing political violence and antisemitic remarks, praised you and invited you on. Your youth director loves it. Your pollster does not.", opts: [
+    hurtsMe({ label: "Decline quietly", say: "No interview, no comment.", out: { risk: 0.35, riskT: `${c.op.name} asked why you will not condemn him, and it stuck for a few days.`, riskFx: -0.06, t: "You stayed out of it." } }),
+    hurtsMe({ label: "Denounce his comments", say: "Say there is no place for that, then talk to young voters on your own terms.", out: { st: { pos: -0.2, tone: "calm", extra: ["Independent", "Moderate"] }, buzz: 5, enth: -1, t: "Moderates noticed. His fans called you a sellout." } }),
+    hurtsMe({ label: "Go on and push back", say: "Do the show and challenge him on air.", out: { buzz: 18, enth: 2, risk: 0.45, riskT: "A two second clip of you laughing along went everywhere without the pushback.", riskFx: -0.25, t: "Millions watched. Some of it went well." } }),
+    hurtsMe({ label: "Go on and play along", say: "Friendly hour, no pushback.", out: { fx: -0.7, fxLabel: "Moderates, independents and Jewish voters", enth: 4, buzz: 24, quit: true, cash: -Math.round(c.weekly * 0.6), oppEnth: 5, t: "It became the defining story of your race, and not in a good way." } })] };
+}
+
+/** A celebrity wants in. Fun, fast and occasionally a liability. */
+function starEv(c: Ctx, s: State): Ev | null {
+  const R = c.me.party === "R";
+  const stars = R ? ["a country music star who grew up in the state", "a former NFL lineman turned sports radio host", "a UFC champion with a huge young following"] : ["a pop star with a hundred million followers", "a beloved actor who grew up in the state", "an NBA legend from the state's flagship school"];
+  const who = stars[(s.seed >>> 3) % stars.length];
+  return { id: "star", kind: "star", title: "A celebrity wants to endorse you", prompt: `Scenario: ${who} wants to endorse you and is offering to headline an event. Celebrities move young and casual voters, and say unscripted things.`, opts: [
+    { label: "Headline a rally", say: "A concert sized rally in the biggest city.", out: { days: 1, buzz: 18, enth: 5, vol: 180, st: { pos: 0, extra: ["18 to 29"], sal: 0.7 }, risk: 0.2, riskT: "The star went off script about the other party's voters, and that became the clip.", riskFx: -0.1, t: "Thousands showed up, and the line to register went around the block." } },
+    { label: "A video and a post", say: "Cut a vertical video for their feeds.", out: { buzz: 9, cash: Math.round(c.weekly * 0.15), t: "Millions of views and a burst of small donations." } },
+    { label: "Thanks, but no", say: "Keep the focus on the state.", out: { t: "Their fans did not notice." } }] };
+}

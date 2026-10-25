@@ -27,7 +27,12 @@ export type RaceFile = {
   earlyVote: { ballots: number; party: { d: number; r: number; o: number }; estimatedShare: number; date: string; expectedEarly?: number; expectedTotal?: number } | null;
   news: { id: string; title: string; dek: string; date: string }[]; media: { who: string; what: string; when: string; lean: string }[];
   research?: Research; donorSignal?: { z: number; shift_logit: number } | null;
+  /** the Watchdog connections for each side, and the commentators paying attention to the race */
+  net?: { D: Net; R: Net; attention: { who: string; role: string; side: string | null; about: string | null; notes: string[]; src: string }[] };
 };
+export type Net = { endorsers: { by: string; role: string; kind: string; src: string }[]; donors: { name: string; v: number; note: string; src: string }[];
+  groups: { name: string; v: number; how: string; src: string }[]; mega: { name: string; v: number; via: string; src: string }[];
+  surrogates: { name: string; n: number; note: string; src: string }[]; party: { name: string; v: number; src: string }[]; self: number | null };
 
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; opp: number; fund: number; neg: number; drift: number; noise: number }> = {
   safe: { name: "Safe Seat", blurb: "A friendly year. You start two points better than the forecast, donors give more and the other side is slower.", start: 2, opp: 0.8, fund: 1.25, neg: 0.8, drift: 0, noise: 0.8 },
@@ -37,8 +42,24 @@ export const DIFF: Record<Diff, { name: string; blurb: string; start: number; op
 };
 
 export const WEEKS = 8;
-export const DAYS = 6;
+/** Each week has twelve half days: a rally takes a full day, a town hall or call time takes a morning. */
+export const DAYS = 12;
+/** What each move costs, in half days. */
+export const COST = { rally: 2, hall: 1, call: 1, donors: 2, media: 1, prep: 2, rest: 2, nap: 1, canvass: 2, reg: 1, virtual: 1, celeb: 2, jfc: 2, ask: 1, surrogate: 2, guest: 2, podcast: 2, meet: 1 } as const;
+export const halfTxt = (n: number) => (n <= 0 ? "No time" : n === 1 ? "Half day" : n % 2 ? `${Math.floor(n / 2)}½ days` : n === 2 ? "1 day" : `${n / 2} days`);
+/** Campaign lengths: the classic eight week fall sprint, or start in early August or mid July. */
+export const LENGTHS: { w: number; name: string; blurb: string }[] = [
+  { w: 8, name: "Fall sprint", blurb: "Labor Day to Election Day. Eight weeks, every one of them counts. About 45 minutes." },
+  { w: 12, name: "From August", blurb: "Start the second week of August. Four summer weeks to raise money, hire, register voters and build a field program while voters are at the lake. About 70 minutes." },
+  { w: 16, name: "From July", blurb: "Start in mid July. Eight long summer weeks for the full build: money, staff, offices, door knocking crews, then the fall sprint. About 90 minutes." },
+];
 const WEEK0 = Date.UTC(2026, 8, 8); // Tuesday after Labor Day
+/** The calendar week a game week falls in: week 1 is the week after Labor Day, zero and below are summer weeks. */
+export const cal = (s: { week: number; len?: number }, w = s.week) => w - ((s.len ?? 8) - 8);
+export const lenOf = (s: { len?: number }) => s.len ?? 8;
+/** Voters pay about half as much attention in summer: persuasion moves less, and the forecast expects less of everyone. */
+export const att = (s: { week: number; len?: number }, w = s.week) => (cal(s, w) <= 0 ? 0.55 : 1);
+export const phaseOf = (s: { week: number; len?: number }) => { const k = cal(s); return k <= 0 ? "summer" : k < 5 ? "fall" : k < 8 ? "stretch" : "final"; };
 export const weekLabel = (w: number) => {
   const a = new Date(WEEK0 + (w - 1) * 7 * 864e5), b = new Date(WEEK0 + ((w - 1) * 7 + 6) * 864e5);
   const f = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
@@ -46,7 +67,7 @@ export const weekLabel = (w: number) => {
 };
 export const DEBATE_WEEK = 6;
 /** The game week a real date falls in, or null outside the eight weeks. */
-export const weekOf = (iso: string) => { const t = Date.parse(iso + "T12:00:00Z"); if (!isFinite(t)) return null; const w = Math.floor((t - WEEK0) / (7 * 864e5)) + 1; return w >= 1 && w <= 8 ? w : null; };
+export const weekOf = (iso: string) => { const t = Date.parse(iso + "T12:00:00Z"); if (!isFinite(t)) return null; const w = Math.floor((t - WEEK0) / (7 * 864e5)) + 1; return w >= -7 && w <= 8 ? w : null; };
 /** The debate falls in the week of the race's first real debate; with none on record, week 6. */
 export function debateWeek(r: RaceFile) {
   const ws = (r.research?.debates ?? []).map((d) => weekOf(d.date)).filter((w): w is number => w != null && w >= 2);
@@ -54,17 +75,28 @@ export function debateWeek(r: RaceFile) {
 }
 /** TV costs more as Election Day nears: stations raise rates and inventory runs short. Reserving early locks today's rate. */
 export const RATE = [1, 1, 1, 1.05, 1.1, 1.15, 1.25, 1.4];
+export const rateAt = (cw: number) => (cw <= 0 ? 0.85 : RATE[Math.min(8, cw) - 1] ?? 1.4);
 export const EARLY_FROM = 5;
 
 export type Staff = { pollster: 0 | 1 | 2 | 3; media: boolean; field: boolean; oppo: boolean; digital: boolean };
+/** Your campaign manager: picked in the lobby, each with a strength and a voice. */
+export type Mgr = "vet" | "digital" | "brawler";
+export const MGR: Record<Mgr, { title: string; blurb: string; perk: string }> = {
+  vet: { title: "The field general", blurb: "Twenty years of knocking doors in this state. Cautious, organized, allergic to surprises.", perk: "Door knocking and turnout programs go 20 percent further, and a tired candidate makes fewer mistakes." },
+  digital: { title: "The digital native", blurb: "Built two presidential email programs. Thinks in clips, lists and dashboards.", perk: "Online fundraising and digital ads go 30 percent further, and buzz fades slower." },
+  brawler: { title: "The brawler", blurb: "Ran the nastiest race in the state last cycle and won it. Wants to hit first.", perk: "Contrast and attack ads hit 15 percent harder, opposition research costs less, and attacks backfire half as often." },
+};
+/** A door knocking program in one region: persuasion conversations with swing voters, or turnout contacts with yours. */
+export type Prog = { reg: number; kind: "pers" | "gotv"; crews: number };
+export const CREW = { wk: 30000, doors: 5000, setup: 20000 };
 export const POLLSTERS = [null, { name: "C rated pollster", sd: 3.4, wk: 18000 }, { name: "B rated pollster", sd: 2.2, wk: 38000 }, { name: "A rated pollster", sd: 1.2, wk: 70000 }] as const;
 export const STAFF_COST = { media: { hire: 150000, wk: 25000, name: "Media consultant", what: "Television and radio go 25 percent further." },
   field: { hire: 80000, wk: 22000, name: "Field director", what: "Field offices and get out the vote go 40 percent further, and you can open more than three offices." },
   oppo: { hire: 120000, wk: 0, name: "Opposition research firm", what: "Turns the other side's record into ads and debate lines, and attacks stop backfiring." },
   digital: { hire: 60000, wk: 15000, name: "Digital director", what: "Online fundraising and targeted digital ads go further." } };
 
-export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; need?: "oppo" | "pollster"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" | "amplify" | "push" | "pivot" | "rally" | "blast" | "tout" | "forum" | "dodge"; fx?: number };
-export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string };
+export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; out?: MeetOut; need?: "oppo" | "pollster"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" | "amplify" | "push" | "pivot" | "rally" | "blast" | "tout" | "forum" | "dodge"; fx?: number };
+export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario" | "fringe" | "star"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string };
 export type Part = { label: string; share: number; lean: number; fx: number };
 export type LogItem = { w: number; kind: "you" | "opp" | "air" | "event" | "money" | "poll" | "gaffe" | "news"; t: string; fx?: number; parts?: Part[] };
 export type Poll = { w: number; src: string; m: number; n: number; internal: boolean; groups?: { label: string; m: number }[] };
@@ -85,6 +117,9 @@ export type State = {
   enth: [number, number]; reads: Record<string, Read>; met: string[]; invites: Meet[]; invw: number; debated: number | null;
   lawyers: boolean; regs: number; final: boolean; oppLast: { stops: string[]; base: string[]; tv: number; ad: string | null } | null;
   low: number; rested: number; zingers: number; dodged: number; closing: string | null;
+  // added in the long campaign edition
+  len?: number; hd?: boolean; mgr?: Mgr; programs?: Prog[]; voterFile?: boolean; contacts?: number; doorsWk?: number;
+  reach?: Record<string, number>; jfc?: boolean; merch?: boolean; selfIn?: number; asked?: string[]; redbox?: number; outPlus?: number; vfat?: number; partyW?: number; celebW?: number; pods?: string[]; fringe?: string | null;
 };
 export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number;
   /** election night: [tick, county index, your votes, their votes, kind 0 early or mail, 1 Election Day, 2 late mail] */
@@ -92,9 +127,11 @@ export type Result = { m: number; win: boolean; me: number; op: number; counties
 /** How a campaign reads a county: its estimate of your margin, how sure it is, the week it last looked and who looked. */
 export type Read = [number, number, number, string];
 export type Role = "chair" | "union" | "farm" | "donor" | "mayor" | "faith" | "podcast" | "editor" | "sheriff" | "teacher" | "vet" | "student" | "biz" | "endorser" | "mole" | "tribal";
-export type MeetOut = { cash?: number; vol?: number; enth?: number; oppEnth?: number; buzz?: number; st?: Stance; region?: string[]; pers?: number; risk?: number; riskT?: string; riskFx?: number; prep?: number; endorse?: string; t: string; days?: number };
+export type MeetOut = { cash?: number; vol?: number; enth?: number; oppEnth?: number; buzz?: number; st?: Stance; region?: string[]; pers?: number; risk?: number; riskT?: string; riskFx?: number; prep?: number; endorse?: string; t: string; days?: number;
+  /** a direct shift in points, before noise */ fx?: number; fxLabel?: string; /** more outside money for you from here on */ outPlus?: number; /** a staffer quits */ quit?: boolean; /** extra cash lost if the risk hits */ riskCash?: number; stSal?: number };
 export type MeetOpt = { label: string; say: string; out: MeetOut; need?: "oppo" };
-export type Meet = { id: string; who: string; role: Role; seed: number; place: string; f?: string; title: string; intro: string; opts: MeetOpt[]; real?: boolean; src?: string };
+export type Meet = { id: string; who: string; role: Role; seed: number; place: string; f?: string; title: string; intro: string; opts: MeetOpt[]; real?: boolean; src?: string;
+  /** a show to go on instead of a meeting: the host's lean decides the audience */ pod?: { lean: "D" | "R" | "O"; show: string; note?: string } };
 
 // ------------------------------------------------------------- randomness
 export function rand(s: State) { // mulberry32 kept in the state
@@ -111,6 +148,8 @@ export function migrate(s: State, r: RaceFile): State {
   s.enth ??= [50, 50]; s.met ??= []; s.invites ??= []; s.invw ??= 0; s.debated ??= null; s.lawyers ??= false; s.regs ??= 0; s.final ??= false; s.oppLast ??= null;
   s.low ??= 99; s.rested ??= 0; s.zingers ??= 0; s.dodged ??= 0; s.closing ??= null;
   if (!s.reads) { s.reads = {}; seedReads(r, s); }
+  s.len ??= 8; s.mgr ??= "vet"; s.programs ??= []; s.contacts ??= 0; s.doorsWk ??= 0; s.selfIn ??= 0; s.asked ??= []; s.redbox ??= 0; s.outPlus ??= 0; s.vfat ??= 0; s.partyW ??= -9; s.celebW ??= -9; s.pods ??= []; s.fringe ??= null;
+  if (!s.hd) { s.days = Math.min(DAYS, s.days * 2); s.hd = true; }
   return s;
 }
 export const lead = (m: number, me: string, op: string) => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
@@ -139,10 +178,12 @@ export function ctx(r: RaceFile, side: Side): Ctx {
   };
 }
 
-export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(Math.random() * 1e9)): State {
+export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(Math.random() * 1e9), len = 8, mgr: Mgr = "vet"): State {
   const c = ctx(r, side);
-  const cash0 = (c.me.money.cash || (c.me.money.receipts || c.total * 5) * 0.3) * 0.85;
-  const opCash0 = (c.op.money.cash || (c.op.money.receipts || c.total * 5) * 0.3) * 0.85;
+  // a longer campaign starts earlier, before the summer's money is in the bank
+  const early = Math.max(0.42, 1 - 0.07 * (len - 8));
+  const cash0 = (c.me.money.cash || (c.me.money.receipts || c.total * 5) * 0.3) * 0.85 * early;
+  const opCash0 = (c.op.money.cash || (c.op.money.receipts || c.total * 5) * 0.3) * 0.85 * early;
   const n = r.counties.length;
   const s: State = {
     v: 1, race: r.id, side, diff, seed, rng: seed, week: 1, days: DAYS, cash: Math.round(cash0), oppCash: Math.round(opCash0), stamina: 100, momentum: 0, fatigue: 0,
@@ -151,7 +192,12 @@ export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(M
     tvWeek: 0, digWeek: 0, weekCash: Math.round(cash0), prep: 0, banked: 0, gotv: 0, spent: 0, raised: 0, pending: [], used: [], resolved: [], polls: [], log: [], trend: [], done: false, cur: [], evw: 0,
     buzz: 35, volunteers: 60 + Math.round(Math.sqrt(c.me.donors?.donations ?? 20000) * 0.6), reserved: [], tests: {}, endorsed: [], dweek: debateWeek(r), knocks: 0, flashes: [], weekly: [],
     enth: [50, 50], reads: {}, met: [], invites: [], invw: 0, debated: null, lawyers: false, regs: 0, final: false, oppLast: null, low: 99, rested: 0, zingers: 0, dodged: 0, closing: null,
+    len, hd: true, mgr, programs: [], voterFile: false, contacts: 0, doorsWk: 0, jfc: false, merch: false, selfIn: 0, asked: [], redbox: 0, outPlus: 0, vfat: 0, partyW: -9, celebW: -9, pods: [], fringe: null,
   };
+  s.dweek = debateWeek(r) + (len - 8);
+  // the county map and the forecast can disagree, as in a race with strong third candidates: start where the forecast is
+  const gap = c.sign * r.est.margin + DIFF[diff].start - margin(r, s);
+  if (Math.abs(gap) > 0.5) s.nat += gap;
   seedReads(r, s);
   s.trend.push({ w: 0, m: margin(r, s) });
   publicPolls(r, s, true);
@@ -244,7 +290,7 @@ export type ActResult = { ok: boolean; t: string; fx?: number; parts?: Part[] };
 const gaffes = ["mixed up two county names at a rally", "misstated the state's unemployment rate in an interview", "was caught on a hot mic calling a reporter's question dumb", "flubbed the name of a local high school team", "said the wrong date for early voting in a radio spot, and the campaign had to correct it"];
 function tire(c: Ctx, s: State, cost: number): ActResult | null {
   s.stamina = clamp(s.stamina - cost, 0, 100);
-  if (s.stamina < 28 && rand(s) < 0.16 + (28 - s.stamina) / 120) {
+  if (s.stamina < 28 && rand(s) < (0.16 + (28 - s.stamina) / 120) * (s.mgr === "vet" ? 0.7 : 1)) {
     const fx = -(0.12 + rand(s) * 0.28) * DIFF[s.diff].neg;
     applyGlobal(s, fx, [{ label: "Everyone", share: 100, lean: 0, fx }], 0.4);
     const t = `Running on fumes, ${c.me.name} ${gaffes[Math.floor(rand(s) * gaffes.length)]}.`;
@@ -257,13 +303,13 @@ const dim = (n: number) => 1 / (1 + 0.55 * n);
 const ci = (r: RaceFile, f: string) => r.counties.findIndex((c) => c[0] === f);
 
 export function rally(c: Ctx, s: State, f: string): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (s.days < COST.rally) return { ok: false, t: "Not enough time left this week: a rally takes a full day." };
   if (s.cash < 35000) return { ok: false, t: "Not enough cash for a rally." };
   const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
-  const co = c.r.counties[i], pm = c.base[i] + s.pers[i], e = dim(s.visits[f] ?? 0) * (0.75 + s.stamina / 400);
-  s.days -= 1; s.cash -= 35000; s.spent += 35000; s.visits[f] = (s.visits[f] ?? 0) + 1;
+  const co = c.r.counties[i], pm = c.base[i] + s.pers[i], e = dim(s.visits[f] ?? 0) * (0.75 + s.stamina / 400) * att(s);
+  s.days -= COST.rally; s.cash -= 35000; s.spent += 35000; s.visits[f] = (s.visits[f] ?? 0) + 1;
   let t: string;
-  if (pm >= 8) { const meV = s.side === "R" ? co[4] : co[3]; const add = meV * 0.008 * e * (s.week >= EARLY_FROM ? 1.3 : 1); s.xme[i] += add; s.pers[i] += 0.3 * e; const fire = 0.1 * e; s.glob += fire; s.ledger["Your base"] = (s.ledger["Your base"] ?? 0) + fire; t = `Rally in ${co[1]}, your country: about ${Math.round(add).toLocaleString()} more of your voters there fired up to turn out, and your base statewide saw it.`; }
+  if (pm >= 8) { const meV = s.side === "R" ? co[4] : co[3]; const add = meV * 0.008 * e * (cal(s) >= EARLY_FROM ? 1.3 : 1); s.xme[i] += add; s.pers[i] += 0.3 * e; const fire = 0.1 * e; s.glob += fire; s.ledger["Your base"] = (s.ledger["Your base"] ?? 0) + fire; t = `Rally in ${co[1]}, your country: about ${Math.round(add).toLocaleString()} more of your voters there fired up to turn out, and your base statewide saw it.`; }
   else if (pm > -8) { s.pers[i] += 2.6 * e; t = `Rally in ${co[1]}, a battleground: about ${(2.6 * e).toFixed(1)} points of persuasion there.`; }
   else { s.pers[i] += 1.7 * e; t = `Rally in ${co[1]}, the other side's turf: ${(1.7 * e).toFixed(1)} points there, and a story about reaching every voter.`; }
   const media = 0.06 * e * Math.pow(co[5] / c.total * 10, 0.35);
@@ -277,12 +323,12 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
 }
 
 export function townHall(c: Ctx, s: State, f: string): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (s.days < COST.hall) return { ok: false, t: "No time left this week." };
   if (s.cash < 12000) return { ok: false, t: "Not enough cash." };
   const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
-  const co = c.r.counties[i], e = dim(s.visits[f] ?? 0);
-  s.days -= 1; s.cash -= 12000; s.spent += 12000; s.visits[f] = (s.visits[f] ?? 0) + 1;
-  s.pers[i] += 1.4 * e;
+  const co = c.r.counties[i], e = dim(s.visits[f] ?? 0) * att(s);
+  s.days -= COST.hall; s.cash -= 12000; s.spent += 12000; s.visits[f] = (s.visits[f] ?? 0) + 1;
+  s.pers[i] += 1.15 * e;
   const ind = c.g("Independent", "Party ID")?.share ?? 30;
   let fx = (ind / 100) * 0.4 * e;
   let t = `Town hall in ${co[1]}: an hour of questions from undecided voters.`;
@@ -294,27 +340,54 @@ export function townHall(c: Ctx, s: State, f: string): ActResult {
   return tire(c, s, 9) ?? { ok: true, t, fx };
 }
 
-export function fundraise(c: Ctx, s: State, kind: "call" | "donors" | "email"): ActResult {
+export function fundraise(c: Ctx, s: State, kind: "call" | "donors" | "email" | "virtual" | "celeb"): ActResult {
   const fm = DIFF[s.diff].fund * (1 + 0.3 * s.momentum);
+  if (kind === "virtual") {
+    if (s.days < COST.virtual) return { ok: false, t: "No time left this week." };
+    if ((s.vfat ?? 0) >= 2) return { ok: false, t: "Two video fundraisers is the most your list will sit through in a week." };
+    s.days -= COST.virtual; s.vfat = (s.vfat ?? 0) + 1;
+    const amt = Math.round(c.weekly * 0.2 * fm * (0.6 + c.smallShare) * (0.7 + s.buzz / 150) * (s.mgr === "digital" ? 1.3 : 1) * (s.staff.digital ? 1.25 : 1) * Math.pow(0.75, (s.vfat ?? 1) - 1));
+    s.cash += amt; s.raised += amt;
+    const t = `A video call fundraiser with grassroots donors: ${usd(amt)}, and nobody had to drive anywhere.`; s.log.push({ w: s.week, kind: "money", t });
+    return tire(c, s, 3) ?? { ok: true, t };
+  }
+  if (kind === "celeb") {
+    if (s.days < COST.celeb) return { ok: false, t: "A celebrity fundraiser takes a full day." };
+    if (s.week - (s.celebW ?? -9) < 3) return { ok: false, t: "The celebrity circuit needs three weeks between events." };
+    s.days -= COST.celeb; s.celebW = s.week;
+    const star = c.me.party === "R" ? "a country music star" : c.me.party === "D" ? "an Oscar winning actor" : "a famous retired quarterback";
+    const amt = Math.round(c.weekly * 1.25 * fm * (0.8 + s.buzz / 250));
+    s.cash += amt; s.raised += amt; s.buzz = clamp(s.buzz + 7, 0, 100);
+    let t = `A fundraiser hosted by ${star}: ${usd(amt)} and a lot of photos.`;
+    if (rand(s) < 0.18 + (c.costsHard > 55 ? 0.1 : 0)) {
+      const fx = -0.13 * DIFF[s.diff].neg * att(s);
+      applyGlobal(s, fx, [{ label: "Voters who find daily costs hard to afford", share: c.costsHard, lean: 0, fx }], 0.6);
+      t += " Then the $10,000 a plate menu leaked, and your opponent had a field day.";
+      s.log.push({ w: s.week, kind: "money", t, fx }); return tire(c, s, 9) ?? { ok: true, t, fx };
+    }
+    s.log.push({ w: s.week, kind: "money", t });
+    return tire(c, s, 9) ?? { ok: true, t };
+  }
   if (kind === "email") {
     if (s.fatigue >= 3) return { ok: false, t: "Your list is tapped out this week. Try again next week." };
     // the list's size and habits come from the donor map: a campaign that raises more in gifts under $200 gets more from a blast
-    const amt = Math.round(c.weekly * 0.22 * fm * (s.staff.digital ? 1.6 : 1) * Math.pow(0.7, s.fatigue) * (0.55 + c.smallShare) * (0.75 + s.buzz / 200));
+    const amt = Math.round(c.weekly * 0.22 * fm * (s.staff.digital ? 1.6 : 1) * (s.mgr === "digital" ? 1.3 : 1) * Math.pow(0.7, s.fatigue) * (0.55 + c.smallShare) * (0.75 + s.buzz / 200));
     s.fatigue += 1; s.cash += amt; s.raised += amt;
     const t = `An email and text blast to small donors brought in ${usd(amt)}. ${Math.round(c.smallShare * 100)}% of your itemized money comes in gifts under $200.`; s.log.push({ w: s.week, kind: "money", t }); return { ok: true, t };
   }
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
-  s.days -= 1;
+  const need = kind === "call" ? COST.call : COST.donors;
+  if (s.days < need) return { ok: false, t: kind === "call" ? "No time left this week." : "A big dollar fundraiser takes a full day." };
+  s.days -= need;
   if (kind === "call") {
     const amt = Math.round(c.weekly * 0.38 * fm);
-    s.cash += amt; s.raised += amt; const t = `A day of call time: ${usd(amt)} raised.`; s.log.push({ w: s.week, kind: "money", t });
+    s.cash += amt; s.raised += amt; const t = `A morning of call time: ${usd(amt)} raised.`; s.log.push({ w: s.week, kind: "money", t });
     return tire(c, s, 6) ?? { ok: true, t };
   }
   const amt = Math.round(c.weekly * 0.85 * fm * (0.7 + c.bigShare * 1.5));
   s.cash += amt; s.raised += amt;
   let t = `A big dollar fundraiser: ${usd(amt)} raised.`;
   if (c.costsHard > 50 && rand(s) < 0.22) {
-    const fx = -0.15 * DIFF[s.diff].neg;
+    const fx = -0.15 * DIFF[s.diff].neg * att(s);
     applyGlobal(s, fx, [{ label: "Voters who find daily costs hard to afford", share: c.costsHard, lean: 0, fx }], 0.6);
     t += ` A photo from the event drew an out of touch story; ${Math.round(c.costsHard)} percent of voters here say daily costs are hard to afford.`;
     s.log.push({ w: s.week, kind: "money", t, fx }); return tire(c, s, 10) ?? { ok: true, t, fx };
@@ -324,53 +397,58 @@ export function fundraise(c: Ctx, s: State, kind: "call" | "donors" | "email"): 
 }
 
 export function media(c: Ctx, s: State): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
-  s.days -= 1;
-  const fx = 0.05 + rand(s) * 0.05;
+  if (s.days < COST.media) return { ok: false, t: "No time left this week." };
+  s.days -= COST.media;
+  const fx = (0.04 + rand(s) * 0.04) * att(s);
   applyGlobal(s, fx, [{ label: "Local news viewers", share: 60, lean: 0, fx }], 0.5);
   const t = "A media tour: local TV, talk radio and two podcasts."; s.log.push({ w: s.week, kind: "you", t, fx });
   s.buzz = clamp(s.buzz + 8, 0, 100);
   return tire(c, s, 8) ?? { ok: true, t, fx };
 }
-export function rest(s: State): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
-  s.days -= 1; s.stamina = clamp(s.stamina + 32, 0, 100); s.rested += 1;
-  return { ok: true, t: "A day off the trail. The candidate sleeps in and calls home." };
+export function rest(s: State, half = false): ActResult {
+  const n = half ? COST.nap : COST.rest;
+  if (s.days < n) return { ok: false, t: "No time left this week." };
+  s.days -= n; s.stamina = clamp(s.stamina + (half ? 14 : 32), 0, 100); s.rested += 1;
+  return { ok: true, t: half ? "An afternoon off: a nap on the bus and a call home." : "A day off the trail. The candidate sleeps in and calls home." };
 }
 export function debatePrep(c: Ctx, s: State): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (s.days < COST.prep) return { ok: false, t: "Debate prep takes a full day." };
   if (s.week > s.dweek) return { ok: false, t: "The debate is over." };
-  s.days -= 1; s.prep += 1;
+  s.days -= COST.prep; s.prep += 1;
   const t = `Debate prep with a stand in for ${c.op.name}.`; s.log.push({ w: s.week, kind: "you", t });
   return tire(c, s, 5) ?? { ok: true, t };
 }
 
 /** How much of its cash a normal campaign puts on television each week, rising to the end. */
 export const SCHED = [0.07, 0.08, 0.09, 0.1, 0.12, 0.15, 0.2, 0.35];
+export const schedAt = (cw: number) => (cw <= 0 ? 0.035 : SCHED[Math.min(8, cw) - 1] ?? 0.35);
 /** What a normal week on the trail is worth; the forecast assumes you do at least this much. */
 export const NORMAL_WEEK = 0.13;
 export const airFx = (spend: number, cost: number) => 0.45 * Math.log(1 + Math.max(0, spend) / cost);
 export function buyTV(c: Ctx, s: State, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
-  const rate = RATE[s.week - 1] ?? 1;
+  const rate = rateAt(cal(s));
   s.cash -= amt; s.spent += amt; s.tvWeek += amt;
   s.pending.push(`tv:${Math.round(amt / rate)}:${tone}`);
-  const t = `${usd(amt)} of ${tone} television booked for this week across ${c.r.state}${rate > 1 ? `, at late rates ${Math.round((rate - 1) * 100)}% above September` : ""}.`; s.log.push({ w: s.week, kind: "you", t });
+  const t = `${usd(amt)} of ${tone} television booked for this week across ${c.r.state}${rate > 1 ? `, at late rates ${Math.round((rate - 1) * 100)}% above September` : rate < 1 ? ", at cheap summer rates, though fewer voters are watching" : ""}.`; s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
 }
 export function reserveTV(c: Ctx, s: State, w: number, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
-  if (w <= s.week || w > WEEKS) return { ok: false, t: "Reserve a future week." };
+  if (w <= s.week || w > lenOf(s)) return { ok: false, t: "Reserve a future week." };
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
-  s.cash -= amt; s.spent += amt; s.reserved.push({ w, amt, tone });
-  const t = `Reserved ${usd(amt)} of ${tone} television for week ${w} at today's rate, ${Math.round(((RATE[w - 1] ?? 1) - 1) * 100)}% cheaper than buying it then.`; s.log.push({ w: s.week, kind: "you", t });
+  // reserved airtime is booked at today's rate and counted at that week's rate
+  const now = rateAt(cal(s)), then = rateAt(cal(s, w));
+  s.cash -= amt; s.spent += amt; s.reserved.push({ w, amt: Math.round(amt * then / Math.max(0.01, now)), tone });
+  const t = `Reserved ${usd(amt)} of ${tone} television for week ${w} at today's rate, ${Math.max(0, Math.round((then / now - 1) * 100))}% cheaper than buying it then.`; s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
 }
 /** A weekend of door knocking: volunteers from your field offices contact voters in those counties. */
 export function canvass(c: Ctx, s: State): ActResult {
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (s.days < COST.canvass) return { ok: false, t: "A door knocking weekend takes a full day of the candidate's time." };
   if (!s.offices.length) return { ok: false, t: "Open a field office first; volunteers need somewhere to pick up their walk lists." };
-  s.days -= 1;
-  const votes = s.volunteers * 3 * (s.staff.field ? 1.4 : 1) * (s.week >= EARLY_FROM ? 1.25 : 1);
+  s.days -= COST.canvass;
+  const k = cal(s), when = k <= 0 ? 0.45 : k >= EARLY_FROM ? 1.25 : 1;
+  const votes = s.volunteers * 3 * (s.staff.field ? 1.4 : 1) * (s.mgr === "vet" ? 1.2 : 1) * when;
   const idx = s.offices.map((f) => ci(c.r, f)).filter((i) => i >= 0);
   const tot = idx.reduce((a, i) => a + c.r.counties[i][5], 0) || 1;
   for (const i of idx) s.xme[i] += votes * (c.r.counties[i][5] / tot);
@@ -384,7 +462,7 @@ export function buyDigital(c: Ctx, s: State, amt: number, label: string): ActRes
   const g = c.groups.find((x) => x.label === label); if (!g) return { ok: false, t: "Unknown group." };
   s.cash -= amt; s.spent += amt; s.digWeek += amt;
   const per = 0.3 + 0.7 * (1 - Math.abs(g.L));
-  const fx = (g.share / 100) * 3.2 * Math.log(1 + amt / (c.total * 0.18)) * per * (s.staff.digital ? 1.2 : 1) * (s.staff.media ? 1.1 : 1);
+  const fx = (g.share / 100) * 3.2 * Math.log(1 + amt / (c.total * 0.18)) * per * (s.staff.digital ? 1.2 : 1) * (s.staff.media ? 1.1 : 1) * (s.mgr === "digital" ? 1.2 : 1) * att(s);
   applyGlobal(s, fx, [{ label: g.label, share: g.share, lean: g.L, fx }], 0.5);
   const t = `${usd(amt)} of digital ads aimed at ${g.label.toLowerCase()}, ${Math.round(g.share)} percent of voters, who split ${Math.round(g.d)} to ${Math.round(g.r)}.`;
   s.log.push({ w: s.week, kind: "you", t, fx });
@@ -412,9 +490,10 @@ export function hire(c: Ctx, s: State, who: keyof typeof STAFF_COST | "pollster"
     return { ok: true, t };
   }
   const x = STAFF_COST[who];
+  const price = Math.round(x.hire * (who === "oppo" && s.mgr === "brawler" ? 0.6 : 1));
   if (s.staff[who]) return { ok: false, t: "Already on staff." };
-  if (s.cash < x.hire) return { ok: false, t: "Not enough cash." };
-  s.cash -= x.hire; s.spent += x.hire; s.staff[who] = true;
+  if (s.cash < price) return { ok: false, t: "Not enough cash." };
+  s.cash -= price; s.spent += price; s.staff[who] = true;
   const t = `Hired a ${x.name.toLowerCase()}.`; s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
 }
@@ -468,12 +547,12 @@ export const REG_DEADLINE = 4;
 /** A voter registration drive: volunteers sign up new voters in one county, before the deadline. About half of new
  * registrants vote, and they split the way the county leans, a little better for whoever signed them up. */
 export function regDrive(c: Ctx, s: State, f: string): ActResult {
-  if (s.week > REG_DEADLINE) return { ok: false, t: "Registration closed at the end of week 4." };
-  if (s.days < 1) return { ok: false, t: "No days left this week." };
+  if (cal(s) > REG_DEADLINE) return { ok: false, t: "Registration closed in early October." };
+  if (s.days < COST.reg) return { ok: false, t: "No time left this week." };
   if (s.cash < 15000) return { ok: false, t: "Not enough cash." };
   const i = ci(c.r, f); if (i < 0) return { ok: false, t: "Unknown county." };
   const co = c.r.counties[i], pm = c.base[i] + s.pers[i];
-  s.days -= 1; s.cash -= 15000; s.spent += 15000;
+  s.days -= COST.reg; s.cash -= 15000; s.spent += 15000;
   const n = Math.round(Math.min(co[5] * 0.03, s.volunteers * 9 * (s.staff.field ? 1.3 : 1) * dim(s.visits["reg:" + f] ?? 0)));
   s.visits["reg:" + f] = (s.visits["reg:" + f] ?? 0) + 1;
   const pMe = Math.max(0.1, Math.min(0.9, 0.5 + pm / 200 + 0.06));
@@ -526,6 +605,118 @@ export function finalPush(c: Ctx, s: State, alloc: Record<string, number>, closi
   return { ok: true, t };
 }
 
+// ------------------------------------------------------------- the field program
+/** Programs you can run at once: four, six with a field director. */
+export const maxPrograms = (s: State) => (s.staff.field ? 6 : 4);
+export function addProgram(c: Ctx, s: State, reg: number, kind: "pers" | "gotv"): ActResult {
+  const g = regionsOf(c.r)[reg]; if (!g) return { ok: false, t: "Unknown region." };
+  const P = (s.programs ??= []);
+  if (P.some((p) => p.reg === reg && p.kind === kind)) return { ok: false, t: "That program is already running." };
+  if (P.length >= maxPrograms(s)) return { ok: false, t: s.staff.field ? "Six programs is all your field staff can run." : "Hire a field director to run more than four programs." };
+  if (s.cash < CREW.setup) return { ok: false, t: "Not enough cash." };
+  s.cash -= CREW.setup; s.spent += CREW.setup; P.push({ reg, kind, crews: 0 });
+  const t = `${kind === "pers" ? "Persuasion" : "Turnout"} program started in ${g.name}: turf cut, walk lists printed, volunteers assigned.`;
+  s.log.push({ w: s.week, kind: "you", t });
+  return { ok: true, t };
+}
+export function setCrews(s: State, k: number, crews: number): ActResult {
+  const p = s.programs?.[k]; if (!p) return { ok: false, t: "No such program." };
+  p.crews = Math.max(0, Math.min(8, Math.round(crews)));
+  return { ok: true, t: p.crews ? `${p.crews} paid canvass crew${p.crews > 1 ? "s" : ""} on this program: ${usd(p.crews * CREW.wk)} a week.` : "Paid crews pulled; volunteers only." };
+}
+export function dropProgram(s: State, k: number): ActResult { if (!s.programs?.[k]) return { ok: false, t: "No such program." }; s.programs.splice(k, 1); return { ok: true, t: "Program shut down." }; }
+export function buyVoterFile(s: State): ActResult {
+  if (s.voterFile) return { ok: false, t: "You already have the data." };
+  if (s.cash < 40000) return { ok: false, t: "Not enough cash." };
+  s.cash -= 40000; s.spent += 40000; s.voterFile = true;
+  const t = "Bought the enhanced voter file and a canvassing app: better targets, no wasted doors, and results synced every night."; s.log.push({ w: s.week, kind: "you", t });
+  return { ok: true, t };
+}
+/** What a program would do this week, before it runs: doors, conversations and net votes. */
+export function programYield(c: Ctx, s: State, p: Prog, nProg: number) {
+  const g = regionsOf(c.r)[p.reg]; if (!g) return { doors: 0, talks: 0, votes: 0, pts: 0, office: false, tot: 0 };
+  const office = g.f.some((f) => s.offices.includes(f));
+  const k = cal(s);
+  const volDoors = (s.volunteers / Math.max(1, nProg)) * 55 * (office ? 1 : 0.55);
+  const doors = volDoors + p.crews * CREW.doors;
+  const talks = doors * (k <= 0 ? 0.33 : 0.27) * (s.voterFile ? 1.15 : 1);
+  const skill = (s.staff.field ? 1.3 : 1) * (s.mgr === "vet" ? 1.2 : 1) * (s.voterFile ? 1.1 : 1);
+  const per = p.kind === "pers" ? 0.04 * (k <= 4 ? 1 : 0.7) : 0.05 * (k <= 0 ? 0.3 : k < EARLY_FROM ? 0.7 : 1.3);
+  const tot = g.f.reduce((a, f) => { const i = ci(c.r, f); return a + (i >= 0 ? c.r.counties[i][5] : 0); }, 0);
+  // the same doors get knocked again: once a region's voters have all been talked to, each new talk is worth less
+  const done = s.reach?.[`${p.reg}:${p.kind}`] ?? 0;
+  const fresh = 1 / (1 + done / Math.max(1, tot * 0.35));
+  const votes = talks * per * skill * fresh;
+  return { doors: Math.round(doors), talks: Math.round(talks), votes, pts: (100 * votes) / Math.max(1, c.total), office, tot };
+}
+function fieldWeek(c: Ctx, s: State) {
+  const P = s.programs ?? []; if (!P.length) { s.doorsWk = 0; return; }
+  let doors = 0, talks = 0, votes = 0, pay = 0;
+  P.forEach((p) => {
+    const y = programYield(c, s, p, P.length); const g = regionsOf(c.r)[p.reg]; if (!g) return;
+    doors += y.doors; talks += y.talks; votes += y.votes; pay += p.crews * CREW.wk;
+    const rk = `${p.reg}:${p.kind}`; (s.reach ??= {})[rk] = (s.reach[rk] ?? 0) + y.talks;
+    // persuasion goes to the region's closest counties, turnout to the ones that lean your way, by size
+    const idx = g.f.map((f) => ci(c.r, f)).filter((i) => i >= 0);
+    const wt = idx.map((i) => c.r.counties[i][5] * (p.kind === "pers" ? Math.max(0.15, 1 - Math.abs(c.base[i] + s.pers[i]) / 25) : Math.max(0.1, 0.5 + (c.base[i] + s.pers[i]) / 40)));
+    const W = wt.reduce((a, b) => a + b, 0) || 1;
+    idx.forEach((i, j) => {
+      const v = y.votes * (wt[j] / W);
+      if (p.kind === "pers") s.pers[i] += (100 * v) / Math.max(1, c.r.counties[i][5]); // net votes on the margin, as points of that county
+      else s.xme[i] += v;
+      groundRead(c, s, i, "Your canvassers", 4.6);
+    });
+  });
+  s.cash -= pay; s.spent += pay; s.contacts = (s.contacts ?? 0) + talks; s.doorsWk = doors;
+  s.knocks += Math.round(doors);
+  s.log.push({ w: s.week, kind: "you", t: `Field: ${Math.round(doors).toLocaleString()} doors knocked and ${Math.round(talks).toLocaleString()} real conversations across ${P.length} program${P.length > 1 ? "s" : ""}, worth about ${Math.round(votes).toLocaleString()} net votes.${pay ? ` Paid crews cost ${usd(pay)}.` : ""}` });
+}
+
+// ------------------------------------------------------------- more ways to raise money
+export function selfFund(c: Ctx, s: State, amt: number): ActResult {
+  if ((s.selfIn ?? 0) + amt > 25e6) return { ok: false, t: "Your accountant says that is everything you can liquidate." };
+  s.cash += amt; s.selfIn = (s.selfIn ?? 0) + amt;
+  let t = `You wrote your campaign a check for ${usd(amt)}.`, fx = 0;
+  if ((s.selfIn ?? 0) > 1e6) {
+    fx = -Math.min(0.15, 0.025 * (amt / 1e6)) * DIFF[s.diff].neg * att(s);
+    applyGlobal(s, fx, [{ label: "Voters who find daily costs hard to afford", share: c.costsHard, lean: 0, fx }], 0.6);
+    t += ` ${c.op.name} called it buying a seat, and your small donors felt less needed.`;
+    s.fatigue = Math.min(3, s.fatigue + 1);
+  }
+  s.log.push({ w: s.week, kind: "money", t, fx: fx || undefined });
+  return { ok: true, t, fx };
+}
+export function setupJFC(c: Ctx, s: State): ActResult {
+  if (s.jfc) return { ok: false, t: "Your joint fundraising committee is already running." };
+  if (s.days < COST.jfc) return { ok: false, t: "The launch event takes a full day." };
+  s.days -= COST.jfc; s.jfc = true;
+  const amt = Math.round(c.weekly * 0.5); s.cash += amt; s.raised += amt;
+  const t = `Joint fundraising committee with the national party: big donors can now write one check that is split between you and the party. The launch raised ${usd(amt)}, and your weekly money runs about 15 percent higher.`;
+  s.log.push({ w: s.week, kind: "money", t });
+  return { ok: true, t };
+}
+export function openMerch(c: Ctx, s: State): ActResult {
+  if (s.merch) return { ok: false, t: "The store is already open." };
+  if (s.cash < 25000) return { ok: false, t: "Not enough cash." };
+  s.cash -= 25000; s.spent += 25000; s.merch = true; s.buzz = clamp(s.buzz + 3, 0, 100);
+  const t = "The merch store is open: hats, shirts and yard signs. It earns a little every week, more when your buzz is up, and every hat is a walking ad.";
+  s.log.push({ w: s.week, kind: "money", t });
+  return { ok: true, t };
+}
+/** Ask the party committee for help. The party funds races it thinks are close, so a blowout either way gets little. */
+export function askParty(c: Ctx, s: State, who: string): ActResult {
+  if (s.days < COST.ask) return { ok: false, t: "No time left this week." };
+  if (s.week - (s.partyW ?? -9) < 4) return { ok: false, t: "The party will take your call again in a few weeks." };
+  s.days -= COST.ask; s.partyW = s.week;
+  const avg = polledAvg(s) ?? margin(c.r, s);
+  const close = Math.max(0.15, 1 - Math.abs(avg) / 8);
+  const amt = Math.round(c.weekly * 1.1 * close * (cal(s) <= 0 ? 0.6 : 1));
+  s.cash += amt; s.raised += amt;
+  const t = close > 0.6 ? `${who} sees a race it can win: ${usd(amt)} in coordinated money is on the way.` : `${who} has other races to save. They sent ${usd(amt)} and their best wishes.`;
+  s.log.push({ w: s.week, kind: "money", t });
+  return { ok: true, t };
+}
+
 // ------------------------------------------------------------- the debate stage
 export const debateMult = (s: State) => 1.5 * (1 + 0.12 * Math.min(4, s.prep));
 /** One answer: how it lands against the average of the answers on offer, times the delivery (0 to 1, 0.5 is average). */
@@ -566,9 +757,20 @@ export function finishDebate(c: Ctx, s: State, total: number, oppTotal: number):
 
 // ------------------------------------------------------------- meetings
 export function resolveMeet(c: Ctx, s: State, m: Meet, k: number): { t: string; fx: number; parts: Part[]; caught: boolean } {
-  const o = m.opts[k], x = o.out;
+  const o = m.opts[k];
+  if (!o) { s.invites = s.invites.filter((y) => y.id !== m.id); return { t: "", fx: 0, parts: [], caught: false }; }
+  const x = o.out;
   s.met.push(m.id); s.invites = s.invites.filter((y) => y.id !== m.id);
-  s.days = Math.max(0, s.days - (x.days ?? 1));
+  s.days = Math.max(0, s.days - meetCost(x));
+  const res = applyOut(c, s, x);
+  s.log.push({ w: s.week, kind: "event", t: `Met with ${m.who}: ${o.label}. ${res.t}`, fx: res.fx || undefined });
+  return res;
+}
+/** Time a meeting choice takes, in half days: a meeting is a half day unless it says otherwise. */
+export const meetCost = (x: MeetOut) => (x.days == null ? COST.meet : Math.round(x.days * 2));
+/** What a choice does: money, volunteers, enthusiasm, a stance voters hear, a risk that leaks. Shared by meetings,
+ * scenario cards and the network. */
+export function applyOut(c: Ctx, s: State, x: MeetOut): { t: string; fx: number; parts: Part[]; caught: boolean } {
   let fx = 0, parts: Part[] = [], t = x.t, caught = false;
   if (x.cash) { s.cash += x.cash; if (x.cash > 0) s.raised += x.cash; else s.spent -= x.cash; }
   if (x.vol) s.volunteers = Math.max(10, s.volunteers + x.vol);
@@ -578,14 +780,18 @@ export function resolveMeet(c: Ctx, s: State, m: Meet, k: number): { t: string; 
   if (x.prep) s.prep += x.prep;
   if (x.endorse) s.endorsed.push(x.endorse);
   if (x.region && x.pers) for (const f of x.region) { const i = ci(c.r, f); if (i >= 0) s.pers[i] += x.pers; }
-  if (x.st) { const r = react(c, s, x.st, 0.6); fx += r.fx * 0.5; parts = r.parts.map((p) => ({ ...p, fx: p.fx * 0.5 })); }
+  if (x.st) { const r = react(c, s, x.st, 0.6 * (x.stSal ?? 1)); fx += r.fx * 0.5; parts = r.parts.map((p) => ({ ...p, fx: p.fx * 0.5 })); }
+  if (x.fx) { const d = x.fx * (x.fx < 0 ? DIFF[s.diff].neg : 1) * (0.85 + rand(s) * 0.3); fx += d; parts = [{ label: x.fxLabel ?? "Voters following the race", share: 55, lean: 0, fx: d }, ...parts]; }
+  if (x.outPlus) s.outPlus = (s.outPlus ?? 0) + x.outPlus;
+  if (x.quit) { const k = (["media", "digital", "field"] as const).find((y) => s.staff[y]); if (k) { s.staff[k] = false; t += ` Your ${STAFF_COST[k].name.toLowerCase()} resigned over it.`; } }
   if (x.risk && rand(s) < x.risk) {
-    caught = true; const hit = (x.riskFx ?? -0.2) * DIFF[s.diff].neg; fx += hit;
+    caught = true; const hit = (x.riskFx ?? -0.2) * (x.riskFx != null && x.riskFx > 0 ? 1 : DIFF[s.diff].neg); fx += hit;
+    if (x.riskCash) { s.cash += x.riskCash; if (x.riskCash < 0) s.spent -= x.riskCash; }
     parts = [{ label: "Voters following the race", share: 55, lean: 0, fx: hit }, ...parts];
     t += " " + (x.riskT ?? "Then a recording of the meeting leaked.");
   }
+  fx *= att(s); parts = parts.map((p) => ({ ...p, fx: p.fx * att(s) }));
   if (fx) applyGlobal(s, fx, parts, 0.7);
-  s.log.push({ w: s.week, kind: "event", t: `Met with ${m.who}: ${o.label}. ${t}`, fx: fx || undefined });
   return { t, fx, parts: parts.slice(0, 5), caught };
 }
 
@@ -596,7 +802,7 @@ function publicPolls(r: RaceFile, s: State, first = false) {
     for (const p of r.polls.slice(0, 4)) s.polls.push({ w: 0, src: p.pollster, m: sign * p.margin + DIFF[s.diff].start, n: p.n, internal: false });
     return;
   }
-  const chance = Math.min(0.92, 0.35 + r.polls.length / 16 + (s.week >= 6 ? 0.2 : 0));
+  const chance = Math.min(0.92, (0.35 + r.polls.length / 16 + (cal(s) >= 6 ? 0.2 : 0)) * (cal(s) <= 0 ? 0.5 : 1));
   if (rand(s) < chance) {
     const p = r.polls[Math.floor(rand(s) * Math.max(1, r.polls.length))];
     const house = ((p?.pollster.length ?? 7) % 5 - 2) * 0.6 * (p?.pollster.includes("(R)") ? sign : p?.pollster.includes("(D)") ? -sign : 1);
@@ -628,7 +834,7 @@ function internalPoll(c: Ctx, s: State) {
 function opponentWeek(c: Ctx, s: State) {
   // The forecast already expects the other side to campaign normally, so only what they do beyond that moves the race:
   // nothing on Lean, more on the harder levels. Their stops still show up in your briefing.
-  const k = DIFF[s.diff].opp - 1 + 0.15, r = c.r;
+  const k = (DIFF[s.diff].opp - 1 + 0.15) * att(s), r = c.r;
   const idx = r.counties.map((_, i) => i);
   const opBase = idx.filter((i) => c.base[i] <= -8).sort((a, b) => r.counties[b][5] - r.counties[a][5]).slice(0, 6);
   const swing = idx.filter((i) => Math.abs(c.base[i]) < 8).sort((a, b) => r.counties[b][5] - r.counties[a][5]).slice(0, 6);
@@ -645,10 +851,10 @@ function opponentWeek(c: Ctx, s: State) {
   for (let j = 0; j < 2; j++) { if (opBase.length) go(opBase[Math.floor(rand(s) * opBase.length)], true); if (swing.length) go(swing[Math.floor(rand(s) * swing.length)], false); }
   // money in, money out
   s.oppCash += c.oppWeekly * (2 - DIFF[s.diff].fund);
-  const rate = SCHED[s.week - 1] ?? 0.2;
+  const rate = schedAt(cal(s));
   const opTV = s.oppCash * rate * 0.8;
   s.oppCash -= opTV / 0.8;
-  if (s.week >= 4) for (const i of opBase.slice(0, 4)) s.xop[i] += (s.side === "R" ? r.counties[i][3] : r.counties[i][4]) * 0.003 * Math.max(0, k);
+  if (cal(s) >= 4) for (const i of opBase.slice(0, 4)) s.xop[i] += (s.side === "R" ? r.counties[i][3] : r.counties[i][4]) * 0.003 * Math.max(0, k);
   if (stops.length) s.log.push({ w: s.week, kind: "opp", t: `${c.op.name} campaigned in ${[...new Set(stops)].join(", ")}.` });
   const theirs = c.op.party === "I" ? "I" : c.side === "D" ? "R" : "D";
   const ads = (r.research?.ads ?? []).filter((a) => a.for === theirs);
@@ -663,34 +869,44 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   // the air war: your television, theirs, and the outside groups, against what the forecast already expects both sides to spend
   const opTV = opponentWeek(c, s);
   let mineTV = 0;
-  for (const x of s.reserved.filter((x) => x.w === s.week)) { s.pending.push(`tv:${x.amt}:${x.tone}`); s.tvWeek += x.amt; }
+  for (const x of s.reserved.filter((x) => x.w === s.week)) { s.pending.push(`tv:${Math.round(x.amt / rateAt(cal(s)))}:${x.tone}`); s.tvWeek += x.amt; }
   s.reserved = s.reserved.filter((x) => x.w !== s.week);
   for (const p of s.pending) { const [, a, tone] = p.split(":"); mineTV += Number(a) * (tone === "positive" ? 0.85 : tone === "contrast" ? 1.05 : 1.3); }
   const attacks = s.pending.filter((p) => p.endsWith("attack")).length;
+  const hard = s.pending.filter((p) => !p.endsWith("positive")).length, booked = s.pending.length;
   s.pending = [];
   const medMult = s.staff.media ? 1.25 : 1;
   // The forecast already prices in a normal air war, both campaigns and their outside groups. Your television counts
   // against what a campaign with your money would normally run this week; on the harder levels the other side runs more.
-  const expTV = s.weekCash * SCHED[s.week - 1];
-  const myAir = airFx(mineTV * medMult, c.cost), expMy = airFx(expTV, c.cost);
+  const expTV = s.weekCash * schedAt(cal(s));
+  const toneK = s.mgr === "brawler" && booked ? 1 + 0.15 * hard / booked : 1;
+  const myAir = airFx(mineTV * medMult * Math.min(1.15, toneK), c.cost), expMy = airFx(expTV, c.cost);
   const extra = (DIFF[s.diff].opp - 1) * (airFx(opTV, c.cost) + 0.7 * airFx(c.outOp, c.cost));
-  let air = myAir - expMy - extra;
-  if (attacks && !s.staff.oppo && rand(s) < 0.3) { const back = -0.12 * attacks * DIFF[s.diff].neg; air += back; s.log.push({ w: s.week, kind: "air", t: "Your attack ad drew a fact check that says it stretches the record. Independents noticed.", fx: back }); }
+  // allies: extra outside money you brought in, and a redbox that tells the groups what to say
+  const allies = 0.6 * airFx((s.outPlus ?? 0) * 0.08, c.cost) + ((s.redbox ?? 0) > 0 ? 0.2 * airFx(c.outMe, c.cost) : 0);
+  let air = (myAir - expMy - extra + allies) * att(s);
+  if (attacks && !s.staff.oppo && rand(s) < (s.mgr === "brawler" ? 0.15 : 0.3)) { const back = -0.12 * attacks * DIFF[s.diff].neg; air += back; s.log.push({ w: s.week, kind: "air", t: "Your attack ad drew a fact check that says it stretches the record. Independents noticed.", fx: back }); }
   s.adStock = s.adStock * 0.55 + air * 0.75; s.perm += air * 0.25;
-  s.log.push({ w: s.week, kind: "air", t: `Air war this week: ${usd(s.tvWeek)} of your television against about ${usd(opTV)} from ${c.op.name}; outside groups spent about ${usd(c.outMe)} for you and ${usd(c.outOp)} for ${c.op.name}.`, fx: air });
+  s.log.push({ w: s.week, kind: "air", t: `Air war this week: ${usd(s.tvWeek)} of your television against about ${usd(opTV)} from ${c.op.name}; outside groups spent about ${usd(c.outMe + (s.outPlus ?? 0) * 0.08)} for you and ${usd(c.outOp)} for ${c.op.name}.${(s.redbox ?? 0) > 0 ? " Your redbox kept your allies on message." : ""}${cal(s) <= 0 ? " It is summer: fewer voters are watching." : ""}`, fx: air });
+  if ((s.redbox ?? 0) > 0) s.redbox = (s.redbox ?? 0) - 1;
   // field: offices and the turnout program
   const fm = s.staff.field ? 1.4 : 1;
-  for (const f of s.offices) { const i = ci(r, f); if (i < 0) continue; const meV = s.side === "R" ? r.counties[i][4] : r.counties[i][3]; s.xme[i] += meV * 0.004 * fm * (s.week >= EARLY_FROM ? 1.5 : 1); }
+  for (const f of s.offices) { const i = ci(r, f); if (i < 0) continue; const meV = s.side === "R" ? r.counties[i][4] : r.counties[i][3]; s.xme[i] += meV * 0.004 * fm * (cal(s) >= EARLY_FROM ? 1.5 : cal(s) <= 0 ? 0.4 : 1); }
+  fieldWeek(c, s);
   if (s.gotv > 0) {
     const g = Math.min(1, s.gotv / (c.total * 1.2));
     const baseIdx = r.counties.map((_, i) => i).filter((i) => c.base[i] > 0);
     for (const i of baseIdx) { const meV = s.side === "R" ? r.counties[i][4] : r.counties[i][3]; s.xme[i] += meV * 0.02 * g * fm; }
-    if (s.week >= EARLY_FROM) s.banked = Math.min(1, s.banked + 0.12 * g * fm + s.offices.length * 0.01);
+    if (cal(s) >= EARLY_FROM) s.banked = Math.min(1, s.banked + 0.12 * g * fm + s.offices.length * 0.01);
     s.gotv = 0;
   }
   // the national environment, and the fundraising that follows the polls
-  s.nat += DIFF[s.diff].drift - NORMAL_WEEK;
-  s.cash += Math.round(c.weekly * 0.55 * DIFF[s.diff].fund * (1 + 0.3 * s.momentum));
+  // The forecast is the race as it stands, summer included, so a summer week only has to balance the other side's summer
+  // stops; a fall week has to beat a normal campaign week.
+  s.nat += DIFF[s.diff].drift * (8 / lenOf(s)) + (cal(s) <= 0 ? 0.05 : -NORMAL_WEEK);
+  const inc = Math.round(c.weekly * 0.55 * DIFF[s.diff].fund * (1 + 0.3 * s.momentum) * (s.jfc ? 1.15 : 1));
+  s.cash += inc;
+  if (s.merch) { const m = Math.round(c.weekly * 0.035 * (0.4 + s.buzz / 60)); s.cash += m; s.raised += m; s.buzz = clamp(s.buzz + 0.6, 0, 100); }
   for (const k of ["media", "field", "digital"] as const) if (s.staff[k]) { s.cash -= STAFF_COST[k].wk; s.spent += STAFF_COST[k].wk; }
   // enthusiasm fades back toward normal; the forecast already expects both bases to be about as fired up as usual
   s.enth[0] = clamp(50 + (s.enth[0] - 50) * 0.82 - 0.9, 0, 100);
@@ -698,19 +914,23 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   for (const f of s.offices) { const i = ci(r, f); if (i >= 0) groundRead(c, s, i, "Your field office", 4.2); }
   internalPoll(c, s);
   publicPolls(r, s);
-  const pa = polledAvg(s); if (pa != null && s.week >= 5) s.low = Math.min(s.low, pa);
+  const pa = polledAvg(s); if (pa != null && cal(s) >= 5) s.low = Math.min(s.low, pa);
   const m1 = margin(r, s);
   s.momentum = clamp((m1 - m0) / 0.8, -1, 1);
   s.trend.push({ w: s.week, m: m1 });
   // buzz fades toward normal, and volunteers follow offices, buzz and momentum
-  s.buzz = clamp(s.buzz * 0.85 + 30 * 0.15 + 6 * s.momentum, 0, 100);
+  const keep = s.mgr === "digital" ? 0.9 : 0.85;
+  s.buzz = clamp(s.buzz * keep + 30 * (1 - keep) + 6 * s.momentum, 0, 100);
   s.volunteers = Math.max(20, Math.round(s.volunteers * 0.95 + s.offices.length * 55 * (s.staff.field ? 1.4 : 1) + 40 * s.momentum + s.buzz * 0.8));
   s.weekly.push({ w: s.week, m: m1, cash: s.cash, buzz: Math.round(s.buzz), vol: s.volunteers });
   s.stamina = clamp(s.stamina + 18, 0, 100);
-  s.tvWeek = 0; s.digWeek = 0; s.fatigue = 0;
+  s.tvWeek = 0; s.digWeek = 0; s.fatigue = 0; s.vfat = 0;
+  // a county's memory of your last visit fades: in a long campaign, coming back a month later counts again
+  for (const k of Object.keys(s.visits)) s.visits[k] *= 0.85;
+  for (const k of Object.keys(s.oppVisits)) s.oppVisits[k] *= 0.85;
   s.week += 1; s.days = DAYS; s.weekCash = Math.max(0, s.cash);
   if (s.cash < 0) { s.log.push({ w: s.week - 1, kind: "money", t: "The campaign ended the week in the red; vendors want to be paid before they book more." }); }
-  if (s.week > WEEKS) electionNight(c, s);
+  if (s.week > lenOf(s)) electionNight(c, s);
   return s.log.slice(before);
 }
 
