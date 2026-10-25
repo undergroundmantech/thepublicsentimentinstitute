@@ -32,6 +32,9 @@ from collections import defaultdict
 
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fec_links  # noqa: E402
+
 ap = argparse.ArgumentParser()
 ap.add_argument("--cycle", type=int, required=True)
 ap.add_argument("--work", default=os.path.expanduser("~/donorwork"))
@@ -87,13 +90,11 @@ cn = zread(paths["cn"], CN)
 cn = cn[cn.CAND_OFFICE.isin(OFFICES)]
 cn_cy = cn[cn.CAND_ELECTION_YR == str(CY)]
 ccl = zread(paths["ccl"], CCL)
+cm = zread(paths["cm"], fec_links.CM)
 # principal and authorized committees, plus joint fundraising committees tied to one candidate: presidential and many
-# Senate campaigns raise most of their money through them (Trump's through Trump National Committee JFC and Trump 47)
-ccl = ccl[ccl.CMTE_DSGN.isin(["P", "A", "J"]) & ccl.CAND_ID.isin(set(cn.CAND_ID))]
-_n = ccl.groupby("CMTE_ID").CAND_ID.nunique()
-ccl = ccl[(ccl.CMTE_DSGN != "J") | ccl.CMTE_ID.isin(_n[_n == 1].index)]
-cmte2cand = dict(zip(ccl.CMTE_ID, ccl.CAND_ID))
-CAND = {r.CAND_ID: r for r in cn.itertuples()}
+# Senate campaigns raise most of their money through them (Trump's through Trump National Committee JFC and Trump 47).
+# fec_links.py also fills links the linkage file misses and moves Biden's 2024 committee to Harris from July 21 2024.
+cmte2cand, CAND, SPLIT = fec_links.build(cn, ccl, cm, CY, log)
 log(f"{len(cn_cy)} candidates on the {CY} ballot cycle, {len(cmte2cand)} committees linked")
 
 # ------------------------------------------------------------- the gifts
@@ -134,6 +135,7 @@ for k, ch in enumerate(reader):
     d = pd.DataFrame({"cand": cmte[keep].map(cmte2cand), "zip": ch.ZIP_CODE[keep].fillna("").str[:5], "st": ch.STATE[keep].fillna(""),
                       "amt": amt[keep].where(ch.TRANSACTION_TP[keep] != "22Y", -amt[keep].abs()), "ymd": ymd[keep], "plat": plat_ok[keep]})
     d = d[(d.ymd >= START) & (d.ymd <= int(f"{CY}1231"))]
+    d["cand"] = SPLIT(d.cand, d.ymd)
     a = d.amt.abs()
     d["band"] = (a >= 200).astype(int) + (a >= 1000).astype(int) + (a >= 2500).astype(int)
     d["cnt"] = (d.amt > 0).astype(int)

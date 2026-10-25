@@ -27,6 +27,7 @@ GI = {f: i for i, f in enumerate(GEO)}
 ALIAS = {"02063": "02261", "02066": "02261", "46113": "46102", "02270": "02158"}  # 2020 county codes the map draws differently
 OFF_LABEL = {"all": "All federal", "H": "House", "S": "Senate", "P": "President", "G": "Governor"}
 CYCLES = [2022, 2024, 2026]
+PIN = {(2024, "P-US"): ("P00009423", "P80001571")}  # Harris and Trump
 ST = {"AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming", "US": "United States"}
 MIN_HOUSE = 250_000  # House races need this much through Sep 30 between the two nominees to get a page
 
@@ -129,6 +130,9 @@ for cy in CYCLES:
         for key, cs in groups.items():
             by = lambda p: sorted([c for c in cs if c["p"] == p], key=lambda c: -c["sep30"]["usd"])
             dc, rc = (by("D") or [None])[0], (by("R") or [None])[0]
+            if (cy, key) in PIN:  # past nominees by FEC id, so a primary loss or a mid race swap never takes the slot
+                pd_, pr_ = PIN[(cy, key)]
+                dc = next((c for c in cs if c["cand_id"] == pd_), dc); rc = next((c for c in cs if c["cand_id"] == pr_), rc)
             if cy == 2026 and key in MODEL:  # the forecast's nominees, an independent can sit in the Democratic slot
                 dn, rn = MODEL[key]
                 md = next((c for c in sorted(cs, key=lambda c: -c["sep30"]["usd"]) if last(c["name"].split(",")[0]) == last(dn)), None) if dn and "No " not in dn else None

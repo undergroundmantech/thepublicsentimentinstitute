@@ -29,6 +29,9 @@ from collections import defaultdict
 
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fec_links  # noqa: E402
+
 ap = argparse.ArgumentParser()
 ap.add_argument("--cycle", type=int, required=True)
 ap.add_argument("--work", default=os.path.expanduser("~/donorwork"))
@@ -101,11 +104,8 @@ def zread(path, cols):
 cn = zread(fetch(f"{BULK}/cn{YY}.zip", os.path.join(WORK, f"cn{YY}.zip")), ["CAND_ID", "CAND_NAME", "CAND_PTY_AFFILIATION", "CAND_ELECTION_YR", "CAND_OFFICE_ST", "CAND_OFFICE", "CAND_OFFICE_DISTRICT", "CAND_ICI", "CAND_STATUS", "CAND_PCC", "CAND_ST1", "CAND_ST2", "CAND_CITY", "CAND_ST", "CAND_ZIP"])
 cn = cn[cn.CAND_OFFICE.isin(OFFICES)]
 ccl = zread(fetch(f"{BULK}/ccl{YY}.zip", os.path.join(WORK, f"ccl{YY}.zip")), ["CAND_ID", "CAND_ELECTION_YR", "FEC_ELECTION_YR", "CMTE_ID", "CMTE_TP", "CMTE_DSGN", "LINKAGE_ID"])
-ccl = ccl[ccl.CMTE_DSGN.isin(["P", "A", "J"]) & ccl.CAND_ID.isin(set(cn.CAND_ID))]
-_n = ccl.groupby("CMTE_ID").CAND_ID.nunique()
-ccl = ccl[(ccl.CMTE_DSGN != "J") | ccl.CMTE_ID.isin(_n[_n == 1].index)]
-cmte2cand = dict(zip(ccl.CMTE_ID, ccl.CAND_ID))
-CAND = {r.CAND_ID: r for r in cn.itertuples()}
+cm = zread(fetch(f"{BULK}/cm{YY}.zip", os.path.join(WORK, f"cm{YY}.zip")), fec_links.CM)
+cmte2cand, CAND, SPLIT = fec_links.build(cn, ccl, cm, CY, log)
 log(f"{len(cmte2cand)} committees linked to {len(set(cmte2cand.values()))} candidates")
 log(f"FEC key: from {KEY_FROM}" if KEY_FROM else "FEC key: none found, using DEMO_KEY, which is very slow. Looked for " + ", ".join(NAMES_) + " in the environment and in .env files at the repo root.")
 
@@ -163,6 +163,7 @@ def parse_stream(text, r):
         rcp = next((x for x in EAR.findall("\x1f".join(f[cols["agg"] + 1:])) if x not in CONDUITS), None)
         cand = cmte2cand.get(rcp)
         if cand is None: st["unlinked_usd"] += amt; return
+        cand = SPLIT(cand, ymd)
         k = (cand, f[cols["zip"]][:5], ymd <= SEP30)
         a = agg.get(k)
         if a is None: agg[k] = [amt, 1]
