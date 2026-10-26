@@ -14,10 +14,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PORTAL_COOKIE, verifySession } from "@/app/lib/portalSession";
 import { researchCoverage } from "@/app/lib/intelligence/baseline";
+import { captureDir, captureStatus } from "@/app/lib/intelligence/capture";
 import { loadResearchDir, RESEARCH_DIR } from "@/app/lib/intelligence/load";
 import { appendObservations, fromCivicDetail } from "@/app/lib/intelligence/observations";
 import { runPipeline } from "@/app/lib/intelligence/pipeline";
-import type { BaselineRace, DiagnosticReport, Interval, Issue, LoggedObservation, Register, ReportingOrderProfile, ResearchCoverage, StageStatus, TimingKind } from "@/app/lib/intelligence/types";
+import type { BallotCategory, BaselineRace, DiagnosticReport, Interval, Issue, LoggedObservation, Register, ReportingOrderProfile, ResearchCoverage, StageStatus, TimingKind } from "@/app/lib/intelligence/types";
 import type { XIndex } from "@/app/results/2026/live";
 import baselineFile from "@/data/intelligence/baseline/2026-10-25.json";
 import statesFile from "@/data/intelligence/states/priority15-2026-10-26.json";
@@ -44,7 +45,7 @@ const ivM = (i: Interval | null | undefined) => iv(i, (n) => mg(n));
 const ivPct = (i: Interval | null | undefined) => iv(i, p1);
 const ivShare = (i: Interval | null | undefined) => iv(i, (n) => p1(n * 100));
 
-const tone = (s: string) => (["OK", "AVAILABLE", "PRESENT", "MEDIUM", "NOT_REQUIRED", "VERIFIED"].includes(s) ? "ok" : ["DEGRADED", "PARTIAL", "LOW", "INFERRED", "AMBIGUOUS", "PRECINCTS_COMPLETE_BALLOTS_INCOMPLETE"].includes(s) ? "warn" : ["FAILED", "MISSING", "NONE", "UNKNOWN", "BLOCKED", "UNAVAILABLE"].includes(s) ? "bad" : "");
+const tone = (s: string) => (["OK", "AVAILABLE", "PRESENT", "MEDIUM", "NOT_REQUIRED", "VERIFIED", "USED"].includes(s) ? "ok" : ["DEGRADED", "PARTIAL", "LOW", "INFERRED", "AMBIGUOUS", "PRECINCTS_COMPLETE_BALLOTS_INCOMPLETE", "PRESENT_NOT_USED"].includes(s) ? "warn" : ["FAILED", "MISSING", "NONE", "UNKNOWN", "BLOCKED", "UNAVAILABLE", "ABSENT"].includes(s) ? "bad" : "");
 const Pill = ({ v }: { v: string }) => <span className={`pill ${tone(v)}`}>{v.replace(/_/g, " ")}</span>;
 
 function Issues({ list }: { list: Issue[] }) {
@@ -118,10 +119,39 @@ function StateOverview() {
 function StatePanel({ o }: { o: ReportingOrderProfile | null }) {
   if (!o) return <section className="panel wide"><h2>State reporting order</h2><p className="mute">unavailable</p></section>;
   const kinds = Object.keys(TIMING_LABEL) as TimingKind[];
+  const cats = Object.keys(o.sequence.byCategory) as BallotCategory[];
   return (
     <>
       <section className="panel wide">
-        <h2>State reporting order: {o.state}</h2>
+        <h2>Poll close: {o.state}</h2>
+        <p className="mute" style={{ fontSize: 13, marginBottom: 8 }}>When voting ends, not when results are released.</p>
+        {o.pollClose.length ? <table><tbody>{o.pollClose.map((p) => (
+          <tr key={p.recordId}>
+            <td><Pill v={p.evidenceClass} /></td>
+            <td>{p.closesAtUtc ?? "no single statewide instant"}</td>
+            <td>{p.timeZoneRule === "PER_COUNTY_LOCAL" ? `${p.closesLocal} local time in each county, so the UTC instant differs by county time zone` : p.closesLocal ?? ""}</td>
+            <td>{p.sourceUrl ? <a href={p.sourceUrl} rel="noreferrer noopener" target="_blank">{p.sourceTier?.replace(/_/g, " ").toLowerCase()}</a> : "—"}</td>
+          </tr>))}</tbody></table> : <p><Pill v="UNKNOWN" /> no poll close recorded</p>}
+      </section>
+      <section className="panel wide">
+        <h2>Ballot sequence coverage</h2>
+        <p className="mute" style={{ fontSize: 13, marginBottom: 8 }}>What the law or an official source says about each ballot category. A rule is not a schedule, and a category with no finding is unknown for this state, not assumed.</p>
+        <table>
+          <thead><tr><th>Category</th><th>Status</th><th>Findings</th></tr></thead>
+          <tbody>{cats.map((c) => {
+            const f = o.sequence.byCategory[c];
+            return (
+              <tr key={c}>
+                <td>{c.replace(/_/g, " ").toLowerCase()}</td>
+                <td><Pill v={f.length ? "VERIFIED" : c === "MIXED_OR_UNKNOWN" ? "UNKNOWN" : "MISSING"} /></td>
+                <td>{f.length ? f.map((p) => <div key={p.recordId}>{p.summary} <span className="mute">· {(p.sequenceFact ?? p.kind).replace(/_/g, " ").toLowerCase()} · {p.sourceTier?.replace(/_/g, " ").toLowerCase()} · {p.confidence.toLowerCase()}{p.limitations.length ? ` · limit: ${p.limitations[0]}` : ""}</span>{p.sourceUrl ? <> · <a href={p.sourceUrl} rel="noreferrer noopener" target="_blank">source</a></> : null}</div>) : <span className="mute">no verified finding</span>}</td>
+              </tr>
+            );
+          })}</tbody>
+        </table>
+      </section>
+      <section className="panel wide">
+        <h2>Five timings: {o.state}</h2>
         <p className="mute" style={{ fontSize: 13, marginBottom: 8 }}>Five separate facts. None is derived from another: a legal right to scan is not a release time, and a past release is not a 2026 schedule.{o.stateInDataset ? "" : " This state is not in the priority-15 dataset."}</p>
         <table>
           <thead><tr><th>Timing</th><th>Label</th><th>Value</th><th>Source</th></tr></thead>
@@ -141,6 +171,7 @@ function StatePanel({ o }: { o: ReportingOrderProfile | null }) {
             <div key={`${m.year}-${m.district}`} style={{ marginBottom: 10 }}>
               <p><Pill v="HISTORICAL" /> <Pill v={m.coverage ?? "UNKNOWN"} /> <Pill v={m.confidence} /> {m.year} {m.office}{m.district ? ` district ${m.district}` : ""} · <a href={m.sourceUrl ?? "#"} rel="noreferrer noopener" target="_blank">source</a></p>
               <table><tbody>{m.modes.map((x) => <tr key={x.recordId}><td>{x.modeLabel}</td><td className="r">{n0(x.votes)} votes</td></tr>)}</tbody></table>
+              {m.limitations.length ? <p className="mute" style={{ fontSize: 12 }}>Reconciliation and limits: {m.limitations.join(" · ")}</p> : null}
             </div>
           )) : <p><Pill v="UNKNOWN" /> no candidate-by-method data for this contest</p>}
           <p className="mute" style={{ fontSize: 12 }}>Evidence classes present: {(Object.entries(o.evidenceClasses) as [string, string][]).map(([k, v]) => `${k} ${v.toLowerCase()}`).join(", ")}. Class C (party registration) is never a vote share.</p>
@@ -172,7 +203,7 @@ function StatePanel({ o }: { o: ReportingOrderProfile | null }) {
       <section className="panel wide">
         <h2>Missing inputs for {o.state}</h2>
         {o.missing.length ? <ul>{o.missing.map((m, k) => <li key={k}><Pill v="UNKNOWN" /> {m}</li>)}</ul> : <p className="mute">none listed</p>}
-        <p className="mute" style={{ fontSize: 12 }}>Validation status: records are importer-validated; nothing here is backtested. Historical replay is BLOCKED until timestamped returns, an archive record and a certified result are obtained.</p>
+        <p className="mute" style={{ fontSize: 12 }}>Validation status: records are importer-validated; nothing here is backtested. Historical replay is BLOCKED until timestamped returns, an archive record and a certified result are obtained. A search of 2022 and 2024 sources found no usable source-timestamped sequence (data/intelligence/historical/timestamp-search-2026-10-26.json). Method evidence is a data gate: no method adjustment is applied.</p>
       </section>
     </>
   );
@@ -265,6 +296,7 @@ async function RaceView({ raceId, sp, index, research, asOf }: { raceId: string;
     published: x ? { race: x, exp, detail: detail && (!detail.test || includeTest) ? detail : null } : null,
   });
   const base = `/portal/intelligence?race=${raceId}`;
+  const cap = await captureStatus(captureDir(), raceId).catch(() => null);
   return (
     <>
       <div className="links"><Link href="/portal/intelligence">← Register</Link><Link href={base}>forecast + research only</Link><Link href={`${base}&live=1`}>with civicAPI returns</Link><Link href={`${base}&live=1&test=1`}>with civicAPI test data</Link></div>
@@ -273,6 +305,14 @@ async function RaceView({ raceId, sp, index, research, asOf }: { raceId: string;
       {includeTest && detail?.test ? <div className="banner"><b>Test data</b>civicAPI marks these returns as test data. They are not real results.</div> : null}
       {notes.length ? <div className="banner"><b>Inputs</b>{notes.join(" · ")}</div> : null}
       <Report r={report} />
+      <section className="panel wide">
+        <h2>Evidence capture</h2>
+        {cap && cap.captures > 0 ? <dl className="kv">
+          <dt>captures</dt><dd>{cap.captures} <span className="mute">distinct payloads; {cap.test} test, {cap.corrected} corrected, {cap.outOfOrder} out of order, {cap.withoutSourceTimestamp} without a source timestamp</span></dd>
+          <dt>first / last observed</dt><dd>{cap.firstObservedAt} / {cap.lastObservedAt}</dd>
+          <dt>ledger health</dt><dd><Pill v={cap.corruptLines || cap.tornTail ? "DEGRADED" : "OK"} /> {cap.corruptLines} skipped line(s){cap.tornTail ? "; torn tail" : ""}</dd>
+        </dl> : <p><Pill v="NONE" /> nothing captured for this race. Capture is not scheduled; replay of this race is BLOCKED.</p>}
+      </section>
     </>
   );
 }
@@ -319,6 +359,8 @@ function Report({ r }: { r: DiagnosticReport }) {
             <dt>estimated outstanding</dt><dd>{iv(inv.estimatedOutstanding)}</dd>
             <dt>expected final</dt><dd>{iv(inv.expectedFinal)}</dd>
             <dt>uncertainty</dt><dd>{inv.uncertainty}</dd>
+            <dt>estimator tier</dt><dd><Pill v={inv.tier} />{inv.officialScope ? <span className="mute"> official scope: {inv.officialScope.replace(/_/g, " ").toLowerCase()}</span> : null}</dd>
+            <dt>tier ladder</dt><dd>{inv.ladder.map((l) => <div key={l.tier}><Pill v={l.status} /> {l.tier.replace(/_/g, " ").toLowerCase()} <span className="mute">{l.detail}</span></div>)}</dd>
             <dt>turnout basis</dt><dd>{inv.turnoutBasis.kind} <span className="mute">{inv.turnoutBasis.evidenceClass}</span></dd>
             <dt>inventory</dt><dd>{inv.unknownInventory ? "unknown: no usable official statement" : "official statement in use"}</dd>
           </dl> : <p className="mute">unavailable</p>}
@@ -351,7 +393,7 @@ function Report({ r }: { r: DiagnosticReport }) {
           <h2>Reporting context</h2>
           {rep ? <dl className="kv">
             <dt>polls closed</dt><dd>{rep.pollsClosed}</dd>
-            <dt>verified closing times</dt><dd>{rep.pollClose.map((p) => `${p.jurisdictionId} ${p.closesAtUtc}`).join(", ") || "none"}</dd>
+            <dt>verified closing times</dt><dd>{rep.pollClose.map((p) => `${p.jurisdictionId} ${p.closesAtUtc}`).join(", ") || "none with a single statewide instant (a local-time rule is in the poll close panel)"}</dd>
             <dt>historical windows</dt><dd>{rep.historicalWindows.length} <span className="mute">context only, not a 2026 schedule</span></dd>
             <dt>deadlines</dt><dd>{rep.deadlines.map((d) => `${d.kind ?? "?"} ${d.deadlineUtc ?? "?"}`).join(", ") || "none"}</dd>
           </dl> : <p className="mute">unavailable</p>}

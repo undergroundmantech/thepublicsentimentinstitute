@@ -100,10 +100,19 @@ interface RecordBase {
   synthetic: boolean;
 }
 
-/** Official 2026 poll closing time for a jurisdiction. */
+export const TIME_ZONE_RULES = ["STATEWIDE", "PER_COUNTY_LOCAL"] as const;
+export type TimeZoneRule = (typeof TIME_ZONE_RULES)[number];
+
+/**
+ * Official 2026 poll closing time for a jurisdiction. This is when voting ends, not when results are released.
+ * STATEWIDE: `closesAtUtc` is the instant. PER_COUNTY_LOCAL: the law gives a local clock time (`closesLocal`, "19:00") and
+ * the instant differs by county time zone, so no single statewide instant exists and `closesAtUtc` must be null.
+ */
 export interface PollCloseRecord extends RecordBase {
   recordType: "POLL_CLOSE";
   closesAtUtc: string | null;
+  closesLocal: string | null;
+  timeZoneRule: TimeZoneRule | null;
 }
 
 /** When a method's ballots were reported in a past election, relative to poll close. Describes the past only. */
@@ -193,15 +202,50 @@ export const PRACTICE_KINDS = [
   "CANVASS_CERTIFICATION",
   "RANKED_CHOICE",
   "OUTSTANDING_INVENTORY_SOURCE",
+  "SEQUENCE_FINDING",
 ] as const;
 export type PracticeKind = (typeof PRACTICE_KINDS)[number];
 
-/** How a state reports and finishes counting. Qualitative: it carries words and a citation, never a number the model uses. */
+/**
+ * The kinds of ballot whose order of arrival matters. A combined batch whose methods the source does not separate is
+ * MIXED_OR_UNKNOWN; it is never assigned to one of the others.
+ */
+export const BALLOT_CATEGORIES = [
+  "EARLY_IN_PERSON",
+  "MAIL_ABSENTEE",
+  "ELECTION_DAY_IN_PERSON",
+  "PROVISIONAL",
+  "MILITARY_OVERSEAS",
+  "LATE_ARRIVING_ELIGIBLE",
+  "CURE_ADJUDICATION_CANVASS",
+  "MIXED_OR_UNKNOWN",
+] as const;
+export type BallotCategory = (typeof BALLOT_CATEGORIES)[number];
+
+/** What a sequence finding states about its category. A rule is not a schedule; none of these is a release time. */
+export const SEQUENCE_FACTS = [
+  "PROCESSING_WINDOW",
+  "TABULATION_WINDOW",
+  "RELEASE_RESTRICTION",
+  "REPORTING_REQUIREMENT",
+  "RECEIPT_DEADLINE",
+  "CURE_OR_REVIEW_WINDOW",
+  "REPORTING_UNIT_NOTE",
+  "NOT_STATED_BY_SOURCE",
+] as const;
+export type SequenceFact = (typeof SEQUENCE_FACTS)[number];
+
+/**
+ * How a state reports and finishes counting. Qualitative: it carries words and a citation, never a number the model uses.
+ * A SEQUENCE_FINDING also names the ballot category and the kind of fact, and must state at least one limitation.
+ */
 export interface ReportingPracticeRecord extends RecordBase {
   recordType: "REPORTING_PRACTICE";
   practiceKind: PracticeKind;
   summary: string | null;
   statuteCite: string | null;
+  ballotCategory: BallotCategory | null;
+  sequenceFact: SequenceFact | null;
 }
 
 /**
@@ -231,9 +275,10 @@ export interface CandidateByMethodRecord extends RecordBase {
   methodology: string | null;
   uncertainty: string | null;
   /**
-   * Whether the source's method rows cover the whole contest. RECONCILED: the method rows sum to the source's TOTAL
-   * rows. AMBIGUOUS: TOTAL rows exist beside method rows and may cover other jurisdictions. NO_TOTAL: no TOTAL row to
-   * check against.
+   * Whether the source's method rows cover the whole contest. RECONCILED: method labels are complete and the candidate
+   * totals match a retrieved certified total within tolerance. NO_TOTAL: no certified total was retrieved to check
+   * against. AMBIGUOUS: the contest failed a check (label completeness, certified difference or overlap); the record's
+   * limitations say which.
    */
   coverage: "RECONCILED" | "AMBIGUOUS" | "NO_TOTAL" | null;
 }
@@ -433,12 +478,36 @@ export interface MethodComposition {
   knownMethodShare: number | null;
 }
 
+/**
+ * What an outstanding-vote figure rests on, best first. A lower rung is used only when every rung above it is absent;
+ * the estimator never blends rungs and never states more precision than the rung it uses carries.
+ *  1 OFFICIAL_JURISDICTION_COUNT   an official statement of ballots still to count
+ *  2 VERIFIED_METHOD_INVENTORY     an official count of ballots by method, used only if it can be netted against counted votes
+ *  3 HISTORICAL_ESTIMATE_WITH_RANGE a turnout expectation that states its own low and high; not backtested
+ *  4 FORECAST_POINT_NO_RANGE       the forecast's expected total, a point with no stated range
+ *  5 UNKNOWN                       no usable basis: no number is produced
+ */
+export const ESTIMATOR_TIERS = ["OFFICIAL_JURISDICTION_COUNT", "VERIFIED_METHOD_INVENTORY", "HISTORICAL_ESTIMATE_WITH_RANGE", "FORECAST_POINT_NO_RANGE", "UNKNOWN"] as const;
+export type EstimatorTier = (typeof ESTIMATOR_TIERS)[number];
+
+export interface EstimatorRung {
+  tier: EstimatorTier;
+  status: "USED" | "PRESENT_NOT_USED" | "ABSENT";
+  detail: string;
+}
+
 export interface OutstandingInventory {
   reported: number;
   officiallyConfirmedOutstanding: Quantity;
   notYetEligible: Quantity;
   estimatedOutstanding: Interval | null;
   expectedFinal: Interval | null;
+  /** The best rung the figure rests on. */
+  tier: EstimatorTier;
+  /** Every rung and whether it was used, present but unusable, or absent. */
+  ladder: EstimatorRung[];
+  /** For rung 1: whether the official statement is statewide/district-wide or from counties that may not cover the race. */
+  officialScope: "STATEWIDE_OR_DISTRICT" | "COUNTIES" | null;
   /** QUANTIFIED: the turnout input carried its own interval. UNQUANTIFIED: a point with no stated range. */
   uncertainty: "QUANTIFIED" | "UNQUANTIFIED" | "UNAVAILABLE";
   turnoutBasis: { kind: "RESEARCH" | "FORECAST_EXPECTED_TOTAL" | "NONE"; recordIds: string[]; evidenceClass: EvidenceClass };
@@ -527,6 +596,32 @@ export interface PracticeEntry {
   sourceTier: SourceTier | null;
   recordId: string;
   confidence: Confidence;
+  ballotCategory: BallotCategory | null;
+  sequenceFact: SequenceFact | null;
+  jurisdictionId: string;
+  publishedAt: string | null;
+  retrievedAt: string | null;
+  limitations: string[];
+}
+
+/** Poll closing facts for a state: an instant when the law gives one statewide, a local rule when it does not. */
+export interface PollCloseEntry {
+  jurisdictionId: string;
+  closesAtUtc: string | null;
+  closesLocal: string | null;
+  timeZoneRule: TimeZoneRule | null;
+  evidenceClass: EvidenceClass;
+  sourceUrl: string | null;
+  sourceTier: SourceTier | null;
+  recordId: string;
+  notes: string | null;
+}
+
+/** Which ballot categories have a documented sequence finding for a state, and which do not. */
+export interface SequenceCoverage {
+  byCategory: Record<BallotCategory, PracticeEntry[]>;
+  /** Categories with no VERIFIED finding. They are unknown for this state, not assumed. */
+  undocumented: BallotCategory[];
 }
 
 export interface MethodEvidenceEntry {
@@ -538,6 +633,8 @@ export interface MethodEvidenceEntry {
   modes: { modeLabel: string | null; method: VotingMethod | null; votes: number; recordId: string }[];
   sourceUrl: string | null;
   confidence: Confidence;
+  /** Why the evidence is or is not reconciled: label completeness, difference from the official total, caveats. */
+  limitations: string[];
 }
 
 export interface PrecinctVsBallots {
@@ -561,9 +658,11 @@ export interface PrecinctVsBallots {
 export interface ReportingOrderProfile {
   state: string;
   stateInDataset: boolean;
+  pollClose: PollCloseEntry[];
   /** Each timing kind is listed on its own. An empty list is UNKNOWN; nothing is carried across kinds. */
   timings: Record<TimingKind, TimingEntry[]>;
   practices: PracticeEntry[];
+  sequence: SequenceCoverage;
   methodEvidence: MethodEvidenceEntry[];
   /** Which evidence classes exist for this race's state, so a reader can see what a composition adjustment would rest on. */
   evidenceClasses: Record<MeasureKind, "PRESENT" | "ABSENT">;

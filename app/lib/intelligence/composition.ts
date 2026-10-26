@@ -44,6 +44,10 @@ export function reportingContext(records: ResearchRecord[], asOf: string): { con
   const now = Date.parse(asOf);
   const pollClose: ReportingContext["pollClose"] = [];
   for (const r of records) {
+    if (r.recordType === "POLL_CLOSE" && !r.closesAtUtc && r.closesLocal && r.provenance.evidenceClass === "VERIFIED") {
+      issues.push({ code: "POLL_CLOSE_PER_COUNTY", severity: "INFO", message: `${r.recordId}: polls close at ${r.closesLocal} local time in each county; no statewide instant exists, so polls-closed status stays UNKNOWN until county time zones are researched` });
+      continue;
+    }
     if (r.recordType !== "POLL_CLOSE" || !r.closesAtUtc) continue;
     if (r.provenance.evidenceClass !== "VERIFIED" || !r.closesAtUtc.startsWith("2026-")) {
       issues.push({ code: "NOT_APPLICABLE_2026", severity: "INFO", message: `${r.recordId}: ${r.provenance.evidenceClass} closing time ${r.closesAtUtc} is not used as a 2026 closing time` });

@@ -1,0 +1,1272 @@
+{
+  "schemaVersion": "TPSI_TIMESTAMP_SEARCH/1",
+  "probeVersion": "1",
+  "startedAt": "2026-10-26T06:37:59Z",
+  "finishedAt": "2026-10-26T06:41:24Z",
+  "interpretation": {
+    "captureTime": "the archive's crawl time: when the archive looked at the URL. It is an observation time, not the source's publication time.",
+    "sourceTime": "exists only when the captured content states one (contentChecks[].statesOwnTime on a file that looksLikeResults). Without it the sequence of source updates is unknown.",
+    "retrievalFailures": "an error is a failed probe, not evidence that nothing exists",
+    "notUsed": "no scrape from an unrelated period, and no reconstructed or invented sequence, is used anywhere"
+  },
+  "results": [
+    {
+      "system": "AZ_results_arizona_vote",
+      "description": "Arizona SoS results site",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.arizona.vote/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 443,
+      "dataCaptures": 0,
+      "distinctContentDigests": 256,
+      "mimetypes": [
+        "application/javascript",
+        "application/x-javascript",
+        "image/png",
+        "image/x-icon",
+        "text/css",
+        "text/html",
+        "text/plain"
+      ],
+      "firstCapture": "20221108004205",
+      "lastCapture": "20221111214939",
+      "distinctUrls": 99,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_DATA_FILES_CAPTURED"
+    },
+    {
+      "system": "AZ_results_arizona_vote",
+      "description": "Arizona SoS results site",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.arizona.vote/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 302,
+      "dataCaptures": 0,
+      "distinctContentDigests": 242,
+      "mimetypes": [
+        "application/javascript",
+        "application/x-javascript",
+        "image/png",
+        "image/x-icon",
+        "text/css",
+        "text/html",
+        "text/plain"
+      ],
+      "firstCapture": "20241105230901",
+      "lastCapture": "20241108095437",
+      "distinctUrls": 192,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_DATA_FILES_CAPTURED"
+    },
+    {
+      "system": "PA_electionreturns",
+      "description": "Pennsylvania DOS election returns",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=electionreturns.pa.gov/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 223,
+      "dataCaptures": 30,
+      "distinctContentDigests": 123,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "application/xml",
+        "image/gif",
+        "image/png",
+        "image/x-icon",
+        "text/css",
+        "text/html"
+      ],
+      "firstCapture": "20221108000450",
+      "lastCapture": "20221111232127",
+      "distinctUrls": 99,
+      "resultCandidateFiles": 30,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 3,
+        "distinctHours": 5
+      },
+      "contentChecks": [
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GET",
+          "captureTimestamp": "20221108165846",
+          "bytes": 5753,
+          "sha256": "42e04cf709a004c83a78652d845cf10648d1a7ecda681d7db3ba9e83331999ca",
+          "isJson": false,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/scripts/Details.json",
+          "captureTimestamp": "20221108165846",
+          "bytes": 2513,
+          "sha256": "bae797b5865f980e443e902a3383f4883cf054205b4cb87dceb1174625960a22",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetLatestElection",
+          "captureTimestamp": "20221108234737",
+          "bytes": 229,
+          "sha256": "f71f24386824f35ee08e7e688cbacc9dc203ffb78e1bc72458de0bbb0b6d5559",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetElectionTesting",
+          "captureTimestamp": "20221109012708",
+          "bytes": 1664,
+          "sha256": "ef883c78782fbe7f787dbe269bb2161430dad70814a1003271d1e0fa2482e5df",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetOfficeNames",
+          "captureTimestamp": "20221110012036",
+          "bytes": 1433,
+          "sha256": "5fad4d063056295d059ec8c38ef12757dccdd14a7f9dea50d0e3cf6e0f7ef8de",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetOfficeNames",
+          "captureTimestamp": "20221110123712",
+          "bytes": 959,
+          "sha256": "14e21505ee68ab9d1a6603fae7d7c707172fbfe573ef46b5b144dc2ad503ddf0",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "RESULT_FILES_WITHOUT_SOURCE_TIME_ARCHIVE_TIME_ONLY"
+    },
+    {
+      "system": "PA_electionreturns",
+      "description": "Pennsylvania DOS election returns",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=electionreturns.pa.gov/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 1773,
+      "dataCaptures": 982,
+      "distinctContentDigests": 1328,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "application/xml",
+        "font/x-woff",
+        "image/gif",
+        "image/png",
+        "image/x-icon",
+        "text/css"
+      ],
+      "firstCapture": "20241105013701",
+      "lastCapture": "20241108154421",
+      "distinctUrls": 328,
+      "resultCandidateFiles": 982,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 3,
+        "distinctHours": 16
+      },
+      "contentChecks": [
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GET",
+          "captureTimestamp": "20241105204917",
+          "bytes": 14178,
+          "sha256": "2e35a44c0ecf14518017af4cc1e2946821a722b425a76842931a64cd18198c68",
+          "isJson": false,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/Built-with-the-For-hopence-Hurleysurfecting-the-",
+          "captureTimestamp": "20241106012450",
+          "bytes": 540,
+          "sha256": "72f93f6eae7a45ec4254cd9e0b889e0337107eda2e4c6768c719b84d55f2dd66",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/Built-with-the-For-hopence-Hurleysurfecting-the-",
+          "captureTimestamp": "20241106020755",
+          "bytes": 542,
+          "sha256": "1cb43249b79b1ba9c9e194aceed7c7550e666da51df15a22351302e645e3b8a2",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetOfficeNames",
+          "captureTimestamp": "20241106031250",
+          "bytes": 576,
+          "sha256": "47d95a4ba7cb54d8b7fbec6f689d949ba9e5b157f72ff0dc991545ba320d06d3",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/Built-with-the-For-hopence-Hurleysurfecting-the-",
+          "captureTimestamp": "20241106050241",
+          "bytes": 543,
+          "sha256": "153d397843a68f9ad48b9f7ad494573c495c3f84c098aecd8dadfffb3ae5291e",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://www.electionreturns.pa.gov/api/ElectionReturn/GetCountyBreak",
+          "captureTimestamp": "20241106062620",
+          "bytes": 8882,
+          "sha256": "4f4e34fc9019ca83141d54863162586614d6952b1a7253a769d0f679e27b39ce",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "RESULT_FILES_WITHOUT_SOURCE_TIME_ARCHIVE_TIME_ONLY"
+    },
+    {
+      "system": "GA_clarity_enr",
+      "description": "Georgia SoS results via Clarity ENR",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.enr.clarityelections.com/GA/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 338,
+      "dataCaptures": 129,
+      "distinctContentDigests": 188,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "application/octet-stream",
+        "font/woff",
+        "font/woff2",
+        "image/gif",
+        "image/jpeg",
+        "image/png"
+      ],
+      "firstCapture": "20221108011240",
+      "lastCapture": "20221111214347",
+      "distinctUrls": 308,
+      "resultCandidateFiles": 129,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 4,
+        "distinctHours": 20
+      },
+      "contentChecks": [
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/Cobb/103647/web.254232/manifest.json",
+          "captureTimestamp": "20221108235609",
+          "bytes": 1088,
+          "sha256": "ab1e4469f3aa2b1f7a8d49dab2d23f7d74c36fcf7e75ac50425257ec2eaaa90d",
+          "isJson": true,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/DeKalb/115510/web.307039/manifest.json",
+          "captureTimestamp": "20221109025501",
+          "bytes": 1088,
+          "sha256": "ab1e4469f3aa2b1f7a8d49dab2d23f7d74c36fcf7e75ac50425257ec2eaaa90d",
+          "isJson": true,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/113667/294374/json/en/electionsettings.json",
+          "captureTimestamp": "20221109235232",
+          "bytes": 39623,
+          "sha256": "2e3960cab0643fe22b8d50fc12e1066e9e40f0693f6c2a6ba52bfaf0d41671b1",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/115465/308628/json/en/electionsettings.json",
+          "captureTimestamp": "20221110062106",
+          "bytes": 35576,
+          "sha256": "5225d67709ac1ab0cb865b75183d877fef6e0ae0795a4345fc1ebbfa846bef7e",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com//GA/105369/271927/json/vt.json",
+          "captureTimestamp": "20221110221102",
+          "bytes": 21274,
+          "sha256": "5eca1abe8d289630d43549c1cda62a39fe03ea171509764eb3845f61e934915b",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/115465/308628/json/en/electionsettings.json",
+          "captureTimestamp": "20221111002547",
+          "bytes": 35576,
+          "sha256": "5225d67709ac1ab0cb865b75183d877fef6e0ae0795a4345fc1ebbfa846bef7e",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "RESULT_FILES_WITHOUT_SOURCE_TIME_ARCHIVE_TIME_ONLY"
+    },
+    {
+      "system": "GA_clarity_enr",
+      "description": "Georgia SoS results via Clarity ENR",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.enr.clarityelections.com/GA/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 239,
+      "dataCaptures": 41,
+      "distinctContentDigests": 148,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "font/woff",
+        "font/woff2",
+        "image/gif",
+        "image/jpeg",
+        "image/png",
+        "image/svg+xml"
+      ],
+      "firstCapture": "20241105014627",
+      "lastCapture": "20241108023100",
+      "distinctUrls": 216,
+      "resultCandidateFiles": 36,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 3,
+        "distinctHours": 5
+      },
+      "contentChecks": [
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/121813/344588/json/en/electionsettings.json",
+          "captureTimestamp": "20241105192954",
+          "bytes": 32000,
+          "sha256": "438659923f19cb1c4f3dcabbbfe874e974171ec590c3fe0b79d40000d807c603",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/Gwinnett/122587/353110/json/en/nav.json",
+          "captureTimestamp": "20241106091035",
+          "bytes": 70,
+          "sha256": "10d9806ed853ccd1d9ced88d0767226f4db73f55d9d84bd66c5b5924927e0ef2",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/Gwinnett/122587/353110/json/Election_Day_Votes.json",
+          "captureTimestamp": "20241106091036",
+          "bytes": 57942,
+          "sha256": "d1bc32d69c2fa0cce4b29dc7e2b0c0640143cd270f41a5be6bdb221ad3bfd2ff",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/54042/149045/json/sum.json",
+          "captureTimestamp": "20241106183640",
+          "bytes": 75640,
+          "sha256": "257e265b56adc249e9dc2bd50c8efba17da0473382807df9ab613549ec0d3707",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/Fulton/115526/313235/json/en/nav.json",
+          "captureTimestamp": "20241108023056",
+          "bytes": 625,
+          "sha256": "abebe2e8ee05441ea477c8efe89c4e7a7217f094dabdbc97c20c376d4268eb0c",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.enr.clarityelections.com/GA/Fulton/115526/313235/json/Absentee_by_Mail_Votes.json",
+          "captureTimestamp": "20241108023059",
+          "bytes": 145153,
+          "sha256": "0f90c9f6aa35b9dcd1b86fe02ca20473518ada6808ab93318d7a876c640d00c7",
+          "isJson": true,
+          "looksLikeResults": true,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "RESULT_FILES_WITHOUT_SOURCE_TIME_ARCHIVE_TIME_ONLY"
+    },
+    {
+      "system": "GA_results_sos",
+      "description": "Georgia SoS results site",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.sos.ga.gov/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "GA_results_sos",
+      "description": "Georgia SoS results site",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.sos.ga.gov/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 1050,
+      "dataCaptures": 798,
+      "distinctContentDigests": 863,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "application/octet-stream",
+        "image/png",
+        "text/css",
+        "text/html",
+        "text/plain"
+      ],
+      "firstCapture": "20241105224451",
+      "lastCapture": "20241108165929",
+      "distinctUrls": 127,
+      "resultCandidateFiles": 798,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 3,
+        "distinctHours": 14
+      },
+      "contentChecks": [
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/elections/Georgia/2024NovGen",
+          "captureTimestamp": "20241105225352",
+          "bytes": 608,
+          "sha256": "d1af9dc532ddd71ffddd4a4bb5ea9a7fa22d74c2465dd58b1bb789167b352829",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/elections/Georgia/2024NovGen",
+          "captureTimestamp": "20241106003603",
+          "bytes": 603,
+          "sha256": "014a4b251fd617e2c51f2f7078ac22238c104dde3bffee58dd7438b7968017ff",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/jurisdictions/Georgia/2024NovGen",
+          "captureTimestamp": "20241106012513",
+          "bytes": 9286,
+          "sha256": "c485c8881df53807e18d72927532f52970518aa003bb5dfa361fcc06e6516a55",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/elections/Georgia/2024NovGen/ballot-items",
+          "captureTimestamp": "20241106022316",
+          "bytes": 25980,
+          "sha256": "0a85bbe3f877670a919b22544e938b6584645596bdb98b3d46ec7a0d4357cd34",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/elections/Georgia/2024NovGen",
+          "captureTimestamp": "20241106034705",
+          "bytes": 606,
+          "sha256": "cb032afd0aebd8713262e7c0808c05b316168cb8e7c804d197e7b8e7d63140ab",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://results.sos.ga.gov/results/public/api/elections/Georgia/2024NovGen/vr",
+          "captureTimestamp": "20241106061019",
+          "bytes": 5255,
+          "sha256": "747a8878001fbc0161bc1ae5b63b4958b768e58bc5a2c43d03752a236bf32218",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "FL_results",
+      "description": "Florida Division of Elections results",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.elections.myflorida.com/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 81,
+      "dataCaptures": 0,
+      "distinctContentDigests": 40,
+      "mimetypes": [
+        "image/gif",
+        "text/css",
+        "text/html"
+      ],
+      "firstCapture": "20221108002129",
+      "lastCapture": "20221111172336",
+      "distinctUrls": 40,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_DATA_FILES_CAPTURED"
+    },
+    {
+      "system": "FL_results",
+      "description": "Florida Division of Elections results",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.elections.myflorida.com/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 52,
+      "dataCaptures": 0,
+      "distinctContentDigests": 41,
+      "mimetypes": [
+        "image/gif",
+        "text/css",
+        "text/html"
+      ],
+      "firstCapture": "20241105072352",
+      "lastCapture": "20241108223943",
+      "distinctUrls": 42,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_DATA_FILES_CAPTURED"
+    },
+    {
+      "system": "SC_scvotes",
+      "description": "South Carolina Election Commission ENR",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=enr.scvotes.sc.gov/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "SC_scvotes",
+      "description": "South Carolina Election Commission ENR",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=enr.scvotes.sc.gov/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "IA_results",
+      "description": "Iowa SoS results",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.iowa.gov/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "IA_results",
+      "description": "Iowa SoS results",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.iowa.gov/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "AK_results",
+      "description": "Alaska Division of Elections results",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.elections.alaska.gov/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "AK_results",
+      "description": "Alaska Division of Elections results",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=results.elections.alaska.gov/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "NYT_elections_assets",
+      "description": "New York Times election data files",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=static01.nyt.com/elections-assets/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 4000,
+      "dataCaptures": 244,
+      "distinctContentDigests": 2059,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "image/png",
+        "text/css"
+      ],
+      "firstCapture": "20221108000038",
+      "lastCapture": "20221111235150",
+      "distinctUrls": 1875,
+      "resultCandidateFiles": 244,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 4,
+        "distinctHours": 28
+      },
+      "contentChecks": [
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2021-06-22/race-page/new-york/city-council.json",
+          "captureTimestamp": "20221108000038",
+          "bytes": 33128,
+          "sha256": "23598da93140d8626313f9c83ab1f1b99469b3976cee6ad8241d0156a58c9dee",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/precincts/MIGeneralConcatenator-2020-11-18T21:04:32.075Z.json",
+          "captureTimestamp": "20221108033717",
+          "bytes": 95007,
+          "sha256": "3941a3c5f12d3dc4cd91a00f739f4b6512c8d58f8b8d6606a5f376ff179346f7",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/state-page/new-hampshire.json",
+          "captureTimestamp": "20221108033744",
+          "bytes": 212886,
+          "sha256": "6498492886a5b244932f56014176add8403a1c78329417e6a84b430c5cf99de3",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/liveModel/2020-03-03/president/AL-D-P-2020-03-03.json",
+          "captureTimestamp": "20221109224612",
+          "bytes": 43666,
+          "sha256": "d11c89e7fa3ba776f83fa9c9438cf113305304c312fe4fd8864433995884bf12",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/state-page/new-mexico.json",
+          "captureTimestamp": "20221109234309",
+          "bytes": 114018,
+          "sha256": "6c99abc687879ca64e459c986c512a3efba19011dea730857ba53e69dda34f01",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2021-11-02/state-page/maine.json",
+          "captureTimestamp": "20221110045342",
+          "bytes": 49831,
+          "sha256": "f7395cf806709a5e652dd178082b9509b6f1837b49df72b4a8d4f0831f5ded8c",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "NYT_elections_assets",
+      "description": "New York Times election data files",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=static01.nyt.com/elections-assets/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 4000,
+      "dataCaptures": 7,
+      "distinctContentDigests": 1409,
+      "mimetypes": [
+        "application/javascript",
+        "application/json",
+        "image/png",
+        "text/css"
+      ],
+      "firstCapture": "20241105001544",
+      "lastCapture": "20241108220028",
+      "distinctUrls": 1393,
+      "resultCandidateFiles": 7,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 2,
+        "distinctHours": 4
+      },
+      "contentChecks": [
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/national-map-page/national/president.json",
+          "captureTimestamp": "20241106021115",
+          "bytes": 761260,
+          "sha256": "9f2af1f1c04a85ccc93b5c810b60815484802ffe16f1cf13af7ad3e5ed443cbe",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/liveModel/2020-11-03/president/summary.json",
+          "captureTimestamp": "20241106021115",
+          "bytes": 200625,
+          "sha256": "bd50088748cba029b3251c9db8fe65654f2df1e3a9837e6be40c1f63cd8ddcb0",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/general-ap-polls-page/michigan/president.json",
+          "captureTimestamp": "20241106080144",
+          "bytes": 94390,
+          "sha256": "667abc229395463cb05a262be539addd1d9ae1e7b3dc933c9b2117ecd0f9ac71",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/national-map-page/national/president.json",
+          "captureTimestamp": "20241107041805",
+          "bytes": 761259,
+          "sha256": "b2559e8cdfeed4c53f7567948a16246ad136b862ccbda273bb08a5045722fb0e",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/liveModel/2020-11-03/president/summary.json",
+          "captureTimestamp": "20241107041805",
+          "bytes": 200625,
+          "sha256": "bd50088748cba029b3251c9db8fe65654f2df1e3a9837e6be40c1f63cd8ddcb0",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/national-map-page/national/president.json",
+          "captureTimestamp": "20241107195702",
+          "bytes": 761259,
+          "sha256": "b2559e8cdfeed4c53f7567948a16246ad136b862ccbda273bb08a5045722fb0e",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "NYT_newsgraphics",
+      "description": "New York Times newsgraphics data",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=static01.nyt.com/newsgraphics/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 4000,
+      "dataCaptures": 190,
+      "distinctContentDigests": 3404,
+      "mimetypes": [
+        "application/font-sfnt",
+        "application/font-woff",
+        "application/javascript",
+        "application/json",
+        "application/pdf",
+        "application/vnd.ms-fontobject",
+        "application/x-font-ttf",
+        "application/x-font-woff"
+      ],
+      "firstCapture": "20221108000158",
+      "lastCapture": "20221111235918",
+      "distinctUrls": 3694,
+      "resultCandidateFiles": 6,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 2,
+        "distinctHours": 3
+      },
+      "contentChecks": [
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2014/elections/general/maps/counties.json",
+          "captureTimestamp": "20221108234758",
+          "bytes": 408085,
+          "sha256": "f3b4b5fec799e2f37214aafb4b8b273d0ad38b3073cfb2727109fb8114137a7a",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2014/elections/general/maps/cities.json",
+          "captureTimestamp": "20221108234759",
+          "bytes": 10860,
+          "sha256": "08ee0f156c1066a09f4ab4f1a6e42ac7a9098cdc01a7fd7bad270193da795411",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2016/08/05/presidential-forecast/e1331840f42cf44a02251f619093d60d42a34f72/timeseries.csv",
+          "captureTimestamp": "20221109002433",
+          "bytes": 3814,
+          "sha256": "baef5a0d68530f1fbfe6a81001bdea9ea3d80ce732451d332e9b6f769dc9d4d7",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2013/07/25/stadium-deals/cb49f534c01b0281dcbf2ee25fdfcdc306b1d532/deals-current.csv",
+          "captureTimestamp": "20221109163736",
+          "bytes": 5948,
+          "sha256": "29d14d1bf5f25853c67a0fde3384e8bd7e8e2d5cd582fd60c771405b2d0fcf70",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2013/07/25/stadium-deals/cb49f534c01b0281dcbf2ee25fdfcdc306b1d532/deals-timeline-mlb.csv",
+          "captureTimestamp": "20221109163736",
+          "bytes": 2287,
+          "sha256": "eade1149fa837496ced2858c399e96133138d4c8b3f4c622f70257abe4f2a388",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2013/07/25/stadium-deals/cb49f534c01b0281dcbf2ee25fdfcdc306b1d532/deals-timeline-nfl.csv",
+          "captureTimestamp": "20221109163802",
+          "bytes": 2322,
+          "sha256": "7610643d6095c1b96b9e4fca76ba4e17e48b0e0f7d8a16c12f32b335333f398e",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "NYT_newsgraphics",
+      "description": "New York Times newsgraphics data",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=static01.nyt.com/newsgraphics/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 4000,
+      "dataCaptures": 280,
+      "distinctContentDigests": 2379,
+      "mimetypes": [
+        "application/font-sfnt",
+        "application/font-woff",
+        "application/javascript",
+        "application/json",
+        "application/mp4",
+        "application/vnd.ms-fontobject",
+        "application/x-font-ttf",
+        "application/x-font-woff"
+      ],
+      "firstCapture": "20241105000228",
+      "lastCapture": "20241108234901",
+      "distinctUrls": 2600,
+      "resultCandidateFiles": 21,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 2,
+        "distinctHours": 7
+      },
+      "contentChecks": [
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2016/11/14/final-histogram/3ac7e9b54b8fa97e79fb08d8a858b85a6a06763b/histogram.csv",
+          "captureTimestamp": "20241107002836",
+          "bytes": 11097,
+          "sha256": "b716cf4de1288955bead41de2005d4f6052417a5d92a05cd2d1212c128b53d7c",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2018/03/21/upshot-you-are-here/5aa608c1af6ab6e4fef1b65ae012be09e230d512/thirdparty.json",
+          "captureTimestamp": "20241107025834",
+          "bytes": 25186,
+          "sha256": "3bc58b3571a5097f89b0ec5b22dbfacc67840e0224c6eae0aea3544dc4c9d001",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2018/09/24/weinstein-impact/4f8537d167737b9cccdda5bdbf338215b52449c4/gender-count.json",
+          "captureTimestamp": "20241107071139",
+          "bytes": 2908,
+          "sha256": "e45a7ee7b5035ea9396bde1919acbf9e0cba336bc44c2ae06b08c1c06c1c2b27",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2014/elections/general/maps/cities.json",
+          "captureTimestamp": "20241107195753",
+          "bytes": 10860,
+          "sha256": "08ee0f156c1066a09f4ab4f1a6e42ac7a9098cdc01a7fd7bad270193da795411",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2016/11/21/facebook-tv-maps/fe3a5d1e6f94db95c7ce097d32fd6922f0b1abcb/zips.json",
+          "captureTimestamp": "20241108002244",
+          "bytes": 843964,
+          "sha256": "778b420861afa6c58ff614eed0c73cc0b01639331baeb405c1672cba0eee29a6",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        },
+        {
+          "checked": "https://static01.nyt.com/newsgraphics/2016/12/15/chetty-college/60c28b25cc1772040f3f5d5665931ab2cff6330e/college-selection-by-income-group-01-13.csv",
+          "captureTimestamp": "20241108034349",
+          "bytes": 1723,
+          "sha256": "6ed5ba2a50f4c89764504fcac3573681869206f27b7356ce22a19f319095c115",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "CIVICAPI",
+      "description": "civicAPI (the live feed this project reads)",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=civicapi.org/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "CIVICAPI",
+      "description": "civicAPI (the live feed this project reads)",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=civicapi.org/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    },
+    {
+      "system": "AP_elections",
+      "description": "Associated Press election results API",
+      "year": 2022,
+      "window": [
+        "20221108",
+        "20221111"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=api.ap.org/*&from=20221108&to=20221111&filter=statuscode:200",
+      "error": null,
+      "captures": 1,
+      "dataCaptures": 1,
+      "distinctContentDigests": 1,
+      "mimetypes": [
+        "application/json"
+      ],
+      "firstCapture": "20221110010947",
+      "lastCapture": "20221110010947",
+      "distinctUrls": 1,
+      "resultCandidateFiles": 1,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 1,
+        "distinctHours": 1
+      },
+      "contentChecks": [
+        {
+          "checked": "https://api.ap.org/v2/elections/2022-11-08",
+          "captureTimestamp": "20221110010947",
+          "bytes": 1120,
+          "sha256": "8e55c2a925446c3e6a342df807eb4c8d4ab61ea2228bc4bdf9a8a9624092fea3",
+          "isJson": false,
+          "looksLikeResults": false,
+          "statesOwnTime": false,
+          "looksLikeHtmlShell": false
+        }
+      ],
+      "verdict": "DATA_FILES_SAMPLED_NONE_LOOK_LIKE_RESULTS"
+    },
+    {
+      "system": "AP_elections",
+      "description": "Associated Press election results API",
+      "year": 2024,
+      "window": [
+        "20241105",
+        "20241108"
+      ],
+      "query": "http://web.archive.org/cdx/search/cdx?url=api.ap.org/*&from=20241105&to=20241108&filter=statuscode:200",
+      "error": null,
+      "captures": 0,
+      "dataCaptures": 0,
+      "distinctContentDigests": 0,
+      "mimetypes": [],
+      "firstCapture": null,
+      "lastCapture": null,
+      "distinctUrls": 0,
+      "resultCandidateFiles": 0,
+      "resultCandidateCaptureSpread": {
+        "distinctDays": 0,
+        "distinctHours": 0
+      },
+      "contentChecks": [],
+      "verdict": "NO_CAPTURES"
+    }
+  ]
+}

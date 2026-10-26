@@ -10,8 +10,11 @@ import { STN } from "../../results/2026/live";
 import {
   CONFIDENCE_LEVELS,
   EVIDENCE_CLASSES,
+  BALLOT_CATEGORIES,
   JURISDICTION_LEVELS,
   MEASURE_KINDS,
+  SEQUENCE_FACTS,
+  TIME_ZONE_RULES,
   OUTSTANDING_STATUSES,
   PRACTICE_KINDS,
   RECORD_TYPES,
@@ -19,8 +22,11 @@ import {
   TIMING_KINDS,
   VALUE_KINDS,
   VOTING_METHODS,
+  type BallotCategory,
   type CandidateByMethodRecord,
   type Confidence,
+  type SequenceFact,
+  type TimeZoneRule,
   type EvidenceClass,
   type Issue,
   type JurisdictionLevel,
@@ -67,6 +73,7 @@ export const CSV_COLUMNS = [
   "source_tier", "timing_kind", "local_text", "at_utc", "time_zone", "statute_cite", "practice_kind", "summary",
   "measure_kind", "contest_year", "office", "contest_district", "mode_label", "votes_a", "votes_b", "votes_other",
   "methodology", "uncertainty", "coverage",
+  "closes_local", "time_zone_rule", "ballot_category", "sequence_fact",
 ] as const;
 
 type Row = Record<string, unknown>;
@@ -233,11 +240,19 @@ function readRecord(input: Row, rowNo: number | null, meta: ResearchPackageMeta,
   switch (recordType) {
     case "POLL_CLOSE": {
       const closesAtUtc = r.date("closes_at_utc");
-      values.push(closesAtUtc);
-      if (evidenceClass !== "UNKNOWN" && !closesAtUtc) r.error("closes_at_utc", "MISSING_FIELD", "closes_at_utc is required");
+      const closesLocal = r.text("closes_local");
+      const timeZoneRule = r.oneOf<TimeZoneRule>("time_zone_rule", TIME_ZONE_RULES, false);
+      values.push(closesAtUtc, closesLocal);
+      if (closesLocal && !/^([01]\d|2[0-3]):[0-5]\d$/.test(closesLocal)) r.error("closes_local", "INVALID_FIELD", `closes_local "${closesLocal}" must be a 24-hour HH:MM clock time`);
+      if (timeZoneRule === "PER_COUNTY_LOCAL") {
+        // The law gives a local clock time and the instant differs by county time zone. One statewide instant would be wrong for some counties.
+        if (closesAtUtc) r.error("closes_at_utc", "NO_STATEWIDE_INSTANT", "a per-county local closing time has no single statewide UTC instant; closes_at_utc must be empty");
+        if (evidenceClass !== "UNKNOWN" && !closesLocal) r.error("closes_local", "MISSING_FIELD", "a per-county local closing time needs closes_local");
+      } else if (evidenceClass !== "UNKNOWN" && !closesAtUtc) r.error("closes_at_utc", "MISSING_FIELD", "closes_at_utc is required");
+      if (closesLocal && timeZoneRule !== "PER_COUNTY_LOCAL" && !closesAtUtc) r.error("closes_at_utc", "MISSING_FIELD", "closes_local without time_zone_rule PER_COUNTY_LOCAL needs closes_at_utc");
       if (closesAtUtc && !closesAtUtc.startsWith(`${ELECTION_YEAR}-`)) r.warn("closes_at_utc", "NOT_APPLICABLE_2026", `poll close ${closesAtUtc} is not in ${ELECTION_YEAR}; it will not be used as a ${ELECTION_YEAR} closing time`);
       if (evidenceClass === "HISTORICAL") r.warn("evidence_class", "NOT_APPLICABLE_2026", "a historical poll closing time is not evidence of the 2026 closing time");
-      if (provenance) record = { ...base, recordType, provenance, closesAtUtc };
+      if (provenance) record = { ...base, recordType, provenance, closesAtUtc, closesLocal, timeZoneRule };
       break;
     }
     case "REPORTING_WINDOW": {
@@ -315,11 +330,22 @@ function readRecord(input: Row, rowNo: number | null, meta: ResearchPackageMeta,
       const practiceKind = r.oneOf<PracticeKind>("practice_kind", PRACTICE_KINDS);
       const summary = r.text("summary");
       const statuteCite = r.text("statute_cite");
+      const ballotCategory = r.oneOf<BallotCategory>("ballot_category", BALLOT_CATEGORIES, false);
+      const sequenceFact = r.oneOf<SequenceFact>("sequence_fact", SEQUENCE_FACTS, false);
       values.push(summary);
+      if (practiceKind === "SEQUENCE_FINDING") {
+        if (!ballotCategory) r.error("ballot_category", "MISSING_FIELD", "a sequence finding names the ballot category it describes (MIXED_OR_UNKNOWN when the source does not separate them)");
+        if (!sequenceFact) r.error("sequence_fact", "MISSING_FIELD", "a sequence finding names the kind of fact it states");
+        if (!limitations.length) r.error("limitations", "MISSING_LIMITATION", "a sequence finding must state at least one limitation");
+        if (evidenceClass === "VERIFIED" && !sourceUrl) r.error("source_url", "MISSING_PROVENANCE", "a verified sequence finding links its source");
+        if (evidenceClass === "VERIFIED" && !retrievedAt && !publishedAt) r.error("retrieved_at", "MISSING_PROVENANCE", "a verified sequence finding carries a date");
+      } else if (ballotCategory || sequenceFact) {
+        r.error("ballot_category", "CONTRADICTORY_METADATA", "ballot_category and sequence_fact belong to SEQUENCE_FINDING records only");
+      }
       if (evidenceClass && evidenceClass !== "VERIFIED" && evidenceClass !== "UNKNOWN") r.error("evidence_class", "CONTRADICTORY_METADATA", "a reporting practice is a rule or procedure: VERIFIED or UNKNOWN");
       if (evidenceClass !== "UNKNOWN" && !summary) r.error("summary", "MISSING_FIELD", "summary is required");
       if (practiceKind === "OUTSTANDING_INVENTORY_SOURCE" && evidenceClass === "VERIFIED" && !sourceUrl) r.error("source_url", "MISSING_PROVENANCE", "an inventory source must link to the inventory");
-      if (provenance && practiceKind) record = { ...base, recordType, provenance, practiceKind, summary, statuteCite };
+      if (provenance && practiceKind) record = { ...base, recordType, provenance, practiceKind, summary, statuteCite, ballotCategory, sequenceFact };
       break;
     }
     case "CANDIDATE_BY_METHOD": {

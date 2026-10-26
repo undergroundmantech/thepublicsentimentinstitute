@@ -55,7 +55,7 @@ export const split = (id: string, county: string, district: string, weight: numb
 });
 
 export const pollClose = (id: string, at: string, evidenceClass: "VERIFIED" | "HISTORICAL" = "VERIFIED", year: number | null = null): ResearchRecord => ({
-  ...base, recordId: id, recordType: "POLL_CLOSE", raceId: null, closesAtUtc: at, provenance: prov({ evidenceClass, historicalYear: year }),
+  ...base, recordId: id, recordType: "POLL_CLOSE", raceId: null, closesAtUtc: at, closesLocal: null, timeZoneRule: null, provenance: prov({ evidenceClass, historicalYear: year }),
 });
 
 export const methodHistory = (id: string, method: ResearchRecord["method"], year: number, share: number): ResearchRecord => ({

@@ -131,3 +131,44 @@ export function runBacktest(source: BacktestSource, certified: CertifiedResult |
     summary: { checkpoints: checkpoints.length, shadowMeanAbsError: mean(checkpoints.map((c) => c.shadowError)), publishedMeanAbsError: mean(checkpoints.map((c) => c.publishedError)), shadowCoverage: cov.length ? cov.filter((c) => c.shadowCovered).length / cov.length : null },
   };
 }
+
+// ---- replay from captured snapshots ---------------------------------------------------------------------------------------
+
+/**
+ * Snapshots read back from the capture ledger (see capture.ts). Each step is evaluated at the time the capture was
+ * first observed, so a later correction cannot leak into an earlier evaluation.
+ */
+export interface LoadedCaptures {
+  raceId: string;
+  steps: (ReplayStep & { captureId: string; flag: "LIVE" | "TEST" | "CORRECTED"; outOfOrder: boolean })[];
+  /** Captures left out, and why: TEST_DATA, PAYLOAD_MISSING, PAYLOAD_HASH_MISMATCH. */
+  excluded: { captureId: string; reason: string }[];
+  archive: ReplayArchive | null;
+  corruptLines: number;
+  tornTail: boolean;
+}
+
+export interface CaptureReplayResult extends BacktestResult {
+  raceId: string;
+  stepsUsed: number;
+  excluded: LoadedCaptures["excluded"];
+  corrections: number;
+  outOfOrder: number;
+  ledgerHealth: { corruptLines: number; tornTail: boolean };
+}
+
+/**
+ * Replay captured snapshots after the election. With no snapshots, with snapshots that carry no source timestamp, or
+ * without a certified result, the result is BLOCKED and says why. No timestamp or sequence is ever supplied by this
+ * function.
+ */
+export function backtestFromCaptures(loaded: LoadedCaptures, certified: CertifiedResult | null, base: Omit<PipelineInput, "log" | "asOf">): CaptureReplayResult {
+  const meta = {
+    raceId: loaded.raceId, stepsUsed: loaded.steps.length, excluded: loaded.excluded,
+    corrections: loaded.steps.filter((s) => s.flag === "CORRECTED").length, outOfOrder: loaded.steps.filter((s) => s.outOfOrder).length,
+    ledgerHealth: { corruptLines: loaded.corruptLines, tornTail: loaded.tornTail },
+  };
+  if (!loaded.steps.length) return { ...meta, status: "BLOCKED", reasons: [`no captured snapshots for ${loaded.raceId}; there is nothing to replay`], checkpoints: [], summary: null };
+  const source: BacktestSource = { label: `capture-ledger:${loaded.raceId}`, synthetic: false, archive: loaded.archive, steps: loaded.steps.map((s) => ({ at: s.at, batch: s.batch })) };
+  return { ...meta, ...runBacktest(source, certified, base, base.baseline) };
+}

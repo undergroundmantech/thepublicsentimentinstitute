@@ -5,14 +5,18 @@
 // counted. A method adjustment to the shadow projection is not implemented, because the evidence it would need
 // (a backtested model over timestamped history) does not exist in the repository.
 
-import { TIMING_KINDS } from "./types";
+import { BALLOT_CATEGORIES, TIMING_KINDS } from "./types";
 import type {
-  CandidateByMethodRecord, Interval, MeasureKind, MethodEvidenceEntry, OutstandingInventory, PracticeEntry, PrecinctVsBallots,
+  BallotCategory, CandidateByMethodRecord, Interval, MeasureKind, MethodEvidenceEntry, OutstandingInventory, PollCloseEntry, PollCloseRecord, PracticeEntry, PrecinctVsBallots,
   PublishedComparison, ReconciledReturns, ReportingOrderProfile, ReportingPracticeRecord, ReleaseTimingRecord, ResearchRecord,
-  ShadowProjection, TimingEntry, TimingKind,
+  SequenceCoverage, ShadowProjection, TimingEntry, TimingKind,
 } from "./types";
 
 const PHASE2_TYPES = new Set(["RELEASE_TIMING", "REPORTING_PRACTICE", "CANDIDATE_BY_METHOD"]);
+/** The category a Phase 2 rule kind describes. These are secondary-summary rules unless the entry says otherwise. */
+const KIND_CATEGORY: Partial<Record<string, BallotCategory>> = {
+  LATE_BALLOT_RULE: "LATE_ARRIVING_ELIGIBLE", UOCAVA_RULE: "MILITARY_OVERSEAS", PROVISIONAL_RULE: "PROVISIONAL", CANVASS_CERTIFICATION: "CURE_ADJUDICATION_CANVASS",
+};
 
 export interface ReportingOrderInput {
   raceId: string;
@@ -85,7 +89,24 @@ export function buildReportingProfile(i: ReportingOrderInput): ReportingOrderPro
 
   const practices: PracticeEntry[] = usable
     .filter((r): r is ReportingPracticeRecord => r.recordType === "REPORTING_PRACTICE")
-    .map((p) => ({ kind: p.practiceKind, evidenceClass: p.provenance.evidenceClass, summary: p.summary, statuteCite: p.statuteCite, sourceUrl: p.provenance.sourceUrl, sourceTier: p.provenance.sourceTier ?? null, recordId: p.recordId, confidence: p.provenance.confidence }));
+    .map((p) => ({
+      kind: p.practiceKind, evidenceClass: p.provenance.evidenceClass, summary: p.summary, statuteCite: p.statuteCite, sourceUrl: p.provenance.sourceUrl,
+      sourceTier: p.provenance.sourceTier ?? null, recordId: p.recordId, confidence: p.provenance.confidence,
+      ballotCategory: p.ballotCategory, sequenceFact: p.sequenceFact, jurisdictionId: p.jurisdictionId, publishedAt: p.provenance.publishedAt, retrievedAt: p.provenance.retrievedAt, limitations: p.provenance.limitations,
+    }));
+
+  // Sequence findings by ballot category. A category with no VERIFIED finding is undocumented, never assumed.
+  const byCategory = Object.fromEntries(BALLOT_CATEGORIES.map((c) => [c, [] as PracticeEntry[]])) as Record<BallotCategory, PracticeEntry[]>;
+  // The Phase 2 rule kinds each describe one category; a SEQUENCE_FINDING names its own.
+  for (const p of practices) {
+    const cat = p.kind === "SEQUENCE_FINDING" ? p.ballotCategory : (KIND_CATEGORY[p.kind] ?? null);
+    if (cat && p.evidenceClass === "VERIFIED" && p.sequenceFact !== "NOT_STATED_BY_SOURCE") byCategory[cat].push(p);
+  }
+  const sequence: SequenceCoverage = { byCategory, undocumented: BALLOT_CATEGORIES.filter((c) => c !== "MIXED_OR_UNKNOWN" && !byCategory[c].length) };
+
+  const pollClose: PollCloseEntry[] = i.research
+    .filter((r): r is PollCloseRecord => r.state === i.state && r.recordType === "POLL_CLOSE")
+    .map((p) => ({ jurisdictionId: p.jurisdictionId, closesAtUtc: p.closesAtUtc, closesLocal: p.closesLocal, timeZoneRule: p.timeZoneRule, evidenceClass: p.provenance.evidenceClass, sourceUrl: p.provenance.sourceUrl, sourceTier: p.provenance.sourceTier ?? null, recordId: p.recordId, notes: p.notes }));
 
   const relevant = usable.filter((r): r is CandidateByMethodRecord => r.recordType === "CANDIDATE_BY_METHOD" && r.measureKind === "A"
     && r.office === i.office && (i.office === "house" ? sameDistrict(r.contestDistrict, i.district) : r.contestDistrict === null));
@@ -95,6 +116,7 @@ export function buildReportingProfile(i: ReportingOrderInput): ReportingOrderPro
     year: g[0].contestYear, office: g[0].office, district: g[0].contestDistrict, coverage: g[0].coverage,
     modes: g.map((r) => ({ modeLabel: r.modeLabel, method: r.method, votes: (r.votesA ?? 0) + (r.votesB ?? 0) + (r.votesOther ?? 0), recordId: r.recordId })),
     sourceUrl: g[0].provenance.sourceUrl, confidence: g.some((r) => r.provenance.confidence === "LOW") ? "LOW" : g[0].provenance.confidence,
+    limitations: g[0].provenance.limitations,
   })).sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 
   const evidenceClasses = { A: methodEvidence.length ? "PRESENT" : "ABSENT", B: i.research.some((r) => r.state === i.state && r.recordType === "METHOD_HISTORY" && r.provenance.evidenceClass === "HISTORICAL") ? "PRESENT" : "ABSENT", C: "ABSENT", D: "ABSENT", E: "ABSENT" } as Record<MeasureKind, "PRESENT" | "ABSENT">;
@@ -107,6 +129,7 @@ export function buildReportingProfile(i: ReportingOrderInput): ReportingOrderPro
   if (!timings.LEGAL_PROCESSING_TIME.length) missing.push("LEGAL_PROCESSING_TIME: not researched");
   if (!timings.LEGAL_SCANNING_TIME.length) missing.push("LEGAL_SCANNING_TIME: not researched");
   for (const k of ["OUTSTANDING_INVENTORY_SOURCE", "CANVASS_CERTIFICATION", "METHOD_SEPARATION"] as const) if (!practices.some((p) => p.kind === k)) missing.push(`${k}: not verified`);
+  for (const c of sequence.undocumented) missing.push(`sequence ${c}: no verified finding for this state`);
   if (!methodEvidence.length) missing.push("candidate votes by method (class A) for this contest: none obtained");
   missing.push("method-adjusted projection: a backtested model over timestamped returns does not exist, so no partisan method adjustment is applied");
 
@@ -114,8 +137,10 @@ export function buildReportingProfile(i: ReportingOrderInput): ReportingOrderPro
   return {
     state: i.state,
     stateInDataset: stateRecords.length > 0,
+    pollClose,
     timings,
     practices,
+    sequence,
     methodEvidence,
     evidenceClasses,
     partisanComposition: {

@@ -2,7 +2,8 @@
 // priority-15 research package and assert what it contains and, as importantly, what it does not.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { importJsonPackage } from "../../app/lib/intelligence/research";
 import { loadResearchDir, RESEARCH_DIR } from "../../app/lib/intelligence/load";
@@ -128,7 +129,7 @@ const p15 = real.files.find((f) => f.file.startsWith("priority15-reporting"));
 test("the real priority-15 package validates with no rejections", () => {
   assert.ok(p15, "package is present in data/intelligence/research");
   assert.equal(p15.result.rejected.length, 0);
-  assert.equal(p15.result.accepted.length, 187);
+  assert.equal(p15.result.accepted.length, 227);
   assert.deepEqual(p15.result.unmatchedRaceIds, []);
   assert.ok(real.records.every((r) => !r.synthetic));
 });
@@ -166,7 +167,7 @@ test("shadow integration: partisan composition is NOT_APPLIED and method outstan
 
 test("shadow integration changes no number: the projection is identical with and without the Phase 2 research", () => {
   const input = { raceId: "gov-GA", asOf: "2026-11-04T06:00:00Z", baseline: baseFor("gov-GA"), log: log(obs({ raceId: "gov-GA", a: 500_000, b: 600_000 })), expectedJurisdictions: null, forecastExpectedTotal: 4_000_000, forecastSource: "x", generatedAt: "2026-11-04T06:00:01Z" };
-  const phase2 = real.records.filter((r) => ["RELEASE_TIMING", "REPORTING_PRACTICE", "CANDIDATE_BY_METHOD"].includes(r.recordType));
+  const phase2 = real.records.filter((r) => ["RELEASE_TIMING", "REPORTING_PRACTICE", "CANDIDATE_BY_METHOD", "POLL_CLOSE"].includes(r.recordType));
   const without = runPipeline({ ...input, research: [] });
   const withP2 = runPipeline({ ...input, research: phase2 });
   assert.deepEqual(withP2.shadow, without.shadow);
@@ -202,4 +203,104 @@ test("the GA runoff file holds scrape times only, so it cannot be a backtest sou
   // Retrieval times are when a scraper looked, not when a jurisdiction published; they are not source timestamps.
   const scraped = goodSource({ steps: [step("2026-11-04T02:00:00Z", null)] });
   assert.match(reasonsFor(scraped), /no source timestamp/);
+});
+
+// ---- Phase 2b: poll closes ---------------------------------------------------------------------------------------------
+
+type PC = { state: string; closesAtUtc: string | null; closesLocal: string | null; timeZoneRule: string | null; provenance: { evidenceClass: string } };
+const pollCloses = real.records.filter((r) => r.recordType === "POLL_CLOSE") as unknown as PC[];
+const pcOf = (s: string) => pollCloses.find((p) => p.state === s);
+
+test("every one of the 15 states has a VERIFIED poll close, as a closing time and not a release time", () => {
+  const states = ["AK", "AZ", "CO", "FL", "GA", "IA", "KS", "ME", "NE", "NY", "OH", "PA", "SC", "TX", "WI"];
+  for (const s of states) assert.equal(pcOf(s)?.provenance.evidenceClass, "VERIFIED", s);
+  assert.equal(pollCloses.length, 15);
+});
+
+test("GA closes 7pm ET and PA 8pm ET, with the instants after DST ended", () => {
+  assert.equal(pcOf("GA")?.closesAtUtc, "2026-11-04T00:00:00Z");
+  assert.equal(pcOf("PA")?.closesAtUtc, "2026-11-04T01:00:00Z");
+});
+
+test("Texas has a local clock rule and no statewide UTC instant", () => {
+  const tx = pcOf("TX");
+  assert.equal(tx?.closesLocal, "19:00");
+  assert.equal(tx?.closesAtUtc, null);
+  assert.equal(tx?.timeZoneRule, "PER_COUNTY_LOCAL");
+});
+
+const pollRec = (over: object = {}) => ({ ...common, record_id: "pc1", record_type: "POLL_CLOSE", evidence_class: "VERIFIED", value_kind: "OBSERVATION", state: "TX", ...over });
+
+test("a per-county local poll close with a single UTC instant is rejected; one without a local time is rejected", () => {
+  assert.ok(codes(importJsonPackage(pkg(pollRec({ time_zone_rule: "PER_COUNTY_LOCAL", closes_local: "19:00", closes_at_utc: "2026-11-04T01:00:00Z" })), opts)).includes("NO_STATEWIDE_INSTANT"));
+  assert.ok(codes(importJsonPackage(pkg(pollRec({ time_zone_rule: "PER_COUNTY_LOCAL" })), opts)).includes("MISSING_FIELD"));
+  assert.equal(importJsonPackage(pkg(pollRec({ time_zone_rule: "PER_COUNTY_LOCAL", closes_local: "19:00" })), opts).accepted.length, 1);
+  assert.ok(codes(importJsonPackage(pkg(pollRec({ time_zone_rule: "PER_COUNTY_LOCAL", closes_local: "7pm" })), opts)).includes("INVALID_FIELD"));
+});
+
+// ---- Phase 2b: sequence findings ---------------------------------------------------------------------------------------
+
+const seq = (over: object = {}) => ({ ...common, record_id: "s1", record_type: "REPORTING_PRACTICE", evidence_class: "VERIFIED", value_kind: "OBSERVATION", practice_kind: "SEQUENCE_FINDING", summary: "SYNTHETIC finding", ballot_category: "MAIL_ABSENTEE", sequence_fact: "PROCESSING_WINDOW", ...over });
+
+test("a sequence finding needs a category, a fact kind and a limitation; a category on any other practice is contradictory", () => {
+  assert.equal(importJsonPackage(pkg(seq()), opts).accepted.length, 1);
+  assert.ok(codes(importJsonPackage(pkg(seq({ ballot_category: undefined })), opts)).includes("MISSING_FIELD"));
+  assert.ok(codes(importJsonPackage(pkg(seq({ sequence_fact: undefined })), opts)).includes("MISSING_FIELD"));
+  assert.ok(codes(importJsonPackage(pkg(seq({ limitations: undefined })), opts)).includes("MISSING_LIMITATION"));
+  assert.ok(codes(importJsonPackage(pkg(seq({ practice_kind: "LATE_BALLOT_RULE" })), opts)).includes("CONTRADICTORY_METADATA"));
+});
+
+type Prac = { practiceKind: string; ballotCategory: string | null; sequenceFact: string | null; provenance: { sourceUrl: string | null; limitations: string[]; confidence: string; sourceTier?: string; evidenceClass: string } };
+const findings = real.records.filter((r) => r.recordType === "REPORTING_PRACTICE" && (r as unknown as Prac).practiceKind === "SEQUENCE_FINDING") as unknown as Prac[];
+
+test("every real sequence finding has a category, a fact kind, a source URL and a limitation; secondary tiers are never HIGH", () => {
+  assert.ok(findings.length >= 30);
+  for (const f of findings) {
+    assert.ok(f.ballotCategory && f.sequenceFact, "category and fact");
+    assert.ok(f.provenance.sourceUrl?.startsWith("https://") || f.provenance.sourceUrl?.startsWith("http://"), "source url");
+    assert.ok(f.provenance.limitations.length > 0, "limitation");
+    if (f.provenance.sourceTier !== "PRIMARY_OFFICIAL") assert.notEqual(f.provenance.confidence, "HIGH");
+  }
+});
+
+test("no sequence finding or rule is expressed as a release time", () => {
+  const timings = real.records.filter((r) => r.recordType === "RELEASE_TIMING") as unknown as { timingKind: string; provenance: { evidenceClass: string } }[];
+  assert.ok(!timings.some((t) => ["ACTUAL_2026_RELEASE_TIME", "HISTORICAL_OBSERVED_RELEASE_TIME"].includes(t.timingKind) && t.provenance.evidenceClass !== "UNKNOWN"));
+});
+
+test("the Georgia profile lists mail findings, names categories with no finding, and carries the poll close", () => {
+  const b = baseFor("gov-GA");
+  const r = runPipeline({ raceId: "gov-GA", asOf: "2026-11-04T06:00:00Z", baseline: b, log: [], research: real.records, expectedJurisdictions: null, forecastExpectedTotal: null, forecastSource: null });
+  const o = r.reportingOrder;
+  assert.ok(o);
+  assert.ok(o.sequence.byCategory.MAIL_ABSENTEE.length > 0);
+  assert.ok(o.sequence.byCategory.MAIL_ABSENTEE.every((p) => p.evidenceClass === "VERIFIED" && p.limitations.length > 0));
+  assert.ok(o.sequence.undocumented.includes("EARLY_IN_PERSON"), "no early-in-person sequence evidence was found for GA");
+  assert.ok(o.missing.some((m) => m.startsWith("sequence EARLY_IN_PERSON")));
+  assert.equal(o.pollClose.find((p) => p.jurisdictionId === "STATE")?.closesAtUtc, "2026-11-04T00:00:00Z");
+});
+
+test("an undocumented category is a gap, never a guess: documented and undocumented are disjoint and cover every category", () => {
+  for (const id of ["gov-GA", "sen-AK", "house-AZ-08", "house-SC-01"]) {
+    const r = runPipeline({ raceId: id, asOf: "2026-11-04T06:00:00Z", baseline: baseFor(id), log: [], research: real.records, expectedJurisdictions: null, forecastExpectedTotal: null, forecastSource: null });
+    const s = r.reportingOrder!.sequence;
+    for (const c of Object.keys(s.byCategory) as (keyof typeof s.byCategory)[]) {
+      if (c === "MIXED_OR_UNKNOWN") continue;
+      assert.equal(s.byCategory[c].length === 0, s.undocumented.includes(c), `${id} ${c}`);
+    }
+  }
+});
+
+// ---- Phase 2b: committed outputs match their manifest -----------------------------------------------------------------
+
+test("the build manifest's output checksums match the committed files", () => {
+  const dir = path.join(process.cwd(), "data/intelligence/build");
+  const manifestFile = readdirSync(dir).find((f) => f.startsWith("priority15-build-manifest"));
+  assert.ok(manifestFile, "build manifest is committed");
+  const m = JSON.parse(readFileSync(path.join(dir, manifestFile), "utf8")) as { outputs?: { path: string; sha256: string }[] };
+  assert.ok(m.outputs && m.outputs.length >= 3, "manifest lists outputs");
+  for (const o of m.outputs) {
+    const sha = createHash("sha256").update(readFileSync(path.join(process.cwd(), o.path))).digest("hex");
+    assert.equal(sha, o.sha256, o.path);
+  }
 });

@@ -1,6 +1,6 @@
 {
  "kind": "PRIORITY_15_STATE_DATASET",
- "generatedAt": "2026-10-26T04:21:38Z",
+ "generatedAt": "2026-10-26T05:29:46Z",
  "baselineSnapshot": "2026-10-25",
  "raceCount": 39,
  "states": [
@@ -11,6 +11,7 @@
    ],
    "raceCount": 1,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "AK_CH15",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -23,7 +24,12 @@
     "PROVISIONAL_RULE",
     "RANKED_CHOICE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE",
+    "PROVISIONAL"
    ],
    "candidateByMethodRecords": 9,
    "candidateByMethodContests": [
@@ -55,6 +61,7 @@
    ],
    "raceCount": 2,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "AZ_16_565",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -64,9 +71,16 @@
    },
    "practiceKinds": [
     "LATE_BALLOT_RULE",
+    "OUTSTANDING_INVENTORY_SOURCE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "CURE_ADJUDICATION_CANVASS",
+    "ELECTION_DAY_IN_PERSON",
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 25,
    "candidateByMethodContests": [
@@ -104,6 +118,7 @@
    ],
    "raceCount": 3,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "CO_1_7_101",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -115,7 +130,11 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -146,10 +165,11 @@
    ],
    "raceCount": 4,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "FL_100_011",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
-    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 1,
     "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
     "ACTUAL_2026_RELEASE_TIME": 0
    },
@@ -157,7 +177,12 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "CURE_ADJUDICATION_CANVASS",
+    "MIXED_OR_UNKNOWN"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -184,7 +209,8 @@
     "gov-GA"
    ],
    "raceCount": 1,
-   "pollClose": "UNKNOWN",
+   "pollClose": "VERIFIED",
+   "pollCloseSource": "GA_GOV_GENERAL_2026",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -196,7 +222,11 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 8,
    "candidateByMethodContests": [
@@ -228,6 +258,7 @@
    ],
    "raceCount": 2,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "IA_49_73",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -240,7 +271,11 @@
     "METHOD_SEPARATION",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 8,
    "candidateByMethodContests": [
@@ -275,6 +310,7 @@
    ],
    "raceCount": 3,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "KS_25_106",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -287,7 +323,12 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "CURE_ADJUDICATION_CANVASS",
+    "MIXED_OR_UNKNOWN"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -316,6 +357,7 @@
    ],
    "raceCount": 2,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "ME_626",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -327,8 +369,13 @@
     "LATE_BALLOT_RULE",
     "METHOD_SEPARATION",
     "PROVISIONAL_RULE",
+    "RANKED_CHOICE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -358,6 +405,7 @@
    ],
    "raceCount": 3,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "NE_32_908",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -369,7 +417,11 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -400,6 +452,7 @@
    ],
    "raceCount": 4,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "NY_8_100",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -411,7 +464,12 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "CURE_ADJUDICATION_CANVASS",
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -442,6 +500,7 @@
    ],
    "raceCount": 4,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "OH_3501_32",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -453,7 +512,12 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE",
+    "PROVISIONAL"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -481,7 +545,8 @@
     "house-PA-08"
    ],
    "raceCount": 2,
-   "pollClose": "UNKNOWN",
+   "pollClose": "VERIFIED",
+   "pollCloseSource": "PA_UPCOMING_ELECTIONS",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -493,7 +558,12 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE",
+    "MILITARY_OVERSEAS"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -522,6 +592,7 @@
    ],
    "raceCount": 2,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "SC_7_13_60",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -535,7 +606,12 @@
     "METHOD_SEPARATION",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "LATE_ARRIVING_ELIGIBLE",
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 24,
    "candidateByMethodContests": [
@@ -570,7 +646,8 @@
     "house-TX-24"
    ],
    "raceCount": 4,
-   "pollClose": "UNKNOWN",
+   "pollClose": "VERIFIED_PER_COUNTY_LOCAL",
+   "pollCloseSource": "TX_SOS_ADVISORY_2026_21",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -583,7 +660,16 @@
     "METHOD_SEPARATION",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "ELECTION_DAY_IN_PERSON",
+    "LATE_ARRIVING_ELIGIBLE",
+    "MAIL_ABSENTEE",
+    "MILITARY_OVERSEAS",
+    "MIXED_OR_UNKNOWN",
+    "PROVISIONAL"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],
@@ -612,6 +698,7 @@
    ],
    "raceCount": 2,
    "pollClose": "VERIFIED",
+   "pollCloseSource": "WI_6_78",
    "timings": {
     "LEGAL_PROCESSING_TIME": 1,
     "LEGAL_SCANNING_TIME": 1,
@@ -623,7 +710,11 @@
     "LATE_BALLOT_RULE",
     "PROVISIONAL_RULE",
     "REPORTING_UNIT",
+    "SEQUENCE_FINDING",
     "UOCAVA_RULE"
+   ],
+   "sequenceCategories": [
+    "MAIL_ABSENTEE"
    ],
    "candidateByMethodRecords": 0,
    "candidateByMethodContests": [],

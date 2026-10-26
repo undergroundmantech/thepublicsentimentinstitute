@@ -1,0 +1,512 @@
+{
+ "schemaVersion": "priority15-build-manifest/1",
+ "buildVersion": "build_priority15/2",
+ "generatedAt": "2026-10-26T05:29:46Z",
+ "parsers": {
+  "build": "build_priority15/2",
+  "fetch": "fetch_sources/1",
+  "medsl": "medsl_reconcile/3",
+  "seed": "SEED_NORMALIZE/1",
+  "packageSchema": "priority15-package/2",
+  "medslSchema": "medsl-method-aggregates/2"
+ },
+ "transformation": [
+  "fetch_sources.py retrieves each URL in sources.json into a local cache, extracts text, and logs status, sha256 and retrieval time",
+  "normalize_seed.py reduces the analyst-supplied seed ZIP to the fields the build uses, with the ZIP checksum",
+  "medsl_reconcile.py aggregates MEDSL precinct returns by the source's mode label and reconciles each contest against the FEC certified total",
+  "build_priority15.py checks every evidence anchor against the cached source text, then writes the research package, source register and state dataset",
+  "npm run intelligence:validate and npm run test:intelligence validate the package against the importer's rules"
+ ],
+ "inputs": {
+  "sourcesManifest": {
+   "path": "scripts/intelligence/research/sources.json",
+   "sha256": "b8452570d973100c84bba99cff051c6a28ebe788494081fc8e8dc60b104ef18e"
+  },
+  "sequenceFindings": {
+   "path": "scripts/intelligence/research/sequence_findings.json",
+   "sha256": "01882521fa0a9b07045d2b0ba2a260957a9deb780cbde1aced645bb181afe3fe"
+  },
+  "seed": {
+   "path": "data/intelligence/seed/priority15-seed-normalized.json",
+   "sha256": "b7c8966503d5667377ff4221bf4618f126726de58e5a93b9e10d16e8156d4d5e",
+   "archiveSha256": "83db75a81846aaa531bb7390dd8f78a79a08233c4b305c64228e351f2d3f8f45",
+   "archiveName": "OnPoint_15_State_Reporting_Research_Seed_2026-10-25.zip"
+  },
+  "medslAggregates": {
+   "path": "data/intelligence/historical/medsl-method-aggregates-2026-10-26.json",
+   "sha256": "fa43afb501d4a8e3a0e62264aecbea2ab194443ee193583aa1e298f110caabbd",
+   "files": 30
+  },
+  "voterRegistration": {
+   "path": "data/voter-registration/states_summary.csv",
+   "sha256": "2602cae8e0b4ae454408ce538d9933c01433befc3651e3580e5efa138abfe1f5"
+  },
+  "sources": [
+   {
+    "id": "AK_15_20_201",
+    "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.20.201&secEnd=15.20.201",
+    "sha256": "54c88985b4234a34f1b6eee7c2fcba475dfb4923ed855a68be23ea755a5423d4",
+    "bytes": 1581,
+    "retrievedAt": "2026-10-26T05:27:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "AK_CH15",
+    "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.15.010&secEnd=15.15.470",
+    "sha256": "c4205f3f38ffac9f226c3ac8944d5a9f27348dd012b29092bc95d54877ca737d",
+    "bytes": 53540,
+    "retrievedAt": "2026-10-26T05:27:36Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "AK_CH20",
+    "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.20.010&secEnd=15.20.540",
+    "sha256": "cb3dbb6268c6920dff61e59afb31a1a6a80ea04f6102ba413bb6acfc47e21d23",
+    "bytes": 61765,
+    "retrievedAt": "2026-10-26T05:28:31Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "AZSOS",
+    "url": "https://azsos.gov/elections/election-information",
+    "sha256": "06de49365649ce95acc232e9e246c6fa6edba5986c864fc0c710f14caa0bec35",
+    "bytes": 268879,
+    "retrievedAt": "2026-10-26T05:27:35Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "AZ_16_565",
+    "url": "https://www.azleg.gov/ars/16/00565.htm",
+    "sha256": "929aa4266bce21de8f72254c10950faa5e09d60bfee418acbfdbea9ec6f0aa09",
+    "bytes": 1336,
+    "retrievedAt": "2026-10-26T05:27:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "AZ_ARS_16_550",
+    "url": "https://www.azleg.gov/ars/16/00550.htm",
+    "sha256": "c1b890bf1c5ef3dfb5bb5505112e881a1019e11ac3e1a838db5e5b7520ad2d35",
+    "bytes": 7311,
+    "retrievedAt": "2026-10-26T05:28:31Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "AZ_ARS_16_551",
+    "url": "https://www.azleg.gov/ars/16/00551.htm",
+    "sha256": "86e145d4ee102ff4b2317bec2d58e2fc9d89103fd253e5ba02b4acc0d7e4fa07",
+    "bytes": 3269,
+    "retrievedAt": "2026-10-26T05:28:31Z",
+    "usedByRecords": 3
+   },
+   {
+    "id": "AZ_ARS_16_622",
+    "url": "https://www.azleg.gov/ars/16/00622.htm",
+    "sha256": "22e72e8bc747accf7366e22011914de090629d7485bd918357a38a3555fff9d3",
+    "bytes": 1368,
+    "retrievedAt": "2026-10-26T05:28:32Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "CO_1_7_101",
+    "url": "https://colorado.public.law/statutes/crs_1-7-101",
+    "sha256": "cf6e0477da826765014ec87d52eb9b3b3c3f40a05629e2a6b3bba1690edb9194",
+    "bytes": 31417,
+    "retrievedAt": "2026-10-26T05:27:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "CO_CRS_1_7_5_107_5",
+    "url": "https://colorado.public.law/statutes/crs_1-7.5-107.5",
+    "sha256": "dd77ee664524d2179646000fe5227734de9fa42e157e9401408785e98ac1b029",
+    "bytes": 23947,
+    "retrievedAt": "2026-10-26T05:28:32Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "FL_100_011",
+    "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0100/Sections/0100.011.html",
+    "sha256": "9bb081391bc20c7d9756f3c828ae9a9e58bf18185cf02d6c235f3ceb7c5a37fb",
+    "bytes": 21330,
+    "retrievedAt": "2026-10-26T05:27:37Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "FL_101_68",
+    "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0101/Sections/0101.68.html",
+    "sha256": "dde27f885fb9faf08e6a7b0d970f4449227272b79c672a61dde83584def33924",
+    "bytes": 34863,
+    "retrievedAt": "2026-10-26T05:29:44Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "FL_102_141",
+    "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0102/Sections/0102.141.html",
+    "sha256": "e880bf9a5f7bb04169126660cbdc53a8997c6fef609130aff62cc8d00ee05f94",
+    "bytes": 42436,
+    "retrievedAt": "2026-10-26T05:29:45Z",
+    "usedByRecords": 3
+   },
+   {
+    "id": "GA_GOV_GENERAL_2026",
+    "url": "https://georgia.gov/georgia-general-election-2026",
+    "sha256": "10e40797cdc86d52bb3bd39154497c51407d8245388226a3984686377835a9d1",
+    "bytes": 124954,
+    "retrievedAt": "2026-10-26T05:28:30Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "IA_49_73",
+    "url": "https://www.legis.iowa.gov/docs/code/49.73.pdf",
+    "sha256": "e62d80f82eb85936f1acdd236979e1a3c2c407e10f49395a2b204a16c3493667",
+    "bytes": 34741,
+    "retrievedAt": "2026-10-26T05:27:39Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "IA_CODE_53_23",
+    "url": "https://www.legis.iowa.gov/docs/code/53.23.pdf",
+    "sha256": "c0ece9a5b91a84ab817841b3671ce14937f06fd74e204615674f23c60b7acc6a",
+    "bytes": 41020,
+    "retrievedAt": "2026-10-26T05:28:35Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "KS_25_106",
+    "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_001_0006.html",
+    "sha256": "7680d982bd4c088ae32729b552f0a9a5471eeff0c713298c93d18e7511394899",
+    "bytes": 14798,
+    "retrievedAt": "2026-10-26T05:27:39Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "KS_25_1134",
+    "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_011_0034.html",
+    "sha256": "2f400f058c7860c2d048a09c97d2ce43bf1cc7d8deb08ea119e7495da8831b1e",
+    "bytes": 13640,
+    "retrievedAt": "2026-10-26T05:28:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "KS_25_3104",
+    "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_031_0004.html",
+    "sha256": "6f60dbd8f36c0359a2c3a097582410e80b1b6c8b787cd7765ab69a1ff9cc2032",
+    "bytes": 13755,
+    "retrievedAt": "2026-10-26T05:28:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "ME_626",
+    "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec626.html",
+    "sha256": "34870bd71e4c4874ee43ceffe2e7fc3119559a6fadc3b03f71969c153c54327b",
+    "bytes": 11980,
+    "retrievedAt": "2026-10-26T05:27:39Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "ME_723_A",
+    "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec723-A.html",
+    "sha256": "24ec2546c287248ef5c8ca316fcd3228ccc35dc3af317767a24333b5e40290ff",
+    "bytes": 29893,
+    "retrievedAt": "2026-10-26T05:28:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "ME_759",
+    "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec759.html",
+    "sha256": "65119afb4081a72902e93e7f5adf74d1a39fef3c074fe236412a2d15911bdda8",
+    "bytes": 21178,
+    "retrievedAt": "2026-10-26T05:28:36Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "NCSL11",
+    "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+    "sha256": "db48262370f96c49fce4e0459902bc8af199afdb5f8d5fbb00a79bad9b8842a3",
+    "bytes": 273623,
+    "retrievedAt": "2026-10-26T05:27:31Z",
+    "usedByRecords": 30
+   },
+   {
+    "id": "NCSL16",
+    "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+    "sha256": "ed0826b271d6c2d5e34bcfd3ee69d05dc3be956deee8b8f5f2f738bc5f569969",
+    "bytes": 202709,
+    "retrievedAt": "2026-10-26T05:27:28Z",
+    "usedByRecords": 29
+   },
+   {
+    "id": "NCSL17",
+    "url": "https://www.ncsl.org/elections-and-campaigns/table-17-how-election-results-are-reported",
+    "sha256": "3b54936464cabe077bf427aa32d1a0d577994df03dd5f9d0ae4a246e84263c53",
+    "bytes": 70130,
+    "retrievedAt": "2026-10-26T05:27:30Z",
+    "usedByRecords": 19
+   },
+   {
+    "id": "NCSL_PROV",
+    "url": "https://www.ncsl.org/elections-and-campaigns/provisional-ballots",
+    "sha256": "82ecd74cf39e712ab5bb8095771a8baac4b3d5bd9068870c1014624c1dc7fe74",
+    "bytes": 165123,
+    "retrievedAt": "2026-10-26T05:27:33Z",
+    "usedByRecords": 17
+   },
+   {
+    "id": "NE_32_1027",
+    "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=32-1027",
+    "sha256": "fc667af07e60288b3044a0013c488729a899d3e4c26f2ec0a6f257a7366ad291",
+    "bytes": 33036,
+    "retrievedAt": "2026-10-26T05:28:37Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "NE_32_908",
+    "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=32-908",
+    "sha256": "a74ec8106235a9c6bbba22ff935ed421121d33b7626740c4fd008083f8db06d3",
+    "bytes": 23367,
+    "retrievedAt": "2026-10-26T05:27:40Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "NY_8_100",
+    "url": "https://newyork.public.law/laws/n.y._election_law_section_8-100",
+    "sha256": "183de705d9f8beb4febc3e263848fcad74f5a9a43631a07027009babb72770cc",
+    "bytes": 20802,
+    "retrievedAt": "2026-10-26T05:27:40Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "NY_9_209",
+    "url": "https://newyork.public.law/laws/n.y._election_law_section_9-209",
+    "sha256": "a909de7721382f5390e5d15f7e51c638cbc993e447069c6dd26f811b2231dc11",
+    "bytes": 56320,
+    "retrievedAt": "2026-10-26T05:28:37Z",
+    "usedByRecords": 2
+   },
+   {
+    "id": "OH_3501_32",
+    "url": "https://codes.ohio.gov/ohio-revised-code/section-3501.32",
+    "sha256": "107c26ca53b39f04da7a56bf5dffc3acece49e2255923da712a8770338ec2c98",
+    "bytes": 15737,
+    "retrievedAt": "2026-10-26T05:27:40Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "OH_3505_183",
+    "url": "https://codes.ohio.gov/ohio-revised-code/section-3505.183",
+    "sha256": "4cda1cbe7c59e0173c61f22c6f637a249e7a8bcd1256b7680c8c803b2f015bfc",
+    "bytes": 31640,
+    "retrievedAt": "2026-10-26T05:28:38Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "OH_3509_06",
+    "url": "https://codes.ohio.gov/ohio-revised-code/section-3509.06",
+    "sha256": "c200653355eecd1939cba798b83e91dc85d62ec374303f7ed1be507c611ed6f9",
+    "bytes": 28485,
+    "retrievedAt": "2026-10-26T05:28:37Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "PA_UPCOMING_ELECTIONS",
+    "url": "https://www.pa.gov/agencies/vote/elections/upcoming-elections",
+    "sha256": "a0fb71d0f87c3e503e98a80de0a6b5ffaec5d18681bd60f3fe38aaeb0c1591c8",
+    "bytes": 226036,
+    "retrievedAt": "2026-10-26T05:28:30Z",
+    "usedByRecords": 3
+   },
+   {
+    "id": "SC_7_13_60",
+    "url": "https://www.scstatehouse.gov/code/t07c013.php",
+    "sha256": "2fdac9b2356676d033d30a19c2bd8b7aa545494462d1ba66110955d1d85f1267",
+    "bytes": 233249,
+    "retrievedAt": "2026-10-26T05:27:41Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "SC_CH15",
+    "url": "https://www.scstatehouse.gov/code/t07c015.php",
+    "sha256": "58e9352784947f990e5df356fd29a9724a9b4462d3faac0e51bfac3ebe058c0b",
+    "bytes": 97162,
+    "retrievedAt": "2026-10-26T05:28:38Z",
+    "usedByRecords": 4
+   },
+   {
+    "id": "TX_SOS_ADVISORY_2026_21",
+    "url": "https://www.sos.state.tx.us/elections/laws/advisory2026-21-november-3-election-law-calendar.shtml",
+    "sha256": "8bab3e6433c8b96601b93881f4004ea88911ee5a4a747a0452f1e953c77cc5b3",
+    "bytes": 252039,
+    "retrievedAt": "2026-10-26T05:28:30Z",
+    "usedByRecords": 7
+   },
+   {
+    "id": "WI_6_78",
+    "url": "https://docs.legis.wisconsin.gov/statutes/statutes/6/iii/78",
+    "sha256": "956c4c928591d3667fbec3629c13dde60f9524bf12c799bf4adafd1bc61072e8",
+    "bytes": 114949,
+    "retrievedAt": "2026-10-26T05:27:41Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "WI_6_88",
+    "url": "https://docs.legis.wisconsin.gov/statutes/statutes/6/iv/88",
+    "sha256": "9a9dc6f766c26e009aed7ef4471e92370324499f4b93c4e84a8a1c556d8b4d02",
+    "bytes": 114117,
+    "retrievedAt": "2026-10-26T05:29:46Z",
+    "usedByRecords": 1
+   },
+   {
+    "id": "WI_7_52",
+    "url": "https://docs.legis.wisconsin.gov/statutes/statutes/7/ii/52",
+    "sha256": "f1db5b0421c1f980cbafb74b2f7757b414cf23790be2975ad5f520db11cc8404",
+    "bytes": 127365,
+    "retrievedAt": "2026-10-26T05:29:46Z",
+    "usedByRecords": 1
+   }
+  ]
+ },
+ "retrievalFailures": [
+  {
+   "id": "AK_DOE",
+   "url": "https://www.elections.alaska.gov/",
+   "outcome": "retrieval failed: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)>"
+  },
+  {
+   "id": "GA_SOS",
+   "url": "https://sos.ga.gov/page/election-day-voting",
+   "outcome": "retrieval failed: HTTP 403"
+  },
+  {
+   "id": "GA_CODE_21_2_403",
+   "url": "https://georgia.public.law/statutes/ga._code_21-2-403",
+   "outcome": "retrieval failed: URLError: <urlopen error [Errno -5] No address associated with hostname>"
+  },
+  {
+   "id": "PA_VOTE",
+   "url": "https://www.pa.gov/agencies/vote/voting-in-pennsylvania/voting-in-person",
+   "outcome": "retrieval failed: HTTP 404"
+  },
+  {
+   "id": "PA_25PS_3045",
+   "url": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=HTM&SessYr=1937&ActNum=0320.&SessInd=0&chapter=12&section=1",
+   "outcome": "marked unusable: page returned without the statute text"
+  },
+  {
+   "id": "TX_41_031",
+   "url": "https://texas.public.law/statutes/tex._elec._code_section_41.031",
+   "outcome": "marked unusable: page returned an index, not the polling-hours section"
+  },
+  {
+   "id": "TX_VOTETX",
+   "url": "https://www.votetexas.gov/voting/when.html",
+   "outcome": "marked unusable: page moved"
+  },
+  {
+   "id": "NY_BOE",
+   "url": "https://elections.ny.gov/voting-hours",
+   "outcome": "retrieval failed: HTTP 403"
+  },
+  {
+   "id": "WI_WEC",
+   "url": "https://elections.wi.gov/elections/election-results",
+   "outcome": "retrieval failed: HTTP 403"
+  },
+  {
+   "id": "CO_LEG",
+   "url": "https://content.leg.colorado.gov/sites/default/files/images/olls/crs2025-title-01.pdf",
+   "outcome": "retrieval failed: HTTP 404"
+  },
+  {
+   "id": "ME_SOS",
+   "url": "https://www.maine.gov/sos/elections-voting/voting-information",
+   "outcome": "retrieval failed: HTTP 404"
+  },
+  {
+   "id": "PA_3146_8",
+   "url": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=HTM&SessYr=1937&ActNum=0320&SctnNum=8",
+   "outcome": "marked unusable: HTTP 200 but a JavaScript shell with no statute text"
+  },
+  {
+   "id": "TX_EL_87",
+   "url": "https://statutes.capitol.texas.gov/Docs/EL/htm/EL.87.htm",
+   "outcome": "marked unusable: HTTP 200 but a JavaScript shell with no statute text"
+  }
+ ],
+ "expected": {
+  "records": 227,
+  "byRecordType": {
+   "CANDIDATE_BY_METHOD": 74,
+   "POLL_CLOSE": 15,
+   "RELEASE_TIMING": 32,
+   "REPORTING_PRACTICE": 106
+  },
+  "races": 39,
+  "states": 15,
+  "pollCloseRecords": 15,
+  "sequenceFindings": 37,
+  "candidateByMethodContests": [
+   "2022 GA governor",
+   "2022 GA senate",
+   "2022 AZ governor",
+   "2022 AZ house CD-2",
+   "2022 AZ house CD-8",
+   "2022 AZ senate",
+   "2024 AZ house CD-2",
+   "2024 AZ house CD-8",
+   "2024 AZ senate",
+   "2022 IA governor",
+   "2022 IA house CD-2",
+   "2022 IA senate",
+   "2024 IA house CD-2",
+   "2022 AK governor",
+   "2022 AK senate",
+   "2022 SC governor",
+   "2022 SC house CD-1",
+   "2022 SC senate",
+   "2024 SC house CD-1"
+  ],
+  "contestsWithoutMethodRows": [
+   "2022 CO governor",
+   "2022 CO senate",
+   "2022 FL governor",
+   "2022 FL senate",
+   "2022 KS governor",
+   "2022 KS senate",
+   "2022 ME governor",
+   "2022 NE governor",
+   "2022 NY governor",
+   "2022 NY senate",
+   "2022 OH governor",
+   "2022 OH senate",
+   "2022 PA governor",
+   "2022 PA senate",
+   "2022 TX governor",
+   "2022 WI governor",
+   "2022 WI senate",
+   "2024 FL senate",
+   "2024 ME senate",
+   "2024 NE senate",
+   "2024 NY senate",
+   "2024 OH senate",
+   "2024 PA senate",
+   "2024 TX senate",
+   "2024 WI senate"
+  ]
+ },
+ "outputs": [
+  {
+   "path": "data/intelligence/research/priority15-reporting-2026-10-26.json",
+   "sha256": "bd450934d91e08f936c464c84e1c8fa1bd80d10312db953a74c3079d78be35b0",
+   "bytes": 254586
+  },
+  {
+   "path": "data/intelligence/sources/register-2026-10-26.json",
+   "sha256": "cd173c3545c257d56631cee8fb00042ded39ccabe42ccde66e33b1d745b1c741",
+   "bytes": 35106
+  },
+  {
+   "path": "data/intelligence/states/priority15-2026-10-26.json",
+   "sha256": "4f954a4761376e164135a0b7d9dd7e22c1cd78257de44d0e7369c419ac22ebbf",
+   "bytes": 24937
+  }
+ ]
+}

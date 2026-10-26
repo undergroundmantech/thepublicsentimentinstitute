@@ -2,7 +2,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { estimateOutstanding, type OutstandingInput } from "../../app/lib/intelligence/outstanding";
-import { outstanding, turnout } from "./fixtures";
+import type { ResearchRecord } from "../../app/lib/intelligence/types";
+import { methodHistory, outstanding, turnout } from "./fixtures";
 
 const AS_OF = "2026-11-04T06:00:00Z";
 const RET = "2026-11-04T04:00:00Z";
@@ -94,4 +95,66 @@ test("non-overlapping turnout expectations are flagged and the envelope used", (
   const r = estimateOutstanding(input({ records: [turnout("sen-GA", 3_000_000, null, 3_500_000, "INFERRED", "a"), turnout("sen-GA", 4_000_000, null, 4_500_000, "INFERRED", "b")] }));
   assert.ok(codes(r.issues).includes("CONTRADICTORY_METADATA"));
   assert.deepEqual(r.inventory.expectedFinal, { low: 3_000_000, central: null, high: 4_500_000 });
+});
+
+// ---- estimator hierarchy -------------------------------------------------------------------------------------------
+
+const rungs = (r: ReturnType<typeof estimateOutstanding>) => Object.fromEntries(r.inventory.ladder.map((x) => [x.tier, x.status]));
+
+test("tier 1: an official statement of ballots to count is the top rung, and a statewide statement is labelled so", () => {
+  const r = estimateOutstanding(input({ records: [turnout("sen-GA", 4_000_000, 4_300_000, 4_600_000), outstanding({ id: "o1", n: 3_200_000, asOf: "2026-11-04T05:00:00Z" })] }));
+  assert.equal(r.inventory.tier, "OFFICIAL_JURISDICTION_COUNT");
+  assert.equal(r.inventory.officialScope, "STATEWIDE_OR_DISTRICT");
+  assert.deepEqual(rungs(r), { OFFICIAL_JURISDICTION_COUNT: "USED", VERIFIED_METHOD_INVENTORY: "ABSENT", HISTORICAL_ESTIMATE_WITH_RANGE: "PRESENT_NOT_USED", FORECAST_POINT_NO_RANGE: "ABSENT", UNKNOWN: "ABSENT" });
+});
+
+test("tier 1 from county statements is flagged as possibly partial coverage", () => {
+  const r = estimateOutstanding(input({ records: [outstanding({ id: "c1", n: 10_000, level: "COUNTY", jurisdictionId: "13121", asOf: "2026-11-04T05:00:00Z" })], latestByJurisdiction: { TOPLINE: RET, "13121": RET } }));
+  assert.equal(r.inventory.tier, "OFFICIAL_JURISDICTION_COUNT");
+  assert.equal(r.inventory.officialScope, "COUNTIES");
+  assert.ok(codes(r.issues).includes("OFFICIAL_SCOPE_PARTIAL"));
+});
+
+test("tier 3: a stated-range turnout expectation, never described as calibrated", () => {
+  const r = estimateOutstanding(input({ records: [turnout("sen-GA", 4_000_000, 4_300_000, 4_600_000)] }));
+  assert.equal(r.inventory.tier, "HISTORICAL_ESTIMATE_WITH_RANGE");
+  const used = r.inventory.ladder.find((x) => x.status === "USED");
+  assert.match(used!.detail, /not backtested/);
+});
+
+test("tier 4: the forecast point is its own rung, with no range invented", () => {
+  const r = estimateOutstanding(input({ forecastExpectedTotal: 4_200_000, forecastSource: "x" }));
+  assert.equal(r.inventory.tier, "FORECAST_POINT_NO_RANGE");
+  assert.equal(r.inventory.uncertainty, "UNQUANTIFIED");
+});
+
+test("tier 5: with no basis the tier is UNKNOWN and no figure is produced", () => {
+  const r = estimateOutstanding(input());
+  assert.equal(r.inventory.tier, "UNKNOWN");
+  assert.equal(r.inventory.estimatedOutstanding, null);
+  assert.equal(r.inventory.expectedFinal, null);
+  assert.equal(r.inventory.unknownInventory, true);
+});
+
+test("a verified method inventory is shown as present but is not netted against counted votes", () => {
+  const mh = methodHistory("m1", "MAIL_ABSENTEE", 2026, 0.3);
+  const verified = { ...mh, provenance: { ...mh.provenance, evidenceClass: "VERIFIED", historicalYear: null } } as ResearchRecord;
+  const r = estimateOutstanding(input({ state: "GA", forecastExpectedTotal: 4_200_000, forecastSource: "x", records: [verified] }));
+  assert.equal(rungs(r).VERIFIED_METHOD_INVENTORY, "PRESENT_NOT_USED");
+  assert.equal(r.inventory.tier, "FORECAST_POINT_NO_RANGE", "the figure still rests on the forecast point");
+  assert.deepEqual(r.inventory.expectedFinal, { low: 4_200_000, central: 4_200_000, high: 4_200_000 });
+  const other = estimateOutstanding(input({ state: "PA", records: [verified] }));
+  assert.equal(rungs(other).VERIFIED_METHOD_INVENTORY, "ABSENT", "another state's inventory is not used");
+});
+
+test("precincts reporting never enters the estimate: the estimator takes no precinct input", () => {
+  const a = estimateOutstanding(input({ forecastExpectedTotal: 4_200_000, forecastSource: "x" }));
+  const b = estimateOutstanding({ ...input({ forecastExpectedTotal: 4_200_000, forecastSource: "x" }), precinctsReportingPct: 100 } as OutstandingInput);
+  assert.deepEqual(a.inventory, b.inventory);
+});
+
+test("a district race ignores a county statement that was not made for the race", () => {
+  const r = estimateOutstanding(input({ raceId: "house-PA-07", office: "house", records: [outstanding({ id: "c1", n: 50_000, level: "COUNTY", jurisdictionId: "42077", asOf: "2026-11-04T05:00:00Z" })], latestByJurisdiction: { TOPLINE: RET, "42077": RET } }));
+  assert.equal(r.inventory.tier, "UNKNOWN");
+  assert.equal(r.inventory.officiallyConfirmedOutstanding.value, null);
 });

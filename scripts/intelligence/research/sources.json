@@ -1,0 +1,601 @@
+{
+ "manifestVersion": 1,
+ "sources": [
+  {
+   "id": "NCSL16",
+   "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+   "publisher": "NCSL",
+   "title": "Table 16: When Absentee/Mail Ballot Processing and Counting Can Begin",
+   "pageDate": "2026-09-15",
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "NCSL17",
+   "url": "https://www.ncsl.org/elections-and-campaigns/table-17-how-election-results-are-reported",
+   "publisher": "NCSL",
+   "title": "Table 17: How Election Results Are Reported",
+   "pageDate": "2024-10-15",
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "NCSL11",
+   "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+   "publisher": "NCSL",
+   "title": "Table 11: Receipt and Postmark Deadlines for Absentee/Mail Ballots",
+   "pageDate": "2026-09-25",
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "NCSL_PROV",
+   "url": "https://www.ncsl.org/elections-and-campaigns/provisional-ballots",
+   "publisher": "NCSL",
+   "title": "Provisional Ballots (time allotted to verify)",
+   "pageDate": "2025-04-16",
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "AZSOS",
+   "url": "https://azsos.gov/elections/election-information",
+   "publisher": "Arizona Secretary of State",
+   "title": "Election information (election night results)",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "EAC",
+   "url": "https://www.eac.gov/why-do-election-results-change-after-election-night",
+   "publisher": "U.S. Election Assistance Commission",
+   "title": "Why do election results change after election night?",
+   "pageDate": "2025-12-23",
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "EAC_CANVASS",
+   "url": "https://www.eac.gov/election-officials/election-results-canvass-and-certification",
+   "publisher": "U.S. Election Assistance Commission",
+   "title": "Election Results, Canvass, and Certification",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "AK_CH15",
+   "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.15.010&secEnd=15.15.470",
+   "publisher": "Alaska Legislature",
+   "title": "AS 15.15.010-15.15.470 (voting and counting)",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "AK_15_20_201",
+   "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.20.201&secEnd=15.20.201",
+   "publisher": "Alaska Legislature",
+   "title": "AS 15.20.201 district absentee ballot counting review",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "AZ_16_565",
+   "url": "https://www.azleg.gov/ars/16/00565.htm",
+   "publisher": "Arizona Legislature",
+   "title": "A.R.S. 16-565 hours polls opened and closed",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "CO_1_7_101",
+   "url": "https://colorado.public.law/statutes/crs_1-7-101",
+   "publisher": "Public.Law (mirror of C.R.S.)",
+   "title": "C.R.S. 1-7-101 hours for voting",
+   "pageDate": null,
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "FL_100_011",
+   "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0100/Sections/0100.011.html",
+   "publisher": "Florida Legislature",
+   "title": "Fla. Stat. 100.011 hours of voting",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "IA_49_73",
+   "url": "https://www.legis.iowa.gov/docs/code/49.73.pdf",
+   "publisher": "Iowa Legislature",
+   "title": "Iowa Code 49.73 time of opening and closing polls",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "KS_25_106",
+   "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_001_0006.html",
+   "publisher": "Kansas Revisor of Statutes",
+   "title": "K.S.A. 25-106 hours of voting",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "ME_626",
+   "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec626.html",
+   "publisher": "Maine Legislature",
+   "title": "21-A M.R.S. 626 polling times",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "NE_32_908",
+   "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=32-908",
+   "publisher": "Nebraska Legislature",
+   "title": "Neb. Rev. Stat. 32-908 polls when opened and closed",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "NY_8_100",
+   "url": "https://newyork.public.law/laws/n.y._election_law_section_8-100",
+   "publisher": "Public.Law (mirror of N.Y. Election Law)",
+   "title": "N.Y. Election Law 8-100 hours of voting",
+   "pageDate": null,
+   "tier": "SECONDARY_SUMMARY",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "OH_3501_32",
+   "url": "https://codes.ohio.gov/ohio-revised-code/section-3501.32",
+   "publisher": "Ohio Laws and Administrative Rules",
+   "title": "R.C. 3501.32 opening and closing polls",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "SC_7_13_60",
+   "url": "https://www.scstatehouse.gov/code/t07c013.php",
+   "publisher": "South Carolina Legislature",
+   "title": "S.C. Code 7-13-60 hours polls open",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "WI_6_78",
+   "url": "https://docs.legis.wisconsin.gov/statutes/statutes/6/iii/78",
+   "publisher": "Wisconsin Legislature",
+   "title": "Wis. Stat. 6.78 polling hours",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": true,
+   "anchors": []
+  },
+  {
+   "id": "AK_DOE",
+   "url": "https://www.elections.alaska.gov/",
+   "publisher": "Alaska Division of Elections",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "no response (timeout) on every attempt"
+  },
+  {
+   "id": "GA_SOS",
+   "url": "https://sos.ga.gov/page/election-day-voting",
+   "publisher": "Georgia Secretary of State",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 403"
+  },
+  {
+   "id": "GA_CODE_21_2_403",
+   "url": "https://georgia.public.law/statutes/ga._code_21-2-403",
+   "publisher": "Public.Law mirror of O.C.G.A. 21-2-403",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "no response"
+  },
+  {
+   "id": "PA_VOTE",
+   "url": "https://www.pa.gov/agencies/vote/voting-in-pennsylvania/voting-in-person",
+   "publisher": "Pennsylvania Department of State",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 404"
+  },
+  {
+   "id": "PA_25PS_3045",
+   "url": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=HTM&SessYr=1937&ActNum=0320.&SessInd=0&chapter=12&section=1",
+   "publisher": "Pennsylvania General Assembly",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "page returned without the statute text",
+   "unusable": "page returned without the statute text"
+  },
+  {
+   "id": "TX_41_031",
+   "url": "https://texas.public.law/statutes/tex._elec._code_section_41.031",
+   "publisher": "Public.Law mirror of Tex. Elec. Code",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "page returned an index, not the polling-hours section",
+   "unusable": "page returned an index, not the polling-hours section"
+  },
+  {
+   "id": "TX_VOTETX",
+   "url": "https://www.votetexas.gov/voting/when.html",
+   "publisher": "Texas Secretary of State",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "page moved",
+   "unusable": "page moved"
+  },
+  {
+   "id": "NY_BOE",
+   "url": "https://elections.ny.gov/voting-hours",
+   "publisher": "New York State Board of Elections",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 403"
+  },
+  {
+   "id": "WI_WEC",
+   "url": "https://elections.wi.gov/elections/election-results",
+   "publisher": "Wisconsin Elections Commission",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 403"
+  },
+  {
+   "id": "CO_LEG",
+   "url": "https://content.leg.colorado.gov/sites/default/files/images/olls/crs2025-title-01.pdf",
+   "publisher": "Colorado Legislature",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 404"
+  },
+  {
+   "id": "ME_SOS",
+   "url": "https://www.maine.gov/sos/elections-voting/voting-information",
+   "publisher": "Maine Secretary of State",
+   "title": null,
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "knownOutcome2026_10_26": "HTTP 404"
+  },
+  {
+   "id": "GA_GOV_GENERAL_2026",
+   "url": "https://georgia.gov/georgia-general-election-2026",
+   "publisher": "Georgia.gov",
+   "title": "Georgia general election 2026",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "PA_UPCOMING_ELECTIONS",
+   "url": "https://www.pa.gov/agencies/vote/elections/upcoming-elections",
+   "publisher": "Pennsylvania Department of State",
+   "title": "Upcoming elections",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "TX_SOS_ADVISORY_2026_21",
+   "url": "https://www.sos.state.tx.us/elections/laws/advisory2026-21-november-3-election-law-calendar.shtml",
+   "publisher": "Texas Secretary of State",
+   "title": "Election Advisory 2026-21: November 3, 2026 election law calendar",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "AK_CH20",
+   "url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=15.20.010&secEnd=15.20.540",
+   "publisher": "Alaska Legislature",
+   "title": "AS 15.20 absentee voting",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "AZ_ARS_16_550",
+   "url": "https://www.azleg.gov/ars/16/00550.htm",
+   "publisher": "Arizona Legislature",
+   "title": "A.R.S. 16-550",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "AZ_ARS_16_551",
+   "url": "https://www.azleg.gov/ars/16/00551.htm",
+   "publisher": "Arizona Legislature",
+   "title": "A.R.S. 16-551",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "AZ_ARS_16_621",
+   "url": "https://www.azleg.gov/ars/16/00621.htm",
+   "publisher": "Arizona Legislature",
+   "title": "A.R.S. 16-621",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "AZ_ARS_16_622",
+   "url": "https://www.azleg.gov/ars/16/00622.htm",
+   "publisher": "Arizona Legislature",
+   "title": "A.R.S. 16-622",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "CO_CRS_1_7_5_107_5",
+   "url": "https://colorado.public.law/statutes/crs_1-7.5-107.5",
+   "publisher": "Public.Law (mirror of C.R.S.)",
+   "title": "C.R.S. 1-7.5-107.5",
+   "pageDate": null,
+   "tier": "SECONDARY_SUMMARY",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "FL_101_5612",
+   "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0101/Sections/0101.5612.html",
+   "publisher": "Florida Legislature",
+   "title": "Fla. Stat. 101.5612",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "FL_101_5614",
+   "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0101/Sections/0101.5614.html",
+   "publisher": "Florida Legislature",
+   "title": "Fla. Stat. 101.5614",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "FL_101_68",
+   "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0101/Sections/0101.68.html",
+   "publisher": "Florida Legislature",
+   "title": "Fla. Stat. 101.68",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "FL_102_141",
+   "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0102/Sections/0102.141.html",
+   "publisher": "Florida Legislature",
+   "title": "Fla. Stat. 102.141",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "IA_CODE_53_23",
+   "url": "https://www.legis.iowa.gov/docs/code/53.23.pdf",
+   "publisher": "Iowa Legislature",
+   "title": "Iowa Code 53.23",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "KS_25_1134",
+   "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_011_0034.html",
+   "publisher": "Kansas Revisor of Statutes",
+   "title": "K.S.A. 25-1134",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "KS_25_3104",
+   "url": "https://www.ksrevisor.gov/statutes/chapters/ch25/025_031_0004.html",
+   "publisher": "Kansas Revisor of Statutes",
+   "title": "K.S.A. 25-3104",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "ME_759",
+   "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec759.html",
+   "publisher": "Maine Legislature",
+   "title": "21-A M.R.S. 759",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "ME_723_A",
+   "url": "https://legislature.maine.gov/statutes/21-A/title21-Asec723-A.html",
+   "publisher": "Maine Legislature",
+   "title": "21-A M.R.S. 723-A",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "NE_32_1027",
+   "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=32-1027",
+   "publisher": "Nebraska Legislature",
+   "title": "Neb. Rev. Stat. 32-1027",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "NY_9_209",
+   "url": "https://newyork.public.law/laws/n.y._election_law_section_9-209",
+   "publisher": "Public.Law (mirror of N.Y. Election Law)",
+   "title": "N.Y. Election Law 9-209",
+   "pageDate": null,
+   "tier": "SECONDARY_SUMMARY",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "OH_3509_06",
+   "url": "https://codes.ohio.gov/ohio-revised-code/section-3509.06",
+   "publisher": "Ohio Laws and Administrative Rules",
+   "title": "R.C. 3509.06",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "OH_3505_183",
+   "url": "https://codes.ohio.gov/ohio-revised-code/section-3505.183",
+   "publisher": "Ohio Laws and Administrative Rules",
+   "title": "R.C. 3505.183",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "SC_CH15",
+   "url": "https://www.scstatehouse.gov/code/t07c015.php",
+   "publisher": "South Carolina Legislature",
+   "title": "S.C. Code Title 7 Chapter 15 (absentee voting)",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "WI_7_52",
+   "url": "https://docs.legis.wisconsin.gov/statutes/statutes/7/ii/52",
+   "publisher": "Wisconsin Legislature",
+   "title": "Wis. Stat. 7.52",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "WI_6_88",
+   "url": "https://docs.legis.wisconsin.gov/statutes/statutes/6/iv/88",
+   "publisher": "Wisconsin Legislature",
+   "title": "Wis. Stat. 6.88",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": []
+  },
+  {
+   "id": "PA_3146_8",
+   "url": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=HTM&SessYr=1937&ActNum=0320&SctnNum=8",
+   "publisher": "Pennsylvania General Assembly",
+   "title": "Pennsylvania Election Code (Act 320 of 1937) section 1308 (25 P.S. 3146.8)",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "unusable": "HTTP 200 but a JavaScript shell with no statute text"
+  },
+  {
+   "id": "TX_EL_87",
+   "url": "https://statutes.capitol.texas.gov/Docs/EL/htm/EL.87.htm",
+   "publisher": "Texas Legislature",
+   "title": "Texas Election Code chapter 87 (Early Voting Ballot Board)",
+   "pageDate": null,
+   "tier": "PRIMARY_OFFICIAL",
+   "required": false,
+   "anchors": [],
+   "unusable": "HTTP 200 but a JavaScript shell with no statute text"
+  }
+ ]
+}

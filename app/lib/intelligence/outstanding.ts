@@ -13,7 +13,7 @@
 // its own low and high, or else the forecast's expected total, which has no stated range and is reported as
 // UNQUANTIFIED. No spread is invented around a point.
 
-import type { EvidenceClass, Interval, Issue, OutstandingInventory, OutstandingReportRecord, Quantity, ResearchRecord, TurnoutExpectationRecord } from "./types";
+import type { EstimatorRung, EstimatorTier, EvidenceClass, Interval, Issue, OutstandingInventory, OutstandingReportRecord, Quantity, ResearchRecord, TurnoutExpectationRecord } from "./types";
 
 export interface OutstandingInput {
   raceId: string;
@@ -23,6 +23,8 @@ export interface OutstandingInput {
   /** Latest source timestamp per reporting jurisdiction id, and "TOPLINE" for the race total. */
   latestByJurisdiction: Record<string, string | null>;
   records: ResearchRecord[];
+  /** Postal code of the race's state, used only to find a verified method inventory. */
+  state?: string;
   /** The OnPoint forecast's expected total vote for the race, if it has one. */
   forecastExpectedTotal: number | null;
   forecastSource: string | null;
@@ -133,6 +135,21 @@ export function estimateOutstanding(input: OutstandingInput): { inventory: Outst
     ? { low: reported + estimated.low, central: estimated.central === null ? null : reported + estimated.central, high: reported + estimated.high }
     : null;
 
+  // which rung the figure rests on
+  const officialUsed = confirmed.quantity.value !== null;
+  const methodInventory = input.records.filter((r) => r.recordType === "METHOD_HISTORY" && r.provenance.evidenceClass === "VERIFIED" && input.state !== undefined && r.state === input.state);
+  const tier: EstimatorTier = officialUsed ? "OFFICIAL_JURISDICTION_COUNT" : !estimated ? "UNKNOWN" : basis.kind === "RESEARCH" ? "HISTORICAL_ESTIMATE_WITH_RANGE" : "FORECAST_POINT_NO_RANGE";
+  const rung = (t: EstimatorTier, present: boolean, detail: string, absent: string): EstimatorRung => ({ tier: t, status: tier === t ? "USED" : present ? "PRESENT_NOT_USED" : "ABSENT", detail: present || tier === t ? detail : absent });
+  const ladder: EstimatorRung[] = [
+    rung("OFFICIAL_JURISDICTION_COUNT", officialUsed, `official statement(s): ${confirmed.used.map((r) => r.recordId).join(", ")}`, "no usable official statement of ballots still to count"),
+    rung("VERIFIED_METHOD_INVENTORY", methodInventory.length > 0, `${methodInventory.length} verified ballot-count record(s) by method exist, but they cannot be netted against counted votes: the returns carry no method label`, "no verified method inventory for this state"),
+    rung("HISTORICAL_ESTIMATE_WITH_RANGE", basis.kind === "RESEARCH", `turnout expectation with its own range (${basis.recordIds.join(", ")}); not backtested`, "no turnout expectation with a stated range"),
+    rung("FORECAST_POINT_NO_RANGE", basis.kind === "FORECAST_EXPECTED_TOTAL", "the forecast's expected total, a point with no stated range", "no forecast expected total used"),
+    { tier: "UNKNOWN", status: tier === "UNKNOWN" ? "USED" : "ABSENT", detail: tier === "UNKNOWN" ? "no usable basis; no outstanding figure is produced" : "not needed: a higher rung supplies the figure" },
+  ];
+  const officialScope: OutstandingInventory["officialScope"] = !officialUsed ? null : confirmed.used.every((r) => r.jurisdictionLevel === "STATE" || r.jurisdictionLevel === "DISTRICT") ? "STATEWIDE_OR_DISTRICT" : "COUNTIES";
+  if (officialScope === "COUNTIES") issues.push({ code: "OFFICIAL_SCOPE_PARTIAL", severity: "INFO", message: "the official outstanding figure sums county statements, which may not cover every jurisdiction of the race" });
+
   return {
     inventory: {
       reported,
@@ -140,6 +157,9 @@ export function estimateOutstanding(input: OutstandingInput): { inventory: Outst
       notYetEligible: notYet.quantity,
       estimatedOutstanding: estimated,
       expectedFinal,
+      tier,
+      ladder,
+      officialScope,
       uncertainty,
       turnoutBasis: basis,
       unknownInventory: confirmed.quantity.value === null,

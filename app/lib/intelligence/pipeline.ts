@@ -94,7 +94,7 @@ export function runPipeline(input: PipelineInput): DiagnosticReport {
     const latest: Record<string, string | null> = {};
     for (const [j, v] of Object.entries(returns!.byJurisdiction)) latest[j] = v.sourceTimestamp;
     latest.TOPLINE = returns!.basis === "TOPLINE" ? returns!.latestSourceTimestamp : null;
-    const o = estimateOutstanding({ raceId: input.raceId, office: office as Office, asOf: input.asOf, reported: returns!.reported.t, latestByJurisdiction: latest, records: research, forecastExpectedTotal: input.forecastExpectedTotal, forecastSource: input.forecastSource });
+    const o = estimateOutstanding({ raceId: input.raceId, office: office as Office, state, asOf: input.asOf, reported: returns!.reported.t, latestByJurisdiction: latest, records: research, forecastExpectedTotal: input.forecastExpectedTotal, forecastSource: input.forecastSource });
     issues.push(...o.issues);
     return o.inventory;
   }, (v, issues) => (v.estimatedOutstanding === null ? "UNAVAILABLE" : issues.some((i) => i.severity !== "INFO") ? "DEGRADED" : "OK"));

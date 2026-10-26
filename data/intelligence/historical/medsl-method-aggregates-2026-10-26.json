@@ -1,17 +1,57 @@
 {
  "kind": "MEDSL_METHOD_AGGREGATES",
- "retrievedAt": "2026-10-26T04:07:24Z",
+ "schemaVersion": "medsl-method-aggregates/2",
+ "parserVersion": "medsl_reconcile/3",
+ "builtAt": "2026-10-26T05:51:53Z",
  "classification": "A for contests with method rows (RESEARCH_COMPILATION of official returns); E where only TOTAL rows exist",
+ "transformation": "precinct rows with stage GEN; rows whose candidate is UNDER VOTES, OVER VOTES, NOT QUALIFIED, BLANK and similar are not candidate votes and are reported separately; side A = party_simplified DEMOCRAT, side B = REPUBLICAN, other = all else; votes summed by the source's own mode label; a precinct's contest total is its TOTAL row if present, else the sum of its method rows",
+ "reconcileTolerance": 0.005,
+ "labelCompleteMin": 0.99,
  "files": {
-  "2022-ak": {
-   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ak-local-precinct-general.zip",
-   "sha256": "c7c8d36011097cf9452cbfadcd9a2cbcef7757bcd316a0d62318e80c643388d5",
-   "bytes": 297028
+  "2022-ga": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ga-local-precinct-general.zip",
+   "sha256": "92d77246fefe0d46f87bf0f1d3ff722e1a1b1574b08a25bde9eb13ee1933339c",
+   "bytes": 5075601
   },
   "2022-az": {
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-az-local-precinct-general.zip",
    "sha256": "0c2391b601a0180563fdf93736002c91bb3a26538535e1db7995bc391e2766db",
    "bytes": 4052363
+  },
+  "2024-az": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/az24.zip",
+   "sha256": "bff8059944b3f58f13228518f9fbeff58a556677d5ab05ab49ca5a4a524555a6",
+   "bytes": 9504594
+  },
+  "2022-ia": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ia-local-precinct-general.zip",
+   "sha256": "db5eb42db50cd11687c63bdd5773aa91fece6d31997d3b82eefabf7338d344a8",
+   "bytes": 404450
+  },
+  "2024-ia": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ia24.zip",
+   "sha256": "c31797ace26c06f9504ec4a815cfb717b8619507f529726ac4572dea68ecb7b2",
+   "bytes": 1551251
+  },
+  "2022-ak": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ak-local-precinct-general.zip",
+   "sha256": "c7c8d36011097cf9452cbfadcd9a2cbcef7757bcd316a0d62318e80c643388d5",
+   "bytes": 297028
+  },
+  "2024-ak": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ak24.zip",
+   "sha256": "e501940935cccbf5df3884aa0a61cca7e4b61b7fcf78a861f45ecb9ea73b23f6",
+   "bytes": 881696
+  },
+  "2022-sc": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-sc-local-precinct-general.zip",
+   "sha256": "3f0ca616aa8768cd1126d8f372bab13161973c8c2af0eb466380d40175687a19",
+   "bytes": 3455820
+  },
+  "2024-sc": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/sc24.zip",
+   "sha256": "0a55d286d4a1034b801e27e7ca120c67cd98aa93b31510878da58a00866af599",
+   "bytes": 2279665
   },
   "2022-co": {
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-co-local-precinct-general.zip",
@@ -22,16 +62,6 @@
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-fl-local-precinct-general.zip",
    "sha256": "434ed98274d82cae45c2a65f288c03fdb511788c250fc58d8627a9d307ff1e33",
    "bytes": 4933782
-  },
-  "2022-ga": {
-   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ga-local-precinct-general.zip",
-   "sha256": "92d77246fefe0d46f87bf0f1d3ff722e1a1b1574b08a25bde9eb13ee1933339c",
-   "bytes": 5075601
-  },
-  "2022-ia": {
-   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ia-local-precinct-general.zip",
-   "sha256": "db5eb42db50cd11687c63bdd5773aa91fece6d31997d3b82eefabf7338d344a8",
-   "bytes": 404450
   },
   "2022-ks": {
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ks-local-precinct-general.zip",
@@ -63,11 +93,6 @@
    "sha256": "3864c6827cea27ad489a1536be41857b2417d6590de94a6785540f77732bc29d",
    "bytes": 806622
   },
-  "2022-sc": {
-   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-sc-local-precinct-general.zip",
-   "sha256": "3f0ca616aa8768cd1126d8f372bab13161973c8c2af0eb466380d40175687a19",
-   "bytes": 3455820
-  },
   "2022-tx": {
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-tx-local-precinct-general.zip",
    "sha256": "a0a07ea481572afdb714cb25b2655e859badc74337a755955b2316a57a209e56",
@@ -77,16 +102,6 @@
    "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-wi-local-precinct-general.zip",
    "sha256": "2b9fe60f0704937b48cdb78ef079044f7e645e4baac642f6a2e2bb4cd02fcca3",
    "bytes": 1306439
-  },
-  "2024-ak": {
-   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ak24.zip",
-   "sha256": "e501940935cccbf5df3884aa0a61cca7e4b61b7fcf78a861f45ecb9ea73b23f6",
-   "bytes": 881696
-  },
-  "2024-az": {
-   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/az24.zip",
-   "sha256": "bff8059944b3f58f13228518f9fbeff58a556677d5ab05ab49ca5a4a524555a6",
-   "bytes": 9504594
   },
   "2024-co": {
    "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/co24.zip",
@@ -102,11 +117,6 @@
    "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ga24.zip",
    "sha256": "36a86477d771ef5b6cf2a033cf941bbfe28eca5adab57ba803836f6b5bc954ed",
    "bytes": 691608
-  },
-  "2024-ia": {
-   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ia24.zip",
-   "sha256": "c31797ace26c06f9504ec4a815cfb717b8619507f529726ac4572dea68ecb7b2",
-   "bytes": 1551251
   },
   "2024-ks": {
    "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ks24.zip",
@@ -138,11 +148,6 @@
    "sha256": "f134e829a9df0925209f8cad77fc2448c8c780400e2a0190de1d42866f4075ee",
    "bytes": 1657617
   },
-  "2024-sc": {
-   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/sc24.zip",
-   "sha256": "0a55d286d4a1034b801e27e7ca120c67cd98aa93b31510878da58a00866af599",
-   "bytes": 2279665
-  },
   "2024-tx": {
    "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/tx24.zip",
    "sha256": "9202fc83607e296bc38be68bde0f0121a0eadb0b6edee4a115c6cf81fd00371f",
@@ -154,371 +159,735 @@
    "bytes": 951627
   }
  },
+ "certifiedSources": {
+  "2022": {
+   "url": "https://www.fec.gov/resources/cms-content/documents/federalelections2022.xlsx",
+   "sha256": "cdb258ea23803e50d752bcea19faa39b3c201eb960094bcb556c3a38c2350897",
+   "bytes": 3179722,
+   "publisher": "Federal Election Commission",
+   "title": "Federal Elections 2022: Election Results for the U.S. Senate and the U.S. House (state-certified results)"
+  }
+ },
  "contests": [
   {
    "year": 2022,
-   "state": "AK",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "ELECTION DAY": {
-     "D": 14264,
-     "R": 148985,
-     "OTHER": 392
-    },
-    "FEDERAL OVERSEAS": {
-     "D": 56,
-     "R": 48,
-     "OTHER": 0
-    },
-    "ABSENTEE": {
-     "D": 7731,
-     "R": 45228,
-     "OTHER": 1045
-    },
-    "EARLY VOTING": {
-     "D": 4211,
-     "R": 32294,
-     "OTHER": 382
-    },
-    "QUESTION": {
-     "D": 883,
-     "R": 5977,
-     "OTHER": 209
-    }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 261705,
-   "totalRowVotes": null
-  },
-  {
-   "year": 2022,
-   "state": "AK",
+   "state": "GA",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
-    "ELECTION DAY": {
-     "R": 99171,
-     "D": 34387,
-     "OTHER": 31954
-    },
     "ABSENTEE": {
-     "R": 23309,
-     "D": 17674,
-     "OTHER": 12942
+     "D": 154084,
+     "R": 90691,
+     "OTHER": 1623
     },
-    "EARLY VOTING": {
-     "R": 17857,
-     "D": 10272,
-     "OTHER": 9125
+    "ADVANCED": {
+     "D": 1134210,
+     "R": 1140808,
+     "OTHER": 11228
     },
-    "QUESTION": {
-     "R": 4112,
-     "D": 1518,
-     "OTHER": 1431
+    "ELECTION DAY": {
+     "D": 523575,
+     "R": 878952,
+     "OTHER": 15272
+    },
+    "PROVISIONAL": {
+     "D": 1804,
+     "R": 1121,
+     "OTHER": 40
+    },
+    "TOTAL": {
+     "D": 1813673,
+     "R": 2111572,
+     "OTHER": 28188
     }
    },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 263752,
-   "totalRowVotes": null
+   "reconciliation": {
+    "rowsSum": 7906841,
+    "totalRowsSum": 3953433,
+    "methodRowsSum": 3953408,
+    "contestVotesDeduplicated": 3953433,
+    "methodLabeledVotes": 3953408,
+    "methodLabelCompleteness": 0.99999,
+    "methodLabelCoverageOfContest": 0.99999,
+    "jurisdictions": {
+     "counties": 160,
+     "countiesWithMethodLabels": 159,
+     "countyCoverage": 0.99375,
+     "precincts": 2723
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 2722,
+     "totalEqualsMethodSum": 2722,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label",
+      "summing every row (7,906,841) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 3,953,433"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
-   "state": "AZ",
+   "state": "GA",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
-    "EARLY VOTING": {
-     "D": 882493,
-     "R": 695831,
-     "OTHER": 39263
+    "ABSENTEE": {
+     "D": 166257,
+     "R": 74845,
+     "OTHER": 4833
+    },
+    "ADVANCED": {
+     "D": 1202113,
+     "R": 1038220,
+     "OTHER": 35937
     },
     "ELECTION DAY": {
-     "D": 102129,
-     "R": 233206,
-     "OTHER": 6438
+     "D": 575873,
+     "R": 794384,
+     "OTHER": 40492
     },
     "PROVISIONAL": {
-     "D": 1995,
-     "R": 2687,
-     "OTHER": 100
-    },
-    "LATE VOTES": {
-     "D": 1500,
-     "R": 2238,
-     "OTHER": 71
+     "D": 1874,
+     "R": 993,
+     "OTHER": 103
     },
     "TOTAL": {
-     "D": 337034,
-     "R": 269734,
-     "OTHER": 14197
+     "D": 1946117,
+     "R": 1908442,
+     "OTHER": 81365
     }
    },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 1967951,
-   "totalRowVotes": 620965
-  },
-  {
-   "year": 2022,
-   "state": "AZ",
-   "office": "house",
-   "district": "002",
-   "modes": {
-    "EARLY VOTING": {
-     "D": 72706,
-     "R": 85937,
-     "OTHER": 2375
+   "reconciliation": {
+    "rowsSum": 7871848,
+    "totalRowsSum": 3935924,
+    "methodRowsSum": 3935924,
+    "contestVotesDeduplicated": 3935924,
+    "methodLabeledVotes": 3935924,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 159,
+     "countiesWithMethodLabels": 159,
+     "countyCoverage": 1.0,
+     "precincts": 2722
     },
-    "ELECTION DAY": {
-     "D": 14862,
-     "R": 31652,
-     "OTHER": 690
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 2722,
+     "totalEqualsMethodSum": 2722,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
     },
-    "PROVISIONAL": {
-     "D": 336,
-     "R": 490,
-     "OTHER": 12
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 3935924,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 1.0
     },
-    "LATE VOTES": {
-     "D": 31,
-     "R": 7
-    },
-    "TOTAL": {
-     "D": 61704,
-     "R": 56092,
-     "OTHER": 1772
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label",
+      "summing every row (7,871,848) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 3,935,924"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 209098,
-   "totalRowVotes": 119568
+   }
   },
   {
    "year": 2022,
    "state": "AZ",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "EARLY VOTING": {
      "D": 861402,
      "R": 743341,
-     "OTHER": 9965
+     "OTHER": 5461
     },
     "ELECTION DAY": {
      "D": 98764,
      "R": 241409,
-     "OTHER": 1289
-    },
-    "PROVISIONAL": {
-     "D": 1831,
-     "R": 2759,
-     "OTHER": 8
+     "OTHER": 646
     },
     "LATE VOTES": {
      "D": 1424,
      "R": 2354,
      "OTHER": 6
     },
+    "PROVISIONAL": {
+     "D": 1831,
+     "R": 2759,
+     "OTHER": 5
+    },
     "TOTAL": {
      "D": 327527,
      "R": 288693,
-     "OTHER": 2694
+     "OTHER": 1730
     }
    },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 1964552,
-   "totalRowVotes": 618914
+   "reconciliation": {
+    "rowsSum": 2577352,
+    "totalRowsSum": 617950,
+    "methodRowsSum": 1959402,
+    "contestVotesDeduplicated": 2566497,
+    "methodLabeledVotes": 1959377,
+    "methodLabelCompleteness": 0.76344,
+    "methodLabelCoverageOfContest": 0.76344,
+    "jurisdictions": {
+     "counties": 15,
+     "countiesWithMethodLabels": 8,
+     "countyCoverage": 0.53333,
+     "precincts": 1692
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 22,
+     "totalEqualsMethodSum": 8,
+     "totalDiffersFromMethodSum": 14,
+     "examples": [
+      {
+       "precinct": "SAFFORD #2",
+       "county": "04009",
+       "totalRow": 839,
+       "methodRowsSum": 840
+      },
+      {
+       "precinct": "SAFFORD #3",
+       "county": "04009",
+       "totalRow": 409,
+       "methodRowsSum": 410
+      },
+      {
+       "precinct": "LAYTON #4",
+       "county": "04009",
+       "totalRow": 338,
+       "methodRowsSum": 339
+      }
+     ]
+    },
+    "excludedNonCandidateRows": {
+     "NOT QUALIFIED | EARLY VOTING": 3992,
+     "NOT QUALIFIED | ELECTION DAY": 400,
+     "NOT QUALIFIED | PROVISIONAL": 2,
+     "OVER VOTES | EARLY VOTING": 11,
+     "OVER VOTES | ELECTION DAY": 4,
+     "OVER VOTES | TOTAL": 14,
+     "UNDER VOTES | EARLY VOTING": 501,
+     "UNDER VOTES | ELECTION DAY": 239,
+     "UNDER VOTES | PROVISIONAL": 1,
+     "UNDER VOTES | TOTAL": 950
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 76.3% of the contest's votes carry a method label",
+      "14 precincts have a TOTAL row that differs from their method rows"
+     ],
+     "semanticCaveats": [
+      "summing every row (2,577,352) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 2,566,497"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "AZ",
    "office": "house",
-   "district": "008",
+   "district": "2",
+   "special": false,
    "modes": {
     "EARLY VOTING": {
+     "D": 72706,
+     "R": 85937,
+     "OTHER": 224
+    },
+    "ELECTION DAY": {
+     "D": 14862,
+     "R": 31652,
+     "OTHER": 69
+    },
+    "LATE VOTES": {
+     "D": 31,
+     "R": 7,
+     "OTHER": 0
+    },
+    "PROVISIONAL": {
+     "D": 336,
+     "R": 490,
+     "OTHER": 2
+    },
+    "TOTAL": {
+     "D": 61704,
+     "R": 56092,
+     "OTHER": 255
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 324367,
+    "totalRowsSum": 118051,
+    "methodRowsSum": 206316,
+    "contestVotesDeduplicated": 323825,
+    "methodLabeledVotes": 206314,
+    "methodLabelCompleteness": 0.63712,
+    "methodLabelCoverageOfContest": 0.63712,
+    "jurisdictions": {
+     "counties": 9,
+     "countiesWithMethodLabels": 5,
+     "countyCoverage": 0.55556,
+     "precincts": 274
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 2,
+     "totalEqualsMethodSum": 1,
+     "totalDiffersFromMethodSum": 1,
+     "examples": [
+      {
+       "precinct": "PERIDOT #16",
+       "county": "04009",
+       "totalRow": 244,
+       "methodRowsSum": 246
+      }
+     ]
+    },
+    "excludedNonCandidateRows": {
+     "OVER VOTES | EARLY VOTING": 40,
+     "OVER VOTES | ELECTION DAY": 18,
+     "OVER VOTES | TOTAL": 21,
+     "UNDER VOTES | EARLY VOTING": 2111,
+     "UNDER VOTES | ELECTION DAY": 603,
+     "UNDER VOTES | PROVISIONAL": 10,
+     "UNDER VOTES | TOTAL": 1496
+    },
+    "certified": {
+     "status": "COMPARED",
+     "total": 323396,
+     "difference": 429,
+     "differencePct": 0.1327,
+     "unmatchedVotes": -429,
+     "methodLabeledShareOfCertified": 0.63796
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 63.7% of the contest's votes carry a method label",
+      "1 precincts have a TOTAL row that differs from their method rows"
+     ],
+     "semanticCaveats": [
+      "summing every row (324,367) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 323,825"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "house",
+   "district": "8",
+   "special": false,
+   "modes": {
+    "EARLY VOTING": {
+     "D": 0,
      "R": 158039,
-     "OTHER": 32544
+     "OTHER": 23214
     },
     "ELECTION DAY": {
+     "D": 0,
      "R": 39135,
-     "OTHER": 2404
+     "OTHER": 1415
     },
     "PROVISIONAL": {
+     "D": 0,
      "R": 381,
-     "OTHER": 39
+     "OTHER": 22
     }
    },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 232542,
-   "totalRowVotes": null
-  },
-  {
-   "year": 2022,
-   "state": "CO",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "D": 1397170,
-     "R": 1031693,
-     "OTHER": 71338
-    }
-   },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "CO",
-   "office": "governor",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "R": 983040,
-     "D": 1468481,
-     "OTHER": 57309
-    }
-   },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "FL",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "R": 4474846,
-     "D": 3201522,
-     "OTHER": 120544
-    }
-   },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "FL",
-   "office": "governor",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "R": 4614209,
-     "D": 3106313,
-     "OTHER": 75371
-    }
-   },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "GA",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "R": 1908442,
-     "D": 1946117,
-     "OTHER": 81365
+   "reconciliation": {
+    "rowsSum": 222206,
+    "totalRowsSum": 0,
+    "methodRowsSum": 222206,
+    "contestVotesDeduplicated": 222206,
+    "methodLabeledVotes": 222206,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 1,
+     "countiesWithMethodLabels": 1,
+     "countyCoverage": 1.0,
+     "precincts": 173
     },
-    "ADVANCED": {
-     "R": 1038220,
-     "D": 1202113,
-     "OTHER": 35937
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "NOT QUALIFIED | EARLY VOTING": 9330,
+     "NOT QUALIFIED | ELECTION DAY": 989,
+     "NOT QUALIFIED | PROVISIONAL": 17
+    },
+    "certified": {
+     "status": "COMPARED",
+     "total": 204713,
+     "difference": 17493,
+     "differencePct": 8.5451,
+     "unmatchedVotes": -17493,
+     "methodLabeledShareOfCertified": 1.08545
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "candidate votes differ from the certified total by 8.5451% (+17,493 votes unmatched)"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "EARLY VOTING": {
+     "D": 882493,
+     "R": 695831,
+     "OTHER": 36819
     },
     "ELECTION DAY": {
-     "R": 794384,
-     "D": 575873,
-     "OTHER": 40492
+     "D": 102129,
+     "R": 233206,
+     "OTHER": 5927
     },
-    "ABSENTEE": {
-     "R": 74845,
-     "D": 166257,
-     "OTHER": 4833
+    "LATE VOTES": {
+     "D": 1500,
+     "R": 2238,
+     "OTHER": 71
     },
     "PROVISIONAL": {
-     "R": 993,
-     "D": 1874,
-     "OTHER": 103
+     "D": 1995,
+     "R": 2687,
+     "OTHER": 93
+    },
+    "TOTAL": {
+     "D": 337034,
+     "R": 269734,
+     "OTHER": 13510
     }
    },
-   "classification": "A",
-   "coverage": "RECONCILED",
-   "methodVotes": 3935924,
-   "totalRowVotes": 3935924
+   "reconciliation": {
+    "rowsSum": 2585267,
+    "totalRowsSum": 620278,
+    "methodRowsSum": 1964989,
+    "contestVotesDeduplicated": 2574380,
+    "methodLabeledVotes": 1964953,
+    "methodLabelCompleteness": 0.76327,
+    "methodLabelCoverageOfContest": 0.76327,
+    "jurisdictions": {
+     "counties": 15,
+     "countiesWithMethodLabels": 8,
+     "countyCoverage": 0.53333,
+     "precincts": 1694
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 22,
+     "totalEqualsMethodSum": 9,
+     "totalDiffersFromMethodSum": 13,
+     "examples": [
+      {
+       "precinct": "SOLOMON #1",
+       "county": "04009",
+       "totalRow": 602,
+       "methodRowsSum": 604
+      },
+      {
+       "precinct": "LAYTON #5",
+       "county": "04009",
+       "totalRow": 843,
+       "methodRowsSum": 840
+      },
+      {
+       "precinct": "CENTRAL #8",
+       "county": "04009",
+       "totalRow": 397,
+       "methodRowsSum": 402
+      }
+     ]
+    },
+    "excludedNonCandidateRows": {
+     "NOT QUALIFIED | EARLY VOTING": 1200,
+     "NOT QUALIFIED | ELECTION DAY": 141,
+     "NOT QUALIFIED | PROVISIONAL": 1,
+     "OVER VOTES | EARLY VOTING": 51,
+     "OVER VOTES | ELECTION DAY": 17,
+     "OVER VOTES | TOTAL": 26,
+     "UNDER VOTES | EARLY VOTING": 1193,
+     "UNDER VOTES | ELECTION DAY": 353,
+     "UNDER VOTES | PROVISIONAL": 6,
+     "UNDER VOTES | TOTAL": 661
+    },
+    "certified": {
+     "status": "COMPARED",
+     "total": 2572294,
+     "difference": 2086,
+     "differencePct": 0.0811,
+     "unmatchedVotes": -2086,
+     "methodLabeledShareOfCertified": 0.76389
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 76.3% of the contest's votes carry a method label",
+      "13 precincts have a TOTAL row that differs from their method rows"
+     ],
+     "semanticCaveats": [
+      "summing every row (2,585,267) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 2,574,380"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
-   "year": 2022,
-   "state": "GA",
-   "office": "governor",
-   "district": "STATE",
+   "year": 2024,
+   "state": "AZ",
+   "office": "house",
+   "district": "2",
+   "special": false,
    "modes": {
-    "TOTAL": {
-     "R": 2111572,
-     "D": 1813673,
-     "OTHER": 28188
-    },
-    "ADVANCED": {
-     "R": 1140808,
-     "D": 1134210,
-     "OTHER": 11228
+    "EARLY VOTING": {
+     "D": 336,
+     "R": 80,
+     "OTHER": 63137
     },
     "ELECTION DAY": {
-     "R": 878952,
-     "D": 523575,
-     "OTHER": 15272
-    },
-    "ABSENTEE": {
-     "R": 90691,
-     "D": 154084,
-     "OTHER": 1623
+     "D": 149459,
+     "R": 173654,
+     "OTHER": 19723
     },
     "PROVISIONAL": {
-     "R": 1121,
-     "D": 1804,
-     "OTHER": 40
+     "D": 13,
+     "R": 2,
+     "OTHER": 550
     }
    },
-   "classification": "A",
-   "coverage": "RECONCILED",
-   "methodVotes": 3953408,
-   "totalRowVotes": 3953433
+   "reconciliation": {
+    "rowsSum": 406954,
+    "totalRowsSum": 0,
+    "methodRowsSum": 406954,
+    "contestVotesDeduplicated": 406954,
+    "methodLabeledVotes": 406954,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 9,
+     "countiesWithMethodLabels": 9,
+     "countyCoverage": 1.0,
+     "precincts": 292
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | ELECTION DAY": 120,
+     "UNDERVOTES | EARLY VOTING": 15,
+     "UNDERVOTES | ELECTION DAY": 11046,
+     "UNDERVOTES | PROVISIONAL": 1
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2024,
+   "state": "AZ",
+   "office": "house",
+   "district": "8",
+   "special": false,
+   "modes": {
+    "EARLY VOTING": {
+     "D": 146828,
+     "R": 181973,
+     "OTHER": 630
+    },
+    "ELECTION DAY": {
+     "D": 13322,
+     "R": 26014,
+     "OTHER": 119
+    },
+    "PROVISIONAL": {
+     "D": 194,
+     "R": 282,
+     "OTHER": 2
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 369364,
+    "totalRowsSum": 0,
+    "methodRowsSum": 369364,
+    "contestVotesDeduplicated": 369364,
+    "methodLabeledVotes": 369364,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 1,
+     "countiesWithMethodLabels": 1,
+     "countyCoverage": 1.0,
+     "precincts": 173
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | EARLY VOTING": 124,
+     "OVERVOTES | ELECTION DAY": 21,
+     "UNDERVOTES | EARLY VOTING": 22650,
+     "UNDERVOTES | ELECTION DAY": 4238,
+     "UNDERVOTES | PROVISIONAL": 70
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2024,
+   "state": "AZ",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "EARLY VOTING": {
+     "D": 1354959,
+     "R": 1168040,
+     "OTHER": 60437
+    },
+    "ELECTION DAY": {
+     "D": 315668,
+     "R": 420589,
+     "OTHER": 36960
+    },
+    "LATE EARLY": {
+     "D": 785,
+     "R": 821,
+     "OTHER": 58
+    },
+    "PROVISIONAL": {
+     "D": 4711,
+     "R": 5509,
+     "OTHER": 455
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 3368992,
+    "totalRowsSum": 0,
+    "methodRowsSum": 3368992,
+    "contestVotesDeduplicated": 3368992,
+    "methodLabeledVotes": 3368992,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 15,
+     "countiesWithMethodLabels": 15,
+     "countyCoverage": 1.0,
+     "precincts": 1716
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | EARLY VOTING": 576,
+     "OVERVOTES | ELECTION DAY": 309,
+     "OVERVOTES | PROVISIONAL": 6,
+     "UNDERVOTES | EARLY VOTING": 46339,
+     "UNDERVOTES | ELECTION DAY": 17131,
+     "UNDERVOTES | PROVISIONAL": 345
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "IA",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "ABSENTEE": {
-     "D": 218647,
-     "R": 146745,
-     "OTHER": 298
-    },
-    "ELECTION DAY": {
-     "D": 314683,
-     "R": 534756,
-     "OTHER": 1517
-    }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 1216646,
-   "totalRowVotes": null
-  },
-  {
-   "year": 2022,
-   "state": "IA",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "ABSENTEE": {
      "D": 203145,
@@ -531,16 +900,50 @@
      "OTHER": 22902
     }
    },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 1221864,
-   "totalRowVotes": null
+   "reconciliation": {
+    "rowsSum": 1221864,
+    "totalRowsSum": 0,
+    "methodRowsSum": 1221864,
+    "contestVotesDeduplicated": 1221864,
+    "methodLabeledVotes": 1221864,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 99,
+     "countiesWithMethodLabels": 99,
+     "countyCoverage": 1.0,
+     "precincts": 1653
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "IA",
    "office": "house",
-   "district": "002",
+   "district": "2",
+   "special": false,
    "modes": {
     "ABSENTEE": {
      "D": 58988,
@@ -553,16 +956,839 @@
      "OTHER": 212
     }
    },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 318399,
-   "totalRowVotes": null
+   "reconciliation": {
+    "rowsSum": 318399,
+    "totalRowsSum": 0,
+    "methodRowsSum": 318399,
+    "contestVotesDeduplicated": 318399,
+    "methodLabeledVotes": 318399,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 22,
+     "countiesWithMethodLabels": 22,
+     "countyCoverage": 1.0,
+     "precincts": 411
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 318399,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 1.0
+    },
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "IA",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 218647,
+     "R": 146745,
+     "OTHER": 298
+    },
+    "ELECTION DAY": {
+     "D": 314683,
+     "R": 534756,
+     "OTHER": 1517
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 1216646,
+    "totalRowsSum": 0,
+    "methodRowsSum": 1216646,
+    "contestVotesDeduplicated": 1216646,
+    "methodLabeledVotes": 1216646,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 99,
+     "countiesWithMethodLabels": 99,
+     "countyCoverage": 1.0,
+     "precincts": 1653
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 1216646,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 1.0
+    },
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2024,
+   "state": "IA",
+   "office": "house",
+   "district": "2",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 82917,
+     "R": 80618,
+     "OTHER": 1725
+    },
+    "ELECTION DAY": {
+     "D": 86823,
+     "R": 152722,
+     "OTHER": 3997
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 408802,
+    "totalRowsSum": 0,
+    "methodRowsSum": 408802,
+    "contestVotesDeduplicated": 408802,
+    "methodLabeledVotes": 408802,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 22,
+     "countiesWithMethodLabels": 22,
+     "countyCoverage": 1.0,
+     "precincts": 412
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [
+      "ABSENTEE/ADVANCED labels may include early in-person voting; method meaning is the source's own label"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "governor",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 17674,
+     "R": 23309,
+     "OTHER": 12942
+    },
+    "EARLY VOTING": {
+     "D": 10272,
+     "R": 17857,
+     "OTHER": 9125
+    },
+    "ELECTION DAY": {
+     "D": 34387,
+     "R": 99171,
+     "OTHER": 31954
+    },
+    "QUESTION": {
+     "D": 1518,
+     "R": 4112,
+     "OTHER": 1431
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 263752,
+    "totalRowsSum": 0,
+    "methodRowsSum": 263752,
+    "contestVotesDeduplicated": 263752,
+    "methodLabeledVotes": 263752,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 1,
+     "countiesWithMethodLabels": 1,
+     "countyCoverage": 1.0,
+     "precincts": 521
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 7731,
+     "R": 45228,
+     "OTHER": 1045
+    },
+    "EARLY VOTING": {
+     "D": 4211,
+     "R": 32294,
+     "OTHER": 382
+    },
+    "ELECTION DAY": {
+     "D": 14264,
+     "R": 148985,
+     "OTHER": 392
+    },
+    "FEDERAL OVERSEAS": {
+     "D": 56,
+     "R": 48,
+     "OTHER": 0
+    },
+    "QUESTION": {
+     "D": 883,
+     "R": 5977,
+     "OTHER": 209
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 261705,
+    "totalRowsSum": 0,
+    "methodRowsSum": 261705,
+    "contestVotesDeduplicated": 261705,
+    "methodLabeledVotes": 261705,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 1,
+     "countiesWithMethodLabels": 1,
+     "countyCoverage": 1.0,
+     "precincts": 522
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 261705,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 1.0
+    },
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "governor",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 34318,
+     "R": 34948,
+     "OTHER": 524
+    },
+    "EARLY": {
+     "D": 257822,
+     "R": 280015,
+     "OTHER": 4675
+    },
+    "ELECTION DAY": {
+     "D": 397962,
+     "R": 670157,
+     "OTHER": 16694
+    },
+    "FAILSAFE": {
+     "D": 1980,
+     "R": 2410,
+     "OTHER": 100
+    },
+    "FAILSAFE PROVISIONAL": {
+     "D": 1804,
+     "R": 2534,
+     "OTHER": 72
+    },
+    "PROVISIONAL": {
+     "D": 1394,
+     "R": 1818,
+     "OTHER": 42
+    },
+    "TOTAL": {
+     "D": 690102,
+     "R": 985120,
+     "OTHER": 21893
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 3406384,
+    "totalRowsSum": 1697115,
+    "methodRowsSum": 1709269,
+    "contestVotesDeduplicated": 1709269,
+    "methodLabeledVotes": 1709269,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 46,
+     "countiesWithMethodLabels": 46,
+     "countyCoverage": 1.0,
+     "precincts": 2395
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 2257,
+     "totalEqualsMethodSum": 2257,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [
+      "labels FAILSAFE, PROVISIONAL and FAILSAFE PROVISIONAL may overlap; exclusivity cannot be established from the file",
+      "summing every row (3,406,384) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 1,709,269"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 6462,
+     "R": 5595,
+     "OTHER": 84
+    },
+    "EARLY": {
+     "D": 49721,
+     "R": 53025,
+     "OTHER": 875
+    },
+    "ELECTION DAY": {
+     "D": 59280,
+     "R": 94699,
+     "OTHER": 2155
+    },
+    "FAILSAFE": {
+     "D": 222,
+     "R": 330,
+     "OTHER": 14
+    },
+    "FAILSAFE PROVISIONAL": {
+     "D": 210,
+     "R": 276,
+     "OTHER": 10
+    },
+    "PROVISIONAL": {
+     "D": 234,
+     "R": 270,
+     "OTHER": 4
+    },
+    "TOTAL": {
+     "D": 115463,
+     "R": 153319,
+     "OTHER": 3114
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 545362,
+    "totalRowsSum": 271896,
+    "methodRowsSum": 273466,
+    "contestVotesDeduplicated": 273466,
+    "methodLabeledVotes": 273466,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 6,
+     "countiesWithMethodLabels": 6,
+     "countyCoverage": 1.0,
+     "precincts": 353
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 335,
+     "totalEqualsMethodSum": 335,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 272681,
+     "difference": 785,
+     "differencePct": 0.2879,
+     "unmatchedVotes": -785,
+     "methodLabeledShareOfCertified": 1.00288
+    },
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [
+      "labels FAILSAFE, PROVISIONAL and FAILSAFE PROVISIONAL may overlap; exclusivity cannot be established from the file",
+      "summing every row (545,362) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 273,466"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 32251,
+     "R": 37056,
+     "OTHER": 119
+    },
+    "EARLY": {
+     "D": 240438,
+     "R": 298921,
+     "OTHER": 555
+    },
+    "ELECTION DAY": {
+     "D": 352635,
+     "R": 726540,
+     "OTHER": 1133
+    },
+    "FAILSAFE": {
+     "D": 1802,
+     "R": 2668,
+     "OTHER": 0
+    },
+    "FAILSAFE PROVISIONAL": {
+     "D": 1504,
+     "R": 2874,
+     "OTHER": 4
+    },
+    "PROVISIONAL": {
+     "D": 1278,
+     "R": 1972,
+     "OTHER": 6
+    },
+    "TOTAL": {
+     "D": 625324,
+     "R": 1062517,
+     "OTHER": 1807
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 3391404,
+    "totalRowsSum": 1689648,
+    "methodRowsSum": 1701756,
+    "contestVotesDeduplicated": 1701756,
+    "methodLabeledVotes": 1701756,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 46,
+     "countiesWithMethodLabels": 46,
+     "countyCoverage": 1.0,
+     "precincts": 2395
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 2257,
+     "totalEqualsMethodSum": 2257,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 1695702,
+     "difference": 6054,
+     "differencePct": 0.357,
+     "unmatchedVotes": -6054,
+     "methodLabeledShareOfCertified": 1.00357
+    },
+    "verdict": {
+     "status": "DATASET_RECONCILED",
+     "reasons": [],
+     "semanticCaveats": [
+      "labels FAILSAFE, PROVISIONAL and FAILSAFE PROVISIONAL may overlap; exclusivity cannot be established from the file",
+      "summing every row (3,391,404) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 1,701,756"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2024,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "special": false,
+   "modes": {
+    "ABSENTEE": {
+     "D": 12574,
+     "R": 10247,
+     "OTHER": 55
+    },
+    "EARLY": {
+     "D": 99933,
+     "R": 139256,
+     "OTHER": 342
+    },
+    "ELECTION DAY": {
+     "D": 49743,
+     "R": 77626,
+     "OTHER": 295
+    },
+    "FAILSAFE": {
+     "D": 99,
+     "R": 129,
+     "OTHER": 0
+    },
+    "FAILSAFE PROVISIONAL": {
+     "D": 79,
+     "R": 88,
+     "OTHER": 1
+    },
+    "PROVISIONAL": {
+     "D": 154,
+     "R": 156,
+     "OTHER": 0
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 390777,
+    "totalRowsSum": 0,
+    "methodRowsSum": 390777,
+    "contestVotesDeduplicated": 390777,
+    "methodLabeledVotes": 390777,
+    "methodLabelCompleteness": 1.0,
+    "methodLabelCoverageOfContest": 1.0,
+    "jurisdictions": {
+     "counties": 6,
+     "countiesWithMethodLabels": 6,
+     "countyCoverage": 1.0,
+     "precincts": 384
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against"
+     ],
+     "semanticCaveats": [
+      "labels FAILSAFE, PROVISIONAL and FAILSAFE PROVISIONAL may overlap; exclusivity cannot be established from the file"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "CO",
+   "office": "governor",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "TOTAL": {
+     "D": 1468481,
+     "R": 983040,
+     "OTHER": 57309
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 2508830,
+    "totalRowsSum": 2508830,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 2508830,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 64,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 3232
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "CO",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "TOTAL": {
+     "D": 1397170,
+     "R": 1031693,
+     "OTHER": 71338
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 2500201,
+    "totalRowsSum": 2500201,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 2500201,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 64,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 3232
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 2500201,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 0.0
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "FL",
+   "office": "governor",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "TOTAL": {
+     "D": 3106313,
+     "R": 4614209,
+     "OTHER": 50876
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 7771398,
+    "totalRowsSum": 7771398,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 7771398,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 6007
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | TOTAL": 2441,
+     "UNDERVOTES | TOTAL": 22054
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
+  },
+  {
+   "year": 2022,
+   "state": "FL",
+   "office": "senate",
+   "district": "STATE",
+   "special": false,
+   "modes": {
+    "TOTAL": {
+     "D": 3201522,
+     "R": 4474846,
+     "OTHER": 84725
+    }
+   },
+   "reconciliation": {
+    "rowsSum": 7761093,
+    "totalRowsSum": 7761093,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 7761093,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 6013
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | TOTAL": 1936,
+     "UNDERVOTES | TOTAL": 33883
+    },
+    "certified": {
+     "status": "COMPARED",
+     "total": 7758014,
+     "difference": 3079,
+     "differencePct": 0.0397,
+     "unmatchedVotes": -3079,
+     "methodLabeledShareOfCertified": 0.0
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "KS",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 499845,
@@ -570,14 +1796,49 @@
      "OTHER": 31558
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 1008989,
+    "totalRowsSum": 1008989,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 1008989,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 105,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 4524
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "KS",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 372211,
@@ -585,156 +1846,460 @@
      "OTHER": 29766
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 1004948,
+    "totalRowsSum": 1004948,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 1004948,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 105,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 4523
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 1004956,
+     "difference": -8,
+     "differencePct": -0.0008,
+     "unmatchedVotes": 8,
+     "methodLabeledShareOfCertified": 0.0
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "ME",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "OTHER": 12562,
+     "D": 375332,
      "R": 287087,
-     "D": 375332
+     "OTHER": 12562
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 674981,
+    "totalRowsSum": 674981,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 674981,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 16,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 508
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "NE",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "R": 398334,
      "D": 242006,
+     "R": 398334,
      "OTHER": 26455
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 666795,
+    "totalRowsSum": 666795,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 666795,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 93,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 1323
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "NY",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
-    "UNSPECIFIED": {
-     "D": 2798433,
-     "OTHER": 2283423,
-     "R": 2350513
-    },
-    "TOTAL": {
-     "D": 85252,
-     "R": 98623,
-     "OTHER": 19625
+    "ABSENTEE": {
+     "D": 15160,
+     "R": 8225,
+     "OTHER": 2579
     },
     "ABSENTEE / MILITARY": {
+     "D": 0,
+     "R": 0,
      "OTHER": 125864
     },
     "AFFIDAVIT": {
-     "OTHER": 32266,
      "D": 35,
-     "R": 78
-    },
-    "FEDERAL": {
-     "OTHER": 6462
+     "R": 78,
+     "OTHER": 32264
     },
     "ELECTION_DAY": {
      "D": 67254,
      "R": 105531,
-     "OTHER": 18727
+     "OTHER": 17614
     },
-    "ABSENTEE": {
-     "D": 15160,
-     "OTHER": 3167,
-     "R": 8225
+    "FEDERAL": {
+     "D": 0,
+     "R": 0,
+     "OTHER": 6462
     },
     "MILITARY": {
      "D": 6,
-     "R": 1
+     "R": 1,
+     "OTHER": 0
+    },
+    "TOTAL": {
+     "D": 85252,
+     "R": 98623,
+     "OTHER": 18233
+    },
+    "UNSPECIFIED": {
+     "D": 2798433,
+     "R": 2350513,
+     "OTHER": 2264860
     }
    },
-   "classification": "E",
-   "reason": "mode labels are not standardized; one label ('UNSPECIFIED') carries the great majority of votes and others overlap"
+   "reconciliation": {
+    "rowsSum": 7996987,
+    "totalRowsSum": 202108,
+    "methodRowsSum": 381073,
+    "contestVotesDeduplicated": 7822582,
+    "methodLabeledVotes": 381073,
+    "methodLabelCompleteness": 0.04871,
+    "methodLabelCoverageOfContest": 0.04871,
+    "jurisdictions": {
+     "counties": 62,
+     "countiesWithMethodLabels": 18,
+     "countyCoverage": 0.29032,
+     "precincts": 13536
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 456,
+     "totalEqualsMethodSum": 72,
+     "totalDiffersFromMethodSum": 384,
+     "examples": [
+      {
+       "precinct": "Arcade 1 1",
+       "county": "36121",
+       "totalRow": 488,
+       "methodRowsSum": 437
+      },
+      {
+       "precinct": "Arcade 2 1",
+       "county": "36121",
+       "totalRow": 330,
+       "methodRowsSum": 314
+      },
+      {
+       "precinct": "Arcade 3 1",
+       "county": "36121",
+       "totalRow": 337,
+       "methodRowsSum": 323
+      }
+     ]
+    },
+    "excludedNonCandidateRows": {
+     "BLANK | ABSENTEE": 395,
+     "BLANK | ELECTION_DAY": 486,
+     "BLANK | TOTAL": 607,
+     "BLANK | UNSPECIFIED": 10501,
+     "OVERVOTES | ABSENTEE": 6,
+     "OVERVOTES | ELECTION_DAY": 19,
+     "OVERVOTES | TOTAL": 33,
+     "OVERVOTES | UNSPECIFIED": 541,
+     "UNDERVOTES | ABSENTEE": 170,
+     "UNDERVOTES | AFFIDAVIT": 2,
+     "UNDERVOTES | ELECTION_DAY": 599,
+     "UNDERVOTES | TOTAL": 736,
+     "UNDERVOTES | UNSPECIFIED": 6768,
+     "VOID | ABSENTEE": 17,
+     "VOID | ELECTION_DAY": 9,
+     "VOID | TOTAL": 16,
+     "VOID | UNSPECIFIED": 753
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 4.9% of the contest's votes carry a method label",
+      "384 precincts have a TOTAL row that differs from their method rows"
+     ],
+     "semanticCaveats": [
+      "summing every row (7,996,987) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 7,822,582"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "NY",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
-    "UNSPECIFIED": {
-     "D": 2887841,
-     "OTHER": 2301007,
-     "R": 2071768
-    },
-    "TOTAL": {
-     "D": 90965,
-     "R": 90295,
-     "OTHER": 22816
+    "ABSENTEE": {
+     "D": 15845,
+     "R": 7656,
+     "OTHER": 2638
     },
     "ABSENTEE / MILITARY": {
+     "D": 0,
+     "R": 0,
      "OTHER": 125864
     },
     "AFFIDAVIT": {
-     "OTHER": 32262,
      "D": 40,
-     "R": 76
-    },
-    "FEDERAL": {
-     "OTHER": 6463,
-     "D": 7,
-     "R": 2
-    },
-    "ELECTION_DAY": {
-     "D": 72909,
-     "R": 96572,
-     "OTHER": 22390
-    },
-    "ABSENTEE": {
-     "D": 15845,
-     "OTHER": 2934,
-     "R": 7656
-    },
-    "MILITARY": {
-     "D": 6,
-     "R": 1
+     "R": 76,
+     "OTHER": 32262
     },
     "ELECTION DAY": {
      "D": 34251,
      "R": 25414,
      "OTHER": 10245
+    },
+    "ELECTION_DAY": {
+     "D": 72909,
+     "R": 96572,
+     "OTHER": 19349
+    },
+    "FEDERAL": {
+     "D": 7,
+     "R": 2,
+     "OTHER": 6463
+    },
+    "MILITARY": {
+     "D": 6,
+     "R": 1,
+     "OTHER": 0
+    },
+    "TOTAL": {
+     "D": 90965,
+     "R": 90295,
+     "OTHER": 19957
+    },
+    "UNSPECIFIED": {
+     "D": 2887841,
+     "R": 2071768,
+     "OTHER": 2252501
     }
    },
-   "classification": "E",
-   "reason": "mode labels are not standardized; one label ('UNSPECIFIED') carries the great majority of votes and others overlap"
+   "reconciliation": {
+    "rowsSum": 7862927,
+    "totalRowsSum": 201217,
+    "methodRowsSum": 449600,
+    "contestVotesDeduplicated": 7689537,
+    "methodLabeledVotes": 449600,
+    "methodLabelCompleteness": 0.05847,
+    "methodLabelCoverageOfContest": 0.05847,
+    "jurisdictions": {
+     "counties": 61,
+     "countiesWithMethodLabels": 18,
+     "countyCoverage": 0.29508,
+     "precincts": 13448
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 457,
+     "totalEqualsMethodSum": 73,
+     "totalDiffersFromMethodSum": 384,
+     "examples": [
+      {
+       "precinct": "Arcade 1 1",
+       "county": "36121",
+       "totalRow": 488,
+       "methodRowsSum": 437
+      },
+      {
+       "precinct": "Arcade 2 1",
+       "county": "36121",
+       "totalRow": 330,
+       "methodRowsSum": 314
+      },
+      {
+       "precinct": "Arcade 3 1",
+       "county": "36121",
+       "totalRow": 337,
+       "methodRowsSum": 323
+      }
+     ]
+    },
+    "excludedNonCandidateRows": {
+     "BLANK | ABSENTEE": 140,
+     "BLANK | ELECTION_DAY": 1137,
+     "BLANK | TOTAL": 1095,
+     "BLANK | UNSPECIFIED": 23455,
+     "OVERVOTES | ABSENTEE": 9,
+     "OVERVOTES | ELECTION_DAY": 35,
+     "OVERVOTES | TOTAL": 49,
+     "OVERVOTES | UNSPECIFIED": 536,
+     "UNDERVOTES | ABSENTEE": 133,
+     "UNDERVOTES | ELECTION_DAY": 1852,
+     "UNDERVOTES | TOTAL": 1691,
+     "UNDERVOTES | UNSPECIFIED": 23962,
+     "VOID | ABSENTEE": 14,
+     "VOID | ELECTION_DAY": 17,
+     "VOID | TOTAL": 24,
+     "VOID | UNSPECIFIED": 553
+    },
+    "certified": {
+     "status": "COMPARED",
+     "total": 5852707,
+     "difference": 1836830,
+     "differencePct": 31.3843,
+     "unmatchedVotes": -1836830,
+     "methodLabeledShareOfCertified": 0.07682
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "candidate votes differ from the certified total by 31.3843% (+1,836,830 votes unmatched)",
+      "only 5.8% of the contest's votes carry a method label",
+      "384 precincts have a TOTAL row that differs from their method rows"
+     ],
+     "semanticCaveats": [
+      "summing every row (7,862,927) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 7,689,537"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "OH",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "R": 2580424,
      "D": 1545489,
+     "R": 2580424,
      "OTHER": 8964
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 4134877,
+    "totalRowsSum": 4134877,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 4134877,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 88,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9021
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "OH",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 1939489,
@@ -742,29 +2307,52 @@
      "OTHER": 1739
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "PA",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "D": 2750317,
-     "R": 2487091,
-     "OTHER": 129230
+   "reconciliation": {
+    "rowsSum": 4133342,
+    "totalRowsSum": 4133342,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 4133342,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 88,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9021
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 4133342,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 0.0
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   }
   },
   {
    "year": 2022,
    "state": "PA",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 3031032,
@@ -772,170 +2360,152 @@
      "OTHER": 96560
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2022,
-   "state": "SC",
-   "office": "governor",
-   "district": "STATE",
-   "modes": {
-    "TOTAL": {
-     "R": 985120,
-     "OTHER": 21893,
-     "D": 690102
+   "reconciliation": {
+    "rowsSum": 5365929,
+    "totalRowsSum": 5365929,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 5365929,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9187
     },
-    "FAILSAFE": {
-     "R": 2410,
-     "OTHER": 100,
-     "D": 1980
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
     },
-    "PROVISIONAL": {
-     "R": 1818,
-     "OTHER": 42,
-     "D": 1394
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
     },
-    "FAILSAFE PROVISIONAL": {
-     "R": 2534,
-     "OTHER": 72,
-     "D": 1804
-    },
-    "EARLY": {
-     "R": 280015,
-     "OTHER": 4675,
-     "D": 257822
-    },
-    "ABSENTEE": {
-     "R": 34948,
-     "OTHER": 524,
-     "D": 34318
-    },
-    "ELECTION DAY": {
-     "R": 670157,
-     "OTHER": 16694,
-     "D": 397962
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 1709269,
-   "totalRowVotes": 1697115
+   }
   },
   {
    "year": 2022,
-   "state": "SC",
+   "state": "PA",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "R": 1062517,
-     "D": 625324,
-     "OTHER": 1807
-    },
-    "FAILSAFE": {
-     "R": 2668,
-     "D": 1802,
-     "OTHER": 0
-    },
-    "PROVISIONAL": {
-     "R": 1972,
-     "D": 1278,
-     "OTHER": 6
-    },
-    "FAILSAFE PROVISIONAL": {
-     "R": 2874,
-     "D": 1504,
-     "OTHER": 4
-    },
-    "EARLY": {
-     "R": 298921,
-     "D": 240438,
-     "OTHER": 555
-    },
-    "ABSENTEE": {
-     "R": 37056,
-     "D": 32251,
-     "OTHER": 119
-    },
-    "ELECTION DAY": {
-     "R": 726540,
-     "D": 352635,
-     "OTHER": 1133
+     "D": 2750317,
+     "R": 2487091,
+     "OTHER": 129230
     }
    },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 1701756,
-   "totalRowVotes": 1689648
-  },
-  {
-   "year": 2022,
-   "state": "SC",
-   "office": "house",
-   "district": "001",
-   "modes": {
-    "TOTAL": {
-     "R": 153319,
-     "OTHER": 3114,
-     "D": 115463
+   "reconciliation": {
+    "rowsSum": 5366638,
+    "totalRowsSum": 5366638,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 5366638,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9187
     },
-    "FAILSAFE": {
-     "R": 330,
-     "OTHER": 14,
-     "D": 222
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
     },
-    "PROVISIONAL": {
-     "R": 270,
-     "OTHER": 4,
-     "D": 234
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 5375885,
+     "difference": -9247,
+     "differencePct": -0.172,
+     "unmatchedVotes": 9247,
+     "methodLabeledShareOfCertified": 0.0
     },
-    "FAILSAFE PROVISIONAL": {
-     "R": 276,
-     "OTHER": 10,
-     "D": 210
-    },
-    "EARLY": {
-     "R": 53025,
-     "OTHER": 875,
-     "D": 49721
-    },
-    "ABSENTEE": {
-     "R": 5595,
-     "OTHER": 84,
-     "D": 6462
-    },
-    "ELECTION DAY": {
-     "R": 94699,
-     "OTHER": 2155,
-     "D": 59280
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "AMBIGUOUS",
-   "methodVotes": 273466,
-   "totalRowVotes": 271896
+   }
   },
   {
    "year": 2022,
    "state": "TX",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
+     "D": 3554772,
      "R": 4437097,
-     "OTHER": 114899,
-     "D": 3554772
+     "OTHER": 114899
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 8106768,
+    "totalRowsSum": 8106768,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 8106768,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 254,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9256
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "WI",
    "office": "governor",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 1358774,
@@ -943,14 +2513,49 @@
      "OTHER": 29077
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 2656386,
+    "totalRowsSum": 2656386,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 2656386,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 72,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 3626
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2022,
    "state": "WI",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 1310467,
@@ -958,255 +2563,401 @@
      "OTHER": 4825
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2024,
-   "state": "AZ",
-   "office": "senate",
-   "district": "STATE",
-   "modes": {
-    "ELECTION DAY": {
-     "R": 420589,
-     "D": 315668,
-     "OTHER": 54400
+   "reconciliation": {
+    "rowsSum": 2652477,
+    "totalRowsSum": 2652477,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 2652477,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 72,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 3626
     },
-    "EARLY VOTING": {
-     "R": 1168040,
-     "D": 1354959,
-     "OTHER": 107352
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
     },
-    "PROVISIONAL": {
-     "R": 5509,
-     "D": 4711,
-     "OTHER": 806
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "COMPARED",
+     "total": 2652477,
+     "difference": 0,
+     "differencePct": 0.0,
+     "unmatchedVotes": 0,
+     "methodLabeledShareOfCertified": 0.0
     },
-    "LATE EARLY": {
-     "R": 821,
-     "D": 785,
-     "OTHER": 58
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 3433698,
-   "totalRowVotes": null
-  },
-  {
-   "year": 2024,
-   "state": "AZ",
-   "office": "house",
-   "district": "002",
-   "modes": {
-    "EARLY VOTING": {
-     "R": 80,
-     "D": 336,
-     "OTHER": 63152
-    },
-    "ELECTION DAY": {
-     "R": 173654,
-     "D": 149459,
-     "OTHER": 30889
-    },
-    "PROVISIONAL": {
-     "R": 2,
-     "D": 13,
-     "OTHER": 551
-    }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 418136,
-   "totalRowVotes": null
-  },
-  {
-   "year": 2024,
-   "state": "AZ",
-   "office": "house",
-   "district": "008",
-   "modes": {
-    "EARLY VOTING": {
-     "D": 146828,
-     "R": 181973,
-     "OTHER": 23404
-    },
-    "ELECTION DAY": {
-     "D": 13322,
-     "R": 26014,
-     "OTHER": 4378
-    },
-    "PROVISIONAL": {
-     "D": 194,
-     "R": 282,
-     "OTHER": 72
-    }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 396467,
-   "totalRowVotes": null
+   }
   },
   {
    "year": 2024,
    "state": "FL",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "R": 5977707,
      "D": 4603077,
-     "OTHER": 421740
+     "R": 5977707,
+     "OTHER": 186528
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2024,
-   "state": "IA",
-   "office": "house",
-   "district": "002",
-   "modes": {
-    "ELECTION DAY": {
-     "D": 86823,
-     "R": 152722,
-     "OTHER": 3997
+   "reconciliation": {
+    "rowsSum": 10767312,
+    "totalRowsSum": 10767312,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 10767312,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 5710
     },
-    "ABSENTEE": {
-     "D": 82917,
-     "R": 80618,
-     "OTHER": 1725
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | TOTAL": 3180,
+     "UNDERVOTES | TOTAL": 232032
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 408802,
-   "totalRowVotes": null
+   }
   },
   {
    "year": 2024,
    "state": "ME",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
-     "OTHER": 1301614,
      "D": 86464,
-     "R": 283638
+     "R": 283638,
+     "OTHER": 1280394
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 1650496,
+    "totalRowsSum": 1650496,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 1650496,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 16,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 511
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "UNDERVOTES | TOTAL": 21220
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2024,
    "state": "NE",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
+     "D": 436493,
      "R": 499124,
-     "D": 436493
+     "OTHER": 0
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 935617,
+    "totalRowsSum": 935617,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 935617,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 93,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 1326
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2024,
    "state": "NY",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
-    "TOTAL": {
-     "D": 4242512,
-     "R": 2832286,
-     "OTHER": 968571
-    },
-    "ELECTION DAY": {
-     "D": 87161,
-     "R": 80825,
-     "OTHER": 40662
-    },
-    "EARLY VOTING": {
-     "D": 63928,
-     "R": 33991,
-     "OTHER": 17360
-    },
     "ABSENTEE": {
      "D": 21674,
      "R": 6770,
-     "OTHER": 5347
+     "OTHER": 3951
     },
-    "PROVISIONAL": {
-     "D": 398,
-     "OTHER": 454
+    "ABSENTEE, EARLY MAIL BALLOT, MILITARY, UOCAVA, AFFIDAVIT": {
+     "D": 1606,
+     "R": 992,
+     "OTHER": 215
+    },
+    "ABSENTEE/AFFIDAVIT": {
+     "D": 2906,
+     "R": 1473,
+     "OTHER": 415
+    },
+    "ABSENTEE/EARLY VOTING BY MAIL PRE ELECTION DAY": {
+     "D": 816,
+     "R": 569,
+     "OTHER": 153
+    },
+    "ABSENTEE/EARLY VOTING BY MAIL/AFFIDAVIT POST ELECTION DAY": {
+     "D": 342,
+     "R": 399,
+     "OTHER": 94
     },
     "AFFIDAVIT": {
      "D": 565,
      "R": 436,
-     "OTHER": 252
+     "OTHER": 138
+    },
+    "EARLY VOTING": {
+     "D": 63928,
+     "R": 33991,
+     "OTHER": 14171
+    },
+    "ELECTION DAY": {
+     "D": 87161,
+     "R": 80825,
+     "OTHER": 31600
+    },
+    "ELECTION DAY/EARLY VOTING": {
+     "D": 13994,
+     "R": 13245,
+     "OTHER": 2850
     },
     "MILITARY": {
      "D": 0,
      "R": 0,
      "OTHER": 0
     },
-    "ABSENTEE/EARLY VOTING BY MAIL PRE ELECTION DAY": {
-     "D": 816,
-     "R": 569,
-     "OTHER": 199
+    "PROVISIONAL": {
+     "D": 398,
+     "R": 0,
+     "OTHER": 383
     },
-    "ABSENTEE/EARLY VOTING BY MAIL/AFFIDAVIT POST ELECTION DAY": {
-     "D": 342,
-     "R": 399,
-     "OTHER": 155
+    "TOTAL": {
+     "D": 4242512,
+     "R": 2832286,
+     "OTHER": 790724
     },
     "UNSCANNED/MANUAL ENTRY": {
      "D": 126,
      "R": 100,
-     "OTHER": 50
-    },
-    "ABSENTEE/AFFIDAVIT": {
-     "D": 2906,
-     "OTHER": 628,
-     "R": 1473
-    },
-    "ELECTION DAY/EARLY VOTING": {
-     "OTHER": 3992,
-     "D": 13994,
-     "R": 13245
-    },
-    "ABSENTEE, EARLY MAIL BALLOT, MILITARY, UOCAVA, AFFIDAVIT": {
-     "D": 1606,
-     "R": 992,
-     "OTHER": 333
+     "OTHER": 34
     }
    },
-   "classification": "E",
-   "reason": "mode labels are not standardized; one label ('UNSPECIFIED') carries the great majority of votes and others overlap"
+   "reconciliation": {
+    "rowsSum": 8251842,
+    "totalRowsSum": 7865522,
+    "methodRowsSum": 386320,
+    "contestVotesDeduplicated": 8030814,
+    "methodLabeledVotes": 386320,
+    "methodLabelCompleteness": 0.0481,
+    "methodLabelCoverageOfContest": 0.0481,
+    "jurisdictions": {
+     "counties": 62,
+     "countiesWithMethodLabels": 9,
+     "countyCoverage": 0.14516,
+     "precincts": 13112
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 408,
+     "totalEqualsMethodSum": 408,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {
+     "OVERVOTES | ABSENTEE": 39,
+     "OVERVOTES | ABSENTEE/AFFIDAVIT": 8,
+     "OVERVOTES | AFFIDAVIT": 3,
+     "OVERVOTES | EARLY VOTING": 37,
+     "OVERVOTES | ELECTION DAY": 108,
+     "OVERVOTES | ELECTION DAY/EARLY VOTING": 23,
+     "OVERVOTES | MILITARY": 0,
+     "OVERVOTES | PROVISIONAL": 0,
+     "OVERVOTES | TOTAL": 3292,
+     "UNDERVOTES | ABSENTEE": 1357,
+     "UNDERVOTES | ABSENTEE, EARLY MAIL BALLOT, MILITARY, UOCAVA, AFFIDAVIT": 112,
+     "UNDERVOTES | ABSENTEE/AFFIDAVIT": 205,
+     "UNDERVOTES | ABSENTEE/EARLY VOTING BY MAIL PRE ELECTION DAY": 45,
+     "UNDERVOTES | ABSENTEE/EARLY VOTING BY MAIL/AFFIDAVIT POST ELECTION DAY": 60,
+     "UNDERVOTES | AFFIDAVIT": 111,
+     "UNDERVOTES | EARLY VOTING": 3142,
+     "UNDERVOTES | ELECTION DAY": 8911,
+     "UNDERVOTES | ELECTION DAY/EARLY VOTING": 1119,
+     "UNDERVOTES | MILITARY": 0,
+     "UNDERVOTES | PROVISIONAL": 71,
+     "UNDERVOTES | TOTAL": 161645,
+     "UNDERVOTES | UNSCANNED/MANUAL ENTRY": 14,
+     "VOID | ABSENTEE": 0,
+     "VOID | ABSENTEE, EARLY MAIL BALLOT, MILITARY, UOCAVA, AFFIDAVIT": 6,
+     "VOID | ABSENTEE/EARLY VOTING BY MAIL PRE ELECTION DAY": 1,
+     "VOID | ABSENTEE/EARLY VOTING BY MAIL/AFFIDAVIT POST ELECTION DAY": 1,
+     "VOID | EARLY VOTING": 10,
+     "VOID | ELECTION DAY": 43,
+     "VOID | PROVISIONAL": 0,
+     "VOID | TOTAL": 12910,
+     "VOID | UNSCANNED/MANUAL ENTRY": 2
+    },
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 4.8% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [
+      "summing every row (8,251,842) double counts where TOTAL rows duplicate method rows; the deduplicated figure is 8,030,814"
+     ],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2024,
    "state": "OH",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 2650949,
-     "OTHER": 195648,
-     "R": 2857383
+     "R": 2857383,
+     "OTHER": 195648
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 5703980,
+    "totalRowsSum": 5703980,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 5703980,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 88,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 8878
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2024,
    "state": "PA",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 3382144,
@@ -1214,71 +2965,99 @@
      "OTHER": 179577
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
-  },
-  {
-   "year": 2024,
-   "state": "SC",
-   "office": "house",
-   "district": "001",
-   "modes": {
-    "ELECTION DAY": {
-     "R": 77626,
-     "D": 49743,
-     "OTHER": 295
+   "reconciliation": {
+    "rowsSum": 6960775,
+    "totalRowsSum": 6960775,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 6960775,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 67,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9187
     },
-    "EARLY": {
-     "R": 139256,
-     "D": 99933,
-     "OTHER": 342
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
     },
-    "ABSENTEE": {
-     "R": 10247,
-     "D": 12574,
-     "OTHER": 55
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
     },
-    "FAILSAFE": {
-     "R": 129,
-     "D": 99,
-     "OTHER": 0
-    },
-    "PROVISIONAL": {
-     "R": 156,
-     "D": 154,
-     "OTHER": 0
-    },
-    "FAILSAFE PROVISIONAL": {
-     "R": 88,
-     "D": 79,
-     "OTHER": 1
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
     }
-   },
-   "classification": "A",
-   "coverage": "NO_TOTAL",
-   "methodVotes": 390777,
-   "totalRowVotes": null
+   }
   },
   {
    "year": 2024,
    "state": "TX",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 5031142,
-     "OTHER": 268454,
-     "R": 5990637
+     "R": 5990637,
+     "OTHER": 268454
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 11290233,
+    "totalRowsSum": 11290233,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 11290233,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 254,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 9712
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   },
   {
    "year": 2024,
    "state": "WI",
    "office": "senate",
    "district": "STATE",
+   "special": false,
    "modes": {
     "TOTAL": {
      "D": 1672777,
@@ -1286,8 +3065,42 @@
      "OTHER": 74014
     }
    },
-   "classification": "E",
-   "reason": "only TOTAL rows; no method breakdown"
+   "reconciliation": {
+    "rowsSum": 3390787,
+    "totalRowsSum": 3390787,
+    "methodRowsSum": 0,
+    "contestVotesDeduplicated": 3390787,
+    "methodLabeledVotes": 0,
+    "methodLabelCompleteness": 0.0,
+    "methodLabelCoverageOfContest": 0.0,
+    "jurisdictions": {
+     "counties": 72,
+     "countiesWithMethodLabels": 0,
+     "countyCoverage": 0.0,
+     "precincts": 3601
+    },
+    "overlap": {
+     "precinctsWithTotalAndMethodRows": 0,
+     "totalEqualsMethodSum": 0,
+     "totalDiffersFromMethodSum": 0,
+     "examples": []
+    },
+    "excludedNonCandidateRows": {},
+    "certified": {
+     "status": "NO_CERTIFIED_SOURCE_RETRIEVED",
+     "reason": "the federal certified-results workbook covers Senate and House only; no official certified export was retrieved for this contest"
+    },
+    "verdict": {
+     "status": "NOT_RECONCILED",
+     "reasons": [
+      "no certified total to reconcile against",
+      "only 0.0% of the contest's votes carry a method label"
+     ],
+     "semanticCaveats": [],
+     "adjustmentEnabled": false,
+     "adjustmentNote": "No method adjustment is enabled by this verdict. A reconciled dataset removes one blocker; a backtest over timestamped returns is still required."
+    }
+   }
   }
  ]
 }

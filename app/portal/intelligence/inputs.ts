@@ -23,7 +23,7 @@ type Region = { name: string; type?: string; fips?: string; percent_reporting?: 
 const cands = (cs: Cand[] | undefined) => (cs || []).map((c) => [c.name, c.party, c.votes ?? 0, c.percent ?? 0, c.winner ? 1 : 0, c.seats ?? null] as CRace["c"][number]);
 
 /** The civicAPI race matching a forecast race, trimmed the way /api/civic trims it. */
-export async function fetchCivicDetail(race: XRace): Promise<{ detail: CDetail | null; url: string | null; error: string | null }> {
+export async function fetchCivicDetail(race: XRace): Promise<{ detail: CDetail | null; url: string | null; error: string | null; raw?: unknown }> {
   try {
     const civ: CRace[] = [];
     for (const type of race.civ.t ?? []) {
@@ -43,7 +43,7 @@ export async function fetchCivicDetail(race: XRace): Promise<{ detail: CDetail |
     for (const [k, v] of Object.entries((j.region_results || {}) as Record<string, Region>)) regions[v.fips || k] = { n: v.name, t: v.type, pr: v.percent_reporting ?? 0, c: cands(v.candidates) };
     return {
       detail: { id: hit.id, name: j.election_name, type: j.election_type, province: j.province, district: j.district, pr: j.percent_reporting ?? 0, close: j.polls_close ?? null, updated: j.last_updated ?? null, test: !!j.test_data, c: cands(j.candidates), regions },
-      url, error: null,
+      url, error: null, raw: j,
     };
   } catch {
     return { detail: null, url: null, error: "civicAPI unreachable" };
