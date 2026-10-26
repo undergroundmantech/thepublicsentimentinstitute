@@ -27,6 +27,7 @@ import Script from "next/script";
 const GA_ID = "G-77X2X4JG8M";
 import SiteEvents from "./components/SiteEvents";
 import YouTubePromo from "./components/YouTubePromo";
+import VideoPromo from "./components/VideoPromo";
 import { FLAG_VALUES, flagJson } from "./lib/flagValues";
 import { KEYWORDS, SITE, graph, orgLd } from "./lib/seo";
 
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <MobileTabs />
+        <VideoPromo />
         <YouTubePromo />
         <LiteMotion />
         <script type="application/json" data-flag-values="" dangerouslySetInnerHTML={{ __html: flagJson(FLAG_VALUES) }} />

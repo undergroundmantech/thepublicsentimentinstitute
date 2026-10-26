@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { ev } from "@/app/lib/ev";
 import { YT_SUB } from "@/app/lib/youtube";
 import YouTubeIcon from "./YouTubeIcon";
+import { videoPromoActive } from "./VideoPromo";
 import "./youtube.css";
 
 const KEY = "opp.yt.until";
@@ -36,6 +37,8 @@ export default function YouTubePromo() {
     const modal = () => !!document.querySelector('[role="dialog"][aria-modal="true"]');
     const show = (why: string) => {
       if (done) return;
+      // the newest video pop up goes first: this card stays away the visit it showed
+      if (videoPromoActive()) { done = true; cleanup(); return; }
       if (modal()) { window.clearTimeout(retry); retry = window.setTimeout(() => show(why), 8000); return; }
       done = true; setOpen(true); ev("YouTube promo shown", { why }); cleanup();
     };

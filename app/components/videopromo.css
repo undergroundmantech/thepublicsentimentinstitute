@@ -1,0 +1,46 @@
+/* The newest video pop up: a glass card in the bottom corner with Pointy pointing at it from the left. The brand gradient
+   stays on the one primary button and the eyebrow. Phone: a strip above the tab bar, Pointy hidden, the player full width. */
+.vpp { position: fixed; z-index: 71; right: 18px; bottom: 18px; width: min(380px, calc(100vw - 32px)); animation: vpp-in .4s ease-out both; }
+.vpp-card { position: relative; overflow: hidden; background: rgba(var(--bg2-rgb), .96); border: 1px solid var(--line2); border-radius: 16px;
+  box-shadow: var(--shadow-md); backdrop-filter: blur(12px); }
+.vpp-thumb { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: pointer; aspect-ratio: 16 / 9; }
+.vpp-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.vpp-playbtn { position: absolute; left: 50%; top: 50%; width: 56px; height: 40px; margin: -20px 0 0 -28px; display: grid; place-items: center;
+  border-radius: 12px; background: #e5252a; color: #fff; box-shadow: 0 8px 24px -8px rgba(0,0,0,.7); transition: transform .15s ease; }
+.vpp-thumb:hover .vpp-playbtn, .vpp-thumb:focus-visible .vpp-playbtn { transform: scale(1.08); }
+.vpp-player { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.vpp-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vpp-body { display: grid; gap: 5px; padding: 12px 14px 14px; }
+.vpp-title { font: 700 15px/1.3 var(--font-b); color: var(--hi); text-wrap: balance; }
+.vpp-hook { font-size: 12.5px; line-height: 1.4; color: var(--mute); }
+.vpp-acts { display: flex; align-items: center; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+.vpp-go { font-size: 13px; }
+.vpp-yt { display: inline-flex; align-items: center; gap: 6px; font: 600 12.5px var(--font-b); color: var(--mute); text-decoration: none; }
+.vpp-yt:hover, .vpp-yt:focus-visible { color: var(--hi); }
+.vpp-x { position: absolute; z-index: 2; top: 8px; right: 8px; width: 30px; height: 30px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(10,7,17,.72); color: #f3eff8; font-size: 18px; line-height: 30px; }
+.vpp-x:hover { background: rgba(10,7,17,.92); }
+.vpp-x:focus-visible, .vpp-thumb:focus-visible, .vpp-yt:focus-visible, .vpp-say:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+/* Pointy stands off the card's left edge, pointing at it, with his bubble */
+.vpp-pty.pty-cameo { position: absolute; left: -104px; bottom: 26px; animation-delay: .25s; }
+.vpp-say { all: unset; cursor: pointer; }
+.vpp-pty .pty-say { max-width: 150px; }
+.vpp.is-playing .vpp-pty { display: none; }
+@keyframes vpp-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .vpp { animation: none; } .vpp-playbtn { transition: none; } }
+/* not enough room beside the card for Pointy */
+@media (max-width: 1100px) { .vpp-pty.pty-cameo { display: none; } }
+/* phone: a strip above the tab bar, thumbnail and title side by side; playing opens the player full width */
+@media (max-width: 640px) {
+  .vpp { left: 10px; right: 10px; width: auto; bottom: calc(var(--tabbar, 0px) + 10px); }
+  .vpp:not(.is-playing) .vpp-card { display: grid; grid-template-columns: 124px 1fr; align-items: center; }
+  .vpp:not(.is-playing) .vpp-thumb { height: 100%; aspect-ratio: auto; }
+  .vpp-body { padding: 10px 40px 10px 12px; gap: 3px; }
+  .vpp-title { font-size: 13px; }
+  .vpp-hook, .vpp .eye { display: none; }
+  .vpp-acts { margin-top: 4px; gap: 10px; }
+  .vpp-go { padding: 6px 12px; font-size: 12px; }
+  .vpp-playbtn { width: 40px; height: 28px; margin: -14px 0 0 -20px; border-radius: 8px; }
+  .vpp-playbtn svg { width: 16px; height: 16px; }
+  .vpp.is-playing .vpp-body { padding: 10px 44px 12px 12px; }
+}
