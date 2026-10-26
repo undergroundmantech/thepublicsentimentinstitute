@@ -14,6 +14,7 @@ export default function SmsOptInPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) { setError("Email address is required."); return; }
+    if (phone.replace(/\D/g, "").length < 10) { setError("Enter the mobile number you want texts sent to."); return; }
     if (!agreed) { setError("You must consent to receive SMS messages."); return; }
     setError("");
     setSubmitted(true);
@@ -58,8 +59,8 @@ export default function SmsOptInPage() {
       <header className="ph">
         <div className="eye g">Stay in the loop</div>
         <h1>Polling updates, <em>delivered</em></h1>
-        <p className="lede">Sign up to participate in our surveys and receive important polling updates via SMS. Join thousands of Americans helping shape the national data picture, one response at a time.</p>
-        <div className="pmeta"><span>Texts from <b>On Point Polling</b></span><span>Opt out <b>Reply STOP</b></span></div>
+        <p className="lede">Sign up to take part in surveys and receive polling updates by text from The Public Sentiment Institute (TPSI), doing business as On Point Polling. Join thousands of Americans helping shape the national data picture, one response at a time.</p>
+        <div className="pmeta"><span>Texts from <b>The Public Sentiment Institute</b></span><span>Doing business as <b>On Point Polling</b></span><span>Help <b>Reply HELP</b></span><span>Opt out <b>Reply STOP</b></span></div>
       </header>
 
       <div className="layout sms-layout">
@@ -78,7 +79,7 @@ export default function SmsOptInPage() {
                 </div>
               ))}
             </div>
-            <div className="sms-foot">On Point Polling · United States · info@publicsentimentinstitute.com · Standard msg &amp; data rates may apply</div>
+            <div className="sms-foot">The Public Sentiment Institute (TPSI), doing business as On Point Polling · United States · info@publicsentimentinstitute.com · Msg &amp; data rates may apply · Reply HELP for help, STOP to opt out</div>
           </div>
           <div className="grid3">
             {[
@@ -105,7 +106,7 @@ export default function SmsOptInPage() {
                   <h3 style={{ fontSize: 20 }}>You&rsquo;re in</h3>
                   <p>
                     Thanks for signing up. Watch for a confirmation text. You'll receive polling
-                    invitations and data updates from On Point Polling.
+                    invitations and data updates from The Public Sentiment Institute (TPSI), doing business as On Point Polling.
                   </p>
                   <p style={{ fontSize: 12, color: "var(--mute)" }}>Reply STOP at any time to unsubscribe.</p>
                 </div>
@@ -120,7 +121,7 @@ export default function SmsOptInPage() {
                     <input id="sms-first" type="text" className="sms-input" placeholder="Optional" value={firstName} onChange={e => setFirstName(e.target.value)} autoComplete="given-name" />
                   </div>
                   <div className="sms-field">
-                    <label className="sms-label" htmlFor="sms-phone">Phone number</label>
+                    <label className="sms-label" htmlFor="sms-phone">Mobile number<span className="req">*</span></label>
                     <input id="sms-phone" type="tel" className="sms-input" placeholder="+1 (555) 000-0000" value={phone} onChange={e => setPhone(e.target.value)} autoComplete="tel" />
                   </div>
 
@@ -136,10 +137,11 @@ export default function SmsOptInPage() {
                     <p>
                       By submitting this form and signing up for texts, you consent to receive
                       text messages (e.g., political polling and market research/surveys) from
-                      On Point Polling at the number provided, including messages
+                      The Public Sentiment Institute (TPSI), doing business as On Point Polling, at the number provided, including messages
                       sent by auto-dialer. Consent is not a condition of purchase. Msg &amp; data
                       rates may apply. Msg frequency varies. Unsubscribe at any time by replying
                       STOP or clicking the unsubscribe link (where available). Reply HELP for help.
+                      Your mobile number and consent are never shared with third parties or affiliates for marketing.
                       See our{" "}
                       <Link href="/terms" onClick={e => e.stopPropagation()}>
                         Privacy Policy &amp; Terms
@@ -153,7 +155,7 @@ export default function SmsOptInPage() {
                 </form>
               )}
               <div className="sms-legal">
-                © 2025 On Point Polling · All Rights Reserved<br />
+                © 2026 The Public Sentiment Institute (TPSI), doing business as On Point Polling · All Rights Reserved<br />
                 <Link href="/terms">Privacy Policy &amp; Terms and Conditions</Link>
               </div>
             </div>
