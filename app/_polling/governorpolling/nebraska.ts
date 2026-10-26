@@ -46,6 +46,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-02", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 44.0, "Other": 12.0, "Undecided": 6.0}},
     {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 571, "sampleType": "RV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 44.0, "Other": 8.0, "Undecided": 5.0}},
     {"raceId": "NE-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 598, "sampleType": "LV", "results": {"Lynne Walz (D)": 41.0, "Jim Pillen (R)": 47.0, "Other": 8.0, "Undecided": 4.0}},
-    {"raceId": "NE-GOV-2026", "pollster": "Global Strategy Group for Walz (D)", "startDate": "2026-10-13", "endDate": "2026-10-18", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.8, "Jim Pillen (R)": 44.9, "Other": 5.6, "Undecided": 5.7}}
+    {"raceId": "NE-GOV-2026", "pollster": "Global Strategy Group for Walz (D)", "startDate": "2026-10-13", "endDate": "2026-10-18", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.8, "Jim Pillen (R)": 44.9, "Other": 5.6, "Undecided": 5.7}},
+    {"raceId": "NE-GOV-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 40.0, "Other": 9.0, "Undecided": 8.0}}
   ],
 };

@@ -50,6 +50,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-24", "endDate": "2026-10-03", "sampleSize": 1809, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 47.0, "Undecided": 5.0}},
     {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-02", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 46.0, "Other": 6.0, "Undecided": 5.0}},
     {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 598, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 46.0, "Other": 5.0, "Undecided": 5.0}},
-    {"raceId": "NE-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-10-22", "endDate": "2026-10-22", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 45.0, "Undecided": 7.0}}
+    {"raceId": "NE-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-10-22", "endDate": "2026-10-22", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 45.0, "Undecided": 7.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "Impact Research for Osborn (D)", "startDate": "2026-10-14", "endDate": "2026-10-20", "sampleSize": 600, "sampleType": "LV", "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 49.0, "Other": 2.0, "Undecided": 1.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 41.0, "Other": 6.0, "Undecided": 5.0}}
   ],
 };

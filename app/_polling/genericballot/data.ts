@@ -9,6 +9,10 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 26, 2026 morning ──
+  { pollster: "Financial Times", endDate: "2026-10-20", sampleSize: 1549, sampleType: "LV", results: { Democrats: 53, Republicans: 44 } },   // FT/Focaldata, Oct 16 to 20, likely voters
+  // ── Added Oct 25, 2026 evening ──
+  { pollster: "CBS News", endDate: "2026-10-23", sampleSize: 1749, sampleType: "LV", results: { Democrats: 53, Republicans: 45 } },   // CBS News/YouGov Oct 21 to 23, likely voters, CBS PDF
   // ── Added Oct 23, 2026 morning ──
   { pollster: "Economist/YouGov", endDate: "2026-10-20", sampleSize: 1501, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },   // Oct 19 to 20, registered voters, toplines PDF
   { pollster: "ActiVote", endDate: "2026-10-21", sampleSize: 1000, sampleType: "LV", results: { Democrats: 53.7, Republicans: 46.3 } },   // Oct 15 to 21
