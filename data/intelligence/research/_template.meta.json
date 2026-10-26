@@ -1,0 +1,7 @@
+{
+  "packageId": "REPLACE-producer-topic-YYYYMMDD",
+  "producer": "who or what produced the research (analyst name, ChatGPT, Gemini, ...)",
+  "createdAt": "2026-10-26T00:00:00Z",
+  "synthetic": false,
+  "baselineSnapshot": "2026-10-25"
+}
