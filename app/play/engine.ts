@@ -4,6 +4,8 @@
 // hears a statement and how they lean, and the money books set what each side can spend.
 // Margins are in points from the player's side: positive means the player leads.
 
+import { rivalWeek, rivalLookAhead, initRival, type Rival } from "./rival";
+
 export type Side = "D" | "R";
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export type Intel = { l: string | null; t: string; u: string | null };
@@ -98,7 +100,7 @@ export const STAFF_COST = { media: { hire: 150000, wk: 25000, name: "Media consu
   digital: { hire: 60000, wk: 15000, name: "Digital director", what: "Online fundraising and targeted digital ads go further." } };
 
 export type Opt = { label: string; say: string; st?: Stance; cash?: number; days?: number; out?: MeetOut; need?: "oppo" | "pollster"; kind?: "respond" | "ignore" | "clarify" | "counter" | "hit" | "hold" | "accept" | "decline" | "skip" | "amplify" | "push" | "pivot" | "rally" | "blast" | "tout" | "forum" | "dodge"; fx?: number };
-export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario" | "fringe" | "star" | "shock" | "osurprise"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string;
+export type Ev = { id: string; kind: "issue" | "news" | "attack" | "opening" | "surrogate" | "debate" | "real" | "flash" | "endorse" | "quarter" | "chair" | "scenario" | "fringe" | "star" | "shock" | "osurprise" | "crisis" | "chaos"; title: string; prompt: string; src?: string | null; opts: Opt[]; states?: string[]; sal?: number; helps?: string; real?: boolean; date?: string;
   /** a change to the world that lasts a few weeks, whatever you answer */ mod?: Mod };
 /** Something happening in the world that changes the race for a while: a storm, a shutdown, a market drop. nat is points a
  * week in the player's favor; econ makes cost of living answers matter more; tv scales what ads can do; block holds
@@ -130,7 +132,9 @@ export type State = {
   // added in the long campaign edition
   pollBias?: number; mods?: Mod[]; dirt?: number; dumped?: boolean; shocks?: string[];
   len?: number; hd?: boolean; mgr?: Mgr; programs?: Prog[]; voterFile?: boolean; contacts?: number; doorsWk?: number;
-  reach?: Record<string, number>; jfc?: boolean; merch?: boolean; selfIn?: number; asked?: string[]; redbox?: number; outPlus?: number; vfat?: number; partyW?: number; celebW?: number; pods?: string[]; fringe?: string | null;
+  reach?: Record<string, number>; jfc?: boolean;
+  // added in the live edition: the rival war room, cards waiting for next week, the hot streak, trophies, chat and chaos
+  rival?: Rival; queue?: Ev[]; streak?: number; ach?: string[]; chatN?: number; chaosN?: number; chaosW?: number; hypeW?: number; hypeN?: number; merch?: boolean; selfIn?: number; asked?: string[]; redbox?: number; outPlus?: number; vfat?: number; partyW?: number; celebW?: number; pods?: string[]; fringe?: string | null;
 };
 export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number;
   /** the campaign's final poll average, and the late break of undecided voters */ pollAvg?: number | null; late?: number;
@@ -163,6 +167,8 @@ export function migrate(s: State, r: RaceFile): State {
   s.pollBias ??= 0; s.mods ??= []; s.dirt ??= 0; s.dumped ??= false; s.shocks ??= [];
   s.len ??= 8; s.mgr ??= "vet"; s.programs ??= []; s.contacts ??= 0; s.doorsWk ??= 0; s.selfIn ??= 0; s.asked ??= []; s.redbox ??= 0; s.outPlus ??= 0; s.vfat ??= 0; s.partyW ??= -9; s.celebW ??= -9; s.pods ??= []; s.fringe ??= null;
   if (!s.hd) { s.days = Math.min(DAYS, s.days * 2); s.hd = true; }
+  s.queue ??= []; s.streak ??= 0; s.ach ??= []; s.chatN ??= 0; s.chaosN ??= 0;
+  if (!s.rival && !s.done) initRival(ctx(r, s.side), s);
   return s;
 }
 export const lead = (m: number, me: string, op: string) => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
@@ -219,6 +225,8 @@ export function newGame(r: RaceFile, side: Side, diff: Diff, seed = Math.floor(M
   seedReads(r, s);
   s.trend.push({ w: 0, m: margin(r, s) });
   publicPolls(r, s, true);
+  initRival(c, s);
+  s.queue = []; s.streak = 0; s.ach = []; s.chatN = 0; s.chaosN = 0;
   return s;
 }
 
@@ -304,7 +312,7 @@ export function applyGlobal(s: State, fx: number, parts?: Part[], durable = 1) {
 }
 
 // ------------------------------------------------------------- actions
-export type ActResult = { ok: boolean; t: string; fx?: number; parts?: Part[] };
+export type ActResult = { ok: boolean; t: string; fx?: number; parts?: Part[]; big?: "viral" | "packed" | "dud" };
 const gaffes = ["mixed up two county names at a rally", "misstated the state's unemployment rate in an interview", "was caught on a hot mic calling a reporter's question dumb", "flubbed the name of a local high school team", "said the wrong date for early voting in a radio spot, and the campaign had to correct it"];
 function tire(c: Ctx, s: State, cost: number): ActResult | null {
   s.stamina = clamp(s.stamina - cost, 0, 100);
@@ -338,7 +346,22 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
   s.buzz = clamp(s.buzz + 5 * e, 0, 100); s.volunteers += Math.round(18 * e);
   s.enth[0] = clamp(s.enth[0] + (pm >= 8 ? 1.6 : 0.8) * e, 0, 100);
   groundRead(c, s, i, "Your advance team");
-  return tire(c, s, 13) ?? { ok: true, t, fx };
+  const crowd = crowdRoll(c, s, co[1]);
+  return tire(c, s, 13) ?? { ok: true, t: crowd ? `${t} ${crowd.t}` : t, fx: fx + (crowd?.fx ?? 0), big: crowd?.big };
+}
+/** Every rally rolls its crowd: once in a while a clip goes viral, sometimes the gym is half empty. */
+function crowdRoll(c: Ctx, s: State, name: string): { t: string; fx: number; big: "viral" | "packed" | "dud" } | null {
+  const x = rand(s), pv = 0.05 + s.buzz / 900 + (s.staff.digital ? 0.03 : 0), pd = 0.07 + (s.stamina < 40 ? 0.08 : 0) + (s.buzz < 25 ? 0.05 : 0);
+  if (x < pv) {
+    const fx = 0.05 + rand(s) * 0.05; s.buzz = clamp(s.buzz + 14, 0, 100); s.volunteers += 120; applyGlobal(s, fx, [{ label: "Voters online", share: 40, lean: 0, fx }], 0.6);
+    const t = `Viral moment: a clip from ${name} hit millions of views overnight.`; s.log.push({ w: s.week, kind: "you", t, fx }); return { t, fx, big: "viral" };
+  }
+  if (x < pv + 0.12) { s.buzz = clamp(s.buzz + 4, 0, 100); s.volunteers += 40; return { t: "A packed house, with a line out the door.", fx: 0, big: "packed" }; }
+  if (x > 1 - pd) {
+    const fx = -(0.02 + rand(s) * 0.03) * DIFF[s.diff].neg; s.buzz = clamp(s.buzz - 6, 0, 100); applyGlobal(s, fx, [{ label: "Local news viewers", share: 30, lean: 0, fx }], 0.5);
+    const t = `Empty seats: the local news led with the half empty gym in ${name}.`; s.log.push({ w: s.week, kind: "gaffe", t, fx }); return { t, fx, big: "dud" };
+  }
+  return null;
 }
 
 export function townHall(c: Ctx, s: State, f: string): ActResult {
@@ -984,6 +1007,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   const fm = s.staff.field ? 1.4 : 1;
   for (const f of s.offices) { const i = ci(r, f); if (i < 0) continue; const meV = s.side === "R" ? r.counties[i][4] : r.counties[i][3]; s.xme[i] += meV * 0.004 * fm * (cal(s) >= EARLY_FROM ? 1.5 : cal(s) <= 0 ? 0.4 : 1); }
   fieldWeek(c, s);
+  for (const l of rivalWeek(c, s)) s.log.push(l);
   if (s.gotv > 0) {
     const g = Math.min(1, s.gotv / (c.total * 1.2));
     const baseIdx = r.counties.map((_, i) => i).filter((i) => c.base[i] > 0);
@@ -1016,6 +1040,11 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   const m1 = margin(r, s);
   s.momentum = clamp((m1 - m0) / 0.8, -1, 1);
   s.trend.push({ w: s.week, m: m1 });
+  // the hot streak: weeks of gains in a row bring money and volunteers in, a slump scares them off
+  const st0 = s.streak ?? 0;
+  s.streak = m1 - m0 > 0.05 ? Math.max(0, st0) + 1 : m1 - m0 < -0.05 ? Math.min(0, st0) - 1 : 0;
+  if (s.streak >= 3) { const b = Math.round(c.weekly * 0.08 * Math.min(3, s.streak - 2)); s.cash += b; s.raised += b; s.buzz = clamp(s.buzz + 3, 0, 100); s.log.push({ w: s.week, kind: "money", t: `Hot streak, ${s.streak} weeks of gains: donors and volunteers want in. ${usd(b)} more came in unasked.` }); }
+  else if (s.streak <= -3) { const b = Math.round(c.weekly * 0.06); s.cash -= b; s.volunteers = Math.max(20, Math.round(s.volunteers * 0.95)); s.log.push({ w: s.week, kind: "money", t: `Slump, ${-s.streak} weeks of slipping: some donors are holding back ${usd(b)} and volunteers are drifting off.` }); }
   // buzz fades toward normal, and volunteers follow offices, buzz and momentum
   const keep = s.mgr === "digital" ? 0.9 : 0.85;
   s.buzz = clamp(s.buzz * keep + 30 * (1 - keep) + 6 * s.momentum, 0, 100);
@@ -1027,6 +1056,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   for (const k of Object.keys(s.visits)) s.visits[k] *= 0.85;
   for (const k of Object.keys(s.oppVisits)) s.oppVisits[k] *= 0.85;
   s.week += 1; s.days = DAYS; s.weekCash = Math.max(0, s.cash);
+  rivalLookAhead(c, s);
   s.mods = (s.mods ?? []).filter((m) => m.until >= s.week);
   if (s.cash < 0) { s.log.push({ w: s.week - 1, kind: "money", t: "The campaign ended the week in the red; vendors want to be paid before they book more." }); }
   if (s.week > lenOf(s)) electionNight(c, s);

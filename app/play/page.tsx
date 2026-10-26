@@ -27,6 +27,9 @@ export default function Page() {
           <li><b>Fog of war</b><span>Polls and ground teams sharpen your county read; it goes stale.</span></li>
           <li><b>Real turnout</b><span>Enthusiasm, registration, early votes, Election Day weather and lines.</span></li>
           <li><b>Debate stage</b><span>Real issues, a delivery meter, comebacks and a live dial.</span></li>
+          <li><b>A real rival</b><span>The other campaign picks a plan every week, as sharp as its real money, incumbency and odds.</span></li>
+          <li><b>Stream mode</b><span>Twitch chat votes on cards, fills the chaos meter and starts hype trains.</span></li>
+          <li><b>Trophies</b><span>Crises, the chaos wheel, viral rallies and hot streaks, with a trophy case to fill.</span></li>
           <li><b>Election night</b><span>Mail and Election Day votes in batches, a needle, and the call.</span></li>
         </ul>
       </section>

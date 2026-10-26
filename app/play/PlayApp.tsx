@@ -21,6 +21,10 @@ import { adviceFor, memoFor, mgrName, mgrSeed } from "./px/mgr";
 import { Portrait, Type, Roll, cls, sur, fxs } from "./px/ui";
 import { seedOf, partyCol } from "./px/sprites";
 import { sfx, music, setSound, soundState, unlock } from "./px/sound";
+import { spinChaos, chaos as chaosCards } from "./cards";
+import { checkTrophies, saveTrophies, trophyCase, type Trophy } from "./achieve";
+import { useTwitch, loadCfg, saveCfg, voteOf, isChaos, isHype, DEF_CFG, type StreamCfg, type ChatMsg } from "./stream";
+import { RivalPanel, RivalMoveCard, ChatVote, CrisisClock, Breaking, isLoud, ChaosWheel, Splash, TrophyToasts, TrophyCase, ChatBox, Meters, StreamPane, RivalBadge, type SplashKind } from "./px/Stream";
 
 export type PIndex = { asOf: string; election: string; races: { id: string; office: string; st: string; state: string; name: string; m: number; p: number; c: [string, string, boolean][] }[] };
 type Save = { s: E.State };
@@ -34,6 +38,8 @@ function store(x: Save | null) { try { if (x) localStorage.setItem(KEY, JSON.str
 // ============================================================ title
 function Title({ onGo, saved, onResume, savedLabel }: { onGo: () => void; saved: boolean; onResume: () => void; savedLabel: string }) {
   const cv = useRef<HTMLCanvasElement>(null);
+  const [have, setHave] = useState<string[]>([]);
+  useEffect(() => { setHave(trophyCase()); }, []);
   useEffect(() => {
     const g = cv.current?.getContext("2d"); if (!g) return;
     const W = 200, H = 90; let raf = 0, lt = 0;
@@ -63,7 +69,8 @@ function Title({ onGo, saved, onResume, savedLabel }: { onGo: () => void; saved:
           <button type="button" className="px-press blink" onClick={() => { unlock(); sfx("coin"); onGo(); }}>Press start</button>
           {saved ? <button type="button" className="px-press ghost" onClick={() => { unlock(); sfx("click"); onResume(); }}>Continue: {savedLabel}</button> : null}
         </div>
-        <ul className="px-feat" aria-label="What is new"><li>Summer campaigns</li><li>Half day moves</li><li>Door knocking crews</li><li>Your real network</li><li>Podcasts</li><li>Campaign manager</li><li>Debate stage</li><li>Long election night</li></ul>
+        <ul className="px-feat" aria-label="What is new"><li>Rival war room</li><li>Crises</li><li>Chaos wheel</li><li>Twitch chat votes</li><li>Viral rallies</li><li>Hot streaks</li><li>Trophies</li><li>Debate stage</li><li>Long election night</li></ul>
+        <TrophyCase have={have} />
       </div>
     </section>
   );
@@ -140,6 +147,7 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
                   <span className="k">{PARTY[cd.party] ?? cd.party}{cd.inc ? ", incumbent" : ""}</span>
                   <b>{cd.name}</b>
                   <span className="odds">Chance to win <strong>{pct(odds)}</strong></span>
+                  <RivalBadge r={rf} side={sd} />
                   <span className="px-stats">
                     <Bar label="Cash" v={cd.money.cash ?? 0} max={mx(cd.money.cash, o.money.cash)} val={E.usd(cd.money.cash ?? 0)} tone="gold" />
                     <Bar label="Raised" v={dn?.raised ?? cd.money.receipts ?? 0} max={mx(dn?.raised ?? cd.money.receipts, o.donors?.raised ?? o.money.receipts)} val={E.usd(dn?.raised ?? cd.money.receipts ?? 0)} tone="gold" />
@@ -329,8 +337,8 @@ function Advisor({ r, s, c }: { r: E.RaceFile; s: E.State; c: E.Ctx }) {
 }
 
 // ============================================================ headquarters
-type Tab = "trail" | "money" | "net" | "meet" | "air" | "ground" | "staff" | "polls" | "intel" | "log";
-const TABS: [Tab, string][] = [["trail", "Trail"], ["money", "Money"], ["net", "Network"], ["meet", "Meetings"], ["air", "Air war"], ["ground", "Field"], ["staff", "Staff"], ["polls", "Polls"], ["intel", "Intel"], ["log", "Wire"]];
+type Tab = "trail" | "money" | "net" | "meet" | "air" | "ground" | "staff" | "polls" | "intel" | "log" | "stream";
+const TABS: [Tab, string][] = [["trail", "Trail"], ["money", "Money"], ["net", "Network"], ["meet", "Meetings"], ["air", "Air war"], ["ground", "Field"], ["staff", "Staff"], ["polls", "Polls"], ["intel", "Intel"], ["log", "Wire"], ["stream", "Stream"]];
 const H = (n: number) => E.halfTxt(n);
 /** The week's time as twelve half day blocks, two to a day. */
 function Days({ n }: { n: number }) {
@@ -368,12 +376,37 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
   const [dg, setDg] = useState("");
   const [snd, setSnd] = useState(soundState());
   const fxId = useRef(1);
+  // stream mode: config, the Twitch chat, the vote, the meters, the loud overlays
+  const [cfg, setCfgS] = useState<StreamCfg>(DEF_CFG);
+  useEffect(() => { setCfgS(loadCfg()); }, []);
+  const setCfg = (x: StreamCfg) => { setCfgS(x); saveCfg(x); };
+  const [vote, setVote] = useState<{ id: string; ends: number; total: number; tally: Record<string, number> } | null>(null);
+  const [voted, setVoted] = useState<string[]>([]);
+  const [chaosM, setChaosM] = useState(0);
+  const [hype, setHype] = useState(0);
+  const [brk, setBrk] = useState<E.Ev | null>(null);
+  const [wheel, setWheel] = useState<{ titles: string[]; land: string } | null>(null);
+  const [splash, setSplash] = useState<SplashKind | null>(null);
+  const [clock, setClock] = useState<{ id: string; ends: number } | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const seen = useRef(new Set<string>());
+  const last = useRef<Record<string, number>>({});
+  const voteRef = useRef(vote);
+  useEffect(() => { voteRef.current = vote; }, [vote]);
+  const onChat = useCallback((m: ChatMsg) => {
+    const v = voteRef.current; const key = m.user.toLowerCase();
+    if (v) { const k = voteOf(m.text, 9); if (k != null) { setVote((x) => (x ? { ...x, tally: { ...x.tally, [key]: k } } : x)); return; } }
+    const t = Date.now();
+    if (isChaos(m.text) && t - (last.current["c:" + key] ?? 0) > 20000) { last.current["c:" + key] = t; setChaosM((x) => Math.min(100, x + 10)); }
+    else if (isHype(m.text) && t - (last.current["h:" + key] ?? 0) > 8000) { last.current["h:" + key] = t; setHype((x) => Math.min(100, x + 6)); }
+  }, []);
+  const tw = useTwitch(cfg.channel, cfg.on, onChat);
   useEffect(() => { if (!s.done && (s.evw < s.week || s.invw < s.week)) { const x = structuredClone(s); dealWeek(c, x); dealInvites(c, x); commit(x); } }, [s, c, commit]);
   useEffect(() => { music("trail"); }, []);
   const burst = (k: MapFx["kind"], f?: string, fs?: string[]) => { const id = fxId.current++; setFx((e) => [...e.filter((x) => performance.now() - x.t0 < 2500), { id, kind: k, f, fs, t0: performance.now() }]); };
   const run = (fn: (x: E.State) => E.ActResult, name?: string, at?: { f?: string; kind: MapFx["kind"]; fs?: string[] }, snd2: Parameters<typeof sfx>[0] = "good") => {
     const x = structuredClone(s); const res = fn(x);
-    if (res.ok) { commit(x); if (at) { burst(at.kind, at.f, at.fs); if (at.f && (at.kind === "rally" || at.kind === "hall" || at.kind === "reg")) setBus(at.f); } sfx(res.t.includes("Running on fumes") ? "bad" : snd2); }
+    if (res.ok) { commit(x); if (res.big) setSplash(res.big); if (at) { burst(at.kind, at.f, at.fs); if (at.f && (at.kind === "rally" || at.kind === "hall" || at.kind === "reg")) setBus(at.f); } sfx(res.t.includes("Running on fumes") ? "bad" : snd2); }
     else sfx("buzz");
     setToast({ t: res.t, ok: res.ok, k: Date.now() }); if (res.ok && name) track("Play action", { a: name, race: r.id });
   };
@@ -399,7 +432,60 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
     setWeek({ items, before }); track("Play week", { race: r.id, week: s.week }); sfx("whoosh");
     if (!x.done) setReplay(true);
   };
-  const choose = (i: number) => { const x = structuredClone(s); const e = x.cur.shift()!; const o = resolve(c, x, e, i); commit(x); setOut({ ev: e, o, choice: i }); sfx(o.fx > 0.03 ? "good" : o.fx < -0.03 ? "bad" : "click"); };
+  const choose = (i: number, chat = false) => { const x = structuredClone(s); const e = x.cur.shift()!; if (chat) x.chatN = (x.chatN ?? 0) + 1; const o = resolve(c, x, e, i); commit(x); setOut({ ev: e, o, choice: i }); setVote(null); setClock(null); sfx(o.fx > 0.03 ? "good" : o.fx < -0.03 ? "bad" : "click"); };
+  const isBlocked = (o: E.Ev["opts"][number]) => { const dd = Math.round(((o.days ?? 0) + (o.out?.days ?? 0)) * 2); return (o.need === "oppo" && !s.staff.oppo) || (o.cash != null && s.cash < o.cash) || (o.out?.cash != null && o.out.cash < 0 && s.cash < -o.out.cash) || s.days < dd; };
+  const modalBusy = !!(out || meet || pod || week || replay || f72 || roll || wheel || brk);
+  const cardUp = !!pend && !modalBusy;
+  const startVote = () => { if (!pend) return; setVote({ id: pend.id, ends: Date.now() + cfg.voteSec * 1000, total: cfg.voteSec, tally: {} }); setVoted((v) => [...v, pend.id]); setClock(null); sfx("bell"); };
+  const counts = pend ? pend.opts.map((_, i) => Object.values(vote?.tally ?? {}).filter((k) => k === i).length) : [];
+  const endVote = () => {
+    if (!pend || !vote) { setVote(null); return; }
+    const n = counts.reduce((a, b) => a + b, 0);
+    let best = -1; pend.opts.forEach((o, i) => { if (!isBlocked(o) && (best < 0 || counts[i] > counts[best])) best = i; });
+    if (!n || best < 0) { setVote(null); setToast({ t: "Chat was quiet. Your call.", ok: false, k: Date.now() }); return; }
+    setToast({ t: `Chat picked: ${pend.opts[best].label}, ${counts[best]} of ${n} votes.`, ok: true, k: Date.now() });
+    choose(best, true);
+  };
+  const canSpin = !pend && !modalBusy && !s.done && (s.chaosW ?? 0) < s.week;
+  const spin = (free = false) => {
+    if (pend || modalBusy || s.done) return;
+    const x = structuredClone(s); const titles = chaosCards(c, x).map((e) => e.title); const e = spinChaos(c, x);
+    if (!e) { setToast({ t: "The wheel is out of cards this campaign.", ok: false, k: Date.now() }); return; }
+    if (!free) x.chaosW = x.week;
+    seen.current.add(e.id); commit(x); setWheel({ titles, land: e.title }); track("Play chaos", { race: r.id, free });
+  };
+  // a tick for the clocks
+  useEffect(() => { if (!vote && !clock) return; const id = window.setInterval(() => setNow(Date.now()), 250); return () => clearInterval(id); }, [vote, clock]);
+  // loud cards get the BREAKING banner first
+  useEffect(() => { if (pend && !roll && !out && !week && !replay && isLoud(pend.kind) && !seen.current.has(pend.id)) { seen.current.add(pend.id); setBrk(pend); } }, [pend, roll, out, week, replay]);
+  // the crisis clock
+  useEffect(() => { if (cardUp && pend!.kind === "crisis" && cfg.on && cfg.crisisSec > 0 && !vote && clock?.id !== pend!.id) setClock({ id: pend!.id, ends: Date.now() + cfg.crisisSec * 1000 }); }, [cardUp, pend, cfg.on, cfg.crisisSec, vote, clock]);
+  useEffect(() => {
+    if (clock && pend && clock.id === pend.id && cardUp && !vote && now >= clock.ends) {
+      const i = pend.opts.findIndex((o) => !isBlocked(o)); setClock(null);
+      if (i >= 0) { setToast({ t: "Too slow: the campaign put out a flat denial for you.", ok: false, k: Date.now() }); choose(i); }
+    }
+  });
+  // the vote clock, and chat voting on every card when asked
+  useEffect(() => { if (vote && now >= vote.ends) endVote(); });
+  useEffect(() => { if (cardUp && cfg.on && cfg.auto && tw.status === "live" && !vote && pend && !voted.includes(pend.id)) startVote(); });
+  useEffect(() => { if (vote && pend?.id !== vote.id) setVote(null); }, [vote, pend]);
+  // keys 1 to 9 add a vote from the room while a vote is open
+  useEffect(() => {
+    if (!vote) return;
+    const h = (e: KeyboardEvent) => { const k = Number(e.key) - 1; if (k >= 0 && k < (pend?.opts.length ?? 0) && !(e.target instanceof HTMLInputElement)) setVote((x) => (x ? { ...x, tally: { ...x.tally, ["room" + Math.random()]: k } } : x)); };
+    window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h);
+  }, [vote, pend]);
+  // the chat meters: a full chaos meter spins the wheel for free, a full hype train pays out once a week
+  useEffect(() => { if (chaosM >= 100 && !pend && !modalBusy && !s.done) { setChaosM(0); spin(true); } });
+  useEffect(() => {
+    if (hype >= 100 && (s.hypeW ?? 0) < s.week && !s.done) {
+      const x = structuredClone(s); const v = 60 + Math.round(x.volunteers * 0.04);
+      x.buzz = Math.min(100, x.buzz + 6); x.volunteers += v; x.hypeW = x.week; x.hypeN = (x.hypeN ?? 0) + 1;
+      x.log.push({ w: x.week, kind: "you", t: `Hype train: the live chat flooded in. Buzz up and ${v.toLocaleString()} new volunteers signed up.` });
+      setHype(0); commit(x); setSplash("hype");
+    }
+  });
   const test = () => { const x = structuredClone(s); const r2 = testEvent(c, x, x.cur[0]); if (r2) { commit(x); sfx("coin"); } else setToast({ t: s.staff.pollster ? "Not enough cash to test." : "Hire a pollster to test messages.", ok: false, k: Date.now() }); };
   const tests = pend ? s.tests[pend.id] : undefined;
   const ticker = useMemo(() => [...(r.media ?? []).map((m) => `${m.who}: ${m.what}`), ...(r.research?.storylines ?? []).map((x) => `${x.date}: ${x.title}`)], [r]);
@@ -419,10 +505,12 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
         <div className="px-hs"><span>Cash</span><b className={s.cash < 0 ? "dn" : "cash"}><Roll v={s.cash} fmt={E.usd} /></b></div>
         <div className="px-hs"><span>Volunteers</span><b><Roll v={s.volunteers} /></b></div>
         <div className="px-hs meters"><Meter label="Energy" v={s.stamina} tone={s.stamina < 30 ? "hot" : "green"} /><Meter label="Base" v={s.enth[0]} tone="gold" /><Meter label="Buzz" v={s.buzz} tone="pink" /></div>
-        <div className="px-hs"><span>Poll avg</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "None" : E.lead(avg, sur(me.name), sur(op.name))}</b>{odds ? <small>{Math.round(odds.p * 100)}% to win, your read</small> : null}</div>
+        <div className="px-hs"><span>Poll avg</span><b className={avg == null ? "" : avg >= 0 ? "up" : "dn"}>{avg == null ? "None" : E.lead(avg, sur(me.name), sur(op.name))}</b>{odds ? <small>{Math.round(odds.p * 100)}% to win, your read</small> : null}{(s.streak ?? 0) >= 2 ? <small className="px-streak hot">Hot streak · {s.streak} wk</small> : (s.streak ?? 0) <= -2 ? <small className="px-streak cold">Slump · {-(s.streak ?? 0)} wk</small> : null}</div>
         <div className="px-hacts">
           {debateNow ? <button type="button" className="px-press sm hot" onClick={() => { sfx("alarm"); onDebate(); }}>Debate night</button>
             : <button type="button" className="px-press sm" onClick={endWeek} disabled={!!pend}>{s.week >= L ? "Election eve" : "End week"}</button>}
+          <button type="button" className="px-icon chaos" onClick={() => spin(false)} disabled={!canSpin} title={canSpin ? "Spin the chaos wheel: once a week" : pend ? "Answer the card first" : "Spun this week. A full chaos meter in chat spins it again."}>SPIN</button>
+          <button type="button" className={cls("px-icon", cfg.on && "on live")} onClick={() => { setTab("stream"); sfx("click"); }} title="Stream mode and Twitch chat">{cfg.on ? (tw.status === "live" ? "LIVE" : "STRM") : "LIVE"}</button>
           <button type="button" className={cls("px-icon", clear && "on")} onClick={() => setClear(!clear)} aria-pressed={clear} title="Clear view: no scanlines or dither, higher contrast">{clear ? "CRT" : "CLR"}</button>
           <button type="button" className={cls("px-icon", !snd.sfx && "off")} onClick={() => flipSnd("sfx")} aria-label="Sound effects" title="Sound effects">SFX</button>
           <button type="button" className={cls("px-icon", !snd.music && "off")} onClick={() => flipSnd("music")} aria-label="Music" title="Music">MUS</button>
@@ -431,6 +519,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
         </div>
       </header>
       <Calendar s={s} />
+      <RivalPanel s={s} c={c} />
       {mods.length || (s.staff.oppo && !s.dumped) ? (
         <div className="px-world" aria-label="What is happening in the world">
           <span className="px-k">In the world</span>
@@ -615,19 +704,24 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 <Link className="px-note" href={`/watchdog/war-room/${r.id}`}>This race in the War Room</Link>
               </div>
             ) : null}
+            {tab === "stream" ? <StreamPane cfg={cfg} setCfg={setCfg} status={tw.status} recent={tw.recent} chaos={chaosM} hype={hype} hypeUsed={(s.hypeW ?? 0) >= s.week} canSpin={canSpin} spin={() => spin(false)} /> : null}
             {tab === "log" ? <ul className="px-log">{[...s.log].reverse().slice(0, 40).map((l, i) => <li key={i} className={l.kind}><span>W{l.w}</span><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul> : null}
           </div>
         </section>
       </div>
       <div className="px-ticker" aria-hidden="true"><span className="lbl">On the wire</span><div className="run">{[...wire, ...ticker].concat([...wire, ...ticker]).map((t, i) => <span key={i}>{t}</span>)}</div></div>
       {toast ? <div key={toast.k} className={cls("px-toast", !toast.ok && "bad")} role="status" onAnimationEnd={() => setToast(null)}>{toast.t}</div> : null}
+      {cfg.on && cfg.chatBox && cfg.channel ? <div className="px-chatdock"><ChatBox recent={tw.recent} status={tw.status} channel={cfg.channel} /><Meters chaos={chaosM} hype={hype} hypeUsed={(s.hypeW ?? 0) >= s.week} /></div> : null}
+      {splash ? <Splash kind={splash} onDone={() => setSplash(null)} /> : null}
+      {brk ? <Breaking ev={brk} onDone={() => setBrk(null)} /> : null}
+      {wheel ? <ChaosWheel titles={wheel.titles} land={wheel.land} onDone={() => setWheel(null)} /> : null}
 
       {roll && !s.done && !week && !replay && !f72 ? <NewsRoll r={r} s={s} onDone={() => setRoll(false)} /> : null}
-      {!roll && pend && !out && !meet && !pod && !week && !replay && !f72 ? (
+      {cardUp ? (
         <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="px-ev-h">
           <div className={cls("px-card", "ev", pend.kind)}>
             <div className="px-evtags">
-              <span className={cls("px-tag", pend.kind === "attack" || pend.kind === "fringe" || pend.kind === "osurprise" ? "hot" : pend.kind === "shock" ? "news" : pend.kind === "flash" ? "news" : "")}>{pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "fringe" ? "An unwanted fan" : pend.kind === "shock" ? "The world moves" : pend.kind === "osurprise" ? "October surprise" : pend.kind === "star" ? "Celebrity" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : `Week ${s.week} card`}</span>
+              <span className={cls("px-tag", pend.kind === "attack" || pend.kind === "fringe" || pend.kind === "osurprise" || pend.kind === "crisis" ? "hot" : pend.kind === "chaos" ? "chaos" : pend.kind === "shock" ? "news" : pend.kind === "flash" ? "news" : "")}>{pend.kind === "attack" ? "Incoming" : pend.kind === "opening" ? "Opportunity" : pend.kind === "flash" ? (pend.helps === "you" ? "Breaking, good news" : pend.helps === "them" ? "Breaking, bad news" : "Breaking") : pend.kind === "scenario" ? "Scenario" : pend.kind === "fringe" ? "An unwanted fan" : pend.kind === "shock" ? "The world moves" : pend.kind === "osurprise" ? "October surprise" : pend.kind === "star" ? "Celebrity" : pend.kind === "endorse" ? "Endorsement" : pend.kind === "quarter" ? "Deadline" : pend.kind === "crisis" ? "Crisis" : pend.kind === "chaos" ? "Chaos wheel" : `Week ${s.week} card`}</span>
               {pend.real ? <span className="px-tag real">Real{pend.date ? `, ${pend.date}` : ""}</span> : null}
               {s.cur.length > 1 ? <span className="px-tag dim">{s.cur.length - 1} more</span> : null}
             </div>
@@ -635,14 +729,18 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
             {pend.mod ? <p className="px-modnote">Whatever you say, for the next {Math.max(1, (E.activeMods(s).find((m) => m.id === pend.mod!.id)?.until ?? s.week) - s.week + 1)} week{(E.activeMods(s).find((m) => m.id === pend.mod!.id)?.until ?? s.week) > s.week ? "s" : ""}: {[pend.mod.block ? "rallies in the hit counties are off" : "", pend.mod.tv && pend.mod.tv < 1 ? "ads reach fewer voters" : "", pend.mod.econ && pend.mod.econ > 1 ? "cost of living answers count more" : "", pend.mod.fund && pend.mod.fund < 1 ? "donors give less" : "", pend.mod.nat ? (pend.mod.nat > 0 ? "the national mood drifts your way" : "the national mood drifts against you") : "", pend.mod.enth ? "turnout enthusiasm shifts" : ""].filter(Boolean).join(", ") || "the race feels it"}.</p> : null}
             <p><Type key={pend.id} text={pend.prompt} speed={12} /> {pend.src ? (pend.src.startsWith("/") ? <Link href={pend.src}>Read it</Link> : <a href={pend.src} target="_blank" rel="noopener noreferrer">Source</a>) : null}</p>
             {pend.opts.some((o) => o.st) ? (tests ? <p className="px-note">Your pollster tested the answers: bars show how each tested, with error.</p> : <button type="button" className="px-ghost" onClick={test} disabled={!s.staff.pollster}>Test the answers, $25K{!s.staff.pollster ? ": hire a pollster" : ""}</button>) : null}
+            {clock && clock.id === pend.id && !vote ? <CrisisClock left={Math.max(0, Math.ceil((clock.ends - now) / 1000))} total={cfg.crisisSec} /> : null}
+            {cfg.on ? (vote && vote.id === pend.id
+              ? <ChatVote labels={pend.opts.map((o) => o.label)} blocked={pend.opts.map(isBlocked)} counts={counts} left={Math.max(0, Math.ceil((vote.ends - now) / 1000))} total={vote.total} onEnd={endVote} />
+              : <button type="button" className="px-ghost chatgo" onClick={startVote}>Let chat decide · {cfg.voteSec}s{tw.status !== "live" ? " · chat not connected, keys 1 to 4 vote" : ""}</button>) : null}
             <div className="px-opts">
               {pend.opts.map((o, i) => {
                 const dd = Math.round(((o.days ?? 0) + (o.out?.days ?? 0)) * 2);
-                const blocked = (o.need === "oppo" && !s.staff.oppo) || (o.cash != null && s.cash < o.cash) || (o.out?.cash != null && o.out.cash < 0 && s.cash < -o.out.cash) || s.days < dd;
+                const blocked = isBlocked(o);
                 const tv = tests?.[i];
                 return (
-                  <button key={i} type="button" className="px-opt" disabled={blocked} onClick={() => choose(i)}>
-                    <b>{o.label}</b><span>{o.say}{o.cash ? ` ${E.usd(o.cash)}.` : ""}{o.out?.cash != null && o.out.cash < 0 ? ` ${E.usd(-o.out.cash)}.` : ""}{dd ? ` ${H(dd)}.` : ""}{o.need === "oppo" && !s.staff.oppo ? " Needs opposition research." : ""}</span>
+                  <button key={i} type="button" className={cls("px-opt", vote && vote.id === pend.id && counts[i] === Math.max(...counts) && counts[i] > 0 && "lead")} disabled={blocked} onClick={() => choose(i)}>
+                    <b>{cfg.on ? <i className="px-num">{i + 1}</i> : null}{o.label}</b><span>{o.say}{o.cash ? ` ${E.usd(o.cash)}.` : ""}{o.out?.cash != null && o.out.cash < 0 ? ` ${E.usd(-o.out.cash)}.` : ""}{dd ? ` ${H(dd)}.` : ""}{o.need === "oppo" && !s.staff.oppo ? " Needs opposition research." : ""}</span>
                     {tv != null && !Number.isNaN(tv) ? <span className="px-test"><i className={tv >= 0 ? "up" : "dn"} style={{ width: `${Math.min(50, Math.abs(tv) * 120)}%`, [tv >= 0 ? "left" : "right"]: "50%" } as React.CSSProperties} /><em className={tv >= 0 ? "up" : "dn"}>{fxs(tv)}</em></span> : null}
                   </button>
                 );
@@ -673,6 +771,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
             <div className="px-card report">
               <span className="px-tag">{s.done ? "The polls are closed" : `Week ${s.week - 1} report`}</span>
               <h3 id="px-wk-h">{s.done ? "Election Day is here" : "The week in review"}</h3>
+              <RivalMoveCard s={s} c={c} />
               <div className="px-deltas">
                 <div><span>Poll avg</span><b className={na == null ? "" : na >= 0 ? "up" : "dn"}>{na == null ? "n/a" : E.lead(na, sur(me.name), sur(op.name))}</b>{na != null && week.before.avg != null ? <small className={na - week.before.avg >= 0 ? "up" : "dn"}>{fxs(na - week.before.avg)}</small> : null}</div>
                 <div><span>Cash</span><b>{E.usd(s.cash)}</b><small className={s.cash - week.before.cash >= 0 ? "up" : "dn"}>{s.cash - week.before.cash >= 0 ? "+" : "-"}{E.usd(Math.abs(s.cash - week.before.cash))}</small></div>
@@ -681,7 +780,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
               </div>
               {!s.done && s.polls.length > 1 ? <PollChart s={s} me={me.name} op={op.name} compact /> : null}
               {!s.done ? <div className="px-memo"><Portrait seed={mgrSeed(r, s.mgr ?? "vet")} role="staff" party={me.party} size={48} talking /><p><span className="px-k">Memo from {mgrName(r, s.mgr ?? "vet")}</span>{memoFor(s, week.before, na)}</p></div> : null}
-              <ul className="px-log">{week.items.map((l, i) => <li key={i} className={l.kind}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
+              <ul className="px-log">{week.items.filter((l) => !(l.t.startsWith("Rival move") && s.rival?.moves.at(-1)?.w === s.week - 1)).map((l, i) => <li key={i} className={l.kind}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
               <button type="button" className="px-btn go" onClick={() => { setWeek(null); if (s.done) onNight(); else { setRoll(true); sfx("bell"); } }}>{s.done ? "Watch the returns" : `On to week ${s.week}`}</button>
             </div>
           </div>
@@ -721,7 +820,14 @@ export default function PlayApp({ idx }: { idx: PIndex }) {
     try { const r = (await fetch(`/play/r/${saved.s.race}.json`).then((x) => x.json())) as E.RaceFile; setRace(r); loadPaths(r); setSt(E.migrate(saved.s, r)); setScreen(saved.s.done ? "night" : "hq"); goImm(true); }
     catch { setErr("The saved campaign could not load."); }
   };
-  const commit = useCallback((x: E.State) => setSt(x), []);
+  const raceRef = useRef<E.RaceFile | null>(null);
+  useEffect(() => { raceRef.current = race; }, [race]);
+  const [troph, setTroph] = useState<Trophy[]>([]);
+  const commit = useCallback((x: E.State) => {
+    const rr = raceRef.current;
+    if (rr) { const got = checkTrophies(x, rr); if (got.length) { saveTrophies(got.map((t) => t.id)); setTroph((q) => [...q, ...got]); got.forEach((t) => track("Play trophy", { t: t.id, race: rr.id })); } }
+    setSt(x);
+  }, []);
   const menu = () => { setScreen("lobby"); setSaved(load()); music("off"); };
   const sr = saved ? idx.races.find((r) => r.id === saved.s.race) : null;
   const meC = race && st ? race.cands[st.side === "D" ? 0 : 1] : null, opC = race && st ? race.cands[st.side === "D" ? 1 : 0] : null;
@@ -736,12 +842,14 @@ export default function PlayApp({ idx }: { idx: PIndex }) {
           <span className="px-tag">{E.lenOf(st) === 8 ? "Labor Day · September 7, 2026" : `Summer · week of ${E.weekLabel(E.cal(st)).split(" to ")[0]}, 2026`}</span>
           <b className="px-cut-h">{meC.name}: {race.name}</b>
           <span><Type text={`You start at ${E.lead(E.margin(race, st), sur(meC.name), sur(opC.name))} with ${E.usd(st.cash)} in the bank, ${E.lenOf(st)} weeks, a campaign bus and ${mgrName(race, st.mgr ?? "vet")} running the show. ${E.lenOf(st) > 8 ? "Summer is for building: money, staff, offices and door knocking crews. " : ""}Your county map is only as good as your polling, so keep it fresh.`} /></span>
+          <RivalBadge r={race} side={st.side} />
           <em>Click to begin</em>
         </button>
       ) : null}
       {screen === "hq" && race && st ? <HQ r={race} s={st} commit={commit} geo={geo} onNight={() => setScreen("night")} onDebate={() => setScreen("debate")} quit={() => { goImm(false); menu(); }} immersive={imm} toggleFull={() => goImm(!imm)} rolled={rolled} setRolled={setRolled} clear={clear} setClear={setClear} /> : null}
       {screen === "debate" && race && st ? <Debate r={race} s={st} onDone={(x) => { commit(x); setScreen("hq"); }} /> : null}
       {screen === "night" && race && st?.result ? <Night r={race} s={st} geo={geo} again={() => start(race, st.side, st.diff, undefined, st.len ?? 8, st.mgr ?? "vet")} menu={() => { store(null); goImm(false); menu(); }} /> : null}
+      <TrophyToasts list={troph} onDone={(id) => setTroph((q) => q.filter((t) => t.id !== id))} />
       {imm && screen !== "title" && screen !== "hq" ? <button type="button" className="px-exit" onClick={() => goImm(false)} aria-label="Leave full screen">WIN</button> : null}
     </div>
   );

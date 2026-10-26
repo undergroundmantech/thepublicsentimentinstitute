@@ -6,6 +6,7 @@
 import { podInvite } from "./net";
 import { type Ctx, type State, type Part, type Ev, type Stance, type Meet, type Role, type MeetOut, react, applyGlobal, applyOut, usd, DIFF, rand, gauss, weekOf, POLLSTERS, cal, att } from "./engine";
 export type { Ev, Opt } from "./engine";
+import { crisisFor } from "./cards";
 
 const FARM = ["IA", "NE", "KS", "SD", "MN", "WI", "OH", "MI", "GA", "AR", "MS", "LA", "TN", "OK", "TX", "ME", "VT", "NC", "SC"];
 
@@ -321,7 +322,10 @@ export function dealWeek(c: Ctx, s: State) {
   const fr = fringeEv(c); if (fr && !s.used.includes(fr.id) && s.week >= 3 && cal(s) <= 6 && (rand(s) < 0.3 || cal(s) === 6)) out.push(fr);
   const st = starEv(c, s); if (st && !s.used.includes(st.id) && s.week >= 2 && rand(s) < 0.18) out.push(st);
   dealWorld(c, s, out);
-  s.cur = out;
+  // the rival war room's cards come first: an attack ad they cut, a story they held; then, now and then, a crisis
+  const q = (s.queue ?? []).filter((e) => !out.some((x) => x.id === e.id)); s.queue = [];
+  const cr = crisisFor(c, s);
+  s.cur = [...q, ...out, ...(cr ? [cr] : [])];
 }
 
 /** Message testing: your pollster tests each answer with a quick online panel before you choose. The read is the real
