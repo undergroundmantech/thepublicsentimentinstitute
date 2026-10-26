@@ -14,7 +14,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PORTAL_COOKIE, verifySession } from "@/app/lib/portalSession";
 import { researchCoverage } from "@/app/lib/intelligence/baseline";
-import { captureDir, captureStatus } from "@/app/lib/intelligence/capture";
 import { loadResearchDir, RESEARCH_DIR } from "@/app/lib/intelligence/load";
 import { appendObservations, fromCivicDetail } from "@/app/lib/intelligence/observations";
 import { runPipeline } from "@/app/lib/intelligence/pipeline";
@@ -24,6 +23,7 @@ import baselineFile from "@/data/intelligence/baseline/2026-10-25.json";
 import statesFile from "@/data/intelligence/states/priority15-2026-10-26.json";
 import registerFile from "@/data/intelligence/register/top50-2026-10-25.json";
 import { fetchCivicDetail, readCountyExpectations, readIndex } from "./inputs";
+import { RaceCapture, RecorderPanel } from "./RecorderPanel";
 import { ENI_CSS } from "./styles";
 
 export const dynamic = "force-dynamic";
@@ -73,6 +73,7 @@ export default async function IntelligencePage({ searchParams }: { searchParams:
       <style>{ENI_CSS}</style>
       <span className="eye">Developer diagnostics · shadow only · not published</span>
       <div className="banner"><b>Shadow</b>Nothing on this page reaches a public page. The shadow pipeline is a software architecture, not a validated forecasting model: it has no backtest, gives no win probability, and does not call races.</div>
+      {raceId ? null : <RecorderPanel />}
       {raceParam && !raceId ? <div className="banner"><b>Unmatched</b>{`"${raceParam.slice(0, 40)}" is not a race id in the October 25 baseline.`}</div> : null}
       {raceId
         ? <RaceView raceId={raceId} sp={sp} index={index} research={research} asOf={asOf} />
@@ -296,7 +297,6 @@ async function RaceView({ raceId, sp, index, research, asOf }: { raceId: string;
     published: x ? { race: x, exp, detail: detail && (!detail.test || includeTest) ? detail : null } : null,
   });
   const base = `/portal/intelligence?race=${raceId}`;
-  const cap = await captureStatus(captureDir(), raceId).catch(() => null);
   return (
     <>
       <div className="links"><Link href="/portal/intelligence">← Register</Link><Link href={base}>forecast + research only</Link><Link href={`${base}&live=1`}>with civicAPI returns</Link><Link href={`${base}&live=1&test=1`}>with civicAPI test data</Link></div>
@@ -305,14 +305,7 @@ async function RaceView({ raceId, sp, index, research, asOf }: { raceId: string;
       {includeTest && detail?.test ? <div className="banner"><b>Test data</b>civicAPI marks these returns as test data. They are not real results.</div> : null}
       {notes.length ? <div className="banner"><b>Inputs</b>{notes.join(" · ")}</div> : null}
       <Report r={report} />
-      <section className="panel wide">
-        <h2>Evidence capture</h2>
-        {cap && cap.captures > 0 ? <dl className="kv">
-          <dt>captures</dt><dd>{cap.captures} <span className="mute">distinct payloads; {cap.test} test, {cap.corrected} corrected, {cap.outOfOrder} out of order, {cap.withoutSourceTimestamp} without a source timestamp</span></dd>
-          <dt>first / last observed</dt><dd>{cap.firstObservedAt} / {cap.lastObservedAt}</dd>
-          <dt>ledger health</dt><dd><Pill v={cap.corruptLines || cap.tornTail ? "DEGRADED" : "OK"} /> {cap.corruptLines} skipped line(s){cap.tornTail ? "; torn tail" : ""}</dd>
-        </dl> : <p><Pill v="NONE" /> nothing captured for this race. Capture is not scheduled; replay of this race is BLOCKED.</p>}
-      </section>
+      <RaceCapture raceId={raceId} />
     </>
   );
 }

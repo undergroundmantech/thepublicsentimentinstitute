@@ -141,11 +141,11 @@ export function runBacktest(source: BacktestSource, certified: CertifiedResult |
 export interface LoadedCaptures {
   raceId: string;
   steps: (ReplayStep & { captureId: string; flag: "LIVE" | "TEST" | "CORRECTED"; outOfOrder: boolean })[];
-  /** Captures left out, and why: TEST_DATA, PAYLOAD_MISSING, PAYLOAD_HASH_MISMATCH. */
+  /** Captures left out, and why: TEST_DATA, RAW_MISSING_OR_MISMATCHED. */
   excluded: { captureId: string; reason: string }[];
   archive: ReplayArchive | null;
-  corruptLines: number;
-  tornTail: boolean;
+  /** Records that failed their checksum or had an unknown shape. They are skipped, never trusted. */
+  corruptRecords: number;
 }
 
 export interface CaptureReplayResult extends BacktestResult {
@@ -154,7 +154,7 @@ export interface CaptureReplayResult extends BacktestResult {
   excluded: LoadedCaptures["excluded"];
   corrections: number;
   outOfOrder: number;
-  ledgerHealth: { corruptLines: number; tornTail: boolean };
+  ledgerHealth: { corruptRecords: number };
 }
 
 /**
@@ -166,7 +166,7 @@ export function backtestFromCaptures(loaded: LoadedCaptures, certified: Certifie
   const meta = {
     raceId: loaded.raceId, stepsUsed: loaded.steps.length, excluded: loaded.excluded,
     corrections: loaded.steps.filter((s) => s.flag === "CORRECTED").length, outOfOrder: loaded.steps.filter((s) => s.outOfOrder).length,
-    ledgerHealth: { corruptLines: loaded.corruptLines, tornTail: loaded.tornTail },
+    ledgerHealth: { corruptRecords: loaded.corruptRecords },
   };
   if (!loaded.steps.length) return { ...meta, status: "BLOCKED", reasons: [`no captured snapshots for ${loaded.raceId}; there is nothing to replay`], checkpoints: [], summary: null };
   const source: BacktestSource = { label: `capture-ledger:${loaded.raceId}`, synthetic: false, archive: loaded.archive, steps: loaded.steps.map((s) => ({ at: s.at, batch: s.batch })) };

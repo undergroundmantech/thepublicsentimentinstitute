@@ -1,0 +1,1297 @@
+{
+ "meta": {
+  "id": "tx-county-timezones-2026-10-26",
+  "state": "TX",
+  "retrievedAt": "2026-10-26T11:51:00Z",
+  "source": {
+   "name": "eCFR, 49 CFR 71.7(e) and 71.8 (Central/Mountain zone boundary), current text retrieved 2026-10-26",
+   "url": "https://www.ecfr.gov/current/title-49/subtitle-A/part-71/section-71.7",
+   "tier": "PRIMARY_OFFICIAL"
+  },
+  "rule": "The central/mountain boundary follows the west boundary of Texas to the southeast corner of New Mexico, then west along the Texas-New Mexico line to the EAST line of Hudspeth County, then south along the east line of Hudspeth County to the Mexico border. Counties west of that line (El Paso, Hudspeth) are Mountain; every other Texas county is Central.",
+  "pollClose": "7:00 p.m. local time in each county (Tex. Elec. Code 41.031, per Texas SOS Election Advisory 2026-21). Local clock time is not converted here to a statewide instant.",
+  "dstOnElectionDay": "None. Daylight time ends 2026-11-01, so on 2026-11-03 Central is UTC-6 and Mountain is UTC-7.",
+  "utcOffsetHours": {
+   "CENTRAL": -6,
+   "MOUNTAIN": -7
+  },
+  "limitations": [
+   "Legal zone only. A county seat or park that informally follows a neighbouring zone (for example reports about the Guadalupe Mountains National Park in Culberson County) is not a legal exception and was not verified.",
+   "The CFR describes a boundary, not a county list. Membership was derived by geography (El Paso lies west of Hudspeth) and should be confirmed by a second source before it feeds anything beyond ordering of poll-close times.",
+   "Whether the Texas Secretary of State or any county publishes an alternative closing time for Nov 3 was not checked."
+  ],
+  "counties": 254
+ },
+ "counties": [
+  {
+   "fips": "48001",
+   "name": "Anderson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48003",
+   "name": "Andrews",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48005",
+   "name": "Angelina",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48007",
+   "name": "Aransas",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48009",
+   "name": "Archer",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48011",
+   "name": "Armstrong",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48013",
+   "name": "Atascosa",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48015",
+   "name": "Austin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48017",
+   "name": "Bailey",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48019",
+   "name": "Bandera",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48021",
+   "name": "Bastrop",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48023",
+   "name": "Baylor",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48025",
+   "name": "Bee",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48027",
+   "name": "Bell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48029",
+   "name": "Bexar",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48031",
+   "name": "Blanco",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48033",
+   "name": "Borden",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48035",
+   "name": "Bosque",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48037",
+   "name": "Bowie",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48039",
+   "name": "Brazoria",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48041",
+   "name": "Brazos",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48043",
+   "name": "Brewster",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48045",
+   "name": "Briscoe",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48047",
+   "name": "Brooks",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48049",
+   "name": "Brown",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48051",
+   "name": "Burleson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48053",
+   "name": "Burnet",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48055",
+   "name": "Caldwell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48057",
+   "name": "Calhoun",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48059",
+   "name": "Callahan",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48061",
+   "name": "Cameron",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48063",
+   "name": "Camp",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48065",
+   "name": "Carson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48067",
+   "name": "Cass",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48069",
+   "name": "Castro",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48071",
+   "name": "Chambers",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48073",
+   "name": "Cherokee",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48075",
+   "name": "Childress",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48077",
+   "name": "Clay",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48079",
+   "name": "Cochran",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48081",
+   "name": "Coke",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48083",
+   "name": "Coleman",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48085",
+   "name": "Collin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48087",
+   "name": "Collingsworth",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48089",
+   "name": "Colorado",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48091",
+   "name": "Comal",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48093",
+   "name": "Comanche",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48095",
+   "name": "Concho",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48097",
+   "name": "Cooke",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48099",
+   "name": "Coryell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48101",
+   "name": "Cottle",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48103",
+   "name": "Crane",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48105",
+   "name": "Crockett",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48107",
+   "name": "Crosby",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48109",
+   "name": "Culberson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48111",
+   "name": "Dallam",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48113",
+   "name": "Dallas",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48115",
+   "name": "Dawson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48117",
+   "name": "Deaf Smith",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48119",
+   "name": "Delta",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48121",
+   "name": "Denton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48123",
+   "name": "DeWitt",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48125",
+   "name": "Dickens",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48127",
+   "name": "Dimmit",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48129",
+   "name": "Donley",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48131",
+   "name": "Duval",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48133",
+   "name": "Eastland",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48135",
+   "name": "Ector",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48137",
+   "name": "Edwards",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48139",
+   "name": "Ellis",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48141",
+   "name": "El Paso",
+   "zone": "MOUNTAIN"
+  },
+  {
+   "fips": "48143",
+   "name": "Erath",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48145",
+   "name": "Falls",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48147",
+   "name": "Fannin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48149",
+   "name": "Fayette",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48151",
+   "name": "Fisher",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48153",
+   "name": "Floyd",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48155",
+   "name": "Foard",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48157",
+   "name": "Fort Bend",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48159",
+   "name": "Franklin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48161",
+   "name": "Freestone",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48163",
+   "name": "Frio",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48165",
+   "name": "Gaines",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48167",
+   "name": "Galveston",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48169",
+   "name": "Garza",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48171",
+   "name": "Gillespie",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48173",
+   "name": "Glasscock",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48175",
+   "name": "Goliad",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48177",
+   "name": "Gonzales",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48179",
+   "name": "Gray",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48181",
+   "name": "Grayson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48183",
+   "name": "Gregg",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48185",
+   "name": "Grimes",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48187",
+   "name": "Guadalupe",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48189",
+   "name": "Hale",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48191",
+   "name": "Hall",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48193",
+   "name": "Hamilton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48195",
+   "name": "Hansford",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48197",
+   "name": "Hardeman",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48199",
+   "name": "Hardin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48201",
+   "name": "Harris",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48203",
+   "name": "Harrison",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48205",
+   "name": "Hartley",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48207",
+   "name": "Haskell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48209",
+   "name": "Hays",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48211",
+   "name": "Hemphill",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48213",
+   "name": "Henderson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48215",
+   "name": "Hidalgo",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48217",
+   "name": "Hill",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48219",
+   "name": "Hockley",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48221",
+   "name": "Hood",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48223",
+   "name": "Hopkins",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48225",
+   "name": "Houston",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48227",
+   "name": "Howard",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48229",
+   "name": "Hudspeth",
+   "zone": "MOUNTAIN"
+  },
+  {
+   "fips": "48231",
+   "name": "Hunt",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48233",
+   "name": "Hutchinson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48235",
+   "name": "Irion",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48237",
+   "name": "Jack",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48239",
+   "name": "Jackson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48241",
+   "name": "Jasper",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48243",
+   "name": "Jeff Davis",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48245",
+   "name": "Jefferson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48247",
+   "name": "Jim Hogg",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48249",
+   "name": "Jim Wells",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48251",
+   "name": "Johnson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48253",
+   "name": "Jones",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48255",
+   "name": "Karnes",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48257",
+   "name": "Kaufman",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48259",
+   "name": "Kendall",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48261",
+   "name": "Kenedy",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48263",
+   "name": "Kent",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48265",
+   "name": "Kerr",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48267",
+   "name": "Kimble",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48269",
+   "name": "King",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48271",
+   "name": "Kinney",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48273",
+   "name": "Kleberg",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48275",
+   "name": "Knox",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48277",
+   "name": "Lamar",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48279",
+   "name": "Lamb",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48281",
+   "name": "Lampasas",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48283",
+   "name": "La Salle",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48285",
+   "name": "Lavaca",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48287",
+   "name": "Lee",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48289",
+   "name": "Leon",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48291",
+   "name": "Liberty",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48293",
+   "name": "Limestone",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48295",
+   "name": "Lipscomb",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48297",
+   "name": "Live Oak",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48299",
+   "name": "Llano",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48301",
+   "name": "Loving",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48303",
+   "name": "Lubbock",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48305",
+   "name": "Lynn",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48307",
+   "name": "McCulloch",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48309",
+   "name": "McLennan",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48311",
+   "name": "McMullen",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48313",
+   "name": "Madison",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48315",
+   "name": "Marion",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48317",
+   "name": "Martin",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48319",
+   "name": "Mason",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48321",
+   "name": "Matagorda",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48323",
+   "name": "Maverick",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48325",
+   "name": "Medina",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48327",
+   "name": "Menard",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48329",
+   "name": "Midland",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48331",
+   "name": "Milam",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48333",
+   "name": "Mills",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48335",
+   "name": "Mitchell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48337",
+   "name": "Montague",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48339",
+   "name": "Montgomery",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48341",
+   "name": "Moore",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48343",
+   "name": "Morris",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48345",
+   "name": "Motley",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48347",
+   "name": "Nacogdoches",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48349",
+   "name": "Navarro",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48351",
+   "name": "Newton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48353",
+   "name": "Nolan",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48355",
+   "name": "Nueces",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48357",
+   "name": "Ochiltree",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48359",
+   "name": "Oldham",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48361",
+   "name": "Orange",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48363",
+   "name": "Palo Pinto",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48365",
+   "name": "Panola",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48367",
+   "name": "Parker",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48369",
+   "name": "Parmer",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48371",
+   "name": "Pecos",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48373",
+   "name": "Polk",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48375",
+   "name": "Potter",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48377",
+   "name": "Presidio",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48379",
+   "name": "Rains",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48381",
+   "name": "Randall",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48383",
+   "name": "Reagan",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48385",
+   "name": "Real",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48387",
+   "name": "Red River",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48389",
+   "name": "Reeves",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48391",
+   "name": "Refugio",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48393",
+   "name": "Roberts",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48395",
+   "name": "Robertson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48397",
+   "name": "Rockwall",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48399",
+   "name": "Runnels",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48401",
+   "name": "Rusk",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48403",
+   "name": "Sabine",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48405",
+   "name": "San Augustine",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48407",
+   "name": "San Jacinto",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48409",
+   "name": "San Patricio",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48411",
+   "name": "San Saba",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48413",
+   "name": "Schleicher",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48415",
+   "name": "Scurry",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48417",
+   "name": "Shackelford",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48419",
+   "name": "Shelby",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48421",
+   "name": "Sherman",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48423",
+   "name": "Smith",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48425",
+   "name": "Somervell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48427",
+   "name": "Starr",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48429",
+   "name": "Stephens",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48431",
+   "name": "Sterling",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48433",
+   "name": "Stonewall",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48435",
+   "name": "Sutton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48437",
+   "name": "Swisher",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48439",
+   "name": "Tarrant",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48441",
+   "name": "Taylor",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48443",
+   "name": "Terrell",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48445",
+   "name": "Terry",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48447",
+   "name": "Throckmorton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48449",
+   "name": "Titus",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48451",
+   "name": "Tom Green",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48453",
+   "name": "Travis",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48455",
+   "name": "Trinity",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48457",
+   "name": "Tyler",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48459",
+   "name": "Upshur",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48461",
+   "name": "Upton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48463",
+   "name": "Uvalde",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48465",
+   "name": "Val Verde",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48467",
+   "name": "Van Zandt",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48469",
+   "name": "Victoria",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48471",
+   "name": "Walker",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48473",
+   "name": "Waller",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48475",
+   "name": "Ward",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48477",
+   "name": "Washington",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48479",
+   "name": "Webb",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48481",
+   "name": "Wharton",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48483",
+   "name": "Wheeler",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48485",
+   "name": "Wichita",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48487",
+   "name": "Wilbarger",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48489",
+   "name": "Willacy",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48491",
+   "name": "Williamson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48493",
+   "name": "Wilson",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48495",
+   "name": "Winkler",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48497",
+   "name": "Wise",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48499",
+   "name": "Wood",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48501",
+   "name": "Yoakum",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48503",
+   "name": "Young",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48505",
+   "name": "Zapata",
+   "zone": "CENTRAL"
+  },
+  {
+   "fips": "48507",
+   "name": "Zavala",
+   "zone": "CENTRAL"
+  }
+ ]
+}

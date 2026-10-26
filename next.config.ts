@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
     "/on-point-polling": ["./public/forecast/model.json"],
     "/on-point-polling/polls": ["./public/forecast/model.json"],
     "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json", "./public/results/2026/index.json"],
+    // The recorder reads the tracked-race list and the forecast index from the deployment's files.
+    "/api/intelligence/capture": ["./data/intelligence/states/priority15-2026-10-26.json", "./public/results/2026/index.json"],
+    "/portal/intelligence": ["./data/intelligence/states/priority15-2026-10-26.json", "./public/results/2026/index.json"],
   },
   // Force the flag into the bundler's define map even when the env var is
   // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which
