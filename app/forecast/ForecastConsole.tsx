@@ -14,11 +14,12 @@ import { RATE, RATING_LABEL, rating, ratingPill, STATE_NAME, type Rating } from 
 import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
 import SpendingTracker, { SPENDING_CSS } from "./Spending";
 import Ambient from "@/app/components/opp/Ambient";
+import SeatBars from "./SeatBars";
 import "./console.css";
 
 export type Layer = "senate" | "house" | "governor" | "statewide" | "legis" | "measures";
 export type CRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; open: boolean; p10: number; p90: number; office?: string; officeLabel?: string; pl?: [number, number, number, number][] };
-export type CChamber = { demControl: number; demSeats: number; median: number; seatsTotal: number; p10: number; p90: number; majority: number; trend: number[]; notUpD: number; notUpR: number };
+export type CChamber = { demControl: number; demSeats: number; median: number; seatsTotal: number; p10: number; p90: number; majority: number; trend: number[]; notUpD: number; notUpR: number; notUpI?: number };
 export type CLeg = { id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number; demControl: number; gopControl: number; demSeats: number; gopSeats: number; p10: number; p90: number; href: string };
 export type CMeas = { st: string; label: string; title: string; yes: number; prob: number; thr: number; href: string };
 export type ConsoleData = {
@@ -174,7 +175,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
     if (layer === "senate" || layer === "governor") {
       const c = ch[layer], rs = layer === "senate" ? data.senate : data.governor;
       const nu = (n: number, col: string, who: string) => Array.from({ length: n }, () => ({ c: col, t: `${who} seat not up in 2026`, dim: true }));
-      const cells = [...nu(c.notUpD, RATE.safeD, "Democratic"), ...cellsOf(rs), ...nu(c.notUpR, RATE.safeR, "Republican")];
+      const cells = [...nu(c.notUpD, RATE.safeD, "Democratic"), ...nu(c.notUpI ?? 0, dColor(true), "Independent"), ...cellsOf(rs), ...nu(c.notUpR, RATE.safeR, "Republican")];
       const dWin = c.demControl >= 0.5;
       return {
         verdict: layer === "senate"
@@ -263,6 +264,8 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
           {data.ev ? <div><dt>Early ballots</dt><dd><Link href="/maps/early-vote">{(data.ev.ballots / 1e6).toFixed(1)}M</Link></dd></div> : null}
         </dl>
       </header>
+
+      <SeatBars ch={ch} data={data} onPick={choose} active={layer} />
 
       <div className="fcx-tiles" role="tablist" aria-label="Forecast layer">
         {LAYERS.map((l, i) => {

@@ -243,7 +243,7 @@ function National({ model, races, office, signals, geo, shade, onOpen }: {
         </div>
         <p className="db-note">{inModel
           ? "Closest races first. The forecast now includes this correction: each state's early vote, read against the party mix the forecast expected of it, timed against the same day in 2022 and 2024 and pooled with similar states and primary turnout, moves each party's turnout among the forecast's simulated voters. A state with no ballots reported takes its correction from similar states. Click a race for its counties."
-          : "Closest races first, after the adjustment. Click a race for its counties. A state with no ballots reported keeps the forecast as is."}</p>
+          : "Closest races first: the forecast, and where today's early vote read would put each race. The forecast already builds the early vote into the electorate it simulates, so this is a comparison, not a change to the forecast. Click a race for its counties. A state with no ballots reported keeps the forecast as is."}</p>
       </div>
 
       {t && tip ? (

@@ -309,7 +309,7 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
                   <b style={{ color: calc.impliedShift < 0 ? "var(--dem)" : "var(--gop)" }}>
                     {Math.abs(calc.impliedShift) < 0.05 ? "nothing" : `${Math.abs(calc.impliedShift).toFixed(1)} points to ${calc.impliedShift < 0 ? "Democrats" : "Republicans"}`}
                   </b>
-                  <span>against the forecast&apos;s electorate before its early vote correction, with half of today&apos;s gap carried into the ballots still to come. The forecast check shows how much of it each race already counts.</span>
+                  <span>against the electorate the forecast expected of these ballots, with half of today&apos;s gap carried into the ballots still to come. The forecast already builds the early vote into its own electorate; the forecast check shows how far this read sits from it.</span>
                 </div>
               </div>
 

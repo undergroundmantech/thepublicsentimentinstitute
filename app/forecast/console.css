@@ -155,3 +155,28 @@
 .fcx-spk { display: inline-flex; align-items: center; gap: 6px; }
 .fcx-spk .ptr { width: 96px; height: 28px; }
 @media (max-width: 900px) { .fcx-pcol { display: none; } }
+
+/* seat count bars: Senate, House and governors, Democrats, independents and Republicans on one bar each */
+.fcx-seats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.fcx-seat { display: grid; gap: 8px; text-align: left; padding: 14px 16px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--glass); color: var(--ink); cursor: pointer; font: inherit; transition: border-color .15s, transform .15s; }
+.fcx-seat:hover { border-color: var(--line2); transform: translateY(-1px); }
+.fcx-seat:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+.fcx-seat.on { border-color: rgba(170,140,255,.55); }
+.fcx-seat .sh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.fcx-seat .lb { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.fcx-seat.on .lb { color: #e9e2ff; }
+.fcx-seat .nt { font: 600 11px var(--font-m); color: var(--mute); white-space: nowrap; }
+.fcx-seat .cn { display: flex; align-items: baseline; gap: 14px; }
+.fcx-seat .cn b { font: 800 clamp(22px, 1.9vw, 30px)/1 var(--font-d); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.fcx-seat .cn b.d { color: var(--dem2); } .fcx-seat .cn b.i { color: var(--ind); } .fcx-seat .cn b.r { color: var(--gop2); margin-left: auto; }
+.fcx-seat .cn small { margin-left: 3px; font: 700 11px var(--font-m); letter-spacing: .08em; color: var(--mute); }
+.fcx-seat .bar { position: relative; display: flex; height: 12px; border-radius: 6px; overflow: visible; background: var(--line); }
+.fcx-seat .bar i { display: block; height: 100%; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.fcx-seat .bar .sd { background: var(--dem); border-radius: 6px 0 0 6px; }
+.fcx-seat .bar .si { background: var(--ind); }
+.fcx-seat .bar .sr { background: var(--gop); border-radius: 0 6px 6px 0; }
+.fcx-seat .bar .mk { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--hi); border-radius: 1px; box-shadow: 0 0 0 1px rgba(0,0,0,.35); }
+.fcx-seat .ft { display: flex; justify-content: space-between; gap: 8px; font-size: 11.5px; color: var(--mute); }
+.fcx-seat .ft .d { color: var(--dem2); } .fcx-seat .ft .r { color: var(--gop2); } .fcx-seat .ft .i { color: var(--ind); }
+@media (prefers-reduced-motion: reduce) { .fcx-seat, .fcx-seat .bar i { transition: none; } }
+@media (max-width: 900px) { .fcx-seats { grid-template-columns: 1fr; gap: 8px; } .fcx-seat { padding: 12px 14px 10px; gap: 6px; } .fcx-seat .cn b { font-size: 24px; } }

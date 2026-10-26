@@ -327,7 +327,7 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
           </div>
         </aside>
       </div>
-      <p className="evc-note evb-foot">Benchmarks assume the rest of the early vote keeps the gap seen so far and Election Day votes as the forecast expects. Party is registration where {row.name} publishes it and the On Point party model where it does not. Crossover rates are On Point Polling likely voters nationwide; the forecast itself already carries an early vote correction of {lab(r.evShift, ind, 2)}, which is taken out of the baseline here so the same ballots are not counted twice. Polls of the last 30 days leave out Rasmussen, ActiVote and Wedgewood, as the site average does.</p>
+      <p className="evc-note evb-foot">Benchmarks assume the rest of the early vote keeps the gap seen so far and Election Day votes as the forecast expects. Party is registration where {row.name} publishes it and the On Point party model where it does not. Crossover rates are On Point Polling likely voters nationwide. The forecast builds the early vote into the electorate it simulates, so this read is a check against the forecast, not an addition to it. Polls of the last 30 days leave out Rasmussen, ActiVote and Wedgewood, as the site average does.</p>
     </section>
   );
 }
