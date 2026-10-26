@@ -1,11 +1,13 @@
 // Replay: run the shadow pipeline over a timestamped sequence of readings, as it would have run on the night.
 //
-// This is the harness historical backtests will use once timestamped returns from past elections are collected
-// (Phase 2). A replay over a synthetic source is a software test, never a backtest, and its reports say so.
+// A replay over a synthetic source is a software test, never a backtest, and its reports say so. A backtest needs
+// real returns with the timestamps the source published them under, an archive record, and certified results to
+// score against. `runBacktest` refuses to run without all three and says which is missing; it never fills a gap
+// with an invented timestamp.
 
 import { appendObservations } from "./observations";
 import { runPipeline, type PipelineInput } from "./pipeline";
-import type { DiagnosticReport, Issue, LoggedObservation, VoteObservation } from "./types";
+import type { BaselineRace, DiagnosticReport, Interval, Issue, LoggedObservation, VoteObservation } from "./types";
 
 export interface ReplayStep {
   /** The evaluation time after this batch arrives. */
@@ -39,4 +41,93 @@ export function runReplay(source: ReplaySource, base: Omit<PipelineInput, "log" 
     reports.push(runPipeline({ ...base, log, asOf: step.at, synthetic: source.synthetic || base.synthetic }));
   }
   return { label: source.label, synthetic: source.synthetic, backtestEligible: !source.synthetic, reports, ingestIssues };
+}
+
+// ---- backtest ------------------------------------------------------------------------------------------------------
+
+/** Where an archived return sequence came from. Required for a source to count as a backtest. */
+export interface ReplayArchive {
+  sourceUrl: string;
+  retrievedAt: string;
+  sha256: string;
+}
+
+export interface CertifiedResult {
+  raceId: string;
+  /** Certified margin, side B minus side A, percentage points. */
+  margin: number;
+  votes: { a: number; b: number; o: number };
+  certifiedAt: string;
+  sourceUrl: string;
+}
+
+export interface BacktestSource extends ReplaySource {
+  archive: ReplayArchive | null;
+}
+
+export interface BacktestCheckpoint {
+  at: string;
+  /** Shadow "outstanding splits like the reported vote" final margin, B minus A. */
+  shadowMargin: Interval | null;
+  shadowError: number | null;
+  shadowCovered: boolean | null;
+  /** The published engine's margin at the same checkpoint, read-only. */
+  publishedMargin: number | null;
+  publishedError: number | null;
+}
+
+export interface BacktestResult {
+  status: "BLOCKED" | "COMPLETED";
+  reasons: string[];
+  checkpoints: BacktestCheckpoint[];
+  summary: { checkpoints: number; shadowMeanAbsError: number | null; publishedMeanAbsError: number | null; shadowCoverage: number | null } | null;
+}
+
+/** Why a source cannot be used as a backtest, or an empty list when it can. Pure; touches nothing. */
+export function backtestBlockers(source: BacktestSource, certified: CertifiedResult | null): string[] {
+  const out: string[] = [];
+  if (source.synthetic) out.push("the source is synthetic; a synthetic replay is a software test, not a backtest");
+  if (!source.archive) out.push("no archive record (source URL, retrieval time and hash) for the returns");
+  if (!source.steps.length) out.push("the source has no timestamped returns");
+  if (!certified) out.push("no certified result to score against");
+  let prev = -Infinity;
+  for (const [i, st] of source.steps.entries()) {
+    const at = Date.parse(st.at);
+    if (!Number.isFinite(at)) { out.push(`step ${i} has no valid evaluation time`); continue; }
+    if (at < prev) out.push(`step ${i} is earlier than the step before it; returns must be ingested in their historical order`);
+    prev = at;
+    for (const b of st.batch) {
+      const ts = b.observation.sourceTimestamp;
+      if (!ts) { out.push(`step ${i}: an observation has no source timestamp; timestamps are never invented`); break; }
+      if (Date.parse(ts) > at) { out.push(`step ${i}: an observation is stamped after the evaluation time (future leakage)`); break; }
+    }
+  }
+  return [...new Set(out)];
+}
+
+export function runBacktest(source: BacktestSource, certified: CertifiedResult | null, base: Omit<PipelineInput, "log" | "asOf">, frozenBaseline: BaselineRace | null): BacktestResult {
+  const blockers = backtestBlockers(source, certified);
+  if (blockers.length || !certified) return { status: "BLOCKED", reasons: blockers, checkpoints: [], summary: null };
+  const before = JSON.stringify(frozenBaseline);
+  const replay = runReplay(source, { ...base, baseline: frozenBaseline });
+  const reasons: string[] = [];
+  if (JSON.stringify(frozenBaseline) !== before) reasons.push("the baseline changed during the replay");
+  if (reasons.length) return { status: "BLOCKED", reasons, checkpoints: [], summary: null };
+  const checkpoints: BacktestCheckpoint[] = replay.reports.map((r) => {
+    const sc = r.shadow?.scenarios.find((x) => x.id === "OUTSTANDING_SPLITS_LIKE_REPORTED")?.finalMargin ?? null;
+    const central = sc?.central ?? null;
+    const pm = r.published?.published?.margin ?? null;
+    return {
+      at: r.asOf, shadowMargin: sc,
+      shadowError: central === null ? null : central - certified.margin,
+      shadowCovered: sc ? sc.low <= certified.margin && certified.margin <= sc.high : null,
+      publishedMargin: pm, publishedError: pm === null ? null : pm - certified.margin,
+    };
+  });
+  const mean = (xs: (number | null)[]) => { const v = xs.filter((x): x is number => x !== null).map(Math.abs); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const cov = checkpoints.filter((c) => c.shadowCovered !== null);
+  return {
+    status: "COMPLETED", reasons: [], checkpoints,
+    summary: { checkpoints: checkpoints.length, shadowMeanAbsError: mean(checkpoints.map((c) => c.shadowError)), publishedMeanAbsError: mean(checkpoints.map((c) => c.publishedError)), shadowCoverage: cov.length ? cov.filter((c) => c.shadowCovered).length / cov.length : null },
+  };
 }

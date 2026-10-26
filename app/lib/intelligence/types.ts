@@ -39,7 +39,19 @@ export interface ReportingWindow {
   endMinAfterClose: number | null;
 }
 
+/**
+ * How close the source is to the primary record.
+ * PRIMARY_OFFICIAL    the statute, the election authority's own page or its data file
+ * SECONDARY_SUMMARY   a summary of the primary record by a third party that cites it (for example NCSL tables)
+ * RESEARCH_COMPILATION a research group's compilation of official returns (for example MEDSL)
+ * A VERIFIED value that rests on a secondary tier is capped at MEDIUM confidence.
+ */
+export const SOURCE_TIERS = ["PRIMARY_OFFICIAL", "SECONDARY_SUMMARY", "RESEARCH_COMPILATION"] as const;
+export type SourceTier = (typeof SOURCE_TIERS)[number];
+
 export interface Provenance {
+  /** Optional: records written before Phase 2 do not carry it. */
+  sourceTier?: SourceTier | null;
   evidenceClass: EvidenceClass;
   valueKind: ValueKind;
   sourceUrl: string | null;
@@ -64,6 +76,9 @@ export const RECORD_TYPES = [
   "OUTSTANDING_REPORT",
   "BALLOT_DEADLINE",
   "GEO_SPLIT",
+  "RELEASE_TIMING",
+  "REPORTING_PRACTICE",
+  "CANDIDATE_BY_METHOD",
 ] as const;
 export type RecordType = (typeof RECORD_TYPES)[number];
 
@@ -145,7 +160,88 @@ export interface GeoSplitRecord extends RecordBase {
   weightBasis: string | null;
 }
 
+/**
+ * The five timing questions. They are separate facts and are never derived from one another: a legal right to scan
+ * says nothing about when a county publishes, and a past release says nothing about 2026.
+ */
+export const TIMING_KINDS = [
+  "LEGAL_PROCESSING_TIME",
+  "LEGAL_SCANNING_TIME",
+  "OFFICIAL_EXPECTED_RELEASE_TIME",
+  "HISTORICAL_OBSERVED_RELEASE_TIME",
+  "ACTUAL_2026_RELEASE_TIME",
+] as const;
+export type TimingKind = (typeof TIMING_KINDS)[number];
+
+export interface ReleaseTimingRecord extends RecordBase {
+  recordType: "RELEASE_TIMING";
+  timingKind: TimingKind;
+  /** What the source says, in words: "7 days before Election Day", "after 8:00 p.m. on election night". */
+  localText: string | null;
+  /** Set only when the source states an exact instant. A rule such as "7 days before" stays text. */
+  atUtc: string | null;
+  timeZone: string | null;
+  statuteCite: string | null;
+}
+
+export const PRACTICE_KINDS = [
+  "REPORTING_UNIT",
+  "METHOD_SEPARATION",
+  "LATE_BALLOT_RULE",
+  "UOCAVA_RULE",
+  "PROVISIONAL_RULE",
+  "CANVASS_CERTIFICATION",
+  "RANKED_CHOICE",
+  "OUTSTANDING_INVENTORY_SOURCE",
+] as const;
+export type PracticeKind = (typeof PRACTICE_KINDS)[number];
+
+/** How a state reports and finishes counting. Qualitative: it carries words and a citation, never a number the model uses. */
+export interface ReportingPracticeRecord extends RecordBase {
+  recordType: "REPORTING_PRACTICE";
+  practiceKind: PracticeKind;
+  summary: string | null;
+  statuteCite: string | null;
+}
+
+/**
+ * A = actual candidate votes by method
+ * B = official ballot counts by method (no candidate split)
+ * C = party registration composition. NEVER a vote share.
+ * D = statistical estimate (needs a stated methodology and uncertainty)
+ * E = unknown
+ */
+export const MEASURE_KINDS = ["A", "B", "C", "D", "E"] as const;
+export type MeasureKind = (typeof MEASURE_KINDS)[number];
+
+/** Votes for each side in one contest in one past election, for one method, as the source labels it. */
+export interface CandidateByMethodRecord extends RecordBase {
+  recordType: "CANDIDATE_BY_METHOD";
+  measureKind: MeasureKind;
+  contestYear: number | null;
+  office: Office | null;
+  /** House district number as the source gives it, or null for a statewide contest. */
+  contestDistrict: string | null;
+  /** The source's own mode label, kept verbatim. `method` is set only where the label is unambiguous. */
+  modeLabel: string | null;
+  votesA: number | null;
+  votesB: number | null;
+  votesOther: number | null;
+  /** Class D only: how the estimate was made and its stated uncertainty. */
+  methodology: string | null;
+  uncertainty: string | null;
+  /**
+   * Whether the source's method rows cover the whole contest. RECONCILED: the method rows sum to the source's TOTAL
+   * rows. AMBIGUOUS: TOTAL rows exist beside method rows and may cover other jurisdictions. NO_TOTAL: no TOTAL row to
+   * check against.
+   */
+  coverage: "RECONCILED" | "AMBIGUOUS" | "NO_TOTAL" | null;
+}
+
 export type ResearchRecord =
+  | ReleaseTimingRecord
+  | ReportingPracticeRecord
+  | CandidateByMethodRecord
   | PollCloseRecord
   | ReportingWindowRecord
   | MethodHistoryRecord
@@ -406,6 +502,77 @@ export interface PublishedComparison {
   } | null;
 }
 
+// ---- Phase 2: state reporting order --------------------------------------------------------------------------------
+
+export interface TimingEntry {
+  kind: TimingKind;
+  /** VERIFIED: a 2026 rule or statement from an authority. HISTORICAL: observed in a past election. */
+  evidenceClass: EvidenceClass;
+  localText: string | null;
+  atUtc: string | null;
+  timeZone: string | null;
+  statuteCite: string | null;
+  sourceUrl: string | null;
+  sourceTier: SourceTier | null;
+  recordId: string;
+  confidence: Confidence;
+}
+
+export interface PracticeEntry {
+  kind: PracticeKind;
+  evidenceClass: EvidenceClass;
+  summary: string | null;
+  statuteCite: string | null;
+  sourceUrl: string | null;
+  sourceTier: SourceTier | null;
+  recordId: string;
+  confidence: Confidence;
+}
+
+export interface MethodEvidenceEntry {
+  year: number | null;
+  office: Office | null;
+  district: string | null;
+  coverage: CandidateByMethodRecord["coverage"];
+  /** One row per source mode label, with total votes. Candidate shares are in the records, not computed here. */
+  modes: { modeLabel: string | null; method: VotingMethod | null; votes: number; recordId: string }[];
+  sourceUrl: string | null;
+  confidence: Confidence;
+}
+
+export interface PrecinctVsBallots {
+  jurisdictionsWithPrecinctPct: number;
+  jurisdictionsAtFullPrecincts: number;
+  /** Mean of the sources' precinct percentages, weighted by votes. A share of precincts, not of votes. */
+  precinctPctWeighted: number | null;
+  reportedVotes: number;
+  /** The published engine's own "percent in", 0..100, when a comparison was run. */
+  publishedPctIn: number | null;
+  /** Reported votes over the forecast's expected final total, 0..100. */
+  estimatedBallotShareCounted: Interval | null;
+  officialOutstanding: number | null;
+  modelOutstanding: Interval | null;
+  /** Precinct percentage minus the estimated share of ballots counted, in points. */
+  gapPoints: number | null;
+  flag: "PRECINCTS_COMPLETE_BALLOTS_INCOMPLETE" | "PRECINCTS_AND_BALLOTS_CONSISTENT" | "UNAVAILABLE";
+  explanation: string;
+}
+
+export interface ReportingOrderProfile {
+  state: string;
+  stateInDataset: boolean;
+  /** Each timing kind is listed on its own. An empty list is UNKNOWN; nothing is carried across kinds. */
+  timings: Record<TimingKind, TimingEntry[]>;
+  practices: PracticeEntry[];
+  methodEvidence: MethodEvidenceEntry[];
+  /** Which evidence classes exist for this race's state, so a reader can see what a composition adjustment would rest on. */
+  evidenceClasses: Record<MeasureKind, "PRESENT" | "ABSENT">;
+  partisanComposition: { status: "NOT_APPLIED"; appliedToProjection: false; reason: string };
+  methodOutstanding: { status: "UNAVAILABLE"; reason: string };
+  precinctVsBallots: PrecinctVsBallots | null;
+  missing: string[];
+}
+
 export interface DiagnosticReport {
   raceId: string;
   generatedAt: string;
@@ -420,6 +587,8 @@ export interface DiagnosticReport {
   outstanding: OutstandingInventory | null;
   shadow: ShadowProjection | null;
   published: PublishedComparison | null;
+  /** State-specific reporting order and partisan-composition availability. Descriptive only. */
+  reportingOrder: ReportingOrderProfile | null;
   confidence: Confidence;
   confidenceReasons: string[];
   missingResearch: { component: ComponentKey; need: string }[];

@@ -1,0 +1,648 @@
+{
+ "kind": "PRIORITY_15_STATE_DATASET",
+ "generatedAt": "2026-10-26T04:21:38Z",
+ "baselineSnapshot": "2026-10-25",
+ "raceCount": 39,
+ "states": [
+  {
+   "state": "AK",
+   "raceIds": [
+    "sen-AK"
+   ],
+   "raceCount": 1,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "RANKED_CHOICE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 9,
+   "candidateByMethodContests": [
+    "2022 governor",
+    "2022 senate"
+   ],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-05-03",
+    "sourceUrl": "https://www.elections.alaska.gov/statistics/2026/MAY/VOTERS%20BY%20PARTY%20AND%20PRECINCT.htm",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "after polls close on Election Day",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Do not assume early absentee results are available at poll close; watch absentee, questioned/provisional, and any ranked-choice tabulation separately.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Confirm current ranked-choice rules, batch publication and absentee/questioned ballot calendar with Alaska Division of Elections.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "AZ",
+   "raceIds": [
+    "house-AZ-08",
+    "house-AZ-02"
+   ],
+   "raceCount": 2,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 1,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 25,
+   "candidateByMethodContests": [
+    "2022 governor",
+    "2022 house CD-2",
+    "2022 house CD-8",
+    "2022 senate",
+    "2024 house CD-2",
+    "2024 house CD-8",
+    "2024 senate"
+   ],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-04-01",
+    "sourceUrl": "https://apps.azsos.gov/election/VoterReg/2026/State-Voter-Registration-April-2026.csv",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "First release can contain previously tabulated early ballots; later polling-place and late-return early ballots may have different composition. County update frequency varies.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify Maricopa/Pima and relevant district county first-release contents, ballot drop-off processing, and county ballot-estimate updates.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "CO",
+   "raceIds": [
+    "house-CO-04",
+    "house-CO-05",
+    "house-CO-03"
+   ],
+   "raceCount": 3,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-06-01",
+    "sourceUrl": "https://www.coloradosos.gov/pubs/elections/VoterRegNumbers/2026/MayStatistics2026.xlsx",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Watch county-level batch timing, late ballot drops, signature cures and provisional additions; do not treat ballot method as party preference.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Obtain Colorado county return batches, 2024 ballot-method vote counts, and district/precinct crosswalk.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "FL",
+   "raceIds": [
+    "house-FL-04",
+    "house-FL-22",
+    "house-FL-09",
+    "house-FL-26"
+   ],
+   "raceCount": 4,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-05-31",
+    "sourceUrl": "https://dos.fl.gov/elections/data-statistics/voter-registration-statistics/voter-registration-reports/voter-registration-by-county-and-party",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Early in-person and vote-by-mail tabulations may be ready for early unofficial releases; election-day precinct returns follow, but county releases are not standardized.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify county supervisors first-release schedules, time-zone constraints, 2024/2022 county-level method-by-candidate returns.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "GA",
+   "raceIds": [
+    "gov-GA"
+   ],
+   "raceCount": 1,
+   "pollClose": "UNKNOWN",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 8,
+   "candidateByMethodContests": [
+    "2022 governor",
+    "2022 senate"
+   ],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": false,
+    "asOf": "2024-11-05",
+    "sourceUrl": "https://www.eac.gov/research-and-data/studies-and-reports/eavs-data-interactive",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Advance/absentee batches and Election Day precincts may arrive separately; do not assume a fixed party lean or county order.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify 2026 SOS reporting guidance, county absentee/advance results labeling, and provisional/overseas calendar.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "IA",
+   "raceIds": [
+    "sen-IA",
+    "house-IA-02"
+   ],
+   "raceCount": 2,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "METHOD_SEPARATION",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 8,
+   "candidateByMethodContests": [
+    "2022 governor",
+    "2022 house CD-2",
+    "2022 senate",
+    "2024 house CD-2"
+   ],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-06-01",
+    "sourceUrl": "https://sos.iowa.gov/elections/pdf/VRStatsArchive/2026/CoJun26.pdf",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "County reporting may mix absentee and precinct ballots; precinct-reporting percent is not votes-counted percent.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify 2026 county election-night reporting files, absentee breakdown availability and method-level 2022/2024 results.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "KS",
+   "raceIds": [
+    "sen-KS",
+    "gov-KS",
+    "house-KS-02"
+   ],
+   "raceCount": 3,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "CANVASS_CERTIFICATION",
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2025-11-01",
+    "sourceUrl": "https://www.sos.ks.gov/elections/25elec/2025-11-01-Voter-Registration-Numbers-by-County.pdf",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Advance ballots and Election Day ballots may arrive in different county batches; mode composition is unverified.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify Kansas county election office reporting order, advance-by-mail vs advance-in-person availability, and post-election provisional process.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "ME",
+   "raceIds": [
+    "sen-ME",
+    "house-ME-02"
+   ],
+   "raceCount": 2,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "METHOD_SEPARATION",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-03-07",
+    "sourceUrl": "https://www.maine.gov/sos/elections-voting/voter-data",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Federal contests may require ranked-choice tabulation if no first-round majority; election-night first choices are not necessarily the final result.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify 2026 ranked-choice applicability and state RCV tabulation schedule; capture first-choice vs final-round totals separately.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "NE",
+   "raceIds": [
+    "sen-NE",
+    "gov-NE",
+    "house-NE-01"
+   ],
+   "raceCount": 3,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-05-01",
+    "sourceUrl": "https://sos.nebraska.gov/sites/default/files/doc/elections/vrstats/2026VR/Statewide-May-2026.pdf",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "County early/absentee and precinct releases can vary; preserve independent Senate candidate labels and non-two-party vote share.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify county-specific batches and Nebraska reporting formats; do not force independent candidates into party bins.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "NY",
+   "raceIds": [
+    "house-NY-01",
+    "house-NY-11",
+    "house-NY-02",
+    "house-NY-17"
+   ],
+   "raceCount": 4,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-02-20",
+    "sourceUrl": "https://elections.ny.gov/system/files/documents/2026/02/county_feb26.xlsx",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Election-night unofficial totals and subsequent absentee/affidavit canvass can differ; verify whether individual releases expose ballot modes.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify county boards, absentee canvass deadlines, fusion/cross-endorsement candidate aggregation and 2022/2024 method-level returns.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "OH",
+   "raceIds": [
+    "sen-OH",
+    "house-OH-15",
+    "house-OH-09",
+    "house-OH-08"
+   ],
+   "raceCount": 4,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": false,
+    "asOf": "2026-06-13",
+    "sourceUrl": "https://data.ohiosos.gov/portal/voter-registration",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Absentee/early totals may be included in first county returns; Election Day precincts and later provisional ballots require distinct tracking.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify county board first-release metadata, early/mail separation, and official outstanding ballot reports.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "PA",
+   "raceIds": [
+    "house-PA-10",
+    "house-PA-08"
+   ],
+   "raceCount": 2,
+   "pollClose": "UNKNOWN",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": true,
+    "asOf": "2026-06-08",
+    "sourceUrl": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/voting-and-election-statistics/currentvotestats.xlsx",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "Election Day scanning permitted before close of polls",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Mail and Election Day returns can arrive in different sequences by county; some mail results may remain outstanding after Election Night.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify Pennsylvania 2026 law, county pre-canvass timing, county mail reporting and provisional calendar.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "SC",
+   "raceIds": [
+    "sen-SC",
+    "house-SC-01"
+   ],
+   "raceCount": 2,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "CANVASS_CERTIFICATION",
+    "LATE_BALLOT_RULE",
+    "METHOD_SEPARATION",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 24,
+   "candidateByMethodContests": [
+    "2022 governor",
+    "2022 house CD-1",
+    "2022 senate",
+    "2024 house CD-1"
+   ],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": false,
+    "asOf": "2026-06-04",
+    "sourceUrl": "https://scvotes.gov/wp-content/uploads/2026/06/VR-Totals-Race-County-Gender-Age-2026-6-4.xlsx",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "Election Day scanning permitted before close of polls",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Do not presume statewide early-vote batches have a consistent release time or partisan profile.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify South Carolina early-vote and absentee reporting definitions, county results file and provisional certification process.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "TX",
+   "raceIds": [
+    "sen-TX",
+    "gov-TX",
+    "house-TX-35",
+    "house-TX-24"
+   ],
+   "raceCount": 4,
+   "pollClose": "UNKNOWN",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "METHOD_SEPARATION",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": false,
+    "asOf": "2026-02-02",
+    "sourceUrl": "https://www.sos.texas.gov/elections/historical/mar2026.shtml",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "some pre-election scanning permitted",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Early-vote totals may be published before Election Day precinct totals; mail, late-arriving eligible ballots and provisional counts need separate inventories.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify county early-vote release schedules, ballot-by-mail receipt deadlines and county results method labels.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  },
+  {
+   "state": "WI",
+   "raceIds": [
+    "gov-WI",
+    "house-WI-01"
+   ],
+   "raceCount": 2,
+   "pollClose": "VERIFIED",
+   "timings": {
+    "LEGAL_PROCESSING_TIME": 1,
+    "LEGAL_SCANNING_TIME": 1,
+    "OFFICIAL_EXPECTED_RELEASE_TIME": 0,
+    "HISTORICAL_OBSERVED_RELEASE_TIME": 0,
+    "ACTUAL_2026_RELEASE_TIME": 0
+   },
+   "practiceKinds": [
+    "LATE_BALLOT_RULE",
+    "PROVISIONAL_RULE",
+    "REPORTING_UNIT",
+    "UOCAVA_RULE"
+   ],
+   "candidateByMethodRecords": 0,
+   "candidateByMethodContests": [],
+   "partyRegistration": {
+    "class": "C",
+    "registersByParty": false,
+    "asOf": "2026-06-01",
+    "sourceUrl": "https://elections.wi.gov/resources/statistics/june-1-2026-voter-registration-statistics",
+    "useAsVoteShare": false,
+    "note": "Class C evidence. Registration is not vote share and is never used as one."
+   },
+   "seed": {
+    "legalScanningCategory": "Election Day scanning permitted before close of polls",
+    "legalScanningStatus": "VERIFIED_SECONDARY_2026_SUMMARY",
+    "unvalidatedWatchpoints": "Central-count absentee batches may post later than some Election Day precincts; timing depends on municipality.",
+    "watchpointsStatus": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+    "nextVerification": "Verify municipal central-count lists, reporting batches and outstanding absentee inventories.",
+    "seedPartisanDataStatus": "UNKNOWN_UNVERIFIED"
+   }
+  }
+ ]
+}

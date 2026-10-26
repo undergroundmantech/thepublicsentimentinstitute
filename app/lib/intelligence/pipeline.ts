@@ -12,11 +12,12 @@ import { reconcileGeography } from "./geography";
 import { latestReadings, totalsFrom, type Reading } from "./observations";
 import { estimateOutstanding } from "./outstanding";
 import { comparePublished, type PublishedInput } from "./published";
+import { buildReportingProfile } from "./reportingOrder";
 import { recordsForRace } from "./research";
 import { shadowProject } from "./shadow";
 import type {
   BaselineRace, ComponentKey, Confidence, DiagnosticReport, GeoCoverage, GeoSplitRecord, Issue, LoggedObservation, MethodComposition,
-  Office, OutstandingInventory, PublishedComparison, ReconciledReturns, ReportingContext, ResearchRecord, ShadowProjection, StageStatus,
+  Office, OutstandingInventory, PublishedComparison, ReconciledReturns, ReportingContext, ReportingOrderProfile, ResearchRecord, ShadowProjection, StageStatus,
 } from "./types";
 
 export interface PipelineInput {
@@ -116,13 +117,17 @@ export function runPipeline(input: PipelineInput): DiagnosticReport {
   const published: PublishedComparison | null = run(stages, "published", matched, () => comparePublished(input.published ?? null, shadow),
     (v) => (v.available ? "OK" : "UNAVAILABLE"));
 
+  const reportingOrder: ReportingOrderProfile | null = run(stages, "reportingOrder", matched, () => buildReportingProfile({
+    raceId: input.raceId, state, office, district: b?.district ?? null, research: input.research, returns, outstanding, shadow, published,
+  }), (v) => (v.stateInDataset ? "OK" : "DEGRADED"));
+
   const missingResearch = matched ? missingInputs({ raceId: input.raceId, office: office as Office, state }, research) : [];
   const { confidence, reasons } = assessConfidence(stages, geo?.coverage ?? null, outstanding, shadow);
 
   return {
     raceId: input.raceId, generatedAt, asOf: input.asOf,
     synthetic: !!input.synthetic || research.some((r) => r.synthetic),
-    baseline: b, stages, returns, geography: geo?.coverage ?? null, methods, reporting, outstanding, shadow, published,
+    baseline: b, stages, returns, geography: geo?.coverage ?? null, methods, reporting, outstanding, shadow, published, reportingOrder,
     confidence, confidenceReasons: reasons, missingResearch,
   };
 }

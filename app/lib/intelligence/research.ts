@@ -11,21 +11,31 @@ import {
   CONFIDENCE_LEVELS,
   EVIDENCE_CLASSES,
   JURISDICTION_LEVELS,
+  MEASURE_KINDS,
   OUTSTANDING_STATUSES,
+  PRACTICE_KINDS,
   RECORD_TYPES,
+  SOURCE_TIERS,
+  TIMING_KINDS,
   VALUE_KINDS,
   VOTING_METHODS,
+  type CandidateByMethodRecord,
   type Confidence,
   type EvidenceClass,
   type Issue,
   type JurisdictionLevel,
+  type MeasureKind,
+  type Office,
   type OutstandingStatus,
+  type PracticeKind,
   type Provenance,
   type RecordType,
   type ReportingWindow,
   type ResearchPackageMeta,
   type ResearchRecord,
   type ResearchValidationResult,
+  type SourceTier,
+  type TimingKind,
   type ValueKind,
   type VotingMethod,
 } from "./types";
@@ -54,6 +64,9 @@ export const CSV_COLUMNS = [
   "closes_at_utc", "sequence_rank", "share_reported", "votes", "share_of_total",
   "expected_low", "expected_central", "expected_high", "outstanding", "outstanding_status", "as_of",
   "deadline_kind", "deadline_utc", "county_fips", "district_id", "weight", "weight_basis",
+  "source_tier", "timing_kind", "local_text", "at_utc", "time_zone", "statute_cite", "practice_kind", "summary",
+  "measure_kind", "contest_year", "office", "contest_district", "mode_label", "votes_a", "votes_b", "votes_other",
+  "methodology", "uncertainty", "coverage",
 ] as const;
 
 type Row = Record<string, unknown>;
@@ -167,6 +180,7 @@ function readRecord(input: Row, rowNo: number | null, meta: ResearchPackageMeta,
   const sourceUrl = r.text("source_url");
   if (sourceUrl && !isHttpUrl(sourceUrl)) r.error("source_url", "INVALID_URL", `source_url "${sourceUrl}" is not an http(s) URL`);
   const sourceName = r.text("source_name");
+  const sourceTier = r.oneOf<SourceTier>("source_tier", SOURCE_TIERS, false);
   const publishedAt = r.date("published_at");
   const retrievedAt = r.date("retrieved_at");
   const historicalYear = r.num("historical_year", { integer: true, min: 1900, max: ELECTION_YEAR });
@@ -200,9 +214,17 @@ function readRecord(input: Row, rowNo: number | null, meta: ResearchPackageMeta,
   if (ws !== null && we !== null && we < ws) r.error("window_end_min", "OUT_OF_RANGE", "window_end_min is before window_start_min");
   const reportingWindow: ReportingWindow | null = windowLabel || ws !== null || we !== null ? { label: windowLabel, startMinAfterClose: ws, endMinAfterClose: we } : null;
 
-  const provenance: Provenance | null = evidenceClass && valueKind && confidence
-    ? { evidenceClass, valueKind, sourceUrl, sourceName, publishedAt, retrievedAt, historicalYear, confidence, limitations }
+  // A secondary summary or a research compilation can be VERIFIED or HISTORICAL but never better than MEDIUM.
+  let cappedConfidence = confidence;
+  if (sourceTier && sourceTier !== "PRIMARY_OFFICIAL" && confidence === "HIGH") {
+    cappedConfidence = "MEDIUM";
+    r.warn("confidence", "CONFIDENCE_CAPPED", `${sourceTier} sources are capped at MEDIUM confidence`);
+  }
+  const provenance: Provenance | null = evidenceClass && valueKind && cappedConfidence
+    ? { sourceTier, evidenceClass, valueKind, sourceUrl, sourceName, publishedAt, retrievedAt, historicalYear, confidence: cappedConfidence, limitations }
     : null;
+  const isPhase2 = recordType === "RELEASE_TIMING" || recordType === "REPORTING_PRACTICE" || recordType === "CANDIDATE_BY_METHOD";
+  if (isPhase2 && !sourceTier) r.error("source_tier", "MISSING_PROVENANCE", `${recordType} records need a source_tier`);
 
   // type specific payloads
   const base = { recordId: recordId ?? "", raceId, state: state ?? "", jurisdictionId: jurisdictionId ?? "", jurisdictionLevel: jurisdictionLevel ?? "STATE", method, reportingWindow, notes, packageId: meta.packageId, synthetic: meta.synthetic };
@@ -262,6 +284,76 @@ function readRecord(input: Row, rowNo: number | null, meta: ResearchPackageMeta,
       values.push(deadlineUtc);
       if (evidenceClass === "VERIFIED" && !deadlineUtc) r.error("deadline_utc", "MISSING_FIELD", "deadline_utc is required");
       if (provenance) record = { ...base, recordType, provenance, deadlineKind, deadlineUtc };
+      break;
+    }
+    case "RELEASE_TIMING": {
+      const timingKind = r.oneOf<TimingKind>("timing_kind", TIMING_KINDS);
+      const localText = r.text("local_text");
+      const atUtc = r.date("at_utc");
+      const timeZone = r.text("time_zone");
+      const statuteCite = r.text("statute_cite");
+      values.push(localText, atUtc);
+      if (evidenceClass === "INFERRED") r.error("evidence_class", "TIMING_NOT_INFERRED", "a timing is documented or unknown; it is never inferred from another timing or from practice");
+      if (timingKind === "HISTORICAL_OBSERVED_RELEASE_TIME") {
+        if (evidenceClass && evidenceClass !== "HISTORICAL" && evidenceClass !== "UNKNOWN") r.error("evidence_class", "TIMING_KIND_MISMATCH", "an observed past release is HISTORICAL; a 2026 statement is a different timing kind");
+      } else if (timingKind && evidenceClass === "HISTORICAL") {
+        r.error("evidence_class", "TIMING_KIND_MISMATCH", `${timingKind} describes 2026; a past election's timing is HISTORICAL_OBSERVED_RELEASE_TIME`);
+      }
+      if (evidenceClass !== "UNKNOWN" && !localText && !atUtc) r.error("local_text", "MISSING_FIELD", "a timing needs local_text or at_utc");
+      if (atUtc && !timeZone) r.error("time_zone", "MISSING_FIELD", "an exact timing needs the source's time zone");
+      if (timingKind === "ACTUAL_2026_RELEASE_TIME") {
+        if (evidenceClass !== "UNKNOWN" && !atUtc) r.error("at_utc", "MISSING_FIELD", "an actual 2026 release needs the observed instant (at_utc)");
+        if (atUtc && !atUtc.startsWith(`${ELECTION_YEAR}-`)) r.error("at_utc", "CONTRADICTORY_METADATA", `an actual ${ELECTION_YEAR} release must be in ${ELECTION_YEAR}`);
+        if (atUtc && Date.parse(atUtc) > now + FUTURE_TOLERANCE_MS) r.error("at_utc", "FUTURE_TIMESTAMP", "an actual release cannot be in the future");
+      }
+      if (timingKind === "OFFICIAL_EXPECTED_RELEASE_TIME" && atUtc && sourceTier !== "PRIMARY_OFFICIAL") r.error("source_tier", "NOT_AN_AUTHORITY", "an exact expected release time must come from the election authority itself");
+      if (timingKind === "HISTORICAL_OBSERVED_RELEASE_TIME" && evidenceClass === "HISTORICAL" && !atUtc && !localText) r.error("at_utc", "MISSING_FIELD", "a historical observation needs a timestamp or description");
+      if (provenance && timingKind) record = { ...base, recordType, provenance, timingKind, localText, atUtc, timeZone, statuteCite };
+      break;
+    }
+    case "REPORTING_PRACTICE": {
+      const practiceKind = r.oneOf<PracticeKind>("practice_kind", PRACTICE_KINDS);
+      const summary = r.text("summary");
+      const statuteCite = r.text("statute_cite");
+      values.push(summary);
+      if (evidenceClass && evidenceClass !== "VERIFIED" && evidenceClass !== "UNKNOWN") r.error("evidence_class", "CONTRADICTORY_METADATA", "a reporting practice is a rule or procedure: VERIFIED or UNKNOWN");
+      if (evidenceClass !== "UNKNOWN" && !summary) r.error("summary", "MISSING_FIELD", "summary is required");
+      if (practiceKind === "OUTSTANDING_INVENTORY_SOURCE" && evidenceClass === "VERIFIED" && !sourceUrl) r.error("source_url", "MISSING_PROVENANCE", "an inventory source must link to the inventory");
+      if (provenance && practiceKind) record = { ...base, recordType, provenance, practiceKind, summary, statuteCite };
+      break;
+    }
+    case "CANDIDATE_BY_METHOD": {
+      const measureKind = r.oneOf<MeasureKind>("measure_kind", MEASURE_KINDS);
+      const contestYear = r.num("contest_year", { integer: true, min: 1900, max: ELECTION_YEAR });
+      const officeUp = r.oneOf<"SENATE" | "GOVERNOR" | "HOUSE">("office", ["SENATE", "GOVERNOR", "HOUSE"] as const, false);
+      const office: Office | null = officeUp ? (officeUp.toLowerCase() as Office) : null;
+      const contestDistrict = r.text("contest_district");
+      const modeLabel = r.text("mode_label");
+      const votesA = r.num("votes_a", { integer: true, min: 0 }), votesB = r.num("votes_b", { integer: true, min: 0 }), votesOther = r.num("votes_other", { integer: true, min: 0 });
+      const methodology = r.text("methodology");
+      const uncertainty = r.text("uncertainty");
+      const coverage = r.oneOf<NonNullable<CandidateByMethodRecord["coverage"]>>("coverage", ["RECONCILED", "AMBIGUOUS", "NO_TOTAL"] as const, false);
+      values.push(votesA, votesB, votesOther);
+      const anyVotes = votesA !== null || votesB !== null || votesOther !== null;
+      if (measureKind === "C") r.error("measure_kind", "REGISTRATION_IS_NOT_VOTE_SHARE", "party registration is not vote share and cannot be recorded as candidate votes by method");
+      if (measureKind === "B") r.error("measure_kind", "USE_METHOD_HISTORY", "official ballot counts by method with no candidate split belong in METHOD_HISTORY");
+      if (measureKind === "A") {
+        if (evidenceClass !== "HISTORICAL") r.error("evidence_class", "CONTRADICTORY_METADATA", "actual candidate votes by method from a past election are HISTORICAL");
+        if (contestYear === null) r.error("contest_year", "MISSING_FIELD", "contest_year is required");
+        else if (historicalYear !== null && historicalYear !== contestYear) r.error("contest_year", "CONTRADICTORY_METADATA", "contest_year and historical_year disagree");
+        if (!office) r.error("office", "MISSING_FIELD", "office is required");
+        if (!modeLabel) r.error("mode_label", "MISSING_FIELD", "mode_label is required: the source's own label for the method");
+        if (votesA === null || votesB === null || votesOther === null) r.error("votes_a", "MISSING_FIELD", "class A needs votes_a, votes_b and votes_other: actual candidate votes");
+        if (!coverage) r.error("coverage", "MISSING_FIELD", "coverage is required: whether the method rows cover the contest");
+        if (office === "house" && !contestDistrict) r.error("contest_district", "MISSING_FIELD", "a House contest needs contest_district");
+      }
+      if (measureKind === "D") {
+        if (evidenceClass !== "INFERRED") r.error("evidence_class", "CONTRADICTORY_METADATA", "a statistical estimate is INFERRED");
+        if (!methodology) r.error("methodology", "MISSING_BASIS", "a class D estimate needs its methodology");
+        if (!uncertainty) r.error("uncertainty", "MISSING_BASIS", "a class D estimate needs its stated uncertainty");
+      }
+      if (measureKind === "E" && (evidenceClass !== "UNKNOWN" || anyVotes)) r.error("measure_kind", "CONTRADICTORY_METADATA", "class E is UNKNOWN and carries no values");
+      if (provenance && measureKind) record = { ...base, recordType, provenance, measureKind, contestYear, office, contestDistrict, modeLabel, votesA, votesB, votesOther, methodology, uncertainty, coverage };
       break;
     }
     case "GEO_SPLIT": {

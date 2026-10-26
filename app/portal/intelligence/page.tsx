@@ -17,9 +17,10 @@ import { researchCoverage } from "@/app/lib/intelligence/baseline";
 import { loadResearchDir, RESEARCH_DIR } from "@/app/lib/intelligence/load";
 import { appendObservations, fromCivicDetail } from "@/app/lib/intelligence/observations";
 import { runPipeline } from "@/app/lib/intelligence/pipeline";
-import type { BaselineRace, DiagnosticReport, Interval, Issue, LoggedObservation, Register, ResearchCoverage, StageStatus } from "@/app/lib/intelligence/types";
+import type { BaselineRace, DiagnosticReport, Interval, Issue, LoggedObservation, Register, ReportingOrderProfile, ResearchCoverage, StageStatus, TimingKind } from "@/app/lib/intelligence/types";
 import type { XIndex } from "@/app/results/2026/live";
 import baselineFile from "@/data/intelligence/baseline/2026-10-25.json";
+import statesFile from "@/data/intelligence/states/priority15-2026-10-26.json";
 import registerFile from "@/data/intelligence/register/top50-2026-10-25.json";
 import { fetchCivicDetail, readCountyExpectations, readIndex } from "./inputs";
 import { ENI_CSS } from "./styles";
@@ -43,7 +44,7 @@ const ivM = (i: Interval | null | undefined) => iv(i, (n) => mg(n));
 const ivPct = (i: Interval | null | undefined) => iv(i, p1);
 const ivShare = (i: Interval | null | undefined) => iv(i, (n) => p1(n * 100));
 
-const tone = (s: string) => (["OK", "AVAILABLE", "PRESENT", "MEDIUM", "NOT_REQUIRED"].includes(s) ? "ok" : ["DEGRADED", "PARTIAL", "LOW"].includes(s) ? "warn" : ["FAILED", "MISSING", "NONE"].includes(s) ? "bad" : "");
+const tone = (s: string) => (["OK", "AVAILABLE", "PRESENT", "MEDIUM", "NOT_REQUIRED", "VERIFIED"].includes(s) ? "ok" : ["DEGRADED", "PARTIAL", "LOW", "INFERRED", "AMBIGUOUS", "PRECINCTS_COMPLETE_BALLOTS_INCOMPLETE"].includes(s) ? "warn" : ["FAILED", "MISSING", "NONE", "UNKNOWN", "BLOCKED", "UNAVAILABLE"].includes(s) ? "bad" : "");
 const Pill = ({ v }: { v: string }) => <span className={`pill ${tone(v)}`}>{v.replace(/_/g, " ")}</span>;
 
 function Issues({ list }: { list: Issue[] }) {
@@ -81,6 +82,102 @@ export default async function IntelligencePage({ searchParams }: { searchParams:
 
 type Research = ReturnType<typeof loadResearchDir>;
 
+type StateRow = { state: string; raceIds: string[]; raceCount: number; pollClose: string; timings: Record<string, number>; practiceKinds: string[]; candidateByMethodRecords: number; candidateByMethodContests: string[]; partyRegistration: { registersByParty: boolean; asOf: string } };
+const stateRows = (statesFile as unknown as { states: StateRow[] }).states;
+const TIMING_LABEL: Record<TimingKind, string> = {
+  LEGAL_PROCESSING_TIME: "legal processing time",
+  LEGAL_SCANNING_TIME: "legal scanning time",
+  OFFICIAL_EXPECTED_RELEASE_TIME: "official expected release time",
+  HISTORICAL_OBSERVED_RELEASE_TIME: "historical observed release time",
+  ACTUAL_2026_RELEASE_TIME: "actual 2026 release time",
+};
+
+function StateOverview() {
+  return (
+    <section className="panel wide scroll">
+      <h2>Priority 15 states: reporting-order research</h2>
+      <p className="mute" style={{ fontSize: 13, marginBottom: 8 }}>{stateRows.reduce((s, x) => s + x.raceCount, 0)} races. Counts are research records, not values used by any projection. A zero is UNKNOWN, not none.</p>
+      <table>
+        <thead><tr><th>State</th><th className="r">Races</th><th>Poll close</th><th className="r">Legal processing</th><th className="r">Legal scanning</th><th className="r">Official expected release</th><th className="r">Historical release</th><th className="r">Actual 2026 release</th><th className="r">Candidate-by-method records</th><th>Party registration (class C)</th></tr></thead>
+        <tbody>{stateRows.map((x) => (
+          <tr key={x.state}>
+            <td>{x.raceIds.map((id) => <Link key={id} href={`/portal/intelligence?race=${id}`} className="mono" style={{ marginRight: 6 }}>{id}</Link>)}</td>
+            <td className="r">{x.raceCount}</td>
+            <td><Pill v={x.pollClose} /></td>
+            <td className="r">{x.timings.LEGAL_PROCESSING_TIME}</td><td className="r">{x.timings.LEGAL_SCANNING_TIME}</td>
+            <td className="r">{x.timings.OFFICIAL_EXPECTED_RELEASE_TIME}</td><td className="r">{x.timings.HISTORICAL_OBSERVED_RELEASE_TIME}</td><td className="r">{x.timings.ACTUAL_2026_RELEASE_TIME}</td>
+            <td className="r">{x.candidateByMethodRecords || "UNKNOWN"}</td>
+            <td>{x.partyRegistration.registersByParty ? `registration by party, as of ${x.partyRegistration.asOf}; not vote share` : "state does not register by party"}</td>
+          </tr>
+        ))}</tbody>
+      </table>
+    </section>
+  );
+}
+
+function StatePanel({ o }: { o: ReportingOrderProfile | null }) {
+  if (!o) return <section className="panel wide"><h2>State reporting order</h2><p className="mute">unavailable</p></section>;
+  const kinds = Object.keys(TIMING_LABEL) as TimingKind[];
+  return (
+    <>
+      <section className="panel wide">
+        <h2>State reporting order: {o.state}</h2>
+        <p className="mute" style={{ fontSize: 13, marginBottom: 8 }}>Five separate facts. None is derived from another: a legal right to scan is not a release time, and a past release is not a 2026 schedule.{o.stateInDataset ? "" : " This state is not in the priority-15 dataset."}</p>
+        <table>
+          <thead><tr><th>Timing</th><th>Label</th><th>Value</th><th>Source</th></tr></thead>
+          <tbody>{kinds.map((k) => o.timings[k].length
+            ? o.timings[k].map((t) => <tr key={t.recordId}><td>{TIMING_LABEL[k]}</td><td><Pill v={t.evidenceClass} /> <Pill v={t.confidence} /></td><td>{t.localText ?? t.atUtc}{t.statuteCite ? <span className="mute"> · {t.statuteCite}</span> : null}</td><td>{t.sourceUrl ? <a href={t.sourceUrl} rel="noreferrer noopener" target="_blank">{t.sourceTier?.replace(/_/g, " ").toLowerCase()}</a> : "—"}</td></tr>)
+            : [<tr key={k}><td>{TIMING_LABEL[k]}</td><td><Pill v="UNKNOWN" /></td><td className="mute">no documented value</td><td>—</td></tr>])}</tbody>
+        </table>
+      </section>
+      <div className="grid">
+        <section className="panel">
+          <h2>Procedure and reporting practice</h2>
+          {o.practices.length ? <table><tbody>{o.practices.map((p) => <tr key={p.recordId}><td>{p.kind.replace(/_/g, " ").toLowerCase()}</td><td><Pill v={p.evidenceClass} /></td><td>{p.summary}{p.statuteCite ? <span className="mute"> · {p.statuteCite}</span> : null}{p.sourceUrl ? <> · <a href={p.sourceUrl} rel="noreferrer noopener" target="_blank">source</a></> : null}</td></tr>)}</tbody></table> : <p className="mute">no practice records</p>}
+        </section>
+        <section className="panel">
+          <h2>Method evidence (historical)</h2>
+          {o.methodEvidence.length ? o.methodEvidence.map((m) => (
+            <div key={`${m.year}-${m.district}`} style={{ marginBottom: 10 }}>
+              <p><Pill v="HISTORICAL" /> <Pill v={m.coverage ?? "UNKNOWN"} /> <Pill v={m.confidence} /> {m.year} {m.office}{m.district ? ` district ${m.district}` : ""} · <a href={m.sourceUrl ?? "#"} rel="noreferrer noopener" target="_blank">source</a></p>
+              <table><tbody>{m.modes.map((x) => <tr key={x.recordId}><td>{x.modeLabel}</td><td className="r">{n0(x.votes)} votes</td></tr>)}</tbody></table>
+            </div>
+          )) : <p><Pill v="UNKNOWN" /> no candidate-by-method data for this contest</p>}
+          <p className="mute" style={{ fontSize: 12 }}>Evidence classes present: {(Object.entries(o.evidenceClasses) as [string, string][]).map(([k, v]) => `${k} ${v.toLowerCase()}`).join(", ")}. Class C (party registration) is never a vote share.</p>
+        </section>
+      </div>
+      <div className="grid">
+        <section className="panel">
+          <h2>Partisan composition and method outstanding</h2>
+          <dl className="kv">
+            <dt>partisan method adjustment</dt><dd><Pill v="UNAVAILABLE" /> {o.partisanComposition.reason}</dd>
+            <dt>outstanding by method</dt><dd><Pill v={o.methodOutstanding.status} /> {o.methodOutstanding.reason}</dd>
+          </dl>
+        </section>
+        <section className="panel">
+          <h2>Precinct progress vs ballots counted</h2>
+          {o.precinctVsBallots ? <dl className="kv">
+            <dt>flag</dt><dd><Pill v={o.precinctVsBallots.flag} /></dd>
+            <dt>precincts reporting</dt><dd>{p1(o.precinctVsBallots.precinctPctWeighted)} <span className="mute">{o.precinctVsBallots.jurisdictionsAtFullPrecincts} of {o.precinctVsBallots.jurisdictionsWithPrecinctPct} jurisdictions at 100%</span></dd>
+            <dt>published engine % in</dt><dd>{p1(o.precinctVsBallots.publishedPctIn)}</dd>
+            <dt>estimated ballots counted</dt><dd>{ivPct(o.precinctVsBallots.estimatedBallotShareCounted)} <span className="mute">of the forecast expected total</span></dd>
+            <dt>reported votes</dt><dd>{n0(o.precinctVsBallots.reportedVotes)}</dd>
+            <dt>official outstanding</dt><dd>{n0(o.precinctVsBallots.officialOutstanding)}</dd>
+            <dt>model outstanding</dt><dd>{iv(o.precinctVsBallots.modelOutstanding)}</dd>
+            <dt>gap</dt><dd>{o.precinctVsBallots.gapPoints == null ? "—" : `${o.precinctVsBallots.gapPoints.toFixed(1)} pts`}</dd>
+          </dl> : <p className="mute">no returns</p>}
+          {o.precinctVsBallots ? <p className="mute" style={{ fontSize: 12 }}>{o.precinctVsBallots.explanation}</p> : null}
+        </section>
+      </div>
+      <section className="panel wide">
+        <h2>Missing inputs for {o.state}</h2>
+        {o.missing.length ? <ul>{o.missing.map((m, k) => <li key={k}><Pill v="UNKNOWN" /> {m}</li>)}</ul> : <p className="mute">none listed</p>}
+        <p className="mute" style={{ fontSize: 12 }}>Validation status: records are importer-validated; nothing here is backtested. Historical replay is BLOCKED until timestamped returns, an archive record and a certified result are obtained.</p>
+      </section>
+    </>
+  );
+}
+
 function RegisterView({ index, research, asOf }: { index: XIndex | null; research: Research; asOf: string }) {
   const byId = new Map((index?.races ?? []).map((r) => [r.id, r]));
   const rows = register.entries.map((e) => {
@@ -114,6 +211,7 @@ function RegisterView({ index, research, asOf }: { index: XIndex | null; researc
           </dl>
         </section>
       </div>
+      <StateOverview />
       <section className="panel wide scroll">
         <table>
           <thead><tr><th className="r">#</th><th>Race</th><th className="r">Forecast</th><th className="r">P(R)</th>{comps.map((c) => <th key={c}>{c}</th>)}<th>Shadow</th><th>Confidence</th><th className="r">Gaps</th></tr></thead>
@@ -285,6 +383,7 @@ function Report({ r }: { r: DiagnosticReport }) {
           </dl> : <p className="mute">{pub?.reason ?? "unavailable"}</p>}
         </section>
       </div>
+      <StatePanel o={r.reportingOrder} />
       <section className="panel wide">
         <h2>Missing research</h2>
         {r.missingResearch.length ? <ul>{r.missingResearch.map((m, k) => <li key={k}><span className="pill">{m.component}</span> {m.need}</li>)}</ul> : <p className="mute">none listed</p>}
