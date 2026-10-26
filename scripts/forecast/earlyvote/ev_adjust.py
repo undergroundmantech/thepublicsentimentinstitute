@@ -52,6 +52,12 @@ Margins in the published files are Republican minus Democratic.
 Usage: python3 ev_adjust.py SIGNALS_JSON PUBLIC_FORECAST_DIR [--dry]
 """
 import glob, json, math, os, sys, copy
+
+# Oct 26 2026: retired by the final methodology. The early vote now reaches the forecast through the electorate leg
+# (scripts/forecast/final_method), so this separate turnout correction would count it twice. EV_ADJUST_FORCE=1 runs it anyway.
+if os.environ.get("EV_ADJUST_FORCE") != "1":
+    print("ev_adjust.py is retired: the early vote enters through the final method electorate leg. Nothing changed.")
+    sys.exit(0)
 import numpy as np
 
 SIG = json.load(open(sys.argv[1]))

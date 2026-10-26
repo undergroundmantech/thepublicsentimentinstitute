@@ -22,7 +22,7 @@
 .vpp-x:hover { background: rgba(10,7,17,.92); }
 .vpp-x:focus-visible, .vpp-thumb:focus-visible, .vpp-yt:focus-visible, .vpp-say:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
 /* Pointy stands off the card's left edge, pointing at it, with his bubble */
-.vpp-pty.pty-cameo { position: absolute; left: -104px; bottom: 26px; animation-delay: .25s; }
+.vpp-pty.pty-cameo { position: absolute; left: -150px; bottom: 6px; animation-delay: .25s; }
 .vpp-say { all: unset; cursor: pointer; }
 .vpp-pty .pty-say { max-width: 150px; }
 .vpp.is-playing .vpp-pty { display: none; }
