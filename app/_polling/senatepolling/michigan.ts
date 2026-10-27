@@ -80,6 +80,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 518, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.7, "Mike Rogers (R)": 45.4, "Other": 1.9, "Undecided": 1.0}},
     {"raceId": "MI-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1200, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 47.0, "Mike Rogers (R)": 46.0, "Undecided": 7.0}},
     {"raceId": "MI-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2696, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Other": 4.0, "Undecided": 3.0}},
-    {"raceId": "MI-SEN-2026", "pollster": "Michigan State University/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 836, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 45.5, "Undecided": 6.5}}
+    {"raceId": "MI-SEN-2026", "pollster": "Michigan State University/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 836, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 45.5, "Undecided": 6.5}},
+    {"raceId": "MI-SEN-2026", "pollster": "Glengariff Group", "startDate": "2026-10-19", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.4, "Mike Rogers (R)": 45.1, "Undecided": 3.6}}
   ],
 };

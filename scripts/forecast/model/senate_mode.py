@@ -1866,8 +1866,13 @@ def _primaries_base(st):
         # no civicAPI page for either 2026 governor primary: the party structure term is proxied by the 2022 governor
         # county / borough vote and the candidate term is neutral at 0.5
         if st == "AKG":
-            g = pd.read_csv(f"{PKG['AKG']}/ak_gov2022_borough.csv", dtype={"fips": str}).set_index("fips")
-            note = "no county primary file: 2022 governor borough vote used for the party term (Aug 18 2026 statewide results from the Division of Elections)"
+            # Oct 26 2026: the Aug 18 2026 top four primary was one ballot for every office, so the party structure term
+            # uses that day's borough ballots by party from the Senate contest (civicAPI race 86863) instead of the 2022
+            # governor vote; the candidate term stays neutral at 0.5
+            p = pd.read_csv(f"{PKG['AK']}/ak_primary_2026_borough.csv", dtype={"fips": str}).set_index("fips")
+            dc = [c for c in p if c.endswith("_D")]; rc = [c for c in p if c.endswith("_R")]
+            g = pd.DataFrame({"D": p[dc].sum(1), "R": p[rc].sum(1)})
+            note = "Aug 18 2026 top four primary borough ballots by party, same ballot as the Senate contest (civicAPI race 86863)"
         else:
             g = pd.read_csv(f"{PKG['HIG']}/hi_gov2022_county.csv", dtype={"fips": str}).set_index("fips")
             note = "no county primary file: 2022 governor county vote used for the party term (Aug 8 2026 statewide results from the Office of Elections)"
@@ -3180,6 +3185,11 @@ def calibrated_approval(fl):
         vw = P24.reindex(a.index).total_votes.fillna(0)
         x = logit(a["TRUMP APPROVE"] / (a["TRUMP APPROVE"] + a["TRUMP DISAPPROVE"]))
         target = tA / (tA + tD)
+        if os.environ.get("APPROVAL_NAT_TWO_WAY"):
+            # Oct 26 2026, final methodology section 3: the county approvals are set to the national approval average,
+            # 37.1 approve and 60.6 disapprove as two way share, with every county keeping its own lean
+            APPROVAL_INPUT.update(tpsi_lv_two_way=round(float(target), 4), national_two_way_target=float(os.environ["APPROVAL_NAT_TWO_WAY"]))
+            target = float(os.environ["APPROVAL_NAT_TWO_WAY"])
         lo, hi = -2.0, 2.0
         for _ in range(60):
             mid = (lo + hi) / 2
@@ -3459,6 +3469,32 @@ def _gallup_floor(npolls, st=None):
         f = min(f, _d)
     return f
 GALLUP_AUDIT = {}
+# Oct 26 2026, by the user's choice (FINAL_W=1): the leg weights of On_Point_Forecast_Final_Methodology_2026.md section 6.1.
+# The Gallup leg is the census leg and the seat history at equal halves (half 2024 president, half the seat's previous
+# result), the electorate leg is the approval leg on the county Trump approvals and the early vote electorate, and the
+# polls are capped: before 10 percent of the expected vote is cast Gallup 0.35, electorate 0.20, polls 0.45; from a
+# third cast 0.325, 0.325, 0.35; linear in between, the share cast read from FINAL_W_BANKED (ev_electorate.py output).
+# A race with no recent polls splits the poll weight between the two legs in proportion.
+FINAL_W = os.environ.get("FINAL_W") == "1"
+_FW_BANK = {}
+if FINAL_W and os.environ.get("FINAL_W_BANKED"):
+    _FW_BANK = {k: float(v.get("banked", 0.0)) for k, v in json.load(open(os.environ["FINAL_W_BANKED"])).items()}
+FINAL_AUDIT = {}
+def _final_weights(st, has_polls):
+    b = _FW_BANK.get(st[:2], 0.0)
+    t = float(np.clip((b - 0.10) / (1.0 / 3.0 - 0.10), 0.0, 1.0))
+    wG, wE, wP = 0.35 + t * (0.325 - 0.35), 0.20 + t * (0.325 - 0.20), 0.45 + t * (0.35 - 0.45)
+    # Oct 26 2026, by the user's choice: POLL_UP adds points to the poll leg; Gallup and the electorate leg keep their
+    # ratio and share what is left
+    _up = float(os.environ.get("POLL_UP", "0") or 0)
+    if _up:
+        _z = wG + wE; wP = min(0.95, wP + _up); wG, wE = wG / _z * (1 - wP), wE / _z * (1 - wP)
+    if not has_polls:
+        z = wG + wE; wG, wE, wP = wG / z, wE / z, 0.0
+    return wG, wE, wP, b
+# PRIOR_CARRY (json of race key to points): the measured personal vote of a nominee who ran statewide before against a
+# different opponent, at the same 0.612 carry as the incumbent personal vote, added to the fundamental legs.
+PRIOR_CARRY = json.loads(os.environ.get("PRIOR_CARRY", "{}"))
 SEAT_ASVOTED = os.environ.get("SEAT_ASVOTED") == "1"
 SEAT_PRIM = float(os.environ.get("SEAT_PRIM", "0.0"))
 NAT_HOUSE_D2 = {2008: 0.5553, 2010: 0.4660, 2012: 0.5059, 2014: 0.4705, 2016: 0.4945, 2017: 0.4945, 2018: 0.5431, 2020: 0.5155, 2022: 0.4858, 2024: 0.4866}
@@ -3763,6 +3799,8 @@ def run_state(st, model, shift, nat_turn_rate):
         _tot = (_term_pv if isinstance(_term_pv, pd.Series) else pd.Series(float(_term_pv), index=fl)) + _wk
         _aud.update(party=_party, shift_pts_in_fundamental_legs=round(float(100 * (inv(float((_tot.values * _w).sum() / max(_w.sum(), 1))) - 0.5) * 2), 2))
         INC_AUDIT2[st] = _aud
+    if st in PRIOR_CARRY:
+        cand_effect = cand_effect + float(PRIOR_CARRY[st]) / 50.0
     m1 = inv(base + cand_effect) if MOVE_A else inv(base + party_term + cand_term + cand_effect)
     _lock = fin_lock(st)
     if _lock > 0:
@@ -4014,6 +4052,12 @@ def run_state(st, model, shift, nat_turn_rate):
             w_fund, _wp, _wh, w_census = w_fund * _sc_g, _wp * _sc_g, _wh * _sc_g, _GLW
             GALLUP_AUDIT[st] = dict(before=_before, after=dict(polls=round(_wp, 4), seat=round(_wh, 4), approval=round(w_fund, 4), gallup=round(w_census, 4)))
             _sa.update(poll_weight_final=round(_wp, 4))
+        if FINAL_W:
+            _fG, _fE, _fP, _fb = _final_weights(st, _wp > 1e-6)
+            FINAL_AUDIT[st] = dict(before=dict(polls=round(_wp, 4), seat=round(_wh, 4), approval=round(w_fund, 4), gallup=round(w_census, 4)),
+                                   banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4))
+            w_census, _wh, w_fund, _wp = _fG / 2, _fG / 2, _fE, _fP
+            _sa.update(poll_weight_final=round(_wp, 4))
         w_hist = _wp
         m1c, m2c, m3hc = (_rcv_fc_equiv(cfg, m1), _rcv_fc_equiv(cfg, m2), _rcv_fc_equiv(cfg, m3h)) if cfg.get("rcv_fc") else (m1, m2, m3h)
         d2 = w_fund * m1c + w_census * m2c + _wp * m3 + _wh * m3hc
@@ -4058,6 +4102,10 @@ def run_state(st, model, shift, nat_turn_rate):
         if GALLUP_FULL and w_census < _GLW:
             _sc_g = (1.0 - _GLW) / max(w_fund + w_hist, 1e-9)
             w_fund, w_hist, w_census = w_fund * _sc_g, w_hist * _sc_g, _GLW
+        if FINAL_W:
+            _fG, _fE, _fP, _fb = _final_weights(st, w_hist > 1e-6)
+            w_census, w_fund, w_hist = _fG, _fE, _fP
+            FINAL_AUDIT[st] = dict(banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4))
         d2 = w_fund * (_rcv_fc_equiv(cfg, m1) if cfg.get("rcv_fc") else m1) + w_census * (_rcv_fc_equiv(cfg, m2) if cfg.get("rcv_fc") else m2) + w_hist * m3
     if LOCAL_COND and not (LEG_INT and SEAT_HIST):
         _ls = LOCAL_W * LOCAL_SHIFT.reindex([str(f) for f in fl]).fillna(0.0).values.astype(float)
@@ -4292,7 +4340,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -4316,7 +4364,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:

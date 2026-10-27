@@ -7,6 +7,10 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 25, 2026 evening ──
+  { pollster: "CBS News", endDate: "2026-10-23", sampleSize: 2355, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },   // CBS News/YouGov Oct 21 to 23, adults
+  { pollster: "Reuters/Ipsos", endDate: "2026-10-26", sampleSize: 1679, sampleType: "A", results: { Approve: 32, Disapprove: 66 } },   // Oct 22 to 26, adults
+  { pollster: "NPR/PBS/Marist", endDate: "2026-10-20", sampleSize: 1289, sampleType: "RV", results: { Approve: 38, Disapprove: 61 } },   // Oct 19 to 20, registered voters, released Oct 27; likely voters 40 to 59
   // ── Added Oct 23, 2026 evening ──
   { pollster: "RMG Research", endDate: "2026-10-20", sampleSize: 2000, sampleType: "RV", results: { Approve: 42, Disapprove: 57 } },   // Napolitan News, Oct 12 to 20
   // ── Added Oct 22, 2026 evening ──

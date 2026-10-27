@@ -69,6 +69,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 518, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 54.1, "John James (R)": 42.1, "Other": 2.5, "Undecided": 1.2}},
     {"raceId": "MI-GOV-2026", "pollster": "Marist University", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 1025, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 51.0, "John James (R)": 45.0, "Other": 2.0, "Undecided": 2.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Michigan State University/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 836, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 53.3, "John James (R)": 40.9, "Undecided": 5.9}},
-    {"raceId": "MI-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2696, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 48.6, "John James (R)": 42.8, "Other": 3.5, "Undecided": 5.1}}
+    {"raceId": "MI-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2696, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 48.6, "John James (R)": 42.8, "Other": 3.5, "Undecided": 5.1}},
+    {"raceId": "MI-GOV-2026", "pollster": "Glengariff Group", "startDate": "2026-10-19", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 51.4, "John James (R)": 44.5, "Undecided": 4.0}}
   ],
 };
