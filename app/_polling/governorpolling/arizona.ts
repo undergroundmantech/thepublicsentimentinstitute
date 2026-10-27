@@ -2,7 +2,7 @@
 // Arizona — 2026 Governor: Katie Hobbs (D) vs. Andy Biggs (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-20. Seven 2026 pre primary polls added Sept 28.
+// ballot were dropped. Newest poll: 2026-10-23. Seven 2026 pre primary polls added Sept 28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -63,6 +63,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AZ-GOV-2026", "pollster": "GrayHouse for Norton (R)", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 550, "sampleType": "LV", "results": {"Katie Hobbs (D)": 50.0, "Andy Biggs (R)": 44.0, "Undecided": 6.0}, "notes": "Internal poll for Elijah Norton, Republican candidate for state treasurer."},
     {"raceId": "AZ-GOV-2026", "pollster": "Steve Cortes for League of American Workers (R)", "startDate": "2026-10-03", "endDate": "2026-10-06", "sampleSize": 1513, "sampleType": "LV", "results": {"Katie Hobbs (D)": 48.9, "Andy Biggs (R)": 43.2, "Other": 3.4, "Undecided": 4.5}},
     {"raceId": "AZ-GOV-2026", "pollster": "HighGround Public Affairs", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 400, "sampleType": "LV", "results": {"Katie Hobbs (D)": 50.5, "Andy Biggs (R)": 33.7, "Undecided": 15.8}},
-    {"raceId": "AZ-GOV-2026", "pollster": "GrayHouse for Norton (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 550, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 2.0, "Undecided": 2.0}}
+    {"raceId": "AZ-GOV-2026", "pollster": "GrayHouse for Norton (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 550, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 2.0, "Undecided": 2.0}},
+    {"raceId": "AZ-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2686, "sampleType": "LV", "results": {"Katie Hobbs (D)": 47.4, "Andy Biggs (R)": 42.3, "Other": 4.4, "Undecided": 5.9}}
   ],
 };

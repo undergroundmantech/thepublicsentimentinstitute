@@ -2,7 +2,7 @@
 // Kansas — 2026 U.S. Senate: Adam Hamilton (D) vs. Roger Marshall (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-21.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -50,6 +50,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-09-30", "endDate": "2026-10-04", "sampleSize": 600, "sampleType": "LV", "results": {"Adam Hamilton (D)": 49.0, "Roger Marshall (R)": 44.0, "Undecided": 7.0}},
     {"raceId": "KS-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-09", "endDate": "2026-10-10", "sampleSize": 1200, "sampleType": "LV", "results": {"Adam Hamilton (D)": 48.0, "Roger Marshall (R)": 47.0, "Undecided": 5.0}, "notes": "Sample size not given; 1,200 is a placeholder from the same release."},
     {"raceId": "KS-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 800, "sampleType": "LV", "results": {"Adam Hamilton (D)": 47.0, "Roger Marshall (R)": 48.0, "Undecided": 5.0}, "notes": "Field dates and sample size not published; taken from the same release as Texas and Maine, 800 is a placeholder."},
-    {"raceId": "KS-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 479, "sampleType": "LV", "results": {"Adam Hamilton (D)": 48.9, "Roger Marshall (R)": 47.1, "Other": 4.0}}
+    {"raceId": "KS-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 479, "sampleType": "LV", "results": {"Adam Hamilton (D)": 48.9, "Roger Marshall (R)": 47.1, "Other": 4.0}},
+    {"raceId": "KS-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 1301, "sampleType": "LV", "results": {"Adam Hamilton (D)": 45.0, "Roger Marshall (R)": 45.7, "Other": 4.3, "Undecided": 5.1}}
   ],
 };

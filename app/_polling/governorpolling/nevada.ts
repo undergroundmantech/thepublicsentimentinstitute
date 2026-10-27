@@ -2,7 +2,7 @@
 // Nevada — 2026 Governor: Aaron Ford (D) vs. Joe Lombardo (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-13.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,6 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NV-GOV-2026", "pollster": "Tarrance Group (R)", "startDate": "2026-07-25", "endDate": "2026-07-29", "sampleSize": 519, "sampleType": "LV", "results": {"Aaron Ford (D)": 43.0, "Joe Lombardo (R)": 50.0, "Undecided": 7.0}},
     {"raceId": "NV-GOV-2026", "pollster": "Emerson College", "startDate": "2026-09-05", "endDate": "2026-09-08", "sampleSize": 680, "sampleType": "LV", "results": {"Aaron Ford (D)": 44.0, "Joe Lombardo (R)": 42.0, "Other": 2.0, "Undecided": 11.0}},
     {"raceId": "NV-GOV-2026", "pollster": "Noble Predictive Insights", "startDate": "2026-09-22", "endDate": "2026-09-26", "sampleSize": 708, "sampleType": "LV", "results": {"Joe Lombardo (R)": 42.0, "Aaron Ford (D)": 40.0, "Other": 7.0, "Undecided": 9.0}, "notes": "Other is Danielle Ford, independent."},
-    {"raceId": "NV-GOV-2026", "pollster": "Global Strategy Group for Ford (D)", "startDate": "2026-10-08", "endDate": "2026-10-13", "sampleSize": 700, "sampleType": "LV", "results": {"Aaron Ford (D)": 47.0, "Joe Lombardo (R)": 48.0, "Undecided": 5.0}}
+    {"raceId": "NV-GOV-2026", "pollster": "Global Strategy Group for Ford (D)", "startDate": "2026-10-08", "endDate": "2026-10-13", "sampleSize": 700, "sampleType": "LV", "results": {"Aaron Ford (D)": 47.0, "Joe Lombardo (R)": 48.0, "Undecided": 5.0}},
+    {"raceId": "NV-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 1470, "sampleType": "LV", "results": {"Aaron Ford (D)": 45.6, "Joe Lombardo (R)": 42.6, "Other": 5.4, "Undecided": 6.4}}
   ],
 };

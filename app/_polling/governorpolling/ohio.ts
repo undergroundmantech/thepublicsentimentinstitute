@@ -2,7 +2,7 @@
 // Ohio — 2026 Governor: Amy Acton (D) vs. Vivek Ramaswamy (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-20.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -61,10 +61,11 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-22", "endDate": "2026-10-01", "sampleSize": 616, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 45.0, "Undecided": 6.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-29", "endDate": "2026-10-09", "sampleSize": 1000, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 44.0, "Other": 6.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Cook Political Report/GS Strategy Group and New River Strategies", "startDate": "2026-10-09", "endDate": "2026-10-13", "sampleSize": 959, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 44.0, "Other": 6.0, "Undecided": 1.0}},
-    {"raceId": "OH-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-16", "endDate": "2026-10-17", "sampleSize": 635, "sampleType": "LV", "results": {"Amy Acton (D)": 47.9, "Vivek Ramaswamy (R)": 43.1, "Other": 4.2, "Undecided": 4.8}},
+    {"raceId": "OH-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-16", "endDate": "2026-10-17", "sampleSize": 635, "sampleType": "LV", "results": {"Amy Acton (D)": 49.2, "Vivek Ramaswamy (R)": 45.7, "Other": 4.3, "Undecided": 0.8}},
     {"raceId": "OH-GOV-2026", "pollster": "Marist University", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 883, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 43.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "OH-GOV-2026", "pollster": "ActiVote", "startDate": "2026-09-27", "endDate": "2026-10-19", "sampleSize": 400, "sampleType": "LV", "results": {"Amy Acton (D)": 48.6, "Vivek Ramaswamy (R)": 51.4}},
     {"raceId": "OH-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1592, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 48.0, "Undecided": 2.0}},
-    {"raceId": "OH-GOV-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 531, "sampleType": "LV", "results": {"Amy Acton (D)": 46.2, "Vivek Ramaswamy (R)": 45.4, "Other": 2.0, "Undecided": 5.7}}
+    {"raceId": "OH-GOV-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 531, "sampleType": "LV", "results": {"Amy Acton (D)": 46.2, "Vivek Ramaswamy (R)": 45.4, "Other": 2.0, "Undecided": 5.7}},
+    {"raceId": "OH-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Amy Acton (D)": 48.2, "Vivek Ramaswamy (R)": 43.8, "Other": 3.8, "Undecided": 4.3}}
   ],
 };

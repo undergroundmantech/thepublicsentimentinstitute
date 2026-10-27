@@ -2,7 +2,7 @@
 // North Carolina — 2026 U.S. Senate: Roy Cooper (D) vs. Michael Whatley (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-20.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -81,6 +81,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Elon University/YouGov", "startDate": "2026-09-29", "endDate": "2026-10-08", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 52.0, "Michael Whatley (R)": 39.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "WRAL/SurveyUSA", "startDate": "2026-10-07", "endDate": "2026-10-11", "sampleSize": 650, "sampleType": "LV", "results": {"Roy Cooper (D)": 54.0, "Michael Whatley (R)": 40.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "NC-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-08", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Roy Cooper (D)": 56.9, "Michael Whatley (R)": 43.1}},
-    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 39.0, "Other": 5.0, "Undecided": 7.0}}
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 39.0, "Other": 5.0, "Undecided": 7.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 3292, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.8, "Michael Whatley (R)": 43.5, "Other": 2.1, "Undecided": 4.7}}
   ],
 };
