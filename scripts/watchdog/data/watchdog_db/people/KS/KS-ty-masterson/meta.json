@@ -4,16 +4,44 @@
   "party": "Republican",
   "state": "KS",
   "office_sought": "Governor",
-  "current_office": "State Senator",
+  "current_office": "Kansas Senate President, Andover",
   "opponents": [
     "KS-cindy-holscher"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
-  "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
+  "vehicles": [
+    {
+      "name": "Ty Masterson for Governor",
+      "id": "Kansas statewide candidate filing SW01TM, July 2026 report",
+      "kind": "state candidate committee",
+      "treasurer": "Tom Devlin"
+    },
+    {
+      "name": "Take Back Kansas",
+      "id": "nonprofit, ID not verified",
+      "kind": "Masterson nonprofit; $700,000 entering 2026",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Right Direction PAC",
+      "id": "RGA PAC, state ID not verified",
+      "kind": "RGA outside spender attacking Holscher",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Party and leadership",
+    "AI industry",
+    "Sugar and agriculture"
+  ],
+  "headline_total": {
+    "amount_usd": 766535.24,
+    "label": "contributions and receipts, Jan 1 to Jul 23, 2026 report",
+    "as_of": "2026-07-23",
+    "source": "https://www.kansas.gov/ethics/CFAScanned/StWide/2026ElecCycle/202607/SW01TM_202607.pdf"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-27",
+  "next_filing": "Kansas pre general candidate report due Oct 26, 2026, not yet retrieved; post election report date not verified",
   "groups": "2026 Governor nominee",
   "competitive_rating": "Cook: Lean Republican",
   "research_priority": "1"

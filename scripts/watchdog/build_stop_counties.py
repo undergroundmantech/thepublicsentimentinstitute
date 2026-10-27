@@ -39,6 +39,13 @@ for _st, _m in {"GA": {"Locust Grove": ["Henry"], "Perry": ["Houston"]}, "IA": {
                 "MS": {"Clarksdale": ["Coahoma"], "Columbus": ["Lowndes"], "Corinth": ["Alcorn"]}, "NH": {"Manchester": ["Hillsborough"], "Portsmouth": ["Rockingham"]},
                 "OH": {"Chillicothe": ["Ross"]}, "WI": {"Madison": ["Dane"], "Milwaukee": ["Milwaukee"]}}.items():
     CITY.setdefault(_st, {}).update(_m)
+# Oct 27 2026 sweep
+for _st, _m in {"FL": {"Clearwater": ["Pinellas"], "Eatonville": ["Orange"]}, "GA": {"Alpharetta": ["Fulton"], "Buford": ["Gwinnett"], "Jefferson": ["Jackson"]},
+                "KS": {"Holton": ["Jackson"], "Pratt": ["Pratt"], "Salina": ["Saline"]}, "MI": {"Alpena": ["Alpena"], "Lansing": ["Ingham"], "Romeo": ["Macomb"]},
+                "MT": {"Belgrade": ["Gallatin"]}, "NC": {"Kinston": ["Lenoir"], "Wilmington": ["New Hanover"]}, "NY": {"Rochester": ["Monroe"], "Staten Island": ["Richmond"]},
+                "OH": {"Akron": ["Summit"], "Cincinnati": ["Hamilton"], "Dayton": ["Montgomery"]}, "PA": {"Lebanon": ["Lebanon"], "Pittsburgh": ["Allegheny"], "University Park": ["Centre"]},
+                "SC": {"Rock Hill": ["York"]}, "TX": {"Amarillo": ["Potter"], "Inez": ["Victoria"], "Weatherford": ["Parker"]}}.items():
+    CITY.setdefault(_st, {}).update(_m)
 co = json.load(open(os.path.join(site, "public/watchdog/counties.json")))
 by = {}
 for f, v in co.items():

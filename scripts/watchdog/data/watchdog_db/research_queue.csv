@@ -33,9 +33,9 @@ priority,person_id,name,party,state,office_sought,district,rating,status,edges
 1,IL-darren-bailey,Darren Bailey,Republican,IL,Governor,,Cook: Solid D,queued,0
 1,IL-jb-pritzker,JB Pritzker,Democrat,IL,Governor,,Cook: Solid D,queued,0
 1,IN-mike-braun,Mike Braun,Republican,IN,,,,queued,0
-1,KS-cindy-holscher,Cindy Holscher,Democrat,KS,Governor,,Cook: Lean Republican,queued,0
+1,KS-cindy-holscher,Cindy Holscher,Democrat,KS,Governor,,Cook: Lean Republican,hand researched,28
 1,KS-laura-kelly,Laura Kelly,Democrat,KS,,,,queued,0
-1,KS-ty-masterson,Ty Masterson,Republican,KS,Governor,,Cook: Lean Republican,queued,0
+1,KS-ty-masterson,Ty Masterson,Republican,KS,Governor,,Cook: Lean Republican,hand researched,38
 1,KY-andy-beshear,Andy Beshear,Democrat,KY,,,,queued,0
 1,LA-jeff-landry,Jeff Landry,Republican,LA,,,,queued,0
 1,MA-maura-healey,Maura Healey,Democrat,MA,Governor,,Cook: Solid D,queued,0
@@ -63,8 +63,8 @@ priority,person_id,name,party,state,office_sought,district,rating,status,edges
 1,NM-deb-haaland,Deb Haaland,Democrat,NM,Governor,,Cook: Solid Democratic,queued,0
 1,NM-gregg-hull,Gregg Hull,Republican,NM,Governor,,Cook: Solid Democratic,queued,0
 1,NM-michelle-lujan-grisham,Michelle Lujan Grisham,Democrat,NM,,,,queued,0
-1,NV-aaron-ford,Aaron Ford,Democrat,NV,Governor,,Cook: Toss Up,queued,0
-1,NV-joe-lombardo,Joe Lombardo,Republican,NV,Governor,,Cook: Toss Up,queued,0
+1,NV-aaron-ford,Aaron Ford,Democrat,NV,Governor,,Cook: Toss Up,hand researched,25
+1,NV-joe-lombardo,Joe Lombardo,Republican,NV,Governor,,Cook: Toss Up,hand researched,36
 1,NY-bruce-blakeman,Bruce Blakeman,Republican,NY,Governor,,Cook: Solid D,queued,0
 1,NY-kathy-hochul,Kathy Hochul,Democrat,NY,Governor,,Cook: Solid D,queued,0
 1,OH-mike-dewine,Mike DeWine,Republican,OH,,,,queued,0

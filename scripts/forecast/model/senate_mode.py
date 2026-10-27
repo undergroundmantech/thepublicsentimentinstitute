@@ -1885,8 +1885,10 @@ def _primaries_base(st):
         p["fips"] = p.county.map(lambda x: n2f[norm(x)]); p = p.set_index("fips")
         for fips in county_list(st):
             r = p.loc[fips]
-            out[fips] = dict(pD=float(r.dem_total), pR=float(r.rep_total), candD=1.0, candR=r.ricketts / r.rep_total)
-        return pd.DataFrame(out).T, "county results via civicAPI: May 12 2026 R and D Senate primaries"
+            # Oct 27 2026, by the user's choice: Cindy Burbank won the Democratic primary and withdrew for Osborn, so her
+            # county share of the Democratic primary vote is read as Osborn's nominee share in the D column
+            out[fips] = dict(pD=float(r.dem_total), pR=float(r.rep_total), candD=r.burbank / r.dem_total, candR=r.ricketts / r.rep_total)
+        return pd.DataFrame(out).T, "county results via civicAPI: May 12 2026 R and D Senate primaries; Burbank's Democratic primary share read as Osborn's"
     if st == "SC":
         # civicAPI county results: Jun 9 R Senate primary (82664), Jun 9 D governor primary (82595) as the Democratic
         # primary turnout measure, Aug 11 special R primary (86330) and Aug 25 special R runoff (87534)

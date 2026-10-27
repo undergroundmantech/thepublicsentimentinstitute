@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-25",
+ "asOf": "2026-10-27",
  "note": "Researched Oct 22 2026 in two passes from Wikipedia race pages, Ballotpedia, campaign, party, union and group endorsement pages and local news; every row has the page it came from.",
  "endorsements": [
   {
@@ -2243,7 +2243,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_special_election_in_Florida"
   },
   {
-   "by": "Mario Díaz-Balart",
+   "by": "Mario D\u00edaz-Balart",
    "byRole": "U.S. Representative from Florida",
    "byKind": "politician",
    "state": "FL",
@@ -4251,7 +4251,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Illinois"
   },
   {
-   "by": "Chuy García",
+   "by": "Chuy Garc\u00eda",
    "byRole": "U.S. Representative, IL-04",
    "byKind": "politician",
    "state": "IL",
@@ -7354,7 +7354,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": "2026-05-09",
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7367,7 +7367,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7380,7 +7380,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7393,7 +7393,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7406,7 +7406,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7419,7 +7419,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -7432,7 +7432,7 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
    "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_New_Mexico",
@@ -8281,7 +8281,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_Georgia_gubernatorial_election"
   },
   {
-   "by": "Bárbara Rivera Holmes",
+   "by": "B\u00e1rbara Rivera Holmes",
    "byRole": "Georgia Labor Commissioner",
    "byKind": "politician",
    "state": "GA",
@@ -8475,7 +8475,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_Florida_gubernatorial_election"
   },
   {
-   "by": "María Elvira Salazar",
+   "by": "Mar\u00eda Elvira Salazar",
    "byRole": "U.S. Rep., FL-27",
    "byKind": "politician",
    "state": "FL",
@@ -8487,7 +8487,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_Florida_gubernatorial_election"
   },
   {
-   "by": "Mario Díaz-Balart",
+   "by": "Mario D\u00edaz-Balart",
    "byRole": "U.S. Rep., FL-26",
    "byKind": "politician",
    "state": "FL",
@@ -10416,7 +10416,7 @@
    "source": "https://philforcolorado.com/endorsements/"
   },
   {
-   "by": "Federico Peña",
+   "by": "Federico Pe\u00f1a",
    "byRole": "Former Energy and Transportation Secretary",
    "byKind": "politician",
    "state": "CO",
@@ -15043,7 +15043,7 @@
    "source": "https://en.wikipedia.org/wiki/2026_New_Mexico_gubernatorial_election"
   },
   {
-   "by": "Ben Ray Luján",
+   "by": "Ben Ray Luj\u00e1n",
    "byRole": "U.S. Senator",
    "byKind": "politician",
    "state": "NM",
@@ -16207,10 +16207,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16220,10 +16220,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16233,10 +16233,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16246,10 +16246,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16259,10 +16259,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16272,10 +16272,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16285,10 +16285,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16298,10 +16298,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16311,10 +16311,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16324,10 +16324,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16337,10 +16337,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16350,10 +16350,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16363,10 +16363,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16376,10 +16376,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16389,10 +16389,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16402,10 +16402,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16415,10 +16415,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16428,10 +16428,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": ""
   },
   {
@@ -16441,10 +16441,10 @@
    "state": "NM",
    "race": "NM Senate",
    "office": "senate",
-   "candidate": "Ben Ray Luján",
+   "candidate": "Ben Ray Luj\u00e1n",
    "party": "D",
    "date": null,
-   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luján/3675",
+   "source": "https://bluevoterguide.org/NM/candidate_Ben_Ray_Luj\u00e1n/3675",
    "note": "Listed as recommended by NEA"
   },
   {
@@ -19932,7 +19932,7 @@
    "note": ""
   },
   {
-   "by": "Cecelia González",
+   "by": "Cecelia Gonz\u00e1lez",
    "byRole": "Nevada assemblywoman, AD-16",
    "byKind": "politician",
    "state": "NV",
@@ -19997,7 +19997,7 @@
    "note": ""
   },
   {
-   "by": "Fabian Doñate",
+   "by": "Fabian Do\u00f1ate",
    "byRole": "Nevada state senator, SD-10",
    "byKind": "politician",
    "state": "NV",
@@ -24625,7 +24625,7 @@
    "note": ""
   },
   {
-   "by": "Anthony Muñoz",
+   "by": "Anthony Mu\u00f1oz",
    "byRole": "Former NFL player",
    "byKind": "celebrity",
    "state": "OH",
@@ -32885,6 +32885,126 @@
    "role": "reporter",
    "show": "Fox News",
    "lean": "nonpartisan"
+  },
+  {
+   "name": "Steve Doocy",
+   "role": "host",
+   "show": "Fox & Friends",
+   "lean": "R"
+  },
+  {
+   "name": "Fox & Friends hosts",
+   "role": "host",
+   "show": "Fox & Friends",
+   "lean": "R"
+  },
+  {
+   "name": "Alex Miller",
+   "role": "reporter",
+   "show": "Fox News Digital",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Katie Miller",
+   "role": "podcaster",
+   "show": "The Katie Miller Podcast",
+   "lean": "R"
+  },
+  {
+   "name": "Brian Kilmeade",
+   "role": "host",
+   "show": "Fox & Friends",
+   "lean": "R"
+  },
+  {
+   "name": "Lawrence Jones",
+   "role": "host",
+   "show": "Fox & Friends",
+   "lean": "R"
+  },
+  {
+   "name": "Nicolle Wallace",
+   "role": "host",
+   "show": "Deadline: White House, MS NOW",
+   "lean": "D"
+  },
+  {
+   "name": "John Harwood",
+   "role": "commentator",
+   "show": "Independent journalist",
+   "lean": "D"
+  },
+  {
+   "name": "Aaron Parnas",
+   "role": "influencer",
+   "show": "The Parnas Perspective",
+   "lean": "D"
+  },
+  {
+   "name": "Erin Reed",
+   "role": "commentator",
+   "show": "Erin In The Morning",
+   "lean": "D"
+  },
+  {
+   "name": "Paul Waldman",
+   "role": "commentator",
+   "show": "Public Notice",
+   "lean": "D"
+  },
+  {
+   "name": "Judd Legum",
+   "role": "reporter",
+   "show": "Popular Information",
+   "lean": "D"
+  },
+  {
+   "name": "David Nir",
+   "role": "analyst",
+   "show": "The Downballot",
+   "lean": "D"
+  },
+  {
+   "name": "Julia Terruso",
+   "role": "reporter",
+   "show": "TIME",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Marcel Clarke",
+   "role": "reporter",
+   "show": "KVIA ABC-7 El Paso",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Jonathan Karl",
+   "role": "host",
+   "show": "This Week, ABC",
+   "lean": "nonpartisan"
+  },
+  {
+   "name": "Donna Brazile",
+   "role": "commentator",
+   "show": "ABC News contributor",
+   "lean": "D"
+  },
+  {
+   "name": "Chris Christie",
+   "role": "commentator",
+   "show": "ABC News contributor",
+   "lean": "R"
+  },
+  {
+   "name": "Patrick McHenry",
+   "role": "commentator",
+   "show": "ABC News This Week panel",
+   "lean": "R"
+  },
+  {
+   "name": "Greg Orman",
+   "role": "commentator",
+   "show": "RealClearPolitics podcast contributor",
+   "lean": "other"
   }
  ],
  "media_attention": [
@@ -36187,6 +36307,356 @@
    "what": "Interviewed Sen. Jon Husted on Fox News about Trump's repeated comments on his physique, which Husted said motivated him to hit the gym.",
    "when": "2026-10-24",
    "source": "https://www.mediaite.com/media/news/got-to-get-down-to-the-gym-jon-husted-admits-hes-motivated-by-trumps-comments-about-his-rump/"
+  },
+  {
+   "person": "Steve Doocy",
+   "role": "host",
+   "lean": "R",
+   "state": "MI",
+   "race": "MI Governor",
+   "what": "Interviewed Republican governor nominee Rep. John James at a Romeo, Michigan diner on Fox & Friends, asking how he would bring jobs back to Michigan.",
+   "when": "2026-10-27",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Fox & Friends hosts",
+   "role": "host",
+   "lean": "R",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Hosted Republican Mike Rogers on Fox & Friends, where he said Abdul El-Sayed wants to represent Palestine and that Michigan cannot risk his ideology.",
+   "when": "2026-10-27",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Alex Miller",
+   "role": "reporter",
+   "lean": "nonpartisan",
+   "state": "KS",
+   "race": "KS Senate",
+   "what": "Interviewed Sen. Roger Marshall in Wichita for Fox News Digital, where Marshall said that if Republicans lose Kansas he does not see how they keep the Senate.",
+   "when": "2026-10-27",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Katie Miller",
+   "role": "podcaster",
+   "lean": "R",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "On her podcast she asked detransitioner Soren Aldaco about her criticism of James Talarico and what she would tell him.",
+   "when": "2026-10-26",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Brian Kilmeade",
+   "role": "host",
+   "lean": "R",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Defended Elon Musk against James Talarico's attacks, saying Musk has brought at least 30 million dollars in property taxes to Texas and asking if that is the man Talarico wants to vilify.",
+   "when": "2026-10-26",
+   "source": "https://redstate.com/nick-arama/2026/10/26/fox-crushes-talarico-n2208630"
+  },
+  {
+   "person": "Lawrence Jones",
+   "role": "host",
+   "lean": "R",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Said James Talarico lies so much he needs to be fact checked and urged a look at the donors bankrolling his Senate campaign.",
+   "when": "2026-10-26",
+   "source": "https://redstate.com/nick-arama/2026/10/26/fox-crushes-talarico-n2208630"
+  },
+  {
+   "person": "Nicolle Wallace",
+   "role": "host",
+   "lean": "D",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Opened Deadline: White House calling Vivek Ramaswamy's ad featuring Amy Acton's estranged mother abhorrent desperation and highlighted the Cleveland Plain Dealer's rare endorsement of Acton.",
+   "when": "2026-10-26",
+   "source": "https://www.rawstory.com/nicolle-wallace-ramaswamy/"
+  },
+  {
+   "person": "Kristen Welker",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Interviewed Republican Mike Rogers on Meet the Press, pressing him on whether he supports Trump and MAGA Republicans; Rogers ducked tariff questions and called the MAGA question disgusting.",
+   "when": "2026-10-25",
+   "source": "https://www.rawstory.com/mike-rogers-nbc-flop/"
+  },
+  {
+   "person": "Joe Scarborough",
+   "role": "host",
+   "lean": "other",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Refused to air clips of Mike Rogers' Meet the Press interview on Morning Joe, calling it embarrassing and humiliating and calling Rogers a puppet for Trump.",
+   "when": "2026-10-26",
+   "source": "https://www.rawstory.com/mike-rogers-nbc-flop/"
+  },
+  {
+   "person": "John Harwood",
+   "role": "commentator",
+   "lean": "D",
+   "state": "SC",
+   "race": "SC Senate",
+   "what": "Called Sen. Tim Scott such a tool after Scott used a slur about Democratic Senate candidate Annie Andrews on The Charlie Kirk Show.",
+   "when": "2026-10-27",
+   "source": "https://www.rawstory.com/tim-scott-2678148308/"
+  },
+  {
+   "person": "Aaron Parnas",
+   "role": "influencer",
+   "lean": "D",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Interviewed Democratic governor nominee Amy Acton on The Parnas Perspective as nearly 30 million Americans had already voted.",
+   "when": "2026-10-26",
+   "source": "https://aaronparnas.substack.com/p/news-democratic-early-voting-surges"
+  },
+  {
+   "person": "Simon Rosenberg",
+   "role": "commentator",
+   "lean": "D",
+   "state": "KS",
+   "race": "KS Senate",
+   "what": "Interviewed Democrat Adam Hamilton on his campaign bus for Hopium Chronicles, where Hamilton said early voting looks really strong and slammed Roger Marshall for skipping town halls.",
+   "when": "2026-10-26",
+   "source": "https://www.hopiumchronicles.com/p/meet-adam-hamilton-the-man-who-can"
+  },
+  {
+   "person": "Erin Reed",
+   "role": "commentator",
+   "lean": "D",
+   "state": "IA",
+   "race": "IA Senate",
+   "what": "Said she would not vote for Democrat Josh Turek after his closing ad opposed taxpayers paying for sex changes, calling the stance devastating for transgender Iowans.",
+   "when": "2026-10-26",
+   "source": "https://www.erininthemorning.com/p/dont-vote-for-the-worst-anti-trans"
+  },
+  {
+   "person": "Erin Reed",
+   "role": "commentator",
+   "lean": "D",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Praised Abdul El-Sayed for saying health care decisions belong between a patient and their doctor, contrasting him with Democrats running anti trans ads.",
+   "when": "2026-10-26",
+   "source": "https://www.erininthemorning.com/p/dont-vote-for-the-worst-anti-trans"
+  },
+  {
+   "person": "Paul Waldman",
+   "role": "commentator",
+   "lean": "D",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Argued in Public Notice that Ramaswamy's ad featuring Amy Acton's estranged mother was a self defeating copy of Trump's style and that the backlash shows voters have limits.",
+   "when": "2026-10-26",
+   "source": "https://www.publicnotice.co/p/vivek-ramaswamy-acton-ad"
+  },
+  {
+   "person": "Judd Legum",
+   "role": "reporter",
+   "lean": "D",
+   "state": "WI",
+   "race": "WI Governor",
+   "what": "Reported in Popular Information that mailers from a so called Progressive Alliance of Wisconsin attacking Democrat David Crowley from the left were paid through an Oklahoma firm that mainly works for Republicans.",
+   "when": "2026-10-26",
+   "source": "https://popular.info/p/mailers-from-progressive-alliance"
+  },
+  {
+   "person": "Judd Legum",
+   "role": "reporter",
+   "lean": "D",
+   "state": "MN",
+   "race": "MN Governor",
+   "what": "Reported that similar anti Democrat mailers from an unregistered group have appeared in the Minnesota governor race targeting Amy Klobuchar.",
+   "when": "2026-10-26",
+   "source": "https://popular.info/p/mailers-from-progressive-alliance"
+  },
+  {
+   "person": "David Nir",
+   "role": "analyst",
+   "lean": "D",
+   "state": "AZ",
+   "race": "AZ Governor",
+   "what": "The Downballot's Morning Digest by Nir and Jeff Singer said Gov. Katie Hobbs and other Arizona Democrats lead statewide as the party aims to flip both legislative chambers.",
+   "when": "2026-10-26",
+   "source": "https://www.the-downballot.com/p/morning-digest-how-arizona-democrats"
+  },
+  {
+   "person": "Julia Terruso",
+   "role": "reporter",
+   "lean": "nonpartisan",
+   "state": "ME",
+   "race": "ME Senate",
+   "what": "Wrote for TIME that the toss up Collins versus Troy Jackson race is almost entirely a referendum on Susan Collins, with Jackson narrowly ahead within the margin of error.",
+   "when": "2026-10-26",
+   "source": "https://time.com/article/2026/10/26/in-maine-a-toss-up-senate-race-is-about-the-incumbent-and-not-much-else/"
+  },
+  {
+   "person": "Dana Bash",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Hosted Pennsylvania Gov. Josh Shapiro on State of the Union, where he called JD Vance profoundly and pathetically weak for defending Ramaswamy's ad featuring Amy Acton's mother.",
+   "when": "2026-10-25",
+   "source": "https://www.breitbart.com/clips/2026/10/25/gov-shapiro-jd-vance-is-profoundly-and-pathetically-weak/"
+  },
+  {
+   "person": "Dana Bash",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "Grilled Attorney General Todd Blanche on State of the Union over the Justice Department suit to block certification of Alaska's Senate race if Dan Sullivan loses, asking what crime is alleged.",
+   "when": "2026-10-25",
+   "source": "https://demwinsmedia.substack.com/p/breaking-trumps-ag-loses-it-as-dana"
+  },
+  {
+   "person": "Marcel Clarke",
+   "role": "reporter",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Senate",
+   "what": "Conducted an exclusive ABC-7 interview with James Talarico in El Paso on cost of living, immigration, border security and tensions in the Democratic Party.",
+   "when": "2026-10-26",
+   "source": "https://kvia.com/news/2026/10/26/democratic-u-s-senate-nominee-james-talarico-discusses-key-issues-in-exclusive-abc-7-interview/"
+  },
+  {
+   "person": "Jonathan Karl",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "IA",
+   "race": "IA Senate",
+   "what": "Interviewed both Iowa Senate nominees, Republican Ashley Hinson and Democrat Josh Turek, on This Week, pressing Hinson on Iran and Trump and asking Turek whether Obama's endorsements matter.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Jonathan Karl",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Asked Ashley Hinson on This Week about Ramaswamy's ad featuring Amy Acton's mother; Hinson called it absolutely terrible and said it should come down.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Donna Brazile",
+   "role": "commentator",
+   "lean": "D",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Called Ramaswamy's ad featuring Amy Acton's mother disgusting and despicable on the This Week panel and said it should be removed.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Chris Christie",
+   "role": "commentator",
+   "lean": "R",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Said on This Week that Ramaswamy's Acton ad reflects a rotten moral core in the Republican Party.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Chris Christie",
+   "role": "commentator",
+   "lean": "R",
+   "state": "MI",
+   "race": "MI Senate",
+   "what": "Called Abdul El-Sayed an awful candidate on This Week and said Democrats are giving Republicans a chance in Michigan.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Chris Christie",
+   "role": "commentator",
+   "lean": "R",
+   "state": "ME",
+   "race": "ME Senate",
+   "what": "Called the Democratic Senate picks in Maine, Graham Platner and Troy Jackson, awful candidates who give Republicans a chance.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Chris Christie",
+   "role": "commentator",
+   "lean": "R",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "Called the Justice Department's lawsuit over the Alaska Senate race a dirty trick.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Patrick McHenry",
+   "role": "commentator",
+   "lean": "R",
+   "state": "OH",
+   "race": "OH Governor",
+   "what": "Said on the This Week panel that Ramaswamy's Acton ad showed poor judgment and that Sen. Jon Husted was right to call it unsound.",
+   "when": "2026-10-25",
+   "source": "https://abcnews.com/Politics/week-transcript-10-25-26-rep-ashley-hinson/story?id=137541709"
+  },
+  {
+   "person": "Guy Benson",
+   "role": "host",
+   "lean": "R",
+   "state": "MN",
+   "race": "MN Senate",
+   "what": "Interviewed Republican Michele Tafoya on The Guy Benson Show, asking if fraud and Somali gang violence resonate in a blue state; she said Peggy Flanagan is not an experiment worth retrying.",
+   "when": "2026-10-26",
+   "source": "https://radio.foxnews.com/2026/10/26/michele-tafoya-peggy-flanagan-is-not-an-experiment-worth-retrying/"
+  },
+  {
+   "person": "Margaret Brennan",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "TX",
+   "race": "TX Governor",
+   "what": "Interviewed Democratic governor nominee Gina Hinojosa on Face the Nation about four day school weeks, the uninsured rate, Greg Abbott's data center tax breaks and Elon Musk's donations to Abbott.",
+   "when": "2026-10-25",
+   "source": "https://www.cbsnews.com/news/texas-ginojosa-texas-democrat-face-the-nation-transcript-10-25-2026/"
+  },
+  {
+   "person": "Margaret Brennan",
+   "role": "host",
+   "lean": "nonpartisan",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "Pressed Sen. Thom Tillis on Face the Nation about the Justice Department suit over the Alaska Senate ballot; Tillis called filing it before the facts are known suspicious.",
+   "when": "2026-10-25",
+   "source": "https://www.cbsnews.com/news/thom-tillis-north-carolina-republican-face-the-nation-transcript-10-25-2026/"
+  },
+  {
+   "person": "Greg Orman",
+   "role": "commentator",
+   "lean": "other",
+   "state": "AK",
+   "race": "AK Senate",
+   "what": "On the RealClearPolitics podcast he argued ranked choice voting will shield Dan Sullivan from confusion with the other Dan Sullivan on the ballot, with Peltola up 0.8 in the RCP average.",
+   "when": "2026-10-26",
+   "source": "https://www.yahoo.com/news/politics/articles/rcp-podcast-other-dan-sullivan-130000318.html"
+  },
+  {
+   "person": "Greg Orman",
+   "role": "commentator",
+   "lean": "other",
+   "state": "KS",
+   "race": "KS Senate",
+   "what": "On the RealClearPolitics podcast he said many Kansans remain angry the Epstein files are unreleased, as an Epstein themed ad targets Roger Marshall in a race within one point.",
+   "when": "2026-10-26",
+   "source": "https://www.yahoo.com/news/politics/articles/rcp-podcast-other-dan-sullivan-130000318.html"
   }
  ],
  "unconfirmed": [
@@ -36286,8 +36756,8 @@
    "file": "endorse_senate_nw.json"
   },
   {
-   "claim": "AFGE endorsed Ben Ray Luján (NM)",
-   "why": "Reference title says AFGE endorsed four NM incumbents; page does not confirm Luján is one.",
+   "claim": "AFGE endorsed Ben Ray Luj\u00e1n (NM)",
+   "why": "Reference title says AFGE endorsed four NM incumbents; page does not confirm Luj\u00e1n is one.",
    "file": "endorse_senate_nw.json"
   },
   {

@@ -8,12 +8,40 @@
   "opponents": [
     "NV-joe-lombardo"
   ],
-  "vehicles": [],
-  "top_blocs": [],
-  "headline_total": {},
-  "research_tier": "Queued, roster and office levers only",
-  "compiled": "2026-10-23",
-  "next_filing": "FEC pre general report covers through Oct 14, 2026; post general report due Dec 3, 2026",
+  "vehicles": [
+    {
+      "name": "Ford campaign committee",
+      "id": "Nevada SOS ID not verified in this pass",
+      "kind": "candidate campaign committee",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "Forward Nevada PAC",
+      "id": "Nevada SOS ID not verified in this pass",
+      "kind": "state PAC affiliated with Ford",
+      "treasurer": "not verified"
+    },
+    {
+      "name": "A More Affordable Nevada PAC",
+      "id": "Nevada SOS ID not verified in this pass",
+      "kind": "DGA affiliated PAC, separate from Ford's committees",
+      "treasurer": "not verified"
+    }
+  ],
+  "top_blocs": [
+    "Labor unions",
+    "Party and leadership",
+    "Small donors"
+  ],
+  "headline_total": {
+    "amount_usd": 9000000,
+    "label": "raised in 2026 across the campaign, almost $5M, and Forward Nevada PAC, just over $4M, cumulative; sum computed from KTVN figures",
+    "as_of": "2026-09-30",
+    "source": "https://www.2news.com/townnews/economics/looking-at-recent-2026-nevada-campaign-finance-reports/article_d3235f09-5701-4e00-a585-e50de6ffc1bb.html"
+  },
+  "research_tier": "Tier 2 compact",
+  "compiled": "2026-10-27",
+  "next_filing": "Next Nevada Secretary of State contributions and expenses report after the Nov 3, 2026 election; exact due date not verified",
   "groups": "2026 Governor nominee",
   "competitive_rating": "Cook: Toss Up",
   "research_priority": "1"

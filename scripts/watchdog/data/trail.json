@@ -356,20 +356,6 @@
    "source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
   },
   {
-   "person": "Donald Trump",
-   "party": "R",
-   "date": "2026-10-27",
-   "state": "TX",
-   "city": "Waco",
-   "kind": "announced",
-   "for": [
-    "Ken Paxton"
-   ],
-   "race": "TX Senate",
-   "note": "6 p.m. rally the same day as Lubbock.",
-   "source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
-  },
-  {
    "person": "JD Vance",
    "party": "R",
    "date": "2026-08-31",
@@ -706,13 +692,14 @@
    "party": "D",
    "date": "2026-10-28",
    "state": "GA",
-   "city": "",
+   "city": "Atlanta",
    "kind": "announced",
    "for": [
-    "Jon Ossoff"
+    "Jon Ossoff",
+    "Keisha Lance Bottoms"
    ],
-   "race": "GA Senate",
-   "note": "Start of a three day Georgia swing through Oct 30 with voter protection events.",
+   "race": "GA Senate; GA Governor",
+   "note": "Start of a three day Georgia swing through Oct 30 with voter protection events. Atlanta event Oct 28 alongside Barack Obama.",
    "source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
   },
   {
@@ -7641,6 +7628,868 @@
    "race": "TX Governor",
    "note": "Afternoon stop at Honor Cafe on a statewide trip ahead of early voting, focused on affordability and law enforcement.",
    "source": "https://www.kbtx.com/2026/10/16/greg-abbott-gina-hinajosa-make-stops-texas-ahead-early-voting/"
+  },
+  {
+   "person": "Donald Trump",
+   "party": "R",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Corpus Christi",
+   "kind": "announced",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "announced Tuesday rally that replaced the planned Waco stop, doors 10:30 a.m., Trump expected to speak at 2 p.m., venue not yet announced.",
+   "source": "https://www.audacy.com/krld/news/local/trump-campaigns-in-lubbock-and-corpus-christi-as-vance-heads-to-weatherford"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Corpus Christi",
+   "kind": "announced",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Announced rally with President Donald Trump to boost GOP turnout, remarks set for 2 p.m. local time.",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Lubbock",
+   "kind": "announced",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Announced evening rally with President Donald Trump at the Lubbock Memorial Civic Center, Trump remarks at 6 p.m.",
+   "source": "https://abc7amarillo.com/news/local/president-trump-headlining-upcoming-midterm-rally-in-lubbock"
+  },
+  {
+   "person": "Ken Paxton",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "TX",
+   "city": "Amarillo",
+   "kind": "tour stop",
+   "for": [
+    "Ken Paxton"
+   ],
+   "race": "TX Senate",
+   "note": "Monday night Come and Take It tour stop at The Big Texan.",
+   "source": "https://abc7amarillo.com/newsletter-daily/ken-paxton-republican-makes-campaign-stop-at-the-big-texan-come-and-take-it-tour-us-senate-texas-democrat-james-talarico-clear-eyes-full-hearts-tour-election-beyond-the-podium-amarillo-texas"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "TX",
+   "city": "El Paso",
+   "kind": "rally",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Clear Eyes, Full Hearts tour rally set for 6 to 8 p.m., venue not disclosed in advance.",
+   "source": "https://kfoxtv.com/news/local/senate-candidate-james-talarico-sets-oct-26-el-paso-stop"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Amarillo",
+   "kind": "announced",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Announced meet and greet from 2:30 to 4 p.m. at the Texas Panhandle Democratic Headquarters on SW 10th Street.",
+   "source": "https://abc7amarillo.com/news/local/president-trump-headlining-upcoming-midterm-rally-in-lubbock"
+  },
+  {
+   "person": "James Talarico",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Lubbock",
+   "kind": "announced",
+   "for": [
+    "James Talarico"
+   ],
+   "race": "TX Senate",
+   "note": "Announced 7 p.m. community rally at the Frazier Alumni Pavilion on the Texas Tech campus, the same night as the Trump rally in town.",
+   "source": "https://abc7amarillo.com/news/local/president-trump-headlining-upcoming-midterm-rally-in-lubbock"
+  },
+  {
+   "person": "JD Vance",
+   "party": "R",
+   "date": "2026-10-29",
+   "state": "TX",
+   "city": "Weatherford",
+   "kind": "announced",
+   "for": [],
+   "race": "TX Senate",
+   "note": "Announced Thursday rally at JRJ Construction on Ric Williamson Memorial Highway, Vance to speak at 1:50 p.m., hosted by the Texas GOP.",
+   "source": "https://www.cbsnews.com/texas/news/jd-vance-midterm-rally-weatherford-texas-paxton-talarico-senate-race-oct-2026/"
+  },
+  {
+   "person": "JD Vance",
+   "party": "R",
+   "date": "2026-10-29",
+   "state": "TX",
+   "city": "Corpus Christi",
+   "kind": "announced",
+   "for": [],
+   "race": "TX Senate",
+   "note": "Announced Thursday visit at the Omni Corpus Christi Hotel per local media reports, details not yet released.",
+   "source": "https://victoriaadvocate.com/2026/10/23/trump-abbott-hinojosa-set-campaign-stops-across-south-texas/"
+  },
+  {
+   "person": "Gina Hinojosa",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "TX",
+   "city": "Corpus Christi",
+   "kind": "rally",
+   "for": [
+    "Gina Hinojosa"
+   ],
+   "race": "TX Governor",
+   "note": "Scheduled 6:30 p.m. get out the vote rally on her One Fight tour.",
+   "source": "https://victoriaadvocate.com/2026/10/23/trump-abbott-hinojosa-set-campaign-stops-across-south-texas/"
+  },
+  {
+   "person": "Greg Abbott",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "TX",
+   "city": "Inez",
+   "kind": "announced",
+   "for": [
+    "Greg Abbott"
+   ],
+   "race": "TX Governor",
+   "note": "Announced Tuesday stop at Bomb Diggity.",
+   "source": "https://victoriaadvocate.com/2026/10/23/trump-abbott-hinojosa-set-campaign-stops-across-south-texas/"
+  },
+  {
+   "person": "Jocelyn Benson",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "rally",
+   "for": [
+    "Jocelyn Benson"
+   ],
+   "race": "MI Governor",
+   "note": "Rally with former President Barack Obama and Abdul El-Sayed.",
+   "source": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections"
+  },
+  {
+   "person": "Mike Rogers",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "MI",
+   "city": "Lansing",
+   "kind": "event",
+   "for": [
+    "Mike Rogers"
+   ],
+   "race": "MI Senate",
+   "note": "Morning campaign stop before a crowd of hundreds.",
+   "source": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections"
+  },
+  {
+   "person": "Mike Rogers",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "MI",
+   "city": "Romeo",
+   "kind": "event",
+   "for": [
+    "Mike Rogers"
+   ],
+   "race": "MI Senate",
+   "note": "Took voter questions at a diner and appeared on Fox and Friends from there.",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "John James",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-27",
+   "state": "MI",
+   "city": "Romeo",
+   "kind": "event",
+   "for": [
+    "John James"
+   ],
+   "race": "MI Governor",
+   "note": "Campaigned at the Four Corners Diner and gave a Fox and Friends interview.",
+   "source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-texas-comey-october-27"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "rally",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Sunday rally with Sen. Bernie Sanders to open a two day Michigan tour.",
+   "source": "https://upnorthlive.com/news/michigan-politics/bernie-sanders-michigan-tour-abdul-el-sayed-rally-grand-rapids-devos-performance-hall-politics-government-election-democrat-kent-county-west-michigan"
+  },
+  {
+   "person": "Bernie Sanders",
+   "party": "D",
+   "date": "2026-10-25",
+   "state": "MI",
+   "city": "Grand Rapids",
+   "kind": "rally",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Sunday rally with El-Sayed to open a two day Michigan tour.",
+   "source": "https://upnorthlive.com/news/michigan-politics/bernie-sanders-michigan-tour-abdul-el-sayed-rally-grand-rapids-devos-performance-hall-politics-government-election-democrat-kent-county-west-michigan"
+  },
+  {
+   "person": "Bernie Sanders",
+   "party": "D",
+   "date": "2026-10-26",
+   "state": "MI",
+   "city": "Alpena",
+   "kind": "rally",
+   "for": [],
+   "race": "MI Senate",
+   "note": "Fighting Oligarchy tour stop, part of his Michigan swing alongside the El-Sayed campaign.",
+   "source": "https://berniesanders.com/oligarchy/"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "MI",
+   "city": "Lansing",
+   "kind": "rally",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Monday rally on his final week push with union leaders.",
+   "source": "https://upnorthlive.com/news/michigan-politics/bernie-sanders-michigan-tour-abdul-el-sayed-rally-grand-rapids-devos-performance-hall-politics-government-election-democrat-kent-county-west-michigan"
+  },
+  {
+   "person": "Abdul El-Sayed",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "MI",
+   "city": "Detroit",
+   "kind": "event",
+   "for": [
+    "Abdul El-Sayed"
+   ],
+   "race": "MI Senate",
+   "note": "Monday campaign push with union leaders aimed at Black voters.",
+   "source": "https://foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "OH",
+   "city": "Akron",
+   "kind": "rally",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Rally with Dr. Amy Acton the day after the Obama rally in Cleveland.",
+   "source": "https://www.sherrodbrown.com/2026/10/26/in-akron-sherrod-brown-rallies-with-ohioans-ready-for-change/"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "OH",
+   "city": "Akron",
+   "kind": "rally",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Rally with Sherrod Brown the day after the Obama rally in Cleveland.",
+   "source": "https://www.sherrodbrown.com/2026/10/26/in-akron-sherrod-brown-rallies-with-ohioans-ready-for-change/"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "OH",
+   "city": "Dayton",
+   "kind": "rally",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Monday evening downtown rally with Amy Acton and special guest John Legend before hundreds of supporters.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "OH",
+   "city": "Dayton",
+   "kind": "rally",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Monday evening downtown rally with Sherrod Brown and special guest John Legend before hundreds of supporters.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "John Legend",
+   "party": "D",
+   "date": "2026-10-26",
+   "state": "OH",
+   "city": "Dayton",
+   "kind": "rally",
+   "for": [
+    "Sherrod Brown",
+    "Amy Acton"
+   ],
+   "race": "OH Senate; OH Governor",
+   "note": "Special guest at the Fighting for Ohio rally, also visited several small businesses in the area.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "OH",
+   "city": "Cincinnati",
+   "kind": "announced",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Announced joint stop with Amy Acton on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-28",
+   "state": "OH",
+   "city": "Cincinnati",
+   "kind": "announced",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Announced joint stop with Sherrod Brown on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "OH",
+   "city": "Toledo",
+   "kind": "announced",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Announced joint stop with Amy Acton on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-29",
+   "state": "OH",
+   "city": "Toledo",
+   "kind": "announced",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Announced joint stop with Sherrod Brown on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "OH",
+   "city": "Cleveland",
+   "kind": "announced",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Announced joint stop with Amy Acton on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-11-01",
+   "state": "OH",
+   "city": "Cleveland",
+   "kind": "announced",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Announced joint stop with Sherrod Brown on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Sherrod Brown",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "announced",
+   "for": [
+    "Sherrod Brown"
+   ],
+   "race": "OH Senate",
+   "note": "Announced joint stop with Amy Acton on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Amy Acton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-11-02",
+   "state": "OH",
+   "city": "Columbus",
+   "kind": "announced",
+   "for": [
+    "Amy Acton"
+   ],
+   "race": "OH Governor",
+   "note": "Announced joint stop with Sherrod Brown on their closing swing, date taken from the weekday given in the report.",
+   "source": "https://nbc16.com/news/nation-world/brown-acton-make-final-push-in-dayton-as-ohio-midterm-races-near"
+  },
+  {
+   "person": "Rick Jackson",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "GA",
+   "city": "Perry",
+   "kind": "rally",
+   "for": [
+    "Rick Jackson"
+   ],
+   "race": "GA Governor",
+   "note": "Rally with President Donald Trump and Mike Collins at the Guardian Centers, with Jason Aldean in attendance.",
+   "source": "https://www.foxnews.com/live-news/trump-weekend-rallies-georgia-michigan-2026-midterm-elections"
+  },
+  {
+   "person": "Jon Ossoff",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "event",
+   "for": [
+    "Jon Ossoff"
+   ],
+   "race": "GA Senate",
+   "note": "Sunday service at Dream Center Church of Atlanta with Keisha Lance Bottoms and Penny Brown Reynolds, urging early in person voting.",
+   "source": "https://www.fox5atlanta.com/news/ossoff-bottoms-urge-early-voting-atlanta-church"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "GA",
+   "city": "Atlanta",
+   "kind": "event",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "Sunday service at Dream Center Church of Atlanta with Jon Ossoff and Penny Brown Reynolds, urging early in person voting.",
+   "source": "https://www.fox5atlanta.com/news/ossoff-bottoms-urge-early-voting-atlanta-church"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "GA",
+   "city": "Jefferson",
+   "kind": "event",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Monday meeting with supporters during the last week of early voting.",
+   "source": "https://www.fox5atlanta.com/election/georgia-candidates-making-campaign-stops-across-state-monday"
+  },
+  {
+   "person": "Mike Collins",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "GA",
+   "city": "Buford",
+   "kind": "event",
+   "for": [
+    "Mike Collins"
+   ],
+   "race": "GA Senate",
+   "note": "Monday meeting with supporters during the last week of early voting.",
+   "source": "https://www.fox5atlanta.com/election/georgia-candidates-making-campaign-stops-across-state-monday"
+  },
+  {
+   "person": "Keisha Lance Bottoms",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "GA",
+   "city": "Alpharetta",
+   "kind": "event",
+   "for": [
+    "Keisha Lance Bottoms"
+   ],
+   "race": "GA Governor",
+   "note": "Monday meeting with voters during the last week of early voting.",
+   "source": "https://www.fox5atlanta.com/election/georgia-candidates-making-campaign-stops-across-state-monday"
+  },
+  {
+   "person": "Roy Cooper",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NC",
+   "city": "Greensboro",
+   "kind": "tour stop",
+   "for": [
+    "Roy Cooper"
+   ],
+   "race": "NC Senate",
+   "note": "Saturday morning Make Stuff Cost Less tour stop outside the Barber Park early voting site, about 50 attendees.",
+   "source": "https://www.yahoo.com/news/politics/articles/north-carolina-candidate-u-senate-182219578.html"
+  },
+  {
+   "person": "Michael Whatley",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NC",
+   "city": "Wilmington",
+   "kind": "event",
+   "for": [
+    "Michael Whatley"
+   ],
+   "race": "NC Senate",
+   "note": "Defending Freedom press conference at New Hanover County GOP headquarters with Rep. David Rouzer.",
+   "source": "https://www.wect.com/2026/10/24/whatley-stops-wilmington-cooper-makes-final-push-before-early-voting-ends/"
+  },
+  {
+   "person": "JD Vance",
+   "party": "R",
+   "date": "2026-10-28",
+   "state": "NC",
+   "city": "Kinston",
+   "kind": "announced",
+   "for": [],
+   "race": "NC Senate",
+   "note": "Announced Wednesday midterm rally hosted by Trump 47 Committee, Vance expected to speak at 2 p.m., venue not yet announced.",
+   "source": "https://www.carolinajournal.com/jd-vance-to-return-to-nc-for-kinston-rally-wednesday/"
+  },
+  {
+   "person": "Donald Trump",
+   "party": "R",
+   "date": "2026-10-29",
+   "state": "SC",
+   "city": "Rock Hill",
+   "kind": "announced",
+   "for": [],
+   "race": "SC Senate",
+   "note": "Announced Thursday rally for SC GOP candidates, Trump to speak at 12:30 p.m., venue not named, his second SC visit in days.",
+   "source": "https://www.postandcourier.com/politics/trump-rally-south-carolina-rock-hill-darline-graham/article_9e1cb903-22cb-4690-b1a5-03a92b657545.html"
+  },
+  {
+   "person": "Adam Hamilton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "KS",
+   "city": "Holton",
+   "kind": "tour stop",
+   "for": [
+    "Adam Hamilton"
+   ],
+   "race": "KS Senate",
+   "note": "Saturday statewide bus tour stop at Linscott Park.",
+   "source": "https://www.wibw.com/2026/10/25/hamilton-campaigns-holton-ahead-midterm-election/"
+  },
+  {
+   "person": "Adam Hamilton",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "KS",
+   "city": "Pratt",
+   "kind": "tour stop",
+   "for": [
+    "Adam Hamilton"
+   ],
+   "race": "KS Senate",
+   "note": "Monday bus tour stop, spoke to a crowd around the bandstand on a 10 day tour of more than 20 communities.",
+   "source": "https://www.kwch.com/2026/10/26/senate-candidate-adam-hamilton-visits-kansas-speaks-issues-during-statewide-bus-tour/"
+  },
+  {
+   "person": "Donald Trump",
+   "party": "R",
+   "date": "2026-10-31",
+   "state": "KS",
+   "city": "Salina",
+   "kind": "announced",
+   "for": [],
+   "race": "KS Senate",
+   "note": "Announced Saturday rally, doors 8:30 a.m., Trump to speak at noon, RSVP required, venue not yet announced.",
+   "source": "https://www.kwch.com/2026/10/27/president-trump-returning-kansas-saturday/"
+  },
+  {
+   "person": "Dan Osborn",
+   "party": "I",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NE",
+   "city": "Omaha",
+   "kind": "town hall",
+   "for": [
+    "Dan Osborn"
+   ],
+   "race": "NE Senate",
+   "note": "Cross partisan town hall at a University of Nebraska Omaha auditorium with Ro Khanna, Joe Walsh and Marc Racicot, reported Oct. 25 as just over a week before Election Day.",
+   "source": "https://www.wowt.com/2026/10/25/election-2026-dan-osborn-rallies-bipartisan-support-uno-town-hall-before-election-day/"
+  },
+  {
+   "person": "Angie Nixon",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "FL",
+   "city": "Eatonville",
+   "kind": "rally",
+   "for": [
+    "Angie Nixon"
+   ],
+   "race": "FL Senate",
+   "note": "Sunday rally at Macedonia Missionary Baptist Church.",
+   "source": "https://www.clickorlando.com/news/local/2026/10/26/senate-race-heats-up-as-candidates-court-central-florida-voters/"
+  },
+  {
+   "person": "Ashley Moody",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "FL",
+   "city": "Clearwater",
+   "kind": "event",
+   "for": [
+    "Ashley Moody"
+   ],
+   "race": "FL Senate",
+   "note": "Saturday campaign stop with Rep. Byron Donalds, the Republican nominee for governor.",
+   "source": "https://www.clickorlando.com/news/local/2026/10/26/senate-race-heats-up-as-candidates-court-central-florida-voters/"
+  },
+  {
+   "person": "Byron Donalds",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "FL",
+   "city": "Clearwater",
+   "kind": "event",
+   "for": [
+    "Byron Donalds"
+   ],
+   "race": "FL Governor",
+   "note": "Saturday campaign stop with Sen. Ashley Moody.",
+   "source": "https://www.clickorlando.com/news/local/2026/10/26/senate-race-heats-up-as-candidates-court-central-florida-voters/"
+  },
+  {
+   "person": "David Crowley",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "WI",
+   "city": "Milwaukee",
+   "kind": "event",
+   "for": [
+    "David Crowley"
+   ],
+   "race": "WI Governor",
+   "note": "Launched canvassers with former Vice President Kamala Harris at the Democratic Party of Wisconsin office on the northwest side.",
+   "source": "https://milwaukeecourier.com/news/2026/10/26/kamala-harris-and-david-crowley-launch-canvassers-on-milwaukees-northwest-side"
+  },
+  {
+   "person": "Josh Shapiro",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "PA",
+   "city": "Pittsburgh",
+   "kind": "rally",
+   "for": [
+    "Josh Shapiro"
+   ],
+   "race": "PA Governor",
+   "note": "Stop at Fiori's pizza in Brookline, then an evening rally at the IBEW Local 5 hall on the South Side with Lt. Gov. Austin Davis.",
+   "source": "https://www.wesanews.org/politics-government/2026-10-26/shapiro-outlines-agenda-pittsburgh-campaign-stop-trump"
+  },
+  {
+   "person": "Josh Shapiro",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-25",
+   "state": "PA",
+   "city": "University Park",
+   "kind": "rally",
+   "for": [
+    "Josh Shapiro"
+   ],
+   "race": "PA Governor",
+   "note": "Bus tour rally in front of Old Main on the Penn State campus hosted by Penn State College Democrats.",
+   "source": "https://radio.wpsu.org/2026-10-26/governor-josh-shapiro-president-trump-stacy-garrity-rally-penn-state-campus-midterm-election"
+  },
+  {
+   "person": "Stacy Garrity",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-26",
+   "state": "PA",
+   "city": "Lebanon",
+   "kind": "event",
+   "for": [
+    "Stacy Garrity"
+   ],
+   "race": "PA Governor",
+   "note": "Toured Henry Molded Products and spoke to supporters with Rep. Dan Meuser.",
+   "source": "https://lebtown.com/2026/10/27/republican-gubernatorial-candidate-stacy-garrity-visits-lebanon-county-business/"
+  },
+  {
+   "person": "Kathy Hochul",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NY",
+   "city": "Buffalo",
+   "kind": "rally",
+   "for": [
+    "Kathy Hochul"
+   ],
+   "race": "NY Governor",
+   "note": "Saturday rally on the first day of early voting.",
+   "source": "https://spectrumlocalnews.com/nys/central-ny/ny-state-of-politics/2026/10/25/hochul--blakeman-hit-the-campaign-trail-as-early-voting-begins"
+  },
+  {
+   "person": "Kathy Hochul",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NY",
+   "city": "Rochester",
+   "kind": "event",
+   "for": [
+    "Kathy Hochul"
+   ],
+   "race": "NY Governor",
+   "note": "Saturday campaign stop on the first day of early voting.",
+   "source": "https://spectrumlocalnews.com/nys/central-ny/ny-state-of-politics/2026/10/25/hochul--blakeman-hit-the-campaign-trail-as-early-voting-begins"
+  },
+  {
+   "person": "Kathy Hochul",
+   "party": "D",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NY",
+   "city": "Syracuse",
+   "kind": "rally",
+   "for": [
+    "Kathy Hochul"
+   ],
+   "race": "NY Governor",
+   "note": "Saturday rally on the first day of early voting, criticizing Blakeman for Trump style leadership.",
+   "source": "https://spectrumlocalnews.com/nys/central-ny/ny-state-of-politics/2026/10/25/hochul--blakeman-hit-the-campaign-trail-as-early-voting-begins"
+  },
+  {
+   "person": "Bruce Blakeman",
+   "party": "R",
+   "role": "candidate",
+   "date": "2026-10-24",
+   "state": "NY",
+   "city": "Staten Island",
+   "kind": "rally",
+   "for": [
+    "Bruce Blakeman"
+   ],
+   "race": "NY Governor",
+   "note": "Saturday rally on the first day of early voting.",
+   "source": "https://spectrumlocalnews.com/nys/central-ny/ny-state-of-politics/2026/10/25/hochul--blakeman-hit-the-campaign-trail-as-early-voting-begins"
+  },
+  {
+   "person": "JD Vance",
+   "party": "R",
+   "date": "2026-10-26",
+   "state": "MT",
+   "city": "Belgrade",
+   "kind": "event",
+   "for": [],
+   "race": "MT-01",
+   "note": "Monday campaign stop backing Montana Republicans, attacking House candidate Sam Forstag.",
+   "source": "https://foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26"
   }
  ],
  "unconfirmed": [

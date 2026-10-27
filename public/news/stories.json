@@ -1,7 +1,560 @@
 {
- "updated": "2026-10-25T10:00:00-04:00",
+ "updated": "2026-10-27T09:30:00-04:00",
  "note": "Written by the On Point Politics news desk from the reporting linked under each story. Every fact is attributed to the outlet that reported it; claims made by candidates and officials are given as their claims.",
  "stories": [
+  {
+   "id": "texas-senate-final-week-trump-lubbock-waco",
+   "cat": "politics",
+   "date": "2026-10-27",
+   "title": "Trump heads to Lubbock and Waco for Ken Paxton as Texas Senate polls stay within a few points",
+   "dek": "Recent surveys range from a tie to a five point lead for James Talarico. The president told reporters Paxton had \"gone way up in the poll.\"",
+   "summary": [
+    "President Trump was set to hold rallies in Lubbock and Waco on Tuesday for Republican Ken Paxton, his third visit to Texas this month, Newsweek reported. Trump told reporters Paxton had \"gone way up in the poll,\" according to Newsweek. Paxton, the state attorney general, faces Democratic state Rep. James Talarico for the seat held by Sen. John Cornyn, who lost the Republican primary to Paxton, Fox News reported.",
+    "Polls taken in mid October show a close race. A Fox News poll of 1,398 likely voters taken Oct. 15 to 19 had the two tied at 49%, after Talarico led 51% to 49% a month earlier, and found Gov. Greg Abbott ahead of Democrat Gina Hinojosa 52% to 47%. Fox News said Trump's job approval in Texas stood at 45% approve and 54% disapprove. A Texas Public Opinion Research survey of 969 likely voters taken Oct. 15 to 18 had Talarico at 51%, Paxton at 47% and Libertarian Ted Brown at 2%, FOX 7 Austin reported. Newsweek also listed an Emerson College survey with Talarico ahead 48% to 46% and a Cook Political Report survey taken Oct. 9 to 13 with Talarico ahead 49% to 44%, and put the RealClearPolitics average at Talarico plus 1.8 points.",
+    "Rice University political scientist Mark Jones told Newsweek, \"If Paxton doesn't do better than he's doing right now in the suburban areas, he may very well lose.\" Talarico has argued, \"We have an affordability crisis because we have a corruption crisis,\" Newsweek reported. ABC13 Houston cautioned that in each of the last three big statewide races, final Texas polls missed the result by 3.6 to 4.7 points, and that Harris County also set early voting records in 2018, a year Democrats lost statewide."
+   ],
+   "facts": [
+    "Fox News poll, Oct. 15 to 19: Paxton 49%, Talarico 49% among likely voters.",
+    "Texas Public Opinion Research, Oct. 15 to 18: Talarico 51%, Paxton 47%, Brown 2%.",
+    "Newsweek put the RealClearPolitics average at Talarico plus 1.8 points.",
+    "Fox News found Hispanic voters backing Talarico 64% to 34%.",
+    "Early voting in Texas runs through Oct. 30."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "Paxton has \"gone way up in the poll.\""
+    },
+    {
+     "who": "James Talarico",
+     "says": "\"We have an affordability crisis because we have a corruption crisis.\""
+    }
+   ],
+   "framing": {
+    "C": "Newsweek gathered the latest polls into a near toss up and quoted analysts on Paxton's suburban weakness; ABC13 Houston warned that Texas polls and early vote records have misled before; FOX 7 Austin led with Talarico's narrowing lead.",
+    "R": "Fox News framed its own poll as a race \"galloping toward a photo finish,\" crediting Paxton with consolidating conservatives and former Cornyn voters."
+   },
+   "related": [
+    {
+     "href": "/forecast/tx/senate",
+     "label": "Texas Senate forecast"
+    },
+    {
+     "href": "/forecast/tx/governor",
+     "label": "Texas governor forecast"
+    },
+    {
+     "href": "/polls/senate",
+     "label": "Senate polls"
+    }
+   ],
+   "keys": [
+    "texas",
+    "senate",
+    "paxton",
+    "talarico",
+    "trump",
+    "polls",
+    "abbott"
+   ],
+   "coverage": [
+    {
+     "o": "newsweek",
+     "t": "James Talarico vs. Ken Paxton: What Texas Polls Show One Week Before Midterm",
+     "u": "https://www.newsweek.com/james-talarico-vs-ken-paxton-what-texas-polls-show-one-week-before-midterm-12621879",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "fox",
+     "t": "Fox News Poll: Texas Senate race galloping toward a photo finish",
+     "u": "https://www.foxnews.com/politics/fox-news-poll-texas-senate-race-galloping-toward-photo-finish",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "local",
+     "n": "FOX 7 Austin",
+     "t": "Talarico leads Paxton in new poll as early voting continues in Texas",
+     "u": "https://www.fox7austin.com/news/talarico-leads-paxton-new-poll-early-voting-continues-texas",
+     "d": "2026-10-23"
+    },
+    {
+     "o": "local",
+     "n": "ABC13 Houston",
+     "t": "Harris County broke early-voting records in 2018, too. Democrats still lost",
+     "u": "https://abc13.com/live-updates/2026-midterm-election-early-voting-starts-monday-runs-oct-30-texas/19850056/",
+     "d": "2026-10-26"
+    }
+   ]
+  },
+  {
+   "id": "trump-mississippi-rally-hyde-smith-colom",
+   "cat": "politics",
+   "date": "2026-10-27",
+   "title": "Trump rallies in Corinth for Sen. Cindy Hyde-Smith as Republicans spend to defend a Mississippi seat",
+   "dek": "A Democratic firm's poll had Hyde-Smith up three points on Scott Colom. Colom says the visit shows Hyde-Smith \"is scared.\"",
+   "summary": [
+    "President Trump rallied Monday night in Corinth, Mississippi, for Republican Sen. Cindy Hyde-Smith, who faces Democratic District Attorney Scott Colom, Fox News reported. Trump told supporters not to get complacent and called Colom part of the \"radical left\" and a \"disaster\" who wants to take guns away, according to Fox News. WMC Action News 5 reported that the rally at the Crossroads Arena, which holds more than 7,700 people, also backed Rep. Trent Kelly, that hundreds lined up in the morning and that several people in line had medical emergencies.",
+    "Trump won Mississippi by about 23 points in 2024, but Republicans are now spending there, Newsweek reported. The Senate Leadership Fund launched an ad campaign in the \"low seven figures,\" and the Democratic Senate Majority PAC has a $1.2 million buy for Colom, according to Newsweek, which cited AdImpact figures reported by NBC News and the Associated Press showing Colom had outspent Hyde-Smith about $4.6 million to $3.2 million as of last week. A Change Research survey for the 365 Project taken Oct. 21 and 22 had Hyde-Smith at 43%, Colom at 40% and independent Ty Pinkins at 6%, Newsweek reported, noting that the firm is Democratic and that public averages still favor Hyde-Smith. The Cook Political Report moved the race from Solid to Likely Republican last week.",
+    "Colom told Mississippi Today, \"Hyde-Smith is scared and that's why she's sending Donald Trump down here,\" and challenged Trump to a debate, Newsweek reported. At a news conference in Corinth before the rally, Colom said \"we actually do need lower grocery prices\" and cited health care and releasing the Epstein files, Action News 5 reported. Hyde-Smith campaign manager Jake Monssen said, \"We are confident that Senator Hyde-Smith will win on November 3rd,\" according to Newsweek. If elected, Colom would be Mississippi's first Black U.S. senator since Reconstruction."
+   ],
+   "facts": [
+    "Change Research for the 365 Project: Hyde-Smith 43%, Colom 40%, Pinkins 6%, margin of error 3.5 points.",
+    "Civiqs had Trump's Mississippi approval at 41% and disapproval at 52%, Newsweek reported.",
+    "Colom had outspent Hyde-Smith about $4.6 million to $3.2 million on ads as of last week, per AdImpact.",
+    "Trump won Mississippi by about 23 points in 2024."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "Colom is part of the \"radical left\" and a \"disaster\" who wants to take guns away."
+    },
+    {
+     "who": "Scott Colom",
+     "says": "\"Hyde-Smith is scared and that's why she's sending Donald Trump down here.\""
+    },
+    {
+     "who": "Hyde-Smith campaign",
+     "says": "\"We are confident that Senator Hyde-Smith will win on November 3rd.\""
+    }
+   ],
+   "framing": {
+    "C": "Newsweek framed the trip around growing Republican anxiety in the Deep South and laid out the spending and polling behind it; Action News 5 covered the crowds, the logistics and Colom's counter event.",
+    "R": "Fox News focused on Trump's case against Colom and his warning to supporters not to get complacent."
+   },
+   "related": [
+    {
+     "href": "/forecast/ms/senate",
+     "label": "Mississippi Senate forecast"
+    },
+    {
+     "href": "/watchdog/trail",
+     "label": "Campaign trail"
+    }
+   ],
+   "keys": [
+    "mississippi",
+    "senate",
+    "hyde-smith",
+    "colom",
+    "trump",
+    "rally"
+   ],
+   "coverage": [
+    {
+     "o": "newsweek",
+     "t": "Donald Trump Holds Mississippi Rally as GOP Anxiety Grows in Deep South",
+     "u": "https://www.newsweek.com/donald-trump-holds-mississippi-rally-as-gop-anxiety-grows-in-deep-south-12620395",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "local",
+     "n": "WMC Action News 5",
+     "t": "Trump to rally for Hyde-Smith, Kelly in Corinth ahead of midterms",
+     "u": "https://www.actionnews5.com/2026/10/26/trump-rally-hyde-smith-kelly-corinth-ahead-midterms/",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "fox",
+     "t": "8 days until midterms, Trump intensifies attacks on El-Sayed as election disputes mount",
+     "u": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26",
+     "d": "2026-10-26"
+    }
+   ]
+  },
+  {
+   "id": "ninth-circuit-declines-california-ballots",
+   "cat": "politics",
+   "date": "2026-10-26",
+   "title": "Appeals court declines to fast track the Justice Department's bid to set aside 20,000 California ballots",
+   "dek": "Two of three 9th Circuit judges said the government had not given the trial court a chance to rule. A district judge takes up the case Tuesday, as Trump offers $1 million for voter fraud tips.",
+   "summary": [
+    "The 9th U.S. Circuit Court of Appeals on Monday declined to rule on whether California officials may count about 20,000 mail ballots the Justice Department says belong to noncitizens, the Associated Press reported. Two of the three judges wrote that the government \"failed to allow the district court adequate opportunity to consider\" its request to sequester the ballots, according to the AP. The two sides meet again Tuesday before a federal district judge, leaving the government little time before the Nov. 3 election, the AP reported.",
+    "At rare weekend arguments on Sunday, Judge Mark Bennett, a Trump appointee, questioned whether the appeals court had jurisdiction before the lower court ruled, Judge Gabriel Sanchez, a Biden appointee, asked whether the government was commandeering the state, and Judge Patrick Bumatay, a Trump appointee, said everyone has an interest in ensuring only eligible citizens vote, the AP reported. Justice Department lawyer Matthew Donnelly argued that California was causing irreparable harm \"by allowing noncitizens to vote in violation of their own state laws.\" Seth Waxman, representing Los Angeles County Clerk Dean Logan, said the federal list is unreliable and that checking the county's expected 2.75 million mail ballots for three minutes each would take about 140,000 hours, and a lawyer for Secretary of State Shirley Weber said the claim \"has no basis in law or in fact,\" according to the AP.",
+    "On Monday, President Trump wrote on Truth Social that anyone \"reporting Voter Fraud in the past Elections, or the upcoming 2026 Midterm Election, will be paid\" $1,000,000 \"upon the arrest and conviction of those that created the Fraud,\" FOX 5 DC reported, adding that he did not say where the money would come from. The Department of Homeland Security also announced that five noncitizens in Florida were charged last week with illegally voting in past elections, and Secretary Markwayne Mullin said noncitizen voting \"steals the vote\" of citizens, Fox News reported. Election experts from both parties say there is no evidence of widespread voter fraud, FOX 5 DC reported."
+   ],
+   "facts": [
+    "The Justice Department sued California and Los Angeles County in mid October over about 20,000 ballots.",
+    "The 9th Circuit panel was Bennett, Sanchez and Bumatay; two of the three declined to act before the district court.",
+    "The district court hearing is set for Oct. 27.",
+    "Trump's $1 million offer applies on arrest and conviction; the White House gave no further details."
+   ],
+   "sides": [
+    {
+     "who": "Justice Department",
+     "says": "California is causing irreparable harm \"by allowing noncitizens to vote in violation of their own state laws.\""
+    },
+    {
+     "who": "California Secretary of State's lawyer",
+     "says": "The government's claim \"has no basis in law or in fact.\""
+    },
+    {
+     "who": "President Trump",
+     "says": "Anyone reporting voter fraud that leads to an arrest and conviction will be paid $1 million."
+    }
+   ],
+   "framing": {
+    "C": "The Associated Press led with the appeals court sending the case back to the trial judge and the government's shrinking window, and detailed the judges' questions at Sunday's argument.",
+    "R": "Fox News said judges questioned the case and paired it with DHS charges against noncitizen voters in Florida and Trump's reward offer; FOX 5 DC noted that experts from both parties see no evidence of widespread fraud."
+   },
+   "related": [
+    {
+     "href": "/forecast/ca/governor",
+     "label": "California governor forecast"
+    },
+    {
+     "href": "/watchdog/war-room",
+     "label": "Election war room"
+    }
+   ],
+   "keys": [
+    "california",
+    "noncitizens",
+    "ballots",
+    "justice department",
+    "9th circuit",
+    "voter fraud",
+    "lawsuit"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Appeals court declines to rule on federal bid to set aside California ballots of alleged noncitizens",
+     "u": "https://www.clickorlando.com/news/politics/2026/10/26/appeals-court-declines-to-rule-on-federal-bid-to-set-aside-california-ballots-of-alleged-noncitizens/",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "ap",
+     "t": "Two of three appeals judges appear skeptical of Justice Department push to hold California ballots from 20,000 flagged voters",
+     "u": "https://fortune.com/2026/10/26/9th-circuit-judges-doj-20-000-mail-ballots/",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "fox",
+     "t": "8 days until midterms, Trump intensifies attacks on El-Sayed as election disputes mount",
+     "u": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "local",
+     "n": "FOX 5 DC",
+     "t": "Trump offers $1 million reward for voter fraud tips that lead to convictions",
+     "u": "https://www.fox5dc.com/news/trump-offers-1-million-reward-voter-fraud-tips-lead-convictions",
+     "d": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "id": "trump-port-huron-el-sayed-michigan",
+   "cat": "politics",
+   "date": "2026-10-26",
+   "title": "Trump calls Abdul El-Sayed a \"jihadist\" at a Michigan rally as a new poll shows El-Sayed ahead of Mike Rogers",
+   "dek": "A Glengariff Group poll for WDIV and The Detroit News had El-Sayed at 51.4% and Rogers at 45.1%. Democrats called the rally's attacks Islamophobic.",
+   "summary": [
+    "At a Sunday rally in Port Huron for Republican Senate nominee Mike Rogers and governor nominee John James, President Trump said, \"I'm here to keep a jihadist Muslim Brotherhood member from becoming a United States senator,\" CBS News Detroit reported. Trump also said El-Sayed would be the only senator who \"will have to go through a metal detector before he's allowed to go into the Senate,\" and said Democrats would \"invite hordes of jihadists to our shores,\" Al Jazeera reported, adding that there is no evidence El-Sayed, a U.S. born former public health official, belongs to the Muslim Brotherhood. Earlier this month, asked in Caro whether he would disavow the group, El-Sayed said \"absolutely,\" CBS News Detroit reported.",
+    "Trump said of the Iran war, \"I made that decision, and I have no second guess,\" Al Jazeera reported, noting Michigan gas averaged $4.83 a gallon, up from $2.91 before the war. Rogers pledged to make housing more affordable and \"bring back the 200,000 jobs\" he said Democrats had driven out, WDIV reported; Nicki Minaj and Dr. Oz also appeared. At a Grand Rapids rally with El-Sayed, Sen. Bernie Sanders said, \"All they can do is foment hatred and divisiveness,\" and Michigan Democratic Party Chair Curtis Hertel said Republicans had shown they would back \"Trump's toxic agenda,\" according to CBS News Detroit.",
+    "A Glengariff Group survey of 600 likely voters for WDIV and The Detroit News, taken Oct. 19 to 22 with a margin of error of 4 points, had El-Sayed at 51.4%, Rogers at 45.1% and 3.6% undecided, WDIV reported. Separately, El-Sayed's campaign said it had no affiliation with a Rebellion PAC ad linked to Cenk Uygur that tied aid to Israel to food prices and drew accusations of antisemitism, Fox News reported. El-Sayed campaigned Monday in Detroit and Lansing and blamed Rogers for the state takeover of Detroit Public Schools, while Rogers said he hopes to outperform expectations among Black voters, according to Fox News. Vice President JD Vance is scheduled to campaign in Howell on Tuesday."
+   ],
+   "facts": [
+    "Glengariff Group, Oct. 19 to 22, 600 likely voters: El-Sayed 51.4%, Rogers 45.1%.",
+    "Rogers' favorability was 32.2% favorable and 49.2% unfavorable; El-Sayed's was 42.2% and 44.8%.",
+    "The seat is open because Democratic Sen. Gary Peters is retiring.",
+    "Obama campaigned for El-Sayed in Detroit the day before Trump's rally."
+   ],
+   "sides": [
+    {
+     "who": "President Trump",
+     "says": "\"I'm here to keep a jihadist Muslim Brotherhood member from becoming a United States senator.\""
+    },
+    {
+     "who": "Sen. Bernie Sanders",
+     "says": "Trump and his allies use Islamophobia because they have nothing to say on health care and housing: \"All they can do is foment hatred and divisiveness.\""
+    },
+    {
+     "who": "Mike Rogers",
+     "says": "He will make housing more affordable and \"bring back the 200,000 jobs\" he says Democrats drove out."
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera and CBS News Detroit led with the attacks on El-Sayed's faith, which Al Jazeera called Islamophobic, and noted there is no evidence for the Muslim Brotherhood claim.",
+    "C": "WDIV covered the rally as a Republican ticket event with Rogers' and James' pitches, and led its poll story with El-Sayed's lead while noting Rogers remains within striking distance.",
+    "R": "Fox News highlighted the El-Sayed campaign distancing itself from a PAC ad accused of antisemitism, and El-Sayed's and Rogers' pitches to Black voters."
+   },
+   "related": [
+    {
+     "href": "/forecast/mi/senate",
+     "label": "Michigan Senate forecast"
+    },
+    {
+     "href": "/forecast/mi/governor",
+     "label": "Michigan governor forecast"
+    },
+    {
+     "href": "/polls/senate",
+     "label": "Senate polls"
+    }
+   ],
+   "keys": [
+    "michigan",
+    "senate",
+    "el-sayed",
+    "rogers",
+    "trump",
+    "rally",
+    "polls"
+   ],
+   "coverage": [
+    {
+     "o": "aljazeera",
+     "t": "Trump dials up Islamophobia against Abdul El-Sayed at Michigan Senate rally",
+     "u": "https://www.aljazeera.com/news/2026/10/26/trump-dials-up-islamophobia-at-michigan-senate-rally-against-abdul-el-sayed",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "cbs",
+     "t": "Trump attacks El-Sayed over his faith during Michigan rally, calls him \"jihadist\"",
+     "u": "https://www.cbsnews.com/detroit/news/president-trump-port-huron-rally-republicans/",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "local",
+     "n": "WDIV Local 4",
+     "t": "President Trump rallies in Michigan, supports Republican nominees",
+     "u": "https://www.clickondetroit.com/news/local/2026/10/26/pres-trump-rallies-in-michigan-supports-republican-nominees/",
+     "d": "2026-10-25"
+    },
+    {
+     "o": "local",
+     "n": "WDIV Local 4",
+     "t": "Democratic candidate El-Sayed leads Michigan U.S. Senate race, new poll finds",
+     "u": "https://www.clickondetroit.com/news/local/2026/10/27/democratic-candidate-el-sayed-leads-michigan-us-senate-race-new-poll-finds/",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "fox",
+     "t": "8 days until midterms, Trump intensifies attacks on El-Sayed as election disputes mount",
+     "u": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26",
+     "d": "2026-10-26"
+    }
+   ]
+  },
+  {
+   "id": "alaska-judge-gleason-doj-certification-suit",
+   "cat": "politics",
+   "date": "2026-10-26",
+   "title": "Judge signals skepticism of the Justice Department's suit to block certification in Alaska's Senate race",
+   "dek": "Judge Sharon Gleason noted the government sued after voting began and months after Alaska's top court put Daniel J. Sullivan on the ballot. Sen. Adam Schiff says the case has \"no chance.\"",
+   "summary": [
+    "U.S. District Judge Sharon Gleason signaled considerable skepticism of the Justice Department's legal strategy in her first order in its Alaska Senate case on Monday, ABC News reported. Gleason pointed to timing, noting the United States filed on Oct. 22, after Alaskans had begun voting and nearly four months after the Alaska Supreme Court ordered Daniel J. Sullivan placed on the ballot, according to ABC News. She plans to rule by 5 p.m. local time Wednesday on requests from outside parties to join the case.",
+    "The department wants to stop certification if Republican Sen. Dan S. Sullivan loses to Democrat Mary Peltola but would have won had all votes for Daniel J. Sullivan gone to him under ranked choice tabulation, ABC News reported. President Trump said Friday he had directed the department to file the suit, citing confusion between the names, and Republicans allege Daniel J. Sullivan is running a sham campaign to draw votes from the incumbent, according to ABC News. Daniel J. Sullivan Jr. and his campaign deny that, Fox News reported.",
+    "Sen. Adam Schiff, a California Democrat, told NBC News on Sunday that the department has no standing in a dispute state courts already settled, accused Attorney General Todd Blanche of joining a \"disgraceful campaign\" and predicted the suit has \"no chance\" of success, Fox News reported. Iowa Democratic governor nominee Rob Sand criticized alleged Democratic efforts to boost the unaffiliated candidate, telling Fox News, \"Neither party should be doing it.\""
+   ],
+   "facts": [
+    "The Justice Department filed on Oct. 22, after Alaska voting had begun.",
+    "Gleason will decide on intervention requests by Oct. 28 at 5 p.m. Alaska time.",
+    "No hearing date had been reported as of Monday night, ABC News said.",
+    "Alaska uses ranked choice voting in general elections."
+   ],
+   "sides": [
+    {
+     "who": "Justice Department",
+     "says": "Certification should be blocked if Sullivan loses narrowly and votes for the similarly named candidate would have changed the result."
+    },
+    {
+     "who": "Sen. Adam Schiff",
+     "says": "The department has no standing, and the suit has \"no chance\" of success."
+    },
+    {
+     "who": "Rob Sand",
+     "says": "Boosting a same name candidate manipulates the system, and \"Neither party should be doing it.\""
+    }
+   ],
+   "framing": {
+    "L": "ABC News led with the judge's skepticism and the timing of the filing.",
+    "R": "Fox News carried Schiff's criticism alongside a Democratic nominee who faulted his own party over the alleged effort to boost Daniel J. Sullivan."
+   },
+   "related": [
+    {
+     "href": "/forecast/ak/senate",
+     "label": "Alaska Senate forecast"
+    },
+    {
+     "href": "/watchdog/war-room",
+     "label": "Election war room"
+    }
+   ],
+   "keys": [
+    "alaska",
+    "senate",
+    "sullivan",
+    "peltola",
+    "justice department",
+    "certification",
+    "lawsuit"
+   ],
+   "coverage": [
+    {
+     "o": "abc",
+     "t": "Judge appears skeptical of DOJ's legal maneuvering in Alaska lawsuit",
+     "u": "https://abcnews.com/Politics/judge-appears-skeptical-dojs-legal-maneuvering-alaska-lawsuit/story?id=137590192",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "fox",
+     "t": "8 days until midterms, Trump intensifies attacks on El-Sayed as election disputes mount",
+     "u": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26",
+     "d": "2026-10-26"
+    }
+   ]
+  },
+  {
+   "id": "early-vote-tops-27-million-harris-record",
+   "cat": "politics",
+   "date": "2026-10-26",
+   "title": "More than 27 million Americans have voted early, and Harris County posts its fastest midterm start on record",
+   "dek": "Texas leads the country with more than 4 million ballots. Registered Democrats outnumber Republicans among early voters in states that track party, though most votes are still to come.",
+   "summary": [
+    "More than 27.4 million Americans had voted early as of 6 a.m. Monday, Fox News reported, including more than 4.35 million in Texas and more than 986,000 in Michigan. Newsweek, citing the University of Florida Election Lab, put the total at more than 28 million, with 3.1 million in California, 2.7 million in Florida, 1.5 million in North Carolina and more than 1.1 million in Virginia. An Associated Press analysis found early voting in Texas up 74% from the same point in 2022, Kansas more than doubling its early ballot total, and Maine, North Carolina and Ohio each up more than 30%, according to Newsweek.",
+    "In Harris County, more than half a million voters, about one in five registered voters, cast ballots in the first week, ABC13 Houston reported. More than 104,000 voted in person on the first day, a first day midterm record, and each following day beat the same day in 2018 and 2022; no midterm since 1998 started faster in county records, ABC13 reported. University of Houston political scientist Nancy Sims said turnout is high even in suburban, traditionally Republican areas, but that \"it's a little hard to extrapolate.\"",
+    "Of 13.7 million early voters in states that record party registration, 45.1% were registered Democrats and 30.7% were registered Republicans, and half of voters with age data were over 65, Newsweek reported. An ABC News analysis last week found that early voters favored Democrats, but noted Republicans have historically done better on Election Day and said lower propensity Republicans could still narrow the gap. The Republican National Committee relaunched its Swamp the Vote USA site to push early voting, and Trump voted early in Florida on Oct. 24, Newsweek reported."
+   ],
+   "facts": [
+    "Fox News: more than 27.4 million early votes as of Monday morning.",
+    "Newsweek, citing the UF Election Lab: more than 28 million.",
+    "Harris County: more than 104,000 in person votes on the first day, a midterm record.",
+    "Texas early voting ends Oct. 30; Election Day is Nov. 3."
+   ],
+   "sides": [
+    {
+     "who": "Republican National Committee",
+     "says": "Republicans win by making elections \"Too Big To Rig\" and by voting early."
+    },
+    {
+     "who": "Nancy Sims, University of Houston",
+     "says": "Turnout is high even in suburban Republican areas, but \"it's a little hard to extrapolate.\""
+    }
+   ],
+   "framing": {
+    "L": "ABC News stressed Democratic enthusiasm in the early vote while warning it is only one piece of the picture.",
+    "C": "Newsweek mapped the totals by state with the caveat that conclusions cannot be drawn yet; ABC13 Houston called Harris County's first week the best midterm start on record.",
+    "R": "Fox News reported the national total with a focus on Texas and Michigan, the two marquee Senate fights."
+   },
+   "related": [
+    {
+     "href": "/maps/early-vote",
+     "label": "Early vote tracker"
+    },
+    {
+     "href": "/maps/early-vote/texas",
+     "label": "Texas early vote"
+    },
+    {
+     "href": "/maps/early-vote/michigan",
+     "label": "Michigan early vote"
+    }
+   ],
+   "keys": [
+    "early vote",
+    "turnout",
+    "texas",
+    "harris county",
+    "michigan",
+    "midterms"
+   ],
+   "coverage": [
+    {
+     "o": "newsweek",
+     "t": "Map Shows States With Most Early Voters So Far",
+     "u": "https://www.newsweek.com/map-states-early-voters-midterms-12619134",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "fox",
+     "t": "8 days until midterms, Trump intensifies attacks on El-Sayed as election disputes mount",
+     "u": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-el-sayed-california-alaska-october-26",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "local",
+     "n": "ABC13 Houston",
+     "t": "Harris County's first week of early voting beats every midterm on record",
+     "u": "https://abc13.com/live-updates/2026-midterm-election-early-voting-starts-monday-runs-oct-30-texas/19850056/",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "abc",
+     "t": "Early vote shows Democratic enthusiasm high in some key states, but only one piece of puzzle: ABC News analysis",
+     "u": "https://abcnews.com/Politics/early-vote-shows-democratic-enthusiasm-high-key-states/story?id=137414080",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "brazil-lula-wins-fourth-term",
+   "cat": "world",
+   "date": "2026-10-26",
+   "title": "Lula wins a fourth term in Brazil's runoff, and Flávio Bolsonaro refuses to concede",
+   "dek": "Lula took 51.79% to Bolsonaro's 48.21%, the first time since 1985 that a first round runner up won the presidency. Bolsonaro is seeking to annul the result over a late extension of voting hours.",
+   "summary": [
+    "President Luiz Inácio Lula da Silva won Sunday's runoff with 51.79% of valid votes, about 64.26 million, to 48.21% for Sen. Flávio Bolsonaro, about 59.83 million, Al Jazeera reported. Fox News put the margin at nearly 4.4 million votes and said Lula is the first candidate since the military dictatorship ended in 1985 to win after finishing second in the first round, which Bolsonaro led 47% to 45% on Oct. 4. Turnout rose to 80.8% from 78.92% in the first round, according to Al Jazeera.",
+    "Bolsonaro refused to concede and called for the result to be annulled after Supreme Court Justice Cristiano Zanin ordered a nationwide two hour extension of voting three minutes before polls were due to close, Fox News reported. Electoral court president Kassio Nunes Marques said the extension did not affect the results, according to Fox News, and Al Jazeera reported that both campaigns had requested extensions, citing transport disruption and severe weather, which experts said weakens Bolsonaro's legal case. Bolsonaro still carried Rio de Janeiro, São Paulo, Paraná and Rio Grande do Sul by smaller margins than in the first round, while Minas Gerais was essentially tied, Fox News reported.",
+    "\"No one is required to like the president-elect, but he must govern for everyone,\" Lula told supporters, calling the result \"a defeat for denialism and lies,\" according to Fox News and Al Jazeera. Analysts told Al Jazeera that young voters mobilized online after the first round and that Bolsonaro appeared overconfident. Lula, who turns 81 on Tuesday, faces a Congress where Bolsonaro's Liberal Party and allies could hold more than 280 of 513 lower house seats and up to 50 of 81 Senate seats, Al Jazeera reported."
+   ],
+   "facts": [
+    "Lula 51.79%, Flávio Bolsonaro 48.21% of valid votes.",
+    "Turnout was 80.8%, up from 78.92% in the first round.",
+    "Justice Cristiano Zanin extended voting by two hours minutes before polls closed.",
+    "Governors were also chosen in runoffs in five states and the Federal District, Fox News reported."
+   ],
+   "sides": [
+    {
+     "who": "President Lula",
+     "says": "\"No one is required to like the president-elect, but he must govern for everyone.\""
+    },
+    {
+     "who": "Flávio Bolsonaro",
+     "says": "The runoff result should be annulled after the court extended voting hours."
+    },
+    {
+     "who": "Electoral court president Kassio Nunes Marques",
+     "says": "The extension did not affect the results."
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera explained how Lula came back from a first round loss, crediting youth mobilization and Bolsonaro's overconfidence, and called the result a setback for Trump aligned movements in Latin America.",
+    "R": "Fox News framed the result as a conservative wave hitting a roadblock, and gave weight to the confusion over the late voting extension and Bolsonaro's refusal to concede."
+   },
+   "related": [
+    {
+     "href": "/brasil/resultados",
+     "label": "Brazil runoff results"
+    },
+    {
+     "href": "/brasil",
+     "label": "Brazil runoff desk"
+    }
+   ],
+   "keys": [
+    "brazil",
+    "lula",
+    "bolsonaro",
+    "runoff",
+    "election"
+   ],
+   "coverage": [
+    {
+     "o": "aljazeera",
+     "t": "How did Lula beat Bolsonaro after losing Brazil's first-round election?",
+     "u": "https://www.aljazeera.com/news/2026/10/26/how-did-lula-beat-bolsonaro-after-losing-brazils-first-round-election",
+     "d": "2026-10-26"
+    },
+    {
+     "o": "fox",
+     "t": "Conservative wave hits roadblock in Brazil as Lula holds off Bolsonaro challenge",
+     "u": "https://www.foxnews.com/world/conservative-wave-hits-roadblock-brazil-lula-holds-off-bolsonaro-challenge",
+     "d": "2026-10-25"
+    }
+   ]
+  },
   {
    "id": "brazil-runoff-lula-flavio-bolsonaro",
    "cat": "world",
@@ -553,71 +1106,6 @@
    ]
   },
   {
-   "id": "early-vote-surge-senate-states",
-   "cat": "politics",
-   "date": "2026-10-22",
-   "title": "Early voting runs well ahead of 2022 in Texas, Kansas and other Senate battlegrounds",
-   "dek": "More than 13 million ballots were in by Tuesday, against 9 million at the same point four years ago. Michigan and Georgia are running about even with 2022, and Iowa is slightly behind.",
-   "summary": [
-    "More than 13 million mail and early in person ballots had been cast nationwide through Oct. 20, compared with 9 million at the same point in 2022, an Associated Press analysis found. Texas was up 74 percent, with nearly 1 million ballots against roughly 550,000 four years ago, and Kansas more than doubled, with over 55,000 ballots against 27,000. Maine was up 39 percent, Ohio 30 percent and North Carolina more than 30 percent. Michigan and Georgia were high but similar to 2022, and Iowa was down about 6 percent.",
-    "The AP called the data \"a snapshot of potential voter enthusiasm\" and cautioned that some of the increase comes from states expanding early voting or releasing more data, that Texas does not report ballots by party, and that Ohio dropped its grace period for mail ballots, so voters must return them earlier.",
-    "By Thursday morning more than 18 million Americans had voted, according to the University of Florida's Election Lab, ABC News reported. ABC found that registered and modeled Democrats made up a larger share of early ballots than in 2024 in every state it examined except Alaska and Michigan, where the share was similar, and that early and absentee votes in Georgia and Iowa were about 18 points more Democratic than in 2024. ABC cautioned that the numbers do not show whether lower propensity voters of either party will turn out later, and that Republicans have historically been more likely to vote on Election Day.",
-    "Spectrum News reported more than 16 million votes in 41 states and Washington, D.C., about 10 million by mail and 6 million in person, and paired the numbers with closing messages on gas prices and the Iran war from Michigan Senate candidates Abdul El-Sayed and Mike Rogers."
-   ],
-   "facts": [
-    "Texas early voting was up 74 percent from 2022 through Oct. 20, the AP found.",
-    "Kansas ballots more than doubled from 2022.",
-    "Iowa was down about 6 percent from 2022, the AP found.",
-    "Tallies differ by date and source; the AP figure runs through Tuesday and ABC's through Thursday morning."
-   ],
-   "sides": [],
-   "framing": {
-    "L": "Network coverage read the party data as a sign of Democratic enthusiasm in key states, with caveats about Election Day Republicans.",
-    "C": "Wire and local coverage framed the numbers as a snapshot of enthusiasm in Senate battlegrounds and listed the rule changes that blur comparisons."
-   },
-   "related": [
-    {
-     "href": "/maps/early-vote",
-     "label": "Early vote tracker"
-    },
-    {
-     "href": "/maps/early-vote/texas",
-     "label": "Texas early vote"
-    },
-    {
-     "href": "/maps/early-vote/kansas",
-     "label": "Kansas early vote"
-    }
-   ],
-   "keys": [
-    "early vote",
-    "turnout",
-    "texas",
-    "kansas"
-   ],
-   "coverage": [
-    {
-     "o": "ap",
-     "t": "Many states deciding control of the Senate are seeing a big boost in early voting, AP analysis shows",
-     "u": "https://www.ksat.com/news/politics/2026/10/21/many-states-deciding-control-of-the-senate-are-seeing-a-big-boost-in-early-voting-ap-analysis-shows/",
-     "d": "2026-10-21"
-    },
-    {
-     "o": "abc",
-     "t": "Takeaways from the early vote in the 2026 midterms two weeks out",
-     "u": "https://www.aol.com/articles/takeaways-early-vote-2026-midterms-143931000.html",
-     "d": "2026-10-22"
-    },
-    {
-     "o": "local",
-     "n": "Spectrum News",
-     "t": "Early voting surges in several states with competitive Senate races",
-     "u": "https://spectrumlocalnews.com/us/snplus/politics/2026/10/22/early-voting-surges-states-competitive-senate-races",
-     "d": "2026-10-22"
-    }
-   ]
-  },
-  {
    "id": "iran-war-oil-tanker-claims",
    "cat": "world",
    "date": "2026-10-23",
@@ -885,6 +1373,71 @@
      "o": "aljazeera",
      "t": "Powerful earthquake in Tibet kills at least 16 people",
      "u": "https://www.aljazeera.com/news/2026/10/22/magnitude-7-earthquake-kills-16-people-in-chinas-tibet-xinhua-reports",
+     "d": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "early-vote-surge-senate-states",
+   "cat": "politics",
+   "date": "2026-10-22",
+   "title": "Early voting runs well ahead of 2022 in Texas, Kansas and other Senate battlegrounds",
+   "dek": "More than 13 million ballots were in by Tuesday, against 9 million at the same point four years ago. Michigan and Georgia are running about even with 2022, and Iowa is slightly behind.",
+   "summary": [
+    "More than 13 million mail and early in person ballots had been cast nationwide through Oct. 20, compared with 9 million at the same point in 2022, an Associated Press analysis found. Texas was up 74 percent, with nearly 1 million ballots against roughly 550,000 four years ago, and Kansas more than doubled, with over 55,000 ballots against 27,000. Maine was up 39 percent, Ohio 30 percent and North Carolina more than 30 percent. Michigan and Georgia were high but similar to 2022, and Iowa was down about 6 percent.",
+    "The AP called the data \"a snapshot of potential voter enthusiasm\" and cautioned that some of the increase comes from states expanding early voting or releasing more data, that Texas does not report ballots by party, and that Ohio dropped its grace period for mail ballots, so voters must return them earlier.",
+    "By Thursday morning more than 18 million Americans had voted, according to the University of Florida's Election Lab, ABC News reported. ABC found that registered and modeled Democrats made up a larger share of early ballots than in 2024 in every state it examined except Alaska and Michigan, where the share was similar, and that early and absentee votes in Georgia and Iowa were about 18 points more Democratic than in 2024. ABC cautioned that the numbers do not show whether lower propensity voters of either party will turn out later, and that Republicans have historically been more likely to vote on Election Day.",
+    "Spectrum News reported more than 16 million votes in 41 states and Washington, D.C., about 10 million by mail and 6 million in person, and paired the numbers with closing messages on gas prices and the Iran war from Michigan Senate candidates Abdul El-Sayed and Mike Rogers."
+   ],
+   "facts": [
+    "Texas early voting was up 74 percent from 2022 through Oct. 20, the AP found.",
+    "Kansas ballots more than doubled from 2022.",
+    "Iowa was down about 6 percent from 2022, the AP found.",
+    "Tallies differ by date and source; the AP figure runs through Tuesday and ABC's through Thursday morning."
+   ],
+   "sides": [],
+   "framing": {
+    "L": "Network coverage read the party data as a sign of Democratic enthusiasm in key states, with caveats about Election Day Republicans.",
+    "C": "Wire and local coverage framed the numbers as a snapshot of enthusiasm in Senate battlegrounds and listed the rule changes that blur comparisons."
+   },
+   "related": [
+    {
+     "href": "/maps/early-vote",
+     "label": "Early vote tracker"
+    },
+    {
+     "href": "/maps/early-vote/texas",
+     "label": "Texas early vote"
+    },
+    {
+     "href": "/maps/early-vote/kansas",
+     "label": "Kansas early vote"
+    }
+   ],
+   "keys": [
+    "early vote",
+    "turnout",
+    "texas",
+    "kansas"
+   ],
+   "coverage": [
+    {
+     "o": "ap",
+     "t": "Many states deciding control of the Senate are seeing a big boost in early voting, AP analysis shows",
+     "u": "https://www.ksat.com/news/politics/2026/10/21/many-states-deciding-control-of-the-senate-are-seeing-a-big-boost-in-early-voting-ap-analysis-shows/",
+     "d": "2026-10-21"
+    },
+    {
+     "o": "abc",
+     "t": "Takeaways from the early vote in the 2026 midterms two weeks out",
+     "u": "https://www.aol.com/articles/takeaways-early-vote-2026-midterms-143931000.html",
+     "d": "2026-10-22"
+    },
+    {
+     "o": "local",
+     "n": "Spectrum News",
+     "t": "Early voting surges in several states with competitive Senate races",
+     "u": "https://spectrumlocalnews.com/us/snplus/politics/2026/10/22/early-voting-surges-states-competitive-senate-races",
      "d": "2026-10-22"
     }
    ]

@@ -1,15 +1,15 @@
 {
  "date": "2026-10-27",
- "statewide_run": "2026-10-27 full rerun S1026PW with the poll leg upweighted 10 points at the user's request; 8 AM sweep S1027AM reran ME, MEG, MI, MIG, SC and NC for the Marist Maine, Glengariff Michigan, Targoz South Carolina and Quantus North Carolina polls, with the Oct 27 early vote",
+ "statewide_run": "poll sweep 2026-10-27: S1027NE against S1027AM, change applied to 2026-10-27; S1027NE reran Nebraska Senate with Cindy Burbank's Democratic primary vote read as Osborn's nominee share, at the user's request",
  "house_run": "S1026PW full House rerun, district polls at 0.45 instead of 0.35, otherwise the final methodology",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 84.2,
+   "d_control": 84.5,
    "d_seats_median": 54.0,
    "p10": 50.0,
    "p90": 58.0,
-   "d_control_without_osborn": 80.7
+   "d_control_without_osborn": 81.0
   },
   "governors": {
    "d_majority": 85.9,
@@ -1607,10 +1607,10 @@
   "NE": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 0.44,
-   "win_d": 51.93,
-   "p10": -6.88,
-   "p90": 7.95,
+   "margin": 1.06,
+   "win_d": 56.25,
+   "p10": -6.26,
+   "p90": 8.57,
    "deterministic_margin": 1.0091572633513266,
    "n_polls": 15,
    "poll_house_index": 3.0,
