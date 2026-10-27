@@ -91,6 +91,9 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
   const [side, setSide] = useState<E.Side | null>(null);
   const [diff, setDiff] = useState<E.Diff>("lean");
   const [seed, setSeed] = useState("");
+  const step3 = useRef<HTMLElement>(null);
+  useEffect(() => { if (side) step3.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }, [side]);
+  const go = () => { if (!rf || !side) return; unlock(); sfx("fanfare"); onStart(rf, side, diff, seed && /^\d+$/.test(seed) ? Number(seed) : undefined, len, mgr); };
   const geo = useMapGeo(paths, 160, 110);
   const list = idx.races.filter((r) => office === "all" || r.office === office);
   const race = idx.races.find((r) => r.id === pick);
@@ -163,7 +166,7 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
         </section>
       ) : null}
       {race && rf && side ? (
-        <section className="px-step">
+        <section className="px-step" ref={step3}>
           <div className="px-sh"><span className="px-n">3</span><h2>Choose the year you are running in</h2></div>
           <div className="px-diffs">
             {DIFFS.map((d, i) => (
@@ -197,11 +200,16 @@ function Lobby({ idx, onStart }: { idx: PIndex; onStart: (r: E.RaceFile, side: E
             ))}
           </div>
           <div className="px-go">
-            <button type="button" className="px-press" onClick={() => { unlock(); sfx("fanfare"); onStart(rf, side, diff, seed && /^\d+$/.test(seed) ? Number(seed) : undefined, len, mgr); }}>Launch the campaign</button>
             <label className="px-seed" htmlFor="px-seed-in">Seed <input id="px-seed-in" inputMode="numeric" placeholder="random" value={seed} onChange={(e) => setSeed(e.target.value.replace(/\D/g, "").slice(0, 10))} /></label>
             <span className="px-note">Debate in week {E.debateWeek(rf) + len - 8}. Registration closes after week {E.REG_DEADLINE + len - 8}. Early voting opens week {E.EARLY_FROM + len - 8}. Every week has twelve half days: a rally takes a full day, call time or a town hall half of one.</span>
           </div>
         </section>
+      ) : null}
+      {race && rf && side ? (
+        <div className="px-gobar" role="region" aria-label="Launch">
+          <span><b>{rf.cands[side === "D" ? 0 : 1].name}</b> · {race.state} · {E.DIFF[diff].name} · {len} weeks · {E.MGR[mgr].title}</span>
+          <button type="button" className="px-press" onClick={go}>Launch the campaign</button>
+        </div>
       ) : null}
     </div>
   );
@@ -771,6 +779,7 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
             <div className="px-card report">
               <span className="px-tag">{s.done ? "The polls are closed" : `Week ${s.week - 1} report`}</span>
               <h3 id="px-wk-h">{s.done ? "Election Day is here" : "The week in review"}</h3>
+              <div className="px-wrep"><div className="px-wrep-l">
               <RivalMoveCard s={s} c={c} />
               <div className="px-deltas">
                 <div><span>Poll avg</span><b className={na == null ? "" : na >= 0 ? "up" : "dn"}>{na == null ? "n/a" : E.lead(na, sur(me.name), sur(op.name))}</b>{na != null && week.before.avg != null ? <small className={na - week.before.avg >= 0 ? "up" : "dn"}>{fxs(na - week.before.avg)}</small> : null}</div>
@@ -779,8 +788,10 @@ function HQ({ r, s, commit, geo, onNight, onDebate, quit, immersive, toggleFull,
                 <div><span>Volunteers</span><b>{s.volunteers.toLocaleString()}</b><small className={s.volunteers - week.before.vol >= 0 ? "up" : "dn"}>{s.volunteers - week.before.vol >= 0 ? "+" : "-"}{Math.abs(s.volunteers - week.before.vol).toLocaleString()}</small></div>
               </div>
               {!s.done && s.polls.length > 1 ? <PollChart s={s} me={me.name} op={op.name} compact /> : null}
+              </div><div className="px-wrep-r">
               {!s.done ? <div className="px-memo"><Portrait seed={mgrSeed(r, s.mgr ?? "vet")} role="staff" party={me.party} size={48} talking /><p><span className="px-k">Memo from {mgrName(r, s.mgr ?? "vet")}</span>{memoFor(s, week.before, na)}</p></div> : null}
               <ul className="px-log">{week.items.filter((l) => !(l.t.startsWith("Rival move") && s.rival?.moves.at(-1)?.w === s.week - 1)).map((l, i) => <li key={i} className={l.kind}><p>{l.t}</p>{l.fx != null && Math.abs(l.fx) >= 0.01 ? <b className={l.fx >= 0 ? "up" : "dn"}>{fxs(l.fx)}</b> : null}</li>)}</ul>
+              </div></div>
               <button type="button" className="px-btn go" onClick={() => { setWeek(null); if (s.done) onNight(); else { setRoll(true); sfx("bell"); } }}>{s.done ? "Watch the returns" : `On to week ${s.week}`}</button>
             </div>
           </div>

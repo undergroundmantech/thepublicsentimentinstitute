@@ -635,3 +635,40 @@
 @media (max-width: 1100px) { .opp.pg .px-rival { grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.4fr) auto; } .opp.pg .px-rival .last { display: none; } }
 @media (max-width: 640px) { .opp.pg .px-rival { grid-template-columns: auto minmax(0, 1fr) auto; } .opp.pg .px-rival .plan { grid-column: 1 / -1; } .opp.pg .px-chatdock { display: none; } .opp.pg .px-vote li { grid-template-columns: 22px minmax(0, 1fr) 56px 30px; } }
 @media (prefers-reduced-motion: reduce) { .opp.pg .px-wheel .disc, .opp.pg .px-breaking .bar.low, .opp.pg .px-streak.hot, .opp.pg .px-icon.live, .opp.pg .px-live.live { animation: none; } .opp.pg .px-splash, .opp.pg .px-trophy { animation-timing-function: linear; } }
+
+/* one screen: on a desktop or stream layout the headquarters fits the window, the map scales to the room it has and only
+   the side panel scrolls; the week report sits in two columns; the lobby keeps its launch button in reach */
+.opp.pg .px-gobar { position: sticky; bottom: 0; z-index: 6; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; padding: 10px 16px; background: rgba(11, 7, 22, .96); border-top: 3px solid var(--px-gold2); box-shadow: 0 -6px 18px rgba(0, 0, 0, .5); }
+.opp.pg .px-gobar span { font-size: 15px; color: var(--px-mute); } .opp.pg .px-gobar span b { color: var(--px-hi); }
+.opp.pg .px-card.report { width: min(1100px, 100%); }
+.opp.pg .px-wrep { display: grid; gap: 12px; }
+.opp.pg .px-wrep-l, .opp.pg .px-wrep-r { display: grid; gap: 12px; align-content: start; min-width: 0; }
+@media (min-width: 1000px) {
+  .opp.pg .px-wrep { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+  .opp.pg .px-wrep-r .px-log { max-height: calc(100vh - 330px); overflow-y: auto; }
+}
+@media (min-width: 901px) {
+  .opp.pg .px-app.imm .px-hq { height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .opp.pg .px-app.imm .px-hq > * { flex: none; }
+  .opp.pg .px-app.imm .px-hq > .px-main { flex: 1 1 0; min-height: 0; grid-template-rows: minmax(0, 1fr); }
+  .opp.pg .px-app.imm .px-hq .px-hud { position: relative; }
+  .opp.pg .px-app.imm .px-mapw { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; gap: 8px; padding: 8px 12px; }
+  .opp.pg .px-app.imm .px-mapw > * { flex: none; }
+  .opp.pg .px-app.imm .px-mapw > .px-mapbox { flex: 1 1 0; min-height: 180px; container-type: size; display: grid; place-items: center; }
+  .opp.pg .px-app.imm .px-mapbox .px-map { width: min(100cqw, calc(100cqh * var(--ar, 1.3))); margin-inline: auto; }
+  .opp.pg .px-app.imm .px-side { min-height: 0; overflow: hidden; }
+  .opp.pg .px-app.imm .px-pane { max-height: none; min-height: 0; }
+  .opp.pg .px-app.imm .px-cal { padding: 4px 12px; gap: 5px; }
+  .opp.pg .px-app.imm .px-cal li { padding: 4px 6px; gap: 1px; }
+  .opp.pg .px-app.imm .px-cal li em + em { display: none; }
+  .opp.pg .px-app.imm .px-rival { padding: 5px 12px; gap: 6px 12px; }
+  .opp.pg .px-app.imm .px-rival .px-portrait { width: 36px !important; height: 36px !important; }
+  .opp.pg .px-app.imm .px-rival .plan small, .opp.pg .px-app.imm .px-rival .last em { font-size: 13px; line-height: 1.25; }
+  .opp.pg .px-app.imm .px-advisor { padding: 0; }
+  .opp.pg .px-app.imm .px-advisor .px-portrait { width: 44px !important; height: 44px !important; }
+  .opp.pg .px-app.imm .px-advisor .px-bubble { padding: 8px 12px; gap: 4px; }
+  .opp.pg .px-app.imm .px-legend { font-size: 13px; }
+  .opp.pg .px-app.imm .px-county { gap: 8px; padding: 8px 10px; }
+  .opp.pg .px-app.imm .px-ticker .lbl, .opp.pg .px-app.imm .px-ticker .run { padding-block: 6px; }
+}
+.opp.pg .px-step { scroll-margin-top: 130px; }
