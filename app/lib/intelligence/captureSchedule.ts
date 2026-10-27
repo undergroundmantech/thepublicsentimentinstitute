@@ -31,10 +31,12 @@ export function defaultWindows(until?: string): Window[] {
   return [
     { phase: "PRE_ELECTION", from: FAR_PAST, to: "2026-11-03T12:00:00Z", intervalMinutes: 60, details: "SAMPLE" },
     { phase: "POLLS_OPEN", from: "2026-11-03T12:00:00Z", to: "2026-11-03T22:30:00Z", intervalMinutes: 10, details: "ALL" },
-    { phase: "ELECTION_NIGHT", from: "2026-11-03T22:30:00Z", to: "2026-11-04T10:00:00Z", intervalMinutes: 1, details: "ALL" },
-    { phase: "OVERNIGHT", from: "2026-11-04T10:00:00Z", to: "2026-11-05T00:00:00Z", intervalMinutes: 2, details: "ALL" },
-    { phase: "COUNTING", from: "2026-11-05T00:00:00Z", to: "2026-11-10T00:00:00Z", intervalMinutes: 5, details: "ALL" },
-    { phase: "CANVASS", from: "2026-11-10T00:00:00Z", to: end, intervalMinutes: 15, details: "ALL" },
+    { phase: "ELECTION_NIGHT", from: "2026-11-03T22:30:00Z", to: "2026-11-04T00:00:00Z", intervalMinutes: 1, details: "ALL" },
+    // the approved archive schedule: 7 p.m. ET Nov 3 to 7 a.m. ET Nov 4 every 30 seconds, then every 10 minutes to 7 a.m. ET Nov 11
+    { phase: "ELECTION_NIGHT", from: "2026-11-04T00:00:00Z", to: "2026-11-04T12:00:00Z", intervalMinutes: 0.5, details: "ALL" },
+    { phase: "OVERNIGHT", from: "2026-11-04T12:00:00Z", to: "2026-11-05T00:00:00Z", intervalMinutes: 10, details: "ALL" },
+    { phase: "COUNTING", from: "2026-11-05T00:00:00Z", to: "2026-11-11T12:00:00Z", intervalMinutes: 10, details: "ALL" },
+    { phase: "CANVASS", from: "2026-11-11T12:00:00Z", to: end, intervalMinutes: 15, details: "ALL" },
     { phase: "ENDED", from: end, to: FAR_FUTURE, intervalMinutes: null, details: "NONE" },
   ];
 }
@@ -58,7 +60,7 @@ export interface TickPlan {
 
 /** Cron fires on the minute, a little early or late; a poll is due when this much of the interval has passed. */
 const TOLERANCE_MS = 15_000;
-/** In the slower phases, this many quiet polls in a row doubles the interval, up to MAX_MINUTES. Election night never slows. */
+/** In POLLS_OPEN and CANVASS, this many quiet polls in a row doubles the interval, up to MAX_MINUTES. The approved archive windows never slow. */
 export const QUIET_POLLS_TO_SLOW = 6;
 const MAX_MINUTES = 30;
 
@@ -66,7 +68,7 @@ export function planTick(nowIso: string, state: TickState, windows: Window[] = d
   const t = Date.parse(nowIso);
   const w = windows.find((x) => t >= Date.parse(x.from) && t < Date.parse(x.to)) ?? windows[windows.length - 1];
   if (w.intervalMinutes === null) return { phase: w.phase, baseIntervalMinutes: null, intervalMinutes: null, due: !!opts.force, details: opts.force ? "ALL" : "NONE", feeds: !!opts.force, reason: opts.force ? "forced after the capture window ended" : "the capture window has ended" };
-  const slow = w.phase !== "ELECTION_NIGHT" && w.phase !== "PRE_ELECTION" && state.quietPolls >= QUIET_POLLS_TO_SLOW;
+  const slow = (w.phase === "POLLS_OPEN" || w.phase === "CANVASS") && state.quietPolls >= QUIET_POLLS_TO_SLOW;
   const interval = slow ? Math.min(w.intervalMinutes * 2, MAX_MINUTES) : w.intervalMinutes;
   const last = state.lastPollAt ? Date.parse(state.lastPollAt) : NaN;
   const elapsed = t - last;

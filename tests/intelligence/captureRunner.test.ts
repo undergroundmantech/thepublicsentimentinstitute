@@ -26,19 +26,23 @@ test("the schedule moves through its phases by UTC time", () => {
 
 test("a poll is due once its interval has passed, with a little tolerance for cron jitter", () => {
   const p = (lastPollAt: string, now: string) => planTick(now, { lastPollAt, quietPolls: 0 }, W);
-  assert.equal(p("2026-11-04T01:00:00Z", "2026-11-04T01:00:30Z").due, false);
-  assert.equal(p("2026-11-04T01:00:03Z", "2026-11-04T01:00:58Z").due, true);
-  assert.equal(p("2026-11-04T01:00:00Z", "2026-11-04T01:00:46Z").due, true);
+  assert.equal(p("2026-11-03T23:00:00Z", "2026-11-03T23:00:30Z").due, false);
+  assert.equal(p("2026-11-03T23:00:03Z", "2026-11-03T23:00:58Z").due, true);
+  assert.equal(p("2026-11-03T23:00:00Z", "2026-11-03T23:00:46Z").due, true);
   assert.equal(planTick("2026-11-04T01:00:00Z", { lastPollAt: null, quietPolls: 0 }, W).due, true);
+  assert.equal(p("2026-11-04T01:00:00Z", "2026-11-04T01:00:30Z").due, true, "the approved election-night cadence is 30 seconds");
 });
 
-test("quiet polls slow the cadence outside election night, and election night never slows", () => {
-  const quiet = { lastPollAt: "2026-11-06T12:00:00Z", quietPolls: QUIET_POLLS_TO_SLOW };
-  assert.equal(planTick("2026-11-06T12:06:00Z", { ...quiet, quietPolls: 0 }, W).due, true);
-  const slowed = planTick("2026-11-06T12:06:00Z", quiet, W);
-  assert.equal(slowed.intervalMinutes, 10);
+test("quiet polls slow the cadence only outside the approved archive windows", () => {
+  const quiet = { lastPollAt: "2026-11-12T12:00:00Z", quietPolls: QUIET_POLLS_TO_SLOW };
+  assert.equal(planTick("2026-11-12T12:16:00Z", { ...quiet, quietPolls: 0 }, W).due, true);
+  const slowed = planTick("2026-11-12T12:16:00Z", quiet, W);
+  assert.equal(slowed.intervalMinutes, 30);
   assert.equal(slowed.due, false);
-  assert.equal(planTick("2026-11-04T01:01:00Z", { lastPollAt: "2026-11-04T01:00:00Z", quietPolls: 99 }, W).intervalMinutes, 1);
+  assert.equal(planTick("2026-11-04T01:01:00Z", { lastPollAt: "2026-11-04T01:00:00Z", quietPolls: 99 }, W).intervalMinutes, 0.5);
+  assert.equal(planTick("2026-11-06T12:00:00Z", { lastPollAt: "2026-11-06T11:50:00Z", quietPolls: 99 }, W).intervalMinutes, 10);
+  assert.equal(planTick("2026-11-04T12:00:00Z", { lastPollAt: null, quietPolls: 99 }, W).intervalMinutes, 10);
+  assert.equal(planTick("2026-11-11T11:59:00Z", { lastPollAt: null, quietPolls: 99 }, W).intervalMinutes, 10);
   assert.ok(planTick("2026-11-12T12:00:00Z", { lastPollAt: null, quietPolls: 99 }, W).intervalMinutes! <= 30);
 });
 
@@ -69,7 +73,7 @@ test("a minute that is not due makes no upstream request but still leaves a hear
   const r = rig();
   await r.tick();
   r.provider.requests.length = 0;
-  r.clock.advance(20_000);
+  r.clock.advance(10_000);
   const { run, plan, tick } = await r.tick();
   assert.equal(run, null);
   assert.equal(plan.due, false);
@@ -206,7 +210,7 @@ test("restart and recovery: a new process continues from the stored tick without
     const first = rig({ store: new FsStore(dir) });
     sen(first.provider, 100, 90, "2026-11-04T00:59:00Z");
     await first.tick();
-    const second = rig({ store: new FsStore(dir), t: first.clock.t + 20_000 });
+    const second = rig({ store: new FsStore(dir), t: first.clock.t + 10_000 });
     second.provider.races = first.provider.races;
     const early = await second.tick();
     assert.equal(early.run, null);

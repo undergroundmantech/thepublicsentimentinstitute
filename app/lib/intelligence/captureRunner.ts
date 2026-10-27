@@ -11,9 +11,10 @@ import { matchCivic } from "@/app/results/2026/live";
 import { fromCivicDetail } from "./observations";
 import { searchRows, trimDetail } from "./civic";
 import {
-  CaptureError, compactTime, intact, jsonBytes, parseJson, recordFeedDelta, recordObservation, storeRaw, withChecksum,
+  CaptureError, compactTime, intact, jsonBytes, parseJson, recordFeedDelta, recordObservation, sha256Hex, storeRaw, withChecksum,
   type CandidateLine, type CapturedObservation, type FeedRow, type RecordOutcome,
 } from "./capture";
+import { archiveCheckpoint, type ArchiveDeps, type RaceCapture } from "./checkpointArchive";
 import type { ObjectStore } from "./captureStore";
 import { planTick, type Phase, type TickPlan, type TickState, type Window } from "./captureSchedule";
 
@@ -65,6 +66,8 @@ export interface RunnerDeps {
   config: RunnerConfig;
   /** Names a run. Tests supply a counter. */
   newId?: () => string;
+  /** When set, each poll that reads every tracked race is archived as a checkpoint (raw, calculated, published). */
+  archive?: ArchiveDeps;
 }
 
 export interface ProviderRequest { target: string; status: number | null; ms: number | null; bytes: number | null; age: number | null; error: string | null }
@@ -167,16 +170,20 @@ export async function runCapture(deps: RunnerDeps, plan: TickPlan, trigger: RunR
   });
 
   // 2. tracked race details
+  const captures: RaceCapture[] = [];
+  const matchedIds = new Set<number>();
+  const missed = (race: XRace, civicId: number | null, failure: string) => captures.push({ race, civicId, observedAt: null, detail: null, raw: null, failure });
   if (plan.details !== "NONE") {
     const matched = matchCivic(deps.races, civ);
+    for (const h of Object.values(matched)) if (h) matchedIds.add(h.id);
     const targets = (plan.details === "SAMPLE" ? deps.races.slice(0, 3) : deps.races);
     await pool(targets, config.detailConcurrency, async (race) => {
       const hit = matched[race.id];
-      if (!hit) { races.push({ raceId: race.id, civicId: null, outcome: "SKIPPED", material: false, sourceTimestamp: null, testStatus: null }); errors.push({ scope: `race:${race.id}`, code: "NO_MATCH", message: "no civicAPI race matches this forecast race in the feeds read" }); return; }
-      if (overBudget()) { races.push({ raceId: race.id, civicId: hit.id, outcome: "SKIPPED", material: false, sourceTimestamp: null, testStatus: null }); errors.push({ scope: `race:${race.id}`, code: "DEADLINE", message: "run budget exhausted before this race" }); return; }
+      if (!hit) { missed(race, null, "NO_MATCH"); races.push({ raceId: race.id, civicId: null, outcome: "SKIPPED", material: false, sourceTimestamp: null, testStatus: null }); errors.push({ scope: `race:${race.id}`, code: "NO_MATCH", message: "no civicAPI race matches this forecast race in the feeds read" }); return; }
+      if (overBudget()) { missed(race, hit.id, "DEADLINE"); races.push({ raceId: race.id, civicId: hit.id, outcome: "SKIPPED", material: false, sourceTimestamp: null, testStatus: null }); errors.push({ scope: `race:${race.id}`, code: "DEADLINE", message: "run budget exhausted before this race" }); return; }
       const url = `${CIVIC_BASE}/race/${hit.id}`;
       const res = await request(`race:${race.id}`, url, 8_000);
-      if (!res) { races.push({ raceId: race.id, civicId: hit.id, outcome: "ERROR", material: false, sourceTimestamp: null, testStatus: null }); return; }
+      if (!res) { missed(race, hit.id, "PROVIDER_ERROR"); races.push({ raceId: race.id, civicId: hit.id, outcome: "ERROR", material: false, sourceTimestamp: null, testStatus: null }); return; }
       const observedAt = deps.now().toISOString();
       try {
         const detail = trimDetail(JSON.parse(res.text), hit.id);
@@ -189,16 +196,35 @@ export async function runCapture(deps: RunnerDeps, plan: TickPlan, trigger: RunR
           observedAt, ingestedAt: deps.now().toISOString(), candidates, observations, reportingPct: Number.isFinite(detail.pr) ? detail.pr : null, rawText: res.text, payloadForm: "CIVICAPI_RACE_JSON", runId,
         });
         if (r.outcome === "NEW" && r.material) anyMaterial = true;
+        captures.push({ race, civicId: hit.id, observedAt, detail, raw: { outcome: r.outcome, observationId: r.observationId, contentId: r.contentId, observationKey: r.key, responseSha256: sha256Hex(res.text) }, failure: null });
         races.push({ raceId: race.id, civicId: hit.id, outcome: r.outcome, material: r.material, sourceTimestamp, testStatus: detail.test ? "TEST" : "LIVE" });
       } catch (e) {
         const s = sanitize(e);
         const malformed = e instanceof SyntaxError || (e instanceof Error && /payload is not an object/.test(e.message));
         if (malformed) { try { await storeRaw(store, res.text); } catch { storageFailed = true; } }
         else storageFailed = true;
+        missed(race, hit.id, malformed ? "MALFORMED_PAYLOAD" : "STORAGE_WRITE_FAILED");
         errors.push({ scope: `race:${race.id}`, code: malformed ? "MALFORMED_PAYLOAD" : e instanceof CaptureError ? s.code : "STORAGE_WRITE_FAILED", message: malformed ? "the race payload was malformed; kept as raw evidence only" : s.message });
         races.push({ raceId: race.id, civicId: hit.id, outcome: "ERROR", material: false, sourceTimestamp: null, testStatus: null });
       }
     });
+  }
+
+  // 3. checkpoint archive: calculations and published state for this snapshot. A failure here never touches the raw layer.
+  const runKey = `runs/${startedAt.slice(0, 10)}/${compactTime(startedAt)}_${runId}.json`;
+  if (deps.archive && plan.details === "ALL") {
+    const rawIssues = [
+      ...feeds.filter((f) => f.outcome === "ERROR").map((f) => `feed ${f.feed} not captured`),
+      ...captures.filter((c) => !c.raw).map((c) => `${c.race.id}: ${c.failure}`),
+      ...(deadlineHit ? ["run budget exhausted"] : []),
+    ].sort();
+    const untracked = civ.filter((c) => !matchedIds.has(c.id)).map((c) => ({ civicId: c.id, type: c.type, province: c.province, district: c.district, name: c.name }));
+    try {
+      await archiveCheckpoint(store, { runId, phase: plan.phase, startedAt, rawFinishedAt: deps.now().toISOString(), runKey, captures, untracked, feeds: feeds.map(({ feed, outcome }) => ({ feed, outcome })), rawIssues }, deps.archive);
+    } catch (e) {
+      storageFailed = true;
+      errors.push({ scope: "archive", code: "ARCHIVE_WRITE_FAILED", message: sanitize(e).message });
+    }
   }
 
   const anyProviderOk = provider.some((p) => p.status === 200);
@@ -208,7 +234,7 @@ export async function runCapture(deps: RunnerDeps, plan: TickPlan, trigger: RunR
     deployment: { environment: process.env.VERCEL_ENV ?? null, region: process.env.VERCEL_REGION ?? null, commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ?? null },
     provider, feeds, races: races.sort((a, b) => a.raceId.localeCompare(b.raceId)), errors, deadlineHit, ok: anyProviderOk && !storageFailed, anyMaterial,
   });
-  await store.putIfAbsent(`runs/${startedAt.slice(0, 10)}/${compactTime(startedAt)}_${runId}.json`, jsonBytes(record), "application/json");
+  await store.putIfAbsent(runKey, jsonBytes(record), "application/json");
   return record;
 }
 
@@ -255,6 +281,28 @@ export async function runTick(deps: RunnerDeps, opts: { force?: boolean; trigger
 // ---- run history ----------------------------------------------------------------------------------------------------------
 
 /** Run records started between two instants, oldest first. Records that fail their checksum are skipped. */
+/**
+ * One cron invocation. Cron fires once a minute; when the phase polls faster than that (30 seconds on election night),
+ * the later slots of the minute are run here, each on the normal schedule check, while the function's budget allows.
+ */
+export async function runCronSlots(deps: RunnerDeps, opts: { force?: boolean; trigger: RunRecord["trigger"] }, sleep: (ms: number) => Promise<void>, budgetMs = 50_000): Promise<TickResult[]> {
+  const t0 = deps.now().getTime();
+  const out = [await runTick(deps, opts)];
+  for (;;) {
+    const last = out[out.length - 1];
+    const iv = last.plan.intervalMinutes;
+    if (!last.run || iv === null || iv >= 1) break;
+    const next = Date.parse(last.run.startedAt) + iv * 60_000;
+    if (next - t0 >= 60_000) break;
+    const remaining = budgetMs - (Math.max(next, deps.now().getTime()) - t0);
+    if (remaining < 15_000) break;
+    const wait = next - deps.now().getTime();
+    if (wait > 0) await sleep(wait);
+    out.push(await runTick({ ...deps, config: { ...deps.config, deadlineMs: Math.min(deps.config.deadlineMs, remaining - 5_000) } }, { trigger: opts.trigger }));
+  }
+  return out;
+}
+
 export async function readRuns(store: ObjectStore, fromIso: string, toIso: string): Promise<RunRecord[]> {
   const out: RunRecord[] = [];
   for (let d = Date.parse(fromIso.slice(0, 10)); d <= Date.parse(toIso); d += 86_400_000) {

@@ -22,9 +22,12 @@ import { matchCivic } from "@/app/results/2026/live";
 import { jsonBytes, parseJson, sha256Hex } from "./capture";
 import { searchRows } from "./civic";
 import { resolveStore, type ObjectStore, type StoreChoice } from "./captureStore";
-import { CIVIC_BASE, defaultFetchText, readTick, runTick, type FetchText, type RunnerConfig } from "./captureRunner";
+import { CIVIC_BASE, defaultFetchText, readTick, runCronSlots, runTick, type FetchText, type RunnerConfig, type TickResult } from "./captureRunner";
 import { loadTrackedRaces, runnerConfig } from "./captureConfig";
 import type { ExpectedRace } from "./captureHealth";
+import type { ArchiveDeps } from "./checkpointArchive";
+import { githubTargetFrom, mirrorPending, type GitHubTarget, type MirrorResult } from "./githubArchive";
+import { readCountyExpectations } from "@/app/portal/intelligence/inputs";
 
 export const MIN_SECRET_LENGTH = 24;
 export const MIN_FORCE_SPACING_MS = 10_000;
@@ -54,10 +57,17 @@ export interface HandlerDeps {
   now: () => Date;
   limiter: FailureLimiter;
   config?: RunnerConfig;
+  /** Present in production: lets one cron call run the second 30-second slot of its minute. */
+  sleep?: (ms: number) => Promise<void>;
+  /** Archive dependencies; used only when ONPOINT_ARCHIVE=1. */
+  archive?: ArchiveDeps;
+  /** GitHub mirror; defaults to ONPOINT_ARCHIVE_REPO / ONPOINT_ARCHIVE_TOKEN, and only when ONPOINT_ARCHIVE=1. */
+  github?: GitHubTarget | null;
 }
 
 const sharedLimiter = new FailureLimiter();
-export const defaultDeps = (): HandlerDeps => ({ env: process.env, store: () => resolveStore(process.env), tracked: loadTrackedRaces, fetchText: defaultFetchText, now: () => new Date(), limiter: sharedLimiter });
+export const defaultArchiveDeps = (now: () => Date): ArchiveDeps => ({ now, expFor: (r) => readCountyExpectations(r.st, r.id), raceHistory: true });
+export const defaultDeps = (): HandlerDeps => ({ env: process.env, store: () => resolveStore(process.env), tracked: loadTrackedRaces, fetchText: defaultFetchText, now: () => new Date(), limiter: sharedLimiter, sleep: (ms) => new Promise((r) => setTimeout(r, ms)) });
 
 const json = (status: number, body: unknown, headers: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store", "x-content-type-options": "nosniff", ...headers } });
@@ -108,11 +118,19 @@ export async function handleCapture(req: Request, deps: HandlerDeps = defaultDep
       const tick = await readTick(store);
       if (tick?.lastPollAt && nowMs - Date.parse(tick.lastPollAt) < MIN_FORCE_SPACING_MS) return json(429, { error: "too_soon" }, { "retry-after": "10" });
     }
-    const out = await runTick({ store, fetchText: deps.fetchText, now: deps.now, races: tracked.races, config }, { force: force === "1", trigger: method === "GET" ? "CRON" : "MANUAL" });
+    const archiveOn = deps.env.ONPOINT_ARCHIVE === "1";
+    const runnerDeps = { store, fetchText: deps.fetchText, now: deps.now, races: tracked.races, config, archive: archiveOn ? deps.archive ?? defaultArchiveDeps(deps.now) : undefined };
+    const tickOpts = { force: force === "1", trigger: method === "GET" ? "CRON" as const : "MANUAL" as const };
+    const slots: TickResult[] = method === "GET" && deps.sleep ? await runCronSlots(runnerDeps, tickOpts, deps.sleep) : [await runTick(runnerDeps, tickOpts)];
+    const out = slots[slots.length - 1];
+    const target = archiveOn ? (deps.github !== undefined ? deps.github : githubTargetFrom(deps.env)) : null;
+    let mirror: MirrorResult | null = null;
+    if (target && slots.some((s) => s.run)) mirror = await mirrorPending(store, target, { now: deps.now });
     const run = out.run;
     const count = <T extends { outcome: string }>(xs: T[]) => xs.reduce<Record<string, number>>((m, x) => ({ ...m, [x.outcome]: (m[x.outcome] ?? 0) + 1 }), {});
     return json(run && !run.ok ? 502 : 200, {
       phase: out.plan.phase, due: out.plan.due, reason: out.plan.reason, intervalMinutes: out.plan.intervalMinutes, trackedRaces: tracked.races.length, missingFromIndex: tracked.missing.length,
+      slots: slots.length, archive: archiveOn, mirror: mirror ? { status: mirror.status, checkpoints: mirror.checkpoints, code: mirror.code } : null,
       run: run ? { runId: run.runId, ok: run.ok, anyMaterial: run.anyMaterial, deadlineHit: run.deadlineHit, races: count(run.races), feeds: count(run.feeds), errors: run.errors.length, errorCodes: [...new Set(run.errors.map((e) => e.code))] } : null,
     });
   } catch (e) {

@@ -201,6 +201,55 @@ Every state has: poll close, legal processing and scanning time, reporting unit,
 
 Outstanding-ballot sources exist for AZ only; certified 2024 totals for none in this repo.
 
+## Checkpoint archive (added 2026-10-27, off by default)
+
+Code: `app/lib/intelligence/checkpointArchive.ts`, `githubArchive.ts`, wired into `captureRunner.ts` / `captureHandler.ts`. Tests: `tests/intelligence/checkpointArchive.test.ts`.
+
+**Three layers per checkpoint.** A checkpoint is every poll that reads all tracked races.
+
+- **RAW.** These are the recorder's existing observation records and gzipped responses. The checkpoint refers to them by observation id, content id and response SHA-256.
+- **CALCULATED.** This is the public results engine (`project`, `liveOdds` and `sides` in `app/results/2026/live.ts`), called exactly as the desk calls it. The engine is unchanged.
+  - Each record carries the raw ref, `observedAt`, the real `calculatedAt` (never backdated), the model name and version (the deployment commit), an engine-code hash, an input hash, a status, an output hash and `PUBLISHED`/`SHADOW`.
+  - When the inputs and the model are identical, the earlier outputs are reused and the original `calculatedAt` is kept.
+  - Fields the engine does not produce are `null`, with a reason: reporting-order and voting-method adjustments, confidence, and per-candidate values where one side has several candidates.
+  - Contests no OnPoint model covers are listed as `UNAVAILABLE`.
+- **PUBLISHED.** This is derived only from the `PUBLISHED` calculation. Its basis is `PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT`. The desk computes in each visitor's browser from its own fetch, so this layer is the desk's output on the archived snapshot, not a capture of a rendered page. It also records the desk's test-data visibility and the provider's winner flags. `onpointCall` is `null` because no OnPoint call engine feeds the desk.
+
+**Integrity.**
+
+- Layer files are written once.
+- The manifest is written last, with each layer's hash. It is `complete: true` only if the raw layer is complete and both layer files were stored.
+- A calculation failure keeps the raw layer and is recorded as `FAILED`.
+- `stateAt()` replays only checkpoints archived by the given time.
+
+**Race History.** Each new published calculation is also recorded as a `LIVE_PROJECTION` point. The point carries probabilities, the projected margin with its interval and the projected votes per candidate. `/api/race-history` reads these points from the store, never from GitHub.
+
+**Schedule (approved).**
+
+- 7 p.m. ET Nov 3 to 7 a.m. ET Nov 4 (00:00Z to 12:00Z): every 30 seconds. One cron call runs both slots of its minute.
+- Then every 10 minutes until 7 a.m. ET Nov 11 (12:00Z).
+
+**GitHub mirror.**
+
+- Pending checkpoints go into one commit per cron call through the Git Data API, under `YYYY/MM-DD/{checkpoints,calculated,published,raw}/`.
+- The mirror head advances only after the ref update succeeds.
+- `verifyCheckpointFiles()` checks a recovered checkpoint.
+
+**Configuration.** All of it is unset now.
+
+| Name | Value |
+|---|---|
+| `ONPOINT_ARCHIVE` | `1` to archive checkpoints |
+| `ONPOINT_ARCHIVE_REPO` | `owner/name` of a **private** repository |
+| `ONPOINT_ARCHIVE_TOKEN` | fine-grained token, Contents read/write on that repository only |
+| `ONPOINT_ARCHIVE_BRANCH` | optional, default `main` |
+
+**Limits.**
+
+- Untracked contests have raw data from the whole-feed rows only, not per-race detail.
+- The mirror adds about five GitHub API calls per cron minute.
+- Repository size grows with every new raw response; it was not measured against a real night.
+
 ## 11. Actions needed from you
 
 1. Confirm the Vercel plan (the existing every-minute cron implies Pro) and that `maxDuration = 60` is allowed.
