@@ -10,28 +10,16 @@
 import { NextResponse } from "next/server";
 import { getRaceCapabilities, getRecorderRaceIds } from "@/app/results/_data/raceCapabilities";
 import { buildSnapshot, appendSnapshotIfNew } from "@/app/results/_lib/flightRecorder";
+import { legacyCaptureGate } from "@/app/results/_lib/legacyCaptureGate";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const CIVIC_BASE = "https://civicapi.org";
 
-// If CRON_SECRET is set (recommended in production), require it as a bearer
-// token — matches Vercel Cron's own convention of sending
-// `Authorization: Bearer $CRON_SECRET` automatically when that env var is
-// configured. Without it configured, the route stays open (dev/local use) —
-// set CRON_SECRET before deploying so this write endpoint can't be triggered
-// or abused by anyone who finds the URL.
-function isAuthorized(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return true;
-  return req.headers.get("authorization") === `Bearer ${secret}`;
-}
-
 export async function GET(req: Request) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
+  const gate = legacyCaptureGate(process.env, req.headers.get("authorization"));
+  if (gate) return NextResponse.json(gate.body, { status: gate.status, headers: { "cache-control": "no-store" } });
 
   const raceIds = getRecorderRaceIds();
   const results = await Promise.allSettled(

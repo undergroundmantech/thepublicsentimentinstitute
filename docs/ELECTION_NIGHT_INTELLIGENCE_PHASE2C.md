@@ -165,6 +165,8 @@ Ready locally. **Blockers before production:**
 
 Operational note: the existing public recorder (`/api/flightrecorder/capture`) writes to the local filesystem; on Vercel that data is not durable. It is unchanged and should not be relied on as evidence.
 
+Update (2026-10-27): the legacy route now goes through `app/results/_lib/legacyCaptureGate.ts`. It fails closed on Vercel when `CRON_SECRET` is unset (503), compares the bearer in constant time, and stands down with no civicAPI request once `INTELLIGENCE_CAPTURE_STORE` is set, so the two recorders never poll the same races twice. Tested in `tests/intelligence/legacyCaptureGate.test.ts`.
+
 ## 10. Research (section 8, non-blocking)
 
 | Topic | Result |
