@@ -22,6 +22,7 @@ import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { raceLd, raceMeta } from "../../seo";
 import YouTubeBand from "@/app/components/YouTubeBand";
+import RaceHistorySection from "@/app/components/opp/RaceHistorySection";
 
 export const dynamicParams = false;
 
@@ -182,7 +183,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
   }
   const navItems = [
     { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
-    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
+    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "history", label: "History" }, { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
     ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
   ];
 
@@ -298,6 +299,11 @@ export default async function Page({ params }: { params: Promise<{ state: string
               <TrendChart trend={r.trend!} demName={lastName(r.dem)} gopName={lastName(r.gop)} demColor={ind ? "#b78cff" : "#3d7bff"} gopColor="#ff3b5c" />
             </section>
           ) : null}
+
+          <section id="history" className="st-sec">
+            <SecTitle title="Race history" sub="Every published forecast for this race, and on election night the live projection and the count, over time" />
+            <RaceHistorySection raceId={r.id} title={`${lastName(r.dem)} vs. ${lastName(r.gop)}`} />
+          </section>
 
           <section id="polls" className="st-sec">
             <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />

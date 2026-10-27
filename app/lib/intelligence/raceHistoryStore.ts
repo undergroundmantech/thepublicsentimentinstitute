@@ -22,7 +22,7 @@ import { gunzipSync } from "node:zlib";
 import path from "node:path";
 import { canonicalJson, compactTime, foldObservations, intact, jsonBytes, parseJson, readObservationRecords, sha256Hex, slug, withChecksum, type ObservationView } from "./capture";
 import { checkKey, type ObjectStore } from "./captureStore";
-import { HISTORY_SCHEMA, invalidReason, lastName, prepareHistory, type DataStatus, type HistoryCandidate, type HistoryPoint, type MarginReference, type ModelOutputPoint, type PrepareOptions, type PreparedHistory, type ResultPoint } from "./raceHistory";
+import { HISTORY_SCHEMA, invalidReason, lastName, prepareHistory, type DataStatus, type HistoryCandidate, type HistoryPoint, type MarginReference, type ModelOutputPoint, type PrepareOptions, type PreparedHistory, type Publication, type PublicationClass, type ResultPoint } from "./raceHistory";
 
 const SAFE_RACE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/;
 export class HistoryError extends Error {
@@ -55,6 +55,7 @@ export type ModelRecordOutcome = "NEW" | "UNCHANGED" | "ALREADY_RECORDED";
  */
 export async function recordModelOutput(store: ObjectStore, input: ModelOutputInput): Promise<{ outcome: ModelRecordOutcome; pointId: string | null; key: string }> {
   if (!SAFE_RACE.test(input.raceId)) throw new HistoryError("INVALID_RACE_ID", `race id "${input.raceId.slice(0, 40)}" is not a safe key`);
+  if (!store.durable && process.env.VERCEL) throw new HistoryError("EPHEMERAL_STORE", "refusing to record race history on non-durable storage in a deployment");
   const probe: ModelOutputPoint = { ...input, schema: HISTORY_SCHEMA, kind: "MODEL_OUTPUT", pointId: "probe" };
   const t = Date.parse(input.observedAt);
   if (!Number.isFinite(t)) throw new HistoryError("INVALID_DATE", "observedAt is not a date");
@@ -173,17 +174,24 @@ export function resultPointsFrom(views: ObservationView[], roster: HistoryCandid
 export const FROZEN_FILE = path.join(process.cwd(), "data/intelligence/history/frozen-forecasts.json.gz");
 export const FROZEN_MODEL_ID = "onpoint-forecast";
 
+type FrozenPt = [number, number | null, number | null, number | null, number | null, [string, string, number | null][]];
+export interface FrozenSnapshotInfo {
+  snapshot: string; commit: string; committedAt: string; modelUpdated: string | null; onMain: boolean;
+  class: PublicationClass; publishedAt: string | null; deployment: { id: number; sha: string } | null; revertedBy: string | null; reason: string;
+}
 interface FrozenFile {
   schema: string;
-  snapshots: { snapshot: string; commit: string; committedAt: string; modelUpdated: string | null }[];
-  races: Record<string, { dem: string | null; gop: string | null; pts: [number, number | null, number | null, number | null, number | null, [string, string, number | null][]][] }>;
+  evidence: { source: string; fetchedAt: string; deployments: number; successful: number; first: string | null; last: string | null };
+  snapshots: FrozenSnapshotInfo[];
+  publications: { liveAt: string; deploymentId: number; deploymentSha: string; snapshotIndex: number }[];
+  races: Record<string, { dem: string | null; gop: string | null; pts: FrozenPt[] }>;
 }
 let frozenCache: { file: string; data: FrozenFile } | null = null;
 
 export function loadFrozenDataset(file = FROZEN_FILE): FrozenFile {
   if (frozenCache?.file === file) return frozenCache.data;
   const data = JSON.parse(gunzipSync(readFileSync(file)).toString("utf8")) as FrozenFile;
-  if (data.schema !== "TPSI_FROZEN_FORECAST_HISTORY/1") throw new HistoryError("BAD_FROZEN_FILE", `unexpected schema ${String(data.schema)}`);
+  if (data.schema !== "TPSI_FROZEN_FORECAST_HISTORY/2") throw new HistoryError("BAD_FROZEN_FILE", `unexpected schema ${String(data.schema)}`);
   frozenCache = { file, data };
   return data;
 }
@@ -196,13 +204,32 @@ const r6 = (n: number) => Math.round(n * 1e6) / 1e6;
  * Frozen forecast points for one race, exactly as published: GOP win probability, its two-side complement for the Democratic slot,
  * the published margin (GOP minus Dem) with the published p10–p90, and the published vote estimates. Third-party candidates carry
  * no probability because the model prices only the two sides.
+ *
+ * PUBLISHED (default): one point per production publication that changed this race's figures, at the time the deployment went
+ * live. ALL (diagnostics only): every snapshot at its commit time, each carrying its publication class.
  */
-export function frozenPointsFor(raceId: string, file?: string): ModelOutputPoint[] {
+export function frozenPointsFor(raceId: string, file?: string, include: "PUBLISHED" | "ALL" = "PUBLISHED"): ModelOutputPoint[] {
   const d = loadFrozenDataset(file);
   const race = d.races[raceId];
   if (!race) return [];
-  return race.pts.map((pt) => {
-    const [si, margin, probGop, p10, p90, cands] = pt;
+  const at = (si: number): FrozenPt | null => { let r: FrozenPt | null = null; for (const p of race.pts) { if (p[0] > si) break; r = p; } return r; };
+  const events: { pt: FrozenPt; si: number; observedAt: string; publication: Publication; id: string }[] = [];
+  if (include === "ALL") {
+    for (const pt of race.pts) { const s = d.snapshots[pt[0]]; events.push({ pt, si: pt[0], observedAt: s.committedAt, id: s.commit, publication: { class: s.class, publishedAt: s.publishedAt, evidence: s.reason, revertedBy: s.revertedBy } }); }
+  } else {
+    let prev = "";
+    for (const e of d.publications) {
+      const pt = at(e.snapshotIndex);
+      if (!pt) continue;
+      const k = JSON.stringify(pt.slice(1));
+      if (k === prev) continue;
+      prev = k;
+      const s = d.snapshots[e.snapshotIndex];
+      events.push({ pt, si: e.snapshotIndex, observedAt: e.liveAt, id: `deploy:${e.deploymentId}`, publication: { class: "PUBLISHED", publishedAt: e.liveAt, evidence: `production deployment ${e.deploymentId} (${e.deploymentSha.slice(0, 8)}) went live`, revertedBy: s.revertedBy } });
+    }
+  }
+  return events.map(({ pt, si, observedAt, publication, id: evId }) => {
+    const [, margin, probGop, p10, p90, cands] = pt;
     const snap = d.snapshots[si];
     const dem = race.dem, gop = race.gop;
     const roster: HistoryCandidate[] = [];
@@ -218,9 +245,9 @@ export function frozenPointsFor(raceId: string, file?: string): ModelOutputPoint
     const votes: Record<string, number | null> = {};
     for (const c of cands) votes[candidateId(c[0])] = c[2];
     return {
-      schema: HISTORY_SCHEMA, kind: "MODEL_OUTPUT", pointId: sha256Hex(`frozen|${raceId}|${snap.commit}`), raceId, observedAt: snap.committedAt, sourceTimestamp: null,
+      schema: HISTORY_SCHEMA, kind: "MODEL_OUTPUT", pointId: sha256Hex(`frozen|${raceId}|${evId}`), raceId, observedAt, sourceTimestamp: null,
       sourceClass: "FROZEN_FORECAST", status: "LIVE", candidates: roster, revision: { status: "ORIGINAL", supersedes: null, note: null }, reporting: null,
-      model: { id: FROZEN_MODEL_ID, version: "UNVERSIONED", snapshot: snap.snapshot, asOf: snap.modelUpdated },
+      model: { id: FROZEN_MODEL_ID, version: "UNVERSIONED", snapshot: snap.snapshot, asOf: snap.modelUpdated }, publication,
       winProbability: priced ? { [gopId]: probGop, [demId]: r6(1 - probGop) } : null, winProbabilityBasis: priced ? "TWO_SIDE" : null,
       margin: margin !== null && demId && gopId ? { pp: margin, reference: { plus: gopId, minus: demId }, low: p10, high: p90, intervalBasis: "p10 to p90 of the model's simulated margins" } : null,
       projectedFinalVotes: cands.length ? votes : null, provenance: { origin: "git:public/forecast/model.json", ref: snap.commit },
@@ -248,6 +275,8 @@ export interface HistoryLoadOptions extends PrepareOptions {
   /** Add the repository's frozen dataset when the store holds no frozen forecast for the race. Default true. */
   frozenFallback?: boolean;
   frozenFile?: string;
+  /** Preview diagnostics only: every frozen snapshot, published or not. A public surface drops unpublished ones regardless. */
+  frozenInclude?: "PUBLISHED" | "ALL";
   /** Preview only: read the shadow stream too. Ignored on a public surface. */
   includeShadow?: boolean;
 }
@@ -260,7 +289,7 @@ export async function loadRaceHistory(store: ObjectStore, raceId: string, opts: 
   const shadow = opts.surface === "PREVIEW" && opts.includeShadow ? await readModelOutputs(store, raceId, { shadow: true }) : { points: [], corrupt: 0 };
   const points: HistoryPoint[] = [...model.points, ...shadow.points];
   if (opts.frozenFallback !== false && !model.points.some((p) => p.sourceClass === "FROZEN_FORECAST")) {
-    try { points.push(...frozenPointsFor(raceId, opts.frozenFile)); } catch (e) { if (!(e instanceof Error) || (e as NodeJS.ErrnoException).code !== "ENOENT") throw e; }
+    try { points.push(...frozenPointsFor(raceId, opts.frozenFile, opts.surface === "PREVIEW" ? opts.frozenInclude : "PUBLISHED")); } catch (e) { if (!(e instanceof Error) || (e as NodeJS.ErrnoException).code !== "ENOENT") throw e; }
   }
   const roster: HistoryCandidate[] = [...points].filter((p): p is ModelOutputPoint => p.kind === "MODEL_OUTPUT").sort((a, b) => Date.parse(b.observedAt) - Date.parse(a.observedAt))[0]?.candidates ?? [];
   const loaded = await readObservationRecords(store, raceId);

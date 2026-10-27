@@ -5,7 +5,7 @@
 // three candidates, a frozen forecast history, a live projection that starts without a valid probability, a model-version change, a
 // revision, a downward vote correction, a feed outage, an out-of-order reading, and a shadow stream that must stay apart.
 
-import { HISTORY_SCHEMA, type HistoryCandidate, type HistoryPoint, type ModelOutputPoint, type ResultPoint } from "./raceHistory";
+import { HISTORY_SCHEMA, type HistoryCandidate, type HistoryPoint, type ModelOutputPoint, type ResultPoint, type SourceOutage } from "./raceHistory";
 
 export const DEMO_RACE_ID = "demo-three-way";
 export const DEMO_NIGHT_START = Date.parse("2026-11-04T00:00:00Z"); // 7 PM ET
@@ -36,6 +36,14 @@ export interface DemoOptions {
   seed?: number;
   /** Frozen forecasts in the nine days before. */
   frozen?: number;
+}
+
+/** The synthetic night's 40-minute feed outage, declared as a recorder would declare it. Without a declaration a quiet feed simply holds. */
+export function syntheticOutages(opts: DemoOptions = {}): SourceOutage[] {
+  const n = opts.results ?? 96;
+  if (n !== 96) return [];
+  const at = (i: number) => iso(DEMO_NIGHT_START + 5 * 60_000 + i * (8 * 3_600_000 / n));
+  return [{ provider: "*", from: at(40), to: at(48), reason: "the results feed returned errors" }];
 }
 
 export function syntheticNight(opts: DemoOptions = {}): HistoryPoint[] {

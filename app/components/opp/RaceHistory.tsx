@@ -6,9 +6,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./studio.css";
 import "./raceHistory.css";
 import {
-  buildChart, candidateColor, decimate, defaultRange, fmtLead, fmtProb, fmtStamp, fmtVotes, heldAt, lastName, RANGE_LABEL, rangeHasData, rangeWindow,
-  readoutAt, stepTime, timeTicks, windowSeries, ZONE_LABEL, zoneName,
-  type ChartData, type ChartId, type HistoryCandidate, type PreparedHistory, type RangeId, type ReadoutRow, type Series, type SeriesPoint, type ZoneId,
+  buildChart, candidateColor, decimate, defaultRange, fmtLead, fmtProb, fmtStamp, fmtVotes, heldAt, lastName, lastUpdated, PARTY_COLOR, RANGE_LABEL, rangeHasData, rangeWindow,
+  readoutAt, SHADOW_COLOR, stepTime, timeTicks, windowSeries, ZONE_LABEL, zoneName,
+  type ChartData, type ChartId, type Freshness, type HistoryCandidate, type PreparedHistory, type RangeId, type ReadoutRow, type Series, type SeriesPoint, type Tick, type ZoneId,
 } from "@/app/lib/intelligence/raceHistory";
 
 const TABS: { id: ChartId; label: string }[] = [{ id: "prob", label: "WIN PROBABILITY" }, { id: "margin", label: "EXPECTED MARGIN" }, { id: "votes", label: "VOTE TOTALS" }];
@@ -77,14 +77,15 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
   const tz = zoneName(zone);
   const narrow = W < 560;
 
-  const H = height, L = narrow ? 42 : 56, R = narrow ? 58 : 116, T = 24, B = 30;
+  const H = height, L = narrow ? 42 : 56, R = narrow ? 66 : 116, T = 24, B = 30;
   const pw = W - L - R;
   const x = (t: number) => L + ((t - t0) / Math.max(1, t1 - t0)) * pw;
   const [ylo, yhi] = data.yDomain;
-  const y = (v: number) => T + ((yhi - v) / Math.max(1e-9, yhi - ylo)) * (H - T - B);
+  const clampV = (v: number) => Math.min(yhi, Math.max(ylo, v));
+  const y = (v: number) => T + ((yhi - clampV(v)) / Math.max(1e-9, yhi - ylo)) * (H - T - B);
   const ref = data.reference;
-  const plusColor = ref ? candidateColor(ref.plus, h.candidates.indexOf(ref.plus)) : "#ff4d6a";
-  const minusColor = ref ? candidateColor(ref.minus, h.candidates.indexOf(ref.minus)) : "#5b8fff";
+  const plusColor = ref ? candidateColor(ref.plus, h.candidates.indexOf(ref.plus)) : PARTY_COLOR.R;
+  const minusColor = ref ? candidateColor(ref.minus, h.candidates.indexOf(ref.minus)) : PARTY_COLOR.D;
 
   const yTicks = useMemo(() => {
     if (chart === "prob") return [0, 25, 50, 75, 100];
@@ -93,16 +94,34 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
     const out: number[] = []; for (let v = -Math.floor(yhi / step) * step; v <= yhi + 1e-9; v += step) out.push(Math.round(v * 100) / 100); return out;
   }, [chart, yhi, narrow]);
   const yLabel = (v: number) => (chart === "prob" ? `${v}%` : chart === "votes" ? compact(v) : Math.abs(v) < 1e-9 ? "Even" : ref ? `${axisTag(v > 0 ? ref.plus : ref.minus)}+${Math.abs(v)}` : `${v > 0 ? "+" : "−"}${Math.abs(v)}`);
-  const xTicks = useMemo(() => timeTicks(t0, t1, tz, narrow ? 4 : 8), [t0, t1, tz, narrow]);
+  // at most one label per ~86px (66px narrow); day labels win over hour labels, and no two labels may overlap
+  const xTicks = useMemo(() => {
+    const px = (t: number) => L + ((t - t0) / Math.max(1, t1 - t0)) * pw;
+    const wOf = (s: string) => s.length * 6.4 + 12;
+    const kept: Tick[] = [];
+    const fits = (q: Tick) => { const a = px(q.t), w = wOf(q.label); return a - w / 2 >= 2 && a + w / 2 <= W - 2 && kept.every((k) => Math.abs(px(k.t) - a) >= (wOf(k.label) + w) / 2); };
+    const all = timeTicks(t0, t1, tz, Math.max(2, Math.floor(pw / (narrow ? 66 : 86))));
+    for (const q of all) if (q.major && fits(q)) kept.push(q);
+    for (const q of all) if (!q.major && fits(q)) kept.push(q);
+    return kept.sort((a, b) => a.t - b.t);
+  }, [t0, t1, tz, narrow, pw, L, W]);
 
   // geometry is rebuilt when the data, window or size change, never on cursor movement
   const drawn = useMemo(() => data.series.map((s) => {
     const pts = decimate(windowSeries(s, t0, t1), t0, t1, Math.max(50, Math.round(pw)));
     const segs = stepsOf(s, pts, endT, t0);
-    const X = (t: number) => (L + ((t - t0) / Math.max(1, t1 - t0)) * pw).toFixed(1), Y = (v: number) => (T + ((yhi - v) / Math.max(1e-9, yhi - ylo)) * (H - T - B)).toFixed(1);
+    const cv = (v: number) => Math.min(yhi, Math.max(ylo, v));
+    const X = (t: number) => (L + ((t - t0) / Math.max(1, t1 - t0)) * pw).toFixed(1), Y = (v: number) => (T + ((yhi - cv(v)) / Math.max(1e-9, yhi - ylo)) * (H - T - B)).toFixed(1);
     let line = "", band = "", area = "";
     const iso: { t: number; v: number }[] = [];
+    // runs beyond the scale: drawn along the edge and marked with the true value
+    const off: { t: number; v: number; up: boolean }[] = [];
     for (const seg of segs) {
+      let run: { t: number; v: number; up: boolean } | null = null;
+      for (const st of seg) {
+        const v = st.q.v as number, up = v > yhi;
+        if (up || v < ylo) { if (!run || run.up !== up) { run = { t: Math.max(st.a, t0), v, up }; off.push(run); } else if (Math.abs(v) > Math.abs(run.v)) run.v = v; } else run = null;
+      }
       if (seg.length === 1 && seg[0].a === seg[0].b) { iso.push({ t: seg[0].a, v: seg[0].q.v as number }); continue; }
       let d = `M${X(seg[0].a)},${Y(seg[0].q.v as number)}H${X(seg[0].b)}`;
       for (let k = 1; k < seg.length; k++) d += `V${Y(seg[k].q.v as number)}H${X(seg[k].b)}`;
@@ -110,9 +129,9 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
       if (chart === "margin" && s.phase !== "SHADOW" && s.source === "MODEL") area += `${d}V${Y(0)}H${X(seg[0].a)}Z`;
       if (s.band) for (const st of seg) if (st.q.lo != null && st.q.hi != null && st.b > st.a) band += `M${X(st.a)},${Y(st.q.hi)}H${X(st.b)}V${Y(st.q.lo)}H${X(st.a)}Z`;
     }
-    const obs = s.source === "RESULT" && pts.length <= 160 ? pts.filter((q) => q.v !== null && !q.carried) : [];
+    const obs = s.source === "RESULT" && pts.length <= 160 ? pts.filter((q) => q.v !== null && !q.carried && q.v <= yhi && q.v >= ylo) : [];
     const flags = pts.filter((q) => q.flag && q.v !== null && !q.carried);
-    return { s, line, band, area, iso, obs, flags };
+    return { s, line, band, area, iso, obs, flags, off };
   }), [data, t0, t1, pw, endT, chart, L, T, H, B, yhi, ylo]);
 
   const markers = data.markers.filter((m) => m.t >= t0 && m.t <= t1);
@@ -131,11 +150,12 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
       const cur = best.get(key);
       if (!cur || rankOf(s) < rankOf(cur.s)) best.set(key, { s, v: held.point.v });
     }
-    const list = [...best.values()].map((e) => ({ ...e, y: T + ((yhi - e.v) / Math.max(1e-9, yhi - ylo)) * (H - T - B) })).sort((a, b) => a.y - b.y);
-    for (let i = 1; i < list.length; i++) if (list[i].y - list[i - 1].y < 15) list[i].y = list[i - 1].y + 15;
-    for (let i = list.length - 1; i >= 0; i--) list[i].y = Math.min(list[i].y, i === list.length - 1 ? H - B - 4 : list[i + 1].y - 15);
+    const gap = narrow ? 26 : 15, floor = H - B - (narrow ? 14 : 4);
+    const list = [...best.values()].map((e) => ({ ...e, off: e.v > yhi ? 1 : e.v < ylo ? -1 : 0, y: T + ((yhi - Math.min(yhi, Math.max(ylo, e.v))) / Math.max(1e-9, yhi - ylo)) * (H - T - B) })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < list.length; i++) if (list[i].y - list[i - 1].y < gap) list[i].y = list[i - 1].y + gap;
+    for (let i = list.length - 1; i >= 0; i--) list[i].y = Math.min(list[i].y, i === list.length - 1 ? floor : list[i + 1].y - gap);
     return list;
-  }, [data, chart, endT, T, H, B, yhi, ylo]);
+  }, [data, chart, endT, T, H, B, yhi, ylo, narrow]);
   const fmtEnd = (v: number) => (chart === "prob" ? fmtProb(v) : chart === "votes" ? compact(v) : fmtLead(v, ref));
   const endTag = (s: Series) => (chart === "margin" ? (s.source === "RESULT" ? "counted" : "") : lastName(s.label.replace(/ \(estimated final\)$/, "")));
   const colorAt = (s: Series, v: number) => (chart === "margin" && s.phase !== "SHADOW" ? (v >= 0 ? plusColor : minusColor) : s.color);
@@ -150,6 +170,8 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
   };
   const ct = cursor !== null && cursor >= t0 && cursor <= t1 ? cursor : null;
   const readout = ct !== null ? readoutAt(data, h, ct) : null;
+  const cross = ct !== null ? TABS.filter((c) => c.id !== chart).map((c) => crossLine(c.id, charts[c.id], h, ct)).filter((s): s is string => !!s) : [];
+  const updated = lastUpdated(h);
   const onPoint = (e: React.PointerEvent<SVGSVGElement>) => {
     const b = e.currentTarget.getBoundingClientRect(), px = ((e.clientX - b.left) / b.width) * W;
     if (px < L - 4 || px > W - R + 4) { if (e.pointerType === "mouse") setCursor(null); return; }
@@ -175,6 +197,7 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
         {statuses.has("SYNTHETIC") ? <span className="rh-badge">Synthetic data</span> : null}
         {statuses.has("TEST") ? <span className="rh-badge">Test data</span> : null}
         {shadowOk && overlay ? <span className="rh-badge sh">Shadow overlay</span> : null}
+        {updated !== null ? <span className="rh-upd">Last updated {fmtStamp(updated, tz)}</span> : null}
       </div>
       <div className="stu-bar">
         <div className="stu-seg rh-tabs" role="group" aria-label="Chart">
@@ -196,9 +219,10 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
             <clipPath id={`${uid}p`}><rect x={L} y={T - 2} width={Math.max(0, pw)} height={Math.max(0, H - T - B + 4)} /></clipPath>
             <clipPath id={`${uid}u`}><rect x={L} y={0} width={Math.max(0, pw)} height={Math.max(0, y0)} /></clipPath>
             <clipPath id={`${uid}d`}><rect x={L} y={y0} width={Math.max(0, pw)} height={Math.max(0, H - y0)} /></clipPath>
-            <linearGradient id={`${uid}ga`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={plusColor} stopOpacity=".26" /><stop offset="1" stopColor={plusColor} stopOpacity="0" /></linearGradient>
-            <linearGradient id={`${uid}gb`} x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopColor={minusColor} stopOpacity=".26" /><stop offset="1" stopColor={minusColor} stopOpacity="0" /></linearGradient>
+            <linearGradient id={`${uid}ga`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopOpacity=".26" style={{ stopColor: plusColor }} /><stop offset="1" stopOpacity="0" style={{ stopColor: plusColor }} /></linearGradient>
+            <linearGradient id={`${uid}gb`} x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopOpacity=".26" style={{ stopColor: minusColor }} /><stop offset="1" stopOpacity="0" style={{ stopColor: minusColor }} /></linearGradient>
           </defs>
+          {h.outages.map((o, i) => { const a = Math.max(x(o.from), L), b = Math.min(x(o.to ?? endT), W - R); return b > a ? <g key={`u${i}`} className="rh-out"><rect x={a} y={T} width={b - a} height={H - T - B} /><title>{`Results source unavailable${o.provider !== "*" ? ` (${o.provider})` : ""}: ${o.reason}`}</title></g> : null; })}
           {preEnd !== null && preEnd > t0 ? <g><rect className="rh-pre" x={L} y={T} width={x(preEnd) - L} height={H - T - B} />{x(preEnd) - L > 120 ? <text className="rh-cap" x={L + 8} y={T + 13}>Pre-election forecast</text> : null}</g> : null}
           {preEnd !== null && preEnd < t1 && W - R - x(preEnd) > 70 ? <text className="rh-cap" x={x(preEnd) + 8} y={T + 13}>Live</text> : null}
           {yTicks.map((v) => (
@@ -216,41 +240,76 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
             </g>
           ))}
           <g clipPath={`url(#${uid}p)`}>
-            {drawn.map(({ s, band }) => band ? <path key={`b${s.key}`} d={band} className="rh-band" fill={chart === "margin" && s.phase !== "SHADOW" ? "#e9edf5" : s.color} /> : null)}
+            {drawn.map(({ s, band }) => band ? <path key={`b${s.key}`} d={band} className="rh-band" style={{ fill: chart === "margin" && s.phase !== "SHADOW" ? "var(--rh-neutral)" : s.color }} /> : null)}
             {chart === "margin" ? drawn.map(({ s, area }) => area ? <g key={`a${s.key}`} opacity={s.phase === "FROZEN" ? 0.5 : 1}><path d={area} fill={`url(#${uid}ga)`} clipPath={`url(#${uid}u)`} /><path d={area} fill={`url(#${uid}gb)`} clipPath={`url(#${uid}d)`} /></g> : null) : null}
             {drawn.map(({ s, line, iso, obs }) => {
               const cls = `rh-line ${lineClass(s)}`;
               const split = chart === "margin" && s.phase !== "SHADOW";
               return (
                 <g key={s.key}>
-                  {line ? (split ? <><path d={line} className={cls} stroke={plusColor} clipPath={`url(#${uid}u)`} /><path d={line} className={cls} stroke={minusColor} clipPath={`url(#${uid}d)`} /></> : <path d={line} className={cls} stroke={s.color} />) : null}
-                  {iso.map((q, i) => <circle key={`i${i}`} className="rh-iso" cx={x(q.t)} cy={y(q.v)} r={3.4} fill={colorAt(s, q.v)} />)}
-                  {obs.map((q, i) => <circle key={`o${i}`} className="rh-obs" cx={x(q.t)} cy={y(q.v as number)} r={1.9} fill={colorAt(s, q.v as number)} />)}
+                  {line ? (split ? <><path d={line} className={cls} style={{ stroke: plusColor }} clipPath={`url(#${uid}u)`} /><path d={line} className={cls} style={{ stroke: minusColor }} clipPath={`url(#${uid}d)`} /></> : <path d={line} className={cls} style={{ stroke: s.color }} />) : null}
+                  {iso.map((q, i) => <circle key={`i${i}`} className="rh-iso" cx={x(q.t)} cy={y(q.v)} r={3.4} style={{ fill: colorAt(s, q.v) }} />)}
+                  {obs.map((q, i) => <circle key={`o${i}`} className="rh-obs" cx={x(q.t)} cy={y(q.v as number)} r={1.9} style={{ fill: colorAt(s, q.v as number) }} />)}
                 </g>
               );
             })}
             {drawn.flatMap(({ s, flags }) => flags.map((q, i) => <circle key={`f${s.key}${i}`} className="rh-flag" cx={x(q.t)} cy={y(q.v as number)} r={5.5}><title>{q.flag === "DECREASE" ? "Reported total went down" : q.flag === "CORRECTION" ? "Correction" : q.flag === "REVISION" ? "Revised publication" : "Source time older than an earlier reading"}</title></circle>))}
           </g>
+          {drawn.flatMap(({ s, off }) => off.slice(0, 6).map((o, i) => {
+            const cx = Math.max(L + 6, x(o.t)), cy = o.up ? T - 1 : H - B + 1, c = colorAt(s, o.v);
+            return (
+              <g key={`x${s.key}${i}`} className="rh-off">
+                <path d={o.up ? `M${cx - 5},${cy + 7}L${cx},${cy}L${cx + 5},${cy + 7}Z` : `M${cx - 5},${cy - 7}L${cx},${cy}L${cx + 5},${cy - 7}Z`} style={{ fill: c }} />
+                {i === 0 && !narrow ? <text x={cx + 9} y={o.up ? cy + 8 : cy - 1} style={{ fill: c }}>{fmtEnd(o.v)} · off scale</text> : null}
+                <title>{`${s.label}: ${fmtEnd(o.v)}, beyond the chart's scale`}</title>
+              </g>
+            );
+          }))}
           {ends.map((e) => (
             <g key={`e${e.s.key}`}>
-              <circle cx={x(endT)} cy={y(e.v)} r={4} fill={colorAt(e.s, e.v)} />
-              <text x={W - R + 10} y={e.y + 4.5} className="stu-endl" style={{ fontSize: narrow ? 11.5 : 13 }} fill={colorAt(e.s, e.v)}>{fmtEnd(e.v)}{!narrow && endTag(e.s) ? <tspan className="stu-ax" dx="5">{endTag(e.s)}</tspan> : null}</text>
+              <circle cx={x(endT)} cy={y(e.v)} r={4} style={{ fill: colorAt(e.s, e.v) }} />
+              <text x={W - R + 10} y={e.y + 4.5} className="stu-endl" style={{ fontSize: narrow ? 11.5 : 13, fill: colorAt(e.s, e.v) }}>
+                {e.off ? (e.off > 0 ? "\u25B2" : "\u25BC") : null}{fmtEnd(e.v)}
+                {endTag(e.s) ? (narrow ? <tspan className="stu-ax" x={W - R + 10} dy="12" style={{ fontSize: 9.5 }}>{endTag(e.s).slice(0, 9)}</tspan> : <tspan className="stu-ax" dx="5">{endTag(e.s)}</tspan>) : null}
+                {e.off ? <title>Beyond the chart&apos;s scale</title> : null}
+              </text>
             </g>
           ))}
           {ct !== null && readout ? (
             <g className="stu-scrub" pointerEvents="none">
               <line x1={x(ct)} x2={x(ct)} y1={T} y2={H - B} />
-              {readout.rows.map((r) => (r.value !== null ? <circle key={r.seriesKey} cx={x(ct)} cy={y(r.value)} r={4} fill="#fff" stroke={chart === "margin" && r.phase !== "SHADOW" ? (r.value >= 0 ? plusColor : minusColor) : r.color} strokeWidth={2.2} /> : null))}
+              {readout.rows.map((r) => (r.value !== null ? <circle key={r.seriesKey} className="rh-dot" cx={x(ct)} cy={y(r.value)} r={4} strokeWidth={2.2} style={{ stroke: chart === "margin" && r.phase !== "SHADOW" ? (r.value >= 0 ? plusColor : minusColor) : r.color }} /> : null))}
             </g>
           ) : null}
         </svg>
         {empty ? <div className="rh-empty"><div><b>{chart === "votes" ? "No votes yet" : "Nothing published"}</b>{empty}{chart === "votes" ? " Reported totals appear here as results arrive." : ""}</div></div> : null}
-        {readout && !narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} style={{ left: `${(x(readout.t) / W) * 100}%`, transform: x(readout.t) > W * 0.55 ? "translateX(calc(-100% - 14px))" : "translateX(14px)" }} /> : null}
+        {readout && !narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} style={{ left: `${(x(readout.t) / W) * 100}%`, transform: x(readout.t) > W * 0.55 ? "translateX(calc(-100% - 14px))" : "translateX(14px)" }} /> : null}
       </div>
-      {readout && narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} dock /> : null}
-      <Legend data={data} chart={chart} narrow={narrow} />
+      {readout && narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} dock /> : null}
+      <Legend data={data} chart={chart} narrow={narrow} outages={h.outages.length > 0} />
     </div>
   );
+}
+
+/** One line per other chart at the cursor time, so the three metrics read together. */
+function crossLine(id: ChartId, d: ChartData, h: PreparedHistory, t: number): string | null {
+  const rows = readoutAt(d, h, t).rows.map((r, i) => ({ r, s: d.series[i] })).filter(({ r }) => r.value !== null && r.phase !== "SHADOW");
+  if (!rows.length) return null;
+  const rank = (s: Series) => (s.source === "RESULT" ? 0 : s.phase === "LIVE" ? 1 : 2);
+  if (id === "margin") {
+    const proj = rows.filter(({ s }) => s.source === "MODEL").sort((a, b) => rank(a.s) - rank(b.s))[0];
+    const cnt = rows.find(({ s }) => s.source === "RESULT");
+    return `Margin: ${[proj ? `${fmtLead(proj.r.value, d.reference)} ${proj.s.phase === "FROZEN" ? "forecast" : "projected"}` : null, cnt ? `${fmtLead(cnt.r.value, d.reference)} counted` : null].filter(Boolean).join(" · ")}`;
+  }
+  const reported = id === "votes" && rows.some(({ s }) => s.source === "RESULT");
+  const best = new Map<string, { r: ReadoutRow; s: Series }>();
+  for (const e of rows) {
+    if (id === "votes" && (e.s.source === "RESULT") !== reported) continue;
+    const k = e.s.candidateId ?? e.s.key, cur = best.get(k);
+    if (!cur || rank(e.s) < rank(cur.s)) best.set(k, e);
+  }
+  const parts = [...best.values()].map(({ r, s }) => `${lastName(s.label.replace(/ \(estimated final\)$/, ""))} ${id === "prob" ? fmtProb(r.value) : compact(r.value as number)}`);
+  return `${id === "prob" ? "Win chance" : reported ? "Reported votes" : "Est. final votes"}: ${parts.join(" · ")}`;
 }
 
 function fmtValue(chart: ChartId, v: number, ref: ChartData["reference"]): string {
@@ -267,21 +326,30 @@ function sourceLine(r: ReadoutRow, tz: string | undefined): { text: string; tag:
   const st = src.sourceTimestamp ? `source time ${fmtStamp(Date.parse(src.sourceTimestamp), tz)}` : "no source time given";
   if (src.kind === "MODEL_OUTPUT") {
     const v = src.model.version === "UNVERSIONED" ? "unversioned" : `v${src.model.version}`;
-    return { text: `${CLASS_LABEL[src.sourceClass]} · ${src.model.id} ${v}, snapshot ${src.model.snapshot} · published ${asOf.replace("as of ", "")}`, tag };
+    const pub = src.publication;
+    const when = pub && pub.class !== "PUBLISHED" ? `committed ${asOf.replace("as of ", "")}, never verified as published` : `published ${asOf.replace("as of ", "")}${pub?.revertedBy ? ", later reverted" : ""}`;
+    return { text: `${CLASS_LABEL[src.sourceClass]} · ${src.model.id} ${v}, snapshot ${src.model.snapshot} · ${when}`, tag: tag ?? (pub && pub.class !== "PUBLISHED" ? pub.class : null) };
   }
   const rep = src.reporting?.pct != null ? ` · ${src.reporting.pct}% reporting (${src.reporting.definition.replace(/\.$/, "").toLowerCase()})` : "";
   return { text: `${CLASS_LABEL.RESULT_FEED} · ${src.provider} · first seen ${asOf.replace("as of ", "")} · ${st}${rep}`, tag };
 }
 
-function Readout({ readout, data, chart, tz, sides, style, dock }: { readout: ReturnType<typeof readoutAt>; data: ChartData; chart: ChartId; tz: string | undefined; sides: [string, string]; style?: React.CSSProperties; dock?: boolean }) {
+function freshText(f: Freshness, tz: string | undefined): string {
+  if (f.kind === "NEW") return "New reading at this time.";
+  if (f.kind === "CONFIRMED") return `Re-confirmed unchanged at ${fmtStamp(f.at, tz)}.`;
+  if (f.kind === "NO_NEW") return "No new result since this reading.";
+  return `Source unavailable since ${fmtStamp(f.since, tz)} (${f.reason}). Last reported values shown.`;
+}
+
+function Readout({ readout, data, chart, tz, sides, cross, style, dock }: { readout: ReturnType<typeof readoutAt>; data: ChartData; chart: ChartId; tz: string | undefined; sides: [string, string]; cross: string[]; style?: React.CSSProperties; dock?: boolean }) {
   const byKey = new Map(data.series.map((s) => [s.key, s]));
   // a live model series that has started but has no value here is shown as a gap, so a missing probability is never mistaken for zero
   const rows = readout.rows.filter((r) => r.value !== null || (r.phase === "LIVE" && byKey.get(r.seriesKey)?.source === "MODEL" && (byKey.get(r.seriesKey)?.pts[0]?.t ?? Infinity) <= readout.t));
-  const groups = new Map<string, { head: ReturnType<typeof sourceLine>; rows: ReadoutRow[]; flag: string | null }>();
+  const groups = new Map<string, { head: ReturnType<typeof sourceLine>; rows: ReadoutRow[]; flag: string | null; fresh: Freshness | null }>();
   for (const r of rows) {
     const k = r.source?.pointId ?? `none:${r.phase}`;
     let g = groups.get(k);
-    if (!g) { g = { head: sourceLine(r, tz), rows: [], flag: null }; groups.set(k, g); }
+    if (!g) { g = { head: sourceLine(r, tz), rows: [], flag: null, fresh: r.freshness }; groups.set(k, g); }
     g.rows.push(r);
     if (r.flag && !g.flag) g.flag = r.flag === "DECREASE" ? "Reported total went down at this reading; kept as reported." : r.flag === "CORRECTION" ? `Correction${r.source?.revision.note ? `: ${r.source.revision.note}` : ""}.` : r.flag === "REVISION" ? `Revision of an earlier publication${r.source?.revision.note ? `: ${r.source.revision.note}` : ""}.` : "Source time is older than an earlier reading.";
   }
@@ -300,14 +368,16 @@ function Readout({ readout, data, chart, tz, sides, style, dock }: { readout: Re
             </div>
           ))}
           {g.flag ? <div className="f">{g.flag}</div> : null}
+          {g.fresh ? <div className={`fr${g.fresh.kind === "SOURCE_UNAVAILABLE" ? " out" : ""}`}>{freshText(g.fresh, tz)}</div> : null}
         </div>
       ))}
       {!rows.length ? <div className="s">No published value at this time.</div> : null}
+      {cross.length ? <div className="x">{cross.map((c) => <div key={c}>{c}</div>)}</div> : null}
     </div>
   );
 }
 
-function Legend({ data, chart, narrow }: { data: ChartData; chart: ChartId; narrow: boolean }) {
+function Legend({ data, chart, narrow, outages }: { data: ChartData; chart: ChartId; narrow: boolean; outages: boolean }) {
   const has = (f: (s: Series) => boolean) => data.series.some(f);
   const band = data.series.find((s) => s.band);
   const ref = data.reference;
@@ -329,10 +399,11 @@ function Legend({ data, chart, narrow }: { data: ChartData; chart: ChartId; narr
         {has((s) => s.dash === "DASHED" && s.phase === "LIVE") ? <span><i className="ln dashed" />Estimated final votes (model, not reported)</span> : null}
         {has((s) => s.phase === "FROZEN") ? <span><i className="ln frozen" />Frozen pre-election estimate of the final vote</span> : null}
       </> : null}
-      {has((s) => s.phase === "SHADOW") ? <span><i className="ln shadow" style={{ color: "#8a94a6" }} />Shadow model: research only, not published</span> : null}
+      {has((s) => s.phase === "SHADOW") ? <span><i className="ln shadow" style={{ color: SHADOW_COLOR }} />Shadow model: research only, not published</span> : null}
       {has((s) => s.pts.some((q) => q.flag)) ? <span><i className="rg" />Correction, decrease or revision, kept as recorded</span> : null}
-      <span>A break in a line means no valid published value; nothing is filled in</span>
-      {!narrow ? <span className="k">Hover, tap or use the arrow keys to read any update</span> : null}
+      {outages ? <span><i className="ou" />Results source unavailable: nothing new could be read</span> : null}
+      <span>Each value stands until the next update. A break means a value is known to be missing; nothing is filled in</span>
+      <span className="k">{narrow ? "Tap the chart to read any update" : "Hover, tap or use the arrow keys to read any update"}</span>
       {data.notShown.length ? <span className="ns">{data.notShown.map((n) => `${n.name}: ${n.reason}`).join(" · ")}</span> : null}
     </div>
   );

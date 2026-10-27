@@ -72,10 +72,16 @@ export interface ModelMargin {
   intervalBasis: string | null;
 }
 
+/** Whether a frozen snapshot was verifiably public. Only PUBLISHED frozen points may appear on a public surface. */
+export type PublicationClass = "PUBLISHED" | "UNVERIFIED" | "INTERNAL" | "REVERTED";
+export interface Publication { class: PublicationClass; publishedAt: string | null; evidence: string; revertedBy: string | null }
+
 export interface ModelOutputPoint extends PointBase {
   kind: "MODEL_OUTPUT";
   sourceClass: "FROZEN_FORECAST" | "LIVE_PROJECTION" | "SHADOW_MODEL";
   model: ModelId;
+  /** Required for FROZEN_FORECAST on a public surface. A live projection is recorded when published, so it carries none. */
+  publication?: Publication;
   /** Fractions 0–1 by candidate id. null as a whole, or per candidate, means the model published no valid probability. */
   winProbability: Record<string, number | null> | null;
   /** What the probabilities cover. TWO_SIDE: only the two margin sides are priced; others are "not priced", not 0. */
@@ -128,6 +134,17 @@ export interface PrepareOptions {
   surface: Surface;
   /** Statuses to admit. Public default: LIVE and NOT_PROVIDED. Test data needs TEST here, synthetic data SYNTHETIC. */
   statuses?: readonly DataStatus[];
+  /** Periods when a results source was known to be unavailable. The chart marks them; nothing is drawn or inferred inside them. */
+  outages?: readonly SourceOutage[];
+}
+
+export interface SourceOutage {
+  /** Provider name as on the result points, or "*" for every provider. */
+  provider: string;
+  from: string;
+  /** null: still unavailable. */
+  to: string | null;
+  reason: string;
 }
 
 export interface PreparedHistory {
@@ -139,11 +156,13 @@ export interface PreparedHistory {
   results: ResultPoint[];
   /** Preview only. Empty on a public surface. */
   shadow: ModelOutputPoint[];
-  excluded: { shadow: number; invalid: number; duplicate: number; status: Record<string, number> };
+  excluded: { shadow: number; invalid: number; duplicate: number; unpublished: number; status: Record<string, number> };
   bounds: [number, number] | null;
   /** Index in `models` of the last frozen forecast, or -1. */
   finalFrozenIndex: number;
   outOfOrder: number;
+  /** Known results-source outages, as epoch-ms intervals; `to` null means still unavailable. */
+  outages: { provider: string; from: number; to: number | null; reason: string }[];
 }
 
 const byTime = (a: HistoryPoint, b: HistoryPoint) => ms(a.observedAt) - ms(b.observedAt) || a.pointId.localeCompare(b.pointId);
@@ -162,7 +181,7 @@ function deriveRevisions(models: ModelOutputPoint[]): ModelOutputPoint[] {
 
 export function prepareHistory(raceId: string, input: readonly HistoryPoint[], opts: PrepareOptions): PreparedHistory {
   const statuses = new Set<DataStatus>(opts.statuses ?? ["LIVE", "NOT_PROVIDED"]);
-  const excluded: PreparedHistory["excluded"] = { shadow: 0, invalid: 0, duplicate: 0, status: {} };
+  const excluded: PreparedHistory["excluded"] = { shadow: 0, invalid: 0, duplicate: 0, unpublished: 0, status: {} };
   const ids = new Set<string>();
   const models: ModelOutputPoint[] = [], results: ResultPoint[] = [], shadow: ModelOutputPoint[] = [];
   for (const p of input) {
@@ -178,6 +197,7 @@ export function prepareHistory(raceId: string, input: readonly HistoryPoint[], o
       continue;
     }
     if (!statuses.has(p.status)) { excluded.status[p.status] = (excluded.status[p.status] ?? 0) + 1; continue; }
+    if (opts.surface === "PUBLIC" && p.sourceClass === "FROZEN_FORECAST" && p.publication?.class !== "PUBLISHED") { excluded.unpublished++; continue; }
     if (p.kind === "MODEL_OUTPUT") models.push(p); else results.push(p);
   }
   models.sort(byTime); results.sort(byTime); shadow.sort(byTime);
@@ -195,18 +215,29 @@ export function prepareHistory(raceId: string, input: readonly HistoryPoint[], o
   const candidates = [...roster.values()].sort((a, b) => rank(a) - rank(b) || (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
 
   const all = [...dm, ...results, ...shadow].map((p) => ms(p.observedAt));
+  const outages = (opts.outages ?? []).map((o) => ({ provider: o.provider, from: ms(o.from), to: o.to === null ? null : ms(o.to), reason: o.reason }))
+    .filter((o) => Number.isFinite(o.from) && (o.to === null || (Number.isFinite(o.to) && o.to > o.from))).sort((a, b) => a.from - b.from);
   return {
     raceId, surface: opts.surface, candidates, models: dm, results, shadow, excluded,
-    bounds: all.length ? [Math.min(...all), Math.max(...all)] : null, finalFrozenIndex, outOfOrder,
+    bounds: all.length ? [Math.min(...all), Math.max(...all)] : null, finalFrozenIndex, outOfOrder, outages,
   };
+}
+
+/** The latest moment any figure on the page was published or re-confirmed. */
+export function lastUpdated(p: PreparedHistory): number | null {
+  let t = -Infinity;
+  for (const m of p.models) t = Math.max(t, ms(m.observedAt));
+  for (const r of p.results) { t = Math.max(t, ms(r.observedAt)); const c = ms(r.confirmedThrough); if (Number.isFinite(c)) t = Math.max(t, c); }
+  return Number.isFinite(t) ? t : null;
 }
 
 const rank = (c: HistoryCandidate) => (c.party === "D" ? 0 : c.party === "R" ? 1 : c.side === "A" ? 0 : c.side === "B" ? 1 : 2);
 
 // ---- colors and labels -------------------------------------------------------------------------------------------------
 
-export const PARTY_COLOR: Record<string, string> = { D: "#5b8fff", R: "#ff4d6a", I: "#b78cff", IND: "#b78cff", NPA: "#b78cff", L: "#f2b84b", G: "#4cc38a" };
-const OTHER = ["#9aa3b2", "#2fc4d6", "#ff9f6b", "#c9d36a"];
+// Colors are theme tokens defined on .rh in raceHistory.css, so dark, light and future themes restyle the chart without code changes.
+export const PARTY_COLOR: Record<string, string> = { D: "var(--rh-d)", R: "var(--rh-r)", I: "var(--rh-i)", IND: "var(--rh-i)", NPA: "var(--rh-i)", L: "var(--rh-l)", G: "var(--rh-g)" };
+const OTHER = ["var(--rh-o1)", "var(--rh-o2)", "var(--rh-o3)", "var(--rh-o4)"];
 
 export function candidateColor(c: HistoryCandidate, index: number): string {
   if (c.party && PARTY_COLOR[c.party]) return PARTY_COLOR[c.party];
@@ -214,7 +245,8 @@ export function candidateColor(c: HistoryCandidate, index: number): string {
   if (c.side === "B") return PARTY_COLOR.R;
   return OTHER[index % OTHER.length];
 }
-export const SHADOW_COLOR = "#8a94a6";
+export const SHADOW_COLOR = "var(--rh-shadow)";
+export const NEUTRAL_COLOR = "var(--rh-neutral)";
 
 export const lastName = (name: string) => { const p = name.trim().split(/\s+/); return p.length > 1 && /^(jr|sr|ii|iii|iv)\.?$/i.test(p[p.length - 1]) ? p[p.length - 2] : p[p.length - 1] ?? name; };
 
@@ -273,8 +305,6 @@ export interface ChartData {
   times: number[];
   yDomain: [number, number];
 }
-
-export const RESULT_GAP_MS = 20 * 60_000;
 
 export interface BuildOptions {
   /** Include the shadow series as its own labelled overlay. Ignored on a public surface. */
@@ -371,7 +401,7 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
       if (!pts.some((q) => q.v !== null)) continue;
       series.push({
         key: `margin:${phase}`, candidateId: null, label: phase === "FROZEN" ? "Forecast margin (frozen)" : phase === "SHADOW" ? "Shadow margin (not published)" : "Projected final margin",
-        color: phase === "SHADOW" ? SHADOW_COLOR : "#e9edf5", dash: "SOLID", phase, source: phase === "SHADOW" ? "SHADOW" : "MODEL",
+        color: phase === "SHADOW" ? SHADOW_COLOR : NEUTRAL_COLOR, dash: "SOLID", phase, source: phase === "SHADOW" ? "SHADOW" : "MODEL",
         meaning: phase === "FROZEN" ? "Pre-election forecast of the final margin, frozen" : phase === "SHADOW" ? "Shadow model, not published" : "Published projection of the FINAL margin",
         breakAfterMs: null, extendTo: extendFor(p, phase), band: pts.some((q) => q.lo != null && q.hi != null), pts,
       });
@@ -382,12 +412,16 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
       counted.push({ t: ms(r.observedAt), v, src: i, ...untilOf(r), ...(r.totalsDecreased ? { flag: "DECREASE" as const } : r.revision.status === "CORRECTION" ? { flag: "CORRECTION" as const } : {}) });
     });
     if (counted.some((q) => q.v !== null)) series.push({
-      key: "margin:counted", candidateId: null, label: "Counted-vote margin", color: "#e9edf5", dash: "DASHED", phase: "LIVE", source: "RESULT",
-      meaning: "Margin among votes counted so far. Not a projection.", breakAfterMs: RESULT_GAP_MS, extendTo: null, band: false, pts: counted,
+      key: "margin:counted", candidateId: null, label: "Counted-vote margin", color: NEUTRAL_COLOR, dash: "DASHED", phase: "LIVE", source: "RESULT",
+      meaning: "Margin among votes counted so far. Not a projection.", breakAfterMs: null, extendTo: null, band: false, pts: counted,
     });
     if (!series.length) emptyReason = "No margin has been published for this race.";
-    const vals = series.flatMap((s) => s.pts.flatMap((q) => [q.v, q.lo, q.hi])).filter((x): x is number => typeof x === "number");
-    const m = vals.length ? Math.max(...vals.map(Math.abs)) : 5;
+    // The scale follows the forecast. An early count with a lopsided first batch can run far past it; it is capped and marked
+    // off scale rather than allowed to flatten the forecast into a line.
+    const abs = (ss: Series[]) => ss.flatMap((s) => s.pts.flatMap((q) => [q.v, q.lo, q.hi])).filter((x): x is number => typeof x === "number").map(Math.abs);
+    const m1 = Math.max(0, ...abs(series.filter((s) => s.source !== "RESULT")));
+    const m2 = Math.max(0, ...abs(series.filter((s) => s.source === "RESULT")));
+    const m = Math.max(m1, m1 > 0 ? Math.min(m2, Math.max(m1 * 2, m1 + 10)) : m2) || 5;
     const [lo, hi] = nice(-m, m, 4);
     const ext = Math.max(Math.abs(lo), Math.abs(hi));
     return finish(chart, series, markers, notShown, reference, emptyReason, [-ext, ext]);
@@ -403,7 +437,7 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
     let any = false;
     if (rep.some((q) => q.v !== null)) {
       any = true;
-      series.push({ key: `votes:${c.id}:reported`, candidateId: c.id, label: c.name, color: colorOf(c.id), dash: "SOLID", phase: "LIVE", source: "RESULT", meaning: "Votes reported by the results source", breakAfterMs: RESULT_GAP_MS, extendTo: null, band: false, pts: rep });
+      series.push({ key: `votes:${c.id}:reported`, candidateId: c.id, label: c.name, color: colorOf(c.id), dash: "SOLID", phase: "LIVE", source: "RESULT", meaning: "Votes reported by the results source", breakAfterMs: null, extendTo: null, band: false, pts: rep });
     }
     for (const phase of ["FROZEN", "LIVE", "SHADOW"] as const) {
       const est: SeriesPoint[] = [];
@@ -535,8 +569,24 @@ export interface ReadoutRow {
   asOf: number | null;
   flag: PointFlag | null;
   source: PreparedHistory["models"][number] | ResultPoint | null;
+  /** Results only. What was known at the cursor time about whether the value was still current; never uses later information. */
+  freshness: Freshness | null;
 }
+export type Freshness =
+  | { kind: "NEW" }
+  | { kind: "CONFIRMED"; at: number }
+  | { kind: "NO_NEW"; since: number }
+  | { kind: "SOURCE_UNAVAILABLE"; since: number; reason: string };
 export interface Readout { t: number; rows: ReadoutRow[] }
+
+function freshnessAt(p: PreparedHistory, src: ResultPoint, q: SeriesPoint, t: number): Freshness {
+  const out = p.outages.find((o) => (o.provider === "*" || o.provider === src.provider) && o.from <= t && (o.to === null || t < o.to));
+  if (out) return { kind: "SOURCE_UNAVAILABLE", since: out.from, reason: out.reason };
+  if (q.t === t) return { kind: "NEW" };
+  // confirmedThrough is the latest re-confirmation. If it is after t, the earlier ones were not kept, so nothing is claimed.
+  if (q.until !== undefined && q.until <= t) return { kind: "CONFIRMED", at: q.until };
+  return { kind: "NO_NEW", since: q.t };
+}
 
 export function readoutAt(c: ChartData, p: PreparedHistory, t: number): Readout {
   const rows: ReadoutRow[] = c.series.map((s) => {
@@ -545,6 +595,7 @@ export function readoutAt(c: ChartData, p: PreparedHistory, t: number): Readout 
     return {
       seriesKey: s.key, label: s.label, color: s.color, dash: s.dash, phase: s.phase, meaning: s.meaning, value: h ? h.point.v : null,
       band: h && h.point.lo != null && h.point.hi != null ? [h.point.lo, h.point.hi] : null, asOf: h ? h.point.t : null, flag: h?.point.flag ?? null, source: src,
+      freshness: h && src?.kind === "RESULT_OBSERVATION" ? freshnessAt(p, src, h.point, t) : null,
     };
   });
   return { t, rows };

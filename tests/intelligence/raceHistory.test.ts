@@ -5,11 +5,11 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import {
-  buildChart, decimate, defaultRange, fmtLead, fmtProb, fmtPp, fmtStamp, fmtVotes, heldAt, HISTORY_SCHEMA, prepareHistory, rangeHasData, rangeWindow, readoutAt, stepTime, timeTicks,
+  buildChart, decimate, defaultRange, fmtLead, fmtProb, fmtPp, fmtStamp, fmtVotes, heldAt, HISTORY_SCHEMA, lastUpdated, prepareHistory, rangeHasData, rangeWindow, readoutAt, stepTime, timeTicks,
   windowSeries, zoneOffset, zonedToUtc, ELECTION_NIGHT_START,
   type HistoryCandidate, type HistoryPoint, type ModelOutputPoint, type ResultPoint, type Series, type SeriesPoint,
 } from "../../app/lib/intelligence/raceHistory";
-import { DEMO_NIGHT_START, DEMO_RACE_ID, syntheticNight } from "../../app/lib/intelligence/raceHistoryDemo";
+import { DEMO_NIGHT_START, DEMO_RACE_ID, syntheticNight, syntheticOutages } from "../../app/lib/intelligence/raceHistoryDemo";
 import {
   frozenPointsFor, frozenRaceIds, loadFrozenDataset, loadRaceHistory, partyCode, readModelOutputs, recordModelOutput, resolveCandidate, resultPointsFrom, seedFrozenForecasts, type ModelOutputInput,
 } from "../../app/lib/intelligence/raceHistoryStore";
@@ -18,7 +18,7 @@ import { MemoryStore } from "../../app/lib/intelligence/captureStore";
 import { obs } from "./fixtures";
 
 const SYN = { statuses: ["SYNTHETIC"] as const };
-const night = (o?: Parameters<typeof syntheticNight>[0]) => prepareHistory(DEMO_RACE_ID, syntheticNight(o), { surface: "PREVIEW", ...SYN });
+const night = (o?: Parameters<typeof syntheticNight>[0]) => prepareHistory(DEMO_RACE_ID, syntheticNight(o), { surface: "PREVIEW", ...SYN, outages: syntheticOutages(o) });
 const iso = (t: number) => new Date(t).toISOString();
 
 const CANDS: HistoryCandidate[] = [
@@ -33,7 +33,8 @@ function model(id: string, at: string, over: Partial<ModelOutputPoint> = {}): Mo
     schema: HISTORY_SCHEMA, kind: "MODEL_OUTPUT", pointId: id, raceId: "r1", observedAt: at, sourceTimestamp: null, sourceClass: "LIVE_PROJECTION", status: "LIVE", candidates: CANDS,
     revision: { status: "ORIGINAL", supersedes: null, note: null }, reporting: null, model: { id: "m", version: "1.0", snapshot: id, asOf: null },
     winProbability: { a: 0.6, b: 0.3, c: 0.1 }, winProbabilityBasis: "MULTI_CANDIDATE", margin: { pp: -1, reference: REF, low: -3, high: 1, intervalBasis: "p10-p90" },
-    projectedFinalVotes: { a: 500, b: 480, c: 20 }, provenance: { origin: "test", ref: null }, ...over,
+    projectedFinalVotes: { a: 500, b: 480, c: 20 }, provenance: { origin: "test", ref: null },
+    ...(over.sourceClass === "FROZEN_FORECAST" ? { publication: { class: "PUBLISHED" as const, publishedAt: at, evidence: "test deployment", revertedBy: null } } : {}), ...over,
   };
 }
 function result(id: string, at: string, votes: Record<string, number>, over: Partial<ResultPoint> = {}): ResultPoint {
@@ -54,8 +55,10 @@ test("the frozen dataset reproduces the pinned baseline exactly and keeps third 
   const baseline = JSON.parse(readFileSync(path.join(process.cwd(), "data/intelligence/baseline/2026-10-25.json"), "utf8")) as { races: { raceId: string; margin: number; probB: number; p10: number; p90: number }[] };
   const ids = new Set(frozenRaceIds());
   assert.equal(ids.size, 506);
+  // The baseline was pinned from commit d1738e7e; later published snapshots move the figures on, so compare as of that commit.
+  const cut = Date.parse(loadFrozenDataset().snapshots.find((s) => s.commit.startsWith("d1738e7e"))!.committedAt);
   for (const b of baseline.races) {
-    const last = frozenPointsFor(b.raceId).at(-1)!;
+    const last = frozenPointsFor(b.raceId, undefined, "ALL").filter((p) => Date.parse(p.observedAt) <= cut).at(-1)!;
     assert.equal(last.margin?.pp, b.margin, b.raceId);
     assert.equal(last.margin?.low, b.p10);
     assert.equal(last.margin?.high, b.p90);
@@ -92,6 +95,62 @@ test("every point passes validation and ids are unique", () => {
   const prepared = prepareHistory("sen-IA", frozenPointsFor("sen-IA"), { surface: "PUBLIC" });
   assert.equal(prepared.excluded.invalid, 0);
   assert.ok(prepared.finalFrozenIndex === prepared.models.length - 1);
+});
+
+test("public frozen history is published-only, timed by go-live, and starts at the first verified publication", () => {
+  const d = loadFrozenDataset();
+  assert.equal(d.schema, "TPSI_FROZEN_FORECAST_HISTORY/2");
+  const live = new Set(d.publications.map((e) => e.liveAt));
+  const first = Date.parse(d.publications[0].liveAt);
+  const unpublished = new Set(d.snapshots.filter((s) => s.class !== "PUBLISHED").map((s) => s.snapshot));
+  assert.ok(unpublished.size >= 1, "the dataset carries at least one snapshot never verified as published");
+  let sawUnverified = false;
+  for (const id of frozenRaceIds().slice(0, 200)) {
+    const pub = frozenPointsFor(id);
+    for (let i = 0; i < pub.length; i++) {
+      const p = pub[i];
+      assert.equal(p.publication?.class, "PUBLISHED", id);
+      assert.ok(live.has(p.observedAt), `${id} point is timed at a deployment go-live`);
+      assert.ok(Date.parse(p.observedAt) >= first);
+      assert.ok(!unpublished.has(p.model.snapshot), `${id} shows an unverified snapshot`);
+      if (i) assert.ok(Date.parse(p.observedAt) > Date.parse(pub[i - 1].observedAt), `${id} out of order`);
+    }
+    const all = frozenPointsFor(id, undefined, "ALL");
+    for (let i = 1; i < all.length; i++) assert.ok(Date.parse(all[i].observedAt) >= Date.parse(all[i - 1].observedAt));
+    if (all.some((p) => p.publication?.class === "UNVERIFIED")) {
+      sawUnverified = true;
+      const pubSurface = prepareHistory(id, all, { surface: "PUBLIC" });
+      assert.ok(pubSurface.excluded.unpublished > 0);
+      assert.ok(pubSurface.models.every((m) => m.publication?.class === "PUBLISHED"));
+      assert.equal(prepareHistory(id, all, { surface: "PREVIEW" }).excluded.unpublished, 0);
+    }
+  }
+  assert.ok(sawUnverified, "diagnostic mode exposes unverified snapshots for at least one race");
+  // A frozen point with no publication evidence never reaches a public chart.
+  const bare = model("f1", T, { sourceClass: "FROZEN_FORECAST", publication: undefined, model: { id: "m", version: "UNVERSIONED", snapshot: "x", asOf: null } });
+  assert.equal(prep([bare]).models.length, 0);
+  assert.equal(prep([bare], "PREVIEW").models.length, 1);
+});
+
+test("a published forecast that was later reverted remains published history", () => {
+  const d = loadFrozenDataset();
+  const s = d.snapshots.find((x) => x.commit.startsWith("d6010cb6"))!;
+  assert.equal(s.class, "PUBLISHED");
+  assert.ok(s.publishedAt && s.deployment);
+  assert.ok(s.revertedBy?.startsWith("50cc9fd9"));
+  const marked = frozenRaceIds().some((id) => frozenPointsFor(id).some((p) => p.publication?.revertedBy === s.revertedBy));
+  assert.ok(marked, "the reverted publication is still drawn, marked as later reverted");
+});
+
+test("recording refuses non-durable storage inside a deployment", async () => {
+  const prev = process.env.VERCEL;
+  process.env.VERCEL = "1";
+  try {
+    const input = { ...model("x", T), raceId: "sen-GA" } as unknown as ModelOutputInput;
+    await assert.rejects(recordModelOutput(new MemoryStore(), input), (e: Error & { code?: string }) => e.code === "EPHEMERAL_STORE");
+  } finally {
+    if (prev === undefined) delete process.env.VERCEL; else process.env.VERCEL = prev;
+  }
 });
 
 // ---- series semantics --------------------------------------------------------------------------------------------------------
@@ -221,22 +280,56 @@ test("out-of-order and shuffled input is ordered by observation time and flagged
   assert.equal(dup.results.length, 1);
 });
 
-test("sparse observations: a long silence breaks the line, a re-confirmed unchanged feed does not", () => {
+test("sparse observations: a reported value stands until the next update, and the readout says what was known then", () => {
   const sparse = prep([result("r1", at(0), { a: 10, b: 10, c: 0 }), result("r2", at(180), { a: 90, b: 80, c: 0 })]);
-  const s = buildChart(sparse, "votes").series[0];
-  assert.equal(heldAt(s, Date.parse(at(10)))!.point.v, 10);
-  assert.equal(heldAt(s, Date.parse(at(60))), null, "three hours with no observation is not drawn as a verified value");
+  const vc = buildChart(sparse, "votes");
+  const s = vc.series[0];
+  assert.equal(heldAt(s, Date.parse(at(60)))!.point.v, 10, "a quiet count is still the last reported count, not missing");
   assert.equal(heldAt(s, Date.parse(at(181)))!.point.v, 90);
+  const w = windowSeries(s, Date.parse(at(60)), Date.parse(at(200)));
+  assert.equal(w[0].carried, true);
+  assert.deepEqual(readoutAt(vc, sparse, Date.parse(at(0))).rows[0].freshness, { kind: "NEW" });
+  assert.deepEqual(readoutAt(vc, sparse, Date.parse(at(60))).rows[0].freshness, { kind: "NO_NEW", since: Date.parse(at(0)) });
+  // re-confirmation is only claimed once it has happened: before confirmedThrough the readout must not use that later knowledge
   const held = prep([result("r1", at(0), { a: 10, b: 10, c: 0 }, { confirmedThrough: at(100) }), result("r2", at(110), { a: 11, b: 10, c: 0 })]);
-  const h = buildChart(held, "votes").series[0];
-  assert.equal(heldAt(h, Date.parse(at(90)))!.point.v, 10);
-  assert.equal(heldAt(h, Date.parse(at(125)))!.point.v, 11);
-  const [t0, t1] = [Date.parse(at(60)), Date.parse(at(200))];
-  const w = windowSeries(s, t0, t1);
-  assert.equal(w.some((q) => q.carried), false, "a stale value is not carried into a window");
-  const w2 = windowSeries(buildChart(held, "votes").series[0], Date.parse(at(60)), Date.parse(at(200)));
-  assert.equal(w2[0].carried, true);
-  assert.equal(w2[0].v, 10);
+  const hc = buildChart(held, "votes");
+  assert.deepEqual(readoutAt(hc, held, Date.parse(at(50))).rows[0].freshness, { kind: "NO_NEW", since: Date.parse(at(0)) });
+  assert.deepEqual(readoutAt(hc, held, Date.parse(at(105))).rows[0].freshness, { kind: "CONFIRMED", at: Date.parse(at(100)) });
+  assert.equal(heldAt(hc.series[0], Date.parse(at(125)))!.point.v, 11);
+  assert.equal(lastUpdated(held), Date.parse(at(110)));
+  assert.equal(lastUpdated(prep([result("r1", at(0), { a: 1, b: 1, c: 0 }, { confirmedThrough: at(40) })])), Date.parse(at(40)));
+  // a null value is a known gap and still breaks the line
+  const gap = buildChart(prep([result("r1", at(0), { a: 10, b: 10, c: 0 }), result("r2", at(30), { b: 12, c: 0 }, { countedMargin: null }), result("r3", at(60), { a: 20, b: 10, c: 0 })]), "votes");
+  assert.equal(heldAt(gap.series[0], Date.parse(at(45))), null);
+});
+
+test("a known source outage is marked and named in the readout; nothing is drawn inside it", () => {
+  const pts = [result("r1", at(0), { a: 10, b: 10, c: 0 }), result("r2", at(90), { a: 30, b: 20, c: 0 })];
+  const p = prepareHistory("r1", pts, { surface: "PUBLIC", outages: [{ provider: "feed", from: at(20), to: at(80), reason: "feed returned errors" }, { provider: "feed", from: "bad", to: null, reason: "x" }] });
+  assert.equal(p.outages.length, 1, "an unparseable outage is dropped");
+  const c = buildChart(p, "votes");
+  const f = readoutAt(c, p, Date.parse(at(40))).rows[0].freshness;
+  assert.deepEqual(f, { kind: "SOURCE_UNAVAILABLE", since: Date.parse(at(20)), reason: "feed returned errors" });
+  assert.deepEqual(readoutAt(c, p, Date.parse(at(85))).rows[0].freshness, { kind: "NO_NEW", since: Date.parse(at(0)) });
+  assert.equal(c.series[0].pts.length, 2, "the outage adds no points");
+});
+
+test("an early lopsided count cannot flatten the forecast: the margin scale is capped and the count is marked off scale", () => {
+  const ms = [model("m1", at(0), { margin: { pp: 2, reference: REF, low: -1, high: 5, intervalBasis: "p10-p90" } })];
+  const rs = [result("r1", at(10), { a: 5, b: 95, c: 0 })];
+  const c = buildChart(prep([...ms, ...rs]), "margin");
+  const counted = c.series.find((s) => s.source === "RESULT")!;
+  assert.ok(counted.pts[0].v! > 80);
+  assert.ok(c.yDomain[1] < 30, `domain ${c.yDomain} follows the forecast, not the 90-point count`);
+  const near = buildChart(prep([...ms, result("r1", at(10), { a: 45, b: 55, c: 0 })]), "margin");
+  assert.ok(near.yDomain[1] >= 10, "a count within reach still fits on the scale");
+  const only = buildChart(prep(rs), "margin");
+  assert.ok(only.yDomain[1] >= 90, "with no forecast, the count sets the scale");
+});
+
+test("chart colors are theme tokens, not fixed values", () => {
+  const p = night();
+  for (const ch of ["prob", "margin", "votes"] as const) for (const s of buildChart(p, ch).series) assert.match(s.color, /^var\(--rh-[a-z0-9]+\)$/, `${ch} ${s.key}`);
 });
 
 test("shadow separation: never on a public surface, never in a public series, and apart and labelled in the preview", () => {
@@ -346,9 +439,10 @@ test("the synthetic night shows every case the charts must handle", () => {
   assert.ok(votes.series.find((s) => s.key === "votes:brandt:reported")!.pts.some((q) => q.flag === "DECREASE"));
   assert.ok(p.results.some((r) => r.outOfOrder) && p.results.some((r) => r.sourceTimestamp === null));
   const brandt = votes.series.find((s) => s.key === "votes:brandt:reported")!;
-  // the 40-minute outage breaks the line
+  // the 40-minute outage is declared: the last count stands, and the readout says the source was unavailable
   const gapStart = brandt.pts[39].t;
-  assert.equal(heldAt(brandt, gapStart + 30 * 60_000), null);
+  assert.equal(heldAt(brandt, gapStart + 30 * 60_000)!.point.t, gapStart);
+  assert.equal(readoutAt(votes, p, gapStart + 30 * 60_000).rows.find((r) => r.seriesKey === brandt.key)!.freshness?.kind, "SOURCE_UNAVAILABLE");
   const margin = buildChart(p, "margin");
   assert.equal(margin.reference!.plus.id, "brandt");
   assert.ok(margin.series.some((s) => s.key === "margin:counted"));

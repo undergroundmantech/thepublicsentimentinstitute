@@ -79,9 +79,11 @@ Result points also carry the following:
 1. **Step-after lines.** A published value stands until the next publication replaces it. This is what the page showed; nothing is interpolated, and no intermediate points are generated.
 2. **Gaps are null.** If the engine published no valid probability (the whole field, or one candidate), the line stops. In the readout the value is empty, not zero.
    - In a `TWO_SIDE` race, a candidate outside the two margin sides is listed as "not priced", not drawn at 0%.
-3. **Result gap rule: `RESULT_GAP_MS` = 20 minutes.** A reported-vote line breaks if nothing new or confirming arrives for 20 minutes.
-   - An unchanged re-read extends the held value through `confirmedThrough`, so a quiet feed is not a gap.
-   - A model line is held until the next publication.
+3. **Staleness (Phase 2; replaces the 20-minute gap rule).** Every value, reported or modelled, stands until the next update. Silence is not drawn as missing data.
+   - A line breaks only where a value is *known* to be missing: a null value, or a declared source outage.
+   - An outage (`PrepareOptions.outages`: provider or `"*"`, from, to, reason) is shaded as "Results source unavailable: nothing new could be read". The line keeps the last reported value, and the readout says "Source unavailable since … (reason). Last reported values shown."
+   - Every readout row carries a freshness line: **New reading at this time**, **Confirmed unchanged at …**, **No new reading since …**, or **Source unavailable since …**. "Confirmed" uses only confirmations at or before the cursor time; it never draws on later information.
+   - The chart header shows **Last updated**: the latest `observedAt` or `confirmedThrough`.
 4. **Frozen to live transition.** The last frozen forecast is held until the first `LIVE_PROJECTION`. Both moments get a marker ("Final forecast" and "Live projections begin").
    - The frozen baseline is drawn dotted and stays visible on every range that includes it.
 5. **Model revisions.** A record that restates an earlier snapshot with different figures is derived as a `REVISION` when the history is read. It is never stored that way, and the original record is never rewritten.
@@ -120,15 +122,25 @@ obs/<race>/...                                 reported votes, written by the re
 
 ### Frozen pre-election history
 
-`frozen-forecasts.json.gz` (320 KB) was rebuilt from the git history of `public/forecast/model.json`:
+`frozen-forecasts.json.gz` (schema `TPSI_FROZEN_FORECAST_HISTORY/2`) is rebuilt from the git history of `public/forecast/model.json`:
 
-- 52 published snapshots and 506 races;
-- a race is written at a snapshot only when its figures changed;
-- the time of a snapshot is the **commit time**, which is the earliest moment the site could have shown it;
+- 67 snapshots and 506 races; a race is written at a snapshot only when its figures changed;
 - the model version is `UNVERSIONED`, because `model.json` carries none, and the snapshot is the commit;
 - the interval is p10–p90 of the model's simulated margins.
 
-**For review:** the history includes every commit, **reverts included**. In gov-GA, for example, it shows a sharp move on October 14 and some snapshots that alternate back and forth. That is what was published, but you may prefer to keep only commits that reached production.
+**Published-only (Phase 2).** Each snapshot is classified against production deployment records:
+
+- **Evidence:** `data/intelligence/history/production-deployments.json`, built by `build_frozen_history.ts --fetch-deployments` from the GitHub Deployments API (environment `Production`, created by Vercel).
+- **Matching:** a deployment publishes a snapshot when the `model.json` blob at the deployment's commit equals that snapshot's blob. The go-live time is the deployment's first `SUCCESS` status.
+- **Classes:**
+  - `PUBLISHED`: served by a successful production deployment (65). It stays PUBLISHED even if a later commit reverted it. Two did: `1aeeb267` (reverted by `585426da`) and `d6010cb6` (reverted by `50cc9fd9`).
+  - `UNVERIFIED`: no successful deployment served it (2: `2f32d4c7` and `d65fcc06`).
+  - `REVERTED`: reverted and never served (0).
+  - `INTERNAL`: never on the production branch (0).
+- **Unresolved evidence:** 64 publications were matched, 1 deployment served a blob that matches no snapshot, and 4 deployments could not be resolved to a blob. All are listed in the file.
+- **Public charts** draw one point per publication that changed the figures, at its **go-live time**, not its commit time. Non-PUBLISHED snapshots never reach a public surface.
+- **Diagnostics:** on the preview only, `&diag=1` shows every snapshot at its commit time with its class. The provenance panel lists class counts and the evidence source.
+- The readout states the provenance: "published …", "published …, later reverted" or (diag only) "committed …, never verified as published".
 
 ## UI
 
@@ -152,6 +164,21 @@ The chart reuses the polling-average chart language: the `studio.css` container,
   - no horizontal overflow at 390 px.
 - **Empty states:** no forecast, no reporting yet, and probabilities not published.
 - **Shadow overlay:** a checkbox on the preview only (`allowShadowOverlay`). The shadow series are grey, labelled "Shadow … (not published)", and never share a series with the published lines.
+- **Off-scale values (Phase 2).** The margin domain is set by the model: it is the model extent, widened to fit the counted margin up to twice the model extent (or the model extent + 10 points). A counted margin beyond that runs along the edge as chevrons labelled "R +34.0 · off scale", and its end label carries ▲ or ▼. The readout always gives the true value.
+- **Ticks.** A collision filter keeps at most one x-tick per 86 px (66 px on narrow screens), majors first.
+- **Narrow end labels.** The right gutter is 66 px. The value tag moves to a second line.
+- **Cross-metric readout.** Every tab's readout ends with a summary of the other two metrics at the same moment, for example "Win chance … · Reported votes …".
+- **Theme.** All colors are `.rh` tokens (`--rh-d/r/i/l/g`, `--rh-o1..4`, `--rh-neutral`, surface, text, grid, cursor) with `:root[data-theme="light"]` overrides. This includes the readout card and grid inherited from `studio.css`, scoped to `.rh` so the polling chart is unchanged. Series colors are set through `style`, so CSS variables resolve.
+
+## Public race-page integration (Phase 2)
+
+- **Placement:** on `/forecast/[state]/[race]` there is a "Race history" section after "The trend", with a `History` nav item. All 506 frozen race ids map to these pages.
+- **API:** `GET /api/race-history/[id]`. The id is validated against `^(sen|gov|house)-[A-Z]{2}(-[0-9A-Z]{1,3})?$`.
+  - It reads the durable store if one is configured. Otherwise it reads the frozen PUBLISHED history. It never calls a results provider.
+  - It returns `{history, nowMs, partial}` with `Cache-Control: public, s-maxage=60, stale-while-revalidate=300`. Unknown races get 404, and failures get 503 with a short message.
+  - `next.config.ts` traces the frozen file into the function.
+- **Loading:** `RaceHistorySection` fetches only when the section comes within 600 px of the viewport. It loads the chart with `next/dynamic` (`ssr: false`) and reserves 420 px so the layout does not shift. Errors show inline.
+- **Recording guard:** `recordModelOutput` refuses with `EPHEMERAL_STORE` on Vercel if the store is not durable, so a serverless filesystem cannot pass for history.
 
 ## Screenshots
 
@@ -160,16 +187,23 @@ These are in [docs/design-assets/race-history/](design-assets/race-history/). Th
 - desktop, 1280 px: `desktop-demo-prob`, `-margin`, `-votes`, `-shadow`, `-pre` and `desktop-real-gov-GA-prob`;
 - mobile, 390 px: `mobile-demo-prob`, `-margin`, `-votes` and `mobile-real-gov-GA-prob`.
 
-The full-page app captures are outside the repository, in `~/research/screens/race-history/`, together with the polling-average reference.
+Phase 2 captures are in [docs/design-assets/race-history/phase2/](design-assets/race-history/phase2/). Real races are rendered through the PUBLIC surface (published-only, go-live times):
+
+- `desktop-demo-offscale`, `desktop-demo-outage` (cursor inside the outage), `desktop-demo-margin`, `desktop-real-gov-GA-prob`;
+- light theme: `desktop-light-demo-margin`, `desktop-light-real-gov-GA-prob`, `mobile-light-real-gov-GA-prob`;
+- mobile, 390 px: `mobile-demo-margin`, `mobile-demo-votes`, `mobile-real-gov-GA-prob`.
+
+All 26 Phase 2 captures report no horizontal overflow. The full set is outside the repository, in `~/research/screens/race-history-p2/`.
 
 Why the harness: in this 8 GB codespace, running `next dev` and headless Chromium together repeatedly ran out of memory.
 
 ## Known notes
 
-- At 1280 px the site header overflows (scrollWidth 1430). This is pre-existing site chrome, not this component.
-- A counted margin far outside the projected range is clipped to the y-domain; the readout gives the exact value.
+- At 1280 px the site header overflows (scrollWidth 1430). This is pre-existing site chrome, not this component; it is logged in [SITE_UI_AUDIT.md](SITE_UI_AUDIT.md).
 
-## Not done (by design)
+## Limitations and open decisions
 
-- **No public race-page integration.** It needs approval of the semantics above first. The integration point is `loadRaceHistory(store, raceId, {surface: "PUBLIC"})` → `<RaceHistory history={loaded.prepared} />`.
-- **No live projections are recorded yet.** There is no published live model yet. When one exists, its publisher must call `recordModelOutput()` with a model version on every publication.
+- **Outages are not wired from live data yet.** The chart and the contract support declared outages, but the recorder's run records (`runs/` in `capture.ts`) have no reader. Until one is added, only the synthetic demo shows an outage.
+- **No live projections are recorded yet.** The existing flight-recorder / `LiveTimeline` engine does not call `recordModelOutput()`, and production has no durable store configured. Both are needed, and the publisher must pass a model version on every publication. No new forecast mathematics was activated.
+- **Not covered:** statewide down-ballot pages and the `/results` race pages. Their ids do not map to the frozen race ids yet.
+- **Decision for you:** the existing "The trend" chart stays above Race history, and the two overlap for the pre-election period. You may keep both, or retire TrendChart.

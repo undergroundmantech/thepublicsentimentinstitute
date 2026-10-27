@@ -15,7 +15,7 @@ import { resolveStore } from "@/app/lib/intelligence/captureStore";
 import { loadTrackedRaces } from "@/app/lib/intelligence/captureConfig";
 import { prepareHistory, type DataStatus, type PreparedHistory } from "@/app/lib/intelligence/raceHistory";
 import { frozenPointsFor, HistoryError, loadFrozenDataset, loadRaceHistory } from "@/app/lib/intelligence/raceHistoryStore";
-import { DEMO_RACE_ID, syntheticNight } from "@/app/lib/intelligence/raceHistoryDemo";
+import { DEMO_RACE_ID, syntheticNight, syntheticOutages } from "@/app/lib/intelligence/raceHistoryDemo";
 import RaceHistory from "@/app/components/opp/RaceHistory";
 import { ENI_CSS } from "../styles";
 
@@ -35,7 +35,7 @@ type DemoId = keyof typeof DEMOS;
 function demoHistory(id: DemoId): PreparedHistory {
   const pts = id === "sparse" ? syntheticNight({ results: 10, frozen: 3, seed: 11 }) : syntheticNight();
   const kept = id === "pre" ? pts.filter((p) => p.sourceClass === "FROZEN_FORECAST") : pts;
-  return prepareHistory(DEMO_RACE_ID, kept, { surface: "PREVIEW", statuses: ["SYNTHETIC"] });
+  return prepareHistory(DEMO_RACE_ID, kept, { surface: "PREVIEW", statuses: ["SYNTHETIC"], outages: id === "sparse" || id === "pre" ? [] : syntheticOutages() });
 }
 
 export default async function HistoryPreview({ searchParams }: { searchParams: Search }) {
@@ -45,7 +45,8 @@ export default async function HistoryPreview({ searchParams }: { searchParams: S
   const raceParam = one(sp.race);
   const raceId = !demo && raceParam && SAFE_RACE.test(raceParam) ? raceParam : null;
   const test = one(sp.test) === "1";
-  const qs = demo ? `?demo=${demo}` : raceId ? `?race=${encodeURIComponent(raceId)}${test ? "&test=1" : ""}` : "";
+  const diag = one(sp.diag) === "1";
+  const qs = demo ? `?demo=${demo}` : raceId ? `?race=${encodeURIComponent(raceId)}${test ? "&test=1" : ""}${diag ? "&diag=1" : ""}` : "";
   if (!(await verifySession((await cookies()).get(PORTAL_COOKIE)?.value))) redirect(`/portal/login?next=${encodeURIComponent(`/portal/intelligence/history${qs}`)}`);
 
   let history: PreparedHistory | null = null;
@@ -53,25 +54,29 @@ export default async function HistoryPreview({ searchParams }: { searchParams: S
   const notes: string[] = [];
   let corrupt = { model: 0, observations: 0 };
   const nowMs = demo ? undefined : Date.now();
+  let ds: ReturnType<typeof loadFrozenDataset> | null = null;
+  const frozenInclude = diag ? "ALL" : "PUBLISHED";
 
   if (demo) {
     history = demoHistory(demo);
     title = `SYNTHETIC: ${DEMOS[demo].label}`;
     notes.push(DEMOS[demo].note, "Every name and number in this scenario is invented.");
   } else if (raceId) {
-    const frozen = (() => { try { return loadFrozenDataset().races[raceId] ?? null; } catch { return null; } })();
+    ds = (() => { try { return loadFrozenDataset(); } catch { return null; } })();
+    const frozen = ds?.races[raceId] ?? null;
     title = frozen?.dem && frozen?.gop ? `${raceId}: ${frozen.dem} vs. ${frozen.gop}` : raceId;
     const statuses: DataStatus[] = test ? ["LIVE", "NOT_PROVIDED", "TEST"] : ["LIVE", "NOT_PROVIDED"];
     const choice = resolveStore(process.env);
     if (choice.store) {
       try {
-        const loaded = await loadRaceHistory(choice.store, raceId, { surface: "PREVIEW", statuses, includeShadow: true });
+        const loaded = await loadRaceHistory(choice.store, raceId, { surface: "PREVIEW", statuses, includeShadow: true, frozenInclude });
         history = loaded.prepared; corrupt = loaded.corrupt;
       } catch (e) {
         notes.push(e instanceof HistoryError ? `History could not be read (${e.code}). Showing the frozen forecasts only.` : "The recorder store could not be read. Showing the frozen forecasts only.");
       }
     } else notes.push(`No recorder store: ${choice.problem ?? "not configured"}. Showing the frozen forecasts only.`);
-    history ??= prepareHistory(raceId, frozenPointsFor(raceId), { surface: "PREVIEW", statuses });
+    history ??= prepareHistory(raceId, frozenPointsFor(raceId, undefined, frozenInclude), { surface: "PREVIEW", statuses });
+    if (diag) notes.push("Diagnostics: every frozen snapshot is drawn at its commit time, including any never verified as published. A public page shows only published forecasts, at the time each went live.");
     if (!frozen) notes.push("This race is not in the frozen forecast dataset.");
   }
 
@@ -93,7 +98,8 @@ export default async function HistoryPreview({ searchParams }: { searchParams: S
           <section className="panel wide">
             <h2>What the chart was given</h2>
             <dl className="kv">
-              <dt>Frozen forecasts</dt><dd>{history.models.filter((m) => m.sourceClass === "FROZEN_FORECAST").length}</dd>
+              <dt>Frozen forecasts</dt><dd>{history.models.filter((m) => m.sourceClass === "FROZEN_FORECAST").length}{(() => { const c: Record<string, number> = {}; for (const m of history.models) if (m.publication) c[m.publication.class] = (c[m.publication.class] ?? 0) + 1; const s = Object.entries(c).map(([k, v]) => `${v} ${k.toLowerCase()}`).join(", "); return s ? ` (${s})` : ""; })()}</dd>
+              {ds && !demo ? <><dt>Publication evidence</dt><dd>{ds.evidence.successful} successful of {ds.evidence.deployments} production deployments, {ds.evidence.first?.slice(0, 10)} to {ds.evidence.last?.slice(0, 10)}. Dataset: {ds.snapshots.filter((s) => s.class === "PUBLISHED").length} published, {ds.snapshots.filter((s) => s.class !== "PUBLISHED").length} not verified as published. <Link href={`/portal/intelligence/history?race=${encodeURIComponent(raceId!)}${test ? "&test=1" : ""}${diag ? "" : "&diag=1"}`}>{diag ? "Published only" : "Show all snapshots"}</Link></dd></> : null}
               <dt>Live projections</dt><dd>{history.models.filter((m) => m.sourceClass === "LIVE_PROJECTION").length}</dd>
               <dt>Result observations</dt><dd>{history.results.length}{history.outOfOrder ? ` (${history.outOfOrder} out of order by source time)` : ""}</dd>
               <dt>Shadow outputs</dt><dd>{history.shadow.length} (overlay only)</dd>
