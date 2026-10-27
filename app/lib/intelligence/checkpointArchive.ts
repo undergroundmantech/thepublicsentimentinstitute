@@ -14,8 +14,9 @@
 // written last, so a partial checkpoint can never be read as complete.
 
 import { FIRST_CLOSE, fmtM, liveOdds, project, sides, type CCand, type CDetail, type Exp, type XRace } from "@/app/results/2026/live";
-import { canonicalJson, compactTime, intact, jsonBytes, parseJson, sha256Hex, withChecksum, type RecordOutcome } from "./capture";
+import { canonicalJson, compactTime, intact, jsonBytes, parseJson, readRaw, sha256Hex, withChecksum, type RecordOutcome } from "./capture";
 import type { ObjectStore } from "./captureStore";
+import { trimDetail } from "./civic";
 import type { HistoryCandidate } from "./raceHistory";
 import { candidateId, partyCode, recordModelOutput, type ModelOutputInput } from "./raceHistoryStore";
 
@@ -135,6 +136,8 @@ export type CalcStatus = "OK" | "FAILED" | "UNAVAILABLE";
 export interface CalcRecord {
   layer: "CALCULATED";
   schema: typeof CHECKPOINT_SCHEMA;
+  /** checkpoint/race/designation/model@version: unique and stable. */
+  calculationId: string;
   checkpointId: string;
   raceId: string;
   civicId: number | null;
@@ -162,7 +165,12 @@ export interface PublishedRecord {
   basis: "PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT";
   status: "OK" | "UNAVAILABLE";
   reason: string | null;
+  /** When this published layer was written; the manifest follows it. */
+  publishedAt: string | null;
   model: ModelIdentity;
+  /** The PUBLISHED-designation calculation this state was derived from, and the raw snapshot under it. */
+  calculationId: string;
+  raw: RawSnapshotRef | null;
   calculatedOutputSha256: string | null;
   testData: boolean | null;
   /** The desk hides test returns before the first polls close unless opened with ?test=1. */
@@ -233,9 +241,11 @@ async function readCalcHead(store: ObjectStore): Promise<CalcHead> {
 }
 
 const forecastInputs = (r: XRace) => ({ id: r.id, k: r.k, c: r.c ?? null, tot: r.tot ?? null, m: r.m ?? null, pR: r.pR ?? null, yes: r.yes ?? null, pPass: r.pPass ?? null, thr: r.thr ?? null });
+const inputShaOf = (detail: CDetail, exp: Record<string, Exp> | null, race: XRace) => sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, exp, forecast: forecastInputs(race) }));
+export const calculationIdOf = (checkpointId: string, raceId: string, designation: string, m: ModelIdentity) => `${checkpointId}/${raceId}/${designation}/${m.name}@${m.version}`;
 
 function published(rec: CalcRecord, cap: RaceCapture | null): PublishedRecord {
-  const base = { layer: "PUBLISHED" as const, schema: CHECKPOINT_SCHEMA, checkpointId: rec.checkpointId, raceId: rec.raceId, basis: "PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT" as const, model: rec.model, onpointCall: null, onpointCallReason: "no OnPoint race-call engine feeds the public results desk; only the provider's own winner flags are shown" };
+  const base = { layer: "PUBLISHED" as const, schema: CHECKPOINT_SCHEMA, checkpointId: rec.checkpointId, raceId: rec.raceId, basis: "PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT" as const, publishedAt: null, model: rec.model, calculationId: rec.calculationId, raw: rec.raw, onpointCall: null, onpointCallReason: "no OnPoint race-call engine feeds the public results desk; only the provider's own winner flags are shown" };
   if (rec.status !== "OK" || !cap?.detail) {
     return { ...base, status: "UNAVAILABLE", reason: rec.status === "FAILED" ? `the published calculation failed: ${rec.reason}` : rec.reason, calculatedOutputSha256: null, testData: cap?.detail?.test ?? null, visibility: null, displayed: null, providerCalls: [] };
   }
@@ -287,7 +297,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
   const fresh: { rec: CalcRecord; cap: RaceCapture }[] = [];
 
   for (const cap of [...input.captures].sort((x, y) => x.race.id.localeCompare(y.race.id))) {
-    const base = { layer: "CALCULATED" as const, schema: CHECKPOINT_SCHEMA, checkpointId: keys.id, raceId: cap.race.id, civicId: cap.civicId, designation: "PUBLISHED" as const, raw: cap.raw, observedAt: cap.observedAt, model: engine, reusedFrom: null };
+    const base = { layer: "CALCULATED" as const, schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, cap.race.id, "PUBLISHED", engine), checkpointId: keys.id, raceId: cap.race.id, civicId: cap.civicId, designation: "PUBLISHED" as const, raw: cap.raw, observedAt: cap.observedAt, model: engine, reusedFrom: null };
     let rec: CalcRecord;
     if (!cap.detail || !cap.raw) {
       rec = { ...base, calculatedAt: null, inputSha256: null, status: "UNAVAILABLE", reason: `no raw snapshot at this checkpoint: ${cap.failure ?? "not captured"}`, outputs: null, outputSha256: null };
@@ -295,7 +305,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
       let exp: Record<string, Exp> | null = null, expNote: string | null = null;
       try { exp = await deps.expFor(cap.race); } catch { expNote = "county expectations could not be read"; }
       if (!exp && !expNote) expNote = "no county expectations for this race";
-      const inputSha256 = sha256Hex(canonicalJson({ c: cap.detail.c, regions: cap.detail.regions ?? null, exp, forecast: forecastInputs(cap.race) }));
+      const inputSha256 = inputShaOf(cap.detail, exp, cap.race);
       const prev = head.races[cap.race.id];
       if (prev && prev.status === "OK" && prev.inputSha256 === inputSha256 && prev.model.version === engine.version && prev.model.configSha256 === engine.configSha256) {
         rec = { ...prev, ...base, calculatedAt: prev.calculatedAt, reusedFrom: prev.reusedFrom ?? prev.checkpointId };
@@ -318,7 +328,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     if (deps.shadow && cap.detail && cap.raw) {
       const s = deps.shadow;
       const detail = cap.detail;
-      const sb = { ...base, designation: "SHADOW" as const, model: s.model, inputSha256: sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, forecast: forecastInputs(cap.race) })) };
+      const sb = { ...base, calculationId: calculationIdOf(keys.id, cap.race.id, "SHADOW", s.model), designation: "SHADOW" as const, model: s.model, inputSha256: sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, forecast: forecastInputs(cap.race) })) };
       try {
         const outputs = s.run({ ...cap, detail });
         calc.push({ ...sb, calculatedAt: deps.now().toISOString(), status: "OK", reason: null, outputs, outputSha256: sha256Hex(canonicalJson(outputs ?? null)) });
@@ -329,7 +339,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     }
   }
   for (const c of input.untracked) {
-    calc.push({ layer: "CALCULATED", schema: CHECKPOINT_SCHEMA, checkpointId: keys.id, raceId: `civic-${c.civicId}`, civicId: c.civicId, designation: "PUBLISHED", raw: null, observedAt: null, calculatedAt: null, model: engine, inputSha256: null, status: "UNAVAILABLE", reason: "no OnPoint model covers this contest; its returns are kept in the raw feed", reusedFrom: null, outputs: null, outputSha256: null, contest: c });
+    calc.push({ layer: "CALCULATED", schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, `civic-${c.civicId}`, "PUBLISHED", engine), checkpointId: keys.id, raceId: `civic-${c.civicId}`, civicId: c.civicId, designation: "PUBLISHED", raw: null, observedAt: null, calculatedAt: null, model: engine, inputSha256: null, status: "UNAVAILABLE", reason: "no OnPoint model covers this contest; its returns are kept in the raw feed", reusedFrom: null, outputs: null, outputSha256: null, contest: c });
   }
 
   const incomplete: string[] = input.rawIssues.map((x) => `raw: ${x}`);
@@ -338,7 +348,8 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     catch (e) { incomplete.push(`${key.split("/")[2]} layer not stored (${errName(e)})`); return { key, status: "FAILED", sha256: null, bytes: 0, lines }; }
   };
   const calculated = await write(keys.calculated, jsonl(calc), calc.length);
-  const publishedRef = await write(keys.published, jsonl(pub), pub.length);
+  const publishedAt = deps.now().toISOString();
+  const publishedRef = await write(keys.published, jsonl(pub.map((p) => ({ ...p, publishedAt }))), pub.length);
 
   let raceHistory: CheckpointManifest["raceHistory"] = null;
   if (deps.raceHistory && calculated.status === "WRITTEN") {
@@ -409,4 +420,98 @@ export async function stateAt(store: ObjectStore, raceId: string, atIso: string,
     };
   }
   return null;
+}
+
+// ---- future-model replay -------------------------------------------------------------------------------------------
+// A newer model is run against the archived raw snapshots and written to its own dataset under replays/, never under
+// archive/. Each record links to the raw snapshot, the original calculation and the published state it is compared to.
+
+export interface ReplayRecord {
+  layer: "REPLAY";
+  schema: typeof CHECKPOINT_SCHEMA;
+  datasetId: string;
+  calculationId: string;
+  checkpointId: string;
+  raceId: string;
+  replayOf: { calculationId: string; model: ModelIdentity; outputSha256: string | null; publishedOutputSha256: string | null };
+  raw: RawSnapshotRef | null;
+  observedAt: string | null;
+  calculatedAt: string;
+  model: ModelIdentity;
+  inputSha256: string | null;
+  status: CalcStatus;
+  reason: string | null;
+  outputs: unknown;
+  outputSha256: string | null;
+}
+
+export interface ReplayOptions {
+  datasetId: string;
+  model: ModelIdentity;
+  compute: (race: XRace, detail: CDetail, exp: Record<string, Exp> | null) => unknown;
+  raceOf: (raceId: string) => XRace | null;
+  expFor: (race: XRace) => Promise<Record<string, Exp> | null>;
+  now: () => Date;
+  fromDay?: string;
+  toDay?: string;
+  /** Replay only checkpoints whose archive was finished by this time. */
+  asOf?: string;
+}
+
+const SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
+export const replayKey = (datasetId: string, m: ModelIdentity, checkpointId: string) => `replays/${datasetId}/${m.name}/${m.version}/${checkpointId}.jsonl`;
+
+/** Writes once per checkpoint; an existing replay file is left as it is. */
+export async function replayArchive(store: ObjectStore, o: ReplayOptions): Promise<{ written: string[]; existing: string[]; skipped: string[] }> {
+  if (![o.datasetId, o.model.name, o.model.version].every((s) => SAFE_ID.test(s))) throw new Error("replay dataset id, model name and version must be simple identifiers");
+  const out = { written: [] as string[], existing: [] as string[], skipped: [] as string[] };
+  for (const mk of await listCheckpoints(store, o.fromDay ?? "2026-11-03", o.toDay ?? "2026-11-11")) {
+    const cp = await readCheckpoint(store, mk);
+    if (!cp || cp.problems.length || (o.asOf && Date.parse(cp.manifest.archivedAt) > Date.parse(o.asOf))) { out.skipped.push(mk); continue; }
+    const recs: ReplayRecord[] = [];
+    for (const c of cp.calculated) {
+      if (c.designation !== "PUBLISHED" || c.contest) continue;
+      const pub = cp.published.find((p) => p.calculationId === c.calculationId) ?? null;
+      const base = {
+        layer: "REPLAY" as const, schema: CHECKPOINT_SCHEMA, datasetId: o.datasetId, calculationId: `${o.datasetId}/${calculationIdOf(c.checkpointId, c.raceId, "REPLAY", o.model)}`,
+        checkpointId: c.checkpointId, raceId: c.raceId, replayOf: { calculationId: c.calculationId, model: c.model, outputSha256: c.outputSha256, publishedOutputSha256: pub?.calculatedOutputSha256 ?? null },
+        raw: c.raw, observedAt: c.observedAt, model: o.model,
+      };
+      const none = (reason: string): ReplayRecord => ({ ...base, calculatedAt: o.now().toISOString(), inputSha256: null, status: "UNAVAILABLE", reason, outputs: null, outputSha256: null });
+      const race = o.raceOf(c.raceId);
+      if (!c.raw || c.civicId === null) { recs.push(none("no raw snapshot at this checkpoint")); continue; }
+      if (!race) { recs.push(none("the replay model has no definition for this race")); continue; }
+      const obs = parseJson(await store.get(c.raw.observationKey)) as { rawRef: string; rawSha256: string } | null;
+      const text = obs ? await readRaw(store, obs) : null;
+      if (!text || sha256Hex(text) !== c.raw.responseSha256) { recs.push(none("the archived raw response is missing or does not match its hash")); continue; }
+      const detail = trimDetail(JSON.parse(text), c.civicId);
+      let exp: Record<string, Exp> | null = null;
+      try { exp = await o.expFor(race); } catch { /* the model runs without county expectations, as the archive did */ }
+      const inputSha256 = inputShaOf(detail, exp, race);
+      try {
+        const outputs = o.compute(race, detail, exp);
+        recs.push({ ...base, calculatedAt: o.now().toISOString(), inputSha256, status: "OK", reason: null, outputs, outputSha256: sha256Hex(canonicalJson(outputs ?? null)) });
+      } catch (e) {
+        recs.push({ ...base, calculatedAt: o.now().toISOString(), inputSha256, status: "FAILED", reason: `the replay model threw ${errName(e)}`, outputs: null, outputSha256: null });
+      }
+    }
+    const key = replayKey(o.datasetId, o.model, cp.manifest.checkpointId);
+    if ((await store.putIfAbsent(key, jsonl(recs), "application/x-ndjson")) === "CREATED") out.written.push(key); else out.existing.push(key);
+  }
+  return out;
+}
+
+export interface ReplayComparison { checkpointId: string; raceId: string; raw: RawSnapshotRef | null; original: CalcRecord; published: PublishedRecord | null; replay: ReplayRecord | null }
+
+/** Per checkpoint: what the original model calculated, what was published, and what the replayed model calculates. */
+export async function compareReplay(store: ObjectStore, datasetId: string, model: ModelIdentity, raceId: string, fromDay = "2026-11-03", toDay = "2026-11-11"): Promise<ReplayComparison[]> {
+  const rows: ReplayComparison[] = [];
+  for (const mk of await listCheckpoints(store, fromDay, toDay)) {
+    const cp = await readCheckpoint(store, mk);
+    const original = cp?.calculated.find((c) => c.raceId === raceId && c.designation === "PUBLISHED");
+    if (!cp || !original) continue;
+    const replay = parseLines<ReplayRecord>(await store.get(replayKey(datasetId, model, cp.manifest.checkpointId))).find((r) => r.raceId === raceId) ?? null;
+    rows.push({ checkpointId: cp.manifest.checkpointId, raceId, raw: original.raw, original, published: cp.published.find((p) => p.calculationId === original.calculationId) ?? null, replay });
+  }
+  return rows;
 }

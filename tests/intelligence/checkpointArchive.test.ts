@@ -10,6 +10,8 @@ import {
   archiveCheckpoint, computePublicEngine, listCheckpoints, publicEngineIdentity, readCheckpoint, stateAt,
   type ArchiveDeps, type CalcRecord, type EngineOutputs, type ModelIdentity,
 } from "../../app/lib/intelligence/checkpointArchive";
+import { readRaw, sha256Hex } from "../../app/lib/intelligence/capture";
+import { trimDetail } from "../../app/lib/intelligence/civic";
 import { mirrorPending, readMirrorFile, repoPathOf, verifyCheckpointFiles, type Fetch, type GitHubTarget } from "../../app/lib/intelligence/githubArchive";
 import { ELECTION_NIGHT, FlakyStore, RACES, rig, sen } from "./captureFixtures";
 
@@ -56,6 +58,9 @@ test("each checkpoint keeps raw refs, versioned calculations and the published s
   const p = cp.published.find((x) => x.raceId === "sen-GA")!;
   assert.equal(p.status, "OK");
   assert.equal(p.calculatedOutputSha256, c.outputSha256);
+  assert.equal(p.calculationId, c.calculationId, "published names the calculation it shows");
+  assert.deepEqual(p.raw, c.raw, "and the raw snapshot under it");
+  assert.ok(Date.parse(p.publishedAt!) >= Date.parse(c.calculatedAt!) && Date.parse(cp.manifest.archivedAt) >= Date.parse(p.publishedAt!));
   assert.equal(p.displayed!.expectedFinalMarginPp, o.expectedFinalMarginPp);
   assert.equal(p.onpointCall, null);
   assert.ok(p.onpointCallReason);
@@ -79,6 +84,7 @@ test("raw data is preserved when a calculation fails, and the failure is recorde
   assert.match(c.reason!, /RangeError/);
   assert.equal(c.outputs, null);
   assert.ok(await s.store.get(c.raw!.observationKey), "raw kept");
+  assert.equal(cp.published.find((x) => x.raceId === "sen-GA")!.calculationId, c.calculationId, "the missing layer is linked, not dropped");
   assert.equal(cp.published.find((x) => x.raceId === "sen-GA")!.status, "UNAVAILABLE");
   assert.equal(cp.manifest.counts.failed, RACES.length);
   assert.equal(cp.manifest.complete, true, "every layer is present; failures are explicit");
@@ -149,6 +155,27 @@ test("corrected vote totals: a lower count is a new snapshot and calculation; th
   assert.equal((after!.calculated!.outputs as EngineOutputs).reportedTotal, 1850);
   assert.notEqual(before!.raw!.contentId, after!.raw!.contentId);
   assert.equal((await s.store.list("model/sen-GA/")).length, 2);
+  // the original observation and its exact payload are still there, unaltered
+  const obs = JSON.parse((await s.store.get(before!.raw!.observationKey))!.toString("utf8"));
+  const text = (await readRaw(s.store, obs))!;
+  assert.equal(before!.raw!.responseSha256, sha256Hex(text));
+  assert.deepEqual(trimDetail(JSON.parse(text), before!.calculated!.civicId!).c.map((c) => c[2]), [1000, 900]);
+});
+
+test("an unchanged checkpoint is still recorded, pointing at the stored payload instead of copying it", async () => {
+  const s = setup();
+  sen(s.provider, 1000, 900, "2026-11-04T00:59:00Z");
+  await s.tick();
+  const rawCount = (await s.store.list("raw/")).length;
+  await s.tick();
+  const [k1, k2] = await s.manifests();
+  assert.ok(k1 && k2 && k1 !== k2, "both scheduled checkpoints exist");
+  const a = pubCalc((await readCheckpoint(s.store, k1))!.calculated, "sen-GA"), b = pubCalc((await readCheckpoint(s.store, k2))!.calculated, "sen-GA");
+  assert.equal(b.raw!.outcome, "UNCHANGED");
+  assert.equal(b.raw!.responseSha256, a.raw!.responseSha256);
+  assert.equal((await s.store.list("raw/")).length, rawCount, "no duplicate payload");
+  assert.equal(b.reusedFrom, a.checkpointId);
+  assert.notEqual(b.calculationId, a.calculationId);
 });
 
 test("a race with no published projection is listed as unavailable with a reason, and the checkpoint is not complete", async () => {
