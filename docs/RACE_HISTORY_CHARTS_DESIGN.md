@@ -137,7 +137,8 @@ obs/<race>/...                                 reported votes, written by the re
   - `UNVERIFIED`: no successful deployment served it (2: `2f32d4c7` and `d65fcc06`).
   - `REVERTED`: reverted and never served (0).
   - `INTERNAL`: never on the production branch (0).
-- **Unresolved evidence:** 64 publications were matched, 1 deployment served a blob that matches no snapshot, and 4 deployments could not be resolved to a blob. All are listed in the file.
+- **Unresolved evidence:** 64 publications were matched, 1 deployment served a blob that matches no snapshot, and 4 deployments could not be resolved to a blob. The unmatched deployment is listed in the file (`unmatchedPublications`: deployment 5466646295, live 2026-07-16T01:43:06Z, before the first snapshot). The 4 unresolved deployments are recorded as a count only (`evidence.unresolved`); the build did not store their ids. They stay unresolved: no snapshot class or time was inferred from them.
+- **Verification (consolidation, 2026-10-27):** all 65 `PUBLISHED` snapshots were cross-checked against `production-deployments.json`. Every one points to a deployment record in environment Production with state `ACTIVE` and a `SUCCESS` status (`live`); its `publishedAt` equals that first `SUCCESS` time and its SHA matches. None rests on a commit or a deployment attempt alone. The evidence holds 350 deployments: 340 succeeded and 10 failed (`FAILURE`, no `SUCCESS` status), and no failed deployment is used. Three `PUBLISHED` snapshots (`585426da`, `a5f80e9a`, `50cc9fd9`) have no publication entry of their own, because they served a file identical to the one already live, so the public chart adds no point for them. A local re-check resolved every successful deployment SHA to a `model.json` blob, so the 4 unresolved deployments appear to be an artifact of the build's blob lookup. Their ids would only be recoverable by rebuilding, and that was not done in this pass. The historical reconstruction is closed for this phase.
 - **Public charts** draw one point per publication that changed the figures, at its **go-live time**, not its commit time. Non-PUBLISHED snapshots never reach a public surface.
 - **Diagnostics:** on the preview only, `&diag=1` shows every snapshot at its commit time with its class. The provenance panel lists class counts and the evidence source.
 - The readout states the provenance: "published …", "published …, later reverted" or (diag only) "committed …, never verified as published".
@@ -172,7 +173,8 @@ The chart reuses the polling-average chart language: the `studio.css` container,
 
 ## Public race-page integration (Phase 2)
 
-- **Placement:** on `/forecast/[state]/[race]` there is a "Race history" section after "The trend", with a `History` nav item. All 506 frozen race ids map to these pages.
+- **Placement:** on `/forecast/[state]/[race]`, "Race history" sits after "Vote share", where "The trend" used to be, with a `History` nav item. All 506 frozen race ids map to these pages.
+- **Trend consolidation:** "The trend" section and its nav item are retired on every race with at least one published frozen point. `TrendChart` and `r.trend` are unchanged. Where a race has no published history, the page falls back to the trend data as "Recent model updates", labelled as not verified as published. The polling-average charts are unchanged.
 - **API:** `GET /api/race-history/[id]`. The id is validated against `^(sen|gov|house)-[A-Z]{2}(-[0-9A-Z]{1,3})?$`.
   - It reads the durable store if one is configured. Otherwise it reads the frozen PUBLISHED history. It never calls a results provider.
   - It returns `{history, nowMs, partial}` with `Cache-Control: public, s-maxage=60, stale-while-revalidate=300`. Unknown races get 404, and failures get 503 with a short message.
@@ -203,7 +205,10 @@ Why the harness: in this 8 GB codespace, running `next dev` and headless Chromiu
 
 ## Limitations and open decisions
 
-- **Outages are not wired from live data yet.** The chart and the contract support declared outages, but the recorder's run records (`runs/` in `capture.ts`) have no reader. Until one is added, only the synthetic demo shows an outage.
+- **Outages are not wired from live data yet.** The chart and the contract support declared outages, but the recorder's run records (`runs/` in `capture.ts`) have no reader. Real sources pass no outages, so the indicators stay inactive until they are connected to verified recorder run-status events. Only the synthetic demo shows an outage, and it is not evidence of a real provider outage.
 - **No live projections are recorded yet.** The existing flight-recorder / `LiveTimeline` engine does not call `recordModelOutput()`, and production has no durable store configured. Both are needed, and the publisher must pass a model version on every publication. No new forecast mathematics was activated.
-- **Not covered:** statewide down-ballot pages and the `/results` race pages. Their ids do not map to the frozen race ids yet.
-- **Decision for you:** the existing "The trend" chart stays above Race history, and the two overlap for the pre-election period. You may keep both, or retire TrendChart.
+- **Live charts are not backfilled.** Until a published live projection engine records its outputs, public charts show only the verified pre-election forecasts and reported candidate votes. Live win probabilities and projected final votes stay unavailable. They are never backfilled with newer calculations, and shadow outputs are never shown publicly.
+- **Deferred: other race pages.** Statewide down-ballot pages and `/results` race pages are not covered. This belongs to the election-night results integration and site-wide UI work. Covering them requires:
+  - **Id mapping.** Each page id must map to a history id that matches `^(sen|gov|house)-ST(-D)?$`, or to a new, validated class such as down-ballot. The frozen dataset holds only the 506 Senate, governor and House ids. Down-ballot races (`scripts/forecast/downballot/races_2026.json`) would need their own published frozen history. `/results` race keys come from the results providers, so they need an explicit, tested mapping table, never name matching at runtime.
+  - **Consistent semantics.** Margins are GOP minus Dem in points. Candidates resolve through `resolveCandidate`. Every point has a reporting definition. Nonpartisan and multi-seat contests need a `MULTI_CANDIDATE` basis or are excluded.
+  - **Shared parts.** `RaceHistorySection` (lazy fetch), `GET /api/race-history/[id]` (extend the id regex), `RaceHistory.tsx` and the `.rh` tokens in `raceHistory.css`, and `resultPointsFrom` for recorder observations.
