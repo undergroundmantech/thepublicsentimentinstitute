@@ -9,6 +9,9 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 27, 2026 evening ──
+  { pollster: "Harvard-Harris", endDate: "2026-10-26", sampleSize: 0, sampleType: "LV", results: { Democrats: 52, Republicans: 48 } },   // Oct 24 to 26, likely midterm voters, forced two way; 2,700 registered voters in all, Key Results PDF
+  { pollster: "Prolific", endDate: "2026-10-22", sampleSize: 0, sampleType: "LV", results: { Democrats: 53, Republicans: 42 } },   // Oct 21 to 22, likely voters from 1,518 adult citizens, LV count not published; registered voters 50 to 40, Prolific release Oct 27
   // ── Added Oct 26, 2026 morning ──
   { pollster: "Financial Times", endDate: "2026-10-20", sampleSize: 1549, sampleType: "LV", results: { Democrats: 53, Republicans: 44 } },   // FT/Focaldata, Oct 16 to 20, likely voters
   // ── Added Oct 25, 2026 evening ──

@@ -20,7 +20,7 @@ export const SENATE_MODEL: SenateRace[] = [
   { st: "NH", m: -10.2, open: true }, { st: "NJ", m: -20.7 }, { st: "NM", m: -21.1 },
   { st: "OH", m: -5.0 }, { st: "OK", m: 22.7, open: true }, { st: "OR", m: -24.4 },
   { st: "RI", m: -40.5 }, { st: "SC", m: -0.8 }, { st: "SD", m: 14.4 },
-  { st: "TN", m: 22.2 }, { st: "TX", m: -0.9 }, { st: "VA", m: -16.2 },
+  { st: "TN", m: 22.2 }, { st: "TX", m: -1.0 }, { st: "VA", m: -16.2 },
   { st: "WV", m: 32.4 }, { st: "WY", m: 42.0, open: true },
 ];
 
