@@ -119,18 +119,19 @@ export async function handleCapture(req: Request, deps: HandlerDeps = defaultDep
       if (tick?.lastPollAt && nowMs - Date.parse(tick.lastPollAt) < MIN_FORCE_SPACING_MS) return json(429, { error: "too_soon" }, { "retry-after": "10" });
     }
     const archiveOn = deps.env.ONPOINT_ARCHIVE === "1";
-    const runnerDeps = { store, fetchText: deps.fetchText, now: deps.now, races: tracked.races, config, archive: archiveOn ? deps.archive ?? defaultArchiveDeps(deps.now) : undefined };
+    const runnerDeps = { store, fetchText: deps.fetchText, now: deps.now, races: tracked.races, config, archive: archiveOn ? { ...(deps.archive ?? defaultArchiveDeps(deps.now)), publicationReady: deps.env.ONPOINT_PUBLIC_SNAPSHOT === "1" } : undefined };
     const tickOpts = { force: force === "1", trigger: method === "GET" ? "CRON" as const : "MANUAL" as const };
     const slots: TickResult[] = method === "GET" && deps.sleep ? await runCronSlots(runnerDeps, tickOpts, deps.sleep) : [await runTick(runnerDeps, tickOpts)];
     const out = slots[slots.length - 1];
-    const target = archiveOn ? (deps.github !== undefined ? deps.github : githubTargetFrom(deps.env)) : null;
+    const target = archiveOn && store.kind !== "github" ? (deps.github !== undefined ? deps.github : githubTargetFrom(deps.env)) : null;
     let mirror: MirrorResult | null = null;
     if (target && slots.some((s) => s.run)) mirror = await mirrorPending(store, target, { now: deps.now });
     const run = out.run;
     const count = <T extends { outcome: string }>(xs: T[]) => xs.reduce<Record<string, number>>((m, x) => ({ ...m, [x.outcome]: (m[x.outcome] ?? 0) + 1 }), {});
-    return json(run && !run.ok ? 502 : 200, {
+    const lost = slots.some((s) => s.durability.status === "FAILED");
+    return json((run && !run.ok) || lost ? 502 : 200, {
       phase: out.plan.phase, due: out.plan.due, reason: out.plan.reason, intervalMinutes: out.plan.intervalMinutes, trackedRaces: tracked.races.length, missingFromIndex: tracked.missing.length,
-      slots: slots.length, archive: archiveOn, mirror: mirror ? { status: mirror.status, checkpoints: mirror.checkpoints, code: mirror.code } : null,
+      durability: slots.map((s) => ({ status: s.durability.status, code: s.durability.code })), slots: slots.length, archive: archiveOn, mirror: mirror ? { status: mirror.status, checkpoints: mirror.checkpoints, code: mirror.code } : null,
       run: run ? { runId: run.runId, ok: run.ok, anyMaterial: run.anyMaterial, deadlineHit: run.deadlineHit, races: count(run.races), feeds: count(run.feeds), errors: run.errors.length, errorCodes: [...new Set(run.errors.map((e) => e.code))] } : null,
     });
   } catch (e) {
@@ -162,6 +163,7 @@ async function preflight(store: ObjectStore, deps: HandlerDeps, tracked: { races
     add("list", (await store.list("preflight/")).includes(key), "the object appears in a prefix listing");
     await store.put("heads/preflight.json", jsonBytes({ at, id }), "application/json");
     add("overwrite head", (parseJson(await store.get("heads/preflight.json")) as { id?: string } | null)?.id === id, "a head can be replaced and read back");
+    if (store.commit) { const c = await store.commit(`preflight ${id}`); add("commit", !!c.commit, `${c.files} files in one commit, ${c.calls} GitHub requests`); }
   } catch (e) {
     add("store", false, `store operation failed (${(e as { code?: string })?.code ?? (e as Error)?.name ?? "error"})`);
   }

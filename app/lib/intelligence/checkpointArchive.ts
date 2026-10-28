@@ -1,17 +1,18 @@
-// The election-night checkpoint archive. At each poll it keeps three layers, each stored on its own:
+// The election-night checkpoint archive. Each checkpoint keeps separate, linked layers:
 //
-//   RAW         what civicAPI said (already stored by the recorder: observation records and gzipped raw bodies).
-//               The checkpoint refers to them by observation id, content id and response hash.
-//   CALCULATED  what OnPoint's engines computed from that raw snapshot, with the model, its version, a hash of the
-//               engine, a hash of the inputs, the calculation time (the real clock, never backdated) and a hash of
-//               the outputs. The public results engine (app/results/2026/live.ts) is designation PUBLISHED; anything
-//               else is SHADOW and never feeds the published layer.
-//   PUBLISHED   what the public results desk showed for that snapshot: derived from the PUBLISHED calculation only.
+//   RAW_OBSERVED              what civicAPI said: the recorder's observation records and gzipped responses, referenced
+//                             by observation id, content id and response hash.
+//   CALCULATED_PUBLIC_ENGINE  the public results engine (app/results/2026/live.ts) run on that raw snapshot, with model,
+//   CALCULATED_SHADOW         version, engine hash, input hash, real calculation time and output hash. Shadow output never
+//                             reaches any later layer.
+//   SNAPSHOT                  what the public engine's output would display. PUBLICATION_READY when the canonical public
+//                             pathway is on; otherwise PUBLIC_ENGINE_RECOMPUTED_NOT_VERIFIED_PUBLISHED, because the browser
+//                             desk computes on its own fetch and nothing proves these values were shown.
+//   PUBLISHED                 a separate event (publicSnapshot.ts), written only when a PUBLICATION_READY snapshot was
+//                             made available through the canonical endpoint. Never inferred from a calculation.
 //
-// Nothing here is a new model. The public engine is called exactly as the results desk calls it. A value an engine
-// does not produce is null with a reason. A calculation that fails is recorded as FAILED; the raw layer is untouched.
-// Every layer file is immutable (written once). A checkpoint exists only when its manifest exists, and the manifest is
-// written last, so a partial checkpoint can never be read as complete.
+// Nothing here is a new model. A value an engine does not produce is null with a reason. Every layer file is written
+// once. The manifest is written after its layers, so a partial checkpoint is never read as complete.
 
 import { FIRST_CLOSE, fmtM, liveOdds, project, sides, type CCand, type CDetail, type Exp, type XRace } from "@/app/results/2026/live";
 import { canonicalJson, compactTime, intact, jsonBytes, parseJson, readRaw, sha256Hex, withChecksum, type RecordOutcome } from "./capture";
@@ -135,13 +136,14 @@ export type CalcStatus = "OK" | "FAILED" | "UNAVAILABLE";
 
 export interface CalcRecord {
   layer: "CALCULATED";
+  classification: "CALCULATED_PUBLIC_ENGINE" | "CALCULATED_SHADOW";
   schema: typeof CHECKPOINT_SCHEMA;
   /** checkpoint/race/designation/model@version: unique and stable. */
   calculationId: string;
   checkpointId: string;
   raceId: string;
   civicId: number | null;
-  designation: "PUBLISHED" | "SHADOW";
+  designation: "PUBLIC_ENGINE" | "SHADOW";
   raw: RawSnapshotRef | null;
   observedAt: string | null;
   /** When the calculation actually ran. A reused calculation keeps its own original time. */
@@ -157,32 +159,55 @@ export interface CalcRecord {
   contest?: FeedContest;
 }
 
-export interface PublishedRecord {
-  layer: "PUBLISHED";
+export interface Displayed {
+  marginLabel: string; expectedFinalMarginPp: number; countedMarginPp: number | null; sideProbability: { A: number; B: number };
+  winProbability: Record<string, number | null>; completenessPct: number; providerReportingPct: number | null; reportedTotal: number; estimatedFinalTotal: number;
+  estimatedOutstandingVotes: number; intervalPp: { low: number; high: number }; displayBandPp: number; estimatedFinalSides: Sides;
+  candidates: { id: string; name: string; party: string | null; side: "A" | "B" | null; votes: number; winProbability: number | null }[];
+}
+
+export interface SnapshotRecord {
+  layer: "SNAPSHOT";
+  classification: "PUBLICATION_READY" | "PUBLIC_ENGINE_RECOMPUTED_NOT_VERIFIED_PUBLISHED";
   schema: typeof CHECKPOINT_SCHEMA;
   checkpointId: string;
   raceId: string;
-  basis: "PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT";
+  civicId: number | null;
   status: "OK" | "UNAVAILABLE";
   reason: string | null;
-  /** When this published layer was written; the manifest follows it. */
-  publishedAt: string | null;
   model: ModelIdentity;
-  /** The PUBLISHED-designation calculation this state was derived from, and the raw snapshot under it. */
+  /** The public-engine calculation this was derived from, and the raw snapshot under it. */
   calculationId: string;
   raw: RawSnapshotRef | null;
   calculatedOutputSha256: string | null;
+  observedAt: string | null;
+  sourceUpdatedAt: string | null;
   testData: boolean | null;
   /** The desk hides test returns before the first polls close unless opened with ?test=1. */
   visibility: "SHOWN" | "SHOWN_AS_TEST" | "HIDDEN_BEFORE_CLOSE" | null;
-  displayed: {
-    marginLabel: string; expectedFinalMarginPp: number; countedMarginPp: number | null; sideProbability: { A: number; B: number };
-    winProbability: Record<string, number | null>; completenessPct: number; reportedTotal: number; estimatedFinalTotal: number;
-    estimatedOutstandingVotes: number; intervalPp: { low: number; high: number }; displayBandPp: number;
-  } | null;
+  displayed: Displayed | null;
   providerCalls: string[];
   onpointCall: null;
   onpointCallReason: string;
+}
+
+/** Written only after a PUBLICATION_READY snapshot was made available through the canonical endpoint. */
+export interface PublicationEvent {
+  layer: "PUBLISHED";
+  classification: "PUBLISHED";
+  schema: typeof CHECKPOINT_SCHEMA;
+  publicationId: string;
+  snapshotId: string;
+  checkpointId: string;
+  /** When the canonical head was moved to this document. On the GitHub store it becomes visible with the run's commit. */
+  publishedAt: string;
+  delivery: string;
+  document: { key: string; sha256: string };
+  snapshotLayer: { key: string; sha256: string | null };
+  previousPublicationId: string | null;
+  /** Exactly what the document serves per race. */
+  races: { raceId: string; civicId: number | null; calculationId: string; calculatedOutputSha256: string; model: ModelIdentity }[];
+  checksum: string;
 }
 
 export interface LayerRef { key: string; status: "WRITTEN" | "FAILED"; sha256: string | null; bytes: number; lines: number }
@@ -199,10 +224,12 @@ export interface CheckpointManifest {
   engine: ModelIdentity;
   shadowModel: ModelIdentity | null;
   layers: {
-    raw: { status: "COMPLETE" | "PARTIAL"; runKey: string; issues: string[]; feeds: { feed: string; outcome: string }[] };
+    raw: { classification: "RAW_OBSERVED"; status: "COMPLETE" | "PARTIAL"; runKey: string; issues: string[]; feeds: { feed: string; outcome: string }[] };
     calculated: LayerRef;
-    published: LayerRef;
+    snapshot: LayerRef;
   };
+  /** CANONICAL: the snapshot is offered to the public pathway; a PUBLISHED event exists only if that succeeded. */
+  publication: "CANONICAL" | "NONE_BROWSER_DESK";
   counts: { tracked: number; untracked: number; ok: number; reused: number; failed: number; unavailable: number; shadow: number };
   raceHistory: { recorded: number; failed: number } | null;
   complete: boolean;
@@ -219,15 +246,18 @@ export interface ArchiveDeps {
   /** Test seam for the engine call. Production uses computePublicEngine. */
   compute?: (race: XRace, detail: CDetail, exp: Record<string, Exp> | null) => EngineOutputs;
   shadow?: ShadowCalculator | null;
-  /** Also record each new published calculation as a Race History LIVE_PROJECTION point. */
+  /** Also record each new public-engine calculation as a Race History LIVE_PROJECTION point. */
   raceHistory?: boolean;
+  /** The canonical public pathway is on: snapshots are PUBLICATION_READY instead of recomputed-not-verified. */
+  publicationReady?: boolean;
 }
 
 export const checkpointIdOf = (startedAt: string, runId: string) => `${compactTime(startedAt)}_${runId}`;
 export const archiveKeys = (startedAt: string, runId: string) => {
   const id = checkpointIdOf(startedAt, runId), base = `archive/${startedAt.slice(0, 10)}`;
-  return { id, manifest: `${base}/checkpoints/${id}.json`, calculated: `${base}/calculated/${id}.jsonl`, published: `${base}/published/${id}.jsonl` };
+  return { id, manifest: `${base}/checkpoints/${id}.json`, calculated: `${base}/calculated/${id}.jsonl`, snapshot: `${base}/snapshot/${id}.jsonl`, publication: `${base}/published/${id}.json` };
 };
+export const publicationKeyOf = (manifestKey: string) => manifestKey.replace("/checkpoints/", "/published/");
 
 const jsonl = (xs: unknown[]) => Buffer.from(xs.map((x) => JSON.stringify(x)).join("\n") + (xs.length ? "\n" : ""), "utf8");
 const errName = (e: unknown) => ((e as { code?: unknown })?.code as string) ?? ((e as Error)?.name || "Error");
@@ -244,8 +274,11 @@ const forecastInputs = (r: XRace) => ({ id: r.id, k: r.k, c: r.c ?? null, tot: r
 const inputShaOf = (detail: CDetail, exp: Record<string, Exp> | null, race: XRace) => sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, exp, forecast: forecastInputs(race) }));
 export const calculationIdOf = (checkpointId: string, raceId: string, designation: string, m: ModelIdentity) => `${checkpointId}/${raceId}/${designation}/${m.name}@${m.version}`;
 
-function published(rec: CalcRecord, cap: RaceCapture | null): PublishedRecord {
-  const base = { layer: "PUBLISHED" as const, schema: CHECKPOINT_SCHEMA, checkpointId: rec.checkpointId, raceId: rec.raceId, basis: "PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT" as const, publishedAt: null, model: rec.model, calculationId: rec.calculationId, raw: rec.raw, onpointCall: null, onpointCallReason: "no OnPoint race-call engine feeds the public results desk; only the provider's own winner flags are shown" };
+function snapshotOf(rec: CalcRecord, cap: RaceCapture | null, classification: SnapshotRecord["classification"]): SnapshotRecord {
+  const base = {
+    layer: "SNAPSHOT" as const, classification, schema: CHECKPOINT_SCHEMA, checkpointId: rec.checkpointId, raceId: rec.raceId, civicId: rec.civicId, model: rec.model, calculationId: rec.calculationId, raw: rec.raw,
+    observedAt: rec.observedAt, sourceUpdatedAt: cap?.detail?.updated ?? null, onpointCall: null, onpointCallReason: "no OnPoint race-call engine feeds the public results desk; only the provider's own winner flags are shown",
+  };
   if (rec.status !== "OK" || !cap?.detail) {
     return { ...base, status: "UNAVAILABLE", reason: rec.status === "FAILED" ? `the published calculation failed: ${rec.reason}` : rec.reason, calculatedOutputSha256: null, testData: cap?.detail?.test ?? null, visibility: null, displayed: null, providerCalls: [] };
   }
@@ -257,8 +290,9 @@ function published(rec: CalcRecord, cap: RaceCapture | null): PublishedRecord {
     visibility: !test ? "SHOWN" : seen < FIRST_CLOSE ? "HIDDEN_BEFORE_CLOSE" : "SHOWN_AS_TEST",
     displayed: {
       marginLabel: fmtM(o.expectedFinalMarginPp, cap.race.k), expectedFinalMarginPp: o.expectedFinalMarginPp, countedMarginPp: o.countedMarginPp, sideProbability: o.sideProbability,
-      winProbability: o.winProbability, completenessPct: o.completenessPct, reportedTotal: o.reportedTotal, estimatedFinalTotal: o.estimatedFinalTotal,
-      estimatedOutstandingVotes: o.estimatedOutstandingVotes, intervalPp: { low: o.uncertainty.lowPp, high: o.uncertainty.highPp }, displayBandPp: o.uncertainty.displayBandPp,
+      winProbability: o.winProbability, completenessPct: o.completenessPct, providerReportingPct: Number.isFinite(cap.detail.pr) ? cap.detail.pr : null, reportedTotal: o.reportedTotal, estimatedFinalTotal: o.estimatedFinalTotal,
+      estimatedOutstandingVotes: o.estimatedOutstandingVotes, intervalPp: { low: o.uncertainty.lowPp, high: o.uncertainty.highPp }, displayBandPp: o.uncertainty.displayBandPp, estimatedFinalSides: o.sides.estimatedFinal,
+      candidates: o.candidates.map((c) => ({ id: c.id, name: c.name, party: c.party, side: c.side, votes: o.reportedVotes[c.id] ?? 0, winProbability: o.winProbability[c.id] ?? null })),
     },
     providerCalls: o.candidates.filter((c) => c.providerWinner).map((c) => c.id),
   };
@@ -292,12 +326,13 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
   const compute = deps.compute ?? computePublicEngine;
   const head = await readCalcHead(store);
   const nextHead: Record<string, CalcRecord> = { ...head.races };
-  const calc: CalcRecord[] = [], pub: PublishedRecord[] = [];
+  const calc: CalcRecord[] = [], snap: SnapshotRecord[] = [];
+  const snapClass = deps.publicationReady ? "PUBLICATION_READY" as const : "PUBLIC_ENGINE_RECOMPUTED_NOT_VERIFIED_PUBLISHED" as const;
   const counts = { tracked: input.captures.length, untracked: input.untracked.length, ok: 0, reused: 0, failed: 0, unavailable: 0, shadow: 0 };
   const fresh: { rec: CalcRecord; cap: RaceCapture }[] = [];
 
   for (const cap of [...input.captures].sort((x, y) => x.race.id.localeCompare(y.race.id))) {
-    const base = { layer: "CALCULATED" as const, schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, cap.race.id, "PUBLISHED", engine), checkpointId: keys.id, raceId: cap.race.id, civicId: cap.civicId, designation: "PUBLISHED" as const, raw: cap.raw, observedAt: cap.observedAt, model: engine, reusedFrom: null };
+    const base = { layer: "CALCULATED" as const, classification: "CALCULATED_PUBLIC_ENGINE" as const, schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, cap.race.id, "PUBLIC_ENGINE", engine), checkpointId: keys.id, raceId: cap.race.id, civicId: cap.civicId, designation: "PUBLIC_ENGINE" as const, raw: cap.raw, observedAt: cap.observedAt, model: engine, reusedFrom: null };
     let rec: CalcRecord;
     if (!cap.detail || !cap.raw) {
       rec = { ...base, calculatedAt: null, inputSha256: null, status: "UNAVAILABLE", reason: `no raw snapshot at this checkpoint: ${cap.failure ?? "not captured"}`, outputs: null, outputSha256: null };
@@ -323,12 +358,12 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     }
     counts[rec.status === "OK" ? "ok" : rec.status === "FAILED" ? "failed" : "unavailable"]++;
     calc.push(rec);
-    pub.push(published(rec, cap));
+    snap.push(snapshotOf(rec, cap, snapClass));
 
     if (deps.shadow && cap.detail && cap.raw) {
       const s = deps.shadow;
       const detail = cap.detail;
-      const sb = { ...base, calculationId: calculationIdOf(keys.id, cap.race.id, "SHADOW", s.model), designation: "SHADOW" as const, model: s.model, inputSha256: sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, forecast: forecastInputs(cap.race) })) };
+      const sb = { ...base, classification: "CALCULATED_SHADOW" as const, calculationId: calculationIdOf(keys.id, cap.race.id, "SHADOW", s.model), designation: "SHADOW" as const, model: s.model, inputSha256: sha256Hex(canonicalJson({ c: detail.c, regions: detail.regions ?? null, forecast: forecastInputs(cap.race) })) };
       try {
         const outputs = s.run({ ...cap, detail });
         calc.push({ ...sb, calculatedAt: deps.now().toISOString(), status: "OK", reason: null, outputs, outputSha256: sha256Hex(canonicalJson(outputs ?? null)) });
@@ -339,7 +374,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     }
   }
   for (const c of input.untracked) {
-    calc.push({ layer: "CALCULATED", schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, `civic-${c.civicId}`, "PUBLISHED", engine), checkpointId: keys.id, raceId: `civic-${c.civicId}`, civicId: c.civicId, designation: "PUBLISHED", raw: null, observedAt: null, calculatedAt: null, model: engine, inputSha256: null, status: "UNAVAILABLE", reason: "no OnPoint model covers this contest; its returns are kept in the raw feed", reusedFrom: null, outputs: null, outputSha256: null, contest: c });
+    calc.push({ layer: "CALCULATED", classification: "CALCULATED_PUBLIC_ENGINE", schema: CHECKPOINT_SCHEMA, calculationId: calculationIdOf(keys.id, `civic-${c.civicId}`, "PUBLIC_ENGINE", engine), checkpointId: keys.id, raceId: `civic-${c.civicId}`, civicId: c.civicId, designation: "PUBLIC_ENGINE", raw: null, observedAt: null, calculatedAt: null, model: engine, inputSha256: null, status: "UNAVAILABLE", reason: "no OnPoint model covers this contest; its returns are kept in the raw feed", reusedFrom: null, outputs: null, outputSha256: null, contest: c });
   }
 
   const incomplete: string[] = input.rawIssues.map((x) => `raw: ${x}`);
@@ -348,8 +383,7 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
     catch (e) { incomplete.push(`${key.split("/")[2]} layer not stored (${errName(e)})`); return { key, status: "FAILED", sha256: null, bytes: 0, lines }; }
   };
   const calculated = await write(keys.calculated, jsonl(calc), calc.length);
-  const publishedAt = deps.now().toISOString();
-  const publishedRef = await write(keys.published, jsonl(pub.map((p) => ({ ...p, publishedAt }))), pub.length);
+  const snapshotRef = await write(keys.snapshot, jsonl(snap), snap.length);
 
   let raceHistory: CheckpointManifest["raceHistory"] = null;
   if (deps.raceHistory && calculated.status === "WRITTEN") {
@@ -365,7 +399,8 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
   const manifest = withChecksum<Omit<CheckpointManifest, "checksum">>({
     type: "CHECKPOINT_MANIFEST", schema: CHECKPOINT_SCHEMA, checkpointId: keys.id, runId: input.runId, phase: input.phase, startedAt: input.startedAt, rawFinishedAt: input.rawFinishedAt,
     archivedAt: deps.now().toISOString(), engine, shadowModel: deps.shadow?.model ?? null,
-    layers: { raw: { status: input.rawIssues.length ? "PARTIAL" : "COMPLETE", runKey: input.runKey, issues: input.rawIssues, feeds: input.feeds }, calculated, published: publishedRef },
+    layers: { raw: { classification: "RAW_OBSERVED", status: input.rawIssues.length ? "PARTIAL" : "COMPLETE", runKey: input.runKey, issues: input.rawIssues, feeds: input.feeds }, calculated, snapshot: snapshotRef },
+    publication: deps.publicationReady ? "CANONICAL" : "NONE_BROWSER_DESK",
     counts, raceHistory, complete: incomplete.length === 0, incompleteReasons: incomplete,
   });
   await store.putIfAbsent(keys.manifest, jsonBytes(manifest), "application/json");
@@ -376,9 +411,9 @@ export async function archiveCheckpoint(store: ObjectStore, input: CheckpointInp
 
 const parseLines = <T,>(b: Buffer | null): T[] => (b ? b.toString("utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l) as T) : []);
 
-export interface LoadedCheckpoint { manifest: CheckpointManifest; calculated: CalcRecord[]; published: PublishedRecord[]; problems: string[] }
+export interface LoadedCheckpoint { manifest: CheckpointManifest; calculated: CalcRecord[]; snapshot: SnapshotRecord[]; publication: PublicationEvent | null; problems: string[] }
 
-/** Reads one checkpoint and checks every layer against the hashes in its manifest. */
+/** Reads one checkpoint, checks every layer against the hashes in its manifest, and its publication event if any. */
 export async function readCheckpoint(store: ObjectStore, manifestKey: string): Promise<LoadedCheckpoint | null> {
   const manifest = parseJson(await store.get(manifestKey)) as CheckpointManifest | null;
   if (!manifest) return null;
@@ -391,7 +426,9 @@ export async function readCheckpoint(store: ObjectStore, manifestKey: string): P
     if (sha256Hex(b) !== ref.sha256) problems.push(`${ref.key} hash mismatch`);
     return b;
   };
-  return { manifest, calculated: parseLines<CalcRecord>(await layer(manifest.layers.calculated)), published: parseLines<PublishedRecord>(await layer(manifest.layers.published)), problems };
+  const publication = parseJson(await store.get(publicationKeyOf(manifestKey))) as PublicationEvent | null;
+  if (publication && (!intact(publication) || publication.snapshotLayer.sha256 !== manifest.layers.snapshot.sha256)) problems.push("publication event does not match this checkpoint");
+  return { manifest, calculated: parseLines<CalcRecord>(await layer(manifest.layers.calculated)), snapshot: parseLines<SnapshotRecord>(await layer(manifest.layers.snapshot)), publication, problems };
 }
 
 export async function listCheckpoints(store: ObjectStore, fromDay: string, toDay: string): Promise<string[]> {
@@ -400,7 +437,7 @@ export async function listCheckpoints(store: ObjectStore, fromDay: string, toDay
   return out.sort();
 }
 
-export interface StateAt { checkpointId: string; archivedAt: string; raw: RawSnapshotRef | null; calculated: CalcRecord | null; shadow: CalcRecord | null; published: PublishedRecord | null; problems: string[] }
+export interface StateAt { checkpointId: string; archivedAt: string; raw: RawSnapshotRef | null; calculated: CalcRecord | null; shadow: CalcRecord | null; snapshot: SnapshotRecord | null; published: PublicationEvent | null; problems: string[] }
 
 /**
  * What was known about a race at a moment: the latest checkpoint whose archive was finished by then. Nothing written
@@ -412,11 +449,12 @@ export async function stateAt(store: ObjectStore, raceId: string, atIso: string,
   for (const key of keys) {
     const cp = await readCheckpoint(store, key);
     if (!cp || Date.parse(cp.manifest.archivedAt) > at) continue;
-    const calculated = cp.calculated.find((c) => c.raceId === raceId && c.designation === "PUBLISHED") ?? null;
+    const calculated = cp.calculated.find((c) => c.raceId === raceId && c.designation === "PUBLIC_ENGINE") ?? null;
     return {
       checkpointId: cp.manifest.checkpointId, archivedAt: cp.manifest.archivedAt, raw: calculated?.raw ?? null, calculated,
       shadow: cp.calculated.find((c) => c.raceId === raceId && c.designation === "SHADOW") ?? null,
-      published: cp.published.find((p) => p.raceId === raceId) ?? null, problems: cp.problems,
+      snapshot: cp.snapshot.find((p) => p.raceId === raceId) ?? null,
+      published: cp.publication && Date.parse(cp.publication.publishedAt) <= at ? cp.publication : null, problems: cp.problems,
     };
   }
   return null;
@@ -433,7 +471,7 @@ export interface ReplayRecord {
   calculationId: string;
   checkpointId: string;
   raceId: string;
-  replayOf: { calculationId: string; model: ModelIdentity; outputSha256: string | null; publishedOutputSha256: string | null };
+  replayOf: { calculationId: string; model: ModelIdentity; outputSha256: string | null; publicationId: string | null; publishedOutputSha256: string | null };
   raw: RawSnapshotRef | null;
   observedAt: string | null;
   calculatedAt: string;
@@ -470,11 +508,11 @@ export async function replayArchive(store: ObjectStore, o: ReplayOptions): Promi
     if (!cp || cp.problems.length || (o.asOf && Date.parse(cp.manifest.archivedAt) > Date.parse(o.asOf))) { out.skipped.push(mk); continue; }
     const recs: ReplayRecord[] = [];
     for (const c of cp.calculated) {
-      if (c.designation !== "PUBLISHED" || c.contest) continue;
-      const pub = cp.published.find((p) => p.calculationId === c.calculationId) ?? null;
+      if (c.designation !== "PUBLIC_ENGINE" || c.contest) continue;
+      const pub = cp.publication?.races.find((p) => p.calculationId === c.calculationId) ?? null;
       const base = {
         layer: "REPLAY" as const, schema: CHECKPOINT_SCHEMA, datasetId: o.datasetId, calculationId: `${o.datasetId}/${calculationIdOf(c.checkpointId, c.raceId, "REPLAY", o.model)}`,
-        checkpointId: c.checkpointId, raceId: c.raceId, replayOf: { calculationId: c.calculationId, model: c.model, outputSha256: c.outputSha256, publishedOutputSha256: pub?.calculatedOutputSha256 ?? null },
+        checkpointId: c.checkpointId, raceId: c.raceId, replayOf: { calculationId: c.calculationId, model: c.model, outputSha256: c.outputSha256, publicationId: pub ? cp.publication!.publicationId : null, publishedOutputSha256: pub?.calculatedOutputSha256 ?? null },
         raw: c.raw, observedAt: c.observedAt, model: o.model,
       };
       const none = (reason: string): ReplayRecord => ({ ...base, calculatedAt: o.now().toISOString(), inputSha256: null, status: "UNAVAILABLE", reason, outputs: null, outputSha256: null });
@@ -501,17 +539,20 @@ export async function replayArchive(store: ObjectStore, o: ReplayOptions): Promi
   return out;
 }
 
-export interface ReplayComparison { checkpointId: string; raceId: string; raw: RawSnapshotRef | null; original: CalcRecord; published: PublishedRecord | null; replay: ReplayRecord | null }
+export interface PublishedRef { publicationId: string; publishedAt: string; calculationId: string; calculatedOutputSha256: string; modelVersion: string }
+export interface ReplayComparison { checkpointId: string; raceId: string; raw: RawSnapshotRef | null; original: CalcRecord; snapshot: SnapshotRecord | null; published: PublishedRef | null; replay: ReplayRecord | null }
 
-/** Per checkpoint: what the original model calculated, what was published, and what the replayed model calculates. */
+/** Per checkpoint: the original calculation, what was actually published (with its id), and the replayed model's result. */
 export async function compareReplay(store: ObjectStore, datasetId: string, model: ModelIdentity, raceId: string, fromDay = "2026-11-03", toDay = "2026-11-11"): Promise<ReplayComparison[]> {
   const rows: ReplayComparison[] = [];
   for (const mk of await listCheckpoints(store, fromDay, toDay)) {
     const cp = await readCheckpoint(store, mk);
-    const original = cp?.calculated.find((c) => c.raceId === raceId && c.designation === "PUBLISHED");
+    const original = cp?.calculated.find((c) => c.raceId === raceId && c.designation === "PUBLIC_ENGINE");
     if (!cp || !original) continue;
     const replay = parseLines<ReplayRecord>(await store.get(replayKey(datasetId, model, cp.manifest.checkpointId))).find((r) => r.raceId === raceId) ?? null;
-    rows.push({ checkpointId: cp.manifest.checkpointId, raceId, raw: original.raw, original, published: cp.published.find((p) => p.calculationId === original.calculationId) ?? null, replay });
+    const ev = cp.publication, pr = ev?.races.find((r) => r.raceId === raceId);
+    const published = ev && pr ? { publicationId: ev.publicationId, publishedAt: ev.publishedAt, calculationId: pr.calculationId, calculatedOutputSha256: pr.calculatedOutputSha256, modelVersion: pr.model.version } : null;
+    rows.push({ checkpointId: cp.manifest.checkpointId, raceId, raw: original.raw, original, snapshot: cp.snapshot.find((p) => p.calculationId === original.calculationId) ?? null, published, replay });
   }
   return rows;
 }

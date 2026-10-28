@@ -23,7 +23,7 @@ test("legacy capture runs with the right bearer while the durable recorder is of
 });
 
 test("legacy capture stands down once the durable recorder is configured, without polling", () => {
-  assert.deepEqual(legacyCaptureGate({ CRON_SECRET: SECRET, VERCEL: "1", INTELLIGENCE_CAPTURE_STORE: "blob" }, `Bearer ${SECRET}`),
+  assert.deepEqual(legacyCaptureGate({ CRON_SECRET: SECRET, VERCEL: "1", INTELLIGENCE_CAPTURE_STORE: "blob", ONPOINT_PUBLIC_SNAPSHOT: "1" }, `Bearer ${SECRET}`),
     { status: 200, body: { skipped: "superseded by /api/intelligence/capture" } });
 });
 

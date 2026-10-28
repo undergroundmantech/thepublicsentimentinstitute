@@ -13,7 +13,9 @@ export function legacyCaptureGate(env: Env, authorization: string | null): GateR
     const a = Buffer.from(authorization ?? ""), b = Buffer.from(`Bearer ${secret}`);
     if (a.length !== b.length || !timingSafeEqual(a, b)) return { status: 401, body: { error: "unauthorized" } };
   }
-  // once the durable recorder is configured it polls the same civicAPI races, so this one stands down
-  if (env.INTELLIGENCE_CAPTURE_STORE) return { status: 200, body: { skipped: "superseded by /api/intelligence/capture" } };
+  // stands down only when RaceDesk's timeline is served from the durable recorder (publicTimeline.ts); otherwise the
+  // desk still reads this recorder's history
+  const store = env.INTELLIGENCE_CAPTURE_STORE;
+  if (store && store !== "github" && env.ONPOINT_PUBLIC_SNAPSHOT === "1") return { status: 200, body: { skipped: "superseded by /api/intelligence/capture" } };
   return null;
 }

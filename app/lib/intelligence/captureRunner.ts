@@ -10,6 +10,8 @@ import type { XRace } from "@/app/results/2026/live";
 import { matchCivic } from "@/app/results/2026/live";
 import { fromCivicDetail } from "./observations";
 import { searchRows, trimDetail } from "./civic";
+import { archiveKeys } from "./checkpointArchive";
+import { publishCheckpoint } from "./publicSnapshot";
 import {
   CaptureError, compactTime, intact, jsonBytes, parseJson, recordFeedDelta, recordObservation, sha256Hex, storeRaw, withChecksum,
   type CandidateLine, type CapturedObservation, type FeedRow, type RecordOutcome,
@@ -221,6 +223,10 @@ export async function runCapture(deps: RunnerDeps, plan: TickPlan, trigger: RunR
     const untracked = civ.filter((c) => !matchedIds.has(c.id)).map((c) => ({ civicId: c.id, type: c.type, province: c.province, district: c.district, name: c.name }));
     try {
       await archiveCheckpoint(store, { runId, phase: plan.phase, startedAt, rawFinishedAt: deps.now().toISOString(), runKey, captures, untracked, feeds: feeds.map(({ feed, outcome }) => ({ feed, outcome })), rawIssues }, deps.archive);
+      if (deps.archive.publicationReady) {
+        const p = await publishCheckpoint(store, archiveKeys(startedAt, runId).manifest, deps.now);
+        if (p.status !== "PUBLISHED") errors.push({ scope: "publication", code: p.code, message: "archived but not published; the endpoint keeps serving the previous publication" });
+      }
     } catch (e) {
       storageFailed = true;
       errors.push({ scope: "archive", code: "ARCHIVE_WRITE_FAILED", message: sanitize(e).message });
@@ -257,7 +263,20 @@ export async function readTick(store: ObjectStore): Promise<TickHead | null> {
   return intact(t) ? (t as TickHead) : null;
 }
 
-export interface TickResult { plan: TickPlan; run: RunRecord | null; tick: TickHead }
+/** IMMEDIATE: the store writes as it goes. COMMITTED / FAILED: a batching store (GitHub) made the whole poll durable, or none of it. */
+export interface Durability { status: "IMMEDIATE" | "NOTHING" | "COMMITTED" | "FAILED"; commit: string | null; code: string | null; files: number; bytes: number; requests: number | null }
+export interface TickResult { plan: TickPlan; run: RunRecord | null; tick: TickHead; durability: Durability }
+
+async function makeDurable(store: ObjectStore, message: string): Promise<Durability> {
+  if (!store.commit) return { status: "IMMEDIATE", commit: null, code: null, files: 0, bytes: 0, requests: null };
+  try {
+    const c = await store.commit(message);
+    return { status: c.commit ? "COMMITTED" : "NOTHING", commit: c.commit, code: null, files: c.files, bytes: c.bytes, requests: c.calls };
+  } catch (e) {
+    store.discard?.();
+    return { status: "FAILED", commit: null, code: sanitize(e).code, files: 0, bytes: 0, requests: null };
+  }
+}
 
 /** Decide whether this minute is due and, if so, poll. Always leaves a tick head, so a quiet minute is distinguishable from a dead scheduler. */
 export async function runTick(deps: RunnerDeps, opts: { force?: boolean; trigger: RunRecord["trigger"] }): Promise<TickResult> {
@@ -267,7 +286,7 @@ export async function runTick(deps: RunnerDeps, opts: { force?: boolean; trigger
   if (!plan.due) {
     const tick = withChecksum<Omit<TickHead, "checksum">>({ at: now, phase: plan.phase, intervalMinutes: plan.intervalMinutes, due: false, lastPollAt: prev?.lastPollAt ?? null, quietPolls: prev?.quietPolls ?? 0, lastOkPollAt: prev?.lastOkPollAt ?? null, consecutiveFailures: prev?.consecutiveFailures ?? 0, lastRunKey: prev?.lastRunKey ?? null });
     await deps.store.put(TICK_KEY, jsonBytes(tick), "application/json");
-    return { plan, run: null, tick };
+    return { plan, run: null, tick, durability: { status: deps.store.commit ? "NOTHING" : "IMMEDIATE", commit: null, code: null, files: 0, bytes: 0, requests: null } };
   }
   const run = await runCapture(deps, plan, opts.trigger);
   const tick = withChecksum<Omit<TickHead, "checksum">>({
@@ -275,12 +294,11 @@ export async function runTick(deps: RunnerDeps, opts: { force?: boolean; trigger
     lastOkPollAt: run.ok ? run.startedAt : prev?.lastOkPollAt ?? null, consecutiveFailures: run.ok ? 0 : (prev?.consecutiveFailures ?? 0) + 1, lastRunKey: `runs/${run.startedAt.slice(0, 10)}/${compactTime(run.startedAt)}_${run.runId}.json`,
   });
   await deps.store.put(TICK_KEY, jsonBytes(tick), "application/json");
-  return { plan, run, tick };
+  return { plan, run, tick, durability: await makeDurable(deps.store, `checkpoint ${run.startedAt} ${run.runId}`) };
 }
 
 // ---- run history ----------------------------------------------------------------------------------------------------------
 
-/** Run records started between two instants, oldest first. Records that fail their checksum are skipped. */
 /**
  * One cron invocation. Cron fires once a minute; when the phase polls faster than that (30 seconds on election night),
  * the later slots of the minute are run here, each on the normal schedule check, while the function's budget allows.
@@ -291,9 +309,11 @@ export async function runCronSlots(deps: RunnerDeps, opts: { force?: boolean; tr
   for (;;) {
     const last = out[out.length - 1];
     const iv = last.plan.intervalMinutes;
-    if (!last.run || iv === null || iv >= 1) break;
-    const next = Date.parse(last.run.startedAt) + iv * 60_000;
-    if (next - t0 >= 60_000) break;
+    const lp = last.tick.lastPollAt;
+    if (!lp || iv === null || iv >= 1 || last.durability.status === "FAILED" || (!last.run && out.length > 1)) break;
+    const next = Date.parse(lp) + iv * 60_000;
+    // only slots inside this invocation's own minute, so a late invocation never runs into the next cron's slots
+    if (next >= Math.floor(t0 / 60_000) * 60_000 + 60_000) break;
     const remaining = budgetMs - (Math.max(next, deps.now().getTime()) - t0);
     if (remaining < 15_000) break;
     const wait = next - deps.now().getTime();
@@ -303,6 +323,7 @@ export async function runCronSlots(deps: RunnerDeps, opts: { force?: boolean; tr
   return out;
 }
 
+/** Run records started between two instants, oldest first. Records that fail their checksum are skipped. */
 export async function readRuns(store: ObjectStore, fromIso: string, toIso: string): Promise<RunRecord[]> {
   const out: RunRecord[] = [];
   for (let d = Date.parse(fromIso.slice(0, 10)); d <= Date.parse(toIso); d += 86_400_000) {

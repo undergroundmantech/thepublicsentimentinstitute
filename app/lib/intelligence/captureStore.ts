@@ -4,6 +4,7 @@
 // Backends
 //   fs      a directory on a persistent disk. Durable only where the host keeps the disk (never a serverless function).
 //   blob    Vercel Blob, private access. Durable, and the only backend that survives a serverless deployment.
+//   github  a private GitHub repository (githubStore.ts). Durable; everything a run writes lands in one commit.
 //   memory  tests.
 //
 // Server-only: uses node:fs.
@@ -11,9 +12,12 @@
 import { randomBytes } from "node:crypto";
 import { link, mkdir, readdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { GitHubStore, githubTargetFrom } from "./githubStore";
+
+export interface CommitResult { commit: string | null; files: number; bytes: number; calls: number }
 
 export interface ObjectStore {
-  readonly kind: "fs" | "blob" | "memory";
+  readonly kind: "fs" | "blob" | "memory" | "github";
   /** True when objects survive a process restart and a new deployment. */
   readonly durable: boolean;
   /** Create only when absent. Never replaces an existing object. */
@@ -23,6 +27,11 @@ export interface ObjectStore {
   get(key: string): Promise<Buffer | null>;
   /** Keys that start with `prefix`, ascending. */
   list(prefix: string): Promise<string[]>;
+  /** Batching stores only: writes are provisional until this succeeds, and all-or-nothing. */
+  commit?(message: string): Promise<CommitResult>;
+  discard?(): void;
+  /** The objects directly under `dir/` with their contents, in one request. */
+  readDir?(dir: string): Promise<Map<string, Buffer>>;
 }
 
 export class StoreError extends Error {
@@ -34,6 +43,15 @@ const KEY = /^[A-Za-z0-9][A-Za-z0-9._=/-]{0,240}$/;
 export function checkKey(key: string): string {
   if (!KEY.test(key) || key.includes("..") || key.includes("//") || key.endsWith("/")) throw new StoreError("INVALID_KEY", `"${key.slice(0, 60)}" is not a valid object key`);
   return key;
+}
+
+/** Every object directly under `dir/` (flat directories only), ascending by key. */
+export async function readAll(store: ObjectStore, dir: string): Promise<[string, Buffer | null][]> {
+  if (store.readDir) return [...(await store.readDir(dir))].sort(([a], [b]) => a.localeCompare(b));
+  const keys = await store.list(dir);
+  const out: [string, Buffer | null][] = [];
+  for (let i = 0; i < keys.length; i += 8) out.push(...(await Promise.all(keys.slice(i, i + 8).map(async (k): Promise<[string, Buffer | null]> => [k, await store.get(k)]))));
+  return out;
 }
 
 // ---- memory ------------------------------------------------------------------------------------------------------------
@@ -156,6 +174,10 @@ export interface StoreChoice { store: ObjectStore | null; problem: string | null
 export function resolveStore(env: Record<string, string | undefined> = process.env): StoreChoice {
   const want = env.INTELLIGENCE_CAPTURE_STORE;
   const onVercel = !!env.VERCEL;
+  if (want === "github") {
+    const t = githubTargetFrom(env);
+    return t ? { store: new GitHubStore(t), problem: null } : { store: null, problem: "INTELLIGENCE_CAPTURE_STORE=github but ONPOINT_ARCHIVE_REPO / ONPOINT_ARCHIVE_TOKEN are missing or invalid" };
+  }
   if (want === "blob") {
     if (!env.BLOB_READ_WRITE_TOKEN && !env.BLOB_STORE_ID) return { store: null, problem: "INTELLIGENCE_CAPTURE_STORE=blob but no Blob credentials are configured" };
     return { store: new BlobStore(), problem: null };
@@ -166,5 +188,5 @@ export function resolveStore(env: Record<string, string | undefined> = process.e
     return { store: new FsStore(dir, { durable: !onVercel || env.INTELLIGENCE_CAPTURE_DISK_IS_PERSISTENT === "1" }), problem: null };
   }
   if (want) return { store: null, problem: `INTELLIGENCE_CAPTURE_STORE="${want}" is not a known store` };
-  return { store: null, problem: "no durable store is configured: set INTELLIGENCE_CAPTURE_STORE=blob on Vercel" };
+  return { store: null, problem: "no durable store is configured: set INTELLIGENCE_CAPTURE_STORE=github (or blob) on Vercel" };
 }

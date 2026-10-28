@@ -21,7 +21,7 @@ import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
 import path from "node:path";
 import { canonicalJson, compactTime, foldObservations, intact, jsonBytes, parseJson, readObservationRecords, sha256Hex, slug, withChecksum, type ObservationView } from "./capture";
-import { checkKey, type ObjectStore } from "./captureStore";
+import { checkKey, readAll, type ObjectStore } from "./captureStore";
 import { HISTORY_SCHEMA, invalidReason, lastName, prepareHistory, type DataStatus, type HistoryCandidate, type HistoryPoint, type MarginReference, type ModelOutputPoint, type PrepareOptions, type PreparedHistory, type Publication, type PublicationClass, type ResultPoint } from "./raceHistory";
 
 const SAFE_RACE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/;
@@ -85,18 +85,16 @@ export async function recordModelOutput(store: ObjectStore, input: ModelOutputIn
 export interface LoadedModelOutputs { points: ModelOutputPoint[]; corrupt: number }
 
 export async function readModelOutputs(store: ObjectStore, raceId: string, opts: { shadow?: boolean } = {}): Promise<LoadedModelOutputs> {
-  const keys = await store.list(`${opts.shadow ? "model-shadow" : "model"}/${checkKey(raceId)}/`);
   const out: LoadedModelOutputs = { points: [], corrupt: 0 };
-  const read = async (key: string) => {
-    const rec = parseJson(await store.get(key)) as StoredModelOutput | null;
-    if (!rec || rec.type !== "MODEL_OUTPUT_RECORD" || rec.schema !== HISTORY_SCHEMA || !intact(rec)) { out.corrupt++; return; }
+  for (const [, buf] of await readAll(store, `${opts.shadow ? "model-shadow" : "model"}/${checkKey(raceId)}/`)) {
+    const rec = parseJson(buf) as StoredModelOutput | null;
+    if (!rec || rec.type !== "MODEL_OUTPUT_RECORD" || rec.schema !== HISTORY_SCHEMA || !intact(rec)) { out.corrupt++; continue; }
     // the prefix decides the stream: a record filed under model/ that says SHADOW_MODEL (or the reverse) is not trusted
-    if ((rec.sourceClass === "SHADOW_MODEL") !== !!opts.shadow) { out.corrupt++; return; }
+    if ((rec.sourceClass === "SHADOW_MODEL") !== !!opts.shadow) { out.corrupt++; continue; }
     const { type: _t, valuesSha256: _v, recordedAt: _r, checksum: _c, ...point } = rec;
     void _t; void _v; void _r; void _c;
     out.points.push(point);
-  };
-  for (let i = 0; i < keys.length; i += 8) await Promise.all(keys.slice(i, i + 8).map(read));
+  }
   return out;
 }
 

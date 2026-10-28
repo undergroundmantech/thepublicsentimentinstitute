@@ -213,7 +213,15 @@ Code: `app/lib/intelligence/checkpointArchive.ts`, `githubArchive.ts`, wired int
   - When the inputs and the model are identical, the earlier outputs are reused and the original `calculatedAt` is kept.
   - Fields the engine does not produce are `null`, with a reason: reporting-order and voting-method adjustments, confidence, and per-candidate values where one side has several candidates.
   - Contests no OnPoint model covers are listed as `UNAVAILABLE`.
-- **PUBLISHED.** This is derived only from the `PUBLISHED` calculation. Its basis is `PUBLIC_ENGINE_ON_ARCHIVED_SNAPSHOT`. The desk computes in each visitor's browser from its own fetch, so this layer is the desk's output on the archived snapshot, not a capture of a rendered page. It also records the desk's test-data visibility and the provider's winner flags. `onpointCall` is `null` because no OnPoint call engine feeds the desk.
+- **SNAPSHOT.** What the public engine's output would display: the displayed values and the desk's test-data visibility, linked to its calculation id, output hash and raw ref.
+  - `PUBLIC_ENGINE_RECOMPUTED_NOT_VERIFIED_PUBLISHED` while the browser desk is live. Each visitor's browser computes from its own fetch, so nothing proves these values were shown. This is never treated as published.
+  - `PUBLICATION_READY` when `ONPOINT_PUBLIC_SNAPSHOT=1`.
+- **PUBLISHED.** A separate event at `archive/<day>/published/<id>.json`, written by `publishCheckpoint()` (`publicSnapshot.ts`) only after the canonical head `heads/public-snapshot.json` was moved to an immutable document `public/snapshots/<day>/snap_<id>.json`.
+  - The event names the publication id, the snapshot id, `publishedAt`, the document hash, the snapshot-layer hash, the previous publication, and for every race the calculation id, output hash and model version served.
+  - If the event cannot be written, the head is moved back, and the previous publication stays live. A failed publication leaves raw and calculated records and no event.
+  - The event records which version was made available and when. It does not record what any individual visitor rendered.
+
+Links: PUBLISHED → (calculation id, output hash) → CALCULATED → (observation id, response hash) → RAW. The manifest holds each layer's hash; `readCheckpoint` checks every hash, and the event's match with the snapshot layer.
 
 **Integrity.**
 
@@ -234,6 +242,47 @@ Code: `app/lib/intelligence/checkpointArchive.ts`, `githubArchive.ts`, wired int
 - Pending checkpoints go into one commit per cron call through the Git Data API, under `YYYY/MM-DD/{checkpoints,calculated,published,raw}/`.
 - The mirror head advances only after the ref update succeeds.
 - `verifyCheckpointFiles()` checks a recovered checkpoint.
+
+**Replay datasets.** `replayArchive()` runs a newer model on the archived raw responses, after checking each response hash. It writes once per checkpoint to `replays/<dataset>/<model>/<version>/` and never under `archive/`. `asOf` limits it to checkpoints archived by then. `compareReplay()` returns, per checkpoint: the original calculation, the snapshot, the publication (id, time, model version, output hash) and the replay.
+
+**Public endpoints (off by default).**
+
+- `GET /api/results/public-snapshot` serves the published document. It returns 404 unless `ONPOINT_PUBLIC_SNAPSHOT=1`, and is CDN-cached (`s-maxage=15`), so visitors never reach the store.
+- `GET /api/flightrecorder/[raceId]` (the RaceDesk Live Timeline) keeps using the legacy recorder unless the flag is on and the store is Blob or fs. In that case it serves a per-race index of published output, in the legacy shape.
+- On the GitHub store the per-race index is not kept: updating it would cost one request per race per checkpoint. The desk stays on the legacy recorder, which keeps running (`legacyCaptureGate` stands down only when the published timeline replaces it).
+
+**Storage: GitHub as the primary store (`INTELLIGENCE_CAPTURE_STORE=github`).** Blob is not required.
+
+- `githubStore.ts` buffers a poll's writes and makes them durable in one commit (tree → commit → non-force ref update): raw, calculated, snapshot, publication, run record and heads.
+- A failed or conflicting commit drops everything, and the response reports `durability: FAILED` (HTTP 502). An overlapping invocation therefore cannot interleave, and a lost checkpoint is never reconstructed.
+- Immutable paths are checked against the base commit in one GraphQL request. Different content aborts the commit.
+- Heads live in one `heads.json`. `.gz` objects are stored as base64.
+- Measured with the fake repository in `tests/intelligence/publicSnapshot.test.ts`: the requests per checkpoint are reported by the test, and the dominant cost is reads of per-race observation heads.
+- The 5,000 requests per hour token limit, Git object size and repository growth on a real night are not measured.
+
+**Scheduler limits.**
+
+- Vercel cron fires once a minute with no guaranteed second. One invocation runs the slots of its own minute only (`runCronSlots`), stops 15 s before its 50 s budget, and never overlaps two polls.
+- A late invocation runs only the slots left in its own minute. The next on-time invocation realigns at once through the scheduler's early-poll tolerance (tested).
+- A collection slower than 30 s takes the next slot's time; a cut-short collection is `complete: false`.
+- The real nationwide read time is not measured; it needs one approved preflight against civicAPI.
+
+**Activation prerequisites.**
+
+1. Approve a private repository and a fine-grained token (Contents read/write on it only).
+2. Set `CRON_SECRET` and `INTELLIGENCE_CAPTURE_SECRET` (each at least 24 characters).
+3. Set `INTELLIGENCE_CAPTURE_STORE=github`, `ONPOINT_ARCHIVE_REPO`, `ONPOINT_ARCHIVE_TOKEN` and `ONPOINT_ARCHIVE=1`.
+4. Add the cron `{ "path": "/api/intelligence/capture", "schedule": "* * * * *" }`.
+5. Run `POST ?mode=preflight`; on GitHub it includes a commit check.
+6. Only after review, set `ONPOINT_PUBLIC_SNAPSHOT=1`.
+
+**Recovery and rollback.**
+
+- Unset `ONPOINT_PUBLIC_SNAPSHOT` and the desk is back on the browser path and legacy timeline at once.
+- Unset `ONPOINT_ARCHIVE` to stop archiving; raw capture continues.
+- Remove the cron to stop all recording.
+- After a GitHub outage, the next poll starts from the branch as it is; lost polls show as gaps in `runs/` and are never back-filled.
+- `verifyCheckpointFiles()` checks any recovered checkpoint.
 
 **Configuration.** All of it is unset now.
 

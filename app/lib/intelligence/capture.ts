@@ -28,7 +28,7 @@ import { createHash } from "node:crypto";
 import { gunzipSync, gzipSync } from "node:zlib";
 import { appendObservations, latestReadings, totalsFrom } from "./observations";
 import type { LoadedCaptures } from "./replay";
-import { checkKey, type ObjectStore } from "./captureStore";
+import { checkKey, readAll, type ObjectStore } from "./captureStore";
 import type { Issue, ReconciledReturns, Sides, VoteObservation } from "./types";
 
 export const CAPTURE_SCHEMA = "TPSI_CAPTURE/2" as const;
@@ -247,14 +247,12 @@ export async function recordObservation(store: ObjectStore, input: ObservationIn
 export interface LoadedRecords { records: { key: string; record: ObservationRecord }[]; corrupt: number }
 
 export async function readObservationRecords(store: ObjectStore, raceId: string): Promise<LoadedRecords> {
-  const keys = await store.list(obsPrefix(raceId));
   const out: LoadedRecords = { records: [], corrupt: 0 };
-  const read = async (key: string) => {
-    const rec = parseJson(await store.get(key)) as ObservationRecord | null;
-    if (!rec || rec.type !== "OBSERVATION" || rec.schemaVersion !== CAPTURE_SCHEMA || !intact(rec)) { out.corrupt++; return; }
+  for (const [key, buf] of await readAll(store, obsPrefix(raceId))) {
+    const rec = parseJson(buf) as ObservationRecord | null;
+    if (!rec || rec.type !== "OBSERVATION" || rec.schemaVersion !== CAPTURE_SCHEMA || !intact(rec)) { out.corrupt++; continue; }
     out.records.push({ key, record: rec });
-  };
-  for (let i = 0; i < keys.length; i += 8) await Promise.all(keys.slice(i, i + 8).map(read));
+  }
   out.records.sort((a, b) => ms(a.record.firstObservedAt) - ms(b.record.firstObservedAt) || a.key.localeCompare(b.key));
   return out;
 }

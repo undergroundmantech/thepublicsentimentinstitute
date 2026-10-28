@@ -20,7 +20,7 @@ async function dump(store: ObjectStore) {
 
 test("a 2028 model replays the archived 2026 raw snapshots into its own dataset without changing history", async () => {
   const r = rig({ t: ELECTION_NIGHT });
-  const tick = async () => { await runTick({ ...r.deps(), archive: { now: r.clock.now, expFor: async () => null, engine: V2026, raceHistory: true } }, { trigger: "CRON" }); r.clock.advance(60_000); };
+  const tick = async () => { await runTick({ ...r.deps(), archive: { now: r.clock.now, expFor: async () => null, engine: V2026, raceHistory: true, publicationReady: true } }, { trigger: "CRON" }); r.clock.advance(60_000); };
   sen(r.provider, 1000, 900, "2026-11-04T00:59:00Z");
   await tick();
   const asOf = new Date(r.clock.t - 1).toISOString();
@@ -57,7 +57,10 @@ test("a 2028 model replays the archived 2026 raw snapshots into its own dataset 
     assert.deepEqual(row.replay!.raw, row.original.raw, "both models reference the same raw snapshot");
     assert.equal(row.replay!.inputSha256, row.original.inputSha256, "and the same inputs");
     assert.equal(row.replay!.replayOf.calculationId, row.original.calculationId);
-    assert.equal(row.published!.calculationId, row.original.calculationId);
+    assert.equal(row.published!.calculationId, row.original.calculationId, "the publication names the 2026 calculation it served");
+    assert.match(row.published!.publicationId, /^pub_/);
+    assert.equal(row.published!.modelVersion, "commit-2026");
+    assert.equal(row.replay!.replayOf.publicationId, row.published!.publicationId);
     assert.equal(row.replay!.replayOf.publishedOutputSha256, row.published!.calculatedOutputSha256);
     assert.equal(n.reportedTotal, o.reportedTotal);
     assert.equal(n.expectedFinalMarginPp, 42);

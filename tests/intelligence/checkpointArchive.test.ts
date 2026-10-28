@@ -29,7 +29,7 @@ function setup(over: Partial<ArchiveDeps> = {}, store?: ObjectStore) {
   const latest = async () => (await readCheckpoint(r.store, (await manifests()).at(-1)!))!;
   return { ...r, tick, deps, manifests, latest, calls: () => calls };
 }
-const pubCalc = (cs: CalcRecord[], id: string) => cs.find((c) => c.raceId === id && c.designation === "PUBLISHED")!;
+const pubCalc = (cs: CalcRecord[], id: string) => cs.find((c) => c.raceId === id && c.designation === "PUBLIC_ENGINE")!;
 
 test("each checkpoint keeps raw refs, versioned calculations and the published state, and the manifest says complete", async () => {
   const s = setup();
@@ -55,12 +55,13 @@ test("each checkpoint keeps raw refs, versioned calculations and the published s
   assert.ok(o.uncertainty.lowPp <= o.expectedFinalMarginPp && o.expectedFinalMarginPp <= o.uncertainty.highPp);
   assert.equal(o.adjustments.reportingOrder, null);
   assert.ok(o.unavailable["adjustments.reportingOrder"]);
-  const p = cp.published.find((x) => x.raceId === "sen-GA")!;
+  const p = cp.snapshot.find((x) => x.raceId === "sen-GA")!;
   assert.equal(p.status, "OK");
   assert.equal(p.calculatedOutputSha256, c.outputSha256);
-  assert.equal(p.calculationId, c.calculationId, "published names the calculation it shows");
+  assert.equal(p.calculationId, c.calculationId, "the snapshot names the calculation it shows");
   assert.deepEqual(p.raw, c.raw, "and the raw snapshot under it");
-  assert.ok(Date.parse(p.publishedAt!) >= Date.parse(c.calculatedAt!) && Date.parse(cp.manifest.archivedAt) >= Date.parse(p.publishedAt!));
+  assert.equal(p.classification, "PUBLIC_ENGINE_RECOMPUTED_NOT_VERIFIED_PUBLISHED", "a recomputation is not a publication");
+  assert.equal(cp.publication, null);
   assert.equal(p.displayed!.expectedFinalMarginPp, o.expectedFinalMarginPp);
   assert.equal(p.onpointCall, null);
   assert.ok(p.onpointCallReason);
@@ -84,8 +85,8 @@ test("raw data is preserved when a calculation fails, and the failure is recorde
   assert.match(c.reason!, /RangeError/);
   assert.equal(c.outputs, null);
   assert.ok(await s.store.get(c.raw!.observationKey), "raw kept");
-  assert.equal(cp.published.find((x) => x.raceId === "sen-GA")!.calculationId, c.calculationId, "the missing layer is linked, not dropped");
-  assert.equal(cp.published.find((x) => x.raceId === "sen-GA")!.status, "UNAVAILABLE");
+  assert.equal(cp.snapshot.find((x) => x.raceId === "sen-GA")!.calculationId, c.calculationId, "the missing layer is linked, not dropped");
+  assert.equal(cp.snapshot.find((x) => x.raceId === "sen-GA")!.status, "UNAVAILABLE");
   assert.equal(cp.manifest.counts.failed, RACES.length);
   assert.equal(cp.manifest.complete, true, "every layer is present; failures are explicit");
   assert.deepEqual(await s.store.list("model/sen-GA/"), [], "no Race History point from a failed calculation");
@@ -187,7 +188,7 @@ test("a race with no published projection is listed as unavailable with a reason
   const c = pubCalc(cp.calculated, "sen-ZZ");
   assert.equal(c.status, "UNAVAILABLE");
   assert.match(c.reason!, /NO_MATCH/);
-  const p = cp.published.find((x) => x.raceId === "sen-ZZ")!;
+  const p = cp.snapshot.find((x) => x.raceId === "sen-ZZ")!;
   assert.equal(p.status, "UNAVAILABLE");
   assert.equal(p.displayed, null);
   assert.equal(cp.manifest.layers.raw.status, "PARTIAL");
@@ -214,11 +215,11 @@ test("shadow outputs are stored apart and never reach the published layer or the
   const shadow = cp.calculated.find((c) => c.raceId === "sen-GA" && c.designation === "SHADOW")!;
   const pub = pubCalc(cp.calculated, "sen-GA");
   assert.equal(shadow.model.name, "intelligence-shadow");
-  const p = cp.published.find((x) => x.raceId === "sen-GA")!;
+  const p = cp.snapshot.find((x) => x.raceId === "sen-GA")!;
   assert.equal(p.calculatedOutputSha256, pub.outputSha256);
   assert.notEqual(p.calculatedOutputSha256, shadow.outputSha256);
   assert.equal(p.model.name, "onpoint-results-live");
-  assert.ok(!JSON.stringify(cp.published).includes("0.999"));
+  assert.ok(!JSON.stringify(cp.snapshot).includes("0.999"));
   const point = JSON.parse((await s.store.get((await s.store.list("model/sen-GA/"))[0]))!.toString("utf8"));
   assert.equal(point.model.id, "onpoint-results-live");
   assert.deepEqual(await s.store.list("model-shadow/"), []);
@@ -247,10 +248,10 @@ test("a layer that cannot be stored leaves the checkpoint incomplete; a lost man
   const flaky = new FlakyStore();
   const s = setup({}, flaky);
   sen(s.provider, 1000, 900, "2026-11-04T00:59:00Z");
-  flaky.failPrefix = "archive/2026-11-04/published/";
+  flaky.failPrefix = "archive/2026-11-04/snapshot/";
   await s.tick();
   const cp = await s.latest();
-  assert.equal(cp.manifest.layers.published.status, "FAILED");
+  assert.equal(cp.manifest.layers.snapshot.status, "FAILED");
   assert.equal(cp.manifest.layers.calculated.status, "WRITTEN");
   assert.equal(cp.manifest.complete, false);
   flaky.failPrefix = "archive/2026-11-04/checkpoints/";
@@ -326,16 +327,16 @@ test("GitHub mirror: one commit per batch, retried after failure and conflict, r
   const cp = (await readCheckpoint(s.store, key))!;
   const manifest = (await readMirrorFile(target, repoPathOf(key)))!;
   const calculated = await readMirrorFile(target, repoPathOf(cp.manifest.layers.calculated.key));
-  const published = await readMirrorFile(target, repoPathOf(cp.manifest.layers.published.key));
+  const snapshot = await readMirrorFile(target, repoPathOf(cp.manifest.layers.snapshot.key));
   const raw = await readMirrorFile(target, repoPathOf(key).replace("/checkpoints/", "/raw/").replace(/\.json$/, ".jsonl"));
   assert.ok(raw && raw.includes("sen-GA"), "the new raw response is in the mirror");
   assert.match(repoPathOf(key), /^2026\/11-04\/checkpoints\//);
-  const v = verifyCheckpointFiles({ manifest, calculated, published, raw });
+  const v = verifyCheckpointFiles({ manifest, calculated, snapshot, raw });
   assert.deepEqual(v.problems, []);
   assert.equal(v.complete, true);
-  const tampered = verifyCheckpointFiles({ manifest, calculated, published: published!.replace(/"OK"/, "\"UNAVAILABLE\""), raw });
+  const tampered = verifyCheckpointFiles({ manifest, calculated, snapshot: snapshot!.replace(/"OK"/, "\"UNAVAILABLE\""), raw });
   assert.equal(tampered.ok, false);
-  assert.ok(tampered.problems.includes("published layer hash mismatch"));
+  assert.ok(tampered.problems.includes("snapshot layer hash mismatch"));
   assert.equal(await readMirrorFile(target, "2026/11-04/checkpoints/missing.json"), null);
 });
 

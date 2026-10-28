@@ -1,5 +1,5 @@
-// Mirror of the checkpoint archive into a private GitHub repository. The object store stays the primary record; the
-// mirror is a second, versioned copy that survives the loss of the store.
+// Mirror of the checkpoint archive into a private GitHub repository, used when the primary store is Blob. With
+// INTELLIGENCE_CAPTURE_STORE=github the archive is already in the repository and the mirror is skipped.
 //
 // All pending checkpoints go into ONE commit (Git Data API: tree with inline contents → commit → fast-forward ref), so
 // a checkpoint is either wholly in the repository or not at all, and the number of writes does not grow with races.
@@ -9,21 +9,13 @@
 import { gunzipSync } from "node:zlib";
 import { intact, jsonBytes, parseJson, sha256Hex, withChecksum, type ObservationRecord } from "./capture";
 import type { ObjectStore } from "./captureStore";
-import { listCheckpoints, type CalcRecord, type CheckpointManifest } from "./checkpointArchive";
+import { listCheckpoints, publicationKeyOf, type CalcRecord, type CheckpointManifest, type PublicationEvent } from "./checkpointArchive";
+import { githubTargetFrom, type Fetch, type GitHubTarget } from "./githubStore";
+
+export { githubTargetFrom };
+export type { Fetch, GitHubTarget };
 
 const MIRROR_HEAD = "heads/archive-mirror.json";
-const REPO_RE = /^[A-Za-z0-9_.-]{1,100}\/[A-Za-z0-9_.-]{1,100}$/;
-const BRANCH_RE = /^[A-Za-z0-9_./-]{1,100}$/;
-
-export type Fetch = (url: string, init?: RequestInit) => Promise<Response>;
-export interface GitHubTarget { repo: string; branch: string; token: string; apiBase: string; fetch: Fetch }
-
-/** Null unless a repository and a token are both configured. Disabled by default. */
-export function githubTargetFrom(env: Record<string, string | undefined>, f: Fetch = fetch): GitHubTarget | null {
-  const repo = env.ONPOINT_ARCHIVE_REPO ?? "", token = env.ONPOINT_ARCHIVE_TOKEN ?? "", branch = env.ONPOINT_ARCHIVE_BRANCH || "main";
-  if (!REPO_RE.test(repo) || repo.includes("..") || token.length < 20 || !BRANCH_RE.test(branch) || branch.includes("..")) return null;
-  return { repo, branch, token, apiBase: "https://api.github.com", fetch: f };
-}
 
 class MirrorError extends Error { readonly code: string; constructor(code: string) { super(code); this.code = code; } }
 
@@ -48,17 +40,19 @@ async function filesFor(store: ObjectStore, manifestKey: string): Promise<Record
   const manifest = parseJson(mBuf) as CheckpointManifest | null;
   if (!mBuf || !manifest) throw new MirrorError("MANIFEST_UNREADABLE");
   files[repoPathOf(manifestKey)] = mBuf.toString("utf8");
-  for (const ref of [manifest.layers.calculated, manifest.layers.published]) {
+  for (const ref of [manifest.layers.calculated, manifest.layers.snapshot]) {
     if (ref.status !== "WRITTEN") continue;
     const b = await store.get(ref.key);
     if (!b) throw new MirrorError("LAYER_MISSING");
     files[repoPathOf(ref.key)] = b.toString("utf8");
   }
+  const pub = await store.get(publicationKeyOf(manifestKey));
+  if (pub) files[repoPathOf(publicationKeyOf(manifestKey))] = pub.toString("utf8");
   const calc = files[repoPathOf(manifest.layers.calculated.key)] ?? "";
   const raws: string[] = [];
   for (const line of calc.split("\n").filter(Boolean)) {
     const c = JSON.parse(line) as CalcRecord;
-    if (c.designation !== "PUBLISHED" || c.raw?.outcome !== "NEW") continue;
+    if (c.designation !== "PUBLIC_ENGINE" || c.raw?.outcome !== "NEW") continue;
     const obs = parseJson(await store.get(c.raw.observationKey)) as ObservationRecord | null;
     const body = obs ? await store.get(obs.rawRef) : null;
     const payload = body ? gunzipSync(body).toString("utf8") : null;
@@ -110,15 +104,20 @@ export async function readMirrorFile(t: GitHubTarget, path: string): Promise<str
 export interface VerifyResult { ok: boolean; complete: boolean; problems: string[] }
 
 /** Checks a recovered checkpoint: manifest checksum, each layer's hash, and each raw payload's hash. */
-export function verifyCheckpointFiles(files: { manifest: string; calculated: string | null; published: string | null; raw?: string | null }): VerifyResult {
+export function verifyCheckpointFiles(files: { manifest: string; calculated: string | null; snapshot: string | null; publication?: string | null; raw?: string | null }): VerifyResult {
   const problems: string[] = [];
   let m: CheckpointManifest;
   try { m = JSON.parse(files.manifest) as CheckpointManifest; } catch { return { ok: false, complete: false, problems: ["manifest is not JSON"] }; }
   if (!intact(m)) problems.push("manifest checksum mismatch");
-  for (const [name, ref, body] of [["calculated", m.layers.calculated, files.calculated], ["published", m.layers.published, files.published]] as const) {
+  for (const [name, ref, body] of [["calculated", m.layers.calculated, files.calculated], ["snapshot", m.layers.snapshot, files.snapshot]] as const) {
     if (ref.status !== "WRITTEN") continue;
     if (body === null) problems.push(`${name} layer missing`);
     else if (sha256Hex(Buffer.from(body, "utf8")) !== ref.sha256) problems.push(`${name} layer hash mismatch`);
+  }
+  if (files.publication) {
+    let ev: PublicationEvent | null = null;
+    try { ev = JSON.parse(files.publication) as PublicationEvent; } catch { /* reported below */ }
+    if (!ev || !intact(ev) || ev.snapshotLayer.sha256 !== m.layers.snapshot.sha256) problems.push("publication event does not match this checkpoint");
   }
   for (const line of (files.raw ?? "").split("\n").filter(Boolean)) {
     const r = JSON.parse(line) as { raceId: string; rawSha256: string | null; payload: string | null };
