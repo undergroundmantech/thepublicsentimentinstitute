@@ -3,7 +3,7 @@
 The War Room is the Watchdog's command center for campaign watchers and campaign staff. For every Senate, governor
 and contested House race it builds:
   campaign health for both candidates, the Ledger formula: Money 25, Cash 20, Momentum 15, Air cover 15,
-    Early vote 15 (7 for the House), Activity 10, each scored 0 to 1 from public moves only, weighted, then liabilities
+    Early vote 15 (7 for the House), National tide 15, Activity 10, each scored 0 to 1 from public moves only, weighted, then liabilities
     taken off. Parts without data are left out, never guessed. A snapshot of position, not a forecast.
   the forecast, the polls, the money, the air war and the early vote in one place
   the path to victory for each side, written for a Democratic or a Republican operative, from the forecast, the polls,
@@ -50,6 +50,16 @@ for f, (d, r, o) in pres.items():
 PRES = {st: 100 * (r - d) / max(1, d + r + o) for st, (d, r, o) in pres_st.items()}
 cname = counties.get("_n", {})
 clamp = lambda v, lo=0.0, hi=1.0: max(lo, min(hi, v))
+
+# National tide, added Oct 27 2026: the shift in Gallup party identification with leaners between the third quarter of
+# 2024 and the third quarter of 2026, Republicans 48 Democrats 45 then, Democrats 50 Republicans 39 now, a 14 point move
+# toward the Democrats. Each race feels it by its own elasticity from the forecast, how far that electorate moves when the
+# nation moves, so a swingy open seat gains or loses more than a locked partisan one. The Democratic slot takes the tide,
+# including an independent running in that slot, and the Republican slot gets the mirror image.
+GALLUP_THEN = {"D": 45, "R": 48, "q": "the third quarter of 2024"}
+GALLUP_NOW = {"D": 50, "R": 39, "q": "the third quarter of 2026"}
+TIDE_D = (GALLUP_NOW["D"] - GALLUP_NOW["R"]) - (GALLUP_THEN["D"] - GALLUP_THEN["R"])   # +14, toward the Democrats
+TIDE_SCALE = 20.0   # points of elasticity weighted tide that take a side from even to about 0.88
 
 
 def usd(n):
@@ -169,6 +179,17 @@ def health(race, side, cand, me, rv, rival, info):
                       "why": [f"Registered {party} cast {round(100 * my)}% of the {sg['ballots']:,} ballots in {race['state']} so far, against {round(100 * ot)}% for the other party.",
                               f"That is {abs(sg.get('delta') or 0):.1f} points {'better' if delta >= 0 else 'worse'} for {party} than the forecast expected by now."]
                       + (["Statewide numbers; this weighs less for a House race."] if race["office"] == "house" else []) + ["Counts registration, not votes."]})
+    # national tide: the Gallup party identification shift, scaled by the race's elasticity
+    el = race.get("elast")
+    if isinstance(el, (int, float)) and el > 0:
+        felt = TIDE_D * el                                   # points toward the Democrats this race feels
+        vD = 0.5 + 0.5 * math.tanh(felt / TIDE_SCALE)
+        v = vD if side == "D" else 1 - vD
+        party = "Democrats" if side == "D" else "Republicans"
+        good = (side == "D") == (felt >= 0)
+        parts.append({"key": "tide", "label": "National tide", "w": 15, "v": v,
+                      "why": [f"Gallup party identification moved from Republicans {GALLUP_THEN['R']} Democrats {GALLUP_THEN['D']} in {GALLUP_THEN['q']} to Democrats {GALLUP_NOW['D']} Republicans {GALLUP_NOW['R']} in {GALLUP_NOW['q']}, {abs(TIDE_D)} points toward the Democrats.",
+                              f"This {'district' if race['office'] == 'house' else 'race'} moves {el:.2f} points for every point the nation moves, so it feels about {abs(felt):.1f} points of that tide, a {'tailwind' if good else 'headwind'} for {cand}."]})
     # activity: trail stops, media attention, online ads and headlines in the last weeks
     act, why = 0.0, []
     vis = [v for v in trail["visits"] if fits(v, race) and v.get("party") == side and dt(v.get("date")) and timedelta(0) <= T0 - dt(v["date"]) <= timedelta(days=30)]

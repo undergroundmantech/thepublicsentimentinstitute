@@ -81,7 +81,7 @@ export default function Page() {
         <div className="wr-sh"><h2>How campaign health works</h2><span className="pf-mute">The Ledger formula, from public records only</span></div>
         <div className="wr-how-g">
           <div>
-            <p>Each campaign is scored on up to six parts, each from 0 to 1 against its opponent, then weighted and put on a 100 point scale. A part with no data is left out rather than guessed, and a campaign with no money or cash report on file shows Not enough data.</p>
+            <p>Each campaign is scored on up to seven parts, each from 0 to 1 against its opponent, then weighted and put on a 100 point scale. A part with no data is left out rather than guessed, and a campaign with no money or cash report on file shows Not enough data.</p>
             <table className="pf-t">
               <thead><tr><th>Part</th><th className="n">Weight</th><th>What it measures</th></tr></thead>
               <tbody>
@@ -90,6 +90,7 @@ export default function Page() {
                 <tr><td>Momentum</td><td className="n">15</td><td>Change since the prior report; left out until two reports are on file</td></tr>
                 <tr><td>Air cover</td><td className="n">15</td><td>Share of outside spending that helps this candidate</td></tr>
                 <tr><td>Early vote</td><td className="n">15</td><td>The party&apos;s share of ballots cast where states report party, and the gap to what the forecast expected; 7 for House races</td></tr>
+                <tr><td>National tide</td><td className="n">15</td><td>The Gallup party identification shift from Republicans 48 Democrats 45 in the third quarter of 2024 to Democrats 50 Republicans 39 in the third quarter of 2026, 14 points toward the Democrats, scaled by how far the race moves with the nation</td></tr>
                 <tr><td>Activity</td><td className="n">10</td><td>Campaign stops, show and podcast mentions, Google ads and news desk stories in recent weeks</td></tr>
               </tbody>
             </table>

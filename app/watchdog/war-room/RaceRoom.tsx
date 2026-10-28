@@ -8,7 +8,7 @@ import type { Health, Intel, Side, WRace, County, Grp } from "./data";
 import { OFFICE_NAME, healthTone, lead, pct, surname, usd, warHref, winP } from "./fmt";
 import { LensToggle, useLens } from "./lens";
 
-const PART_NOTE: Record<string, string> = { money: "Receipts against the opponent", cash: "Cash on hand against the opponent", air: "Outside spending for and against", early_vote: "Party share of ballots cast", activity: "Stops, media, ads and headlines" };
+const PART_NOTE: Record<string, string> = { money: "Receipts against the opponent", cash: "Cash on hand against the opponent", air: "Outside spending for and against", early_vote: "Party share of ballots cast", tide: "Gallup party ID shift since 2024, by race elasticity", activity: "Stops, media, ads and headlines" };
 
 function Gauge({ s, tone }: { s: number | null; tone: string }) {
   const v = Math.max(0, Math.min(100, s ?? 0)), a = Math.PI * (1 - v / 100);
