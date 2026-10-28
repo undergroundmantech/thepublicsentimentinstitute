@@ -9,13 +9,17 @@ import { useIndex, useLive } from "./useLive";
 const KINDS: (Kind | "all")[] = ["all", "sen", "gov", "house", "state", "measure", "leg", "other"];
 const SETS = { all: ["fed", "state", "ballot", "leg"], sen: ["fed"], gov: ["fed"], house: ["fed"], state: ["state"], measure: ["ballot"], leg: ["leg"], other: ["state"] } as const;
 
-export default function RacesHub() {
+export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
   const sp = useSearchParams();
   const ix = useIndex();
   const [k, setK] = useState<Kind | "all">((sp.get("k") as Kind) || "all");
   const [st, setSt] = useState<string>((sp.get("st") || "").toUpperCase());
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<"close" | "in" | "name" | "votes">("close");
+  // the national dashboard's category links change ?k= in place
+  const kq = sp.get("k");
+  const [seenK, setSeenK] = useState(kq);
+  if (kq !== seenK) { setSeenK(kq); if (kq && KINDS.includes(kq as Kind)) setK(kq as Kind); }
   const sets = useMemo(() => [...SETS[k]], [k]);
   const live = useLive(ix, sets as never);
   const list = useMemo(() => {
@@ -31,20 +35,29 @@ export default function RacesHub() {
   const linked = Object.keys(live.byId).length, rep = Object.values(live.byId).filter((c) => c.pr > 0 || c.c.some((x) => x[2] > 0)).length;
 
   return (
-    <div className="opp rh">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/results">Results</Link><span className="sep">/</span><span>November 3, 2026</span></nav>
-      <header className="rh-head">
-        <div>
-          <div className="eye">November 3, 2026 · {ix?.races.length ?? "…"} races</div>
-          <h1>Every race, <em>expected and reported.</em></h1>
-          <p className="lede">The On Point Politics forecast for every race it covers, county by county where it has counties, next to live returns from civicAPI. Open any race for its county table, its map and an estimate of the final count as votes come in.</p>
-        </div>
-        <div className="rh-stat">
-          <div><b>{linked}</b><span>linked to civicAPI</span></div>
-          <div><b>{rep}</b><span>reporting</span></div>
-          <Link className="btn g" href="/results/monitor">Open the situation monitor</Link>
-        </div>
-      </header>
+    <div className={`opp rh${embedded ? " rh-embed" : ""}`} id="rh">
+      {embedded ? (
+        <header className="rh-head">
+          <div><div className="eye">Every race · {ix?.races.length ?? "…"} on the ballot</div><h2>Every race, <em>expected and reported.</em></h2></div>
+          <div className="rh-stat"><div><b>{linked}</b><span>linked to civicAPI</span></div><div><b>{rep}</b><span>reporting</span></div></div>
+        </header>
+      ) : (
+        <>
+          <nav className="crumbs" aria-label="Breadcrumb"><Link href="/results">Results</Link><span className="sep">/</span><span>November 3, 2026</span></nav>
+          <header className="rh-head">
+            <div>
+              <div className="eye">November 3, 2026 · {ix?.races.length ?? "…"} races</div>
+              <h1>Every race, <em>expected and reported.</em></h1>
+              <p className="lede">The On Point Politics forecast for every race it covers, county by county where it has counties, next to live returns from civicAPI. Open any race for its county table, its map and an estimate of the final count as votes come in.</p>
+            </div>
+            <div className="rh-stat">
+              <div><b>{linked}</b><span>linked to civicAPI</span></div>
+              <div><b>{rep}</b><span>reporting</span></div>
+              <Link className="btn g" href="/results/monitor">Open the situation monitor</Link>
+            </div>
+          </header>
+        </>
+      )}
       <div className="rh-bar">
         <div className="rl-seg" role="group" aria-label="Race type">{KINDS.map((x) => <button key={x} aria-pressed={k === x} onClick={() => setK(x)}>{x === "all" ? "All" : KIND_LABEL[x]} <em>{counts[x] ?? 0}</em></button>)}</div>
         <select id="rh-st" className="rh-in" value={st} onChange={(e) => setSt(e.target.value)} aria-label="State"><option value="">Every state</option>{Object.entries(STN).map(([a, b]) => <option key={a} value={a}>{b}</option>)}</select>

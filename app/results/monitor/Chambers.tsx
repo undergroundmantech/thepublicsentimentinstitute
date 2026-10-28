@@ -7,9 +7,28 @@ import React from "react";
 import { hemiLayout } from "@/app/components/opp/Hemicycle";
 import { TILE } from "@/app/components/opp/LegisTiles";
 import { leanStroke } from "./paint";
+import { STN, fmtM, isInd, sides, type CRace, type XRace } from "../2026/live";
 
 export type SeatState = "nd" | "cd" | "ci" | "ld" | "li" | "aw" | "lr" | "cr" | "nr";
 export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string; label: string };
+
+// governorships not on the ballot this year and the party that holds each
+export const GOV_HOLD: Record<string, "D" | "R"> = { DE: "D", NC: "D", WA: "D", NJ: "D", VA: "D", KY: "D", IN: "R", MO: "R", MT: "R", ND: "R", UT: "R", WV: "R", LA: "R", MS: "R" };
+
+export const hasReturns = (c?: CRace) => !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
+export const liveMargin = (r: XRace, c: CRace | undefined) => { if (!c) return null; const s = sides(r, c.c); return s.t > 0 ? (100 * (s.b - s.a)) / s.t : null; };
+export const expM = (r: XRace) => (r.k === "measure" ? (r.yes != null ? 100 - 2 * r.yes : null) : r.m ?? null);
+export const raceLabel = (r: XRace, inState: boolean) => (r.k === "house" ? `${r.st}-${r.id.split("-")[2]}` : inState ? r.nm.replace(STN[r.st] + " ", "") : r.nm);
+
+/** One race as one seat: called by civicAPI, leading in the count, not counted yet with its forecast lean. */
+export function seatOf(r: XRace, c: CRace | undefined): Seat & Tile {
+  const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
+  let st: SeatState = "aw", txt = `no votes yet · expected ${fmtM(expM(r), r.k, ind)}`;
+  if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
+  else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${c!.pr.toFixed(0)}% in`; }
+  const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
+  return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? raceLabel(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w };
+}
 
 const ORDER: Record<SeatState, number> = { nd: 0, cd: 1, ci: 2, ld: 3, li: 4, aw: 5, lr: 6, cr: 7, nr: 8 };
 const sortSeats = (seats: Seat[]) => [...seats].sort((a, b) => ORDER[a.s] - ORDER[b.s] || (a.s === "aw" ? (a.pR ?? 0.5) - (b.pR ?? 0.5) : 0));

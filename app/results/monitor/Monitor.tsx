@@ -16,7 +16,7 @@ import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { paintUnit } from "./paint";
 import RaceBrief from "./RaceBrief";
-import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, type Seat, type SeatState, type Tile } from "./Chambers";
+import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, raceLabel as label, GOV_HOLD, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
 import { useSiteTheme } from "@/app/lib/useSiteTheme";
 
@@ -29,16 +29,10 @@ const SETS: Record<Mode, ("fed" | "leg" | "ballot" | "state")[]> = { sen: ["fed"
 export type Chambers = { sen: { notD: number; notR: number; dS: number; pD: number }; house: { dS: number; pD: number }; gov: { notD: number; notR: number; dS: number; pD: number } };
 type Feed = { t: Date; id: string; text: string };
 const NO_RACE = "#16122a", AWAIT = "#2c2547";
-// governorships not on the ballot this year and the party that holds each
-const GOV_HOLD: Record<string, "D" | "R"> = { DE: "D", NC: "D", WA: "D", NJ: "D", VA: "D", KY: "D", IN: "R", MO: "R", MT: "R", ND: "R", UT: "R", WV: "R", LA: "R", MS: "R" };
 
-const hasReturns = (c?: CRace) => !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
-const liveMargin = (r: XRace, c: CRace | undefined) => { if (!c) return null; const s = sides(r, c.c); return s.t > 0 ? (100 * (s.b - s.a)) / s.t : null; };
-const expM = (r: XRace) => (r.k === "measure" ? (r.yes != null ? 100 - 2 * r.yes : null) : r.m ?? null);
 const vsColor = (d: number) => { const a = Math.min(1, Math.abs(d) / 12); return d < 0 ? `rgba(61,123,255,${0.15 + a * 0.8})` : `rgba(255,59,92,${0.15 + a * 0.8})`; };
 // results colour: purple where an independent leads the Republican, as on every forecast map
 const shade = (m: number, k?: Kind, ind = false) => (k === "measure" ? (m < 0 ? `rgba(47,191,155,${0.25 + Math.min(1, -m / 40) * 0.7})` : `rgba(231,121,74,${0.25 + Math.min(1, m / 40) * 0.7})`) : ind ? marginColorInd(m) : marginColor(m));
-const label = (r: XRace, inState: boolean) => (r.k === "house" ? `${r.st}-${r.id.split("-")[2]}` : inState ? r.nm.replace(STN[r.st] + " ", "") : r.nm);
 // statewide offices grouped the way readers look for them, so the map can show one office across every state
 const OFFICE_GROUPS: [string, string, RegExp][] = [
   ["lg", "Lieutenant governor", /lieutenant/i], ["ag", "Attorney general", /attorney general/i], ["sos", "Secretary of state", /secretary of state/i],
@@ -437,24 +431,16 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const T = { sen: tally("sen"), house: tally("house"), gov: tally("gov") };
   const anyLive = T.sen.counting + T.house.counting + T.gov.counting > 0;
   // every race of a chamber as one seat: called, leading, not counted yet with its forecast lean, or not up
-  const seatOf = (r: XRace): Seat & Tile => {
-    const c = live.byId[r.id]; const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
-    let st: SeatState = "aw", txt = `no votes yet · expected ${fmtM(expM(r), r.k, ind)}`;
-    if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
-    else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${c!.pr.toFixed(0)}% in`; }
-    const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
-    return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? label(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w };
-  };
   const seats = useMemo(() => {
     const all = ix?.races ?? [];
-    const of = (k: Kind) => all.filter((r) => r.k === k).map(seatOf);
+    const of = (k: Kind) => all.filter((r) => r.k === k).map((r) => seatOf(r, live.byId[r.id]));
     const hold = (n: number, s: SeatState, l: string): Seat[] => Array.from({ length: n }, () => ({ s, label: l }));
     const sen = [...hold(chambers.sen.notD, "nd", "Democratic seat not up this year"), ...of("sen"), ...hold(chambers.sen.notR, "nr", "Republican seat not up this year")];
     const house = of("house");
     const gov = of("gov") as Tile[];
     for (const [st, p] of Object.entries(GOV_HOLD)) if (!gov.some((t) => t.st === st)) gov.push({ st, s: p === "D" ? "nd" : "nr", label: `${STN[st]}: ${p === "D" ? "Democratic" : "Republican"} governor, not up this year` });
     return { sen, house, gov };
-  }, [ix, live.byId, chambers]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ix, live.byId, chambers]);
   const pickSeat = (x: { id?: string; st?: string }) => { if (!x.id) return; if (x.st) fly.current(x.st); setFocus(x.id); };
   const reportingNow = useMemo(() => races.filter((r) => hasReturns(live.byId[r.id])).sort((a, b) => Math.abs(liveMargin(a, live.byId[a.id]) ?? 99) - Math.abs(liveMargin(b, live.byId[b.id]) ?? 99)), [races, live.byId]);
   // before returns, the list opens on the closest races by the forecast
