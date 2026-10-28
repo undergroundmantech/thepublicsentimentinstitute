@@ -1,0 +1,13 @@
+/* Projections: dashed and hatched, never the solid "called" fill. */
+.proj-band{display:flex;align-items:center;gap:13px;margin:-16px -18px 16px;padding:14px 18px;
+  border-bottom:1px dashed var(--hairline,rgba(255,255,255,.14));
+  background:repeating-linear-gradient(135deg,rgba(140,132,163,.10) 0 6px,transparent 6px 12px)}
+.proj-badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1.5px dashed var(--ink2,#b9b3c9)}
+.proj-copy{min-width:0}
+.proj-copy span{display:block;font-family:var(--mono,var(--font-m));font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink2,#b9b3c9);font-weight:700}
+.proj-copy strong{display:block;font-size:18px;letter-spacing:-.02em;margin-top:3px}
+.proj-copy small{display:block;font-size:10.5px;color:var(--ink3,#8e86a3);margin-top:3px}
+.topline-lead.proj{display:inline-block;color:var(--ink2,#b9b3c9);font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;font-size:8px;padding:3px 8px;margin-top:4px;
+  border:1px dashed var(--ink3,#8e86a3);border-radius:999px;background:none}

@@ -64,6 +64,7 @@ import {
 } from "../_data/scSenateForecast";
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
+import CallBand from "../CallBand";
 
 const OK_GOV_R = 87529;
 const SC_SEN_R = 87534;
@@ -414,7 +415,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "On Point Polling projection",
+  PROJECTED: "OnPoint Projection",
   OFFICIAL: "Race called",
 };
 
@@ -677,7 +678,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   });
 
   const headline = projectedKey
-    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} will win the Republican nomination. ` +
+      `This is our model projection, not an official call. ` +
       `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
@@ -695,7 +697,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : projectedKey
-        ? `On Point Polling projection — ${CANDIDATE_LAST[projectedKey]}`
+        ? `OnPoint Projection — ${CANDIDATE_LAST[projectedKey]}`
         : embargoed
           ? "Held — polls open"
           : live && call.verdict === "LEANING"
@@ -836,17 +838,12 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <article className="card span-3" aria-labelledby="results-title">
             <div className="topline-shell">
               {winnerKey && (
-                <div className="winner-band">
-                  <span className="winner-badge" aria-hidden>✓</span>
-                  <div className="winner-copy">
-                    <span>Winner · {calledCand ? "race called" : "On Point Polling projection"}</span>
-                    <strong>{CANDIDATE_NAMES[winnerKey]} wins the Republican runoff</strong>
-                    <small>
-                      {signed(leadMarginPP)} margin · {int(leadGap)} votes · {pctLabel(rep)}% of the
-                      estimated vote counted
-                    </small>
-                  </div>
-                </div>
+                <CallBand
+                  kind={calledCand ? "official" : "projected"}
+                  name={CANDIDATE_NAMES[winnerKey]}
+                  contest="the Republican runoff"
+                  detail={`${signed(leadMarginPP)} margin · ${int(leadGap)} votes · ${pctLabel(rep)}% of the estimated vote counted`}
+                />
               )}
               <header className="topline-header">
                 <div className="topline-title">
@@ -883,7 +880,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                       <div className="topline-row" key={c.name || i}>
                         <div className="topline-row-top">
                           <div className="topline-candidate">
-                            <CandDot won={c.winner === true || isProjected} color={col} />
+                            <CandDot won={c.winner === true} color={col} />
                             <div className="topline-copy">
                               <strong>{c.name}</strong>
                               <small>{c.party || "Republican"}</small>
@@ -891,7 +888,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                                 <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                               )}
                               {isProjected && (
-                                <span className="topline-lead won">On Point Polling projected winner</span>
+                                <span className="topline-lead proj">OnPoint Projection · projected to win</span>
                               )}
                               {c.winner && <span className="topline-lead won">Race called</span>}
                             </div>
@@ -947,7 +944,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                   <div className="prob-ring"
                        style={{
                          ["--value" as string]: winProb[leaderKey] ?? 0,
-                         ["--ring" as string]: projectedKey
+                         ["--ring" as string]: calledCand
                            ? "var(--called)"
                            : CAND_CSS[leaderKey],
                        } as React.CSSProperties}
@@ -1000,11 +997,11 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               <div className="projected-top">
                 <div className="projected-intro">
                   <span className="model-label">
-                    {projectedKey ? "On Point Polling projection" : "Model projection · not actual results"}
+                    {projectedKey ? "OnPoint Projection · not an official call" : "Model projection · not actual results"}
                   </span>
                   <div className="projected-name">
                     {projectedKey
-                      ? `${CANDIDATE_LAST[projectedKey]} wins`
+                      ? `${CANDIDATE_LAST[projectedKey]} projected to win`
                       : `${CANDIDATE_LAST[leaderKey]} projected ahead`}
                   </div>
                   <p className="projection-headline prose">{headline}</p>

@@ -31,7 +31,7 @@
 .mon-ch .bar i { display: block; height: 100%; } .mon-ch .bar .d { background: #3d7bff; } .mon-ch .bar .r { background: #ff3b5c; }
 .mon-ch .bar .mid { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(255, 255, 255, .55); }
 .mon-ch .n { display: flex; justify-content: space-between; gap: 8px; font: 700 11.5px var(--font-m); color: var(--mute); } .mon-ch .n .d { color: #8fb0ff; } .mon-ch .n .r { color: #ff8399; }
-.mon-legend { display: flex; align-items: center; gap: 8px; padding: 9px 14px; font: 700 10.5px var(--font-m); color: var(--mute); }
+.mon-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 9px 14px; font: 700 10.5px var(--font-m); color: var(--mute); }
 .mon-legend i { flex: 1; height: 7px; border-radius: 4px; } .mon-legend .mg { background: linear-gradient(90deg, #10288c, #3d7bff 25%, #d6e2ff 48%, #ffdce4 52%, #ff3b5c 75%, #8c0a28); }
 .mon-legend .vs { background: linear-gradient(90deg, #3d7bff, rgba(61, 123, 255, .15) 48%, rgba(255, 59, 92, .15) 52%, #ff3b5c); } .mon-legend .ms { background: linear-gradient(90deg, #2fbf9b, rgba(47, 191, 155, .2) 48%, rgba(231, 121, 74, .2) 52%, #e7794a); }
 .mon-feed { padding: 12px 14px; overflow: auto; min-height: 90px; }
@@ -260,7 +260,11 @@ html[data-theme="light"] .mon-toast .w { color: #6b4a00; }
 .mon-key span { display: inline-flex; align-items: center; gap: 6px; }
 .mon-key i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 .mon-key .k-w { background: linear-gradient(90deg, #3d7bff 50%, #ff3b5c 50%); } .mon-key .k-l { background: linear-gradient(90deg, rgba(61, 123, 255, .5) 50%, rgba(255, 59, 92, .5) 50%); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .5); }
-.mon-key .k-a { background: linear-gradient(90deg, rgba(61, 123, 255, .3) 50%, rgba(255, 59, 92, .3) 50%); } .mon-key .k-n { box-shadow: inset 0 0 0 2px #8a84a3; }
+.mon-key .k-a { background: #2c2547; outline: 1.5px dashed #8a84a3; outline-offset: -1.5px; } .mon-key .k-n { box-shadow: inset 0 0 0 2px #8a84a3; }
+.mon-arc .st-aw, .mon-tiles .st-aw rect { fill: #2c2547; }
+html[data-theme="light"] .mon-arc .st-aw, html[data-theme="light"] .mon-tiles .st-aw rect, html[data-theme="light"] .mon-key .k-a { fill: #e4e0ef; background: #e4e0ef; }
+.mon-legend .ex-k { flex: 0 0 100%; display: flex; align-items: center; gap: 6px; }
+.mon-legend .ex-k i { flex: 0 0 18px; height: 9px; border-radius: 2px; background: repeating-linear-gradient(135deg, #8a84a3 0 1.5px, transparent 1.5px 4px); }
 .mon-feed h3 { letter-spacing: .16em; }
 .mon-row .lv.ex { opacity: .7; font-weight: 600; }
 

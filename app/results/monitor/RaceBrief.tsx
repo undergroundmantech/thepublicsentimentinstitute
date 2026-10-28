@@ -28,7 +28,7 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
   const winner = c?.c.find((x) => x[4]);
   const leadA = odds.pA >= 0.5; const leadP = 100 * (leadA ? odds.pA : odds.pB);
   const projected = !winner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
-  const status = !c ? "Not linked to civicAPI" : winner ? `civicAPI call: ${winner[0]}` : projected ? `Projected: ${last(leadA ? A : B)}` : reporting ? "Counting" : "No returns yet";
+  const status = !c ? "Awaiting results feed" : winner ? `civicAPI call: ${winner[0]}` : projected ? `OnPoint Projection: ${last(leadA ? A : B)}` : reporting ? "Counting" : "No returns yet";
   const es = expSides(r);
   // candidates: counted where there are returns, else expected
   const rows: { n: string; p: string; v: number; s: number; w?: boolean }[] = reporting

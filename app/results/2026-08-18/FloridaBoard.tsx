@@ -50,6 +50,7 @@ import {
 } from "../_data/flCountyForecast";
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
+import "../callStatus.css";
 import type { FreshtakePayload } from "../../api/freshtake/route";
 
 const FL_GOV_R = 86349;
@@ -361,7 +362,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "On Point Polling projection",
+  PROJECTED: "OnPoint Projection",
   OFFICIAL: "Race called",
 };
 
@@ -529,7 +530,8 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
   });
 
   const headline = projectedKey
-    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} will win the Republican nomination. ` +
+      `This is our model projection, not an official call. ` +
       `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
@@ -547,7 +549,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : projectedKey
-        ? `On Point Polling projection — ${CANDIDATE_LAST[projectedKey]}`
+        ? `OnPoint Projection — ${CANDIDATE_LAST[projectedKey]}`
         : embargoed
           ? "Held — polls open"
           : live && call.verdict === "LEANING"
@@ -674,7 +676,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                                 <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                               )}
                               {isProjected && (
-                                <span className="topline-lead won">On Point Polling projected winner</span>
+                                <span className="topline-lead proj">OnPoint Projection · projected to win</span>
                               )}
                               {c.winner && <span className="topline-lead won">Race called</span>}
                             </div>
@@ -800,11 +802,11 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <div className="projected-top">
                   <div className="projected-intro">
                     <span className="model-label">
-                      {projectedKey ? "On Point Polling projection" : "Model projection · not actual results"}
+                      {projectedKey ? "OnPoint Projection · not an official call" : "Model projection · not actual results"}
                     </span>
                     <div className="projected-name">
                       {projectedKey
-                        ? `${CANDIDATE_LAST[projectedKey]} wins`
+                        ? `${CANDIDATE_LAST[projectedKey]} projected to win`
                         : `${CANDIDATE_LAST[leaderKey]} projected ahead`}
                     </div>
                     <p className="projection-headline prose">{headline}</p>

@@ -14,6 +14,7 @@ import { STN, KIND_LABEL, FIRST_CLOSE, fmtM, isInd, sides, expSides, type CRace,
 import { useIndex, useLive, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
+import { paintUnit } from "./paint";
 import RaceBrief from "./RaceBrief";
 import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
@@ -112,7 +113,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       const rep = rs.filter((r) => hasReturns(live.byId[r.id]));
       if (!rep.length) {
         out[st] = AWAIT;
-        // nothing counted yet: the forecast, drawn faintly, so the map reads as the forecast until votes land
+        // nothing counted yet: the forecast lean, hatched over the neutral fill so it never reads as returns
         const em = rs.filter((r) => expM(r) != null);
         if (color === "results" && em.length) {
           const wf = (r: XRace) => (r.k === "house" ? 1 : r.tot || 1);
@@ -131,11 +132,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return out;
   }, [byState, live.byId, color, mode]);
   const districtColor = useMemo(() => {
-    const out: Record<string, { fill: string; a: number }> = {};
+    const out: Record<string, { fill: string; a: number; h?: string }> = {};
     if (mode !== "house") return out;
     for (const r of races) {
       const c = live.byId[r.id];
-      if (!hasReturns(c)) { const e = expM(r); out[r.id] = color === "results" && e != null ? { fill: shade(e, undefined, isInd(r)), a: 0.2 } : { fill: AWAIT, a: 1 }; continue; }
+      if (!hasReturns(c)) { const p = paintUnit(null, expM(r)); out[r.id] = color === "results" && p.kind === "expected" ? { fill: AWAIT, a: 1, h: shade(p.m, undefined, isInd(r)) } : { fill: AWAIT, a: 1 }; continue; }
       const m = liveMargin(r, c) ?? 0, e = expM(r);
       out[r.id] = { fill: color === "results" ? shade(m, undefined, isInd(r)) : e != null ? vsColor(m - e) : AWAIT, a: 0.45 + 0.55 * Math.min(1, (c!.pr || 0) / 100) };
     }
@@ -243,6 +244,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     // the globe by night, or by day in the light theme
     const LT = theme === "light";
     const fx = (c: string) => (!LT ? c : c === AWAIT ? "#d8d2ea" : c === NO_RACE ? "#ebe8f3" : c);
+    // diagonal hatching in a unit's expected lean: the mark for "no votes yet"
+    const hatches = new Map<string, CanvasPattern | string>();
+    const hatch = (c: string) => {
+      let p = hatches.get(c);
+      if (!p) {
+        const t = document.createElement("canvas"); t.width = t.height = 6;
+        const g = t.getContext("2d");
+        if (g) { g.strokeStyle = c; g.lineWidth = 1.5; g.beginPath(); g.moveTo(-1, 7); g.lineTo(7, -1); g.moveTo(-1, 1); g.lineTo(1, -1); g.moveTo(5, 7); g.lineTo(7, 5); g.stroke(); }
+        p = (g && ctx.createPattern(t, "repeat")) || c; hatches.set(c, p);
+      }
+      return p;
+    };
     const GOLD = LT ? "176,122,0" : "255,217,138";
     // frames run only while something moves: a flight, a drag, the count sweep or a call glowing; otherwise the
     // globe is drawn once and waits, which keeps a laptop or phone cool on a long election night
@@ -272,7 +285,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         ctx.beginPath(); path(f as GeoPermissibleObjects);
         const dim = sel && sel !== f.st ? 0.45 : 1, gh = stateColor["~" + f.st];
         ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = dim; ctx.fill();
-        if (gh) { ctx.fillStyle = gh; ctx.globalAlpha = dim * (LT ? 0.26 : 0.2); ctx.fill(); }
+        if (gh) { ctx.fillStyle = hatch(gh); ctx.globalAlpha = dim * (LT ? 0.75 : 0.6); ctx.fill(); }
         ctx.globalAlpha = 1;
         ctx.strokeStyle = hv?.st === f.st && !hv.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
       }
@@ -280,7 +293,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         for (const x of dGeo) {
           if (geoDistance(x.c, [-v.rot[0], -v.rot[1]]) > 1.6) continue;
           const dc = districtColor[x.id] ?? { fill: NO_RACE, a: 1 };
-          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill();
+          if (dc.h) { ctx.fillStyle = hatch(dc.h); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * (LT ? 0.75 : 0.6); ctx.fill(); }
+          ctx.globalAlpha = 1;
           ctx.strokeStyle = hv?.d === x.id ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.85)" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 2 : v.k > 5 ? 0.8 : 0.45; ctx.stroke();
         }
         ctx.strokeStyle = LT ? "rgba(17,0,25,.4)" : "rgba(255,255,255,.38)"; ctx.lineWidth = 1;
@@ -300,10 +315,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         for (const x of cGeo) {
           const e = expC?.[x.f]; const lv = liveC?.[x.f];
           const em = e && e[3] ? (100 * (e[1] - e[0])) / e[3] : null;
-          const fill = lv?.m != null ? (color === "results" ? shade(lv.m, layerRace.k, ind) : em != null ? vsColor(lv.m - em) : AWAIT) : AWAIT;
-          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = lv?.m != null ? 0.4 + 0.6 * Math.min(1, lv.pr / 100) : 1; ctx.fill();
-          // a county not counted yet shows its expected margin faintly
-          if (lv?.m == null && em != null && color === "results") { ctx.fillStyle = shade(em, layerRace.k, ind); ctx.globalAlpha = LT ? 0.28 : 0.22; ctx.fill(); }
+          const p = paintUnit(lv?.m, em);
+          const fill = p.kind === "reported" ? (color === "results" ? shade(p.m, layerRace.k, ind) : em != null ? vsColor(p.m - em) : AWAIT) : AWAIT;
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(fill); ctx.globalAlpha = p.kind === "reported" ? 0.4 + 0.6 * Math.min(1, lv!.pr / 100) : 1; ctx.fill();
+          // no votes yet: hatched in the expected lean, never filled like a result
+          if (p.kind === "expected" && color === "results") { ctx.fillStyle = hatch(shade(p.m, layerRace.k, ind)); ctx.globalAlpha = LT ? 0.75 : 0.6; ctx.fill(); }
           ctx.globalAlpha = 1;
           ctx.strokeStyle = hv?.f === x.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
         }
@@ -423,7 +439,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   // every race of a chamber as one seat: called, leading, not counted yet with its forecast lean, or not up
   const seatOf = (r: XRace): Seat & Tile => {
     const c = live.byId[r.id]; const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
-    let st: SeatState = "aw", txt = `forecast ${fmtM(expM(r), r.k, ind)}`;
+    let st: SeatState = "aw", txt = `no votes yet · expected ${fmtM(expM(r), r.k, ind)}`;
     if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
     else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${c!.pr.toFixed(0)}% in`; }
     const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
@@ -459,7 +475,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           {lm == null
             ? <span className={`lv ex ${e == null ? "" : e < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{e == null ? "" : fmtM(e, r.k, isInd(r))}</span>
             : <span className={`lv ${lm < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{fmtM(lm, r.k, isInd(r))}</span>}
-          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : c ? "Forecast" : "Not linked"}</span>
+          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : c ? "Forecast" : "Awaiting feed"}</span>
         </button>
       </li>
     );
@@ -548,6 +564,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         {sel ? <button type="button" className="mon-back" onClick={home}>{STN[sel]} · Back to the country</button> : null}
         <div className="mon-legend">
           {color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
+          {color === "results" ? <span className="ex-k"><i className="ex" />Hatched: no votes yet, expected lean</span> : null}
         </div>
         <div className="mon-hud" aria-hidden="true">{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
         <div className="mon-zoom">
@@ -570,7 +587,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         {sel ? (
           <>
             <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
-            <p className="mon-note">{layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}Click any race to see it here; open the full desk from it.</p>
+            <p className="mon-note">{layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}{color === "results" ? "Hatched areas have no votes yet and show only the expected lean. " : ""}Click any race to see it here; open the full desk from it.</p>
             {(["sen", "gov", "house", "state", "measure", "leg", "other"] as Kind[]).map((k) => { const rs = selRaces.filter((r) => r.k === k); if (!rs.length) return null; return (
               <div key={k} className="mon-grp"><h3>{KIND_LABEL[k]} <em>{rs.length}</em></h3><ul>{rs.slice(0, k === "other" ? 8 : 60).map((r) => raceRow(r, true))}</ul></div>
             ); })}
@@ -607,7 +624,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
             : (
               <>
                 <h4>{STN[hov.st]}</h4>
-                {rs.length ? rs.slice(0, 5).map((r) => { const c = live.byId[r.id]; const lm = liveMargin(r, c); return <div key={r.id} className="row"><span>{label(r, true)}</span><b>{lm != null ? `${fmtM(lm, r.k, isInd(r))} · ${c!.pr.toFixed(0)}% in` : `Expected ${fmtM(expM(r), r.k, isInd(r))}`}</b></div>; }) : <div>No {MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} race here</div>}
+                {rs.length ? rs.slice(0, 5).map((r) => { const c = live.byId[r.id]; const lm = liveMargin(r, c); return <div key={r.id} className="row"><span>{label(r, true)}</span><b>{lm != null ? `${fmtM(lm, r.k, isInd(r))} · ${c!.pr.toFixed(0)}% in` : `Expected ${fmtM(expM(r), r.k, isInd(r))} · no votes yet`}</b></div>; }) : <div>No {MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} race here</div>}
                 {rs.length > 5 ? <div className="sub">and {rs.length - 5} more</div> : null}
                 <small>{hov.st === sel ? "Click a race in the list to see it" : "Click to zoom in"}</small>
               </>
@@ -653,10 +670,10 @@ function RaceTip({ r, c, title, hint }: { r: XRace; c?: CRace; title: string; hi
       <div className="sub">{r.nm}{w ? <b className="call"> · civicAPI call: {w[0]}</b> : null}</div>
       <Cands r={r} c={counted ? c!.c : null} />
       <div className="meta">
-        <span>{counted ? `${c!.pr.toFixed(0)}% reporting` : c ? "No returns yet" : "Not linked to civicAPI yet"}</span>
+        <span>{counted ? `${c!.pr.toFixed(0)}% reporting` : c ? "No returns yet" : "Awaiting results feed"}</span>
         {counted && s ? <span>{s.t.toLocaleString("en-US")} votes counted{ex.t ? ` of about ${Math.round(ex.t).toLocaleString("en-US")} expected` : ""}</span> : ex.t ? <span>About {Math.round(ex.t).toLocaleString("en-US")} votes expected</span> : null}
       </div>
-      <div className="meta"><span>Now <b>{counted ? fmtM(lm, r.k, isInd(r)) : "not counting"}</b></span><span>Forecast <b>{fmtM(e, r.k, isInd(r))}</b></span></div>
+      <div className="meta"><span>Now <b>{counted ? fmtM(lm, r.k, isInd(r)) : "no votes yet"}</b></span><span>Expected <b>{fmtM(e, r.k, isInd(r))}</b></span></div>
       <small>{hint}</small>
     </>
   );

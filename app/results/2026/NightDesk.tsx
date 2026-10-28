@@ -8,6 +8,7 @@ import Link from "next/link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { DESK_CSS } from "./deskCss";
+import CallBand from "../CallBand";
 import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
 import { useIndex, useLive, useStateFile } from "./useLive";
 
@@ -91,7 +92,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const civWinner = c?.c.find((x) => x[4]);
   const projected = !civWinner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
   const repPct = reporting ? Math.max(c?.pr ?? 0, 0) : 0;
-  const status = !c ? "Not linked" : civWinner ? "Race called" : projected ? "Projected" : reporting ? "Counting" : now < FIRST_CLOSE ? "Polls open" : "Awaiting returns";
+  const status = !c ? "Awaiting results feed" : civWinner ? "Race called" : projected ? "OnPoint Projection" : reporting ? "Counting" : now < FIRST_CLOSE ? "Polls open" : "Awaiting returns";
   const msLeft = FIRST_CLOSE - now;
   const margin = Math.abs(P.m);
   const cands = c ? [...c.c].sort((x, y) => y[2] - x[2]) : [];
@@ -165,14 +166,8 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
         <article className="card span-3" id="nd-results" aria-labelledby="nd-res">
           <div className="topline-shell">
             {civWinner || projected ? (
-              <div className="winner-band">
-                <span className="winner-badge" aria-hidden>✓</span>
-                <div className="winner-copy">
-                  <span>Winner · {civWinner ? "race called by civicAPI" : "On Point Polling projection"}</span>
-                  <strong>{civWinner ? civWinner[0] : lead === "A" ? A : B} wins</strong>
-                  <small>{signed(lead === "A" ? -P.m : P.m)} margin · {fmtN(gap)} votes · {pctLabel(P.pctIn)}% of the estimated vote counted</small>
-                </div>
-              </div>
+              <CallBand kind={civWinner ? "official" : "projected"} name={civWinner ? civWinner[0] : lead === "A" ? A : B} calledBy="civicAPI"
+                detail={`${signed(lead === "A" ? -P.m : P.m)} margin · ${fmtN(gap)} votes · ${pctLabel(P.pctIn)}% of the estimated vote counted`} />
             ) : null}
             <header className="topline-header">
               <div className="topline-title"><h2 id="nd-res">Reported results</h2><p>Actual reported votes from civicAPI. Forecast estimates appear separately.</p></div>
@@ -218,7 +213,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
             <div className="forecast-model-layout">
               <div className="forecast-hero">
                 <div className="model-label">{r.k === "leg" ? "Democratic control" : "Win probability"}</div>
-                <div className="prob-ring" style={{ ["--value" as string]: r.k === "leg" ? 100 * (r.pD ?? 0) : leadP, ["--ring" as string]: civWinner || projected ? "var(--called)" : r.k === "leg" ? "var(--dem)" : leadCol } as React.CSSProperties} role="img" aria-label={`Win probability ${pctLabel(leadP)} percent`}>
+                <div className="prob-ring" style={{ ["--value" as string]: r.k === "leg" ? 100 * (r.pD ?? 0) : leadP, ["--ring" as string]: civWinner ? "var(--called)" : r.k === "leg" ? "var(--dem)" : leadCol } as React.CSSProperties} role="img" aria-label={`Win probability ${pctLabel(leadP)} percent`}>
                   <div className="ring-center"><b><Count v={r.k === "leg" ? 100 * (r.pD ?? 0) : leadP} fmt={(x) => `${pctLabel(x)}%`} /></b><span>{r.k === "leg" ? "Democrats" : leadName}</span></div>
                 </div>
               </div>
@@ -250,8 +245,8 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
             <section className="projection-zone" aria-label="Forecasted final result">
               <div className="projected-top">
                 <div className="projected-intro">
-                  <span className="model-label">{projected ? "On Point Polling projection" : "Model projection · not actual results"}</span>
-                  <div className="projected-name">{projected ? `${leadName} wins` : `${isM ? (lead === "A" ? "Yes" : "No") : leadName} projected ahead`}</div>
+                  <span className="model-label">{projected ? "OnPoint Projection · not an official call" : "Model projection · not actual results"}</span>
+                  <div className="projected-name">{projected ? `${leadName} projected to win` : `${isM ? (lead === "A" ? "Yes" : "No") : leadName} projected ahead`}</div>
                   <p className="projection-headline prose">{headline}</p>
                 </div>
                 <div className="projected-margin-wrap"><span>Projected margin</span><b style={{ color: leadCol }}><Count v={margin} fmt={signed} /></b><small>{isM ? (lead === "A" ? "Yes over No" : "No over Yes") : `${leadName} over ${trailName}`}</small></div>

@@ -1,11 +1,12 @@
 "use client";
 // The control panels of the situation monitor: the Senate and House as seat arcs, the governors as a tile map of
 // the states, each with the race to a majority and the forecast beside the returns. Every seat or tile is one race.
-// Before a race is counted it shows the forecast lean faintly, so the arc reads as the forecast until votes come in;
-// a counted race shows who leads, a race civicAPI has called fills in solid, and seats not up this year are rings.
+// Before a race is counted its seat is neutral with a dashed outline in the forecast lean, so expectations never read
+// as returns; a counted race shows who leads, a race civicAPI has called fills in solid, and seats not up are rings.
 import React from "react";
 import { hemiLayout } from "@/app/components/opp/Hemicycle";
 import { TILE } from "@/app/components/opp/LegisTiles";
+import { leanStroke } from "./paint";
 
 export type SeatState = "nd" | "cd" | "ci" | "ld" | "li" | "aw" | "lr" | "cr" | "nr";
 export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string; label: string };
@@ -13,12 +14,6 @@ export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string;
 const ORDER: Record<SeatState, number> = { nd: 0, cd: 1, ci: 2, ld: 3, li: 4, aw: 5, lr: 6, cr: 7, nr: 8 };
 const sortSeats = (seats: Seat[]) => [...seats].sort((a, b) => ORDER[a.s] - ORDER[b.s] || (a.s === "aw" ? (a.pR ?? 0.5) - (b.pR ?? 0.5) : 0));
 
-/** The faint forecast colour of a seat nobody has counted yet: bluer or redder by how sure the forecast is. */
-export function leanFill(pR: number | null | undefined) {
-  const p = pR ?? 0.5, d = Math.abs(p - 0.5) * 2;
-  if (d < 0.2) return "rgba(231, 179, 65, .3)";
-  return p < 0.5 ? `rgba(61, 123, 255, ${0.1 + d * 0.2})` : `rgba(255, 59, 92, ${0.1 + d * 0.2})`;
-}
 
 export type Count = { dW: number; dL: number; iW: number; iL: number; aw: number; rL: number; rW: number; n: number };
 export function countSeats(seats: Seat[]): Count {
@@ -43,9 +38,10 @@ export function SeatArc({ seats, onPick, label }: { seats: Seat[]; onPick?: (s: 
         const p = pts[i]; const x = cx + p.x * R, y = cy - p.y * R;
         const ring = s.s === "nd" || s.s === "nr";
         const lead = s.s === "ld" || s.s === "lr" || s.s === "li";
+        const aw = s.s === "aw";
         return (
-          <circle key={i} cx={x} cy={y} r={ring ? r * 0.78 : r} className={`st-${s.s}${s.id && onPick ? " pick" : ""}`}
-            style={s.s === "aw" ? { fill: leanFill(s.pR) } : undefined} strokeWidth={ring ? Math.max(0.8, r * 0.36) : lead ? Math.max(0.7, r * 0.3) : 0}
+          <circle key={i} cx={x} cy={y} r={ring ? r * 0.78 : aw ? r * 0.85 : r} className={`st-${s.s}${s.id && onPick ? " pick" : ""}`}
+            style={aw ? { stroke: leanStroke(s.pR), strokeDasharray: `${r * 0.55} ${r * 0.4}` } : undefined} strokeWidth={ring ? Math.max(0.8, r * 0.36) : lead || aw ? Math.max(0.7, r * 0.3) : 0}
             onClick={s.id && onPick ? () => onPick(s) : undefined}>
             <title>{s.label}</title>
           </circle>
@@ -88,7 +84,7 @@ export function GovTiles({ tiles, onPick }: { tiles: Tile[]; onPick?: (t: Tile) 
           <g key={st} className={`tile st-${t.s}${t.id && onPick ? " pick" : ""}`} onClick={t.id && onPick ? () => onPick(t) : undefined}>
             <title>{t.label}</title>
             <rect x={x + (ring ? 1 : 0)} y={y + (ring ? 1 : 0)} width={S - (ring ? 2 : 0)} height={S - (ring ? 2 : 0)} rx={5}
-              style={t.s === "aw" ? { fill: leanFill(t.pR) } : undefined} strokeWidth={ring ? 1.6 : t.s === "ld" || t.s === "lr" || t.s === "li" ? 1.4 : 0} />
+              style={t.s === "aw" ? { stroke: leanStroke(t.pR), strokeDasharray: "3 2.5" } : undefined} strokeWidth={ring ? 1.6 : t.s === "aw" ? 1.6 : t.s === "ld" || t.s === "lr" || t.s === "li" ? 1.4 : 0} />
             <text x={x + S / 2} y={y + S / 2 + 0.5}>{st}</text>
             {t.counting ? <circle className="cnt" cx={x + S - 5} cy={y + 5} r={2.2} /> : null}
           </g>
@@ -102,7 +98,7 @@ export function GovTiles({ tiles, onPick }: { tiles: Tile[]; onPick?: (t: Tile) 
 export function SeatKey() {
   return (
     <div className="mon-key">
-      <span><i className="k-w" />Won</span><span><i className="k-l" />Leading</span><span><i className="k-a" />Not counted, forecast lean</span><span><i className="k-n" />Not up</span>
+      <span><i className="k-w" />Won</span><span><i className="k-l" />Leading</span><span><i className="k-a" />No votes yet, dashed in expected lean</span><span><i className="k-n" />Not up</span>
     </div>
   );
 }
