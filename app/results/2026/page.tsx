@@ -5,6 +5,7 @@ import path from "node:path";
 import Link from "next/link";
 import RacesHub from "./RacesHub";
 import NationalDesk from "./NationalDesk";
+import { LiveProvider } from "./LiveProvider";
 import { seo } from "@/app/lib/seo";
 import { getModel } from "@/app/lib/forecastData";
 import { STN } from "./live";
@@ -32,8 +33,10 @@ export default function Page() {
   };
   return (
     <>
-      <NationalDesk chambers={chambers} />
-      <Suspense fallback={<div className="rl-load sx-skel" />}><RacesHub embedded /></Suspense>
+      <LiveProvider>
+        <NationalDesk chambers={chambers} />
+        <Suspense fallback={<div className="rl-load sx-skel" />}><RacesHub embedded /></Suspense>
+      </LiveProvider>
       <nav className="opp srs srs-states" aria-label="Results by state" style={{ paddingTop: 0 }}>
         <h2>Results by state</h2>
         <div>{states().map((s) => <Link key={s} href={`/results/2026/${STN[s].toLowerCase().replace(/[^a-z]+/g, "-")}`}>{STN[s]}</Link>)}</div>

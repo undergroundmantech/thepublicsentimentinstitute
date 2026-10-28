@@ -20,7 +20,10 @@ Route: `/results/2026`. Companion operator view: `/results/monitor` (unchanged i
    get a gold stroke. Hover/focus tooltip, click → race or state results page, keyboard operable.
 4. **Readout** (right rail; stacks under the map below 1100px) — plain-language verdict with strictly non-definitive wording for
    uncalled races, chamber seat arc / governor tiles (Monitor's components), aggregate counting stats,
-   and a "watch" list of the closest counting or earliest-closing races with chance bars.
+   and a "watch" list of the closest counting or earliest-closing races. Its bar is the reported
+   two-way vote share once votes are in, or the established pre-election forecast chance before then;
+   a one-line key above the list says which, and each bar carries a matching `aria-label`. No
+   probability is ever derived from margin, turnout or percent reporting.
 5. **Every race hub** — the existing `RacesHub` with `?k=` deep-linking so category CTAs land on the
    right filter (`/results/2026?k=sen#rh`).
 
@@ -91,8 +94,12 @@ individual race pages, `/results/monitor` layout, production.
 
 ## Limitations
 
-- `NationalDesk` and the embedded `RacesHub` both call `useLive`; the proxy's 30 s cache absorbs the
-  duplicate polling but a shared provider would be cleaner.
+- Live data is one subscription: `LiveProvider` (`app/results/2026/LiveProvider.tsx`) calls the
+  unchanged `useLive` once for every race type and `NationalDesk` and the embedded `RacesHub` read it,
+  so the four category totals no longer depend on the open tab. `RacesHub` still subscribes on its own
+  when rendered outside the provider. Measured on a dev server: 40 civicAPI searches on load, 0
+  duplicates, none added by switching tabs. Caching, sequential fetching and test-return blanking in
+  `useLive` are untouched.
 - The Other Races map shows a state as "reported" if any non-federal/governor race in it has returns;
   the tooltip lists the first few races only.
 - No live data was available; all states were validated against the index/fixture and the pre-election
@@ -105,4 +112,13 @@ individual race pages, `/results/monitor` layout, production.
 
 Give each `/results/2026/[state]/[race]` page the same header/meta grammar (status dot, called/counting
 state, non-definitive verdict), reuse `.nat-row` for the county list, and link back to the dashboard with
-the category preselected. Consider lifting `useLive` into a page-level provider first.
+the category preselected. `useLive` is already lifted into `LiveProvider` for the national page; wrap
+race pages the same way if they ever sit beside a list.
+
+## Fixture test
+
+`node scripts/test-national-tally.mjs` compiles the real `nationalTally.ts` and `Chambers.tsx` helpers
+and checks synthetic Senate/House/Governor/Other reads: no returns, empty provider read, blanked test
+returns, partial returns, an official call (counted as called, not leading), tab-independent totals,
+reported-share bar independent of percent reporting, forecast bar labelled as not a result, and
+source guards (no margin-derived probability, one subscription).

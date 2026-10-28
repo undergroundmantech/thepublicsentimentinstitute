@@ -150,6 +150,7 @@
 .nat-stats b { display: block; margin-top: 4px; font: 800 15px var(--font-d); color: var(--hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
 .nat-watch { display: grid; gap: 2px; }
 .nat-watch .eye { margin-bottom: 4px; }
+.nat-watch .key { margin-bottom: 4px; font: 600 10.5px var(--font-m); color: var(--mute); }
 .nat-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px; margin: 0 -8px; border-radius: 10px; color: var(--ink); text-decoration: none; transition: background .15s; }
 .nat-row:hover { background: rgba(var(--line-rgb), .06); }
 .nat-row:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }

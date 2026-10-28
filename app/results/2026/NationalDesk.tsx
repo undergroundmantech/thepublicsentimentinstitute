@@ -9,7 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { STN, KIND_LABEL, FIRST_CLOSE, fmtK, fmtM, isInd, resultsHref, type Kind, type XRace } from "./live";
-import { useIndex, useLive } from "./useLive";
+import { useSharedLive } from "./LiveProvider";
+import { tally, watchBar } from "./nationalTally";
 import { SeatArc, GovTiles, MajorityBar, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, GOV_HOLD, type Seat, type SeatState, type Tile } from "../monitor/Chambers";
 import { leanStroke } from "../monitor/paint";
 import type { Chambers } from "../monitor/Monitor";
@@ -20,7 +21,6 @@ const CATS: { k: Cat; label: string; kinds: Kind[]; hub: string }[] = [
   { k: "sen", label: "Senate", kinds: ["sen"], hub: "sen" }, { k: "house", label: "House", kinds: ["house"], hub: "house" },
   { k: "gov", label: "Governors", kinds: ["gov"], hub: "gov" }, { k: "other", label: "Other races", kinds: ["state", "measure", "leg", "other"], hub: "state" },
 ];
-const SETS: Record<Cat, ("fed" | "state" | "ballot" | "leg")[]> = { sen: ["fed"], house: ["fed"], gov: ["fed"], other: ["fed", "state", "ballot", "leg"] };
 const MAJ: Record<"sen" | "house" | "gov", number> = { sen: 51, house: 218, gov: 26 };
 const pct = (p: number) => `${Math.round(p > 1 ? p : p * 100)}%`;
 const slug = (st: string) => STN[st].toLowerCase().replace(/[^a-z]+/g, "-");
@@ -32,28 +32,21 @@ const tipFlip = (t: { x: number; y: number; w: number; h: number }): React.CSSPr
 
 export default function NationalDesk({ chambers }: { chambers: Chambers }) {
   const router = useRouter();
-  const ix = useIndex();
+  // one read of every race type for the whole page, so the four category totals never depend on the open tab
+  const shared = useSharedLive();
+  if (!shared) throw new Error("NationalDesk must render inside LiveProvider");
+  const { ix, live } = shared;
   const [cat, setCat] = useState<Cat>("sen");
   const [geo, setGeo] = useState<Geo | null>(null);
   const [now, setNow] = useState(0);
   const [tip, setTip] = useState<{ k: string; x: number; y: number; w: number; h: number } | null>(null);
-  const live = useLive(ix, SETS[cat]);
   useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 30000); return () => clearInterval(t); }, []);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
 
   const all = useMemo(() => ix?.races ?? [], [ix]);
   const ofKind = (k: Kind) => all.filter((r) => r.k === k);
   // what each category has counted: civicAPI calls by party, races leading by party, races counting
-  const tally = (rs: XRace[]) => {
-    let cD = 0, cR = 0, cO = 0, lD = 0, lR = 0, counting = 0, votes = 0;
-    for (const r of rs) {
-      const c = live.byId[r.id]; if (!hasReturns(c)) continue; counting++; votes += c!.c.reduce((s, x) => s + x[2], 0);
-      const w = c!.c.find((y) => y[4]); const m = liveMargin(r, c);
-      if (w) { const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else if (p.startsWith("dem")) cD++; else cO++; } else if (m != null) { if (m < 0) lD++; else lR++; }
-    }
-    return { cD, cR, cO, lD, lR, counting, votes, n: rs.length, called: cD + cR + cO };
-  };
-  const T = useMemo(() => ({ sen: tally(ofKind("sen")), house: tally(ofKind("house")), gov: tally(ofKind("gov")), other: tally(all.filter((r) => CATS[3].kinds.includes(r.k))) }), [all, live.byId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const T = useMemo(() => ({ sen: tally(ofKind("sen"), live.byId), house: tally(ofKind("house"), live.byId), gov: tally(ofKind("gov"), live.byId), other: tally(all.filter((r) => CATS[3].kinds.includes(r.k)), live.byId) }), [all, live.byId]); // eslint-disable-line react-hooks/exhaustive-deps
   const seats = useMemo(() => {
     const of = (k: Kind) => ofKind(k).map((r) => seatOf(r, live.byId[r.id]));
     const hold = (n: number, s: SeatState, l: string): Seat[] => Array.from({ length: n }, () => ({ s, label: l }));
@@ -263,15 +256,16 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
           <div className="nat-stats">{stats.map(([k, v]) => <div key={k}><span>{k}</span><b>{v}</b></div>)}</div>
           <div className="nat-watch">
             <div className="eye">{toWatch.live ? "Closest races counting" : `Closest ${C.label.toLowerCase()} by the forecast`}</div>
+            <div className="key">{toWatch.live ? "Bar: share of the two-way vote counted so far" : "Bar: pre-election forecast chance, not a result"}</div>
             {toWatch.rows.map((r) => {
               const c = live.byId[r.id]; const m = liveMargin(r, c); const ind = isInd(r); const e = expM(r);
-              const pD = toWatch.live && m != null ? Math.max(0.03, Math.min(0.97, 0.5 - m / 80)) : r.pR != null ? 1 - r.pR : 0.5;
+              const bar = watchBar(r, c, toWatch.live);
               return (
                 <Link key={r.id} href={resultsHref(r.id)} className="nat-row">
                   <span className="nm"><b>{r.nm}</b><small>{r.k === "measure" ? r.off : (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" vs ") || r.off}</small></span>
                   <span className="vl">
                     {toWatch.live && m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)}<small> · {c!.pr.toFixed(0)}% in</small></b> : <b className={`ex ${e != null && e < 0 ? (ind ? "i" : "d") : "r"}`}><small>Exp. </small>{fmtM(e, r.k, ind)}</b>}
-                    <span className="nat-cb" aria-hidden><i style={{ width: `${pD * 100}%`, background: ind ? "var(--ind, #b78cff)" : "var(--dem)" }} /></span>
+                    {bar ? <span className="nat-cb" role="img" aria-label={bar.label} title={bar.label}><i style={{ width: `${bar.pD * 100}%`, background: bar.ind ? "var(--ind, #b78cff)" : "var(--dem)" }} /></span> : null}
                   </span>
                 </Link>
               );

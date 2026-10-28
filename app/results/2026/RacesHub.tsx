@@ -5,13 +5,17 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { STN, KIND_LABEL, expMargin, fmtK, fmtM, forecastHref, isInd, resultsHref, sides, type Kind, type XRace } from "./live";
 import { useIndex, useLive } from "./useLive";
+import { useSharedLive } from "./LiveProvider";
 
 const KINDS: (Kind | "all")[] = ["all", "sen", "gov", "house", "state", "measure", "leg", "other"];
 const SETS = { all: ["fed", "state", "ballot", "leg"], sen: ["fed"], gov: ["fed"], house: ["fed"], state: ["state"], measure: ["ballot"], leg: ["leg"], other: ["state"] } as const;
 
 export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
   const sp = useSearchParams();
-  const ix = useIndex();
+  // inside the national page the read is shared with the dashboard; standalone it subscribes on its own
+  const shared = useSharedLive();
+  const ownIx = useIndex();
+  const ix = shared ? shared.ix : ownIx;
   const [k, setK] = useState<Kind | "all">((sp.get("k") as Kind) || "all");
   const [st, setSt] = useState<string>((sp.get("st") || "").toUpperCase());
   const [q, setQ] = useState("");
@@ -21,7 +25,8 @@ export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
   const [seenK, setSeenK] = useState(kq);
   if (kq !== seenK) { setSeenK(kq); if (kq && KINDS.includes(kq as Kind)) setK(kq as Kind); }
   const sets = useMemo(() => [...SETS[k]], [k]);
-  const live = useLive(ix, sets as never);
+  const ownLive = useLive(shared ? null : ix, sets as never);
+  const live = shared ? shared.live : ownLive;
   const list = useMemo(() => {
     let L = (ix?.races ?? []).filter((r) => (k === "all" || r.k === k) && (!st || r.st === st));
     const s = q.trim().toLowerCase();
