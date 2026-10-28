@@ -12,7 +12,7 @@
 | HEAD before this document | `0699a7d3` "Election archive: canonical public snapshot (flagged), publication semantics, GitHub primary store, 30s slot rule" |
 | Working tree | clean |
 | Relative to `origin/main` | 11 commits ahead, 13 behind. No remote branch contains HEAD (local only). |
-| Tests | 237/237 reported for `npm run test:intelligence` at `0699a7d3`. Not re-run at closeout (by instruction); no log of that run was kept locally. The last locally logged run was 208/208 at `3b5ba464`. |
+| Tests | Re-verified 2026-10-28 at `ca57a785`: `npm run test:intelligence` 237/237 pass, `tsc --noEmit` 0 errors, targeted ESLint 0 errors / 0 warnings. |
 
 The full commit list is `git log --oneline origin/main..HEAD`. The most recent commits:
 
@@ -156,7 +156,7 @@ Either the adapter stores objects by key in a generic table, or it writes typed 
 - **Recorder detail:** untracked contests have whole-feed raw rows only, with no per-race detail.
 - **GitHub store:** the 5,000/hour token limit and repository growth are unmeasured on a real night. The per-race timeline index is not kept on GitHub.
 - **Research gaps:** outstanding-ballot sources exist for AZ only; no certified 2024 totals (replay reports BLOCKED); the Texas county time-zone membership needs a second source.
-- **Pre-existing lint issues** in `app/forecast/[state]/[race]/page.tsx` (`prefer-const` at `fills`/`tips`, unused `officeWord`) were reported earlier and are not re-checked here.
+- **Lint:** the `prefer-const` and unused `officeWord` findings reported earlier in `app/forecast/[state]/[race]/page.tsx` no longer appear at HEAD.
 - **Site header** overflows horizontally at a 1280 px viewport. This is logged in [SITE_UI_AUDIT.md](SITE_UI_AUDIT.md) and belongs to the UI audit.
 - **Branch drift:** the branch is 13 commits behind `origin/main`, so expect a rebase or merge before any deployment.
 
@@ -168,6 +168,41 @@ Either the adapter stores objects by key in a generic table, or it writes typed 
 4. Owner-run migrations. Set the environment variables on a **preview** deployment only. Run `?mode=preflight`.
 5. Run one approved nationwide timing preflight. Then decide the cron.
 6. Work through section D in order. Activate only with explicit approval, one flag at a time.
+
+## Deferred TODO (after the UI audit; each item needs the owner's approval)
+
+- [ ] Finalize the PostgreSQL schema with the server owner.
+- [ ] Configure an isolated OnPoint PostgreSQL database or schema.
+- [ ] Create restricted database credentials (no DELETE or DDL at runtime; no CFPredictor access).
+- [ ] Implement the PostgreSQL storage adapter (`ObjectStore`, section C).
+- [ ] Preserve linked RAW, CALCULATED, PREDICTIVE and PUBLISHED records.
+- [ ] Validate immutable historical replay (no 2026 output overwritten).
+- [ ] Verify nationwide collection at 30-second and 10-minute intervals (2,448 checkpoints).
+- [ ] Complete Race History and RaceDesk Live Timeline integration.
+- [ ] Validate actual publication-state integrity.
+- [ ] Run real database preflight, backup, monitoring and recovery tests.
+- [ ] Complete production deployment and rollback checks.
+
+## Branch divergence (checked 2026-10-28)
+
+**Divergence.** The branch and `origin/main` share the merge base `44d06d08`. The branch is 12 commits ahead and 13 behind. A `git merge-tree` preview shows **no conflicts**, and no file has changed on both sides.
+
+**Shared files the branch modifies:**
+
+- `.gitignore`;
+- `next.config.ts` (file tracing);
+- `package.json` and `package-lock.json`;
+- `app/forecast/[state]/[race]/page.tsx` (Race History section; "The trend" retired where published history exists);
+- `app/api/flightrecorder/[raceId]/route.ts` and `app/api/flightrecorder/capture/route.ts` (flagged pathway, legacy gate);
+- `data/flightrecorder/README.md`.
+
+All other branch changes are new files.
+
+**UI audit strategy.**
+
+- Branch the UI audit from updated `origin/main`, for example `ui/site-audit`. Do not merge the intelligence branch into it.
+- The redesign must keep the integration points above. Race History needs to follow the new theme tokens: `raceHistory.css` is already tokenized for dark and light.
+- Merge `origin/main` into this branch (no rebase or squash) when the intelligence work resumes.
 
 ## G. Transition: site-wide UI/UX audit (next workstream; not started)
 
