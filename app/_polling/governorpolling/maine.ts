@@ -52,6 +52,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-GOV-2026", "pollster": "The Washington Post-Schar School", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 36.0, "Other": 11.0, "Undecided": 4.0}, "notes": "Other is Rick Bennett (I) 11."},
     {"raceId": "ME-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 500, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 38.0, "Undecided": 13.0}},
     {"raceId": "ME-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-16", "endDate": "2026-10-20", "sampleSize": 1514, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 39.0, "Other": 9.0, "Undecided": 2.0}},
-    {"raceId": "ME-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-22", "endDate": "2026-10-25", "sampleSize": 560, "sampleType": "LV", "results": {"Hannah Pingree (D)": 44.0, "Bobby Charles (R)": 44.0, "Other": 7.0, "Undecided": 6.0}}
+    {"raceId": "ME-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-22", "endDate": "2026-10-25", "sampleSize": 560, "sampleType": "LV", "results": {"Hannah Pingree (D)": 44.0, "Bobby Charles (R)": 44.0, "Other": 7.0, "Undecided": 6.0}},
+    {"raceId": "ME-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 413, "sampleType": "LV", "results": {"Hannah Pingree (D)": 51.0, "Bobby Charles (R)": 38.0, "Other": 7.0, "Undecided": 3.0}}
   ],
 };

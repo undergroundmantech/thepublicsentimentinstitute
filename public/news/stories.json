@@ -1,7 +1,496 @@
 {
- "updated": "2026-10-27T09:30:00-04:00",
+ "updated": "2026-10-28T09:00:00-04:00",
  "note": "Written by the On Point Politics news desk from the reporting linked under each story. Every fact is attributed to the outlet that reported it; claims made by candidates and officials are given as their claims.",
  "stories": [
+  {
+   "id": "siena-south-carolina-senate-tie-graham-andrews",
+   "cat": "politics",
+   "date": "2026-10-28",
+   "title": "Siena poll finds Darline Graham and Annie Andrews tied in South Carolina as Moody and Flanagan lead",
+   "dek": "The New York Times and Siena polls released Oct. 28 show a 48% to 48% Senate race in South Carolina, a 6 point Moody lead in Florida and a 14 point Flanagan lead in Minnesota.",
+   "summary": [
+    "A New York Times and Siena poll of likely voters released Oct. 28 has Republican Sen. Darline Graham and Democrat Annie Andrews tied at 48% in South Carolina's Senate race, according to the Siena Research Institute. Siena executive director Don Levy said, \"As the battles wage across the map for control of the U.S. Senate, South Carolina now jumps to centerstage,\" adding that Graham, \"recently appointed to the senate, is locked in a toss-up race\" and leads by less than one point. In the governor's race, Siena found Republican Alan Wilson ahead of Democrat Jermaine Johnson 51% to 44%.",
+    "Two other South Carolina surveys released this week also point to a competitive Senate race. The Citadel Poll of 1,009 registered voters found Graham ahead of Andrews by 4 points, just outside its margin of error, and Wilson leading Johnson 42% to 31% with about one in four voters undecided, the school reported. A Targoz Market Research survey for the South Carolina Policy Council of 895 likely voters had Graham at 47% and Andrews at 46%, USA Today reported. USA Today said Sabato's Crystal Ball moved the race to Lean Republican on Oct. 27 and cited a Reuters analysis finding outside Republican groups had spent $9.7 million since Oct. 1 backing Graham or attacking Andrews. Graham was appointed by Gov. Henry McMaster in July after the death of her brother, Sen. Lindsey Graham, according to USA Today.",
+    "The same Siena release covered Florida and Minnesota. In Florida, Republican Sen. Ashley Moody led Democrat Angie Nixon 50% to 44% for Senate and Republican Byron Donalds led Democrat David Jolly 48% to 44% for governor. In Minnesota, Democrat Peggy Flanagan led Republican Michele Tafoya 54% to 40% for Senate and Democrat Amy Klobuchar led Republican Lisa Demuth 56% to 38% for governor, Siena reported."
+   ],
+   "facts": [
+    "Siena, South Carolina Senate: Andrews 48%, Graham 48% among likely voters.",
+    "Siena, South Carolina governor: Wilson 51%, Johnson 44%.",
+    "Targoz for the South Carolina Policy Council: Graham 47%, Andrews 46%, per USA Today.",
+    "Siena, Florida: Moody 50%, Nixon 44% for Senate; Donalds 48%, Jolly 44% for governor.",
+    "Siena, Minnesota: Flanagan 54%, Tafoya 40% for Senate; Klobuchar 56%, Demuth 38% for governor."
+   ],
+   "sides": [
+    {
+     "who": "Don Levy, Siena Research Institute",
+     "says": "\"South Carolina now jumps to centerstage\" in the fight for Senate control, with Graham \"locked in a toss-up race.\""
+    },
+    {
+     "who": "Rob Godfrey, Republican strategist",
+     "says": "Expects Graham to win but told Reuters the race is \"closer than some would expect in a state like South Carolina,\" per USA Today."
+    }
+   ],
+   "framing": {
+    "C": "Siena led with South Carolina as the new center of the Senate battle; USA Today stressed that Democrats have not won a Senate race in the state since 1998 while noting the flow of outside Republican money; the Citadel Poll framed its findings around voters looking to \"pass the torch.\""
+   },
+   "related": [
+    {
+     "href": "/forecast/sc/senate",
+     "label": "South Carolina Senate forecast"
+    },
+    {
+     "href": "/forecast/sc/governor",
+     "label": "South Carolina governor forecast"
+    },
+    {
+     "href": "/forecast/fl/senate",
+     "label": "Florida Senate forecast"
+    },
+    {
+     "href": "/forecast/fl/governor",
+     "label": "Florida governor forecast"
+    },
+    {
+     "href": "/forecast/mn/senate",
+     "label": "Minnesota Senate forecast"
+    },
+    {
+     "href": "/polls/senate",
+     "label": "Senate polls"
+    }
+   ],
+   "keys": [
+    "south carolina",
+    "florida",
+    "minnesota",
+    "senate",
+    "governor",
+    "siena",
+    "darline graham",
+    "annie andrews",
+    "moody",
+    "flanagan",
+    "polls"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "Siena Research Institute",
+     "t": "NYTimes/Siena Poll of Likely Voters: Florida, Minnesota, and South Carolina",
+     "u": "https://sri.siena.edu/2026/10/28/nytimes-siena-poll-of-likely-voters-florida-minnesota-and-south-carolina/",
+     "d": "2026-10-28"
+    },
+    {
+     "o": "local",
+     "n": "USA Today",
+     "t": "South Carolina poll shows Graham, Andrews neck and neck before Election Day",
+     "u": "https://www.yahoo.com/news/politics/articles/south-carolina-poll-shows-graham-033341735.html",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "local",
+     "n": "The Citadel Poll",
+     "t": "SC Voters Look to Pass the Torch in the Midterms",
+     "u": "https://poll.citadel.edu/2026/10/27/sc-voters-look-to-pass-the-torch-in-the-midterms/",
+     "d": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "id": "trump-chillicothe-ohio-ramaswamy-ad-echelon-poll",
+   "cat": "politics",
+   "date": "2026-10-28",
+   "title": "Trump rallies in Chillicothe as Ramaswamy ad backlash and a tight poll shadow Ohio governor race",
+   "dek": "An Echelon Insights survey for NetChoice has Vivek Ramaswamy at 47% and Amy Acton at 45%. Gov. Mike DeWine called Ramaswamy's ad featuring Acton's mother \"deeply, deeply troubling.\"",
+   "summary": [
+    "President Trump was scheduled to rally Wednesday in Chillicothe, his third Ohio stop of the midterm campaign, in support of Sen. Jon Husted against former Sen. Sherrod Brown, Al Jazeera reported. The Columbus Dispatch said Trump won Ross County by 39 points in 2024 and carried Ohio by 11, but that Republicans face headwinds from high gas prices, property tax bills, opposition to data centers and what it called the \"unpopular Iran War.\"",
+    "The visit comes as Republican governor nominee Vivek Ramaswamy faces criticism over an ad featuring Donna Arthur, the estranged mother of Democrat Amy Acton, who accuses her daughter of lying about her upbringing, the Dispatch reported. Acton has described a childhood of neglect and abuse. Gov. Mike DeWine and former Gov. John Kasich, both Republicans, urged Ramaswamy to pull the ad, and DeWine called it \"deeply, deeply troubling,\" according to the Dispatch. Ramaswamy spent more than $4 million to keep the ad on air through Election Day, and Trump wrote on Truth Social, \"The Press is trying to convince everyone that this Ad is bad, because it's so good!\" the Dispatch reported. The paper said the Center for Politics moved the race from toss up to Leans Democrat amid the backlash.",
+    "A survey by Echelon Insights for the tech industry group NetChoice found Ramaswamy at 47%, Acton at 45% and Libertarian Don Kissick at 4% among 508 likely Ohio voters interviewed Oct. 16 to 23, with a margin of error of plus or minus 5.2 points, ABC 6 reported. The same poll found 70% support for State Issue 3, which would require photo ID to vote, and 57% naming inflation and cost of living as a top concern, according to ABC 6."
+   ],
+   "facts": [
+    "Echelon Insights for NetChoice, Oct. 16 to 23: Ramaswamy 47%, Acton 45%, Kissick 4% among 508 likely voters.",
+    "The Center for Politics moved the governor's race to Leans Democrat, per the Columbus Dispatch.",
+    "Ramaswamy spent more than $4 million to air the ad featuring Acton's mother through Election Day.",
+    "Chillicothe is Trump's third Ohio rally this month, per Al Jazeera.",
+    "Al Jazeera, citing Axios, said more than $400 million had been spent or reserved in the Ohio Senate race as of Oct. 8."
+   ],
+   "sides": [
+    {
+     "who": "Gov. Mike DeWine",
+     "says": "Called Ramaswamy's ad \"deeply, deeply troubling\" and urged him to pull it."
+    },
+    {
+     "who": "President Trump",
+     "says": "\"The Press is trying to convince everyone that this Ad is bad, because it's so good!\""
+    },
+    {
+     "who": "Former President Obama, at an Oct. 24 rally for Acton and Brown",
+     "says": "\"There's got to be something inside you where you just say no office is worth stooping that low.\""
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera framed Trump's Ohio trip as part of a final week push in states where Republicans are worried, citing record spending in the Senate race.",
+    "C": "The Columbus Dispatch led with the Ramaswamy ad backlash and the economic strain in Chillicothe; ABC 6 called the Echelon result a statistical dead heat."
+   },
+   "related": [
+    {
+     "href": "/forecast/oh/governor",
+     "label": "Ohio governor forecast"
+    },
+    {
+     "href": "/forecast/oh/senate",
+     "label": "Ohio Senate forecast"
+    },
+    {
+     "href": "/polls/governor",
+     "label": "Governor polls"
+    }
+   ],
+   "keys": [
+    "ohio",
+    "governor",
+    "senate",
+    "ramaswamy",
+    "acton",
+    "husted",
+    "brown",
+    "trump",
+    "echelon insights",
+    "netchoice",
+    "polls"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "The Columbus Dispatch",
+     "t": "Trump returns to Ohio as Ramaswamy faces backlash over ad",
+     "u": "https://www.yahoo.com/news/politics/articles/trump-returns-ohio-ramaswamy-faces-091354921.html",
+     "d": "2026-10-28"
+    },
+    {
+     "o": "local",
+     "n": "ABC 6 Columbus",
+     "t": "Vivek Ramaswamy holds narrowest of leads over Amy Acton one week from Election Day",
+     "u": "https://abc6onyourside.com/news/local/vivek-ramaswamy-holds-narrowest-of-leads-over-amy-acton-one-week-from-election-day",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "aljazeera",
+     "t": "US midterms 2026: Who's ahead in the polls with six days to go?",
+     "u": "https://www.aljazeera.com/news/2026/10/28/us-midterms-six-days-left-who-leads-in-the-polls-as-trump-obama-rally",
+     "d": "2026-10-28"
+    }
+   ]
+  },
+  {
+   "id": "judge-carter-california-20000-ballots-hearing",
+   "cat": "us",
+   "date": "2026-10-27",
+   "title": "Federal judge signals skepticism of DOJ bid to set aside 20,000 California mail ballots, promises ruling Wednesday",
+   "dek": "After the Ninth Circuit sent the case back, U.S. District Judge David O. Carter told federal prosecutors, \"Go out and indict,\" and pointed to the Dec. 3 certification deadline.",
+   "summary": [
+    "U.S. District Judge David O. Carter said he would rule Wednesday on the Justice Department's emergency request to block California from counting mail ballots from people the administration alleges are likely noncitizens, Reuters reported after a three hour hearing in Los Angeles on Tuesday. The department wants roughly 20,000 ballots separated and held, according to ABC7 Los Angeles, which reported that Carter appeared unlikely to grant the request.",
+    "Bill Essayli, the top federal prosecutor in the Los Angeles area, told the court, \"We've given California and LA County a list of people who we believe are noncitizens on the voter rolls,\" NBC Los Angeles reported. Michael Cohen, an attorney for the state, argued the government relied on \"data and methods known to be unreliable,\" according to NBC Los Angeles. Carter told the government, \"You've got a remedy, for goodness' sake. Go out and indict,\" and said threats against state and county election employees should stop immediately, a reference to Essayli's warnings of criminal penalties, both outlets reported.",
+    "Carter said officials have until the Dec. 3 certification deadline, so he saw no immediate need for a restraining order, and indicated a further hearing could come within two weeks, ABC7 reported. The hearing followed a 2 to 1 Ninth Circuit decision on Monday that declined the government's request and returned the case to Carter, Al Jazeera reported. Secretary of State Shirley Weber's office said federal officials had claimed in July that large numbers of noncitizens were on the rolls but refused to provide evidence when asked, according to ABC7."
+   ],
+   "facts": [
+    "The Justice Department sued California and Los Angeles County on Oct. 15, NBC Los Angeles reported.",
+    "The request covers about 20,000 mail ballots the administration says came from likely noncitizens.",
+    "Carter said he would rule by Wednesday, Oct. 28.",
+    "California's certification deadline is Dec. 3, per ABC7 Los Angeles.",
+    "Al Jazeera reported the department has sued 30 states and Washington, D.C., for voter roll data and has won none of those cases."
+   ],
+   "sides": [
+    {
+     "who": "Bill Essayli, First Assistant U.S. Attorney",
+     "says": "\"We've given California and LA County a list of people who we believe are noncitizens on the voter rolls.\""
+    },
+    {
+     "who": "California and Los Angeles County",
+     "says": "The government relied on \"data and methods known to be unreliable,\" and officials lack authority to freeze ballots until citizenship is verified."
+    },
+    {
+     "who": "Judge David O. Carter",
+     "says": "\"You've got a remedy, for goodness' sake. Go out and indict.\""
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera emphasized that the administration has not explained how it built its list and has lost most of its voter roll suits.",
+    "C": "Reuters focused on the timing of the ruling; ABC7 and NBC Los Angeles highlighted Carter's skepticism and his warning about threats to election workers."
+   },
+   "related": [
+    {
+     "href": "/maps/early-vote",
+     "label": "Early vote map"
+    }
+   ],
+   "keys": [
+    "california",
+    "los angeles",
+    "mail ballots",
+    "noncitizens",
+    "justice department",
+    "court",
+    "certification",
+    "carter",
+    "essayli"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "Reuters",
+     "t": "US judge says he will rule Wednesday in lawsuit over California voter rolls",
+     "u": "https://www.yahoo.com/news/us/articles/us-judge-says-rule-wednesday-234438365.html",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "local",
+     "n": "ABC7 Los Angeles",
+     "t": "Los Angeles judge to rule Wednesday on DOJ bid to set aside 20,000 ballots",
+     "u": "https://abc7.com/post/california-judge-rule-wednesday-doj-bid-set-aside-20000-ballots/19987576/",
+     "d": "2026-10-28"
+    },
+    {
+     "o": "local",
+     "n": "NBC Los Angeles",
+     "t": "Federal judge to rule on DOJ lawsuit over 20K LA County ballots",
+     "u": "https://www.nbclosangeles.com/news/local/justice-department-la-county-ballots-noncitizens-trump/3962122/",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "aljazeera",
+     "t": "US court rules against Trump administration in California voting case",
+     "u": "https://aljazeera.com/news/2026/10/27/us-court-rules-against-trump-administration-in-california-voting-case",
+     "d": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "id": "marist-maine-collins-jackson-pingree-charles-tied",
+   "cat": "politics",
+   "date": "2026-10-27",
+   "title": "Marist poll shows Jackson edging Collins in Maine and a tied governor's race, drawing pushback from Nate Silver",
+   "dek": "Troy Jackson leads Sen. Susan Collins 49% to 47% among likely voters, and Hannah Pingree and Bobby Charles are tied at 44%. Leads were larger among registered voters.",
+   "summary": [
+    "A Marist Poll released Tuesday found Democrat Troy Jackson at 49% and Republican Sen. Susan Collins at 47% among likely voters, within the margin of error, the Portland Press Herald reported. Among registered voters, Jackson led by 9 points, WABI reported, putting the likely voter margin of error at plus or minus 6.6 points and the registered voter margin at plus or minus 4.1 points for a sample of 1,449 Mainers.",
+    "In the governor's race, Democrat Hannah Pingree and Republican Bobby Charles were tied at 44% among likely voters, with independent Rick Bennett at 6% and 6% undecided, while Pingree led by 11 points among registered voters, the Press Herald reported. The paper said it was the first poll to show the governor's race this close after Charles trailed by double digits in most earlier surveys. The Press Herald also reported that 57% of respondents were unhappy with Trump's second term and 41% said they were voting \"against the president.\"",
+    "Forecaster Nate Silver questioned the gap between the registered and likely voter results, arguing Democrats were unlikely to fall 7 points between the two groups when Democratic turnout looks high, The Daily Beast reported. On the governor's race Silver wrote \"certainly not by 11 points LOL,\" according to The Daily Beast, which said Marist did not immediately respond to a request for comment."
+   ],
+   "facts": [
+    "Marist, Maine Senate likely voters: Jackson 49%, Collins 47%.",
+    "Marist, Maine Senate registered voters: Jackson ahead by 9 points.",
+    "Marist, Maine governor likely voters: Pingree 44%, Charles 44%, Bennett 6%, undecided 6%.",
+    "Among independents, Jackson led Collins 50% to 41%, per the Press Herald.",
+    "57% said they were unhappy with Trump's second term."
+   ],
+   "sides": [
+    {
+     "who": "Nate Silver, forecaster",
+     "says": "Democrats are unlikely to drop 7 points between registered and likely voters, and the 11 point registered voter lead for Pingree is not credible, per The Daily Beast."
+    },
+    {
+     "who": "Marist Poll",
+     "says": "Did not immediately respond to a request for comment, The Daily Beast reported."
+    }
+   ],
+   "framing": {
+    "L": "The Daily Beast framed the story around Silver calling the poll's likely voter model into question.",
+    "C": "The Portland Press Herald and WABI led with both races as dead heats one week before the election."
+   },
+   "related": [
+    {
+     "href": "/forecast/me/senate",
+     "label": "Maine Senate forecast"
+    },
+    {
+     "href": "/forecast/me/governor",
+     "label": "Maine governor forecast"
+    },
+    {
+     "href": "/polls/senate",
+     "label": "Senate polls"
+    }
+   ],
+   "keys": [
+    "maine",
+    "senate",
+    "governor",
+    "collins",
+    "jackson",
+    "pingree",
+    "charles",
+    "marist",
+    "polls"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "Portland Press Herald",
+     "t": "Maine Senate, governor races in dead heat, new poll shows",
+     "u": "https://www.pressherald.com/2026/10/27/maine-senate-governor-races-in-dead-heat-new-poll-shows/",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "local",
+     "n": "WABI",
+     "t": "Poll: U.S. Senate, Maine governor races tight",
+     "u": "https://www.wabi.tv/2026/10/27/poll-us-senate-maine-governors-races-tight/",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "local",
+     "n": "The Daily Beast",
+     "t": "Nate Silver Calls BS on Eye-Popping Poll in Key Senate Race",
+     "u": "https://www.thedailybeast.com/nate-silver-calls-bs-on-eye-popping-marist-poll-in-key-maine-senate-race",
+     "d": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "id": "reuters-ipsos-trump-approval-32-democrats-lead",
+   "cat": "politics",
+   "date": "2026-10-27",
+   "title": "Reuters/Ipsos: Trump approval edges up to 32% as Democrats keep a 9 point lead among likely voters",
+   "dek": "Democrats lead the congressional ballot 47% to 36% among registered voters and 53% to 44% among likely voters, with a wide enthusiasm gap.",
+   "summary": [
+    "President Trump's approval rating rose to 32%, one point above last week's record low, in a Reuters/Ipsos poll completed Monday, Reuters reported. Democrats led Republicans 47% to 36% on the congressional ballot among registered voters, with 11% unsure, and 53% to 44% among likely voters, according to Reuters. With leaners included, the Democratic edge was 50% to 41%, Reuters said.",
+    "The poll found 73% saying the cost of living is heading in the wrong direction, and 37% saying Democrats have the better approach on the economy compared with 33% for Republicans, Reuters reported. Newsmax noted that Republicans held the edge on the economy before the conflict with Iran and reported that 66% disapprove of Trump's job performance. Reuters tied the inflation concerns to higher gasoline prices following U.S. strikes on Iran in February.",
+    "Democrats also hold an enthusiasm advantage, with 46% of Democrats calling themselves very enthusiastic about the midterms compared with 30% of Republicans, according to Reuters. The online poll surveyed 1,679 adults, including 1,280 registered voters, with a margin of error of about 3 points for registered voters. Al Jazeera cited the same survey in its six days out overview of the race."
+   ],
+   "facts": [
+    "Trump approval: 32%, up from a record low of 31%.",
+    "Registered voters: Democrats 47%, Republicans 36%, 11% unsure.",
+    "Likely voters: Democrats 53%, Republicans 44%.",
+    "46% of Democrats and 30% of Republicans are very enthusiastic about voting.",
+    "73% say the cost of living is heading in the wrong direction."
+   ],
+   "sides": [
+    {
+     "who": "Democrats",
+     "says": "Hold a 37% to 33% edge on which party has the better approach to the economy, per Reuters."
+    },
+    {
+     "who": "Republicans",
+     "says": "Saw Trump's approval tick up a point from its low, which Newsmax described as a slight bump."
+    }
+   ],
+   "framing": {
+    "L": "Al Jazeera placed the poll alongside a busy final week of Trump and Obama rallies.",
+    "C": "Reuters led with the small rise in Trump's approval while stressing the Democratic lead and enthusiasm gap.",
+    "R": "Newsmax headlined the approval uptick but noted Republicans lost their economic edge after the Iran conflict."
+   },
+   "related": [
+    {
+     "href": "/polls/senate",
+     "label": "Senate polls"
+    },
+    {
+     "href": "/polls/governor",
+     "label": "Governor polls"
+    }
+   ],
+   "keys": [
+    "reuters",
+    "ipsos",
+    "trump approval",
+    "generic ballot",
+    "national",
+    "polls",
+    "enthusiasm"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "Reuters",
+     "t": "Trump approval rises from record low to 32% ahead of midterm election, Reuters Ipsos poll finds",
+     "u": "https://kathmandupost.com/world/2026/10/27/trump-approval-rises-from-record-low-to-32-ahead-of-midterm-election-reuters-ipsos-poll-finds",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "newsmax",
+     "t": "Trump's Approval Nudges Up to 32 Percent",
+     "u": "https://www.yahoo.com/news/politics/articles/trumps-approval-nudges-32-percent-162432069.html",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "aljazeera",
+     "t": "US midterms 2026: Who's ahead in the polls with six days to go?",
+     "u": "https://www.aljazeera.com/news/2026/10/28/us-midterms-six-days-left-who-leads-in-the-polls-as-trump-obama-rally",
+     "d": "2026-10-28"
+    }
+   ]
+  },
+  {
+   "id": "vance-howell-michigan-rogers-el-sayed-rally",
+   "cat": "politics",
+   "date": "2026-10-27",
+   "title": "Vance rallies in Howell for Mike Rogers and John James, saying Rogers need not be \"a servant for the administration\"",
+   "dek": "The vice president focused on the Senate race against Abdul El-Sayed. Michigan Democrats said Vance came to brag about policies that raised costs.",
+   "summary": [
+    "Vice President JD Vance rallied Republicans at an airplane hangar in Livingston County on Tuesday, focusing mostly on the Senate race between Republican Mike Rogers and Democrat Abdul El-Sayed, Michigan Public reported. Addressing Democratic claims that Rogers would give President Trump a \"blank check,\" Vance said, \"What Mike has done in this campaign, sometimes he has said things that have been independent of the administration,\" WDIV ClickOnDetroit reported. Michigan Public quoted Vance saying, \"I don't want in Mike Rogers a servant for the administration.\"",
+    "Michigan Public reported that Vance suggested El-Sayed \"allegedly came from Egypt,\" noting that El-Sayed was born in Rochester Hills, which Vance had mentioned earlier in the speech. Rogers called El-Sayed \"the most radical, most extreme DSA-tied candidate in the country,\" WDIV reported, and Michigan Public said Rogers repeated claims linking El-Sayed to the Muslim Brotherhood that the station has described as spurious in a fact check. Vance blamed high energy costs on \"tinpot dictators\" and Democratic renewable energy policies, while Michigan Public noted federal agencies have tied the rise to the war on Iran.",
+    "Republican governor nominee John James, who faces Democrat Jocelyn Benson, told the crowd, \"This will be a test of common sense versus crazy, and common sense will prevail,\" WDIV reported. Michigan Democratic Party Chair Curtis Hertel said Vance returned to brag about policies that have driven up costs for Michigan families and cited tariffs, the war in Iran and health care cuts, according to WDIV."
+   ],
+   "facts": [
+    "The rally was held in Howell, in Livingston County, on Oct. 27.",
+    "Rogers, James and Rep. Tom Barrett of the 7th District all spoke, per Michigan Public.",
+    "Election Day is Nov. 3."
+   ],
+   "sides": [
+    {
+     "who": "Vice President JD Vance",
+     "says": "\"Michigan belongs to those who love it, not those who hate it,\" and Rogers has at times been \"independent of the administration.\""
+    },
+    {
+     "who": "Mike Rogers",
+     "says": "El-Sayed is \"the most radical, most extreme DSA-tied candidate in the country.\""
+    },
+    {
+     "who": "Curtis Hertel, Michigan Democratic Party chair",
+     "says": "Vance came back to Michigan to brag about policies that have raised costs for families."
+    }
+   ],
+   "framing": {
+    "C": "Michigan Public paired Vance's and Rogers's attacks on El-Sayed with fact checks on his birthplace and on energy prices; WDIV gave equal space to the Republican speakers and the Democratic Party response."
+   },
+   "related": [
+    {
+     "href": "/forecast/mi/senate",
+     "label": "Michigan Senate forecast"
+    },
+    {
+     "href": "/forecast/mi/governor",
+     "label": "Michigan governor forecast"
+    }
+   ],
+   "keys": [
+    "michigan",
+    "senate",
+    "governor",
+    "vance",
+    "rogers",
+    "el-sayed",
+    "james",
+    "benson",
+    "rally"
+   ],
+   "coverage": [
+    {
+     "o": "local",
+     "n": "Michigan Public",
+     "t": "VP Vance focuses on Rogers vs. El-Sayed Senate race at Livingston County Republican rally",
+     "u": "https://www.michiganpublic.org/politics-government/2026-10-27/vp-vance-focuses-on-rogers-versus-el-sayed-senate-race-at-livingston-county-republican-rally",
+     "d": "2026-10-27"
+    },
+    {
+     "o": "local",
+     "n": "WDIV ClickOnDetroit",
+     "t": "Vance rallies Michigan Republicans in Howell ahead of November election",
+     "u": "https://www.clickondetroit.com/news/local/2026/10/27/vance-rallies-michigan-republicans-in-howell-ahead-of-november-election/",
+     "d": "2026-10-27"
+    }
+   ]
+  },
   {
    "id": "texas-senate-final-week-trump-lubbock-waco",
    "cat": "politics",

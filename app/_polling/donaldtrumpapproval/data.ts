@@ -8,6 +8,9 @@ export const GOLD_STANDARD_NAMES = [
 
 export const RAW_POLLS: Poll[] = [
   // ── Added Oct 25, 2026 evening ──
+  { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1440, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },   // Oct 23 to 26, registered voters, toplines PDF
+  { pollster: "Echelon Insights", endDate: "2026-10-23", sampleSize: 3644, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },   // Oct 16 to 23 for NetChoice
+  { pollster: "Morning Consult", endDate: "2026-10-20", sampleSize: 2050, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },   // Oct 13 to 20 for Deseret News and the Hinckley Institute
   { pollster: "Harvard-Harris", endDate: "2026-10-26", sampleSize: 2700, sampleType: "RV", results: { Approve: 39, Disapprove: 59 } },   // Oct 24 to 26, Key Results PDF posted Oct 27
   { pollster: "CBS News", endDate: "2026-10-23", sampleSize: 2355, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },   // CBS News/YouGov Oct 21 to 23, adults
   { pollster: "Reuters/Ipsos", endDate: "2026-10-26", sampleSize: 1679, sampleType: "A", results: { Approve: 32, Disapprove: 66 } },   // Oct 22 to 26, adults
