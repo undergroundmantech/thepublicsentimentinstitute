@@ -240,12 +240,12 @@ Required property: at N(t) = 0 everywhere, the predictive distribution of the ra
    - Preferred: the forecast engine's own joint simulations (§8).
    - Interim: sample from the published `est.dist` histogram of each race.
 2. **Within-state components** (δ_g, γ z, ε) have **expected-vote-weighted sum zero**, so they redistribute votes between counties without moving the statewide margin. Turnout terms enter the statewide margin only through composition, which is second order. That residual is removed by step 3.
-3. **Offset α_k.** A one-dimensional root-find per contrast makes the prior predictive **median** margin equal m_pub. This absorbs nonlinearity (softmax, turnout composition) and the county-file mismatches found in the audit (§3.1: `gov-AK` 15 pt and others). α is solved once per frozen forecast and stored.
-4. **Self-test** (stored in every assessment as `anchor.atZeroReporting`):
-   - |median margin − m_pub| ≤ 0.05 pt.
-   - |P(win) − P_pub| ≤ 0.005, allowing for histogram binning and Monte Carlo error at 20,000 draws.
+3. **Calibration, not a single offset** (corrected in Phase A). The published margin m_pub is the simulation **mean** (`scripts/forecast/build_app_forecast.py`; it sits a tenth or two off the median), and P_pub comes from the full run, not from the 40-bin histogram. Mean and P are two constraints, so one offset α cannot satisfy both: on the Oct 29 forecast a shift to the median fails 58 of 71 races and a shift to the mean fails 3 (gov-NE, gov-NV, sen-SC on P). Phase A instead keeps every bin's mass exactly and chooses only where the mass sits inside each bin: knots in the bins holding 0, p10 and p90 place exactly 1 − P_pub, 0.1 and 0.9 of the mass below those values, and one power warp x = lo + w·U^γ in every other bin is solved so the mean equals m_pub (`app/results/_vai/prior.ts`, `WITHIN_BIN_WARP`). The county-file mismatches (§3.1) are carried separately as a geography baseline gap; the state-level draws are what is anchored.
+4. **Self-test** (stored per race in `data/vai/prior_<id>.json` as `anchor`):
+   - |mean margin − m_pub| ≤ 0.05 pt.
+   - |P(win) − P_pub| ≤ 0.005. The P knot is infeasible only when 0 lies in an empty or out-of-range bin; then the gap is the histogram's own, at most 0.00135 on the current forecast.
 
-   If either fails, the race's VAI output is withheld (`ANCHOR_FAILED`).
+   Median, p10 and p90 gaps are reported, not gated. If either gated check fails, the race's VAI output is withheld (`ANCHOR_FAILED`).
 
 The toy example (§12) reproduces the published D +2.0 and P = 0.691 at zero reporting as D +1.96 and 0.689.
 

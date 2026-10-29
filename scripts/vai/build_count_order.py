@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Build the VAI count-order dataset and evidence register from the user-supplied ledger and cached sources.
 
-Inputs live outside the repository (research workspace, default ~/research/vai):
+Inputs live outside the repository (research workspace: --research, else $VAI_RESEARCH_DIR, else ~/research/vai).
+The committed outputs are self-contained; nothing else in the repository (tests included) needs this workspace.
+Set SOURCE_DATE_EPOCH to pin builtAt, which is otherwise the only field that changes between identical runs:
   count_order/Count Order 2026.html     the 50-state ledger (data in its CATS/SPEED/NCSL/S script constants)
   sources/fetch_log.json + sources/*.txt cached copies of every cited URL, with status, sha256 and retrieval time
   intel/sequence_findings.json           anchor-verified findings copied read-only from feature/election-night-intelligence-v1
@@ -104,11 +106,14 @@ def table_rows(text: str, start_marker: str, names: list[str]) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--research", default=os.path.expanduser("~/research/vai"))
+    ap.add_argument("--research", default=os.environ.get("VAI_RESEARCH_DIR") or os.path.expanduser("~/research/vai"))
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "..", "data", "vai"))
     a = ap.parse_args()
     R = a.research
     html_path = os.path.join(R, "count_order", "Count Order 2026.html")
+    if not os.path.exists(html_path):
+        sys.exit(f"research workspace not found at {R} (expected count_order/Count Order 2026.html). "
+                 "Pass --research or set VAI_RESEARCH_DIR. Rebuilding is optional: data/vai/*.json is committed and self-contained.")
     html_sha = hashlib.sha256(open(html_path, "rb").read()).hexdigest()
     L = ledger_from_html(html_path)
     fetch = json.load(open(os.path.join(R, "sources", "fetch_log.json")))
@@ -119,7 +124,8 @@ def main():
         if p and f.get("status") == 200 and os.path.exists(os.path.join(R, p)):
             text[f["url"]] = open(os.path.join(R, p), encoding="utf-8", errors="replace").read()
     intel = json.load(open(os.path.join(R, "intel", "sequence_findings.json")))
-    built = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    epoch = os.environ.get("SOURCE_DATE_EPOCH")
+    built = (datetime.fromtimestamp(int(epoch), timezone.utc) if epoch else datetime.now(timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     def cite(u: str) -> dict:
         f = by_url.get(u, {})
