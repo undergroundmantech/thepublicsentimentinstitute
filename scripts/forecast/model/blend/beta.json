@@ -1,0 +1,452 @@
+{
+ "AL": {
+  "beta": 0.9349,
+  "beta_hist": 0.878,
+  "se_hist": 0.2,
+  "beta_mrp": 1.36,
+  "se_mrp": 1.052,
+  "respondents": 100,
+  "ebar_before": 0.963
+ },
+ "AK": {
+  "beta": 0.9612,
+  "beta_hist": 0.84,
+  "se_hist": 0.43,
+  "beta_mrp": 1.714,
+  "se_mrp": 4.658,
+  "respondents": 5,
+  "ebar_before": 1.0
+ },
+ "AZ": {
+  "beta": 1.0175,
+  "beta_hist": 1.011,
+  "se_hist": 0.2,
+  "beta_mrp": 1.325,
+  "se_mrp": 0.824,
+  "respondents": 165,
+  "ebar_before": 0.996
+ },
+ "AR": {
+  "beta": 0.7027,
+  "beta_hist": 0.341,
+  "se_hist": 0.264,
+  "beta_mrp": 1.499,
+  "se_mrp": 1.341,
+  "respondents": 61,
+  "ebar_before": 0.978
+ },
+ "CA": {
+  "beta": 0.9426,
+  "beta_hist": 0.992,
+  "se_hist": 0.844,
+  "beta_mrp": 0.743,
+  "se_mrp": 0.45,
+  "respondents": 602,
+  "ebar_before": 1.016
+ },
+ "CO": {
+  "beta": 0.9993,
+  "beta_hist": 1.132,
+  "se_hist": 0.974,
+  "beta_mrp": 0.77,
+  "se_mrp": 1.236,
+  "respondents": 72,
+  "ebar_before": 1.001
+ },
+ "CT": {
+  "beta": 1.0612,
+  "beta_hist": 1.149,
+  "se_hist": 0.272,
+  "beta_mrp": 0.722,
+  "se_mrp": 1.281,
+  "respondents": 67,
+  "ebar_before": 0.0
+ },
+ "DE": {
+  "beta": 1.0107,
+  "beta_hist": 1.067,
+  "se_hist": 0.467,
+  "beta_mrp": 0.59,
+  "se_mrp": 2.224,
+  "respondents": 22,
+  "ebar_before": 1.011
+ },
+ "FL": {
+  "beta": 0.9806,
+  "beta_hist": 0.922,
+  "se_hist": 1.003,
+  "beta_mrp": 0.909,
+  "se_mrp": 0.533,
+  "respondents": 415,
+  "ebar_before": 0.986
+ },
+ "GA": {
+  "beta": 0.9448,
+  "beta_hist": 0.751,
+  "se_hist": 0.483,
+  "beta_mrp": 0.916,
+  "se_mrp": 0.744,
+  "respondents": 204,
+  "ebar_before": 1.002
+ },
+ "HI": {
+  "beta": 0.9664,
+  "beta_hist": 0.345,
+  "se_hist": 1.138,
+  "beta_mrp": 0.756,
+  "se_mrp": 1.906,
+  "respondents": 30,
+  "ebar_before": 1.001
+ },
+ "ID": {
+  "beta": 1.0826,
+  "beta_hist": 1.133,
+  "se_hist": 0.2,
+  "beta_mrp": 1.561,
+  "se_mrp": 2.692,
+  "respondents": 15,
+  "ebar_before": 0.999
+ },
+ "IL": {
+  "beta": 0.9469,
+  "beta_hist": 0.727,
+  "se_hist": 0.443,
+  "beta_mrp": 1.076,
+  "se_mrp": 0.691,
+  "respondents": 238,
+  "ebar_before": 1.022
+ },
+ "IN": {
+  "beta": 0.7905,
+  "beta_hist": 0.641,
+  "se_hist": 0.202,
+  "beta_mrp": 1.09,
+  "se_mrp": 0.978,
+  "respondents": 116,
+  "ebar_before": 0.987
+ },
+ "IA": {
+  "beta": 0.8282,
+  "beta_hist": 0.709,
+  "se_hist": 0.2,
+  "beta_mrp": 1.319,
+  "se_mrp": 1.424,
+  "respondents": 54,
+  "ebar_before": 1.001
+ },
+ "KS": {
+  "beta": 0.9801,
+  "beta_hist": 0.742,
+  "se_hist": 0.736,
+  "beta_mrp": 1.423,
+  "se_mrp": 1.906,
+  "respondents": 30,
+  "ebar_before": 0.998
+ },
+ "KY": {
+  "beta": 0.9983,
+  "beta_hist": 0.974,
+  "se_hist": 0.2,
+  "beta_mrp": 1.575,
+  "se_mrp": 0.999,
+  "respondents": 111,
+  "ebar_before": 1.006
+ },
+ "LA": {
+  "beta": 0.7051,
+  "beta_hist": 0.508,
+  "se_hist": 0.2,
+  "beta_mrp": 0.958,
+  "se_mrp": 1.096,
+  "respondents": 92,
+  "ebar_before": 0.982
+ },
+ "ME": {
+  "beta": 0.9386,
+  "beta_hist": 0.676,
+  "se_hist": 0.516,
+  "beta_mrp": 0.944,
+  "se_mrp": 2.009,
+  "respondents": 27,
+  "ebar_before": 1.013
+ },
+ "MD": {
+  "beta": 1.0123,
+  "beta_hist": 1.22,
+  "se_hist": 0.535,
+  "beta_mrp": 0.437,
+  "se_mrp": 1.042,
+  "respondents": 102,
+  "ebar_before": 1.112
+ },
+ "MA": {
+  "beta": 1.2669,
+  "beta_hist": 1.463,
+  "se_hist": 0.2,
+  "beta_mrp": 0.569,
+  "se_mrp": 1.057,
+  "respondents": 99,
+  "ebar_before": 1.008
+ },
+ "MI": {
+  "beta": 0.8369,
+  "beta_hist": 0.709,
+  "se_hist": 0.2,
+  "beta_mrp": 1.173,
+  "se_mrp": 0.749,
+  "respondents": 201,
+  "ebar_before": 1.0
+ },
+ "MN": {
+  "beta": 0.9362,
+  "beta_hist": 0.766,
+  "se_hist": 0.389,
+  "beta_mrp": 1.09,
+  "se_mrp": 1.196,
+  "respondents": 77,
+  "ebar_before": 1.01
+ },
+ "MS": {
+  "beta": 0.9614,
+  "beta_hist": 0.905,
+  "se_hist": 0.27,
+  "beta_mrp": 1.277,
+  "se_mrp": 1.451,
+  "respondents": 52,
+  "ebar_before": 0.978
+ },
+ "MO": {
+  "beta": 0.8647,
+  "beta_hist": 0.697,
+  "se_hist": 0.259,
+  "beta_mrp": 1.173,
+  "se_mrp": 0.947,
+  "respondents": 124,
+  "ebar_before": 0.982
+ },
+ "MT": {
+  "beta": 0.9523,
+  "beta_hist": 0.869,
+  "se_hist": 0.308,
+  "beta_mrp": 1.457,
+  "se_mrp": 2.087,
+  "respondents": 25,
+  "ebar_before": 1.018
+ },
+ "NE": {
+  "beta": 0.9945,
+  "beta_hist": 0.837,
+  "se_hist": 0.863,
+  "beta_mrp": 1.443,
+  "se_mrp": 1.906,
+  "respondents": 30,
+  "ebar_before": 1.016
+ },
+ "NV": {
+  "beta": 0.9152,
+  "beta_hist": 0.608,
+  "se_hist": 0.447,
+  "beta_mrp": 1.201,
+  "se_mrp": 1.253,
+  "respondents": 70,
+  "ebar_before": 0.989
+ },
+ "NH": {
+  "beta": 1.02,
+  "beta_hist": 1.071,
+  "se_hist": 0.411,
+  "beta_mrp": 1.096,
+  "se_mrp": 1.973,
+  "respondents": 28,
+  "ebar_before": 0.999
+ },
+ "NJ": {
+  "beta": 1.0473,
+  "beta_hist": 1.319,
+  "se_hist": 0.526,
+  "beta_mrp": 0.881,
+  "se_mrp": 0.858,
+  "respondents": 152,
+  "ebar_before": 1.005
+ },
+ "NM": {
+  "beta": 0.8063,
+  "beta_hist": 0.676,
+  "se_hist": 0.2,
+  "beta_mrp": 1.235,
+  "se_mrp": 1.674,
+  "respondents": 39,
+  "ebar_before": 1.002
+ },
+ "NY": {
+  "beta": 0.9562,
+  "beta_hist": 1.329,
+  "se_hist": 0.722,
+  "beta_mrp": 0.507,
+  "se_mrp": 0.564,
+  "respondents": 367,
+  "ebar_before": 1.033
+ },
+ "NC": {
+  "beta": 0.6557,
+  "beta_hist": 0.409,
+  "se_hist": 0.2,
+  "beta_mrp": 1.041,
+  "se_mrp": 0.764,
+  "respondents": 193,
+  "ebar_before": 0.994
+ },
+ "ND": {
+  "beta": 0.9556,
+  "beta_hist": 0.84,
+  "se_hist": 0.388,
+  "beta_mrp": 1.534,
+  "se_mrp": 3.142,
+  "respondents": 11,
+  "ebar_before": 1.053
+ },
+ "OH": {
+  "beta": 0.6676,
+  "beta_hist": 0.411,
+  "se_hist": 0.2,
+  "beta_mrp": 1.159,
+  "se_mrp": 0.67,
+  "respondents": 254,
+  "ebar_before": 0.99
+ },
+ "OK": {
+  "beta": 0.9482,
+  "beta_hist": 0.559,
+  "se_hist": 0.502,
+  "beta_mrp": 1.922,
+  "se_mrp": 1.166,
+  "respondents": 81,
+  "ebar_before": 0.97
+ },
+ "OR": {
+  "beta": 0.8963,
+  "beta_hist": 0.61,
+  "se_hist": 0.434,
+  "beta_mrp": 0.749,
+  "se_mrp": 1.027,
+  "respondents": 105,
+  "ebar_before": 1.015
+ },
+ "PA": {
+  "beta": 0.7042,
+  "beta_hist": 0.506,
+  "se_hist": 0.2,
+  "beta_mrp": 0.791,
+  "se_mrp": 0.619,
+  "respondents": 300,
+  "ebar_before": 1.015
+ },
+ "RI": {
+  "beta": 1.0896,
+  "beta_hist": 1.148,
+  "se_hist": 0.2,
+  "beta_mrp": 0.694,
+  "se_mrp": 3.683,
+  "respondents": 8,
+  "ebar_before": 1.001
+ },
+ "SC": {
+  "beta": 0.9617,
+  "beta_hist": 0.933,
+  "se_hist": 0.2,
+  "beta_mrp": 1.083,
+  "se_mrp": 1.139,
+  "respondents": 85,
+  "ebar_before": 0.989
+ },
+ "SD": {
+  "beta": 0.9353,
+  "beta_hist": 0.795,
+  "se_hist": 0.351,
+  "beta_mrp": 1.728,
+  "se_mrp": 2.692,
+  "respondents": 15,
+  "ebar_before": 1.008
+ },
+ "TN": {
+  "beta": 1.0536,
+  "beta_hist": 1.066,
+  "se_hist": 0.2,
+  "beta_mrp": 1.485,
+  "se_mrp": 0.877,
+  "respondents": 145,
+  "ebar_before": 0.962
+ },
+ "TX": {
+  "beta": 1.1451,
+  "beta_hist": 1.212,
+  "se_hist": 0.226,
+  "beta_mrp": 1.43,
+  "se_mrp": 0.53,
+  "respondents": 420,
+  "ebar_before": 0.974
+ },
+ "UT": {
+  "beta": 0.7275,
+  "beta_hist": 0.351,
+  "se_hist": 0.291,
+  "beta_mrp": 0.937,
+  "se_mrp": 1.633,
+  "respondents": 41,
+  "ebar_before": 1.035
+ },
+ "VT": {
+  "beta": 1.0038,
+  "beta_hist": 1.021,
+  "se_hist": 0.42,
+  "beta_mrp": 0.632,
+  "se_mrp": 3.142,
+  "respondents": 11,
+  "ebar_before": 1.01
+ },
+ "VA": {
+  "beta": 0.931,
+  "beta_hist": 0.897,
+  "se_hist": 0.227,
+  "beta_mrp": 0.59,
+  "se_mrp": 0.883,
+  "respondents": 143,
+  "ebar_before": 1.0
+ },
+ "WA": {
+  "beta": 0.5619,
+  "beta_hist": 0.29,
+  "se_hist": 0.2,
+  "beta_mrp": 0.396,
+  "se_mrp": 0.905,
+  "respondents": 136,
+  "ebar_before": 1.037
+ },
+ "WV": {
+  "beta": 0.9638,
+  "beta_hist": 0.859,
+  "se_hist": 0.339,
+  "beta_mrp": 1.707,
+  "se_mrp": 1.495,
+  "respondents": 49,
+  "ebar_before": 1.021
+ },
+ "WI": {
+  "beta": 0.575,
+  "beta_hist": 0.279,
+  "se_hist": 0.2,
+  "beta_mrp": 1.18,
+  "se_mrp": 1.008,
+  "respondents": 109,
+  "ebar_before": 1.017
+ },
+ "WY": {
+  "beta": 0.9975,
+  "beta_hist": 0.933,
+  "se_hist": 0.718,
+  "beta_mrp": 1.77,
+  "se_mrp": 3.009,
+  "respondents": 12,
+  "ebar_before": 1.045
+ }
+}

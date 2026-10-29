@@ -1,9 +1,9 @@
-"""On Point Polling House Mode: Florida and Texas, on the maps enacted for 2026.
+"""TPSI House Mode: Florida and Texas, on the maps enacted for 2026.
 
 Same structure as the Florida first build, now with two states and with projected vote totals for every district.
   spine    each district's 2024 presidential two party share on the enacted lines
-  M1       state county Trump approval, calibrated as in Senate Mode, converted to vote with the On Point Polling respondent crosstab
-  M2       the state's certified 2024 result moved by the On Point Polling demographic swing to the Gallup anchored 2026 environment
+  M1       state county Trump approval, calibrated as in Senate Mode, converted to vote with the TPSI respondent crosstab
+  M2       the state's certified 2024 result moved by the TPSI demographic swing to the Gallup anchored 2026 environment
   M3       the state's 2024 level moved by the national swing from 2024 to the 2026 generic ballot, district polls where they exist
   blend    equal thirds, giving one statewide House level
   spread   district lean plus a candidate term, with one constant so the turnout weighted statewide share matches the blend
@@ -580,6 +580,30 @@ DE = [
 # Oct 12 2026 sweep: NY-21 Siena Oct 6 (46 to 42) and Impact Research for Gendebien (D) Oct 4 (45 to 48), SC-1 co/efficient (R)
 # Oct 1 (40 to 46); /tmp/hpolls/build_1012.py, the 1008b rule.
 POLLS = {
+         # Oct 29 2026, added at the user's request though seen only on aggregators: IN-05 Quantus Insights Oct 21-22, 601 LV,
+         # Ford 44.6 Spartz 47.4 (uspollingdata), averaged evenly with the prior entry; FL-25 Public Policy Polling (D) through
+         # Oct 27, 523 LV, Moskowitz 47 Singer 41 (callthemap), moved 1.5 points against the Democrat then averaged evenly.
+         # CA-34 USC Oct 16-24 and Center for Strategic Politics Oct 8-12 are Gomez against Gonzales-Torres, two Democrats, so they
+         # cannot enter a Democrat against Republican district model and the seat stays a Democratic hold.
+         # Oct 27 2026 8 PM sweep: VA-01 DCCC Analytics (D) Oct 24-25, 478 LV, Taylor 48 Wittman 47, from the DCCC memo of Oct 27,
+         # moved 1.5 points against the Democrat then averaged evenly with the prior entry of 46.8 to 47.2.
+         # Oct 26 2026 8 PM sweep: RedBox Research for A Fight Worth Having, a Democratic super PAC (D), Oct 20-23 text to web LV
+         # district polls released Oct 25 on the sponsor's page, each moved 1.5 points against the Democrat then averaged evenly
+         # with the prior entry: AZ-01, AZ-06, CA-48, FL-13, FL-14, FL-22, FL-25, FL-27, MI-04, MI-10, MT-01, NY-17, NC-01, NC-11,
+         # OH-01, OH-07, OH-09, PA-01, PA-07, PA-08, PA-10; NV-03 is a new district, Lee 49.4 O'Donnell 41.7, 687 LV, moved 1.5.
+         # Oct 26 2026, added at the user's request though seen only on aggregators: SC-01 PPP (D) Oct 21-22 770 LV Lacore 47
+         # Honeycutt 45, CO-05 PPP (D) Oct 19-20 577 LV Killin 47 Crank 47, TX-09 DCCC (D) Oct 20-22 490 LV Gutierrez 47 Mealer 48,
+         # each moved 1.5 points against the sponsor then averaged evenly with the prior entry; CT-05 is a new district, OnMessage
+         # for Shea (R) about Oct 1 400 LV Hayes 51 Shea 45 moved 1.5 points against the Republican; ID-01 and ID-02 are new,
+         # VoteNexus for Knock Every Door PAC, an Achilles ally treated as (D), Oct 21-22 about 350 LV each, Fulcher 52 Peterson 26
+         # and Simpson 46 Gilbreath 31, moved 1.5 points against the Democrat.
+         # Oct 25 2026 8 PM sweep: New York Times, Philadelphia Inquirer and Siena PA district polls Oct 16-22, about 400 LV each,
+         # released Oct 25 on Siena's page: PA-01 Harvie 48 Fitzpatrick 46, PA-07 Brooks 49 Mackenzie 44, PA-08 Cognetti 51
+         # Bresnahan 46, PA-10 Stelson 48 Perry 48, each averaged evenly with the prior entry.
+         # Oct 24 2026 8 PM sweep: CA-48 Tarrance Group for a Republican sponsor (R) Oct 17-20, 410 LV, von Wilpert 47 Desmond 44,
+         # reported by Semafor Oct 23, moved 1.5 points against the Republican then averaged evenly with the prior entry; KS-02 is a
+         # new district, DCCC Targeting and Analytics (D) through Oct 20, 639 LV, Schmidt 49 Coover 46, reported by Semafor Oct 23,
+         # moved 1.5 points against the Democrat.
          # Oct 22 2026 8 PM sweep: FL-25 is a new district, National Research Inc. for Singer and the NRCC (R) Oct 12-15, 400 LV,
          # Singer 49 Moskowitz 42, moved 1.5 points against the Republican as an internal; WA-03 Change Research for the Northwest
          # Progressive Institute Oct 19-21, 551 LV, Gluesenkamp Perez 45 Braun 44, averaged evenly with the prior entry.
@@ -670,40 +694,40 @@ POLLS = {
          # for Dunlap Sept 27-30, Dunlap 50 LePage 48; each blended against the prior entry as a 500 sample poll two weeks
          # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
          # 20 percent undecided or more.
-         "FL": {7: dict(d=43.5, r=46.5), 8: dict(d=43.5, r=49.5), 9: dict(d=41.0, r=44.0), 11: dict(d=41.9, r=42.1), 13: dict(d=44.75, r=47.3), 14: dict(d=46.75, r=40.75), 16: dict(d=39.0, r=43.0), 21: dict(d=36.5, r=50.5), 22: dict(d=47.7, r=47.9), 25: dict(d=44.5, r=45.5), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
-         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=40.5, r=47.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.9, r=44.2), 23: dict(d=42.65, r=47.1), 28: dict(d=48.2, r=36.0), 34: dict(d=46.9, r=42.5), 35: dict(d=46.56, r=47.56)},
-         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.695, r=46.095), 23: dict(d=32.8, r=54.2)},
-         "VA": {1: dict(d=46.8, r=47.2), 2: dict(d=45.9, r=43.8), 5: dict(d=44.2, r=49.6), 6: dict(d=30.2, r=57.8)},
-         "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=46.2, r=40.8)},
-         "PAG": {1: dict(d=44.3, r=48.0), 7: dict(d=45.0, r=41.3), 8: dict(d=49.2, r=46.6), 10: dict(d=47.75, r=45.4)},
-         "OH": {1: dict(d=46.885, r=42.615), 7: dict(d=46.7, r=41.0), 9: dict(d=46.3, r=49.2), 10: dict(d=42.5, r=47.2), 15: dict(d=43.9, r=46.0)},
-         "NC": {1: dict(d=44.5, r=42.3), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=50.75, r=44.25), 14: dict(d=40.0, r=48.0)},
-         "MI": {4: dict(d=46.7, r=46.2), 7: dict(d=50.35, r=46.15), 10: dict(d=43.5, r=46.3)},
+         "FL": {7: dict(d=43.5, r=46.5), 8: dict(d=43.5, r=49.5), 9: dict(d=41.0, r=44.0), 11: dict(d=41.9, r=42.1), 13: dict(d=44.175, r=48.45), 14: dict(d=45.425, r=43.475), 16: dict(d=39.0, r=43.0), 21: dict(d=36.5, r=50.5), 22: dict(d=46.25, r=47.45), 25: dict(d=45.0, r=43.1), 27: dict(d=44.45, r=49.1), 28: dict(d=39.9, r=46.1)},
+         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=43.375, r=48.125), 10: dict(d=39.5, r=49.5), 15: dict(d=50.9, r=44.2), 23: dict(d=42.65, r=47.1), 28: dict(d=48.2, r=36.0), 34: dict(d=46.9, r=42.5), 35: dict(d=46.56, r=47.56)},
+         "NYG": {17: dict(d=47.45, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.695, r=46.095), 23: dict(d=32.8, r=54.2)},
+         "VA": {1: dict(d=47.03, r=47.48), 2: dict(d=45.9, r=43.8), 5: dict(d=44.2, r=49.6), 6: dict(d=30.2, r=57.8)},
+         "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=46.775, r=42.875)},
+         "PAG": {1: dict(d=45.325, r=47.3), 7: dict(d=47.05, r=44.025), 8: dict(d=48.65, r=46.65), 10: dict(d=46.987, r=46.7)},
+         "OH": {1: dict(d=46.692, r=41.558), 7: dict(d=45.45, r=42.1), 9: dict(d=47.1, r=47.05), 10: dict(d=42.5, r=47.2), 15: dict(d=43.9, r=46.0)},
+         "NC": {1: dict(d=44.15, r=43.65), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=49.575, r=44.925), 14: dict(d=40.0, r=48.0)},
+         "MI": {4: dict(d=44.45, r=47.3), 7: dict(d=50.35, r=46.15), 10: dict(d=42.2, r=47.5)},
          "GA": {3: dict(d=43.5, r=51.5), 7: dict(d=45.5, r=46.5)},   # Oct 15 8 PM sweep: GA-3 VoteNexus for Keller (D), GA-7 20/20 Insight for Kozycki (D), /tmp/hpolls/build_1015.py
          "IL": {4: dict(d=34.0, r=15.0)},
          "NJ": {2: dict(d=38.9, r=49.6), 7: dict(d=46.8, r=42.3)},
          "WA": {3: dict(d=44.85, r=45.3), 5: dict(d=47.2, r=52.8)},
-         "AZG": {1: dict(d=44.4, r=41.6), 2: dict(d=45.65, r=47.45), 6: dict(d=46.1, r=45.8)},
+         "AZG": {1: dict(d=45.8, r=43.15), 2: dict(d=45.65, r=47.45), 6: dict(d=45.9, r=44.95)},
          "TN": {5: dict(d=39.2, r=48.2), 9: dict(d=42.5, r=49.5)},
          "MA": {},
          "MO": {2: dict(d=45.425, r=45.575)},
          "MDG": {1: dict(d=39.2, r=51.8)},
          "MN": {1: dict(d=43.6, r=44.9), 2: dict(d=50.2, r=40.4), 6: dict(d=37.5, r=52.5)},   # Oct 13: MN-1 SurveyUSA Oct 4-9, Johnson 46 Finstad 44, /tmp/hpolls/build_1013.py
          "WIG": {1: dict(d=46.4, r=49.2), 3: dict(d=48.4, r=47.7), 6: dict(d=39.2, r=60.8)},
-         "CO": {3: dict(d=44.5, r=47.5), 5: dict(d=43.5, r=46.0), 8: dict(d=47.5, r=46.5), 4: dict(d=38.5, r=46.5)},
-         "IN": {5: dict(d=45.0, r=49.5)},
+         "CO": {3: dict(d=44.5, r=47.5), 5: dict(d=44.875, r=46.875), 8: dict(d=47.5, r=46.5), 4: dict(d=38.5, r=46.5)},
+         "IN": {5: dict(d=44.8, r=48.45)},
          "OR": {},
-         "NVG": {2: dict(d=41.55, r=45.25)},
+         "NVG": {2: dict(d=41.55, r=45.25), 3: dict(d=47.9, r=43.2)},
          "UT": {1: dict(d=62.7, r=21.2), 2: dict(d=34.0, r=39.0), 3: dict(d=26.4, r=44.5), 4: dict(d=32.9, r=41.7)},
          "AK": {1: dict(d=47.2, r=52.3)},
          "HIG": {},
-         "ID": {},
+         "ID": {1: dict(d=25.25, r=52.75), 2: dict(d=30.25, r=46.75)},
          "WY": {},
-         "MT": {1: dict(d=46.625, r=45.85), 2: dict(d=26.0, r=48.0)},
+         "MT": {1: dict(d=45.562, r=47.675), 2: dict(d=26.0, r=48.0)},
          "ND": {},
          "SD": {1: dict(d=37.5, r=53.5)},
          "NE": {1: dict(d=44.4, r=46.7), 2: dict(d=49.1, r=38.9)},
-         "KS": {},
+         "KS": {2: dict(d=44.5, r=50.5)},
          "OK": {5: dict(d=40.3, r=46.8)},
          "NM": {1: dict(d=52.2, r=34.2), 2: dict(d=47.2, r=43.2), 3: dict(d=52.2, r=38.2)},
          "AR": {2: dict(d=44.85, r=50.9)},
@@ -711,10 +735,10 @@ POLLS = {
          "LA": {},
          "MS": {},
          "AL": {2: dict(d=44.6, r=47.8)},
-         "SC": {1: dict(d=44.83, r=45.33)},
+         "SC": {1: dict(d=45.54, r=45.54)},
          "KY": {6: dict(d=44.45, r=41.55)},
          "WV": {},
-         "CTG": {},
+         "CTG": {5: dict(d=51.75, r=44.25)},
          "RI": {1: dict(d=53.2, r=29.0), 2: dict(d=53.7, r=38.8)},   # Oct 15 8 PM sweep: Emerson/WPRI Oct 8-11; Oct 20 8 PM: Salve Regina averaged in
          "VTG": {1: dict(d=55.2, r=29.0)},
          "NH": {1: dict(d=46.05, r=41.95), 2: dict(d=53.5, r=36.3)},

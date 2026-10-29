@@ -54,6 +54,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CA-GOV-2026", "pollster": "Emerson College", "startDate": "2026-10-17", "endDate": "2026-10-19", "sampleSize": 1000, "sampleType": "LV", "results": {"Xavier Becerra (D)": 60.0, "Steve Hilton (R)": 33.0, "Undecided": 7.0}},
     {"raceId": "CA-GOV-2026", "pollster": "UC Berkeley Citrin Center/TrueDot/Politico", "startDate": "2026-10-09", "endDate": "2026-10-14", "sampleSize": 909, "sampleType": "LV", "results": {"Xavier Becerra (D)": 55.0, "Steve Hilton (R)": 35.0, "Undecided": 10.0}},
     {"raceId": "CA-GOV-2026", "pollster": "McLaughlin & Associates (R)", "startDate": "2026-10-17", "endDate": "2026-10-20", "sampleSize": 800, "sampleType": "LV", "results": {"Xavier Becerra (D)": 55.0, "Steve Hilton (R)": 39.0, "Undecided": 5.0}},
-    {"raceId": "CA-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-10-19", "endDate": "2026-10-24", "sampleSize": 799, "sampleType": "LV", "results": {"Xavier Becerra (D)": 54.0, "Steve Hilton (R)": 32.0, "Undecided": 14.0}}
+    {"raceId": "CA-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-10-19", "endDate": "2026-10-24", "sampleSize": 799, "sampleType": "LV", "results": {"Xavier Becerra (D)": 54.0, "Steve Hilton (R)": 32.0, "Undecided": 14.0}},
+    {"raceId": "CA-GOV-2026", "pollster": "PPIC", "startDate": "2026-10-16", "endDate": "2026-10-22", "sampleSize": 1086, "sampleType": "LV", "results": {"Xavier Becerra (D)": 61.0, "Steve Hilton (R)": 37.0, "Other": 1.0, "Undecided": 1.0}}
   ],
 };

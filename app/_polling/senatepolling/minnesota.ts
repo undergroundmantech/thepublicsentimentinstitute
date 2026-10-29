@@ -51,6 +51,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 42.0, "Undecided": 13.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."},
     {"raceId": "MN-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 1079, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.1, "Michele Tafoya (R)": 44.6, "Other": 1.9, "Undecided": 5.4}},
     {"raceId": "MN-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-20", "endDate": "2026-10-21", "sampleSize": 1182, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 45.0, "Undecided": 7.0}},
-    {"raceId": "MN-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 600, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 54.0, "Michele Tafoya (R)": 40.0, "Undecided": 6.0}}
+    {"raceId": "MN-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 752, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 54.0, "Michele Tafoya (R)": 40.0, "Undecided": 6.0}}
   ],
 };

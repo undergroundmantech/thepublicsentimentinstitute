@@ -2,7 +2,7 @@
 // Ohio — 2026 U.S. Senate: Sherrod Brown (D) vs. Jon Husted (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-26.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -73,6 +73,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 531, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Undecided": 9.0}},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Undecided": 9.0}},
     {"raceId": "OH-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 44.2, "Other": 2.9, "Undecided": 5.9}},
-    {"raceId": "OH-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 47.0, "Other": 3.0, "Undecided": 3.0}}
+    {"raceId": "OH-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 47.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 500, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Other": 3.0, "Undecided": 4.0}}
   ],
 };

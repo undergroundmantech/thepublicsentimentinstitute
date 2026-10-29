@@ -46,6 +46,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-28", "endDate": "2026-10-05", "sampleSize": 1520, "sampleType": "LV", "results": {"Kelly Ayotte (R)": 49.0, "Cinde Warmington (D)": 40.0, "Undecided": 11.0}},
     {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College for AARP", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1042, "sampleType": "LV", "results": {"Kelly Ayotte (R)": 52.0, "Cinde Warmington (D)": 45.0, "Undecided": 3.0}, "notes": "New Hampshire Institute of Politics at Saint Anselm College, commissioned by AARP."},
     {"raceId": "NH-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 38.0, "Kelly Ayotte (R)": 54.0, "Other": 3.0, "Undecided": 5.0}},
-    {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 1672, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 50.0, "Undecided": 8.0}}
+    {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 1672, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 50.0, "Undecided": 8.0}},
+    {"raceId": "NH-GOV-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 48.0, "Other": 3.0, "Undecided": 7.0}}
   ],
 };
