@@ -155,7 +155,14 @@ else:
     NAT_D2 = TPSI_NATIONAL["pooled"]["two_party_d"]
 # Oct 29 2026, by the user's choice (NAT_D2_FIX): one national anchor for every leg, the census leg included, set from the
 # On Point Oct 28 national poll's D+13.0 alongside Gallup's D+11: a two party share of 0.565 is D+13.
-if os.environ.get("NAT_D2_FIX"):
+# Oct 29 2026 later, by the user's choice: NAT_D2_FIX=mrp reads the anchor from the On Point national dataset completed by
+# MRP and pooled with the fast drift rate (mrp_national.py), D+11.4 among likely voters on Oct 29.
+NAT_MRP_AUDIT = None
+if os.environ.get("NAT_D2_FIX") == "mrp":
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import mrp_national as _mn
+    NAT_MRP_AUDIT = {k: v for k, v in _mn.pool().items() if k != "waves"}
+    NAT_D2 = float(NAT_MRP_AUDIT["d2"]); os.environ["NAT_D2_FIX"] = repr(NAT_D2)
+elif os.environ.get("NAT_D2_FIX"):
     NAT_D2 = float(os.environ["NAT_D2_FIX"])
 # primary structure coefficients, logit units per logit unit of county deviation from state
 # UNIFORM: run every race on the identical pipeline, with no per race rule.
@@ -3068,6 +3075,30 @@ def _ABBR_OF():
     if not _ABBR_CACHE: _ABBR_CACHE.update(APPROVAL.state_abbr.to_dict())
     return _ABBR_CACHE
 
+# ── county MRP leg blend, Oct 29 2026 night, by the user's choice ─────────────────────────────────────────────────
+# COUNTY_MRP names county_mrp.csv from mrp_states_v2.py: every county's projected 2026 electorate (census, voter file and
+# turnout cells, joined to its certified 2024 vote) poststratified on the On Point national dataset's cell model, which
+# carries the group shifts in the data (Hispanic, rural, 2024 vote by area and race), levelled to the pooled national
+# anchor. COUNTY_MRP_W of the census leg's swing from 2024 is replaced by that county MRP swing. Candidate terms, Osborn's
+# 2024 personal vote among them, sit outside the swing and are kept whole.
+COUNTY_MRP_W = float(os.environ.get("COUNTY_MRP_W", "0") or 0)
+_CMRP = {}
+CMRP_AUDIT = {}
+def county_mrp_adj(fl, swing_logit, w=None, key=None):
+    if COUNTY_MRP_W <= 0 or not os.environ.get("COUNTY_MRP"): return np.zeros(len(fl))
+    if "s" not in _CMRP:
+        _CMRP["s"] = pd.read_csv(os.environ["COUNTY_MRP"], dtype={"fips": str}).set_index("fips").swing_logit
+    s = pd.Series(np.asarray(swing_logit, float), index=list(fl))
+    m = _CMRP["s"].reindex([str(f).zfill(5) for f in fl]); m.index = s.index
+    adj = (COUNTY_MRP_W * (m - s)).fillna(0.0)
+    if key is not None:
+        ww = np.asarray(w if w is not None else np.ones(len(fl)), float)
+        CMRP_AUDIT[key] = dict(weight=COUNTY_MRP_W, counties=int(m.notna().sum()), of=int(len(fl)),
+                               mean_adj_logit=round(float((adj.values * ww).sum() / max(ww.sum(), 1e-9)), 5),
+                               census_swing_logit=round(float((s.values * ww).sum() / max(ww.sum(), 1e-9)), 5),
+                               mrp_swing_logit=round(float((m.fillna(s).values * ww).sum() / max(ww.sum(), 1e-9)), 5))
+    return adj.values
+
 def census_predict(model, fips_list, region_of, shift=0.0, comps=None, use24=False):
     pops, eta, turn, adults, eta24 = comps if comps is not None else census_components(model, fips_list, region_of)
     wt = pops * turn
@@ -3144,7 +3175,7 @@ def m1_anchor_flat():
     if NAT_ANCHOR == "gallup": return 0.0
     if "k" in _M1K: return _M1K["k"]
     fl = [f for f in APPROVAL.index if f in P24.index]
-    r = RESP; w = r.turnout_propensity
+    r = RESP; w = r.lvw if "lvw" in r else r.turnout_propensity
     ct = pd.crosstab(r.trump_approve_2way, r.generic_ballot, values=w, aggfunc="sum", normalize="index")
     app, dis, noop, cal = calibrated_approval(fl)
     Dv = dis * ct.loc["Disapprove", "Democrat"] + app * ct.loc["Approve", "Democrat"] + noop * ct.loc["Neutral", "Democrat"]
@@ -3165,7 +3196,7 @@ def calibrated_approval(fl):
     shifted by one national logit constant so the 2024 vote weighted national two way approval equals the
     TPSI 2026 likely voter approval that the approval to vote crosstab is built on. Neutral share is scaled the same way."""
     if not _CAL:
-        r = RESP; w = r.turnout_propensity
+        r = RESP; w = r.lvw if "lvw" in r else r.turnout_propensity
         lv = pd.Series(w.values, index=r.trump_approve_2way).groupby(level=0).sum() / w.sum()
         tA, tD, tN = lv["Approve"], lv["Disapprove"], lv["Neutral"]
         _rvnet = os.environ.get("APPROVAL_RV_NET")
@@ -3679,7 +3710,7 @@ def run_state(st, model, shift, nat_turn_rate):
     ap = APPROVAL.reindex(fl)
 
     # M1 fundamental: county approval calibrated to the TPSI 2026 likely voter approval level, converted to vote with TPSI respondent crosstab, plus primary structure
-    r = RESP; w = r.turnout_propensity
+    r = RESP; w = r.lvw if "lvw" in r else r.turnout_propensity
     ct = pd.crosstab(r.trump_approve_2way, r.generic_ballot, values=w, aggfunc="sum", normalize="index")
     app, dis, noop, cal = calibrated_approval(fl)
     D = dis * ct.loc["Disapprove", "Democrat"] + app * ct.loc["Approve", "Democrat"] + noop * ct.loc["Neutral", "Democrat"]
@@ -3909,6 +3940,8 @@ def run_state(st, model, shift, nat_turn_rate):
         if cand_prof is not None:
             _hinfo = _ev.HISTORY_INFO.get(st, {})
             m1 = inv(logit(m1) + pd.Series(_hinfo.get("candidate_county_shift", np.zeros(len(fl))), index=fl))
+    _cm_adj = county_mrp_adj(fl, np.asarray(demo_swing, float) + (np.asarray(el_delta, float) if ELECTORATE else 0.0), p24.total_votes.values, st)
+    if COUNTY_MRP_W > 0: m2 = inv(logit(m2) + _cm_adj)
     if GOV_DEPOL and cfg.get("office") == "governor":
         # governor depolarization: the approval and census legs keep their county pattern, their statewide level
         # follows the national environment at GOV_BETA and the state's lean against the nation at GOV_LAMBDA
@@ -3916,7 +3949,7 @@ def run_state(st, model, shift, nat_turn_rate):
         _lvl = lambda z: float(logit(float((inv(np.asarray(z, float)) * _w).sum() / _w.sum())))
         _E1 = float(logit(NAT_D2)); _E2 = float(logit(_T26 if _T26 is not None else NAT_D2))
         _L1 = _lvl(base)
-        _m2p = logit(actual24) + demo_swing + (el_delta if ELECTORATE else 0.0)
+        _m2p = logit(actual24) + demo_swing + (el_delta if ELECTORATE else 0.0) + _cm_adj
         _L2 = _lvl(_m2p)
         _s1 = -(1 - GOV_BETA) * _E1 - (1 - GOV_LAMBDA) * (_L1 - _E1)
         _gb2 = (float(GALLUP_INC_BETA) if (GALLUP_INC_BETA and st in INCUMBENT_GOV) else 1.0) if GALLUP_FULL else GOV_BETA
@@ -4383,7 +4416,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -4407,7 +4440,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:
