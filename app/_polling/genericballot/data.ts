@@ -10,6 +10,9 @@ export const GOLD_STANDARD_NAMES = [
 
 export const RAW_POLLS: Poll[] = [
   // ── Added Oct 29, 2026 morning ──
+  { pollster: "Clarity Campaign Labs", endDate: "2026-10-21", sampleSize: 1016, sampleType: "LV", results: { Democrats: 52, Republicans: 44 } },   // a Democratic firm; aggregator only, added Oct 29 at the publisher's request
+  { pollster: "Rainey Center", endDate: "2026-10-20", sampleSize: 1279, sampleType: "RV", results: { Democrats: 52, Republicans: 44 } },   // aggregator only, added Oct 29 at the publisher's request
+  { pollster: "UMass Lowell/YouGov", endDate: "2026-10-04", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52, Republicans: 43 } },   // Oct 2 to 4, released Oct 22
   { pollster: "Leger", endDate: "2026-10-25", sampleSize: 1037, sampleType: "A", results: { Democrats: 42, Republicans: 36 } },   // Oct 23 to 25, adults; decided voters 52 to 45, Leger release and PDF Oct 28
   // ── Added Oct 28, 2026 evening ──
   { pollster: "Cygnal", endDate: "2026-10-24", sampleSize: 1500, sampleType: "LV", results: { Democrats: 52, Republicans: 43 } },   // Cygnal national, Oct 23 to 24, likely voters, Cygnal release

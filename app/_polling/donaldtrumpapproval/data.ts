@@ -8,6 +8,11 @@ export const GOLD_STANDARD_NAMES = [
 
 export const RAW_POLLS: Poll[] = [
   // ── Added Oct 29, 2026 morning ──
+  { pollster: "Clarity Campaign Labs", endDate: "2026-10-21", sampleSize: 1016, sampleType: "LV", results: { Approve: 42, Disapprove: 56 } },   // aggregator only, added Oct 29 at the publisher's request
+  { pollster: "Rainey Center", endDate: "2026-10-20", sampleSize: 1279, sampleType: "RV", results: { Approve: 42, Disapprove: 58 } },   // aggregator only, added Oct 29 at the publisher's request
+  { pollster: "Prolific", endDate: "2026-10-22", sampleSize: 1118, sampleType: "RV", results: { Approve: 36, Disapprove: 63 } },   // Oct 21 to 22, aggregator only, added Oct 29 at the publisher's request
+  { pollster: "Financial Times", endDate: "2026-10-20", sampleSize: 1549, sampleType: "LV", results: { Approve: 37, Disapprove: 58 } },   // FT/Focaldata Oct 16 to 20, likely voters per RealClearPolling, added Oct 29 at the publisher's request
+  { pollster: "Morning Consult", endDate: "2026-10-18", sampleSize: 2202, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },   // weekly tracker Oct 16 to 18, aggregator only, added Oct 29 at the publisher's request
   { pollster: "Leger", endDate: "2026-10-25", sampleSize: 1037, sampleType: "A", results: { Approve: 33, Disapprove: 58 } },   // Oct 23 to 25, adults, Leger release and PDF Oct 28
   // ── Added Oct 25, 2026 evening ──
   { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { Approve: 39.0, Disapprove: 59.7 } },   // On Point national poll, Oct 28, likely voters; registered voters 38.7 to 58.0

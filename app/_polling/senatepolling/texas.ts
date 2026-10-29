@@ -101,6 +101,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-20", "endDate": "2026-10-21", "sampleSize": 965, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 45.0, "Other": 5.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Univision/YouGov", "startDate": "2026-10-13", "endDate": "2026-10-21", "sampleSize": 1000, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 45.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "254 Labs/YouGov Blue", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 43.0, "Undecided": 5.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 923, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 43.0, "Other": 3.0, "Undecided": 5.0}}
+    {"raceId": "TX-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 923, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 43.0, "Other": 3.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University/YouGov", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 2000, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 47.0, "Undecided": 4.0}}
   ],
 };

@@ -19,3 +19,10 @@ export SITE_AVG_AK=1
 # House runs set W_POLL_DIST=0.45 on their command line
 # Oct 28 2026 late, by the user: 10 more points again, statewide 0.65 sliding to 0.55, House W_POLL_DIST=0.55
 export POLL_UP=0.20
+# Oct 29 2026, by the user's choice: one national anchor of D+13 for every leg (On Point Oct 28 poll D+13.0 alongside Gallup
+# D+11), each state's response to the national environment measured from its 2016 to 2024 presidential swings and the Oct 28
+# state MRP (/tmp/fcrun/blend/state_beta.py), the poll weight measured per race from the weighted average's effective poll
+# count (BLEND=precision), and the primary electorate term read only from 2026 primary ballots (ENTH_REAL_ONLY=1)
+export NAT_D2_FIX=0.565 BLEND=precision BLEND_SF=7.5 BLEND_SSYS=3.5 BLEND_S1=6.0 BLEND_CAP=0.85 ENTH_REAL_ONLY=1
+export NAT_ELAST_CACHE=/tmp/fcrun/blend/nat_elasticity_beta.csv AS_OF_DAILY=2026-10-27
+export BLEND_HALF_DAYS=28

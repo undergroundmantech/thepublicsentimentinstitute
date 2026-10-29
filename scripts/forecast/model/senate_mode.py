@@ -153,6 +153,10 @@ else:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import meridian_all as _ma
     TPSI_NATIONAL = _ma.run()
     NAT_D2 = TPSI_NATIONAL["pooled"]["two_party_d"]
+# Oct 29 2026, by the user's choice (NAT_D2_FIX): one national anchor for every leg, the census leg included, set from the
+# On Point Oct 28 national poll's D+13.0 alongside Gallup's D+11: a two party share of 0.565 is D+13.
+if os.environ.get("NAT_D2_FIX"):
+    NAT_D2 = float(os.environ["NAT_D2_FIX"])
 # primary structure coefficients, logit units per logit unit of county deviation from state
 # UNIFORM: run every race on the identical pipeline, with no per race rule.
 # Structural facts stay (ranked choice in Alaska, Montana's two name split, which region a
@@ -3482,7 +3486,42 @@ _FW_BANK = {}
 if FINAL_W and os.environ.get("FINAL_W_BANKED"):
     _FW_BANK = {k: float(v.get("banked", 0.0)) for k, v in json.load(open(os.environ["FINAL_W_BANKED"])).items()}
 FINAL_AUDIT = {}
+# Oct 29 2026, by the user's choice (BLEND=precision): the poll leg's weight is measured per race instead of fixed. The
+# weighted average's error is a floor shared by every poll (BLEND_SSYS points of margin) plus each poll's own error
+# (BLEND_S1) over the effective number of polls, the Kish count of the average's own weights times their freshness;
+# the fundamentals carry BLEND_SF points of error. The poll weight is SF^2 / (SF^2 + SSYS^2 + S1^2 / n), capped at
+# BLEND_CAP, and the Gallup and electorate legs share the rest 0.35 to 0.20. The share of the vote cast no longer moves
+# weight to the electorate leg: the early vote reaches each race through the measured correction after the run.
+BLEND = os.environ.get("BLEND", "")
+BLEND_SF, BLEND_SSYS, BLEND_S1, BLEND_CAP = (float(os.environ.get("BLEND_SF", "7.5")), float(os.environ.get("BLEND_SSYS", "3.5")),
+                                             float(os.environ.get("BLEND_S1", "6.0")), float(os.environ.get("BLEND_CAP", "0.85")))
+BLEND_AUDIT = {}
+def _poll_neff(st):
+    pdm = sys.modules.get("poll_daily")
+    reg = getattr(pdm, "REGISTRY", {}).get(st) if pdm else None
+    aud = reg.get("audit") if reg else None
+    if aud is None or not len(aud): return 0.0, 0.0, 0
+    w = pd.to_numeric(aud.weight, errors="coerce").fillna(0.0).values.astype(float)
+    # freshness: a poll keeps half its information four weeks after it closes, 1 / (1 + age / BLEND_HALF_DAYS); the
+    # average's own recency weights are steeper because they rank polls against each other, not against the fundamentals
+    _asof = pd.Timestamp(getattr(pdm, "AS_OF_DAILY", None) or os.environ.get("AS_OF_DAILY") or AS_OF)
+    _age = (_asof - pd.to_datetime(aud.end, errors="coerce")).dt.days.clip(lower=0).fillna(365).values.astype(float)
+    rw = 1.0 / (1.0 + _age / float(os.environ.get("BLEND_HALF_DAYS", "28")))
+    if w.sum() <= 0: return 0.0, 0.0, int(len(w))
+    kish = float(w.sum() ** 2 / (w ** 2).sum()); fresh = float((w * rw).sum() / w.sum())
+    return kish * fresh, fresh, int(len(w))
 def _final_weights(st, has_polls):
+    if BLEND == "precision":
+        n, fresh, npolls = _poll_neff(st)
+        wP = 0.0
+        if has_polls and n > 0:
+            vp = BLEND_SSYS ** 2 + BLEND_S1 ** 2 / n
+            wP = min(BLEND_CAP, BLEND_SF ** 2 / (BLEND_SF ** 2 + vp))
+        wG, wE = (1 - wP) * 0.35 / 0.55, (1 - wP) * 0.20 / 0.55
+        BLEND_AUDIT[st] = dict(n_eff=round(n, 3), freshness=round(fresh, 3), polls_in_average=npolls, poll_weight=round(wP, 4),
+                               poll_error_pts=round(float(np.sqrt(BLEND_SSYS ** 2 + BLEND_S1 ** 2 / n)), 2) if n > 0 else None,
+                               fundamentals_error_pts=BLEND_SF)
+        return wG, wE, wP, _FW_BANK.get(st[:2], 0.0)
     b = _FW_BANK.get(st[:2], 0.0)
     t = float(np.clip((b - 0.10) / (1.0 / 3.0 - 0.10), 0.0, 1.0))
     wG, wE, wP = 0.35 + t * (0.325 - 0.35), 0.20 + t * (0.325 - 0.20), 0.45 + t * (0.35 - 0.45)
@@ -4057,7 +4096,8 @@ def run_state(st, model, shift, nat_turn_rate):
         if FINAL_W:
             _fG, _fE, _fP, _fb = _final_weights(st, _wp > 1e-6)
             FINAL_AUDIT[st] = dict(before=dict(polls=round(_wp, 4), seat=round(_wh, 4), approval=round(w_fund, 4), gallup=round(w_census, 4)),
-                                   banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4))
+                                   banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4),
+                                   blend=BLEND_AUDIT.get(st))
             w_census, _wh, w_fund, _wp = _fG / 2, _fG / 2, _fE, _fP
             _sa.update(poll_weight_final=round(_wp, 4))
         w_hist = _wp
@@ -4107,7 +4147,8 @@ def run_state(st, model, shift, nat_turn_rate):
         if FINAL_W:
             _fG, _fE, _fP, _fb = _final_weights(st, w_hist > 1e-6)
             w_census, w_fund, w_hist = _fG, _fE, _fP
-            FINAL_AUDIT[st] = dict(banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4))
+            FINAL_AUDIT[st] = dict(banked=round(_fb, 3), gallup_leg=round(_fG, 4), electorate_leg=round(_fE, 4), polls=round(_fP, 4),
+                                   blend=BLEND_AUDIT.get(st))
         d2 = w_fund * (_rcv_fc_equiv(cfg, m1) if cfg.get("rcv_fc") else m1) + w_census * (_rcv_fc_equiv(cfg, m2) if cfg.get("rcv_fc") else m2) + w_hist * m3
     if LOCAL_COND and not (LEG_INT and SEAT_HIST):
         _ls = LOCAL_W * LOCAL_SHIFT.reindex([str(f) for f in fl]).fillna(0.0).values.astype(float)

@@ -2,12 +2,12 @@
 
 Two national numbers feed the three legs:
 
-  Meridian ballot   DSMeridian Model 13R3 run on every response in the On Point Polling database (meridian_all.py). It sets the
+  Meridian ballot   DSMeridian Model 13R3 run on every response in the TPSI database (meridian_all.py). It sets the
                     approval leg and, in the House, the history leg.
   Gallup party ID   50 D to 39 R among adults, Oct 2026, with leaners. Party identification is not a vote, so it is converted:
-                    the On Point Polling party mix of every ACS cell in every county is moved until the nation's adults identify
+                    the TPSI party mix of every ACS cell in every county is moved until the nation's adults identify
                     50 D, 39 R and 11 independent; each cell and party then turns out at its DSMeridian likely voter
-                    propensity and votes at its On Point Polling vote chance. The result is the likely voter two party vote that
+                    propensity and votes at its TPSI vote chance. The result is the likely voter two party vote that
                     Gallup's party identification implies, and it sets the census leg.
 
 Neither number is added to every county alike. Each county's elasticity, from the national demographic fit and its
@@ -39,6 +39,9 @@ def region_fn(sm, model):
 def gallup_lv_d2(sm, model):
     """Likely voter two party Democratic share implied by Gallup's adult party identification."""
     if "gallup" in _A: return _A["gallup"]
+    if os.environ.get("NAT_D2_FIX"):
+        # Oct 29 2026, by the user's choice: the census leg takes the same fixed national anchor as the other legs
+        _A["gallup"] = float(os.environ["NAT_D2_FIX"]); _A["gallup_detail"] = dict(fixed=_A["gallup"]); return _A["gallup"]
     import electorate as ev, history as hi
     fl = national_counties(sm); rf, abbr = region_fn(sm, model)
     F = hi.fit(sm); nx = F["nx"]
@@ -49,7 +52,7 @@ def gallup_lv_d2(sm, model):
     for reg, fls in by.items():
         popc, x, meta = hi.cells(sm, fls, reg)
         G = ev.groups(sm, model, fls, reg)
-        # likely voter propensity by cell and party, the DSMeridian score averaged over the On Point Polling vote history mix
+        # likely voter propensity by cell and party, the DSMeridian score averaged over the TPSI vote history mix
         L = hi.logits(sm, x)
         pm = hi.inv(L["M"]); p1 = hi.inv(L["P1"]); p0 = hi.inv(L["P0"])
         Hs = np.stack([pm * p1, pm * (1 - p1), (1 - pm) * p0, (1 - pm) * (1 - p0)], axis=2)
@@ -114,9 +117,9 @@ def vf_on():
     return os.environ.get("VOTERFILE", "1") == "1" and bool(vf.load_national())
 
 def m1_constant(sm, model, shift):
-    """Approval leg: county approval converted with the On Point Polling crosstab, moved by elasticity times one constant.
+    """Approval leg: county approval converted with the TPSI crosstab, moved by elasticity times one constant.
     In Voter File Mode the county value is the simulated 2026 electorate's preference, with each voter's Trump
-    approval simulated from the On Point Polling county approval file, and the same elasticity times one constant sets its level."""
+    approval simulated from the TPSI county approval file, and the same elasticity times one constant sets its level."""
     if "k1" in _A: return _A["k1"]
     fl = national_counties(sm)
     if vf_on():
@@ -141,7 +144,7 @@ def m1_constant(sm, model, shift):
     return _A["k1"]
 
 def m2_params(sm, model, shift):
-    """Census leg: the On Point Polling demographic swing keeps its county to county shape; its national level is replaced by
+    """Census leg: the TPSI demographic swing keeps its county to county shape; its national level is replaced by
     elasticity times one constant solved to Gallup's likely voter implication."""
     if "k2" in _A: return _A["m2_mean"], _A["k2"]
     fl = national_counties(sm); rf, abbr = region_fn(sm, model)
