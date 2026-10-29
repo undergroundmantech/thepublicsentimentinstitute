@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 29, 2026 morning ──
+  { pollster: "Leger", endDate: "2026-10-25", sampleSize: 1037, sampleType: "A", results: { Approve: 33, Disapprove: 58 } },   // Oct 23 to 25, adults, Leger release and PDF Oct 28
   // ── Added Oct 25, 2026 evening ──
   { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { Approve: 39.0, Disapprove: 59.7 } },   // On Point national poll, Oct 28, likely voters; registered voters 38.7 to 58.0
   { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1440, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },   // Oct 23 to 26, registered voters, toplines PDF

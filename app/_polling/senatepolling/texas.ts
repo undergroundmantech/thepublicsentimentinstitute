@@ -2,7 +2,7 @@
 // Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-21.
+// ballot were dropped. Newest poll: 2026-10-27.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -99,6 +99,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-10-17", "endDate": "2026-10-19", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 509, "sampleType": "LV", "results": {"James Talarico (D)": 47.6, "Ken Paxton (R)": 45.2, "Other": 1.4, "Undecided": 5.4}},
     {"raceId": "TX-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-20", "endDate": "2026-10-21", "sampleSize": 965, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 45.0, "Other": 5.0, "Undecided": 5.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Univision/YouGov", "startDate": "2026-10-13", "endDate": "2026-10-21", "sampleSize": 1000, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 45.0, "Undecided": 5.0}}
+    {"raceId": "TX-SEN-2026", "pollster": "Univision/YouGov", "startDate": "2026-10-13", "endDate": "2026-10-21", "sampleSize": 1000, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 45.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "254 Labs/YouGov Blue", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 43.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 923, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 43.0, "Other": 3.0, "Undecided": 5.0}}
   ],
 };
