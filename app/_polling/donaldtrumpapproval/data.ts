@@ -8,6 +8,7 @@ export const GOLD_STANDARD_NAMES = [
 
 export const RAW_POLLS: Poll[] = [
   // ── Added Oct 25, 2026 evening ──
+  { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { Approve: 39.0, Disapprove: 59.7 } },   // On Point national poll, Oct 28, likely voters; registered voters 38.7 to 58.0
   { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1440, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },   // Oct 23 to 26, registered voters, toplines PDF
   { pollster: "Echelon Insights", endDate: "2026-10-23", sampleSize: 3644, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },   // Oct 16 to 23 for NetChoice
   { pollster: "Morning Consult", endDate: "2026-10-20", sampleSize: 2050, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },   // Oct 13 to 20 for Deseret News and the Hinckley Institute

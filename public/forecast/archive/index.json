@@ -603,23 +603,23 @@
    "n_sims": 2000,
    "chambers": {
     "senate": {
-     "d_control": 84.6,
-     "d_seats_median": 54.0,
-     "p10": 50.0,
-     "p90": 58.0,
-     "d_control_without_osborn": 81.1
+     "d_control": 81.8,
+     "d_seats_median": 53.0,
+     "p10": 49.0,
+     "p90": 57.0,
+     "d_control_without_osborn": 78.3
     },
     "governors": {
-     "d_majority": 86.1,
+     "d_majority": 84.5,
      "d_median": 28.0,
      "p10": 25.0,
      "p90": 32.0
     },
     "house": {
-     "d_majority": 96.8,
-     "d_seats_median": 248.0,
-     "p10": 225.0,
-     "p90": 279.0,
+     "d_majority": 94.0,
+     "d_seats_median": 244.0,
+     "p10": 221.0,
+     "p90": 275.0,
      "n_sims": 2000
     }
    }

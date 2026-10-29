@@ -9,6 +9,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 28, 2026 evening ──
+  { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { Democrats: 55.0, Republicans: 41.9, Other: 2.8, Undecided: 0.3 } },   // On Point national poll, Oct 28, 1,170 RV, about 672 LV, undecideds leaned; registered voters 53.1 to 41.6
   // ── Added Oct 28, 2026 morning ──
   { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1440, sampleType: "RV", results: { Democrats: 46, Republicans: 40 } },   // Oct 23 to 26, registered voters, toplines PDF
   { pollster: "Echelon Insights", endDate: "2026-10-23", sampleSize: 3644, sampleType: "LV", results: { Democrats: 51, Republicans: 46 } },   // Oct 16 to 23 for NetChoice, national base plus state oversamples weighted to the nation, topline PDF
