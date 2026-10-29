@@ -9,7 +9,7 @@ import FloatTip from "@/app/components/opp/FloatTip";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { DESK_CSS } from "./deskCss";
 import CallBand from "../CallBand";
-import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
+import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
 import { useIndex, useLive, useStateFile } from "./useLive";
 
 type Paths = { counties: { id: string; d: string }[]; districts: { id: string; d: string }[] };
@@ -43,6 +43,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const [det, setDet] = useState<CDetail | null>(null);
   const [view, setView] = useState<"forecast" | "results">("results");
   const [mode, setMode] = useState<"margin" | "turnout">("margin");
+  const [rmode, setRmode] = useState<"margin" | "vs" | "reporting">("margin");
   const [tip, setTip] = useState<{ x: number; y: number; f: string } | null>(null);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<"votes" | "az" | "reporting" | "margin" | "gap">("votes");
@@ -82,6 +83,16 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const odds = liveOdds(r, P);
   const es = expSides(r);
   const isM = r.k === "measure";
+  // the published forecast this page is reading: its date comes from the index, never typed in by hand
+  const asOf = ix.asOf ? new Date(ix.asOf + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" }) : null;
+  const hasFc = isM ? r.pPass != null : r.k === "leg" ? r.pD != null : r.pR != null;
+  const fcM = expMargin(r);
+  const pB0 = isM ? 1 - (r.pPass ?? 0.5) : r.pR ?? 0.5;
+  // a favorite needs a real edge in both margin and probability; anything inside that is shown as a toss-up
+  const favSide: "A" | "B" | null = hasFc && fcM != null && Math.abs(fcM) >= 0.5 && Math.abs(pB0 - 0.5) >= 0.05 ? (pB0 > 0.5 ? "B" : "A") : null;
+  const favP = favSide ? 100 * (favSide === "B" ? pB0 : 1 - pB0) : null;
+  const stSlug = (STN[r.st] ?? r.st).toLowerCase().replace(/[^a-z]+/g, "-");
+  const catHub = r.k === "sen" ? "sen" : r.k === "gov" ? "gov" : r.k === "house" ? "house" : "state";
   const A = isM ? "Yes" : ind ? (r.c?.[0]?.[0] ?? "Independent") : (r.c?.find((x) => x[1] === "D")?.[0] ?? "Democrat");
   const B = isM ? "No" : (r.c?.find((x) => x[1] === "R")?.[0] ?? "Republican");
   const colA = isM ? "#2fbf9b" : ind ? "#b78cff" : "var(--dem)", colB = isM ? "#e7794a" : "var(--gop)";
@@ -90,15 +101,24 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const leadCol = lead === "A" ? colA : colB;
   const leadP = 100 * (lead === "A" ? odds.pA : odds.pB);
   const civWinner = c?.c.find((x) => x[4]);
-  const projected = !civWinner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
+  // a projection needs a published forecast behind it; without one the estimate has no prior and is never shown as a call
+  const projected = hasFc && !civWinner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
   const repPct = reporting ? Math.max(c?.pr ?? 0, 0) : 0;
-  const status = !c ? "Awaiting results feed" : civWinner ? "Race called" : projected ? "OnPoint Projection" : reporting ? "Counting" : now < FIRST_CLOSE ? "Polls open" : "Awaiting returns";
+  const statusKey = !c ? (live.loading ? "load" : live.error ? "err" : "nofeed") : civWinner ? "called" : projected ? "proj" : reporting ? "count" : now < FIRST_CLOSE ? "pre" : "await";
+  const status = ({ load: "Connecting to civicAPI", err: "Live returns unreachable", nofeed: "Awaiting results feed", called: "Race called", proj: "OnPoint Projection", count: "Counting", pre: "Polls open", await: "Awaiting returns" } as const)[statusKey];
   const msLeft = FIRST_CLOSE - now;
   const margin = Math.abs(P.m);
   const cands = c ? [...c.c].sort((x, y) => y[2] - x[2]) : [];
   const counted = cands.reduce((s, x) => s + x[2], 0);
   const gap = cands.length > 1 ? cands[0][2] - cands[1][2] : 0;
   const tone = (party: string, name: string) => { const p = party.toLowerCase(); if (isM) return /^yes/i.test(name) ? colA : /^no$/i.test(name) ? colB : "var(--ink3)"; if (p.startsWith("dem")) return "var(--dem)"; if (p.startsWith("rep")) return "var(--gop)"; if (p.startsWith("ind") && ind) return colA; return "var(--ink3)"; };
+  // which forecast side a listed candidate is, and the forecast's expected share for them
+  const fcRow = (party: string, name: string): { side: "A" | "B" | null; share: number | null } => {
+    const rc = (r.c ?? []).find(([n]) => last(n) === last(name));
+    const p = (rc ? rc[1] : isM ? (/^yes/i.test(name) ? "Y" : /^no$/i.test(name) ? "N" : "O") : party.toLowerCase().startsWith("dem") ? "D" : party.toLowerCase().startsWith("rep") ? "R" : party.toLowerCase().startsWith("ind") ? "I" : "O");
+    const side = p === "D" || p === "Y" || (p === "I" && ind) ? "A" : p === "R" || p === "N" ? "B" : null;
+    return { side, share: rc && es.t ? (100 * rc[2]) / es.t : null };
+  };
   const finA = P.fin.t ? (100 * P.fin.a) / P.fin.t : 0, finB = P.fin.t ? (100 * P.fin.b) / P.fin.t : 0, finO = P.fin.t ? (100 * P.fin.o) / P.fin.t : 0;
   const nowA = P.rep.t ? (100 * P.rep.a) / P.rep.t : null, nowB = P.rep.t ? (100 * P.rep.b) / P.rep.t : null;
   const headline = !P.rep.t
@@ -113,13 +133,23 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const shade = (m: number) => (isM ? (m < 0 ? `rgba(47,191,155,${0.2 + Math.min(1, -m / 40) * 0.75})` : `rgba(231,121,74,${0.2 + Math.min(1, m / 40) * 0.75})`) : ind ? marginColorInd(m) : marginColor(m));
   const regM = (f: string) => { const g = det?.regions[f]; if (!g) return null; const s = sides(r, g.c); return s.t ? { m: (100 * (s.b - s.a)) / s.t, t: s.t, pr: g.pr, s } : null; };
   const expCM = (f: string) => { const e = exp?.[f]; return e && e[3] ? (100 * (e[1] - e[0])) / e[3] : null; };
+  // returns against the forecast, shaded toward whichever side is beating its expected margin
+  const vsShade = (d: number) => { const [a, b] = isM ? ["47,191,155", "231,121,74"] : ind ? ["183,140,255", "255,59,92"] : ["61,123,255", "255,59,92"]; return `rgba(${d <= 0 ? a : b},${(0.15 + 0.8 * Math.min(1, Math.abs(d) / 20)).toFixed(3)})`; };
   const fillOf = (f: string) => {
-    if (view === "results") { const g = regM(f); return g ? shade(g.m) : "var(--map-await)"; }
+    if (view === "results") {
+      const g = regM(f); if (!g) return "var(--map-await)";
+      if (rmode === "reporting") return `rgba(231,179,65,${(0.14 + 0.84 * Math.min(1, g.pr / 100)).toFixed(3)})`;
+      if (rmode === "vs") { const x = expCM(f); return x == null ? shade(g.m) : vsShade(g.m - x); }
+      return shade(g.m);
+    }
     const e = exp?.[f]; if (!e) return "var(--map-blank)";
     if (mode === "turnout") { const k = (Math.log(e[3]) - Math.log(tMin)) / Math.max(0.01, Math.log(tMax) - Math.log(tMin)); return `rgba(15,95,85,${(0.12 + 0.85 * k).toFixed(3)})`; }
     return shade(expCM(f) ?? 0);
   };
-  const opac = (f: string) => { if (view !== "results") return 1; const g = regM(f); return g ? 0.35 + 0.65 * Math.min(1, g.pr / 100) : 1; };
+  const opac = (f: string) => { if (view !== "results" || rmode !== "margin") return 1; const g = regM(f); return g ? 0.35 + 0.65 * Math.min(1, g.pr / 100) : 1; };
+  // on the results map a county with nothing in shows only its expected lean, hatched, the national map's grammar
+  const leanOf = (f: string) => { if (view !== "results" || regM(f)) return null; const x = expCM(f); return x == null ? null : shade(x); };
+  const anyIn = Object.keys(det?.regions ?? {}).some((f) => regM(f));
   const rows = exp ? Object.entries(exp).map(([f, e]) => ({ f, n: names[f] ?? f, e, em: expCM(f), g: regM(f) })) : [];
   const ql = q.trim().toLowerCase();
   const shown = rows.filter((x) => !ql || x.n.toLowerCase().includes(ql)).sort((a, b) => sort === "az" ? a.n.localeCompare(b.n) : sort === "reporting" ? (b.g?.pr ?? -1) - (a.g?.pr ?? -1) : sort === "margin" ? Math.abs(a.g?.m ?? a.em ?? 0) - Math.abs(b.g?.m ?? b.em ?? 0) : sort === "gap" ? Math.abs(b.g && b.em != null ? b.g.m - b.em : 0) - Math.abs(a.g && a.em != null ? a.g.m - a.em : 0) : b.e[3] - a.e[3]);
@@ -135,21 +165,23 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
         {embedded ? <div className="archive-banner"><span>Situation monitor</span><span className="nd-banner-acts"><Link href={`/results/2026/${r.id}`} className="nd-main">Open the race page</Link><button type="button" onClick={onClose}>Back to the globe</button></span></div> : null}
         {live.test && live.hidden > 0 ? <div className="archive-banner nd-test"><span>civicAPI is publishing test returns before Election Day. They are hidden here.</span><a href="?test=1">Preview with test returns</a></div> : null}
         {live.test && live.hidden === 0 && reporting ? <div className="archive-banner nd-test"><span>Test returns from civicAPI, shown for preview. These are not real votes.</span><a href="?">Hide test returns</a></div> : null}
+        {!embedded ? <nav className="nd-crumbs" aria-label="Breadcrumb"><Link href="/results/2026">Election night</Link><span aria-hidden>/</span><Link href={`/results/2026?k=${catHub}#rh`}>{KIND_LABEL[r.k]}</Link><span aria-hidden>/</span><Link href={`/results/2026/${stSlug}`}>{STN[r.st]}</Link><span aria-hidden>/</span><span aria-current="page">{r.nm}</span></nav> : null}
         <div className="race-kicker">
           {reporting && <span className="live-dot" aria-hidden />}
-          <span>{STN[r.st]} · November 3, 2026</span><span>•</span><span>{KIND_LABEL[r.k]}{exp ? " · county projection" : ""}</span>
+          <span>{STN[r.st]} · November 3, 2026</span><span>•</span><span>{KIND_LABEL[r.k]}{exp ? " · county projection" : ""}</span>{asOf && hasFc ? <><span>•</span><span>Forecast of {asOf}</span></> : null}
         </div>
         <div className="race-heading-row">
           <div>
             <h1 id="nd-title">{r.nm}</h1>
-            <p className="race-deck">{isM ? r.off : r.k === "leg" ? `${r.up ?? r.seats} of ${r.seats} seats on the ballot; ${r.maj} for a majority.` : `${A} and ${B}${r.c && r.c.length > 2 ? `, with ${r.c.length - 2} more on the ballot` : ""}. The forecast expects about ${fmtK(r.tot ?? es.t)} votes.`}</p>
+            <p className="race-deck">{isM ? r.off : r.k === "leg" ? `${r.up ?? r.seats} of ${r.seats} seats on the ballot; ${r.maj} for a majority.` : `${A} and ${B}${r.c && r.c.length > 2 ? `, with ${r.c.length - 2} more on the ballot` : ""}.${hasFc && (r.tot ?? es.t) ? ` The forecast expects about ${fmtK(r.tot ?? es.t)} votes.` : ""}`}</p>
           </div>
           <div className="race-meta" aria-label="Race update summary">
-            <div className="meta-block"><span>Last updated</span><b>{fmtClock(live.at)}</b></div>
+            <div className={`meta-block nd-status s-${statusKey}`}><span>Race status</span><b>{statusKey === "count" || statusKey === "proj" ? <i className="live-dot sm" aria-hidden /> : null}{status}</b></div>
             <div className="meta-block"><span>Reported votes</span><b><Count v={counted} fmt={(x) => fmtN(Math.round(x))} /></b></div>
-            <div className="meta-block"><span>Estimated reporting</span><b><Count v={P.pctIn} fmt={(x) => `${pctLabel(x)}%`} /></b></div>
+            <div className="meta-block"><span>Estimated reporting</span><b>{hasFc || exp ? <Count v={P.pctIn} fmt={(x) => `${pctLabel(x)}%`} /> : "—"}</b></div>
             <div className="meta-block"><span>civicAPI reporting</span><b>{pctLabel(repPct)}%</b></div>
-            <div className="meta-block"><span>Race status</span><b>{status}</b></div>
+            <div className="meta-block nd-fc"><span>Pre-election forecast</span><b>{!hasFc ? "None" : r.k === "leg" ? `D ${pctLabel(100 * (r.pD ?? 0))}%` : favP == null ? "Toss-up" : isM ? <>{favSide === "A" ? "Pass" : "Fail"}<small> · {pctLabel(favP)}%</small></> : <>{fmtM(fcM, r.k, ind)}<small> · {pctLabel(favP)}%</small></>}</b></div>
+            <div className="meta-block"><span>Last updated</span><b>{fmtClock(live.at)}</b></div>
           </div>
         </div>
         <nav className="race-tabs" aria-label="Race sections">
@@ -158,8 +190,11 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               ? <Link key={k} href={`/results/2026/${r.id}#${k}`} aria-current={tab === k ? "page" : undefined}>{l}</Link>
               : <a key={k} href={`#${k}`} aria-current={tab === k ? "page" : undefined} onClick={(e) => { e.preventDefault(); jump(k); }}>{l}</a>
           ))}
-          <Link href={forecastHref(r)}>The forecast page</Link>{!embedded ? <Link href="/results/monitor">Situation monitor</Link> : null}
+          <span className="nd-tab-gap" aria-hidden />
+          <Link href={forecastHref(r)}>The forecast page</Link>
+          {!embedded ? <><Link href={`/results/2026/${stSlug}`}>Every {STN[r.st]} result</Link><Link href="/results/2026">National dashboard</Link><Link href="/results/monitor">Situation monitor</Link></> : null}
         </nav>
+        {live.error && !c ? <p className="nd-err">{live.error}</p> : null}
       </section>
 
       <div className="dashboard-grid">
@@ -184,16 +219,19 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
             ) : (
               <>
                 <div className="topline-columns" aria-hidden><span>Candidate</span><span>Votes</span><span>Vote share</span></div>
-                {!reporting ? <p className="prose empty-note">{now < FIRST_CLOSE ? `First polls close at 6:00 PM ET on November 3, in ${countdown(msLeft)}. ` : "Waiting on the first returns. "}Every candidate on civicAPI's ballot is listed and fills in as votes are counted.</p> : null}
-                {(cands.length ? cands.map((x) => [x[0], x[1], x[2], x[3], x[4]] as const) : (r.c ?? []).map(([n, p]) => [n, p === "D" ? "Democratic" : p === "R" ? "Republican" : p === "I" ? "Independent" : p === "Y" ? "Yes" : p === "N" ? "No" : "Other", 0, 0, 0] as const)).map(([n, p, v, pc, w], i) => {
+                {!reporting ? <p className="prose empty-note">{now < FIRST_CLOSE ? `First polls close at 6:00 PM ET on November 3, in ${countdown(msLeft)}. ` : "Waiting on the first returns. "}Every candidate on civicAPI&apos;s ballot is listed and fills in as votes are counted.</p> : null}
+                {(cands.length ? cands.map((x) => [x[0], x[1], x[2], x[3], x[4]] as const) : (r.c ?? []).map(([n, p]) => [n, p === "D" ? "Democratic" : p === "R" ? "Republican" : p === "I" ? "Independent" : p === "Y" ? "Yes" : p === "N" ? "No" : p.length > 1 ? p : "Other", 0, 0, 0] as const)).map(([n, p, v, pc, w], i) => {
                   const share = counted ? (100 * v) / counted : pc; const col = tone(p, n);
+                  const fc = fcRow(p, n); const leads = i === 0 && gap > 0 && !w; const isProj = projected && !w && fc.side === lead;
+                  const fav = !w && favSide != null && fc.side === favSide;
                   return (
-                    <div className="topline-row" key={n + i}>
+                    <div className={`topline-row${leads ? " lead" : ""}${w ? " won" : ""}`} key={n + i}>
                       <div className="topline-row-top">
-                        <div className="topline-candidate"><span className="nd-dot" style={{ background: col }} /><div className="topline-copy"><strong>{n}</strong><small>{p}</small>{i === 0 && gap > 0 && !w ? <span className="topline-lead">Leads by {fmtN(gap)} votes</span> : null}{w ? <span className="topline-lead won">Race called</span> : null}</div></div>
+                        <div className="topline-candidate"><span className="nd-dot" style={{ background: col }} /><div className="topline-copy"><strong>{n}</strong><small>{p}{fc.share != null ? <> · forecast {fc.share.toFixed(1)}%</> : null}</small>
+                          <span className="nd-badges">{w ? <span className="topline-lead won">Called by civicAPI</span> : null}{isProj ? <span className="topline-lead proj">OnPoint projection</span> : null}{leads ? <span className="topline-lead">Leads by {fmtN(gap)} votes</span> : null}{fav ? <span className="nd-fav">{isM ? (fc.side === "A" ? "Favored to pass" : "Favored to fail") : "Forecast favorite"}</span> : null}</span></div></div>
                         <div className="topline-votes">{fmtN(v)}</div><div className="topline-pct">{pctLabel(share)}%</div>
                       </div>
-                      <div className="topline-bar"><span style={{ width: `${Math.max(0, share)}%`, backgroundColor: col, color: col }} /></div>
+                      <div className="topline-bar"><span style={{ width: `${Math.max(0, share)}%`, backgroundColor: col, color: col }} />{fc.share != null ? <i className="nd-exp" style={{ left: `${Math.min(99.5, fc.share)}%` }} title={`Forecast share ${fc.share.toFixed(1)}%`} aria-hidden /> : null}</div>
                     </div>
                   );
                 })}
@@ -202,14 +240,21 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
             <div className="topline-foot">
               <span>{counted ? `${fmtN(counted)} votes counted` : "No votes counted"}</span>
               {counted && cands.length > 1 ? <span className="topline-margin"><b>{signed((100 * gap) / counted)}</b> margin · {fmtN(gap)} votes</span> : null}
-              <span className="topline-reporting"><b>{pctLabel(P.pctIn)}%</b> est. reporting</span>
+              {r.k !== "leg" && es.t ? <span className="nd-key"><i aria-hidden /> forecast share{asOf ? `, ${asOf}` : ""}</span> : null}
+              {hasFc || exp ? <span className="topline-reporting"><b>{pctLabel(P.pctIn)}%</b> est. reporting</span> : null}
             </div>
           </div>
         </article>
 
         <article className="card span-3" id="nd-forecast" aria-labelledby="nd-snap">
           <section className="snapshot">
-            <div className="snapshot-heading"><div><strong id="nd-snap">Forecast snapshot</strong><small>Model metrics update as new results arrive</small></div><span className="race-rule-pill">{isM ? `${Math.round(100 * (r.thr ?? 0.5))}% to pass` : r.k === "leg" ? "majority" : "plurality"}</span></div>
+            <div className="snapshot-heading"><div><strong id="nd-snap">Forecast snapshot</strong><small>{hasFc ? <>On Point Politics forecast{asOf ? ` of ${asOf}` : ""}; the live chance moves with the count</> : "No published forecast for this race"}</small></div><span className="race-rule-pill">{isM ? `${Math.round(100 * (r.thr ?? 0.5))}% to pass` : r.k === "leg" ? "majority" : "plurality"}</span></div>
+            {!hasFc ? (
+              <div className="nd-nofc">
+                <p className="prose">On Point Politics does not publish a forecast for this race, so there is no win probability or projected final vote here. Reported votes and any civicAPI call appear on the left as they arrive.</p>
+                <Link href={forecastHref(r)}>Browse the forecast</Link>
+              </div>
+            ) : (
             <div className="forecast-model-layout">
               <div className="forecast-hero">
                 <div className="model-label">{r.k === "leg" ? "Democratic control" : "Win probability"}</div>
@@ -240,8 +285,10 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                 </div>
               </div>
             </div>
+            )}
           </section>
-          {r.k !== "leg" ? (
+          {/* Race History (feature/election-night-intelligence-v1) mounts below this projection zone as #nd-history: published probability and margin by timestamp, never recomputed. */}
+          {r.k !== "leg" && hasFc ? (
             <section className="projection-zone" aria-label="Forecasted final result">
               <div className="projected-top">
                 <div className="projected-intro">
@@ -286,19 +333,34 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                 <button type="button" className={mode === "margin" ? "on" : ""} onClick={() => setMode("margin")}>margin</button>
                 <button type="button" className={mode === "turnout" ? "on" : ""} onClick={() => setMode("turnout")}>turnout</button>
               </div>
-            ) : null}
+            ) : (
+              <div className="rd-map-toggles" role="group" aria-label="Results map shading">
+                <button type="button" className={rmode === "margin" ? "on" : ""} onClick={() => setRmode("margin")}>margin</button>
+                <button type="button" className={rmode === "vs" ? "on" : ""} onClick={() => setRmode("vs")}>vs expected</button>
+                <button type="button" className={rmode === "reporting" ? "on" : ""} onClick={() => setRmode("reporting")}>reporting</button>
+              </div>
+            )}
+            <span className="nd-map-cap">{view === "results" ? (anyIn ? `${P.countiesIn} of ${rows.length} counties have votes in` : "no county has votes in") : `expected vote in ${rows.length} counties`}</span>
           </div>
           <div className="rd-map">
             <svg viewBox={vb.join(" ")} preserveAspectRatio="xMidYMid meet" className="nd-svg" role="img" aria-label={`${STN[r.st]} counties`} onMouseLeave={() => setTip(null)}>
+              <defs>
+                <pattern id={`nd-stripes-${r.id}`} width={vb[2] / 110} height={vb[2] / 110} patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width={vb[2] / 110} height={vb[2] / 110} fill="#000" /><rect width={vb[2] / 300} height={vb[2] / 110} fill="#fff" /></pattern>
+                <mask id={`nd-hatch-${r.id}`} maskUnits="userSpaceOnUse" x={vb[0]} y={vb[1]} width={vb[2]} height={vb[3]}><rect x={vb[0]} y={vb[1]} width={vb[2]} height={vb[3]} fill={`url(#nd-stripes-${r.id})`} /></mask>
+              </defs>
               {cPaths.map((p, i) => <path key={p.id} d={p.d} style={{ fill: fillOf(p.id), fillOpacity: opac(p.id), animationDelay: `${Math.min(900, i * 6)}ms` }} className={tip?.f === p.id ? "on" : ""} onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, f: p.id })} />)}
+              {cPaths.map((p) => { const l = leanOf(p.id); return l ? <path key={`l-${p.id}`} d={p.d} className="nd-lean" mask={`url(#nd-hatch-${r.id})`} style={{ fill: l }} /> : null; })}
             </svg>
-            {view === "results" && !Object.keys(det?.regions ?? {}).some((f) => regM(f)) ? (
-              <div className="map-empty"><p><i className="live-dot sm" /> No county has reported yet</p><p className="map-empty-sub">Counties fill in here as their votes land. Switch to forecast to see the expected vote.</p></div>
+            {view === "results" && !anyIn ? (
+              <div className="map-empty"><p><i className="live-dot sm" /> No county has reported yet</p><p className="map-empty-sub">Hatching is the expected lean, not a result. Counties fill in solid as their votes land.</p></div>
             ) : null}
           </div>
           <div className="rd-map-legend">
             {view === "forecast" && mode === "turnout" ? <><span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(15,95,85))" }} /><span>lower to higher expected turnout</span></>
+              : view === "results" && rmode === "reporting" ? <><span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg,rgba(231,179,65,.14),rgba(231,179,65,.98))" }} /><span>share of each county&apos;s vote counted</span></>
+              : view === "results" && rmode === "vs" ? <><span className="rd-map-legend-sw" style={{ background: isM ? "linear-gradient(90deg,#2fbf9b,rgba(47,191,155,.15) 48%,rgba(231,121,74,.15) 52%,#e7794a)" : ind ? "linear-gradient(90deg,#b78cff,rgba(183,140,255,.15) 48%,rgba(255,59,92,.15) 52%,#ff3b5c)" : "linear-gradient(90deg,#3d7bff,rgba(61,123,255,.15) 48%,rgba(255,59,92,.15) 52%,#ff3b5c)" }} /><span>returns against the forecast · {last(A)} beating it to {last(B)} beating it</span></>
               : <><span className="rd-map-legend-sw" style={{ background: isM ? "linear-gradient(90deg,#2fbf9b,#e7794a)" : ind ? "linear-gradient(90deg,#4e24aa,#eae2ff 48%,#ffdce4 52%,#8c0a28)" : "linear-gradient(90deg,#10288c,#d6e2ff 48%,#ffdce4 52%,#8c0a28)" }} /><span>{view === "results" ? `margin in counted votes · paler means less counted` : `forecast margin · ${last(A)} to ${last(B)}`}</span></>}
+            {view === "results" ? <span className="nd-lg"><i className="rd-map-legend-sw hatch" aria-hidden /> hatched: no votes yet, expected lean only</span> : null}
             <span className="rd-map-hint">hover any county</span>
           </div>
           {tip && exp[tip.f] ? (() => { const e = exp[tip.f]; const g = regM(tip.f); const x = expCM(tip.f); return (
@@ -359,8 +421,8 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
       ) : null}
 
       <section className="nd-method card" id="nd-method">
-        <strong>Method</strong>
-        <p className="prose">Expected votes are the On Point Politics forecast of October 22 for every {exp ? "county" : r.k === "leg" ? "district" : "race"}. Returns come from civicAPI through a 30 second cache. The win probability starts at the forecast&apos;s own chance and its spread narrows as the estimated share of the vote counted rises. A race is marked projected only when the estimate gives the leader at least 99.5 percent with half the expected vote counted; civicAPI&apos;s own calls are shown as civicAPI reports them.</p>
+        <strong>Method and sources</strong>
+        <p className="prose">{hasFc ? <>Expected votes are the On Point Politics forecast{asOf ? ` of ${asOf}` : ""} for every {exp ? "county" : r.k === "leg" ? "district" : "race"}, read from the same published index as the <Link href="/results/2026">national dashboard</Link>. </> : <>On Point Politics publishes no forecast for this race, so nothing here is modeled. </>}Reported votes come from civicAPI through a 30 second cache and are counted returns.{hasFc ? <> The win probability starts at the forecast&apos;s own chance and its spread narrows as the estimated share of the vote counted rises. A race is marked an OnPoint projection only when the estimate gives the leader at least 99.5 percent with half the expected vote counted, and a projection is never a call.</> : null} A race is marked called only when civicAPI reports a winner. <Link href={forecastHref(r)}>Read the full forecast</Link>.</p>
       </section>
     </main>
   );
@@ -388,6 +450,43 @@ const ND_CSS = `
 .desk.nd .race-tabs a{cursor:pointer}
 .desk.nd.nd-embed{min-height:0}
 .desk.nd.nd-embed .shell{padding-top:16px}
+/* breadcrumb back to the national dashboard, the category and the state */
+.desk.nd .nd-crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:600 12px var(--font-b);color:var(--mute);margin:0 0 14px}
+.desk.nd .nd-crumbs a{color:var(--ink2);text-decoration:none}.desk.nd .nd-crumbs a:hover{color:var(--hi)}
+.desk.nd .nd-crumbs span[aria-current]{color:var(--ink2);max-width:40ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* status block: colored by phase; live phases carry the pulsing dot */
+.desk.nd .nd-status b{display:flex;align-items:center;gap:8px;font-size:17px;line-height:1.2}
+.desk.nd .nd-status b .live-dot{margin:0}
+.desk.nd .nd-status.s-count{border-color:rgba(255,59,92,.4)}.desk.nd .nd-status.s-count b{color:var(--live)}
+.desk.nd .nd-status.s-called{border-color:color-mix(in srgb,var(--called) 50%,transparent);background:color-mix(in srgb,var(--called) 10%,transparent)}.desk.nd .nd-status.s-called b{color:var(--called)}
+.desk.nd .nd-status.s-proj{border-style:dashed}
+.desk.nd .nd-status.s-err b{color:var(--gold)}
+.desk.nd .nd-fc b{font-size:17px}.desk.nd .nd-fc b small{font-size:12px;font-weight:600;color:var(--mute);font-family:var(--font-m)}
+.desk.nd .nd-tab-gap{flex:1 1 auto;min-width:4px}
+.desk.nd .nd-err{margin:12px 0 0;font-size:12.5px;color:var(--gold)}
+/* candidate rows: the counted leader and the called winner */
+.desk.nd .topline-row.lead{background:rgba(var(--line-rgb),.035);margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:12px}
+.desk.nd .topline-row.won{background:color-mix(in srgb,var(--called) 7%,transparent);margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:12px}
+.desk.nd .nd-badges{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:5px}
+.desk.nd .nd-badges .topline-lead{margin-top:0}
+.desk.nd .nd-fav{display:inline-block;font:700 8px var(--font-m);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:3px 8px;border-radius:999px;border:1px solid var(--line2)}
+.desk.nd .nd-exp{position:absolute;top:-2px;bottom:-2px;width:2px;margin-left:-1px;background:var(--hi);opacity:.75;box-shadow:0 0 0 1px rgba(0,0,0,.35);pointer-events:auto}
+.desk.nd .nd-key{display:inline-flex;align-items:center;gap:6px}.desk.nd .nd-key i{display:inline-block;width:2px;height:10px;background:var(--hi);opacity:.75}
+/* no published forecast: say so instead of drawing a dial */
+.desk.nd .nd-nofc{display:grid;gap:10px;padding:18px 0 8px}
+.desk.nd .nd-nofc .prose{font-size:13px;color:var(--ink2);max-width:520px}
+.desk.nd .nd-nofc a{font:700 12px var(--font-b);color:var(--gold)}
+/* county map: results modes, hatched expected lean where nothing is in */
+.desk.nd .county-head{flex-wrap:wrap;gap:10px}
+.desk.nd .nd-map-cap{margin-left:auto;font:700 10.5px var(--font-m);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.desk.nd .nd-svg path.nd-lean{opacity:.7;pointer-events:none;animation:none;stroke:none}
+.desk.nd .rd-map-legend{flex-wrap:wrap;row-gap:6px}
+.desk.nd .nd-lg{display:inline-flex;align-items:center;gap:6px}
+.desk.nd .rd-map-legend-sw.hatch{width:14px;height:10px;border-radius:3px;background:repeating-linear-gradient(45deg,var(--map-await) 0 2px,rgba(140,110,255,.8) 2px 4px)}
+@media(max-width:640px){.desk.nd .nd-map-cap{margin-left:0;flex-basis:100%}.desk.nd .topline-row.lead,.desk.nd .topline-row.won{margin:0;padding-left:6px;padding-right:6px}.desk.nd .meta-block b{font-size:18px}.desk.nd .nd-status b,.desk.nd .nd-fc b{font-size:15px}.desk.nd .nd-fc b small{display:block;margin-top:2px}}
+html[data-theme="light"] .desk.nd .nd-exp{background:var(--ink);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+html[data-theme="light"] .desk.nd .nd-key i{background:var(--ink)}
+html[data-theme="light"] .desk.nd .nd-status.s-count{border-color:rgba(225,29,72,.35)}
 `;
 
 // the site's own look on the board layout: glass cards, the display face, gold for what is selected, and motion that
