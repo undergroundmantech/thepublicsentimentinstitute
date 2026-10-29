@@ -1,0 +1,2936 @@
+{
+ "schema": "vai-evidence-register/1",
+ "builtAt": "2026-10-29T17:00:12Z",
+ "statusCounts": {
+  "VERIFIED_SECONDARY": 112,
+  "VERIFIED_MEDIA_ONLY": 3,
+  "VERIFIED_PRIMARY_ANCHOR": 37,
+  "UNRESOLVED": 12,
+  "PRIOR_NOT_VERIFIED": 1,
+  "UNVERIFIED_NOT_A_MODEL_INPUT": 1
+ },
+ "sourcesFetched": {
+  "total": 127,
+  "ok": 100
+ },
+ "statusMeaning": {
+  "VERIFIED_PRIMARY": "quote found in an official/legislative source",
+  "VERIFIED_PRIMARY_ANCHOR": "intel-branch anchor check against an official source",
+  "VERIFIED_SECONDARY": "quote found in NCSL/Ballotpedia/MIT/CEIR (summaries of law)",
+  "VERIFIED_MEDIA_ONLY": "quote found only in news media",
+  "CONFLICT": "ledger and source classify differently",
+  "NEEDS_MANUAL_REVIEW": "automatic classification failed",
+  "UNRESOLVED": "source cached but claim not found",
+  "SOURCE_UNAVAILABLE": "source not retrievable",
+  "PRIOR_NOT_VERIFIED": "expectation only",
+  "UNVERIFIED_NOT_A_MODEL_INPUT": "context text only"
+ },
+ "entries": [
+  {
+   "id": "AL-receipt-deadline",
+   "state": "AL",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mailed absentees are due by noon Nov 3 and hand delivered ones by close of business Nov 2. There is no signature cure. Absentee volume is small, so little is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by noon on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "AL-processing-window",
+   "state": "AL",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ala. Code § 17-11-10 7 a.m. on Election Day. After the polls close on Election Day. Beginning at 7 a.m. on Election Day: The signature and other information on the affidavit envelope is verified. Then the affidavit envelope is opened, the plain (secrecy) envelope is removed and placed into a sealed box. Upon close of polls on Election Day: Ballots can be scanned and counted."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "AK-receipt-deadline",
+   "state": "AK",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees postmarked by Nov 3 count if received within 10 days domestic or 15 days overseas, through Nov 18. No cure process; SB 64 would have added one and was vetoed. In 2024 about 46,000 early and absentee ballots already in hand were uncounted after election night.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within 10 days if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "AK-processing-window",
+   "state": "AK",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Alaska Stat. §15.20.201 No less than seven days before Election Day. 8 p.m. on Election Day. No less than seven days before Election Day: Voter certificate on the envelope is examined/verified. Once verified, the outer envelope is opened, and the secrecy sleeve is placed in container with other secrecy sleeve ballots. 8 p.m. on Election Day: Accepted ballots may be removed from secrecy envelope and scanned/counted."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "AZ-receipt-deadline",
+   "state": "AZ",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must arrive by 7 PM on Election Day; postmarks do not count. Signature mismatch cures run about 5 days. Provisional checks are capped at 7 days. Counties canvass by Nov 19 and the state on Nov 23.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "AZ-processing-window",
+   "state": "AZ",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ariz. Rev. Stat. §§ 16-550, 16-551 Upon receipt. Scanning can begin immediately after processing. Upon receipt: Ballot envelope is examined and verified. Verified ballots may be scanned immediately after processing."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "AR-receipt-deadline",
+   "state": "AR",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mailed absentees are due 7:30 PM Nov 3; hand delivered ones the Friday before. Provisional voters lacking ID have until noon the Monday after. No signature cure.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7:30 p.m. on Election Day. Hand-delivered ballots must be received at the county clerk’s office by the close of business the Friday before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "AR-processing-window",
+   "state": "AR",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ark. Code Ann. § 7-5-416 The Tuesday before Election Day. 8:30 a.m. on Election Day. No earlier than the Tuesday before Election Day: Outer envelope is verified and examined, then it is opened and any materials included inside the envelope are also examined. The inner envelope containing the ballot is removed from the outer ballot and placed in the ballot box. 8:30 a.m. on Election Day: Inner envelope may be opened,"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "CA-receipt-deadline",
+   "state": "CA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received within 7 days, through Nov 10. The signature cure deadline is day 22. Most ballots must be counted within 13 days. Counties certify around Dec 3.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received no later than seven days after Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "CA-processing-window",
+   "state": "CA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Cal. Elec. Code § 15101 Beginning on the day that an election official mails out ballots, which is no later than 29 days before Election Day. Ballots can be scanned after the completion of other processing, which occurs beginning when ballots are mailed out (no later than 29 days before Election Day). Beginning on the day an official sends out mail ballots (no later than 29 days before Election Day): Processing of r"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "CO-receipt-deadline",
+   "state": "CO",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must reach the county by 7 PM MT; no postmark rule. Overseas ballots and signature cures run up to 8 days after. The 2024 certification was Dec 2.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "CO-processing-window",
+   "state": "CO",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Colo. Rev. Stat. § 1-7.5-107.5 Upon receipt. Fifteen days before Election Day. Upon receipt: Envelope is verified/examined. Fifteen days before Election Day: Ballots may be scanned. For counties with more than 10,000 active voters, scanning must begin no later than four days before the election."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "CT-receipt-deadline",
+   "state": "CT",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM on Election Day. A new cure covers a missing signature. Recounts trigger at 0.5 percent and 2,000 votes or fewer.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day. Hand-delivered ballots must be received the day before an election if delivered by the voter and by the close of polls on Election Day if delivered by a designated agent of a voter who is ill or physically disabled."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "CT-processing-window",
+   "state": "CT",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Conn. Gen. Stat. §§ 9-140c, 9-150a The day after the issuance of absentee voting sets, which must occur between 31 and 21 days before a general election per Conn. Gen Stat. § 9-140. On Election Day, once the ballots have been processed. Beginning no sooner than the day after the issuance of absentee voting sets: Absentee ballots may be sorted into the appropriate voting districts, and the outer envelopes can be chec"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "DE-receipt-deadline",
+   "state": "DE",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM Nov 3. No excuse mail voting is not allowed in the general. Cures only before polls close.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "DE-processing-window",
+   "state": "DE",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Del. Code Ann. tit. 15, § 5510 Thirty days before Election Day. Scanning can begin when processing is complete. Thirty days before Election Day: Envelope is verified/examined and voter information is compared to the list of absentee voters. Verified envelopes are then opened, ballots are removed and then scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "DC-receipt-deadline",
+   "state": "DC",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": null,
+   "ledgerClass": null,
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within ten days of the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "DC-processing-window",
+   "state": "DC",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "D.C. Code § 1-1001.05(a)(4) D.C. Mun. Regs. Tit. 3, § 808 Signatures can be verified and the secrecy envelope removed prior to scanning, which may begin 15 days before Election Day Fifteen days before Election Day. No timeline specified but must occur prior to scanning: Signature is verified, then secrecy envelope is removed from the outer envelope. Starting 15 days before Election Day: Ballots may be scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "FL-receipt-deadline",
+   "state": "FL",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Domestic mail must arrive by 7 PM local on Election Day. Overseas ballots for federal races get 10 days. Cure affidavits are due 5 PM Nov 5. State certification around Nov 17.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "FL-processing-window",
+   "state": "FL",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Fla. Stat. §§ 101.68, 101.5612 Upon receipt. Upon the completion of the public testing of automatic tabulating equipment (which begins not more than 25 days before early voting commences). Upon receipt: Signature on envelope and other information is verified. Verified envelope may then be opened, the secrecy envelope removed and mixed with other secrecy envelopes. Upon completion of public testing of tabulation equi"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "GA-receipt-deadline",
+   "state": "GA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by close of polls. Overseas ballots postmarked by Election Day count within 3 days. Cures are allowed for 3 days.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "GA-processing-window",
+   "state": "GA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ga. Code Ann. § 21-2-386 Verification of driver's license or state identification number conducted upon receipt, and further processing can begin at 8 a.m. on the third Monday before Election Day. Third Monday before Election Day. Upon receipt: Driver’s license or state ID number and other envelope information is verified. Third Monday before Election Day: Outer oath envelope may be opened and the contents removed."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "HI-receipt-deadline",
+   "state": "HI",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must be received by 7 PM HST; postmarks do not count. Few ballots remain after Wednesday's final printout.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "HI-processing-window",
+   "state": "HI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Haw. Rev. Stat. §§ 11-108, 11-152, 15-9 Signature verification conducted upon receipt, and further processing can begin 18 days before Election Day. Eighteen days before Election Day. Upon receipt: Envelope is examined and signature verified. 18th day before Election Day: Envelopes can be opened and ballots scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "ID-receipt-deadline",
+   "state": "ID",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM on Election Day; no postmark grace. Little is outstanding after Wednesday.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 8 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "ID-processing-window",
+   "state": "ID",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Idaho Code §§ 34-1005, 34-1007, 34-1008 Signature verification conducted upon receipt. Ballots are not opened until they are delivered to the polls or central location for counting. After the polls close on Election Day. Upon receipt: Envelope authenticity and signature are verified. Envelope is stamped or endorsed to indicate when it was received. Opening of polls on Election Day: Carrier envelope is opened and the"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "IL-receipt-deadline",
+   "state": "IL",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received within 14 days, through Nov 17. In 2024 about 1.9 percent of the statewide total arrived after Election Day.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within 14 days of the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "IL-processing-window",
+   "state": "IL",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "10 Ill. Comp. Stat. 5/19-8 Signature verification must begin within two days of receipt. After the polls close on Election Day. Within two days of receipt: Envelope is examined and signature verification is conducted. Close of polls on Election Day: Accepted envelopes can be opened, and the ballot may be scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "IN-receipt-deadline",
+   "state": "IN",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail must arrive by 6 PM local on Election Day, except military and overseas ballots at about 10 days. Signature problems become provisionals with a cure by noon about 8 days after.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 6 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "IN-processing-window",
+   "state": "IN",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ind. Code §§ 3-11.5-4-6, 3-11.5-4-11, 3-11.5-4-12 Signature verification conducted upon receipt.. Ballots may be scanned three days before Election Day only in counties using vote centers or electronic poll books. All other counties may begin scanning at 6 a.m. on Election Day. Upon receipt: The outer envelope is removed and signature verification is conducted on the inner envelope. Once verified, the inner envelope"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "IA-receipt-deadline",
+   "state": "IA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must reach the auditor by 8 PM on Election Day regardless of postmark. Almost nothing is outstanding beyond provisionals.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received before the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "IA-processing-window",
+   "state": "IA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Iowa Code § 53.23 The day before Election Day if directed by the commissioner to do so. On Election Day, at a time set by the election commissioner to allow a reasonable amount of time to complete the count of absentee ballots by 10 p.m. on Election Day. The commissioner may also choose to convene the board the day before the election. Election commissioner may direct the processing board to meet the day before the"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "KS-receipt-deadline",
+   "state": "KS",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "A 2025 law ended the 3 day grace period, but a court injunction keeps it in force for Nov 3. Ballots mailed by Election Day that arrive by Nov 6 count. In 2024 only about 0.2 percent of ballots came in during the grace period.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the third day after an election if postmarked by Election Day. Note: the current statute is temporarily enjoined, thus the requirement for ballots to be received by 7 p.m. on Election Day is not currently in effect."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "KS-processing-window",
+   "state": "KS",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Kan. Stat. Ann. § 25-1134 Prior to Election Day. Exact timing not specified. Ballots may be scanned prior to Election Day. Exact timing not specified. Local election officials determine the time for convening the special counting board for canvassing/reviewing absentee ballots. The convening may be before Election Day, but exact timing is not specified in statute or regulation. During the canvass, the voter names on"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "KY-receipt-deadline",
+   "state": "KY",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail must arrive by 6 PM on Election Day; no postmark grace. Very little is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received before the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "KY-processing-window",
+   "state": "KY",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ky. Rev. Stat. § 117.087 May begin 14 days before Election Day and must start by 8 a.m. on Election Day. 8 a.m. on Election Day. Up to 14 days before Election Day: Outer envelope is verified and signature verification is conducted. If accepted, the secrecy envelope containing the ballot is removed from the outer envelope, and the secrecy envelope remains sealed and is placed in a ballot box for later counting. 8 a.m"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "LA-receipt-deadline",
+   "state": "LA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail absentees are due to the registrar by 4:30 PM Nov 2. Almost nothing is outstanding. House runoffs are Dec 12 where no one wins a majority.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "must be received by 4:30 p.m. on the day before the election."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "LA-processing-window",
+   "state": "LA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "La. Rev. Stat. Ann. §§ 18:1313,18:1313.1 Parishes may begin three days before Election Day with written approval of the secretary of state, or one day before Election Day without. Scanning may begin before the polls close on Election Day, but no later than 8 p.m. on Election Day. Three days before Election Day with approval of the secretary of state, or one day before without approval: The name on envelope certifica"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "ME-receipt-deadline",
+   "state": "ME",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must arrive by 8 PM; no postmark grace. Nothing arrives late.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "ME-processing-window",
+   "state": "ME",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Me. Rev. Stat. Ann. tit. 21-A, §§ 759, 760-B Seven days before Election Day if notice of processing times is posted at least 30 days before the election. Seven days before Election Day. Seven days before Election Day: Certificate envelope is examined and signature verification conducted. Ballots may be removed from the envelope and scanned after they have been verified."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MD-receipt-deadline",
+   "state": "MD",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mailed by Election Day and received by 10 AM Friday Nov 13. Mail, provisionals and overseas ballots are all outstanding after election night.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within 10 days after the election by 10 a.m. if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MD-processing-window",
+   "state": "MD",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Md. Election Law Code Ann. § 11-302 Eight business days before the first day of early voting. Ballots can be scanned once they are processed and verified, which begins eight business days before the first day of early voting. Eight business days before the first day of early voting: Envelope is examined and checked for signature. Accepted envelopes can then be opened and the ballots scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MA-receipt-deadline",
+   "state": "MA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received by 5 PM Nov 6. The post election count is small.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 5 p.m. on the third day after the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MA-processing-window",
+   "state": "MA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Mass. Gen. Laws Ann. ch. 54, §§ 94, 95 Upon receipt. Ballots can be deposited into a tabulator for scanning immediately after processing. Upon receipt: Outer envelope is opened and signature verification is conducted for the inner envelope. Accepted envelopes may be opened and the enclosed ballot deposited into a tabulator."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MI-receipt-deadline",
+   "state": "MI",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM Nov 3. Military and overseas ballots get 6 extra days. Signature cure ends 5 PM Nov 6. Automatic recount at 2,000 votes or less.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MI-processing-window",
+   "state": "MI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Mich. Comp. Laws §§ 168.765a, 168.766 Signature verification conducted upon receipt. Jurisdictions with at least 5,000 people may begin further processing eight days before Election Day, and other jurisdictions may begin the Monday before Election Day. Jurisdictions with a population of at least 5,000 that have established an early tabulation absent voter counting board may scan ballots eight days before Election Da"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MN-receipt-deadline",
+   "state": "MN",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Ballots must arrive by 8 PM on Election Day. Very little is outstanding. The 2024 state certification was Nov 21.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "must be received by 8 p.m. on Election Day. Hand-delivered ballots must be received by 5 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MN-processing-window",
+   "state": "MN",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Minn. Stat. § 203B.121 Verification upon receipt. After the close of business on the 19th day before the election, verified ballots can be opened and deposited in a ballot box. Ballots can be scanned beginning after the close of business on the 19th day before Election Day. Upon receipt: Envelope is examined and information verified. Beginning after the close of business on the 19th before the election: Accepted sig"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MS-receipt-deadline",
+   "state": "MS",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mailed absentees postmarked by Election Day count if received within 5 business days, around Nov 10.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within five business days of the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MS-processing-window",
+   "state": "MS",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Miss. Code Ann. § 23-15-639 On Election Day when polls open. After the polls close on Election Day. On Election Day when polls open: Envelopes are examined and signature verification is conducted. If accepted, the envelope is opened and ballot is removed without being unfolded. Ballots are then deposited into the ballot box and voter’s name is recorded. Close of polls on Election Day: Ballots can be scanned and coun"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MO-receipt-deadline",
+   "state": "MO",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Civilian mail must arrive by 7 PM on Election Day. Military ballots by noon Friday.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MO-processing-window",
+   "state": "MO",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Mo. Rev. Stat. §§ 115.299,115.300 Five days before Election Day. On Election Day. Five days before Election Day: Ballot “preparation” may occur. Localities may determine what preparation entails, including envelope verification and opening of envelopes or putting ballots into scanners. On Election Day (if not done before as part of preparation): Teams examine and open each envelope and then place the still-folded ba"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "MT-receipt-deadline",
+   "state": "MT",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM on Election Day. Election Day registration stays open until 8 PM after a court blocked the noon cutoff.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "MT-processing-window",
+   "state": "MT",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Mont. Code Ann. § 13-13-241 Signature verification conducted upon receipt. Three business days before Election Day, election officials may open the secrecy envelope and place the ballot in a secured ballot box until scanning occurs. One day before Election Day, if using a vote-counting machine. Tabulation using a manual count may not begin until Election Day. Upon receipt: Signature verification is conducted and oth"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NE-receipt-deadline",
+   "state": "NE",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Early ballots must arrive by close of polls. In 2024 Douglas had about 15,000 ballots outstanding after election night.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NE-processing-window",
+   "state": "NE",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Neb. Rev. Stat. §32-1027 Verification can begin the second Friday before Election Day. Twenty four hours before the opening of the polls. Second Friday before Election Day: Envelopes can be examined and voter information verified. If approved, the envelope can be opened, the ballot can be removed and unfolded and flattened for the purpose of using an optical scanner, then placed in a sealed container. Beginning 24 h"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NV-receipt-deadline",
+   "state": "NV",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received by 5 PM Nov 7. Signature cure ends around Nov 9. County canvass around Nov 13.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 5 p.m. on the fourth day following the election if postmarked by Election Day. Ballots with unclear postmarks received by the third day following the election are deemed to have been postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NV-processing-window",
+   "state": "NV",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Nev. Rev. Stat. §§ 293.269927, 293.269931, 293.29933 Signature verification conducted upon receipt. Fifteen days before Election Day, and counting must be completed by the seventh day after the election. Upon receipt: Signature verification is conducted. Once the name of the voter is checked and signature verified, the return envelope is opened, and the ballot removed. Fifteen days before Election Day: Ballots can b"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NH-receipt-deadline",
+   "state": "NH",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must reach the clerk by 5 PM on Election Day. No formal cure. Almost nothing is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 5 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NH-processing-window",
+   "state": "NH",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.H. Rev. Stat. § 659:49 At 1 p.m. on Election Day, unless a different time, no earlier than two hours after the opening of the polls, is posted and announced. After the polls close on Election Day. Election Day at 1 p.m. (or no earlier than two hours after polls open): Outer envelope is opened and signature verification for the inner envelope is conducted. If accepted, the inner envelope is opened, and the ballot i"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NJ-receipt-deadline",
+   "state": "NJ",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by 8 PM on Election Day and received within 6 days, around Nov 9. Unpostmarked ballots within 48 hours.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within 144 hours (six days) of the close of the polls if postmarked on or before Election Day. Mail-delivered ballots without postmarks that arrive within 48 hours of the close of the polls will be considered valid."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NJ-processing-window",
+   "state": "NJ",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.J. Rev. Stat. §§ 19:63-17, 19:63-22 Signature verification conducted upon receipt. The inner envelopes may be opened and ballots removed five days before Election Day. Five days before Election Day. Upon receipt: Outer envelope is opened and signature verification conducted on the inner envelope. Open outer envelope and verify the signature on inner envelope. Five days before Election Day: Opening inner envelopes"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NM-receipt-deadline",
+   "state": "NM",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 7 PM Nov 3; no postmark grace. About 10 days to cure.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NM-processing-window",
+   "state": "NM",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.M. Stat. Ann. §§ 1-6-10, 1-6-14 Within one day of receiving an absentee voter’s ballot, the county clerk must verify envelope information and signature. If more than 10,000 absentee ballots are sent in a county, they may be opened and inserted into an electronic voting machine two weeks before Election Day. If fewer than 10,000 absentee ballots are sent in a county, they may be opened and inserted into an electron"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NY-receipt-deadline",
+   "state": "NY",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received within 7 days, around Nov 10.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within seven days of the election if postmarked by Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NY-processing-window",
+   "state": "NY",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.Y. Elec. Law § 9-209 Within four days of receipt. Ballots are scanned beginning the day before the first day of early voting. Within four days of receipt: Ballot envelope must be examined and information verified. If accepted, the ballot envelope is opened, and the ballot is removed, unfolded, stacked face down and stored in a secure ballot box or container. The day before the first day of early voting: Valid ball"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "NC-receipt-deadline",
+   "state": "NC",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Civilian mail must arrive by 7:30 PM Nov 3. Cure and provisional deadlines are the 5th business day, around Nov 10. Overseas ballots about 9 days after.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7:30 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "NC-processing-window",
+   "state": "NC",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.C. Gen. Stat. §§ 163-230.1, 163-234 At county board of elections meetings, beginning the fifth Tuesday before Election Day. Beginning on the fifth Tuesday before Election Day, after envelopes have been verified and accepted. Beginning the fifth Tuesday before Election Day: At the same county election board meetings where the board also reviews absentee applications, the board can examine envelopes and affidavits o"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "ND-receipt-deadline",
+   "state": "ND",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "New for 2026: ballots must arrive by close of polls. The old 13 day postmark window is gone.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "ND-processing-window",
+   "state": "ND",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "N.D. Cent. Code § 16.1-07-12 Three business days before Election Day. Three business days before Election Day. Three business days before Election Day: Outer envelope can be examined, and signature verification is conducted. A verified and accepted envelope may be opened, the ballot removed and scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "OH-receipt-deadline",
+   "state": "OH",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "New for 2026: civilian absentees must arrive by Election Day after SB 293 ended the 4 day grace period. In 2024 about 7,800 ballots arrived after Election Day.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "OH-processing-window",
+   "state": "OH",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Ohio Rev. Code § 3509.06 Processing, including using automatic tabulating equipment to scan ballots, may begin before the time for counting ballots at a time determined by the board of elections. Exact timing not specified. Verified and accepted ballots can be scanned before Election Day. Exact timing not specified. Before Election Day, timing not specified: Envelope is examined and signature verification conducted."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "OK-receipt-deadline",
+   "state": "OK",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail must arrive by 7 PM Nov 3. No drop boxes, no cure, no grace. About 0.1 percent of the vote was left after election night in 2020.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 7 p.m. on Election Day. Absentee ballots that are hand-delivered to the county election board must be delivered no later than the end of business hours on the day before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "OK-processing-window",
+   "state": "OK",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Okla. Stat. Ann. tit. 26, §§ 14-123, 14-125 10 a.m. on the Thursday before Election Day, or earlier with approval by the secretary of the state election board. On Election Day or the day before Election Day with approval by the secretary of the state election board. 10 a.m. on the Thursday before Election Day (or earlier with approval by the secretary of the state election board): The return envelope is opened and t"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "OR-receipt-deadline",
+   "state": "OR",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received within 7 days, through Nov 10. 21 day signature cure window.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received within seven days of the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "OR-processing-window",
+   "state": "OR",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Or. Rev. Stat. §§ 254.478, 260.705 Upon receipt. Ballots can be scanned immediately after processing. Upon receipt: Identification envelopes may be examined and opened, along with any secrecy envelopes. Once envelopes are verified and opened, the ballots can be scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "PA-receipt-deadline",
+   "state": "PA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail must arrive by 8 PM Nov 3; a postmark is not enough. Notice and cure varies by county. Undated envelopes are not being rejected after the Third Circuit ruling, with a Supreme Court petition pending.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 8 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "PA-processing-window",
+   "state": "PA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "25 Pa. Stat. § 3146.8 7 a.m. on Election Day. At 7 a.m. on Election Day. 7 a.m. on Election Day: Envelope declaration is examined and information is compared. Once accepted, the outer envelope is opened, the inner envelope removed, the ballot removed, and the ballot can be scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "RI-receipt-deadline",
+   "state": "RI",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Mail must arrive by 8 PM Nov 3. Cures and overseas ballots are added within about a week.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 8 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "RI-processing-window",
+   "state": "RI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "R.I. Gen. Laws §§ 17-20-26, 17-22-1 Twenty days before Election Day. Twenty days before Election Day. Twenty days before Election Day: Envelopes can be examined and verified. Accepted envelopes may be opened, the ballots removed from the envelopes and scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "SC-receipt-deadline",
+   "state": "SC",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must reach the county by 7 PM Nov 3; no grace.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "SC-processing-window",
+   "state": "SC",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "S.C. Code Ann. § 7-15-420 7 a.m. two days before Election Day. 7 a.m. on Election Day. 7 a.m. on the second day before Election Day: Return envelopes can be examined and verified. If verified, the inner envelope may be removed from the outer one and placed in a lock box or otherwise kept secure. 7 a.m. on Election Day: Ballots may be removed from inner envelopes, placed in ballot boxes and scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "SD-receipt-deadline",
+   "state": "SD",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "No postmark grace. Very little is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "SD-processing-window",
+   "state": "SD",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "S.D. Codified Laws §§ 12-19-10, 12-19-43, 12-19-46 On the day before Election Day (during regular business hours) if the county auditor deems it necessary. On Election Day prior to the close of polls. Upon receipt: Date of receipt marked on envelope, then it is delivered to the appropriate precinct or absentee counting center. On the day before Election Day (if the county auditor chooses): Absent voters’ affidavits"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "TN-receipt-deadline",
+   "state": "TN",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by close of polls; no grace.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "TN-processing-window",
+   "state": "TN",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Tenn. Code Ann. §§ 2-6-202, 2-6-303, 2-6-304 Signature verification conducted upon receipt. On Election Day after the polls open and no later than four hours before closing for general elections, or two hours before closing for all other elections. Upon receipt: Outer envelope is opened, and signature verification is conducted on the inner ballot envelope. Accepted envelopes are deposited in a sealed ballot box. On"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "TX-receipt-deadline",
+   "state": "TX",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by 7 PM Election Day and received by 5 PM Nov 4. Overseas ballots about 5 days. Cure and provisional ID around Nov 9.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 5 p.m. on the day after the election if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "TX-processing-window",
+   "state": "TX",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Tex. Elec. Code §§ 87.0241, 87.027, 87.041, 87.042 No more than 20 days before Election Day. In most jurisdictions, ballots can be scanned when the polls open on Election Day. In a jurisdiction with more than 100,000 people, scanning can begin the fourth day before Election Day. Twentieth day before Election Day: Signature verification is conducted and the carrier envelope is examined. Once accepted, the carrier env"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "UT-receipt-deadline",
+   "state": "UT",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "New for 2026: ballots must be in the clerk's hands by 8 PM Election Day; postmarks no longer count. No more mail arrival tail, but Election Day drop offs are large.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 8 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "UT-processing-window",
+   "state": "UT",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Utah Code Ann. §§ 20A-3a-202(7), 20A-3a-401, 20A-3a-402 Upon receipt. Scanning may begin upon receipt. Upon receipt: Examine and verify information on the envelope and conduct signature verification. Once accepted, ballot is removed from the return envelope and placed with the other ballots to be scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "VT-receipt-deadline",
+   "state": "VT",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Returned by 7 PM Nov 3; no grace. Almost nothing is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day. Ballots hand-delivered to a drop box or the town clerk’s office must be received before the close of business on the day before the election; ballots hand-delivered to the voter’s polling place must be received by the close of polls on Election"
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "VT-processing-window",
+   "state": "VT",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Vt. Stat. Ann. tit. 17, §§ 2546a, 2546b Envelope verification can begin 45 days before Election Day. If a town board of civil authority votes to do so, the town may begin scanning ballots 30 days before Election Day. Otherwise, ballots may be scanned on Election Day. Forty-five days before Election Day: Mailing envelope can be examined and opened and the appropriate voter marked off the checklist as received. The ba"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "VA-receipt-deadline",
+   "state": "VA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received by noon Nov 6. Cures and provisional ID are also due noon Friday. About 95 percent was counted on election night in 2024.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received before noon on the third day after the election if postmarked by Election Day. Beginning Jan. 1, 2027, ballots postmarked by Election Day must be received by 5 p.m. on the third day after the election."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "VA-processing-window",
+   "state": "VA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Va. Code Ann. §§ 24.2-709.1, 24.2-712 Upon receipt. Ballots may be inserted into optical scanning equipment once all other processing has taken place, which may begin upon receipt. If absentee ballots are counted by hand, tallying may begin after noon on Election Day. Upon receipt: Envelope is examined and verified. If accepted, the ballot envelope may be opened and the ballot scanned. The registrar may choose to in"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "WA-receipt-deadline",
+   "state": "WA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day, with no fixed arrival deadline before certification. A large share is out after election night.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received no later than the day before certification, which is 21 days after a general election and 14 days after a primary if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "WA-processing-window",
+   "state": "WA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Wash. Rev. Code §§ 29A.40.110, 29A.84.730 Wash. Admin. Code 434-250-110 Upon receipt. Scanning can begin immediately after processing. Upon receipt: Signature verification is conducted and envelope and declaration are examined. The envelope may then be opened and the ballot scanned."
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "WV-receipt-deadline",
+   "state": "WV",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Postmarked by Election Day and received by the canvass, about 5 days. A bill to end this died in the Senate.",
+   "ledgerClass": "POSTMARK_GRACE",
+   "sourceClass": "POSTMARK_GRACE",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received before the canvass (which begins on the fifth day after the election) if postmarked on or before Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "WV-processing-window",
+   "state": "WV",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "W. Va. Code §§ 3-3-5, 3-3-8, 3-4A-27 Absentee ballots are delivered to precincts on Election Day. On Election Day. Upon receipt: Receipt of the ballot is recorded in system along with any challenges. Envelope is then placed into a sealed ballot box until it is delivered to the appropriate place for counting on Election Day. If ballots are processed at polls, the ballots are sorted by polling location. On Election Da"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "WI-receipt-deadline",
+   "state": "WI",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 8 PM Nov 3; no grace. Very little is outstanding after the Milwaukee block.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by 8 p.m. on Election Day."
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "WI-processing-window",
+   "state": "WI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Wis. Stat. §§ 6.88, 7.52 After the polls open on Election Day. After the polls open on Election Day. Upon receipt: Clerk endorses the envelope and then seals it. On Election Day (time unspecified): The ballots are delivered either to the polling place or to a central absentee canvassing site, depending on whether a municipality adopts a central counting procedure. Any time between opening and closing of polls on Ele"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "WY-receipt-deadline",
+   "state": "WY",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Civilian mail/absentee ballot receipt deadline (postmark grace or not).",
+   "ledgerText": "Absentees must arrive by 7 PM Nov 3. Little is outstanding.",
+   "ledgerClass": "ELECTION_DAY_OR_EARLIER",
+   "sourceClass": "ELECTION_DAY_OR_EARLIER",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Must be received by the close of polls on Election Day. Read More Ballot Receipt Deadlines for Military and Overseas Voters Receipt and postmark deadlines for military and overseas voters may differ from the deadlines for regular voters in many states. Twenty states require ballots from military and"
+    }
+   ],
+   "note": "NCSL Table 11 summarizes statute; it is secondary. Military/overseas rules differ and are not compared here."
+  },
+  {
+   "id": "WY-processing-window",
+   "state": "WY",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "When absentee/mail processing (and, where stated, counting) may begin under statute.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "Wyo. Stat. §§ 22-9-121, 22-9-125 The Thursday or Friday preceding Election Day if prior notice is given to the secretary of state’s office. The Thursday or Friday before Election Day if prior notice is given to the secretary of state’s office. Thursday or Friday before Election Day (if the clerk gives prior notice to the secretary of state): Ballot envelope is examined, then the inner envelope is opened and ballot i"
+    }
+   ],
+   "note": "Legal permission to process is not tabulation, and neither is public release. NCSL: local procedures may vary from statute."
+  },
+  {
+   "id": "US-watson-v-rnc",
+   "state": null,
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Watson v. RNC (decided 2026-06-29): federal law does not preempt state post-Election Day receipt of postmarked mail ballots.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "On June 29, 2026, the U.S. Supreme Court ruled in Watson v. RNC that federal law does not preempt state policies allowing for post-Election Day receipt of postmarked absentee/mail ballots."
+    }
+   ],
+   "note": "Confirm against the opinion on supremecourt.gov before treating grace-period states as settled."
+  },
+  {
+   "id": "US-usps-postmark",
+   "state": null,
+   "claimType": "LATE_ARRIVAL_RISK",
+   "claim": "A 2025-26 USPS postmark-timing change means a postmark may not reflect the drop-off date; states urged early return.",
+   "status": "VERIFIED_MEDIA_ONLY",
+   "evidence": [
+    {
+     "url": "https://www.nbcchicago.com/news/local/chicago-politics/still-have-your-mail-in-ballot-how-a-big-usps-change-could-impact-you/3908922/?amp=1",
+     "tier": "MEDIA",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "e75e2b68d6cd0106f4e3b576a0aadceb985cb1bce30848b6f174eca2a4af593e",
+     "quote": "postmark changes impacts mail-in balloting Voters were urged to turn in their mail-in ballots as early as possible to avoid issues with a new USPS policy on postmarks. In order to be counted, a ballot must be postmarked by Election Day, and"
+    }
+   ],
+   "note": "Media only. Affects late-arrival inventory in grace-period states; no quantitative effect is assumed."
+  },
+  {
+   "id": "OH-sb293-grace-ended",
+   "state": "OH",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Ohio SB 293 (2025) moved most absentee receipt to close of polls; UOCAVA carve-out remains.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Ohio SB 293 (2025) changed the receipt deadline for most absentee ballots to the close of polls on Election Day. Previously, ballots could be received four days after the election as long as they were postmarked by Election Day."
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "KS-grace-injunction",
+   "state": "KS",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Kansas: an injunction keeps the 3-day postmark grace period in force for the November 2026 general.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Kansas issued a preliminary injunction on the law requiring absentee ballots to be received by the close of polls on Election Day. The secretary of state filed an appeal that was blocked by the Kansas Supreme Court. Under the injunction, ba"
+    }
+   ],
+   "note": "Litigation is live; re-check status on Nov 2."
+  },
+  {
+   "id": "KS-grace-injunction-media",
+   "state": "KS",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Appeals court: Kansas mail ballots accepted for three days after the November election.",
+   "status": "VERIFIED_MEDIA_ONLY",
+   "evidence": [
+    {
+     "url": "https://www.hppr.org/hppr-news/2026-10-07/appeals-court-kansas-mail-in-ballots-will-be-accepted-for-three-days-after-november-election",
+     "tier": "MEDIA",
+     "retrievedAt": "2026-10-29T15:00:30Z",
+     "sha256": "37df9d13a4f1e4ba08a4375986a1171caa005905fc1ce215142eb5dd478d2407",
+     "quote": "Kansas mail-in ballots will be accepted for three days after November election"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "MS-receipt-contingent",
+   "state": "MS",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Mississippi HB 908 (2026) moved receipt to the day before the election only if SCOTUS found preemption; Watson found none.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Mississippi HB 908 (2026) required all absentee ballots to be received by the day before an election including a federal office if the U."
+    }
+   ],
+   "note": "Ledger says 5 business days; consistent only because the HB 908 contingency did not trigger."
+  },
+  {
+   "id": "UT-hb300",
+   "state": "UT",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Utah HB 300 (2025): ballots must be received by 8 p.m. on Election Day.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "Utah HB 300 (2025) required ballots to be received by the election officer by 8 p."
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "CA-7day-ab16",
+   "state": "CA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "California counts ballots postmarked by Election Day and received within 7 days; 2025 bills changed processing and cure timelines.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://news.ballotpedia.org/2025/10/14/california-gov-gavin-newsom-signs-three-bills-that-may-affect-speed-of-election-results/",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:28Z",
+     "sha256": "0b382ccb2d21a66909c67a63710ebab23408b2ffab438f064eda0a6acccae0fe",
+     "quote": "seven days after an election, as long as the ballot is postmarked by Election Day"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "MI-8day-preprocess",
+   "state": "MI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Michigan jurisdictions may preprocess/tabulate absentee ballots up to eight days before Election Day.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": " Jurisdictions with at least 5,000 people may begin further processing eight days before Election Day, and other jurisdictions may begin the Monday before Election Day."
+    }
+   ],
+   "note": "Permission, not practice: smaller jurisdictions may start only the day before."
+  },
+  {
+   "id": "MI-8day-preprocess-media",
+   "state": "MI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Michigan preprocessing up to eight days does not mean results are complete on election night.",
+   "status": "VERIFIED_MEDIA_ONLY",
+   "evidence": [
+    {
+     "url": "https://www.clickondetroit.com/news/local/2026/10/14/why-arent-michigan-election-results-instant-how-our-votes-are-counted/",
+     "tier": "MEDIA",
+     "retrievedAt": "2026-10-29T15:00:30Z",
+     "sha256": "3c25d52cc6d13d2d405f49bffde0f370b0fd21822325713691f11060c03f6bcc",
+     "quote": "preprocess and tabulate absentee ballots up to eight days before Election Day, millions of ballots still require sequential verification steps before results are made public."
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "NC-1930-receipt",
+   "state": "NC",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "North Carolina civilian mail ballots must be received by 7:30 p.m. on Election Day.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-11-receipt-and-postmark-deadlines-for-absentee-mail-ballots",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:33Z",
+     "sha256": "1d707604d4057fbeb20c3451ae469bab84d70f55b921902d29fe85768cc2623f",
+     "quote": "North Carolina N.C. Gen. Stat. § 163-231 ✓ Must be received by 7:30 p.m. on Election Day."
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "US-mit-reporting-pace",
+   "state": null,
+   "claimType": "HISTORICAL_OBSERVED_SEQUENCE",
+   "claim": "Historical national reporting pace: one hour after all polls closed ~35% counted, ~50% an hour later (MIT Election Lab).",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://electionlab.mit.edu/research/election-return-reporting",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:34Z",
+     "sha256": "7888960d123ca100b5c5e30eed7671ec042eeb79917bc333ca52f4ff6be41f5a",
+     "quote": "one hour after polls closed in all the states, 35 percent of all votes had been counted; an hour later, that had risen to 50 percent."
+    }
+   ],
+   "note": "National aggregate; not a per-state or per-race prior."
+  },
+  {
+   "id": "PA-precanvass-7am",
+   "state": "PA",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Pennsylvania pre-canvassing of mail ballots may not begin until 7 a.m. on Election Day.",
+   "status": "VERIFIED_SECONDARY",
+   "evidence": [
+    {
+     "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin",
+     "tier": "SECONDARY_RESEARCH",
+     "retrievedAt": "2026-10-29T15:00:31Z",
+     "sha256": "0fbfdd3dba3e40e0506c697502ad3fa2e63491db67c5b0a43dd4be7127d8659e",
+     "quote": "25 Pa. Stat. § 3146.8 7 a.m. on Election Day."
+    }
+   ],
+   "note": "NCSL summary of 25 P.S. § 3146.8; confirm (g)(1.1) text before production use."
+  },
+  {
+   "id": "intel:AK-quest-review",
+   "state": "AK",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "Alaska questioned ballots are reviewed by the election supervisor beginning on the second day after the election, and counting of questioned ballots that pass review begins on the third day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AK_CH20",
+     "cite": "AS 15.20.205(a)-(b)",
+     "anchor": "On the second day following the day of the election, the election supervisor"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "State law says when review and counting may happen; it does not say when or how the Division of Elections publishes the results of that count"
+   ]
+  },
+  {
+   "id": "intel:AK-abs-late",
+   "state": "AK",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Absentee ballots that reach an election supervisor after the district absentee ballot counting review is complete are forwarded to the director rather than counted in that district review, so they arrive as a later batch.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AK_CH20",
+     "cite": "AS 15.20.201(d)",
+     "anchor": "after the completion of the district absentee ballot counting review shall be forwarded immediately to the director"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Describes where late-arriving absentee ballots go; the date and form of the resulting count are not stated"
+   ]
+  },
+  {
+   "id": "intel:AZ-early-receipt",
+   "state": "AZ",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Arizona early ballots received before 7:00 p.m. on Election Day go to the early election board for counting.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AZ_ARS_16_551",
+     "cite": "A.R.S. 16-551(C)",
+     "anchor": "before 7:00 p.m. on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Arizona 'early ballots' are mail ballots, including those dropped off in person; the statute does not separate them"
+   ]
+  },
+  {
+   "id": "intel:AZ-early-release",
+   "state": "AZ",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "Partial or complete tallies of the early election board may not be released before all precincts have reported or one hour after polls close on Election Day, whichever occurs first.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AZ_ARS_16_551",
+     "cite": "A.R.S. 16-551(C)",
+     "anchor": "one hour after the closing of the polls on election day, whichever occurs first"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A restriction on releasing early-ballot tallies, not a schedule; it sets the earliest point, not when counties publish"
+   ]
+  },
+  {
+   "id": "intel:AZ-eday-tabulation",
+   "state": "AZ",
+   "claimType": "LEGAL_TABULATION_PERMITTED",
+   "claim": "After the polls close, unofficial returns may be released during counting of ballots by vote tabulating equipment, subject to the early-ballot restrictions in 16-550 and 16-551.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AZ_ARS_16_622",
+     "cite": "A.R.S. 16-622",
+     "anchor": "unofficial returns may be released during the counting of the ballots by vote tabulating equipment"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Permission to release unofficial returns, not a schedule or an order between methods"
+   ]
+  },
+  {
+   "id": "intel:AZ-cure",
+   "state": "AZ",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "Arizona voters may correct a missing early-ballot signature until the fifth business day after a general election that includes a federal office, so ballots can still be added after Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "AZ_ARS_16_550",
+     "cite": "A.R.S. 16-550(A)",
+     "anchor": "not later than the fifth business day after a primary, general or special election that includes a federal office"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A cure deadline: it shows ballots can still be added, not how many or how they lean"
+   ]
+  },
+  {
+   "id": "intel:CO-mail-open",
+   "state": "CO",
+   "claimType": "LEGAL_TABULATION_PERMITTED",
+   "claim": "Counting of Colorado mail ballots may begin fifteen days before the election, and counties with more than ten thousand active electors at the previous general election must begin no later than four days before.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "CO_CRS_1_7_5_107_5",
+     "cite": "C.R.S. 1-7.5-107.5",
+     "anchor": "fifteen days prior to the election"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "The section sits in the mail-ballot-election article; its application to a state general election is not confirmed from this page alone"
+   ]
+  },
+  {
+   "id": "intel:CO-mail-release",
+   "state": "CO",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "No information concerning the mail-ballot count may be released by election officials or watchers until after 7:00 p.m. on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "CO_CRS_1_7_5_107_5",
+     "cite": "C.R.S. 1-7.5-107.5",
+     "anchor": "until after 7 p.m. on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "A restriction, not a release schedule"
+   ]
+  },
+  {
+   "id": "intel:FL-report-30",
+   "state": "FL",
+   "claimType": "LEGAL_RELEASE_TIMING",
+   "claim": "Each Florida county must report early voting and tabulated vote-by-mail results to the Department of State within 30 minutes after polls close, and then update at least every 45 minutes until all results are reported.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "FL_102_141",
+     "cite": "Fla. Stat. 102.141(4)(b)",
+     "anchor": "within 30 minutes after the polls close"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A deadline for reporting to the Department of State, not a statement of when a county posts publicly",
+    "Early and vote-by-mail are reported together, so the first batch is a mixed batch the statute does not separate"
+   ]
+  },
+  {
+   "id": "intel:FL-embargo",
+   "state": "FL",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "Florida bars making public the tabulation of votes cast in the pre-Election-Day processing of early voting and vote-by-mail ballots (ss. 101.5614(8), 101.657, 101.68(2)) before the close of the polls on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "FL_102_141",
+     "cite": "Fla. Stat. 102.141(4)(a)",
+     "anchor": "before the close of the polls on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A restriction, not a schedule"
+   ]
+  },
+  {
+   "id": "intel:FL-cure",
+   "state": "FL",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "A Florida vote-by-mail voter may cure a missing or mismatched signature until 5 p.m. on the second day after the election.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "FL_101_68",
+     "cite": "Fla. Stat. 101.68 (cure provision)",
+     "anchor": "5 p.m. on the 2nd day after the election"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A cure deadline: it shows ballots can still be added, not how many or how they lean"
+   ]
+  },
+  {
+   "id": "intel:GA-abs-receipt",
+   "state": "GA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Georgia voters can return a completed absentee ballot to a drop box or the county registrar's office until polls close at 7 p.m.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "GA_GOV_GENERAL_2026",
+     "cite": "Georgia 2026 General Election page",
+     "anchor": "by the time polls close at 7 p.m."
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Voter-facing summary page; the statute was not retrieved",
+    "Says nothing about when absentee ballots are counted or published"
+   ]
+  },
+  {
+   "id": "intel:IA-abs-10pm",
+   "state": "IA",
+   "claimType": "LEGAL_TABULATION_PERMITTED",
+   "claim": "Iowa's special precinct election board must have enough members to finish counting absentee ballots by 10:00 p.m. on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "IA_CODE_53_23",
+     "cite": "Iowa Code 53.23(1)",
+     "anchor": "complete the counting of absentee ballots by 10:00 p.m. on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A staffing standard, not a guarantee of when results post"
+   ]
+  },
+  {
+   "id": "intel:IA-abs-release",
+   "state": "IA",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "Where the Iowa special precinct election board begins counting absentee ballots the day before Election Day, it may not release its tabulation until the count is completed on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "IA_CODE_53_23",
+     "cite": "Iowa Code 53.23",
+     "anchor": "until the count is completed on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A restriction on the board's own tabulation; it does not say when the county publishes the count"
+   ]
+  },
+  {
+   "id": "intel:KS-adv-original",
+   "state": "KS",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Kansas advance voting ballots (mail and in-person advance voting together) may have their original canvass before Election Day, but final tabulation may not be completed before Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "KS_25_1134",
+     "cite": "K.S.A. 25-1134",
+     "anchor": "shall not complete final tabulation prior to election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Advance voting combines mail and in-person advance ballots; the statute does not separate them"
+   ]
+  },
+  {
+   "id": "intel:KS-canvass",
+   "state": "KS",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "The Kansas county canvass is held on the Monday after the election, and a county may move it to a business day no later than 13 days after the election.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "KS_25_3104",
+     "cite": "K.S.A. 25-3104",
+     "anchor": "not later than 13 days following any election"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "County canvass date; the state certification date is separate"
+   ]
+  },
+  {
+   "id": "intel:ME-abs-release",
+   "state": "ME",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "Maine absentee ballots may not be counted, and results may not be obtained or released, until after the polls have closed on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "ME_759",
+     "cite": "21-A M.R.S. 759",
+     "anchor": "until after the polls have closed on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Read from the statute text as retrieved; a restriction, not a schedule"
+   ]
+  },
+  {
+   "id": "intel:NE-abs-open",
+   "state": "NE",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "The Nebraska counting board may begin its duties no earlier than the second Friday before the election.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "NE_32_1027",
+     "cite": "Neb. Rev. Stat. 32-1027",
+     "anchor": "not earlier than the second Friday before the election"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Processing window only; Nebraska results are released after polls close in practice, which this source does not say"
+   ]
+  },
+  {
+   "id": "intel:NE-abs-count",
+   "state": "NE",
+   "claimType": "LEGAL_TABULATION_PERMITTED",
+   "claim": "Nebraska counting boards may begin counting early ballots no earlier than 24 hours before polls open on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "NE_32_1027",
+     "cite": "Neb. Rev. Stat. 32-1027",
+     "anchor": "twenty-four hours prior to the opening of the polls"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A tabulation window; it does not say when the count is published"
+   ]
+  },
+  {
+   "id": "intel:NY-abs-canvass",
+   "state": "NY",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "New York boards of canvassers examine absentee and mail ballot affirmation envelopes within one day of receipt, so mail ballots are processed on a rolling basis.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "NY_9_209",
+     "cite": "N.Y. Election Law 9-209",
+     "anchor": "within one day of receipt"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "Processing rule only"
+   ]
+  },
+  {
+   "id": "intel:NY-cure",
+   "state": "NY",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "New York boards notify a voter of a ballot-envelope defect within one day of determining it, and the voter may cure; ballots can be added after Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "NY_9_209",
+     "cite": "N.Y. Election Law 9-209",
+     "anchor": "within one day of such determination"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "A cure rule: it does not say how many ballots are affected"
+   ]
+  },
+  {
+   "id": "intel:OH-abs-process",
+   "state": "OH",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Ohio boards may process absent voter's ballots before the time for counting them, but may not tabulate or count the votes before that time.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "OH_3509_06",
+     "cite": "R.C. 3509.06",
+     "anchor": "shall not tabulate or count the votes on those ballots before that time"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Processing versus counting rule; the time for counting is set elsewhere and not in this finding"
+   ]
+  },
+  {
+   "id": "intel:OH-prov",
+   "state": "OH",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "Ohio provisional ballot envelopes are kept sealed in a secure location until their validity is determined, so provisional ballots are counted after Election Day review.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "OH_3505_183",
+     "cite": "R.C. 3505.183",
+     "anchor": "until the validity of those ballots is determined"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Describes the holding of provisional ballots; the date of the count is not stated here"
+   ]
+  },
+  {
+   "id": "intel:PA-mail-receipt",
+   "state": "PA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Pennsylvania counties must receive completed mail-in and civilian absentee ballots by 8:00 p.m. on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "PA_UPCOMING_ELECTIONS",
+     "cite": "Pennsylvania Department of State, election calendar",
+     "anchor": "Last day for county election office to receive completed mail-in and civilian absentee ballots"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A receipt deadline from the Department of State's calendar page; the statute page was not retrievable with its text"
+   ]
+  },
+  {
+   "id": "intel:PA-uocava-receipt",
+   "state": "PA",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Pennsylvania counties may receive military and overseas absentee ballots after Election Day; the calendar lists November 10, 2026 as the last day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "PA_UPCOMING_ELECTIONS",
+     "cite": "Pennsylvania Department of State, election calendar",
+     "anchor": "Last day for county election office to receive completed military and overseas absentee ballots"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ]
+  },
+  {
+   "id": "intel:SC-abs-open",
+   "state": "SC",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "South Carolina managers may begin examining absentee ballot envelopes no earlier than 7:00 a.m. on the second day before Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "SC_CH15",
+     "cite": "S.C. Code 7-15-420",
+     "anchor": "Beginning no earlier than 7:00 a.m. on the second day immediately preceding election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Processing window only"
+   ]
+  },
+  {
+   "id": "intel:SC-abs-count",
+   "state": "SC",
+   "claimType": "LEGAL_TABULATION_PERMITTED",
+   "claim": "South Carolina absentee ballots may be tabulated beginning no earlier than 7:00 a.m. on Election Day, including absentee ballots received on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "SC_CH15",
+     "cite": "S.C. Code 7-15-420",
+     "anchor": "Beginning no earlier than 7:00 a.m. on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A tabulation window; it does not say when the count is published"
+   ]
+  },
+  {
+   "id": "intel:SC-abs-unit",
+   "state": "SC",
+   "claimType": "REPORTING_UNIT",
+   "claim": "Each South Carolina county board is responsible for tabulating and reporting the ballots of an absentee voting precinct, so absentee results form their own reporting unit.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "SC_CH15",
+     "cite": "S.C. Code 7-15-410",
+     "anchor": "is responsible for the tabulation and reporting of ballots at the absentee voting precinct"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "States the unit; whether a county publishes it separately is not stated"
+   ]
+  },
+  {
+   "id": "intel:SC-late",
+   "state": "SC",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "South Carolina does not count an absentee ballot received by the election officials after the time for closing of the polls.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "SC_CH15",
+     "cite": "S.C. Code Title 7, Chapter 15 (absentee voting; section number not shown in the retrieved text)",
+     "anchor": "after time for closing of the polls"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Means no late-arriving mail ballots for ordinary absentee voters; military and overseas voters are covered by a separate rule"
+   ]
+  },
+  {
+   "id": "intel:TX-mail-receipt",
+   "state": "TX",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Texas carrier-envelope ballots received by 7:00 p.m. on Election Day, November 3, 2026, must be counted on election night.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+     "anchor": "must be counted on election night"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Secretary of State election-law calendar; the statute page itself was not retrievable"
+   ]
+  },
+  {
+   "id": "intel:TX-late-domestic",
+   "state": "TX",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Texas accepts late domestic mail ballots received by 5:00 p.m. on November 4, 2026 if they were placed in delivery by 7:00 p.m. on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+     "anchor": "Deadline to receive \"late domestic ballots\""
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ]
+  },
+  {
+   "id": "intel:TX-uocava",
+   "state": "TX",
+   "claimType": "LEGAL_RECEIPT_DEADLINE",
+   "claim": "Texas accepts ballots from voters casting ballots from outside the United States, including some military voters, received by Monday, November 9, 2026 if placed in delivery by 7:00 p.m. on Election Day.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+     "anchor": "Last day to receive ballots from non-military and any military voters casting ballots from outside of the United States"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ]
+  },
+  {
+   "id": "intel:TX-ballot-board",
+   "state": "TX",
+   "claimType": "LEGAL_RELEASE_RESTRICTION",
+   "claim": "Texas early voting ballot boards (early in-person and mail together) may begin counting before Election Day in larger counties, but results may not be announced until after the polls close.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 87.0222, 87.0241",
+     "anchor": "the results may not be announced until after the polls close"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "The early voting ballot board handles early in-person and mail ballots together; the source does not separate them"
+   ]
+  },
+  {
+   "id": "intel:TX-eday-tape",
+   "state": "TX",
+   "claimType": "LEGAL_RELEASE_TIMING",
+   "claim": "Immediately after polls close, the presiding judge prints the tape showing votes for each candidate at the precinct, the first Election Day in-person numbers.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 61.002",
+     "anchor": "Immediately after the closing of the polls on election day, the presiding judge or alternate judge shall print the tape"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "A precinct-level duty; when a county publishes its totals is not stated"
+   ]
+  },
+  {
+   "id": "intel:TX-prov-late",
+   "state": "TX",
+   "claimType": "CURE_CANVASS_WINDOW",
+   "claim": "Texas central counting stations process late-arriving ballots by mail and provisional ballots at a later meeting after election-day tabulation closes.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "TX_SOS_ADVISORY_2026_21",
+     "cite": "Tex. Elec. Code 127.131",
+     "anchor": "to process late-arriving ballots by mail and provisional ballots"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Describes a later processing meeting; its date is not stated"
+   ]
+  },
+  {
+   "id": "intel:WI-central",
+   "state": "WI",
+   "claimType": "REPORTING_UNIT",
+   "claim": "A Wisconsin municipality may canvass absentee ballots at a central municipal board instead of at polling places, so absentee results can arrive as a separate batch from ward results.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "WI_7_52",
+     "cite": "Wis. Stat. 7.52",
+     "anchor": "absentee ballots received by the municipal clerk by 8 p.m. on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Central count is chosen municipality by municipality; the statute does not say which municipalities use it"
+   ]
+  },
+  {
+   "id": "intel:WI-open-eday",
+   "state": "WI",
+   "claimType": "LEGAL_PREPROCESSING_PERMITTED",
+   "claim": "Wisconsin absentee ballot envelopes are opened on Election Day during polling hours, at the polling place or at a central count under 7.52.",
+   "status": "VERIFIED_PRIMARY_ANCHOR",
+   "evidence": [
+    {
+     "sourceId": "WI_6_88",
+     "cite": "Wis. Stat. 6.88(1)",
+     "anchor": "during polling hours on election day"
+    }
+   ],
+   "note": "Imported read-only from feature/election-night-intelligence-v1@0559aad3 (sequence_findings.json, anchor-checked 2026-10-26). Not re-run here.",
+   "limitations": [
+    "Processing rule only"
+   ]
+  },
+  {
+   "id": "AL-ledger-caveat",
+   "state": "AL",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "Election night completeness and provisional dates were not confirmed against a 2026 source.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "CT-ledger-caveat",
+   "state": "CT",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "One 2026 voter guide still lists absentee excuses. Confirm with the Secretary of the State that no excuse absentee applies Nov 3.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "DE-ledger-caveat",
+   "state": "DE",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "Release order and any method breakdown on the state results page were not confirmed this cycle.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "FL-ledger-caveat",
+   "state": "FL",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "The mail deadline, speed and partisan pattern come from statute and past cycles, not a 2026 source.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "ID-ledger-caveat",
+   "state": "ID",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "The early opening window in state law appears to have lapsed after 2020, so absentees may only be opened on Election Day. Likely, not certain.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "MD-ledger-caveat",
+   "state": "MD",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "The method breakdown on the state results site was not reverified this cycle.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "MS-ledger-caveat",
+   "state": "MS",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "A 2025 bill for no excuse in person voting passed both chambers, but its signing was not confirmed.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "NM-ledger-caveat",
+   "state": "NM",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "The partisan pattern and any method breakout were not sourced this cycle.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "OH-ledger-caveat",
+   "state": "OH",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "The partisan pattern was not sourced this cycle.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "SC-ledger-caveat",
+   "state": "SC",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "County release order and certification timing were not confirmed.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "TX-ledger-caveat",
+   "state": "TX",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "Whether all counties hold the first batch until El Paso closes at 9 PM ET was not confirmed.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "WV-ledger-caveat",
+   "state": "WV",
+   "claimType": "LEDGER_CAVEAT",
+   "claim": "County order of early versus precinct release was not confirmed.",
+   "status": "UNRESOLVED",
+   "evidence": [],
+   "note": "Explicit verification caveat carried from the ledger."
+  },
+  {
+   "id": "ALL-ledger-sequences",
+   "state": null,
+   "claimType": "ESTIMATED_2026_ORDER",
+   "claim": "Each state's releaseSequence is the ledger author's expected 2026 order.",
+   "status": "PRIOR_NOT_VERIFIED",
+   "evidence": [],
+   "note": "Used only as a scenario prior with uncertainty, never as a schedule or a partisan adjustment."
+  },
+  {
+   "id": "ALL-ledger-shifts",
+   "state": null,
+   "claimType": "HISTORICAL_OBSERVED_SEQUENCE",
+   "claim": "Each state's historicalPattern (partisan lean of early vs late batches) as stated by the ledger.",
+   "status": "UNVERIFIED_NOT_A_MODEL_INPUT",
+   "evidence": [],
+   "note": "Requires timestamped historical returns to verify; until then context text only."
+  }
+ ]
+}
