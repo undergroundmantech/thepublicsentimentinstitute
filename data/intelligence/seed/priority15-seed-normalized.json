@@ -1,0 +1,296 @@
+{
+ "as_of": "2026-10-25",
+ "critical_limitations": [
+  "No observed candidate vote share by voting method has been verified for these 15 states. Do not infer it from party registration or general voting trends.",
+  "NCSL16 identifies when scanning is legally permitted, NOT the timing, content, or partisan composition of public result releases.",
+  "State-level law does not establish county-level publication times.",
+  "Operational watchpoints are hypotheses/risks, not certified 2026 reporting schedules.",
+  "No numerical mode weights, turnout allocations, partisan tilts or release timestamps have been fabricated."
+ ],
+ "provenance": "Supplied by the analyst (ChatGPT-assisted research seed, 2026-10-25). Not independently verified; see critical_limitations.",
+ "schemaVersion": "priority15-seed-normalized/1",
+ "scope": "15 states covering 39 of the user-provided October 25 Top 50 races; all 8 Senate and all 5 governor races",
+ "sourceArchive": {
+  "bytes": 7961,
+  "member": "priority_15_state_research_seed.json",
+  "memberBytes": 18052,
+  "memberSha256": "d6f4f71aa8a8075825a1bbfda36cc451476076392a49d7aa5ed4e41f6cd2c8ee",
+  "name": "OnPoint_15_State_Reporting_Research_Seed_2026-10-25.zip",
+  "sha256": "83db75a81846aaa531bb7390dd8f78a79a08233c4b305c64228e351f2d3f8f45"
+ },
+ "sources": [
+  {
+   "id": "NCSL16",
+   "publication_date": "2026-04-22",
+   "publisher": "National Conference of State Legislatures",
+   "supports": "Statutory mail-ballot processing/scanning windows; local practice can vary",
+   "url": "https://www.ncsl.org/elections-and-campaigns/table-16-when-absentee-mail-ballot-processing-and-counting-can-begin"
+  },
+  {
+   "id": "NCSL17",
+   "publication_date": "2024-10-15",
+   "publisher": "National Conference of State Legislatures",
+   "supports": "Most jurisdictions combine mail with precinct-level results; no guaranteed mode identification",
+   "url": "https://www.ncsl.org/elections-and-campaigns/table-17-how-election-results-are-reported"
+  },
+  {
+   "id": "AZSOS",
+   "publication_date": "undated",
+   "publisher": "Arizona Secretary of State",
+   "supports": "Arizona first election-night batch after 8pm; sporadic subsequent county updates",
+   "url": "https://azsos.gov/elections/election-information"
+  },
+  {
+   "id": "EAC",
+   "publication_date": "2025-12-23",
+   "publisher": "U.S. Election Assistance Commission",
+   "supports": "Unofficial returns, canvass, mail, provisional and overseas ballot caveats",
+   "url": "https://www.eac.gov/why-do-election-results-change-after-election-night"
+  },
+  {
+   "id": "UF2024",
+   "publication_date": "2024",
+   "publisher": "University of Florida Election Lab",
+   "supports": "Party registration by voting method is NOT actual candidate vote share",
+   "url": "https://election.lab.ufl.edu/early-vote/2024-early-voting/"
+  },
+  {
+   "id": "MIT2024",
+   "publication_date": "2024",
+   "publisher": "MIT Election Data + Science Lab / Elections Performance Central",
+   "supports": "2024 method participation and registration snapshots for some states, not candidate-by-method results",
+   "url": "https://www.elexcentral.org/replication-datasets"
+  },
+  {
+   "id": "EAC2024",
+   "publication_date": "2024",
+   "publisher": "EAC EAVS as reproduced by Ballotpedia",
+   "supports": "2024 ballot counts by method, NOT candidate-by-method partisanship",
+   "url": "https://ballotpedia.org/Voting_policies_in_the_United_States"
+  }
+ ],
+ "states": [
+  {
+   "legal_scanning_category": "after polls close on Election Day",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Confirm current ranked-choice rules, batch publication and absentee/questioned ballot calendar with Alaska Division of Elections.",
+   "operational_watchpoints": "Do not assume early absentee results are available at poll close; watch absentee, questioned/provisional, and any ranked-choice tabulation separately.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "sen-AK"
+   ],
+   "state": "AK"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify Maricopa/Pima and relevant district county first-release contents, ballot drop-off processing, and county ballot-estimate updates.",
+   "operational_watchpoints": "First release can contain previously tabulated early ballots; later polling-place and late-return early ballots may have different composition. County update frequency varies.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-AZ-08",
+    "house-AZ-02"
+   ],
+   "state": "AZ"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Obtain Colorado county return batches, 2024 ballot-method vote counts, and district/precinct crosswalk.",
+   "operational_watchpoints": "Watch county-level batch timing, late ballot drops, signature cures and provisional additions; do not treat ballot method as party preference.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-CO-04",
+    "house-CO-05",
+    "house-CO-03"
+   ],
+   "state": "CO"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify county supervisors first-release schedules, time-zone constraints, 2024/2022 county-level method-by-candidate returns.",
+   "operational_watchpoints": "Early in-person and vote-by-mail tabulations may be ready for early unofficial releases; election-day precinct returns follow, but county releases are not standardized.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-FL-04",
+    "house-FL-22",
+    "house-FL-09",
+    "house-FL-26"
+   ],
+   "state": "FL"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify 2026 SOS reporting guidance, county absentee/advance results labeling, and provisional/overseas calendar.",
+   "operational_watchpoints": "Advance/absentee batches and Election Day precincts may arrive separately; do not assume a fixed party lean or county order.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "gov-GA"
+   ],
+   "state": "GA"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify 2026 county election-night reporting files, absentee breakdown availability and method-level 2022/2024 results.",
+   "operational_watchpoints": "County reporting may mix absentee and precinct ballots; precinct-reporting percent is not votes-counted percent.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "sen-IA",
+    "house-IA-02"
+   ],
+   "state": "IA"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify Kansas county election office reporting order, advance-by-mail vs advance-in-person availability, and post-election provisional process.",
+   "operational_watchpoints": "Advance ballots and Election Day ballots may arrive in different county batches; mode composition is unverified.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-KS-02",
+    "sen-KS",
+    "gov-KS"
+   ],
+   "state": "KS"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify 2026 ranked-choice applicability and state RCV tabulation schedule; capture first-choice vs final-round totals separately.",
+   "operational_watchpoints": "Federal contests may require ranked-choice tabulation if no first-round majority; election-night first choices are not necessarily the final result.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-ME-02",
+    "sen-ME"
+   ],
+   "state": "ME"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify county-specific batches and Nebraska reporting formats; do not force independent candidates into party bins.",
+   "operational_watchpoints": "County early/absentee and precinct releases can vary; preserve independent Senate candidate labels and non-two-party vote share.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "sen-NE",
+    "house-NE-01",
+    "gov-NE"
+   ],
+   "state": "NE"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify county boards, absentee canvass deadlines, fusion/cross-endorsement candidate aggregation and 2022/2024 method-level returns.",
+   "operational_watchpoints": "Election-night unofficial totals and subsequent absentee/affidavit canvass can differ; verify whether individual releases expose ballot modes.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-NY-01",
+    "house-NY-11",
+    "house-NY-02",
+    "house-NY-17"
+   ],
+   "state": "NY"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify county board first-release metadata, early/mail separation, and official outstanding ballot reports.",
+   "operational_watchpoints": "Absentee/early totals may be included in first county returns; Election Day precincts and later provisional ballots require distinct tracking.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-OH-15",
+    "house-OH-09",
+    "house-OH-08",
+    "sen-OH"
+   ],
+   "state": "OH"
+  },
+  {
+   "legal_scanning_category": "Election Day scanning permitted before close of polls",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify Pennsylvania 2026 law, county pre-canvass timing, county mail reporting and provisional calendar.",
+   "operational_watchpoints": "Mail and Election Day returns can arrive in different sequences by county; some mail results may remain outstanding after Election Night.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-PA-10",
+    "house-PA-08"
+   ],
+   "state": "PA"
+  },
+  {
+   "legal_scanning_category": "Election Day scanning permitted before close of polls",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify South Carolina early-vote and absentee reporting definitions, county results file and provisional certification process.",
+   "operational_watchpoints": "Do not presume statewide early-vote batches have a consistent release time or partisan profile.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "sen-SC",
+    "house-SC-01"
+   ],
+   "state": "SC"
+  },
+  {
+   "legal_scanning_category": "some pre-election scanning permitted",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify county early-vote release schedules, ballot-by-mail receipt deadlines and county results method labels.",
+   "operational_watchpoints": "Early-vote totals may be published before Election Day precinct totals; mail, late-arriving eligible ballots and provisional counts need separate inventories.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-TX-35",
+    "sen-TX",
+    "house-TX-24",
+    "gov-TX"
+   ],
+   "state": "TX"
+  },
+  {
+   "legal_scanning_category": "Election Day scanning permitted before close of polls",
+   "legal_scanning_evidence": "NCSL16",
+   "legal_scanning_status": "VERIFIED_SECONDARY_2026_SUMMARY",
+   "next_verification": "Verify municipal central-count lists, reporting batches and outstanding absentee inventories.",
+   "operational_watchpoints": "Central-count absentee batches may post later than some Election Day precincts; timing depends on municipality.",
+   "operational_watchpoints_evidence": "INFERENCE_OR_HISTORICAL_PRACTICE_NOT_YET_VALIDATED_FOR_2026",
+   "partisan_data_status": "UNKNOWN_UNVERIFIED",
+   "race_ids": [
+    "house-WI-01",
+    "gov-WI"
+   ],
+   "state": "WI"
+  }
+ ],
+ "status": "SOURCE-GROUNDED RESEARCH SEED; NOT A READY-TO-IMPORT VOTE-METHOD ESTIMATION PACKAGE",
+ "title": "OnPoint Politics 2026 Priority-State Reporting Intelligence - Research Seed",
+ "transformVersion": "SEED_NORMALIZE/1"
+}

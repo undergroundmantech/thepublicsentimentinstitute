@@ -1,0 +1,80 @@
+/* RaceHistory: extends the polling-average chart (studio.css). Same container, grid, axes, segmented controls and readout. */
+/* Theme tokens. Every color the chart draws comes from here, so a theme only overrides this block. */
+.rh {
+  --rh-d: #5b8fff; --rh-r: #ff4d6a; --rh-i: var(--ind, #b78cff); --rh-l: #f2b84b; --rh-g: #4cc38a;
+  --rh-o1: #9aa3b2; --rh-o2: #2fc4d6; --rh-o3: #ff9f6b; --rh-o4: #c9d36a;
+  --rh-shadow: #8a94a6; --rh-neutral: #e9edf5; --rh-accent: var(--gold, #e7b341);
+  --rh-tint: rgba(255,255,255,.022); --rh-rule: rgba(255,255,255,.18); --rh-hair: rgba(255,255,255,.1);
+  --rh-surface: rgba(12,7,22,.82); --rh-text: #d8d0ea; --rh-dot: #fff; --rh-glow: rgba(0,0,0,.6);
+  --rh-read-bg: rgba(12,7,22,.95); --rh-strong: #fff; --rh-grid: rgba(255,255,255,.06); --rh-zero: rgba(255,255,255,.35); --rh-scrub: rgba(255,255,255,.55);
+}
+:root[data-theme="light"] .rh {
+  --rh-d: #2a5fe0; --rh-r: #d81e45; --rh-i: #7c4dd6; --rh-l: #a86a00; --rh-g: #1a7f50;
+  --rh-o1: #5c6573; --rh-o2: #0b7f8f; --rh-o3: #b9531b; --rh-o4: #6b7714;
+  --rh-shadow: #6b7385; --rh-neutral: #2b2540; --rh-accent: #a6720a;
+  --rh-tint: rgba(20,12,40,.035); --rh-rule: rgba(20,12,40,.22); --rh-hair: rgba(20,12,40,.12);
+  --rh-surface: rgba(255,255,255,.94); --rh-text: #2b2540; --rh-dot: #fff; --rh-glow: rgba(0,0,0,.12);
+  --rh-read-bg: rgba(255,255,255,.97); --rh-strong: #120c22; --rh-grid: rgba(20,12,40,.08); --rh-zero: rgba(20,12,40,.4); --rh-scrub: rgba(20,12,40,.5);
+}
+.rh .stu-grid { stroke: var(--rh-grid); }
+.rh .stu-zero { stroke: var(--rh-zero); }
+.rh .stu-scrub line { stroke: var(--rh-scrub); }
+.rh .stu-read { background: var(--rh-read-bg); border-color: var(--rh-hair); }
+.rh .stu-read .r { color: var(--rh-text); }
+.rh .stu-read .r b { color: var(--rh-strong); }
+.rh .stu-bar { gap: 8px 10px; }
+.rh-upd { margin-left: auto; font: 600 10.5px var(--font-m); letter-spacing: .04em; color: var(--mute, #a79fbd); }
+.rh .stu-seg button:disabled { opacity: .35; cursor: not-allowed; }
+.rh .stu-seg button:disabled:hover { color: var(--mute, #a79fbd); }
+.rh-tabs button { letter-spacing: .08em; font-size: 11.5px; }
+.rh-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px; font: 700 10px var(--font-m); letter-spacing: .12em; text-transform: uppercase; border: 1px solid color-mix(in srgb, var(--rh-accent) 55%, transparent); color: var(--rh-accent); background: color-mix(in srgb, var(--rh-accent) 8%, transparent); }
+.rh-badge.sh { border-color: color-mix(in srgb, var(--rh-shadow) 60%, transparent); color: var(--rh-shadow); background: color-mix(in srgb, var(--rh-shadow) 10%, transparent); }
+.rh .stu-plot svg { touch-action: pan-y; }
+.rh .rh-line { fill: none; stroke-linecap: round; stroke-linejoin: round; animation: rh-in .5s ease-out both; }
+.rh .rh-line.frozen { stroke-width: 2.6; stroke-dasharray: .1 5.2; }
+.rh .rh-line.live { stroke-width: 3; filter: drop-shadow(0 0 6px var(--rh-glow)); }
+.rh .rh-line.dashed { stroke-width: 2.4; stroke-dasharray: 7 5; stroke-linecap: butt; }
+.rh .rh-line.shadow { stroke-width: 1.8; stroke-dasharray: 2 3; opacity: .9; }
+.rh .rh-band { opacity: .09; }
+.rh .rh-iso { stroke-width: 0; }
+.rh .rh-obs { opacity: .55; }
+.rh .rh-flag { fill: none; stroke: var(--rh-accent); stroke-width: 1.8; }
+.rh .rh-pre { fill: var(--rh-tint); }
+.rh .rh-out rect { fill: color-mix(in srgb, var(--rh-accent) 7%, transparent); stroke: color-mix(in srgb, var(--rh-accent) 40%, transparent); stroke-dasharray: 3 3; }
+.rh .rh-off text { font: 700 10px var(--font-m); letter-spacing: .03em; }
+.rh .rh-dot { fill: var(--rh-dot); }
+.rh .rh-cap { font: 700 9.5px var(--font-m); letter-spacing: .14em; text-transform: uppercase; fill: var(--mute, #8e86a3); opacity: .8; }
+.rh .rh-mk line { stroke: color-mix(in srgb, var(--rh-accent) 55%, transparent); stroke-width: 1; stroke-dasharray: 2 3; }
+.rh .rh-mk text { font: 700 9.5px var(--font-m); fill: var(--rh-accent); letter-spacing: .04em; }
+.rh .rh-ref { stroke: var(--rh-rule); stroke-dasharray: 2 4; }
+.rh-empty { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; pointer-events: none; }
+.rh-empty div { max-width: 420px; padding: 14px 16px; border-radius: 12px; background: var(--rh-surface); border: 1px solid var(--rh-hair); font-size: 13px; line-height: 1.5; color: var(--rh-text); }
+.rh-empty b { display: block; margin-bottom: 4px; font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute, #a79fbd); }
+.rh .stu-read { min-width: 240px; max-width: 340px; }
+.rh .stu-read .u { font: 600 10px var(--font-m); color: var(--mute, #8e86a3); margin-top: 1px; }
+.rh .stu-read .g { margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--rh-hair); }
+.rh .stu-read .g:first-of-type { border-top: 0; padding-top: 0; }
+.rh .stu-read .s { font-size: 11px; line-height: 1.4; color: var(--mute, #a79fbd); margin-bottom: 3px; }
+.rh .stu-read .s em { font-style: normal; font: 700 9.5px var(--font-m); letter-spacing: .1em; padding: 0 4px; margin-left: 4px; border-radius: 4px; border: 1px solid color-mix(in srgb, var(--rh-accent) 50%, transparent); color: var(--rh-accent); }
+.rh .stu-read .r { gap: 7px; }
+.rh .stu-read .r i { width: 14px; height: 0; border-radius: 0; border-top: 3px solid currentColor; background: none !important; }
+.rh .stu-read .r i.frozen { border-top-style: dotted; }
+.rh .stu-read .r i.dashed, .rh .stu-read .r i.shadow { border-top-style: dashed; }
+.rh .stu-read .r span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rh .stu-read .r small { color: var(--mute, #a79fbd); font-size: 10.5px; margin-left: 4px; }
+.rh .stu-read .r.na b { color: var(--mute, #a79fbd); font-weight: 600; }
+.rh .stu-read .f { color: var(--rh-accent); font-size: 11px; margin-top: 2px; }
+.rh .stu-read .fr { color: var(--mute, #a79fbd); font-size: 10.5px; margin-top: 2px; }
+.rh .stu-read .fr.out { color: var(--rh-accent); }
+.rh .stu-read .x { margin-top: 7px; padding-top: 6px; border-top: 1px dashed var(--rh-hair); font: 600 10.5px/1.5 var(--font-m); color: var(--mute, #a79fbd); }
+.rh .stu-read.dock { position: static; transform: none !important; max-width: none; min-width: 0; margin-top: 8px; box-shadow: none; }
+.rh .stu-foot .ln { width: 18px; height: 0; border-radius: 0; border-top: 3px solid currentColor; background: none !important; }
+.rh .stu-foot .ln.frozen { border-top-style: dotted; }
+.rh .stu-foot .ln.dashed, .rh .stu-foot .ln.shadow { border-top-style: dashed; }
+.rh .stu-foot .rg { width: 9px; height: 9px; border-radius: 50%; border: 1.8px solid var(--rh-accent); }
+.rh .stu-foot .ou { width: 16px; height: 9px; border-radius: 2px; border: 1px dashed color-mix(in srgb, var(--rh-accent) 60%, transparent); }
+.rh .stu-foot .bd { width: 16px; height: 9px; border-radius: 2px; background: var(--rh-rule); }
+.rh .stu-foot .ns { width: 100%; }
+@keyframes rh-in { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 640px) { .rh-tabs button { padding: 6px 9px; font-size: 10.5px; letter-spacing: .04em; } .rh .stu-seg button { padding: 6px 9px; } }
+@media (prefers-reduced-motion: reduce) { .rh .rh-line { animation: none; } }

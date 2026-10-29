@@ -1,0 +1,835 @@
+{
+ "kind": "TOP_N_CLOSEST",
+ "n": 50,
+ "offices": [
+  "senate",
+  "governor",
+  "house"
+ ],
+ "rankedBy": "absolute forecast margin (B minus A, points), then distance of P(B) from 0.5, then race id",
+ "generatedAt": "2026-10-26T01:52:15.497Z",
+ "source": {
+  "snapshotDate": "2026-10-25",
+  "files": [
+   {
+    "path": "public/forecast/model.json",
+    "gitRef": "44d06d08e0268bd0fb6d4fb17bb96571933eb8b8",
+    "sha256": "f0695853d14289485660516db236dbe4ecff46c9cab6ef899355f7a8e6aee3cd"
+   },
+   {
+    "path": "public/forecast/archive/2026-10-25.json",
+    "gitRef": "44d06d08e0268bd0fb6d4fb17bb96571933eb8b8",
+    "sha256": "4da297fe842909d56142921ad326fd586311cb351a81ae13f0b23de06a159349"
+   }
+  ],
+  "notes": [
+   "model.json meta.updated = 2026-10-25; Senate, governor and House margins read from races[].est",
+   "statewide margins and chances cross-checked against the archive: 71 races, 0 mismatches",
+   "the archive holds no House races; House margins come from model.json at the pinned ref",
+   "margin is Republican minus Democratic (or minus the main non-Republican candidate), in points; probB is the Republican chance"
+  ]
+ },
+ "entries": [
+  {
+   "rank": 1,
+   "raceId": "sen-AK",
+   "office": "senate",
+   "state": "AK",
+   "district": null,
+   "name": "Alaska Senate",
+   "baseline": {
+    "margin": -0.19,
+    "probB": 0.5002,
+    "p10": -7.01,
+    "p90": 6.57,
+    "sideA": "Mary Peltola",
+    "sideB": "Dan S. Sullivan"
+   }
+  },
+  {
+   "rank": 2,
+   "raceId": "house-AR-02",
+   "office": "house",
+   "state": "AR",
+   "district": 2,
+   "name": "Arkansas 2nd",
+   "baseline": {
+    "margin": 0.26,
+    "probB": 0.5221,
+    "p10": -7.38,
+    "p90": 8.12,
+    "sideA": "Chris Jones",
+    "sideB": "French Hill"
+   }
+  },
+  {
+   "rank": 3,
+   "raceId": "house-PA-10",
+   "office": "house",
+   "state": "PA",
+   "district": 10,
+   "name": "Pennsylvania 10th",
+   "baseline": {
+    "margin": -0.39,
+    "probB": 0.4701,
+    "p10": -7.47,
+    "p90": 6.63,
+    "sideA": "Janelle Stelson",
+    "sideB": "Scott Perry"
+   }
+  },
+  {
+   "rank": 4,
+   "raceId": "gov-GA",
+   "office": "governor",
+   "state": "GA",
+   "district": null,
+   "name": "Georgia Governor",
+   "baseline": {
+    "margin": 0.4,
+    "probB": 0.5125,
+    "p10": -6.25,
+    "p90": 7.22,
+    "sideA": "Keisha Lance Bottoms",
+    "sideB": "Rick Jackson"
+   }
+  },
+  {
+   "rank": 5,
+   "raceId": "house-AZ-08",
+   "office": "house",
+   "state": "AZ",
+   "district": 8,
+   "name": "Arizona 8th",
+   "baseline": {
+    "margin": -0.44,
+    "probB": 0.4704,
+    "p10": -8.48,
+    "p90": 7.82,
+    "sideA": "Bernadette Greene-Placentia",
+    "sideB": "Abraham Hamadeh"
+   }
+  },
+  {
+   "rank": 6,
+   "raceId": "house-TX-35",
+   "office": "house",
+   "state": "TX",
+   "district": 35,
+   "name": "Texas 35th",
+   "baseline": {
+    "margin": -0.5,
+    "probB": 0.4706,
+    "p10": -8.9,
+    "p90": 7.8,
+    "sideA": "Johnny Garcia",
+    "sideB": "Carlos De La Cruz"
+   }
+  },
+  {
+   "rank": 7,
+   "raceId": "house-MI-10",
+   "office": "house",
+   "state": "MI",
+   "district": 10,
+   "name": "Michigan 10th",
+   "baseline": {
+    "margin": -0.62,
+    "probB": 0.4599,
+    "p10": -8.68,
+    "p90": 7.52,
+    "sideA": "Christina Hines",
+    "sideB": "Michael Bouchard"
+   }
+  },
+  {
+   "rank": 8,
+   "raceId": "sen-IA",
+   "office": "senate",
+   "state": "IA",
+   "district": null,
+   "name": "Iowa Senate",
+   "baseline": {
+    "margin": -0.65,
+    "probB": 0.4726,
+    "p10": -7.78,
+    "p90": 5.92,
+    "sideA": "Josh Turek",
+    "sideB": "Ashley Hinson"
+   }
+  },
+  {
+   "rank": 9,
+   "raceId": "house-NY-01",
+   "office": "house",
+   "state": "NY",
+   "district": 1,
+   "name": "New York 1st",
+   "baseline": {
+    "margin": 0.82,
+    "probB": 0.5526,
+    "p10": -7.06,
+    "p90": 8.44,
+    "sideA": "Chris Gallant",
+    "sideB": "Nick LaLota"
+   }
+  },
+  {
+   "rank": 10,
+   "raceId": "house-OH-15",
+   "office": "house",
+   "state": "OH",
+   "district": 15,
+   "name": "Ohio 15th",
+   "baseline": {
+    "margin": 0.9,
+    "probB": 0.5684,
+    "p10": -7.38,
+    "p90": 8.92,
+    "sideA": "Don Leonard",
+    "sideB": "Mike Carey"
+   }
+  },
+  {
+   "rank": 11,
+   "raceId": "house-MN-01",
+   "office": "house",
+   "state": "MN",
+   "district": 1,
+   "name": "Minnesota 1st",
+   "baseline": {
+    "margin": 0.97,
+    "probB": 0.5593,
+    "p10": -7.36,
+    "p90": 9.34,
+    "sideA": "Jake Johnson",
+    "sideB": "Brad Finstad"
+   }
+  },
+  {
+   "rank": 12,
+   "raceId": "house-MT-01",
+   "office": "house",
+   "state": "MT",
+   "district": 1,
+   "name": "Montana 1st",
+   "baseline": {
+    "margin": 0.97,
+    "probB": 0.5641,
+    "p10": -7.5,
+    "p90": 9.7,
+    "sideA": "Sam Forstag",
+    "sideB": "Aaron Flint"
+   }
+  },
+  {
+   "rank": 13,
+   "raceId": "house-OH-09",
+   "office": "house",
+   "state": "OH",
+   "district": 9,
+   "name": "Ohio 9th",
+   "baseline": {
+    "margin": -0.99,
+    "probB": 0.4467,
+    "p10": -9.07,
+    "p90": 6.93,
+    "sideA": "Marcy Kaptur",
+    "sideB": "Derek Merrin"
+   }
+  },
+  {
+   "rank": 14,
+   "raceId": "house-VA-01",
+   "office": "house",
+   "state": "VA",
+   "district": 1,
+   "name": "Virginia 1st",
+   "baseline": {
+    "margin": 1.14,
+    "probB": 0.5869,
+    "p10": -5.72,
+    "p90": 7.88,
+    "sideA": "Shannon Taylor",
+    "sideB": "Rob Wittman"
+   }
+  },
+  {
+   "rank": 15,
+   "raceId": "house-IA-02",
+   "office": "house",
+   "state": "IA",
+   "district": 2,
+   "name": "Iowa 2nd",
+   "baseline": {
+    "margin": -1.17,
+    "probB": 0.4236,
+    "p10": -8.74,
+    "p90": 6.46,
+    "sideA": "Lindsay James",
+    "sideB": "Joe Mitchell"
+   }
+  },
+  {
+   "rank": 16,
+   "raceId": "house-NY-11",
+   "office": "house",
+   "state": "NY",
+   "district": 11,
+   "name": "New York 11th",
+   "baseline": {
+    "margin": 1.2,
+    "probB": 0.5684,
+    "p10": -7.7,
+    "p90": 9.9,
+    "sideA": "Mike DeCillis",
+    "sideB": "Nicole Malliotakis"
+   }
+  },
+  {
+   "rank": 17,
+   "raceId": "house-FL-04",
+   "office": "house",
+   "state": "FL",
+   "district": 4,
+   "name": "Florida 4th",
+   "baseline": {
+    "margin": 1.27,
+    "probB": 0.5662,
+    "p10": -7.8,
+    "p90": 10.7,
+    "sideA": "LaShonda Holloway",
+    "sideB": "Aaron Bean"
+   }
+  },
+  {
+   "rank": 18,
+   "raceId": "sen-NE",
+   "office": "senate",
+   "state": "NE",
+   "district": null,
+   "name": "Nebraska Senate",
+   "baseline": {
+    "margin": -1.32,
+    "probB": 0.4193,
+    "p10": -8.83,
+    "p90": 6,
+    "sideA": "Dan Osborn",
+    "sideB": "Pete Ricketts"
+   }
+  },
+  {
+   "rank": 19,
+   "raceId": "house-MO-02",
+   "office": "house",
+   "state": "MO",
+   "district": 2,
+   "name": "Missouri 2nd",
+   "baseline": {
+    "margin": 1.44,
+    "probB": 0.5861,
+    "p10": -6.56,
+    "p90": 9.24,
+    "sideA": "Fred Wellman",
+    "sideB": "Ann Wagner"
+   }
+  },
+  {
+   "rank": 20,
+   "raceId": "house-NE-01",
+   "office": "house",
+   "state": "NE",
+   "district": 1,
+   "name": "Nebraska 1st",
+   "baseline": {
+    "margin": -1.47,
+    "probB": 0.4081,
+    "p10": -9.55,
+    "p90": 6.85,
+    "sideA": "Chris Backemeyer",
+    "sideB": "Mike Flood"
+   }
+  },
+  {
+   "rank": 21,
+   "raceId": "house-KS-02",
+   "office": "house",
+   "state": "KS",
+   "district": 2,
+   "name": "Kansas 2nd",
+   "baseline": {
+    "margin": 1.52,
+    "probB": 0.5789,
+    "p10": -7.44,
+    "p90": 10.66,
+    "sideA": "Don Coover",
+    "sideB": "Derek Schmidt"
+   }
+  },
+  {
+   "rank": 22,
+   "raceId": "house-WA-03",
+   "office": "house",
+   "state": "WA",
+   "district": 3,
+   "name": "Washington 3rd",
+   "baseline": {
+    "margin": -1.53,
+    "probB": 0.4078,
+    "p10": -9.5,
+    "p90": 5.9,
+    "sideA": "Marie Gluesenkamp Perez",
+    "sideB": "John Braun"
+   }
+  },
+  {
+   "rank": 23,
+   "raceId": "sen-SC",
+   "office": "senate",
+   "state": "SC",
+   "district": null,
+   "name": "South Carolina Senate",
+   "baseline": {
+    "margin": -1.58,
+    "probB": 0.4241,
+    "p10": -9.74,
+    "p90": 6.38,
+    "sideA": "Annie Andrews",
+    "sideB": "Darline Graham"
+   }
+  },
+  {
+   "rank": 24,
+   "raceId": "house-OH-08",
+   "office": "house",
+   "state": "OH",
+   "district": 8,
+   "name": "Ohio 8th",
+   "baseline": {
+    "margin": 1.67,
+    "probB": 0.5966,
+    "p10": -7,
+    "p90": 10.5,
+    "sideA": "Vanessa Enoch",
+    "sideB": "Warren Davidson"
+   }
+  },
+  {
+   "rank": 25,
+   "raceId": "house-ME-02",
+   "office": "house",
+   "state": "ME",
+   "district": 2,
+   "name": "Maine 2nd",
+   "baseline": {
+    "margin": -1.7,
+    "probB": 0.3988,
+    "p10": -10.04,
+    "p90": 6.56,
+    "sideA": "Matt Dunlap",
+    "sideB": "Paul LePage"
+   }
+  },
+  {
+   "rank": 26,
+   "raceId": "sen-TX",
+   "office": "senate",
+   "state": "TX",
+   "district": null,
+   "name": "Texas Senate",
+   "baseline": {
+    "margin": -1.7,
+    "probB": 0.3697,
+    "p10": -7.92,
+    "p90": 4.65,
+    "sideA": "James Talarico",
+    "sideB": "Ken Paxton"
+   }
+  },
+  {
+   "rank": 27,
+   "raceId": "house-WI-01",
+   "office": "house",
+   "state": "WI",
+   "district": 1,
+   "name": "Wisconsin 1st",
+   "baseline": {
+    "margin": 1.73,
+    "probB": 0.6145,
+    "p10": -6.8,
+    "p90": 9.9,
+    "sideA": "Mitchell Berman",
+    "sideB": "Bryan Steil"
+   }
+  },
+  {
+   "rank": 28,
+   "raceId": "house-TX-24",
+   "office": "house",
+   "state": "TX",
+   "district": 24,
+   "name": "Texas 24th",
+   "baseline": {
+    "margin": -1.78,
+    "probB": 0.3956,
+    "p10": -10.28,
+    "p90": 6.62,
+    "sideA": "Kevin Burge",
+    "sideB": "Beth Van Duyne"
+   }
+  },
+  {
+   "rank": 29,
+   "raceId": "sen-ME",
+   "office": "senate",
+   "state": "ME",
+   "district": null,
+   "name": "Maine Senate",
+   "baseline": {
+    "margin": -1.79,
+    "probB": 0.3468,
+    "p10": -8.31,
+    "p90": 5.08,
+    "sideA": "Troy Jackson",
+    "sideB": "Susan Collins"
+   }
+  },
+  {
+   "rank": 30,
+   "raceId": "house-MN-08",
+   "office": "house",
+   "state": "MN",
+   "district": 8,
+   "name": "Minnesota 8th",
+   "baseline": {
+    "margin": -1.98,
+    "probB": 0.3791,
+    "p10": -11.02,
+    "p90": 7.28,
+    "sideA": "Trina Swanson",
+    "sideB": "Pete Stauber"
+   }
+  },
+  {
+   "rank": 31,
+   "raceId": "house-KY-06",
+   "office": "house",
+   "state": "KY",
+   "district": 6,
+   "name": "Kentucky 6th",
+   "baseline": {
+    "margin": -2.06,
+    "probB": 0.3676,
+    "p10": -10.46,
+    "p90": 6.74,
+    "sideA": "Zach Dembo",
+    "sideB": "Ralph Alvarado"
+   }
+  },
+  {
+   "rank": 32,
+   "raceId": "house-FL-22",
+   "office": "house",
+   "state": "FL",
+   "district": 22,
+   "name": "Florida 22nd",
+   "baseline": {
+    "margin": 2.11,
+    "probB": 0.6082,
+    "p10": -6.69,
+    "p90": 10.91,
+    "sideA": "Pia Dandiya",
+    "sideB": "Casey Askar"
+   }
+  },
+  {
+   "rank": 33,
+   "raceId": "house-TN-09",
+   "office": "house",
+   "state": "TN",
+   "district": 9,
+   "name": "Tennessee 9th",
+   "baseline": {
+    "margin": 2.22,
+    "probB": 0.6328,
+    "p10": -6.37,
+    "p90": 10.83,
+    "sideA": "Justin Pearson",
+    "sideB": "Brent Taylor"
+   }
+  },
+  {
+   "rank": 34,
+   "raceId": "gov-WI",
+   "office": "governor",
+   "state": "WI",
+   "district": null,
+   "name": "Wisconsin Governor",
+   "baseline": {
+    "margin": -2.23,
+    "probB": 0.354,
+    "p10": -10.63,
+    "p90": 5.9,
+    "sideA": "David Crowley",
+    "sideB": "Tom Tiffany"
+   }
+  },
+  {
+   "rank": 35,
+   "raceId": "house-FL-09",
+   "office": "house",
+   "state": "FL",
+   "district": 9,
+   "name": "Florida 9th",
+   "baseline": {
+    "margin": 2.24,
+    "probB": 0.6298,
+    "p10": -7.31,
+    "p90": 11.49,
+    "sideA": "Darren Soto",
+    "sideB": "Dan Green"
+   }
+  },
+  {
+   "rank": 36,
+   "raceId": "house-FL-26",
+   "office": "house",
+   "state": "FL",
+   "district": 26,
+   "name": "Florida 26th",
+   "baseline": {
+    "margin": 2.32,
+    "probB": 0.6395,
+    "p10": -6.18,
+    "p90": 10.92,
+    "sideA": "Nicole Locklin",
+    "sideB": "Mario Diaz-Balart"
+   }
+  },
+  {
+   "rank": 37,
+   "raceId": "gov-TX",
+   "office": "governor",
+   "state": "TX",
+   "district": null,
+   "name": "Texas Governor",
+   "baseline": {
+    "margin": 2.33,
+    "probB": 0.7014,
+    "p10": -3.64,
+    "p90": 8.06,
+    "sideA": "Gina Hinojosa",
+    "sideB": "Greg Abbott"
+   }
+  },
+  {
+   "rank": 38,
+   "raceId": "house-CO-04",
+   "office": "house",
+   "state": "CO",
+   "district": 4,
+   "name": "Colorado 4th",
+   "baseline": {
+    "margin": 2.37,
+    "probB": 0.6818,
+    "p10": -4.48,
+    "p90": 9.32,
+    "sideA": "Eileen Laubacher",
+    "sideB": "Lauren Boebert"
+   }
+  },
+  {
+   "rank": 39,
+   "raceId": "sen-KS",
+   "office": "senate",
+   "state": "KS",
+   "district": null,
+   "name": "Kansas Senate",
+   "baseline": {
+    "margin": -2.46,
+    "probB": 0.3506,
+    "p10": -10.14,
+    "p90": 5.07,
+    "sideA": "Adam Hamilton",
+    "sideB": "Roger Marshall"
+   }
+  },
+  {
+   "rank": 40,
+   "raceId": "house-SC-01",
+   "office": "house",
+   "state": "SC",
+   "district": 1,
+   "name": "South Carolina 1st",
+   "baseline": {
+    "margin": 2.49,
+    "probB": 0.639,
+    "p10": -6.26,
+    "p90": 11.34,
+    "sideA": "Nancy Lacore",
+    "sideB": "Jenny Costa Honeycutt"
+   }
+  },
+  {
+   "rank": 41,
+   "raceId": "house-VA-02",
+   "office": "house",
+   "state": "VA",
+   "district": 2,
+   "name": "Virginia 2nd",
+   "baseline": {
+    "margin": -2.93,
+    "probB": 0.2914,
+    "p10": -9.64,
+    "p90": 3.86,
+    "sideA": "Elaine Luria",
+    "sideB": "Jen Kiggans"
+   }
+  },
+  {
+   "rank": 42,
+   "raceId": "house-CO-05",
+   "office": "house",
+   "state": "CO",
+   "district": 5,
+   "name": "Colorado 5th",
+   "baseline": {
+    "margin": 3.02,
+    "probB": 0.7146,
+    "p10": -4.01,
+    "p90": 9.99,
+    "sideA": "Jessica Killin",
+    "sideB": "Jeff Crank"
+   }
+  },
+  {
+   "rank": 43,
+   "raceId": "gov-KS",
+   "office": "governor",
+   "state": "KS",
+   "district": null,
+   "name": "Kansas Governor",
+   "baseline": {
+    "margin": -3.1,
+    "probB": 0.3168,
+    "p10": -11.28,
+    "p90": 5.29,
+    "sideA": "Cindy Holscher",
+    "sideB": "Ty Masterson"
+   }
+  },
+  {
+   "rank": 44,
+   "raceId": "house-AZ-02",
+   "office": "house",
+   "state": "AZ",
+   "district": 2,
+   "name": "Arizona 2nd",
+   "baseline": {
+    "margin": 3.22,
+    "probB": 0.715,
+    "p10": -4.25,
+    "p90": 10.95,
+    "sideA": "Jonathan Nez",
+    "sideB": "Eli Crane"
+   }
+  },
+  {
+   "rank": 45,
+   "raceId": "house-NY-02",
+   "office": "house",
+   "state": "NY",
+   "district": 2,
+   "name": "New York 2nd",
+   "baseline": {
+    "margin": 3.43,
+    "probB": 0.7076,
+    "p10": -4.9,
+    "p90": 11.4,
+    "sideA": "Pat Halpin",
+    "sideB": "Andrew Garbarino"
+   }
+  },
+  {
+   "rank": 46,
+   "raceId": "house-CO-03",
+   "office": "house",
+   "state": "CO",
+   "district": 3,
+   "name": "Colorado 3rd",
+   "baseline": {
+    "margin": 3.52,
+    "probB": 0.7144,
+    "p10": -4.27,
+    "p90": 11.43,
+    "sideA": "Dwayne Romero",
+    "sideB": "Jeff Hurd"
+   }
+  },
+  {
+   "rank": 47,
+   "raceId": "house-PA-08",
+   "office": "house",
+   "state": "PA",
+   "district": 8,
+   "name": "Pennsylvania 8th",
+   "baseline": {
+    "margin": -3.53,
+    "probB": 0.285,
+    "p10": -11.93,
+    "p90": 4.77,
+    "sideA": "Paige Cognetti",
+    "sideB": "Rob Bresnahan"
+   }
+  },
+  {
+   "rank": 48,
+   "raceId": "sen-OH",
+   "office": "senate",
+   "state": "OH",
+   "district": null,
+   "name": "Ohio Senate special",
+   "baseline": {
+    "margin": -3.56,
+    "probB": 0.221,
+    "p10": -9.38,
+    "p90": 2.32,
+    "sideA": "Sherrod Brown",
+    "sideB": "Jon Husted"
+   }
+  },
+  {
+   "rank": 49,
+   "raceId": "gov-NE",
+   "office": "governor",
+   "state": "NE",
+   "district": null,
+   "name": "Nebraska Governor",
+   "baseline": {
+    "margin": 3.59,
+    "probB": 0.7524,
+    "p10": -3.03,
+    "p90": 10.14,
+    "sideA": "Lynne Walz",
+    "sideB": "Jim Pillen"
+   }
+  },
+  {
+   "rank": 50,
+   "raceId": "house-WI-08",
+   "office": "house",
+   "state": "WI",
+   "district": 8,
+   "name": "Wisconsin 8th",
+   "baseline": {
+    "margin": 3.63,
+    "probB": 0.7149,
+    "p10": -4.91,
+    "p90": 11.89,
+    "sideA": "Rick Crosson",
+    "sideB": "Tony Wied"
+   }
+  }
+ ],
+ "excluded": []
+}
