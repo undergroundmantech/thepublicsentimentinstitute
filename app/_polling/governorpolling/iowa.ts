@@ -2,7 +2,7 @@
 // Iowa — 2026 Governor: Rob Sand (D) vs. Zach Lahn (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-21.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -57,6 +57,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 678, "sampleType": "LV", "results": {"Rob Sand (D)": 50.0, "Zach Lahn (R)": 45.0, "Undecided": 5.0}},
     {"raceId": "IA-GOV-2026", "pollster": "Cook Political Report/GS Strategy Group and New River Strategies", "startDate": "2026-10-09", "endDate": "2026-10-13", "sampleSize": 602, "sampleType": "LV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 43.0, "Undecided": 3.0}},
     {"raceId": "IA-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 863, "sampleType": "LV", "results": {"Rob Sand (D)": 49.0, "Zach Lahn (R)": 45.0, "Undecided": 6.0}},
-    {"raceId": "IA-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 491, "sampleType": "LV", "results": {"Rob Sand (D)": 52.0, "Zach Lahn (R)": 47.3, "Other": 0.7}}
+    {"raceId": "IA-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 491, "sampleType": "LV", "results": {"Rob Sand (D)": 52.0, "Zach Lahn (R)": 47.3, "Other": 0.7}},
+    {"raceId": "IA-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 403, "sampleType": "LV", "results": {"Rob Sand (D)": 50.0, "Zach Lahn (R)": 46.0, "Undecided": 3.0}}
   ],
 };

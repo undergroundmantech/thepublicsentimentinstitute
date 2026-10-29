@@ -18,14 +18,17 @@ How a state's early vote becomes a turnout correction
      still to come carry half of it, so the electorate gap is delta x (s + 0.5 (1 - s)), s the share of the expected
      total vote already cast. Registration runs ahead of party identification, so 85 percent of it is read as a gap
      in party identification.
-  2. Strength. A state's own reading counts n / (n + 25,000) of its ballots, three times over at most, times
-     pace / (pace + 0.1) for how much of its early vote is in, and a state whose party is estimated rather than reported
-     counts 35 percent of that.
-  3. Timing and previous results. Ballots cast early in the window run more Democratic than the whole early vote,
-     so a reported gap is moved 3 points toward Republicans times the share of the early vote still to come. Where a
-     state published its early vote party split on this day and at the close in 2022 or 2024, the like for like
-     reading, today's lead against that day's less the forecast's expected early vote against that year's final, takes
-     65 percent of the weight.
+  2. Strength, measured each run (Oct 28 2026, DYNAMIC STRENGTH in the code): a state's reading counts
+     sigma_forecast^2 / sigma_early_vote^2 against the forecast's one. sigma_forecast is the race's own uncertainty from
+     its 80 percent range. sigma_early_vote adds the state's day to day scatter around its trend, the uncertainty of
+     that trend over the early vote still to come, the voters still to come (the spread of the gap across reporting
+     states times the share of the expected vote not yet cast), a modeled rather than reported party split, and ballots
+     with no party; a gap far outside the other states' spread is down weighted as a likely data quirk.
+  3. Timing and previous results. The gap is carried to the end of the state's early vote along its own 2026 trend,
+     partially pooled with the other states and with the 2022 and 2024 drift, at most 8 points. Where a state published
+     its early vote party split on this day and at the close in 2022 or 2024, the like for like reading takes half the
+     weight with one past year and two thirds with two. Registration is read as party identification at a ratio measured
+     from the On Point Oct 28 national poll's early voters against the 0.85 prior.
   4. Primary turnout. The Democratic share of 2026 primary ballots against the 2018 and 2022 midterm primaries is a
      weak prior on which party's voters are more engaged, for every state with primary counts.
   5. Neighbours. Every state, with ballots in or not, also reads the gaps of the reporting states most like it, by the
@@ -53,11 +56,9 @@ Usage: python3 ev_adjust.py SIGNALS_JSON PUBLIC_FORECAST_DIR [--dry]
 """
 import glob, json, math, os, sys, copy
 
-# Oct 26 2026: retired by the final methodology. The early vote now reaches the forecast through the electorate leg
-# (scripts/forecast/final_method), so this separate turnout correction would count it twice. EV_ADJUST_FORCE=1 runs it anyway.
-if os.environ.get("EV_ADJUST_FORCE") != "1":
-    print("ev_adjust.py is retired: the early vote enters through the final method electorate leg. Nothing changed.")
-    sys.exit(0)
+# Oct 26 2026 this was retired while the early vote rode inside the engine's electorate. Oct 28 2026, by the user: the
+# engine term is off (EV_ELECTORATE empty) and this correction is back, with its strength measured each run rather than
+# set by hand (DYNAMIC STRENGTH below). Run it after every publish, once: it replaces the correction already in a race.
 import numpy as np
 
 SIG = json.load(open(sys.argv[1]))
@@ -65,7 +66,7 @@ PUB = sys.argv[2]
 DRY = "--dry" in sys.argv
 SITE = os.environ.get("SITE", os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 RUNS = "/tmp/fcrun/runs"
-RUN_ORDER = os.environ.get("EV_RUNS", "S1018AK,S1018OH,S1018,S1017C,S1017B,S1017,B2").split(",")
+RUN_ORDER = os.environ.get("EV_RUNS", "S1028PE,S1028DB").split(",")
 TODAY = os.environ.get("TODAY", "2026-10-18")
 ELECTION = "2026-11-03"
 
@@ -98,6 +99,90 @@ def at_day(cps, d):
     return None
 
 
+# ── DYNAMIC STRENGTH, Oct 28 2026 ─────────────────────────────────────────────────────────────────────────────────
+# Every weight below is measured from the data each time the script runs, not set by hand:
+#   timing   how far a state's party gap moves as its early vote fills in: the 2026 daily snapshots of each reporting
+#            state (gap against the share of its early vote in), partially pooled with the other states and with the
+#            2022 and 2024 drift from the history file, so a state's own trend counts only as far as it is clear
+#   noise    each state's own day to day scatter around that trend, shrunk toward the typical state's
+#   unknown  the voters still to come: the spread of the gap across reporting states, times the share of the expected
+#            vote not yet cast; a modeled party split carries that spread again in proportion to how much is modeled
+#   prior    the forecast's own uncertainty in the race, from its 80 percent range: the early vote moves an uncertain
+#            race more than a settled one. A state's reading then counts sigma_forecast^2 / sigma_early_vote^2 against
+#            the forecast's one, the precision weighted (Kalman) combination
+#   rho      registration to party identification, from the On Point Oct 28 national poll's early voters against the
+#            tracker's registration split in the same states, combined with the 0.85 prior by precision
+CAL = {}
+def _calibrate():
+    import pandas as _pd
+    snaps = sorted(glob.glob(f"{SITE}/scripts/forecast/earlyvote/snapshots/*/ev_signals.json"))
+    rows = []
+    for f in snaps:
+        d = json.load(open(f)); day = os.path.basename(os.path.dirname(f))
+        for st_, x in d["states"].items():
+            rows.append(dict(day=day, st=st_, delta=x["delta"], pace=min(1.0, x["pace"]), est=x["estimatedShare"]))
+    L = _pd.DataFrame(rows).drop_duplicates(["day", "st"], keep="last")
+    fits = {}
+    for st_, g in L[L.est < 0.2].groupby("st"):
+        if len(g) < 4 or g.pace.max() - g.pace.min() < 0.05: continue
+        Xm = np.c_[np.ones(len(g)), 1 - g.pace.values]; b, *_ = np.linalg.lstsq(Xm, g.delta.values, rcond=None)
+        res = g.delta.values - Xm @ b; sd = float(np.sqrt((res ** 2).sum() / max(1, len(g) - 2)))
+        se_b = sd / max(1e-6, float(np.sqrt(((Xm[:, 1] - Xm[:, 1].mean()) ** 2).sum())))
+        fits[st_] = dict(b=float(b[1]), se_b=se_b, sd=sd, n=int(len(g)))
+    bs = np.array([v["b"] for v in fits.values()]) if fits else np.array([-7.0])
+    b_live = float(np.median(bs)); tau_b = float(1.4826 * np.median(np.abs(bs - b_live))) or 5.0
+    hd = []
+    for st_, v in H["states"].items():
+        for y in ("2022", "2024"):
+            yy = v.get(y, {}); pl = sorted(yy.get("party") or [], key=lambda x: -x[0])
+            e = next((q for q in pl if q[0] >= 6), None); fn = next((q for q in sorted(pl, key=lambda x: x[0]) if q[0] <= 2), None)
+            if not e or not fn or not yy.get("early"): continue
+            cast = at_day(yy.get("cps"), e[0]); rem = 1 - min(1.0, cast[0] / yy["early"]) if cast else 0.7
+            if rem > 0.1: hd.append(100 * ((fn[2] - fn[1]) - (e[2] - e[1])) / rem)
+    b_hist = -float(np.median(hd)) if hd else -7.0; se_hist = (float(np.std(hd)) / max(1.0, math.sqrt(len(hd)))) if len(hd) > 1 else 5.0
+    se_live = tau_b / max(1.0, math.sqrt(len(bs)))
+    b_pool = (b_live / se_live ** 2 + b_hist / se_hist ** 2) / (1 / se_live ** 2 + 1 / se_hist ** 2)
+    sd_pool = float(np.median([v["sd"] for v in fits.values()])) if fits else 1.0
+    last = L[L.day == L.day.max()]
+    sig_cross = float(last[last.est < 0.2].delta.std()) if (last.est < 0.2).sum() > 3 else 8.0
+    rho, rho_meas = RHO, None
+    dbp = os.environ.get("EV_DB", "/tmp/fcrun/TPSI_B/model/tpsi_db/TPSI_Unified_Respondent_Dataset.csv")
+    try:
+        db = _pd.read_csv(dbp, low_memory=False, usecols=["wave", "already_voted", "state", "party_id", "weight_rv"])
+        w = db[(db.wave == "2026-10 October 28 National Poll") & (db.already_voted == 1)]
+        w = w[w.state.map(lambda x: x in SIG["states"] and SIG["states"][x]["estimatedShare"] < 0.2)]
+        if len(w) >= 40:
+            trk = w.state.map(lambda x: 100 * (SIG["states"][x]["party"]["d"] - SIG["states"][x]["party"]["r"])).values
+            pid = np.where(w.party_id == "Democrat", 100.0, np.where(w.party_id == "Republican", -100.0, 0.0)); ww = w.weight_rv.values
+            rng = np.random.default_rng(20261028); boot = []
+            for _ in range(400):
+                ix = rng.integers(0, len(w), len(w)); tt = (ww[ix] * trk[ix]).sum()
+                if abs(tt) > 1e-6: boot.append((ww[ix] * pid[ix]).sum() / tt)
+            r_hat = float((ww * pid).sum() / (ww * trk).sum()); r_se = float(np.std(boot)) or 1.0
+            rho = (RHO / 0.15 ** 2 + r_hat / r_se ** 2) / (1 / 0.15 ** 2 + 1 / r_se ** 2); rho_meas = dict(poll=round(r_hat, 3), se=round(r_se, 3), n=int(len(w)))
+    except Exception as ex:
+        rho_meas = dict(error=str(ex)[:120])
+    sig_f = {}
+    for r in M["races"]:
+        if r["office"] not in ("senate", "governor"): continue
+        e = r["est"]; sd = max(1.5, (e["p90"] - e["p10"]) / 2.563)
+        if r["st"] not in sig_f or r["office"] == "senate": sig_f[r["st"]] = sd
+    CAL.update(fits=fits, b_live=b_live, tau_b=tau_b, b_hist=b_hist, se_hist=se_hist, hist_pairs=len(hd), b_pool=b_pool,
+               sd_pool=sd_pool, sig_cross=sig_cross, rho=rho, rho_meas=rho_meas, sig_f=sig_f,
+               sig_f_default=float(np.median(list(sig_f.values()))) if sig_f else 5.0, snapshots=len(snaps))
+    return rho
+def slope_for(st_):
+    f = CAL["fits"].get(st_)
+    if not f: return CAL["b_pool"], CAL["tau_b"]
+    lam = min(0.5, CAL["tau_b"] ** 2 / (CAL["tau_b"] ** 2 + f["se_b"] ** 2))
+    return lam * f["b"] + (1 - lam) * CAL["b_pool"], math.sqrt(lam * f["se_b"] ** 2 + (1 - lam) * CAL["tau_b"] ** 2 / 4)
+def noise_for(st_):
+    f = CAL["fits"].get(st_)
+    if not f: return CAL["sd_pool"]
+    return math.sqrt((f["n"] * f["sd"] ** 2 + 4 * CAL["sd_pool"] ** 2) / (f["n"] + 4))
+
+RHO = _calibrate()
+
 # ── 1 to 3, 6: each reporting state's own readings ─────────────────────────────────────────────────────────────
 own = {}
 for st, s in SIG["states"].items():
@@ -108,7 +193,10 @@ for st, s in SIG["states"].items():
     # Republicans from 16 days out to the close. The forecast's expected mix is the whole window's, so a reported
     # gap is moved toward Republicans by 3 points times the share of the early vote still to come, half that in a
     # universal mail state. An estimated party already carries the measured return rates, so it is not moved.
-    t = 3.0 * (1 - min(1.0, s["pace"])) * (1 - s["estimatedShare"]) * (0.5 if s.get("regime") == "universal" else 1.0)
+    # Oct 28 2026: the timing move is measured (DYNAMIC STRENGTH), not the old fixed 3 points: the state's gap is carried to the
+    # end of its early vote along its pooled trend, at most 8 points
+    b_s, sb_s = slope_for(st)
+    t = max(-8.0, min(8.0, -b_s * (1 - min(1.0, s["pace"])))) * (1 - s["estimatedShare"]) * (0.5 if s.get("regime") == "universal" else 1.0)
     own_corr = s["delta"] + t
     # Previous results. Where the state published its early vote party split on this day and at the close in 2022 or
     # 2024, the like for like reading is how far today's lead has moved since that day, less how far the forecast's
@@ -124,12 +212,21 @@ for st, s in SIG["states"].items():
             fin = next((p for p in sorted(pl, key=lambda x: x[0]) if p[0] <= 2), None)
             if same and fin:
                 hist.append((now - (same[2] - same[1]) * 100) - (expf - (fin[2] - fin[1]) * 100))
-    used = 0.35 * own_corr + 0.65 * float(np.mean(hist)) if hist else own_corr
+    wh = len(hist) / (len(hist) + 1.0)                                # one past year half the weight, two years two thirds
+    used = (1 - wh) * own_corr + wh * float(np.mean(hist)) if hist else own_corr
     g_ev = RHO * used * carry                                          # R minus D points of the electorate
     # strength: ballots in, how far into the early vote the state is (pace / (pace + 0.1), so a state with 2 percent of
     # its early vote in counts a sixth as much as one with a third in), and reported rather than estimated party
-    w = min(W_MAX, W_MAX * n / (n + N0)) * (s["pace"] / (s["pace"] + 0.1)) * (1 - (1 - EST_W) * s["estimatedShare"])
-    rd = {"g": g_ev, "w": w, "delta": s["delta"], "timing": t}
+    # Oct 28 2026: precision weighted against the forecast (DYNAMIC STRENGTH)
+    sf = CAL["sig_f"].get(st, CAL["sig_f_default"])
+    var_ev = (noise_for(st) ** 2 + (sb_s * (1 - min(1.0, s["pace"]))) ** 2 + (CAL["sig_cross"] * (1 - sh)) ** 2
+              + (CAL["sig_cross"] * s["estimatedShare"]) ** 2 + 100.0 ** 2 * 0.25 / max(1.0, n)
+              # a state where most ballots carry no party (Arkansas registers none) says little about the parties
+              + (2 * CAL["sig_cross"] * max(0.0, s["party"]["o"] - 0.35) / 0.65) ** 2) * RHO ** 2
+    w = sf ** 2 / var_ev
+    # heavy tails: a gap far outside the spread of the other states is more likely a data quirk than a real shift
+    w = w / (1 + (s["delta"] / (2.5 * CAL["sig_cross"])) ** 2)
+    rd = {"g": g_ev, "w": w, "delta": s["delta"], "timing": t, "sig_forecast": sf, "sig_ev": math.sqrt(var_ev), "weight_share": w / (1 + w)}
     if hist:
         rd["g_hist"] = RHO * float(np.mean(hist)) * carry; rd["hist_years"] = len(hist)
     # turnout level: ballots against the early vote the forecast expects by today, on the state's past timing
@@ -376,7 +473,9 @@ M["meta"]["earlyVote"] = {"snapshot": SIG["snapshot"], "daysOut": D_OUT, "applie
                           "states": sum(1 for v in post.values() if v["source"] == "early vote"),
                           "ballots": int(sum(s["ballots"] for s in SIG["states"].values()))}
 summary = {"snapshot": SIG["snapshot"], "daysOut": D_OUT, "applied": TODAY,
-           "settings": dict(kappa=KAPPA, rho=RHO, n0=N0, w_max=W_MAX, estimated_weight=EST_W, w_hist=W_HIST, w_nbr=W_NBR, w_prim=W_PRIM, w_vol=W_VOL, cap=CAP),
+           "settings": dict(kappa=KAPPA, rho=RHO, w_nbr=W_NBR, w_prim=W_PRIM, w_vol=W_VOL, cap=CAP),
+           "dynamic": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in CAL.items() if k not in ("fits", "sig_f")},
+           "dynamic_states": {st_: {k: round(v, 3) for k, v in f.items()} for st_, f in CAL["fits"].items()},
            "states": {st: {k: (round(v, 3) if isinstance(v, float) else v) for k, v in ps.items()} for st, ps in post.items()},
            "chambers": chlog}
 for st, sc in state_comp.items():

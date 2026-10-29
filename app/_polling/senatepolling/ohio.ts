@@ -72,6 +72,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1592, "sampleType": "LV", "results": {"Sherrod Brown (D)": 52.0, "Jon Husted (R)": 47.0, "Undecided": 1.0}},
     {"raceId": "OH-SEN-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 531, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Undecided": 9.0}},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Undecided": 9.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 44.2, "Other": 2.9, "Undecided": 5.9}}
+    {"raceId": "OH-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 44.2, "Other": 2.9, "Undecided": 5.9}},
+    {"raceId": "OH-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 47.0, "Other": 3.0, "Undecided": 3.0}}
   ],
 };

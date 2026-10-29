@@ -66,6 +66,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "ActiVote", "startDate": "2026-09-27", "endDate": "2026-10-19", "sampleSize": 400, "sampleType": "LV", "results": {"Amy Acton (D)": 48.6, "Vivek Ramaswamy (R)": 51.4}},
     {"raceId": "OH-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1592, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 48.0, "Undecided": 2.0}},
     {"raceId": "OH-GOV-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 531, "sampleType": "LV", "results": {"Amy Acton (D)": 46.2, "Vivek Ramaswamy (R)": 45.4, "Other": 2.0, "Undecided": 5.7}},
-    {"raceId": "OH-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Amy Acton (D)": 48.2, "Vivek Ramaswamy (R)": 43.8, "Other": 3.8, "Undecided": 4.3}}
+    {"raceId": "OH-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Amy Acton (D)": 48.2, "Vivek Ramaswamy (R)": 43.8, "Other": 3.8, "Undecided": 4.3}},
+    {"raceId": "OH-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Amy Acton (D)": 45.0, "Vivek Ramaswamy (R)": 47.0, "Other": 4.0, "Undecided": 3.0}}
   ],
 };

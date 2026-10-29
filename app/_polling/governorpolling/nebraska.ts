@@ -2,7 +2,7 @@
 // Nebraska — 2026 Governor: Lynne Walz (D) vs. Jim Pillen (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-18.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -47,6 +47,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 571, "sampleType": "RV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 44.0, "Other": 8.0, "Undecided": 5.0}},
     {"raceId": "NE-GOV-2026", "pollster": "National Public Affairs", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 598, "sampleType": "LV", "results": {"Lynne Walz (D)": 41.0, "Jim Pillen (R)": 47.0, "Other": 8.0, "Undecided": 4.0}},
     {"raceId": "NE-GOV-2026", "pollster": "Global Strategy Group for Walz (D)", "startDate": "2026-10-13", "endDate": "2026-10-18", "sampleSize": 800, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.8, "Jim Pillen (R)": 44.9, "Other": 5.6, "Undecided": 5.7}},
-    {"raceId": "NE-GOV-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 40.0, "Other": 9.0, "Undecided": 8.0}}
+    {"raceId": "NE-GOV-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 40.0, "Other": 9.0, "Undecided": 8.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 407, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 47.0, "Other": 11.0, "Undecided": 2.0}}
   ],
 };

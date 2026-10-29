@@ -9,6 +9,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 28, 2026 ──
+  { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { RightTrack: 31.6, WrongTrack: 61.9 } },   // On Point national poll, Oct 28, likely voters; registered voters 29.9 to 60.3
   // ── Added Oct 5, 2026: June through September releases ──
   { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1429, sampleType: "RV", results: { RightTrack: 27, WrongTrack: 66 } },
   { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 2200, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 52 } },

@@ -2,7 +2,7 @@
 // Georgia — 2026 U.S. Senate: Jon Ossoff (D) vs. Mike Collins (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-20.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -54,6 +54,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 1090, "sampleType": "LV", "results": {"Jon Ossoff (D)": 51.0, "Mike Collins (R)": 43.0, "Undecided": 6.0}, "notes": "Sample size not given; 1,090 is a placeholder."},
     {"raceId": "GA-SEN-2026", "pollster": "UGA SPIA for the Atlanta Journal-Constitution", "startDate": "2026-10-07", "endDate": "2026-10-15", "sampleSize": 1000, "sampleType": "LV", "results": {"Jon Ossoff (D)": 48.0, "Mike Collins (R)": 40.0, "Undecided": 12.0}},
     {"raceId": "GA-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-15", "endDate": "2026-10-17", "sampleSize": 755, "sampleType": "LV", "results": {"Jon Ossoff (D)": 51.8, "Mike Collins (R)": 44.9, "Undecided": 3.3}},
-    {"raceId": "GA-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-06", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Jon Ossoff (D)": 54.0, "Mike Collins (R)": 46.0}}
+    {"raceId": "GA-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-06", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Jon Ossoff (D)": 54.0, "Mike Collins (R)": 46.0}},
+    {"raceId": "GA-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 40.0, "Other": 3.0, "Undecided": 2.0}}
   ],
 };

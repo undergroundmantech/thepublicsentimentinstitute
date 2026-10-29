@@ -62,6 +62,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 500, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-16", "endDate": "2026-10-20", "sampleSize": 1514, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 49.0, "Undecided": 2.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-21", "endDate": "2026-10-23", "sampleSize": 1077, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.5, "Susan Collins (R)": 47.0, "Undecided": 6.5}},
-    {"raceId": "ME-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-22", "endDate": "2026-10-25", "sampleSize": 560, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Other": 1.0, "Undecided": 3.0}}
+    {"raceId": "ME-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-22", "endDate": "2026-10-25", "sampleSize": 560, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Other": 1.0, "Undecided": 3.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 413, "sampleType": "LV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 44.0, "Other": 1.0, "Undecided": 4.0}}
   ],
 };

@@ -2,7 +2,7 @@
 // Iowa — 2026 U.S. Senate: Josh Turek (D) vs. Ashley Hinson (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-22.
+// ballot were dropped. Newest poll: 2026-10-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -72,6 +72,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 1094, "sampleType": "LV", "results": {"Josh Turek (D)": 44.2, "Ashley Hinson (R)": 45.9, "Other": 3.5, "Undecided": 6.4}},
     {"raceId": "IA-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 863, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 48.0, "Other": 2.0, "Undecided": 6.0}},
     {"raceId": "IA-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 491, "sampleType": "LV", "results": {"Josh Turek (D)": 51.6, "Ashley Hinson (R)": 46.9, "Other": 1.5}},
-    {"raceId": "IA-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1200, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 47.0, "Undecided": 8.0}}
+    {"raceId": "IA-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1200, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 47.0, "Undecided": 8.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 403, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 43.0, "Other": 7.0, "Undecided": 3.0}}
   ],
 };

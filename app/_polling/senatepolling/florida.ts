@@ -2,7 +2,7 @@
 // Florida — 2026 U.S. Senate: Angie Nixon (D) vs. Ashley Moody (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-26.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -53,6 +53,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 378, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.8, "Ashley Moody (R)": 52.5, "Other": 0.7, "Undecided": 1.1}},
     {"raceId": "FL-SEN-2026", "pollster": "University of North Florida", "startDate": "2026-10-12", "endDate": "2026-10-19", "sampleSize": 1471, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 49.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "FL-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 1014, "sampleType": "LV", "results": {"Angie Nixon (D)": 40.0, "Ashley Moody (R)": 48.0, "Other": 2.0, "Undecided": 10.0}},
-    {"raceId": "FL-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 4823, "sampleType": "LV", "results": {"Angie Nixon (D)": 42.8, "Ashley Moody (R)": 49.6, "Other": 1.7, "Undecided": 5.8}}
+    {"raceId": "FL-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 4823, "sampleType": "LV", "results": {"Angie Nixon (D)": 42.8, "Ashley Moody (R)": 49.6, "Other": 1.7, "Undecided": 5.8}},
+    {"raceId": "FL-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 515, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 51.0, "Other": 3.0, "Undecided": 4.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 813, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.0, "Ashley Moody (R)": 50.0, "Undecided": 6.0}}
   ],
 };
