@@ -2,7 +2,7 @@
 // Nebraska — 2026 U.S. Senate: Dan Osborn (I) vs. Pete Ricketts (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-29.
 // Osborn runs as an independent. The Democratic nominee withdrew, so he holds the
 // only non Republican line on the ballot and the forecast models him in that column.
 
@@ -53,6 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-10-22", "endDate": "2026-10-22", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 45.0, "Undecided": 7.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Impact Research for Osborn (D)", "startDate": "2026-10-14", "endDate": "2026-10-20", "sampleSize": 600, "sampleType": "LV", "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 49.0, "Other": 2.0, "Undecided": 1.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 41.0, "Other": 6.0, "Undecided": 5.0}},
-    {"raceId": "NE-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 407, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 47.0, "Other": 3.0, "Undecided": 3.0}}
+    {"raceId": "NE-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 407, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 47.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 1555, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.7, "Pete Ricketts (R)": 47.2, "Other": 4.0, "Undecided": 0.2}}
   ],
 };

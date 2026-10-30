@@ -2,7 +2,7 @@
 // Texas — 2026 Governor: Gina Hinojosa (D) vs. Greg Abbott (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-21.
+// ballot were dropped. Newest poll: 2026-10-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -90,6 +90,10 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "Texas Public Opinion Research", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 969, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.0, "Greg Abbott (R)": 51.0, "Other": 1.0}},
     {"raceId": "TX-GOV-2026", "pollster": "Emerson College", "startDate": "2026-10-17", "endDate": "2026-10-19", "sampleSize": 1000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.0, "Greg Abbott (R)": 49.0, "Other": 1.0, "Undecided": 4.0}},
     {"raceId": "TX-GOV-2026", "pollster": "VoteHub/Verasight", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 509, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.4, "Greg Abbott (R)": 47.7, "Other": 0.7, "Undecided": 5.1}},
-    {"raceId": "TX-GOV-2026", "pollster": "Univision/YouGov", "startDate": "2026-10-13", "endDate": "2026-10-21", "sampleSize": 1000, "sampleType": "RV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 48.0, "Undecided": 6.0}}
+    {"raceId": "TX-GOV-2026", "pollster": "Univision/YouGov", "startDate": "2026-10-13", "endDate": "2026-10-21", "sampleSize": 1000, "sampleType": "RV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 48.0, "Undecided": 6.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "Texas Southern University/YouGov", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 2000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 50.0, "Other": 2.0, "Undecided": 1.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-27", "sampleSize": 1142, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.3, "Greg Abbott (R)": 50.1, "Other": 1.5, "Undecided": 0.1}},
+    {"raceId": "TX-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 923, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 48.0, "Undecided": 6.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "Quantus Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 839, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.3, "Greg Abbott (R)": 51.6, "Other": 1.2, "Undecided": 0.9}}
   ],
 };

@@ -23,8 +23,6 @@ export const TROPHIES: Trophy[] = [
   { id: "surprise", name: "Survived October", desc: "Answer an October surprise and still lead the next poll average.", tier: 3, test: (s) => s.used.includes("osurprise") && s.polls.slice(-2).every((p) => p.m > 0) },
   { id: "crisis", name: "Crisis Manager", desc: "Get through three crises.", tier: 2, test: (s) => s.resolved.filter((x) => x.id.startsWith("cr:")).length >= 3 },
   { id: "chaos", name: "Agent of Chaos", desc: "Spin the chaos wheel three times.", tier: 1, test: (s) => (s.chaosN ?? 0) >= 3 },
-  { id: "hype", name: "Hype Train", desc: "Chat filled the hype meter.", tier: 1, test: (s) => (s.hypeN ?? 0) >= 1 },
-  { id: "chat", name: "Chat Is Running This", desc: "Let chat decide five cards.", tier: 1, test: (s) => (s.chatN ?? 0) >= 5 },
   { id: "viral", name: "Gone Viral", desc: "Have a rally clip go viral.", tier: 1, test: (s) => s.log.some((l) => l.t.startsWith("Viral moment")) },
   { id: "iron", name: "Iron Candidate", desc: "Reach the final week without a single rest day.", tier: 2, test: (s) => s.week >= (s.len ?? 8) && s.rested === 0 },
   { id: "dirty", name: "Opposition File", desc: "Drop your opposition research file.", tier: 1, test: (s) => !!s.dumped },
@@ -38,6 +36,13 @@ export const TROPHIES: Trophy[] = [
   { id: "machine", name: "Beat the Machine", desc: "Win against a five star rival.", tier: 3, test: (s) => !!s.result?.win && (s.rival?.stars ?? 0) >= 5 },
   { id: "spent", name: "Left It All Out There", desc: "Finish with less than $100,000 in the bank.", tier: 1, test: (s) => !!s.done && s.cash < 1e5 && s.cash >= 0 },
   { id: "nap", name: "Power Nap", desc: "Rest three times.", tier: 1, test: (s) => s.rested >= 3 },
+  { id: "crowd", name: "Crowd Pleaser", desc: "Land three perfect applause lines in one rally.", tier: 2, test: (s) => (s.crowdBest ?? 0) >= 6 },
+  { id: "showman", name: "Showman", desc: "Work the crowd at ten rallies.", tier: 1, test: (s) => (s.crowds ?? 0) >= 10 },
+  { id: "adman", name: "Mad Man", desc: "Cut three ads the focus group loved.", tier: 2, test: (s) => (s.adHits ?? 0) >= 3 },
+  { id: "whale", name: "Whale Watching", desc: "See two whale trades move your Kalshi line.", tier: 1, test: (s) => (s.whales ?? 0) >= 2 },
+  { id: "market", name: "Beat the Market", desc: "Win a race Kalshi opened you at 35 cents or less.", tier: 3, test: (s) => !!s.result?.win && !!s.mkt && s.mkt.open <= 0.35 },
+  { id: "bull", name: "Bull Run", desc: "Push your Kalshi line 15 cents above where it opened.", tier: 2, test: (s) => !!s.mkt && s.mkt.p - s.mkt.open >= 0.15 },
+  { id: "chalk", name: "Chalk", desc: "Win as the Kalshi favorite, priced at 75 cents or more on election eve.", tier: 1, test: (s) => !!s.result?.win && !!s.mkt && s.mkt.p >= 0.75 },
   { id: "everyone", name: "Shook Every Hand", desc: "Make 50 campaign stops.", tier: 3, test: (s) => visitsTotal(s) >= 50 },
 ];
 

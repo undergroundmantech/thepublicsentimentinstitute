@@ -1,4 +1,4 @@
-"""On Point Polling Candidate Mode: candidate quality, strength and weakness from the 2026 primaries and the polls.
+"""TPSI Candidate Mode: candidate quality, strength and weakness from the 2026 primaries and the polls.
 
 Four measures, each independent of the national environment because each is read inside one party or against the
 model's own environment based fundamentals:
@@ -17,7 +17,7 @@ model's own environment based fundamentals:
    where and among whom a candidate wins, not the party's statewide base.
 
 3. Candidate strength against the environment. Where polls exist, the gap between the polling average and the model's
-   own fundamentals, which already carry Trump approval, the Gallup environment, the census and On Point Polling electorate, the
+   own fundamentals, which already carry Trump approval, the Gallup environment, the census and TPSI electorate, the
    money and party unity, less the average gap across every polled race, which is the national environment, is what is
    left: the candidates themselves. Half of it, shrunk by the number of polls as
    n / (n + 4) and held to 0.12, moves the approval and census legs toward it.
@@ -71,7 +71,7 @@ GROUPS = [("Black", lambda ai, ri, ci: ri == 1), ("Hispanic", lambda ai, ri, ci:
           ("under 30", lambda ai, ri, ci: ai == 0), ("65 and over", lambda ai, ri, ci: ai == 3)]
 
 def primary_electorate(sm, model, st, fl):
-    """[C, 32, 3] expected primary voters by cell and party: ACS adults, the On Point Polling party mix solved to the county's 2024
+    """[C, 32, 3] expected primary voters by cell and party: ACS adults, the TPSI party mix solved to the county's 2024
     result, and the DSMeridian likely voter propensity of that cell's regular voters, the people who vote in primaries."""
     import history as hi, electorate as ev
     reg = model["state_region"][sm.STATES[st].get("base", st[:2])]
@@ -263,3 +263,55 @@ def poll_strength(n_polls, poll_d2, fund_d2, netdiff=None):
     gap = float(lg(poll_d2) - lg(fund_d2)) - POLL_CENTER
     a = n_polls / (n_polls + POLL_N0)
     return float(np.clip(K_POLL * (a * gap + (1 - a) * prior), -POLL_CAP, POLL_CAP)), gap
+
+# Oct 14 2026 coalition placement of the personal vote (COALITION). Rebuilt Oct 29 2026 at the user's request after the
+# original was lost with the workspace. An incumbent's personal vote, the county gap between their own past race and the
+# presidential race on the same ground, is noisy county by county. Half of it is now placed by the voter groups that
+# carried them: the gap is fit, weighted by votes, on each county's electorate, its race shares, college share, age
+# shares, size and area type (the census and voter file cells in the forecast's county profiles), with a ridge
+# penalty, and the fitted gap stands in for half the raw one, so a personal vote built on, say, rural white or Hispanic
+# voters lands where those voters live. The statewide size of the personal vote is kept: the fit is levelled to the
+# raw gap's vote weighted mean.
+COALITION = os.environ.get("COALITION", "1") == "1"
+COAL_PV_W = float(os.environ.get("COAL_PV_W", "0.5"))
+COAL_RIDGE = 2.0
+COAL_AUDIT = {}
+_COMP = {}
+def _composition():
+    if "X" in _COMP: return _COMP["X"]
+    import json as _js
+    site = os.environ.get("SITE_DIR", "/tmp/site")
+    prof = _js.load(open(f"{site}/public/watchdog/county_profiles.json"))["c"]
+    rows = {}
+    for f, x in prof.items():
+        try:
+            race = [g[0] for g in x["race_"]]; col = [g[0] for g in x["col"]]; age = [g[0] for g in x["age"]]
+            rows[f] = dict(black=race[1] / 100, hisp=race[2] / 100, asian=race[3] / 100, college=col[1] / 100,
+                           young=age[0] / 100, old=age[3] / 100, size=float(np.log(max(float(x.get("ev", 1.0)), 1.0))))
+        except Exception:
+            continue
+    X = pd.DataFrame(rows).T.astype(float)
+    _COMP["X"] = X
+    return X
+
+def smooth_gap(sm, fl, raw, w):
+    """Coalition placed personal vote: (fitted gap per county, audit), or (None, None) when too few counties."""
+    try:
+        X = _composition().reindex([str(f).zfill(5) for f in fl])
+    except Exception:
+        return None, None
+    raw = np.asarray(raw, float); w = np.asarray(w, float)
+    ok = X.notna().all(1).values & np.isfinite(raw) & (w > 0)
+    if ok.sum() < 8: return None, None
+    Z = X.values[ok]; mu = (Z * w[ok, None]).sum(0) / w[ok].sum(); sdv = np.sqrt((((Z - mu) ** 2) * w[ok, None]).sum(0) / w[ok].sum()) + 1e-9
+    Zs = np.c_[np.ones(ok.sum()), (Z - mu) / sdv]
+    W_ = w[ok] / w[ok].mean(); P = np.eye(Zs.shape[1]) * COAL_RIDGE; P[0, 0] = 0.0
+    beta = np.linalg.solve(Zs.T @ (Zs * W_[:, None]) + P, Zs.T @ (W_ * raw[ok]))
+    Xa = X.fillna(pd.Series(mu, index=X.columns)).values; fit = np.c_[np.ones(len(Xa)), (Xa - mu) / sdv] @ beta
+    fit = np.where(np.isfinite(fit), fit, raw)
+    m_raw = float((raw[ok] * w[ok]).sum() / w[ok].sum()); m_fit = float((fit[ok] * w[ok]).sum() / w[ok].sum())
+    fit = fit + (m_raw - m_fit)
+    res = raw[ok] - fit[ok]; r2 = 1 - float((W_ * res ** 2).sum() / max((W_ * (raw[ok] - m_raw) ** 2).sum(), 1e-12))
+    aud = dict(counties=int(ok.sum()), weight=COAL_PV_W, r2=round(r2, 3),
+               slopes_logit_per_sd={k: round(float(v), 4) for k, v in zip(X.columns, beta[1:])})
+    return fit, aud

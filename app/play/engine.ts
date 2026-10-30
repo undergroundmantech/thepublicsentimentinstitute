@@ -135,6 +135,10 @@ export type State = {
   reach?: Record<string, number>; jfc?: boolean;
   // added in the live edition: the rival war room, cards waiting for next week, the hot streak, trophies, chat and chaos
   rival?: Rival; queue?: Ev[]; streak?: number; ach?: string[]; chatN?: number; chaosN?: number; chaosW?: number; hypeW?: number; hypeN?: number; merch?: boolean; selfIn?: number; asked?: string[]; redbox?: number; outPlus?: number; vfat?: number; partyW?: number; celebW?: number; pods?: string[]; fringe?: string | null;
+  // added in the market edition: the Kalshi line on your race, opened at the live price when the campaign began
+  mkt?: Mkt;
+  // added in the show edition: crowd work, the ad studio and whale trades
+  crowdBest?: number; crowds?: number; adsMade?: number; adHits?: number; whales?: number;
 };
 export type Result = { m: number; win: boolean; me: number; op: number; counties: { f: string; m: number; t: number }[]; order: string[]; start: number; forecast: number;
   /** the campaign's final poll average, and the late break of undecided voters */ pollAvg?: number | null; late?: number;
@@ -349,6 +353,21 @@ export function rally(c: Ctx, s: State, f: string): ActResult {
   const crowd = crowdRoll(c, s, co[1]);
   return tire(c, s, 13) ?? { ok: true, t: crowd ? `${t} ${crowd.t}` : t, fx: fx + (crowd?.fx ?? 0), big: crowd?.big };
 }
+/** Working the crowd after a rally: three applause lines, each a miss (0), good (1) or perfect (2). A great set
+ * moves a little more of the county and fires up your base; a flat one gets a shrug and a bad clip. */
+export function crowdWork(c: Ctx, s: State, f: string, hits: number[]): ActResult & { score: number } {
+  const i = ci(c.r, f); const score = hits.reduce((a, b) => a + b, 0);
+  if (i < 0) return { ok: false, t: "Unknown county.", score };
+  const e = att(s) * (0.75 + s.stamina / 400), name = c.r.counties[i][1];
+  s.crowds = (s.crowds ?? 0) + 1; s.crowdBest = Math.max(s.crowdBest ?? 0, score);
+  let t: string, fx = 0;
+  if (score >= 5) { s.pers[i] += 0.7 * e; fx = (c.r.counties[i][5] / c.total) * 0.7 * e + 0.02 * e; s.glob += 0.02 * e; s.buzz = clamp(s.buzz + 6, 0, 100); s.volunteers += 45; s.enth[0] = clamp(s.enth[0] + 1.2, 0, 100); t = `The crowd in ${name} went wild: every applause line landed and the local news ran the chant.`; }
+  else if (score >= 3) { s.pers[i] += 0.35 * e; fx = (c.r.counties[i][5] / c.total) * 0.35 * e; s.buzz = clamp(s.buzz + 3, 0, 100); s.volunteers += 20; t = `A solid set in ${name}: the lines got real applause.`; }
+  else if (score >= 1) { t = `A so so set in ${name}: polite applause.`; }
+  else { s.buzz = clamp(s.buzz - 3, 0, 100); fx = -0.01 * e; s.glob -= 0.01 * e; t = `Crickets in ${name}: the applause lines fell flat, and someone filmed it.`; }
+  s.log.push({ w: s.week, kind: score ? "you" : "gaffe", t, fx: fx || undefined });
+  return { ok: true, t, fx, score, big: undefined };
+}
 /** Every rally rolls its crowd: once in a while a clip goes viral, sometimes the gym is half empty. */
 function crowdRoll(c: Ctx, s: State, name: string): { t: string; fx: number; big: "viral" | "packed" | "dud" } | null {
   const x = rand(s), pv = 0.05 + s.buzz / 900 + (s.staff.digital ? 0.03 : 0), pd = 0.07 + (s.stamina < 40 ? 0.08 : 0) + (s.buzz < 25 ? 0.05 : 0);
@@ -468,12 +487,15 @@ export const schedAt = (cw: number) => (cw <= 0 ? 0.035 : SCHED[Math.min(8, cw) 
 /** What a normal week on the trail is worth; the forecast assumes you do at least this much. */
 export const NORMAL_WEEK = 0.13;
 export const airFx = (spend: number, cost: number) => 0.45 * Math.log(1 + Math.max(0, spend) / cost);
-export function buyTV(c: Ctx, s: State, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
+/** mult is how the spot tested in the ad studio, 0.75 to 1.3; a stronger spot reaches further for the same money. */
+export function buyTV(c: Ctx, s: State, amt: number, tone: "positive" | "contrast" | "attack", mult = 1, title?: string): ActResult {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
   const rate = rateAt(cal(s));
   s.cash -= amt; s.spent += amt; s.tvWeek += amt;
-  s.pending.push(`tv:${Math.round(amt / rate)}:${tone}`);
-  const t = `${usd(amt)} of ${tone} television booked for this week across ${c.r.state}${rate > 1 ? `, at late rates ${Math.round((rate - 1) * 100)}% above September` : rate < 1 ? ", at cheap summer rates, though fewer voters are watching" : ""}.`; s.log.push({ w: s.week, kind: "you", t });
+  const q = Math.max(0.75, Math.min(1.3, mult));
+  s.pending.push(`tv:${Math.round((amt / rate) * q)}:${tone}`);
+  s.adsMade = (s.adsMade ?? 0) + (title ? 1 : 0); if (q >= 1.15) s.adHits = (s.adHits ?? 0) + 1;
+  const t = `${title ? `"${title}": ` : ""}${usd(amt)} of ${tone} television booked for this week across ${c.r.state}${rate > 1 ? `, at late rates ${Math.round((rate - 1) * 100)}% above September` : rate < 1 ? ", at cheap summer rates, though fewer voters are watching" : ""}.`; s.log.push({ w: s.week, kind: "you", t });
   return { ok: true, t };
 }
 export function reserveTV(c: Ctx, s: State, w: number, amt: number, tone: "positive" | "contrast" | "attack"): ActResult {
@@ -683,6 +705,50 @@ export function dropOppo(c: Ctx, s: State): ActResult {
   return { ok: true, t, fx };
 }
 const PHI = (z: number) => 1 / (1 + Math.exp(-1.702 * z));
+
+// ------------------------------------------------------------- the Kalshi line
+/** The prediction market on your race. It opens at the real Kalshi price for your candidate on the day you start,
+ * then trades on what traders can see: the public polls, never your internals or the truth. It moves part of the way
+ * each week, with some noise, and the opening price keeps a pull that fades as Election Day nears. A move of eight cents or
+ * more in a week is news: donors and volunteers notice a rising line, and a falling one makes them nervous. */
+export type Mkt = { ev: string; open: number; p: number; hist: { w: number; p: number }[]; asOf: string; real: number };
+export function openMarket(s: State, price: number, ev: string, asOf: string) {
+  const p = Math.round(Math.max(0.01, Math.min(0.99, price)) * 100) / 100;
+  s.mkt = { ev, open: p, p, hist: [{ w: 0, p }], asOf, real: p };
+}
+/** What a trader reads from the public polls: the same recency weights as your average, internals left out. */
+export const publicAvg = (s: State) => {
+  const ps = s.polls.filter((p) => !p.internal && p.w >= s.week - 3);
+  if (!ps.length) return null;
+  let a = 0, w = 0;
+  for (const p of ps) { const k = Math.pow(0.7, s.week - 1 - p.w); a += k * p.m; w += k; }
+  return a / w;
+};
+function marketWeek(c: Ctx, s: State) {
+  const k = s.mkt; if (!k) return;
+  const avg = publicAvg(s), left = Math.max(0, lenOf(s) - s.week);
+  const read = avg == null ? k.p : PHI(avg / Math.sqrt(2.6 ** 2 + 0.6 * left + 2));
+  const pull = Math.max(0.1, 0.55 - 0.06 * s.week);
+  const target = pull * k.open + (1 - pull) * read;
+  const prev = k.p;
+  k.p = Math.round(clamp(prev + 0.55 * (target - prev) + gauss(s) * 0.015, 0.01, 0.99) * 100) / 100;
+  // now and then a whale: one big trade jolts the line, and the move is the story for a day
+  if (rand(s) < 0.14) {
+    const up = rand(s) < 0.5, jolt = (0.06 + rand(s) * 0.07) * (up ? 1 : -1), size = Math.round((0.4 + rand(s) * 2.6) * 10) / 10;
+    k.p = Math.round(clamp(k.p + jolt, 0.01, 0.99) * 100) / 100; s.whales = (s.whales ?? 0) + 1;
+    s.buzz = clamp(s.buzz + (up ? 3 : -1), 0, 100);
+    s.log.push({ w: s.week, kind: "news", t: `Whale alert: a single trader put $${size} million on ${up ? c.me.name : c.op.name} on Kalshi, moving your line ${Math.abs(Math.round(jolt * 100))} cents ${up ? "up" : "down"}.` });
+  }
+  k.hist.push({ w: s.week, p: k.p });
+  const d = Math.round((k.p - prev) * 100);
+  if (d >= 8) {
+    const b = Math.round(c.weekly * 0.04); s.cash += b; s.raised += b; s.buzz = clamp(s.buzz + 3, 0, 100);
+    s.log.push({ w: s.week, kind: "money", t: `Kalshi traders bid ${c.me.name} up ${d} cents to ${Math.round(k.p * 100)} cents. The move made the political newsletters; ${usd(b)} came in from donors who want to back a rising campaign.` });
+  } else if (d <= -8) {
+    s.buzz = clamp(s.buzz - 2, 0, 100);
+    s.log.push({ w: s.week, kind: "money", t: `Kalshi traders sold ${c.me.name} down ${-d} cents to ${Math.round(k.p * 100)} cents. Reporters asked whether the campaign is in trouble.` });
+  }
+}
 /** The campaign's own odds: its poll average against the shared polling error, the noise in its polls and the weeks
  * left for things to change. It never sees the truth, only the polls. */
 export function winOdds(s: State): { p: number; sd: number; avg: number } | null {
@@ -1045,6 +1111,7 @@ export function endWeek(c: Ctx, s: State): LogItem[] {
   s.streak = m1 - m0 > 0.05 ? Math.max(0, st0) + 1 : m1 - m0 < -0.05 ? Math.min(0, st0) - 1 : 0;
   if (s.streak >= 3) { const b = Math.round(c.weekly * 0.08 * Math.min(3, s.streak - 2)); s.cash += b; s.raised += b; s.buzz = clamp(s.buzz + 3, 0, 100); s.log.push({ w: s.week, kind: "money", t: `Hot streak, ${s.streak} weeks of gains: donors and volunteers want in. ${usd(b)} more came in unasked.` }); }
   else if (s.streak <= -3) { const b = Math.round(c.weekly * 0.06); s.cash -= b; s.volunteers = Math.max(20, Math.round(s.volunteers * 0.95)); s.log.push({ w: s.week, kind: "money", t: `Slump, ${-s.streak} weeks of slipping: some donors are holding back ${usd(b)} and volunteers are drifting off.` }); }
+  marketWeek(c, s);
   // buzz fades toward normal, and volunteers follow offices, buzz and momentum
   const keep = s.mgr === "digital" ? 0.9 : 0.85;
   s.buzz = clamp(s.buzz * keep + 30 * (1 - keep) + 6 * s.momentum, 0, 100);

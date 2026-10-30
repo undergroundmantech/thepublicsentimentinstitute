@@ -2,7 +2,7 @@
 // Michigan — 2026 Governor: Jocelyn Benson (D) vs. John James (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-27.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -70,6 +70,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-GOV-2026", "pollster": "Marist University", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 1025, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 51.0, "John James (R)": 45.0, "Other": 2.0, "Undecided": 2.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Michigan State University/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 836, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 53.3, "John James (R)": 40.9, "Undecided": 5.9}},
     {"raceId": "MI-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2696, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 48.6, "John James (R)": 42.8, "Other": 3.5, "Undecided": 5.1}},
-    {"raceId": "MI-GOV-2026", "pollster": "Glengariff Group", "startDate": "2026-10-19", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 51.4, "John James (R)": 44.5, "Undecided": 4.0}}
+    {"raceId": "MI-GOV-2026", "pollster": "Glengariff Group", "startDate": "2026-10-19", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 51.4, "John James (R)": 44.5, "Undecided": 4.0}},
+    {"raceId": "MI-GOV-2026", "pollster": "Michigan State University/Verasight", "startDate": "2026-10-08", "endDate": "2026-10-23", "sampleSize": 1383, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 48.5, "John James (R)": 38.7, "Other": 3.3, "Undecided": 9.6}},
+    {"raceId": "MI-GOV-2026", "pollster": "Mitchell Research for CBS Detroit", "startDate": "2026-10-26", "endDate": "2026-10-27", "sampleSize": 636, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 49.0, "John James (R)": 44.0, "Undecided": 7.0}},
+    {"raceId": "MI-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 768, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 53.0, "John James (R)": 41.0, "Undecided": 6.0}}
   ],
 };

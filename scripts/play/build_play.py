@@ -154,5 +154,8 @@ for race in model["races"]:
                   "m": race["est"]["margin"], "p": race["est"]["prob"],
                   "c": [[c["name"], c["party"], c["inc"]] for c in rec["cands"]]})
 index.sort(key=lambda r: abs(r["m"]))
-json.dump({"asOf": model["meta"]["updated"], "election": model["meta"]["election"], "races": index}, open(os.path.join(OUT, "index.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+# every Senate and governor race on the ballot, for the Kalshi board: the market map shows them all, not only the playable ones
+board = [{"id": r["id"], "st": r["st"], "c": [[r["dem"], party_of(r, r["dem"], "D")], [r["gop"], party_of(r, r["gop"], "R")]], "m": r["est"]["margin"]}
+         for r in model["races"] if r["id"].startswith(("sen-", "gov-")) and r.get("dem") and r.get("gop")]
+json.dump({"asOf": model["meta"]["updated"], "election": model["meta"]["election"], "races": index, "board": board}, open(os.path.join(OUT, "index.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
 print(f"play: {len(index)} races")

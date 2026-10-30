@@ -2,7 +2,7 @@
 // Maine — 2026 Governor: Hannah Pingree (D) vs. Bobby Charles (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-25.
+// ballot were dropped. Newest poll: 2026-10-26.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -53,6 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 500, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 38.0, "Undecided": 13.0}},
     {"raceId": "ME-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-16", "endDate": "2026-10-20", "sampleSize": 1514, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 39.0, "Other": 9.0, "Undecided": 2.0}},
     {"raceId": "ME-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-22", "endDate": "2026-10-25", "sampleSize": 560, "sampleType": "LV", "results": {"Hannah Pingree (D)": 44.0, "Bobby Charles (R)": 44.0, "Other": 7.0, "Undecided": 6.0}},
-    {"raceId": "ME-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 413, "sampleType": "LV", "results": {"Hannah Pingree (D)": 51.0, "Bobby Charles (R)": 38.0, "Other": 7.0, "Undecided": 3.0}}
+    {"raceId": "ME-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 413, "sampleType": "LV", "results": {"Hannah Pingree (D)": 51.0, "Bobby Charles (R)": 38.0, "Other": 7.0, "Undecided": 3.0}},
+    {"raceId": "ME-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-26", "sampleSize": 783, "sampleType": "LV", "results": {"Hannah Pingree (D)": 53.0, "Bobby Charles (R)": 39.0, "Undecided": 8.0}}
   ],
 };
