@@ -973,6 +973,16 @@ if APPROVAL_SRC == "tpsi":
 _ctap = pd.read_csv(f"{BASE}/CTG/ct_county_approval{'_tpsi' if APPROVAL_SRC == 'tpsi' else ''}.csv", dtype={"county_fips": str})
 _ctap["f"] = _ctap.county_fips
 APPROVAL = pd.concat([_ct_counties(APPROVAL, APPROVAL.f), _ctap], ignore_index=True).set_index("f")
+# Oct 29 2026 late night, by the user's choice (APPROVAL_SRC=mrp): Trump approval re-estimated in every county from the On
+# Point national dataset (mrp_states_v2.py, county_approval_mrp.csv): the cell model on each county's projected 2026
+# electorate, levelled nationally to the Oct 28 poll's likely voters. With APPROVAL_NO_CAL=1 each state and county keeps
+# that level: no national constant is solved, so the approval leg reads Trump's disapproval state by state.
+if APPROVAL_SRC == "mrp" and os.environ.get("APPROVAL_MRP_FILE"):
+    _am = pd.read_csv(os.environ["APPROVAL_MRP_FILE"], dtype={"county_fips": str}); _am["f"] = _am.county_fips.str.zfill(5); _am = _am.set_index("f")
+    _ix = APPROVAL.index.intersection(_am.index)
+    for _c in ("TRUMP APPROVE", "TRUMP DISAPPROVE", "no_opinion"):
+        APPROVAL.loc[_ix, _c] = _am.loc[_ix, _c].values
+    APPROVAL_MRP_COUNTIES = int(len(_ix))
 # September 2026 national database, the same six waves as the previous export with 99 more
 # respondents; every variable this model reads is identical on the 4,238 rows they share.
 # Sept 29 2026: respondent component version 2 (respondent_v2.py). The unified respondent dataset, one filter
@@ -3060,7 +3070,7 @@ def census_components(model, fips_list, region_of):
         _me = sys.modules.get(__name__)
         if _me is None:
             import types as _ty; _me = _ty.SimpleNamespace(**globals())
-        _rf = _ru.factor(_me, list(fips_list), with_cvap=False)
+        _rf = _ru.factor(_me, list(fips_list), with_cvap=False, pops=pops)
         if _rf is not None: pops = pops * _rf          # Oct 14 2026 (RV_BENCH=1): registered voters, raked to the benchmarks
         _ab = _ABBR_OF()
         _off = {}
@@ -3234,6 +3244,11 @@ def calibrated_approval(fl):
             lo, hi = (mid, hi) if m < target else (lo, mid)
         _CAL.update(k=(lo + hi) / 2, tA=tA, tD=tD, tN=tN, n_nat=(a.no_opinion * vw).sum() / vw.sum() / 100,
                     raw_nat=((a["TRUMP APPROVE"] * vw).sum() / vw.sum(), (a["TRUMP DISAPPROVE"] * vw).sum() / vw.sum()))
+        if os.environ.get("APPROVAL_NO_CAL") == "1":
+            # every county at its own estimate: no national shift, no neutral rescale
+            _CAL.update(k=0.0, tN=_CAL["n_nat"])
+            APPROVAL_INPUT.update(calibration="none, county estimates used as estimated", source=APPROVAL_SRC,
+                                  national_approve=round(float(_CAL["raw_nat"][0]), 2), national_disapprove=round(float(_CAL["raw_nat"][1]), 2))
     a = APPROVAL.reindex(fl)
     neu = (a.no_opinion / 100) * (_CAL["tN"] / _CAL["n_nat"])
     two = inv(logit(a["TRUMP APPROVE"] / (a["TRUMP APPROVE"] + a["TRUMP DISAPPROVE"])) + _CAL["k"])

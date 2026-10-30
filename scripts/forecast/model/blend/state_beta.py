@@ -28,7 +28,7 @@ def nat(y):
 S = {y: st2(y) for y in P}; N = {y: nat(y) for y in P}
 dn = np.array([N[2020] - N[2016], N[2024] - N[2020]])
 mrp = pd.read_csv("/tmp/np1028/out/mrp_v2/state_generic_mrp.csv").set_index("state")
-T_POLL = 11.39; NAT24 = -1.41
+T_POLL = 13.1; NAT24 = -1.41
 l2 = lambda mpts: lg(0.5 + mpts / 200.0)
 nat_shift = l2(T_POLL) - l2(NAT24)
 DEMO_SD = 0.20

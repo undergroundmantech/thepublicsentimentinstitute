@@ -1,0 +1,1797 @@
+{
+ "built": "2026-10-14",
+ "method": "Revised 2026 registered voter benchmarks, statewide, Oct 14 2026.\n\nThree sources, each strong where the others are weak:\n  1. Bonfire voter file counts, all 50 states: registrants by age band, education, race and sex. A hard count of\n     the registered universe, with age and sex from the record itself, race self reported in the six states that\n     ask it on the form (AL, FL, GA, LA, NC, SC) and modeled elsewhere, and education modeled and coarse (its\n     \"High School\" holds everyone without a degree, so it cannot split high school from some college). The file\n     carries inactive and moved registrants, so in several states it exceeds the citizen adult population.\n  2. The model's own registered voter estimate, the one the forecast reports for each state: census citizen\n     adults (Census CVAP special tabulation, 2020 to 2024 ACS, by county and race group) times the TPSI\n     registration rate fitted on respondents by age, race, college and region.\n  3. The census itself for education detail: ACS 2020 to 2024 S1501 educational attainment by state, weighted by\n     the TPSI registration rate for each education level.\n\nTotals. Registered = citizen adults times a registration rate, the rate a blend in log odds of the file's rate\n(capped at 97 percent of citizen adults, since a file above that is carrying deadwood) at FILE_W_TOTAL and the\nmodel's rate at the rest.\n\nComposition. Every margin is the file's share and the estimate's share blended, the file weighted by how much its\nfield can be trusted: age 0.75 (0.55 where more than 15 percent of ages are suppressed, 0.35 where a band is off the\ncensus by more than 6 points), sex 1.0, race 0.85 where\nrace is self reported and 0.35 where it is modeled, since surname models overcount Hispanic registrants\n(0.10 less where more than 20 percent is unknown), degree\nholding 0.35 and graduate share among degree holders 0.35. The high school or less against some college split is\ncensus only. Unknown and blank values are left out of the file's shares rather than guessed. The age by gender\ncells are the file's joint table raked to the blended age and sex margins.\nOutputs aggregate tables only; no respondent row leaves this script.",
+ "reg_rate_by_edu_tpsi": {
+  "HS or less": 0.8400586940572267,
+  "Some college/assoc": 0.9581856839121191,
+  "College grad": 0.9801980198019802,
+  "Postgrad": 0.9820359281437125
+ },
+ "states": {
+  "AK": {
+   "total": 513777,
+   "AgeGender": {
+    "18-29_Female": 8.84,
+    "18-29_Male": 8.08,
+    "30-44_Female": 13.68,
+    "30-44_Male": 13.53,
+    "45-64_Female": 15.31,
+    "45-64_Male": 16.93,
+    "65+_Female": 10.95,
+    "65+_Male": 12.68
+   },
+   "Race4": {
+    "White": 63.12,
+    "Black": 3.04,
+    "Hispanic": 5.96,
+    "Asian/Other": 27.88
+   },
+   "Edu4": {
+    "HS or less": 33.72,
+    "Some college/assoc": 32.75,
+    "College grad": 21.69,
+    "Postgrad": 11.84
+   },
+   "Age4": {
+    "18-29": 16.92,
+    "30-44": 27.21,
+    "45-64": 32.23,
+    "65+": 23.64
+   },
+   "Gender": {
+    "Male": 51.22,
+    "Female": 48.78
+   }
+  },
+  "AL": {
+   "total": 3637006,
+   "AgeGender": {
+    "18-29_Female": 9.33,
+    "18-29_Male": 8.77,
+    "30-44_Female": 13.08,
+    "30-44_Male": 11.64,
+    "45-64_Female": 16.89,
+    "45-64_Male": 14.67,
+    "65+_Female": 14.42,
+    "65+_Male": 11.19
+   },
+   "Race4": {
+    "White": 65.45,
+    "Black": 24.95,
+    "Hispanic": 4.59,
+    "Asian/Other": 5.01
+   },
+   "Edu4": {
+    "HS or less": 36.28,
+    "Some college/assoc": 30.61,
+    "College grad": 21.68,
+    "Postgrad": 11.42
+   },
+   "Age4": {
+    "18-29": 18.1,
+    "30-44": 24.73,
+    "45-64": 31.56,
+    "65+": 25.61
+   },
+   "Gender": {
+    "Male": 46.28,
+    "Female": 53.72
+   }
+  },
+  "AR": {
+   "total": 1852941,
+   "AgeGender": {
+    "18-29_Female": 8.93,
+    "18-29_Male": 9.67,
+    "30-44_Female": 11.72,
+    "30-44_Male": 11.21,
+    "45-64_Female": 15.91,
+    "45-64_Male": 14.44,
+    "65+_Female": 15.22,
+    "65+_Male": 12.92
+   },
+   "Race4": {
+    "White": 72.87,
+    "Black": 14.39,
+    "Hispanic": 5.5,
+    "Asian/Other": 7.23
+   },
+   "Edu4": {
+    "HS or less": 39.06,
+    "Some college/assoc": 29.22,
+    "College grad": 21.07,
+    "Postgrad": 10.65
+   },
+   "Age4": {
+    "18-29": 18.59,
+    "30-44": 22.92,
+    "45-64": 30.35,
+    "65+": 28.14
+   },
+   "Gender": {
+    "Male": 48.24,
+    "Female": 51.76
+   }
+  },
+  "AZ": {
+   "total": 4932487,
+   "AgeGender": {
+    "18-29_Female": 9.27,
+    "18-29_Male": 9.44,
+    "30-44_Female": 12.43,
+    "30-44_Male": 12.55,
+    "45-64_Female": 14.92,
+    "45-64_Male": 14.07,
+    "65+_Female": 14.69,
+    "65+_Male": 12.64
+   },
+   "Race4": {
+    "White": 59.86,
+    "Black": 4.37,
+    "Hispanic": 25.56,
+    "Asian/Other": 10.21
+   },
+   "Edu4": {
+    "HS or less": 30.54,
+    "Some college/assoc": 32.21,
+    "College grad": 23.91,
+    "Postgrad": 13.34
+   },
+   "Age4": {
+    "18-29": 18.71,
+    "30-44": 24.98,
+    "45-64": 28.99,
+    "65+": 27.33
+   },
+   "Gender": {
+    "Male": 48.7,
+    "Female": 51.3
+   }
+  },
+  "CA": {
+   "total": 23352409,
+   "AgeGender": {
+    "18-29_Female": 9.81,
+    "18-29_Male": 9.7,
+    "30-44_Female": 13.24,
+    "30-44_Male": 12.94,
+    "45-64_Female": 15.33,
+    "45-64_Male": 14.74,
+    "65+_Female": 12.91,
+    "65+_Male": 11.33
+   },
+   "Race4": {
+    "White": 40.59,
+    "Black": 5.95,
+    "Hispanic": 33.01,
+    "Asian/Other": 20.44
+   },
+   "Edu4": {
+    "HS or less": 32.2,
+    "Some college/assoc": 28.94,
+    "College grad": 24.91,
+    "Postgrad": 13.95
+   },
+   "Age4": {
+    "18-29": 19.51,
+    "30-44": 26.18,
+    "45-64": 30.07,
+    "65+": 24.24
+   },
+   "Gender": {
+    "Male": 48.72,
+    "Female": 51.28
+   }
+  },
+  "CO": {
+   "total": 4168829,
+   "AgeGender": {
+    "18-29_Female": 10.23,
+    "18-29_Male": 10.48,
+    "30-44_Female": 14.02,
+    "30-44_Male": 14.53,
+    "45-64_Female": 14.43,
+    "45-64_Male": 14.31,
+    "65+_Female": 11.8,
+    "65+_Male": 10.2
+   },
+   "Race4": {
+    "White": 70.86,
+    "Black": 3.85,
+    "Hispanic": 18.01,
+    "Asian/Other": 7.28
+   },
+   "Edu4": {
+    "HS or less": 25.81,
+    "Some college/assoc": 29.23,
+    "College grad": 28.95,
+    "Postgrad": 16.01
+   },
+   "Age4": {
+    "18-29": 20.71,
+    "30-44": 28.55,
+    "45-64": 28.74,
+    "65+": 22.0
+   },
+   "Gender": {
+    "Male": 49.51,
+    "Female": 50.49
+   }
+  },
+  "CT": {
+   "total": 2470976,
+   "AgeGender": {
+    "18-29_Female": 8.67,
+    "18-29_Male": 8.13,
+    "30-44_Female": 12.39,
+    "30-44_Male": 11.3,
+    "45-64_Female": 16.92,
+    "45-64_Male": 15.1,
+    "65+_Female": 15.12,
+    "65+_Male": 12.38
+   },
+   "Race4": {
+    "White": 67.9,
+    "Black": 9.97,
+    "Hispanic": 13.84,
+    "Asian/Other": 8.29
+   },
+   "Edu4": {
+    "HS or less": 30.7,
+    "Some college/assoc": 25.85,
+    "College grad": 25.39,
+    "Postgrad": 18.05
+   },
+   "Age4": {
+    "18-29": 16.79,
+    "30-44": 23.69,
+    "45-64": 32.02,
+    "65+": 27.5
+   },
+   "Gender": {
+    "Male": 46.91,
+    "Female": 53.09
+   }
+  },
+  "DE": {
+   "total": 731049,
+   "AgeGender": {
+    "18-29_Female": 8.4,
+    "18-29_Male": 8.7,
+    "30-44_Female": 11.32,
+    "30-44_Male": 11.66,
+    "45-64_Female": 15.61,
+    "45-64_Male": 15.08,
+    "65+_Female": 15.73,
+    "65+_Male": 13.5
+   },
+   "Race4": {
+    "White": 63.97,
+    "Black": 21.01,
+    "Hispanic": 6.82,
+    "Asian/Other": 8.2
+   },
+   "Edu4": {
+    "HS or less": 34.04,
+    "Some college/assoc": 28.87,
+    "College grad": 22.44,
+    "Postgrad": 14.65
+   },
+   "Age4": {
+    "18-29": 17.1,
+    "30-44": 22.99,
+    "45-64": 30.69,
+    "65+": 29.23
+   },
+   "Gender": {
+    "Male": 48.94,
+    "Female": 51.06
+   }
+  },
+  "FL": {
+   "total": 15376808,
+   "AgeGender": {
+    "18-29_Female": 8.28,
+    "18-29_Male": 7.8,
+    "30-44_Female": 12.08,
+    "30-44_Male": 10.88,
+    "45-64_Female": 16.47,
+    "45-64_Male": 14.44,
+    "65+_Female": 16.54,
+    "65+_Male": 13.52
+   },
+   "Race4": {
+    "White": 51.87,
+    "Black": 14.0,
+    "Hispanic": 26.23,
+    "Asian/Other": 7.89
+   },
+   "Edu4": {
+    "HS or less": 32.64,
+    "Some college/assoc": 29.07,
+    "College grad": 24.74,
+    "Postgrad": 13.55
+   },
+   "Age4": {
+    "18-29": 16.07,
+    "30-44": 22.96,
+    "45-64": 30.91,
+    "65+": 30.06
+   },
+   "Gender": {
+    "Male": 46.64,
+    "Female": 53.36
+   }
+  },
+  "GA": {
+   "total": 7449777,
+   "AgeGender": {
+    "18-29_Female": 10.47,
+    "18-29_Male": 10.0,
+    "30-44_Female": 13.87,
+    "30-44_Male": 12.6,
+    "45-64_Female": 16.65,
+    "45-64_Male": 14.75,
+    "65+_Female": 12.1,
+    "65+_Male": 9.55
+   },
+   "Race4": {
+    "White": 51.14,
+    "Black": 30.98,
+    "Hispanic": 8.49,
+    "Asian/Other": 9.39
+   },
+   "Edu4": {
+    "HS or less": 34.34,
+    "Some college/assoc": 29.0,
+    "College grad": 23.58,
+    "Postgrad": 13.08
+   },
+   "Age4": {
+    "18-29": 20.47,
+    "30-44": 26.48,
+    "45-64": 31.39,
+    "65+": 21.66
+   },
+   "Gender": {
+    "Male": 46.91,
+    "Female": 53.09
+   }
+  },
+  "HI": {
+   "total": 885691,
+   "AgeGender": {
+    "18-29_Female": 7.71,
+    "18-29_Male": 6.06,
+    "30-44_Female": 11.75,
+    "30-44_Male": 10.44,
+    "45-64_Female": 15.6,
+    "45-64_Male": 16.16,
+    "65+_Female": 16.15,
+    "65+_Male": 16.13
+   },
+   "Race4": {
+    "White": 23.25,
+    "Black": 1.62,
+    "Hispanic": 8.66,
+    "Asian/Other": 66.47
+   },
+   "Edu4": {
+    "HS or less": 30.11,
+    "Some college/assoc": 30.64,
+    "College grad": 26.09,
+    "Postgrad": 13.16
+   },
+   "Age4": {
+    "18-29": 13.77,
+    "30-44": 22.19,
+    "45-64": 31.75,
+    "65+": 32.28
+   },
+   "Gender": {
+    "Male": 48.79,
+    "Female": 51.21
+   }
+  },
+  "IA": {
+   "total": 2139843,
+   "AgeGender": {
+    "18-29_Female": 9.53,
+    "18-29_Male": 9.52,
+    "30-44_Female": 12.12,
+    "30-44_Male": 11.62,
+    "45-64_Female": 15.3,
+    "45-64_Male": 14.38,
+    "65+_Female": 14.97,
+    "65+_Male": 12.55
+   },
+   "Race4": {
+    "White": 87.28,
+    "Black": 3.23,
+    "Hispanic": 4.79,
+    "Asian/Other": 4.71
+   },
+   "Edu4": {
+    "HS or less": 31.72,
+    "Some college/assoc": 32.35,
+    "College grad": 24.71,
+    "Postgrad": 11.21
+   },
+   "Age4": {
+    "18-29": 19.05,
+    "30-44": 23.75,
+    "45-64": 29.68,
+    "65+": 27.52
+   },
+   "Gender": {
+    "Male": 48.08,
+    "Female": 51.92
+   }
+  },
+  "ID": {
+   "total": 1145049,
+   "AgeGender": {
+    "18-29_Female": 9.98,
+    "18-29_Male": 9.14,
+    "30-44_Female": 12.77,
+    "30-44_Male": 11.56,
+    "45-64_Female": 15.79,
+    "45-64_Male": 14.61,
+    "65+_Female": 13.78,
+    "65+_Male": 12.35
+   },
+   "Race4": {
+    "White": 83.43,
+    "Black": 0.7,
+    "Hispanic": 10.11,
+    "Asian/Other": 5.76
+   },
+   "Edu4": {
+    "HS or less": 30.84,
+    "Some college/assoc": 33.46,
+    "College grad": 24.28,
+    "Postgrad": 11.42
+   },
+   "Age4": {
+    "18-29": 19.13,
+    "30-44": 24.33,
+    "45-64": 30.4,
+    "65+": 26.14
+   },
+   "Gender": {
+    "Male": 47.67,
+    "Female": 52.33
+   }
+  },
+  "IL": {
+   "total": 8682179,
+   "AgeGender": {
+    "18-29_Female": 9.42,
+    "18-29_Male": 8.89,
+    "30-44_Female": 13.3,
+    "30-44_Male": 12.15,
+    "45-64_Female": 16.16,
+    "45-64_Male": 14.82,
+    "65+_Female": 13.94,
+    "65+_Male": 11.32
+   },
+   "Race4": {
+    "White": 63.85,
+    "Black": 13.83,
+    "Hispanic": 13.3,
+    "Asian/Other": 9.02
+   },
+   "Edu4": {
+    "HS or less": 31.37,
+    "Some college/assoc": 28.82,
+    "College grad": 25.32,
+    "Postgrad": 14.48
+   },
+   "Age4": {
+    "18-29": 18.31,
+    "30-44": 25.46,
+    "45-64": 30.98,
+    "65+": 25.26
+   },
+   "Gender": {
+    "Male": 47.18,
+    "Female": 52.82
+   }
+  },
+  "IN": {
+   "total": 4664263,
+   "AgeGender": {
+    "18-29_Female": 9.08,
+    "18-29_Male": 9.28,
+    "30-44_Female": 12.63,
+    "30-44_Male": 12.29,
+    "45-64_Female": 16.07,
+    "45-64_Male": 15.29,
+    "65+_Female": 13.85,
+    "65+_Male": 11.51
+   },
+   "Race4": {
+    "White": 80.2,
+    "Black": 8.71,
+    "Hispanic": 5.17,
+    "Asian/Other": 5.91
+   },
+   "Edu4": {
+    "HS or less": 37.86,
+    "Some college/assoc": 29.19,
+    "College grad": 21.83,
+    "Postgrad": 11.11
+   },
+   "Age4": {
+    "18-29": 18.36,
+    "30-44": 24.92,
+    "45-64": 31.36,
+    "65+": 25.36
+   },
+   "Gender": {
+    "Male": 48.37,
+    "Female": 51.63
+   }
+  },
+  "KS": {
+   "total": 1976295,
+   "AgeGender": {
+    "18-29_Female": 9.68,
+    "18-29_Male": 9.26,
+    "30-44_Female": 12.94,
+    "30-44_Male": 12.24,
+    "45-64_Female": 15.44,
+    "45-64_Male": 14.39,
+    "65+_Female": 14.2,
+    "65+_Male": 11.85
+   },
+   "Race4": {
+    "White": 78.37,
+    "Black": 5.2,
+    "Hispanic": 9.15,
+    "Asian/Other": 7.27
+   },
+   "Edu4": {
+    "HS or less": 29.67,
+    "Some college/assoc": 31.42,
+    "College grad": 25.65,
+    "Postgrad": 13.26
+   },
+   "Age4": {
+    "18-29": 18.94,
+    "30-44": 25.18,
+    "45-64": 29.83,
+    "65+": 26.04
+   },
+   "Gender": {
+    "Male": 47.74,
+    "Female": 52.26
+   }
+  },
+  "KY": {
+   "total": 3212771,
+   "AgeGender": {
+    "18-29_Female": 8.61,
+    "18-29_Male": 8.24,
+    "30-44_Female": 12.91,
+    "30-44_Male": 11.98,
+    "45-64_Female": 16.96,
+    "45-64_Male": 15.45,
+    "65+_Female": 14.28,
+    "65+_Male": 11.55
+   },
+   "Race4": {
+    "White": 85.48,
+    "Black": 7.18,
+    "Hispanic": 2.79,
+    "Asian/Other": 4.55
+   },
+   "Edu4": {
+    "HS or less": 38.41,
+    "Some college/assoc": 29.2,
+    "College grad": 20.7,
+    "Postgrad": 11.7
+   },
+   "Age4": {
+    "18-29": 16.86,
+    "30-44": 24.89,
+    "45-64": 32.41,
+    "65+": 25.84
+   },
+   "Gender": {
+    "Male": 47.23,
+    "Female": 52.77
+   }
+  },
+  "LA": {
+   "total": 2945666,
+   "AgeGender": {
+    "18-29_Female": 9.31,
+    "18-29_Male": 7.73,
+    "30-44_Female": 14.04,
+    "30-44_Male": 11.3,
+    "45-64_Female": 17.46,
+    "45-64_Male": 14.61,
+    "65+_Female": 14.35,
+    "65+_Male": 11.21
+   },
+   "Race4": {
+    "White": 57.78,
+    "Black": 30.92,
+    "Hispanic": 5.29,
+    "Asian/Other": 6.02
+   },
+   "Edu4": {
+    "HS or less": 39.27,
+    "Some college/assoc": 28.48,
+    "College grad": 21.41,
+    "Postgrad": 10.84
+   },
+   "Age4": {
+    "18-29": 17.04,
+    "30-44": 25.33,
+    "45-64": 32.07,
+    "65+": 25.56
+   },
+   "Gender": {
+    "Male": 44.84,
+    "Female": 55.16
+   }
+  },
+  "MA": {
+   "total": 4939473,
+   "AgeGender": {
+    "18-29_Female": 9.29,
+    "18-29_Male": 9.41,
+    "30-44_Female": 12.9,
+    "30-44_Male": 12.45,
+    "45-64_Female": 15.85,
+    "45-64_Male": 14.65,
+    "65+_Female": 14.01,
+    "65+_Male": 11.45
+   },
+   "Race4": {
+    "White": 72.95,
+    "Black": 6.36,
+    "Hispanic": 10.17,
+    "Asian/Other": 10.52
+   },
+   "Edu4": {
+    "HS or less": 29.07,
+    "Some college/assoc": 24.16,
+    "College grad": 27.44,
+    "Postgrad": 19.33
+   },
+   "Age4": {
+    "18-29": 18.7,
+    "30-44": 25.34,
+    "45-64": 30.49,
+    "65+": 25.47
+   },
+   "Gender": {
+    "Male": 47.95,
+    "Female": 52.05
+   }
+  },
+  "MD": {
+   "total": 4232085,
+   "AgeGender": {
+    "18-29_Female": 8.49,
+    "18-29_Male": 7.83,
+    "30-44_Female": 13.52,
+    "30-44_Male": 12.36,
+    "45-64_Female": 17.34,
+    "45-64_Male": 15.46,
+    "65+_Female": 13.93,
+    "65+_Male": 11.08
+   },
+   "Race4": {
+    "White": 51.4,
+    "Black": 30.15,
+    "Hispanic": 7.6,
+    "Asian/Other": 10.84
+   },
+   "Edu4": {
+    "HS or less": 30.29,
+    "Some college/assoc": 26.38,
+    "College grad": 24.63,
+    "Postgrad": 18.7
+   },
+   "Age4": {
+    "18-29": 16.32,
+    "30-44": 25.89,
+    "45-64": 32.8,
+    "65+": 25.0
+   },
+   "Gender": {
+    "Male": 46.72,
+    "Female": 53.28
+   }
+  },
+  "ME": {
+   "total": 1033352,
+   "AgeGender": {
+    "18-29_Female": 7.17,
+    "18-29_Male": 7.21,
+    "30-44_Female": 11.13,
+    "30-44_Male": 11.02,
+    "45-64_Female": 16.15,
+    "45-64_Male": 15.25,
+    "65+_Female": 17.3,
+    "65+_Male": 14.77
+   },
+   "Race4": {
+    "White": 92.66,
+    "Black": 1.18,
+    "Hispanic": 1.67,
+    "Asian/Other": 4.5
+   },
+   "Edu4": {
+    "HS or less": 31.14,
+    "Some college/assoc": 29.04,
+    "College grad": 25.6,
+    "Postgrad": 14.22
+   },
+   "Age4": {
+    "18-29": 14.38,
+    "30-44": 22.15,
+    "45-64": 31.4,
+    "65+": 32.06
+   },
+   "Gender": {
+    "Male": 48.25,
+    "Female": 51.75
+   }
+  },
+  "MI": {
+   "total": 7304524,
+   "AgeGender": {
+    "18-29_Female": 9.21,
+    "18-29_Male": 9.52,
+    "30-44_Female": 11.91,
+    "30-44_Male": 12.24,
+    "45-64_Female": 15.77,
+    "45-64_Male": 15.28,
+    "65+_Female": 14.17,
+    "65+_Male": 11.89
+   },
+   "Race4": {
+    "White": 76.0,
+    "Black": 12.99,
+    "Hispanic": 4.32,
+    "Asian/Other": 6.68
+   },
+   "Edu4": {
+    "HS or less": 32.87,
+    "Some college/assoc": 32.94,
+    "College grad": 22.02,
+    "Postgrad": 12.17
+   },
+   "Age4": {
+    "18-29": 18.73,
+    "30-44": 24.15,
+    "45-64": 31.06,
+    "65+": 26.06
+   },
+   "Gender": {
+    "Male": 48.94,
+    "Female": 51.06
+   }
+  },
+  "MN": {
+   "total": 3889589,
+   "AgeGender": {
+    "18-29_Female": 9.39,
+    "18-29_Male": 9.83,
+    "30-44_Female": 12.18,
+    "30-44_Male": 12.35,
+    "45-64_Female": 15.26,
+    "45-64_Male": 15.11,
+    "65+_Female": 13.83,
+    "65+_Male": 12.05
+   },
+   "Race4": {
+    "White": 81.49,
+    "Black": 5.71,
+    "Hispanic": 4.24,
+    "Asian/Other": 8.57
+   },
+   "Edu4": {
+    "HS or less": 26.78,
+    "Some college/assoc": 31.71,
+    "College grad": 28.13,
+    "Postgrad": 13.39
+   },
+   "Age4": {
+    "18-29": 19.23,
+    "30-44": 24.53,
+    "45-64": 30.37,
+    "65+": 25.87
+   },
+   "Gender": {
+    "Male": 49.34,
+    "Female": 50.66
+   }
+  },
+  "MO": {
+   "total": 4376126,
+   "AgeGender": {
+    "18-29_Female": 8.57,
+    "18-29_Male": 9.01,
+    "30-44_Female": 12.3,
+    "30-44_Male": 12.45,
+    "45-64_Female": 15.8,
+    "45-64_Male": 15.23,
+    "65+_Female": 14.44,
+    "65+_Male": 12.21
+   },
+   "Race4": {
+    "White": 80.0,
+    "Black": 10.21,
+    "Hispanic": 3.55,
+    "Asian/Other": 6.25
+   },
+   "Edu4": {
+    "HS or less": 33.6,
+    "Some college/assoc": 29.76,
+    "College grad": 23.76,
+    "Postgrad": 12.88
+   },
+   "Age4": {
+    "18-29": 17.57,
+    "30-44": 24.75,
+    "45-64": 31.03,
+    "65+": 26.65
+   },
+   "Gender": {
+    "Male": 48.9,
+    "Female": 51.1
+   }
+  },
+  "MS": {
+   "total": 2040037,
+   "AgeGender": {
+    "18-29_Female": 8.46,
+    "18-29_Male": 7.1,
+    "30-44_Female": 12.38,
+    "30-44_Male": 10.04,
+    "45-64_Female": 17.4,
+    "45-64_Male": 15.82,
+    "65+_Female": 15.07,
+    "65+_Male": 13.73
+   },
+   "Race4": {
+    "White": 57.85,
+    "Black": 36.07,
+    "Hispanic": 2.12,
+    "Asian/Other": 3.96
+   },
+   "Edu4": {
+    "HS or less": 35.86,
+    "Some college/assoc": 31.76,
+    "College grad": 21.26,
+    "Postgrad": 11.13
+   },
+   "Age4": {
+    "18-29": 15.56,
+    "30-44": 22.42,
+    "45-64": 33.22,
+    "65+": 28.8
+   },
+   "Gender": {
+    "Male": 46.69,
+    "Female": 53.31
+   }
+  },
+  "MT": {
+   "total": 800486,
+   "AgeGender": {
+    "18-29_Female": 8.06,
+    "18-29_Male": 9.16,
+    "30-44_Female": 11.61,
+    "30-44_Male": 12.49,
+    "45-64_Female": 14.68,
+    "45-64_Male": 14.87,
+    "65+_Female": 15.12,
+    "65+_Male": 14.01
+   },
+   "Race4": {
+    "White": 86.44,
+    "Black": 0.25,
+    "Hispanic": 3.39,
+    "Asian/Other": 9.92
+   },
+   "Edu4": {
+    "HS or less": 30.34,
+    "Some college/assoc": 32.2,
+    "College grad": 25.6,
+    "Postgrad": 11.86
+   },
+   "Age4": {
+    "18-29": 17.21,
+    "30-44": 24.11,
+    "45-64": 29.55,
+    "65+": 29.13
+   },
+   "Gender": {
+    "Male": 50.53,
+    "Female": 49.47
+   }
+  },
+  "NC": {
+   "total": 7511306,
+   "AgeGender": {
+    "18-29_Female": 10.14,
+    "18-29_Male": 9.48,
+    "30-44_Female": 12.86,
+    "30-44_Male": 11.34,
+    "45-64_Female": 16.49,
+    "45-64_Male": 14.44,
+    "65+_Female": 14.11,
+    "65+_Male": 11.14
+   },
+   "Race4": {
+    "White": 62.66,
+    "Black": 19.83,
+    "Hispanic": 8.5,
+    "Asian/Other": 9.01
+   },
+   "Edu4": {
+    "HS or less": 31.03,
+    "Some college/assoc": 30.57,
+    "College grad": 25.2,
+    "Postgrad": 13.2
+   },
+   "Age4": {
+    "18-29": 19.62,
+    "30-44": 24.19,
+    "45-64": 30.94,
+    "65+": 25.25
+   },
+   "Gender": {
+    "Male": 46.41,
+    "Female": 53.59
+   }
+  },
+  "ND": {
+   "total": 443940,
+   "AgeGender": {
+    "18-29_Female": 8.6,
+    "18-29_Male": 8.23,
+    "30-44_Female": 11.99,
+    "30-44_Male": 12.09,
+    "45-64_Female": 14.93,
+    "45-64_Male": 15.4,
+    "65+_Female": 14.6,
+    "65+_Male": 14.17
+   },
+   "Race4": {
+    "White": 87.04,
+    "Black": 2.31,
+    "Hispanic": 3.03,
+    "Asian/Other": 7.61
+   },
+   "Edu4": {
+    "HS or less": 26.22,
+    "Some college/assoc": 34.83,
+    "College grad": 28.22,
+    "Postgrad": 10.72
+   },
+   "Age4": {
+    "18-29": 16.82,
+    "30-44": 24.09,
+    "45-64": 30.32,
+    "65+": 28.77
+   },
+   "Gender": {
+    "Male": 49.89,
+    "Female": 50.11
+   }
+  },
+  "NE": {
+   "total": 1255388,
+   "AgeGender": {
+    "18-29_Female": 9.06,
+    "18-29_Male": 9.49,
+    "30-44_Female": 12.29,
+    "30-44_Male": 12.45,
+    "45-64_Female": 15.24,
+    "45-64_Male": 14.9,
+    "65+_Female": 14.44,
+    "65+_Male": 12.13
+   },
+   "Race4": {
+    "White": 81.86,
+    "Black": 4.12,
+    "Hispanic": 8.23,
+    "Asian/Other": 5.79
+   },
+   "Edu4": {
+    "HS or less": 29.06,
+    "Some college/assoc": 32.97,
+    "College grad": 25.5,
+    "Postgrad": 12.48
+   },
+   "Age4": {
+    "18-29": 18.55,
+    "30-44": 24.74,
+    "45-64": 30.14,
+    "65+": 26.57
+   },
+   "Gender": {
+    "Male": 48.97,
+    "Female": 51.03
+   }
+  },
+  "NH": {
+   "total": 939770,
+   "AgeGender": {
+    "18-29_Female": 7.2,
+    "18-29_Male": 6.28,
+    "30-44_Female": 10.67,
+    "30-44_Male": 9.85,
+    "45-64_Female": 17.64,
+    "45-64_Male": 17.18,
+    "65+_Female": 15.74,
+    "65+_Male": 15.46
+   },
+   "Race4": {
+    "White": 89.69,
+    "Black": 1.07,
+    "Hispanic": 3.66,
+    "Asian/Other": 5.57
+   },
+   "Edu4": {
+    "HS or less": 28.91,
+    "Some college/assoc": 27.84,
+    "College grad": 27.03,
+    "Postgrad": 16.23
+   },
+   "Age4": {
+    "18-29": 13.48,
+    "30-44": 20.52,
+    "45-64": 34.81,
+    "65+": 31.19
+   },
+   "Gender": {
+    "Male": 48.77,
+    "Female": 51.23
+   }
+  },
+  "NJ": {
+   "total": 6154579,
+   "AgeGender": {
+    "18-29_Female": 8.38,
+    "18-29_Male": 8.6,
+    "30-44_Female": 12.68,
+    "30-44_Male": 12.32,
+    "45-64_Female": 16.77,
+    "45-64_Male": 15.56,
+    "65+_Female": 14.07,
+    "65+_Male": 11.62
+   },
+   "Race4": {
+    "White": 57.52,
+    "Black": 12.74,
+    "Hispanic": 17.09,
+    "Asian/Other": 12.65
+   },
+   "Edu4": {
+    "HS or less": 32.04,
+    "Some college/assoc": 24.29,
+    "College grad": 27.38,
+    "Postgrad": 16.28
+   },
+   "Age4": {
+    "18-29": 16.97,
+    "30-44": 25.0,
+    "45-64": 32.33,
+    "65+": 25.7
+   },
+   "Gender": {
+    "Male": 48.1,
+    "Female": 51.9
+   }
+  },
+  "NM": {
+   "total": 1418308,
+   "AgeGender": {
+    "18-29_Female": 8.96,
+    "18-29_Male": 9.45,
+    "30-44_Female": 12.28,
+    "30-44_Male": 11.95,
+    "45-64_Female": 15.11,
+    "45-64_Male": 13.71,
+    "65+_Female": 15.59,
+    "65+_Male": 12.96
+   },
+   "Race4": {
+    "White": 41.73,
+    "Black": 2.09,
+    "Hispanic": 43.89,
+    "Asian/Other": 12.29
+   },
+   "Edu4": {
+    "HS or less": 33.6,
+    "Some college/assoc": 31.11,
+    "College grad": 20.87,
+    "Postgrad": 14.42
+   },
+   "Age4": {
+    "18-29": 18.41,
+    "30-44": 24.22,
+    "45-64": 28.82,
+    "65+": 28.55
+   },
+   "Gender": {
+    "Male": 48.06,
+    "Female": 51.94
+   }
+  },
+  "NV": {
+   "total": 2121007,
+   "AgeGender": {
+    "18-29_Female": 9.22,
+    "18-29_Male": 10.09,
+    "30-44_Female": 12.79,
+    "30-44_Male": 14.0,
+    "45-64_Female": 14.6,
+    "45-64_Male": 15.55,
+    "65+_Female": 12.17,
+    "65+_Male": 11.58
+   },
+   "Race4": {
+    "White": 52.83,
+    "Black": 9.61,
+    "Hispanic": 21.46,
+    "Asian/Other": 16.1
+   },
+   "Edu4": {
+    "HS or less": 36.75,
+    "Some college/assoc": 32.38,
+    "College grad": 20.81,
+    "Postgrad": 10.06
+   },
+   "Age4": {
+    "18-29": 19.31,
+    "30-44": 26.79,
+    "45-64": 30.15,
+    "65+": 23.75
+   },
+   "Gender": {
+    "Male": 51.21,
+    "Female": 48.79
+   }
+  },
+  "NY": {
+   "total": 13406172,
+   "AgeGender": {
+    "18-29_Female": 8.69,
+    "18-29_Male": 7.84,
+    "30-44_Female": 13.51,
+    "30-44_Male": 12.08,
+    "45-64_Female": 16.55,
+    "45-64_Male": 14.52,
+    "65+_Female": 14.97,
+    "65+_Male": 11.84
+   },
+   "Race4": {
+    "White": 58.25,
+    "Black": 13.9,
+    "Hispanic": 15.62,
+    "Asian/Other": 12.23
+   },
+   "Edu4": {
+    "HS or less": 33.37,
+    "Some college/assoc": 26.35,
+    "College grad": 24.36,
+    "Postgrad": 15.92
+   },
+   "Age4": {
+    "18-29": 16.53,
+    "30-44": 25.59,
+    "45-64": 31.08,
+    "65+": 26.81
+   },
+   "Gender": {
+    "Male": 46.28,
+    "Female": 53.72
+   }
+  },
+  "OH": {
+   "total": 8017946,
+   "AgeGender": {
+    "18-29_Female": 8.72,
+    "18-29_Male": 9.02,
+    "30-44_Female": 12.25,
+    "30-44_Male": 12.27,
+    "45-64_Female": 16.01,
+    "45-64_Male": 15.18,
+    "65+_Female": 14.63,
+    "65+_Male": 11.93
+   },
+   "Race4": {
+    "White": 79.4,
+    "Black": 11.56,
+    "Hispanic": 2.96,
+    "Asian/Other": 6.08
+   },
+   "Edu4": {
+    "HS or less": 35.85,
+    "Some college/assoc": 28.88,
+    "College grad": 22.57,
+    "Postgrad": 12.69
+   },
+   "Age4": {
+    "18-29": 17.74,
+    "30-44": 24.52,
+    "45-64": 31.19,
+    "65+": 26.56
+   },
+   "Gender": {
+    "Male": 48.39,
+    "Female": 51.61
+   }
+  },
+  "OK": {
+   "total": 2470350,
+   "AgeGender": {
+    "18-29_Female": 9.02,
+    "18-29_Male": 9.32,
+    "30-44_Female": 12.66,
+    "30-44_Male": 12.06,
+    "45-64_Female": 15.92,
+    "45-64_Male": 14.57,
+    "65+_Female": 14.46,
+    "65+_Male": 11.99
+   },
+   "Race4": {
+    "White": 68.68,
+    "Black": 6.99,
+    "Hispanic": 8.4,
+    "Asian/Other": 15.93
+   },
+   "Edu4": {
+    "HS or less": 35.39,
+    "Some college/assoc": 29.65,
+    "College grad": 23.53,
+    "Postgrad": 11.44
+   },
+   "Age4": {
+    "18-29": 18.35,
+    "30-44": 24.72,
+    "45-64": 30.49,
+    "65+": 26.45
+   },
+   "Gender": {
+    "Male": 47.94,
+    "Female": 52.06
+   }
+  },
+  "OR": {
+   "total": 3071260,
+   "AgeGender": {
+    "18-29_Female": 8.75,
+    "18-29_Male": 9.4,
+    "30-44_Female": 12.97,
+    "30-44_Male": 13.91,
+    "45-64_Female": 14.32,
+    "45-64_Male": 14.87,
+    "65+_Female": 13.76,
+    "65+_Male": 12.02
+   },
+   "Race4": {
+    "White": 77.12,
+    "Black": 1.86,
+    "Hispanic": 10.28,
+    "Asian/Other": 10.75
+   },
+   "Edu4": {
+    "HS or less": 28.79,
+    "Some college/assoc": 33.69,
+    "College grad": 24.37,
+    "Postgrad": 13.14
+   },
+   "Age4": {
+    "18-29": 18.15,
+    "30-44": 26.87,
+    "45-64": 29.19,
+    "65+": 25.79
+   },
+   "Gender": {
+    "Male": 50.2,
+    "Female": 49.8
+   }
+  },
+  "PA": {
+   "total": 9035741,
+   "AgeGender": {
+    "18-29_Female": 8.81,
+    "18-29_Male": 8.37,
+    "30-44_Female": 12.35,
+    "30-44_Male": 11.88,
+    "45-64_Female": 15.88,
+    "45-64_Male": 15.11,
+    "65+_Female": 15.07,
+    "65+_Male": 12.54
+   },
+   "Race4": {
+    "White": 77.26,
+    "Black": 10.0,
+    "Hispanic": 6.01,
+    "Asian/Other": 6.73
+   },
+   "Edu4": {
+    "HS or less": 36.81,
+    "Some college/assoc": 25.81,
+    "College grad": 23.22,
+    "Postgrad": 14.16
+   },
+   "Age4": {
+    "18-29": 17.19,
+    "30-44": 24.22,
+    "45-64": 30.98,
+    "65+": 27.61
+   },
+   "Gender": {
+    "Male": 47.89,
+    "Female": 52.11
+   }
+  },
+  "RI": {
+   "total": 785003,
+   "AgeGender": {
+    "18-29_Female": 8.68,
+    "18-29_Male": 8.64,
+    "30-44_Female": 12.85,
+    "30-44_Male": 12.46,
+    "45-64_Female": 16.06,
+    "45-64_Male": 14.66,
+    "65+_Female": 14.71,
+    "65+_Male": 11.94
+   },
+   "Race4": {
+    "White": 74.67,
+    "Black": 4.95,
+    "Hispanic": 12.98,
+    "Asian/Other": 7.41
+   },
+   "Edu4": {
+    "HS or less": 32.8,
+    "Some college/assoc": 27.26,
+    "College grad": 25.34,
+    "Postgrad": 14.6
+   },
+   "Age4": {
+    "18-29": 17.32,
+    "30-44": 25.31,
+    "45-64": 30.71,
+    "65+": 26.65
+   },
+   "Gender": {
+    "Male": 47.7,
+    "Female": 52.3
+   }
+  },
+  "SC": {
+   "total": 3676042,
+   "AgeGender": {
+    "18-29_Female": 8.62,
+    "18-29_Male": 7.34,
+    "30-44_Female": 12.84,
+    "30-44_Male": 10.54,
+    "45-64_Female": 17.29,
+    "45-64_Male": 14.51,
+    "65+_Female": 16.03,
+    "65+_Male": 12.83
+   },
+   "Race4": {
+    "White": 63.77,
+    "Black": 24.98,
+    "Hispanic": 4.65,
+    "Asian/Other": 6.6
+   },
+   "Edu4": {
+    "HS or less": 33.47,
+    "Some college/assoc": 30.03,
+    "College grad": 23.61,
+    "Postgrad": 12.88
+   },
+   "Age4": {
+    "18-29": 15.95,
+    "30-44": 23.38,
+    "45-64": 31.81,
+    "65+": 28.85
+   },
+   "Gender": {
+    "Male": 45.22,
+    "Female": 54.78
+   }
+  },
+  "SD": {
+   "total": 636246,
+   "AgeGender": {
+    "18-29_Female": 7.79,
+    "18-29_Male": 7.93,
+    "30-44_Female": 11.77,
+    "30-44_Male": 11.67,
+    "45-64_Female": 15.69,
+    "45-64_Male": 15.5,
+    "65+_Female": 15.22,
+    "65+_Male": 14.44
+   },
+   "Race4": {
+    "White": 84.51,
+    "Black": 1.68,
+    "Hispanic": 3.26,
+    "Asian/Other": 10.55
+   },
+   "Edu4": {
+    "HS or less": 31.38,
+    "Some college/assoc": 31.63,
+    "College grad": 25.94,
+    "Postgrad": 11.04
+   },
+   "Age4": {
+    "18-29": 15.72,
+    "30-44": 23.44,
+    "45-64": 31.18,
+    "65+": 29.65
+   },
+   "Gender": {
+    "Male": 49.54,
+    "Female": 50.46
+   }
+  },
+  "TN": {
+   "total": 4655522,
+   "AgeGender": {
+    "18-29_Female": 9.32,
+    "18-29_Male": 8.29,
+    "30-44_Female": 13.65,
+    "30-44_Male": 11.61,
+    "45-64_Female": 17.09,
+    "45-64_Male": 14.47,
+    "65+_Female": 14.26,
+    "65+_Male": 11.32
+   },
+   "Race4": {
+    "White": 75.58,
+    "Black": 15.49,
+    "Hispanic": 3.72,
+    "Asian/Other": 5.21
+   },
+   "Edu4": {
+    "HS or less": 36.03,
+    "Some college/assoc": 28.26,
+    "College grad": 23.35,
+    "Postgrad": 12.36
+   },
+   "Age4": {
+    "18-29": 17.61,
+    "30-44": 25.26,
+    "45-64": 31.56,
+    "65+": 25.58
+   },
+   "Gender": {
+    "Male": 45.69,
+    "Female": 54.31
+   }
+  },
+  "TX": {
+   "total": 18518824,
+   "AgeGender": {
+    "18-29_Female": 10.47,
+    "18-29_Male": 10.15,
+    "30-44_Female": 13.92,
+    "30-44_Male": 12.86,
+    "45-64_Female": 16.04,
+    "45-64_Male": 14.66,
+    "65+_Female": 11.97,
+    "65+_Male": 9.94
+   },
+   "Race4": {
+    "White": 46.13,
+    "Black": 13.04,
+    "Hispanic": 32.85,
+    "Asian/Other": 7.97
+   },
+   "Edu4": {
+    "HS or less": 33.01,
+    "Some college/assoc": 27.63,
+    "College grad": 26.25,
+    "Postgrad": 13.11
+   },
+   "Age4": {
+    "18-29": 20.61,
+    "30-44": 26.78,
+    "45-64": 30.7,
+    "65+": 21.91
+   },
+   "Gender": {
+    "Male": 47.6,
+    "Female": 52.4
+   }
+  },
+  "UT": {
+   "total": 2066662,
+   "AgeGender": {
+    "18-29_Female": 11.59,
+    "18-29_Male": 12.83,
+    "30-44_Female": 13.53,
+    "30-44_Male": 14.36,
+    "45-64_Female": 14.15,
+    "45-64_Male": 14.05,
+    "65+_Female": 10.18,
+    "65+_Male": 9.3
+   },
+   "Race4": {
+    "White": 81.37,
+    "Black": 0.96,
+    "Hispanic": 10.88,
+    "Asian/Other": 6.79
+   },
+   "Edu4": {
+    "HS or less": 27.16,
+    "Some college/assoc": 34.62,
+    "College grad": 25.78,
+    "Postgrad": 12.44
+   },
+   "Age4": {
+    "18-29": 24.43,
+    "30-44": 27.89,
+    "45-64": 28.2,
+    "65+": 19.48
+   },
+   "Gender": {
+    "Male": 50.54,
+    "Female": 49.46
+   }
+  },
+  "VA": {
+   "total": 6072052,
+   "AgeGender": {
+    "18-29_Female": 9.29,
+    "18-29_Male": 8.94,
+    "30-44_Female": 12.84,
+    "30-44_Male": 11.83,
+    "45-64_Female": 16.32,
+    "45-64_Male": 14.49,
+    "65+_Female": 14.69,
+    "65+_Male": 11.61
+   },
+   "Race4": {
+    "White": 63.3,
+    "Black": 18.79,
+    "Hispanic": 6.91,
+    "Asian/Other": 11.01
+   },
+   "Edu4": {
+    "HS or less": 29.81,
+    "Some college/assoc": 27.32,
+    "College grad": 25.73,
+    "Postgrad": 17.14
+   },
+   "Age4": {
+    "18-29": 18.22,
+    "30-44": 24.67,
+    "45-64": 30.81,
+    "65+": 26.29
+   },
+   "Gender": {
+    "Male": 46.87,
+    "Female": 53.13
+   }
+  },
+  "VT": {
+   "total": 497349,
+   "AgeGender": {
+    "18-29_Female": 8.05,
+    "18-29_Male": 8.48,
+    "30-44_Female": 11.42,
+    "30-44_Male": 11.75,
+    "45-64_Female": 15.58,
+    "45-64_Male": 15.15,
+    "65+_Female": 15.74,
+    "65+_Male": 13.83
+   },
+   "Race4": {
+    "White": 91.78,
+    "Black": 0.96,
+    "Hispanic": 2.0,
+    "Asian/Other": 5.26
+   },
+   "Edu4": {
+    "HS or less": 29.21,
+    "Some college/assoc": 26.44,
+    "College grad": 26.8,
+    "Postgrad": 17.55
+   },
+   "Age4": {
+    "18-29": 16.53,
+    "30-44": 23.17,
+    "45-64": 30.73,
+    "65+": 29.57
+   },
+   "Gender": {
+    "Male": 49.22,
+    "Female": 50.78
+   }
+  },
+  "WA": {
+   "total": 5338645,
+   "AgeGender": {
+    "18-29_Female": 9.32,
+    "18-29_Male": 9.32,
+    "30-44_Female": 13.46,
+    "30-44_Male": 13.43,
+    "45-64_Female": 15.16,
+    "45-64_Male": 14.73,
+    "65+_Female": 13.26,
+    "65+_Male": 11.33
+   },
+   "Race4": {
+    "White": 70.33,
+    "Black": 3.82,
+    "Hispanic": 9.64,
+    "Asian/Other": 16.21
+   },
+   "Edu4": {
+    "HS or less": 28.39,
+    "Some college/assoc": 32.63,
+    "College grad": 25.05,
+    "Postgrad": 13.93
+   },
+   "Age4": {
+    "18-29": 18.63,
+    "30-44": 26.89,
+    "45-64": 29.89,
+    "65+": 24.59
+   },
+   "Gender": {
+    "Male": 48.81,
+    "Female": 51.19
+   }
+  },
+  "WI": {
+   "total": 4298778,
+   "AgeGender": {
+    "18-29_Female": 8.27,
+    "18-29_Male": 6.87,
+    "30-44_Female": 12.13,
+    "30-44_Male": 10.41,
+    "45-64_Female": 17.46,
+    "45-64_Male": 15.63,
+    "65+_Female": 15.76,
+    "65+_Male": 13.46
+   },
+   "Race4": {
+    "White": 83.28,
+    "Black": 5.57,
+    "Hispanic": 5.14,
+    "Asian/Other": 6.01
+   },
+   "Edu4": {
+    "HS or less": 30.56,
+    "Some college/assoc": 29.93,
+    "College grad": 26.92,
+    "Postgrad": 12.58
+   },
+   "Age4": {
+    "18-29": 15.14,
+    "30-44": 22.54,
+    "45-64": 33.1,
+    "65+": 29.22
+   },
+   "Gender": {
+    "Male": 46.37,
+    "Female": 53.63
+   }
+  },
+  "WV": {
+   "total": 1198361,
+   "AgeGender": {
+    "18-29_Female": 8.6,
+    "18-29_Male": 8.91,
+    "30-44_Female": 11.45,
+    "30-44_Male": 10.95,
+    "45-64_Female": 16.27,
+    "45-64_Male": 15.0,
+    "65+_Female": 15.65,
+    "65+_Male": 13.18
+   },
+   "Race4": {
+    "White": 91.2,
+    "Black": 3.18,
+    "Hispanic": 1.62,
+    "Asian/Other": 4.0
+   },
+   "Edu4": {
+    "HS or less": 42.93,
+    "Some college/assoc": 26.54,
+    "College grad": 19.51,
+    "Postgrad": 11.02
+   },
+   "Age4": {
+    "18-29": 17.51,
+    "30-44": 22.4,
+    "45-64": 31.27,
+    "65+": 28.82
+   },
+   "Gender": {
+    "Male": 48.04,
+    "Female": 51.96
+   }
+  },
+  "WY": {
+   "total": 335469,
+   "AgeGender": {
+    "18-29_Female": 6.92,
+    "18-29_Male": 6.46,
+    "30-44_Female": 10.95,
+    "30-44_Male": 9.99,
+    "45-64_Female": 15.92,
+    "45-64_Male": 15.85,
+    "65+_Female": 16.85,
+    "65+_Male": 17.06
+   },
+   "Race4": {
+    "White": 85.51,
+    "Black": 0.82,
+    "Hispanic": 7.92,
+    "Asian/Other": 5.75
+   },
+   "Edu4": {
+    "HS or less": 28.95,
+    "Some college/assoc": 34.9,
+    "College grad": 23.36,
+    "Postgrad": 12.79
+   },
+   "Age4": {
+    "18-29": 13.38,
+    "30-44": 20.94,
+    "45-64": 31.78,
+    "65+": 33.91
+   },
+   "Gender": {
+    "Male": 49.36,
+    "Female": 50.64
+   }
+  },
+  "US": {
+   "total": 222678208,
+   "AgeGender": {
+    "18-29_Female": 9.24,
+    "18-29_Male": 8.98,
+    "30-44_Female": 12.9,
+    "30-44_Male": 12.18,
+    "45-64_Female": 16.06,
+    "45-64_Male": 14.82,
+    "65+_Female": 14.09,
+    "65+_Male": 11.74
+   },
+   "Race4": {
+    "White": 62.95,
+    "Black": 12.11,
+    "Hispanic": 14.84,
+    "Asian/Other": 10.1
+   },
+   "Edu4": {
+    "HS or less": 32.68,
+    "Some college/assoc": 28.99,
+    "College grad": 24.56,
+    "Postgrad": 13.77
+   },
+   "Age4": {
+    "18-29": 18.22,
+    "30-44": 25.08,
+    "45-64": 30.88,
+    "65+": 25.83
+   },
+   "Gender": {
+    "Male": 47.72,
+    "Female": 52.28
+   }
+  }
+ }
+}

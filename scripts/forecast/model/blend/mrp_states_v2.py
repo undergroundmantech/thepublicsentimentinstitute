@@ -32,7 +32,7 @@ SITE, DBF, OUT = sys.argv[1:4]
 os.makedirs(OUT, exist_ok=True)
 DESK = "/root/.claude/uploads/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e/508b8a6a-National_Poll_Desk_12.html"
 ZTS = "/tmp/ledger_full/src/data/zips.ts"
-POLL_TARGET = 11.39
+POLL_TARGET = 13.1
 GALLUP_SHIFT = (50 - 39) - (45 - 48)          # 14 points toward the Democrats
 inv = lambda x: 1 / (1 + np.exp(-x)); logit = lambda p: np.log(p / (1 - p))
 
@@ -305,6 +305,82 @@ for st, r in sorted(st_rows.items()):
             row[f"{off}_dem"] = rc.get("dem"); row[f"{off}_gop"] = rc.get("gop")
     out.append(row)
 T = pd.DataFrame(out)
+
+# ---------------------------------------------------------------- county MRP, Oct 29 2026 night, at the user's request
+# Every county's projected 2026 electorate (the forecast's own census, voter file and turnout cells, joined to its
+# certified 2024 vote) poststratified on the cell model at the pooled anchor, D+11.4. The county's swing from its 2024
+# result is what the engine's census leg blends in (COUNTY_MRP).
+crow = []
+for f, st, votes, t in cells:
+    a_ = CT.get(f, "Suburban"); lm = CACHE[(st, a_)]; ld = CACHE_D[a_]
+    d2 = float((t * inv(lm + d_poll)).sum() / t.sum()); d2g = float((t * inv(lm + d_gal)).sum() / t.sum())
+    d2d = float((t * inv(ld + d_dm)).sum() / t.sum())
+    pv = P24.get(f); a24 = pv[0] / (pv[0] + pv[1]) if pv and (pv[0] + pv[1]) > 0 else np.nan
+    crow.append(dict(fips=f, state=st, area=a_, votes_2026=round(votes, 1), d2_2024=None if not np.isfinite(a24) else round(a24, 5),
+                     d2_mrp=round(d2, 5), d2_mrp_gallup=round(d2g, 5), d2_demo=round(d2d, 5),
+                     margin_2024=None if not np.isfinite(a24) else round(100 * (2 * a24 - 1), 2), margin_mrp=round(100 * (2 * d2 - 1), 2),
+                     swing_pts=None if not np.isfinite(a24) else round(100 * (2 * d2 - 1) - 100 * (2 * a24 - 1), 2),
+                     swing_logit=None if not np.isfinite(a24) else round(float(logit(np.clip(d2, 1e-4, 1 - 1e-4)) - logit(np.clip(a24, 1e-4, 1 - 1e-4))), 5)))
+CM = pd.DataFrame(crow); CM.to_csv(f"{OUT}/county_mrp.csv", index=False)
+
+# ---------------------------------------------------------------- county Trump approval, Oct 29 2026 late night, at the user's request
+# Every county's approval re-estimated on the same cell model and frame: one penalized logit for no opinion against an
+# opinion, one for approve against disapprove among those with one, fitted on the answered approval question (modeled
+# answers stay out), waves pooled by the fast drift multipliers and the likely voter weights, predicted at the Oct 28
+# wave, and levelled nationally to the On Point Oct 28 poll's likely voters, 38.4 approve 59.2 disapprove on the MRP
+# weights. Each state and county keeps its own level from there: nothing flattens it to a national average.
+APP_T = dict(approve=38.4, disapprove=59.2)
+nat["app"] = nat.respondent_id.map(_C.app_answer); nat["appsrc"] = nat.respondent_id.map(_C.app_source)
+fa = nat[(nat.appsrc == "answered") & nat.app.notna() & nat.recall_2024.notna() & nat.age_band.notna() & nat.race4.notna() & nat.area.notna()].copy()
+XA = X(fa).reindex(columns=cols, fill_value=0.0).values
+swa = fa.weight_lv.astype(float).values; swa = np.nan_to_num(swa / np.nanmean(swa), nan=1.0) * fa.pool.fillna(1.0).values
+def fitb(Xm, yy, ww):
+    bb = np.zeros(Xm.shape[1])
+    for _ in range(80):
+        p_ = inv(Xm @ bb); W_ = ww * p_ * (1 - p_)
+        st_ = np.linalg.solve(Xm.T @ (Xm * W_[:, None]) + np.diag(pen), Xm.T @ (ww * (yy - p_)) - pen * bb); bb += st_
+        if np.abs(st_).max() < 1e-7: break
+    return bb
+yN = fa.app.str.startswith("Neutral").values.astype(float)
+bN = fitb(XA, yN, swa)
+op = yN == 0
+yA = fa.app[op].isin(["Strongly approve", "Somewhat approve"]).values.astype(float)
+bA = fitb(XA[op], yA, swa[op])
+CA = {}
+def cellA(st, area):
+    g = grid.copy(); g["state"] = st; g["region8"] = S2R.get(st); g["area"] = area; g["wave"] = LAST
+    Xm = X(g, LAST).reindex(columns=cols, fill_value=0.0).values
+    fem = cols.index("female")
+    return (Xm @ bN - 0.5 * bN[fem]).reshape(4, 4, 2, 4), (Xm @ bA - 0.5 * bA[fem]).reshape(4, 4, 2, 4)
+for f, st, votes, t in cells:
+    k_ = (st, CT.get(f, "Suburban"))
+    if k_ not in CA: CA[k_] = cellA(*k_)
+def nat_app(dn, da):
+    num = np.zeros(3); den = 0.0
+    for f, st, votes, t in cells:
+        lN, lA = CA[(st, CT.get(f, "Suburban"))]; pN = inv(lN + dn); pA = inv(lA + da); tt = t / t.sum()
+        num += votes * np.array([(tt * (1 - pN) * pA).sum(), (tt * (1 - pN) * (1 - pA)).sum(), (tt * pN).sum()]); den += votes
+    return 100 * num / den
+tgtN = 100 - APP_T["approve"] - APP_T["disapprove"]; tgtA = APP_T["approve"] / (APP_T["approve"] + APP_T["disapprove"])
+dn = da = 0.0
+for _ in range(3):
+    lo, hi = -3.0, 3.0
+    for _ in range(40):
+        mid = 0.5 * (lo + hi); (lo, hi) = (mid, hi) if nat_app(mid, da)[2] < tgtN else (lo, mid)
+    dn = 0.5 * (lo + hi)
+    lo, hi = -3.0, 3.0
+    for _ in range(40):
+        mid = 0.5 * (lo + hi); v = nat_app(dn, mid); (lo, hi) = (mid, hi) if v[0] / (v[0] + v[1]) < tgtA else (lo, mid)
+    da = 0.5 * (lo + hi)
+arow = []
+for f, st, votes, t in cells:
+    lN, lA = CA[(st, CT.get(f, "Suburban"))]; pN = inv(lN + dn); pA = inv(lA + da); tt = t / t.sum()
+    ap = float((tt * (1 - pN) * pA).sum()); di = float((tt * (1 - pN) * (1 - pA)).sum()); ne = float((tt * pN).sum())
+    arow.append(dict(county_fips=f, state_abbr=st, votes_2026=round(votes, 1), **{"TRUMP APPROVE": round(100 * ap, 2), "TRUMP DISAPPROVE": round(100 * di, 2)}, no_opinion=round(100 * ne, 2)))
+AP = pd.DataFrame(arow); AP.to_csv(f"{OUT}/county_approval_mrp.csv", index=False)
+_sa = AP.groupby("state_abbr").apply(lambda g: pd.Series({k_: float((g[k_] * g.votes_2026).sum() / g.votes_2026.sum()) for k_ in ["TRUMP APPROVE", "TRUMP DISAPPROVE", "no_opinion"]}))
+_sa.round(1).to_csv(f"{OUT}/state_approval_mrp.csv")
+print("approval fit rows", len(fa), "national", nat_app(dn, da).round(2), "shifts", round(dn, 3), round(da, 3))
 
 # ---------------------------------------------------------------- Senate and governor MRP from the On Point state respondents
 five = db[db.source_dataset.astype(str).str.startswith("onpoint_")].copy()
