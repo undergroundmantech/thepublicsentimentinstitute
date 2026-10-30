@@ -2,7 +2,7 @@
 // Arizona — 2026 Governor: Katie Hobbs (D) vs. Andy Biggs (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-25. Seven 2026 pre primary polls added Sept 28.
+// ballot were dropped. Newest poll: 2026-10-28. Seven 2026 pre primary polls added Sept 28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -65,6 +65,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AZ-GOV-2026", "pollster": "HighGround Public Affairs", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 400, "sampleType": "LV", "results": {"Katie Hobbs (D)": 50.5, "Andy Biggs (R)": 33.7, "Undecided": 15.8}},
     {"raceId": "AZ-GOV-2026", "pollster": "GrayHouse for Norton (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 550, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 2.0, "Undecided": 2.0}},
     {"raceId": "AZ-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2686, "sampleType": "LV", "results": {"Katie Hobbs (D)": 47.4, "Andy Biggs (R)": 42.3, "Other": 4.4, "Undecided": 5.9}},
-    {"raceId": "AZ-GOV-2026", "pollster": "HighGround Public Affairs", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 400, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.5, "Andy Biggs (R)": 39.3, "Undecided": 9.2}}
+    {"raceId": "AZ-GOV-2026", "pollster": "HighGround Public Affairs", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 400, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.5, "Andy Biggs (R)": 39.3, "Undecided": 9.2}},
+    {"raceId": "AZ-GOV-2026", "pollster": "KStrat for American Encore (R)", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 900, "sampleType": "LV", "results": {"Katie Hobbs (D)": 48.3, "Andy Biggs (R)": 43.1, "Other": 1.4, "Undecided": 7.1}},
+    {"raceId": "AZ-GOV-2026", "pollster": "Noble Predictive Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 511, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 1.0, "Undecided": 3.0}}
   ],
 };

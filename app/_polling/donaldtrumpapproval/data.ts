@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 30, 2026 midday ──
+  { pollster: "Emerson", endDate: "2026-10-26", sampleSize: 1000, sampleType: "LV", results: { Approve: 37, Disapprove: 57 } },   // Emerson national, Oct 24 to 26, likely voters; n estimated from past Emerson national waves; sent by the publisher Oct 30
   // ── Added Oct 29, 2026 morning ──
   { pollster: "Clarity Campaign Labs", endDate: "2026-10-21", sampleSize: 1016, sampleType: "LV", results: { Approve: 42, Disapprove: 56 } },   // aggregator only, added Oct 29 at the publisher's request
   { pollster: "Rainey Center", endDate: "2026-10-20", sampleSize: 1279, sampleType: "RV", results: { Approve: 42, Disapprove: 58 } },   // aggregator only, added Oct 29 at the publisher's request

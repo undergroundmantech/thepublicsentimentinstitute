@@ -1,7 +1,7 @@
 {
  "snapshot": "2026-10-28",
  "daysOut": 6,
- "applied": "2026-10-29",
+ "applied": "2026-10-30",
  "settings": {
   "kappa": 0.5,
   "rho": 0.8573979256883263,
@@ -164,9 +164,9 @@
  },
  "states": {
   "AK": {
-   "gap": -0.075,
+   "gap": -0.076,
    "vol": -0.001,
-   "nbr": 0.484,
+   "nbr": 0.483,
    "own": 0.305,
    "w": 0.221,
    "hist": null,
@@ -180,7 +180,7 @@
   "AL": {
    "gap": 0.31,
    "vol": 0.002,
-   "nbr": 0.827,
+   "nbr": 0.826,
    "own": null,
    "w": 0.0,
    "hist": null,
@@ -194,7 +194,7 @@
   "AR": {
    "gap": -0.533,
    "vol": 0.003,
-   "nbr": 0.665,
+   "nbr": 0.664,
    "own": -15.033,
    "w": 0.086,
    "hist": null,
@@ -208,7 +208,7 @@
   "AZ": {
    "gap": -0.318,
    "vol": -0.009,
-   "nbr": 0.123,
+   "nbr": 0.124,
    "own": -0.737,
    "w": 1.379,
    "hist": -2.043,
@@ -217,7 +217,7 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": 0.26,
-   "level": -0.01
+   "level": -0.02
   },
   "CA": {
    "gap": -0.427,
@@ -264,7 +264,7 @@
   "DE": {
    "gap": 3.903,
    "vol": 0.001,
-   "nbr": 0.493,
+   "nbr": 0.492,
    "own": 10.054,
    "w": 0.967,
    "hist": null,
@@ -276,9 +276,9 @@
    "level": 0.0
   },
   "FL": {
-   "gap": 2.144,
+   "gap": 2.143,
    "vol": 0.01,
-   "nbr": -0.038,
+   "nbr": -0.041,
    "own": 4.796,
    "w": 1.465,
    "hist": null,
@@ -286,7 +286,7 @@
    "ballots": 3879348,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.81,
+   "comp": -1.8,
    "level": 0.03
   },
   "GA": {
@@ -360,9 +360,9 @@
    "level": -0.0
   },
   "IN": {
-   "gap": 0.44,
+   "gap": 0.438,
    "vol": -0.0,
-   "nbr": 0.583,
+   "nbr": 0.579,
    "own": 1.635,
    "w": 0.296,
    "hist": null,
@@ -400,7 +400,7 @@
    "level": -0.0
   },
   "LA": {
-   "gap": 0.437,
+   "gap": 0.436,
    "vol": 0.004,
    "nbr": 0.737,
    "own": 0.996,
@@ -484,9 +484,9 @@
    "level": -0.01
   },
   "MO": {
-   "gap": 0.303,
+   "gap": 0.302,
    "vol": -0.0,
-   "nbr": 0.568,
+   "nbr": 0.564,
    "own": 1.093,
    "w": 0.183,
    "hist": null,
@@ -512,7 +512,7 @@
   "MT": {
    "gap": 0.161,
    "vol": -0.002,
-   "nbr": 0.754,
+   "nbr": 0.753,
    "own": -0.468,
    "w": 0.309,
    "hist": null,
@@ -524,9 +524,9 @@
    "level": -0.0
   },
   "NC": {
-   "gap": 1.118,
+   "gap": 1.117,
    "vol": 0.005,
-   "nbr": 0.532,
+   "nbr": 0.529,
    "own": 3.177,
    "w": 1.09,
    "hist": null,
@@ -540,7 +540,7 @@
   "ND": {
    "gap": 0.152,
    "vol": -0.0,
-   "nbr": 0.714,
+   "nbr": 0.712,
    "own": -0.399,
    "w": 0.336,
    "hist": null,
@@ -578,9 +578,9 @@
    "level": -0.0
   },
   "NJ": {
-   "gap": 0.023,
+   "gap": 0.022,
    "vol": -0.038,
-   "nbr": 0.459,
+   "nbr": 0.458,
    "own": 0.006,
    "w": 1.276,
    "hist": 0.188,
@@ -676,9 +676,9 @@
    "level": -0.0
   },
   "PA": {
-   "gap": 0.792,
+   "gap": 0.791,
    "vol": -0.041,
-   "nbr": 0.331,
+   "nbr": 0.33,
    "own": 4.218,
    "w": 0.537,
    "hist": null,
@@ -704,9 +704,9 @@
    "level": -0.01
   },
   "SC": {
-   "gap": 0.223,
+   "gap": 0.222,
    "vol": 0.014,
-   "nbr": 1.086,
+   "nbr": 1.084,
    "own": 0.373,
    "w": 0.443,
    "hist": null,
@@ -734,7 +734,7 @@
   "TN": {
    "gap": 0.305,
    "vol": 0.003,
-   "nbr": 0.763,
+   "nbr": 0.762,
    "own": 0.378,
    "w": 0.405,
    "hist": null,
@@ -746,9 +746,9 @@
    "level": 0.01
   },
   "TX": {
-   "gap": -0.137,
+   "gap": -0.136,
    "vol": 0.03,
-   "nbr": 0.676,
+   "nbr": 0.68,
    "own": -0.714,
    "w": 0.333,
    "hist": null,
@@ -760,9 +760,9 @@
    "level": 0.07
   },
   "UT": {
-   "gap": 0.921,
+   "gap": 0.919,
    "vol": 0.0,
-   "nbr": 0.571,
+   "nbr": 0.566,
    "own": 3.441,
    "w": 0.449,
    "hist": null,
@@ -772,9 +772,9 @@
    "source": "early vote"
   },
   "VA": {
-   "gap": 0.529,
+   "gap": 0.528,
    "vol": -0.002,
-   "nbr": 1.246,
+   "nbr": 1.245,
    "own": 0.807,
    "w": 0.353,
    "hist": null,
@@ -814,7 +814,7 @@
   "WI": {
    "gap": 0.088,
    "vol": -0.004,
-   "nbr": 0.583,
+   "nbr": 0.582,
    "own": 0.842,
    "w": 0.435,
    "hist": null,
@@ -856,22 +856,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.0,
-   "dem_control_before": 0.8437,
-   "dem_control": 0.8438,
-   "dem_seats": 28.31
+   "seat_change": -0.0,
+   "dem_control_before": 0.8468,
+   "dem_control": 0.8468,
+   "dem_seats": 28.37
   },
   "senate": {
    "seat_change": 0.0,
-   "dem_control_before": 0.8175,
-   "dem_control": 0.8175,
-   "dem_seats": 53.52
+   "dem_control_before": 0.8228,
+   "dem_control": 0.8228,
+   "dem_seats": 53.6
   },
   "house": {
    "seat_change": 0.0,
-   "dem_control_before": 0.9538,
-   "dem_control": 0.9538,
-   "dem_seats": 249.81
+   "dem_control_before": 0.9541,
+   "dem_control": 0.9541,
+   "dem_seats": 249.84
   }
  }
 }

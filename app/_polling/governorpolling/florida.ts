@@ -74,6 +74,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 4823, "sampleType": "LV", "results": {"David Jolly (D)": 43.9, "Byron Donalds (R)": 49.2, "Other": 1.9, "Undecided": 5.2}},
     {"raceId": "FL-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 515, "sampleType": "LV", "results": {"David Jolly (D)": 44.0, "Byron Donalds (R)": 50.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "FL-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 813, "sampleType": "LV", "results": {"David Jolly (D)": 44.0, "Byron Donalds (R)": 48.0, "Undecided": 8.0}},
-    {"raceId": "FL-GOV-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 916, "sampleType": "LV", "results": {"David Jolly (D)": 45.5, "Byron Donalds (R)": 47.8, "Other": 3.2, "Undecided": 3.5}}
+    {"raceId": "FL-GOV-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 916, "sampleType": "LV", "results": {"David Jolly (D)": 45.5, "Byron Donalds (R)": 47.8, "Other": 3.2, "Undecided": 3.5}},
+    {"raceId": "FL-GOV-2026", "pollster": "Workbench Strategy for the Nixon campaign (D)", "startDate": "2026-10-18", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"David Jolly (D)": 48.0, "Byron Donalds (R)": 46.0, "Undecided": 6.0}}
   ],
 };
