@@ -76,7 +76,10 @@ Published forecast data preserved: **yes**. National dashboard preserved: **yes*
 
 ## Remaining integration risks
 
-- `main` keeps moving (two poll sweeps a day). Any later `main` should be merged into this branch the same way; the
-  race page reads the forecast date from `index.json`, so a newer publication needs no code change.
+- `main` keeps moving (two poll sweeps a day). At close-out on 2026-10-30 `origin/main` was `45df156c`, four commits
+  past `30ecde03` (`55c7398f`, `182bceff`, `e084eadc`, `45df156c`: Oct 29 poll sweep and model reruns). None of them
+  touch `app/results/**` or the two election-night docs, so the branch still merges cleanly. Any later `main` should be
+  merged into this branch the same way; the race page reads the forecast date from `index.json`, so a newer publication
+  needs no code change.
 - The uncommitted `flightrecorder` route above will fail `tsc` until the intelligence branch lands; it is excluded
   from this branch's commits.

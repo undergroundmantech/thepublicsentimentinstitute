@@ -107,6 +107,13 @@ Eleven post-fix screenshots were inspected: `senate-partial` at 390 / 768 / 1024
 - The pre-existing forecast outcome rows read `{Candidate} wins 99.6%` inside the *Model projection · not actual results* panel; they are probabilities, not results, and are unchanged by this work.
 - The fixed bottom tab bar appearing mid-page in full-page mobile captures is a screenshot-stitching artifact, not a layout fault.
 
+### Final QA pass (Milestone 2 close-out, 2026-10-30)
+
+A second, independent inspection of eleven shots — `senate-partial` 390 / 768 / 1024 / 1280 / 1440 dark and 1280 light, `gov-partial` 390 light, `house-partial` 390 dark, `measure-partial` 1280 dark, `other-partial` 1280 dark, `senate-called` 1280 dark — confirmed the findings above. Composition, type scale, meta-block grid, tab row, card chrome and map legend match the national dashboard and the rest of the OnPoint results UI in both themes; official calls (green band + *Called by civicAPI* chip), OnPoint projections (dashed status + chip) and reported returns (solid bars, *Reported results* card) stay visually distinct in every state captured. No code change was made. Two further minor observations, left as they are:
+
+- At 390 the *Last updated* value (`9:04 AM ET`) and the *Pre-election forecast* value (`D +82.9 · >99%`) wrap to two lines inside their meta blocks. Text is complete and legible; the only effect is that those two blocks are taller than their neighbours.
+- On the no-forecast page (`other-partial`) the *Forecast snapshot* card keeps its race-rule chip (*Plurality*) and, at 1024 and wider, stretches to the height of the results card below the `.nd-nofc` panel.
+
 ## 8. Verified result states
 
 | # | State (brief §11) | Scenario | How it was produced | What the page shows |
@@ -151,6 +158,7 @@ The intelligence branch's Race History / flight-recorder timeline should mount a
 
 ## 12. Remaining work / recommended next milestone
 
+- `origin/main` has moved on to `45df156c` (four Oct 29 forecast/poll commits after `30ecde03`). None of them touch `app/results/**` or these docs, so the branch merges cleanly; fold the newer head in with the same no-fast-forward procedure before this branch is merged, so the page is tested against Lester's current published numbers.
 - Wire the Race History module once `feature/election-night-intelligence-v1` lands (see §11).
 - Senate/governor "needs" ticker (votes outstanding vs. lead) once civicAPI exposes expected-vote by county.
 - Share card (`/api/og`) per race using the status pill colours.
