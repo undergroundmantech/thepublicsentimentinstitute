@@ -8,7 +8,6 @@ function useLatest<T>(v: T) { const r = useRef(v); useEffect(() => { r.current =
 import * as E from "../engine";
 import { PLAN, rivalIntel, rivalProfile, starsTxt } from "../rival";
 import { TROPHIES, type Trophy } from "../achieve";
-import type { ChatMsg, ChatStatus, StreamCfg } from "../stream";
 import { Portrait, cls, sur, fxs } from "./ui";
 import { seedOf } from "./sprites";
 import { sfx } from "./sound";
@@ -61,24 +60,6 @@ export function RivalMoveCard({ s, c }: { s: E.State; c: E.Ctx }) {
   );
 }
 
-// ============================================================ chat vote
-export function ChatVote({ labels, blocked, counts, left, total, onEnd }: { labels: string[]; blocked: boolean[]; counts: number[]; left: number; total: number; onEnd: () => void }) {
-  const n = counts.reduce((a, b) => a + b, 0); const top = Math.max(0, ...counts);
-  return (
-    <div className="px-vote" role="status" aria-live="polite">
-      <div className="hd"><span className="px-k">Chat decides · type 1 to {labels.length}</span><b className={cls("clock", left <= 5 && "hot")}>{left}s</b></div>
-      <span className="timer"><i style={{ width: `${(100 * left) / Math.max(1, total)}%` }} /></span>
-      <ul>{labels.map((l, i) => (
-        <li key={i} className={cls(blocked[i] && "off", counts[i] === top && top > 0 && "lead")}>
-          <b>{i + 1}</b><span className="l">{l}{blocked[i] ? " · not available" : ""}</span>
-          <span className="bar"><i style={{ width: `${n ? (100 * counts[i]) / n : 0}%` }} /></span><em>{counts[i]}</em>
-        </li>
-      ))}</ul>
-      <div className="ft"><small>{n} vote{n === 1 ? "" : "s"}. Keys 1 to {labels.length} add a vote from the room.</small><button type="button" className="px-ghost sm" onClick={onEnd}>Close the vote</button></div>
-    </div>
-  );
-}
-
 export function CrisisClock({ left, total }: { left: number; total: number }) {
   return <div className={cls("px-cclock", left <= 5 && "hot")} role="timer" aria-label={`${left} seconds to decide`}><b>{left}</b><span>seconds before the campaign answers for you</span><i style={{ width: `${(100 * left) / Math.max(1, total)}%` }} /></div>;
 }
@@ -122,12 +103,12 @@ export function ChaosWheel({ titles, land, onDone }: { titles: string[]; land: s
 }
 
 // ============================================================ crowd splash and trophies
-const SPLASH = { viral: ["GONE VIRAL", "Millions of views overnight"], packed: ["PACKED HOUSE", "A line out the door"], dud: ["EMPTY SEATS", "The local news noticed"], hype: ["HYPE TRAIN", "Chat lit up: buzz and volunteers up"] } as const;
+const SPLASH = { viral: ["GONE VIRAL", "Millions of views overnight"], packed: ["PACKED HOUSE", "A line out the door"], dud: ["EMPTY SEATS", "The local news noticed"], wild: ["CROWD GOES WILD", "Every applause line landed"], flop: ["CRICKETS", "The applause lines fell flat"], bull: ["KALSHI SURGE", "Traders are buying you"], bear: ["KALSHI SELLOFF", "Traders are dumping you"], whale: ["WHALE ALERT", "One trade just moved your line"], ad: ["AD IS LIVE", "Your spot hits the airwaves"] } as const;
 export type SplashKind = keyof typeof SPLASH;
-export function Splash({ kind, onDone }: { kind: keyof typeof SPLASH; onDone: () => void }) {
+export function Splash({ kind, sub, onDone }: { kind: keyof typeof SPLASH; sub?: string; onDone: () => void }) {
   const done = useLatest(onDone);
-  useEffect(() => { sfx(kind === "dud" ? "boo" : "crowd"); const f = kind === "viral" || kind === "hype" ? setTimeout(() => sfx("fanfare"), 250) : 0; const id = setTimeout(() => done.current(), 1900); return () => { clearTimeout(id); clearTimeout(f); }; }, [kind, done]);
-  return <div className={cls("px-splash", kind)} role="status" onClick={onDone}><b>{SPLASH[kind][0]}</b><span>{SPLASH[kind][1]}</span></div>;
+  useEffect(() => { sfx(kind === "dud" || kind === "flop" ? "boo" : kind === "bear" ? "bad" : kind === "bull" || kind === "whale" ? "coin" : kind === "ad" ? "whoosh" : "crowd"); const f = kind === "viral" || kind === "wild" || kind === "bull" || kind === "whale" ? setTimeout(() => sfx("fanfare"), 250) : 0; const id = setTimeout(() => done.current(), 1900); return () => { clearTimeout(id); clearTimeout(f); }; }, [kind, done]);
+  return <div className={cls("px-splash", kind)} role="status" onClick={onDone}><b>{SPLASH[kind][0]}</b><span>{sub ?? SPLASH[kind][1]}</span></div>;
 }
 
 export function TrophyToasts({ list, onDone }: { list: Trophy[]; onDone: (id: string) => void }) {
@@ -153,47 +134,26 @@ export function TrophyCase({ have }: { have: string[] }) {
   );
 }
 
-// ============================================================ chat on screen
-export function ChatBox({ recent, status, channel }: { recent: ChatMsg[]; status: ChatStatus; channel: string }) {
-  const lines = recent.slice(-6);
-  return (
-    <aside className="px-chat" aria-label="Twitch chat">
-      <span className={cls("px-k", status)}>{status === "live" ? `Live · #${channel}` : status === "connecting" ? "Connecting to chat" : status === "error" ? "Chat unreachable" : "Chat off"}</span>
-      <ul>{lines.map((m) => <li key={m.t + m.user}><b style={m.color ? { color: m.color } : undefined}>{m.user}</b> {m.text.slice(0, 90)}</li>)}</ul>
-    </aside>
-  );
-}
-
-export function Meters({ chaos, hype, hypeUsed }: { chaos: number; hype: number; hypeUsed: boolean }) {
-  return (
-    <div className="px-cmeters" aria-label="Chat meters">
-      <div><span className="px-k">Chaos meter · !chaos</span><span className="m chaos"><i style={{ width: `${chaos}%` }} /></span></div>
-      <div><span className="px-k">Hype train · !hype{hypeUsed ? ", used this week" : ""}</span><span className="m hype"><i style={{ width: `${hype}%` }} /></span></div>
-    </div>
-  );
-}
-
-// ============================================================ the stream tab
-export function StreamPane({ cfg, setCfg, status, recent, chaos, hype, hypeUsed, canSpin, spin }: { cfg: StreamCfg; setCfg: (c: StreamCfg) => void; status: ChatStatus; recent: ChatMsg[]; chaos: number; hype: number; hypeUsed: boolean; canSpin: boolean; spin: () => void }) {
-  const [ch, setCh] = useState(cfg.channel);
-  const set = (p: Partial<StreamCfg>) => { setCfg({ ...cfg, ...p }); sfx("click"); };
+// ============================================================ the show tab: settings for playing on camera
+export type ShowCfg = { clock: number; loud: boolean; keys: boolean; crowd: boolean; ads: boolean };
+export const DEF_SHOW: ShowCfg = { clock: 20, loud: true, keys: true, crowd: true, ads: true };
+const SHOW_KEY = "opp_play_show";
+export function loadShow(): ShowCfg { try { return { ...DEF_SHOW, ...JSON.parse(localStorage.getItem(SHOW_KEY) || "{}") }; } catch { return DEF_SHOW; } }
+export function saveShow(c: ShowCfg) { try { localStorage.setItem(SHOW_KEY, JSON.stringify(c)); } catch { /* storage blocked */ } }
+export function ShowPane({ cfg, setCfg, canSpin, spin }: { cfg: ShowCfg; setCfg: (c: ShowCfg) => void; canSpin: boolean; spin: () => void }) {
+  const set = (p: Partial<ShowCfg>) => { setCfg({ ...cfg, ...p }); sfx("click"); };
   return (
     <div className="px-air px-stream">
-      <label className="px-check" htmlFor="px-st-on"><input id="px-st-on" type="checkbox" checked={cfg.on} onChange={(e) => set({ on: e.target.checked })} />Stream mode: chat votes, crisis clocks, BREAKING banners, the chat box</label>
-      <div className="px-row wrap"><label className="px-k" htmlFor="px-st-ch">Twitch channel</label>
-        <input id="px-st-ch" className="px-sel" placeholder="yourchannel" value={ch} onChange={(e) => setCh(e.target.value.replace(/[^A-Za-z0-9_]/g, "").slice(0, 25))} />
-        <button type="button" className="px-btn sm" onClick={() => set({ channel: ch, on: true })}>Connect</button>
-        <b className={cls("px-live", status)}>{status === "live" ? "LIVE" : status === "connecting" ? "..." : status === "error" ? "ERROR" : "OFF"}</b></div>
-      <p className="px-note">Reads public chat with no login. Nothing is posted to your channel.</p>
-      <div className="px-row wrap"><span className="px-k">Vote length</span>{[15, 30, 45, 60].map((v) => <button key={v} type="button" className={cls("px-chipb", cfg.voteSec === v && "on")} onClick={() => set({ voteSec: v })}>{v}s</button>)}</div>
-      <div className="px-row wrap"><span className="px-k">Crisis clock</span>{[0, 15, 20, 30].map((v) => <button key={v} type="button" className={cls("px-chipb", cfg.crisisSec === v && "on")} onClick={() => set({ crisisSec: v })}>{v ? `${v}s` : "Off"}</button>)}</div>
-      <label className="px-check" htmlFor="px-st-box"><input id="px-st-box" type="checkbox" checked={cfg.chatBox} onChange={(e) => set({ chatBox: e.target.checked })} />Show chat on the game screen</label>
-      <label className="px-check" htmlFor="px-st-auto"><input id="px-st-auto" type="checkbox" checked={!!cfg.auto} onChange={(e) => set({ auto: e.target.checked })} />Chat votes on every card automatically</label>
-      <Meters chaos={chaos} hype={hype} hypeUsed={hypeUsed} />
-      <button type="button" className="px-act wide" disabled={!canSpin} onClick={spin}><b>Spin the chaos wheel</b><span>Once a week, plus a free spin every time chat fills the chaos meter. Something loud and strange happens; how it plays depends on your answer.</span></button>
-      <span className="px-k">Chat commands</span>
-      <ul className="px-cmds"><li><b>1 to 4</b> vote on the card while a vote is open</li><li><b>!chaos</b> fills the chaos meter; full spins the wheel</li><li><b>!hype</b> fills the hype train; full gives buzz and volunteers once a week</li></ul>
-      {recent.length ? <ul className="px-log">{recent.slice(-8).reverse().map((m) => <li key={m.t + m.user} className="news"><p><b>{m.user}</b> {m.text}</p></li>)}</ul> : null}
+      <p className="px-note">Settings for playing on camera. Most change only how loud the game is; working the crowd and the ad studio can also add a little to a rally or an ad, or cost you when they flop.</p>
+      <div className="px-row wrap"><span className="px-k">Crisis clock</span>{[0, 10, 20, 30].map((v) => <button key={v} type="button" className={cls("px-chipb", cfg.clock === v && "on")} onClick={() => set({ clock: v })}>{v ? `${v}s` : "Off"}</button>)}</div>
+      <p className="px-note">A crisis card starts a countdown. Run out of time and the campaign puts out a flat denial for you.</p>
+      <label className="px-check" htmlFor="px-sh-loud"><input id="px-sh-loud" type="checkbox" checked={cfg.loud} onChange={(e) => set({ loud: e.target.checked })} />BREAKING banners, crowd splashes and Kalshi alerts</label>
+      <label className="px-check" htmlFor="px-sh-crowd"><input id="px-sh-crowd" type="checkbox" checked={cfg.crowd} onChange={(e) => set({ crowd: e.target.checked })} />Work the crowd after every rally: hit the applause lines</label>
+      <label className="px-check" htmlFor="px-sh-ads"><input id="px-sh-ads" type="checkbox" checked={cfg.ads} onChange={(e) => set({ ads: e.target.checked })} />Ad studio: watch your TV ad and the focus group dial before it airs</label>
+      <label className="px-check" htmlFor="px-sh-keys"><input id="px-sh-keys" type="checkbox" checked={cfg.keys} onChange={(e) => set({ keys: e.target.checked })} />Show the 1 to 4 key numbers on cards</label>
+      <button type="button" className="px-act wide" disabled={!canSpin} onClick={spin}><b>Spin the chaos wheel</b><span>Once a week. Something loud and strange happens; how it plays depends on your answer.</span></button>
+      <span className="px-k">Keys</span>
+      <ul className="px-cmds"><li><b>1 to 4</b> answer the card on screen</li><li><b>Space</b> hits the applause line when you work the crowd</li><li><b>On election night</b> call the race yourself before the desk does</li></ul>
     </div>
   );
 }

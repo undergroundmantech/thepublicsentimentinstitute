@@ -672,3 +672,101 @@
   .opp.pg .px-app.imm .px-ticker .lbl, .opp.pg .px-app.imm .px-ticker .run { padding-block: 6px; }
 }
 .opp.pg .px-step { scroll-margin-top: 130px; }
+
+/* Kalshi in pixels: price chips, the LED ticker, pixel charts, the tile map and Kalshi TV. Kalshi green marks market data. */
+.opp.pg { --px-kx: #09bc7f; }
+.opp.pg .px-kx { font: 400 9px var(--px-fd); letter-spacing: .04em; color: var(--px-kx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.opp.pg .px-fighter .odds.kx strong { color: var(--px-kx); }
+.opp.pg .px-hs .px-kxh { color: var(--px-kx); }
+/* pixel canvases: drawn small, scaled up without smoothing */
+.opp.pg .px-pcv { display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; }
+.opp.pg .px-pcwrap { position: relative; aspect-ratio: 340 / 168; max-width: 100%; box-shadow: 0 0 0 2px #000; background: #0b0619; }
+.opp.pg .px-pcwrap .px-pcv { position: absolute; inset: 0; }
+.opp.pg .px-pc2.top { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; box-shadow: none; }
+.opp.pg .px-pc2 .lbl { fill: var(--px-gold); font: 400 6px var(--px-fd); paint-order: stroke; stroke: #000; stroke-width: 2px; }
+.opp.pg .px-chart { position: relative; aspect-ratio: 120 / 46; max-width: 100%; background: #0b0716; box-shadow: 0 0 0 2px #000; margin-block: 8px 6px; }
+.opp.pg .px-chart .px-pcv { position: absolute; inset: 0; }
+.opp.pg .px-chart .ax, .opp.pg .px-chart .ref, .opp.pg .px-chart .tag { position: absolute; transform: translateY(-50%); font: 400 8px var(--px-fd); pointer-events: none; text-shadow: 1px 1px 0 #000; }
+.opp.pg .px-chart .ax { left: 2px; color: var(--px-mute); }
+.opp.pg .px-chart .ref { right: 4px; transform: translateY(-120%); }
+.opp.pg .px-chart .tag { transform: translate(-100%, -150%); white-space: nowrap; }
+.opp.pg .px-chart.wait { display: grid; place-items: center; color: var(--px-mute); font: 400 9px var(--px-fd); padding: 12px; text-align: center; }
+/* the LED ticker */
+.opp.pg .px-led { display: flex; align-items: stretch; margin: 0 0 12px; background: #050308; box-shadow: 0 0 0 3px #000, inset 0 0 0 2px #1b1430; overflow: hidden; }
+.opp.pg .px-led > b { flex: none; display: grid; place-items: center; padding: 0 10px; background: var(--px-kx); color: #04130d; font: 400 10px var(--px-fd); letter-spacing: .08em; }
+.opp.pg .px-led .run { position: relative; flex: 1; min-width: 0; overflow: hidden; }
+.opp.pg .px-led .run::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, transparent 1px, #050308 1.6px); background-size: 3px 3px; opacity: .55; }
+.opp.pg .px-led .tape { display: inline-flex; gap: 28px; padding: 10px 0; white-space: nowrap; animation: px-led 70s linear infinite; font: 400 12px var(--px-fd); letter-spacing: .06em; }
+.opp.pg .px-led .tape span { color: #ffd76a; text-shadow: 0 0 4px rgba(255, 215, 106, .6); }
+.opp.pg .px-led .tape span.d { color: #8fb0ff; text-shadow: 0 0 4px rgba(61, 123, 255, .7); } .opp.pg .px-led .tape span.r { color: #ff8da1; text-shadow: 0 0 4px rgba(255, 59, 92, .7); } .opp.pg .px-led .tape span.i { color: #d8c2ff; text-shadow: 0 0 4px rgba(183, 140, 255, .7); }
+.opp.pg .px-led .tape em { font-style: normal; margin-left: 6px; } .opp.pg .px-led .tape em.up { color: var(--px-green); } .opp.pg .px-led .tape em.dn { color: var(--px-gop); }
+@keyframes px-led { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* the tile map */
+.opp.pg .px-kxmap { display: grid; gap: 8px; margin-block: 6px 10px; }
+.opp.pg .px-tiles { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); gap: 3px; padding: 8px; background: #0b0716; box-shadow: 0 0 0 2px #000; }
+.opp.pg .px-tiles .t { appearance: none; border: 0; aspect-ratio: 1; min-width: 0; display: grid; place-content: center; gap: 1px; padding: 0; cursor: pointer; background: #1d1238; color: var(--px-mute); box-shadow: inset -2px -2px 0 rgba(0, 0, 0, .35), inset 2px 2px 0 rgba(255, 255, 255, .08); font-family: var(--px-fd); }
+.opp.pg .px-tiles .t b { font: 400 clamp(6px, 1.2vw, 10px) var(--px-fd); }
+.opp.pg .px-tiles .t i { font-style: normal; font-size: clamp(5px, .9vw, 8px); }
+.opp.pg .px-tiles .t.none { visibility: hidden; } .opp.pg .px-tiles .t.nomkt { background: #2a2346; }
+.opp.pg .px-tiles .t.tu { background: var(--px-gold); color: #1a1030; }
+.opp.pg .px-tiles .t.d1 { background: #8fb0ff; color: #0b0716; } .opp.pg .px-tiles .t.d2 { background: #3d7bff; color: #fff; } .opp.pg .px-tiles .t.d3 { background: #1f45b8; color: #fff; }
+.opp.pg .px-tiles .t.i1 { background: #d8c2ff; color: #0b0716; } .opp.pg .px-tiles .t.i2 { background: #b78cff; color: #0b0716; } .opp.pg .px-tiles .t.i3 { background: #7a4fd6; color: #fff; }
+.opp.pg .px-tiles .t.r1 { background: #ff8da1; color: #0b0716; } .opp.pg .px-tiles .t.r2 { background: #ff3b5c; color: #fff; } .opp.pg .px-tiles .t.r3 { background: #b51d3a; color: #fff; }
+.opp.pg .px-tiles .t.mine { outline: 2px solid var(--px-kx); outline-offset: 1px; } .opp.pg .px-tiles .t.on { outline: 2px solid #fff; outline-offset: 1px; }
+.opp.pg .px-kxmap-k { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 12px; color: var(--px-mute); }
+.opp.pg .px-kxmap-k i { display: inline-block; width: 9px; height: 9px; margin-right: 5px; box-shadow: 0 0 0 1px #000; }
+.opp.pg .px-kxmap-k i.d2 { background: #3d7bff; } .opp.pg .px-kxmap-k i.tu { background: var(--px-gold); } .opp.pg .px-kxmap-k i.r2 { background: #ff3b5c; }
+.opp.pg .px-kxmap-k b { flex-basis: 100%; font: 400 9px var(--px-fd); color: var(--px-kx); }
+/* Kalshi TV: the real widgets on a CRT, through the mosaic filter */
+.opp.pg .px-crts { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.opp.pg .px-crt .bezel { position: relative; padding: 14px 14px 10px; background: linear-gradient(#3b3352, #241d38); box-shadow: 0 0 0 3px #000, inset 0 2px 0 rgba(255, 255, 255, .12), 0 6px 0 3px #000; }
+.opp.pg .px-crt .brand { position: absolute; left: 16px; bottom: 12px; font: 400 8px var(--px-fd); color: var(--px-kx); letter-spacing: .1em; }
+.opp.pg .px-crt .screen { position: relative; overflow: hidden; background: #050308; box-shadow: 0 0 0 3px #000, inset 0 0 18px rgba(0, 0, 0, .9); border-radius: 10px / 14px; }
+.opp.pg .px-crt iframe { display: block; width: 100%; height: 100%; border: 0; background: #050308; }
+.opp.pg .px-crt.chunky iframe { filter: url(#px-mosaic4) saturate(1.25) contrast(1.08); }
+.opp.pg .px-crt.light iframe { filter: url(#px-mosaic2) saturate(1.15); }
+.opp.pg .px-crt .scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .32) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }
+.opp.pg .px-crt.off .scan { opacity: .25; }
+.opp.pg .px-crt .glass { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, .08), transparent 55%), radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, .45)); }
+.opp.pg .px-crt .off { appearance: none; border: 0; width: 100%; height: 100%; display: grid; place-content: center; gap: 8px; cursor: pointer; color: var(--px-kx); background: repeating-linear-gradient(45deg, #0b0716 0 4px, #120b22 4px 8px); }
+.opp.pg .px-crt .off b { font: 400 13px var(--px-fd); } .opp.pg .px-crt .off span { font: 600 14px var(--px-fb); color: var(--px-mute); }
+.opp.pg .px-crt .knobs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: 8px; }
+.opp.pg .px-crt .knobs button { appearance: none; border: 0; cursor: pointer; padding: 5px 8px; font: 400 8px var(--px-fd); background: #16102a; color: var(--px-mute); box-shadow: 0 0 0 2px #000; }
+.opp.pg .px-crt .knobs button.on { background: var(--px-kx); color: #04130d; }
+/* the Kalshi tab */
+.opp.pg .px-mkt-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.opp.pg .px-mkt-top > div { display: grid; gap: 2px; padding: 8px 10px; background: var(--px-panel2); box-shadow: 0 0 0 2px #000; }
+.opp.pg .px-mkt-top b { font: 400 18px var(--px-fd); font-variant-numeric: tabular-nums; }
+.opp.pg .px-mkt-top small { color: var(--px-mute); font-size: 12px; }
+/* work the crowd */
+.opp.pg .px-crowd { position: relative; width: min(560px, 100%); display: grid; gap: 10px; }
+.opp.pg .px-crowdcv, .opp.pg .px-dialcv { width: 100%; height: auto; aspect-ratio: 96 / 30; box-shadow: 0 0 0 2px #000; image-rendering: pixelated; }
+.opp.pg .px-dialcv { aspect-ratio: 90 / 30; }
+.opp.pg .px-say { display: flex; gap: 10px; align-items: center; font: 600 17px var(--px-fb); margin: 0; }
+.opp.pg .px-meter { appearance: none; border: 0; position: relative; height: 34px; width: 100%; cursor: pointer; background: repeating-linear-gradient(90deg, #1d1238 0 6px, #241848 6px 12px); box-shadow: 0 0 0 3px #000; }
+.opp.pg .px-meter .zone { position: absolute; top: 0; bottom: 0; background: var(--px-gold2); }
+.opp.pg .px-meter .sweet { position: absolute; top: 0; bottom: 0; background: var(--px-gold); }
+.opp.pg .px-meter .cur { position: absolute; top: -6px; bottom: -6px; width: 6px; margin-left: -3px; background: #fff; box-shadow: 0 0 0 2px #000; }
+.opp.pg .px-hits { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.opp.pg .px-hits li { padding: 6px 10px; font: 400 10px var(--px-fd); box-shadow: 0 0 0 2px #000; }
+.opp.pg .px-hits li.p { background: var(--px-gold); color: #1a1030; } .opp.pg .px-hits li.g { background: var(--px-green); color: #0b0716; } .opp.pg .px-hits li.m { background: #3a3550; color: var(--px-mute); }
+.opp.pg .px-hitflash { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); font: 400 clamp(20px, 5vw, 34px) var(--px-fd); color: var(--px-gold); text-shadow: 3px 3px 0 #000; pointer-events: none; animation: px-pop .65s ease-out; }
+.opp.pg .px-hitflash.miss { color: var(--px-gop2); }
+@keyframes px-pop { 0% { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 30% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -70%) scale(1); opacity: 0; } }
+/* the ad studio */
+.opp.pg .px-adst { width: min(620px, 100%); display: grid; gap: 10px; }
+.opp.pg .px-tv { position: relative; padding: 14px 64px 14px 14px; background: linear-gradient(#5a3b24, #3b2614); box-shadow: 0 0 0 3px #000, inset 0 2px 0 rgba(255, 255, 255, .15); }
+.opp.pg .px-tv .scr { position: relative; min-height: 150px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; padding: 14px; background: #0d1a14; box-shadow: 0 0 0 3px #000, inset 0 0 20px rgba(0, 0, 0, .9); border-radius: 8px / 12px; overflow: hidden; }
+.opp.pg .px-tv .scr p { margin: 0; font: 400 12px/1.6 var(--px-fd); color: #f1ecff; text-shadow: 2px 2px 0 #000; }
+.opp.pg .px-tv .scr p b { font: 400 9px var(--px-fd); color: var(--px-mute); }
+.opp.pg .px-tv .scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .35) 0 1px, transparent 1px 3px); }
+.opp.pg .px-tv .knob { position: absolute; right: 18px; top: 26px; width: 30px; height: 30px; background: #1a1008; box-shadow: 0 0 0 3px #000, inset 3px 3px 0 #6b4a2a; } .opp.pg .px-tv .knob.two { top: 72px; }
+/* election night: Kalshi live and your own call */
+.opp.pg .px-nkx, .opp.pg .px-mycall { display: grid; gap: 4px; padding: 8px 10px; background: var(--px-panel); box-shadow: 0 0 0 2px #000; margin-top: 8px; }
+.opp.pg .px-nkx b { font: 400 16px var(--px-fd); color: var(--px-kx); } .opp.pg .px-nkx small, .opp.pg .px-mycall small { color: var(--px-mute); font-size: 12px; }
+.opp.pg .px-mycall.me b { color: var(--px-me, var(--px-green)); } .opp.pg .px-mycall.op b { color: var(--px-op, var(--px-gop)); }
+.opp.pg .px-mycall b { font: 400 13px var(--px-fd); }
+/* new splashes */
+.opp.pg .px-splash.wild { background: var(--px-green); } .opp.pg .px-splash.flop { background: #3a3550; color: var(--px-mute); }
+.opp.pg .px-splash.bull, .opp.pg .px-splash.whale { background: var(--px-kx); color: #04130d; } .opp.pg .px-splash.bear { background: var(--px-gop); color: #fff; } .opp.pg .px-splash.ad { background: #ff9a3d; }
+@media (prefers-reduced-motion: reduce) { .opp.pg .px-led .tape { animation: none; } .opp.pg .px-hitflash { animation: none; } }

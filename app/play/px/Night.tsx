@@ -17,7 +17,7 @@ type Feed = { k: number; t: string; tone?: "up" | "dn" | "hot" | "call" };
 const KIND = ["early and mail ballots", "Election Day votes", "late mail ballots"];
 const PHI = (z: number) => 1 / (1 + Math.exp(-1.702 * z));
 
-export function achievements(r: E.RaceFile, s: E.State) {
+export function achievements(r: E.RaceFile, s: E.State, call?: { me: boolean; tick: number } | null, calledAt?: number | null) {
   const res = s.result!; const c = E.ctx(r, s.side);
   const flips = res.counties.filter((x) => { const co = r.counties.find((k) => k[0] === x.f); return co && co[6] != null && x.m > 0 && c.sign * co[6] < 0; }).length;
   const odds = s.side === "R" ? r.est.prob : 1 - r.est.prob;
@@ -41,6 +41,9 @@ export function achievements(r: E.RaceFile, s: E.State) {
     ["Weathered it", "Win after an October surprise", res.win && s.used.includes("osurprise")],
     ["Ground war", "Have 50,000 real conversations at the door", (s.contacts ?? 0) >= 50000],
     ["Bootstrapped", "Win without writing yourself a check", res.win && !(s.selfIn ?? 0)],
+    ["Called it", "Call the race yourself before the decision desk, and get it right", !!call && call.me === res.win && call.tick < (calledAt ?? 1e9)],
+    ["Dewey defeats Truman", "Call the race yourself and get it wrong", !!call && call.me !== res.win],
+    ["Beat the market", "Win when Kalshi opened you under 35 cents", res.win && !!s.mkt && s.mkt.open < 0.35],
   ];
   return list.map(([n, d, ok]) => ({ n, d, ok }));
 }
@@ -55,6 +58,8 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
   const [feed, setFeed] = useState<Feed[]>([]);
   const [speech, setSpeech] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  // calling the race yourself, before the decision desk does
+  const [myCall, setMyCall] = useState<{ me: boolean; tick: number; rep: number } | null>(null);
   const mood = useRef(0);
   const live = useRef(0.5);
   // cumulative tallies by tick
@@ -133,6 +138,7 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
     if (p0 < 0.8 && p >= 0.8) say(`n80u${tick}`, `The needle now leans ${c.me.name}: ${Math.round(p * 100)}% to win.`, "up");
     if (p0 > 0.2 && p <= 0.2) say(`n20d${tick}`, `The needle swings to ${c.op.name}: ${Math.round((1 - p) * 100)}% to win.`, "dn");
     const every = Math.max(20, Math.round(T / 12)); const media = r.media ?? []; if (tick % every === Math.round(every / 2) && media.length) { const k = (tick / every | 0) % media.length; const m = media[k]; say(`m${k}`, `From the coverage this fall, ${m.who}: ${m.what}`); }
+    if (called && calledAt === tick && myCall) add.push({ k: tick, t: myCall.me === res.win ? `YOU CALLED IT. Your war room called ${r.name} ${Math.max(0, calledAt - myCall.tick)} reports before the desk, with ${Math.round(myCall.rep * 100)}% counted.` : `BLOWN CALL. Your war room called it for ${myCall.me ? c.me.name : c.op.name} with ${Math.round(myCall.rep * 100)}% counted. The clip will live forever.`, tone: myCall.me === res.win ? "up" : "hot" });
     if (called && calledAt === tick) { add.push({ k: tick, t: `RACE CALL: ${res.win ? c.me.name : c.op.name} wins ${r.name}.`, tone: "call" }); sfx(res.win ? "fanfare" : "lose"); track("Play finished", { race: r.id, side: s.side, diff: s.diff, win: res.win, m: Math.round(res.m * 10) / 10 }); }
     if (done && calledAt == null) say("recount", `It is too close to call. ${r.name} is headed for a recount.`, "hot");
     if (add.length) setFeed((f) => [...add.reverse(), ...f].slice(0, 40));
@@ -158,8 +164,8 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
   }, [c.me.party, r.id]);
 
   const g = E.grade(s);
-  const ach = useMemo(() => (done ? achievements(r, s) : []), [done, r, s]);
-  const share = `I ran ${c.me.name}'s campaign for ${r.name} on ${E.DIFF[s.diff].name} and ${res.win ? "won" : "lost"} by ${Math.abs(res.m).toFixed(1)} points. Grade ${g.letter}. Seed ${s.seed}. Play at onpointpolitics.com/play`;
+  const ach = useMemo(() => (done ? achievements(r, s, myCall, calledAt) : []), [done, r, s, myCall, calledAt]);
+  const share = `I ran ${c.me.name}'s campaign for ${r.name} on ${E.DIFF[s.diff].name} and ${res.win ? "won" : "lost"} by ${Math.abs(res.m).toFixed(1)} points. Grade ${g.letter}.${s.mkt ? ` Kalshi opened me at ${Math.round(s.mkt.open * 100)} cents.` : ""} ${myCall ? (myCall.me === res.win ? ` I called it with ${Math.round(myCall.rep * 100)}% counted.` : " I blew the call.") : ""} Seed ${s.seed}. Play at onpointpolitics.com/play`;
   const SPEECH = res.win ? [["Unity", "Thank both campaigns and promise to work for every voter, including the ones who did not pick you."], ["Victory lap", "Declare a mandate and rip the other side."], ["Thank the volunteers", "Bring the field team on stage."]] : [["Gracious", "Call your opponent, concede, and thank your volunteers."], ["Fight on", "Say the movement is just getting started."], ...(Math.abs(res.m) < 0.5 ? [["Demand a recount", "Say every vote must be counted, and lawyer up."]] : [])];
   const meName = sur(c.me.name), opName = sur(c.op.name);
   return (
@@ -215,6 +221,9 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
             <svg viewBox="0 0 200 110"><path d="M10 100 A90 90 0 0 1 190 100" className="arc" /><path d="M10 100 A90 90 0 0 1 100 10" className={cls("half", c.op.party.toLowerCase())} /><path d="M100 10 A90 90 0 0 1 190 100" className={cls("half", c.me.party.toLowerCase())} />
               <line x1="100" y1="100" x2={100 + 82 * Math.cos(Math.PI * (1 - p))} y2={100 - 82 * Math.sin(Math.PI * (1 - p))} className="hand" /><circle cx="100" cy="100" r="5" className="hub" /></svg>
             <b>{p >= 0.5 ? `${meName} ${Math.round(p * 100)}%` : `${opName} ${Math.round((1 - p) * 100)}%`}</b></div>
+          {s.mkt ? (() => { const kp = Math.max(0.01, Math.min(0.99, (1 - Math.min(1, rep * 1.4)) * s.mkt.p + Math.min(1, rep * 1.4) * p)); return <div className="px-nkx"><span className="px-k">Kalshi, live</span><b className={kp >= 0.5 ? "up" : "dn"}>{meName} {Math.round(kp * 100)}¢</b><small>opened the night at {Math.round(s.mkt.p * 100)}¢</small></div>; })() : null}
+          {!called && !done ? (myCall ? <div className={cls("px-mycall", myCall.me ? "me" : "op")}><span className="px-k">Your call</span><b>{myCall.me ? meName : opName} wins</b><small>called at {clock(myCall.tick)} with {Math.round(myCall.rep * 100)}% in</small></div>
+            : <div className="px-mycall ask" role="group" aria-label="Call the race yourself"><span className="px-k">Call it before the desk</span><div className="px-row"><button type="button" className="px-btn sm" disabled={inV <= 0} onClick={() => { setMyCall({ me: true, tick, rep }); sfx("bell"); }}>{meName} wins</button><button type="button" className="px-btn sm" disabled={inV <= 0} onClick={() => { setMyCall({ me: false, tick, rep }); sfx("bell"); }}>{opName} wins</button></div></div>) : null}
           <div className="px-outv"><span className="px-k">Vote still out</span>
             <div className="bar"><i className={c.me.party.toLowerCase()} style={{ width: `${(100 * out.me) / Math.max(1, out.me + out.op)}%` }} /><i className={c.op.party.toLowerCase()} style={{ width: `${(100 * out.op) / Math.max(1, out.me + out.op)}%` }} /></div>
             <small>{Math.round(out.me).toLocaleString()} in counties that lean {meName} · {Math.round(out.op).toLocaleString()} in counties that lean {opName}</small></div>
@@ -237,6 +246,7 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
                 {res.pollAvg != null ? <div><dt>Your final poll average</dt><dd>{E.lead(res.pollAvg, meName, opName)}</dd></div> : null}
                 {res.pollAvg != null ? <div className="miss"><dt>The polls missed by</dt><dd className={res.m - res.pollAvg >= 0 ? "up" : "dn"}>{Math.abs(res.m - res.pollAvg).toFixed(1)} points toward {res.m - res.pollAvg >= 0 ? meName : opName}</dd></div> : null}
                 {res.late != null && Math.abs(res.late) >= 0.1 ? <div><dt>Late deciders broke</dt><dd>{Math.abs(res.late).toFixed(1)} points toward {res.late >= 0 ? meName : opName}</dd></div> : null}
+                {s.mkt ? <div><dt>Kalshi opened you at</dt><dd>{Math.round(s.mkt.open * 100)}¢, closed at {Math.round(s.mkt.p * 100)}¢</dd></div> : null}
                 <div><dt>Turnout</dt><dd>{(res.turnout ?? 0).toLocaleString()}</dd></div>
                 <div><dt>Raised and spent</dt><dd>{E.usd(s.raised)} · {E.usd(s.spent)}</dd></div>
                 <div><dt>Doors and new voters</dt><dd>{s.knocks.toLocaleString()} · {s.regs.toLocaleString()}</dd></div>
