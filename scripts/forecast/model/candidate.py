@@ -29,7 +29,10 @@ import os, numpy as np, pandas as pd
 
 K_UNITY, UNITY_CAP, UNOPPOSED_SHARE, UNITY_REF = (0.025 if os.environ.get("NO_RECENCY") else 0.028), 0.05, 0.75, None
 K_DEMO_VOTE, K_DEMO_TURN, K_DEMO_IND, DEMO_CLIP, RIDGE = 0.30, 0.20, 0.15, 1.0, 0.5
-K_POLL, POLL_CAP, POLL_N0 = 0.5, 0.12, 4.0
+# Oct 30 2026, by the user: a nominee who polls behind or ahead of the race's baseline, its 2024 result moved by the
+# national environment and the state's swing rate, is read as weaker or stronger by CAND_K_POLL of the gap, up to
+# CAND_POLL_CAP log odds (was 0.5 and 0.12)
+K_POLL, POLL_CAP, POLL_N0 = float(os.environ.get("CAND_K_POLL", "0.5")), float(os.environ.get("CAND_POLL_CAP", "0.12")), 4.0
 # the national gap between polls and fundamentals is the environment, not the candidates: it is the poll count weighted
 # mean gap across all 58 polled Senate and governor races in a pre pass, and it is removed
 POLL_CENTER = float(os.environ.get("CAND_POLL_CENTER", "-0.1005"))

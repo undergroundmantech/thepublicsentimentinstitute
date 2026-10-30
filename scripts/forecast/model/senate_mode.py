@@ -3378,6 +3378,26 @@ def race_prim_scale(st):
 THIRD_REAL = os.environ.get("THIRD_REAL") == "1"
 PRIM_RESID = os.environ.get("PRIM_RESID") == "1"
 PRIM_RESID_AUDIT = {}
+# Oct 30 2026, by the user: crossover and the punishment factor in the county primary terms.
+# CROSSOVER=1: in a state where voters of the other party can vote in a party's primary, part of a county's primary
+# turnout beyond what its 2024 lean predicts is crossover, not enthusiasm. PHI_OPEN is that part where any voter can
+# take either ballot, PHI_SEMI where unaffiliated voters can, none in a closed primary, and half again as much when the
+# other party's own primary was not contested, so its voters were free to cross. Crossover is taken out of the party
+# term, and each nominee's county share counts only for the part of its primary electorate that was not crossover.
+# PUNISH=1: a nominee who ran far behind their statewide share in a county, a distant fourth or fifth there, is hurt
+# more than in proportion: below the statewide share the deficit d grows to d + PUN_A (exp(PUN_B d) - 1 - PUN_B d), so a
+# small shortfall barely changes and a collapse costs several times as much, up to CAND_CAP log odds after scaling.
+CROSSOVER = os.environ.get("CROSSOVER") == "1"
+PUNISH = os.environ.get("PUNISH") == "1"
+PHI_OPEN, PHI_SEMI = float(os.environ.get("PHI_OPEN", "0.5")), float(os.environ.get("PHI_SEMI", "0.25"))
+PUN_A, PUN_B, CAND_CAP = float(os.environ.get("PUN_A", "0.6")), float(os.environ.get("PUN_B", "0.9")), float(os.environ.get("CAND_CAP", "0.6"))
+OPEN_PRIMARY = set("AL AR GA HI IL IN MI MN MS MO MT ND SC TN TX VT VA WI ID".split())
+SEMI_PRIMARY = set("AK AZ CO IA KS MA ME NC NE NH OH OK RI UT WV WA CA LA".split())
+XOVER_AUDIT = {}
+_GT = {}
+def _punish(z):
+    z = np.asarray(z, float); d = np.maximum(-z, 0.0)
+    return np.where(z >= 0, z, -(d + PUN_A * (np.exp(PUN_B * d) - 1 - PUN_B * d)))
 THIRD_FADE = float(os.environ.get("THIRD_FADE", "0.75"))
 def third_party_level(st, cfg, polls, pavg, o_hist, turnout):
     tw = sum(x[2] for x in cfg["third"]) or 1.0
@@ -3753,7 +3773,35 @@ def run_state(st, model, shift, nat_turn_rate):
             party_term = K_PRIMARY_PARTY * _res
             PRIM_RESID_AUDIT[st] = dict(slope_on_2024_lean=round(_b, 3), raw_spread=round(float(np.sqrt(np.average(_y[_ok] ** 2, weights=_wn[_ok]))), 3),
                                         residual_spread=round(float(np.sqrt(np.average(_res[_ok] ** 2, weights=_wn[_ok]))), 3))
-    cand_term = K_PRIMARY_CAND * ((logit(prim.candD) - logit(cd_state)) - (logit(prim.candR) - logit(cr_state)))
+    _zD = (logit(prim.candD) - logit(cd_state)).astype(float); _zR = (logit(prim.candR) - logit(cr_state)).astype(float)
+    _xD = _xR = 0.0
+    if CROSSOVER and st[:2] in (OPEN_PRIMARY | SEMI_PRIMARY):
+        # excess primary turnout beyond the 2024 lean, for each party, read as crossover in part
+        _phi = PHI_OPEN if st[:2] in OPEN_PRIMARY else PHI_SEMI
+        _p24x = P24.reindex(fl); _a24x = (_p24x.votes_dem / (_p24x.votes_dem + _p24x.votes_gop)).clip(0.01, 0.99)
+        _s24x = float(_p24x.votes_dem.sum() / (_p24x.votes_dem.sum() + _p24x.votes_gop.sum()))
+        _yx = (logit(ps) - logit(ps_state)).astype(float); _xx = (logit(_a24x) - logit(_s24x)).astype(float)
+        _wx = (prim.pD.fillna(0) + prim.pR.fillna(0)).astype(float); _okx = _yx.notna() & _xx.notna() & (_wx > 0)
+        if _okx.sum() >= 3:
+            _xm = np.average(_xx[_okx], weights=_wx[_okx]); _ym = np.average(_yx[_okx], weights=_wx[_okx])
+            _bx = float(np.sum(_wx[_okx] * (_xx[_okx] - _xm) * (_yx[_okx] - _ym)) / max(np.sum(_wx[_okx] * (_xx[_okx] - _xm) ** 2), 1e-9))
+            _hat = inv(logit(ps_state) + _ym + _bx * (_xx - _xm))                       # expected D share of the primary vote
+            _tot = (prim.pD + prim.pR).astype(float)
+            _exD = np.maximum(prim.pD - _hat * _tot, 0).where(_okx, 0.0); _exR = np.maximum(prim.pR - (1 - _hat) * _tot, 0).where(_okx, 0.0)
+            _phD = _phi * (1.5 if cr_state > 0.85 else 1.0); _phR = _phi * (1.5 if cd_state > 0.85 else 1.0)
+            _xD = (np.minimum(0.6, _phD * _exD / prim.pD.clip(lower=1))).fillna(0.0); _xR = (np.minimum(0.6, _phR * _exR / prim.pR.clip(lower=1))).fillna(0.0)
+            # the crossover part of the primary split is not enthusiasm: take it out of the party term
+            _cx = logit(((prim.pD - _xD * prim.pD) / ((prim.pD - _xD * prim.pD) + (prim.pR - _xR * prim.pR))).clip(0.01, 0.99)) - logit(ps)
+            party_term = party_term + K_PRIMARY_PARTY * _cx.fillna(0.0)
+            _wv = _wx.where(_okx, 0)
+            XOVER_AUDIT[st] = dict(phi=_phi, open=st[:2] in OPEN_PRIMARY, d_primary_crossover=round(float((_xD * prim.pD).sum() / max(prim.pD.sum(), 1)), 4),
+                                   r_primary_crossover=round(float((_xR * prim.pR).sum() / max(prim.pR.sum(), 1)), 4),
+                                   top_counties_d=[(NAMES.get(str(f), str(f)), round(float(v), 3)) for f, v in _xD.sort_values(ascending=False).head(3).items()],
+                                   top_counties_r=[(NAMES.get(str(f), str(f)), round(float(v), 3)) for f, v in _xR.sort_values(ascending=False).head(3).items()])
+    if PUNISH:
+        _zD, _zR = pd.Series(_punish(_zD), index=_zD.index), pd.Series(_punish(_zR), index=_zR.index)
+    cand_term = K_PRIMARY_CAND * ((1 - _xD) * _zD - (1 - _xR) * _zR)
+    if PUNISH: cand_term = cand_term.clip(-CAND_CAP, CAND_CAP)
     if PRIM_N0 > 0:
         # Oct 12 2026 county reliability: a county's primary reading is shrunk toward the statewide reading by its own
         # primary vote, n / (n + PRIM_N0), the empirical Bayes weight for a share measured on n voters. Large counties
@@ -4006,6 +4054,13 @@ def run_state(st, model, shift, nat_turn_rate):
             share = _ev.W_HIST * _g + _ev.W_PRIM * _p + _ev.W_DEMO * _d
         else:
             share = (_ev.W_HIST + _ev.W_PRIM) * _g + _ev.W_DEMO * _d
+    if os.environ.get("GROUND_TURNOUT"):
+        # Oct 30 2026: the ground up voter simulation moves each county's turnout by its field programs and Election Day
+        # weather, relative to the base projection, and the state total with it
+        if "g" not in _GT: _GT["g"] = pd.read_csv(os.environ["GROUND_TURNOUT"], dtype={"fips": str}).set_index("fips")
+        _rel = _GT["g"].turnout_rel.reindex([str(f).zfill(5) for f in fl]).fillna(1.0).values
+        _sh = np.asarray(share, float) * _rel; _k = float(_sh.sum()); state_total = state_total * _k
+        share = pd.Series(_sh / _k, index=share.index) if isinstance(share, pd.Series) else _sh / _k
     turnout = state_total * share
     if ELECTORATE and os.environ.get("HISTORY"):
         # Vote History Mode: 2026 turnout is the sum of every group's own 2026 turnout chance, not a share of an anchored total
@@ -4431,7 +4486,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), primary_crossover=XOVER_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -4455,7 +4510,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), gallup_full=GALLUP_AUDIT.get(st), final_weights=FINAL_AUDIT.get(st), prior_carry_pts=PRIOR_CARRY.get(st), history_level=HIST_AUDIT.get(st), statewide_topout=TOPOUT_AUDIT.get(st), dynamic_history=DYN_HIST_AUDIT.get(st), primary_reliability=PRIM_REL_AUDIT.get(st), seat_history=SEAT_AUDIT.get(st), primary_residual=PRIM_RESID_AUDIT.get(st), primary_crossover=XOVER_AUDIT.get(st), census_range=CENSUS_AUDIT.get(st), county_mrp=CMRP_AUDIT.get(st), local_conditions=LOCAL_AUDIT.get(st), data_centers=DC_AUDIT.get(st), gas_strain=GAS_AUDIT.get(st), rv_universe=sys.modules["rv_universe"].AUDIT.get(st[:2]) if "rv_universe" in sys.modules else None, incumbent_strength=INC_AUDIT2.get(st), voter_segments=SEG_AUDIT.get(st), coalitions=(sys.modules['candidate'].COAL_AUDIT.get(st) if 'candidate' in sys.modules else None), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:

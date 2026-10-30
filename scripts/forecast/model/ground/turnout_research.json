@@ -1,0 +1,423 @@
+{
+ "weather": {
+  "TX": {
+   "outlook": "Central US storm system. CNN meteorologist Chris Dolce: eastern and coastal Texas have the best rain chances, a few severe storms with damaging wind possible, highs in the 80s on the coast to 60s in the Panhandle. AccuWeather: warm humid air fuels thunderstorms from the Texas coast north, rain and storms flagged for Houston, Austin, San Antonio. NWS Fort Worth 40 percent chance of showers and storms Nov 3, Austin 60 percent per Latin Times. The Weather Channel names Dallas in the rain zone. Severe risk shifts east into Louisiana, Arkansas and Mississippi Tue to Wed. Most unusual risk of any state on the list.",
+   "precip": "storm",
+   "temp": "warm",
+   "severity": 2,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026; CNN Oct 29 to 30 2026; Latin Times Oct 30 2026"
+  },
+  "MI": {
+   "outlook": "Rain possible in northern and western Michigan for part of the day per CNN, models split between widespread rain and scattered showers. AccuWeather includes the Detroit metro in the rain zone. Warm for November, highs in the 60s in Lower Michigan, 50s in the Upper Peninsula.",
+   "precip": "wet",
+   "temp": "warm",
+   "severity": 1,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; AccuWeather updated Oct 30 2026"
+  },
+  "OH": {
+   "outlook": "Models keep the rain west of Ohio, mostly dry but being monitored. Highs in the 70s, well above normal.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; Latin Times Oct 30 2026"
+  },
+  "IA": {
+   "outlook": "Rain likely for part of Election Day, exact areas unclear. Highs in the 60s, 50s in the northwest, near normal to mild. AccuWeather also lists Iowa in the steady rain zone; breezy.",
+   "precip": "wet",
+   "temp": "normal",
+   "severity": 2,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; AccuWeather updated Oct 30 2026"
+  },
+  "ME": {
+   "outlook": "Showers possible in northern Maine, timing uncertain. Highs in the 40s to low 50s. Southern population centers likely dry. NOAA CPC 8 to 14 day outlook issued Oct 26 2026, valid Nov 3 to 9, favors above normal temperature.",
+   "precip": "normal",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "NC": {
+   "outlook": "Likely dry with highs in the 70s per CNN. AccuWeather says Charlotte area may be free of long lasting rain as storms move off the southern Atlantic coast. Well above normal warmth.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; AccuWeather updated Oct 30 2026"
+  },
+  "GA": {
+   "outlook": "Likely dry, highs in the 70s to low 80s. Atlanta may be free of long lasting rain per AccuWeather. Unusually warm.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; AccuWeather updated Oct 30 2026"
+  },
+  "NH": {
+   "outlook": "Possible nuisance shower in the north, low chance of significant rain. Highs in the 40s and 50s. Manchester and Nashua area likely dry.",
+   "precip": "normal",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "AK": {
+   "outlook": "No day specific outlet forecast found. NOAA CPC 6 to 10 day outlook issued Oct 26, valid Nov 1 to 5, favors above normal temperature and above normal precipitation across all Alaska regions; CPC Oct 29 discussion keeps an active wet pattern on the south coast near Anchorage and Southeast Alaska with above normal temperature. Mild for November but precipitation could fall as rain or mixed wintry weather.",
+   "precip": "wet",
+   "temp": "warm",
+   "severity": 1,
+   "source": "https://www.cpc.ncep.noaa.gov/products/predictions/610day/fxus06.html",
+   "date": "CPC issued Oct 26 2026 and Oct 29 2026"
+  },
+  "NE": {
+   "outlook": "In the core of the central US storm. AccuWeather lists Nebraska in the rain zone and places Omaha in the hazard area for high winds, large hail and isolated tornadoes, though the system is likely past its most intense phase by Tuesday. WPC notes gusty Plains winds behind the low and possible rain snow mix on the northern and central High Plains backside. Temperatures moderating to near normal.",
+   "precip": "wet",
+   "temp": "normal",
+   "severity": 2,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026; WPC extended discussion Oct 28 2026"
+  },
+  "KS": {
+   "outlook": "Wind driven rain most likely in central and eastern Kansas, gusts 30 to 40 mph. Highs from the 40s and 50s in the northwest to the 60s and low 70s in the east. Kansas City metro named by AccuWeather and The Weather Channel.",
+   "precip": "wet",
+   "temp": "normal",
+   "severity": 2,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; AccuWeather updated Oct 30 2026"
+  },
+  "SC": {
+   "outlook": "Southeast mostly dry, nuisance showers possible along the coast. Warm, well above normal.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "FL": {
+   "outlook": "Southeast mostly dry, nuisance coastal showers possible; Miami may be free of long lasting rain as storms move away from the southern Atlantic Seaboard. Warm. No tropical system mentioned in WPC or outlet forecasts.",
+   "precip": "normal",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026; CNN Oct 29 to 30 2026"
+  },
+  "MN": {
+   "outlook": "Rain and a few storms; Minneapolis named by The Weather Channel, and AccuWeather lists Minnesota in the steady rain zone. Latin Times says parts of the state are among the areas most likely to see persistent wet weather. Chilly start in the far north, then mild by afternoon.",
+   "precip": "wet",
+   "temp": "normal",
+   "severity": 2,
+   "source": "https://www.aol.com/articles/election-day-2026-weather-forecast-144811000.html",
+   "date": "The Weather Channel via AOL Oct 29 2026; AccuWeather updated Oct 30 2026; Latin Times Oct 30 2026"
+  },
+  "AZ": {
+   "outlook": "West mostly dry, Southwest slightly cooler than average. Phoenix and Tucson expected dry.",
+   "precip": "dry",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "WI": {
+   "outlook": "AccuWeather lists portions of Wisconsin in the rain zone with the Chicago metro next door; some areas may see several hours of steady rain, others only a shower. Mild.",
+   "precip": "wet",
+   "temp": "warm",
+   "severity": 1,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026"
+  },
+  "PA": {
+   "outlook": "East mostly dry with highs 5 to 20 degrees above average per CNN. No storm threat for Philadelphia or Pittsburgh in outlet forecasts. NOAA CPC 8 to 14 day outlook issued Oct 26 2026, valid Nov 3 to 9, favors above normal temperature.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "NV": {
+   "outlook": "West mostly dry, slightly cooler than average in the Southwest. Las Vegas and Reno expected dry.",
+   "precip": "dry",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "NM": {
+   "outlook": "West mostly dry, Southwest slightly cooler than average. CPC 6 to 10 day issued Oct 26 had New Mexico above normal for precipitation; Albuquerque sits west of the storm so a dry or light shower day is most likely.",
+   "precip": "normal",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026; CPC Oct 26 2026"
+  },
+  "MT": {
+   "outlook": "The Weather Channel: chilly temperatures from the Northwest to the Rockies on Election Day morning, warming to comfortable levels. WPC: rain snow mix possible on the northern High Plains behind the low. CPC Oct 29 favors below normal precipitation for the Northern Rockies.",
+   "precip": "normal",
+   "temp": "cold",
+   "severity": 1,
+   "source": "https://www.aol.com/articles/election-day-2026-weather-forecast-144811000.html",
+   "date": "The Weather Channel via AOL Oct 29 2026; WPC Oct 28 2026"
+  },
+  "VA": {
+   "outlook": "East mostly dry with highs well above average. NOAA CPC 8 to 14 day outlook issued Oct 26 2026, valid Nov 3 to 9, favors above normal temperature.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "NY": {
+   "outlook": "East mostly dry, highs 5 to 20 degrees above average. NOAA CPC 8 to 14 day outlook issued Oct 26 2026, valid Nov 3 to 9, favors above normal temperature.",
+   "precip": "dry",
+   "temp": "warm",
+   "severity": 0,
+   "source": "https://krdo.com/cnn-weather-environment/2026/10/30/election-day-storm-could-impact-voter-turnout-in-key-midterm-races-in-the-central-us/",
+   "date": "CNN Oct 29 to 30 2026"
+  },
+  "CO": {
+   "outlook": "AccuWeather: Pacific moisture meeting colder air could bring accumulating snow to parts of Colorado and Wyoming from Sunday into Tuesday, possibly below the higher mountain elevations; Denver being monitored. Chilly per The Weather Channel. Colorado is all mail ballot so the in person effect is limited, but snow could slow ballot drop off.",
+   "precip": "snow",
+   "temp": "cold",
+   "severity": 2,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026; The Weather Channel via AOL Oct 29 2026"
+  },
+  "OR": {
+   "outlook": "Chilly morning in the Northwest, then comfortable; West Coast cities forecast dry on Election Day per AccuWeather. Wetter pattern arrives later in the week per CPC. Oregon is all mail ballot.",
+   "precip": "dry",
+   "temp": "normal",
+   "severity": 0,
+   "source": "https://www.accuweather.com/en/weather-forecasts/election-day-weather-rain-severe-storms-could-complicate-trips-to-polls-across-central-us/1951713",
+   "date": "AccuWeather updated Oct 30 2026; The Weather Channel via AOL Oct 29 2026"
+  }
+ },
+ "gotv": {
+  "TX": {
+   "D": "Powered by People, the Beto O'Rourke 2018 network, is mobilizing for Talarico, no counts given, Yahoo Oct 30 2026. Texas Democratic Party and Texas Together block walks, about 140 signups for a single McLennan County effort, Baylor Lariat Oct 21 2026. Talarico raised 134.3M total, 64M in Q3, Tangle Oct 19 2026. Hope Springs from Field PAC volunteer canvass active in Texas, Daily Kos community diary Oct 30 2026. AFL-CIO says union outreach running in Texas, no count, Oct 6 2026. Early vote over 6M through Oct 28, up about 74 percent vs 2022 at the same point per Latin Times; Texas has no party registration.",
+   "R": "America PAC put more than a third of its disclosed midterm spending into the Texas Senate race, more than any other race; paid canvassers in Texas reportedly paid 1.50 to 3.00 dollars per door and leave door hangers attacking Talarico and gubernatorial nominee Gina Hinojosa. Nationally America PAC claims about 6.5M doors and nearly 3,000 paid canvassers in one week. Musk also gave 10M to Lone Star Liberty PAC backing Paxton. Reporting is a New York Times story of Oct 12 2026 republished by GV Wire. Paxton running a Come and Take It bus tour.",
+   "edge": "R",
+   "sources": [
+    "https://gvwire.com/2026/10/12/inside-elon-musks-276-million-midterm-rescue-mission-for-republicans/",
+    "https://www.yahoo.com/news/politics/articles/james-talarico-relying-grassroot-infrastructure-124918032.html",
+    "https://baylorlariat.com/2026/10/21/beyond-the-ballot-block-walking-brings-politics-to-the-doorstep/",
+    "https://www.readtangle.com/texas-senate-talarico-paxton-october-2026/",
+    "https://www.latintimes.com/storm-threatens-midterm-battleground-states-election-day-600716"
+   ]
+  },
+  "MI": {
+   "D": "Paid canvassing for Senate nominee Abdul El-Sayed: Unity and Justice Fund paid Chase and Porter 435,698 dollars for Detroit canvassing; Planned Parenthood paid The Outreach Team 300,000 dollars; For Our Future 33,333 dollars; canvasser pay 22 to 27 dollars an hour. Washington Free Beacon Oct 28 2026. No Democratic door total found. House candidate Lawrence campaign claims over 200k doors, WKAR Oct 30 2026.",
+   "R": "Mike Rogers campaign claims more than 7M doors knocked, a record, with a goal of 7.5M before Election Day; 200 plus college volunteers from 19 states at an Oct 24 Lansing door launch. WCMU Oct 26 2026, WWMT Oct 24 2026. Michigan rated a first tier target for a GOP turnout operation by Newsweek, Jul 30 2026.",
+   "edge": "R",
+   "sources": [
+    "https://www.wcmu.org/local-regional-news/2026-10-26/rogers-says-republicans-knocking-record-number-of-doors-in-frontline-mid-michigan",
+    "https://wwmt.com/news/local/mike-rogers-lansing-canvassing-door-launch-john-james-doug-lloyd-tom-barrett-politics-government-ingham-county-state",
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://wkar.org/election-2026/2026-10-30/lawrence-campaign-has-knocked-more-than-200k-doors-the-most-nationally"
+   ]
+  },
+  "OH": {
+   "D": "Labor focused program for Sherrod Brown; AFL-CIO cites Ohio union outreach, no state count. Paid canvassing payments: For Our Future 111,000 dollars and Planned Parenthood Votes Ohio 22,500 dollars, Free Beacon Oct 28 2026. Hope Springs from Field volunteer canvass active in Ohio. Early vote over 120k by Oct 9 and up about 30 percent vs 2022 per Latin Times Oct 30.",
+   "R": "Americans for Prosperity Action and affiliates have knocked more than 700,000 doors for Husted; Republicans generally outspending Democrats on about 250M of ads through September with 140M more reserved, Statehouse News Bureau Oct 9 2026. Three Trump and Vance rally visits.",
+   "edge": "R",
+   "sources": [
+    "https://www.statenews.org/government-politics/2026-10-09/ohio-us-senate-race-tight-race-forces-gop-to-surge-in-resources",
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://democrats.org/icymi-dnc-holds-national-gotv-call-with-vice-president-kamala-d-harris-to-turbocharge-organizing-efforts-in-final-sprint-to-midterm-elections/",
+    "https://www.latintimes.com/storm-threatens-midterm-battleground-states-election-day-600716"
+   ]
+  },
+  "IA": {
+   "D": "Campaign for a Family Friendly Economy paid 256,971 dollars for canvassing for Senate nominee Josh Turek; The Outreach Team also canvassing Iowa House races, Free Beacon Oct 28 2026. Hope Springs from Field volunteer canvass active in Iowa. Governor nominee Rob Sand; no field counts found.",
+   "R": "America PAC lists the Iowa Senate race among its targets, canvassing against Turek for Ashley Hinson, GV Wire republication of NYT Oct 12 2026. Iowa rated a first tier GOP turnout target by Newsweek. No door totals found.",
+   "edge": "unknown",
+   "sources": [
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://gvwire.com/2026/10/12/inside-elon-musks-276-million-midterm-rescue-mission-for-republicans/"
+   ]
+  },
+  "ME": {
+   "D": "Platner volunteer network described as self organizing after turmoil, Central Maine Oct 25 2026 headline, page not readable. Maine GOP chair op ed of Aug 1 2026 says Democratic party insiders chose Troy Jackson as the Senate nominee; verify the current nominee. AFL-CIO cites union outreach in Maine; Hope Springs from Field canvassing ME 01. No door totals.",
+   "R": "RNC sent paid field staff to Maine in May 2026 as one of 17 states, described as a state the party does not traditionally contest, NOTUS via Washington Sun May 7 2026. Maine GOP claims hundreds of volunteers, hundreds of thousands of voters contacted and a new Maine Neighborhood Navigators program for low propensity voters, Portland Press Herald op ed by the party chair Aug 1 2026.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.washingtonsun.com/2026-election/rnc-seven-figure-spend-ground-game?redirected=notus_org",
+    "https://www.pressherald.com/?p=7697033",
+    "https://www.centralmaine.com/2026/10/25/once-adrift-graham-platners-volunteer-fleet-finds-purpose-in-self-organizing/",
+    "https://democrats.org/icymi-dnc-holds-national-gotv-call-with-vice-president-kamala-d-harris-to-turbocharge-organizing-efforts-in-final-sprint-to-midterm-elections/"
+   ]
+  },
+  "NC": {
+   "D": "Coordinated campaign volunteers knocked 1M doors before early in person voting started; Unite Here Local 23 knocked 130,000 doors in low turnout Mecklenburg precincts as of Oct 23; marches to the polls at HBCUs. Early vote 792,033 through Oct 27, up 42 percent vs 2022; about one third of registered Democrats had voted vs about one fifth of registered Republicans. WRAL Oct 28 2026. Planned Parenthood Votes paid 1.108M dollars for canvassing for Roy Cooper, Free Beacon Oct 28 2026.",
+   "R": "Whatley campaign stresses grassroots from his NC GOP chair years and visits to all 100 counties; Bank Your Vote early vote messaging; RNC paid field staff deployed to North Carolina in May 2026. GOP structural edge is Election Day turnout of reliable voters. No door totals.",
+   "edge": "D",
+   "sources": [
+    "https://www.wral.com/news/nccapitol/north-carolina-democrats-polls-early-voting-turnout-midterms-october-28/",
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://www.washingtonsun.com/2026-election/rnc-seven-figure-spend-ground-game?redirected=notus_org"
+   ]
+  },
+  "GA": {
+   "D": "Democratic Party of Georgia coordinated campaign has 100 plus field staffers and 30 offices statewide, Ossoff transferred more than 3.6M dollars to it, tens of thousands of doors since early summer, AJC Sep 16 2026. Obama and Harris campaigning in the final week.",
+   "R": "Mike Collins bets on turnout with a road tour of over 2,000 miles a week and convoy captains, AJC Oct 27 2026; RNC paid field staff sent to Georgia in May 2026; governor nominee Rick Jackson runs a persuasion concierge program. No office or door totals.",
+   "edge": "D",
+   "sources": [
+    "https://www.ajc.com/politics/2026/09/a-36m-bet-from-georgias-jon-ossoff-that-goes-beyond-his-own-reelection/",
+    "https://www.ajc.com/politics/2026/10/trailing-in-polls-mike-collins-bets-on-voter-turnout/",
+    "https://www.washingtonsun.com/2026-election/rnc-seven-figure-spend-ground-game?redirected=notus_org"
+   ]
+  },
+  "NH": {
+   "D": "Pappas campaign says close to 500,000 voters have had a call or door knock from a volunteer, NHPR Oct 21 2026. Organize New Hampshire coordinated offices opening, for example Swanzey on Oct 6 2026, MyKeeneNow. Hope Springs from Field canvass active in NH.",
+   "R": "About 1,000 paid canvassers from outside groups plus the RNC per the AFP New Hampshire director, NHPR Oct 21 2026. Turning Point Action says it has dozens and dozens of full time staff in NH under its Chase the Ballot program, CNN via KESQ Oct 18 2026.",
+   "edge": "even",
+   "sources": [
+    "https://www.nhpr.org/nh-news/2026-10-21/nh-newhampshire-senate-race-pappas-sununu-2026-election",
+    "https://kesq.com/news/national-politics/cnn-us-politics/2026/10/18/turning-point-action-hits-the-ground-in-new-hampshire-for-a-key-senate-race/",
+    "https://mykeenenow.com/news/219912-pappas-warnock-campaign-together-at-organize-new-hampshire-office-opening/"
+   ]
+  },
+  "AK": {
+   "D": "No Peltola or Alaska Democratic field numbers found.",
+   "R": "RNC sent paid field staff to Alaska in May 2026, a state the party does not traditionally contest, NOTUS via Washington Sun May 7 2026. No counts.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.washingtonsun.com/2026-election/rnc-seven-figure-spend-ground-game?redirected=notus_org"
+   ]
+  },
+  "NE": {
+   "D": "No Democratic nominee; independent Dan Osborn is the anti Ricketts candidate. The Outreach Team, a Democratic canvassing firm working for the DSCC, is working the race, Free Beacon Oct 28 2026. Osborn raised 9.8M, IVN Oct 29 2026. No door totals.",
+   "R": "No Ricketts or Nebraska GOP field counts found.",
+   "edge": "unknown",
+   "sources": [
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://ivn.us/the-working-class-independent-is-popular-in-polls-winning-takes-two-more-things/"
+   ]
+  },
+  "KS": {
+   "D": "DSCC hired The Outreach Team for paid canvassing for Senate nominee Adam Hamilton, amount not given, Free Beacon Oct 28 2026.",
+   "R": "No GOP field counts found.",
+   "edge": "unknown",
+   "sources": [
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/"
+   ]
+  },
+  "SC": {
+   "D": "Hope Springs from Field volunteer canvass in SC 01 only. No statewide Senate or governor field numbers.",
+   "R": "No GOP field counts found.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.dailykos.com/stories/2026/10/30/800119818/community/day-six/"
+   ]
+  },
+  "FL": {
+   "D": "Planned Parenthood Votes paid 93,750 dollars for canvassing for Senate nominee Angie Nixon; The Outreach Team canvassing Florida House races, Free Beacon Oct 28 2026.",
+   "R": "No GOP field counts found; Florida rated a first tier GOP turnout target by Newsweek Jul 30 2026, not a confirmed America PAC state.",
+   "edge": "unknown",
+   "sources": [
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/",
+    "https://www.newsweek.com/map-elon-musk-midterm-america-pac-12264200"
+   ]
+  },
+  "MN": {
+   "D": "DFL and its campaigns passed 2,000,000 doors knocked as of Oct 16, a record, 650,000 more than the same point in 2022 and 450,000 more than 2024; organizers deployed since June 2025. DFL Oct 16 2026; MPR News Oct 29 2026. GOTV bus tour.",
+   "R": "AFP Action Minnesota spending about 1M dollars mostly on door knocking in state Senate districts; GOP GOTV bus tour; no GOP door totals. MPR News Oct 29 2026.",
+   "edge": "D",
+   "sources": [
+    "https://www.mprnews.org/story/2026/10/29/minnesota-get-out-the-vote-efforts-ramp-up-as-election-day-approaches",
+    "https://dfl.org/dfl-campaigns-break-record-with-two-million-doors-knocked-in-2026/"
+   ]
+  },
+  "AZ": {
+   "D": "Hobbs rallying volunteer canvassers in Tucson and Paradise Valley in the final week, ABC15 Oct 28 2026. The Outreach Team canvassing Arizona House races, Free Beacon. No door totals.",
+   "R": "Turning Point Action Chase the Vote with full time paid ballot chasers and weekly Super Chase events in Mesa, Gilbert and Scottsdale, KGUN Feb 4 2026; in 2024 TPA claimed 315,000 plus ballots chased in Arizona. TPA volunteers knocking doors with Biggs in the final week, ABC15 Oct 28 2026.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.abc15.com/news/local-news/gov-katie-hobbs-congressman-andy-biggs-race-to-election-day",
+    "https://www.kgun9.com/news/local-news/turning-point-action-opens-chase-the-vote-operation-in-arizona-for-2026",
+    "https://freebeacon.com/democrats/democrats-are-recruiting-canvassers-with-previous-felony-convictions-to-knock-on-doors-for-abdul-el-sayed-other-dems-in-get-out-the-vote-push/"
+   ]
+  },
+  "WI": {
+   "D": "No fall 2026 totals found. WisDems said over 1,000 volunteers knocked doors one year out in Nov 2025; Hope Springs from Field canvassing WI 03.",
+   "R": "No GOP field counts found.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.wispolitics.com/2025/wisdems-see-surge-of-energy-as-over-1000-volunteers-knock-doors-one-year-from-2026-elections",
+    "https://www.dailykos.com/stories/2026/10/30/800119818/community/day-six/"
+   ]
+  },
+  "PA": {
+   "D": "Pennsylvania House Democratic Campaign Committee reported over 416,000 doors, 512,000 calls and 1.4M texts, and Shapiro put 3.3M dollars into downballot races to open more offices, Pennsylvania Capital Star, summer 2026. Shapiro 10 day, 29 county bus tour, WVIA Oct 29 2026.",
+   "R": "RNC paid field staff sent to Pennsylvania in May 2026. Garrity 14 stop Turnaround PA tour. No GOP door totals.",
+   "edge": "D",
+   "sources": [
+    "https://penncapital-star.com/election-2026/shapiro-pa-democrats-look-to-mobilize-voters-ahead-of-midterm-elections/",
+    "https://www.wvia.org/news/local/2026-10-27/a-tale-of-two-campaigns-gubernatorial-candidates-stop-in-luzerne-county-during-pre-election-blitz",
+    "https://www.washingtonsun.com/2026-election/rnc-seven-figure-spend-ground-game?redirected=notus_org"
+   ]
+  },
+  "NV": {
+   "D": "Culinary Union canvass for Aaron Ford: about 200 canvassers on Oct 21, thousands of doors over the campaign, deployment consistent with past cycles, Fox5 Vegas Oct 22 2026.",
+   "R": "No Lombardo or Nevada GOP field counts found.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.fox5vegas.com/2026/10/22/kamala-harris-rallies-with-aaron-ford-culinary-union-ahead-nevada-election/"
+   ]
+  },
+  "NM": {
+   "D": "No field reporting found.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": []
+  },
+  "MT": {
+   "D": "AFL-CIO cites union outreach in Montana, no count, DNC release Oct 6 2026.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": [
+    "https://democrats.org/icymi-dnc-holds-national-gotv-call-with-vice-president-kamala-d-harris-to-turbocharge-organizing-efforts-in-final-sprint-to-midterm-elections/"
+   ]
+  },
+  "VA": {
+   "D": "Hope Springs from Field volunteer canvass active in Virginia; no statewide counts.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.dailykos.com/stories/2026/10/30/800119818/community/day-six/"
+   ]
+  },
+  "NY": {
+   "D": "No field reporting found.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": []
+  },
+  "CO": {
+   "D": "Hope Springs from Field volunteer canvass in CO 08; no statewide counts.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": [
+    "https://www.dailykos.com/stories/2026/10/30/800119818/community/day-six/"
+   ]
+  },
+  "OR": {
+   "D": "No field reporting found.",
+   "R": "No field reporting found.",
+   "edge": "unknown",
+   "sources": []
+  }
+ },
+ "national": {
+  "America_PAC": "Nearly 3,000 paid canvassers in one week and about 6.5M doors nationally, active in seven Senate battlegrounds and about three dozen House races, over a third of disclosed spending in Texas Senate; Musk gave over 76M to America PAC and 158M to Senate Leadership Fund Jul to Sep. New York Times reporting of Oct 12 2026 as republished by GV Wire; flagged because the caller excluded the NYT website.",
+  "RNC": "Initial seven figure ground game spend, 34 paid staffers sent to 17 states in May 2026 including NC, PA, GA, AK and ME, targeting infrequent voters. Bank Your Vote early vote push.",
+  "Turning_Point_Action": "Chase the Ballot or Chase the Vote paid ballot chaser program; NH has dozens of full time staff; Arizona program with weekly Super Chase events.",
+  "AFP_Action": "700,000 plus doors for Husted in Ohio by Oct 9; about 1M dollars on Minnesota legislative doors; part of about 1,000 GOP side paid canvassers in NH.",
+  "Labor": "AFL-CIO labor program 700,000 doors and 2.2M calls as of Oct 5 2026, programs in all 50 states, with outreach called out in ME, NC, TX, MT, OH. Unite Here Local 23 130,000 doors in Charlotte; Culinary Union canvass in Nevada.",
+  "Dem_paid_canvass": "The Outreach Team, working for the DSCC, received about 3.47M dollars from Democratic PACs for canvassing in MI, KS, NE, IA and others; Planned Parenthood Votes, For Our Future and others funding paid canvasses, pay 22 to 27 dollars an hour, Free Beacon Oct 28 2026.",
+  "Hope_Springs_from_Field": "Volunteer Democratic aligned PAC: 141,221 doors on Oct 29 alone across 15 locations including FL, GA, IA, NH, NC, OH, PA, TX, VA and districts in ME, SC, CO, WI; arranged rides to early voting for 4,296 voters. Source is a Daily Kos community diary, low reliability.",
+  "not_found": "No 2026 numbers found for Working Families Party, Senate Majority PAC, Senate Leadership Fund field, or DNC organizer counts. The Ohio Democrats one million doors release found in search was from 2024 and was excluded.",
+  "weather_national": "WPC extended discussion Oct 28: upper low closes off over the Plains Mon to Tue with surface low, moderate to heavy rain persisting into Tuesday with an eastward shift, gusty Plains winds, possible High Plains snow on the backside; central and eastern US 10 to 20 degrees above normal; no tropical systems. CNN says over 43M had voted early by Oct 29."
+ }
+}

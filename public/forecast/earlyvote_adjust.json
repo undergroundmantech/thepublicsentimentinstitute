@@ -164,9 +164,9 @@
  },
  "states": {
   "AK": {
-   "gap": -0.076,
+   "gap": -0.075,
    "vol": -0.001,
-   "nbr": 0.483,
+   "nbr": 0.484,
    "own": 0.305,
    "w": 0.221,
    "hist": null,
@@ -178,9 +178,9 @@
    "level": -0.0
   },
   "AL": {
-   "gap": 0.311,
+   "gap": 0.314,
    "vol": 0.002,
-   "nbr": 0.829,
+   "nbr": 0.838,
    "own": null,
    "w": 0.0,
    "hist": null,
@@ -192,9 +192,9 @@
    "level": 0.01
   },
   "AR": {
-   "gap": -0.532,
+   "gap": -0.529,
    "vol": 0.003,
-   "nbr": 0.668,
+   "nbr": 0.678,
    "own": -15.033,
    "w": 0.086,
    "hist": null,
@@ -202,13 +202,13 @@
    "ballots": 368915,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.44,
+   "comp": 0.42,
    "level": 0.01
   },
   "AZ": {
-   "gap": -0.318,
-   "vol": -0.009,
-   "nbr": 0.124,
+   "gap": -0.321,
+   "vol": -0.01,
+   "nbr": 0.106,
    "own": -0.737,
    "w": 1.379,
    "hist": -2.043,
@@ -220,9 +220,9 @@
    "level": -0.02
   },
   "CA": {
-   "gap": -0.428,
+   "gap": -0.426,
    "vol": -0.001,
-   "nbr": 0.282,
+   "nbr": 0.289,
    "own": -5.327,
    "w": 0.197,
    "hist": null,
@@ -236,7 +236,7 @@
   "CO": {
    "gap": -0.642,
    "vol": -0.017,
-   "nbr": 0.858,
+   "nbr": 0.855,
    "own": -1.452,
    "w": 1.576,
    "hist": null,
@@ -244,13 +244,13 @@
    "ballots": 1174321,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.54,
-   "level": -0.0
+   "comp": 0.52,
+   "level": -0.01
   },
   "CT": {
-   "gap": 0.938,
+   "gap": 0.939,
    "vol": -0.001,
-   "nbr": 0.874,
+   "nbr": 0.876,
    "own": 4.245,
    "w": 0.295,
    "hist": null,
@@ -264,7 +264,7 @@
   "DE": {
    "gap": 3.903,
    "vol": 0.001,
-   "nbr": 0.492,
+   "nbr": 0.494,
    "own": 10.054,
    "w": 0.967,
    "hist": null,
@@ -272,13 +272,13 @@
    "ballots": 104746,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -3.21,
+   "comp": -3.17,
    "level": 0.0
   },
   "FL": {
-   "gap": 2.144,
+   "gap": 2.152,
    "vol": 0.01,
-   "nbr": -0.036,
+   "nbr": 0.007,
    "own": 4.796,
    "w": 1.465,
    "hist": null,
@@ -286,13 +286,13 @@
    "ballots": 3879348,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.82,
+   "comp": -1.79,
    "level": 0.03
   },
   "GA": {
-   "gap": 0.211,
+   "gap": 0.212,
    "vol": 0.007,
-   "nbr": 0.991,
+   "nbr": 0.995,
    "own": 1.019,
    "w": 0.256,
    "hist": null,
@@ -300,13 +300,13 @@
    "ballots": 2128281,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.18,
+   "comp": -0.17,
    "level": 0.01
   },
   "HI": {
    "gap": -0.903,
    "vol": -0.007,
-   "nbr": 0.747,
+   "nbr": 0.748,
    "own": -5.676,
    "w": 0.397,
    "hist": null,
@@ -314,13 +314,13 @@
    "ballots": 168190,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.73,
+   "comp": 0.72,
    "level": -0.0
   },
   "IA": {
    "gap": 2.335,
    "vol": -0.008,
-   "nbr": 0.66,
+   "nbr": 0.661,
    "own": 7.83,
    "w": 0.69,
    "hist": null,
@@ -328,13 +328,13 @@
    "ballots": 338739,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -2.01,
+   "comp": -1.97,
    "level": -0.02
   },
   "ID": {
-   "gap": 1.283,
+   "gap": 1.285,
    "vol": -0.001,
-   "nbr": 0.983,
+   "nbr": 0.991,
    "own": 8.186,
    "w": 0.212,
    "hist": null,
@@ -342,13 +342,13 @@
    "ballots": 28945,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.09,
+   "comp": -1.07,
    "level": -0.0
   },
   "IL": {
-   "gap": -0.023,
+   "gap": -0.016,
    "vol": -0.004,
-   "nbr": 0.84,
+   "nbr": 0.868,
    "own": -0.429,
    "w": 0.455,
    "hist": null,
@@ -356,13 +356,13 @@
    "ballots": 1166832,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.02,
+   "comp": 0.01,
    "level": -0.0
   },
   "IN": {
-   "gap": 0.438,
+   "gap": 0.441,
    "vol": -0.0,
-   "nbr": 0.579,
+   "nbr": 0.586,
    "own": 1.635,
    "w": 0.296,
    "hist": null,
@@ -372,9 +372,9 @@
    "source": "early vote"
   },
   "KS": {
-   "gap": -0.643,
+   "gap": -0.642,
    "vol": 0.0,
-   "nbr": 0.843,
+   "nbr": 0.847,
    "own": -3.069,
    "w": 0.646,
    "hist": null,
@@ -382,13 +382,13 @@
    "ballots": 282232,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.53,
+   "comp": 0.52,
    "level": 0.0
   },
   "KY": {
-   "gap": 1.418,
+   "gap": 1.419,
    "vol": -0.002,
-   "nbr": 0.245,
+   "nbr": 0.248,
    "own": 4.722,
    "w": 0.642,
    "hist": null,
@@ -396,13 +396,13 @@
    "ballots": 49502,
    "estimatedShare": 0.078,
    "source": "early vote",
-   "comp": -1.19,
+   "comp": -1.18,
    "level": -0.0
   },
   "LA": {
-   "gap": 0.437,
+   "gap": 0.441,
    "vol": 0.004,
-   "nbr": 0.739,
+   "nbr": 0.751,
    "own": 0.996,
    "w": 0.458,
    "hist": null,
@@ -410,13 +410,13 @@
    "ballots": 520942,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.38,
+   "comp": -0.37,
    "level": 0.01
   },
   "MA": {
-   "gap": 0.019,
+   "gap": 0.02,
    "vol": -0.0,
-   "nbr": 0.85,
+   "nbr": 0.853,
    "own": null,
    "w": 0.0,
    "hist": null,
@@ -430,7 +430,7 @@
   "MD": {
    "gap": 0.095,
    "vol": -0.045,
-   "nbr": 0.718,
+   "nbr": 0.716,
    "own": -0.525,
    "w": 0.449,
    "hist": null,
@@ -439,12 +439,12 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": -0.08,
-   "level": -0.02
+   "level": -0.01
   },
   "ME": {
    "gap": 0.507,
    "vol": 0.012,
-   "nbr": 0.756,
+   "nbr": 0.755,
    "own": 1.35,
    "w": 0.978,
    "hist": null,
@@ -452,13 +452,13 @@
    "ballots": 244931,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.43,
+   "comp": -0.42,
    "level": -0.01
   },
   "MI": {
-   "gap": -0.075,
+   "gap": -0.076,
    "vol": -0.018,
-   "nbr": 0.672,
+   "nbr": 0.668,
    "own": -0.494,
    "w": 0.25,
    "hist": null,
@@ -470,9 +470,9 @@
    "level": -0.01
   },
   "MN": {
-   "gap": 0.141,
+   "gap": 0.14,
    "vol": -0.044,
-   "nbr": 0.49,
+   "nbr": 0.487,
    "own": 0.274,
    "w": 0.219,
    "hist": null,
@@ -484,9 +484,9 @@
    "level": -0.01
   },
   "MO": {
-   "gap": 0.302,
+   "gap": 0.304,
    "vol": -0.0,
-   "nbr": 0.564,
+   "nbr": 0.571,
    "own": 1.093,
    "w": 0.183,
    "hist": null,
@@ -496,9 +496,9 @@
    "source": "early vote"
   },
   "MS": {
-   "gap": 0.566,
+   "gap": 0.567,
    "vol": 0.0,
-   "nbr": 0.63,
+   "nbr": 0.631,
    "own": 2.956,
    "w": 0.221,
    "hist": null,
@@ -506,13 +506,13 @@
    "ballots": 56049,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.47,
+   "comp": -0.45,
    "level": 0.0
   },
   "MT": {
    "gap": 0.162,
    "vol": -0.002,
-   "nbr": 0.756,
+   "nbr": 0.757,
    "own": -0.468,
    "w": 0.309,
    "hist": null,
@@ -520,13 +520,13 @@
    "ballots": 249744,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.13,
-   "level": -0.01
+   "comp": -0.12,
+   "level": -0.0
   },
   "NC": {
-   "gap": 1.118,
+   "gap": 1.123,
    "vol": 0.005,
-   "nbr": 0.534,
+   "nbr": 0.559,
    "own": 3.177,
    "w": 1.09,
    "hist": null,
@@ -534,13 +534,13 @@
    "ballots": 1961167,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.95,
+   "comp": -0.93,
    "level": 0.01
   },
   "ND": {
    "gap": 0.152,
    "vol": -0.0,
-   "nbr": 0.713,
+   "nbr": 0.715,
    "own": -0.399,
    "w": 0.336,
    "hist": null,
@@ -552,7 +552,7 @@
   "NE": {
    "gap": -0.128,
    "vol": 0.008,
-   "nbr": 0.978,
+   "nbr": 0.98,
    "own": -0.657,
    "w": 0.874,
    "hist": null,
@@ -560,13 +560,13 @@
    "ballots": 185194,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.11,
+   "comp": 0.1,
    "level": 0.02
   },
   "NH": {
-   "gap": 0.032,
+   "gap": 0.031,
    "vol": -0.001,
-   "nbr": 0.552,
+   "nbr": 0.55,
    "own": null,
    "w": 0.0,
    "hist": null,
@@ -578,9 +578,9 @@
    "level": -0.0
   },
   "NJ": {
-   "gap": 0.023,
+   "gap": 0.024,
    "vol": -0.038,
-   "nbr": 0.463,
+   "nbr": 0.465,
    "own": 0.006,
    "w": 1.276,
    "hist": 0.188,
@@ -594,7 +594,7 @@
   "NM": {
    "gap": 0.146,
    "vol": -0.004,
-   "nbr": 0.639,
+   "nbr": 0.64,
    "own": 0.159,
    "w": 1.709,
    "hist": null,
@@ -606,9 +606,9 @@
    "level": -0.0
   },
   "NV": {
-   "gap": -2.038,
+   "gap": -2.042,
    "vol": -0.011,
-   "nbr": 0.728,
+   "nbr": 0.708,
    "own": -5.123,
    "w": 1.365,
    "hist": null,
@@ -616,13 +616,13 @@
    "ballots": 532650,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 1.71,
+   "comp": 1.72,
    "level": -0.02
   },
   "NY": {
-   "gap": -0.009,
+   "gap": -0.008,
    "vol": -0.006,
-   "nbr": 0.476,
+   "nbr": 0.48,
    "own": -1.577,
    "w": 0.191,
    "hist": null,
@@ -634,9 +634,9 @@
    "level": -0.01
   },
   "OH": {
-   "gap": 0.184,
+   "gap": 0.185,
    "vol": 0.006,
-   "nbr": 0.981,
+   "nbr": 0.985,
    "own": 0.778,
    "w": 0.211,
    "hist": null,
@@ -648,9 +648,9 @@
    "level": 0.01
   },
   "OK": {
-   "gap": 0.986,
+   "gap": 0.981,
    "vol": 0.001,
-   "nbr": 0.908,
+   "nbr": 0.892,
    "own": 4.925,
    "w": 0.262,
    "hist": null,
@@ -658,13 +658,13 @@
    "ballots": 32756,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.83,
+   "comp": -0.82,
    "level": 0.01
   },
   "OR": {
    "gap": 0.272,
    "vol": -0.002,
-   "nbr": 0.793,
+   "nbr": 0.797,
    "own": 0.249,
    "w": 1.845,
    "hist": null,
@@ -676,9 +676,9 @@
    "level": -0.0
   },
   "PA": {
-   "gap": 0.792,
+   "gap": 0.794,
    "vol": -0.041,
-   "nbr": 0.332,
+   "nbr": 0.339,
    "own": 4.218,
    "w": 0.537,
    "hist": null,
@@ -686,8 +686,8 @@
    "ballots": 931701,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.6,
-   "level": -0.06
+   "comp": -0.57,
+   "level": -0.05
   },
   "RI": {
    "gap": 2.016,
@@ -700,13 +700,13 @@
    "ballots": 92353,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.42,
+   "comp": -1.43,
    "level": -0.01
   },
   "SC": {
-   "gap": 0.224,
+   "gap": 0.23,
    "vol": 0.014,
-   "nbr": 1.089,
+   "nbr": 1.115,
    "own": 0.373,
    "w": 0.443,
    "hist": null,
@@ -728,13 +728,13 @@
    "ballots": 61052,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.61,
+   "comp": -1.57,
    "level": -0.0
   },
   "TN": {
    "gap": 0.305,
    "vol": 0.003,
-   "nbr": 0.764,
+   "nbr": 0.765,
    "own": 0.378,
    "w": 0.405,
    "hist": null,
@@ -742,13 +742,13 @@
    "ballots": 1018521,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.27,
+   "comp": -0.26,
    "level": 0.01
   },
   "TX": {
-   "gap": -0.141,
+   "gap": -0.156,
    "vol": 0.03,
-   "nbr": 0.664,
+   "nbr": 0.606,
    "own": -0.714,
    "w": 0.333,
    "hist": null,
@@ -756,13 +756,13 @@
    "ballots": 5647822,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.12,
+   "comp": 0.13,
    "level": 0.07
   },
   "UT": {
-   "gap": 0.92,
+   "gap": 0.922,
    "vol": 0.0,
-   "nbr": 0.567,
+   "nbr": 0.574,
    "own": 3.441,
    "w": 0.449,
    "hist": null,
@@ -772,9 +772,9 @@
    "source": "early vote"
   },
   "VA": {
-   "gap": 0.528,
+   "gap": 0.529,
    "vol": -0.002,
-   "nbr": 1.244,
+   "nbr": 1.246,
    "own": 0.807,
    "w": 0.353,
    "hist": null,
@@ -782,7 +782,7 @@
    "ballots": 1261612,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.45,
+   "comp": -0.43,
    "level": -0.0
   },
   "VT": {
@@ -796,13 +796,13 @@
    "ballots": 123481,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.47,
+   "comp": 0.46,
    "level": 0.0
   },
   "WA": {
-   "gap": -1.154,
+   "gap": -1.153,
    "vol": -0.008,
-   "nbr": 0.27,
+   "nbr": 0.271,
    "own": -9.402,
    "w": 0.243,
    "hist": null,
@@ -812,9 +812,9 @@
    "source": "early vote"
   },
   "WI": {
-   "gap": 0.088,
+   "gap": 0.086,
    "vol": -0.004,
-   "nbr": 0.581,
+   "nbr": 0.574,
    "own": 0.842,
    "w": 0.435,
    "hist": null,
@@ -822,13 +822,13 @@
    "ballots": 873458,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.08,
+   "comp": -0.07,
    "level": -0.0
   },
   "WV": {
-   "gap": -1.045,
+   "gap": -1.044,
    "vol": -0.002,
-   "nbr": 1.028,
+   "nbr": 1.03,
    "own": -5.179,
    "w": 0.554,
    "hist": null,
@@ -836,13 +836,13 @@
    "ballots": 62366,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.89,
+   "comp": 0.88,
    "level": -0.0
   },
   "WY": {
-   "gap": 1.284,
+   "gap": 1.283,
    "vol": 0.002,
-   "nbr": 0.443,
+   "nbr": 0.438,
    "own": 3.455,
    "w": 0.824,
    "hist": null,
@@ -850,28 +850,28 @@
    "ballots": 47553,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.11,
+   "comp": -1.1,
    "level": 0.01
   }
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.8503,
-   "dem_control": 0.8502,
-   "dem_seats": 28.42
+   "seat_change": 0.0,
+   "dem_control_before": 0.8489,
+   "dem_control": 0.8489,
+   "dem_seats": 28.41
   },
   "senate": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.831,
-   "dem_control": 0.8307,
-   "dem_seats": 53.74
+   "seat_change": 0.01,
+   "dem_control_before": 0.8482,
+   "dem_control": 0.8485,
+   "dem_seats": 54.03
   },
   "house": {
-   "seat_change": -0.01,
-   "dem_control_before": 0.9588,
-   "dem_control": 0.9587,
-   "dem_seats": 250.26
+   "seat_change": 0.05,
+   "dem_control_before": 0.9735,
+   "dem_control": 0.974,
+   "dem_seats": 251.52
   }
  }
 }

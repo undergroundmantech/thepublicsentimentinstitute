@@ -62,7 +62,7 @@ SIG_STATE_H, SIG_DIST, SIG_TURN_ST, SIG_TURN_DIST = 0.07, 0.05, 0.06, 0.04
 K_UNITY, UNITY_CAP, UNOPPOSED_SHARE = 0.025, 0.05, 0.75
 # Primary priority, Sept 29 2026: the same PRIMARY_BOOST as the statewide candidate model, on party unity in full and on
 # the district primary participation term at half strength. PRIMARY_BOOST=1 restores the Sept 28 settings.
-PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.8"))   # Oct 12 2026: 1.5 became 1.8, primaries weigh more
+PRIMARY_BOOST = float(os.environ.get("HOUSE_PRIMARY_BOOST", os.environ.get("PRIMARY_BOOST", "1.8")))   # Oct 12 2026: 1.5 became 1.8; Oct 30: the House reads HOUSE_PRIMARY_BOOST first, since its primary terms are unity and participation, not candidate terms
 K_UNITY, UNITY_CAP = K_UNITY * PRIMARY_BOOST, UNITY_CAP * PRIMARY_BOOST
 H["K_PRIMARY_PARTY"] = H["K_PRIMARY_PARTY"] * (1.0 + (PRIMARY_BOOST - 1.0) / 2.0)
 KERNEL = 0.25          # log odds width of the county analog kernel

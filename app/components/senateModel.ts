@@ -10,18 +10,18 @@
 export type SenateRace = { st: string; m: number; open?: boolean };
 
 export const SENATE_MODEL: SenateRace[] = [
-  { st: "AK", m: -5.5 }, { st: "AL", m: 16.4, open: true }, { st: "AR", m: 9.9 },
-  { st: "CO", m: -18.2 }, { st: "DE", m: -25.1 }, { st: "FL", m: 4.5 },
-  { st: "GA", m: -11.5 }, { st: "IA", m: -0.4, open: true }, { st: "ID", m: 20.3 },
-  { st: "IL", m: -18.9, open: true }, { st: "KS", m: -2.9 }, { st: "KY", m: 14.8, open: true },
-  { st: "LA", m: 11.1, open: true }, { st: "MA", m: -32.8 }, { st: "ME", m: -2.8 },
-  { st: "MI", m: -6.8, open: true }, { st: "MN", m: -11.8, open: true }, { st: "MS", m: 3.3 },
-  { st: "MT", m: 18.7, open: true }, { st: "NC", m: -9.6, open: true }, { st: "NE", m: -1.7 },
-  { st: "NH", m: -9.7, open: true }, { st: "NJ", m: -20.6 }, { st: "NM", m: -21.1 },
-  { st: "OH", m: -4.5 }, { st: "OK", m: 20.3, open: true }, { st: "OR", m: -24.2 },
-  { st: "RI", m: -39.3 }, { st: "SC", m: -0.3 }, { st: "SD", m: 15.8 },
-  { st: "TN", m: 21.2 }, { st: "TX", m: -1.5 }, { st: "VA", m: -15.7 },
-  { st: "WV", m: 30.4 }, { st: "WY", m: 37.5, open: true },
+  { st: "AK", m: -5.1 }, { st: "AL", m: 16.1, open: true }, { st: "AR", m: 8.4 },
+  { st: "CO", m: -20.2 }, { st: "DE", m: -25.6 }, { st: "FL", m: 4.7 },
+  { st: "GA", m: -11.8 }, { st: "IA", m: -0.7, open: true }, { st: "ID", m: 19.6 },
+  { st: "IL", m: -19.1, open: true }, { st: "KS", m: -4.1 }, { st: "KY", m: 14.3, open: true },
+  { st: "LA", m: 10.4, open: true }, { st: "MA", m: -32.4 }, { st: "ME", m: -3.2 },
+  { st: "MI", m: -7.2, open: true }, { st: "MN", m: -11.5, open: true }, { st: "MS", m: 1.7 },
+  { st: "MT", m: 17.4, open: true }, { st: "NC", m: -9.5, open: true }, { st: "NE", m: -1.5 },
+  { st: "NH", m: -9.7, open: true }, { st: "NJ", m: -25.6 }, { st: "NM", m: -21.3 },
+  { st: "OH", m: -4.8 }, { st: "OK", m: 19.7, open: true }, { st: "OR", m: -27.9 },
+  { st: "RI", m: -39.4 }, { st: "SC", m: -0.6 }, { st: "SD", m: 14.8 },
+  { st: "TN", m: 20.5 }, { st: "TX", m: -1.9 }, { st: "VA", m: -19.7 },
+  { st: "WV", m: 28.8 }, { st: "WY", m: 36.5, open: true },
 ];
 
 // Seats decided by the model's margins, plus holdovers not on the ballot:
