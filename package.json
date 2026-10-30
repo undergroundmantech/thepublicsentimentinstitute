@@ -11,6 +11,7 @@
     "test:vai": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs --test tests/vai/*.test.ts",
     "vai:rules": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/vai/build_race_rules.ts",
     "vai:prior": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/vai/build_prior.ts",
+    "vai:hyper": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/vai/build_hyper.ts",
     "intelligence:register": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/intelligence/build_register.ts",
     "intelligence:validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/intelligence/validate_research.ts",
     "intelligence:frozen-history": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/intelligence/build_frozen_history.ts"

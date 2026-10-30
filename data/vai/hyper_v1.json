@@ -1,0 +1,146 @@
+{
+  "schema": "vai-hyper/1",
+  "hyperId": "vai-hyper-v1-initial",
+  "status": "INITIAL_UNFITTED",
+  "inventory": {
+    "sigmaTauState": 0.06,
+    "sigmaTauRegion": 0.05,
+    "sigmaUnit": 0.1,
+    "graceMultiplier": 1.5,
+    "slowCountMultiplier": 1.25,
+    "exceedMultiplier": 2,
+    "exceedQuantile": 0.99,
+    "rejectionBeta": 30,
+    "lateArrivalMeanShare": 0.01,
+    "provisionalShareElectionNight": 0.01,
+    "provisionalShareAllKnown": 0.002
+  },
+  "preference": {
+    "sigmaEps": 0.1,
+    "sigmaGamma": 0.05,
+    "sigmaRegion": 0.05,
+    "kappaRevision": 4,
+    "sigmaGap": {
+      "FIRST": {
+        "AB": 0.3,
+        "C": 0.1,
+        "D": 0.25
+      },
+      "MIXED": {
+        "AB": 0.2,
+        "C": 0.08,
+        "D": 0.2
+      },
+      "TAIL": {
+        "AB": 0.15,
+        "C": 0.1,
+        "D": 0.15
+      }
+    },
+    "scenarioWeights": {
+      "ledger": 0.6,
+      "mixed": 0.25,
+      "varying": 0.15,
+      "ledgerWhenUnresolved": 0.45
+    },
+    "stage": {
+      "firstBelow": 0.25,
+      "mixedBelow": 0.7
+    },
+    "minorShiftSd": 0.25,
+    "pooledShare": 0.005,
+    "essFloor": 0.1,
+    "pseudoCount": 0.5
+  },
+  "provenance": {
+    "inventory.sigmaTauState": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "inventory.sigmaTauRegion": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "inventory.sigmaUnit": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "inventory.graceMultiplier": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; math §2.1 says only that σ_u is larger in grace jurisdictions"
+    },
+    "inventory.slowCountMultiplier": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; math §2.1 says only that σ_u is larger where the ledger codes days to weeks"
+    },
+    "inventory.exceedMultiplier": {
+      "status": "SPEC_FIXED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §2.3 (doubled)"
+    },
+    "inventory.exceedQuantile": {
+      "status": "SPEC_FIXED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §2.3 (99th percentile)"
+    },
+    "inventory.rejectionBeta": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10: ρ_c ~ Beta(1, 30), labelled UNKNOWN"
+    },
+    "inventory.lateArrivalMeanShare": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; the register stores no late-arrival volume (math §2.4), so this is a wide placeholder labelled UNKNOWN"
+    },
+    "inventory.provisionalShareElectionNight": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; math §2.2 says only \"later-counted ballots stay in R_c\""
+    },
+    "inventory.provisionalShareAllKnown": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; math §2.2 says only \"a small provisional and cure residual\""
+    },
+    "preference.sigmaEps": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "preference.sigmaGamma": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "preference.sigmaRegion": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "preference.kappaRevision": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §10"
+    },
+    "preference.sigmaGap": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §3.3"
+    },
+    "preference.scenarioWeights": {
+      "status": "INITIAL_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §5 (0.60 / 0.25 / 0.15; 0.45 when the ledger is UNRESOLVED)"
+    },
+    "preference.stage": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification; math §3.3 defines the stages but gives no cut-offs"
+    },
+    "preference.minorShiftSd": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §3.5 asks for a wide default labelled PRIOR when no polling spread exists"
+    },
+    "preference.pooledShare": {
+      "status": "SPEC_FIXED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §3.5 (0.5%)"
+    },
+    "preference.essFloor": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "VAI_V1_MATHEMATICAL_DESIGN.md §8.3 uses J/10 for chambers; reused here"
+    },
+    "preference.pseudoCount": {
+      "status": "ASSUMED_UNFITTED",
+      "source": "Phase B1 choice; not in the specification"
+    }
+  },
+  "note": "Initial, uncalibrated settings. Not estimated from data. Replace with backtest estimates (VAI_V1_BACKTEST_PLAN.md section 4) before any VAI output is published."
+}
