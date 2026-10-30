@@ -668,10 +668,10 @@
      "p90": 32.0
     },
     "house": {
-     "d_majority": 97.4,
-     "d_seats_median": 248.0,
+     "d_majority": 97.6,
+     "d_seats_median": 249.0,
      "p10": 226.0,
-     "p90": 281.0,
+     "p90": 280.0,
      "n_sims": 2000
     }
    }

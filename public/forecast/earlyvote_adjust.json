@@ -862,16 +862,16 @@
    "dem_seats": 28.41
   },
   "senate": {
-   "seat_change": 0.01,
-   "dem_control_before": 0.8482,
+   "seat_change": -0.0,
+   "dem_control_before": 0.8485,
    "dem_control": 0.8485,
    "dem_seats": 54.03
   },
   "house": {
-   "seat_change": 0.05,
-   "dem_control_before": 0.9735,
-   "dem_control": 0.974,
-   "dem_seats": 251.52
+   "seat_change": -0.0,
+   "dem_control_before": 0.976,
+   "dem_control": 0.976,
+   "dem_seats": 251.38
   }
  }
 }
