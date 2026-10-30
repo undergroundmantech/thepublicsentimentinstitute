@@ -1,0 +1,20 @@
+{
+  "schema": "vai-backtest-synthetic/1",
+  "class": "SYNTHETIC",
+  "validation": "NONE_SYNTHETIC_ONLY",
+  "seed": 20261030,
+  "races": [{"raceId":"sen-SC","state":"SC","partition":"TRAIN","counties":46},{"raceId":"sen-MA","state":"MA","partition":"TRAIN","counties":14},{"raceId":"gov-SD","state":"SD","partition":"HELD_OUT","counties":66},{"raceId":"gov-AR","state":"AR","partition":"HELD_OUT","counties":75},{"raceId":"sen-CO","state":"CO","partition":"TRAIN","counties":64},{"raceId":"gov-AZ","state":"AZ","partition":"HELD_OUT","counties":15},{"raceId":"gov-WY","state":"WY","partition":"TRAIN","counties":23},{"raceId":"sen-ID","state":"ID","partition":"HELD_OUT","counties":44},{"raceId":"gov-OR","state":"OR","partition":"HELD_OUT","counties":36},{"raceId":"gov-OK","state":"OK","partition":"TRAIN","counties":77}],
+  "reps": 2,
+  "draws": 300,
+  "orders": ["NEUTRAL","EARLY_A","EARLY_B"],
+  "checkpoints": ["NONE","INITIAL","Q1","MID","Q3","LATE","NEAR_COMPLETE","COMPLETE"],
+  "models": [{"id":"B","ablation":"B: published + counted returns, no count order, no inventory uncertainty","hyperId":"vai-hyper-v1-initial"},{"id":"C","ablation":"C: B + inventory model","hyperId":"vai-hyper-v2-research"},{"id":"D","ablation":"D: full VAI with the ledger's count-order profile (v2 hyperparameters)","hyperId":"vai-hyper-v2-research"},{"id":"E","ablation":"E: D + a verified official statement of votes outstanding (SYNTHETIC, 10% noise)","hyperId":"vai-hyper-v2-research"},{"id":"D_V1","ablation":"D with the v1 (Tobit) inventory likelihood","hyperId":"vai-hyper-v1-initial"},{"id":"D_RHO50","ablation":"D with a shared selection gap, rhoGap = 0.5","hyperId":"vai-hyper-v2-research"},{"id":"D_GAP50","ablation":"D with every sigma_g halved","hyperId":"vai-hyper-v2-research"},{"id":"D_GAP200","ablation":"D with every sigma_g doubled","hyperId":"vai-hyper-v2-research"}],
+  "baselines": ["A_PUBLISHED","REPORTED_LEAD","UNIFORM_SWING"],
+  "generator": {"earlyGapLogOdds":0.6,"firstBatchShare":0.4,"note":"magnitude informed by the observed PA 2024 early-batch shift; not fitted"},
+  "inputs": {"priorId":"98e38292a879","countOrderLedgerSha256":"1d2f76638196b3bf1f3cf53128a5a8ac7ccc542f1ff41f18d0bb793ad90f2b54","hyperV2Sha256":"dde4cbeece52e10de6f726869a60ee8cb6e6436d9ab8f209a38112c7bd78d996"},
+  "swingBaselineSdFittedOnTrain": 9.5987,
+  "codeCommit": "d6d21f31cae7207899f535a50f2c6bb28b226ce0",
+  "wallSeconds": 1155,
+  "rowsSha256": "22600016c7fcbce0761e55dc122576ea9cdd2b457b2c2ba2d65f8379ea555198",
+  "integrityIssues": 0
+}

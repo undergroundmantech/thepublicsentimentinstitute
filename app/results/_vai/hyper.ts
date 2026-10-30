@@ -6,12 +6,26 @@ export const HYPER_SCHEMA = "vai-hyper/1";
 
 export type Stage = "FIRST" | "MIXED" | "TAIL";
 export type GapColumn = "AB" | "C" | "D";
-export type ParamStatus = "INITIAL_UNFITTED" | "SPEC_FIXED" | "ASSUMED_UNFITTED";
+export type ParamStatus = "INITIAL_UNFITTED" | "SPEC_FIXED" | "ASSUMED_UNFITTED" | "DERIVED_FROM_FINALS" | "SYNTHETIC_STUDY_ONLY";
+
+/**
+ * How a unit's counted votes N relate to its final total T (B2). Never reads a precinct share.
+ *  - TOBIT: the B1 model. N only truncates T ≥ N, so a unit near its expectation pushes the shared turnout shocks up.
+ *  - POWER_PROGRESS: N is an observation with density α (N/T)^(α−1)/T on N ≤ T. α = 1 is uniform progress; large α is mostly done.
+ *  - LOG_PROGRESS: log(N/T) = −v with v ~ N(m, s²) truncated to v ≥ 0: a typical log shortfall m of counted from final votes, and a spread s
+ *    across units. Counties that progress roughly in step (small s) are representable, unlike with the power form.
+ * The statewide component (α, or (m, s)) is shared by every unit and learned from the cross-section over a grid with prior weights.
+ */
+export interface ProgressComponent { alpha?: number; m?: number; s?: number; weight: number }
+export interface ProgressModel {
+  model: "TOBIT" | "POWER_PROGRESS" | "LOG_PROGRESS";
+  components: ProgressComponent[];
+}
 
 export interface VaiHyper {
   schema: typeof HYPER_SCHEMA;
   hyperId: string;
-  status: "INITIAL_UNFITTED";
+  status: "INITIAL_UNFITTED" | "RESEARCH_CANDIDATE";
   inventory: {
     /** σ_τs: statewide turnout shock (log scale). */
     sigmaTauState: number;
@@ -35,6 +49,8 @@ export interface VaiHyper {
     provisionalShareElectionNight: number;
     /** The same after every known ballot is counted. */
     provisionalShareAllKnown: number;
+    /** B2. Absent in v1, which means TOBIT. */
+    progress?: ProgressModel;
   };
   preference: {
     sigmaEps: number;
@@ -57,6 +73,8 @@ export interface VaiHyper {
     essFloor: number;
     /** Pseudo-count added to each candidate's votes before taking a log-ratio, so a zero never produces an infinity. */
     pseudoCount: number;
+    /** B2. Share of the selection-gap variance common to every county in the race (a statewide early-vs-late difference). Absent or 0 in v1: gaps are independent. */
+    rhoGap?: number;
   };
   provenance: Record<string, { status: ParamStatus; source: string }>;
 }
@@ -140,3 +158,25 @@ export function withHyper(base: VaiHyper, patch: Patch<Omit<VaiHyper, "provenanc
   };
   return merge(base, patch) as VaiHyper;
 }
+
+// ---- v2 research candidate (B2) ------------------------------------------------------------------------------------------
+// Changes from v1: the progress likelihood (LOG_PROGRESS replaces the censored Tobit likelihood that overstated votes outstanding near
+// completion). Nothing is fitted to point-in-time returns, because none exist for the races VAI targets. Every number v1 carried keeps its
+// v1 provenance. rhoGap stays unset (independent gaps): the shared-gap model is implemented and evaluated, not adopted.
+
+const LOG_M = [0.02, 0.05, 0.1, 0.2, 0.4, 0.8, 1.5];
+const LOG_S = [0.03, 0.1, 0.3, 0.8];
+export const LOG_PROGRESS_V2: ProgressModel = {
+  model: "LOG_PROGRESS",
+  components: LOG_M.flatMap((m) => LOG_S.map((s) => ({ m, s, weight: 1 / (LOG_M.length * LOG_S.length) }))),
+};
+
+export const HYPER_V2: VaiHyper = {
+  ...withHyper(HYPER_V1, { inventory: { progress: LOG_PROGRESS_V2 } }),
+  hyperId: "vai-hyper-v2-research",
+  status: "RESEARCH_CANDIDATE",
+  provenance: {
+    ...HYPER_V1.provenance,
+    "inventory.progress": { status: "SYNTHETIC_STUDY_ONLY", source: "B2 near-completion study (data/vai/experiments/near_completion_study.json): the likelihood family was chosen on synthetic regimes; the (m, s) grid and its uniform weights are ASSUMED, not fitted" },
+  },
+};

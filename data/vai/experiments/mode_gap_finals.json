@@ -1,0 +1,371 @@
+{
+ "schema": "vai-mode-gap-finals/1",
+ "class": "DERIVED_FROM_FINALS",
+ "notPointInTime": true,
+ "input": {
+  "file": "medsl-agg.json",
+  "sha256": "fa43afb501d4a8e3a0e62264aecbea2ab194443ee193583aa1e298f110caabbd"
+ },
+ "definition": "log((B_m + 0.5)/(A_m + 0.5)) - log((B_ed + 0.5)/(A_ed + 0.5)) for each non-election-day method m with at least 5,000 two-party votes,\nside A = D, side B = R.",
+ "n": 35,
+ "absGapQuantiles": {
+  "q25": 0.4354,
+  "median": 0.5797,
+  "q75": 0.929,
+  "q90": 1.0633,
+  "max": 1.3958
+ },
+ "rows": [
+  {
+   "year": 2022,
+   "state": "GA",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 244775,
+   "shareOfTwoParty": 0.0624,
+   "gapLogRB": -1.0481
+  },
+  {
+   "year": 2022,
+   "state": "GA",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ADVANCED",
+   "twoParty": 2275018,
+   "shareOfTwoParty": 0.58,
+   "gapLogRB": -0.5122
+  },
+  {
+   "year": 2022,
+   "state": "GA",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 241102,
+   "shareOfTwoParty": 0.0626,
+   "gapLogRB": -1.1198
+  },
+  {
+   "year": 2022,
+   "state": "GA",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ADVANCED",
+   "twoParty": 2240333,
+   "shareOfTwoParty": 0.5816,
+   "gapLogRB": -0.4683
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "governor",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 1604743,
+   "shareOfTwoParty": 0.8251,
+   "gapLogRB": -1.0412
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "house",
+   "district": "2",
+   "method": "EARLY VOTING",
+   "twoParty": 158643,
+   "shareOfTwoParty": 0.7733,
+   "gapLogRB": -0.5888
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "house",
+   "district": "8",
+   "method": "EARLY VOTING",
+   "twoParty": 158039,
+   "shareOfTwoParty": 0.8015,
+   "gapLogRB": 1.3958
+  },
+  {
+   "year": 2022,
+   "state": "AZ",
+   "office": "senate",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 1578324,
+   "shareOfTwoParty": 0.8248,
+   "gapLogRB": -1.0633
+  },
+  {
+   "year": 2024,
+   "state": "AZ",
+   "office": "house",
+   "district": "8",
+   "method": "EARLY VOTING",
+   "twoParty": 328801,
+   "shareOfTwoParty": 0.8931,
+   "gapLogRB": -0.4546
+  },
+  {
+   "year": 2024,
+   "state": "AZ",
+   "office": "senate",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 2522999,
+   "shareOfTwoParty": 0.7717,
+   "gapLogRB": -0.4354
+  },
+  {
+   "year": 2024,
+   "state": "AZ",
+   "office": "senate",
+   "district": "STATE",
+   "method": "PROVISIONAL",
+   "twoParty": 10220,
+   "shareOfTwoParty": 0.0031,
+   "gapLogRB": -0.1305
+  },
+  {
+   "year": 2022,
+   "state": "IA",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 360018,
+   "shareOfTwoParty": 0.302,
+   "gapLogRB": -0.9385
+  },
+  {
+   "year": 2022,
+   "state": "IA",
+   "office": "house",
+   "district": "2",
+   "method": "ABSENTEE",
+   "twoParty": 96470,
+   "shareOfTwoParty": 0.3032,
+   "gapLogRB": -0.8912
+  },
+  {
+   "year": 2022,
+   "state": "IA",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 365392,
+   "shareOfTwoParty": 0.3008,
+   "gapLogRB": -0.929
+  },
+  {
+   "year": 2024,
+   "state": "IA",
+   "office": "house",
+   "district": "2",
+   "method": "ABSENTEE",
+   "twoParty": 163535,
+   "shareOfTwoParty": 0.4057,
+   "gapLogRB": -0.5929
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 40983,
+   "shareOfTwoParty": 0.1967,
+   "gapLogRB": -0.7824
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "governor",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 28129,
+   "shareOfTwoParty": 0.135,
+   "gapLogRB": -0.5062
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "governor",
+   "district": "STATE",
+   "method": "QUESTION",
+   "twoParty": 5630,
+   "shareOfTwoParty": 0.027,
+   "gapLogRB": -0.0628
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 52959,
+   "shareOfTwoParty": 0.204,
+   "gapLogRB": -0.5797
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "senate",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 36505,
+   "shareOfTwoParty": 0.1406,
+   "gapLogRB": -0.309
+  },
+  {
+   "year": 2022,
+   "state": "AK",
+   "office": "senate",
+   "district": "STATE",
+   "method": "QUESTION",
+   "twoParty": 6860,
+   "shareOfTwoParty": 0.0264,
+   "gapLogRB": -0.4342
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 69266,
+   "shareOfTwoParty": 0.0413,
+   "gapLogRB": -0.503
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "governor",
+   "district": "STATE",
+   "method": "EARLY",
+   "twoParty": 537837,
+   "shareOfTwoParty": 0.3211,
+   "gapLogRB": -0.4386
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "method": "ABSENTEE",
+   "twoParty": 12057,
+   "shareOfTwoParty": 0.0449,
+   "gapLogRB": -0.6125
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "method": "EARLY",
+   "twoParty": 102746,
+   "shareOfTwoParty": 0.3823,
+   "gapLogRB": -0.4041
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 69307,
+   "shareOfTwoParty": 0.0411,
+   "gapLogRB": -0.584
+  },
+  {
+   "year": 2022,
+   "state": "SC",
+   "office": "senate",
+   "district": "STATE",
+   "method": "EARLY",
+   "twoParty": 539359,
+   "shareOfTwoParty": 0.3196,
+   "gapLogRB": -0.5051
+  },
+  {
+   "year": 2024,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "method": "ABSENTEE",
+   "twoParty": 22821,
+   "shareOfTwoParty": 0.0586,
+   "gapLogRB": -0.6497
+  },
+  {
+   "year": 2024,
+   "state": "SC",
+   "office": "house",
+   "district": "1",
+   "method": "EARLY",
+   "twoParty": 239189,
+   "shareOfTwoParty": 0.6143,
+   "gapLogRB": -0.1132
+  },
+  {
+   "year": 2022,
+   "state": "NY",
+   "office": "governor",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 23385,
+   "shareOfTwoParty": 0.0044,
+   "gapLogRB": -1.062
+  },
+  {
+   "year": 2022,
+   "state": "NY",
+   "office": "governor",
+   "district": "STATE",
+   "method": "UNSPECIFIED",
+   "twoParty": 5148946,
+   "shareOfTwoParty": 0.9633,
+   "gapLogRB": -0.625
+  },
+  {
+   "year": 2022,
+   "state": "NY",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 23501,
+   "shareOfTwoParty": 0.0047,
+   "gapLogRB": -0.4289
+  },
+  {
+   "year": 2022,
+   "state": "NY",
+   "office": "senate",
+   "district": "STATE",
+   "method": "UNSPECIFIED",
+   "twoParty": 4959609,
+   "shareOfTwoParty": 0.9835,
+   "gapLogRB": -0.0337
+  },
+  {
+   "year": 2024,
+   "state": "NY",
+   "office": "senate",
+   "district": "STATE",
+   "method": "ABSENTEE",
+   "twoParty": 28444,
+   "shareOfTwoParty": 0.0966,
+   "gapLogRB": -1.0881
+  },
+  {
+   "year": 2024,
+   "state": "NY",
+   "office": "senate",
+   "district": "STATE",
+   "method": "EARLY VOTING",
+   "twoParty": 97919,
+   "shareOfTwoParty": 0.3327,
+   "gapLogRB": -0.5562
+  }
+ ],
+ "interpretation": "Sample is the states where MEDSL labels methods (GA, AZ, IA, AK, SC, NY): a handful of states, not a random draw. v1 sigma_g (0.08 to 0.30) sits inside this range but is not estimated from it."
+}

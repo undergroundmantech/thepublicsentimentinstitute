@@ -17,12 +17,14 @@
 // and units with no region label share one regional shock.
 
 import type { Interval, OutstandingInventory } from "../../lib/intelligence/types";
-import type { VaiHyper } from "./hyper";
+import type { VaiHyper, ProgressComponent } from "./hyper";
 import { logNormalSurvival, logSumExp, normalQuantile, normalSurvival, normalSurvivalInverse } from "./normal";
 import { Rng } from "./rng";
 import type { CompletionLevel, Labeled, Quantiles, VaiInventory, VaiReturnsFrame } from "./types";
 
 export const INVENTORY_MODEL_VERSION = "vai-inventory/1";
+/** B2: the same model with a count-progress likelihood (`hyper.inventory.progress`) in place of the B1 truncation. */
+export const INVENTORY_MODEL_VERSION_V2 = "vai-inventory/2";
 
 export type ReceiptClass = "ELECTION_DAY_OR_EARLIER" | "POSTMARK_GRACE" | "UNCLASSIFIED";
 
@@ -68,7 +70,7 @@ export interface InventoryUnitReport {
 }
 
 export interface InventoryPosterior {
-  model: typeof INVENTORY_MODEL_VERSION;
+  model: typeof INVENTORY_MODEL_VERSION | typeof INVENTORY_MODEL_VERSION_V2;
   raceId: string;
   asOf: string;
   draws: number;
@@ -90,7 +92,11 @@ export interface InventoryPosterior {
   perUnit: InventoryUnitReport[];
   late: { rule: ReceiptClass; applies: boolean; deadlineUtc: string | null };
   flags: string[];
-  diagnostics: { latticeStep: number; tauStateNodes: number; tauRegionNodes: number; regions: number; unitsWithLikelihood: number };
+  diagnostics: {
+    latticeStep: number; tauStateNodes: number; tauRegionNodes: number; regions: number; unitsWithLikelihood: number;
+    /** The posterior over the progress power, when the progress model is on. */
+    progress: { model: "TOBIT" | "POWER_PROGRESS" | "LOG_PROGRESS"; components: ProgressComponent[]; prior: number[]; posterior: number[] };
+  };
   hyperId: string;
   seed: number;
 }
@@ -177,8 +183,45 @@ function prepare(input: InventoryInput) {
   return { preps, reports, flags, regions: regionIndex.size, late };
 }
 
-/** The lattice posterior of (τ_s, τ_g) and a sampler for it. Lattice step h; τ = k·h. */
-function shockSampler(preps: Prep[], regions: number, hyper: VaiHyper["inventory"]) {
+/** The lattice posterior of (τ_s, τ_g) and a sampler for it. Lattice step h; τ = k·h. With a progress model it is also a posterior over the progress component. */
+interface Progress { model: "POWER_PROGRESS" | "LOG_PROGRESS"; comps: ProgressComponent[]; logW: number[] }
+
+const LOG_SQRT_2PI = 0.5 * Math.log(2 * Math.PI);
+
+/** log ∫ p(T | x) p(N | T) dT over T ≥ N for one unit and one progress component, up to a factor that does not depend on x. */
+function progressLogLik(p: Progress, k: number, lnN: number, mu: number, sigma: number): number {
+  const c = p.comps[k];
+  if (p.model === "POWER_PROGRESS") {
+    const alpha = c.alpha as number, as = alpha * sigma, zz = (lnN - mu) / sigma;
+    // N has density α (N/T)^(α−1)/T: integrating T above N leaves α·exp(½(ασ)² + ασ·z)·Q(z + ασ)
+    return Math.log(alpha) + 0.5 * as * as + as * zz + logNormalSurvival(zz + as);
+  }
+  // v = ln T − ln N has prior N(μ − ln N, σ²) and likelihood N(v; m, s²)/Φ(m/s), truncated to v ≥ 0
+  const m = c.m as number, s = c.s as number, v0 = mu - lnN, s2 = s * s, sg2 = sigma * sigma;
+  const vv = 1 / (1 / sg2 + 1 / s2), vm = (v0 / sg2 + m / s2) * vv;
+  const tot = sg2 + s2;
+  return -0.5 * (v0 - m) ** 2 / tot - 0.5 * Math.log(tot) - LOG_SQRT_2PI + logNormalSurvival(-vm / Math.sqrt(vv)) - logNormalSurvival(-m / s);
+}
+
+/** One draw of ln T for a unit with counted votes N > 0, given its prior mean μ and the progress component. */
+function progressDrawLnT(p: Progress, k: number, lnN: number, mu: number, sigma: number, rng: Rng, exp1: () => number): number {
+  const c = p.comps[k];
+  if (p.model === "POWER_PROGRESS") {
+    // truncated at N and tilted by exp(−ασz): z + ασ is a truncated standard normal
+    const as = (c.alpha as number) * sigma;
+    const a = (lnN - mu) / sigma + as, q = normalSurvival(a);
+    const zz = (q > 0 ? Math.max(a, normalSurvivalInverse(rng.uniform() * q)) : a + exp1() / Math.max(a, 1)) - as;
+    return mu + sigma * zz;
+  }
+  const m = c.m as number, s = c.s as number, v0 = mu - lnN, s2 = s * s, sg2 = sigma * sigma;
+  const vv = 1 / (1 / sg2 + 1 / s2), vm = (v0 / sg2 + m / s2) * vv, sd = Math.sqrt(vv);
+  const a = -vm / sd, q = normalSurvival(a);
+  const z = q > 0 ? Math.max(a, normalSurvivalInverse(rng.uniform() * q)) : a + exp1() / Math.max(a, 1);
+  return lnN + Math.max(0, vm + sd * z);
+}
+
+function shockSampler(preps: Prep[], regions: number, hyper: VaiHyper["inventory"], progress: Progress | null) {
+  const K = progress ? progress.comps.length : 1;
   const sS = hyper.sigmaTauState, sG = hyper.sigmaTauRegion;
   const pos = [sS, sG].filter((x) => x > 0);
   const step = pos.length ? Math.min(...pos) / 15 : 1;
@@ -189,48 +232,64 @@ function shockSampler(preps: Prep[], regions: number, hyper: VaiHyper["inventory
   for (let j = 0; j < wG; j++) logPriorG[j] = sG > 0 ? -0.5 * (((j - nG) * step) / sG) ** 2 : 0;
 
   // Σ over each region's units of the log-likelihood of T_c given x = τ_s + τ_g, tabulated on the lattice of x.
-  const acc: Float64Array[] = Array.from({ length: regions }, () => new Float64Array(tN));
+  const acc: Float64Array[][] = Array.from({ length: K }, () => Array.from({ length: regions }, () => new Float64Array(tN)));
   let withTerm = 0;
   for (const p of preps) {
     if (!p.term || p.region < 0) continue;
     withTerm++;
-    const a = acc[p.region];
-    for (let t = 0; t < tN; t++) {
-      const mu = p.lnE + (t - span) * step;
-      const zz = (p.lnN - mu) / p.sigma;
-      a[t] += p.term === "CENSORED" ? logNormalSurvival(zz) : -0.5 * zz * zz - Math.log(p.sigma);
+    for (let k = 0; k < K; k++) {
+      const a = acc[k][p.region];
+      const useProgress = progress !== null && p.mode === "PRIOR";
+      for (let t = 0; t < tN; t++) {
+        const mu = p.lnE + (t - span) * step;
+        const zz = (p.lnN - mu) / p.sigma;
+        if (p.term === "EXACT") a[t] += -0.5 * zz * zz - Math.log(p.sigma);
+        else if (useProgress) a[t] += progressLogLik(progress as Progress, k, p.lnN, mu, p.sigma);
+        else a[t] += logNormalSurvival(zz);
+      }
     }
   }
 
-  // Per region and per τ_s node, the normalised CDF over τ_g nodes, and the log marginal that τ_s sees.
-  const logM = Float64Array.from(logPriorS);
-  const cdf: Float64Array[][] = [];
+  // Per progress power, region and τ_s node, the normalised CDF over τ_g nodes, and the log marginal that (α, τ_s) sees.
+  const logM = new Float64Array(K * wS);
+  for (let k = 0; k < K; k++) for (let i = 0; i < wS; i++) logM[k * wS + i] = logPriorS[i] + (progress ? progress.logW[k] : 0);
+  const cdf: Float64Array[][][] = [];
   const row = new Float64Array(wG);
-  for (let r = 0; r < regions; r++) {
-    const rows: Float64Array[] = [];
-    for (let i = 0; i < wS; i++) {
-      for (let j = 0; j < wG; j++) row[j] = logPriorG[j] + acc[r][i - nS + j - nG + span];
-      const lz = logSumExp(row);
-      logM[i] += lz;
-      const c = new Float64Array(wG);
-      let run = 0;
-      for (let j = 0; j < wG; j++) {
-        run += Math.exp(row[j] - lz);
-        c[j] = run;
+  for (let k = 0; k < K; k++) {
+    const perRegion: Float64Array[][] = [];
+    for (let r = 0; r < regions; r++) {
+      const rows: Float64Array[] = [];
+      for (let i = 0; i < wS; i++) {
+        for (let j = 0; j < wG; j++) row[j] = logPriorG[j] + acc[k][r][i - nS + j - nG + span];
+        const lz = logSumExp(row);
+        logM[k * wS + i] += lz;
+        const c = new Float64Array(wG);
+        let run = 0;
+        for (let j = 0; j < wG; j++) {
+          run += Math.exp(row[j] - lz);
+          c[j] = run;
+        }
+        for (let j = 0; j < wG; j++) c[j] /= run;
+        rows.push(c);
       }
-      for (let j = 0; j < wG; j++) c[j] /= run;
-      rows.push(c);
+      perRegion.push(rows);
     }
-    cdf.push(rows);
+    cdf.push(perRegion);
   }
   const lm = logSumExp(logM);
-  const cS = new Float64Array(wS);
+  const cS = new Float64Array(K * wS);
   let run = 0;
-  for (let i = 0; i < wS; i++) {
+  for (let i = 0; i < K * wS; i++) {
     run += Math.exp(logM[i] - lm);
     cS[i] = run;
   }
-  for (let i = 0; i < wS; i++) cS[i] /= run;
+  for (let i = 0; i < K * wS; i++) cS[i] /= run;
+  const alphaPosterior = new Float64Array(K);
+  for (let k = 0; k < K; k++) {
+    let s = 0;
+    for (let i = 0; i < wS; i++) s += Math.exp(logM[k * wS + i] - lm);
+    alphaPosterior[k] = s;
+  }
 
   const pick = (c: Float64Array, u: number) => {
     let lo = 0, hi = c.length - 1;
@@ -242,12 +301,16 @@ function shockSampler(preps: Prep[], regions: number, hyper: VaiHyper["inventory
     return lo;
   };
   return {
-    step, nodes: { state: wS, region: wG }, withTerm,
+    step, nodes: { state: wS, region: wG }, withTerm, alphaPosterior,
+    /** Sets `lastAlpha` to the progress power of this draw (index into the grid). */
+    lastAlpha: 0,
     draw(rng: Rng, tauRegion: Float64Array): number {
-      const i = pick(cS, rng.uniform());
+      const flat = pick(cS, rng.uniform());
+      const k = Math.floor(flat / wS), i = flat - k * wS;
+      this.lastAlpha = k;
       const ts = sS > 0 ? (i - nS + rng.uniform() - 0.5) * step : 0;
       for (let r = 0; r < regions; r++) {
-        const j = pick(cdf[r][i], rng.uniform());
+        const j = pick(cdf[k][r][i], rng.uniform());
         tauRegion[r] = sG > 0 ? (j - nG + rng.uniform() - 0.5) * step : 0;
       }
       return ts;
@@ -259,8 +322,12 @@ export function estimateInventory(input: InventoryInput): InventoryPosterior {
   const hv = input.hyper.inventory;
   const J = input.draws;
   const { preps, reports, flags, regions, late } = prepare(input);
-  const sampler = shockSampler(preps, regions, hv);
-  const rng = Rng.fork(input.seed, `${INVENTORY_MODEL_VERSION}|${input.raceId}`);
+  const pm = hv.progress && hv.progress.model !== "TOBIT" ? hv.progress : null;
+  const wsum = pm ? pm.components.reduce((s, c) => s + c.weight, 0) : 1;
+  const prog: Progress | null = pm ? { model: pm.model as Progress["model"], comps: pm.components, logW: pm.components.map((c) => Math.log(c.weight / wsum)) } : null;
+  const version = pm ? INVENTORY_MODEL_VERSION_V2 : INVENTORY_MODEL_VERSION;
+  const sampler = shockSampler(preps, regions, hv, prog);
+  const rng = Rng.fork(input.seed, `${version}|${input.raceId}`);
   const n = preps.length;
   const total = preps.map(() => new Float64Array(J));
   const remainingTotal = new Float64Array(J), tauState = new Float64Array(J);
@@ -284,8 +351,11 @@ export function estimateInventory(input: InventoryInput): InventoryPosterior {
           const mu = p.lnE + ts + tauRegion[p.region];
           let zz: number;
           if (p.N > 0) {
-            const a = (p.lnN - mu) / p.sigma, q = normalSurvival(a);
-            zz = q > 0 ? Math.max(a, normalSurvivalInverse(rng.uniform() * q)) : a + exp1() / Math.max(a, 1);
+            zz = prog ? (progressDrawLnT(prog, sampler.lastAlpha, p.lnN, mu, p.sigma, rng, exp1) - mu) / p.sigma : 0;
+            if (!prog) {
+              const a = (p.lnN - mu) / p.sigma, q = normalSurvival(a);
+              zz = q > 0 ? Math.max(a, normalSurvivalInverse(rng.uniform() * q)) : a + exp1() / Math.max(a, 1);
+            }
           } else zz = rng.normal();
           r = Math.max(0, Math.exp(mu + p.sigma * zz) - p.N);
           flexSum += r;
@@ -337,7 +407,7 @@ export function estimateInventory(input: InventoryInput): InventoryPosterior {
   const totalSum = new Float64Array(J);
   for (let j = 0; j < J; j++) totalSum[j] = sumN + remainingTotal[j];
   return {
-    model: INVENTORY_MODEL_VERSION, raceId: input.raceId, asOf: input.asOf, draws: J,
+    model: version, raceId: input.raceId, asOf: input.asOf, draws: J,
     ids: preps.map((p) => p.id), reported, total, remainingTotal, tauState,
     summary: {
       reported: sumN, remaining: quantilesOf(remainingTotal), total: quantilesOf(totalSum),
@@ -347,7 +417,12 @@ export function estimateInventory(input: InventoryInput): InventoryPosterior {
     perUnit: reports,
     late: { rule: input.receipt.class, applies: late, deadlineUtc: input.receipt.deadlineUtc },
     flags: [...flags].sort(),
-    diagnostics: { latticeStep: sampler.step, tauStateNodes: sampler.nodes.state, tauRegionNodes: sampler.nodes.region, regions, unitsWithLikelihood: sampler.withTerm },
+    diagnostics: {
+      latticeStep: sampler.step, tauStateNodes: sampler.nodes.state, tauRegionNodes: sampler.nodes.region, regions, unitsWithLikelihood: sampler.withTerm,
+      progress: pm
+        ? { model: pm.model, components: pm.components.map((c) => ({ ...c })), prior: pm.components.map((c) => c.weight / wsum), posterior: Array.from(sampler.alphaPosterior) }
+        : { model: "TOBIT", components: [], prior: [], posterior: [] },
+    },
     hyperId: input.hyper.hyperId, seed: input.seed,
   };
 }

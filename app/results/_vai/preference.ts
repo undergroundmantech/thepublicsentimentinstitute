@@ -113,6 +113,12 @@ export interface PreferenceInput {
   scenarios: Scenario[];
   /** Added to every unit's baseline log-ratio so that a race with nothing counted reproduces the published anchor. */
   anchorOffset?: number[];
+  /**
+   * How published state-shift draws meet the count. WEIGHTED (B1): each draw is one importance-weighted particle, with a Gaussian
+   * fallback when the weights degenerate. MARGINALISED (B2): the shift is integrated out analytically given the other latent terms
+   * (its likelihood is Gaussian in δ), so only the turnout draws are weighted and the published shape is kept. Default WEIGHTED.
+   */
+  shiftMode?: "WEIGHTED" | "MARGINALISED";
   hyper: VaiHyper;
   seed: number;
 }
@@ -140,6 +146,7 @@ export interface PreferenceResult {
   scenarios: { id: ScenarioId; column: GapColumn | "MAX"; sigmaGap: number; prior: number; posterior: number }[];
   /** Kish effective sample size of the importance weights, as a fraction of J. */
   essFraction: number;
+  shiftMode: "WEIGHTED" | "MARGINALISED" | "GAUSSIAN" | "NONE";
   flags: string[];
   hyperId: string;
   seed: number;
@@ -208,6 +215,9 @@ interface Contrast {
   hasZeta: boolean;
   hasGamma: boolean;
   hasDelta: boolean;
+  /** Column of the shared selection gap in B and K (−1 when the shared component is off), and its variance share ρ. */
+  gapCol: number;
+  rho: number;
   deltaMean: number;
   deltaValues: Float64Array | null;
   alpha: number;
@@ -253,7 +263,9 @@ function buildContrast(units: PrefUnit[], k: number, shift: StateShift, alpha: n
   const hasZeta = G > 1 && hp.sigmaRegion > 0, hasGamma = hp.sigmaGamma > 0 && sd > 1e-9;
   const sdDelta = shift.kind === "GAUSSIAN" ? shift.sd : 0;
   const hasDelta = shift.kind === "GAUSSIAN" && shift.sd > 0;
-  const m = (hasZeta ? G : 0) + (hasGamma ? 1 : 0) + (hasDelta ? 1 : 0) + 2;
+  const rho = Math.min(0.999, Math.max(0, hp.rhoGap ?? 0));
+  const hasGap = rho > 0;
+  const m = (hasZeta ? G : 0) + (hasGamma ? 1 : 0) + (hasDelta ? 1 : 0) + (hasGap ? 1 : 0) + 2;
   const B = new Float64Array(nS * m), K = new Float64Array(m * m);
   let col = 0;
   if (hasZeta) {
@@ -271,6 +283,9 @@ function buildContrast(units: PrefUnit[], k: number, shift: StateShift, alpha: n
     for (let s = 0; s < nS; s++) B[s * m + col] = 1;
     col++;
   }
+  // the shared selection gap: loadings −(1−π) and variance ρσ_g² are set per (draw, scenario) in `factorize`
+  const gapCol = hasGap ? col : -1;
+  if (hasGap) col++;
   // the centring of ε: columns [1, w_S] with covariance σ_ε²·[[W, −1], [−1, 0]]
   const e2 = hp.sigmaEps ** 2;
   K[col * m + col] = e2 * wSum2;
@@ -280,7 +295,7 @@ function buildContrast(units: PrefUnit[], k: number, shift: StateShift, alpha: n
 
   return {
     k, n, eta0, z, w, wSum2, region, regionW, G, rep: Int32Array.from(rep), nS, y, ve, m, B, K,
-    sdZeta: hp.sigmaRegion, sdGamma: hp.sigmaGamma, sdDelta, hasZeta, hasGamma, hasDelta,
+    sdZeta: hp.sigmaRegion, sdGamma: hp.sigmaGamma, sdDelta, hasZeta, hasGamma, hasDelta, gapCol, rho,
     deltaMean: shift.kind === "GAUSSIAN" ? shift.mean : 0,
     deltaValues: shift.kind === "DRAWS" ? shift.values : null,
     alpha, sdEps: hp.sigmaEps,
@@ -295,9 +310,13 @@ function buildContrast(units: PrefUnit[], k: number, shift: StateShift, alpha: n
 function factorize(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: Float64Array): number {
   const { nS, m, B, K } = cx;
   const { dInv, Gm, A, piv } = cx.scratch;
-  const e2 = cx.sdEps * cx.sdEps, g2 = sigmaG * sigmaG;
+  const e2 = cx.sdEps * cx.sdEps, g2 = sigmaG * sigmaG * (1 - cx.rho);
   let logD = 0;
   Gm.fill(0);
+  if (cx.gapCol >= 0) {
+    K[cx.gapCol * m + cx.gapCol] = cx.rho * sigmaG * sigmaG;
+    for (let s = 0; s < nS; s++) B[s * m + cx.gapCol] = -(1 - pi[s]);
+  }
   for (let s = 0; s < nS; s++) {
     const d = e2 + (1 - pi[s]) ** 2 * g2 + kappa[s] * cx.ve[s];
     logD += Math.log(d);
@@ -356,6 +375,76 @@ function logLik(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: Float64Ar
   return -0.5 * (quad + logdet);
 }
 
+// ---- the state shift integrated out ---------------------------------------------------------------------------------
+
+/** The published shift draws as equal-mass Gaussian bins: weight 1/NB, mean and variance each. Keeps skew and multimodality. */
+interface ShiftBins { mean: Float64Array; vari: Float64Array; nb: number }
+
+function makeBins(values: Float64Array, target = 500): ShiftBins {
+  const s = Float64Array.from(values).sort();
+  const nb = Math.max(1, Math.min(target, Math.floor(s.length / 8)));
+  const mean = new Float64Array(nb), vari = new Float64Array(nb);
+  for (let b = 0; b < nb; b++) {
+    const lo = Math.floor((b * s.length) / nb), hi = Math.floor(((b + 1) * s.length) / nb);
+    let m = 0;
+    for (let i = lo; i < hi; i++) m += s[i];
+    m /= hi - lo;
+    let v = 0;
+    for (let i = lo; i < hi; i++) v += (s[i] - m) ** 2;
+    mean[b] = m;
+    vari[b] = Math.max(v / Math.max(hi - lo, 1), 1e-12);
+  }
+  return { mean, vari, nb };
+}
+
+interface ShiftStats { logdet: number; q0: number; lin: number; cur: number }
+
+/**
+ * For one (draw, scenario): with r₀ the observed log-ratio minus its baseline, the log-likelihood of a fixed shift δ is
+ * −½(log|Σ| + q₀ − 2·lin·δ + cur·δ²), q₀ = r₀ᵀΣ⁻¹r₀, lin = 1ᵀΣ⁻¹r₀, cur = 1ᵀΣ⁻¹1. Leaves the factorisation in place.
+ */
+function shiftStats(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: Float64Array): ShiftStats {
+  const logdet = factorize(cx, pi, sigmaG, kappa);
+  if (Number.isNaN(logdet)) return { logdet: NaN, q0: 0, lin: 0, cur: 0 };
+  const { r, u, ys } = cx.scratch;
+  for (let s = 0; s < cx.nS; s++) r[s] = cx.y[s] - cx.eta0[cx.rep[s]] - cx.alpha;
+  applyInverse(cx, r, u);
+  let q0 = 0, lin = 0;
+  for (let s = 0; s < cx.nS; s++) { q0 += r[s] * u[s]; lin += u[s]; }
+  ys.fill(1);
+  applyInverse(cx, ys, ys);
+  let cur = 0;
+  for (let s = 0; s < cx.nS; s++) cur += ys[s];
+  return { logdet, q0, lin, cur };
+}
+
+/** log of each bin's integral of exp(lin·δ − ½ cur·δ²) against N(mean, vari): exact for a Gaussian bin. */
+function binLogs(st: ShiftStats, bins: ShiftBins, out: Float64Array): void {
+  for (let b = 0; b < bins.nb; b++) {
+    const m = bins.mean[b], v = bins.vari[b], d = 1 + st.cur * v;
+    out[b] = -0.5 * Math.log(d) + (st.lin * m - 0.5 * st.cur * m * m + 0.5 * st.lin * st.lin * v) / d;
+  }
+}
+
+/** The marginal log-likelihood of (draw, scenario) with the shift integrated against the published distribution. */
+function logLikMarginal(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: Float64Array, bins: ShiftBins, tmp: Float64Array): number {
+  const st = shiftStats(cx, pi, sigmaG, kappa);
+  if (Number.isNaN(st.logdet)) return -Infinity;
+  binLogs(st, bins, tmp);
+  return -0.5 * (st.logdet + st.q0) + logSumExp(tmp, bins.nb) - Math.log(bins.nb);
+}
+
+/** One draw of the shift given the data: pick a bin by its marginal weight, then draw from that bin's tilted Gaussian. */
+function sampleShift(st: ShiftStats, bins: ShiftBins, tmp: Float64Array, rng: Rng): number {
+  binLogs(st, bins, tmp);
+  const l = logSumExp(tmp, bins.nb);
+  const u = rng.uniform();
+  let run = 0, pickB = bins.nb - 1;
+  for (let b = 0; b < bins.nb; b++) { run += Math.exp(tmp[b] - l); if (u <= run) { pickB = b; break; } }
+  const m = bins.mean[pickB], v = bins.vari[pickB], d = 1 + st.cur * v;
+  return (m + v * st.lin) / d + Math.sqrt(v / d) * rng.normal();
+}
+
 /**
  * One posterior draw of the final log-ratio of the remaining votes in every unit, by Matheron's rule. `out` receives q_c.
  * Must follow `factorize` for the same (draw, scenario).
@@ -366,6 +455,8 @@ function samplePosterior(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: 
   if (cx.hasZeta) for (let g = 0; g < G; g++) zeta[g] = cx.sdZeta * rng.normal();
   const gammaStar = cx.hasGamma ? cx.sdGamma * rng.normal() : 0;
   const deltaStar = cx.hasDelta ? cx.sdDelta * rng.normal() : 0;
+  const gapStar = cx.gapCol >= 0 ? Math.sqrt(cx.rho) * sigmaG * rng.normal() : 0;
+  const sigmaInd = sigmaG * Math.sqrt(1 - cx.rho);
   const zt = new Float64Array(n);
   let zbar = 0;
   for (let c = 0; c < n; c++) { zt[c] = cx.sdEps * rng.normal(); zbar += w[c] * zt[c]; }
@@ -377,15 +468,16 @@ function samplePosterior(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: 
 
   const deltaConst = deltaFixed === null ? cx.deltaMean : deltaFixed;
   const gammaPost = { value: gammaStar }, deltaPost = { value: deltaStar }, zetaPost = Float64Array.from(zeta);
+  let gapPost = gapStar;
   let epsU1 = 0, epsU2 = 0;
   if (nS > 0) {
     const { r, u, ys } = cx.scratch;
     for (let s = 0; s < nS; s++) {
       const c = rep[s];
-      gStar[s] = sigmaG * rng.normal();
+      gStar[s] = sigmaInd * rng.normal();
       const noise = Math.sqrt(kappa[s] * cx.ve[s]) * rng.normal();
       const zetaTerm = cx.hasZeta ? zeta[region[c]] - zeta0 : 0;
-      ys[s] = zetaTerm + gammaStar * cx.z[c] + deltaStar + eps[c] - (1 - pi[s]) * gStar[s] + noise;
+      ys[s] = zetaTerm + gammaStar * cx.z[c] + deltaStar + eps[c] - (1 - pi[s]) * (gStar[s] + gapStar) + noise;
       r[s] = cx.y[s] - cx.eta0[c] - cx.alpha - deltaConst - ys[s];
     }
     applyInverse(cx, r, u);
@@ -402,6 +494,11 @@ function samplePosterior(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: 
     if (cx.hasZeta) for (let g = 0; g < G; g++) zetaPost[g] = zeta[g] + cx.sdZeta ** 2 * (regionU[g] - regionW[g] * sumU);
     if (cx.hasGamma) gammaPost.value = gammaStar + cx.sdGamma ** 2 * sumZU;
     if (cx.hasDelta) deltaPost.value = deltaStar + cx.sdDelta ** 2 * sumU;
+    if (cx.gapCol >= 0) {
+      let bu = 0;
+      for (let s = 0; s < nS; s++) bu += -(1 - pi[s]) * u[s];
+      gapPost = gapStar + cx.rho * sigmaG * sigmaG * bu;
+    }
     // ε and g at the reporting units
     const e22 = cx.sdEps * cx.sdEps;
     for (let c = 0; c < n; c++) eps[c] += e22 * (-w[c] * epsU1 - epsU2 + cx.wSum2 * epsU1);
@@ -409,7 +506,7 @@ function samplePosterior(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: 
       const c = rep[s];
       eps[c] += e22 * u[s];
       // Cov(g, y) = −(1−π)σ_g²: the counted votes sit at θ − (1−π)g
-      gStar[s] -= (1 - pi[s]) * sigmaG * sigmaG * u[s];
+      gStar[s] -= (1 - pi[s]) * sigmaInd * sigmaInd * u[s];
     }
   }
   let zetaPost0 = 0;
@@ -420,7 +517,7 @@ function samplePosterior(cx: Contrast, pi: Float64Array, sigmaG: number, kappa: 
     const zetaTerm = cx.hasZeta ? zetaPost[region[c]] - zetaPost0 : 0;
     const theta = cx.eta0[c] + cx.alpha + deltaConst + deltaPost.value + zetaTerm + gammaPost.value * cx.z[c] + eps[c];
     // the remaining votes sit at θ + π·g; a unit that has reported nothing has π = 0
-    out[c] = theta + piAt[c] * gAt[c];
+    out[c] = theta + piAt[c] * (gAt[c] + gapPost);
   }
 }
 
@@ -468,6 +565,9 @@ export function runPreference(input: PreferenceInput, visit: (d: PreferenceDraw)
   let contrasts = build();
   const nS = contrasts[0].nS;
   const Omega = input.scenarios.length;
+  const marg = (input.shiftMode ?? "WEIGHTED") === "MARGINALISED" && shifts[0].kind === "DRAWS";
+  const bins = marg ? makeBins((shifts[0] as { values: Float64Array }).values.subarray(0, J)) : null;
+  const binTmp = new Float64Array(bins ? bins.nb : 1);
   const piAt = (cx: Contrast, j: number, out: Float64Array) => { for (let s = 0; s < cx.nS; s++) { const c = cx.rep[s]; const t = inv.total[c][j]; out[s] = t > 0 ? Math.min(1, inv.reported[c] / t) : 1; } };
 
   // pass 1: per inventory draw, the log marginal likelihood under each scenario
@@ -483,7 +583,7 @@ export function runPreference(input: PreferenceInput, visit: (d: PreferenceDraw)
         contrasts.forEach((cx, i) => piAt(cx, j, pis[i]));
         for (let o = 0; o < Omega; o++) {
           let sum = 0;
-          contrasts.forEach((cx, i) => { sum += logLik(cx, pis[i], sigmaG[o], ks[i], cx.deltaValues ? cx.deltaValues[j] : cx.deltaMean); });
+          contrasts.forEach((cx, i) => { sum += marg && i === 0 ? logLikMarginal(cx, pis[i], sigmaG[o], ks[i], bins as ShiftBins, binTmp) : logLik(cx, pis[i], sigmaG[o], ks[i], cx.deltaValues ? cx.deltaValues[j] : cx.deltaMean); });
           ll[j * Omega + o] = sum;
         }
       }
@@ -502,7 +602,7 @@ export function runPreference(input: PreferenceInput, visit: (d: PreferenceDraw)
   pass1();
   const essFraction0 = ess / J;
   // Only a draws-based shift can lose its weights; a Gaussian shift is already marginalised exactly.
-  if (nS > 0 && shifts[0].kind === "DRAWS" && essFraction0 < hp.essFloor) {
+  if (nS > 0 && shifts[0].kind === "DRAWS" && !marg && essFraction0 < hp.essFloor) {
     shifts[0] = gaussianOf((shifts[0] as { values: Float64Array }).values);
     flags.push("STATE_SHIFT_DRAWS_REPLACED_BY_GAUSSIAN");
     contrasts = build();
@@ -554,6 +654,11 @@ export function runPreference(input: PreferenceInput, visit: (d: PreferenceDraw)
     for (let a = 0; a < Omega; a++) { run += pj[a]; if (u <= run) { o = a; break; } }
     contrasts.forEach((cx, i) => {
       piAt(cx, j, pis[i]);
+      if (marg && i === 0 && cx.nS > 0) {
+        const st = shiftStats(cx, pis[i], sigmaG[o], ks[i]);
+        samplePosterior(cx, pis[i], sigmaG[o], ks[i], sampleShift(st, bins as ShiftBins, binTmp, rng), rng, q[i]);
+        return;
+      }
       if (cx.nS > 0) factorize(cx, pis[i], sigmaG[o], ks[i]);
       samplePosterior(cx, pis[i], sigmaG[o], ks[i], cx.deltaValues ? cx.deltaValues[j] : null, rng, q[i]);
     });
@@ -565,6 +670,7 @@ export function runPreference(input: PreferenceInput, visit: (d: PreferenceDraw)
     model: PREFERENCE_MODEL_VERSION, raceId: input.raceId, draws: J, stage, reportedShare, reportingUnits: nS, candidates: K,
     scenarios: input.scenarios.map((s, o) => ({ id: s.id, column: s.column, sigmaGap: sigmaG[o], prior: prior[o], posterior: scenPost[o] })),
     essFraction, flags, hyperId: hyper.hyperId, seed: input.seed,
+    shiftMode: marg ? "MARGINALISED" : shifts[0].kind === "GAUSSIAN" ? "GAUSSIAN" : nS > 0 ? "WEIGHTED" : "NONE",
   };
 }
 

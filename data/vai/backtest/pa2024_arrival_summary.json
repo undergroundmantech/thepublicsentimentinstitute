@@ -1,0 +1,421 @@
+{
+ "schema": "vai-observed-summary/1",
+ "class": "HISTORICAL_OBSERVED_CAPTURE_TIME",
+ "source": "data/vai/backtest/pa2024_president_observed.json",
+ "note": "Observation times are archive crawl times. Distinct counted totals only. No final truth is held, so no value here is a forecast error.",
+ "distinctCaptures": 47,
+ "firstCapture": {
+  "capturedAt": "20241106011438",
+  "countiesReporting": 4,
+  "votes": 237225,
+  "twoPartyMarginDemMinusRep": 0.419,
+  "demMailShare": 1.0,
+  "repMailShare": 1.0
+ },
+ "lastCapture": {
+  "capturedAt": "20241106073727",
+  "countiesReporting": 67,
+  "votes": 6638911,
+  "twoPartyMarginDemMinusRep": -0.0287,
+  "demMailShare": 0.345,
+  "repMailShare": 0.172
+ },
+ "maxDemLeadCapture": {
+  "capturedAt": "20241106014718",
+  "countiesReporting": 18,
+  "votes": 743420,
+  "twoPartyMarginDemMinusRep": 0.4214,
+  "demMailShare": 0.989,
+  "repMailShare": 0.954
+ },
+ "firstDemNegativeCapture": {
+  "capturedAt": "20241106030530",
+  "countiesReporting": 54,
+  "votes": 2858209,
+  "twoPartyMarginDemMinusRep": -0.0119,
+  "demMailShare": 0.531,
+  "repMailShare": 0.256
+ },
+ "marginRangeDemMinusRep": [
+  -0.0351,
+  0.4214
+ ],
+ "series": [
+  {
+   "capturedAt": "20241106011438",
+   "countiesReporting": 4,
+   "votes": 237225,
+   "twoPartyMarginDemMinusRep": 0.419,
+   "demMailShare": 1.0,
+   "repMailShare": 1.0
+  },
+  {
+   "capturedAt": "20241106012006",
+   "countiesReporting": 7,
+   "votes": 335787,
+   "twoPartyMarginDemMinusRep": 0.3687,
+   "demMailShare": 1.0,
+   "repMailShare": 1.0
+  },
+  {
+   "capturedAt": "20241106012942",
+   "countiesReporting": 10,
+   "votes": 389559,
+   "twoPartyMarginDemMinusRep": 0.3839,
+   "demMailShare": 0.999,
+   "repMailShare": 0.997
+  },
+  {
+   "capturedAt": "20241106013900",
+   "countiesReporting": 12,
+   "votes": 525327,
+   "twoPartyMarginDemMinusRep": 0.4046,
+   "demMailShare": 0.992,
+   "repMailShare": 0.984
+  },
+  {
+   "capturedAt": "20241106014053",
+   "countiesReporting": 14,
+   "votes": 550999,
+   "twoPartyMarginDemMinusRep": 0.3841,
+   "demMailShare": 0.99,
+   "repMailShare": 0.975
+  },
+  {
+   "capturedAt": "20241106014718",
+   "countiesReporting": 18,
+   "votes": 743420,
+   "twoPartyMarginDemMinusRep": 0.4214,
+   "demMailShare": 0.989,
+   "repMailShare": 0.954
+  },
+  {
+   "capturedAt": "20241106015109",
+   "countiesReporting": 20,
+   "votes": 777224,
+   "twoPartyMarginDemMinusRep": 0.4012,
+   "demMailShare": 0.982,
+   "repMailShare": 0.918
+  },
+  {
+   "capturedAt": "20241106015657",
+   "countiesReporting": 25,
+   "votes": 874597,
+   "twoPartyMarginDemMinusRep": 0.3737,
+   "demMailShare": 0.969,
+   "repMailShare": 0.889
+  },
+  {
+   "capturedAt": "20241106020016",
+   "countiesReporting": 26,
+   "votes": 946642,
+   "twoPartyMarginDemMinusRep": 0.3364,
+   "demMailShare": 0.92,
+   "repMailShare": 0.775
+  },
+  {
+   "capturedAt": "20241106020508",
+   "countiesReporting": 32,
+   "votes": 1040039,
+   "twoPartyMarginDemMinusRep": 0.2745,
+   "demMailShare": 0.888,
+   "repMailShare": 0.664
+  },
+  {
+   "capturedAt": "20241106021209",
+   "countiesReporting": 33,
+   "votes": 1183055,
+   "twoPartyMarginDemMinusRep": 0.2366,
+   "demMailShare": 0.829,
+   "repMailShare": 0.576
+  },
+  {
+   "capturedAt": "20241106021539",
+   "countiesReporting": 34,
+   "votes": 1236666,
+   "twoPartyMarginDemMinusRep": 0.2122,
+   "demMailShare": 0.82,
+   "repMailShare": 0.55
+  },
+  {
+   "capturedAt": "20241106022329",
+   "countiesReporting": 38,
+   "votes": 1418486,
+   "twoPartyMarginDemMinusRep": 0.1888,
+   "demMailShare": 0.782,
+   "repMailShare": 0.512
+  },
+  {
+   "capturedAt": "20241106022717",
+   "countiesReporting": 41,
+   "votes": 1600419,
+   "twoPartyMarginDemMinusRep": 0.1529,
+   "demMailShare": 0.744,
+   "repMailShare": 0.472
+  },
+  {
+   "capturedAt": "20241106023310",
+   "countiesReporting": 43,
+   "votes": 1725985,
+   "twoPartyMarginDemMinusRep": 0.1349,
+   "demMailShare": 0.702,
+   "repMailShare": 0.431
+  },
+  {
+   "capturedAt": "20241106023600",
+   "countiesReporting": 46,
+   "votes": 1840419,
+   "twoPartyMarginDemMinusRep": 0.0973,
+   "demMailShare": 0.684,
+   "repMailShare": 0.392
+  },
+  {
+   "capturedAt": "20241106024222",
+   "countiesReporting": 46,
+   "votes": 2027518,
+   "twoPartyMarginDemMinusRep": 0.0671,
+   "demMailShare": 0.645,
+   "repMailShare": 0.351
+  },
+  {
+   "capturedAt": "20241106024517",
+   "countiesReporting": 48,
+   "votes": 2082785,
+   "twoPartyMarginDemMinusRep": 0.0545,
+   "demMailShare": 0.638,
+   "repMailShare": 0.34
+  },
+  {
+   "capturedAt": "20241106025209",
+   "countiesReporting": 52,
+   "votes": 2358163,
+   "twoPartyMarginDemMinusRep": 0.036,
+   "demMailShare": 0.594,
+   "repMailShare": 0.313
+  },
+  {
+   "capturedAt": "20241106030038",
+   "countiesReporting": 52,
+   "votes": 2782397,
+   "twoPartyMarginDemMinusRep": 0.0001,
+   "demMailShare": 0.537,
+   "repMailShare": 0.265
+  },
+  {
+   "capturedAt": "20241106030530",
+   "countiesReporting": 54,
+   "votes": 2858209,
+   "twoPartyMarginDemMinusRep": -0.0119,
+   "demMailShare": 0.531,
+   "repMailShare": 0.256
+  },
+  {
+   "capturedAt": "20241106031252",
+   "countiesReporting": 56,
+   "votes": 3056607,
+   "twoPartyMarginDemMinusRep": -0.0107,
+   "demMailShare": 0.498,
+   "repMailShare": 0.241
+  },
+  {
+   "capturedAt": "20241106031552",
+   "countiesReporting": 58,
+   "votes": 3260012,
+   "twoPartyMarginDemMinusRep": -0.0065,
+   "demMailShare": 0.483,
+   "repMailShare": 0.237
+  },
+  {
+   "capturedAt": "20241106032410",
+   "countiesReporting": 60,
+   "votes": 3553708,
+   "twoPartyMarginDemMinusRep": -0.0203,
+   "demMailShare": 0.475,
+   "repMailShare": 0.232
+  },
+  {
+   "capturedAt": "20241106034522",
+   "countiesReporting": 62,
+   "votes": 4009253,
+   "twoPartyMarginDemMinusRep": -0.0219,
+   "demMailShare": 0.431,
+   "repMailShare": 0.211
+  },
+  {
+   "capturedAt": "20241106035352",
+   "countiesReporting": 64,
+   "votes": 4381691,
+   "twoPartyMarginDemMinusRep": -0.0231,
+   "demMailShare": 0.406,
+   "repMailShare": 0.202
+  },
+  {
+   "capturedAt": "20241106040009",
+   "countiesReporting": 64,
+   "votes": 4529645,
+   "twoPartyMarginDemMinusRep": -0.0233,
+   "demMailShare": 0.402,
+   "repMailShare": 0.199
+  },
+  {
+   "capturedAt": "20241106040843",
+   "countiesReporting": 64,
+   "votes": 4669514,
+   "twoPartyMarginDemMinusRep": -0.0335,
+   "demMailShare": 0.394,
+   "repMailShare": 0.192
+  },
+  {
+   "capturedAt": "20241106042110",
+   "countiesReporting": 65,
+   "votes": 5075211,
+   "twoPartyMarginDemMinusRep": -0.0277,
+   "demMailShare": 0.371,
+   "repMailShare": 0.186
+  },
+  {
+   "capturedAt": "20241106044424",
+   "countiesReporting": 65,
+   "votes": 5272985,
+   "twoPartyMarginDemMinusRep": -0.0335,
+   "demMailShare": 0.361,
+   "repMailShare": 0.179
+  },
+  {
+   "capturedAt": "20241106045216",
+   "countiesReporting": 65,
+   "votes": 5347406,
+   "twoPartyMarginDemMinusRep": -0.0351,
+   "demMailShare": 0.357,
+   "repMailShare": 0.176
+  },
+  {
+   "capturedAt": "20241106050241",
+   "countiesReporting": 65,
+   "votes": 5462546,
+   "twoPartyMarginDemMinusRep": -0.0341,
+   "demMailShare": 0.351,
+   "repMailShare": 0.173
+  },
+  {
+   "capturedAt": "20241106051222",
+   "countiesReporting": 65,
+   "votes": 5622357,
+   "twoPartyMarginDemMinusRep": -0.025,
+   "demMailShare": 0.358,
+   "repMailShare": 0.176
+  },
+  {
+   "capturedAt": "20241106051644",
+   "countiesReporting": 65,
+   "votes": 5654481,
+   "twoPartyMarginDemMinusRep": -0.0249,
+   "demMailShare": 0.357,
+   "repMailShare": 0.175
+  },
+  {
+   "capturedAt": "20241106052630",
+   "countiesReporting": 65,
+   "votes": 5697543,
+   "twoPartyMarginDemMinusRep": -0.026,
+   "demMailShare": 0.356,
+   "repMailShare": 0.176
+  },
+  {
+   "capturedAt": "20241106053536",
+   "countiesReporting": 65,
+   "votes": 5757105,
+   "twoPartyMarginDemMinusRep": -0.0252,
+   "demMailShare": 0.358,
+   "repMailShare": 0.178
+  },
+  {
+   "capturedAt": "20241106055839",
+   "countiesReporting": 65,
+   "votes": 6072929,
+   "twoPartyMarginDemMinusRep": -0.0345,
+   "demMailShare": 0.351,
+   "repMailShare": 0.173
+  },
+  {
+   "capturedAt": "20241106060028",
+   "countiesReporting": 65,
+   "votes": 6094692,
+   "twoPartyMarginDemMinusRep": -0.0346,
+   "demMailShare": 0.351,
+   "repMailShare": 0.173
+  },
+  {
+   "capturedAt": "20241106061327",
+   "countiesReporting": 66,
+   "votes": 6444655,
+   "twoPartyMarginDemMinusRep": -0.0341,
+   "demMailShare": 0.347,
+   "repMailShare": 0.171
+  },
+  {
+   "capturedAt": "20241106062620",
+   "countiesReporting": 66,
+   "votes": 6465916,
+   "twoPartyMarginDemMinusRep": -0.0335,
+   "demMailShare": 0.349,
+   "repMailShare": 0.173
+  },
+  {
+   "capturedAt": "20241106063311",
+   "countiesReporting": 66,
+   "votes": 6516983,
+   "twoPartyMarginDemMinusRep": -0.0278,
+   "demMailShare": 0.345,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106063642",
+   "countiesReporting": 67,
+   "votes": 6590763,
+   "twoPartyMarginDemMinusRep": -0.0293,
+   "demMailShare": 0.344,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106064604",
+   "countiesReporting": 67,
+   "votes": 6607382,
+   "twoPartyMarginDemMinusRep": -0.0295,
+   "demMailShare": 0.344,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106065802",
+   "countiesReporting": 67,
+   "votes": 6613448,
+   "twoPartyMarginDemMinusRep": -0.0288,
+   "demMailShare": 0.345,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106070123",
+   "countiesReporting": 67,
+   "votes": 6630206,
+   "twoPartyMarginDemMinusRep": -0.0288,
+   "demMailShare": 0.345,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106070610",
+   "countiesReporting": 67,
+   "votes": 6637508,
+   "twoPartyMarginDemMinusRep": -0.0287,
+   "demMailShare": 0.345,
+   "repMailShare": 0.172
+  },
+  {
+   "capturedAt": "20241106073727",
+   "countiesReporting": 67,
+   "votes": 6638911,
+   "twoPartyMarginDemMinusRep": -0.0287,
+   "demMailShare": 0.345,
+   "repMailShare": 0.172
+  }
+ ]
+}

@@ -43,6 +43,7 @@ export interface RaceSetup {
   scenarios: Scenario[];
   receipt?: InventoryInput["receipt"];
   anchorOffset?: number[];
+  shiftMode?: "WEIGHTED" | "MARGINALISED";
   inventoryUnits?: (u: InventoryUnit) => InventoryUnit;
   statewideOfficial?: InventoryInput["statewideOfficial"];
 }
@@ -73,7 +74,7 @@ export function simulate(s: RaceSetup): Simulated {
   const countedA = keys.reduce((t, k) => t + (s.counted?.[k]?.[0] ?? 0), 0);
   const countedB = keys.reduce((t, k) => t + (s.counted?.[k]?.[1] ?? 0), 0);
   const countedAll = inventory.summary.reported;
-  const result = runPreference({ raceId: s.raceId, units: pref, inventory, stateShift: [s.shift], scenarios: s.scenarios, anchorOffset: s.anchorOffset, hyper: s.hyper, seed: s.seed }, (d) => {
+  const result = runPreference({ raceId: s.raceId, units: pref, inventory, stateShift: [s.shift], scenarios: s.scenarios, anchorOffset: s.anchorOffset, shiftMode: s.shiftMode, hyper: s.hyper, seed: s.seed }, (d) => {
     let vb = countedB, va = countedA, tot = countedAll;
     for (let c = 0; c < keys.length; c++) {
       const r = d.remaining[c];
