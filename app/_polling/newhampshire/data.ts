@@ -7,7 +7,7 @@ export const RAW_POLLS: Poll[] = [
 { pollster: "University of New Hampshire", endDate: "2024-11-02", sampleSize: 2814, sampleType: "LV", results: { Harris: 51, Trump: 46 } },
 { pollster: "Saint Anselm College", endDate: "2024-10-29", sampleSize: 2791, sampleType: "LV", results: { Harris: 51, Trump: 46 } },
 
-{ pollster: "Rasmussen Reports", endDate: "2024-10-28", sampleSize: 901, sampleType: "LV", results: { Harris: 48, Trump: 47 } },
+{ pollster: "Rasmussen Reports (R)", endDate: "2024-10-28", sampleSize: 901, sampleType: "LV", results: { Harris: 48, Trump: 47 } },
 
 { pollster: "Praecones Analytica/NHJournal", endDate: "2024-10-26", sampleSize: 622, sampleType: "RV", results: { Harris: 50, Trump: 50 } },
 

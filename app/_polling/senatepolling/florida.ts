@@ -2,7 +2,7 @@
 // Florida — 2026 U.S. Senate: Angie Nixon (D) vs. Ashley Moody (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-27.
+// ballot were dropped. Newest poll: 2026-10-29.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -57,6 +57,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 515, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 51.0, "Other": 3.0, "Undecided": 4.0}},
     {"raceId": "FL-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 813, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.0, "Ashley Moody (R)": 50.0, "Undecided": 6.0}},
     {"raceId": "FL-SEN-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 916, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.7, "Ashley Moody (R)": 49.0, "Other": 2.6, "Undecided": 3.7}},
-    {"raceId": "FL-SEN-2026", "pollster": "Workbench Strategy for the Nixon campaign (D)", "startDate": "2026-10-18", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Angie Nixon (D)": 47.0, "Ashley Moody (R)": 49.0, "Undecided": 4.0}}
+    {"raceId": "FL-SEN-2026", "pollster": "Workbench Strategy for the Nixon campaign (D)", "startDate": "2026-10-18", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Angie Nixon (D)": 47.0, "Ashley Moody (R)": 49.0, "Undecided": 4.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 1200, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 49.0, "Other": 2.0, "Undecided": 6.0}}
   ],
 };

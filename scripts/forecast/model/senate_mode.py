@@ -1094,7 +1094,7 @@ EXTRA_POLLS = {
            dict(source="CNN/SSRS", dates="September 29-October 5, 2026", end="2026-10-05", n=760, pop="LV", D=49, R=43, O=0, U=8),   # Oct 8 morning sweep, no third party or undecided published
            dict(source="YouGov", dates="September 18-30, 2026", end="2026-09-30", n=3780, pop="LV", D=49, R=45, O=2, U=4),   # Oct 6 2026 sweep, 3,780 likely voters
            dict(source="New York Times/Siena", dates="September 22-October 1, 2026", end="2026-10-01", n=616, pop="LV", D=49, R=46, O=0, U=5),   # Oct 3 sweep; n and dates from the Oct 3 release
-           dict(source="Rasmussen Reports", dates="September 22-23, 2026", end="2026-09-23", n=1115, pop="LV", D=46, R=43, O=5, U=7),   # Oct 4 sweep
+           dict(source="Rasmussen Reports (R)", dates="September 22-23, 2026", end="2026-09-23", n=1115, pop="LV", D=46, R=43, O=5, U=7),   # Oct 4 sweep
            dict(source="Quantus Insights", dates="September 21-23, 2026", end="2026-09-23", n=695, pop="LV", D=47.3, R=46.8, O=3.5, U=2.4),   # Oct 4 sweep, full ballot with leaners
            dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
            dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13),
@@ -1111,7 +1111,7 @@ EXTRA_POLLS = {
            dict(source="InsiderAdvantage", dates="September 28-29, 2026", end="2026-09-29", n=1200, pop="LV", D=44, R=43, O=6, U=7)],
     # the governor ballot from the same Big Data Poll survey: Ramaswamy 47.9, Acton 46.8
     "OHG": [dict(source="Big Data Poll", dates="September 26-27, 2026", end="2026-09-27", n=682, pop="LV", D=46.8, R=47.9, O=0, U=5.3)],
-    "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
+    "SC": [dict(source="Rasmussen Reports (R)", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
 }
 
 # Oct 21 2026: pollsters removed from every race at the user's request, from every source: the csv files, the docx

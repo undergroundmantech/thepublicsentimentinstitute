@@ -46,7 +46,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Fox News", endDate: "2026-10-12", sampleSize: 1202, sampleType: "RV", results: { Democrats: 54, Republicans: 45 } },   // Beacon Research and Shaw & Company, Oct 9 to 12
   { pollster: "NBC News/SurveyMonkey", endDate: "2026-10-12", sampleSize: 0, sampleType: "RV", results: { Democrats: 55, Republicans: 45 } },   // Decision Desk, Sep 28 to Oct 12; RV count not published
   { pollster: "ABC/Washington Post/Ipsos", endDate: "2026-10-13", sampleSize: 2032, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },   // Oct 9 to 13, registered voters
-  { pollster: "Rasmussen Reports", endDate: "2026-10-14", sampleSize: 1789, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },   // Oct 8 to 14
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-14", sampleSize: 1789, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },   // Oct 8 to 14
   { pollster: "RMG Research", endDate: "2026-10-14", sampleSize: 2000, sampleType: "RV", results: { Democrats: 51, Republicans: 43 } },   // Napolitan News, Oct 13 to 14, with leaners
   { pollster: "ActiVote", endDate: "2026-10-14", sampleSize: 1000, sampleType: "LV", results: { Democrats: 53.3, Republicans: 46.7 } },   // Oct 4 to 14
   { pollster: "Siena/NYT", endDate: "2026-10-19", sampleSize: 3494, sampleType: "LV", results: { Democrats: 52, Republicans: 41 } },   // Oct 12 to 19, numbers via Newsweek
@@ -69,7 +69,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1003, sampleType: "LV", results: { Democrats: 53, Republicans: 38 } },
   { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 0, sampleType: "LV", results: { Democrats: 51, Republicans: 49 } },   // likely midterm voters; 2,200 registered voters split 50 to 50
   { pollster: "Quinnipiac", endDate: "2026-09-27", sampleSize: 1032, sampleType: "RV", results: { Democrats: 51, Republicans: 39 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-09-23", sampleSize: 1819, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-23", sampleSize: 1819, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },
   { pollster: "Wall Street Journal", endDate: "2026-09-21", sampleSize: 1500, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },
   { pollster: "ActiVote", endDate: "2026-09-21", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52.8, Republicans: 47.2 } },
   // ── RCP feed added Sep 25, 2026 (through the Sep 21–22 Emerson wave) ──
@@ -80,12 +80,12 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Reuters/Ipsos", endDate: "2026-09-20", sampleSize: 979, sampleType: "RV", results: { Democrats: 43, Republicans: 35 } },
   { pollster: "Quantus Insights", endDate: "2026-09-18", sampleSize: 1389, sampleType: "LV", results: { Democrats: 50, Republicans: 42 } },
   { pollster: "CNN", endDate: "2026-09-17", sampleSize: 867, sampleType: "RV", results: { Democrats: 49, Republicans: 41 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-09-16", sampleSize: 1746, sampleType: "LV", results: { Democrats: 49, Republicans: 41 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-16", sampleSize: 1746, sampleType: "LV", results: { Democrats: 49, Republicans: 41 } },
   { pollster: "NPR/PBS/Marist", endDate: "2026-09-15", sampleSize: 1280, sampleType: "RV", results: { Democrats: 53, Republicans: 41 } },
   { pollster: "NBC News", endDate: "2026-09-15", sampleSize: 1000, sampleType: "RV", results: { Democrats: 50, Republicans: 45 } },
   { pollster: "RMG Research**", endDate: "2026-09-15", sampleSize: 2000, sampleType: "LV", results: { Democrats: 52, Republicans: 46 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-09-09", sampleSize: 1905, sampleType: "LV", results: { Democrats: 47, Republicans: 42 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-08-27", sampleSize: 2231, sampleType: "LV", results: { Democrats: 41, Republicans: 36 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-09", sampleSize: 1905, sampleType: "LV", results: { Democrats: 47, Republicans: 42 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-08-27", sampleSize: 2231, sampleType: "LV", results: { Democrats: 41, Republicans: 36 } },
   { pollster: "Economist/YouGov", endDate: "2026-08-24", sampleSize: 1379, sampleType: "RV", results: { Democrats: 46, Republicans: 40 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-08-24", sampleSize: 951, sampleType: "RV", results: { Democrats: 41, Republicans: 35 } },
   // ── broad-feed polls added Sep 23, 2026 ──

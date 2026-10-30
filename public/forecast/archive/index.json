@@ -655,23 +655,23 @@
    "n_sims": 2000,
    "chambers": {
     "senate": {
-     "d_control": 82.7,
+     "d_control": 83.1,
      "d_seats_median": 54.0,
      "p10": 49.0,
      "p90": 58.0,
-     "d_control_without_osborn": 79.2
+     "d_control_without_osborn": 79.6
     },
     "governors": {
-     "d_majority": 84.6,
+     "d_majority": 85.0,
      "d_median": 28.0,
      "p10": 25.0,
      "p90": 32.0
     },
     "house": {
-     "d_majority": 95.5,
-     "d_seats_median": 248.0,
-     "p10": 223.0,
-     "p90": 278.0,
+     "d_majority": 95.9,
+     "d_seats_median": 247.0,
+     "p10": 224.0,
+     "p90": 279.0,
      "n_sims": 2000
     }
    }

@@ -398,7 +398,8 @@ const RAW_AGGREGATES: AggregateDef[] = [
 ];
 
 /* -------------------- removed firms and Republican lean -------------------- */
-// Oct 22 2026, set by the publisher. ActiVote and Rasmussen Reports are dropped from every average.
+// Oct 22 2026, set by the publisher. ActiVote is dropped from every average. Oct 30: Rasmussen Reports is back, as a Republican
+// internal, and every campaign or party internal, tagged (R) or (D), is corrected by its side's measured lean.
 // Trafalgar and InsiderAdvantage are labelled Republican leaning, and their lean is measured, not assumed:
 // each of their polls is set against the polls other firms ended within three weeks of it in the same race,
 // as Republican minus Democrat margin, the gaps are pooled across every race, shrunk toward zero by
