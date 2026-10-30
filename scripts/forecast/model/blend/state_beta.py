@@ -1,10 +1,16 @@
-"""State response to the national environment, Oct 29 2026, at the user's request.
+"""Version 2, Oct 29 2026 evening, at the user's request: the state MRP is rebuilt on the MRP completed national dataset
+(mrp_states_v2.py) against a composite partisan baseline, 2024 lean 0.5, 2020 lean 0.25 and the 2022 midterm 0.25, and a
+demographic elasticity from the database's group shifts joins as a fourth term. All three data terms are now on the
+logit scale, the scale the engine applies them on. beta_demo is the composite baseline plus the demographic elasticity
+times the national shift, measured from the 2024 result; beta_mrp is the state MRP at the pooled target from the 2024
+result. Each is divided by the national logit shift from 2024 to the pooled D+11.4 target.
+Original note: State response to the national environment, Oct 29 2026, at the user's request.
 For each state: beta_hist from its 2016 to 2020 and 2020 to 2024 presidential swings against the nation's (logit, through
 the origin), beta_mrp from the Oct 28 state MRP's shift from 2024 at the D+13 national target against the national shift,
 each with a standard error, combined with a prior of 1 (sd 0.25) by precision. Writes beta.json and a county elasticity
 cache whose turnout weighted state mean equals beta, keeping each county's shape within its state."""
 import json, numpy as np, pandas as pd
-G = "/tmp/fcrun/TPSI_B/geo"; OUT = "/tmp/fcrun/blend"
+G = "/tmp/fcrun/TPSI_B/geo"; OUT = "/tmp/fcrun/blend2"
 lg = lambda p: np.log(p / (1 - p))
 def pres(y):
     if y == 2016:
@@ -21,8 +27,11 @@ def nat(y):
     s = P[y][["votes_dem", "votes_gop"]].sum(); return lg(s.votes_dem / (s.votes_dem + s.votes_gop))
 S = {y: st2(y) for y in P}; N = {y: nat(y) for y in P}
 dn = np.array([N[2020] - N[2016], N[2024] - N[2020]])
-mrp = pd.read_csv("/tmp/np1028/out/mrp/state_generic_mrp.csv").set_index("state")
-nat_shift_pts = 13.0 - (-1.41)                              # national 2024 margin -1.41 to the D+13 target
+mrp = pd.read_csv("/tmp/np1028/out/mrp_v2/state_generic_mrp.csv").set_index("state")
+T_POLL = 13.1; NAT24 = -1.41
+l2 = lambda mpts: lg(0.5 + mpts / 200.0)
+nat_shift = l2(T_POLL) - l2(NAT24)
+DEMO_SD = 0.20
 PRIOR_SD = 0.25
 out = {}
 for f2, ab in FIPS2AB.items():
@@ -31,15 +40,19 @@ for f2, ab in FIPS2AB.items():
     b_h = float((ds * dn).sum() / (dn ** 2).sum())
     res = ds - b_h * dn; se_h = float(max(0.20, np.sqrt((res ** 2).sum() / 1.0) / np.sqrt((dn ** 2).sum())))
     terms = [(1.0, PRIOR_SD), (b_h, se_h)]
-    b_m = se_m = None
+    b_m = se_m = b_d = None
     if ab in mrp.index:
-        r = mrp.loc[ab]; n = max(float(r.respondents), 1.0)
-        b_m = float((r.mrp_poll_target - r.pres_2024) / nat_shift_pts)
+        r = mrp.loc[ab]; n = max(float(r.respondents), 1.0); p24 = l2(r.pres_2024)
+        b_m = float((l2(r.mrp_poll_target) - p24) / nat_shift)
         se_pts = 1.5 * 100.0 / np.sqrt(n)                     # two party margin standard error with a 1.5 design effect
-        se_m = float(np.hypot(se_pts / nat_shift_pts, 0.15))  # plus model error in the MRP itself
+        dl = se_pts / 200.0 / max(0.05, (0.5 + r.mrp_poll_target / 200.0) * (0.5 - r.mrp_poll_target / 200.0))
+        se_m = float(np.hypot(dl / nat_shift, 0.15))          # plus model error in the MRP itself
         terms.append((b_m, se_m))
+        tgt_d = r.baseline + r.elasticity_demo * (T_POLL - NAT24)
+        b_d = float((l2(tgt_d) - p24) / nat_shift)
+        terms.append((b_d, DEMO_SD))
     w = np.array([1 / s ** 2 for _, s in terms]); b = float((np.array([v for v, _ in terms]) * w).sum() / w.sum())
-    out[ab] = dict(beta=round(b, 4), beta_hist=round(b_h, 3), se_hist=round(se_h, 3), beta_mrp=None if b_m is None else round(b_m, 3),
+    out[ab] = dict(beta=round(b, 4), beta_hist=round(b_h, 3), se_hist=round(se_h, 3), beta_demo=None if b_d is None else round(b_d, 3), beta_mrp=None if b_m is None else round(b_m, 3),
                    se_mrp=None if se_m is None else round(se_m, 3), respondents=None if ab not in mrp.index else int(mrp.loc[ab].respondents))
 json.dump(out, open(f"{OUT}/beta.json", "w"), indent=1)
 e = pd.read_csv("/tmp/pvi/nat_elasticity.csv", dtype={"f": str}).set_index("f").e
