@@ -301,7 +301,7 @@ export default function Benchmarks({ row, data, m24, m26, geo24 }: { row: EvRow;
             <div className="evb-topics" role="tablist" aria-label="Pointy explains">
               {TOPIC.map(([k, l]) => <button key={k} role="tab" aria-selected={topic === k} className={topic === k ? "on" : ""} onClick={() => setTopic(k)}>{l}</button>)}
             </div>
-            <Pointy key={topic} className="evb-pty pty-side keep" pose={t[2]} prop={t[3]} size={96} look={-1} say={say[topic]} />
+            <Pointy key={topic} className="evb-pty pty-side keep essential" pose={t[2]} prop={t[3]} size={96} look={-1} say={say[topic]} />
           </div>
 
           <div className="evb-sim">

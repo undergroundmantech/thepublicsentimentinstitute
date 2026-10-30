@@ -199,6 +199,103 @@
   --dem-dim: rgba(42,99,240,.12);
   --gop-dim: rgba(232,38,75,.12);
 }
+
+/* ---------- 2c) Semantic tokens, shared by the three appearance modes ----------
+   Modes (app/lib/theme.ts): html[data-mode] is "dark" (Pro Dark, default), "light" (Pro Light) or "themed" (Theme).
+   html[data-theme] is the colour scheme, "dark" or "light"; Theme runs on the dark scheme, so every rule written for
+   data-theme keeps working and nothing may ever select data-theme="themed".
+   Components read these names; each resolves to a section 1 token, so a mode block re-points base tokens and the
+   rest follows. Party, rating and county tokens are deliberately not here: they mean the same thing in every mode. */
+:root {
+  /* surfaces */
+  --surface-page: var(--bg);
+  --surface-raised: var(--bg2);
+  --surface-sunken: var(--bg3);
+  --surface-glass: var(--glass);
+  --surface-glass-2: var(--glass2);
+  --surface-hover: rgba(var(--line-rgb),.1);
+  --surface-masthead: rgba(var(--canvas-rgb),.72);
+  --surface-overlay: rgba(14,9,26,.98);          /* menus, popovers, dialogs */
+  --surface-tooltip: rgba(var(--bg2-rgb),.94);
+  /* text */
+  --text-strong: var(--hi);
+  --text: var(--ink);
+  --text-2: var(--ink2);
+  --text-muted: var(--mute);
+  --text-faint: var(--mute2);
+  --text-on-grad: #ffffff;
+  --text-on-gold: #1a1200;
+  /* borders */
+  --border-subtle: var(--line);
+  --border-strong: var(--line2);
+  /* accents and focus */
+  --accent-grad: var(--grad);
+  --accent-2: var(--gold);
+  --focus-ring: var(--gold);
+  /* buttons */
+  --btn-bg: var(--glass2);
+  --btn-border: var(--line2);
+  --btn-fg: var(--hi);
+  --btn-hover-bg: var(--surface-hover);
+  --btn-primary-shadow: var(--shadow-grad);
+  /* cards */
+  --card-bg: var(--glass);
+  --card-border: var(--line);
+  --card-border-hover: var(--line2);
+  --card-glow: 0 0 0 0 transparent;
+  /* tables */
+  --table-head: var(--mute);
+  --table-rule: var(--line);
+  --table-row-hover: var(--glass2);
+  --table-row-emph: rgba(var(--line-rgb),.05);
+  /* charts: grid, axis text, tooltips. Series colors come from the party and rating tokens. */
+  --chart-grid: rgba(var(--line-rgb),.07);
+  --chart-axis: var(--mute);
+  --chart-tooltip-bg: var(--surface-tooltip);
+  --chart-tooltip-border: var(--line2);
+  /* maps: geography outlines and hover; fills stay party and rating tokens */
+  --map-stroke: var(--bg);
+  --map-stroke-hover: var(--hi);
+  --map-empty: var(--rate-none);
+  /* status */
+  --status-live: var(--live);
+  --status-win: var(--win);
+  --status-warn: var(--gold);
+  /* elevation */
+  --shadow-overlay: 0 30px 70px -24px #000;
+  /* ambient brand art (orbs, grain) in the dark modes, 1 = the approved mock; Pro Light keeps its own values in opp.css */
+  --ambient: .85;
+  --grain: .5;
+}
+:root[data-theme="light"] {
+  --surface-overlay: rgba(255,255,255,.98);
+  --surface-masthead: rgba(var(--canvas-rgb),.82);
+  --shadow-overlay: 0 30px 70px -30px rgba(40,20,80,.45);
+}
+
+/* ---------- 2d) Theme mode: the expressive OnPoint look on the dark scheme ----------
+   Deeper brand-purple ground, purple-tinted hairlines, stronger orbs, a soft glow on cards. Text keeps the Pro Dark
+   values so contrast is unchanged; party and rating colors are untouched. */
+:root[data-mode="themed"] {
+  --bg: #0d0519;
+  --bg2: #17082b;
+  --bg3: #1f0c38;
+  --canvas-rgb: 13, 5, 25;
+  --bg2-rgb: 23, 8, 43;
+  --line: rgba(205,170,255,.12);
+  --line2: rgba(205,170,255,.22);
+  --glass: rgba(205,170,255,.045);
+  --glass2: rgba(205,170,255,.08);
+  --surface-overlay: rgba(25,9,46,.98);
+  --surface-masthead: rgba(13,5,25,.66);
+  --card-glow: 0 18px 60px -34px rgba(131,68,156,.75);
+  --chart-grid: rgba(205,170,255,.10);
+  --shadow-card: 0 30px 80px rgba(6,0,16,.55), inset 0 1px 0 rgba(205,170,255,.10);
+  --shadow-grad: 0 10px 34px rgba(131,68,156,.55);
+  --shadow-overlay: 0 30px 70px -24px rgba(40,0,70,.9);
+  --ambient: 1.25;
+  --grain: .6;
+}
 :root[data-theme="light"] ::selection { background: rgba(131,68,156,.28); color: var(--ink); }
 :root[data-theme="light"] .psi-badge-purple { background: rgba(124,58,237,.12); }
 :root[data-theme="light"] .psi-badge-red { background: rgba(232,38,75,.12); }
@@ -246,7 +343,7 @@ li { margin: .35em 0; }
 .mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
 .eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
 .eye.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; } }
 
@@ -315,7 +412,7 @@ a.psi-btn:hover, button.psi-btn:hover { background: rgba(var(--line-rgb),.1); tr
   color: var(--mute); padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: transparent;
 }
 .psi-table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 13px; }
-.psi-table tbody tr:hover td { background: var(--glass2); }
+.psi-table tbody tr:hover td { background: var(--table-row-hover); }
 .psi-num { text-align: right; }
 
 /* Older pages paint cards with Tailwind's white; on the dark site they are glass. */
@@ -330,11 +427,11 @@ a.psi-btn:hover, button.psi-btn:hover { background: rgba(var(--line-rgb),.1); tr
 *::-webkit-scrollbar-thumb:hover { background: rgba(var(--line-rgb),.3); }
 
 .recharts-text, .recharts-cartesian-axis-tick-value {
-  fill: var(--mute) !important; font-family: var(--font-m) !important; font-size: 10px !important;
+  fill: var(--chart-axis) !important; font-family: var(--font-m) !important; font-size: 10px !important;
 }
-.recharts-cartesian-grid line { stroke: rgba(var(--line-rgb),.07) !important; }
+.recharts-cartesian-grid line { stroke: var(--chart-grid) !important; }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: rgba(var(--bg2-rgb),.94) !important; border: 1px solid var(--line2) !important;
+  background: var(--chart-tooltip-bg) !important; border: 1px solid var(--chart-tooltip-border) !important;
   border-radius: 10px !important; color: var(--ink2) !important; backdrop-filter: blur(10px);
 }
 

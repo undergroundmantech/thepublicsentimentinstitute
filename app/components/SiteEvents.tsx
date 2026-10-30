@@ -7,11 +7,11 @@
 //     Nav click       a link in the masthead or menu, by where it goes
 //     Outbound link   a source or story on another site, by host and the section it was clicked from
 //     any element with data-ev="Event name" and optional data-ev-d='{"key":"value"}'
-//  3. Theme changed, when the visitor flips light and dark.
+//  3. Theme changed, when the visitor picks Pro Dark, Pro Light or Theme.
 import { useEffect, useState } from "react";
 import { ev, type EvData } from "@/app/lib/ev";
 import { flagJson } from "@/app/lib/flagValues";
-import { THEME_EVENT, getTheme, type Theme } from "@/app/lib/theme";
+import { THEME_EVENT, getMode, type Mode } from "@/app/lib/theme";
 
 const section = () => window.location.pathname.split("/")[1] || "home";
 
@@ -36,12 +36,12 @@ function onClick(e: MouseEvent) {
 }
 
 export default function SiteEvents() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Mode>("dark");
   const [lite, setLite] = useState({ lite: false, phone: false });
   useEffect(() => {
-    setTheme(getTheme());
+    setTheme(getMode());
     setLite({ lite: document.documentElement.hasAttribute("data-lite"), phone: document.documentElement.hasAttribute("data-phone") });
-    const onTheme = (e: Event) => { const to = (e as CustomEvent<Theme>).detail; setTheme(to); ev("Theme changed", { to }); };
+    const onTheme = (e: Event) => { const to = (e as CustomEvent<Mode>).detail; setTheme(to); ev("Theme changed", { to }); };
     window.addEventListener(THEME_EVENT, onTheme);
     document.addEventListener("click", onClick, { capture: true, passive: true });
     return () => { window.removeEventListener(THEME_EVENT, onTheme); document.removeEventListener("click", onClick, { capture: true }); };

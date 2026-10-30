@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { RATE } from "@/app/lib/opp";
 import { districtFill, MODE_LABEL, type LegisMode } from "./legisColor";
 import "./usl.css";
+import { useSiteMode } from "@/app/lib/useSiteTheme";
 
 export type USChamber = {
   id: string; st: string; chamber: "house" | "senate"; name: string; demControl: number;
@@ -43,6 +44,7 @@ export default function USLegisMap({ chambers, height, which: whichProp, bare }:
   // zoom and pan, in screen pixels: screen = view.s * k * frame + (view.x, view.y)
   const [view, setView] = useState({ s: 1, x: 0, y: 0 });
   const drag = useRef<{ x: number; y: number; vx: number; vy: number; moved: boolean } | null>(null);
+  const siteMode = useSiteMode(); // outlines read CSS tokens at draw time; redraw on a mode change
 
   useEffect(() => { getJson<USMap>("/forecast/statehouse_map_us.json").then(setMap).catch(() => {}); getJson<GeoStates>("/forecast/geo.json").then(setGeo).catch(() => {}); }, []);
   useEffect(() => {
@@ -122,7 +124,7 @@ export default function USLegisMap({ chambers, height, which: whichProp, bare }:
     for (const s of states) ctx.stroke(s.path);
     ctx.restore();
     const vis = c.getContext("2d")!; vis.setTransform(1, 0, 0, 1, 0, 0); vis.clearRect(0, 0, c.width, c.height); vis.drawImage(off, 0, 0);
-  }, [W, H, k, map, cells, states, upStates, mode, frame, view]);
+  }, [W, H, k, map, cells, states, upStates, mode, frame, view, siteMode]);
   useEffect(() => {
     const c = cv.current, off = base.current;
     if (!c || !off || !W) return;

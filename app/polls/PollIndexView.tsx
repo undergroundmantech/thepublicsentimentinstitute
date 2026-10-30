@@ -43,7 +43,7 @@ export default function PollIndexView({ sections, national, title, lede, crumb, 
         {crumb ? <><Link href="/polls">Polls</Link><span className="sep">/</span><span>{crumb}</span></> : <span>Polls</span>}
       </nav>
       <header className="pi2-hero">
-        <Pointy className="cam-hero cam-pi pty-side l" pose="think" prop="magnifier" size={120} look={1} say={<>I read every new poll in every race, twice a day.</>} />
+        <Pointy className="cam-hero cam-pi pty-side l quip" pose="think" prop="magnifier" size={120} look={1} say={<>I read every new poll in every race, twice a day.</>} />
         <div>
           <div className="eye g">Polling averages · {total} tracked · {fresh} new polls this week</div>
           <h1>{title}</h1>

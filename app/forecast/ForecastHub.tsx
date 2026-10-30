@@ -11,6 +11,7 @@ import { type DBJson, type Model, dbRaces, indSide } from "./lib";
 import { RATE, raceHref } from "@/app/lib/opp";
 import USLegisMap from "@/app/components/opp/USLegisMap";
 import ForecastNav from "@/app/components/opp/ForecastNav";
+import { useSiteMode } from "@/app/lib/useSiteTheme";
 import "./hub.css";
 
 type Lvl = "sen" | "gov" | "db" | "house" | "sl";
@@ -147,6 +148,8 @@ function GrandHemicycle({ items }: { items: Item[] }) {
   const [tip, setTip] = useState<Tip>(null);
   const prog = useRef(0);
   const router = useRouter();
+  // the canvas reads CSS tokens when it draws, so a mode change redraws it (statically, the fly-out plays once)
+  const siteMode = useSiteMode();
 
   useEffect(() => {
     if (!wrap.current) return;
@@ -201,7 +204,7 @@ function GrandHemicycle({ items }: { items: Item[] }) {
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [L, W, focus]);
+  }, [L, W, focus, siteMode]);
 
   const hit = (e: React.MouseEvent) => {
     if (!L || !cv.current) return null;
@@ -266,6 +269,7 @@ function Spectrum({ items }: { items: Item[] }) {
   const [W, setW] = useState(0);
   const [tip, setTip] = useState<Tip>(null);
   const router = useRouter();
+  const siteMode = useSiteMode(); // tokens are read at draw time; redraw on a mode change
   useEffect(() => {
     if (!wrap.current) return;
     const ro = new ResizeObserver(([e]) => setW(Math.floor(e.contentRect.width)));
@@ -345,7 +349,7 @@ function Spectrum({ items }: { items: Item[] }) {
       ctx.fill();
     }
     ctx.globalAlpha = 1;
-  }, [L, W]);
+  }, [L, W, siteMode]);
 
   const hit = (e: React.MouseEvent) => {
     if (!L || !cv.current) return null;

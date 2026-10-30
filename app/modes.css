@@ -1,0 +1,28 @@
+/* Appearance modes: the few presentation rules that depend on the mode rather than on the colour scheme.
+   html[data-mode] is "dark" (Pro Dark, default), "light" (Pro Light) or "themed" (Theme); app/lib/theme.ts keeps it in
+   step with html[data-theme]. Colour values live in globals.css (2c semantic tokens, 2d Theme block); this file only
+   turns expressive elements up or down. Never select data-theme="themed": it does not exist. */
+
+/* Pro Dark and Pro Light are data first: Pointy's page cameos belong to Theme. Only cameos marked .essential stay in every
+   mode: the 404 page, where Pointy is the page, and the early-vote benchmark tabs, where the bubbles explain the data.
+   A cameo that speaks keeps its words as a plain note (the figure goes); .quip marks character-voice lines that go with it. */
+:root:not([data-mode="themed"]) .pty-cameo:not(.essential) { display: none; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) {
+  display: block; position: static; inset: auto; transform: none; animation: none; z-index: auto; max-width: 64ch; margin: 12px 0 0; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-fig { display: none; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say { max-width: none; padding: 2px 0 2px 12px; border: 0; border-left: 2px solid var(--accent-2);
+  border-radius: 0; background: none; box-shadow: none; color: var(--text-2); font: 500 13px/1.5 var(--font-b); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say::after { display: none; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say b { color: var(--text-strong); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say .d { color: var(--dem2); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say .r { color: var(--gop2); }
+
+/* Theme: the brand turned up, on the same layout and data. */
+:root[data-mode="themed"] .opp .top {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, rgba(6,75,249,.75), rgba(131,68,156,.75) 50%, rgba(249,6,75,.75)) 1;
+}
+:root[data-mode="themed"] .opp .card,
+:root[data-mode="themed"] .psi-card { box-shadow: var(--card-glow); }
+:root[data-mode="themed"] .opp .foot { border-top: 1px solid transparent; border-image: linear-gradient(90deg, rgba(6,75,249,.5), rgba(131,68,156,.5) 50%, rgba(249,6,75,.5)) 1; }
+:root[data-mode="themed"] ::selection { background: rgba(131,68,156,.6); }

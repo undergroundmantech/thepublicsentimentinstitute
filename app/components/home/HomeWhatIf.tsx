@@ -37,7 +37,7 @@ export default function HomeWhatIf() {
   };
   return (
     <section className="hw" aria-labelledby="hw-h">
-      <Pointy className="hw-mascot pty-side" pose={joy ? "cheer" : npin ? "point" : "think"} prop={joy ? "flag" : npin ? "none" : "ballot"} size={130} look={-1} flip={!!npin && !joy} say={say} />
+      <Pointy className="hw-mascot pty-side quip" pose={joy ? "cheer" : npin ? "point" : "think"} prop={joy ? "flag" : npin ? "none" : "ballot"} size={130} look={-1} flip={!!npin && !joy} say={say} />
       <div className="hw-grid">
         <div>
           <div className="eye g">What if</div>

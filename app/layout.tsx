@@ -4,6 +4,7 @@ import "./motion.css";
 import "./chrome.css";
 import "./lite.css";
 import "./phone.css";
+import "./modes.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -77,7 +78,7 @@ export const viewport: Viewport = { themeColor: "#110019", colorScheme: "dark li
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-mode="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: LITE_INIT_SCRIPT }} />

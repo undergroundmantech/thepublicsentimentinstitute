@@ -171,7 +171,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
           <div className="mfoot">
             <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <Link className="btn" href="/contact">Contact</Link>
-            <ThemeToggle className="btn" />
+            <ThemeToggle variant="inline" />
             <LangPicker className="btn" inMenu />
           </div>
         </div>

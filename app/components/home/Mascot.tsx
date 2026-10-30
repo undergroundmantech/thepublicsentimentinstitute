@@ -113,7 +113,7 @@ export const MASCOT_CSS = "";
 // Pointy as a page cameo: the mascot plus an optional speech bubble, placed by the parent with a class.
 export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, detective, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; detective?: boolean; className?: string; flip?: boolean }) {
   return (
-    <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} aria-hidden={say ? undefined : true}>
+    <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} data-say={say ? "" : undefined} aria-hidden={say ? undefined : true}>
       {say ? <div className="pty-say">{say}</div> : null}
       <div className="pty-fig"><Mascot size={size} pose={pose} prop={prop} look={look} cap={cap} detective={detective} /></div>
     </div>
