@@ -32,10 +32,10 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Emerson College", endDate: "2024-10-31", sampleSize: 700, sampleType: "LV", results: { Harris: 48, Trump: 47 } },
 
   // ── Rasmussen Reports ─────────────────────────────────────────────────────
-  { pollster: "Rasmussen Reports", endDate: "2024-10-28", sampleSize: 767,  sampleType: "LV", results: { Harris: 47, Trump: 49 } },
-  { pollster: "Rasmussen Reports", endDate: "2024-10-14", sampleSize: 748,  sampleType: "LV", results: { Harris: 47, Trump: 49 } },
-  { pollster: "Rasmussen Reports", endDate: "2024-09-22", sampleSize: 738,  sampleType: "LV", results: { Harris: 49, Trump: 48 } },
-  { pollster: "Rasmussen Reports", endDate: "2024-08-19", sampleSize: 980,  sampleType: "LV", results: { Harris: 46, Trump: 48 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-10-28", sampleSize: 767,  sampleType: "LV", results: { Harris: 47, Trump: 49 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-10-14", sampleSize: 748,  sampleType: "LV", results: { Harris: 47, Trump: 49 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-09-22", sampleSize: 738,  sampleType: "LV", results: { Harris: 49, Trump: 48 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-08-19", sampleSize: 980,  sampleType: "LV", results: { Harris: 46, Trump: 48 } },
 
   // ── Data for Progress (D) ─────────────────────────────────────────────────
   { pollster: "Data for Progress", endDate: "2024-10-30", sampleSize: 721, sampleType: "LV", results: { Harris: 49, Trump: 47 } },

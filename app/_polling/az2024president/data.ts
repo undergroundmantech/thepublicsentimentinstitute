@@ -81,7 +81,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "HarrisX", endDate: "2024-11-05", sampleSize: 1468, sampleType: "LV", results: { Harris: 46, Trump: 49 } },
 
   // ── Rasmussen Reports ─────────────────────────────────────────────────────
-  { pollster: "Rasmussen Reports", endDate: "2024-08-17", sampleSize: 1187, sampleType: "LV", results: { Harris: 44, Trump: 45 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-08-17", sampleSize: 1187, sampleType: "LV", results: { Harris: 44, Trump: 45 } },
 
   // ── The Hill / Emerson ────────────────────────────────────────────────────
   { pollster: "The Hill/Emerson", endDate: "2024-07-23", sampleSize: 800, sampleType: "RV", results: { Harris: 40, Trump: 48 } },

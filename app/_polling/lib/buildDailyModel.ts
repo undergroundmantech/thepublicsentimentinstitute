@@ -235,9 +235,10 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "soonerpoll":                                 { grade: "Super F", weight: 0.005 },
 };
 
-// Oct 22 2026, set by the publisher: ActiVote and Rasmussen Reports are left out of every
-// average. Wedgewood Polls stays out as well.
-export const EXCLUDED_POLLSTERS = /activote|rasmussen|wedgewood/i;
+// Oct 22 2026, set by the publisher: ActiVote is left out of every average, and Wedgewood Polls stays out as well.
+// Oct 30 2026, set by the publisher: Rasmussen Reports comes back in, entered as a Republican internal, so it carries
+// the measured Republican internal correction below.
+export const EXCLUDED_POLLSTERS = /activote|wedgewood/i;
 export function isExcludedPollster(name: string): boolean { return EXCLUDED_POLLSTERS.test(name || ""); }
 
 // Oct 22 2026: Trafalgar and InsiderAdvantage are labelled Republican leaning. Their lean is
@@ -268,13 +269,19 @@ export const LEAN_FIRMS: { id: string; label: string; re: RegExp; dir: LeanDir }
   { id: "ztoa", label: "Z to A Research", re: /z\s*to\s*a\s*research/i, dir: "D" },
   { id: "mdw", label: "MDW Communications", re: /mdw\s*communications/i, dir: "D" },
   { id: "clarity", label: "Clarity Campaign Labs", re: /clarity\s*campaign/i, dir: "D" },
+  // Oct 30 2026, set by the publisher: campaign and party internals, tagged (R) or (D), get the same measured
+  // correction. All Republican internals are measured together against the nonpartisan polls of the same races, and
+  // all Democratic internals the same way, and each poll is moved back by its side's measured lean.
+  { id: "rinternal", label: "Republican internals", re: /\(R\)/, dir: "R" },
+  { id: "dinternal", label: "Democratic internals", re: /\(D\)/, dir: "D" },
 ];
 export const R_LEAN_FIRMS = LEAN_FIRMS;
 // a bipartisan release, like Fabrizio Ward with Impact Research, is not a partisan internal
 // a bipartisan release, a Democratic firm paired with a Republican one, is not moved either way
 const BIPARTISAN = /fabrizio|bipartisan|north\s*star|nsor|shaw|cygnal|\bpos\b|public\s*opinion\s*strategies/i;
 const bipartisan = (n: string) => BIPARTISAN.test(n) || (/\(D\)/.test(n) && /\(R\)/.test(n));
-export function leanFirms(name: string): string[] { const n = name || ""; return LEAN_FIRMS.filter((f) => f.re.test(n) && !(f.dir === "D" && bipartisan(n))).map((f) => f.id); }
+const INTERNAL_IDS = new Set(["rinternal", "dinternal"]);
+export function leanFirms(name: string): string[] { const n = name || ""; return LEAN_FIRMS.filter((f) => f.re.test(n) && !(f.dir === "D" && bipartisan(n)) && !(INTERNAL_IDS.has(f.id) && bipartisan(n))).map((f) => f.id); }
 export const rLeanFirms = leanFirms;
 export const leanDirOf = (id: string): LeanDir => LEAN_FIRMS.find((f) => f.id === id)?.dir ?? "R";
 

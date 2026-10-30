@@ -30,7 +30,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Morning Consult", endDate: "2026-01-12", sampleSize: 2201, sampleType: "RV", results: { Favorable: 40, Unfavorable: 46 } },
   { pollster: "Economist/YouGov", endDate: "2026-01-12", sampleSize: 1437, sampleType: "RV", results: { Favorable: 41, Unfavorable: 54 } },
   { pollster: "Cygnal", endDate: "2026-01-08", sampleSize: 1500, sampleType: "LV", results: { Favorable: 42, Unfavorable: 51 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-01-06", sampleSize: 1122, sampleType: "LV", results: { Favorable: 44, Unfavorable: 51 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-01-06", sampleSize: 1122, sampleType: "LV", results: { Favorable: 44, Unfavorable: 51 } },
   { pollster: "Morning Consult", endDate: "2026-01-04", sampleSize: 2201, sampleType: "RV", results: { Favorable: 42, Unfavorable: 44 } },
 
   // 2025 December
@@ -55,7 +55,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "RMG Research", endDate: "2025-10-01", sampleSize: 1000, sampleType: "RV", results: { Favorable: 47, Unfavorable: 47 } },
   { pollster: "Pew Research", endDate: "2025-09-28", sampleSize: 1718, sampleType: "A", results: { Favorable: 40, Unfavorable: 51 } },
   { pollster: "Marquette", endDate: "2025-09-24", sampleSize: 1043, sampleType: "A", results: { Favorable: 39, Unfavorable: 50 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-09-18", sampleSize: 1165, sampleType: "LV", results: { Favorable: 51, Unfavorable: 43 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2025-09-18", sampleSize: 1165, sampleType: "LV", results: { Favorable: 51, Unfavorable: 43 } },
   { pollster: "Atlas Intel", endDate: "2025-09-16", sampleSize: 1066, sampleType: "A", results: { Favorable: 45, Unfavorable: 52 } },
   { pollster: "Economist/YouGov", endDate: "2025-09-15", sampleSize: 1420, sampleType: "RV", results: { Favorable: 41, Unfavorable: 50 } },
   { pollster: "FOX News", endDate: "2025-09-09", sampleSize: 1004, sampleType: "RV", results: { Favorable: 41, Unfavorable: 53 } },
@@ -103,7 +103,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Wall Street Journal", endDate: "2025-04-01", sampleSize: 1500, sampleType: "RV", results: { Favorable: 43, Unfavorable: 50 } },
   { pollster: "TIPP", endDate: "2025-03-28", sampleSize: 1452, sampleType: "A", results: { Favorable: 38, Unfavorable: 37 } },
   { pollster: "Harvard-Harris", endDate: "2025-03-27", sampleSize: 2746, sampleType: "RV", results: { Favorable: 40, Unfavorable: 41 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-03-27", sampleSize: 1036, sampleType: "LV", results: { Favorable: 49, Unfavorable: 45 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2025-03-27", sampleSize: 1036, sampleType: "LV", results: { Favorable: 49, Unfavorable: 45 } },
   { pollster: "Quantus Insights", endDate: "2025-03-27", sampleSize: 1000, sampleType: "RV", results: { Favorable: 45, Unfavorable: 47 } },
   { pollster: "Economist/YouGov", endDate: "2025-03-25", sampleSize: 1440, sampleType: "RV", results: { Favorable: 45, Unfavorable: 51 } },
   { pollster: "Marquette", endDate: "2025-03-27", sampleSize: 1021, sampleType: "A", results: { Favorable: 37, Unfavorable: 50 } },
