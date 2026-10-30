@@ -166,7 +166,7 @@
   "AK": {
    "gap": -0.076,
    "vol": -0.001,
-   "nbr": 0.483,
+   "nbr": 0.482,
    "own": 0.305,
    "w": 0.221,
    "hist": null,
@@ -194,7 +194,7 @@
   "AR": {
    "gap": -0.533,
    "vol": 0.003,
-   "nbr": 0.664,
+   "nbr": 0.665,
    "own": -15.033,
    "w": 0.086,
    "hist": null,
@@ -320,7 +320,7 @@
   "IA": {
    "gap": 2.335,
    "vol": -0.008,
-   "nbr": 0.657,
+   "nbr": 0.658,
    "own": 7.83,
    "w": 0.69,
    "hist": null,
@@ -362,7 +362,7 @@
   "IN": {
    "gap": 0.438,
    "vol": -0.0,
-   "nbr": 0.579,
+   "nbr": 0.578,
    "own": 1.635,
    "w": 0.296,
    "hist": null,
@@ -372,9 +372,9 @@
    "source": "early vote"
   },
   "KS": {
-   "gap": -0.642,
+   "gap": -0.643,
    "vol": 0.0,
-   "nbr": 0.845,
+   "nbr": 0.844,
    "own": -3.069,
    "w": 0.646,
    "hist": null,
@@ -486,7 +486,7 @@
   "MO": {
    "gap": 0.302,
    "vol": -0.0,
-   "nbr": 0.564,
+   "nbr": 0.563,
    "own": 1.093,
    "w": 0.183,
    "hist": null,
@@ -512,7 +512,7 @@
   "MT": {
    "gap": 0.161,
    "vol": -0.002,
-   "nbr": 0.753,
+   "nbr": 0.754,
    "own": -0.468,
    "w": 0.309,
    "hist": null,
@@ -538,7 +538,7 @@
    "level": 0.0
   },
   "ND": {
-   "gap": 0.152,
+   "gap": 0.151,
    "vol": -0.0,
    "nbr": 0.712,
    "own": -0.399,
@@ -550,9 +550,9 @@
    "source": "early vote"
   },
   "NE": {
-   "gap": -0.129,
+   "gap": -0.13,
    "vol": 0.008,
-   "nbr": 0.974,
+   "nbr": 0.97,
    "own": -0.657,
    "w": 0.874,
    "hist": null,
@@ -718,9 +718,9 @@
    "level": 0.03
   },
   "SD": {
-   "gap": 1.854,
+   "gap": 1.855,
    "vol": -0.001,
-   "nbr": 0.88,
+   "nbr": 0.881,
    "own": 4.232,
    "w": 1.026,
    "hist": null,
@@ -856,22 +856,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.8468,
-   "dem_control": 0.8468,
-   "dem_seats": 28.37
+   "seat_change": 0.0,
+   "dem_control_before": 0.8463,
+   "dem_control": 0.8463,
+   "dem_seats": 28.36
   },
   "senate": {
    "seat_change": 0.0,
-   "dem_control_before": 0.8228,
-   "dem_control": 0.8228,
-   "dem_seats": 53.6
+   "dem_control_before": 0.8271,
+   "dem_control": 0.8271,
+   "dem_seats": 53.67
   },
   "house": {
    "seat_change": 0.0,
-   "dem_control_before": 0.9541,
-   "dem_control": 0.9541,
-   "dem_seats": 249.84
+   "dem_control_before": 0.9553,
+   "dem_control": 0.9553,
+   "dem_seats": 249.97
   }
  }
 }
