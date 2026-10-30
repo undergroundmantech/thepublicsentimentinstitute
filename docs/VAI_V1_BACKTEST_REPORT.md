@@ -137,6 +137,8 @@ Study `data/vai/experiments/near_completion_study.json` (SYNTHETIC, 100 reps, 60
 
 POWER_LEARNED is more accurate in four scenarios and fails in SYNC_STATEWIDE. LOG was adopted for robustness, not because it is best. Its known faults: it overstates remaining votes by 2 to 10% when counting is late or complete, and its 80% intervals under-cover (0.4 to 0.9). `NEAR_COMPLETION_UNVERIFIED` fired on 1,092 runs (28%). It fires when reported is at least 0.9 of expected and no completion evidence exists. These runs are DEGRADED, which is why 57 of 60 D runs at NEAR_COMPLETE and all at COMPLETE are DEGRADED.
 
+**Correction (final independent review, `docs/VAI_V1_FINAL_INDEPENDENT_REVIEW.md`).** The "2 to 10%" figure applies only to the scenarios of this study, which have homogeneous county progress. In the replay, where counties finish at different times and no completion evidence is given, the median remaining-vote estimate is about 2.1 times the truth at 90% counted and 3.2 times at 97% (row-level data in `rows.csv`). With completion evidence on the finished counties a probe gave 0.9 to 1.1 times. Treat the inventory as unreliable late in the count unless per-county completion is known.
+
 ## 7. Effective sample size behaviour
 
 Study `data/vai/experiments/ess_study.json` (SYNTHETIC, sen-SC, 24 truths × 4 seeds, 300 draws, 1,238 s).
