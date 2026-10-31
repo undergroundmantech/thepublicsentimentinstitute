@@ -26,7 +26,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Noble Predictive Insights", endDate: "2024-09-16", sampleSize: 692, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
 
   // ── Susquehanna ───────────────────────────────────────────────────────────
-  { pollster: "Susquehanna", endDate: "2024-10-31", sampleSize: 400, sampleType: "LV", results: { Harris: 44, Trump: 50 } },
+  { pollster: "Susquehanna (R)", endDate: "2024-10-31", sampleSize: 400, sampleType: "LV", results: { Harris: 44, Trump: 50 } },
 
   // ── Emerson College ───────────────────────────────────────────────────────
   { pollster: "Emerson College", endDate: "2024-10-31", sampleSize: 700, sampleType: "LV", results: { Harris: 48, Trump: 47 } },
@@ -76,7 +76,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Redfield & Wilton Strategies", endDate: "2024-08-28", sampleSize: 490,  sampleType: "LV", results: { Harris: 47, Trump: 47 } },
 
   // ── OnMessage Inc. (R) ────────────────────────────────────────────────────
-  { pollster: "OnMessage Inc.", endDate: "2024-10-22", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 50 } },
+  { pollster: "OnMessage Inc. (R)", endDate: "2024-10-22", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 50 } },
 
   // ── Wall Street Journal ───────────────────────────────────────────────────
   { pollster: "Wall Street Journal", endDate: "2024-10-08", sampleSize: 600, sampleType: "RV", results: { Harris: 43, Trump: 49 } },
@@ -92,7 +92,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Cook Political Report", endDate: "2024-08-02", sampleSize: 403, sampleType: "LV", results: { Harris: 45, Trump: 48 } },
 
   // ── Remington Research (R) ────────────────────────────────────────────────
-  { pollster: "Remington Research", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 48, Trump: 49 } },
+  { pollster: "Remington Research (R)", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 48, Trump: 49 } },
 
   // ── YouGov ────────────────────────────────────────────────────────────────
   { pollster: "YouGov", endDate: "2024-10-31", sampleSize: 773, sampleType: "LV", results: { Harris: 48, Trump: 47 } },

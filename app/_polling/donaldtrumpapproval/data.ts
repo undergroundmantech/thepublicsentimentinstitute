@@ -2,7 +2,7 @@ import { Poll } from "@/app/_polling/lib/buildDailyModel";
 
 export const GOLD_STANDARD_NAMES = [
   // Oct 22 2026, set by the publisher: the gold standard pollsters, weighted up in every average.
-  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Cygnal", "Quantus",
+  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Quantus",
   "New York Times", "NY Times", "NYT", "Wall Street Journal", "WSJ",
 ];
 
@@ -21,7 +21,7 @@ export const RAW_POLLS: Poll[] = [
   // ── Added Oct 25, 2026 evening ──
   { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { Approve: 39.0, Disapprove: 59.7 } },   // On Point national poll, Oct 28, likely voters; registered voters 38.7 to 58.0
   { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1440, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },   // Oct 23 to 26, registered voters, toplines PDF
-  { pollster: "Echelon Insights", endDate: "2026-10-23", sampleSize: 3644, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },   // Oct 16 to 23 for NetChoice
+  { pollster: "Echelon Insights (R)", endDate: "2026-10-23", sampleSize: 3644, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },   // Oct 16 to 23 for NetChoice
   { pollster: "Morning Consult", endDate: "2026-10-20", sampleSize: 2050, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },   // Oct 13 to 20 for Deseret News and the Hinckley Institute
   { pollster: "Harvard-Harris", endDate: "2026-10-26", sampleSize: 2700, sampleType: "RV", results: { Approve: 39, Disapprove: 59 } },   // Oct 24 to 26, Key Results PDF posted Oct 27
   { pollster: "CBS News", endDate: "2026-10-23", sampleSize: 2355, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },   // CBS News/YouGov Oct 21 to 23, adults
@@ -44,7 +44,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Strength In Numbers/Verasight", endDate: "2026-10-19", sampleSize: 2028, sampleType: "A", results: { Approve: 34, Disapprove: 62 } },   // Oct 13 to 19
   { pollster: "CNN/SSRS", endDate: "2026-10-18", sampleSize: 1701, sampleType: "A", results: { Approve: 32, Disapprove: 67 } },   // Oct 15 to 18
   { pollster: "Reuters/Ipsos", endDate: "2026-10-19", sampleSize: 1679, sampleType: "A", results: { Approve: 31, Disapprove: 66 } },   // Oct 16 to 19, adults
-  { pollster: "Echelon Insights", endDate: "2026-10-19", sampleSize: 1010, sampleType: "LV", results: { Approve: 39, Disapprove: 60 } },   // Oct 15 to 19
+  { pollster: "Echelon Insights (R)", endDate: "2026-10-19", sampleSize: 1010, sampleType: "LV", results: { Approve: 39, Disapprove: 60 } },   // Oct 15 to 19
   { pollster: "Rasmussen Reports (R)", endDate: "2026-10-22", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },   // Daily tracking Oct 18 to 22, five night rolling, nights inferred; replaces the Oct 20 reading
   // ── Added Oct 14, 2026: releases through the Oct 10 to 12 Economist/YouGov poll ──
   { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1548, sampleType: "A", results: { Approve: 34, Disapprove: 62 } },   // Oct 10 to 12, adult citizens; registered voter approval not published
@@ -76,7 +76,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Rasmussen Reports (R)", endDate: "2026-09-24", sampleSize: 1500, sampleType: "LV", results: { Approve: 44, Disapprove: 56 } },
   { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Approve: 39, Disapprove: 58 } },
   { pollster: "Economist/YouGov", endDate: "2026-09-21", sampleSize: 982, sampleType: "LV", results: { Approve: 35, Disapprove: 63 } },
-  { pollster: "Echelon Insights", endDate: "2026-09-21", sampleSize: 1002, sampleType: "LV", results: { Approve: 36, Disapprove: 64 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-09-21", sampleSize: 1002, sampleType: "LV", results: { Approve: 36, Disapprove: 64 } },
   { pollster: "Morning Consult", endDate: "2026-09-20", sampleSize: 2201, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-09-20", sampleSize: 979, sampleType: "RV", results: { Approve: 35, Disapprove: 65 } },
   { pollster: "Quantus Insights", endDate: "2026-09-18", sampleSize: 1389, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
@@ -120,7 +120,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Emerson", endDate: "2026-08-17", sampleSize: 1000, sampleType: "LV", results: { Approve: 40, Disapprove: 56 } },
   { pollster: "Economist/YouGov", endDate: "2026-08-17", sampleSize: 1450, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-08-17", sampleSize: 876, sampleType: "RV", results: { Approve: 35, Disapprove: 65 } },
-  { pollster: "Echelon Insights", endDate: "2026-08-17", sampleSize: 1002, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-08-17", sampleSize: 1002, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
   { pollster: "RMG Research", endDate: "2026-08-17", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
   { pollster: "Financial Times", endDate: "2026-08-11", sampleSize: 1857, sampleType: "LV", results: { Approve: 38, Disapprove: 56 } },
   { pollster: "RMG Research", endDate: "2026-08-11", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
@@ -150,7 +150,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Morning Consult", endDate: "2026-07-19", sampleSize: 2200, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
   { pollster: "RMG Research", endDate: "2026-07-14", sampleSize: 2000, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
   { pollster: "Wash Post/Ipsos", endDate: "2026-07-13", sampleSize: 2092, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },
-  { pollster: "Echelon Insights", endDate: "2026-07-13", sampleSize: 1004, sampleType: "LV", results: { Approve: 38, Disapprove: 61 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-07-13", sampleSize: 1004, sampleType: "LV", results: { Approve: 38, Disapprove: 61 } },
   { pollster: "Morning Consult", endDate: "2026-07-13", sampleSize: 2200, sampleType: "RV", results: { Approve: 45, Disapprove: 52 } },
   { pollster: "Economist/YouGov", endDate: "2026-07-13", sampleSize: 1450, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },
   { pollster: "Harvard-Harris", endDate: "2026-07-12", sampleSize: 1776, sampleType: "RV", results: { Approve: 42, Disapprove: 54 } },
@@ -170,7 +170,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-06-22", sampleSize: 1517, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },
   { pollster: "Morning Consult", endDate: "2026-06-22", sampleSize: 2200, sampleType: "RV", results: { Approve: 43, Disapprove: 54 } },
   { pollster: "Quinnipiac", endDate: "2026-06-22", sampleSize: 1165, sampleType: "RV", results: { Approve: 38, Disapprove: 55 } },
-  { pollster: "Echelon Insights", endDate: "2026-06-22", sampleSize: 1003, sampleType: "LV", results: { Approve: 41, Disapprove: 58 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-06-22", sampleSize: 1003, sampleType: "LV", results: { Approve: 41, Disapprove: 58 } },
   { pollster: "Daily Mail", endDate: "2026-06-21", sampleSize: 1040, sampleType: "RV", results: { Approve: 47, Disapprove: 53 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-06-21", sampleSize: 978, sampleType: "RV", results: { Approve: 37, Disapprove: 62 } },
   { pollster: "CBS News", endDate: "2026-06-19", sampleSize: 2519, sampleType: "A", results: { Approve: 38, Disapprove: 62 } },
@@ -182,7 +182,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-06-15", sampleSize: 1403, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
   { pollster: "Morning Consult", endDate: "2026-06-15", sampleSize: 2200, sampleType: "RV", results: { Approve: 43, Disapprove: 53 } },
   { pollster: "Marquette", endDate: "2026-06-15", sampleSize: 1213, sampleType: "RV", results: { Approve: 40, Disapprove: 60 } },
-  { pollster: "Echelon Insights", endDate: "2026-06-14", sampleSize: 1012, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-06-14", sampleSize: 1012, sampleType: "RV", results: { Approve: 40, Disapprove: 59 } },
   { pollster: "NPR/PBS/Marist", endDate: "2026-06-11", sampleSize: 1162, sampleType: "RV", results: { Approve: 38, Disapprove: 59 } },
   { pollster: "RMG Research", endDate: "2026-06-11", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },
   { pollster: "Emerson", endDate: "2026-06-08", sampleSize: 1000, sampleType: "LV", results: { Approve: 39, Disapprove: 55 } },
@@ -212,7 +212,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Morning Consult", endDate: "2026-05-17", sampleSize: 2203, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
   { pollster: "RMG Research", endDate: "2026-05-21", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 57 } },
   { pollster: "Quinnipiac", endDate: "2026-05-18", sampleSize: 1106, sampleType: "RV", results: { Approve: 34, Disapprove: 58 } },
-  { pollster: "Echelon Insights", endDate: "2026-05-18", sampleSize: 1008, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-05-18", sampleSize: 1008, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
   { pollster: "AP/NORC", endDate: "2026-05-18", sampleSize: 1117, sampleType: "A", results: { Approve: 37, Disapprove: 62 } },
   { pollster: "CBS News", endDate: "2026-05-15", sampleSize: 2064, sampleType: "A", results: { Approve: 37, Disapprove: 63 } },
   { pollster: "Wall Street Journal", endDate: "2026-05-18", sampleSize: 1500, sampleType: "RV", results: { Approve: 41, Disapprove: 57 } },
@@ -243,7 +243,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "FOX News", endDate: "2026-04-20", sampleSize: 1001, sampleType: "RV", results: { Approve: 42, Disapprove: 58 } },
   { pollster: "Morning Consult", endDate: "2026-04-20", sampleSize: 2203, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
   { pollster: "Economist/YouGov", endDate: "2026-04-20", sampleSize: 1553, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
-  { pollster: "Echelon Insights", endDate: "2026-04-20", sampleSize: 1012, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },
+  { pollster: "Echelon Insights (R)", endDate: "2026-04-20", sampleSize: 1012, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },
   { pollster: "RMG Research", endDate: "2026-04-23", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
   { pollster: "AP/NORC", endDate: "2026-04-20", sampleSize: 2596, sampleType: "A", results: { Approve: 33, Disapprove: 67 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-04-20", sampleSize: 4557, sampleType: "A", results: { Approve: 36, Disapprove: 62 } },
@@ -370,7 +370,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Morning Consult", endDate: "2025-12-15", sampleSize: 2201, sampleType: "RV", results: { Approve: 46, Disapprove: 52 } },
   { pollster: "Reuters/Ipsos", endDate: "2025-12-14", sampleSize: 1016, sampleType: "A", results: { Approve: 39, Disapprove: 59 } },
   { pollster: "Quinnipiac", endDate: "2025-12-15", sampleSize: 1035, sampleType: "RV", results: { Approve: 40, Disapprove: 54 } },
-  { pollster: "Susquehanna", endDate: "2025-12-17", sampleSize: 800, sampleType: "LV", results: { Approve: 38, Disapprove: 56 } },
+  { pollster: "Susquehanna (R)", endDate: "2025-12-17", sampleSize: 800, sampleType: "LV", results: { Approve: 38, Disapprove: 56 } },
   { pollster: "Big Data Poll", endDate: "2025-12-12", sampleSize: 3004, sampleType: "RV", results: { Approve: 47, Disapprove: 50 } },
   { pollster: "NPR/PBS/Marist", endDate: "2025-12-11", sampleSize: 1261, sampleType: "RV", results: { Approve: 40, Disapprove: 55 } },
   { pollster: "Gallup", endDate: "2025-12-15", sampleSize: 1016, sampleType: "A", results: { Approve: 36, Disapprove: 59 } },
@@ -644,7 +644,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Quinnipiac", endDate: "2025-04-07", sampleSize: 1407, sampleType: "RV", results: { Approve: 41, Disapprove: 53 } },
   { pollster: "Morning Consult", endDate: "2025-04-06", sampleSize: 2207, sampleType: "RV", results: { Approve: 46, Disapprove: 52 } },
   { pollster: "RMG Research*", endDate: "2025-04-10", sampleSize: 3000, sampleType: "RV", results: { Approve: 49, Disapprove: 48 } },
-  { pollster: "Cygnal", endDate: "2025-04-03", sampleSize: 1500, sampleType: "LV", results: { Approve: 47, Disapprove: 51 } },
+  { pollster: "Cygnal (R)", endDate: "2025-04-03", sampleSize: 1500, sampleType: "LV", results: { Approve: 47, Disapprove: 51 } },
   { pollster: "Daily Mail", endDate: "2025-04-03", sampleSize: 1000, sampleType: "RV", results: { Approve: 53, Disapprove: 47 } },
   { pollster: "Reuters/Ipsos", endDate: "2025-04-02", sampleSize: 1486, sampleType: "A", results: { Approve: 43, Disapprove: 53 } },
   { pollster: "Economist/YouGov", endDate: "2025-04-01", sampleSize: 1465, sampleType: "RV", results: { Approve: 46, Disapprove: 51 } },
@@ -706,7 +706,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Trafalgar/InsiderAdvantage", endDate: "2025-02-09", sampleSize: 1321, sampleType: "RV", results: { Approve: 54, Disapprove: 45 } },
   { pollster: "CBS News", endDate: "2025-02-07", sampleSize: 2175, sampleType: "A", results: { Approve: 53, Disapprove: 47 } },
   { pollster: "RMG Research*", endDate: "2025-02-06", sampleSize: 3000, sampleType: "RV", results: { Approve: 51, Disapprove: 45 } },
-  { pollster: "Cygnal", endDate: "2025-02-05", sampleSize: 1500, sampleType: "LV", results: { Approve: 50, Disapprove: 48 } },
+  { pollster: "Cygnal (R)", endDate: "2025-02-05", sampleSize: 1500, sampleType: "LV", results: { Approve: 50, Disapprove: 48 } },
   { pollster: "Economist/YouGov", endDate: "2025-02-04", sampleSize: 1423, sampleType: "RV", results: { Approve: 48, Disapprove: 47 } },
   { pollster: "Quantus Insights", endDate: "2025-02-03", sampleSize: 1000, sampleType: "RV", results: { Approve: 52, Disapprove: 45 } },
   { pollster: "Morning Consult", endDate: "2025-02-03", sampleSize: 2303, sampleType: "RV", results: { Approve: 49, Disapprove: 47 } },

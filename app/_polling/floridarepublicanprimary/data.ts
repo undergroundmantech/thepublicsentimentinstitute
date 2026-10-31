@@ -16,11 +16,11 @@ export const RAW_POLLS: Poll[] = [
 
   // December 2025
   { pollster: "Public Opinion Strategies**", endDate: "2025-12-11", sampleSize: 700, sampleType: "RV", results: { Collins: 13, Donalds: 40, Fishback: 0, Renner: 0 } },
-  { pollster: "The Tyson Group**", endDate: "2025-12-09", sampleSize: 800, sampleType: "LV", results: { Collins: 9, Donalds: 38, Fishback: 2, Renner: 1 } },
+  { pollster: "The Tyson Group (R)**", endDate: "2025-12-09", sampleSize: 800, sampleType: "LV", results: { Collins: 9, Donalds: 38, Fishback: 2, Renner: 1 } },
 
   // November 2025
   { pollster: "The American Promise", endDate: "2025-11-19", sampleSize: 800, sampleType: "LV", results: { Collins: 1, Donalds: 43, Fishback: 0, Renner: 2 } },
-  { pollster: "Victory Insights**", endDate: "2025-11-13", sampleSize: 600, sampleType: "LV", results: { Collins: 1, Donalds: 45, Fishback: 1, Renner: 3 } },
+  { pollster: "Victory Insights (R)**", endDate: "2025-11-13", sampleSize: 600, sampleType: "LV", results: { Collins: 1, Donalds: 45, Fishback: 1, Renner: 3 } },
 
   // October 2025
   { pollster: "St. Pete Polls", endDate: "2025-10-15", sampleSize: 1034, sampleType: "LV", results: { Collins: 4, Donalds: 39, Fishback: 0, Renner: 3 } },

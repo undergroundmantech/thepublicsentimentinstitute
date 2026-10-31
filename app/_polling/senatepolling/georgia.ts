@@ -55,6 +55,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-SEN-2026", "pollster": "UGA SPIA for the Atlanta Journal-Constitution", "startDate": "2026-10-07", "endDate": "2026-10-15", "sampleSize": 1000, "sampleType": "LV", "results": {"Jon Ossoff (D)": 48.0, "Mike Collins (R)": 40.0, "Undecided": 12.0}},
     {"raceId": "GA-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-15", "endDate": "2026-10-17", "sampleSize": 755, "sampleType": "LV", "results": {"Jon Ossoff (D)": 51.8, "Mike Collins (R)": 44.9, "Undecided": 3.3}},
     {"raceId": "GA-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-06", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Jon Ossoff (D)": 54.0, "Mike Collins (R)": 46.0}},
-    {"raceId": "GA-SEN-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 40.0, "Other": 3.0, "Undecided": 2.0}}
+    {"raceId": "GA-SEN-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 40.0, "Other": 3.0, "Undecided": 2.0}}
   ],
 };

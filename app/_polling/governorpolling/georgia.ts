@@ -2,7 +2,7 @@
 // Georgia — 2026 Governor: Keisha Lance Bottoms (D) vs. Rick Jackson (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-27.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -52,6 +52,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-GOV-2026", "pollster": "UGA SPIA for the Atlanta Journal-Constitution", "startDate": "2026-10-07", "endDate": "2026-10-15", "sampleSize": 1000, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 45.0, "Rick Jackson (R)": 46.0, "Other": 1.0, "Undecided": 8.0}},
     {"raceId": "GA-GOV-2026", "pollster": "Quantus Insights", "startDate": "2026-10-15", "endDate": "2026-10-17", "sampleSize": 755, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 47.5, "Rick Jackson (R)": 49.0, "Undecided": 3.5}},
     {"raceId": "GA-GOV-2026", "pollster": "ActiVote", "startDate": "2026-10-06", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 48.5, "Rick Jackson (R)": 51.5}},
-    {"raceId": "GA-GOV-2026", "pollster": "Echelon Insights for NetChoice", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 49.0, "Rick Jackson (R)": 48.0, "Undecided": 3.0}}
+    {"raceId": "GA-GOV-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 49.0, "Rick Jackson (R)": 48.0, "Undecided": 3.0}},
+    {"raceId": "GA-GOV-2026", "pollster": "State Navigate", "startDate": "2026-10-23", "endDate": "2026-10-27", "sampleSize": 679, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 50.0, "Rick Jackson (R)": 47.0, "Undecided": 3.0}}
   ],
 };

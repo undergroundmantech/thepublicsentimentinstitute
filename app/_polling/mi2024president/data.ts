@@ -31,7 +31,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "CNN/SSRS", endDate: "2024-10-28", sampleSize: 726, sampleType: "LV", results: { Harris: 48, Trump: 43 } },
 
   // ── Echelon Insights ──────────────────────────────────────────────────────
-  { pollster: "Echelon Insights", endDate: "2024-10-30", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
+  { pollster: "Echelon Insights (R)", endDate: "2024-10-30", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
 
   // ── Detroit News / WDIV-TV ────────────────────────────────────────────────
   { pollster: "Detroit News/WDIV-TV", endDate: "2024-10-24", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 44 } },
@@ -79,7 +79,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "USA Today/Suffolk", endDate: "2024-09-19", sampleSize: 500, sampleType: "LV", results: { Harris: 48, Trump: 45 } },
 
   // ── Remington Research (R) ────────────────────────────────────────────────
-  { pollster: "Remington Research", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 49, Trump: 47 } },
+  { pollster: "Remington Research (R)", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 49, Trump: 47 } },
 
   // ── Redfield & Wilton Strategies ─────────────────────────────────────────
   { pollster: "Redfield & Wilton Strategies", endDate: "2024-10-31", sampleSize: 1731, sampleType: "LV", results: { Harris: 47, Trump: 47 } },

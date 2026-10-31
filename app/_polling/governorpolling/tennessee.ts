@@ -39,6 +39,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TN-GOV-2026", "pollster": "Targoz Market Research", "startDate": "2026-04-20", "endDate": "2026-04-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Jerri Green (D)": 27.0, "Marsha Blackburn (R)": 51.0, "Undecided": 22.0}},
     {"raceId": "TN-GOV-2026", "pollster": "Targoz Market Research", "startDate": "2026-08-15", "endDate": "2026-08-26", "sampleSize": 1149, "sampleType": "RV", "results": {"Jerri Green (D)": 33.0, "Marsha Blackburn (R)": 46.0, "Other": 8.0, "Undecided": 14.0}},
     {"raceId": "TN-GOV-2026", "pollster": "TargetSmart (D)", "startDate": "2026-09-12", "endDate": "2026-09-12", "sampleSize": 600, "sampleType": "LV", "results": {"Jerri Green (D)": 36.0, "Marsha Blackburn (R)": 45.0}},
-    {"raceId": "TN-GOV-2026", "pollster": "Spry Strategies", "startDate": "2026-10-10", "endDate": "2026-10-16", "sampleSize": 635, "sampleType": "LV", "results": {"Jerri Green (D)": 32.0, "Marsha Blackburn (R)": 43.5, "Other": 13.3, "Undecided": 10.0}}
+    {"raceId": "TN-GOV-2026", "pollster": "Spry Strategies (R)", "startDate": "2026-10-10", "endDate": "2026-10-16", "sampleSize": 635, "sampleType": "LV", "results": {"Jerri Green (D)": 32.0, "Marsha Blackburn (R)": 43.5, "Other": 13.3, "Undecided": 10.0}}
   ],
 };

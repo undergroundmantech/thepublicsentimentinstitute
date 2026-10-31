@@ -50,3 +50,5 @@ tpsi-full-site.zip
 
 # large public downloads for the early vote precinct scripts
 .cache/
+l2_early_vote/data/
+L2_county_early_vote.zip

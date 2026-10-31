@@ -278,7 +278,8 @@ export const LEAN_FIRMS: { id: string; label: string; re: RegExp; dir: LeanDir }
 export const R_LEAN_FIRMS = LEAN_FIRMS;
 // a bipartisan release, like Fabrizio Ward with Impact Research, is not a partisan internal
 // a bipartisan release, a Democratic firm paired with a Republican one, is not moved either way
-const BIPARTISAN = /fabrizio|bipartisan|north\s*star|nsor|shaw|cygnal|\bpos\b|public\s*opinion\s*strategies/i;
+// Oct 31 2026, set by the publisher: Cygnal is a Republican firm, tagged (R) and corrected as a Republican internal, no longer bipartisan
+const BIPARTISAN = /fabrizio|bipartisan|north\s*star|nsor|shaw|\bpos\b|public\s*opinion\s*strategies/i;
 const bipartisan = (n: string) => BIPARTISAN.test(n) || (/\(D\)/.test(n) && /\(R\)/.test(n));
 const INTERNAL_IDS = new Set(["rinternal", "dinternal"]);
 export function leanFirms(name: string): string[] { const n = name || ""; return LEAN_FIRMS.filter((f) => f.re.test(n) && !(f.dir === "D" && bipartisan(n)) && !(INTERNAL_IDS.has(f.id) && bipartisan(n))).map((f) => f.id); }

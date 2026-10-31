@@ -10,18 +10,18 @@
 export type SenateRace = { st: string; m: number; open?: boolean };
 
 export const SENATE_MODEL: SenateRace[] = [
-  { st: "AK", m: -4.9 }, { st: "AL", m: 15.6, open: true }, { st: "AR", m: 8.5 },
+  { st: "AK", m: -4.9 }, { st: "AL", m: 12.8, open: true }, { st: "AR", m: 8.6 },
   { st: "CO", m: -20.0 }, { st: "DE", m: -26.6 }, { st: "FL", m: 5.1 },
-  { st: "GA", m: -11.5 }, { st: "IA", m: -1.2, open: true }, { st: "ID", m: 18.9 },
-  { st: "IL", m: -19.8, open: true }, { st: "KS", m: -4.0 }, { st: "KY", m: 11.1, open: true },
-  { st: "LA", m: 6.5, open: true }, { st: "MA", m: -32.9 }, { st: "ME", m: -3.0 },
-  { st: "MI", m: -7.5, open: true }, { st: "MN", m: -12.0, open: true }, { st: "MS", m: 1.9 },
-  { st: "MT", m: 17.9, open: true }, { st: "NC", m: -9.5, open: true }, { st: "NE", m: -1.7 },
-  { st: "NH", m: -10.1, open: true }, { st: "NJ", m: -25.8 }, { st: "NM", m: -21.4 },
+  { st: "GA", m: -11.8 }, { st: "IA", m: -1.1, open: true }, { st: "ID", m: 19.4 },
+  { st: "IL", m: -19.9, open: true }, { st: "KS", m: -4.0 }, { st: "KY", m: 10.8, open: true },
+  { st: "LA", m: 6.4, open: true }, { st: "MA", m: -33.0 }, { st: "ME", m: -3.0 },
+  { st: "MI", m: -7.5, open: true }, { st: "MN", m: -11.6, open: true }, { st: "MS", m: 1.8 },
+  { st: "MT", m: 18.0, open: true }, { st: "NC", m: -9.5, open: true }, { st: "NE", m: -2.5 },
+  { st: "NH", m: -10.6, open: true }, { st: "NJ", m: -25.8 }, { st: "NM", m: -21.4 },
   { st: "OH", m: -4.8 }, { st: "OK", m: 21.1, open: true }, { st: "OR", m: -27.9 },
-  { st: "RI", m: -39.7 }, { st: "SC", m: -0.6 }, { st: "SD", m: 13.7 },
+  { st: "RI", m: -39.7 }, { st: "SC", m: -0.4 }, { st: "SD", m: 13.5 },
   { st: "TN", m: 19.8 }, { st: "TX", m: -1.9 }, { st: "VA", m: -20.4 },
-  { st: "WV", m: 28.6 }, { st: "WY", m: 38.2, open: true },
+  { st: "WV", m: 28.7 }, { st: "WY", m: 38.2, open: true },
 ];
 
 // Seats decided by the model's margins, plus holdovers not on the ballot:

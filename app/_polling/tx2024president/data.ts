@@ -3,7 +3,7 @@ import type { Poll } from "@/app/_polling/lib/buildDailyModel";
 
 export const RAW_POLLS: Poll[] = [
   { pollster: "AtlasIntel", endDate: "2024-11-04", sampleSize: 2434, sampleType: "LV", results: { Harris: 44, Trump: 55 } },
-{ pollster: "Cygnal", endDate: "2024-10-28", sampleSize: 600, sampleType: "LV", results: { Harris: 43, Trump: 51 } },
+{ pollster: "Cygnal (R)", endDate: "2024-10-28", sampleSize: 600, sampleType: "LV", results: { Harris: 43, Trump: 51 } },
 { pollster: "NY Times/Siena", endDate: "2024-10-26", sampleSize: 1180, sampleType: "LV", results: { Harris: 42, Trump: 52 } },
 { pollster: "Morning Consult", endDate: "2024-10-31", sampleSize: 2120, sampleType: "LV", results: { Harris: 45, Trump: 52 } },
 { pollster: "Rasmussen Reports (R)", endDate: "2024-10-25", sampleSize: 1002, sampleType: "LV", results: { Harris: 44, Trump: 50 } },
