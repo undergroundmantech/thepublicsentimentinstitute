@@ -171,6 +171,18 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
         if (mu) U += e[3];
       }
     }
+    // civicAPI's topline is the count of record. Where the county breakdown lags it (votes counted but not yet in any
+    // county), those votes are counted all the same and come out of the counties' outstanding estimate, so the counted
+    // vote matches the topline and final = counted + outstanding. With a breakdown that sums to the topline, a no-op.
+    if (top && top.length) {
+      const T0 = sides(r, top), extra = T0.t - rep.t;
+      if (extra > 0) {
+        const out = { a: fin.a - rep.a, b: fin.b - rep.b, o: fin.o - rep.o }, ot = out.a + out.b + out.o;
+        const keep = ot > 0 ? Math.max(0, ot - extra) / ot : 0;
+        fin.a = T0.a + out.a * keep; fin.b = T0.b + out.b * keep; fin.o = T0.o + out.o * keep;
+        Object.assign(rep, T0); U *= keep;
+      }
+    }
     if (mu) openingShift(fin, rep, mu, sv, expAll.t, U);
     fin.t = fin.a + fin.b + fin.o;
     const pctIn = fin.t ? Math.min(100, (100 * rep.t) / fin.t) : 0;

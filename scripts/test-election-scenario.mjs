@@ -137,6 +137,30 @@ test("probability comes from the adjusted margin at the official spread, not a 3
   close(v.pRAdjusted, Phi(v.adjusted.m / so.sd), 1e-12);
 });
 
+test("counted vote matches civicAPI's topline; final = counted + outstanding", () => {
+  const lv = { "1": region(40, 300, 200, 4), "2": region(10, 600, 380, 5) };
+  const sum = (lv) => Object.values(lv).reduce((o, g) => { o.d += g.c[0][2]; o.r += g.c[1][2]; o.l += g.c[2][2]; return o; }, { d: 0, r: 0, l: 0 });
+  const s = sum(lv);
+  // a breakdown that sums to the topline: identical to passing no topline at all
+  const consistent = [cand("Dana Dem", "D", s.d), cand("Ray Rep", "R", s.r), cand("Lee Lib", "L", s.l)];
+  assert.deepEqual(project(exp, lv, DR, consistent, T), project(exp, lv, DR, null, T));
+  // the topline is ahead of the breakdown by 2,000 votes (the 41% vs 22% "estimated reporting" mismatch)
+  const ahead = [cand("Dana Dem", "D", s.d + 1100), cand("Ray Rep", "R", s.r + 880), cand("Lee Lib", "L", s.l + 20)];
+  const P = project(exp, lv, DR, ahead, T), Q = project(exp, lv, DR, null, T);
+  assert.equal(P.rep.t, s.d + s.r + s.l + 2000, "counted = topline");
+  close(P.fin.t, Q.fin.t, 1e-6, "the lagging votes come out of the outstanding estimate, not on top of it");
+  close(P.fin.t - P.rep.t, Q.fin.t - Q.rep.t - 2000, 1e-6, "outstanding shrinks by the unallocated votes");
+  close(P.pctIn, (100 * P.rep.t) / P.fin.t, 1e-9);
+  for (const k of ["a", "b", "o"]) assert.ok(P.fin[k] >= P.rep[k] - 1e-9, `final ${k} never below counted`);
+  // the topline exceeds every outstanding vote: final is the count
+  const huge = [cand("Dana Dem", "D", 9000), cand("Ray Rep", "R", 8000), cand("Lee Lib", "L", 100)];
+  const H = project(exp, lv, DR, huge, T);
+  close(H.fin.t, H.rep.t, 1e-6); close(H.pctIn, 100, 1e-9);
+  // a county breakdown ahead of a stale topline is left alone
+  const stale = [cand("Dana Dem", "D", 10), cand("Ray Rep", "R", 10), cand("Lee Lib", "L", 0)];
+  assert.deepEqual(project(exp, lv, DR, stale, T), Q);
+});
+
 test("unsupported races keep the official estimate", () => {
   const cases = {
     independent: race([["Indy", "I", 8000], ["Ray Rep", "R", 8000]]),
