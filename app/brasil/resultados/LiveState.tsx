@@ -1,5 +1,5 @@
 "use client";
-// /brasil/resultados/[state]: one state's count, its projection and every municipality as it reports.
+// /brasil/resultados/[state]: one state's archived count, its projection and every municipality.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import MunMap, { useMun } from "../MunMap";
 import { useBrLive } from "../useBrLive";
@@ -50,12 +50,12 @@ export default function LiveState({ s }: { s: BrState }) {
       <SimBanner sim={sim} />
       <section className="br-live-top">
         <div className="br-card">
-          <Status t={live?.t} counted={counted} err={err} />
+          <Status t={live?.t} counted={counted} err={err} archive={live?.archive} />
           <Cards fv={x?.fv ?? 0} lv={x?.lv ?? 0} call={proj.call} winLabel={t("Wins the state", "Vence no estado")} />
           <Reporting pr={x?.pr ?? 0} counted={counted} total={proj.total} />
           {rows && <p className="br-note">{t(`${nint(reported)} of ${nint(rows.length)} municipalities have counted votes.`, `${nint(reported)} de ${nint(rows.length)} municípios com votos apurados.`)}</p>}
         </div>
-        <div className="br-card"><ProjBand proj={proj} label={t(`Projection for ${s.name}`, `Projeção para ${s.uf === "DF" ? "o Distrito Federal" : s.name}`)} scope={fx.inState(s.uf, s.name)} /></div>
+        <div className="br-card"><ProjBand proj={proj} label={t(`Projection for ${s.name}`, `Projeção para ${s.uf === "DF" ? "o Distrito Federal" : s.name}`)} scope={fx.inState(s.uf, s.name)} archived={!!live?.archive} /></div>
       </section>
 
       <section className="br-card">
@@ -81,7 +81,9 @@ export default function LiveState({ s }: { s: BrState }) {
         {color === "res"
           ? <div className="br-legend"><span>Lula +40</span><i /><span>Flávio +40</span></div>
           : <div className="br-legend"><span>{t("Lula above forecast", "Lula acima do previsto")}</span><i style={{ background: "linear-gradient(90deg, rgb(224,50,60), rgba(224,50,60,.12) 49%, rgba(47,111,227,.12) 51%, rgb(47,111,227))" }} /><span>{t("Flávio above", "Flávio acima")}</span></div>}
-        <p className="br-note">{t("Pale municipalities have no votes counted yet and show the forecast. Towns that just reported flash on the map.", "Municípios em tom claro ainda não têm votos apurados e mostram a previsão. Os que acabaram de chegar piscam no mapa.")}</p>
+        <p className="br-note">{live?.archive
+          ? t("Pale municipalities had no votes in the archived count and show the forecast.", "Municípios em tom claro não têm votos na apuração arquivada e mostram a previsão.")
+          : t("Pale municipalities have no votes counted yet and show the forecast. Towns that just reported flash on the map.", "Municípios em tom claro ainda não têm votos apurados e mostram a previsão. Os que acabaram de chegar piscam no mapa.")}</p>
       </section>
 
       <section className="br-card">

@@ -18,10 +18,6 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/measures", label: "Ballot measures", note: "145 statewide questions" },
         { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
       ] },
-      { h: "Around the world", links: [
-        { href: "/brasil", label: "Brazil 2026", note: "Runoff forecast, Flávio Bolsonaro vs Lula", badge: "New" },
-        { href: "/brasil/estados", label: "Brazil by municipality", note: "Every state and town" },
-      ] },
       { h: "Scenarios and method", links: [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
         { href: "/swingometer", label: "Swingometer", note: "Move any group of voters" },
@@ -54,12 +50,8 @@ export const MENU: NavGroup[] = [
       ] },
     ] },
   { key: "results", label: "Results", href: "/results", go: "/results/monitor", live: true,
-    feature: { href: "/brasil/resultados", eyebrow: "Brazil · October 25", title: "Brazil runoff live", note: "The count in every municipality, a desk for every state and our projection." },
+    feature: { href: "/results/monitor", eyebrow: "November 3", title: "Situation monitor", note: "Every November 3 race on one full screen globe, with expected and reported vote." },
     cols: [
-      { h: "Brazil runoff", links: [
-        { href: "/brasil/resultados", label: "Live results", note: "Flávio Bolsonaro vs Lula, every state and town", badge: "Live" },
-        { href: "/brasil", label: "Runoff forecast", note: "The On Point Brazil forecast" },
-      ] },
       { h: "November 3", links: [
         { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race", badge: "New" },
         { href: "/results/2026", label: "Every race", note: "Expected and reported vote, county by county" },
@@ -67,6 +59,7 @@ export const MENU: NavGroup[] = [
       ] },
       { h: "Past nights", links: [
         { href: "/results/archive", label: "Results archive", note: "Every tracked night" },
+        { href: "/brasil/arquivo", label: "Brazil 2026 runoff", note: "Forecast and results, archived" },
         { href: "/results/archive/2026-08-25", label: "August 25 runoffs" },
         { href: "/results/archive/2026-08-18", label: "August 18 primaries" },
         { href: "/results/archive/2026-08-04", label: "August 4 primaries" },

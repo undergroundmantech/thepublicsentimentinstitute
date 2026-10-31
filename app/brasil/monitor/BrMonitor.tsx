@@ -1,13 +1,14 @@
 "use client";
-// The Brazil results desk, built like the US situation monitor: every municipality on one full screen map, colored as
-// the count comes in; towns flash as they report, states are called with a toast, and the panels keep the national
-// count and the On Point projection in view. Click any state, on the map or in the list, to open its desk: the count,
-// the projection, how it runs against the forecast and its biggest municipalities. Tilt the map for the 3D view.
+// The Brazil results desk, built like the US situation monitor: every municipality on one full screen map, colored by
+// the archived count (the provider's last update after the October 25, 2026 runoff), with the national count and the
+// On Point projection in view. Click any state, on the map or in the list, to open its desk: the count, the projection,
+// how it ran against the forecast and its biggest municipalities. Tilt the map for the 3D view. With ?simular=1 the
+// labelled election night simulation still plays, with its flashing towns, timeline and call toasts.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "@/app/components/Link";
 import NationCanvas, { useAllMun, type CanvasHandle, type Muni } from "../NationCanvas";
 import { useBrLive } from "../useBrLive";
-import { swingColor } from "../LiveBits";
+import { archivedAt, swingColor } from "../LiveBits";
 import { useFmt } from "../i18n";
 import { UF_ORDER, marginColor, slugOf, ELECTION_ISO, type BrState, type Fmt } from "../lib";
 import type { LiveState, Proj } from "../project";
@@ -89,6 +90,7 @@ function StateDesk({ s, live, munis, x, onClose, qs }: { s: BrState; live: LiveS
 
 export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { flavio: number; p_flavio: number; valid: number; p10: number; p90: number } }) {
   const { live, sim } = useBrLive();
+  const archive = live?.archive;
   const x = useFmt(), { t, nf, nint, pct, mg } = x;
   const munis = useAllMun(UF_ORDER);
   const by = useMemo(() => Object.fromEntries(states.map((s) => [s.uf, s])), [states]);
@@ -104,10 +106,11 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => { setNow(new Date()); const tm = setInterval(() => setNow(new Date()), 15000); return () => clearInterval(tm); }, []);
 
-  // what changed since the last update: new municipalities flash, new calls go to the feed and the toast
+  // what changed since the last update: new municipalities flash, new calls go to the feed and the toast. The archived
+  // count is one fixed snapshot with no timeline of its own, so it gets neither.
   const seen = useRef<{ m: Record<string, number>; calls: Record<string, string>; started: Set<string>; nat: string | null; first: boolean }>({ m: {}, calls: {}, started: new Set(), nat: null, first: true });
   useEffect(() => {
-    if (!live) return;
+    if (!live || live.archive) return;
     const S = seen.current, tn = performance.now(), g = new Map<string, number>(), add: Ev[] = [];
     for (const [uf, st] of Object.entries(live.st)) {
       for (const [k, v] of Object.entries(st.m)) { const id = uf + ":" + k, c = v[0] + v[1]; if (!S.first && c > (S.m[id] ?? 0)) g.set(id, tn - Math.random() * 900); S.m[id] = c; }
@@ -175,9 +178,9 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
 
       <div className="brm-top">
         <div className="brm-title gl">
-          <div className="eye"><i className={started ? "on" : ""} />{sim ? t("Simulation", "Simulação") : started ? t("Live count", "Apuração ao vivo") : t("Sunday, October 25 · polls close 5 PM Brasília", "Domingo, 25 de outubro · 17h")}</div>
-          <h1>{t("Brazil runoff", "2º turno")} <em>{t("live results", "ao vivo")}</em></h1>
-          <p>{t("Every municipality in Brazil, colored as the TSE counts.", "Todos os municípios do Brasil, coloridos conforme o TSE apura.")} {sim ? t("Made up numbers for a demonstration.", "Números fictícios para demonstração.") : t("Click any state to analyze it.", "Clique em qualquer estado para analisá-lo.")}</p>
+          <div className="eye"><i className={started && !archive ? "on" : ""} />{sim ? t("Simulation", "Simulação") : t("Archive · runoff of October 25, 2026", "Arquivo · 2º turno de 25 de outubro de 2026")}</div>
+          <h1>{t("Brazil runoff", "2º turno")} <em>{sim ? t("live results", "ao vivo") : t("results", "resultados")}</em></h1>
+          <p>{sim ? t("Every municipality in Brazil, colored as the TSE counts. Made up numbers for a demonstration.", "Todos os municípios do Brasil, coloridos conforme o TSE apura. Números fictícios para demonstração.") : t("Every municipality in Brazil, colored by the archived count. Click any state to analyze it.", "Todos os municípios do Brasil, coloridos pela apuração arquivada. Clique em qualquer estado para analisá-lo.")}</p>
         </div>
         <div className="brm-nat gl">
           <div className="row"><span><small>Flávio Bolsonaro</small><br /><b className="f">{fsh == null ? zero : nf(fsh, 2)}%</b></span><span style={{ textAlign: "right" }}><small>Lula</small><br /><b className="l">{fsh == null ? zero : nf(100 - fsh, 2)}%</b></span></div>
@@ -216,13 +219,14 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
       </aside>
 
       <div className="brm-feed gl" aria-live="polite">
-        <h3>{t("Timeline", "Linha do tempo")}</h3>
-        {feed.length ? <ul>{feed.slice(0, 12).map((e, i) => <li key={i}><time>{clock(e.t, x)}</time><span style={{ color: e.kind === "nat" ? "#ffd98a" : e.kind === "call" ? (e.who === "F" ? "#8fb2ff" : "#ff8f96") : undefined }}>{evText(e)}</span></li>)}</ul>
-          : <p>{started ? t("Waiting for the first numbers from the TSE.", "Esperando os primeiros números do TSE.") : t("Polls close at 5 PM Brasília, 4 PM Eastern. Numbers appear here as soon as the TSE starts releasing them.", "As urnas fecham às 17h de Brasília. Os números aparecem aqui assim que o TSE começar a divulgar.")}</p>}
+        <h3>{archive ? t("About this count", "Sobre esta apuração") : t("Timeline", "Linha do tempo")}</h3>
+        {archive ? <p>{t(`The provider's last update, ${archivedAt(archive.providerUpdated, "en")}, with ${nf(archive.reporting, 1)}% of sections counted, saved from civicAPI. The TSE's certified result is the official one. `, `A última atualização do provedor, em ${archivedAt(archive.providerUpdated, "pt")}, com ${nf(archive.reporting, 1)}% das seções apuradas, salva a partir da civicAPI. O resultado oficial é o certificado pelo TSE. `)}<Link href="/brasil/arquivo">{t("About the archive", "Sobre o arquivo")}</Link></p>
+          : feed.length ? <ul>{feed.slice(0, 12).map((e, i) => <li key={i}><time>{clock(e.t, x)}</time><span style={{ color: e.kind === "nat" ? "#ffd98a" : e.kind === "call" ? (e.who === "F" ? "#8fb2ff" : "#ff8f96") : undefined }}>{evText(e)}</span></li>)}</ul>
+          : <p>{!sim ? t("Loading the archived count.", "Carregando a apuração arquivada.") : started ? t("Waiting for the first numbers from the TSE.", "Esperando os primeiros números do TSE.") : t("Polls close at 5 PM Brasília, 4 PM Eastern. Numbers appear here as soon as the TSE starts releasing them.", "As urnas fecham às 17h de Brasília. Os números aparecem aqui assim que o TSE começar a divulgar.")}</p>}
       </div>
 
       <div className="brm-hud">
-        <span>{now ? t(`${clock(now, x)} in Brasília`, `${clock(now, x)} em Brasília`) : ""}</span><span>{nint(munis.length)} {t("municipalities", "municípios")}</span><span>{calls.filter(Boolean).length} {t("states projected", "estados projetados")}</span>
+        <span>{!sim ? t("Archived count", "Apuração arquivada") : now ? t(`${clock(now, x)} in Brasília`, `${clock(now, x)} em Brasília`) : ""}</span><span>{nint(munis.length)} {t("municipalities", "municípios")}</span><span>{calls.filter(Boolean).length} {t("states projected", "estados projetados")}</span>
       </div>
       <div className="brm-z">
         <button type="button" aria-label={t("Zoom in", "Aproximar")} onClick={() => cref.current?.zoom(1.6)}>+</button>

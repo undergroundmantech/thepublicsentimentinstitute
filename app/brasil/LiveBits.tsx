@@ -1,11 +1,9 @@
 "use client";
-// Pieces shared by the live results pages: the status line, the two candidate cards, the reporting bar and the
+// Pieces shared by the results pages: the status line, the two candidate cards, the reporting bar and the
 // On Point projection with its band. Every label follows the reader's language.
 import React from "react";
-import { useCountdown } from "./useBrLive";
 import { useFmt } from "./i18n";
-import { ELECTION_ISO } from "./lib";
-import type { Proj } from "./project";
+import type { ArchiveMeta, Proj } from "./project";
 
 export function SimBanner({ sim }: { sim: boolean }) {
   const { t } = useFmt();
@@ -13,13 +11,20 @@ export function SimBanner({ sim }: { sim: boolean }) {
   return <div className="br-sim" role="status">{t("Simulation: these numbers are made up from the forecast to show how the page works on election night. ", "Simulação: estes números são fictícios, gerados a partir da previsão para mostrar como a página funciona na noite da eleição. ")}<a href="?">{t("Back to the real data", "Voltar aos dados reais")}</a></div>;
 }
 
-export function Status({ t: at, counted, err }: { t?: string; counted: number; err: boolean }) {
+/** the provider's last update, as a date and time in Brasília */
+export function archivedAt(iso: string, lang: "en" | "pt") {
+  const d = new Date(iso), pt = lang === "pt", tz = "America/Sao_Paulo";
+  const day = d.toLocaleDateString(pt ? "pt-BR" : "en-US", { day: "numeric", month: pt ? "2-digit" : "short", year: "numeric", timeZone: tz });
+  const time = d.toLocaleTimeString(pt ? "pt-BR" : "en-US", { hour: pt ? "2-digit" : "numeric", minute: "2-digit", timeZone: tz });
+  return pt ? `${day}, às ${time}` : `${day}, ${time} Brasília`;
+}
+
+export function Status({ t: at, counted, err, archive }: { t?: string; counted: number; err: boolean; archive?: ArchiveMeta }) {
   const x = useFmt(), { t } = x;
-  const c = useCountdown(ELECTION_ISO);
-  if (c && !c.done && counted === 0) return <span className="br-status">{t(`Polls close in ${c.d > 0 ? `${c.d}d ` : ""}${c.h}h ${String(c.m).padStart(2, "0")}m · 5 PM Brasília`, `Urnas fecham em ${c.d > 0 ? `${c.d}d ` : ""}${c.h}h ${String(c.m).padStart(2, "0")}min · 17h de Brasília`)}</span>;
+  if (err) return <span className="br-status">{t("The archived count could not be loaded", "Não foi possível carregar a apuração arquivada")}</span>;
+  if (archive) { const w = archivedAt(archive.providerUpdated, x.lang); return <span className="br-status">{t(`Archived count · last provider update ${w}`, `Apuração arquivada · última atualização do provedor em ${w}`)}</span>; }
   const when = at ? new Date(at).toLocaleTimeString(x.lang === "pt" ? "pt-BR" : "en-US", { hour: x.lang === "pt" ? "2-digit" : "numeric", minute: "2-digit", timeZone: "America/Sao_Paulo" }) : "";
-  if (err) return <span className="br-status">{t("Lost the connection to the count, trying again", "Sem conexão com a apuração, tentando de novo")}</span>;
-  return <span className={`br-status${counted > 0 ? " on" : ""}`}><i />{counted > 0 ? t(`Live count · updated ${when} Brasília`, `Apuração ao vivo · atualizado às ${when}`) : t("Waiting for the first numbers from the TSE", "Aguardando os primeiros números do TSE")}</span>;
+  return <span className={`br-status${counted > 0 ? " on" : ""}`}><i />{counted > 0 ? t(`Simulated count · ${when} Brasília`, `Apuração simulada · ${when}`) : t("Loading the archived count", "Carregando a apuração arquivada")}</span>;
 }
 
 export function Cards({ fv, lv, call, winLabel }: { fv: number; lv: number; call: "F" | "L" | null; winLabel?: string }) {
@@ -48,14 +53,14 @@ export function Reporting({ pr, counted, total }: { pr: number; counted: number;
   );
 }
 
-export function ProjBand({ proj, label, scope }: { proj: Proj; label?: string; scope?: string }) {
+export function ProjBand({ proj, label, scope, archived }: { proj: Proj; label?: string; scope?: string; archived?: boolean }) {
   const { t, nf, pct, mg } = useFmt();
   const lo = 40, hi = 60, X = (v: number) => `${Math.max(0, Math.min(100, ((v - lo) / (hi - lo)) * 100))}%`;
   const started = proj.counted > 0;
   const where = scope ?? t("nationwide", "no país");
   return (
     <div className="br-proj">
-      <div className="br-card-h" style={{ marginBottom: 0 }}><h3>{label ?? t("On Point projection of the final result", "Projeção On Point do resultado final")}</h3><span>{started ? t("Updates with the count", "Atualiza com a apuração") : t("Before the count: the forecast", "Antes da apuração: a previsão")}</span></div>
+      <div className="br-card-h" style={{ marginBottom: 0 }}><h3>{label ?? t("On Point projection of the final result", "Projeção On Point do resultado final")}</h3><span>{!started ? t("Before the count: the forecast", "Antes da apuração: a previsão") : archived ? t("At the last recorded count", "Na última apuração registrada") : t("Updates with the count", "Atualiza com a apuração")}</span></div>
       <div className="band" aria-label={`Flávio ${nf(proj.f)}%, ${nf(proj.lo)} to ${nf(proj.hi)}`}>
         <span className="mid" />
         <span className="rng" style={{ left: X(proj.lo), width: `calc(${X(proj.hi)} - ${X(proj.lo)})` }} />

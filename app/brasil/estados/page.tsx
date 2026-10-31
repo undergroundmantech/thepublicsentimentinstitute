@@ -7,8 +7,8 @@ import NationExplorer from "../NationExplorer";
 import { T } from "../i18n";
 import { fmt, ratingStyle, slugOf, type Fmt } from "../lib";
 
-const DESC = "Explore the Brazil 2026 runoff forecast in all 27 states and more than 5,500 municipalities: who is projected to win each town, the margin, and the change since the first round. Previsão por estado e por município.";
-export const metadata = brSeo({ title: "Brazil 2026 Runoff by State and Municipality: Forecast Map", pt: "2º turno por estado e por município", description: DESC, path: "/brasil/estados",
+const DESC = "Explore the On Point pre-election forecast for Brazil's October 25, 2026 runoff in all 27 states and more than 5,500 municipalities: who was projected to win each town, the margin, and the change since the first round. Archived. Previsão por estado e por município.";
+export const metadata = brSeo({ title: "Brazil 2026 Runoff by State and Municipality: Forecast Map (Archive)", pt: "2º turno por estado e por município (arquivo)", description: DESC, path: "/brasil/estados",
   keywords: ["Brazil election map by municipality", "Brazil runoff by state", "mapa eleição 2026 por município", "resultado por cidade", "previsão por estado", "mapa eleitoral Brasil"] });
 const EN = fmt("en"), PT = fmt("pt");
 const B = (f: (x: Fmt) => React.ReactNode) => <T en={f(EN)} pt={f(PT)} />;

@@ -14,9 +14,11 @@ export const brStates = () => Object.values(getBr().states).filter((s) => s.uf !
 export const BR_KEYWORDS = [
   "Brazil election 2026", "Brazil runoff", "Brazil presidential election", "Lula vs Flavio Bolsonaro", "Brazil election forecast", "Brazil election results",
   "segundo turno 2026", "eleição 2026", "eleições 2026", "pesquisa segundo turno", "Lula x Flávio Bolsonaro", "Flávio Bolsonaro x Lula",
-  "previsão eleição 2026", "quem vai ganhar a eleição", "resultado eleição 2026", "apuração ao vivo", "resultado por estado", "resultado por município",
+  "previsão eleição 2026", "quem ganhou a eleição", "resultado eleição 2026", "resultado segundo turno 2026", "resultado por estado", "resultado por município",
   "média das pesquisas", "chance de vitória", "On Point Politics",
 ];
+/** the day these pages became an archive and the provider's count was saved (see scripts/brasil/archive-results.ts) */
+export const BR_ARCHIVED = "2026-10-31";
 
 export function brSeo(i: { title: string; description: string; path: string; keywords?: string[]; pt?: string }): Metadata {
   const t = `${i.title}${i.pt ? ` · ${i.pt}` : ""} | On Point Politics`;
@@ -31,12 +33,13 @@ export function brSeo(i: { title: string; description: string; path: string; key
   };
 }
 
-export function brPageLd(i: { name: string; description: string; path: string; crumbs: [string, string][]; faq?: [string, string][]; updated?: string }) {
+export function brPageLd(i: { name: string; description: string; path: string; crumbs: [string, string][]; faq?: [string, string][] }) {
+  // an archive: the runoff took place on October 25, 2026; the forecast is dated by its own publication date
   const g: Record<string, unknown>[] = [
     { "@type": "WebPage", "@id": abs(i.path) + "#page", url: abs(i.path), name: i.name, description: i.description, inLanguage: ["en", "pt-BR"],
-      isPartOf: { "@id": `${SITE.url}/#website` }, publisher: { "@id": ORG_ID }, dateModified: i.updated ?? getBr().updated,
+      isPartOf: { "@id": `${SITE.url}/#website` }, publisher: { "@id": ORG_ID }, datePublished: getBr().updated, dateModified: BR_ARCHIVED,
       about: { "@type": "Event", name: "Brazil presidential election runoff", alternateName: "Eleição presidencial no Brasil, 2º turno", startDate: "2026-10-25T08:00:00-03:00", endDate: "2026-10-25T17:00:00-03:00",
-        eventStatus: "https://schema.org/EventScheduled", eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         location: { "@type": "Country", name: "Brazil" } } },
     { "@type": "BreadcrumbList", itemListElement: i.crumbs.map(([n, p], k) => ({ "@type": "ListItem", position: k + 1, name: n, item: abs(p) })) },
   ];

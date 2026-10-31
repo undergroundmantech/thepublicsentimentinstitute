@@ -1,13 +1,12 @@
 "use client";
-// The Brasil section bar: the forecast, states and towns, and the live results, with the language switch.
+// The Brasil section bar: the forecast, states and towns, the results and the archive notes, with the language switch.
+// The runoff is over, so the bar says these pages are an archive.
 import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ELECTION_ISO } from "./lib";
 import { LangToggle, useLang } from "./i18n";
 
 const LINKS: [string, string, string][] = [
-  ["/brasil", "Forecast", "Previsão"], ["/brasil/estados", "States and towns", "Estados e municípios"], ["/brasil/resultados", "Live results", "Resultados ao vivo"],
+  ["/brasil", "Forecast", "Previsão"], ["/brasil/estados", "States and towns", "Estados e municípios"], ["/brasil/resultados", "Results", "Resultados"], ["/brasil/arquivo", "About the archive", "Sobre o arquivo"],
 ];
 
 export default function BrBar() {
@@ -15,9 +14,7 @@ export default function BrBar() {
   const { lang } = useLang();
   const on = (href: string) => (href === "/brasil" ? p === "/brasil"
     : href === "/brasil/resultados" ? p.startsWith("/brasil/resultados") || p.startsWith("/brasil/monitor")
-    : p.startsWith(href) || (href === "/brasil/estados" && /^\/brasil\/(?!resultados|monitor|estados)[a-z-]+$/.test(p)));
-  const [live, setLive] = useState(false);
-  useEffect(() => { const t = new Date(ELECTION_ISO).getTime(), n = Date.now(); setLive(n > t - 12 * 3600e3 && n < t + 30 * 3600e3); }, []);
+    : p.startsWith(href) || (href === "/brasil/estados" && /^\/brasil\/(?!resultados|monitor|estados|arquivo)[a-z-]+$/.test(p)));
   return (
     <div className="br-bar">
       <div className="in">
@@ -28,7 +25,7 @@ export default function BrBar() {
         <nav aria-label="Brazil 2026">
           {LINKS.map(([h, en, pt]) => <Link key={h} href={h} aria-current={on(h) ? "page" : undefined}>{lang === "pt" ? pt : en}</Link>)}
         </nav>
-        <span className="live">{live ? <><i />{lang === "pt" ? "2º turno hoje" : "Runoff today"}</> : lang === "pt" ? "2º turno · 25 de outubro" : "Runoff · October 25"}</span>
+        <span className="live">{lang === "pt" ? "Arquivo · 2º turno de 25/10/2026" : "Archive · runoff of Oct 25, 2026"}</span>
         <LangToggle />
       </div>
     </div>

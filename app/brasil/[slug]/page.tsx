@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const s = find((await params).slug); if (!s) return {};
   const lead = s.margin > 0 ? `Flávio Bolsonaro leads in ${s.name} with ${EN.nf(s.flavio)}% of the projected valid vote` : `Lula leads in ${s.name} with ${EN.nf(s.lula)}% of the projected valid vote`;
   return brSeo({
-    title: `${s.name} Runoff Forecast by Municipality: Flávio vs Lula`, pt: `2º turno ${PT.inState(s.uf, s.name)}`,
-    description: `${lead}. The On Point Politics forecast for every municipality ${EN.ofState(s.uf, s.name)}, against the first round and 2022. Previsão por município ${PT.ofState(s.uf, s.name)}.`,
+    title: `${s.name} Runoff Forecast by Municipality (Archive): Flávio vs Lula`, pt: `2º turno ${PT.inState(s.uf, s.name)} (arquivo)`,
+    description: `${lead}. The On Point Politics pre-election forecast for every municipality ${EN.ofState(s.uf, s.name)}, as published October 24, 2026, against the first round and 2022. Previsão por município ${PT.ofState(s.uf, s.name)}.`,
     path: `/brasil/${slugOf(s.name)}`,
     keywords: [`${s.name} election`, `${s.name} runoff`, `eleição ${s.name}`, `segundo turno ${s.name}`, `resultado ${s.name} 2026`, `pesquisa ${s.name} segundo turno`],
   });
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             : `${leader} is ${strong ? "the favorite" : "a slight favorite"} ${x.inState(s.uf, s.name)}, with ${x.pct(Math.max(s.flavio, s.lula))} of the projected valid vote and a ${x.pct(100 * Math.max(s.p, 1 - s.p), 0)} chance of carrying the state. That is a net ${x.compact(Math.abs(net))} votes for ${leader}, ${big ? "a real share of the national race" : `out of about ${x.compact(s.valid)} projected valid votes`}.`)}</p>
           <div className="meta">
             <span className="br-rt" style={{ ...ratingStyle(s.rating), padding: "6px 12px", fontSize: 12.5 }}>{B((x) => x.rating(s.rating))}</span>
-            <Link href={`/brasil/resultados/${slugOf(s.name)}`} className="br-chip gold">{B((x) => x.t(`Live results ${x.inState(s.uf, s.name)}`, `Apuração ao vivo ${x.inState(s.uf, s.name)}`))}</Link>
+            <Link href={`/brasil/resultados/${slugOf(s.name)}`} className="br-chip gold">{B((x) => x.t(`Archived results ${x.inState(s.uf, s.name)}`, `Resultado arquivado ${x.inState(s.uf, s.name)}`))}</Link>
           </div>
         </div>
         <div className="br-duel">
