@@ -189,7 +189,10 @@ def history_leg(st, office, fips, e_state, top_lean):
         lv = {}
         for f in fips:
             xs = [lg(h["D"][f] / (h["D"][f] + h["R"][f])) - lg(h["d2"]) for h in hy if f in h["D"] and h["D"][f] + h["R"][f] > 0]
-            if xs: lv[f] = float(np.mean(xs))
+            # Oct 31 2026, by the user: the office's own past county pattern counts most, so two offices on the same ballot
+            # no longer share one geography; the year's other down ballot races fill in where the office has no record
+            xo = [lg(h["D"][f] / (h["D"][f] + h["R"][f])) - lg(h["d2"]) for h in same if f in h["D"] and h["D"][f] + h["R"][f] > 0]
+            if xs: lv[f] = float(0.65 * np.mean(xo) + 0.35 * np.mean(xs)) if xo else float(np.mean(xs))
         lean_y[y] = lv
     moved = [lvl[y] + e_state * (lg(NAT26) - lg(NAT_HOUSE_D2[y])) for y in years[:2]]
     level = 0.65 * moved[0] + 0.35 * moved[1] if len(moved) > 1 else moved[0]
