@@ -1,6 +1,13 @@
 # PostgreSQL reconciliation: OnPoint election archive (DRAFT)
 
-Status: **design only.** Nothing here has been executed. No server was contacted, and no migration was run.
+Status: sections 1–6 are **design only** (the relational schema below is not implemented). What is implemented and tested is narrower:
+
+- **Implemented:** the recorder's existing object store, kept in one write-once table, `onpoint.recorder_objects`, in the dedicated database `oop`. The migration is [db/migrations/20261031_recorder_objects.sql](../db/migrations/20261031_recorder_objects.sql). The adapter is [postgresStore.ts](../app/lib/intelligence/postgresStore.ts), selected with `INTELLIGENCE_CAPTURE_STORE=postgres` (or `gh-recorder.ts --store postgres`).
+  - The database refuses UPDATE (except `heads/` and `public/timeline/`), DELETE and TRUNCATE.
+  - A CHECK constraint ties every body to its SHA-256, and the adapter re-checks it on read.
+  - The adapter refuses a connection string that is not `oop`, is badly escaped, or is unencrypted off the local machine.
+- **Tested:** against a disposable local PostgreSQL 17 only ([tests/intelligence/postgresStore.test.ts](../tests/intelligence/postgresStore.test.ts), plus one real civicAPI slot recorded, verified and restored).
+- **Not done:** the migration has not been run on the shared server. That server offers no TLS, and the current credential is rejected.
 
 - The draft DDL is in [db/staging/0001_onpoint_init.sql](../db/staging/0001_onpoint_init.sql).
 - The supplied handoff, `OnPoint_Politics_Postgres_Schema_Handoff(1).zip`, was not in the workspace when this was written. The compatibility table in section 6 was therefore built from the code's own contracts. It must be re-run against the handoff schema once that file is available.
@@ -10,7 +17,7 @@ Status: **design only.** Nothing here has been executed. No server was contacted
 | Requirement | Design |
 | --- | --- |
 | Server | The existing CFPredictor PostgreSQL server |
-| Database | A separate `onpoint` database. It shares nothing with CFPredictor: no schema, role, extension, grant or cross-database query. |
+| Database | The dedicated `oop` database, schema `onpoint`. It shares nothing with CFPredictor's `users` database: no schema, role, extension, grant or cross-database query. |
 | Credentials | `onpoint_owner` runs migrations only. `onpoint_writer` is used by the recorder. `onpoint_reader` is used by the site. They are issued outside the repository and stored as deployment secrets, never in code. |
 | Backups | Independent of CFPredictor's backups: nightly base backup plus WAL archiving for the `onpoint` database. Through the November 3–4 window, take an extra logical dump (`pg_dump -Fc onpoint`) every hour. |
 | CFPredictor | Never altered. This migration is not run until server access and the migration are explicitly authorized. |
@@ -197,3 +204,24 @@ These are JSON byte counts before PostgreSQL compression. TOAST compression of J
 - The per-checkpoint calculated layer dominates at 10 s. In the draft schema, `checkpoint_source` (about 200 B per race per checkpoint, about 0.44 GB at 10 s) already records "unchanged, see earlier observation".
 - If the calculated and snapshot rows did the same, storing a `reused_from` pointer instead of a full copy for unchanged races, the 10 s total would fall to roughly the source-change volume plus pointers, about 5 GB before compression.
 - This is a recommendation for the PgStore adapter. It is not implemented.
+
+### Measured in PostgreSQL 17 (one real forecast-scope slot, 506 races, 2026-10-31)
+
+2,547 objects held 11 MB of bodies and took 5.0 MB on disk, including the table, TOAST and index.
+
+| Family | Stored / raw |
+| --- | --- |
+| `obs/` | 0.16 |
+| `archive/` (calculated + snapshot) | 0.26 |
+| `heads/` | 0.41 |
+| `model/` | 0.96 |
+| `raw/` (already gzip) | 1.00 |
+
+Applying these ratios to the table above gives these on-disk estimates, before WAL:
+
+- 12 h at 10 s: about 4.4 GB.
+- 12 h at 30 s: about 2.5 GB.
+- The following 7 days: about 0.7 GB.
+- Worst case at 10 s, with every race changing every checkpoint: about 11–13 GB.
+
+Add about 1 GB for WAL at default settings. The allotment is about 9.77 GiB, so 30 s, or 10 s with typical change rates, fits; the 10 s worst case does not. These are pre-election payloads. Election-night observations carry county detail and will be larger, so check free space during the night.
