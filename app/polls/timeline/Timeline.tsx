@@ -1,10 +1,11 @@
 "use client";
-// A polling average told as a story: scroll and the line draws itself day by day, Pointy jogs along it, and the
+// A polling average told as a story: scroll and the line draws itself day by day (in Theme, Pointy jogs along it), and the
 // page stops at each event of the term to show where the average stood that day and two weeks later. The chart
 // stays pinned while the page scrolls under it; the rail at the bottom jumps to any event.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "@/app/components/Link";
 import Mascot from "@/app/components/home/Mascot";
+import { useSiteMode } from "@/app/lib/useSiteTheme";
 import { KIND_LABEL, type TEvent } from "./events";
 import "./timeline.css";
 
@@ -42,6 +43,7 @@ export default function Timeline({ data, embedded = false }: { data: TLData; emb
   const isApp = data.kind === "approval";
   const fmtNet = useCallback((n: number) => (isApp ? `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}` : Math.abs(n) < 0.05 ? "Even" : `${n > 0 ? "D" : "R"} +${Math.abs(n).toFixed(1)}`), [isApp]);
   const netWord = isApp ? "Net approval" : "Generic ballot";
+  const themed = useSiteMode() === "themed";
 
   // the scroll is cut into stretches: travel between events, weighted by the days between them, and a stop at each
   const segs = useMemo(() => {
@@ -151,7 +153,7 @@ export default function Timeline({ data, embedded = false }: { data: TLData; emb
           <div className="eye g">{data.kicker}</div>
           {embedded ? <h2>{data.title}, <em>the story so far.</em></h2> : <h1>{data.title}, <em>the story so far.</em></h1>}
           <p className="lede">{data.lede}</p>
-          <p className="tl-cue"><span aria-hidden="true" className="tl-mouse"><i /></span>Scroll to walk the line with Pointy. Every stop is a moment that made news; the numbers show where the average stood that day and two weeks later.</p>
+          <p className="tl-cue"><span aria-hidden="true" className="tl-mouse"><i /></span>{themed ? "Scroll to walk the line with Pointy." : "Scroll to move along the line."} Every stop is a moment that made news; the numbers show where the average stood that day and two weeks later.</p>
         </div>
         <dl className="tl-stats">
           <div><dt>Now</dt><dd>{fmtNet(last[1] - last[2])}</dd><span>{fmtDate(last[0], false)}</span></div>
@@ -195,9 +197,11 @@ export default function Timeline({ data, embedded = false }: { data: TLData; emb
               <line x1={cx} x2={cx} y1={PAD.t - 10} y2={sz.h - PAD.b} className="tl-cur" />
               <circle cx={cx} cy={ya} r={5.5} fill={data.a.color} className="tl-head" /><circle cx={cx} cy={yb} r={5.5} fill={data.b.color} className="tl-head" />
             </svg>
-            <div className={`tl-runner${moving === 2 ? " jog" : ""}`} data-motion-ok="" style={{ transform: `translate(${runnerX}px, ${top}px)` }} aria-hidden="true">
-              <div style={{ transform: `translate(-50%, -100%) scaleX(${dir})` }}><Mascot size={moving === 2 ? 92 : 86} pose={pose} prop={pose === "point" ? "pointer" : "clipboard"} look={1} /></div>
-            </div>
+            {themed ? (
+              <div className={`tl-runner${moving === 2 ? " jog" : ""}`} data-motion-ok="" style={{ transform: `translate(${runnerX}px, ${top}px)` }} aria-hidden="true">
+                <div style={{ transform: `translate(-50%, -100%) scaleX(${dir})` }}><Mascot size={moving === 2 ? 92 : 86} pose={pose} prop={pose === "point" ? "pointer" : "clipboard"} look={1} /></div>
+              </div>
+            ) : null}
           </div>
 
           <div className="tl-card-slot">
@@ -213,7 +217,7 @@ export default function Timeline({ data, embedded = false }: { data: TLData; emb
                 </div>
               </article>
             ) : (
-              <article className="tl-card intro"><h2>{fmtDate(T0)}</h2><p>The first day of the average. Keep scrolling: Pointy walks the line one day at a time and stops at each of {events.length} events.</p></article>
+              <article className="tl-card intro"><h2>{fmtDate(T0)}</h2><p>The first day of the average. Keep scrolling: {themed ? "Pointy walks the line" : "the line advances"} one day at a time and stops at each of {events.length} events.</p></article>
             )}
           </div>
 

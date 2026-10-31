@@ -4,6 +4,7 @@
 // flips it. Poses: walk, idle, wave, point, cheer, think, sit. Props sit in the front hand.
 import React from "react";
 import { ICON_PATH } from "@/app/components/opp/Logo";
+import { useSiteMode } from "@/app/lib/useSiteTheme";
 import "./pointy.css";
 
 export type Pose = "walk" | "idle" | "wave" | "point" | "cheer" | "think" | "sit";
@@ -111,11 +112,15 @@ export default function Mascot({ size = 96, walking, pose, prop = "clipboard", l
 export const MASCOT_CSS = "";
 
 // Pointy as a page cameo: the mascot plus an optional speech bubble, placed by the parent with a class.
+// Theme only: in Pro Dark and Pro Light the figure is never rendered, and a line that is not a .quip stays as a plain
+// note (styled in modes.css). The server and first client render use Pro Dark, so a Pro page never flashes the figure.
 export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, detective, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; detective?: boolean; className?: string; flip?: boolean }) {
+  const themed = useSiteMode() === "themed";
+  if (!themed && (!say || className?.split(/\s+/).includes("quip"))) return null;
   return (
     <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} data-say={say ? "" : undefined} aria-hidden={say ? undefined : true}>
       {say ? <div className="pty-say">{say}</div> : null}
-      <div className="pty-fig"><Mascot size={size} pose={pose} prop={prop} look={look} cap={cap} detective={detective} /></div>
+      {themed ? <div className="pty-fig"><Mascot size={size} pose={pose} prop={prop} look={look} cap={cap} detective={detective} /></div> : null}
     </div>
   );
 }

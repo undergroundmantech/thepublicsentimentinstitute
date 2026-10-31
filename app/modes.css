@@ -3,19 +3,19 @@
    step with html[data-theme]. Colour values live in globals.css (2c semantic tokens, 2d Theme block); this file only
    turns expressive elements up or down. Never select data-theme="themed": it does not exist. */
 
-/* Pro Dark and Pro Light are data first: Pointy's page cameos belong to Theme. Only cameos marked .essential stay in every
-   mode: the 404 page, where Pointy is the page, and the early-vote benchmark tabs, where the bubbles explain the data.
-   A cameo that speaks keeps its words as a plain note (the figure goes); .quip marks character-voice lines that go with it. */
-:root:not([data-mode="themed"]) .pty-cameo:not(.essential) { display: none; }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) {
+/* Pointy belongs to Theme only, with no exceptions. Pointy, HomeGlobe and the polling timeline do not render the figure
+   outside Theme; the first rule is a guard for any figure that slips through. A cameo that speaks keeps its words as a
+   plain note (the figure goes); .quip marks character-voice lines that go with it. */
+:root:not([data-mode="themed"]) :is(.pty, .pty-fig, .hg-man, .tl-runner) { display: none !important; }
+:root:not([data-mode="themed"]) .pty-cameo { display: none; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) {
   display: block; position: static; inset: auto; transform: none; animation: none; z-index: auto; max-width: 64ch; margin: 12px 0 0; }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-fig { display: none; }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say { max-width: none; padding: 2px 0 2px 12px; border: 0; border-left: 2px solid var(--accent-2);
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) .pty-say { max-width: none; padding: 2px 0 2px 12px; border: 0; border-left: 2px solid var(--accent-2);
   border-radius: 0; background: none; box-shadow: none; color: var(--text-2); font: 500 13px/1.5 var(--font-b); }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say::after { display: none; }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say b { color: var(--text-strong); }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say .d { color: var(--dem2); }
-:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.essential):not(.quip) .pty-say .r { color: var(--gop2); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) .pty-say::after { display: none; }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) .pty-say b { color: var(--text-strong); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) .pty-say .d { color: var(--dem2); }
+:root:not([data-mode="themed"]) .pty-cameo[data-say]:not(.quip) .pty-say .r { color: var(--gop2); }
 
 /* Theme: the brand turned up, on the same layout and data. */
 :root[data-mode="themed"] .opp .top {

@@ -1,7 +1,8 @@
 "use client";
-// The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast,
-// with Pointy the On Point canvasser walking across it from one close race to the next. Drag to turn the globe,
-// hover a state for its odds, click it for the full race. Canvas for the globe, SVG for the mascot and its bubble.
+// The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast.
+// In Theme, Pointy the On Point canvasser walks across it from one close race to the next; Pro Dark and Pro Light keep
+// the globe, tooltips and closest-race list without him. Drag to turn the globe, hover a state for its odds, click it
+// for the full race. Canvas for the globe, SVG for the mascot and its bubble.
 import DaysOut from "@/app/components/DaysOut";
 import { canvasDpr, frameGap, isLite } from "@/app/lib/lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -14,7 +15,7 @@ import type { Feature, Geometry } from "geojson";
 import Mascot from "./Mascot";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
-import { useThemeRef } from "@/app/lib/useSiteTheme";
+import { useSiteMode, useThemeRef } from "@/app/lib/useSiteTheme";
 import { probFraction, probPoints } from "@/app/lib/fmtPct";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
@@ -51,6 +52,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const dragRef = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
   const hoverRef = useRef<string | null>(null);
   const themeRef = useThemeRef();
+  const themed = useSiteMode() === "themed";
 
   useEffect(() => {
     Promise.all([fetch("/us-states.json").then((r) => r.json()), fetch("/geo/world-110m.json").then((r) => r.json())]).then(([us, w]) => {
@@ -64,16 +66,17 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const list = races[office];
   const bySt = useMemo(() => Object.fromEntries(list.map((r) => [r.st, r])) as Record<string, GRace>, [list]);
   const rateOf = (r: GRace): Rating => (Math.abs(r.m) >= 99 ? (r.m < 0 ? "safeD" : "safeR") : rating(r.m, r.ind));
-  // Pointy's route: the eight closest races, nearest neighbour order
+  // Pointy's route (Theme only): the eight closest races, nearest neighbour order. Empty in Pro, so no walk, route or
+  // footprints are computed or drawn.
   const tour = useMemo(() => {
-    if (!geo) return [] as { r: GRace; ll: [number, number] }[];
+    if (!geo || !themed) return [] as { r: GRace; ll: [number, number] }[];
     const pts = [...list].filter((r) => Math.abs(r.m) < 99 && r.st !== "AK" && r.st !== "HI").sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).slice(0, 8)
       .map((r) => { const f = geo.states.find((s) => s.st === r.st); return f ? { r, ll: geoCentroid(f as GeoPermissibleObjects) as [number, number] } : null; }).filter(Boolean) as { r: GRace; ll: [number, number] }[];
     if (!pts.length) return pts;
     const out = [pts.shift()!];
     while (pts.length) { const c = out[out.length - 1]; let bi = 0, bd = 9; pts.forEach((p, i) => { const d = geoDistance(c.ll, p.ll); if (d < bd) { bd = d; bi = i; } }); out.push(pts.splice(bi, 1)[0]); }
     return out;
-  }, [geo, list]);
+  }, [geo, list, themed]);
 
   useEffect(() => {
     const c = cv.current, box = wrap.current; if (!c || !box || !geo) return;
@@ -227,14 +230,16 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     <section className="hg" aria-label="2026 forecast globe">
       <div className="hg-stage" ref={wrap}>
         <canvas ref={cv} className="hg-cv" role="img" aria-label={`The 2026 ${office} forecast on a globe, each state shaded by its rating`} />
-        <div className="hg-man" ref={man} aria-hidden="true">
-          <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
-          {stop ? (
-            <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
-              <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
-            </button>
-          ) : null}
-        </div>
+        {themed ? (
+          <div className="hg-man" ref={man} aria-hidden="true">
+            <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
+            {stop ? (
+              <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
+                <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
+              </button>
+            ) : null}
+          </div>
+        ) : null}
         {tr ? (
           <div className="hg-tip" style={{ left: tip!.x, top: tip!.y, transform: `translate(${tip!.x > tip!.w - 300 ? "calc(-100% - 18px)" : "18px"}, ${tip!.y > tip!.h - 220 ? "calc(-100% - 12px)" : "12px"})` }}>
             <h4>{tr.name}</h4>
@@ -251,7 +256,8 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         <div className="hg-copy">
           <span className="chip"><i /><DaysOut initial={daysOut} suffix=" days" /> to Election Day · updated {updated}</span>
           <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
-          <p>The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races.</p>
+          <p>{themed ? "The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races."
+            : "The 2026 midterms on one interactive globe. Explore the closest races, examine state forecasts, and select any state for detailed projections."}</p>
           <div className="hg-odds">
             {([["Senate", odds.senate, "/forecast?office=senate"], ["House", odds.house, "/forecast?office=house"], ["Governors", odds.governor, "/forecast?office=governor"]] as const).map(([l, v, h]) => (
               <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b><CountUp to={100 * (v >= 0.5 ? v : 1 - v)} /></b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>

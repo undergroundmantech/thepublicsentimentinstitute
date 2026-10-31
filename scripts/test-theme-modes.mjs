@@ -116,14 +116,12 @@ test("no stylesheet or component selects a themed colour scheme", () => {
   assert.deepEqual(bad, []);
 });
 
-test("Pro modes hide only decorative Pointy cameos", () => {
+test("Pro modes hide every Pointy figure, with no exceptions", () => {
   const css = readFileSync(join(ROOT, "app/modes.css"), "utf8");
-  assert.match(css, /:root:not\(\[data-mode="themed"\]\) \.pty-cameo:not\(\.essential\) \{ display: none; \}/);
-  // only the 404 and the early-vote benchmark explainer are essential
-  const essential = ["app/not-found.tsx", "app/maps/early-vote/Benchmarks.tsx"];
-  for (const f of essential) assert.match(readFileSync(join(ROOT, f), "utf8"), /<Pointy[^>]*className="[^"]*\bessential\b/, f);
-  // a speaking cameo keeps its words as a note in Pro modes; the figure goes
+  assert.match(css, /:root:not\(\[data-mode="themed"\]\) \.pty-cameo \{ display: none; \}/);
+  assert.doesNotMatch(css, /essential/);
+  // a speaking cameo that is not a quip keeps its words as a note in Pro modes; the figure is not rendered
   assert.match(readFileSync(join(ROOT, "app/components/home/Mascot.tsx"), "utf8"), /data-say=\{say \? "" : undefined\}/);
-  assert.match(css, /\.pty-cameo\[data-say\]:not\(\.essential\):not\(\.quip\) \.pty-fig \{ display: none; \}/);
+  assert.match(css, /\.pty-cameo\[data-say\]:not\(\.quip\) \{/);
   assert.match(readFileSync(join(ROOT, "app/layout.tsx"), "utf8"), /data-theme="dark" data-mode="dark"/);
 });

@@ -43,7 +43,7 @@ export default function Average({ id }: { id: string }) {
       {s ? <JsonLd data={avgLd(s, crumbs)} /> : null}
       {TIMELINE[id] ? (
         <Link href={TIMELINE[id]} className="opp avg-tl" data-ev="Timeline opened" data-ev-d={JSON.stringify({ from: id })}>
-          <span className="k">New</span><b>Walk the timeline</b><span>Scroll the whole term day by day with Pointy, with every major event marked on the line</span><i aria-hidden="true">Open</i>
+          <span className="k">New</span><b>Walk the timeline</b><span>Scroll the whole term day by day, with every major event marked on the line</span><i aria-hidden="true">Open</i>
         </Link>
       ) : null}
       <PollingAveragesPage initialId={id} forecast={forecastLinks()} initialBuilt={initialBuild(id)} />

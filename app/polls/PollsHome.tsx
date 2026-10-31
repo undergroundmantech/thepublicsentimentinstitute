@@ -82,7 +82,7 @@ export default function PollsHome({ approval, generic }: { approval: TLData; gen
           <button aria-pressed={pick === "generic"} onClick={() => choose("generic")}>Generic ballot</button>
           <button aria-pressed={pick === "approval"} onClick={() => choose("approval")}>Trump approval</button>
         </div>
-        <span className="ph-hint">{show ? "Scroll through the term with Pointy. Every stop is an event that made news." : "Switch it on to walk the term day by day."}</span>
+        <span className="ph-hint">{show ? "Scroll through the term. Every stop is an event that made news." : "Switch it on to walk the term day by day."}</span>
       </div>
       {show ? <Timeline key={d.id} data={d} embedded /> : null}
     </div>
