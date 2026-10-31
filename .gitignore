@@ -50,3 +50,10 @@ tpsi-full-site.zip
 
 # large public downloads for the early vote precinct scripts
 .cache/
+
+# Phase 2 research seed (normalized copy lives in data/intelligence/seed)
+chatGPTfiles/
+
+# intelligence evidence capture (runtime ledger and payloads, not source)
+/data/intelligence-capture/
+__pycache__/

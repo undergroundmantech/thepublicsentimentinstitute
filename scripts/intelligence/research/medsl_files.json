@@ -1,0 +1,164 @@
+{
+ "manifestVersion": 1,
+ "files": {
+  "2022-ak": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ak-local-precinct-general.zip",
+   "sha256": "c7c8d36011097cf9452cbfadcd9a2cbcef7757bcd316a0d62318e80c643388d5",
+   "bytes": 297028
+  },
+  "2022-az": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-az-local-precinct-general.zip",
+   "sha256": "0c2391b601a0180563fdf93736002c91bb3a26538535e1db7995bc391e2766db",
+   "bytes": 4052363
+  },
+  "2022-co": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-co-local-precinct-general.zip",
+   "sha256": "022bda98eb75237106e038c281379c047cb38682a717ad7f8038487d3774ec59",
+   "bytes": 2058453
+  },
+  "2022-fl": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-fl-local-precinct-general.zip",
+   "sha256": "434ed98274d82cae45c2a65f288c03fdb511788c250fc58d8627a9d307ff1e33",
+   "bytes": 4933782
+  },
+  "2022-ga": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ga-local-precinct-general.zip",
+   "sha256": "92d77246fefe0d46f87bf0f1d3ff722e1a1b1574b08a25bde9eb13ee1933339c",
+   "bytes": 5075601
+  },
+  "2022-ia": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ia-local-precinct-general.zip",
+   "sha256": "db5eb42db50cd11687c63bdd5773aa91fece6d31997d3b82eefabf7338d344a8",
+   "bytes": 404450
+  },
+  "2022-ks": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ks-local-precinct-general.zip",
+   "sha256": "4cc7ea7f493b79b7b1c7dc391b88ea92c0b946dd3acbd06929b5118cd680a898",
+   "bytes": 472171
+  },
+  "2022-me": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-me-local-precinct-general.zip",
+   "sha256": "fed222860f3c4852aeb18ee3322db2ee6de505654129955964b95c6e7a111d88",
+   "bytes": 232975
+  },
+  "2022-ne": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ne-local-precinct-general.zip",
+   "sha256": "10d74d47127fbd80862fbe22d711d8cc2f18904330ff6b6d383cb46fa57cdb36",
+   "bytes": 575092
+  },
+  "2022-ny": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-ny-local-precinct-general.zip",
+   "sha256": "7de9f4974e6ab397e181f411acd1b2c749b349d85aaae28bee378f7a41165dab",
+   "bytes": 3638838
+  },
+  "2022-oh": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-oh-local-precinct-general.zip",
+   "sha256": "3cc26dccb56b424e87daee75bd831de4265eaafc44713d64bb363cdd12fa65e3",
+   "bytes": 2728407
+  },
+  "2022-pa": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-pa-local-precinct-general.zip",
+   "sha256": "3864c6827cea27ad489a1536be41857b2417d6590de94a6785540f77732bc29d",
+   "bytes": 806622
+  },
+  "2022-sc": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-sc-local-precinct-general.zip",
+   "sha256": "3f0ca616aa8768cd1126d8f372bab13161973c8c2af0eb466380d40175687a19",
+   "bytes": 3455820
+  },
+  "2022-tx": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-tx-local-precinct-general.zip",
+   "sha256": "a0a07ea481572afdb714cb25b2655e859badc74337a755955b2316a57a209e56",
+   "bytes": 5565264
+  },
+  "2022-wi": {
+   "url": "https://github.com/MEDSL/2022-elections-official/raw/main/individual_states/2022-wi-local-precinct-general.zip",
+   "sha256": "2b9fe60f0704937b48cdb78ef079044f7e645e4baac642f6a2e2bb4cd02fcca3",
+   "bytes": 1306439
+  },
+  "2024-ak": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ak24.zip",
+   "sha256": "e501940935cccbf5df3884aa0a61cca7e4b61b7fcf78a861f45ecb9ea73b23f6",
+   "bytes": 881696
+  },
+  "2024-az": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/az24.zip",
+   "sha256": "bff8059944b3f58f13228518f9fbeff58a556677d5ab05ab49ca5a4a524555a6",
+   "bytes": 9504594
+  },
+  "2024-co": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/co24.zip",
+   "sha256": "a9e1758171d6bc32894fb832177f1bc4222c9fc56c492b7c43d1e51c0392cecd",
+   "bytes": 1910511
+  },
+  "2024-fl": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/fl24.zip",
+   "sha256": "192e85fa68ce8e6711c6c13f0a525e3ef6cac95236fd1f0888b3ecc9bc02eebf",
+   "bytes": 3431532
+  },
+  "2024-ga": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ga24.zip",
+   "sha256": "36a86477d771ef5b6cf2a033cf941bbfe28eca5adab57ba803836f6b5bc954ed",
+   "bytes": 691608
+  },
+  "2024-ia": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ia24.zip",
+   "sha256": "c31797ace26c06f9504ec4a815cfb717b8619507f529726ac4572dea68ecb7b2",
+   "bytes": 1551251
+  },
+  "2024-ks": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ks24.zip",
+   "sha256": "9e18bccfb97333c735ca0ac08b01bf5de61cfd4fa1726305834254ba1a00b0e6",
+   "bytes": 1020612
+  },
+  "2024-me": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/me24.zip",
+   "sha256": "e6f3f6068004d8627aceb0a029886cd0d2e6685d7790c708e6e0989857ed31a1",
+   "bytes": 466925
+  },
+  "2024-ne": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ne24.zip",
+   "sha256": "34b3334e65bb7fc35469e399fbf2caf4df18434557e654901966f634028b05ab",
+   "bytes": 328208
+  },
+  "2024-ny": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/ny24.zip",
+   "sha256": "5c3608ba2a74b999f48e181abb764d6ccf91b5506a011f2fe873b8e52f8b2508",
+   "bytes": 6261021
+  },
+  "2024-oh": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/oh24.zip",
+   "sha256": "b6b9ff0b4192c1bd2a86ecc7685e8cc42305cb14a002025acc41c49fbc5543fd",
+   "bytes": 16511891
+  },
+  "2024-pa": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/pa24.zip",
+   "sha256": "f134e829a9df0925209f8cad77fc2448c8c780400e2a0190de1d42866f4075ee",
+   "bytes": 1657617
+  },
+  "2024-sc": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/sc24.zip",
+   "sha256": "0a55d286d4a1034b801e27e7ca120c67cd98aa93b31510878da58a00866af599",
+   "bytes": 2279665
+  },
+  "2024-tx": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/tx24.zip",
+   "sha256": "9202fc83607e296bc38be68bde0f0121a0eadb0b6edee4a115c6cf81fd00371f",
+   "bytes": 3860299
+  },
+  "2024-wi": {
+   "url": "https://github.com/MEDSL/2024-elections-official/raw/main/individual_states/wi24.zip",
+   "sha256": "1dd9b34caae5bda405087f909bf08522e2c58b407ef93529aa92c170a2444b09",
+   "bytes": 951627
+  }
+ },
+ "certified": {
+  "2022": {
+   "url": "https://www.fec.gov/resources/cms-content/documents/federalelections2022.xlsx",
+   "file": "fec-federalelections2022.xlsx",
+   "sha256": "cdb258ea23803e50d752bcea19faa39b3c201eb960094bcb556c3a38c2350897",
+   "publisher": "Federal Election Commission",
+   "title": "Federal Elections 2022: Election Results for the U.S. Senate and the U.S. House (state-certified results)"
+  }
+ }
+}

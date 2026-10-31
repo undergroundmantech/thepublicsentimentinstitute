@@ -1,0 +1,11 @@
+{
+  "meta": { "packageId": "SYNTHETIC-cli-fixture", "producer": "test suite (SYNTHETIC, not research)", "createdAt": "2026-10-25T00:00:00Z", "synthetic": true, "baselineSnapshot": "2026-10-25" },
+  "records": [
+    { "recordId": "syn-t1", "recordType": "TURNOUT_EXPECTATION", "raceId": "sen-AK", "state": "AK", "jurisdictionId": "STATE", "jurisdictionLevel": "STATE",
+      "provenance": { "evidenceClass": "INFERRED", "valueKind": "ESTIMATE", "sourceUrl": "https://example.org/SYNTHETIC/t1", "retrievedAt": "2026-10-20T00:00:00Z", "confidence": "LOW", "limitations": ["SYNTHETIC, invented range"] },
+      "expectedLow": 1, "expectedHigh": 2 },
+    { "recordId": "syn-bad", "recordType": "TURNOUT_EXPECTATION", "raceId": "sen-ZZ", "state": "AK", "jurisdictionId": "STATE", "jurisdictionLevel": "STATE",
+      "provenance": { "evidenceClass": "VERIFIED", "valueKind": "OBSERVATION", "confidence": "LOW" },
+      "expectedLow": 1, "expectedHigh": 2 }
+  ]
+}

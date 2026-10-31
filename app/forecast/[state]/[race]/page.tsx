@@ -22,6 +22,8 @@ import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { raceLd, raceMeta } from "../../seo";
 import YouTubeBand from "@/app/components/YouTubeBand";
+import RaceHistorySection from "@/app/components/opp/RaceHistorySection";
+import { frozenPointsFor } from "@/app/lib/intelligence/raceHistoryStore";
 
 export const dynamicParams = false;
 
@@ -36,8 +38,6 @@ function findRace(state: string, race: string): FRace | undefined {
   const id = raceIdFromRoute(state, race);
   return id ? getModel().races.find((r) => r.id === id) : undefined;
 }
-
-function officeWord(r: FRace) { return r.office === "senate" ? "Senate" : r.office === "governor" ? "governor" : `House, district ${r.district}`; }
 
 export async function generateMetadata({ params }: { params: Promise<{ state: string; race: string }> }): Promise<Metadata> {
   const { state, race } = await params;
@@ -105,7 +105,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const updated = new Date(model.meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   // the map: counties for statewide races, districts for the House
-  let paths: CountyPath[] = [], fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {}, hrefs: Record<string, string> | undefined, unit = "counties";
+  let paths: CountyPath[] = [], hrefs: Record<string, string> | undefined, unit = "counties";
+  const fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {};
   let countyVotes: CountyVote[] = [];
   // the projected vote by candidate, from the race's simulated vote
   const rv = (r as unknown as { votes?: { dem: number; rep: number; other: number; total: number }; cands?: { name: string; party: string; votes: number }[] });
@@ -180,9 +181,12 @@ export default async function Page({ params }: { params: Promise<{ state: string
       mediaHere = ed.media.flatMap((m: { items: { who: string; st: string; race: string; what: string; src: string }[] }) => m.items).filter((a: { st: string; race: string }) => a.st === r.st && a.race.includes(word));
     } catch { endorse = null; }
   }
+  // Race history replaces the trend chart; the trend is a labelled fallback only where no published history exists
+  const hasPublishedHistory = (() => { try { return frozenPointsFor(r.id).length > 0; } catch { return false; } })();
+  const showTrend = !hasPublishedHistory && (r.trend?.length ?? 0) >= 3;
   const navItems = [
     { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
-    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
+    ...(showTrend ? [{ id: "trend", label: "Trend" }] : []), { id: "history", label: "History" }, { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
     ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
   ];
 
@@ -292,12 +296,17 @@ export default async function Page({ params }: { params: Promise<{ state: string
       </div>
           </section>
 
-          {(r.trend?.length ?? 0) >= 3 ? (
+          {showTrend ? (
             <section id="trend" className="st-sec">
-              <SecTitle title="The trend" sub="Each side's chance of winning over the forecast's recent updates" />
+              <SecTitle title="Recent model updates" sub="No verified published forecast history exists for this race yet, so these recent model updates are shown instead. They are not verified as published." />
               <TrendChart trend={r.trend!} demName={lastName(r.dem)} gopName={lastName(r.gop)} demColor={ind ? "#b78cff" : "#3d7bff"} gopColor="#ff3b5c" />
             </section>
           ) : null}
+
+          <section id="history" className="st-sec">
+            <SecTitle title="Race history" sub="Every published forecast for this race, and on election night the live projection and the count, over time" />
+            <RaceHistorySection raceId={r.id} title={`${lastName(r.dem)} vs. ${lastName(r.gop)}`} />
+          </section>
 
           <section id="polls" className="st-sec">
             <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />

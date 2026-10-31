@@ -1,0 +1,575 @@
+{
+ "schemaVersion": "sequence-findings/1",
+ "note": "Curated 2026-10-26 from the sources named. Each finding carries an `anchor`: a verbatim phrase that the build checks against the retrieved text of its source, so a finding whose source text is missing or has changed stops the build. A finding states a rule or a schedule fact. None is a release time, and none becomes a numeric model input. `kind` defaults to SEQUENCE_FINDING.",
+ "findings": [
+  {
+   "id": "AK-quest-review",
+   "state": "AK",
+   "sourceId": "AK_CH20",
+   "category": "PROVISIONAL",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "AS 15.20.205(a)-(b)",
+   "summary": "Alaska questioned ballots are reviewed by the election supervisor beginning on the second day after the election, and counting of questioned ballots that pass review begins on the third day.",
+   "anchor": "On the second day following the day of the election, the election supervisor",
+   "limitations": [
+    "State law says when review and counting may happen; it does not say when or how the Division of Elections publishes the results of that count"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "AK-abs-late",
+   "state": "AK",
+   "sourceId": "AK_CH20",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "AS 15.20.201(d)",
+   "summary": "Absentee ballots that reach an election supervisor after the district absentee ballot counting review is complete are forwarded to the director rather than counted in that district review, so they arrive as a later batch.",
+   "anchor": "after the completion of the district absentee ballot counting review shall be forwarded immediately to the director",
+   "limitations": [
+    "Describes where late-arriving absentee ballots go; the date and form of the resulting count are not stated"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "AZ-early-receipt",
+   "state": "AZ",
+   "sourceId": "AZ_ARS_16_551",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "A.R.S. 16-551(C)",
+   "summary": "Arizona early ballots received before 7:00 p.m. on Election Day go to the early election board for counting.",
+   "anchor": "before 7:00 p.m. on election day",
+   "limitations": [
+    "Arizona 'early ballots' are mail ballots, including those dropped off in person; the statute does not separate them"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "AZ-early-release",
+   "state": "AZ",
+   "sourceId": "AZ_ARS_16_551",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "A.R.S. 16-551(C)",
+   "summary": "Partial or complete tallies of the early election board may not be released before all precincts have reported or one hour after polls close on Election Day, whichever occurs first.",
+   "anchor": "one hour after the closing of the polls on election day, whichever occurs first",
+   "limitations": [
+    "A restriction on releasing early-ballot tallies, not a schedule; it sets the earliest point, not when counties publish"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "AZ-eday-tabulation",
+   "state": "AZ",
+   "sourceId": "AZ_ARS_16_622",
+   "category": "ELECTION_DAY_IN_PERSON",
+   "fact": "TABULATION_WINDOW",
+   "cite": "A.R.S. 16-622",
+   "summary": "After the polls close, unofficial returns may be released during counting of ballots by vote tabulating equipment, subject to the early-ballot restrictions in 16-550 and 16-551.",
+   "anchor": "unofficial returns may be released during the counting of the ballots by vote tabulating equipment",
+   "limitations": [
+    "Permission to release unofficial returns, not a schedule or an order between methods"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "AZ-cure",
+   "state": "AZ",
+   "sourceId": "AZ_ARS_16_550",
+   "category": "CURE_ADJUDICATION_CANVASS",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "A.R.S. 16-550(A)",
+   "summary": "Arizona voters may correct a missing early-ballot signature until the fifth business day after a general election that includes a federal office, so ballots can still be added after Election Day.",
+   "anchor": "not later than the fifth business day after a primary, general or special election that includes a federal office",
+   "limitations": [
+    "A cure deadline: it shows ballots can still be added, not how many or how they lean"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "CO-mail-open",
+   "state": "CO",
+   "sourceId": "CO_CRS_1_7_5_107_5",
+   "category": "MAIL_ABSENTEE",
+   "fact": "TABULATION_WINDOW",
+   "cite": "C.R.S. 1-7.5-107.5",
+   "summary": "Counting of Colorado mail ballots may begin fifteen days before the election, and counties with more than ten thousand active electors at the previous general election must begin no later than four days before.",
+   "anchor": "fifteen days prior to the election",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "The section sits in the mail-ballot-election article; its application to a state general election is not confirmed from this page alone"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "CO-mail-release",
+   "state": "CO",
+   "sourceId": "CO_CRS_1_7_5_107_5",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "C.R.S. 1-7.5-107.5",
+   "summary": "No information concerning the mail-ballot count may be released by election officials or watchers until after 7:00 p.m. on Election Day.",
+   "anchor": "until after 7 p.m. on election day",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "A restriction, not a release schedule"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "FL-report-30",
+   "state": "FL",
+   "sourceId": "FL_102_141",
+   "category": "MIXED_OR_UNKNOWN",
+   "fact": "REPORTING_REQUIREMENT",
+   "cite": "Fla. Stat. 102.141(4)(b)",
+   "summary": "Each Florida county must report early voting and tabulated vote-by-mail results to the Department of State within 30 minutes after polls close, and then update at least every 45 minutes until all results are reported.",
+   "anchor": "within 30 minutes after the polls close",
+   "limitations": [
+    "A deadline for reporting to the Department of State, not a statement of when a county posts publicly",
+    "Early and vote-by-mail are reported together, so the first batch is a mixed batch the statute does not separate"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "FL-embargo",
+   "state": "FL",
+   "sourceId": "FL_102_141",
+   "category": "MIXED_OR_UNKNOWN",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "Fla. Stat. 102.141(4)(a)",
+   "summary": "Florida bars making public the tabulation of votes cast in the pre-Election-Day processing of early voting and vote-by-mail ballots (ss. 101.5614(8), 101.657, 101.68(2)) before the close of the polls on Election Day.",
+   "anchor": "before the close of the polls on election day",
+   "limitations": [
+    "A restriction, not a schedule"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "FL-cure",
+   "state": "FL",
+   "sourceId": "FL_101_68",
+   "category": "CURE_ADJUDICATION_CANVASS",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "Fla. Stat. 101.68 (cure provision)",
+   "summary": "A Florida vote-by-mail voter may cure a missing or mismatched signature until 5 p.m. on the second day after the election.",
+   "anchor": "5 p.m. on the 2nd day after the election",
+   "limitations": [
+    "A cure deadline: it shows ballots can still be added, not how many or how they lean"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "GA-abs-receipt",
+   "state": "GA",
+   "sourceId": "GA_GOV_GENERAL_2026",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Georgia 2026 General Election page",
+   "summary": "Georgia voters can return a completed absentee ballot to a drop box or the county registrar's office until polls close at 7 p.m.",
+   "anchor": "by the time polls close at 7 p.m.",
+   "limitations": [
+    "Voter-facing summary page; the statute was not retrieved",
+    "Says nothing about when absentee ballots are counted or published"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "IA-abs-10pm",
+   "state": "IA",
+   "sourceId": "IA_CODE_53_23",
+   "category": "MAIL_ABSENTEE",
+   "fact": "TABULATION_WINDOW",
+   "cite": "Iowa Code 53.23(1)",
+   "summary": "Iowa's special precinct election board must have enough members to finish counting absentee ballots by 10:00 p.m. on Election Day.",
+   "anchor": "complete the counting of absentee ballots by 10:00 p.m. on election day",
+   "limitations": [
+    "A staffing standard, not a guarantee of when results post"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "IA-abs-release",
+   "state": "IA",
+   "sourceId": "IA_CODE_53_23",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "Iowa Code 53.23",
+   "summary": "Where the Iowa special precinct election board begins counting absentee ballots the day before Election Day, it may not release its tabulation until the count is completed on Election Day.",
+   "anchor": "until the count is completed on election day",
+   "limitations": [
+    "A restriction on the board's own tabulation; it does not say when the county publishes the count"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "KS-adv-original",
+   "state": "KS",
+   "sourceId": "KS_25_1134",
+   "category": "MIXED_OR_UNKNOWN",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "K.S.A. 25-1134",
+   "summary": "Kansas advance voting ballots (mail and in-person advance voting together) may have their original canvass before Election Day, but final tabulation may not be completed before Election Day.",
+   "anchor": "shall not complete final tabulation prior to election day",
+   "limitations": [
+    "Advance voting combines mail and in-person advance ballots; the statute does not separate them"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "KS-canvass",
+   "state": "KS",
+   "sourceId": "KS_25_3104",
+   "category": "CURE_ADJUDICATION_CANVASS",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "K.S.A. 25-3104",
+   "summary": "The Kansas county canvass is held on the Monday after the election, and a county may move it to a business day no later than 13 days after the election.",
+   "anchor": "not later than 13 days following any election",
+   "limitations": [
+    "County canvass date; the state certification date is separate"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "ME-abs-release",
+   "state": "ME",
+   "sourceId": "ME_759",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "21-A M.R.S. 759",
+   "summary": "Maine absentee ballots may not be counted, and results may not be obtained or released, until after the polls have closed on Election Day.",
+   "anchor": "until after the polls have closed on election day",
+   "limitations": [
+    "Read from the statute text as retrieved; a restriction, not a schedule"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "NE-abs-open",
+   "state": "NE",
+   "sourceId": "NE_32_1027",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "Neb. Rev. Stat. 32-1027",
+   "summary": "The Nebraska counting board may begin its duties no earlier than the second Friday before the election.",
+   "anchor": "not earlier than the second Friday before the election",
+   "limitations": [
+    "Processing window only; Nebraska results are released after polls close in practice, which this source does not say"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "NE-abs-count",
+   "state": "NE",
+   "sourceId": "NE_32_1027",
+   "category": "MAIL_ABSENTEE",
+   "fact": "TABULATION_WINDOW",
+   "cite": "Neb. Rev. Stat. 32-1027",
+   "summary": "Nebraska counting boards may begin counting early ballots no earlier than 24 hours before polls open on Election Day.",
+   "anchor": "twenty-four hours prior to the opening of the polls",
+   "limitations": [
+    "A tabulation window; it does not say when the count is published"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "NY-abs-canvass",
+   "state": "NY",
+   "sourceId": "NY_9_209",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "N.Y. Election Law 9-209",
+   "summary": "New York boards of canvassers examine absentee and mail ballot affirmation envelopes within one day of receipt, so mail ballots are processed on a rolling basis.",
+   "anchor": "within one day of receipt",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "Processing rule only"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "NY-cure",
+   "state": "NY",
+   "sourceId": "NY_9_209",
+   "category": "CURE_ADJUDICATION_CANVASS",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "N.Y. Election Law 9-209",
+   "summary": "New York boards notify a voter of a ballot-envelope defect within one day of determining it, and the voter may cure; ballots can be added after Election Day.",
+   "anchor": "within one day of such determination",
+   "limitations": [
+    "Read from a public mirror of the statute (secondary)",
+    "A cure rule: it does not say how many ballots are affected"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "OH-abs-process",
+   "state": "OH",
+   "sourceId": "OH_3509_06",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "R.C. 3509.06",
+   "summary": "Ohio boards may process absent voter's ballots before the time for counting them, but may not tabulate or count the votes before that time.",
+   "anchor": "shall not tabulate or count the votes on those ballots before that time",
+   "limitations": [
+    "Processing versus counting rule; the time for counting is set elsewhere and not in this finding"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "OH-prov",
+   "state": "OH",
+   "sourceId": "OH_3505_183",
+   "category": "PROVISIONAL",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "R.C. 3505.183",
+   "summary": "Ohio provisional ballot envelopes are kept sealed in a secure location until their validity is determined, so provisional ballots are counted after Election Day review.",
+   "anchor": "until the validity of those ballots is determined",
+   "limitations": [
+    "Describes the holding of provisional ballots; the date of the count is not stated here"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "PA-mail-receipt",
+   "state": "PA",
+   "sourceId": "PA_UPCOMING_ELECTIONS",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Pennsylvania Department of State, election calendar",
+   "summary": "Pennsylvania counties must receive completed mail-in and civilian absentee ballots by 8:00 p.m. on Election Day.",
+   "anchor": "Last day for county election office to receive completed mail-in and civilian absentee ballots",
+   "limitations": [
+    "A receipt deadline from the Department of State's calendar page; the statute page was not retrievable with its text"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "PA-uocava-receipt",
+   "state": "PA",
+   "sourceId": "PA_UPCOMING_ELECTIONS",
+   "category": "MILITARY_OVERSEAS",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Pennsylvania Department of State, election calendar",
+   "summary": "Pennsylvania counties may receive military and overseas absentee ballots after Election Day; the calendar lists November 10, 2026 as the last day.",
+   "anchor": "Last day for county election office to receive completed military and overseas absentee ballots",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "SC-abs-open",
+   "state": "SC",
+   "sourceId": "SC_CH15",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "S.C. Code 7-15-420",
+   "summary": "South Carolina managers may begin examining absentee ballot envelopes no earlier than 7:00 a.m. on the second day before Election Day.",
+   "anchor": "Beginning no earlier than 7:00 a.m. on the second day immediately preceding election day",
+   "limitations": [
+    "Processing window only"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "SC-abs-count",
+   "state": "SC",
+   "sourceId": "SC_CH15",
+   "category": "MAIL_ABSENTEE",
+   "fact": "TABULATION_WINDOW",
+   "cite": "S.C. Code 7-15-420",
+   "summary": "South Carolina absentee ballots may be tabulated beginning no earlier than 7:00 a.m. on Election Day, including absentee ballots received on Election Day.",
+   "anchor": "Beginning no earlier than 7:00 a.m. on election day",
+   "limitations": [
+    "A tabulation window; it does not say when the count is published"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "SC-abs-unit",
+   "state": "SC",
+   "sourceId": "SC_CH15",
+   "category": "MAIL_ABSENTEE",
+   "fact": "REPORTING_UNIT_NOTE",
+   "cite": "S.C. Code 7-15-410",
+   "summary": "Each South Carolina county board is responsible for tabulating and reporting the ballots of an absentee voting precinct, so absentee results form their own reporting unit.",
+   "anchor": "is responsible for the tabulation and reporting of ballots at the absentee voting precinct",
+   "limitations": [
+    "States the unit; whether a county publishes it separately is not stated"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "SC-late",
+   "state": "SC",
+   "sourceId": "SC_CH15",
+   "category": "LATE_ARRIVING_ELIGIBLE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "S.C. Code Title 7, Chapter 15 (absentee voting; section number not shown in the retrieved text)",
+   "summary": "South Carolina does not count an absentee ballot received by the election officials after the time for closing of the polls.",
+   "anchor": "after time for closing of the polls",
+   "limitations": [
+    "Means no late-arriving mail ballots for ordinary absentee voters; military and overseas voters are covered by a separate rule"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "TX-mail-receipt",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "MAIL_ABSENTEE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+   "summary": "Texas carrier-envelope ballots received by 7:00 p.m. on Election Day, November 3, 2026, must be counted on election night.",
+   "anchor": "must be counted on election night",
+   "limitations": [
+    "Secretary of State election-law calendar; the statute page itself was not retrievable"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "TX-late-domestic",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "LATE_ARRIVING_ELIGIBLE",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+   "summary": "Texas accepts late domestic mail ballots received by 5:00 p.m. on November 4, 2026 if they were placed in delivery by 7:00 p.m. on Election Day.",
+   "anchor": "Deadline to receive \"late domestic ballots\"",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "TX-uocava",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "MILITARY_OVERSEAS",
+   "fact": "RECEIPT_DEADLINE",
+   "cite": "Tex. Elec. Code 86.007; SOS Advisory 2026-21",
+   "summary": "Texas accepts ballots from voters casting ballots from outside the United States, including some military voters, received by Monday, November 9, 2026 if placed in delivery by 7:00 p.m. on Election Day.",
+   "anchor": "Last day to receive ballots from non-military and any military voters casting ballots from outside of the United States",
+   "limitations": [
+    "A receipt deadline: it shows ballots can still be added, not how many"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "TX-ballot-board",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "MIXED_OR_UNKNOWN",
+   "fact": "RELEASE_RESTRICTION",
+   "cite": "Tex. Elec. Code 87.0222, 87.0241",
+   "summary": "Texas early voting ballot boards (early in-person and mail together) may begin counting before Election Day in larger counties, but results may not be announced until after the polls close.",
+   "anchor": "the results may not be announced until after the polls close",
+   "limitations": [
+    "The early voting ballot board handles early in-person and mail ballots together; the source does not separate them"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "TX-eday-tape",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "ELECTION_DAY_IN_PERSON",
+   "fact": "REPORTING_REQUIREMENT",
+   "cite": "Tex. Elec. Code 61.002",
+   "summary": "Immediately after polls close, the presiding judge prints the tape showing votes for each candidate at the precinct, the first Election Day in-person numbers.",
+   "anchor": "Immediately after the closing of the polls on election day, the presiding judge or alternate judge shall print the tape",
+   "limitations": [
+    "A precinct-level duty; when a county publishes its totals is not stated"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "TX-prov-late",
+   "state": "TX",
+   "sourceId": "TX_SOS_ADVISORY_2026_21",
+   "category": "PROVISIONAL",
+   "fact": "CURE_OR_REVIEW_WINDOW",
+   "cite": "Tex. Elec. Code 127.131",
+   "summary": "Texas central counting stations process late-arriving ballots by mail and provisional ballots at a later meeting after election-day tabulation closes.",
+   "anchor": "to process late-arriving ballots by mail and provisional ballots",
+   "limitations": [
+    "Describes a later processing meeting; its date is not stated"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "WI-central",
+   "state": "WI",
+   "sourceId": "WI_7_52",
+   "category": "MAIL_ABSENTEE",
+   "fact": "REPORTING_UNIT_NOTE",
+   "cite": "Wis. Stat. 7.52",
+   "summary": "A Wisconsin municipality may canvass absentee ballots at a central municipal board instead of at polling places, so absentee results can arrive as a separate batch from ward results.",
+   "anchor": "absentee ballots received by the municipal clerk by 8 p.m. on election day",
+   "limitations": [
+    "Central count is chosen municipality by municipality; the statute does not say which municipalities use it"
+   ],
+   "confidence": "HIGH"
+  },
+  {
+   "id": "WI-open-eday",
+   "state": "WI",
+   "sourceId": "WI_6_88",
+   "category": "MAIL_ABSENTEE",
+   "fact": "PROCESSING_WINDOW",
+   "cite": "Wis. Stat. 6.88(1)",
+   "summary": "Wisconsin absentee ballot envelopes are opened on Election Day during polling hours, at the polling place or at a central count under 7.52.",
+   "anchor": "during polling hours on election day",
+   "limitations": [
+    "Processing rule only"
+   ],
+   "confidence": "HIGH"
+  }
+ ],
+ "practices": [
+  {
+   "id": "AZ-inventory",
+   "kind": "OUTSTANDING_INVENTORY_SOURCE",
+   "state": "AZ",
+   "sourceId": "AZ_ARS_16_551",
+   "cite": "A.R.S. 16-551(D)",
+   "summary": "Arizona requires the county recorder to count the early ballots returned at voting locations on Election Day and post that total with the last unofficial results released on election night. It is an official count of ballots returned, not of ballots left to tabulate.",
+   "anchor": "last unofficial results that are released on election night",
+   "limitations": [
+    "Statute requires posting; where and in what form each county posts it in 2026 is not verified",
+    "It counts ballots returned on Election Day, not ballots remaining after tabulation"
+   ],
+   "confidence": "MEDIUM"
+  },
+  {
+   "id": "ME-rcv",
+   "kind": "RANKED_CHOICE",
+   "state": "ME",
+   "sourceId": "ME_723_A",
+   "cite": "21-A M.R.S. 723-A",
+   "summary": "Maine determines the winner of an office elected by ranked-choice voting through the ranked-choice count described in 723-A and Secretary of State rules.",
+   "anchor": "Determination of winner in election for an office elected by ranked-choice voting",
+   "limitations": [
+    "The retrieved text does not give the timing of rounds or which federal offices use it"
+   ],
+   "confidence": "MEDIUM"
+  }
+ ],
+ "timings": [
+  {
+   "id": "FL-expected",
+   "state": "FL",
+   "sourceId": "FL_102_141",
+   "cite": "Fla. Stat. 102.141(4)(b)",
+   "kind": "OFFICIAL_EXPECTED_RELEASE_TIME",
+   "localText": "Early voting and tabulated vote-by-mail results are due to the Department of State within 30 minutes after polls close; updated results at least every 45 minutes until complete",
+   "anchor": "within 30 minutes after the polls close",
+   "limitations": [
+    "A legal reporting deadline to the Department of State, not a statement of when a county posts publicly",
+    "Not a statement of what share of ballots the first report holds"
+   ],
+   "confidence": "MEDIUM"
+  }
+ ]
+}
