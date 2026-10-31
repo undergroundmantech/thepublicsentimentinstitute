@@ -16,16 +16,24 @@ export type Board = { id: string; st: string; c: [string, string][]; m: number }
 export const cents = (p: number) => `${Math.round(p * 100)}¢`;
 const KX = "#09bc7f", KX2 = "#067a54", INK = "#0b0716", MUTE = "#4a3a80", DIM = "#241848";
 
-/** Live Kalshi prices for a list of race ids, fetched once. */
+/** Live Kalshi prices for a list of race ids. Oct 31 2026: asked for in batches of 20, two at a time, and merged as they
+ *  land, so the lobby fills in race by race and no race is dropped from an oversized request. */
 export function useKalshi(ids: string[]): KxMap {
   const [m, setM] = useState<KxMap>({});
   const key = ids.join(",");
   useEffect(() => {
     if (!key) return; let live = true;
-    fetch(`/api/kalshi?ids=${encodeURIComponent(key)}`).then((x) => (x.ok ? x.json() : null)).then((j) => { if (live && j?.races) setM(j.races as KxMap); }).catch(() => {});
+    const all = key.split(","), B: string[][] = [];
+    for (let i = 0; i < all.length; i += 20) B.push(all.slice(i, i + 20));
+    const run = async () => { for (let b = B.shift(); b && live; b = B.shift()) { const j = await fetchKalshi(b); if (live && j) setM((o) => ({ ...o, ...j })); } };
+    run(); run();
     return () => { live = false; };
   }, [key]);
   return m;
+}
+/** Prices for a few race ids straight from /api/kalshi, or null if the request fails. */
+export async function fetchKalshi(ids: string[]): Promise<KxMap | null> {
+  try { const x = await fetch(`/api/kalshi?ids=${encodeURIComponent(ids.join(","))}`); if (!x.ok) return null; const j = await x.json(); return (j?.races as KxMap) ?? null; } catch { return null; }
 }
 type Hist = { event?: string; sides: { party: string; name: string; price: number; pts: { t: number; p: number }[] }[] };
 /** The real market's daily price history for one race. */

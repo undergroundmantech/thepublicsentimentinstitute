@@ -18,7 +18,7 @@ export function eventTickers(raceId: string): string[] {
 
 /** One side of a Kalshi race market, priced in dollars: 0.62 is 62 cents, a 62 percent chance. */
 export type KalshiSide = { ticker: string; party: "D" | "R" | "I" | "?"; name: string; price: number; prev: number | null; bid: number | null; ask: number | null; volume: number | null };
-export type KalshiRace = { id: string; event: string; title: string; sides: KalshiSide[]; asOf: string };
+export type KalshiRace = { id: string; event: string; series: string; title: string; sides: KalshiSide[]; asOf: string };
 
 const num = (v: unknown) => { const n = typeof v === "string" ? parseFloat(v) : typeof v === "number" ? v : NaN; return isFinite(n) ? n : null; };
 /** Kalshi has reported prices in cents and, more recently, in dollar strings; read either. */
@@ -38,7 +38,8 @@ export function readEvent(id: string, j: { event?: Record<string, unknown>; mark
     sides.push({ ticker, party, name: String(m.yes_sub_title ?? m.subtitle ?? ""), price, prev: dollars(m, "previous_price"), bid, ask, volume: num(m.volume_fp ?? m.volume) });
   }
   if (!sides.length) return null;
-  return { id, event: String(ev.event_ticker ?? sides[0].ticker.split("-").slice(0, -1).join("-")), title: String(ev.title ?? ""), sides, asOf };
+  const event = String(ev.event_ticker ?? sides[0].ticker.split("-").slice(0, -1).join("-"));
+  return { id, event, series: String(ev.series_ticker ?? event.split("-")[0]), title: String(ev.title ?? ""), sides, asOf };
 }
 
 const sur = (n: string) => n.trim().split(/\s+/).pop()?.toLowerCase() ?? "";
@@ -52,5 +53,28 @@ export function priceFor(k: KalshiRace | null | undefined, name: string, party: 
   const byParty = k.sides.find((x) => x.party === p) ?? (p === "I" ? k.sides.find((x) => x.party === "D") : undefined);
   if (byParty) return byParty.price;
   if (k.sides.length === 2) { const other = k.sides.find((x) => x.party === (p === "R" ? "D" : "R")); if (other) return Math.max(0, 1 - other.price); }
+  return null;
+}
+
+/** Fetch one Kalshi URL, waiting and retrying once when Kalshi asks us to slow down. Returns the response or null. */
+export async function kalshiGet(url: string, revalidate: number, timeout = 6000): Promise<Response | null> {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const r = await fetch(url, { next: { revalidate }, headers: { accept: "application/json" }, signal: AbortSignal.timeout(timeout) });
+      if (r.status === 429 || r.status >= 500) { await new Promise((ok) => setTimeout(ok, 350 * (attempt + 1))); continue; }
+      return r;
+    } catch { await new Promise((ok) => setTimeout(ok, 200)); }
+  }
+  return null;
+}
+/** One race from Kalshi: each spelling of its event in turn, moving on only when Kalshi has no such event. */
+export async function fetchRace(id: string): Promise<KalshiRace | null> {
+  for (const t of eventTickers(id)) {
+    const r = await kalshiGet(`${KALSHI_API}/events/${encodeURIComponent(t)}?with_nested_markets=true`, 120);
+    if (!r) return null;
+    if (r.status === 404) continue;
+    if (!r.ok) return null;
+    try { const k = readEvent(id, await r.json()); if (k) return k; } catch { return null; }
+  }
   return null;
 }
