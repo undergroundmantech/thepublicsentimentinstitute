@@ -88,3 +88,17 @@ test("count-up animation never overshoots and lands exactly on the value", () =>
   assert.equal(pctPoints(countFrame(0, 99.7, 1)), "99.7%");
   assert.equal(percentIn(countFrame(0, 99.04, 1)), ">99%");
 });
+
+test("the results index carries each forecast win probability at the forecast's own precision", () => {
+  const model = JSON.parse(fs.readFileSync(path.join(root, "public/forecast/model.json"), "utf8"));
+  const ix = JSON.parse(fs.readFileSync(path.join(root, "public/results/2026/index.json"), "utf8"));
+  const byId = new Map(ix.races.map((r) => [r.id, r]));
+  let checked = 0;
+  for (const r of model.races) {
+    const x = byId.get(r.id);
+    if (!x || r.est?.prob == null) continue;
+    checked++;
+    assert.ok(Math.abs(x.pR - r.est.prob) < 5e-5, `${r.id}: index ${x.pR} vs forecast ${r.est.prob}`);
+  }
+  assert.ok(checked > 400, `checked ${checked} races`);
+});

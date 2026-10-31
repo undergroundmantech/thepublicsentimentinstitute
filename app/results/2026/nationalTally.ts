@@ -32,5 +32,5 @@ export function watchBar(r: XRace, c: CRace | undefined, live: boolean): WatchBa
     return { pD, ind, caption: "Reported vote share", label: `Reported two-way vote share: ${side} ${(pD * 100).toFixed(1)}%` };
   }
   if (r.pR == null) return null;
-  return { pD: 1 - r.pR, ind, caption: "Pre-election forecast", label: `Pre-election forecast, not a result: ${side} ${Math.round((1 - r.pR) * 100)}% chance` };
+  return { pD: 1 - r.pR, ind, caption: "Pre-election forecast", label: `Pre-election forecast, not a result: ${side} ${((1 - r.pR) * 100).toFixed(1)}% chance` };
 }

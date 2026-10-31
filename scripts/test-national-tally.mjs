@@ -71,6 +71,7 @@ const late = { ...mixed[sen.id], pr: 95 };
 assert.equal(watchBar(sen, late, true).pD, a.pD, "percent reporting must not move the bar");
 const pre = watchBar(sen, undefined, false);
 assert.equal(pre.caption, "Pre-election forecast"); assert.equal(pre.pD, 0.6); assert.match(pre.label, /not a result/);
+assert.match(watchBar({ ...sen, pR: 0.005 }, undefined, false).label, /Democratic 99\.5% chance/, "one decimal, no rounding to 100 or 99");
 assert.equal(watchBar(meas, undefined, false), null, "no forecast probability, no bar");
 assert.equal(watchBar(sen, undefined, true), null, "live mode without votes draws nothing");
 assert.equal(watchBar(sen, cr("s", 5, [cand("Jon Ossoff", "Democratic", 0), cand("Mike Collins", "Republican", 0)]), true), null, "zero two-way votes draws nothing");

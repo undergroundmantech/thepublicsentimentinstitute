@@ -23,6 +23,8 @@ OFFICE_CIV = {
     "education-board": ["State Board of Education", "Education"], "supreme-court": ["Supreme Court", "Judicial"],
 }
 r1 = lambda x: None if x is None else round(float(x), 2)
+# Probabilities keep the forecast's own precision (4 places); 2 places turned 0.005 into 0.01.
+p4 = lambda x: None if x is None else round(float(x), 4)
 idx, per = [], {}
 def st_file(st): return per.setdefault(st, {"counties": {}, "leg": {}})
 
@@ -40,7 +42,7 @@ for r in model["races"]:
     cands = [[c["name"], c["party"], int(c.get("votes") or 0)] for c in r.get("cands", []) if c.get("name") and not c["name"].startswith("No ")]
     e = {"id": r["id"], "k": o, "st": r["st"], "nm": r["name"] if o != "house" else f"{r['state']} {int(r['district']) if r['district'] else 'at large'}",
          "off": {"sen": "U.S. Senate", "gov": "Governor", "house": "U.S. House"}[o], "c": cands, "tot": int(v.get("total") or 0),
-         "m": r1(r["est"]["margin"]), "pR": r1(r["est"]["prob"]), "href": None,
+         "m": r1(r["est"]["margin"]), "pR": p4(r["est"]["prob"]), "href": None,
          "civ": {"t": ["US Senate"] if o == "sen" else ["Governor"] if o == "gov" else ["House of Representatives", "US House"],
                  "d": f"{r['st']}-{int(r['district']):02d}" if o == "house" else None}}
     if o == "house" and r["st"] in ("AK", "WY", "ND", "SD", "VT", "DE"): e["civ"]["al"] = True
@@ -58,7 +60,7 @@ for r in db["races"]:
         nm = x.get("name") if isinstance(x, dict) else x
         if nm: cands.append([nm, (x.get("party") if isinstance(x, dict) else None) or "O", 0])
     e = {"id": r["id"], "k": "state", "st": r["st"], "nm": f"{r['state']} {r['officeLabel'].lower() if r['officeLabel'][0].isupper() and r['officeLabel'] not in ('Supreme Court',) else r['officeLabel']}",
-         "off": r["officeLabel"], "c": cands, "tot": int(v.get("total") or 0), "m": r1((r.get("est") or {}).get("margin")), "pR": r1((r.get("est") or {}).get("prob")),
+         "off": r["officeLabel"], "c": cands, "tot": int(v.get("total") or 0), "m": r1((r.get("est") or {}).get("margin")), "pR": p4((r.get("est") or {}).get("prob")),
          "civ": {"t": OFFICE_CIV.get(r["office"], [r["officeLabel"]]), "seat": r.get("seat")}}
     c = rows(dbc, r["id"])
     if c: st_file(r["st"])["counties"][r["id"]] = c; e["cty"] = len(c)
@@ -72,7 +74,7 @@ for r in meas["measures"]:
     v = r.get("votes") or {}
     e = {"id": r["id"], "k": "measure", "st": r["st"], "nm": f"{STN.get(r['st'], r['st'])} {r['label']}", "off": r["title"],
          "c": [["Yes", "Y", int(v.get("yes") or 0)], ["No", "N", int(v.get("no") or 0)]], "tot": int(v.get("total") or 0),
-         "yes": r1((r.get("est") or {}).get("yes")), "pPass": r1((r.get("est") or {}).get("prob")), "thr": r.get("threshold"),
+         "yes": r1((r.get("est") or {}).get("yes")), "pPass": p4((r.get("est") or {}).get("prob")), "thr": r.get("threshold"),
          "civ": {"t": ["Proposition", "Referendum", "Ballot Measure", "Initiative", "Amendment", "Constitutional Amendment", "Question", "Issue"], "n": mkey(r["label"]), "lab": r["label"]}}
     c = {}
     for f, x in (mc.get(r["id"]) or {}).items():
@@ -86,10 +88,10 @@ for ch in sh["chambers"]:
     dists = []
     for d in ch.get("districts") or []:
         v = d.get("votes") or [0, 0, 0, 0]
-        dists.append({"d": str(d["d"]), "s": d.get("seats", 1), "D": d.get("dem"), "R": d.get("gop"), "I": d.get("ind"), "v": [int(x or 0) for x in v[:4]], "m": r1(d.get("margin")), "pD": r1(d.get("probD")), "st": d.get("status")})
+        dists.append({"d": str(d["d"]), "s": d.get("seats", 1), "D": d.get("dem"), "R": d.get("gop"), "I": d.get("ind"), "v": [int(x or 0) for x in v[:4]], "m": r1(d.get("margin")), "pD": p4(d.get("probD")), "st": d.get("status")})
     st_file(st)["leg"][ch["id"]] = dists
     idx.append({"id": ch["id"], "k": "leg", "st": st, "nm": ch["name"], "off": lab, "up": ch.get("up"), "seats": ch.get("seats"), "maj": ch.get("majority"),
-                "dS": r1(ch.get("demSeats")), "rS": r1(ch.get("gopSeats")), "pD": r1(ch.get("demControl")), "pR": r1(ch.get("gopControl")), "nd": len(dists),
+                "dS": r1(ch.get("demSeats")), "rS": r1(ch.get("gopSeats")), "pD": p4(ch.get("demControl")), "pR": p4(ch.get("gopControl")), "nd": len(dists),
                 "civ": {"t": ["State Assembly", "State House", "House of Delegates"] if ch["chamber"] == "house" else ["State Senate"], "code": "HD" if ch["chamber"] == "house" else "SD"}})
 
 # courts, mayors and local races: candidates only, no expected vote

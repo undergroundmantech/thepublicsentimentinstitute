@@ -51,7 +51,7 @@ function favored(r: XRace): string | null {
   const p = pair(r), lead = r.m > 0 ? p.b : p.a; if (!lead) return null;
   if (Math.abs(r.m) >= 99) return `${lead} is unopposed.`;
   const pw = r.m > 0 ? r.pR : 1 - r.pR;
-  return `${lead} leads the On Point forecast by ${Math.abs(r.m).toFixed(1)} points and wins ${Math.round(pw * 100)} percent of the model's simulated elections.`;
+  return `${lead} leads the On Point forecast by ${Math.abs(r.m).toFixed(1)} points and wins ${(pw * 100).toFixed(1)} percent of the model's simulated elections.`;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
