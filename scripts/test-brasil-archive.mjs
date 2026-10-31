@@ -3,7 +3,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
@@ -41,11 +40,13 @@ test("the archived payload is labelled unofficial and dated, and its totals matc
   assert.ok(read("app/lib/llms.ts").includes(`${lula} to ${flavio} percent at ${pr} percent`));
 });
 
-test("the forecast files are unchanged from the last commit", () => {
-  for (const f of ["public/brasil/br.json", "app/brasil/exp.json"]) {
-    const diff = execFileSync("git", ["diff", "--quiet", "HEAD", "--", f], { cwd: ROOT, stdio: "pipe" }).toString();
-    assert.equal(diff, "", f);
-  }
+test("the forecast files are byte-identical to the published pre-election forecast", () => {
+  // SHA-256 of both files at 955eecd5, the last commit before the archive
+  const PUBLISHED = {
+    "public/brasil/br.json": "37692480e80f74aad3dbc3951943b5e82640067f1c79f988dc02ad219f41aaa1",
+    "app/brasil/exp.json": "a314511f9d495f6d350b8df95a362ec97f800669c949dbb43e0028aac8470c29",
+  };
+  for (const [f, h] of Object.entries(PUBLISHED)) assert.equal(createHash("sha256").update(readFileSync(join(ROOT, f))).digest("hex"), h, f);
 });
 
 test("the client reads the archive once: no polling and no live API", () => {
