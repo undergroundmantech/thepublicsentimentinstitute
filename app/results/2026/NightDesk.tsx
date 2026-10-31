@@ -130,7 +130,9 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
     const side = p === "D" || p === "Y" || (p === "I" && ind) ? "A" : p === "R" || p === "N" ? "B" : null;
     return { side, share: rc && es.t ? (100 * rc[2]) / es.t : null };
   };
-  const finA = P.fin.t ? (100 * P.fin.a) / P.fin.t : 0, finB = P.fin.t ? (100 * P.fin.b) / P.fin.t : 0, finO = P.fin.t ? (100 * P.fin.o) / P.fin.t : 0;
+  // before any return the projection is the forecast itself, so the bars read the forecast's expected shares
+  const F = P.fin.t ? P.fin : es;
+  const finA = F.t ? (100 * F.a) / F.t : 0, finB = F.t ? (100 * F.b) / F.t : 0, finO = F.t ? (100 * F.o) / F.t : 0;
   const nowA = P.rep.t ? (100 * P.rep.a) / P.rep.t : null, nowB = P.rep.t ? (100 * P.rep.b) / P.rep.t : null;
   const headline = !P.rep.t
     ? `No votes are counted yet. This is the forecast: ${leadName} ahead by ${margin.toFixed(1)} points, winning ${probLabel(leadP)} percent of simulations. Each county's expected vote is set; returns replace it as they land.`
@@ -213,7 +215,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           <div className="topline-shell">
             {civWinner || projected ? (
               <CallBand kind={civWinner ? "official" : "projected"} name={civWinner ? civWinner[0] : lead === "A" ? A : B} calledBy="civicAPI"
-                detail={`${signed(lead === "A" ? -P.m : P.m)} margin · ${fmtN(gap)} votes · ${pctLabel(P.pctIn)}% of the estimated vote counted`} />
+                detail={`${counted ? `${signed((100 * gap) / counted)} margin · ${fmtN(gap)} votes · ` : ""}${pctLabel(P.pctIn)}% of the estimated vote counted`} />
             ) : null}
             <header className="topline-header">
               <div className="topline-title"><h2 id="nd-res">Reported results</h2><p>Actual reported votes from civicAPI. Forecast estimates appear separately.</p></div>
