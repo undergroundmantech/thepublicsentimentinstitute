@@ -10,7 +10,7 @@ import {
   readoutAt, SHADOW_COLOR, stepTime, timeTicks, windowSeries, ZONE_LABEL, zoneName,
   type ChartData, type ChartId, type Freshness, type HistoryCandidate, type PreparedHistory, type RangeId, type ReadoutRow, type Series, type SeriesPoint, type Tick, type ZoneId,
 } from "@/app/lib/intelligence/raceHistory";
-import { pctPoints } from "@/app/lib/fmtPct";
+import { percentIn, pctPoints } from "@/app/lib/fmtPct";
 
 const TAB_LABEL: Record<ChartId, string> = { prob: "WIN PROBABILITY", margin: "EXPECTED MARGIN", votes: "VOTE TOTALS", reported: "PERCENT REPORTED", counted: "COUNTED MARGIN", modeled: "MODELED FINAL MARGIN" };
 const DEFAULT_CHARTS: ChartId[] = ["prob", "margin", "votes"];
@@ -174,7 +174,8 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
     for (let i = list.length - 1; i >= 0; i--) list[i].y = Math.min(list[i].y, i === list.length - 1 ? floor : list[i + 1].y - gap);
     return list;
   }, [data, mg, endT, T, H, B, yhi, ylo, narrow]);
-  const fmtEnd = (v: number) => (chart === "prob" ? fmtProb(v) : chart === "reported" ? pctPoints(v) : chart === "votes" ? compact(v) : fmtLead(v, ref));
+  // the provider's reporting share is the Percent In figure (">99%" above 99.0); the model's completeness is not
+  const fmtEnd = (v: number, s?: Series) => (chart === "prob" ? fmtProb(v) : chart === "reported" ? (s?.source === "RESULT" ? percentIn(v) : pctPoints(v)) : chart === "votes" ? compact(v) : fmtLead(v, ref));
   const endTag = (s: Series) => (mg ? (s.source === "RESULT" ? "counted" : "") : chart === "reported" ? (s.source === "RESULT" ? "provider" : "est.") : lastName(s.label.replace(/ \(estimated final\)$/, "")));
   const colorAt = (s: Series, v: number) => (mg && s.phase !== "SHADOW" ? (v >= 0 ? plusColor : minusColor) : s.color);
 
@@ -206,7 +207,7 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
   const uid = "rh" + React.useId().replace(/[^a-zA-Z0-9]/g, "");
   const y0 = mg ? y(0) : 0;
   const empty = data.emptyReason;
-  const summary = empty ?? ends.map((e) => `${e.s.label}: ${fmtEnd(e.v)}${mg && e.s.source === "RESULT" ? " counted" : ""}`).join("; ");
+  const summary = empty ?? ends.map((e) => `${e.s.label}: ${fmtEnd(e.v, e.s)}${mg && e.s.source === "RESULT" ? " counted" : ""}`).join("; ");
 
   return (
     <div className="stu rh" ref={wrap}>
@@ -278,8 +279,8 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
             return (
               <g key={`x${s.key}${i}`} className="rh-off">
                 <path d={o.up ? `M${cx - 5},${cy + 7}L${cx},${cy}L${cx + 5},${cy + 7}Z` : `M${cx - 5},${cy - 7}L${cx},${cy}L${cx + 5},${cy - 7}Z`} style={{ fill: c }} />
-                {i === 0 && !narrow ? <text x={cx + 9} y={o.up ? cy + 8 : cy - 1} style={{ fill: c }}>{fmtEnd(o.v)} · off scale</text> : null}
-                <title>{`${s.label}: ${fmtEnd(o.v)}, beyond the chart's scale`}</title>
+                {i === 0 && !narrow ? <text x={cx + 9} y={o.up ? cy + 8 : cy - 1} style={{ fill: c }}>{fmtEnd(o.v, s)} · off scale</text> : null}
+                <title>{`${s.label}: ${fmtEnd(o.v, s)}, beyond the chart's scale`}</title>
               </g>
             );
           }))}
@@ -287,7 +288,7 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
             <g key={`e${e.s.key}`}>
               <circle cx={x(endT)} cy={y(e.v)} r={4} style={{ fill: colorAt(e.s, e.v) }} />
               <text x={W - R + 10} y={e.y + 4.5} className="stu-endl" style={{ fontSize: narrow ? 11.5 : 13, fill: colorAt(e.s, e.v) }}>
-                {e.off ? (e.off > 0 ? "\u25B2" : "\u25BC") : null}{fmtEnd(e.v)}
+                {e.off ? (e.off > 0 ? "\u25B2" : "\u25BC") : null}{fmtEnd(e.v, e.s)}
                 {endTag(e.s) ? (narrow ? <tspan className="stu-ax" x={W - R + 10} dy="12" style={{ fontSize: 9.5 }}>{endTag(e.s).slice(0, 9)}</tspan> : <tspan className="stu-ax" dx="5">{endTag(e.s)}</tspan>) : null}
                 {e.off ? <title>Beyond the chart&apos;s scale</title> : null}
               </text>
@@ -320,7 +321,7 @@ function crossLine(id: ChartId, d: ChartData, h: PreparedHistory, t: number): st
     const txt = [proj ? `${fmtLead(proj.r.value, d.reference)} ${proj.s.phase === "FROZEN" ? "forecast" : "projected"}` : null, cnt ? `${fmtLead(cnt.r.value, d.reference)} counted` : null].filter(Boolean).join(" · ");
     return `${id === "counted" ? "Counted margin" : id === "modeled" ? "Modeled final margin" : "Margin"}: ${txt}`;
   }
-  if (id === "reported") return `Reporting: ${rows.map(({ r, s }) => `${pctPoints(r.value)} ${s.source === "RESULT" ? "provider" : "est. counted"}`).join(" · ")}`;
+  if (id === "reported") return `Reporting: ${rows.map(({ r, s }) => s.source === "RESULT" ? `${percentIn(r.value)} in, provider` : `${pctPoints(r.value)} est. counted`).join(" · ")}`;
   const reported = id === "votes" && rows.some(({ s }) => s.source === "RESULT");
   const best = new Map<string, { r: ReadoutRow; s: Series }>();
   for (const e of rows) {
@@ -332,9 +333,9 @@ function crossLine(id: ChartId, d: ChartData, h: PreparedHistory, t: number): st
   return `${id === "prob" ? "Win chance" : reported ? "Reported votes" : "Est. final votes"}: ${parts.join(" · ")}`;
 }
 
-function fmtValue(chart: ChartId, v: number, ref: ChartData["reference"]): string {
+function fmtValue(chart: ChartId, v: number, ref: ChartData["reference"], key?: string): string {
   if (chart === "prob") return fmtProb(v);
-  if (chart === "reported") return pctPoints(v);
+  if (chart === "reported") return key === "reported:provider" ? percentIn(v) : pctPoints(v);
   if (isMarginChart(chart)) return fmtLead(v, ref);
   return fmtVotes(v);
 }
@@ -385,7 +386,7 @@ function Readout({ readout, data, chart, tz, sides, cross, style, dock }: { read
             <div key={r.seriesKey} className={`r${r.value === null ? " na" : ""}`}>
               <i className={lineClass({ phase: r.phase, dash: r.dash })} style={{ color: isMarginChart(chart) && r.phase !== "SHADOW" && r.value !== null ? sides[r.value >= 0 ? 0 : 1] : r.color }} />
               <span>{r.label}{isMarginChart(chart) && r.band ? <small>{fmtLead(r.band[0], data.reference)} to {fmtLead(r.band[1], data.reference)}</small> : null}</span>
-              <b>{r.value === null ? (chart === "prob" ? "not published" : "no value") : fmtValue(chart, r.value, data.reference)}</b>
+              <b>{r.value === null ? (chart === "prob" ? "not published" : "no value") : fmtValue(chart, r.value, data.reference, r.seriesKey)}</b>
             </div>
           ))}
           {g.flag ? <div className="f">{g.flag}</div> : null}

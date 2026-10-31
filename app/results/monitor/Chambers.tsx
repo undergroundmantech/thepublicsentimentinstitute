@@ -8,6 +8,7 @@ import { hemiLayout } from "@/app/components/opp/Hemicycle";
 import { TILE } from "@/app/components/opp/LegisTiles";
 import { leanStroke } from "./paint";
 import { STN, fmtM, isInd, sides, type CRace, type XRace } from "../2026/live";
+import { percentIn } from "@/app/lib/fmtPct";
 
 export type SeatState = "nd" | "cd" | "ci" | "ld" | "li" | "aw" | "lr" | "cr" | "nr";
 export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string; label: string };
@@ -25,7 +26,7 @@ export function seatOf(r: XRace, c: CRace | undefined): Seat & Tile {
   const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
   let st: SeatState = "aw", txt = `no votes yet · expected ${fmtM(expM(r), r.k, ind)}`;
   if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
-  else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${c!.pr.toFixed(0)}% in`; }
+  else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${percentIn(c!.pr)} in`; }
   const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
   return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? raceLabel(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w };
 }

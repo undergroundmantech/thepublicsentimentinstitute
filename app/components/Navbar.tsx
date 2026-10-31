@@ -8,6 +8,7 @@ import ThemeToggle from "./ThemeToggle";
 import LangPicker from "./LangPicker";
 import { MENU, type NavGroup } from "./navMenu";
 import { daysOut } from "@/app/lib/opp";
+import { pctFraction } from "@/app/lib/fmtPct";
 
 // The On Point Politics masthead. A slim status strip (Election Day countdown, the three control odds, utility links)
 // over the main bar, where every section opens a grouped menu: what the section holds, sorted into columns, each link
@@ -74,7 +75,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
   };
   const enter = (k: string) => { if (timer.current) window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setMenu(k), 90); };
   const leave = () => { if (timer.current) window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setMenu(null), 180); };
-  const pct = (p: number) => `${Math.round(p * 100)}%`;
+  const pct = (p: number) => pctFraction(p);
 
   return (
     <header className="opp opp-top" ref={head}>

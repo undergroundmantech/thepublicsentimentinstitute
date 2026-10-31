@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import "./studio.css";
 import "./raceHistory.css";
 import { cursorSnapshot, fmtLead, fmtProb, fmtShift, fmtStamp, fmtVotes, lastName, lastUpdated, type ChartId, type PreparedHistory } from "@/app/lib/intelligence/raceHistory";
-import { pctPoints } from "@/app/lib/fmtPct";
+import { percentIn, pctPoints } from "@/app/lib/fmtPct";
 
 const RaceHistory = dynamic(() => import("./RaceHistory"), { ssr: false, loading: () => null });
 
@@ -50,15 +50,15 @@ export function CursorPanel({ state, cursor, onClear }: { state: HistoryState; c
   const rows: [string, ReactNode][] = [
     ["Counted votes", snap.votes.length ? snap.votes.map((v) => `${lastName(v.label)} ${fmtVotes(v.value)}`).join(" · ") : "No votes recorded"],
     ["Reporting", snap.providerReporting || snap.modelCounted ? <>
-      {snap.providerReporting ? <span title={snap.providerReporting.definition}>{pctPoints(snap.providerReporting.pct)} provider</span> : null}
+      {snap.providerReporting ? <span title={snap.providerReporting.definition}>{percentIn(snap.providerReporting.pct)} in, provider</span> : null}
       {snap.providerReporting && snap.modelCounted ? " · " : null}
       {snap.modelCounted ? <span title={snap.modelCounted.definition}>{pctPoints(snap.modelCounted.pct)} est. of final vote counted</span> : null}
     </> : "Not recorded"],
     ["Counted margin", snap.countedMargin === null ? "No votes recorded" : `${fmtLead(snap.countedMargin, ref)} counted`],
     ["Win probability", snap.winProbability.length ? `${snap.winProbability.map((w) => `${lastName(w.label)} ${fmtProb(w.pct)}`).join(" · ")}${snap.winProbability[0].phase === "FROZEN" ? " (pre-election forecast)" : ""}` : "Not published"],
     ["Modeled final margin", snap.modeledMargin ? `${fmtLead(snap.modeledMargin.pp, ref)}${snap.modeledMargin.band ? ` (${fmtLead(snap.modeledMargin.band[0], ref)} to ${fmtLead(snap.modeledMargin.band[1], ref)})` : ""}${snap.modeledMargin.phase === "FROZEN" ? " (pre-election forecast)" : ""}` : "Not published"],
-    // the change is taken between the two figures as shown, so the line's arithmetic reads true
-    ["vs. pre-election forecast", snap.forecastShift !== null && snap.preElectionMargin !== null && snap.modeledMargin ? `${fmtLead(snap.preElectionMargin, ref)} → ${fmtLead(snap.modeledMargin.pp, ref)} = ${fmtShift(+snap.modeledMargin.pp.toFixed(1) - +snap.preElectionMargin.toFixed(1), ref)}` : snap.preElectionMargin !== null ? `${fmtLead(snap.preElectionMargin, ref)} forecast; no live projection yet` : "No pre-election forecast"],
+    // the change is taken from the unrounded figures; each figure is rounded only for display
+    ["vs. pre-election forecast", snap.forecastShift !== null && snap.preElectionMargin !== null && snap.modeledMargin ? `${fmtLead(snap.preElectionMargin, ref)} → ${fmtLead(snap.modeledMargin.pp, ref)}: ${fmtShift(snap.forecastShift, ref)}` : snap.preElectionMargin !== null ? `${fmtLead(snap.preElectionMargin, ref)} forecast; no live projection yet` : "No pre-election forecast"],
   ];
   return (
     <div className="rhd-snap" aria-live="polite">

@@ -19,6 +19,7 @@ import RaceBrief from "./RaceBrief";
 import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, raceLabel as label, GOV_HOLD, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
 import { useSiteTheme } from "@/app/lib/useSiteTheme";
+import { percentIn, pctFraction } from "@/app/lib/fmtPct";
 
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 type SF = Feature<Geometry, { name: string }> & { st: string };
@@ -204,7 +205,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     for (const r of ix.races) {
       const a = live.byId[r.id], b = live.prev[r.id]; if (!a) continue;
       const s = sides(r, a.c);
-      if (b && a.pr > b.pr) items.push({ t: live.at, id: r.id, text: `${r.nm}: ${a.pr.toFixed(0)}% reporting, ${fmtM(s.t ? (100 * (s.b - s.a)) / s.t : null, r.k, isInd(r))}` });
+      if (b && a.pr > b.pr) items.push({ t: live.at, id: r.id, text: `${r.nm}: ${percentIn(a.pr)} reporting, ${fmtM(s.t ? (100 * (s.b - s.a)) / s.t : null, r.k, isInd(r))}` });
       if (a.c.some((c) => c[4]) && !(b?.c.some((c) => c[4]))) { const w = a.c.find((c) => c[4]); if (w) items.push({ t: live.at, id: r.id, text: `${r.nm}: civicAPI calls it for ${w[0]}` }); }
     }
     if (items.length) setFeed((f) => [...items.slice(0, 20), ...f].slice(0, 60));
@@ -450,7 +451,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const modeName = mode === "state" && office !== "all" ? (OFFICE_GROUPS.find((g) => g[0] === office)?.[1] ?? "Other statewide") : MODES.find((m) => m[0] === mode)?.[1] ?? "";
   const found = useMemo(() => { const t = q.trim().toLowerCase(); if (!t) return []; return races.filter((r) => r.nm.toLowerCase().includes(t) || (STN[r.st] ?? "").toLowerCase().includes(t) || r.st.toLowerCase() === t || (r.c ?? []).some((x) => x[0].toLowerCase().includes(t))); }, [q, races]);
   const big: "sen" | "house" | "gov" = mode === "house" || mode === "gov" ? mode : "sen";
-  const pctf = (p: number) => `${Math.round((p > 1 ? p : p * 100))}%`;
+  const pctf = (p: number) => pctFraction(p);
 
   const raceRow = (r: XRace, inState: boolean) => {
     const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const e = expM(r);
@@ -461,7 +462,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           {lm == null
             ? <span className={`lv ex ${e == null ? "" : e < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{e == null ? "" : fmtM(e, r.k, isInd(r))}</span>
             : <span className={`lv ${lm < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{fmtM(lm, r.k, isInd(r))}</span>}
-          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${c.pr.toFixed(0)}% in` : c ? "Forecast" : "Awaiting feed"}</span>
+          <span className="pr">{w ? "Called" : c && hasReturns(c) ? `${percentIn(c.pr)} in` : c ? "Forecast" : "Awaiting feed"}</span>
         </button>
       </li>
     );
@@ -563,7 +564,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           <button type="button" key={toast.id} className={`mon-toast p-${toast.p}`} onClick={() => { setFocus(toast.id); fly.current(toast.st); setCalls((q0) => q0.slice(1)); }}>
             <span className="k">civicAPI call · {KIND_LABEL[toast.kind]}</span><b>{toast.race}</b>
             <span className="w"><i />{toast.who}{toast.m != null && toast.kind !== "measure" && Math.abs(toast.m) >= 0.05 ? <>, ahead by {Math.abs(toast.m).toFixed(1)} points</> : null}</span>
-            <span className="s">{toast.pr.toFixed(0)}% reporting{calls.length > 1 ? ` · ${calls.length - 1} more calls` : ""}</span>
+            <span className="s">{percentIn(toast.pr)} reporting{calls.length > 1 ? ` · ${calls.length - 1} more calls` : ""}</span>
           </button>
         ) : null}
       </div>
@@ -603,14 +604,14 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
                 <h4>{sf?.names?.[hov.f!] ?? "County"} · {STN[hov.st]}</h4>
                 <div className="sub">{cr.nm}</div>
                 <Cands r={cr} c={lv?.c ?? null} exp={e ? [["D", e[0]], ["R", e[1]], ["O", e[2]]] : null} />
-                <div className="meta"><span>{lv ? `${lv.pr.toFixed(0)}% reporting` : "No returns yet"}</span>{e ? <span>Expected {Math.round(e[3]).toLocaleString("en-US")} votes</span> : null}</div>
+                <div className="meta"><span>{lv ? `${percentIn(lv.pr)} reporting` : "No returns yet"}</span>{e ? <span>Expected {Math.round(e[3]).toLocaleString("en-US")} votes</span> : null}</div>
                 <small>Click to see the race beside the globe</small>
               </>
             ) : rs.length === 1 ? <RaceTip r={rs[0]} c={live.byId[rs[0].id]} title={STN[hov.st]} hint={hov.st === sel ? "Click to see it beside the globe" : "Click to zoom in and see it beside the globe"} />
             : (
               <>
                 <h4>{STN[hov.st]}</h4>
-                {rs.length ? rs.slice(0, 5).map((r) => { const c = live.byId[r.id]; const lm = liveMargin(r, c); return <div key={r.id} className="row"><span>{label(r, true)}</span><b>{lm != null ? `${fmtM(lm, r.k, isInd(r))} · ${c!.pr.toFixed(0)}% in` : `Expected ${fmtM(expM(r), r.k, isInd(r))} · no votes yet`}</b></div>; }) : <div>No {MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} race here</div>}
+                {rs.length ? rs.slice(0, 5).map((r) => { const c = live.byId[r.id]; const lm = liveMargin(r, c); return <div key={r.id} className="row"><span>{label(r, true)}</span><b>{lm != null ? `${fmtM(lm, r.k, isInd(r))} · ${percentIn(c!.pr)} in` : `Expected ${fmtM(expM(r), r.k, isInd(r))} · no votes yet`}</b></div>; }) : <div>No {MODES.find((m) => m[0] === mode)?.[1].toLowerCase()} race here</div>}
                 {rs.length > 5 ? <div className="sub">and {rs.length - 5} more</div> : null}
                 <small>{hov.st === sel ? "Click a race in the list to see it" : "Click to zoom in"}</small>
               </>
@@ -656,7 +657,7 @@ function RaceTip({ r, c, title, hint }: { r: XRace; c?: CRace; title: string; hi
       <div className="sub">{r.nm}{w ? <b className="call"> · civicAPI call: {w[0]}</b> : null}</div>
       <Cands r={r} c={counted ? c!.c : null} />
       <div className="meta">
-        <span>{counted ? `${c!.pr.toFixed(0)}% reporting` : c ? "No returns yet" : "Awaiting results feed"}</span>
+        <span>{counted ? `${percentIn(c!.pr)} reporting` : c ? "No returns yet" : "Awaiting results feed"}</span>
         {counted && s ? <span>{s.t.toLocaleString("en-US")} votes counted{ex.t ? ` of about ${Math.round(ex.t).toLocaleString("en-US")} expected` : ""}</span> : ex.t ? <span>About {Math.round(ex.t).toLocaleString("en-US")} votes expected</span> : null}
       </div>
       <div className="meta"><span>Now <b>{counted ? fmtM(lm, r.k, isInd(r)) : "no votes yet"}</b></span><span>Expected <b>{fmtM(e, r.k, isInd(r))}</b></span></div>

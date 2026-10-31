@@ -763,23 +763,26 @@ export function fmtStamp(t: number, tz: string | undefined, seconds = false): st
 // ---- value formatting ------------------------------------------------------------------------------------------------------
 
 export const fmtVotes = (n: number | null | undefined) => (n == null || !Number.isFinite(n) ? "—" : Math.round(n).toLocaleString("en-US"));
-export const fmtProb = (pct: number | null | undefined) => (pct == null || !Number.isFinite(pct) ? "—" : pct > 0 && pct < 0.1 ? "<0.1%" : pct < 100 && pct > 99.9 ? ">99.9%" : pctPoints(pct));
-export const fmtPp = (pp: number | null | undefined) => (pp == null || !Number.isFinite(pp) ? "—" : `${pp > 0 ? "+" : pp < 0 ? "−" : ""}${Math.abs(pp).toFixed(1)} pp`);
+// win probabilities: one decimal, never capped (99.9%, 100.0% and 0.1% are shown as computed)
+export const fmtProb = (pct: number | null | undefined) => pctPoints(pct);
+// magnitudes share pctPoints' rounding (half away from zero), and a value that rounds to zero carries no sign
+const mag1 = (x: number) => pctPoints(Math.abs(x)).slice(0, -1);
+export const fmtPp = (pp: number | null | undefined) => { if (pp == null || !Number.isFinite(pp)) return "—"; const m = mag1(pp); return `${m === "0.0" ? "" : pp > 0 ? "+" : "−"}${m} pp`; };
 
 /** "R +1.2" / "D +0.4" / "Even": the lead, named by the side that holds it. */
 export function fmtLead(pp: number | null | undefined, ref: { plus: HistoryCandidate; minus: HistoryCandidate } | null): string {
   if (pp == null || !Number.isFinite(pp)) return "—";
-  if (Math.abs(pp) < 0.05) return "Even";
+  if (mag1(pp) === "0.0") return "Even";
   const c = pp > 0 ? ref?.plus : ref?.minus;
   const tag = c?.party && c.party.length <= 3 ? c.party : c ? lastName(c.name) : pp > 0 ? "+" : "−";
-  return `${tag} +${Math.abs(pp).toFixed(1)}`;
+  return `${tag} +${mag1(pp)}`;
 }
 
 /** A signed change in a margin, named by the side it moved toward: "2.6 pp toward R". */
 export function fmtShift(pp: number | null | undefined, ref: { plus: HistoryCandidate; minus: HistoryCandidate } | null): string {
   if (pp == null || !Number.isFinite(pp)) return "—";
-  if (Math.abs(pp) < 0.05) return "no change";
+  if (mag1(pp) === "0.0") return "no change";
   const c = pp > 0 ? ref?.plus : ref?.minus;
   const tag = c?.party && c.party.length <= 3 ? c.party : c ? lastName(c.name) : pp > 0 ? "+" : "−";
-  return `${Math.abs(pp).toFixed(1)} pp toward ${tag}`;
+  return `${mag1(pp)} pp toward ${tag}`;
 }

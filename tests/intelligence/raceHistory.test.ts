@@ -468,11 +468,15 @@ test("range windows follow the data, election night opens at 4 PM ET, and a lone
 test("formatting: percentages, percentage points and vote counts", () => {
   assert.equal(fmtProb(62.4), "62.4%");
   assert.equal(fmtProb(100), "100.0%");
-  assert.equal(fmtProb(0.03), "<0.1%");
-  assert.equal(fmtProb(99.96), ">99.9%");
+  // never capped: one decimal as computed
+  assert.equal(fmtProb(0.03), "0.0%");
+  assert.equal(fmtProb(0.1), "0.1%");
+  assert.equal(fmtProb(99.9), "99.9%");
+  assert.equal(fmtProb(99.96), "100.0%");
   assert.equal(fmtProb(null), "—");
   assert.equal(fmtPp(1.234), "+1.2 pp");
-  assert.equal(fmtPp(-0.04), "−0.0 pp");
+  assert.equal(fmtPp(-0.04), "0.0 pp");
+  assert.equal(fmtPp(-0.06), "−0.1 pp");
   assert.equal(fmtPp(0), "0.0 pp");
   assert.equal(fmtVotes(1234567), "1,234,567");
   assert.equal(fmtVotes(null), "—");

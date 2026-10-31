@@ -16,7 +16,7 @@ function load(file) {
   const m = { exports: {} }; cache.set(file, m);
   const req = (spec) => {
     if (spec === "react" || spec.startsWith("@/app/components/")) return { ...stub, default: {} };
-    const base = path.resolve(path.dirname(file), spec);
+    const base = spec.startsWith("@/") ? path.join(root, spec.slice(2)) : path.resolve(path.dirname(file), spec);
     const hit = [".ts", ".tsx", ""].map((e) => base + e).find((p) => fs.existsSync(p) && fs.statSync(p).isFile());
     return hit ? load(hit) : require(spec);
   };

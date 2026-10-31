@@ -21,3 +21,9 @@ export const pctPoints = (x: number | null | undefined, o: PctOpts = {}): string
 
 export const pctFraction = (x: number | null | undefined, o: PctOpts = {}): string =>
   pctPoints(x == null || !Number.isFinite(x) ? x : x * 100, o);
+
+// Percent In only (the provider's reporting share, in points): above 99.0, judged on the unrounded value, it reads
+// ">99%" so a race that is still counting never shows "100.0%". Every other percentage, win probabilities included,
+// uses pctPoints / pctFraction unchanged. The caller appends " in" or " reporting".
+export const percentIn = (x: number | null | undefined, o: PctOpts = {}): string =>
+  x != null && Number.isFinite(x) && x > 99 ? ">99%" : pctPoints(x, o);

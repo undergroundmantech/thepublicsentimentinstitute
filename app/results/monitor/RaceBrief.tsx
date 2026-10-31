@@ -4,6 +4,7 @@
 // a button to the full desk. It reads the same returns and the same projection as the race page.
 import React, { useEffect, useState } from "react";
 import { STN, KIND_LABEL, civicRace, expSides, fmtM, isInd, liveOdds, project, sides, type CDetail, type CRace, type StFile, type XRace } from "../2026/live";
+import { percentIn, pctFraction, pctPoints } from "@/app/lib/fmtPct";
 
 const last = (n: string) => n.split(" ").filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).pop() ?? n;
 
@@ -44,8 +45,8 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
       </div>
       <div className={`st ${winner ? "called" : projected ? "proj" : reporting ? "live" : ""}`}>{status}</div>
       <div className="nums">
-        <div><b>{reporting ? `${P.pctIn.toFixed(0)}%` : "0%"}</b><span>estimated in</span></div>
-        <div><b>{c ? `${c.pr.toFixed(0)}%` : "n/a"}</b><span>civicAPI reporting</span></div>
+        <div><b>{reporting ? pctPoints(P.pctIn) : "0.0%"}</b><span>estimated in</span></div>
+        <div><b>{c ? `${percentIn(c.pr)} in` : "n/a"}</b><span>civicAPI reporting</span></div>
         <div><b>{counted ? counted.toLocaleString("en-US") : "0"}</b><span>votes counted{es.t ? ` of about ${Math.round(es.t).toLocaleString("en-US")}` : ""}</span></div>
       </div>
       <table className="cands">
@@ -55,7 +56,7 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
         ))}</tbody>
       </table>
       <div className="odds">
-        <div className="oh"><span>{reporting ? "Win probability now" : "Forecast win probability"}</span><span>{last(A)} {(100 * odds.pA).toFixed(odds.pA > 0.995 || odds.pA < 0.005 ? 0 : 1)}% · {last(B)} {(100 * odds.pB).toFixed(odds.pB > 0.995 || odds.pB < 0.005 ? 0 : 1)}%</span></div>
+        <div className="oh"><span>{reporting ? "Win probability now" : "Forecast win probability"}</span><span>{last(A)} {pctFraction(odds.pA)} · {last(B)} {pctFraction(odds.pB)}</span></div>
         <div className="ob"><i style={{ width: `${100 * odds.pA}%`, background: colA }} /><i style={{ width: `${100 * odds.pB}%`, background: colB }} /></div>
       </div>
       <div className="proj">

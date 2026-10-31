@@ -6,6 +6,7 @@ import React from "react";
 import Link from "@/app/components/Link";
 import { useIndex, useLive } from "../useLive";
 import { fmtM, sides, type XRace } from "../live";
+import { percentIn } from "@/app/lib/fmtPct";
 
 export type LiveRow = { id: string; label: string; who: string; m: number | null; ind: boolean; href: string; fhref: string; k: string };
 export type LiveGroup = { k: string; label: string; rows: LiveRow[]; more?: { n: number; href: string } };
@@ -45,7 +46,7 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
                   <Link href={x.href} className="nm">{x.label}</Link>
                   <span className="who">{x.who}</span>
                   {counted
-                    ? <span className={`lv ${lm != null && lm < 0 ? (x.ind ? "i" : "d") : "r"}`}>{fmtM(lm, k, x.ind)}<small>{w ? `Called for ${w[0]}` : `${c!.pr.toFixed(0)}% in`}</small></span>
+                    ? <span className={`lv ${lm != null && lm < 0 ? (x.ind ? "i" : "d") : "r"}`}>{fmtM(lm, k, x.ind)}<small>{w ? `Called for ${w[0]}` : `${percentIn(c!.pr)} in`}</small></span>
                     : <span className="ex">{x.m == null ? "" : fmtM(x.m, k, x.ind)}<small>Forecast</small></span>}
                   <Link href={x.fhref} className="fc" aria-label={`${x.label} forecast`}>Forecast</Link>
                 </li>
@@ -65,7 +66,7 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
                 <li key={o.id} className={t > 0 ? "on" : ""}>
                   <Link href={`/results/civic/${o.id}`} className="nm">{o.name}</Link>
                   <span className="who">{o.c.slice(0, 3).map((x) => x[0]).join(", ")}</span>
-                  {t > 0 ? <span className="lv">{top[0][0].split(" ").slice(-1)[0]} {((100 * top[0][2]) / t).toFixed(1)}%<small>{w ? `Called for ${w[0]}` : `${o.pr.toFixed(0)}% in`}</small></span>
+                  {t > 0 ? <span className="lv">{top[0][0].split(" ").slice(-1)[0]} {((100 * top[0][2]) / t).toFixed(1)}%<small>{w ? `Called for ${w[0]}` : `${percentIn(o.pr)} in`}</small></span>
                     : <span className="ex">{o.type}<small>Live returns</small></span>}
                   <Link href={`/results/civic/${o.id}`} className="fc" aria-label={`${o.name} results`}>Results</Link>
                 </li>

@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { STN, KIND_LABEL, expMargin, fmtK, fmtM, forecastHref, isInd, resultsHref, sides, type Kind, type XRace } from "./live";
 import { useIndex, useLive } from "./useLive";
 import { useSharedLive } from "./LiveProvider";
+import { percentIn, pctFraction } from "@/app/lib/fmtPct";
 
 const KINDS: (Kind | "all")[] = ["all", "sen", "gov", "house", "state", "measure", "leg", "other"];
 const SETS = { all: ["fed", "state", "ballot", "leg"], sen: ["fed"], gov: ["fed"], house: ["fed"], state: ["state"], measure: ["ballot"], leg: ["leg"], other: ["state"] } as const;
@@ -74,7 +75,7 @@ export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
         <thead><tr><th>Race</th><th>Type</th><th>Expected</th><th>Chance</th><th>Expected votes</th><th>Returns</th><th>In</th><th /></tr></thead>
         <tbody>{list.slice(0, 600).map(({ r, e, l, c }) => {
           const ind = isInd(r);
-          const chance = r.k === "measure" ? (r.pPass != null ? `${Math.round(r.pPass * 100)}% pass` : "") : r.k === "leg" ? (r.pD != null ? `${Math.round(r.pD * 100)}% D control` : "") : r.pR != null ? `${Math.round((r.pR >= 0.5 ? r.pR : 1 - r.pR) * 100)}% ${r.pR >= 0.5 ? "R" : ind ? "I" : "D"}` : "";
+          const chance = r.k === "measure" ? (r.pPass != null ? `${pctFraction(r.pPass)} pass` : "") : r.k === "leg" ? (r.pD != null ? `${pctFraction(r.pD)} D control` : "") : r.pR != null ? `${pctFraction(r.pR >= 0.5 ? r.pR : 1 - r.pR)} ${r.pR >= 0.5 ? "R" : ind ? "I" : "D"}` : "";
           return (
             <tr key={r.id}>
               <td><Link href={resultsHref(r.id)}><b>{r.k === "house" ? `${STN[r.st]} ${Number(r.id.split("-")[2])}` : r.nm}</b></Link>{r.k === "measure" ? <small>{r.off}</small> : r.c?.length && r.k !== "leg" ? <small>{r.c.slice(0, 2).map((x) => x[0]).join(" v ")}</small> : null}</td>
@@ -83,7 +84,7 @@ export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
               <td>{chance}</td>
               <td>{r.tot ? fmtK(r.tot) : ""}</td>
               <td className={!l ? "" : l.m < 0 ? "d" : "r"}>{l ? fmtM(l.m, r.k, ind) : c ? "None yet" : ""}</td>
-              <td>{c ? `${c.pr.toFixed(0)}%` : ""}</td>
+              <td>{c ? percentIn(c.pr) : ""}</td>
               <td className="lk"><Link href={resultsHref(r.id)}>Results</Link><Link href={forecastHref(r)}>Forecast</Link></td>
             </tr>
           );

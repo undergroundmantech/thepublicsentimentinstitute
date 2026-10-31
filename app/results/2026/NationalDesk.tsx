@@ -14,6 +14,7 @@ import { tally, watchBar } from "./nationalTally";
 import { SeatArc, GovTiles, MajorityBar, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, GOV_HOLD, type Seat, type SeatState, type Tile } from "../monitor/Chambers";
 import { leanStroke } from "../monitor/paint";
 import type { Chambers } from "../monitor/Monitor";
+import { percentIn, pctFraction } from "@/app/lib/fmtPct";
 
 type Cat = "sen" | "house" | "gov" | "other";
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
@@ -22,7 +23,7 @@ const CATS: { k: Cat; label: string; kinds: Kind[]; hub: string }[] = [
   { k: "gov", label: "Governors", kinds: ["gov"], hub: "gov" }, { k: "other", label: "Other races", kinds: ["state", "measure", "leg", "other"], hub: "state" },
 ];
 const MAJ: Record<"sen" | "house" | "gov", number> = { sen: 51, house: 218, gov: 26 };
-const pct = (p: number) => `${Math.round(p > 1 ? p : p * 100)}%`;
+const pct = (p: number) => pctFraction(p);
 const slug = (st: string) => STN[st].toLowerCase().replace(/[^a-z]+/g, "-");
 const shade = (m: number, ind = false) => (ind ? marginColorInd(m) : marginColor(m));
 const clockET = (d: Date | null) => (d ? d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " ET" : "—");
@@ -203,7 +204,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
                 </defs>
                 {shapes.map((s, i) => {
                   const p = paintOf(s.key); const rs = byKey[s.key] ?? [];
-                  const aria = rs.length ? rs.slice(0, 3).map((r) => { const c = live.byId[r.id]; const m = liveMargin(r, c); return `${r.nm}: ${m != null ? `${fmtM(m, r.k, isInd(r))} with ${c!.pr.toFixed(0)}% in` : `no votes yet, expected ${fmtM(expM(r), r.k, isInd(r))}`}`; }).join("; ") : undefined;
+                  const aria = rs.length ? rs.slice(0, 3).map((r) => { const c = live.byId[r.id]; const m = liveMargin(r, c); return `${r.nm}: ${m != null ? `${fmtM(m, r.k, isInd(r))} with ${percentIn(c!.pr)} in` : `no votes yet, expected ${fmtM(expM(r), r.k, isInd(r))}`}`; }).join("; ") : undefined;
                   const handlers = rs.length ? {
                     onMouseMove: (e: React.MouseEvent<SVGElement>) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.key, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); },
                     onClick: () => clickKey(s.key), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clickKey(s.key); } },
@@ -225,7 +226,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
                 {tipRaces.slice(0, 6).map((r) => { const c = live.byId[r.id]; const m = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const ind = isInd(r); const e = expM(r); return (
                   <div className="r" key={r.id}>
                     <span>{cat === "house" ? (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" v ") : tipRaces.length > 1 ? r.nm.replace(STN[r.st] + " ", "") : (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" v ") || r.off}</span>
-                    {w ? <b className="call">Called · {lastName(w[0])}</b> : m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)} · {c!.pr.toFixed(0)}% in</b> : <b className="ex">{e != null ? `Expected ${fmtM(e, r.k, ind)}` : "No votes yet"}</b>}
+                    {w ? <b className="call">Called · {lastName(w[0])}</b> : m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)} · {percentIn(c!.pr)} in</b> : <b className="ex">{e != null ? `Expected ${fmtM(e, r.k, ind)}` : "No votes yet"}</b>}
                   </div>); })}
                 {tipRaces.length > 6 ? <div className="more">and {tipRaces.length - 6} more</div> : null}
                 <div className="cta">{tipRaces.length === 1 ? "Click for the full race" : "Click for every race in the state"}</div>
@@ -264,7 +265,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
                 <Link key={r.id} href={resultsHref(r.id)} className="nat-row">
                   <span className="nm"><b>{r.nm}</b><small>{r.k === "measure" ? r.off : (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" vs ") || r.off}</small></span>
                   <span className="vl">
-                    {toWatch.live && m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)}<small> · {c!.pr.toFixed(0)}% in</small></b> : <b className={`ex ${e != null && e < 0 ? (ind ? "i" : "d") : "r"}`}><small>Exp. </small>{fmtM(e, r.k, ind)}</b>}
+                    {toWatch.live && m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)}<small> · {percentIn(c!.pr)} in</small></b> : <b className={`ex ${e != null && e < 0 ? (ind ? "i" : "d") : "r"}`}><small>Exp. </small>{fmtM(e, r.k, ind)}</b>}
                     {bar ? <span className="nat-cb" role="img" aria-label={bar.label} title={bar.label}><i style={{ width: `${bar.pD * 100}%`, background: bar.ind ? "var(--ind, #b78cff)" : "var(--dem)" }} /></span> : null}
                   </span>
                 </Link>
