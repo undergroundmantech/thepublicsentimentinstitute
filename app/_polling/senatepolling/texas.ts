@@ -105,6 +105,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University/YouGov", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 2000, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 47.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-27", "sampleSize": 1142, "sampleType": "LV", "results": {"James Talarico (D)": 51.7, "Ken Paxton (R)": 45.8, "Other": 2.3, "Undecided": 0.2}},
     {"raceId": "TX-SEN-2026", "pollster": "A2 Insights", "startDate": "2026-10-23", "endDate": "2026-10-27", "sampleSize": 631, "sampleType": "LV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 47.0, "Undecided": 3.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 839, "sampleType": "LV", "results": {"James Talarico (D)": 48.4, "Ken Paxton (R)": 49.4, "Other": 1.4, "Undecided": 0.8}}
+    {"raceId": "TX-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 1221, "sampleType": "LV", "results": {"James Talarico (D)": 48.4, "Ken Paxton (R)": 49.4, "Other": 1.4, "Undecided": 0.8}}
   ],
 };

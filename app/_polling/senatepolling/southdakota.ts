@@ -2,7 +2,7 @@
 // South Dakota — 2026 U.S. Senate: Brian Bengs (I) vs. Mike Rounds (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-20.
+// ballot were dropped. Newest poll: 2026-10-26.
 // Bengs runs as an independent after the Democratic nominee withdrew. Two candidate
 // ballot, no third party line.
 
@@ -48,6 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "SD-SEN-2026", "pollster": "Public Opinion Strategies for Rounds (R)", "startDate": "2026-10-12", "endDate": "2026-10-16", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 37.0, "Mike Rounds (R)": 54.0, "Undecided": 9.0}},
     {"raceId": "SD-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 630, "sampleType": "LV", "results": {"Brian Bengs (I)": 36.5, "Mike Rounds (R)": 57.2, "Other": 1.7, "Undecided": 4.6}},
     {"raceId": "SD-SEN-2026", "pollster": "Mason-Dixon for South Dakota News Watch and USD Chiesman Center", "startDate": "2026-10-12", "endDate": "2026-10-14", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 37.0, "Mike Rounds (R)": 56.0, "Undecided": 7.0}},
-    {"raceId": "SD-SEN-2026", "pollster": "Emerson College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 803, "sampleType": "LV", "results": {"Brian Bengs (I)": 42.0, "Mike Rounds (R)": 50.0, "Undecided": 8.0}}
+    {"raceId": "SD-SEN-2026", "pollster": "Emerson College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 803, "sampleType": "LV", "results": {"Brian Bengs (I)": 42.0, "Mike Rounds (R)": 50.0, "Undecided": 8.0}},
+    {"raceId": "SD-SEN-2026", "pollster": "Concord Public Opinion Partners (D)", "startDate": "2026-10-22", "endDate": "2026-10-26", "sampleSize": 448, "sampleType": "LV", "results": {"Brian Bengs (I)": 43.0, "Mike Rounds (R)": 41.0, "Other": 10.0, "Undecided": 6.0}}
   ],
 };

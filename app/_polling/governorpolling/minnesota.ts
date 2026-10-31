@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 48.0, "Lisa Demuth (R)": 41.0, "Undecided": 11.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."},
     {"raceId": "MN-GOV-2026", "pollster": "Mason-Dixon for the Star Tribune", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 800, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 50.0, "Lisa Demuth (R)": 41.0, "Undecided": 9.0}},
     {"raceId": "MN-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 752, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 56.0, "Lisa Demuth (R)": 38.0, "Undecided": 6.0}},
-    {"raceId": "MN-GOV-2026", "pollster": "State Navigate", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 806, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 52.0, "Lisa Demuth (R)": 42.0, "Other": 3.0, "Undecided": 3.0}}
+    {"raceId": "MN-GOV-2026", "pollster": "State Navigate", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 806, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 52.0, "Lisa Demuth (R)": 42.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-24", "endDate": "2026-10-28", "sampleSize": 714, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 51.0, "Lisa Demuth (R)": 39.0, "Other": 3.0, "Undecided": 7.0}}
   ],
 };
