@@ -6,12 +6,14 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./studio.css";
 import "./raceHistory.css";
 import {
-  buildChart, candidateColor, decimate, defaultRange, fmtLead, fmtProb, fmtStamp, fmtVotes, heldAt, lastName, lastUpdated, PARTY_COLOR, RANGE_LABEL, rangeHasData, rangeWindow,
+  buildChart, candidateColor, decimate, defaultRange, fmtLead, fmtProb, fmtStamp, fmtVotes, heldAt, isMarginChart, lastName, lastUpdated, PARTY_COLOR, RANGE_LABEL, rangeHasData, rangeWindow,
   readoutAt, SHADOW_COLOR, stepTime, timeTicks, windowSeries, ZONE_LABEL, zoneName,
   type ChartData, type ChartId, type Freshness, type HistoryCandidate, type PreparedHistory, type RangeId, type ReadoutRow, type Series, type SeriesPoint, type Tick, type ZoneId,
 } from "@/app/lib/intelligence/raceHistory";
+import { pctPoints } from "@/app/lib/fmtPct";
 
-const TABS: { id: ChartId; label: string }[] = [{ id: "prob", label: "WIN PROBABILITY" }, { id: "margin", label: "EXPECTED MARGIN" }, { id: "votes", label: "VOTE TOTALS" }];
+const TAB_LABEL: Record<ChartId, string> = { prob: "WIN PROBABILITY", margin: "EXPECTED MARGIN", votes: "VOTE TOTALS", reported: "PERCENT REPORTED", counted: "COUNTED MARGIN", modeled: "MODELED FINAL MARGIN" };
+const DEFAULT_CHARTS: ChartId[] = ["prob", "margin", "votes"];
 const RANGES: RangeId[] = ["NIGHT", "24H", "7D", "ALL"];
 const ZONES: ZoneId[] = ["ET", "UTC", "LOCAL"];
 const CLASS_LABEL = { FROZEN_FORECAST: "Frozen pre-election forecast", LIVE_PROJECTION: "Published live projection", SHADOW_MODEL: "Shadow model, not published", RESULT_FEED: "Reported votes" } as const;
@@ -53,13 +55,21 @@ export interface RaceHistoryProps {
   initialChart?: ChartId;
   /** Preview only: offer the shadow model as a labelled overlay. Ignored on a public surface. */
   allowShadowOverlay?: boolean;
+  /** The views offered as tabs, in order. */
+  charts?: ChartId[];
+  /** Controlled cursor (epoch ms), shared with sibling charts. Omit for a cursor of its own. */
+  cursor?: number | null;
+  onCursor?: (t: number | null) => void;
 }
 
-export default function RaceHistory({ history: h, title = "Race history", nowMs, height = 360, initialChart = "prob", allowShadowOverlay = false }: RaceHistoryProps) {
-  const [chart, setChart] = useState<ChartId>(initialChart);
+export default function RaceHistory({ history: h, title = "Race history", nowMs, height = 360, initialChart, allowShadowOverlay = false, charts: ids = DEFAULT_CHARTS, cursor: cursorProp, onCursor }: RaceHistoryProps) {
+  const TABS = ids.map((id) => ({ id, label: TAB_LABEL[id] }));
+  const [chart, setChart] = useState<ChartId>(initialChart && ids.includes(initialChart) ? initialChart : ids[0]);
   const [rangeSel, setRange] = useState<RangeId | null>(null);
   const [zone, setZone] = useState<ZoneId>("ET");
-  const [cursor, setCursor] = useState<number | null>(null);
+  const [cursorOwn, setCursorOwn] = useState<number | null>(null);
+  const cursor = cursorProp !== undefined ? cursorProp : cursorOwn;
+  const setCursor = (t: number | null) => (onCursor ? onCursor(t) : setCursorOwn(t));
   const [overlay, setOverlay] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(900);
@@ -68,14 +78,19 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
   const shadowOk = allowShadowOverlay && h.surface === "PREVIEW" && h.shadow.length > 0;
   const charts = useMemo(() => {
     const o = { overlayShadow: shadowOk && overlay };
-    return { prob: buildChart(h, "prob", o), margin: buildChart(h, "margin", o), votes: buildChart(h, "votes", o) } as Record<ChartId, ChartData>;
-  }, [h, shadowOk, overlay]);
+    return Object.fromEntries(ids.map((id) => [id, buildChart(h, id, o)])) as Record<ChartId, ChartData>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [h, shadowOk, overlay, ids.join()]);
   const data = charts[chart];
+  const mg = isMarginChart(chart);
+  const pctAxis = chart === "prob" || chart === "reported";
   const range: RangeId = rangeSel && rangeHasData(data, rangeSel, h.bounds, nowMs) ? rangeSel : defaultRange(data, h.bounds, nowMs);
   const [t0, t1] = rangeWindow(range, h.bounds, nowMs);
   const endT = Math.min(t1, Math.max(h.bounds?.[1] ?? t1, nowMs ?? 0));
   const tz = zoneName(zone);
   const narrow = W < 560;
+  // a floating readout needs room on either side of the cursor; side-by-side panes get it docked below the chart
+  const dockRead = W < 760;
 
   const H = height, L = narrow ? 42 : 56, R = narrow ? 66 : 116, T = 24, B = 30;
   const pw = W - L - R;
@@ -88,12 +103,12 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
   const minusColor = ref ? candidateColor(ref.minus, h.candidates.indexOf(ref.minus)) : PARTY_COLOR.D;
 
   const yTicks = useMemo(() => {
-    if (chart === "prob") return [0, 25, 50, 75, 100];
+    if (pctAxis) return [0, 25, 50, 75, 100];
     if (chart === "votes") { const st = [4, 5, 2].map((n) => yhi / n).find((s) => Number.isInteger(s / Math.pow(10, Math.floor(Math.log10(s)) - 1))) ?? yhi / 4; const out: number[] = []; for (let v = 0; v <= yhi + 1e-6; v += st) out.push(v); return out; }
     const step = [0.5, 1, 2, 2.5, 5, 10, 20, 25, 50].find((s) => (2 * yhi) / s <= (narrow ? 6 : 8)) ?? 50;
     const out: number[] = []; for (let v = -Math.floor(yhi / step) * step; v <= yhi + 1e-9; v += step) out.push(Math.round(v * 100) / 100); return out;
-  }, [chart, yhi, narrow]);
-  const yLabel = (v: number) => (chart === "prob" ? `${v}%` : chart === "votes" ? compact(v) : Math.abs(v) < 1e-9 ? "Even" : ref ? `${axisTag(v > 0 ? ref.plus : ref.minus)}+${Math.abs(v)}` : `${v > 0 ? "+" : "−"}${Math.abs(v)}`);
+  }, [chart, yhi, narrow, pctAxis]);
+  const yLabel = (v: number) => (pctAxis ? `${v}%` : chart === "votes" ? compact(v) : Math.abs(v) < 1e-9 ? "Even" : ref ? `${axisTag(v > 0 ? ref.plus : ref.minus)}+${Math.abs(v)}` : `${v > 0 ? "+" : "−"}${Math.abs(v)}`);
   // at most one label per ~86px (66px narrow); day labels win over hour labels, and no two labels may overlap
   const xTicks = useMemo(() => {
     const px = (t: number) => L + ((t - t0) / Math.max(1, t1 - t0)) * pw;
@@ -126,15 +141,18 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
       let d = `M${X(seg[0].a)},${Y(seg[0].q.v as number)}H${X(seg[0].b)}`;
       for (let k = 1; k < seg.length; k++) d += `V${Y(seg[k].q.v as number)}H${X(seg[k].b)}`;
       line += d;
-      if (chart === "margin" && s.phase !== "SHADOW" && s.source === "MODEL") area += `${d}V${Y(0)}H${X(seg[0].a)}Z`;
+      if (mg && s.phase !== "SHADOW" && s.source === "MODEL") area += `${d}V${Y(0)}H${X(seg[0].a)}Z`;
       if (s.band) for (const st of seg) if (st.q.lo != null && st.q.hi != null && st.b > st.a) band += `M${X(st.a)},${Y(st.q.hi)}H${X(st.b)}V${Y(st.q.lo)}H${X(st.a)}Z`;
     }
     const obs = s.source === "RESULT" && pts.length <= 160 ? pts.filter((q) => q.v !== null && !q.carried && q.v <= yhi && q.v >= ylo) : [];
     const flags = pts.filter((q) => q.flag && q.v !== null && !q.carried);
     return { s, line, band, area, iso, obs, flags, off };
-  }), [data, t0, t1, pw, endT, chart, L, T, H, B, yhi, ylo]);
+  }), [data, t0, t1, pw, endT, mg, L, T, H, B, yhi, ylo]);
 
   const markers = data.markers.filter((m) => m.t >= t0 && m.t <= t1);
+  // ~6.2 units per character at the marker font; a label that would run into the previous one is left off
+  const labelled = new Set<(typeof markers)[number]>();
+  if (!narrow) { let end = -Infinity; for (const m of markers) { const x0 = x(m.t) + 4, x1 = x0 + m.label.length * 6.2; if (x0 > end + 8 && x1 < W - R + 40) { labelled.add(m); end = x1; } } }
   const liveStart = data.markers.find((m) => m.kind === "LIVE_START")?.t ?? null;
   const preEnd = liveStart !== null ? Math.min(Math.max(liveStart, t0), t1) : null;
 
@@ -144,7 +162,7 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
     const best = new Map<string, { s: Series; v: number }>();
     for (const s of data.series) {
       if (s.phase === "SHADOW") continue;
-      const key = chart === "margin" ? (s.source === "RESULT" ? "counted" : "proj") : s.candidateId ?? s.key;
+      const key = mg ? (s.source === "RESULT" ? "counted" : "proj") : s.candidateId ?? s.key;
       const held = heldAt(s, endT);
       if (!held || held.point.v === null) continue;
       const cur = best.get(key);
@@ -155,10 +173,10 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
     for (let i = 1; i < list.length; i++) if (list[i].y - list[i - 1].y < gap) list[i].y = list[i - 1].y + gap;
     for (let i = list.length - 1; i >= 0; i--) list[i].y = Math.min(list[i].y, i === list.length - 1 ? floor : list[i + 1].y - gap);
     return list;
-  }, [data, chart, endT, T, H, B, yhi, ylo, narrow]);
-  const fmtEnd = (v: number) => (chart === "prob" ? fmtProb(v) : chart === "votes" ? compact(v) : fmtLead(v, ref));
-  const endTag = (s: Series) => (chart === "margin" ? (s.source === "RESULT" ? "counted" : "") : lastName(s.label.replace(/ \(estimated final\)$/, "")));
-  const colorAt = (s: Series, v: number) => (chart === "margin" && s.phase !== "SHADOW" ? (v >= 0 ? plusColor : minusColor) : s.color);
+  }, [data, mg, endT, T, H, B, yhi, ylo, narrow]);
+  const fmtEnd = (v: number) => (chart === "prob" ? fmtProb(v) : chart === "reported" ? pctPoints(v) : chart === "votes" ? compact(v) : fmtLead(v, ref));
+  const endTag = (s: Series) => (mg ? (s.source === "RESULT" ? "counted" : "") : chart === "reported" ? (s.source === "RESULT" ? "provider" : "est.") : lastName(s.label.replace(/ \(estimated final\)$/, "")));
+  const colorAt = (s: Series, v: number) => (mg && s.phase !== "SHADOW" ? (v >= 0 ? plusColor : minusColor) : s.color);
 
   // cursor: snapped to the nearest observation time in the window, shared by all three charts
   const inWin = useMemo(() => data.times.filter((t) => t >= t0 && t <= t1), [data.times, t0, t1]);
@@ -186,9 +204,9 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
 
   const statuses = new Set([...h.models, ...h.results].map((p) => p.status));
   const uid = "rh" + React.useId().replace(/[^a-zA-Z0-9]/g, "");
-  const y0 = chart === "margin" ? y(0) : 0;
+  const y0 = mg ? y(0) : 0;
   const empty = data.emptyReason;
-  const summary = empty ?? ends.map((e) => `${e.s.label}: ${fmtEnd(e.v)}${chart === "margin" && e.s.source === "RESULT" ? " counted" : ""}`).join("; ");
+  const summary = empty ?? ends.map((e) => `${e.s.label}: ${fmtEnd(e.v)}${mg && e.s.source === "RESULT" ? " counted" : ""}`).join("; ");
 
   return (
     <div className="stu rh" ref={wrap}>
@@ -200,9 +218,9 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
         {updated !== null ? <span className="rh-upd">Last updated {fmtStamp(updated, tz)}</span> : null}
       </div>
       <div className="stu-bar">
-        <div className="stu-seg rh-tabs" role="group" aria-label="Chart">
+          {TABS.length > 1 ? <div className="stu-seg rh-tabs" role="group" aria-label="Chart">
           {TABS.map((c) => <button key={c.id} className={chart === c.id ? "on" : ""} aria-pressed={chart === c.id} onClick={() => setChart(c.id)}>{c.label}</button>)}
-        </div>
+        </div> : null}
         <div className="stu-seg" role="group" aria-label="Time range">
           {RANGES.map((r) => { const ok = r === "ALL" || rangeHasData(data, r, h.bounds, nowMs); return <button key={r} disabled={!ok} className={range === r ? "on" : ""} aria-pressed={range === r} onClick={() => setRange(r)} title={ok ? undefined : "No observations in this range"}>{narrow && r === "NIGHT" ? "Night" : RANGE_LABEL[r]}</button>; })}
         </div>
@@ -227,24 +245,24 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
           {preEnd !== null && preEnd < t1 && W - R - x(preEnd) > 70 ? <text className="rh-cap" x={x(preEnd) + 8} y={T + 13}>Live</text> : null}
           {yTicks.map((v) => (
             <g key={v}>
-              <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} className={chart === "margin" && Math.abs(v) < 1e-9 ? "stu-zero" : "stu-grid"} />
+              <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} className={mg && Math.abs(v) < 1e-9 ? "stu-zero" : "stu-grid"} />
               <text x={L - 8} y={y(v) + 3.5} textAnchor="end" className="stu-ax">{yLabel(v)}</text>
             </g>
           ))}
           {chart === "prob" ? <line x1={L} x2={W - R} y1={y(50)} y2={y(50)} className="rh-ref" /> : null}
           {xTicks.map((q) => <text key={q.t} x={x(q.t)} y={H - 9} textAnchor="middle" className="stu-ax" fontWeight={q.major ? 800 : undefined}>{q.label}</text>)}
-          {markers.map((m, i) => (
+          {markers.map((m) => (
             <g key={`${m.kind}${m.t}`} className="rh-mk">
               <line x1={x(m.t)} x2={x(m.t)} y1={T} y2={H - B} />
-              {!narrow && (i === 0 || x(m.t) - x(markers[i - 1].t) > 90) && x(m.t) < W - R - 40 ? <text x={x(m.t) + 4} y={T - 8}>{m.label}</text> : null}
+              {labelled.has(m) ? <text x={x(m.t) + 4} y={T - 8}>{m.label}</text> : null}
             </g>
           ))}
           <g clipPath={`url(#${uid}p)`}>
-            {drawn.map(({ s, band }) => band ? <path key={`b${s.key}`} d={band} className="rh-band" style={{ fill: chart === "margin" && s.phase !== "SHADOW" ? "var(--rh-neutral)" : s.color }} /> : null)}
-            {chart === "margin" ? drawn.map(({ s, area }) => area ? <g key={`a${s.key}`} opacity={s.phase === "FROZEN" ? 0.5 : 1}><path d={area} fill={`url(#${uid}ga)`} clipPath={`url(#${uid}u)`} /><path d={area} fill={`url(#${uid}gb)`} clipPath={`url(#${uid}d)`} /></g> : null) : null}
+            {drawn.map(({ s, band }) => band ? <path key={`b${s.key}`} d={band} className="rh-band" style={{ fill: mg && s.phase !== "SHADOW" ? "var(--rh-neutral)" : s.color }} /> : null)}
+            {mg ? drawn.map(({ s, area }) => area ? <g key={`a${s.key}`} opacity={s.phase === "FROZEN" ? 0.5 : 1}><path d={area} fill={`url(#${uid}ga)`} clipPath={`url(#${uid}u)`} /><path d={area} fill={`url(#${uid}gb)`} clipPath={`url(#${uid}d)`} /></g> : null) : null}
             {drawn.map(({ s, line, iso, obs }) => {
               const cls = `rh-line ${lineClass(s)}`;
-              const split = chart === "margin" && s.phase !== "SHADOW";
+              const split = mg && s.phase !== "SHADOW";
               return (
                 <g key={s.key}>
                   {line ? (split ? <><path d={line} className={cls} style={{ stroke: plusColor }} clipPath={`url(#${uid}u)`} /><path d={line} className={cls} style={{ stroke: minusColor }} clipPath={`url(#${uid}d)`} /></> : <path d={line} className={cls} style={{ stroke: s.color }} />) : null}
@@ -278,14 +296,14 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
           {ct !== null && readout ? (
             <g className="stu-scrub" pointerEvents="none">
               <line x1={x(ct)} x2={x(ct)} y1={T} y2={H - B} />
-              {readout.rows.map((r) => (r.value !== null ? <circle key={r.seriesKey} className="rh-dot" cx={x(ct)} cy={y(r.value)} r={4} strokeWidth={2.2} style={{ stroke: chart === "margin" && r.phase !== "SHADOW" ? (r.value >= 0 ? plusColor : minusColor) : r.color }} /> : null))}
+              {readout.rows.map((r) => (r.value !== null ? <circle key={r.seriesKey} className="rh-dot" cx={x(ct)} cy={y(r.value)} r={4} strokeWidth={2.2} style={{ stroke: mg && r.phase !== "SHADOW" ? (r.value >= 0 ? plusColor : minusColor) : r.color }} /> : null))}
             </g>
           ) : null}
         </svg>
-        {empty ? <div className="rh-empty"><div><b>{chart === "votes" ? "No votes yet" : "Nothing published"}</b>{empty}{chart === "votes" ? " Reported totals appear here as results arrive." : ""}</div></div> : null}
-        {readout && !narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} style={{ left: `${(x(readout.t) / W) * 100}%`, transform: x(readout.t) > W * 0.55 ? "translateX(calc(-100% - 14px))" : "translateX(14px)" }} /> : null}
+        {empty ? <div className="rh-empty"><div><b>{chart === "votes" || chart === "counted" ? "No votes yet" : chart === "reported" ? "No reporting yet" : "Nothing published"}</b>{empty}{chart === "votes" || chart === "counted" || chart === "reported" ? " Figures appear here as results arrive." : ""}</div></div> : null}
+        {readout && !dockRead ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} style={{ left: `${(x(readout.t) / W) * 100}%`, transform: x(readout.t) > W * 0.55 ? "translateX(calc(-100% - 14px))" : "translateX(14px)" }} /> : null}
       </div>
-      {readout && narrow ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} dock /> : null}
+      {readout && dockRead ? <Readout readout={readout} data={data} chart={chart} tz={tz} sides={[plusColor, minusColor]} cross={cross} dock /> : null}
       <Legend data={data} chart={chart} narrow={narrow} outages={h.outages.length > 0} />
     </div>
   );
@@ -296,11 +314,13 @@ function crossLine(id: ChartId, d: ChartData, h: PreparedHistory, t: number): st
   const rows = readoutAt(d, h, t).rows.map((r, i) => ({ r, s: d.series[i] })).filter(({ r }) => r.value !== null && r.phase !== "SHADOW");
   if (!rows.length) return null;
   const rank = (s: Series) => (s.source === "RESULT" ? 0 : s.phase === "LIVE" ? 1 : 2);
-  if (id === "margin") {
+  if (isMarginChart(id)) {
     const proj = rows.filter(({ s }) => s.source === "MODEL").sort((a, b) => rank(a.s) - rank(b.s))[0];
     const cnt = rows.find(({ s }) => s.source === "RESULT");
-    return `Margin: ${[proj ? `${fmtLead(proj.r.value, d.reference)} ${proj.s.phase === "FROZEN" ? "forecast" : "projected"}` : null, cnt ? `${fmtLead(cnt.r.value, d.reference)} counted` : null].filter(Boolean).join(" · ")}`;
+    const txt = [proj ? `${fmtLead(proj.r.value, d.reference)} ${proj.s.phase === "FROZEN" ? "forecast" : "projected"}` : null, cnt ? `${fmtLead(cnt.r.value, d.reference)} counted` : null].filter(Boolean).join(" · ");
+    return `${id === "counted" ? "Counted margin" : id === "modeled" ? "Modeled final margin" : "Margin"}: ${txt}`;
   }
+  if (id === "reported") return `Reporting: ${rows.map(({ r, s }) => `${pctPoints(r.value)} ${s.source === "RESULT" ? "provider" : "est. counted"}`).join(" · ")}`;
   const reported = id === "votes" && rows.some(({ s }) => s.source === "RESULT");
   const best = new Map<string, { r: ReadoutRow; s: Series }>();
   for (const e of rows) {
@@ -313,8 +333,9 @@ function crossLine(id: ChartId, d: ChartData, h: PreparedHistory, t: number): st
 }
 
 function fmtValue(chart: ChartId, v: number, ref: ChartData["reference"]): string {
-  if (chart === "prob") return v > 0 && v < 0.1 ? "<0.1%" : v > 99.9 && v < 100 ? ">99.9%" : `${v.toFixed(1)}%`;
-  if (chart === "margin") return fmtLead(v, ref);
+  if (chart === "prob") return fmtProb(v);
+  if (chart === "reported") return pctPoints(v);
+  if (isMarginChart(chart)) return fmtLead(v, ref);
   return fmtVotes(v);
 }
 
@@ -362,8 +383,8 @@ function Readout({ readout, data, chart, tz, sides, cross, style, dock }: { read
           {g.head.text ? <div className="s">{g.head.text}{g.head.tag ? <em>{g.head.tag}</em> : null}</div> : <div className="s">No publication at this time</div>}
           {g.rows.map((r) => (
             <div key={r.seriesKey} className={`r${r.value === null ? " na" : ""}`}>
-              <i className={lineClass({ phase: r.phase, dash: r.dash })} style={{ color: chart === "margin" && r.phase !== "SHADOW" && r.value !== null ? sides[r.value >= 0 ? 0 : 1] : r.color }} />
-              <span>{r.label}{chart === "margin" && r.band ? <small>{fmtLead(r.band[0], data.reference)} to {fmtLead(r.band[1], data.reference)}</small> : null}</span>
+              <i className={lineClass({ phase: r.phase, dash: r.dash })} style={{ color: isMarginChart(chart) && r.phase !== "SHADOW" && r.value !== null ? sides[r.value >= 0 ? 0 : 1] : r.color }} />
+              <span>{r.label}{isMarginChart(chart) && r.band ? <small>{fmtLead(r.band[0], data.reference)} to {fmtLead(r.band[1], data.reference)}</small> : null}</span>
               <b>{r.value === null ? (chart === "prob" ? "not published" : "no value") : fmtValue(chart, r.value, data.reference)}</b>
             </div>
           ))}
@@ -387,12 +408,16 @@ function Legend({ data, chart, narrow, outages }: { data: ChartData; chart: Char
         {has((s) => s.phase === "LIVE") ? <span><i className="ln live" />Published live projection</span> : null}
         {has((s) => s.phase === "FROZEN") ? <span><i className="ln frozen" />Frozen pre-election forecast</span> : null}
       </> : null}
-      {chart === "margin" ? <>
+      {isMarginChart(chart) ? <>
         {ref ? <span>Margin is {lastName(ref.plus.name)} minus {lastName(ref.minus.name)}, in points of the total vote</span> : null}
         {has((s) => s.phase === "LIVE" && s.source === "MODEL") ? <span><i className="ln live" />Projected final margin</span> : null}
         {has((s) => s.phase === "FROZEN") ? <span><i className="ln frozen" />Frozen pre-election forecast</span> : null}
         {has((s) => s.source === "RESULT") ? <span><i className="ln dashed" />Counted-vote margin: votes counted so far, not a projection</span> : null}
         {band ? <span><i className="bd" />Shaded band: the interval the model published, shown only where it published one</span> : null}
+      </> : null}
+      {chart === "reported" ? <>
+        {data.series.map((s) => <span key={s.key}><i className={`ln ${s.dash === "DASHED" ? "dashed" : "live"}`} />{s.label}: {s.meaning}</span>)}
+        <span>The two figures measure different things and are never combined</span>
       </> : null}
       {chart === "votes" ? <>
         {has((s) => s.source === "RESULT") ? <span><i className="ln live" />Reported votes</span> : null}

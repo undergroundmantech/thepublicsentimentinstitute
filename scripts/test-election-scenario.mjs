@@ -74,9 +74,22 @@ test("unchanged versus origin/main when no prior is passed (public output untouc
   ];
   for (const [ex, l, top] of fixtures) {
     const a = base.project(ex, l, DR, top, T), b = project(ex, l, DR, top, T);
-    assert.deepEqual(b, a);
+    // the per-county breakdown (cty) is new and display-only; every published figure must match main exactly
+    const { cty: _cty, ...pub } = b;
+    assert.deepEqual(pub, a);
     assert.deepEqual(liveOdds(DR, b), base.liveOdds(DR, a));
   }
+});
+
+test("county modeled margins: a fully counted county is its count, an unreported one is its own forecast moved by the swing, and none under a prior", () => {
+  const lv = { "1": region(100, 520, 470, 10), "2": region(40, 1600, 1500, 20) };
+  const P = project(exp, lv, DR, null, T);
+  assert.deepEqual(Object.keys(P.cty).sort(), ["1", "2", "3"]);
+  close(P.cty["1"], (100 * (470 - 520)) / 1000, 1e-9, "fully counted county");
+  // county 3 has no votes: its forecast D+10.5 moved by the statewide swing (P.swing, points, + = R)
+  close(P.cty["3"], -10.5 + P.swing, 1e-6, "unreported county");
+  assert.ok(P.cty["2"] > -10.5, "a county running ahead for R models ahead of its forecast");
+  assert.equal(project(exp, lv, DR, null, T, 3.5).cty, undefined, "no county breakdown under a prior");
 });
 
 test("counted votes are never moved; the adjustment touches only the forecast share of the outstanding vote", () => {

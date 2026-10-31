@@ -24,6 +24,8 @@
 //     pixel column and every gap, so an extreme or a downward correction is never smoothed away. The history itself is
 //     never reduced.
 
+import { pctPoints } from "@/app/lib/fmtPct";
+
 export const HISTORY_SCHEMA = "TPSI_RACE_HISTORY/1" as const;
 
 export type SourceClass = "FROZEN_FORECAST" | "LIVE_PROJECTION" | "RESULT_FEED" | "SHADOW_MODEL";
@@ -252,7 +254,9 @@ export const lastName = (name: string) => { const p = name.trim().split(/\s+/); 
 
 // ---- series --------------------------------------------------------------------------------------------------------------
 
-export type ChartId = "prob" | "margin" | "votes";
+/** margin: projected and counted together; counted and modeled: each alone. reported: provider and model completeness. */
+export type ChartId = "prob" | "margin" | "votes" | "reported" | "counted" | "modeled";
+export const isMarginChart = (c: ChartId) => c === "margin" || c === "counted" || c === "modeled";
 export type Phase = "FROZEN" | "LIVE" | "SHADOW";
 export type PointFlag = "DECREASE" | "CORRECTION" | "OUT_OF_ORDER" | "REVISION";
 
@@ -379,15 +383,29 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
     return finish(chart, series, markers, notShown, null, emptyReason, [0, 100]);
   }
 
-  if (chart === "margin") {
+  if (chart === "reported") {
+    // the provider's figure and the model's estimate measure different things; each keeps its own line and definition
+    const prov: SeriesPoint[] = [];
+    p.results.forEach((r, i) => prov.push({ t: ms(r.observedAt), v: r.reporting?.pct ?? null, src: i, ...untilOf(r) }));
+    const provDef = p.results.find((r) => r.reporting?.pct != null)?.reporting?.definition ?? "Provider reporting percentage";
+    if (prov.some((q) => q.v !== null)) series.push({ key: "reported:provider", candidateId: null, label: "Provider reporting", color: NEUTRAL_COLOR, dash: "SOLID", phase: "LIVE", source: "RESULT", meaning: provDef, breakAfterMs: null, extendTo: null, band: false, pts: prov });
+    const est: SeriesPoint[] = [];
+    p.models.forEach((m, i) => { if (phaseOf(m.sourceClass) === "LIVE") est.push({ t: ms(m.observedAt), v: m.reporting?.pct ?? null, src: i }); });
+    const estDef = p.models.find((m) => m.reporting?.pct != null)?.reporting?.definition ?? "Share of the expected final vote counted, as the model estimates it";
+    if (est.some((q) => q.v !== null)) series.push({ key: "reported:model", candidateId: null, label: "Est. share of final vote counted", color: "var(--rh-accent)", dash: "DASHED", phase: "LIVE", source: "MODEL", meaning: estDef, breakAfterMs: null, extendTo: null, band: false, pts: est });
+    if (!series.length) emptyReason = "No reporting figure has been recorded for this race.";
+    return finish(chart, series, markers, notShown, null, emptyReason, [0, 100]);
+  }
+
+  if (isMarginChart(chart)) {
     const latest = [...p.models, ...p.results].sort((a, b) => ms(b.observedAt) - ms(a.observedAt)).find((x) => (x.kind === "MODEL_OUTPUT" ? x.margin?.reference : x.countedMargin?.reference));
     const ref = latest ? (latest.kind === "MODEL_OUTPUT" ? latest.margin!.reference : latest.countedMargin!.reference) : null;
     const plus = ref ? byId.get(ref.plus) : undefined, minus = ref ? byId.get(ref.minus) : undefined;
-    if (!ref || !plus || !minus) return finish(chart, [], markers, notShown, null, "No margin has been published for this race.", [-10, 10]);
+    if (!ref || !plus || !minus) return finish(chart, [], markers, notShown, null, chart === "counted" ? "No votes have been counted for this race yet." : "No margin has been published for this race.", [-10, 10]);
     reference = { plus, minus };
     const align = (r: MarginReference, pp: number): number | null => (r.plus === ref.plus && r.minus === ref.minus ? pp : r.plus === ref.minus && r.minus === ref.plus ? -pp : null);
     const alignOpt = (r: MarginReference, v: number | null) => (v === null ? null : align(r, v));
-    for (const phase of ["FROZEN", "LIVE", "SHADOW"] as const) {
+    if (chart !== "counted") for (const phase of ["FROZEN", "LIVE", "SHADOW"] as const) {
       const pts: SeriesPoint[] = [];
       for (const set of modelSets) set.pts.forEach((m, i) => {
         if (phaseOf(m.sourceClass) !== phase) return;
@@ -411,11 +429,11 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
       const v = r.countedMargin ? align(r.countedMargin.reference, r.countedMargin.pp) : null;
       counted.push({ t: ms(r.observedAt), v, src: i, ...untilOf(r), ...(r.totalsDecreased ? { flag: "DECREASE" as const } : r.revision.status === "CORRECTION" ? { flag: "CORRECTION" as const } : {}) });
     });
-    if (counted.some((q) => q.v !== null)) series.push({
+    if (chart !== "modeled" && counted.some((q) => q.v !== null)) series.push({
       key: "margin:counted", candidateId: null, label: "Counted-vote margin", color: NEUTRAL_COLOR, dash: "DASHED", phase: "LIVE", source: "RESULT",
       meaning: "Margin among votes counted so far. Not a projection.", breakAfterMs: null, extendTo: null, band: false, pts: counted,
     });
-    if (!series.length) emptyReason = "No margin has been published for this race.";
+    if (!series.length) emptyReason = chart === "counted" ? "No votes have been counted for this race yet." : "No margin has been published for this race.";
     // The scale follows the forecast. An early count with a lopsided first batch can run far past it; it is capped and marked
     // off scale rather than allowed to flatten the forecast into a line.
     const abs = (ss: Series[]) => ss.flatMap((s) => s.pts.flatMap((q) => [q.v, q.lo, q.hi])).filter((x): x is number => typeof x === "number").map(Math.abs);
@@ -601,6 +619,55 @@ export function readoutAt(c: ChartData, p: PreparedHistory, t: number): Readout 
   return { t, rows };
 }
 
+/** Every chart's held value at one instant, for the shared cursor. Recorded values only: nothing is interpolated. */
+export interface CursorSnapshot {
+  t: number;
+  reference: ChartData["reference"];
+  /** Reported votes per candidate (results feed). */
+  votes: { candidateId: string | null; label: string; value: number }[];
+  /** The provider's reporting figure and the model's estimate of the share counted; never merged. */
+  providerReporting: { pct: number; definition: string } | null;
+  modelCounted: { pct: number; definition: string } | null;
+  countedMargin: number | null;
+  /** Live projection where one is held, else the frozen forecast. */
+  winProbability: { candidateId: string | null; label: string; pct: number; phase: Phase }[];
+  modeledMargin: { pp: number; phase: Phase; band: [number, number] | null } | null;
+  /** The last frozen pre-election forecast published at or before t. */
+  preElectionMargin: number | null;
+  /** modeledMargin - preElectionMargin, in the reference frame (+ toward reference.plus). Null when no live projection is held. */
+  forecastShift: number | null;
+}
+
+export function cursorSnapshot(p: PreparedHistory, t: number): CursorSnapshot {
+  const pair = (id: ChartId) => { const c = buildChart(p, id); return { c, rows: readoutAt(c, p, t).rows.map((r, i) => ({ r, s: c.series[i] })) }; };
+  const rank = (ph: Phase) => (ph === "LIVE" ? 0 : 1);
+  const v = pair("votes");
+  const votes = v.rows.filter(({ r, s }) => s.source === "RESULT" && r.value !== null).map(({ r, s }) => ({ candidateId: s.candidateId, label: s.label, value: r.value as number }));
+  const rp = pair("reported");
+  const rep = (src: Series["source"]) => { const x = rp.rows.find(({ r, s }) => s.source === src && r.value !== null); return x ? { pct: x.r.value as number, definition: x.s.meaning } : null; };
+  const mg = pair("margin");
+  const counted = mg.rows.find(({ r, s }) => s.source === "RESULT" && r.value !== null);
+  const modeled = mg.rows.filter(({ r, s }) => s.source === "MODEL" && r.value !== null).sort((a, b) => rank(a.s.phase) - rank(b.s.phase))[0];
+  const frozen = mg.c.series.find((s) => s.phase === "FROZEN");
+  const pre = frozen ? [...frozen.pts].reverse().find((q) => q.t <= t && q.v !== null)?.v ?? null : null;
+  const pr = pair("prob");
+  const best = new Map<string, { candidateId: string | null; label: string; pct: number; phase: Phase }>();
+  for (const { r, s } of pr.rows) {
+    if (r.value === null || s.source !== "MODEL") continue;
+    const k = s.candidateId ?? s.key, cur = best.get(k);
+    if (!cur || rank(s.phase) < rank(cur.phase)) best.set(k, { candidateId: s.candidateId, label: s.label, pct: r.value, phase: s.phase });
+  }
+  return {
+    t, reference: mg.c.reference, votes,
+    providerReporting: rep("RESULT"), modelCounted: rep("MODEL"),
+    countedMargin: counted ? (counted.r.value as number) : null,
+    winProbability: [...best.values()].sort((a, b) => b.pct - a.pct),
+    modeledMargin: modeled ? { pp: modeled.r.value as number, phase: modeled.s.phase, band: modeled.r.band } : null,
+    preElectionMargin: pre,
+    forecastShift: modeled && modeled.s.phase === "LIVE" && pre !== null ? (modeled.r.value as number) - pre : null,
+  };
+}
+
 /** The observation time nearest after/before t, for keyboard stepping. */
 export function stepTime(times: number[], t: number | null, dir: 1 | -1): number | null {
   if (!times.length) return null;
@@ -696,7 +763,7 @@ export function fmtStamp(t: number, tz: string | undefined, seconds = false): st
 // ---- value formatting ------------------------------------------------------------------------------------------------------
 
 export const fmtVotes = (n: number | null | undefined) => (n == null || !Number.isFinite(n) ? "—" : Math.round(n).toLocaleString("en-US"));
-export const fmtProb = (pct: number | null | undefined) => (pct == null || !Number.isFinite(pct) ? "—" : pct > 0 && pct < 1 ? "<1%" : pct < 100 && pct > 99 ? ">99%" : `${Math.round(pct)}%`);
+export const fmtProb = (pct: number | null | undefined) => (pct == null || !Number.isFinite(pct) ? "—" : pct > 0 && pct < 0.1 ? "<0.1%" : pct < 100 && pct > 99.9 ? ">99.9%" : pctPoints(pct));
 export const fmtPp = (pp: number | null | undefined) => (pp == null || !Number.isFinite(pp) ? "—" : `${pp > 0 ? "+" : pp < 0 ? "−" : ""}${Math.abs(pp).toFixed(1)} pp`);
 
 /** "R +1.2" / "D +0.4" / "Even": the lead, named by the side that holds it. */
@@ -706,4 +773,13 @@ export function fmtLead(pp: number | null | undefined, ref: { plus: HistoryCandi
   const c = pp > 0 ? ref?.plus : ref?.minus;
   const tag = c?.party && c.party.length <= 3 ? c.party : c ? lastName(c.name) : pp > 0 ? "+" : "−";
   return `${tag} +${Math.abs(pp).toFixed(1)}`;
+}
+
+/** A signed change in a margin, named by the side it moved toward: "2.6 pp toward R". */
+export function fmtShift(pp: number | null | undefined, ref: { plus: HistoryCandidate; minus: HistoryCandidate } | null): string {
+  if (pp == null || !Number.isFinite(pp)) return "—";
+  if (Math.abs(pp) < 0.05) return "no change";
+  const c = pp > 0 ? ref?.plus : ref?.minus;
+  const tag = c?.party && c.party.length <= 3 ? c.party : c ? lastName(c.name) : pp > 0 ? "+" : "−";
+  return `${Math.abs(pp).toFixed(1)} pp toward ${tag}`;
 }

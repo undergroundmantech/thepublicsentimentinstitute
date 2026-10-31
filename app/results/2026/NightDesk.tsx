@@ -11,6 +11,7 @@ import { DESK_CSS } from "./deskCss";
 import CallBand from "../CallBand";
 import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
 import { useIndex, useLive, useStateFile } from "./useLive";
+import { CursorPanel, HistoryPane, useRaceHistory } from "@/app/components/opp/RaceHistoryDesk";
 
 type Paths = { counties: { id: string; d: string }[]; districts: { id: string; d: string }[] };
 const SET = (r: XRace) => (r.k === "leg" ? (["leg"] as const) : r.k === "measure" ? (["ballot"] as const) : r.k === "state" || r.k === "other" ? (["state"] as const) : (["fed"] as const));
@@ -49,6 +50,9 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const [sort, setSort] = useState<"votes" | "az" | "reporting" | "margin" | "gap">("votes");
   const [now, setNow] = useState(0);
   const [tab, setTab] = useState("nd-results");
+  // race history: recorded results and published forecasts by time, one shared cursor across both chart groups
+  const hist = useRaceHistory(!embedded && r && /^(sen|gov|house)-/.test(r.id) ? r.id : null);
+  const [hcur, setHcur] = useState<number | null>(null);
   // section tabs scroll the desk itself, never the page behind it, and never change the address
   const jump = (k: string) => {
     setTab(k); const el = document.getElementById(k); if (!el) return;
@@ -150,9 +154,9 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   // on the results map a county with nothing in shows only its expected lean, hatched, the national map's grammar
   const leanOf = (f: string) => { if (view !== "results" || regM(f)) return null; const x = expCM(f); return x == null ? null : shade(x); };
   const anyIn = Object.keys(det?.regions ?? {}).some((f) => regM(f));
-  const rows = exp ? Object.entries(exp).map(([f, e]) => ({ f, n: names[f] ?? f, e, em: expCM(f), g: regM(f) })) : [];
+  const rows = exp ? Object.entries(exp).map(([f, e]) => ({ f, n: names[f] ?? f, e, em: expCM(f), g: regM(f), mc: P.cty?.[f] ?? null })) : [];
   const ql = q.trim().toLowerCase();
-  const shown = rows.filter((x) => !ql || x.n.toLowerCase().includes(ql)).sort((a, b) => sort === "az" ? a.n.localeCompare(b.n) : sort === "reporting" ? (b.g?.pr ?? -1) - (a.g?.pr ?? -1) : sort === "margin" ? Math.abs(a.g?.m ?? a.em ?? 0) - Math.abs(b.g?.m ?? b.em ?? 0) : sort === "gap" ? Math.abs(b.g && b.em != null ? b.g.m - b.em : 0) - Math.abs(a.g && a.em != null ? a.g.m - a.em : 0) : b.e[3] - a.e[3]);
+  const shown = rows.filter((x) => !ql || x.n.toLowerCase().includes(ql)).sort((a, b) => sort === "az" ? a.n.localeCompare(b.n) : sort === "reporting" ? (b.g?.pr ?? -1) - (a.g?.pr ?? -1) : sort === "margin" ? Math.abs(a.g?.m ?? a.em ?? 0) - Math.abs(b.g?.m ?? b.em ?? 0) : sort === "gap" ? Math.abs(b.mc != null && b.em != null ? b.mc - b.em : 0) - Math.abs(a.mc != null && a.em != null ? a.mc - a.em : 0) : b.e[3] - a.e[3]);
   const legD = r.k === "leg" ? sf?.leg[r.id] ?? [] : [];
   const legLive = r.k === "leg" ? legDistricts(r, live.raw) : {};
   const seats = r.k === "leg" && c ? c.c.reduce((o, x) => { const p = x[1].toLowerCase(); if (p.startsWith("dem")) o.d += x[5] ?? 0; else if (p.startsWith("rep")) o.r += x[5] ?? 0; else o.o += x[5] ?? 0; return o; }, { d: 0, r: 0, o: 0 }) : { d: 0, r: 0, o: 0 };
@@ -244,6 +248,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               {hasFc || exp ? <span className="topline-reporting"><b>{pctLabel(P.pctIn)}%</b> est. reporting</span> : null}
             </div>
           </div>
+          {hist.s !== "idle" ? <HistoryPane state={hist} charts={["votes", "reported", "counted"]} title="Results over time" cursor={hcur} onCursor={setHcur} /> : null}
         </article>
 
         <article className="card span-3" id="nd-forecast" aria-labelledby="nd-snap">
@@ -287,7 +292,6 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
             </div>
             )}
           </section>
-          {/* Race History (feature/election-night-intelligence-v1) mounts below this projection zone as #nd-history: published probability and margin by timestamp, never recomputed. */}
           {r.k !== "leg" && hasFc ? (
             <section className="projection-zone" aria-label="Forecasted final result">
               <div className="projected-top">
@@ -318,8 +322,15 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               <div className="no-history">Margins read {isM ? "Yes minus No" : `${last(A)} minus ${last(B)}`} · live data only · not a race call unless marked</div>
             </section>
           ) : null}
+          {hist.s !== "idle" ? <HistoryPane state={hist} charts={["prob", "modeled"]} title="Forecast over time" cursor={hcur} onCursor={setHcur} /> : null}
         </article>
       </div>
+
+      {hist.s === "ready" ? (
+        <section id="nd-history" className="card" aria-label="Every race metric at the selected time">
+          <CursorPanel state={hist} cursor={hcur} onClear={() => setHcur(null)} />
+        </section>
+      ) : null}
 
       {exp && vb ? (
         <section id="nd-counties" className="county card" aria-label={`${STN[r.st]} county map and county by county detail`}>
@@ -375,15 +386,20 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           <div className="rd-county">
             <div className="rd-county-tools">
               <div className="rd-county-search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" /><path d="M21 21l-4.3-4.3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg><input id={`nd-q-${r.id}`} type="text" placeholder="search counties" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search counties" /></div>
-              <div className="rd-county-sorts" role="group" aria-label="Sort counties">{([["votes", "votes"], ["az", "a to z"], ["reporting", "reporting"], ["margin", "closest"], ["gap", "vs expected"]] as const).map(([k, l]) => <button key={k} type="button" className={sort === k ? "on" : ""} onClick={() => setSort(k)}>{l}</button>)}</div>
+              <div className="rd-county-sorts" role="group" aria-label="Sort counties">{([["votes", "votes"], ["az", "a to z"], ["reporting", "reporting"], ["margin", "closest"], ["gap", "forecast change"]] as const).map(([k, l]) => <button key={k} type="button" className={sort === k ? "on" : ""} onClick={() => setSort(k)}>{l}</button>)}</div>
             </div>
             <div className="rd-county-tablewrap">
               <table className="rd-county-table">
-                <thead><tr><th>county</th><th className="num">reporting</th><th className="num">expected votes</th><th className="num">counted</th><th className="num">{last(A).toLowerCase()}</th><th className="num">{last(B).toLowerCase()}</th><th className="num">margin</th><th className="num">vs expected</th></tr></thead>
-                <tbody>{shown.length === 0 ? <tr><td colSpan={8} className="rd-county-loading">no counties match “{q}”.</td></tr> : shown.map((x) => {
+                <thead><tr><th>county</th><th className="num">reporting</th><th className="num">expected votes</th><th className="num">counted</th><th className="num">{last(A).toLowerCase()}</th><th className="num">{last(B).toLowerCase()}</th><th className="num">counted margin</th><th className="num">pre-election forecast</th><th className="num">modeled now</th><th className="num" title="modeled now minus the pre-election forecast">forecast change</th><th className="num" title="modeled now minus the counted margin">modeled vs counted</th></tr></thead>
+                <tbody>{shown.length === 0 ? <tr><td colSpan={11} className="rd-county-loading">no counties match “{q}”.</td></tr> : shown.map((x) => {
                   const sA = x.g ? (100 * x.g.s.a) / x.g.t : (100 * x.e[0]) / Math.max(1, x.e[3]), sB = x.g ? (100 * x.g.s.b) / x.g.t : (100 * x.e[1]) / Math.max(1, x.e[3]);
                   const vA = x.g ? x.g.s.a : x.e[0], vB = x.g ? x.g.s.b : x.e[1];
-                  const m = x.g ? x.g.m : x.em; const d = x.g && x.em != null ? x.g.m - x.em : null;
+                  // forecast_delta = modeled now - pre-election; forecast_results_gap = modeled now - counted. Margins + = second side.
+                  // Differences are taken between the one-decimal figures shown in the row, so the row's arithmetic reads true.
+                  const r1 = (v: number) => +v.toFixed(1);
+                  const delta = x.mc != null && x.em != null ? r1(x.mc) - r1(x.em) : null, gap = x.mc != null && x.g ? r1(x.mc) - r1(x.g.m) : null;
+                  const lead = (m: number | null) => (m == null ? "—" : <span style={{ color: m <= 0 ? colA : colB }}>{Math.abs(m) < 0.05 ? "even" : `${m < 0 ? last(A) : last(B)} +${Math.abs(m).toFixed(1)}`}</span>);
+                  const toward = (d: number | null) => (d == null ? "—" : Math.abs(d) < 0.05 ? "no change" : <span style={{ color: d < 0 ? colA : colB }}>{Math.abs(d).toFixed(1)} pp toward {d < 0 ? last(A) : last(B)}</span>);
                   return (
                     <tr key={x.f}>
                       <td>{x.n}</td>
@@ -392,14 +408,17 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                       <td className="num">{x.g ? fmtN(x.g.t) : "—"}</td>
                       <td className="num"><span className="rd-cand-cell"><b style={{ color: colA }}>{sA.toFixed(1)}%</b><span className="rd-cand-votes">{fmtN(vA)}</span></span></td>
                       <td className="num"><span className="rd-cand-cell"><b style={{ color: colB }}>{sB.toFixed(1)}%</b><span className="rd-cand-votes">{fmtN(vB)}</span></span></td>
-                      <td className="num">{m == null ? "—" : <span style={{ color: m <= 0 ? colA : colB }}>{m <= 0 ? last(A) : last(B)} +{Math.abs(m).toFixed(1)}</span>}</td>
-                      <td className="num">{d == null ? "—" : <span style={{ color: d <= 0 ? colA : colB }}>{d <= 0 ? last(A) : last(B)} +{Math.abs(d).toFixed(1)}</span>}</td>
+                      <td className="num">{x.g ? lead(x.g.m) : "—"}</td>
+                      <td className="num">{x.em == null ? <span title="No county forecast; the state forecast is never used in its place">no county forecast</span> : lead(x.em)}</td>
+                      <td className="num">{lead(x.mc)}</td>
+                      <td className="num">{toward(delta)}</td>
+                      <td className="num">{toward(gap)}</td>
                     </tr>
                   );
                 })}</tbody>
               </table>
             </div>
-            <p className="prose county-caveat">Before a county reports, its row shows the forecast: expected votes and shares. Once it reports, the row shows counted votes. The estimate of the final count splits each county&apos;s outstanding vote like its own returns, leaning on the forecast while little is in; counties with nothing in take the forecast moved by the average gap in counties that have reported.</p>
+            <p className="prose county-caveat">Before a county reports, its row shows the forecast: expected votes and shares. Once it reports, the row shows counted votes. The estimate of the final count splits each county&apos;s outstanding vote like its own returns, leaning on the forecast while little is in; counties with nothing in take the forecast moved by the average gap in counties that have reported. Modeled now is that estimate for the county alone. Forecast change is modeled now minus the pre-election county forecast; modeled vs counted is modeled now minus the counted margin, both in percentage points and named by the side they move toward. A county with no forecast of its own says so; the state forecast is never used in its place.</p>
           </div>
         </section>
       ) : null}
@@ -547,6 +566,12 @@ const THEME_CSS = `
 .desk.nd .rd-county-tablewrap tbody tr{animation:nd-fade .5s ease both;transition:background .2s}
 .desk.nd .rd-county-tablewrap tbody tr:nth-child(-n+20){animation-delay:calc(var(--r,0)*1ms)}
 .desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(255,217,138,.06)}
+.desk.nd .rhd-pane{margin-top:0;padding:16px 18px 18px}
+.desk.nd #nd-history{padding:16px 18px}
+.desk.nd .rd-county-table{table-layout:auto;min-width:1180px}
+.desk.nd .rd-county-table td{overflow:visible}
+.desk.nd .rd-county-table th:first-child,.desk.nd .rd-county-table td:first-child{position:sticky;left:0;z-index:1;background:rgb(var(--bg2-rgb))}
+.desk.nd .rd-county-table thead th:first-child{z-index:2}
 .desk.nd .mech-box,.desk.nd .gatebox{border-radius:14px}
 .desk.nd .live-dot{box-shadow:0 0 0 0 rgba(255,59,92,.6);animation:nd-pulse 1.8s ease-out infinite}
 @keyframes nd-rise{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:none}}

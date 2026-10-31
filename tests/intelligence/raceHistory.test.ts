@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import {
-  buildChart, decimate, defaultRange, fmtLead, fmtProb, fmtPp, fmtStamp, fmtVotes, heldAt, HISTORY_SCHEMA, lastUpdated, prepareHistory, rangeHasData, rangeWindow, readoutAt, stepTime, timeTicks,
+  buildChart, cursorSnapshot, decimate, defaultRange, fmtLead, fmtProb, fmtPp, fmtShift, fmtStamp, fmtVotes, heldAt, HISTORY_SCHEMA, lastUpdated, prepareHistory, rangeHasData, rangeWindow, readoutAt, stepTime, timeTicks,
   windowSeries, zoneOffset, zonedToUtc, ELECTION_NIGHT_START,
   type HistoryCandidate, type HistoryPoint, type ModelOutputPoint, type ResultPoint, type Series, type SeriesPoint,
 } from "../../app/lib/intelligence/raceHistory";
@@ -258,6 +258,59 @@ test("margin: projected and counted margins are separate series, the interval ex
   assert.ok(c.series[1].meaning.includes("Not a projection"));
 });
 
+// ---- election-night views and the shared cursor (Gate E) ---------------------------------------------------------------
+
+const nightPts = () => [
+  model("f1", at(-600), { sourceClass: "FROZEN_FORECAST", margin: { pp: -8.2, reference: REF, low: -12, high: -4, intervalBasis: "p10-p90" }, winProbability: { a: 0.9, b: 0.08, c: 0.02 } }),
+  model("m1", at(0), { margin: { pp: -5.6, reference: REF, low: -9, high: -2, intervalBasis: "p10-p90" }, reporting: { pct: 40, definition: "share of the projected final vote counted" } }),
+  result("r1", at(5), { a: 100, b: 120, c: 5 }, { reporting: { pct: 10, definition: "The provider's own reporting percentage." } }),
+];
+
+test("election-night views: counted and modeled split the margin chart, and percent reported keeps the provider and model figures apart", () => {
+  const p = prep(nightPts());
+  assert.deepEqual(buildChart(p, "margin").series.map((s) => s.key), ["margin:FROZEN", "margin:LIVE", "margin:counted"]);
+  assert.deepEqual(buildChart(p, "counted").series.map((s) => s.key), ["margin:counted"]);
+  assert.deepEqual(buildChart(p, "modeled").series.map((s) => s.key), ["margin:FROZEN", "margin:LIVE"]);
+  const rep = buildChart(p, "reported");
+  assert.deepEqual(rep.series.map((s) => [s.key, s.source, s.dash]), [["reported:provider", "RESULT", "SOLID"], ["reported:model", "MODEL", "DASHED"]]);
+  assert.deepEqual(rep.yDomain, [0, 100]);
+  assert.equal(rep.series[0].meaning, "The provider's own reporting percentage.");
+  assert.equal(rep.series[1].meaning, "share of the projected final vote counted");
+  assert.deepEqual(rep.series[0].pts.map((q) => q.v), [10]);
+  assert.deepEqual(rep.series[1].pts.map((q) => q.v), [40]);
+  // nothing counted yet: the counted view is empty and says so; the modeled view still has the forecast
+  const pre = prep(nightPts().slice(0, 1));
+  assert.match(buildChart(pre, "counted").emptyReason ?? "", /No votes have been counted/);
+  assert.equal(buildChart(pre, "modeled").emptyReason, null);
+  assert.match(buildChart(pre, "reported").emptyReason ?? "", /No reporting figure/);
+});
+
+test("shared cursor: every metric is the last recorded value at or before the time, with the change from the pre-election forecast", () => {
+  const p = prep(nightPts());
+  const s = cursorSnapshot(p, Date.parse(at(6)));
+  assert.deepEqual(s.votes.map((v) => [v.candidateId, v.value]), [["a", 100], ["b", 120], ["c", 5]]);
+  assert.equal(s.providerReporting?.pct, 10);
+  assert.equal(s.modelCounted?.pct, 40);
+  assert.ok(Math.abs(s.countedMargin! - (20 / 225) * 100) < 1e-9);
+  assert.deepEqual(s.winProbability.map((w) => [w.candidateId, w.pct, w.phase]), [["a", 60, "LIVE"], ["b", 30, "LIVE"], ["c", 10, "LIVE"]]);
+  assert.deepEqual([s.modeledMargin?.pp, s.modeledMargin?.phase], [-5.6, "LIVE"]);
+  assert.equal(s.preElectionMargin, -8.2);
+  assert.ok(Math.abs(s.forecastShift! - 2.6) < 1e-9);
+  assert.equal(`${fmtLead(s.preElectionMargin, s.reference)} -> ${fmtLead(s.modeledMargin!.pp, s.reference)} = ${fmtShift(s.forecastShift, s.reference)}`, "D +8.2 -> D +5.6 = 2.6 pp toward R");
+  // before the first count: no counted figure is borrowed from the future
+  const early = cursorSnapshot(p, Date.parse(at(1)));
+  assert.equal(early.countedMargin, null);
+  assert.deepEqual(early.votes, []);
+  assert.equal(early.providerReporting, null);
+  // before the first live projection: the frozen forecast, and no shift
+  const pre = cursorSnapshot(p, Date.parse(at(-300)));
+  assert.equal(pre.modeledMargin?.phase, "FROZEN");
+  assert.equal(pre.forecastShift, null);
+  assert.equal(pre.winProbability[0].phase, "FROZEN");
+  assert.equal(fmtShift(0.01, s.reference), "no change");
+  assert.equal(fmtShift(-1.25, s.reference), "1.3 pp toward D");
+});
+
 test("margin reference: a point stated with the sides swapped is aligned to the latest reference, with its interval swapped too", () => {
   const swapped = model("m1", at(0), { margin: { pp: 2, reference: { plus: "a", minus: "b" }, low: 1, high: 4, intervalBasis: "x" } });
   const latest = model("m2", at(10), { margin: { pp: -1, reference: REF, low: -2, high: 0, intervalBasis: "x" } });
@@ -413,9 +466,10 @@ test("range windows follow the data, election night opens at 4 PM ET, and a lone
 });
 
 test("formatting: percentages, percentage points and vote counts", () => {
-  assert.equal(fmtProb(62.4), "62%");
-  assert.equal(fmtProb(0.3), "<1%");
-  assert.equal(fmtProb(99.6), ">99%");
+  assert.equal(fmtProb(62.4), "62.4%");
+  assert.equal(fmtProb(100), "100.0%");
+  assert.equal(fmtProb(0.03), "<0.1%");
+  assert.equal(fmtProb(99.96), ">99.9%");
   assert.equal(fmtProb(null), "—");
   assert.equal(fmtPp(1.234), "+1.2 pp");
   assert.equal(fmtPp(-0.04), "−0.0 pp");

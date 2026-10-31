@@ -117,7 +117,7 @@ export function sides(r: XRace, c: CCand[]): { a: number; b: number; o: number; 
   return { a, b, o, t: a + b + o };
 }
 
-export type Proj = { rep: { a: number; b: number; o: number; t: number }; fin: { a: number; b: number; o: number; t: number }; pctIn: number; m: number; band: number; expM: number; swing: number | null; counties: number; countiesIn: number };
+export type Proj = { rep: { a: number; b: number; o: number; t: number }; fin: { a: number; b: number; o: number; t: number }; pctIn: number; m: number; band: number; expM: number; swing: number | null; counties: number; countiesIn: number; cty?: Record<string, number> };
 /**
  * The estimate of the final count. Each county's expected vote comes from the forecast. A county that has reported
  * keeps its own returns and its outstanding vote splits like its returns so far, leaning back to the forecast while
@@ -148,6 +148,8 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
     }
     const swing = sv ? (sw / sv) * (sv / (sv + 0.08 * expAll.t)) : 0;
     let U = 0; // forecast-carried outstanding votes, for the prior
+    // each county's own modeled final margin (+ = side B), the same numbers summed into fin; omitted under a prior, which moves only the total
+    const cty: Record<string, number> = {};
     for (const [f, e] of Object.entries(exp)) {
       const s = seen[f]; const eA = e[3] ? e[0] / e[3] : 0.5, eB = e[3] ? e[1] / e[3] : 0.5, eO = Math.max(0, 1 - eA - eB);
       if (s && s.t > 0) {
@@ -158,11 +160,14 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
         const oA = s.a / s.t, oB = s.b / s.t, oO = s.o / s.t;
         const rA = w * oA + (1 - w) * (eA - swing / 2), rB = w * oB + (1 - w) * (eB + swing / 2), rO = w * oO + (1 - w) * eO;
         const k = rA + rB + rO || 1;
-        fin.a += s.a + (left * rA) / k; fin.b += s.b + (left * rB) / k; fin.o += s.o + (left * rO) / k;
+        const fa = s.a + (left * rA) / k, fb = s.b + (left * rB) / k, fo = s.o + (left * rO) / k;
+        fin.a += fa; fin.b += fb; fin.o += fo;
+        if (fa + fb + fo > 0) cty[f] = (100 * (fb - fa)) / (fa + fb + fo);
         if (mu) U += Math.min(Math.max(0, e[3] - s.t), left) * (1 - Math.min(1, (2 * s.t) / Math.max(1, e[3])));
       } else {
         const A = Math.max(0, eA - swing / 2), B = Math.max(0, eB + swing / 2), k = A + B + eO || 1;
         fin.a += (e[3] * A) / k; fin.b += (e[3] * B) / k; fin.o += (e[3] * eO) / k;
+        if (e[3] > 0) cty[f] = (100 * (B - A)) / k;
         if (mu) U += e[3];
       }
     }
@@ -170,7 +175,7 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
     fin.t = fin.a + fin.b + fin.o;
     const pctIn = fin.t ? Math.min(100, (100 * rep.t) / fin.t) : 0;
     const m = mu && !rep.t ? expM + prior : fin.t ? (100 * (fin.b - fin.a)) / fin.t : expM;
-    return { rep, fin, pctIn, m, band: band(pctIn), expM, swing: sv ? swing * 100 : null, counties, countiesIn };
+    return { rep, fin, pctIn, m, band: band(pctIn), expM, swing: sv ? swing * 100 : null, counties, countiesIn, ...(mu ? {} : { cty }) };
   }
   // no county file or no county returns: the topline against the expected total
   if (top && top.length) {

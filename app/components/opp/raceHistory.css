@@ -78,3 +78,16 @@
 @keyframes rh-in { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 640px) { .rh-tabs button { padding: 6px 9px; font-size: 10.5px; letter-spacing: .04em; } .rh .stu-seg button { padding: 6px 9px; } }
 @media (prefers-reduced-motion: reduce) { .rh .rh-line { animation: none; } }
+
+/* Race page: history panes under the results and forecast blocks, and the shared-cursor panel. */
+.rhd-pane { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line, rgba(127,127,127,.2)); min-width: 0; }
+.rhd-wait { margin: 18px 0 0; font: 500 12.5px/1.5 var(--font-m, monospace); color: var(--mute, #a79fbd); }
+.rhd-snap-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 10px; }
+.rhd-snap-h strong { font: 700 11px var(--font-m, monospace); letter-spacing: .14em; text-transform: uppercase; }
+.rhd-snap-h span { font: 600 13px var(--font-m, monospace); color: var(--mute, #a79fbd); }
+.rhd-snap-h button { margin-left: auto; appearance: none; border: 1px solid var(--line, rgba(127,127,127,.3)); background: none; color: inherit; font: 700 11.5px var(--font-b, sans-serif); padding: 5px 12px; border-radius: 999px; cursor: pointer; }
+.rhd-snap dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 18px; margin: 0; }
+.rhd-snap dl div { min-width: 0; }
+.rhd-snap dt { font: 700 10px var(--font-m, monospace); letter-spacing: .12em; text-transform: uppercase; color: var(--mute, #a79fbd); margin-bottom: 3px; }
+.rhd-snap dd { margin: 0; font: 600 14px/1.4 var(--font-b, sans-serif); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.rhd-snap p { margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--mute, #a79fbd); }
