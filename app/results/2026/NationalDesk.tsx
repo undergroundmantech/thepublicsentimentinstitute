@@ -5,7 +5,7 @@
 // races to watch; the full race list follows. Returns come from civicAPI through the caching proxy and expected
 // results from the forecast index; until a race has votes it shows only its expected lean, hatched, never as a result.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { STN, KIND_LABEL, FIRST_CLOSE, fmtK, fmtM, isInd, resultsHref, type Kind, type XRace } from "./live";
