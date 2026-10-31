@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useMemo, useState } from "react";
 import { Card, EntityLink, Gate, Head, Kpis, Tape, Table, ago, day, href, int, side, usd, useLedger, officeLabel, type Row } from "../lib";
 import { Pointy } from "@/app/components/home/Mascot";

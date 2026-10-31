@@ -1,7 +1,7 @@
 "use client";
 // The phone tab bar: the four desks people come back to, in reach of a thumb, and the full menu. Shown at 860px
 // and narrower (app/phone.css). It steps aside while the on screen keyboard is up and in full screen views.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ev } from "@/app/lib/ev";

@@ -2,7 +2,7 @@
 // The donor coalition of one race at a time: each nominee's money by size and source, how much comes from home, where in
 // the state the donors live next to where the voters are, and the model's reading.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { raceHref } from "@/app/lib/opp";
 
 type Cand = { id: string; name: string; party: string; raised: number | null; itemized: number | null; donations: number | null; home: number | null; status: string; through: string | null;

@@ -1,6 +1,6 @@
 "use client";
 // The section bar on every forecast page, so each forecast is one click from any other.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import "./forecastnav.css";
 

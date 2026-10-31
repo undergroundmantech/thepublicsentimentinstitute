@@ -3,7 +3,7 @@
 // the path to victory, the counties and groups that decide it, the scouting report on both candidates, and the
 // forecast, polls, money, air war, early vote, media and trail behind all of it.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import type { Health, Intel, Side, WRace, County, Grp } from "./data";
 import { OFFICE_NAME, healthTone, lead, pct, surname, usd, warHref, winP } from "./fmt";
 import { LensToggle, useLens } from "./lens";

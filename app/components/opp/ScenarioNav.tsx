@@ -1,6 +1,6 @@
 "use client";
 // The two scenario tools, What If and the swingometer, each on its own page: a small bar to hop between them and back to the forecast.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import "./forecastnav.css";
 

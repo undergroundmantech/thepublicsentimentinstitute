@@ -3,7 +3,7 @@
 // filters for office, party and how deep the research goes. Each row opens that person's file.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ev, evSettled } from "@/app/lib/ev";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import type { PRow } from "../data";
 import { fileHref } from "./PersonFile";
 

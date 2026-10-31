@@ -1,7 +1,7 @@
 // The home page's front door under the globe: one tile per section people come for, each with a live number
 // from that section so the tile answers something before it is clicked. Brazil leads through its count, then the
 // War Room, the forecasts, What If, the early vote, the news desk and the people web.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getModel } from "@/app/lib/forecastData";
 import { getBr } from "@/app/brasil/data";
 import { getWarIndex } from "@/app/watchdog/war-room/data";

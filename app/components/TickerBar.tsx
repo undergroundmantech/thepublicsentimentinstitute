@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getModel, isInd } from "@/app/lib/forecastData";
 import { fmtM, lastName, raceHref } from "@/app/lib/opp";
 import DaysOut from "./DaysOut";

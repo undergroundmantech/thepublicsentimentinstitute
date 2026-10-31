@@ -3,7 +3,7 @@
 // page stops at each event of the term to show where the average stood that day and two weeks later. The chart
 // stays pinned while the page scrolls under it; the rail at the bottom jumps to any event.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import Mascot from "@/app/components/home/Mascot";
 import { KIND_LABEL, type TEvent } from "./events";
 import "./timeline.css";

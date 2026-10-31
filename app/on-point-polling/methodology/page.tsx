@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import PollsterList from "./PollsterList";
 import { seo } from "@/app/lib/seo";
 import { RECENCY_HALF_LIFE_DAYS } from "@/app/_polling/lib/buildDailyModel";

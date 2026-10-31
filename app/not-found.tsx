@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 
 export default function NotFound() {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import { pollHref } from "@/app/polls/registry";

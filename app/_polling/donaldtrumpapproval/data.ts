@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 30, 2026 evening ──
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-30", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },   // daily tracking Oct 26 to 30, posted Oct 30
   // ── Added Oct 30, 2026 midday ──
   { pollster: "Emerson", endDate: "2026-10-26", sampleSize: 1000, sampleType: "LV", results: { Approve: 37, Disapprove: 57 } },   // Emerson national, Oct 24 to 26, likely voters; n estimated from past Emerson national waves; sent by the publisher Oct 30
   // ── Added Oct 29, 2026 morning ──

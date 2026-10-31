@@ -1,7 +1,7 @@
 "use client";
 // /brasil/estados: the whole country municipality by municipality, with a panel for the state or town you pick.
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import NationCanvas, { useAllMun, type CanvasHandle, type Muni } from "./NationCanvas";
 import { UF_ORDER, marginColor, ratingStyle, slugOf, type BrState } from "./lib";
 import { useFmt } from "./i18n";

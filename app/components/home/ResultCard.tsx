@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useEffect, useState } from "react";
 import { Grow } from "./motion";
 

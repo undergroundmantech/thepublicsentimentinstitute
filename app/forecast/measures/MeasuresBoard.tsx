@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 
 export type BoardMeasure = { id: string; st: string; state: string; href: string; label: string; title: string; group: string; groupLabel: string; yes: number; p10: number; p90: number; prob: number; threshold: number; polled: boolean };
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { RATING_LABEL, fmtM, lastName, rating, ratingPill } from "@/app/lib/opp";
 import { OFFICE_ORDER, dbHref, getDownballot, type DBRace } from "./data";

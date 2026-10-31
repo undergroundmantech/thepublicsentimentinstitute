@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { LEAN_LABEL, OUTLETS, type Lean } from "../sources";
 import { LeanTag } from "../ui";
 import "../news.css";

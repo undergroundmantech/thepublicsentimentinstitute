@@ -1,5 +1,5 @@
 // One person's Watchdog file. Plain markup with no data loading, so the static pages and the on demand viewer share it.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import type { PEdge, PFile } from "../data";
 import { PARTY_NAME, usd } from "./fmt";
 import Md from "./md";

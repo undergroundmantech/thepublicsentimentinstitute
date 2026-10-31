@@ -9,6 +9,9 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 30, 2026 evening ──
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-21", sampleSize: 1755, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },   // Oct 15 and Oct 18 to 21, posted Oct 26
+  { pollster: "Penn State McCourtney Institute/YouGov", endDate: "2026-10-20", sampleSize: 724, sampleType: "LV", results: { Democrats: 47, Republicans: 43 } },   // Oct 14 to 20, registered voters who plan to vote; Penn State release gives Democrats by 4, shares as listed by callthemap
   // ── Added Oct 30, 2026 midday ──
   { pollster: "Emerson", endDate: "2026-10-26", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52, Republicans: 42 } },   // Emerson national, Oct 24 to 26, likely voters; n estimated from past Emerson national waves; sent by the publisher Oct 30
   // ── Added Oct 30, 2026 morning ──

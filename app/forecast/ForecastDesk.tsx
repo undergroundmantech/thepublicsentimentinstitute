@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import SwingOMeter from "../results/components/SwingOMeter";
 import {
@@ -42,7 +42,7 @@ export function useJson<T>(url: string | null): T | null {
     let dead = false;
     let p = inflight.get(url);
     if (!p) {
-      p = fetch(url, { cache: "no-store" }).then((r) => r.json()).then((j) => { jsonCache.set(url, j); return j; });
+      p = fetch(url).then((r) => r.json()).then((j) => { jsonCache.set(url, j); return j; });
       inflight.set(url, p);
     }
     p.then((j) => { if (!dead) setData(j as T); }).catch(() => { inflight.delete(url); });

@@ -3,7 +3,7 @@
 // races on the left, a large national map in the middle that opens a race's full page on click, and the projection,
 // a live countdown and the ways into the rest of the forecast on the right.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import { RATE, RATING_LABEL, rating, raceHref, ELECTION_ISO, type Rating } from "@/app/lib/opp";
 

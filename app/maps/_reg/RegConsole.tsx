@@ -4,7 +4,7 @@
 // the size of the rolls, the unaffiliated share or 2024 turnout against the rolls), switch the nation between states
 // and counties, click a state to drop into its counties, and read its numbers and every county below.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import { marginColor } from "@/app/lib/opp";
 import Ambient from "@/app/components/opp/Ambient";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Lockup } from "./opp/Logo";
 import { MENU } from "./navMenu";
 import { Pointy } from "@/app/components/home/Mascot";

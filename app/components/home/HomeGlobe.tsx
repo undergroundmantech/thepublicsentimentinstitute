@@ -5,7 +5,7 @@
 import DaysOut from "@/app/components/DaysOut";
 import { canvasDpr, frameGap, isLite } from "@/app/lib/lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import { geoOrthographic, geoPath, geoGraticule10, geoContains, geoCentroid, geoInterpolate, geoDistance, type GeoPermissibleObjects } from "d3-geo";
 import { feature } from "topojson-client";

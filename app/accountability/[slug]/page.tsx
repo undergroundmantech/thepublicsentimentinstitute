@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { notFound } from "next/navigation";
 import { getAx, money, PARTS, PART_LABEL, PARTY_LABEL, seatLong, STATE_NAME, type Member, type Part } from "../data";
 import { Grade } from "../AxTable";

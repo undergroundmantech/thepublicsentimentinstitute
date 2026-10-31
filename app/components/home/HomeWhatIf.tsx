@@ -2,7 +2,7 @@
 // The home page What if band: call the closest races yourself and watch control of the Senate, the House and the
 // governorships move, using the same joint simulations as the full What if page.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { prep, compute, type Data, type Model, type Pin } from "@/app/forecast/what-if/WhatIf";
 import { Pointy } from "./Mascot";
 

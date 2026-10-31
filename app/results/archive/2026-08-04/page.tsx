@@ -200,7 +200,7 @@ function useSlate() {
   useEffect(() => {
     alive.current = true;
     pull();
-    const t = setInterval(pull, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, REFRESH_MS);
     return () => { alive.current = false; clearInterval(t); };
   }, [pull]);
 
@@ -240,7 +240,7 @@ function useLiveCounties(raceId: number) {
       }
     };
     pull();
-    const t = setInterval(pull, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, REFRESH_MS);
     return () => { alive = false; ac.abort(); clearInterval(t); };
   }, [raceId]);
 

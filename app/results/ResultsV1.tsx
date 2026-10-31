@@ -2409,7 +2409,7 @@ export default function March3FeaturedClient() {
     } catch (e: any) { setError(e?.message ?? "Error refreshing."); }
   }
 
-  useEffect(() => { refreshFeatured(); const t = setInterval(refreshFeatured, POLL_MS); return () => clearInterval(t); }, []);
+  useEffect(() => { refreshFeatured(); const t = setInterval(() => { if (!document.hidden) refreshFeatured(); }, POLL_MS); return () => clearInterval(t); }, []);
   useEffect(() => { const t = setInterval(() => setNowMs(Date.now()), 1000); return () => clearInterval(t); }, []);
   useLayoutEffect(() => { setLoadingMap(true); setMapBlankSvg(null); setMapLoadPct(0); }, [selectedId]);
 

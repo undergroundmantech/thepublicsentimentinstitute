@@ -1,7 +1,7 @@
 // Server rendered text for the early vote tracker: the plain language lede under the page title, the
 // state by state index and the questions people search for. It is what search engines and AI answers
 // read and quote, so every number here is the same feed the interactive desk above it draws.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import Count from "@/app/components/opp/Count";
 import { type EarlyVote, type EvState, commas, millions, longDate, pct } from "./server";
 

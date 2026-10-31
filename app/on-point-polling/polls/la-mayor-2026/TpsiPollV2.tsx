@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 // ─── Palette: party colors for party data only; everything else is toned to neutrals below ───

@@ -5,7 +5,8 @@ import { seo } from "@/app/lib/seo";
 import CivicRace from "./CivicRace";
 import "./civic.css";
 
-export const revalidate = 300;
+// the live numbers come from the client's own 30 second poll, so the page shell can stay cached for an hour
+export const revalidate = 3600;
 
 async function nameOf(id: string): Promise<{ name: string; type: string } | null> {
   try {

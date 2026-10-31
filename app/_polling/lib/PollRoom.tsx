@@ -8,7 +8,7 @@
  * average writes that average on the same board, below the line.
  */
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import React, { useEffect, useMemo, useState } from "react";
 import StateRaceMap, { INK, type MapRow } from "./StateRaceMap";
 import { Pointy } from "@/app/components/home/Mascot";

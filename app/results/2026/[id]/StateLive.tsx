@@ -3,7 +3,7 @@
 // read from civicAPI through the caching proxy every minute. The server renders the forecast rows, so the page reads
 // in full to search engines and before the first live read.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useIndex, useLive } from "../useLive";
 import { fmtM, sides, type XRace } from "../live";
 
@@ -21,7 +21,7 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
   React.useEffect(() => {
     if (!st) return; let dead = false;
     const load = () => fetch(`/api/civic/state?st=${st}`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (!dead && j?.races) setOthers(j.races); }).catch(() => {});
-    load(); const t = setInterval(load, 60_000);
+    load(); const t = setInterval(() => { if (!document.hidden) load(); }, 60_000);
     return () => { dead = true; clearInterval(t); };
   }, [st]);
   const linked = React.useMemo(() => new Set(Object.values(live.byId).map((c) => c.id)), [live.byId]);

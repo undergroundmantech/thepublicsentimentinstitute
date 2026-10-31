@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 
 // Rollout configuration, evaluated from the deploy's environment. Clients
 // bootstrap from this on load; stages flip per-environment in Vercel.
+// The flags come only from build time environment values, so the answer is static and the CDN serves it.
+export const dynamic = "force-static";
+
 export async function GET() {
   const v2 = process.env.NEXT_PUBLIC_SITE_V2 === "on";
   return NextResponse.json(
@@ -26,6 +29,6 @@ export async function GET() {
       },
       evaluated: "environment",
     },
-    { headers: { "cache-control": "no-store" } },
+    { headers: { "cache-control": "public, max-age=300, s-maxage=86400, stale-while-revalidate=86400" } },
   );
 }

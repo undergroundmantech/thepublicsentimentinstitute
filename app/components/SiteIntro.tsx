@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Icon, Lockup } from "./opp/Logo";
 
 // First-visit announcement, shown once and then remembered under SEEN_KEY.

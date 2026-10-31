@@ -4,7 +4,7 @@
 // vote. Click a state to fly in and see its counties; click any race to open its full results desk, with the
 // reported results, the live win probability, the estimate of the final count and the county table.
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { geoOrthographic, geoPath, geoGraticule10, geoContains, geoCentroid, geoDistance, geoBounds, geoArea, type GeoPermissibleObjects } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";

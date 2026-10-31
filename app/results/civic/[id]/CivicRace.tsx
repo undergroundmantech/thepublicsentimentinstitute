@@ -2,7 +2,7 @@
 // Live results for any November 3 race civicAPI carries that the forecast does not: university boards, treasurers,
 // auditors, commissions, courts. The count, a county map shaded by the leader, and every county in a table.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { geoMercator, geoPath, geoArea } from "d3-geo";
 import type { CDetail } from "@/app/results/2026/live";
 import { STN } from "@/app/results/2026/live";
@@ -20,7 +20,7 @@ export default function CivicRace({ id }: { id: number }) {
   useEffect(() => {
     let dead = false;
     const load = () => fetch(`/api/civic/race/${id}`).then((r) => (r.ok ? r.json() : Promise.reject())).then((j) => { if (!dead) { setD(j); setErr(false); } }).catch(() => { if (!dead) setErr(true); });
-    load(); const t = setInterval(load, 30_000);
+    load(); const t = setInterval(() => { if (!document.hidden) load(); }, 30_000);
     return () => { dead = true; clearInterval(t); };
   }, [id]);
   useEffect(() => { if (!LL) fetch("/results/2026/counties_ll.json").then((r) => r.json()).then((j) => { LL = j; setLl(j); }).catch(() => {}); }, []);

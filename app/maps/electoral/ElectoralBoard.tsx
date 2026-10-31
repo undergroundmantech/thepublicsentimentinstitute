@@ -7,7 +7,7 @@
 // The address bar carries the map so it can be shared.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { ev } from "@/app/lib/ev";

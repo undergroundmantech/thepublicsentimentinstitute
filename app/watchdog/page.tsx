@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getEndorsements, getGraph, getMoney, getPeople, getTrail, usd } from "./data";
 import { WD_GROUPS, ToolIcon, type ToolKey } from "./tools";
 import { Pointy } from "@/app/components/home/Mascot";

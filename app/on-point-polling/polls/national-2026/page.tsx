@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { seo } from "@/app/lib/seo";
 
 export const metadata: Metadata = seo({"title": "2026 national poll: generic ballot, Trump approval and 2028", "description": "On Point Polling's 2026 national survey of registered and likely voters: motivation, the generic ballot, Vance vs Newsom, Trump approval and party trust on the issues.", "path": "/on-point-polling/polls/national-2026", "type": "article"});

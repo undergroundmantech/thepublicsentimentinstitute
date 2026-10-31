@@ -2,7 +2,7 @@
 // Every member of Congress on one sortable, filterable board. Index columns first, the ideological scorecards
 // after a divider so they read as context, never as part of the score.
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 
 export type Row = {
   slug: string; name: string; last: string; ch: "S" | "H"; st: string; seat: string; party: "D" | "R" | "I";

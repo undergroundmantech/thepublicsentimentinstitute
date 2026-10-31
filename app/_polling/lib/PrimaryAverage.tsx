@@ -13,7 +13,7 @@
 ============================================================================= */
 
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import type { MultiDaily, MultiPollPoint, MultiSeries } from "@/app/_polling/lib/aggregates";
 import { buildDailyWeightedSeries, getCandidateList, getDateRange, getPollsterEntry, type Poll } from "@/app/_polling/lib/buildDailyModel";

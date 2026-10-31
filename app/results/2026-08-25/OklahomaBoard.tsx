@@ -192,7 +192,7 @@ function useSlate(enabled: boolean) {
     if (!enabled) return;
     alive.current = true;
     pull();
-    const t = setInterval(pull, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, REFRESH_MS);
     return () => { alive.current = false; clearInterval(t); };
   }, [pull, enabled]);
 
@@ -276,7 +276,7 @@ function useRaceDetail<K extends string>(
       }
     };
     pull();
-    const t = setInterval(pull, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, REFRESH_MS);
     return () => { alive = false; ac.abort(); clearInterval(t); };
   }, [raceId, keys, match]);
 

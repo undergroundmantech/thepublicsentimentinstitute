@@ -1,7 +1,7 @@
 "use client";
 // The money page body: the bubble map and the race cards share one selection.
 import React, { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import MoneyMap from "./MoneyMap";
 import type { RaceMoney } from "../data";
 

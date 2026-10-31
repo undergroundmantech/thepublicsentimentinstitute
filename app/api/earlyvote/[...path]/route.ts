@@ -36,7 +36,11 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ path: strin
     // page can fall back rather than treat it as an outage.
     return new NextResponse(body, {
       status: r.status,
-      headers: { "content-type": "application/json", "cache-control": "public, max-age=300" },
+      headers: {
+        "content-type": "application/json",
+        // s-maxage lets the CDN answer repeat requests; max-age alone only cached in the browser, so every view ran this function
+        "cache-control": "public, max-age=300, s-maxage=600, stale-while-revalidate=3600",
+      },
     });
   } catch {
     return NextResponse.json({ error: "upstream unreachable" }, { status: 502 });

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getRaceUrl } from "../_data/raceRegistry";
 
 const CIVIC_BASE = "https://civicapi.org";
@@ -119,7 +119,7 @@ export default function ResultsLanding({ onRaceSelect }: Props) {
     }
 
     fetchAll();
-    const t = setInterval(fetchAll, POLL_MS);
+    const t = setInterval(() => { if (!document.hidden) fetchAll(); }, POLL_MS);
     return () => clearInterval(t);
   }, []);
 

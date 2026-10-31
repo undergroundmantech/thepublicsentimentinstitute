@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 import { pollHref, PRIMARIES } from "@/app/polls/registry";
 import { getModel } from "@/app/lib/forecastData";

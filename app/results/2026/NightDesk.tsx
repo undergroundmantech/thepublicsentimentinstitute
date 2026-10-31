@@ -4,7 +4,7 @@
 // (forecast or results, margin or turnout) and the county table. Expected votes come from the On Point Politics
 // forecast; returns come from civicAPI through the caching proxy. Used on every race page and inside the monitor.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { DESK_CSS } from "./deskCss";

@@ -2,7 +2,7 @@
 // The 27 units of the federation on one map. Fill, hover note and link are passed in, so the forecast, the live
 // results and the control room all draw the same map.
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { pathBounds, type BrState } from "./lib";
 import { useFmt } from "./i18n";

@@ -49,7 +49,7 @@ export default function RolloutGate() {
   useEffect(() => {
     let alive = true;
     setOverrides(readOverrides());
-    fetch("/api/flags", { cache: "no-store" })
+    fetch("/api/flags")
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (alive && d?.flags) setRemote(d.flags);

@@ -5,7 +5,7 @@
 // model ties them together. A win pick keeps only the simulations where that side wins; a margin pick shifts each
 // simulation to that margin and moves every other race by its simulated relationship with it.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import { RATE, RATING_LABEL, rating, raceHref, STATE_NAME, type Rating } from "@/app/lib/opp";
 import { ev, evSettled } from "@/app/lib/ev";

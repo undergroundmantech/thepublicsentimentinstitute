@@ -3,7 +3,7 @@
 // turnout, pace against 2022 at the same point, the party of the ballots, or mail against in person), click a
 // state to drop into its counties, and read the state's numbers, its pace chart and every county below.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import { marginColor } from "@/app/lib/opp";
 import Ambient from "@/app/components/opp/Ambient";

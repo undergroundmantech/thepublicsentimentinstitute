@@ -94,6 +94,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "Texas Southern University/YouGov", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 2000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 50.0, "Other": 2.0, "Undecided": 1.0}},
     {"raceId": "TX-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-27", "sampleSize": 1142, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.3, "Greg Abbott (R)": 50.1, "Other": 1.5, "Undecided": 0.1}},
     {"raceId": "TX-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 923, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 48.0, "Undecided": 6.0}},
-    {"raceId": "TX-GOV-2026", "pollster": "Quantus Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 839, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.3, "Greg Abbott (R)": 51.6, "Other": 1.2, "Undecided": 0.9}}
+    {"raceId": "TX-GOV-2026", "pollster": "Quantus Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 1221, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.3, "Greg Abbott (R)": 51.6, "Other": 1.2, "Undecided": 0.9}}
   ],
 };

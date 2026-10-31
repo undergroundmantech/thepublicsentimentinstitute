@@ -3,7 +3,7 @@
 // (follow the money, follow the people, places), the current tool is lit, and the line under the nav says in one
 // sentence what the tool in front of you answers. On a phone the groups scroll sideways and the active tab is
 // scrolled into view; the bar stays stuck just under the site header.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { WD_DESK, WD_GROUPS, ToolIcon, toolFor, type Tool } from "./tools";

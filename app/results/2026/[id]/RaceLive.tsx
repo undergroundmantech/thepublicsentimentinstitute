@@ -2,7 +2,7 @@
 // One November 3 race: the forecast's expected result, civicAPI's returns, and the estimate of the final count built
 // from the two, county by county where the forecast has counties, district by district for a legislative chamber.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { marginColor } from "@/app/lib/opp";
 import { STN, KIND_LABEL, civicRace, expMargin, expSides, fmtGap, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, project, sides, type CDetail, type CRace, type XRace } from "../live";

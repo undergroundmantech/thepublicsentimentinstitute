@@ -16,5 +16,5 @@ export async function GET(_req: Request, { params }: { params: Promise<{ raceId:
     return NextResponse.json({ error: "invalid race id" }, { status: 400 });
   }
   const snapshots = await readSnapshots(raceId);
-  return NextResponse.json(snapshots);
+  return NextResponse.json(snapshots, { headers: { "cache-control": "public, s-maxage=30, stale-while-revalidate=60" } });
 }
