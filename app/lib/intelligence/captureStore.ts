@@ -5,6 +5,7 @@
 //   fs      a directory on a persistent disk. Durable only where the host keeps the disk (never a serverless function).
 //   blob    Vercel Blob, private access. Durable, and the only backend that survives a serverless deployment.
 //   github  a private GitHub repository (githubStore.ts). Durable; everything a run writes lands in one commit.
+//   postgres  PostgreSQL database oop, schema onpoint (postgresStore.ts). Durable; TLS required off the local machine.
 //   memory  tests.
 //
 // Server-only: uses node:fs.
@@ -13,11 +14,12 @@ import { randomBytes } from "node:crypto";
 import { link, mkdir, readdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { GitHubStore, githubTargetFrom } from "./githubStore";
+import { checkDatabaseUrl, postgresPool, PostgresStore } from "./postgresStore";
 
 export interface CommitResult { commit: string | null; files: number; bytes: number; calls: number }
 
 export interface ObjectStore {
-  readonly kind: "fs" | "blob" | "memory" | "github";
+  readonly kind: "fs" | "blob" | "memory" | "github" | "postgres";
   /** True when objects survive a process restart and a new deployment. */
   readonly durable: boolean;
   /** Create only when absent. Never replaces an existing object. */
@@ -174,6 +176,11 @@ export interface StoreChoice { store: ObjectStore | null; problem: string | null
 export function resolveStore(env: Record<string, string | undefined> = process.env): StoreChoice {
   const want = env.INTELLIGENCE_CAPTURE_STORE;
   const onVercel = !!env.VERCEL;
+  // selected only when asked for by name, and never falls back to another store
+  if (want === "postgres") {
+    const problem = checkDatabaseUrl(env.ONPOINT_DATABASE_URL, env);
+    return problem ? { store: null, problem } : { store: new PostgresStore(postgresPool(env.ONPOINT_DATABASE_URL!), checkKey), problem: null };
+  }
   if (want === "github") {
     const t = githubTargetFrom(env);
     return t ? { store: new GitHubStore(t), problem: null } : { store: null, problem: "INTELLIGENCE_CAPTURE_STORE=github but ONPOINT_ARCHIVE_REPO / ONPOINT_ARCHIVE_TOKEN are missing or invalid" };

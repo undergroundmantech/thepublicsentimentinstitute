@@ -7,14 +7,14 @@
 // Environment (all optional): RECORDER_SITE_BASE (default https://onpointpolitics.us; "none" skips the published layer),
 // RECORDER_SCOPE (forecast | priority | all; default forecast = Senate, Governor and House), RECORDER_DEADLINE_MS,
 // RECORDER_CONCURRENCY, and GitHub's own GITHUB_EVENT_NAME, GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_SHA.
-// No credentials are read: civicAPI and the production site are public. Exit 2 means the slot FAILED (its record is still written).
+// With `--store postgres`, ONPOINT_DATABASE_URL is read (never logged). civicAPI and the production site are public. Exit 2 means the slot FAILED (its record is still written).
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { XIndex, XRace } from "@/app/results/2026/live";
 import { defaultFetchText, type FetchText } from "@/app/lib/intelligence/captureRunner";
 import { loadTrackedRaces, runnerConfig } from "@/app/lib/intelligence/captureConfig";
-import { FsStore } from "@/app/lib/intelligence/captureStore";
+import { FsStore, resolveStore, type ObjectStore } from "@/app/lib/intelligence/captureStore";
 import { publicEngineIdentity, stateAt } from "@/app/lib/intelligence/checkpointArchive";
 import { defaultFetchPublished, readHealth, recorderWindows, restoreAt, runSlot, verifyArchive, type SlotContext } from "@/app/lib/intelligence/ghRecorder";
 import { readCountyExpectations } from "@/app/portal/intelligence/inputs";
@@ -28,7 +28,13 @@ if (!storeDir || !["capture", "verify", "restore"].includes(cmd)) {
   console.error("usage: gh-recorder.ts <capture|verify|restore> --store <dir> [...]");
   process.exit(64);
 }
-const store = new FsStore(storeDir);
+// `--store postgres` records into ONPOINT_DATABASE_URL (database oop, TLS required); anything else is a directory
+const store: ObjectStore = (() => {
+  if (storeDir !== "postgres") return new FsStore(storeDir);
+  const r = resolveStore({ ...env, INTELLIGENCE_CAPTURE_STORE: "postgres" });
+  if (!r.store) { console.error(`store: ${r.problem}`); process.exit(78); }
+  return r.store;
+})();
 
 async function races(scope: string): Promise<XRace[]> {
   if (scope === "priority") return (await loadTrackedRaces()).races;
