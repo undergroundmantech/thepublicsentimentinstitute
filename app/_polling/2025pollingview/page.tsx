@@ -136,7 +136,7 @@ const VA_LTGOV_POLLS: Poll[] = [
 
   { pollster: "The Trafalgar Group (R)", endDate: "2025-11-02", sampleSize: 1057, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 48, Undecided: 6 } },
 
-  { pollster: "Echelon Insights", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 49, Undecided: 5 } },
+  { pollster: "Echelon Insights (R)", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 49, Undecided: 5 } },
 
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 52, Other: 1, Undecided: 1 } },
 
@@ -205,7 +205,7 @@ const VA_AG_POLLS: Poll[] = [
   { pollster: "The Trafalgar Group (R)", endDate: "2025-11-02", sampleSize: 1057, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 46, Undecided: 8 } },
 
   { pollster: "Emerson College", endDate: "2025-10-31", sampleSize: 880, sampleType: "LV", results: { "Jason Miyares (R)": 47, "Jay Jones (D)": 49, Undecided: 4 } },
-  { pollster: "Echelon Insights", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "Jason Miyares (R)": 49, "Jay Jones (D)": 46, Other: 1, Undecided: 4 } },
+  { pollster: "Echelon Insights (R)", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "Jason Miyares (R)": 49, "Jay Jones (D)": 46, Other: 1, Undecided: 4 } },
 
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "Jason Miyares (R)": 48, "Jay Jones (D)": 47, Other: 3, Undecided: 2 } },
 

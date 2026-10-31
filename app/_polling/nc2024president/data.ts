@@ -42,9 +42,9 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Bloomberg/Morning Consult", endDate: "2024-07-28", sampleSize: 706,  sampleType: "RV", results: { Harris: 44, Trump: 45 } },
 
   // ── Carolina Journal / Cygnal (R) ─────────────────────────────────────────
-  { pollster: "Cygnal", endDate: "2024-10-14", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
-  { pollster: "Cygnal", endDate: "2024-09-16", sampleSize: 600, sampleType: "LV", results: { Harris: 45, Trump: 46 } },
-  { pollster: "Cygnal", endDate: "2024-08-05", sampleSize: 600, sampleType: "LV", results: { Harris: 44, Trump: 47 } },
+  { pollster: "Cygnal (R)", endDate: "2024-10-14", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
+  { pollster: "Cygnal (R)", endDate: "2024-09-16", sampleSize: 600, sampleType: "LV", results: { Harris: 45, Trump: 46 } },
+  { pollster: "Cygnal (R)", endDate: "2024-08-05", sampleSize: 600, sampleType: "LV", results: { Harris: 44, Trump: 47 } },
 
   // ── Quinnipiac ────────────────────────────────────────────────────────────
   { pollster: "Quinnipiac", endDate: "2024-10-14", sampleSize: 1031, sampleType: "LV", results: { Harris: 49, Trump: 47 } },

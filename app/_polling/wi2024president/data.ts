@@ -15,7 +15,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "NY Times/Siena", endDate: "2024-08-08", sampleSize: 661,  sampleType: "LV", results: { Harris: 49, Trump: 43 } },
 
   // ── Echelon Insights ──────────────────────────────────────────────────────
-  { pollster: "Echelon Insights", endDate: "2024-10-30", sampleSize: 600, sampleType: "LV", results: { Harris: 48, Trump: 48 } },
+  { pollster: "Echelon Insights (R)", endDate: "2024-10-30", sampleSize: 600, sampleType: "LV", results: { Harris: 48, Trump: 48 } },
 
   // ── CNN/SSRS ──────────────────────────────────────────────────────────────
   { pollster: "CNN/SSRS", endDate: "2024-11-02", sampleSize: 736,  sampleType: "LV", results: { Harris: 45, Trump: 51 } },
@@ -80,11 +80,11 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2024-10-31", sampleSize: 876, sampleType: "LV", results: { Harris: 49, Trump: 45 } },
 
   // ── OnMessage Inc. (R) ────────────────────────────────────────────────────
-  { pollster: "OnMessage Inc.", endDate: "2024-10-22", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 48 } },
+  { pollster: "OnMessage Inc. (R)", endDate: "2024-10-22", sampleSize: 600, sampleType: "LV", results: { Harris: 47, Trump: 48 } },
 
   // ── HarrisX ───────────────────────────────────────────────────────────────
   { pollster: "HarrisX", endDate: "2024-11-05", sampleSize: 1549, sampleType: "LV", results: { Harris: 47, Trump: 47 } },
 
   // ── Remington Research (R) ────────────────────────────────────────────────
-  { pollster: "Remington Research", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 48, Trump: 48 } },
+  { pollster: "Remington Research (R)", endDate: "2024-09-20", sampleSize: 800, sampleType: "LV", results: { Harris: 48, Trump: 48 } },
 ];

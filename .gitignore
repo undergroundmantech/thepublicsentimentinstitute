@@ -57,3 +57,7 @@ chatGPTfiles/
 # intelligence evidence capture (runtime ledger and payloads, not source)
 /data/intelligence-capture/
 __pycache__/
+
+# L2 early vote downloads
+l2_early_vote/data/
+L2_county_early_vote.zip

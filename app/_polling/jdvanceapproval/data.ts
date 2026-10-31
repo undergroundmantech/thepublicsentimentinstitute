@@ -3,7 +3,7 @@ import type { Poll } from "@/app/_polling/lib/buildDailyModel";
 
 export const GOLD_STANDARD_NAMES = [
   // Oct 22 2026, set by the publisher: the gold standard pollsters, weighted up in every average.
-  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Cygnal", "Quantus",
+  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Quantus",
   "New York Times", "NY Times", "NYT", "Wall Street Journal", "WSJ",
 ];
 
@@ -29,7 +29,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Wall Street Journal", endDate: "2026-01-13", sampleSize: 1500, sampleType: "RV", results: { Favorable: 44, Unfavorable: 51 } },
   { pollster: "Morning Consult", endDate: "2026-01-12", sampleSize: 2201, sampleType: "RV", results: { Favorable: 40, Unfavorable: 46 } },
   { pollster: "Economist/YouGov", endDate: "2026-01-12", sampleSize: 1437, sampleType: "RV", results: { Favorable: 41, Unfavorable: 54 } },
-  { pollster: "Cygnal", endDate: "2026-01-08", sampleSize: 1500, sampleType: "LV", results: { Favorable: 42, Unfavorable: 51 } },
+  { pollster: "Cygnal (R)", endDate: "2026-01-08", sampleSize: 1500, sampleType: "LV", results: { Favorable: 42, Unfavorable: 51 } },
   { pollster: "Rasmussen Reports (R)", endDate: "2026-01-06", sampleSize: 1122, sampleType: "LV", results: { Favorable: 44, Unfavorable: 51 } },
   { pollster: "Morning Consult", endDate: "2026-01-04", sampleSize: 2201, sampleType: "RV", results: { Favorable: 42, Unfavorable: 44 } },
 
@@ -63,7 +63,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "RMG Research", endDate: "2025-08-21", sampleSize: 1000, sampleType: "RV", results: { Favorable: 48, Unfavorable: 46 } },
   { pollster: "Harvard-Harris", endDate: "2025-08-21", sampleSize: 2025, sampleType: "RV", results: { Favorable: 39, Unfavorable: 41 } },
   { pollster: "Economist/YouGov", endDate: "2025-08-11", sampleSize: 1474, sampleType: "RV", results: { Favorable: 44, Unfavorable: 50 } },
-  { pollster: "Cygnal", endDate: "2025-08-09", sampleSize: 1500, sampleType: "RV", results: { Favorable: 45, Unfavorable: 48 } },
+  { pollster: "Cygnal (R)", endDate: "2025-08-09", sampleSize: 1500, sampleType: "RV", results: { Favorable: 45, Unfavorable: 48 } },
   { pollster: "Morning Consult", endDate: "2025-08-03", sampleSize: 2201, sampleType: "RV", results: { Favorable: 40, Unfavorable: 45 } },
   { pollster: "Reuters/Ipsos", endDate: "2025-07-16", sampleSize: 1027, sampleType: "A", results: { Favorable: 38, Unfavorable: 52 } },
   { pollster: "Atlas Intel", endDate: "2025-07-18", sampleSize: 1935, sampleType: "A", results: { Favorable: 44, Unfavorable: 55 } },
@@ -73,7 +73,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Marquette", endDate: "2025-07-16", sampleSize: 1005, sampleType: "A", results: { Favorable: 38, Unfavorable: 49 } },
   { pollster: "RMG Research", endDate: "2025-07-08", sampleSize: 1000, sampleType: "RV", results: { Favorable: 46, Unfavorable: 43 } },
   { pollster: "Harvard-Harris", endDate: "2025-07-08", sampleSize: 2044, sampleType: "RV", results: { Favorable: 39, Unfavorable: 41 } },
-  { pollster: "Cygnal", endDate: "2025-07-02", sampleSize: 1500, sampleType: "LV", results: { Favorable: 45, Unfavorable: 48 } },
+  { pollster: "Cygnal (R)", endDate: "2025-07-02", sampleSize: 1500, sampleType: "LV", results: { Favorable: 45, Unfavorable: 48 } },
   { pollster: "Economist/YouGov", endDate: "2025-06-30", sampleSize: 1491, sampleType: "RV", results: { Favorable: 42, Unfavorable: 53 } },
   { pollster: "I&I/TIPP", endDate: "2025-06-27", sampleSize: 1421, sampleType: "A", results: { Favorable: 39, Unfavorable: 37 } },
   { pollster: "FOX News", endDate: "2025-06-16", sampleSize: 1003, sampleType: "RV", results: { Favorable: 44, Unfavorable: 53 } },

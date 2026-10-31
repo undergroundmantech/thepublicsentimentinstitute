@@ -23,7 +23,7 @@ import { seedOf, partyCol } from "./px/sprites";
 import { sfx, music, setSound, soundState, unlock } from "./px/sound";
 import { spinChaos, chaos as chaosCards } from "./cards";
 import { checkTrophies, saveTrophies, trophyCase, type Trophy } from "./achieve";
-import { useKalshi, kxPrice, cents, LedTicker, RealMarket, MarketPane, PxFilters, Crt, type KxMap, type Board } from "./px/Market";
+import { useKalshi, fetchKalshi, kxPrice, cents, LedTicker, RealMarket, MarketPane, PxFilters, Crt, type KxMap, type Board } from "./px/Market";
 import { eventChart } from "@/app/kalshiWidgets";
 import { CrowdWork, AdStudio, type AdPlan } from "./px/Show";
 import { RivalPanel, RivalMoveCard, CrisisClock, Breaking, isLoud, ChaosWheel, Splash, TrophyToasts, TrophyCase, RivalBadge, ShowPane, loadShow, saveShow, DEF_SHOW, type ShowCfg, type SplashKind } from "./px/Stream";
@@ -796,7 +796,9 @@ export default function PlayApp({ idx }: { idx: PIndex }) {
     try { if (on && root.current?.requestFullscreen && !document.fullscreenElement) root.current.requestFullscreen().catch(() => {}); else if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {}); } catch { /* not allowed */ }
   };
   const loadPaths = (r: E.RaceFile) => { setPaths(null); fetch(`/forecast/states/${r.st}.json`).then((x) => x.json()).then((j) => setPaths(j.counties as CountyPath[])).catch(() => setPaths([])); };
-  const start = (r: E.RaceFile, side: E.Side, d: E.Diff, seed?: number, len = 8, mgr: E.Mgr = "vet") => { setRace(r); loadPaths(r); setRolled(0); const ns = E.newGame(r, side, d, seed, len, mgr); const k = kx[r.id], kp = kxPrice(k, r.cands[side === "D" ? 0 : 1]); if (k && kp != null) E.openMarket(ns, kp, k.event, k.asOf); setSt(ns); setScreen("intro"); goImm(true); track("Play start", { race: r.id, side, diff: d, len }); };
+  const start = (r: E.RaceFile, side: E.Side, d: E.Diff, seed?: number, len = 8, mgr: E.Mgr = "vet") => { setRace(r); loadPaths(r); setRolled(0); const ns = E.newGame(r, side, d, seed, len, mgr); const mine = r.cands[side === "D" ? 0 : 1], k = kx[r.id], kp = kxPrice(k, mine); if (k && kp != null) E.openMarket(ns, kp, k.event, k.asOf); setSt(ns);
+    // prices still loading when you pressed start: fetch your race now and open the line if the campaign has not moved on
+    if (!(k && kp != null)) fetchKalshi([r.id]).then((j) => { const k2 = j?.[r.id], p2 = kxPrice(k2, mine); if (!k2 || p2 == null) return; setSt((cur) => { if (!cur || cur !== ns || cur.mkt || cur.week > 0) return cur; const c2 = { ...cur }; E.openMarket(c2, p2, k2.event, k2.asOf); return c2; }); }); setScreen("intro"); goImm(true); track("Play start", { race: r.id, side, diff: d, len }); };
   const resume = async () => {
     if (!saved) return;
     try { const r = (await fetch(`/play/r/${saved.s.race}.json`).then((x) => x.json())) as E.RaceFile; setRace(r); loadPaths(r); setSt(E.migrate(saved.s, r)); setScreen(saved.s.done ? "night" : "hq"); goImm(true); }

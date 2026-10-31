@@ -9,7 +9,7 @@ export const VA_GOV_POLLS: Poll[] = [
 
   { pollster: "The Trafalgar Group (R)", endDate: "2025-11-02", sampleSize: 1057, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 50, Other: 1, Undecided: 6 } },
   { pollster: "Emerson College", endDate: "2025-10-31", sampleSize: 880, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 44, "Abigail Spanberger (D)": 55, Other: 0, Undecided: 1 } },
-  { pollster: "Echelon Insights", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 55, Undecided: 2 } },
+  { pollster: "Echelon Insights (R)", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 55, Undecided: 2 } },
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 45, "Abigail Spanberger (D)": 54, Other: 0, Undecided: 1 } },
   { pollster: "SoCal Strategies (R)", endDate: "2025-10-29", sampleSize: 800, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 53, Undecided: 4 } },
   { pollster: "State Navigate", endDate: "2025-10-28", sampleSize: 614, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 41, "Abigail Spanberger (D)": 54, Undecided: 5 } },

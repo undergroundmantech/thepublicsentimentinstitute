@@ -50,6 +50,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "SC-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 707, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 48.0, "Undecided": 4.0}},
     {"raceId": "SC-SEN-2026", "pollster": "The Citadel Poll", "startDate": "2026-10-14", "endDate": "2026-10-25", "sampleSize": 890, "sampleType": "LV", "results": {"Annie Andrews (D)": 39.0, "Darline Graham (R)": 43.0, "Other": 4.0, "Undecided": 14.0}},
     {"raceId": "SC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-10-19", "endDate": "2026-10-24", "sampleSize": 955, "sampleType": "LV", "results": {"Annie Andrews (D)": 47.0, "Darline Graham (R)": 51.0, "Other": 2.0}},
-    {"raceId": "SC-SEN-2026", "pollster": "Patinkin Research Strategies", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 500, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 43.0, "Other": 8.0}}
+    {"raceId": "SC-SEN-2026", "pollster": "Patinkin Research Strategies (D)", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 500, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 43.0, "Other": 8.0}}
   ],
 };

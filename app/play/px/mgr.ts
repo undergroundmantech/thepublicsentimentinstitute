@@ -1,12 +1,15 @@
 // Your campaign manager: a name, a face and a voice. The field general is careful, the digital native talks in clips
 // and lists, the brawler wants to hit first. Advice reads the state of your campaign, never the true county numbers.
 import * as E from "../engine";
+import { registerLook } from "./looks";
 
 const FIRST = ["Dana", "Marcus", "Linda", "Ray", "Teresa", "Priya", "Luis", "Carol", "Mei", "Rosa", "Janelle", "Omar", "Gloria", "Darnell", "Becky", "Walt"];
 const LAST = ["Hollister", "Ortega", "Banks", "Kowalski", "Nguyen", "Whitfield", "Reyes", "Okafor", "McAllister", "Brandt", "Castillo", "Delgado", "Albright", "Soto", "Mahoney", "Pruitt"];
 const hash = (t: string) => { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
-export const mgrSeed = (r: { id: string }, m: E.Mgr) => hash(`${r.id}:${m}:mgr`);
-export function mgrName(r: { id: string }, m: E.Mgr) { const h = mgrSeed(r, m); return `${FIRST[h % FIRST.length]} ${LAST[(h >>> 8) % LAST.length]}`; }
+const rawSeed = (r: { id: string }, m: E.Mgr) => hash(`${r.id}:${m}:mgr`);
+export function mgrName(r: { id: string }, m: E.Mgr) { const h = rawSeed(r, m); return `${FIRST[h % FIRST.length]} ${LAST[(h >>> 8) % LAST.length]}`; }
+/** The manager's portrait seed, with their face tied to their name so a Keisha is drawn as a woman. */
+export const mgrSeed = (r: { id: string }, m: E.Mgr) => { const h = rawSeed(r, m); registerLook(h, mgrName(r, m)); return h; };
 
 const say = (m: E.Mgr, vet: string, dig: string, bra: string) => (m === "digital" ? dig : m === "brawler" ? bra : vet);
 

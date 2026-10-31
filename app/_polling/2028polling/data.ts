@@ -3,7 +3,7 @@ import type { Poll } from "@/app/_polling/lib/buildDailyModel";
 
 export const GOLD_STANDARD_NAMES = [
   // Oct 22 2026, set by the publisher: the gold standard pollsters, weighted up in every average.
-  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Cygnal", "Quantus",
+  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Quantus",
   "New York Times", "NY Times", "NYT", "Wall Street Journal", "WSJ",
 ];
 
@@ -16,7 +16,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "The Argument/Verasight", endDate: "2025-11-17", sampleSize: 1508, sampleType: "RV", results: { Vance: 46.4, Newsom: 53.6 } },
   { pollster: "Morning Consult",        endDate: "2025-11-16", sampleSize: 2201, sampleType: "RV", results: { Vance: 42.0, Newsom: 41.0 } },
   { pollster: "Overton Insights",       endDate: "2025-10-29", sampleSize: 1200, sampleType: "RV", results: { Vance: 43.0, Newsom: 46.0 } },
-  { pollster: "Echelon Insights",       endDate: "2025-10-20", sampleSize: 1010, sampleType: "LV", results: { Vance: 46.0, Newsom: 47.0 } },
+  { pollster: "Echelon Insights (R)",       endDate: "2025-10-20", sampleSize: 1010, sampleType: "LV", results: { Vance: 46.0, Newsom: 47.0 } },
   { pollster: "YouGov / UMass Lowell",  endDate: "2025-10-20", sampleSize: 1000, sampleType: "A",  results: { Vance: 32.0, Newsom: 36.0 } },
   { pollster: "Emerson",                endDate: "2025-10-14", sampleSize: 1000, sampleType: "RV", results: { Vance: 45.5, Newsom: 44.9 } },
   { pollster: "YouGov / Yahoo",         endDate: "2025-09-02", sampleSize: 1690, sampleType: "A",  results: { Vance: 41.0, Newsom: 49.0 } },

@@ -98,6 +98,96 @@ LEANS_D_WHEN_NONE = {"bonds_spending", "housing", "education"}   # spending meas
 TYPE_ADJ = {"legislative referral constitutional": 0.20, "legislative referral statute": 0.20, "bond": 0.15,
             "initiated statute": -0.10, "initiated constitutional amendment": -0.15, "veto referendum": -0.05, "advisory": 0.10}
 
+# ── Oct 31 2026, by the user: counties move by who lives there, not only by partisanship ─────────────────────────────
+# Every measure's county pattern was its state's 2024 presidential lean times one group slope, so measures of the same
+# group in a state shared one pattern and measures with no partisan lean were flat. Each county now also moves by its own
+# makeup (65 and over, 18 to 29, college, Black, Hispanic, rural, city), with loadings by policy group. Where the On Point
+# national dataset asks about the issue, the loadings are fit on it, net of 2024 vote (transgender issues for LGBTQ
+# measures, mass deportation for immigration, the Epstein files for ethics measures); elsewhere they are set from how such
+# measures have split by age, education and race. A keyword in a measure's own text adds its own pull (seniors and
+# homesteads, veterans, schools, hunting, police, judges), so no two measures share a pattern.
+FEAT = ["age65", "age18_29", "college", "black", "hispanic", "rural", "city"]
+_FR = pd.read_csv("/tmp/np1028/out/mrp_v2/national_county_frame.csv", dtype={"fips": str})
+CF = pd.DataFrame({"fips": _FR.fips.str.zfill(5), "age65": _FR.age_65_plus, "age18_29": _FR.age_18_29, "college": _FR.college,
+                   "black": _FR.race_black, "hispanic": _FR.race_hispanic, "rural": (_FR.area == "Rural").astype(float),
+                   "city": (_FR.area == "City").astype(float)}).set_index("fips")
+def _dataset_loadings():
+    """logit of the progressive answer on each feature, net of 2024 vote, from the national dataset"""
+    try:
+        N_ = pd.read_csv("/tmp/np1028/data/nat_full.csv", low_memory=False)
+    except Exception:
+        return {}
+    w_ = N_.weight_mrp_lv.fillna(0).values
+    Z = pd.DataFrame({"const": 1.0, "age65": (N_.age_band == "65+").astype(float), "age18_29": (N_.age_band == "18-29").astype(float),
+                      "college": (N_.college == "COLLEGE").astype(float), "black": (N_.race4 == "Black").astype(float),
+                      "hispanic": (N_.race4 == "Hispanic").astype(float), "rural": (N_.area_type == "Rural and small town").astype(float),
+                      "city": (N_.area_type == "City").astype(float), "harris": (N_.recall_2024 == "Harris").astype(float),
+                      "trump": (N_.recall_2024 == "Trump").astype(float)})
+    out = {}
+    for g, col, prog in [("lgbtq_rights", "eff_transgender_answer", ["More likely Democrat, much", "More likely Democrat, somewhat"]),
+                         ("immigration", "deport_answer", ["Strongly oppose", "Somewhat oppose"]),
+                         ("government_ethics", "eff_epstein_answer", ["More likely Democrat, much", "More likely Democrat, somewhat"])]:
+        ok = N_[col].notna().values
+        y = N_[col].isin(prog).astype(float).values[ok]; A = Z.values[ok]; ww = w_[ok]; b = np.zeros(A.shape[1])
+        for _ in range(60):
+            p = inv(A @ b); Wt = ww * p * (1 - p)
+            st_ = np.linalg.solve(A.T @ (A * Wt[:, None]) + np.diag(np.r_[0, np.ones(A.shape[1] - 1)]), A.T @ (ww * (y - p)) - np.r_[0, np.ones(A.shape[1] - 1)] * b); b += st_
+            if np.abs(st_).max() < 1e-8: break
+        out[g] = {k: float(v) for k, v in zip(Z.columns, b) if k in FEAT}
+    return out
+DS_LOAD = _dataset_loadings()
+# progressive direction loadings ("prog", multiplied by the side a Yes leans to) or plain Yes loadings ("yes"), logit per unit share
+GAMMA = {
+    "abortion": ("prog", dict(college=1.2, age18_29=0.8, age65=-0.3, black=0.2, hispanic=-0.3, rural=-0.15, city=0.1)),
+    "marijuana": ("prog", dict(age18_29=1.5, age65=-1.2, college=0.3, black=0.3, rural=-0.1)),
+    "drugs_other": ("prog", dict(age18_29=1.0, age65=-0.8, college=0.4)),
+    "minimum_wage": ("prog", dict(college=-0.6, black=0.5, hispanic=0.5, age18_29=0.6)),
+    "labor": ("prog", dict(college=-0.4, black=0.5, hispanic=0.4, age18_29=0.4)),
+    "voter_id": ("prog", dict(black=1.0, hispanic=0.6, college=0.5)),
+    "citizen_voting": ("prog", dict(hispanic=0.8, college=0.5)),
+    "ranked_choice": ("yes", dict(college=1.0, age18_29=0.4, age65=-0.3)),
+    "redistricting": ("yes", dict(college=0.8, age18_29=0.3)),
+    "elections_voting": ("prog", dict(college=0.8, age18_29=0.4, black=0.4)),
+    "supermajority": ("yes", dict(rural=0.2, college=-0.4)),
+    "guns": ("prog", dict(city=0.2, rural=-0.3, college=0.6)),
+    "criminal_justice": ("prog", dict(black=0.8, college=0.4, age18_29=0.5)),
+    "immigration": ("prog", dict(hispanic=1.0, college=0.5)),
+    "lgbtq_rights": ("prog", dict(college=0.8, age18_29=0.8, age65=-0.4, rural=-0.2)),
+    "civil_rights": ("prog", dict(black=0.8, college=0.5)),
+    "education": ("yes", dict(age18_29=0.3, college=0.4, city=0.1)),
+    "health_care": ("yes", dict(age65=0.3, black=0.3)),
+    "taxes_income": ("yes", dict(college=-0.3, age65=0.2)),
+    "taxes_property": ("yes", dict(age65=0.8, rural=0.1, college=-0.2)),
+    "taxes_sales_other": ("yes", dict(college=-0.2, age65=0.2)),
+    "bonds_spending": ("yes", dict(city=0.2, college=0.5, age65=-0.4)),
+    "housing": ("yes", dict(age18_29=0.6, city=0.2, age65=-0.2)),
+    "environment_energy": ("prog", dict(college=0.8, age18_29=0.5, rural=-0.2)),
+    "gambling": ("yes", dict(age65=-0.6, college=0.2, age18_29=0.3)),
+    "government_ethics": ("yes", dict(college=0.5)),
+    "animal": ("yes", dict(rural=-0.5, college=0.5)),
+    "other": ("yes", dict(college=0.6, age65=-0.1)),
+}
+for _g, _v in DS_LOAD.items():                       # the dataset's own fit replaces the set loadings for these groups
+    GAMMA[_g] = ("prog", {k: float(np.clip(v, -1.5, 1.5)) for k, v in _v.items()})
+KEYWORDS = [(r"senior|homestead|elderly|over 65|age 65", dict(age65=0.8)), (r"veteran|military|national guard", dict(rural=0.2, age65=0.3)),
+            (r"school|teacher|student|child care|pre.?k", dict(age18_29=0.3, city=0.1)), (r"hunt|fish|wildlife|trap", dict(rural=0.6, college=-0.2)),
+            (r"police|sheriff|law enforcement", dict(rural=0.3, black=-0.4)), (r"judge|judicial|court|justice", dict(college=0.3)),
+            (r"property tax|appraisal|assessment", dict(age65=0.3)), (r"water|river|lake", dict(rural=0.2)),
+            (r"tribal|tribe|indian", dict(rural=0.2)), (r"rent|tenant|afford", dict(age18_29=0.4, city=0.2))]
+def loadings(m, g, s):
+    mode, gam = GAMMA.get(g, GAMMA["other"])
+    v = {k: 0.0 for k in FEAT}
+    if mode == "prog":
+        if s: v = {k: s * gam.get(k, 0.0) for k in FEAT}
+        else: v = {k: GAMMA["other"][1].get(k, 0.0) for k in FEAT}       # no lean: the plain low information pattern
+    else:
+        v = {k: gam.get(k, 0.0) for k in FEAT}
+    t = (str(m.get("short_title", "")) + " " + str(m.get("summary", ""))).lower()
+    for pat, add in KEYWORDS:
+        if re.search(pat, t):
+            for k, x in add.items(): v[k] += x
+    return v
+
 def group_of(m):
     t = (m.get("short_title", "") + " " + m.get("summary", "")).lower()
     c = m.get("category", "other")
@@ -183,13 +273,16 @@ for m in M:
         x = lg(d2.values) - lg(STD2[st])
         w = np.array([tw.get(f, float(t)) for f, t in zip(pcs.fips, pcs.D + pcs.R + pcs.O)])
         b = ss * cslope
+        L = loadings(m, g, s)
+        Zc = CF.reindex([FIPS_FIX.get(f, f) for f in pcs.fips]).fillna(CF.mean())
+        zc = sum(L[k] * (Zc[k].values - float((Zc[k].values * w).sum() / max(w.sum(), 1.0))) for k in FEAT)
         target = float(inv(mu))
         a = mu
         for _ in range(60):
-            cur = float((inv(a + b * x) * w).sum() / max(1.0, w.sum()))
+            cur = float((inv(a + b * x + zc) * w).sum() / max(1.0, w.sum()))
             a += (lg(target) - lg(cur)) * 0.9
             if abs(cur - target) < 1e-5: break
-        ys = inv(a + b * x)
+        ys = inv(a + b * x + zc)
         cnt = {}; cv = {}
         for f, y, t, wt in zip(pcs.fips, ys, pcs.D + pcs.R + pcs.O, w):
             f = FIPS_FIX.get(f, f)

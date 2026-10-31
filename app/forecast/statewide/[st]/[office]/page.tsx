@@ -8,7 +8,10 @@ import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import { VoteSummary, CountyVotes, countyName } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
-import { STORY_CSS, phraseFor } from "@/app/components/opp/RaceStory";
+import { STORY_CSS, phraseFor, ShareBars, SecTitle, ModelPath } from "@/app/components/opp/RaceStory";
+import SectionNav from "@/app/components/opp/SectionNav";
+import OutcomeHist from "@/app/components/opp/OutcomeHist";
+import { FX_CSS } from "@/app/components/opp/fxCss";
 import StageHero from "@/app/components/opp/StageHero";
 import Ambient from "@/app/components/opp/Ambient";
 import PollTrail from "@/app/components/opp/PollTrail";
@@ -80,9 +83,28 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
   const L = r.legs;
   const v = r.votes;
   const pct = (x: number) => (v ? (100 * x / v.total).toFixed(1) : "");
+  const p10 = r.est.p10 ?? m - 8, p90 = r.est.p90 ?? m + 8;
+  const half = Math.max(0.5, Math.abs(p90 - p10) / 4);
+  const shareCands = v && v.total > 0 ? [
+    { name: r.dem ?? "Democrat", party: "Democrat", pct: (100 * v.dem) / v.total, color: "#5b8fff", win: dWin },
+    { name: r.gop ?? "Republican", party: "Republican", pct: (100 * v.rep) / v.total, color: "#ff4d6a", win: 1 - dWin },
+    ...(r.others ?? []).length && v.other / v.total >= 0.03 ? [{ name: r.others.map((o) => o.name).join(", "), party: r.others.map((o) => o.party).join(", ") || "Others", pct: (100 * v.other) / v.total, color: "#b78cff" }] : [],
+  ] : [];
+  const steps = [
+    ...(L.topOfTicket != null ? [{ label: "Top of ticket", m: L.topOfTicket, note: L.topRaces?.length ? L.topRaces.map((t) => (t.startsWith("sen") ? "Senate" : "governor")).join(" and ") : "the 2026 statewide races" }] : []),
+    ...(L.history != null ? [{ label: "Down ballot history", m: L.history, note: "this office's past results, moved to 2026" }] : []),
+    ...(L.blend != null ? [{ label: "Blend of every leg", m: L.blend, note: "with approval, Gallup and the primaries" }] : []),
+    ...(L.withCandidates != null ? [{ label: "Candidates", m: L.withCandidates, note: "incumbency and primary unity" }] : []),
+    { label: "With polls", m, note: r.pollWeight ? `polls carry ${Math.round(r.pollWeight * 100)} percent` : "no polls in the race" },
+  ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
+  const navItems = [
+    { id: "map", label: "Counties map" }, { id: "vote", label: "Vote share" }, { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
+    ...(r.primary || Object.keys(r.history).length ? [{ id: "context", label: "Primaries and history" }] : []),
+    ...(sibs.length ? [{ id: "ballot", label: "Other statewide races" }] : []), ...(paths.length ? [{ id: "counties", label: "Every county" }] : []),
+  ];
 
   return (
-    <div className="opp fx-dark">
+    <div className="opp fc-xl fx fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href="/forecast/statewide">Statewide offices</Link><span className="sep">/</span><span>{title}</span>
@@ -109,114 +131,112 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
         win={leadWin}
         lead={{ name: lastName(lead), color: m < 0 ? "#5b8fff" : "#ff4d6a" }} other={{ name: lastName(m < 0 ? r.gop! : r.dem!), color: m < 0 ? "#ff4d6a" : "#5b8fff" }} />
 
-      {paths.length > 1 ? (
-        <section style={{ marginBottom: 16 }} aria-label="County explorer">
-          <CountyExplorer paths={paths} unit={unit} stateName={r.state} title={`${title} by ${unit === "parishes" ? "parish" : "county"}`}
-            rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), a: row[1], b: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3] }; })}
-            sides={[{ name: lastName(r.dem ?? "Democrat"), short: lastName(r.dem ?? "Democrat"), color: "#3d7bff", letter: "D" }, { name: lastName(r.gop ?? "Republican"), short: lastName(r.gop ?? "Republican"), color: "#ff3b5c", letter: "R" }]} />
-        </section>
-      ) : null}
+      <style>{FX_CSS}</style>
+      <div className="fx-kpis">
+        <div className="card fx-k"><span>Rating</span><b style={{ color: m < 0 ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
+        <div className="card fx-k"><span>Model margin</span><b className="mono">{fmtM(m)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
+        <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtM(Math.min(p10, p90))} to {fmtM(Math.max(p10, p90))}</b><small>{flips} of {paths.length} {unit} lean Democratic</small></div>
+        <div className="card fx-k"><span>Projected votes</span><b className="mono">{v ? v.total.toLocaleString("en-US") : "n/a"}</b><small>{v && v.total ? `${lastName(lead)} ${(Math.max(v.dem, v.rep) / v.total * 100).toFixed(1)}%` : ""}</small></div>
+      </div>
 
-      <div className="layout">
-        <div style={{ display: "grid", gap: 16 }}>
-          {v && v.total > 0 ? (
-            <VoteSummary title="Projected statewide vote" total={v.total}
-              cands={[{ name: r.dem ?? "Democrat", party: "D", votes: v.dem }, { name: r.gop ?? "Republican", party: "R", votes: v.rep },
-                ...(v.other > 0 ? [{ name: (r.others ?? []).map((o) => o.name).join(", ") || "Other candidates", party: "", votes: v.other }] : [])]}
-              note="Expected votes at the projected turnout for this office, which runs a little below the top of the ticket because some voters skip down ballot races." />
+      <div className="fx-body">
+        <SectionNav items={navItems} />
+        <div style={{ display: "grid", gap: 56, minWidth: 0 }}>
+          <section id="map" className="st-sec">
+            <SecTitle title="The county map" sub="Four ways to read the state: margin, shift from 2024, vote bubbles and turnout" />
+            {paths.length > 1 ? (
+              <section className="fx-sec" aria-label="County explorer">
+                <CountyExplorer paths={paths} unit={unit} stateName={r.state} title={`${title} by ${unit === "parishes" ? "parish" : "county"}`}
+                  rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), a: row[1], b: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3] }; })}
+                  sides={[{ name: lastName(r.dem ?? "Democrat"), short: lastName(r.dem ?? "Democrat"), color: "#3d7bff", letter: "D" }, { name: lastName(r.gop ?? "Republican"), short: lastName(r.gop ?? "Republican"), color: "#ff3b5c", letter: "R" }]} />
+              </section>
+            ) : paths.length ? (
+              <div className="card"><div className="card-b" style={{ padding: 10 }}><GeoMap paths={paths} fills={fills} tips={tips} label={`${title} map`} />
+                <div className="legend" style={{ paddingInline: 8 }}><span>D +40</span><span className="ramp" style={{ flex: 1, maxWidth: 280, margin: 0, background: RAMP_CSS }} /><span>R +40</span></div></div></div>
+            ) : null}
+          </section>
+
+          <section id="vote" className="st-sec">
+            <SecTitle title="Vote share" sub="Each candidate's projected share and the range of 80 percent of simulations" />
+            {shareCands.length ? <ShareBars cands={shareCands} half={half} /> : null}
+            <div className="fx-grid2">
+              {v && v.total > 0 ? (
+                <VoteSummary title="Projected statewide vote" total={v.total}
+                  cands={[{ name: r.dem ?? "Democrat", party: "D", votes: v.dem }, { name: r.gop ?? "Republican", party: "R", votes: v.rep },
+                    ...(v.other > 0 ? [{ name: (r.others ?? []).map((o) => o.name).join(", ") || "Other candidates", party: "", votes: v.other }] : [])]}
+                  note="Expected votes at the projected turnout for this office, which runs a little below the top of the ticket because some voters skip down ballot races." />
+              ) : null}
+              <OutcomeHist title="Every simulated outcome" eye="2,000 sims" center={m} p10={p10} p90={p90} line={0} below="#3d7bff" above="#ff3b5c" fmt={(x) => fmtM(x)}
+                note={<>80 percent of simulations fall between {fmtM(Math.min(p10, p90))} and {fmtM(Math.max(p10, p90))}. Bars left of the white line are Democratic wins.</>} />
+            </div>
+          </section>
+
+          <section id="polls" className="st-sec">
+            <SecTitle title="Polling" sub="Every public poll of the race, and how the model reads it" />
+            <div className="card ptr-card">
+              <div className="card-h"><h3>Polls of the race</h3><span className="eye" style={{ marginLeft: "auto" }}>{r.polls.length || "no"} {r.polls.length === 1 ? "poll" : "polls"}</span></div>
+              {r.polls.length ? <div className="ptr-wrap"><PollTrail polls={r.polls.map((p) => ({ age: p.age, margin: p.margin, n: p.n ?? undefined, pollster: p.pollster, op: p.pollster.startsWith("On Point") }))} avg={r.pollAvg ?? null} asOf={data.meta.updated} dem={r.dem ? lastName(r.dem) : "Democrat"} gop={r.gop ? lastName(r.gop) : "Republican"} height={230} /></div> : null}
+              <div className="tblwrap">
+                <table className="tbl">
+                  <thead><tr><th>Pollster</th><th>Sample</th><th style={{ textAlign: "right" }}>Ended</th><th style={{ textAlign: "right" }}>{lastName(r.dem!)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop!)}</th><th style={{ textAlign: "right" }}>Margin</th></tr></thead>
+                  <tbody>
+                    {r.pollAvg != null ? <tr className="avg"><td>On Point average</td><td>Recency and size weighted</td><td className="n" /><td className="n" /><td className="n" /><td className={`n ${r.pollAvg < 0 ? "d" : "r"}`}>{fmtM(r.pollAvg)}</td></tr> : null}
+                    {r.polls.length ? r.polls.map((p, i) => (
+                      <tr key={i}><td>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.pollster}</a> : p.pollster}</td><td className="mono" style={{ color: "var(--ink2)" }}>{p.n ? p.n.toLocaleString() : ""} {p.kind}</td><td className="n">{p.end}</td><td className="n d">{p.D}</td><td className="n r">{p.R}</td><td className={`n ${p.margin < 0 ? "d" : p.margin > 0 ? "r" : ""}`}>{fmtM(p.margin)}</td></tr>
+                    )) : <tr><td colSpan={6} style={{ color: "var(--ink2)" }}>No public polls of this race. The forecast rests on the top of ticket, past results and the primaries.</td></tr>}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="path" className="st-sec">
+            <SecTitle title="How we got here" sub="From the top of the ticket to the forecast, one stage at a time" />
+            <ModelPath steps={steps} />
+            {L.weights && <p style={{ fontSize: 13, margin: 0, color: "var(--ink2)" }}>Leg weights: {Object.entries(L.weights).map(([k, w]) => `${LEG_NAME[k] ?? k} ${Math.round(w * 100)}%`).join(", ")}.</p>}
+          </section>
+
+          {r.primary || Object.keys(r.history).length ? (
+            <section id="context" className="st-sec">
+              <SecTitle title="Primaries and history" sub="What this year's primaries and the office's past races say" />
+              <div className="fx-grid2">
+                {r.primary ? <div className="card"><div className="stat"><div className="k">2026 primaries</div>
+                  {r.primary.dem_share != null && <div className="kv"><span>Democratic share of the two party primary vote</span><span>{r.primary.dem_share}%</span></div>}
+                  {r.primary.dem_nominee_share != null && <div className="kv"><span>{lastName(r.dem!)} in the primary</span><span>{r.primary.dem_nominee_share}%</span></div>}
+                  {(r.primary.rep_nominee_share ?? r.primary.r_nominee_share) != null && <div className="kv"><span>{lastName(r.gop!)} in the primary</span><span>{r.primary.rep_nominee_share ?? r.primary.r_nominee_share}%</span></div>}
+                  {r.primary.d_nominee_share != null && <div className="kv"><span>{lastName(r.dem!)} in the primary</span><span>{r.primary.d_nominee_share}%</span></div>}
+                </div></div> : null}
+                {Object.keys(r.history).length > 0 ? <div className="card"><div className="stat"><div className="k">Down ballot Democratic share, two party</div>
+                  {Object.entries(r.history).sort((a, b) => Number(b[0]) - Number(a[0])).map(([y, d]) => <div className="kv" key={y}><span>{y}</span><span>{d}%</span></div>)}
+                </div></div> : null}
+              </div>
+            </section>
           ) : null}
 
-          {paths.length > 0 && (
-            <CountyVotes unit={unit} demName={lastName(r.dem ?? "Democrat")} repName={lastName(r.gop ?? "Republican")}
-              rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), dem: row[1], rep: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3], margin: row[0] }; })} />
-          )}
+          {sibs.length > 0 ? (
+            <section id="ballot" className="st-sec">
+              <SecTitle title={`Other ${STATE_NAME[r.st]} statewide races`} sub="Every other office on the ballot, with the model margin" />
+              <div className="card"><div className="stat">
+                {sibs.map((x) => <div className="kv" key={x.id}><Link href={dbHref(x)}>{x.officeLabel}</Link><span className={x.uncontested ? "" : x.est.margin < 0 ? "d" : "r"}>{x.uncontested ? "Uncontested" : fmtM(x.est.margin)}</span></div>)}
+              </div></div>
+            </section>
+          ) : null}
 
-          {r.est.p10 != null && r.est.p90 != null && <div className="card">
-            <div className="card-h"><h3>Range of outcomes</h3><span className="eye" style={{ marginLeft: "auto" }}>80 percent of simulations</span></div>
-            <div className="card-b">
-              {(() => { const lo = Math.min(r.est.p10!, r.est.p90!), hi = Math.max(r.est.p10!, r.est.p90!); const span = Math.max(10, Math.abs(lo), Math.abs(hi)) * 1.15;
-                const X = (x: number) => 20 + ((x + span) / (2 * span)) * 560;
-                return (
-                  <svg viewBox="0 0 600 70" role="img" aria-label={`80 percent range from ${fmtM(lo)} to ${fmtM(hi)}`} style={{ width: "100%", height: "auto" }}>
-                    <rect x={20} y={28} width={560} height={10} rx={5} fill="rgba(255,255,255,.06)" />
-                    <rect x={X(lo)} y={28} width={Math.max(2, X(hi) - X(lo))} height={10} rx={5} fill={m < 0 ? "#3d7bff" : "#ff3b5c"} opacity={0.55} />
-                    <line x1={X(0)} x2={X(0)} y1={18} y2={48} stroke="var(--hi)" strokeWidth={1.5} />
-                    <circle cx={X(m)} cy={33} r={6} fill="#fff" />
-                    <text x={X(lo)} y={64} textAnchor="middle" style={{ font: "500 11px var(--font-m)", fill: "#8e86a3" }}>{fmtM(lo)}</text>
-                    <text x={X(hi)} y={64} textAnchor="middle" style={{ font: "500 11px var(--font-m)", fill: "#8e86a3" }}>{fmtM(hi)}</text>
-                    <text x={X(m)} y={14} textAnchor="middle" style={{ font: "700 11px var(--font-m)", fill: "#f3eff8" }}>{fmtM(m)}</text>
-                  </svg>
-                ); })()}
-              <p style={{ fontSize: 13, marginTop: 8 }}>80 percent of simulations fall between {fmtM(Math.min(r.est.p10!, r.est.p90!))} and {fmtM(Math.max(r.est.p10!, r.est.p90!))}. The white dot is the forecast; the line is a tie.</p>
-            </div>
-          </div>}
+          {paths.length > 0 ? (
+            <section id="counties" className="st-sec">
+              <SecTitle title="Every county" sub="The projected vote in each county, largest first" />
+              <CountyVotes unit={unit} demName={lastName(r.dem ?? "Democrat")} repName={lastName(r.gop ?? "Republican")}
+                rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), dem: row[1], rep: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3], margin: row[0] }; })} />
+            </section>
+          ) : null}
 
-          <div className="card">
-            <div className="card-h"><h3>How the model gets there</h3><span className="eye" style={{ marginLeft: "auto" }}>statewide margin at each step</span></div>
-            <div className="tblwrap">
-              <table className="tbl">
-                <tbody>
-                  {L.topOfTicket != null && <tr><td>Top of ticket{L.topRaces?.length ? `, ${L.topRaces.map((t) => (t.startsWith("sen") ? "Senate" : "governor")).join(" and ")}` : ""}</td><td className={`n ${L.topOfTicket < 0 ? "d" : "r"}`}>{fmtM(L.topOfTicket)}</td></tr>}
-                  {L.history != null && <tr><td>Down ballot history, moved to 2026</td><td className={`n ${L.history < 0 ? "d" : "r"}`}>{fmtM(L.history)}</td></tr>}
-                  {L.blend != null && <tr><td>Blend of every leg</td><td className={`n ${L.blend < 0 ? "d" : "r"}`}>{fmtM(L.blend)}</td></tr>}
-                  {L.withCandidates != null && <tr><td>With incumbency and primary unity</td><td className={`n ${L.withCandidates < 0 ? "d" : "r"}`}>{fmtM(L.withCandidates)}</td></tr>}
-                  <tr className="avg"><td>With polls{r.pollWeight ? `, ${Math.round(r.pollWeight * 100)}% weight` : ", none in the race"}</td><td className={`n ${m < 0 ? "d" : "r"}`}>{fmtM(m)}</td></tr>
-                </tbody>
-              </table>
-            </div>
-            {L.weights && <p style={{ fontSize: 13, padding: "10px 16px 14px", margin: 0, color: "var(--ink2)" }}>Leg weights: {Object.entries(L.weights).map(([k, w]) => `${LEG_NAME[k] ?? k} ${Math.round(w * 100)}%`).join(", ")}. 80 percent of outcomes fall between {fmtM(r.est.p10!)} and {fmtM(r.est.p90!)}.</p>}
-          </div>
-
-          <div className="card">
-            <div className="card-h"><h3>Polls of the race</h3><span className="eye" style={{ marginLeft: "auto" }}>{r.polls.length || "no"} {r.polls.length === 1 ? "poll" : "polls"}</span></div>
-            {r.polls.length ? <div className="ptr-wrap"><PollTrail polls={r.polls.map((p) => ({ age: p.age, margin: p.margin, n: p.n ?? undefined, pollster: p.pollster, op: p.pollster.startsWith("On Point") }))} avg={r.pollAvg ?? null} asOf={data.meta.updated} dem={r.dem ? lastName(r.dem) : "Democrat"} gop={r.gop ? lastName(r.gop) : "Republican"} height={210} /></div> : null}
-            <div className="tblwrap">
-              <table className="tbl">
-                <thead><tr><th>Pollster</th><th>Sample</th><th style={{ textAlign: "right" }}>Ended</th><th style={{ textAlign: "right" }}>{lastName(r.dem!)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop!)}</th><th style={{ textAlign: "right" }}>Margin</th></tr></thead>
-                <tbody>
-                  {r.polls.length ? r.polls.map((p, i) => (
-                    <tr key={i}><td>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.pollster}</a> : p.pollster}</td><td className="mono" style={{ color: "var(--ink2)" }}>{p.n ? p.n.toLocaleString() : ""} {p.kind}</td><td className="n">{p.end}</td><td className="n d">{p.D}</td><td className="n r">{p.R}</td><td className={`n ${p.margin < 0 ? "d" : p.margin > 0 ? "r" : ""}`}>{fmtM(p.margin)}</td></tr>
-                  )) : <tr><td colSpan={6} style={{ color: "var(--ink2)" }}>No public polls of this race. The forecast rests on the top of ticket, past results and the primaries.</td></tr>}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <aside className="side">
-          <div className="card">
-            <div className="stat"><div className="k">Model margin</div><div className={`v ${m < 0 ? "d" : "r"}`}>{lastName(lead)} +{Math.abs(m).toFixed(1)}</div></div>
-            <div className="stat"><div className="k">Chance of winning</div>
-              <div className="cand"><i style={{ background: "var(--dem)" }} /><span>{r.dem}</span><span className="p">{Math.round(dWin * 100)}%</span></div>
-              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{Math.round((1 - dWin) * 100)}%</span></div>
-            </div>
-            {v && <div className="stat"><div className="k">Projected vote</div>
-              <div className="cand"><i style={{ background: "var(--dem)" }} /><span>{r.dem}</span><span className="p">{pct(v.dem)}%</span></div>
-              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{pct(v.rep)}%</span></div>
-              <div className="cand"><i style={{ background: "#6f6883" }} /><span>{r.others.length ? r.others.map((o) => o.name).join(", ") : "Others and write ins"}</span><span className="p">{pct(v.other)}%</span></div>
-            </div>}
-            {r.primary && <div className="stat"><div className="k">2026 primaries</div>
-              {r.primary.dem_share != null && <div className="kv"><span>Democratic share of the two party primary vote</span><span>{r.primary.dem_share}%</span></div>}
-              {r.primary.dem_nominee_share != null && <div className="kv"><span>{lastName(r.dem!)} in the primary</span><span>{r.primary.dem_nominee_share}%</span></div>}
-              {(r.primary.rep_nominee_share ?? r.primary.r_nominee_share) != null && <div className="kv"><span>{lastName(r.gop!)} in the primary</span><span>{r.primary.rep_nominee_share ?? r.primary.r_nominee_share}%</span></div>}
-              {r.primary.d_nominee_share != null && <div className="kv"><span>{lastName(r.dem!)} in the primary</span><span>{r.primary.d_nominee_share}%</span></div>}
-            </div>}
-            {Object.keys(r.history).length > 0 && <div className="stat"><div className="k">Down ballot Democratic share, two party</div>
-              {Object.entries(r.history).sort((a, b) => Number(b[0]) - Number(a[0])).map(([y, d]) => <div className="kv" key={y}><span>{y}</span><span>{d}%</span></div>)}
-            </div>}
-          </div>
-          {sibs.length > 0 && <div className="card">
-            <div className="stat"><div className="k">Other {STATE_NAME[r.st]} statewide races</div>
-              {sibs.map((x) => <div className="kv" key={x.id}><Link href={dbHref(x)}>{x.officeLabel}</Link><span>{x.uncontested ? "Uncontested" : fmtM(x.est.margin)}</span></div>)}
-            </div>
-          </div>}
           <div className="callout">
             <div className="eye">Methodology</div>
-            The county forecast starts from {STATE_NAME[r.st]}&apos;s 2026 top of ticket and its past down ballot results, adds the approval
+            The county forecast starts from {STATE_NAME[r.st]}&apos;s 2026 top of ticket and this office&apos;s own past county results, adds the approval
             fundamentals, a relaxed Gallup leg and this year&apos;s primaries, then moves each county by how loose its voters are in the
             ticket splitting model. <Link href="/forecast/statewide" style={{ textDecoration: "underline" }}>All statewide races</Link>.
           </div>
-        </aside>
+        </div>
       </div>
     </div>
   );

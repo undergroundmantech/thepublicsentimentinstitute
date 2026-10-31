@@ -23,7 +23,7 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Data for Progress", endDate: "2024-10-30", sampleSize: 1079, sampleType: "LV", results: { Harris: 47, Trump: 48 } },
 
   // ── Data Orbital ──────────────────────────────────────────────────────────
-  { pollster: "Data Orbital", endDate: "2024-10-28", sampleSize: 550, sampleType: "LV", results: { Harris: 42, Trump: 50 } },
+  { pollster: "Data Orbital (R)", endDate: "2024-10-28", sampleSize: 550, sampleType: "LV", results: { Harris: 42, Trump: 50 } },
 
   // ── Mitchell Research & Communications ───────────────────────────────────
   { pollster: "Mitchell Research", endDate: "2024-10-28", sampleSize: 610, sampleType: "LV", results: { Harris: 48, Trump: 50 } },
