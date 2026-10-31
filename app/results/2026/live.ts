@@ -124,8 +124,12 @@ export type Proj = { rep: { a: number; b: number; o: number; t: number }; fin: {
  * little is in; a county with nothing in gets its forecast moved by the average gap between returns and forecast
  * in the counties that have reported, weighted by votes and shrunk while few votes are in. Margins are side B minus
  * side A, so positive is Republican or No, as everywhere on the site.
+ *
+ * `prior` (margin points, B minus A; 0 = the official estimate) is an opening adjustment to the vote still resting on
+ * the forecast. It is exactly `prior` before any votes and fades with counted votes (see openingShift).
  */
-export function project(exp: Record<string, Exp> | null, live: Record<string, CRegion> | null, r: XRace, top: CCand[] | null, expTot?: number): Proj {
+export function project(exp: Record<string, Exp> | null, live: Record<string, CRegion> | null, r: XRace, top: CCand[] | null, expTot?: number, prior = 0): Proj {
+  const mu = prior / 100;
   const z = { a: 0, b: 0, o: 0, t: 0 };
   const rep = { ...z }, fin = { ...z };
   const expAll = { ...z };
@@ -143,6 +147,7 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
       if (s.t > 0 && e[3] > 0) { countiesIn++; const gap = (s.b - s.a) / s.t - (e[1] - e[0]) / e[3]; sw += gap * s.t; sv += s.t; }
     }
     const swing = sv ? (sw / sv) * (sv / (sv + 0.08 * expAll.t)) : 0;
+    let U = 0; // forecast-carried outstanding votes, for the prior
     for (const [f, e] of Object.entries(exp)) {
       const s = seen[f]; const eA = e[3] ? e[0] / e[3] : 0.5, eB = e[3] ? e[1] / e[3] : 0.5, eO = Math.max(0, 1 - eA - eB);
       if (s && s.t > 0) {
@@ -154,14 +159,17 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
         const rA = w * oA + (1 - w) * (eA - swing / 2), rB = w * oB + (1 - w) * (eB + swing / 2), rO = w * oO + (1 - w) * eO;
         const k = rA + rB + rO || 1;
         fin.a += s.a + (left * rA) / k; fin.b += s.b + (left * rB) / k; fin.o += s.o + (left * rO) / k;
+        if (mu) U += Math.min(Math.max(0, e[3] - s.t), left) * (1 - Math.min(1, (2 * s.t) / Math.max(1, e[3])));
       } else {
         const A = Math.max(0, eA - swing / 2), B = Math.max(0, eB + swing / 2), k = A + B + eO || 1;
         fin.a += (e[3] * A) / k; fin.b += (e[3] * B) / k; fin.o += (e[3] * eO) / k;
+        if (mu) U += e[3];
       }
     }
+    if (mu) openingShift(fin, rep, mu, sv, expAll.t, U);
     fin.t = fin.a + fin.b + fin.o;
     const pctIn = fin.t ? Math.min(100, (100 * rep.t) / fin.t) : 0;
-    const m = fin.t ? (100 * (fin.b - fin.a)) / fin.t : expM;
+    const m = mu && !rep.t ? expM + prior : fin.t ? (100 * (fin.b - fin.a)) / fin.t : expM;
     return { rep, fin, pctIn, m, band: band(pctIn), expM, swing: sv ? swing * 100 : null, counties, countiesIn };
   }
   // no county file or no county returns: the topline against the expected total
@@ -172,10 +180,22 @@ export function project(exp: Record<string, Exp> | null, live: Record<string, CR
     const left = Math.max(0, T - s.t), w = Math.min(1, s.t / Math.max(1, T) * 2);
     const oA = s.t ? s.a / s.t : eA, oB = s.t ? s.b / s.t : eB;
     fin.a = s.a + left * (w * oA + (1 - w) * eA); fin.b = s.b + left * (w * oB + (1 - w) * eB); fin.o = s.o + left * Math.max(0, 1 - (w * oA + (1 - w) * eA) - (w * oB + (1 - w) * eB));
+    if (mu) openingShift(fin, rep, mu, s.t, T, left * (1 - w));
     fin.t = fin.a + fin.b + fin.o;
   }
   const pctIn = fin.t ? Math.min(100, (100 * rep.t) / fin.t) : 0;
-  return { rep, fin, pctIn, m: fin.t ? (100 * (fin.b - fin.a)) / fin.t : expM, band: band(pctIn), expM, swing: null, counties, countiesIn };
+  const m = mu && !rep.t ? expM + prior : fin.t ? (100 * (fin.b - fin.a)) / fin.t : expM;
+  return { rep, fin, pctIn, m, band: band(pctIn), expM, swing: null, counties, countiesIn };
+}
+/**
+ * Moves `mu` (share units, toward side B) of the outstanding votes that still rest on the forecast, `U`, from A to B.
+ * It shrinks as counted votes `V` grow against the expected total `T`, at the rate the swing estimate trusts returns.
+ * Counted votes are never touched, so the shift is zero once nothing is outstanding.
+ */
+function openingShift(fin: { a: number; b: number }, rep: { a: number; b: number }, mu: number, V: number, T: number, U: number) {
+  const rho = T > 0 ? (0.08 * T) / (V + 0.08 * T) : 0;
+  const mv = Math.max(-(fin.b - rep.b), Math.min(fin.a - rep.a, (mu * rho * U) / 2));
+  fin.a -= mv; fin.b += mv;
 }
 /** The forecast's expected votes for side A (D, or I where an independent is the main challenger, or Yes) and side B. */
 export function expSides(r: XRace) {
@@ -230,14 +250,15 @@ const PhiInv = (p: number) => { // Acklam's approximation
  * Live chance that side B (Republican, or No on a measure) wins. Before any votes it is the forecast's own chance;
  * the spread of the estimate starts at the forecast's spread and narrows as the share of the vote counted rises, so
  * the chance moves smoothly from the forecast to the count. A measure passes when its Yes share clears its own bar.
+ * With an opening `prior`, the pre-vote chance moves by that many margin points at the forecast's own spread.
  */
-export function liveOdds(r: XRace, P: Proj) {
+export function liveOdds(r: XRace, P: Proj, prior = 0) {
   const cut = r.k === "measure" ? 100 - 200 * (r.thr ?? 0.5) : 0;
   const pB0 = r.k === "measure" ? 1 - (r.pPass ?? 0.5) : r.pR ?? 0.5;
   const z0 = PhiInv(pB0);
   const sdF = Math.min(20, Math.max(1.5, Math.abs(P.expM - cut) / Math.max(0.15, Math.abs(z0))));
   const f = Math.min(1, P.pctIn / 100);
   const sd = sdF * Math.pow(1 - f, 0.9) + (f >= 0.999 ? 0.05 : 0.35);
-  const pB = P.rep.t > 0 ? Phi((P.m - cut) / sd) : pB0;
+  const pB = P.rep.t > 0 ? Phi((P.m - cut) / sd) : prior ? Phi(z0 + prior / sdF) : pB0;
   return { pB, pA: 1 - pB, sd, lo: P.m - 1.96 * sd, hi: P.m + 1.96 * sd };
 }
