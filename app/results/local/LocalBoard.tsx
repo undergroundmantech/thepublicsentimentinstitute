@@ -4,6 +4,7 @@ import { useElectionIndex } from "../onpoint/lib/electionIndex.js";
 import { candColor, leaderOf } from "../onpoint/electionLib.js";
 import { fmtInt, partyTag, isNP } from "../onpoint/resultRow.jsx";
 import { classifyRaceTier } from "../_data/raceCapabilities";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const CIVIC_BASE = "https://civicapi.org";
 const REFRESH_MS = 30_000;
@@ -67,7 +68,7 @@ function LocalCard({ race }: { race: CivicRace }) {
       <header className="lb-head">
         <div className="lb-kicker">
           <span>{jurisdiction}</span>
-          <span>{reporting > 0 ? `${reporting.toFixed(0)}% reporting` : "not yet reporting"}</span>
+          <span>{reporting > 0 ? `${percentIn(reporting)} reporting` : "not yet reporting"}</span>
         </div>
         <h2>{race.election_name || race.election_type || "Race"}</h2>
         <div className="lb-status">{status}</div>

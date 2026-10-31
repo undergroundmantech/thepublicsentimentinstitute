@@ -31,6 +31,7 @@ const CIVIC_BASE = "https://civicapi.org";
 const RACE_REFRESH_MS = 30_000;
 import { buildVoteModeRows, voteModeWhyItMatters } from "../../_lib/voteModeModel";
 import type { FlightRecorderSnapshot } from "../../_lib/flightRecorder";
+import { pctPoints, probFraction } from "@/app/lib/fmtPct";
 
 // CO-04 §4c Zone 6 — reads flight-recorder history for the race only when
 // caps.telemetry is true. TIMELINE_PUBLIC_FLAG (raceCapabilities.ts) keeps
@@ -112,7 +113,7 @@ const boardParty = (doc: any): string => {
 };
 const boardRank = (doc: any) => (/democratic/i.test(doc?.contest || "") ? 0 : /republican/i.test(doc?.contest || "") ? 1 : 2);
 
-const fmtProb = (p: number) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+const fmtProb = (p: number) => probFraction(p);
 
 const RACE_RULE_CHIP: Record<string, string> = {
   PLURALITY: "plurality",
@@ -134,7 +135,7 @@ function verdictSentence(n: NeedleProjection): string {
 }
 function flipSentence(n: NeedleProjection): string | null {
   if (n.flipThresholdPct == null) return null;
-  return `${n.runnerName} would need ${n.flipThresholdPct.toFixed(0)}% of the remaining vote to catch ${n.leaderName}.`;
+  return `${n.runnerName} would need ${pctPoints(n.flipThresholdPct)} of the remaining vote to catch ${n.leaderName}.`;
 }
 
 // CO-04 §3 Zone 2 runoff module — mounts per raceRule for any rule where an

@@ -21,6 +21,7 @@
  */
 
 import type { ForecastOutput, CandidateKey } from "./electoralModel";
+import { pctFraction, percentIn } from "./fmtPct";
 
 /** z ≥ 3.0 → 99.73%. The decision gate. */
 export const CALL_SIGMA = 3.0;
@@ -117,7 +118,7 @@ export function evaluateCall(
   if (verdict === "CALLABLE") {
     line = `${leaderName} leads by ${pct(marginVotes)} votes, ${z.toFixed(1)} standard deviations beyond the remaining vote. Callable.`;
   } else if (blockedBy === "MIN_REPORTING") {
-    line = `${leaderName}'s lead clears three standard deviations, but only ${(f.modeled_percent_reporting * 100).toFixed(1)}% of the expected vote is in. Holding until ${(minReporting * 100).toFixed(0)}%.`;
+    line = `${leaderName}'s lead clears three standard deviations, but only ${percentIn(f.modeled_percent_reporting * 100)} of the expected vote is in. Holding until ${pctFraction(minReporting)}.`;
   } else if (verdict === "LEANING") {
     line = `${leaderName} leads by ${pct(marginVotes)} votes, ${z.toFixed(1)} standard deviations. Needs ${pct(marginGap)} more to be callable.`;
   } else {

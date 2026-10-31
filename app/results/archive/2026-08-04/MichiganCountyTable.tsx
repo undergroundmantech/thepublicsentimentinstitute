@@ -7,6 +7,7 @@
 
 import React, { useMemo, useState } from "react";
 import type { CountyProjection } from "./countyForecast";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
@@ -175,7 +176,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
                       <i className="rd-cand-tcc" title="Too close to call" aria-hidden />
                     ) : null}
                   </td>
-                  <td className="num">{r.c.reporting.toFixed(0)}%</td>
+                  <td className="num">{percentIn(r.c.reporting)}</td>
                   <td className="num">{fmtInt(r.turnout)}</td>
                   <td className="num">
                     <span className="rd-cand-cell">
@@ -201,7 +202,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
             <tfoot>
               <tr>
                 <td>statewide{view === "forecast" ? " (projected)" : ""}</td>
-                <td className="num">{statewideReporting.toFixed(0)}%</td>
+                <td className="num">{percentIn(statewideReporting)}</td>
                 <td className="num">{fmtInt(totals.turnout)}</td>
                 <td className="num">
                   <span className="rd-cand-cell">

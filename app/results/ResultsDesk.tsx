@@ -16,6 +16,7 @@ import { needleFromRace } from "./components/needleModel";
 import PrecinctShowcase from "./components/PrecinctShowcase";
 import { classifyRaceTier } from "./_data/raceCapabilities";
 import { isCoveredId, getSpotlightEntry } from "./_data/coverage.2026-08-04";
+import { percentIn } from "@/app/lib/fmtPct";
 
 // The desk's own backdrop — the REAL national county map, counties reporting
 // in red/blue/purple across the night. Canvas 2D over the shared geometry.
@@ -1011,7 +1012,7 @@ function Desk() {
             <div className="desk-fc-meta">
               <span><i style={{ background: fcNeedle.leaderColor }} />{surname(fcNeedle.leaderName)} leads</span>
               <em>·</em>
-              <span>{fcNeedle.reporting.toFixed(0)}% reporting</span>
+              <span>{percentIn(fcNeedle.reporting)} reporting</span>
               <em>·</em>
               <span>same model, every state</span>
             </div>

@@ -11,6 +11,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MI_COUNTY_PATHS, MI_MAP_VIEWBOX } from "../../_data/miCountyGeo";
 import type { CountyProjection } from "./countyForecast";
+import { percentIn } from "@/app/lib/fmtPct";
 
 export type MapView = "forecast" | "results";
 export type ForecastMode = "margin" | "turnout";
@@ -314,7 +315,7 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
                   return (
                     <div className="mi-tip-sub">
                       {m >= 0 ? "+" : "−"}
-                      {Math.abs(m).toFixed(1)} margin · {live.reporting.toFixed(0)}% reporting
+                      {Math.abs(m).toFixed(1)} margin · {percentIn(live.reporting)} reporting
                     </div>
                   );
                 })()}
@@ -333,13 +334,13 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
                 <b>{hover.c.stevens.toFixed(1)}%</b>
               </div>
               <div className="mi-tip-sub">
-                {hover.c.twoWayElSayed.toFixed(1)}% two-way [{hover.c.ci90[0].toFixed(0)}–
-                {hover.c.ci90[1].toFixed(0)}]
+                {hover.c.twoWayElSayed.toFixed(1)}% two-way [{hover.c.ci90[0].toFixed(1)}–
+                {hover.c.ci90[1].toFixed(1)}]
               </div>
               <div className="mi-tip-sub">
                 {fmtInt(hover.c.projectedTurnout)} projected votes ·{" "}
                 {hover.c.reporting > 0
-                  ? `${hover.c.reporting.toFixed(0)}% reporting`
+                  ? `${percentIn(hover.c.reporting)} reporting`
                   : "no returns yet"}
               </div>
               {hover.c.tooCloseToCall && <div className="mi-tip-flag">Too close to call</div>}

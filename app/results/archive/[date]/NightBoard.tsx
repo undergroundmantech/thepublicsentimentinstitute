@@ -14,6 +14,7 @@ import Link from "@/app/components/Link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatElectionDate, getRacesByDate, type RaceRegistryEntry } from "../../_data/raceRegistry";
 import { placeOf, titleOf } from "../labels";
+import { percentIn, probPoints } from "@/app/lib/fmtPct";
 
 type Cand = { name?: string; party?: string; votes?: number; percent?: number; winner?: boolean };
 type Race = { id: number; candidates?: Cand[]; percent_reporting?: number };
@@ -41,9 +42,9 @@ const share = (c: Cand, all: Cand[]) => {
 
 const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-/** Design System §6 — >99 and <1 at the extremes; nothing prints a flat 100. */
-const pctLabel = (p: number) =>
-  p >= 99.95 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+/** Vote shares: one decimal (sitewide standard); reporting uses inLabel. */
+const pctLabel = (p: number) => probPoints(p).slice(0, -1);
+const inLabel = (p: number) => percentIn(p).slice(0, -1);
 
 const partyOf = (p?: string) => {
   const s = String(p || "").toLowerCase();
@@ -292,7 +293,7 @@ function SlateCard({
 
       <div className="l4-foot">
         <span className="model-label">
-          {live ? `${pctLabel(reporting(race))}% reporting` : pending ? "—" : "Feed carried no result"}
+          {live ? `${inLabel(reporting(race))}% reporting` : pending ? "—" : "Feed carried no result"}
         </span>
       </div>
     </div>

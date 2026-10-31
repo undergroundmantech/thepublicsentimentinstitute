@@ -12,15 +12,15 @@ import CallBand from "../CallBand";
 import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
 import { useIndex, useLive, useStateFile } from "./useLive";
 import { CursorPanel, HistoryPane, useRaceHistory } from "@/app/components/opp/RaceHistoryDesk";
-import { percentIn, pctPoints } from "@/app/lib/fmtPct";
+import { percentIn, pctPoints, probPoints } from "@/app/lib/fmtPct";
 import { countFrame } from "@/app/lib/countUp";
 
 type Paths = { counties: { id: string; d: string }[]; districts: { id: string; d: string }[] };
 const SET = (r: XRace) => (r.k === "leg" ? (["leg"] as const) : r.k === "measure" ? (["ballot"] as const) : r.k === "state" || r.k === "other" ? (["state"] as const) : (["fed"] as const));
 // inputs in percentage points; "%" is appended by the caller
 const pctLabel = (p: number) => pctPoints(p).slice(0, -1);
-// win probabilities: one decimal, no caps (99.9, 100.0, 0.1 are all shown as computed)
-const probLabel = pctLabel;
+// win probabilities: one decimal, as calculated; 100.0% / 0.0% only for a genuine certainty
+const probLabel = (p: number) => probPoints(p).slice(0, -1);
 const signed = (m: number) => `${m >= 0 ? "+" : "−"}${Math.abs(m).toFixed(1)}`;
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 function bbox(paths: { d: string }[]) { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of paths) { const re = /(-?\d+\.?\d*)[ ,](-?\d+\.?\d*)/g; let m; while ((m = re.exec(p.d))) { const x = +m[1], y = +m[2]; if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } } const pad = Math.max(x1 - x0, y1 - y0) * 0.03; return [x0 - pad, y0 - pad, x1 - x0 + 2 * pad, y1 - y0 + 2 * pad]; }
@@ -388,7 +388,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               <b>{names[tip.f] ?? tip.f}</b>
               <div className="row"><span>Expected</span><span>{x == null ? "n/a" : `${x <= 0 ? last(A) : last(B)} ${signed(Math.abs(x))}`}</span></div>
               <div className="row"><span>Expected votes</span><span>{fmtN(e[3])}</span></div>
-              <div className="row"><span>Counted</span><span>{g ? `${fmtN(g.t)} · ${pctLabel(g.pr)}% in` : "none yet"}</span></div>
+              <div className="row"><span>Counted</span><span>{g ? `${fmtN(g.t)} · ${percentIn(g.pr)} in` : "none yet"}</span></div>
               {g ? <div className="row"><span>Returns</span><span>{`${g.m <= 0 ? last(A) : last(B)} ${signed(Math.abs(g.m))}`}</span></div> : null}
               {g && x != null ? <div className="row"><span>Versus expected</span><span>{`${g.m - x < 0 ? (isM ? "Yes" : last(A)) : (isM ? "No" : last(B))} ${signed(Math.abs(g.m - x))}`}</span></div> : null}
             </FloatTip>); })() : null}
@@ -411,7 +411,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                   return (
                     <tr key={x.f}>
                       <td>{x.n}</td>
-                      <td className="num">{x.g ? `${pctLabel(x.g.pr)}%` : "0%"}</td>
+                      <td className="num">{x.g ? percentIn(x.g.pr) : "0.0%"}</td>
                       <td className="num">{fmtN(x.e[3])}</td>
                       <td className="num">{x.g ? fmtN(x.g.t) : "—"}</td>
                       <td className="num"><span className="rd-cand-cell"><b style={{ color: colA }}>{sA.toFixed(1)}%</b><span className="rd-cand-votes">{fmtN(vA)}</span></span></td>
@@ -440,7 +440,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               <tbody>{legD.map((d) => { const lc = legLive[d.d.toUpperCase()]; const sd = lc ? sides({ ...r, k: "sen", c: [[d.D ?? "", "D", 0], [d.R ?? "", "R", 0]] }, lc.c) : null; const m = sd && sd.t ? (100 * (sd.b - sd.a)) / sd.t : null; return (
                 <tr key={d.d}><td>{d.d}</td><td>{d.D ?? (d.I ? `${d.I}, ind.` : "none")}</td><td>{d.R ?? "none"}</td><td className="num">{d.v[3] ? fmtN(d.v[3]) : "—"}</td>
                   <td className="num">{d.m == null ? "—" : <span style={{ color: d.m <= 0 ? "var(--dem)" : "var(--gop)" }}>{d.m <= 0 ? "D" : "R"} +{Math.abs(d.m).toFixed(1)}</span>}</td>
-                  <td className="num">{d.pD != null ? `${probLabel(100 * d.pD)}%` : "—"}</td><td className="num">{lc ? `${pctLabel(lc.pr)}%` : "—"}</td>
+                  <td className="num">{d.pD != null ? `${probLabel(100 * d.pD)}%` : "—"}</td><td className="num">{lc ? percentIn(lc.pr) : "—"}</td>
                   <td className="num">{m == null ? "—" : <span style={{ color: m <= 0 ? "var(--dem)" : "var(--gop)" }}>{m <= 0 ? "D" : "R"} +{Math.abs(m).toFixed(1)}</span>}</td></tr>); })}</tbody>
             </table>
           </div>

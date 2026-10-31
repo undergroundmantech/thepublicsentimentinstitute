@@ -56,6 +56,7 @@ import { TURNOUT_MODEL, STATEWIDE_FORECAST } from "../../_data/miCountyForecast"
 import { forecastRace, type Shares3 } from "../../../lib/electoralModel";
 import { evaluateCall } from "../../../lib/raceCall";
 import { fetchRace } from "../../onpoint/electionLib.js";
+import { percentIn, probPoints } from "@/app/lib/fmtPct";
 
 const MI_ID = 84778;
 const REFRESH_MS = 30_000;
@@ -282,9 +283,9 @@ const share = (c: Cand, all: Cand[]) => {
 
 const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-/** Design System §6 — >99 and <1 at the extremes. */
-const pctLabel = (p: number) =>
-  p >= 99.95 && p < 100 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+/** Shares and win probabilities: one decimal as calculated (sitewide standard); reporting uses inLabel. */
+const pctLabel = (p: number) => probPoints(p).slice(0, -1);
+const inLabel = (p: number) => percentIn(p).slice(0, -1);
 
 const partyOf = (p?: string) => {
   const s = String(p || "").toLowerCase();
@@ -423,7 +424,7 @@ export default function TonightBoard() {
 
   const headline = deskCalled
     ? `On Point Polling projects ${deskWinner} wins the Democratic nomination. He leads by ` +
-      `${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated vote counted, ` +
+      `${int(leadGap)} votes with ${inLabel(modeledRep)}% of the estimated vote counted, ` +
       `and the projected margin of ${signed(marginPP)} sits outside the 95% interval ` +
       `for a Stevens comeback.`
     : live
@@ -467,7 +468,7 @@ export default function TonightBoard() {
             <div className="race-meta" aria-label="Race update summary">
               <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
               <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(mi)) : "0"}</b></div>
-              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${inLabel(rep)}%` : "0.0%"}</b></div>
               <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
             </div>
           </div>
@@ -555,7 +556,7 @@ export default function TonightBoard() {
                   </span>
                 )}
                 <span className="topline-reporting">
-                  <b>{live ? pctLabel(rep) : "0"}%</b> est. reporting
+                  <b>{live ? inLabel(rep) : "0.0"}%</b> est. reporting
                 </span>
               </div>
             </div>
@@ -609,7 +610,7 @@ export default function TonightBoard() {
                       {/* §5.4 — residual normalizes, never a separate comeback number */}
                       <div className="outcome-row muted">
                         <i style={{ background: "var(--ink3)" }} aria-hidden />
-                        <span>Other outcomes</span><b>{winOther < 0.05 ? "<1" : pctLabel(winOther)}%</b>
+                        <span>Other outcomes</span><b>{pctLabel(winOther < 1e-9 ? 0 : winOther)}%</b>
                       </div>
                     </div>
 
@@ -619,9 +620,9 @@ export default function TonightBoard() {
                       </div>
                       <div className="rep-ring"
                            style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
-                           role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
+                           role="img" aria-label={`Model-estimated reporting ${inLabel(modeledRep)} percent`}>
                         <div className="ring-center sm">
-                          <b>{pctLabel(modeledRep)}%</b>
+                          <b>{inLabel(modeledRep)}%</b>
                           <span>reporting</span>
                         </div>
                       </div>
@@ -846,7 +847,7 @@ function L4Card({ entry, race }: { entry: Entry; race?: Race }) {
 
       <div className="l4-foot">
         <span className="model-label">
-          {live ? `${pctLabel(estRep(race))}% est. reporting` : closeAt(entry)}
+          {live ? `${inLabel(estRep(race))}% est. reporting` : closeAt(entry)}
         </span>
       </div>
     </div>

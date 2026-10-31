@@ -8,11 +8,12 @@ const eq = (label: string, got: unknown, want: unknown) => {
 };
 
 console.log(`threshold = ${COUNTY_COMPLETE_PCT}\n`);
-eq("0", fmtReporting(0), "0");
-eq("56", fmtReporting(56), "56");
-eq("94.9", fmtReporting(94.9), "95");
-eq("95 (boundary)", fmtReporting(95), ">99");
-eq("97", fmtReporting(97), ">99");
+eq("0", fmtReporting(0), "0.0");
+eq("56", fmtReporting(56), "56.0");
+eq("94.9", fmtReporting(94.9), "94.9");
+eq("95 (boundary)", fmtReporting(95), "95.0");
+eq("97", fmtReporting(97), "97.0");
+eq("99.04", fmtReporting(99.04), ">99");
 eq("100", fmtReporting(100), ">99");
 
 // A snapped county must project no outstanding vote.

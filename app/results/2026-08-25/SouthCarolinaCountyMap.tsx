@@ -11,6 +11,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SC_COUNTY_PATHS, SC_VIEWBOX, SC_TRANSLATE } from "../_data/scCountyGeo";
 import { SC_CANDIDATE_ORDER, SC_CANDIDATE_LAST, type ScCandidateKey } from "../_data/scSenateForecast";
+import { percentIn } from "@/app/lib/fmtPct";
 
 type RGB = [number, number, number];
 
@@ -150,7 +151,7 @@ export default function SouthCarolinaCountyMap({ counties }: Props) {
                 </div>
               ))}
               <div className="sc-tip-sub">
-                {fmtInt(lc.total)} counted · {lc.reporting.toFixed(0)}% reporting
+                {fmtInt(lc.total)} counted · {percentIn(lc.reporting)} reporting
               </div>
             </>
           ) : (

@@ -17,6 +17,7 @@ import {
   type CandidateKey,
 } from "../_data/flCountyForecast";
 import type { CountyProjection, LiveCounty } from "./countyForecast";
+import { percentIn } from "@/app/lib/fmtPct";
 
 export type MapView = "forecast" | "results";
 export type ForecastMode = "margin" | "turnout";
@@ -333,7 +334,7 @@ export default function FloridaCountyMap({ view, mode, counties, liveCounties }:
                   </div>
                 ))}
                 <div className="fl-tip-sub">
-                  {fmtInt(live.total)} counted · {live.reporting.toFixed(0)}% reporting
+                  {fmtInt(live.total)} counted · {percentIn(live.reporting)} reporting
                 </div>
               </>
             ) : (
@@ -349,12 +350,12 @@ export default function FloridaCountyMap({ view, mode, counties, liveCounties }:
               ))}
               <div className="fl-tip-sub">
                 {CANDIDATE_LAST[hover.c.leader]} +{hover.c.margin.toFixed(1)} [
-                {hover.c.ci90[0].toFixed(0)} to {hover.c.ci90[1].toFixed(0)}]
+                {hover.c.ci90[0].toFixed(1)} to {hover.c.ci90[1].toFixed(1)}]
               </div>
               <div className="fl-tip-sub">
                 {fmtInt(hover.c.projectedTurnout)} projected ballots ·{" "}
                 {hover.c.reporting > 0
-                  ? `${hover.c.reporting.toFixed(0)}% reporting`
+                  ? `${percentIn(hover.c.reporting)} reporting`
                   : "no returns yet"}
               </div>
               {hover.c.tooCloseToCall && <div className="fl-tip-flag">Too close to call</div>}

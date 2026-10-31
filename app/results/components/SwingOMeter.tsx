@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { probFraction } from "@/app/lib/fmtPct";
 
 // The needle — ported 1:1 from the precinct app's ForecastNeedle dial
 // (precinct-map/web/components/ForecastNeedle.tsx) so the hub and the ESRI map
@@ -176,7 +177,7 @@ export default function SwingOMeter({
         <span style={{ fontFamily: MONO, fontSize: 11, color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.4 * var(--fc-mute, 1) + var(--fc-floor, 0)))", marginLeft: -3 }}>pts</span>
         <span style={{ color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.5 * var(--fc-mute, 1) + var(--fc-floor, 0)))", fontSize: 13 }}>·</span>
         <span style={{ fontFamily: MONO, fontSize: 15, fontWeight: 600, color: headColor, fontVariantNumeric: "tabular-nums" }}>
-          {(pHead * 100).toFixed(0)}%
+          {probFraction(pHead)}
         </span>
         <span style={{ fontSize: 12, color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.55 * var(--fc-mute, 1) + var(--fc-floor, 0)))", fontWeight: 500 }}>to win</span>
         <span

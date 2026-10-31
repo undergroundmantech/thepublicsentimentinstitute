@@ -65,6 +65,7 @@ import {
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
 import CallBand from "../CallBand";
+import { percentIn, probPoints } from "@/app/lib/fmtPct";
 
 const OK_GOV_R = 87529;
 const SC_SEN_R = 87534;
@@ -318,9 +319,9 @@ const share = (c: Cand, all: Cand[]) => {
 
 const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-/** Design System §6 — >99 and <1 at the extremes; nothing prints a flat 100. */
-const pctLabel = (p: number) =>
-  p >= 99.95 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+/** Shares and win probabilities: one decimal as calculated (sitewide standard); reporting uses inLabel. */
+const pctLabel = (p: number) => probPoints(p).slice(0, -1);
+const inLabel = (p: number) => percentIn(p).slice(0, -1);
 
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
@@ -680,7 +681,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   const headline = projectedKey
     ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} will win the Republican nomination. ` +
       `This is our model projection, not an official call. ` +
-      `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
+      `He leads by ${int(leadGap)} votes with ${inLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
     : embargoed
@@ -816,8 +817,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             <div className="race-meta" aria-label="Race update summary">
               <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
               <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(gov)) : "0"}</b></div>
-              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
-              <div className="meta-block"><span>Precincts</span><b>{live ? `${pctLabel(precinctRep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${inLabel(rep)}%` : "0.0%"}</b></div>
+              <div className="meta-block"><span>Precincts</span><b>{live ? `${inLabel(precinctRep)}%` : "0.0%"}</b></div>
               <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
             </div>
           </div>
@@ -842,7 +843,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                   kind={calledCand ? "official" : "projected"}
                   name={CANDIDATE_NAMES[winnerKey]}
                   contest="the Republican runoff"
-                  detail={`${signed(leadMarginPP)} margin · ${int(leadGap)} votes · ${pctLabel(rep)}% of the estimated vote counted`}
+                  detail={`${signed(leadMarginPP)} margin · ${int(leadGap)} votes · ${inLabel(rep)}% of the estimated vote counted`}
                 />
               )}
               <header className="topline-header">
@@ -921,7 +922,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                   </span>
                 )}
                 <span className="topline-reporting">
-                  <b>{live ? pctLabel(rep) : "0"}%</b> est. reporting
+                  <b>{live ? inLabel(rep) : "0.0"}%</b> est. reporting
                 </span>
               </div>
             </div>
@@ -982,9 +983,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                     </div>
                     <div className="rep-ring"
                          style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
-                         role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
+                         role="img" aria-label={`Model-estimated reporting ${inLabel(modeledRep)} percent`}>
                       <div className="ring-center sm">
-                        <b>{pctLabel(modeledRep)}%</b>
+                        <b>{inLabel(modeledRep)}%</b>
                         <span>reporting</span>
                       </div>
                     </div>
@@ -1159,7 +1160,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               <h2 id="sc-title">U.S. Senate Special Republican Runoff</h2>
               <p className="prose sc-deck">
                 On Point Polling gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
-                {scLeaderProb.toFixed(0)}% chance of winning the nomination.{" "}
+                {pctLabel(scLeaderProb)}% chance of winning the nomination.{" "}
                 <strong>There is no On Point Polling poll of this runoff.</strong> The starting
                 probability was a desk judgement from the first round, the endorsements
                 since, and how runoff electorates have behaved here before — not a survey.
@@ -1176,9 +1177,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                      ["--ring" as string]: SC_CAND_CSS[scModel.leader],
                    } as React.CSSProperties}
                    role="img"
-                   aria-label={`Win probability: ${SC_CANDIDATE_LAST[scModel.leader]} ${scLeaderProb.toFixed(0)} percent`}>
+                   aria-label={`Win probability: ${SC_CANDIDATE_LAST[scModel.leader]} ${pctLabel(scLeaderProb)} percent`}>
                 <div className="ring-center">
-                  <b>{scLeaderProb.toFixed(0)}%</b>
+                  <b>{pctLabel(scLeaderProb)}%</b>
                   <span>{SC_CANDIDATE_LAST[scModel.leader]}</span>
                 </div>
               </div>
@@ -1252,7 +1253,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <div><span>Projected turnout</span><b>{int(scLive ? scProjectedTurnout : SC_TURNOUT_MODEL.projected)}</b></div>
                 <div><span>First round</span><b>{int(SC_TURNOUT_MODEL.firstRound)}</b></div>
                 <div><span>Votes counted</span><b>{scLive ? int(scCounted) : "0"}</b></div>
-                <div><span>Est. reporting</span><b>{scLive ? `${pctLabel(scRep)}%` : "0%"}</b></div>
+                <div><span>Est. reporting</span><b>{scLive ? `${inLabel(scRep)}%` : "0.0%"}</b></div>
                 <div>
                   <span>Projected margin</span>
                   <b style={{ color: SC_CAND_CSS[scModel.leader] }}>
@@ -1291,7 +1292,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <span className="rd-map-legend-note">reported votes only</span>
               </div>
               <p className="prose sc-note">
-                Turnout assumes {(SC_TURNOUT_MODEL.dropoffFactor * 100).toFixed(0)}% of the{" "}
+                Turnout assumes {pctLabel(SC_TURNOUT_MODEL.dropoffFactor * 100)}% of the{" "}
                 {int(SC_TURNOUT_MODEL.firstRound)} ballots cast in the first round —
                 runoffs draw a fraction of the electorate that produced them. Everything
                 on this panel other than the reported votes rests on that assumption and
@@ -1368,7 +1369,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <p className="prose">
             <strong>South Carolina is a different kind of number.</strong> No On Point Polling survey
             of that runoff exists. Its starting{" "}
-            {SC_FORECAST.winProbability.graham.toFixed(0)}% figure was a desk judgement,
+            {pctLabel(SC_FORECAST.winProbability.graham)}% figure was a desk judgement,
             and the {SC_FORECAST.margin.toFixed(1)}-point opening margin was derived from
             it by assuming a {SC_FORECAST.marginSd}-point standard deviation — wider than
             Oklahoma&rsquo;s precisely because there is no poll underneath it. As votes are
@@ -1453,7 +1454,7 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
 
       <div className="l4-foot">
         <span className="model-label">
-          {live ? `${pctLabel(estRep(race))}% est. reporting` : closeAt(entry)}
+          {live ? `${inLabel(estRep(race))}% est. reporting` : closeAt(entry)}
         </span>
       </div>
     </div>

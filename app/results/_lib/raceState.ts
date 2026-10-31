@@ -2,6 +2,7 @@
 // Election Desk rebuild (CHANGE-ORDER-04 §2). Every surface (Race Clock,
 // header badges, forecast panels, the local board) must speak this one
 // vocabulary — do not restate these strings/thresholds locally.
+import { percentIn, probFraction } from "@/app/lib/fmtPct";
 
 // ─── Race state machine (§2) ────────────────────────────────────────────────
 // SCHEDULED → LIVE·GATED (<10%) → LIVE·FORECAST → PROJECTED (On Point Polling call) → OFFICIAL (certified)
@@ -37,12 +38,12 @@ export function getRaceState(opts: {
 
 export function formatEstReporting(pct: number | null | undefined): string {
   if (typeof pct !== "number" || !Number.isFinite(pct)) return "EST. REPORTING —";
-  return `EST. REPORTING ${Math.max(0, Math.min(100, pct)).toFixed(0)}%`;
+  return `EST. REPORTING ${percentIn(Math.max(0, Math.min(100, pct)))}`;
 }
 
 export function formatPrecincts(pct: number | null | undefined): string {
   if (typeof pct !== "number" || !Number.isFinite(pct)) return "PRECINCTS —";
-  return `PRECINCTS ${Math.max(0, Math.min(100, pct)).toFixed(0)}%`;
+  return `PRECINCTS ${percentIn(Math.max(0, Math.min(100, pct)))}`;
 }
 
 // ─── Vote modes (§2) ─────────────────────────────────────────────────────────
@@ -53,7 +54,7 @@ export type VoteMode = (typeof VOTE_MODE_LABELS)[number];
 // ─── Data semantics (§2) ─────────────────────────────────────────────────────
 
 export const NO_HISTORY_LINE = "NO HISTORY SNAPSHOTS — LIVE DATA ONLY";
-export const OTHER_OUTCOMES_LABEL = "OTHER OUTCOMES <1%";
+export const otherOutcomesLabel = (p: number) => `OTHER OUTCOMES ${probFraction(p)}`;
 
 // ─── Rating vocabulary (ported from ResultsV1's marginBucket/legend) ───────
 
@@ -92,7 +93,7 @@ export function calculateWinProbability(leaderVotes: number, runnerUpVotes: numb
   return 50 + (prob - 0.5) * 100;
 }
 
-/** Normalizes raw win-probability mass across 1-3 candidates; residual (if any) renders as OTHER_OUTCOMES_LABEL in the wheel legend. */
+/** Normalizes raw win-probability mass across 1-3 candidates; residual (if any) renders as otherOutcomesLabel in the wheel legend. */
 export function normalizeWinProbabilitiesByCandidateCount(
   src: Partial<Record<"Candidate1" | "Candidate2" | "Candidate3", number>>,
   candidateCount: number,

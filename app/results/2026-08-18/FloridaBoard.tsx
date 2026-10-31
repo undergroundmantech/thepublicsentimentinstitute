@@ -51,6 +51,7 @@ import {
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
 import "../callStatus.css";
+import { percentIn, probPoints } from "@/app/lib/fmtPct";
 import type { FreshtakePayload } from "../../api/freshtake/route";
 
 const FL_GOV_R = 86349;
@@ -317,9 +318,9 @@ const share = (c: Cand, all: Cand[]) => {
 
 const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-/** Design System §6 — >99 and <1 at the extremes. */
-const pctLabel = (p: number) =>
-  p >= 99.95 && p < 100 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+/** Shares and win probabilities: one decimal as calculated (sitewide standard); reporting uses inLabel. */
+const pctLabel = (p: number) => probPoints(p).slice(0, -1);
+const inLabel = (p: number) => percentIn(p).slice(0, -1);
 
 const partyOf = (p?: string) => {
   const s = String(p || "").toLowerCase();
@@ -532,7 +533,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
   const headline = projectedKey
     ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} will win the Republican nomination. ` +
       `This is our model projection, not an official call. ` +
-      `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
+      `He leads by ${int(leadGap)} votes with ${inLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
     : embargoed
@@ -612,8 +613,8 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             <div className="race-meta" aria-label="Race update summary">
               <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
               <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(gov)) : "0"}</b></div>
-              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
-              <div className="meta-block"><span>Precincts</span><b>{live ? `${pctLabel(precinctRep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${inLabel(rep)}%` : "0.0%"}</b></div>
+              <div className="meta-block"><span>Precincts</span><b>{live ? `${inLabel(precinctRep)}%` : "0.0%"}</b></div>
               <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
             </div>
           </div>
@@ -709,7 +710,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                   </span>
                 )}
                 <span className="topline-reporting">
-                  <b>{live ? pctLabel(rep) : "0"}%</b> est. reporting
+                  <b>{live ? inLabel(rep) : "0.0"}%</b> est. reporting
                 </span>
               </div>
             </div>
@@ -773,7 +774,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                               0,
                               100 - (winProb.donalds ?? 0) - (winProb.fishback ?? 0) - (winProb.collins ?? 0)
                             );
-                            return r < 0.05 ? "<1" : pctLabel(r);
+                            return pctLabel(r < 1e-9 ? 0 : r);
                           })()}%
                         </b>
                       </div>
@@ -785,9 +786,9 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                       </div>
                       <div className="rep-ring"
                            style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
-                           role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
+                           role="img" aria-label={`Model-estimated reporting ${inLabel(modeledRep)} percent`}>
                         <div className="ring-center sm">
-                          <b>{pctLabel(modeledRep)}%</b>
+                          <b>{inLabel(modeledRep)}%</b>
                           <span>reporting</span>
                         </div>
                       </div>
@@ -1058,7 +1059,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                     <div className="num">{int(c.projectedTurnout)}</div>
                     <div className="num">{bank === undefined ? "—" : int(bank)}</div>
                     <div className="num">{c.reportedVotes > 0 ? int(c.reportedVotes) : "—"}</div>
-                    <div className="num">{c.reporting > 0 ? `${pctLabel(c.reporting)}%` : "—"}</div>
+                    <div className="num">{c.reporting > 0 ? `${inLabel(c.reporting)}%` : "—"}</div>
                     <div className="portal-row-proj">
                       <span className="portal-chip" style={{ background: CAND_CSS[c.leader] }} />
                       <span>
@@ -1218,7 +1219,7 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
 
       <div className="l4-foot">
         <span className="model-label">
-          {live ? `${pctLabel(estRep(race))}% est. reporting` : closeAt(entry)}
+          {live ? `${inLabel(estRep(race))}% est. reporting` : closeAt(entry)}
         </span>
       </div>
     </div>

@@ -35,6 +35,7 @@ import {
   type CountyForecast,
   type Region,
 } from "../_data/okCountyForecast";
+import { percentIn } from "../../lib/fmtPct";
 
 /** Live county returns, votes by candidate key. */
 export type LiveCounty = {
@@ -52,9 +53,9 @@ export type LiveCounty = {
  */
 export const COUNTY_COMPLETE_PCT = 95;
 
-/** Nothing reads as a flat 100% on air before certification. */
-export const fmtReporting = (pct: number) =>
-  pct >= COUNTY_COMPLETE_PCT ? ">99" : pct.toFixed(0);
+/** Percent In display (sitewide standard): one decimal, ">99" only above 99.0. The
+ *  model's 95% completeness rule above is separate and unchanged. */
+export const fmtReporting = (pct: number) => percentIn(pct).slice(0, -1);
 
 export interface CountyProjection {
   key: string;

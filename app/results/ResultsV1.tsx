@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
 import { slugToId, idToDate, idToLabel, ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "./_data/raceRegistry";
 import ResultsLanding from "./components/ResultsLanding";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const CIVIC_BASE = "https://civicapi.org";
 const POLL_MS = 30_000;
@@ -1054,7 +1055,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                     <td style={{ padding: "5px 8px 5px 12px", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 700, color: "var(--foreground)", whiteSpace: "nowrap" }}>{row.name}</td>
                     <td style={{ padding: "5px 10px", textAlign: "right", whiteSpace: "nowrap" }}>
                       {isReported
-                        ? <span style={{ fontFamily: "var(--font-numeric)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{row.reporting >= 100 ? ">99%" : `${row.reporting.toFixed(0)}%`}</span>
+                        ? <span style={{ fontFamily: "var(--font-numeric)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{percentIn(row.reporting)}</span>
                         : <span style={{ fontSize: "9px", color: "var(--muted2)" }}>—</span>}
                     </td>
                     {topCands.map((tc) => {
@@ -1794,7 +1795,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
                   </div>
                   <div style={{ flexShrink: 0, marginLeft: 8 }}>
                     {isCalled ? <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)" }}>{_callLabel}</span>
-                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: isSelected ? "var(--muted)" : "var(--muted2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
+                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: isSelected ? "var(--muted)" : "var(--muted2)" }}>{reporting !== null ? percentIn(reporting) : "—"}</span>}
                   </div>
                 </button>
               );
@@ -2104,7 +2105,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                           <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       ) : (
-                        <span style={{ flexShrink: 0, fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.06em" }}>{reporting !== null ? `${reporting.toFixed(0)}% IN` : "0% IN"}</span>
+                        <span style={{ flexShrink: 0, fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.06em" }}>{reporting !== null ? `${percentIn(reporting)} IN` : "0.0% IN"}</span>
                       )}
                     </div>
                   </div>
@@ -3308,7 +3309,7 @@ export default function March3FeaturedClient() {
                     }
                     return "✓ CALLED";
                   })();
-                  const statusStr = isMobileCalled ? ` ${_mCallLabel}` : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
+                  const statusStr = isMobileCalled ? ` ${_mCallLabel}` : reporting !== null && reporting > 0 ? ` · ${percentIn(reporting)} IN` : "";
                   return (
                     <option key={r.id} value={r.id}>
                       [{raceTypeShort}] {r.office}{statusStr}
@@ -3343,7 +3344,7 @@ export default function March3FeaturedClient() {
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                 {isMobileQuickCalled
                   ? <span className="res-badge res-badge-win">{_mqCallLabel}</span>
-                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
+                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? percentIn(reporting) : "—"}</span>
                 }
               </div>
             );

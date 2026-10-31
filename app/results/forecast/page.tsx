@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
+import { percentIn, probFraction } from "@/app/lib/fmtPct";
 
 const POLL_MS = 30_000;
 
@@ -97,7 +98,7 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
         <circle cx={CX} cy={CY} r={5} fill="var(--purple2)" />
         <circle cx={CX} cy={CY} r={2.5} fill="#0a0a08" />
         <text x={CX} y={CY - 22} textAnchor="middle" fontSize="19" fontWeight="900" fill={leaderColor} fontFamily="'Bebas Neue', sans-serif" letterSpacing="1">
-          {(leaderProb * 100).toFixed(0)}%
+          {probFraction(leaderProb)}
         </text>
         <text x={CX} y={CY - 9} textAnchor="middle" fontSize="6" fill="rgba(var(--line-rgb),0.3)" fontFamily="'DM Mono', monospace" letterSpacing="0.5">
           {leader.split(" ")[0].toUpperCase().slice(0, 10)}
@@ -344,7 +345,7 @@ export default function ForecastEnginePage() {
                       <div style={{ flex: 1 }}>
                         <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: selectedRace?.id === r.id ? 700 : 400, color: selectedRace?.id === r.id ? "rgba(var(--line-rgb),0.8)" : "rgba(var(--line-rgb),0.5)", marginBottom: 4, lineHeight: 1.4, letterSpacing: "0.02em" }}>{r.election_name}</div>
                         <div style={{ fontSize: 8, color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", letterSpacing: "0.08em" }}>{r.country}{r.province ? ` · ${r.province}` : ""} · {new Date(r.election_date).toLocaleDateString()}</div>
-                        <div style={{ fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em", marginTop: 2 }}>{r.percent_reporting > 99 ? ">99" : r.percent_reporting}% reporting</div>
+                        <div style={{ fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em", marginTop: 2 }}>{percentIn(r.percent_reporting)} reporting</div>
                       </div>
                     </button>
                   ))}
@@ -423,7 +424,7 @@ export default function ForecastEnginePage() {
                         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: "0.04em", color: "#fff", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
-                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting}% reporting</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{percentIn(forecast.race.percent_reporting)} reporting</span>
                           {loadingForecast && <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "#9d5cf0", letterSpacing: "0.1em" }}>↻ updating…</span>}
                         </div>
                       </div>

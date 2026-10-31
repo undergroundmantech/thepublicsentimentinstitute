@@ -371,7 +371,7 @@ export default function OklahomaCountyMap({ view, mode, counties, liveCounties }
               ))}
               <div className="ok-tip-sub">
                 {CANDIDATE_LAST[hover.c.leader]} +{hover.c.margin.toFixed(1)} [
-                {hover.c.ci90[0].toFixed(0)} to {hover.c.ci90[1].toFixed(0)}]
+                {hover.c.ci90[0].toFixed(1)} to {hover.c.ci90[1].toFixed(1)}]
               </div>
               <div className="ok-tip-sub">
                 {fmtInt(hover.c.projectedTurnout)} projected ballots ·{" "}

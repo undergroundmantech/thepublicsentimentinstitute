@@ -14,6 +14,7 @@ import {
 } from "../_data/flCountyForecast";
 import { CAND_CSS } from "./FloridaCountyMap";
 import type { CountyProjection, LiveCounty } from "./countyForecast";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
@@ -218,7 +219,7 @@ export default function FloridaCountyTable({ view, counties, statewide, liveCoun
                       <i className="rd-cand-tcc" title="Too close to call" aria-hidden />
                     ) : null}
                   </td>
-                  <td className="num">{r.c.reporting.toFixed(0)}%</td>
+                  <td className="num">{percentIn(r.c.reporting)}</td>
                   <td className="num">{fmtInt(r.turnout)}</td>
                   {CANDIDATE_ORDER.map((k) => cell(r, k))}
                   <td className="num">
@@ -241,7 +242,7 @@ export default function FloridaCountyTable({ view, counties, statewide, liveCoun
                   <strong>Statewide</strong>
                   <small>{view === "forecast" ? "projected" : "counted"}</small>
                 </td>
-                <td className="num rd-statewide-dim">{statewideReporting.toFixed(0)}%</td>
+                <td className="num rd-statewide-dim">{percentIn(statewideReporting)}</td>
                 <td className="num rd-statewide-dim">{fmtInt(totals.turnout)}</td>
                 {CANDIDATE_ORDER.map((k) => cell(totals, k))}
                 <td className="num">

@@ -6,6 +6,7 @@ import Link from "@/app/components/Link";
 import { geoMercator, geoPath, geoArea } from "d3-geo";
 import type { CDetail } from "@/app/results/2026/live";
 import { STN } from "@/app/results/2026/live";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const ST_FIPS: Record<string, string> = { AL: "01", AK: "02", AZ: "04", AR: "05", CA: "06", CO: "08", CT: "09", DE: "10", DC: "11", FL: "12", GA: "13", HI: "15", ID: "16", IL: "17", IN: "18", IA: "19", KS: "20", KY: "21", LA: "22", ME: "23", MD: "24", MA: "25", MI: "26", MN: "27", MS: "28", MO: "29", MT: "30", NE: "31", NV: "32", NH: "33", NJ: "34", NM: "35", NY: "36", NC: "37", ND: "38", OH: "39", OK: "40", OR: "41", PA: "42", RI: "44", SC: "45", SD: "46", TN: "47", TX: "48", UT: "49", VT: "50", VA: "51", WA: "53", WV: "54", WI: "55", WY: "56" };
 const OTHER = ["#e7b341", "#b78cff", "#2fbf9b", "#e7794a", "#7fd4ff", "#ff8fd1"];
@@ -55,7 +56,7 @@ export default function CivicRace({ id }: { id: number }) {
       <header className="cr-h">
         <div className="eye">{STN[st] ?? st} · {d.type} · November 3, 2026</div>
         <h1>{d.name}</h1>
-        <p>{tot > 0 ? `${d.pr.toFixed(0)}% of the expected vote reported. ` : "No votes counted yet. "}Live returns from civicAPI, refreshed every 30 seconds. This race is not part of the On Point forecast, so it shows the count only.</p>
+        <p>{tot > 0 ? `${percentIn(d.pr)} of the expected vote reported. ` : "No votes counted yet. "}Live returns from civicAPI, refreshed every 30 seconds. This race is not part of the On Point forecast, so it shows the count only.</p>
       </header>
       <section className="cr-card">
         <ul className="cr-c">
@@ -77,7 +78,7 @@ export default function CivicRace({ id }: { id: number }) {
               <svg viewBox="0 0 640 460" role="img" aria-label={`${d.name} by county`}>
                 {shapes.map((s) => <path key={s.f} d={s.d} fill={fillOf(s.f)} stroke="var(--bg)" strokeWidth={0.6} onMouseEnter={() => setHov(s.f)} onMouseLeave={() => setHov(null)} />)}
               </svg>
-              <div className="cr-hov">{hr ? <><b>{hr.n}</b> · {hr.pr.toFixed(0)}% in · {[...hr.c].sort((a, b) => b[2] - a[2]).slice(0, 2).map((c) => `${c[0].split(" ").slice(-1)[0]} ${c[3].toFixed(1)}%`).join(", ")}</> : "Hover a county"}</div>
+              <div className="cr-hov">{hr ? <><b>{hr.n}</b> · {percentIn(hr.pr)} in · {[...hr.c].sort((a, b) => b[2] - a[2]).slice(0, 2).map((c) => `${c[0].split(" ").slice(-1)[0]} ${c[3].toFixed(1)}%`).join(", ")}</> : "Hover a county"}</div>
             </div>
           )}
           <div className="cr-card cr-tbl">
@@ -86,7 +87,7 @@ export default function CivicRace({ id }: { id: number }) {
               <tbody>
                 {regions.sort((a, b) => a[1].n.localeCompare(b[1].n)).map(([k, r]) => (
                   <tr key={k} className={hov === k ? "on" : ""} onMouseEnter={() => setHov(k)} onMouseLeave={() => setHov(null)}>
-                    <td>{r.n}</td><td className="n">{r.pr.toFixed(0)}%</td>
+                    <td>{r.n}</td><td className="n">{percentIn(r.pr)}</td>
                     {cands.slice(0, 3).map((c) => { const x = r.c.find((y) => y[0] === c[0]); return <td key={c[0]} className="n">{x ? `${x[3].toFixed(1)}%` : ""}</td>; })}
                   </tr>
                 ))}
