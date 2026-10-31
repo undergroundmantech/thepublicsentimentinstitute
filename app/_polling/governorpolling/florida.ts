@@ -2,7 +2,7 @@
 // Florida — 2026 Governor: David Jolly (D) vs. Byron Donalds (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-29. Full public poll list as of 2026-09-28.
+// ballot were dropped. Newest poll: 2026-10-30. Full public poll list as of 2026-09-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -76,6 +76,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 813, "sampleType": "LV", "results": {"David Jolly (D)": 44.0, "Byron Donalds (R)": 48.0, "Undecided": 8.0}},
     {"raceId": "FL-GOV-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 916, "sampleType": "LV", "results": {"David Jolly (D)": 45.5, "Byron Donalds (R)": 47.8, "Other": 3.2, "Undecided": 3.5}},
     {"raceId": "FL-GOV-2026", "pollster": "Workbench Strategy for the Nixon campaign (D)", "startDate": "2026-10-18", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"David Jolly (D)": 48.0, "Byron Donalds (R)": 46.0, "Undecided": 6.0}},
-    {"raceId": "FL-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 1200, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 49.0, "Other": 2.0, "Undecided": 4.0}}
+    {"raceId": "FL-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 1200, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 49.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 1129, "sampleType": "LV", "results": {"David Jolly (D)": 44.2, "Byron Donalds (R)": 47.4, "Undecided": 8.4}}
   ],
 };
