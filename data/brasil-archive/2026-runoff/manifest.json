@@ -1,0 +1,287 @@
+{
+  "source": "civicAPI",
+  "url": "https://civicapi.org/api/v2/race/{id}",
+  "capturedAt": "2026-10-31T22:30:21.371Z",
+  "records": [
+    {
+      "uf": "BR",
+      "id": 162819,
+      "file": "civicapi/BR-162819.json.gz",
+      "sha256": "52bd3bdfa24d3e03bf32ad79e9a9203afbf554e7e5871ea1d20381747c228c22",
+      "bytes": 13637,
+      "last_updated": "2026-10-26T15:05:27.206Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "AC",
+      "id": 162829,
+      "file": "civicapi/AC-162829.json.gz",
+      "sha256": "62cf6cce2488d9cda23f8da2799246d73a68327eaca564472c54b005ef1c0537",
+      "bytes": 11440,
+      "last_updated": "2026-10-26T15:05:28.396Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "AL",
+      "id": 162830,
+      "file": "civicapi/AL-162830.json.gz",
+      "sha256": "a502b16714981f780ad3897fa28cfe103c40256c499e4d4c501eaca610ae2c7b",
+      "bytes": 48037,
+      "last_updated": "2026-10-26T15:05:28.500Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "AP",
+      "id": 162831,
+      "file": "civicapi/AP-162831.json.gz",
+      "sha256": "dd53bd7e6634194a903f1a66ab6d022883bebe069d91cbb1e4042af2b77e0cac",
+      "bytes": 8689,
+      "last_updated": "2026-10-26T15:05:28.598Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "AM",
+      "id": 162832,
+      "file": "civicapi/AM-162832.json.gz",
+      "sha256": "c1c742381c587b704ce02b784e263f6d79476e121319c2f8c5e53b4f6e6b8823",
+      "bytes": 29498,
+      "last_updated": "2026-10-26T15:05:28.708Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "BA",
+      "id": 162833,
+      "file": "civicapi/BA-162833.json.gz",
+      "sha256": "257dbe7fc281b366c6544fcd0d010588663be7afc51fa2d8a3cfecb3a723cceb",
+      "bytes": 190749,
+      "last_updated": "2026-10-26T15:05:29.010Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "CE",
+      "id": 162834,
+      "file": "civicapi/CE-162834.json.gz",
+      "sha256": "7484b6a4730f7a4b2ed27e4cf7d742d1f9055ad6fc8ac14bb34bf0ce0f53fcb8",
+      "bytes": 84433,
+      "last_updated": "2026-10-26T15:05:29.248Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "DF",
+      "id": 162835,
+      "file": "civicapi/DF-162835.json.gz",
+      "sha256": "7216855ccb2855cbb50dd65219b5d19543b2e40ddcf9653ef26964955530ecfb",
+      "bytes": 1894,
+      "last_updated": "2026-10-26T15:05:29.357Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "ES",
+      "id": 162836,
+      "file": "civicapi/ES-162836.json.gz",
+      "sha256": "b3b22c66dd090532b334e7ccc6bc34ed7f34124d9f37a93186ac8d0b2e098bc5",
+      "bytes": 37098,
+      "last_updated": "2026-10-26T15:05:29.454Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "GO",
+      "id": 162837,
+      "file": "civicapi/GO-162837.json.gz",
+      "sha256": "1b5a075cc82e9968f67d9fd6e6feb2ed43a4bc86cb659556755d999ee40d653b",
+      "bytes": 113785,
+      "last_updated": "2026-10-26T15:05:29.628Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "MA",
+      "id": 162838,
+      "file": "civicapi/MA-162838.json.gz",
+      "sha256": "c86fc1bd416aca8e8fc8e8a34585795fa82c046a0ef0f10290913dacdac93f7c",
+      "bytes": 101449,
+      "last_updated": "2026-10-26T15:05:29.803Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "MT",
+      "id": 162839,
+      "file": "civicapi/MT-162839.json.gz",
+      "sha256": "98e771992006eb7d108431929eb2aa0ee93df23f2bdd89c55b68710ac86efeb5",
+      "bytes": 66573,
+      "last_updated": "2026-10-26T15:05:29.961Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "MS",
+      "id": 162840,
+      "file": "civicapi/MS-162840.json.gz",
+      "sha256": "79749665dc167a041e9f4427a6391fdc9bbd664bdd0b140843d2c66112375ec4",
+      "bytes": 37330,
+      "last_updated": "2026-10-26T15:05:30.099Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "MG",
+      "id": 162841,
+      "file": "civicapi/MG-162841.json.gz",
+      "sha256": "83f722c37c9d80ca16f8a77a237a9020ba65b10542d279e8e2c52252506f5a35",
+      "bytes": 391071,
+      "last_updated": "2026-10-26T15:05:30.520Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "PA",
+      "id": 162844,
+      "file": "civicapi/PA-162844.json.gz",
+      "sha256": "dda983e1179c3381bd1faf1429fabccade4875839209287e88fff1a818b34e35",
+      "bytes": 67269,
+      "last_updated": "2026-10-26T15:05:31.337Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "PB",
+      "id": 162843,
+      "file": "civicapi/PB-162843.json.gz",
+      "sha256": "6bf5abef5cdd64fdc58cb8f655758c5d25697acd0a27c943191bcad2549f7e19",
+      "bytes": 102778,
+      "last_updated": "2026-10-26T15:05:31.175Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "PR",
+      "id": 162842,
+      "file": "civicapi/PR-162842.json.gz",
+      "sha256": "f3c9baa1b883c90a2f10ea78b04334805994f5b1a37191bbd2b454b8e89d95fc",
+      "bytes": 183710,
+      "last_updated": "2026-10-26T15:05:30.944Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "PE",
+      "id": 162845,
+      "file": "civicapi/PE-162845.json.gz",
+      "sha256": "20e2293cd0f01f6efae858301c51fb6ae6bed2ee7ca030147816c9ec1b075636",
+      "bytes": 85313,
+      "last_updated": "2026-10-26T15:05:31.502Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "PI",
+      "id": 162846,
+      "file": "civicapi/PI-162846.json.gz",
+      "sha256": "b16f1337eec102b4f2ba42f447cab56136d207c197c60d87e98c3fb0a250a993",
+      "bytes": 104879,
+      "last_updated": "2026-10-26T15:05:31.678Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "RJ",
+      "id": 162847,
+      "file": "civicapi/RJ-162847.json.gz",
+      "sha256": "b0810fb8acad81c897b4fbf924a1278165bcc22767ba200b1002f244b206620a",
+      "bytes": 43557,
+      "last_updated": "2026-10-26T15:05:31.830Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "RN",
+      "id": 162848,
+      "file": "civicapi/RN-162848.json.gz",
+      "sha256": "4f6c96f70ebb5d83aaca5233ed201ab5c266f808c6fe8e7d500452389d59d533",
+      "bytes": 77603,
+      "last_updated": "2026-10-26T15:05:32.018Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "RS",
+      "id": 162849,
+      "file": "civicapi/RS-162849.json.gz",
+      "sha256": "7ddcf54e525385f629fc3b8ff50007fd066556019534e988d01cfcc4941c314e",
+      "bytes": 228292,
+      "last_updated": "2026-10-26T15:05:32.371Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "RO",
+      "id": 162850,
+      "file": "civicapi/RO-162850.json.gz",
+      "sha256": "21cafd6c051862c78ef02147132d4cae35a7ab164fa2cd82745f696d1f691b77",
+      "bytes": 25388,
+      "last_updated": "2026-10-26T15:05:32.569Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "RR",
+      "id": 162851,
+      "file": "civicapi/RR-162851.json.gz",
+      "sha256": "34c67db3b6d0f3f05fed625009f6639fba16d65c902c2b6e86041dc09e6fe8ec",
+      "bytes": 8171,
+      "last_updated": "2026-10-26T15:05:32.667Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "SC",
+      "id": 162852,
+      "file": "civicapi/SC-162852.json.gz",
+      "sha256": "92d266af74190b18ea22bd4064a2acd261ee6e4204a2233e1ff4c27a73d0de1f",
+      "bytes": 135488,
+      "last_updated": "2026-10-26T15:05:32.834Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "SP",
+      "id": 162854,
+      "file": "civicapi/SP-162854.json.gz",
+      "sha256": "278f74ccf65b77eac093bd3436140b7f1d81f511008802469e82b62c501ea673",
+      "bytes": 294465,
+      "last_updated": "2026-10-26T15:05:33.361Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "SE",
+      "id": 162853,
+      "file": "civicapi/SE-162853.json.gz",
+      "sha256": "49ccc8e0d0e9d2d5e3f69da2ae1d70d513f301ad2410632ae9a3224a90b30d84",
+      "bytes": 35723,
+      "last_updated": "2026-10-26T15:05:32.996Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    },
+    {
+      "uf": "TO",
+      "id": 162855,
+      "file": "civicapi/TO-162855.json.gz",
+      "sha256": "d2b4f5d8144cec1c237fd927f5ea586ff628a7d07f08c1b1372c848b3e1c64e9",
+      "bytes": 65332,
+      "last_updated": "2026-10-26T15:05:33.615Z",
+      "percent_reporting": 99.9,
+      "test_data": false
+    }
+  ]
+}

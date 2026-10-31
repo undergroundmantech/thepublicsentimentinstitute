@@ -1,14 +1,15 @@
-// /brasil: the On Point forecast for the 2026 Brazilian presidential runoff, in English with a Portuguese version.
+// /brasil: the On Point forecast for the 2026 Brazilian presidential runoff, in English with a Portuguese version. The
+// runoff was held on October 25, 2026; this page is kept as the forecast was published on October 24, as an archive.
 import React from "react";
 import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { getBr, brStates, brSeo, brPageLd } from "./data";
-import { ForecastMap, Countdown } from "./HubClient";
+import { ForecastMap } from "./HubClient";
 import { T } from "./i18n";
 import { FL, LU, fmt, marginColor, ratingStyle, slugOf, type BrState, type Fmt } from "./lib";
 
-const DESC = "On Point Politics forecast for Brazil's 2026 presidential runoff between Flávio Bolsonaro and Lula: win probability, projected valid vote, maps by state and municipality, and the polling average. Previsão do 2º turno em português.";
-export const metadata = brSeo({ title: "Brazil 2026 Runoff Forecast: Flávio Bolsonaro vs Lula", pt: "Previsão do 2º turno", description: DESC, path: "/brasil",
+const DESC = "The On Point Politics pre-election forecast for Brazil's October 25, 2026 presidential runoff between Flávio Bolsonaro and Lula, as published on October 24: win probability, projected valid vote, maps by state and municipality, and the polling average. Archived. Previsão do 2º turno em português.";
+export const metadata = brSeo({ title: "Brazil 2026 Runoff Forecast (Archive): Flávio Bolsonaro vs Lula", pt: "Previsão do 2º turno (arquivo)", description: DESC, path: "/brasil",
   keywords: ["Brazil runoff forecast", "Lula chance of winning", "Flavio Bolsonaro chance of winning", "previsão segundo turno", "chance de vitória Lula", "modelo eleitoral Brasil"] });
 
 const EN = fmt("en"), PT = fmt("pt");
@@ -24,14 +25,14 @@ function faq(n: ReturnType<typeof getBr>["national"], x: Fmt): [string, string][
     ["Quando sai o resultado do 2º turno?", "A urna eletrônica permite uma apuração rápida. Nas últimas eleições, a maior parte dos votos foi totalizada nas duas primeiras horas depois do fechamento, e o vencedor costuma ser conhecido ainda no início da noite."],
     ["O que são votos válidos?", "São os votos dados a um dos dois candidatos, sem contar brancos e nulos. O TSE calcula o percentual de cada candidato sobre os votos válidos, e quem tiver mais da metade deles vence a eleição."],
     ["Como funciona a previsão do On Point Politics?", "O modelo combina três fontes: a média das pesquisas de 2º turno, com peso de 65%; uma estimativa estrutural feita a partir do voto de cada estado no 1º turno, redistribuindo os eleitores dos candidatos eliminados, com peso de 35%; e o comportamento de cada estado no 2º turno de 2022. Depois, roda 40 mil simulações com erros nacionais, regionais e estaduais."],
-    ["Onde acompanhar a apuração ao vivo?", "Na página Resultados ao vivo do On Point Politics, com os números do TSE por estado e por município, comparados com o que o modelo esperava, e uma projeção do resultado final atualizada a cada 30 segundos."],
+    ["Onde está o resultado?", "Na página Resultados do On Point Politics, arquivada: a última apuração divulgada pelo provedor, por estado e por município, comparada com o que o modelo esperava. Os resultados oficiais são os certificados pelo TSE."],
   ] : [
     ["Who is ahead in Brazil's 2026 runoff?", `In the On Point Politics forecast, Flávio Bolsonaro is projected to win ${x.nf(n.flavio)}% of the valid vote to Lula's ${x.nf(n.lula)}%. Across 40,000 simulations Flávio wins ${x.nf(100 * n.p_flavio)}% of the time and Lula ${x.nf(100 * n.p_lula)}%. That is an edge, not a certainty: the likely range for Flávio runs from ${x.nf(n.p10)}% to ${x.nf(n.p90)}%.`],
     ["When do the polls close on Sunday?", "Voting runs from 8 AM to 5 PM Brasília time, the same hours across the whole country, which is 4 PM Eastern. The electoral court, the TSE, starts releasing the count only after 5 PM, once every polling place has closed."],
     ["When will the result be known?", "Brazil votes on electronic machines, so the count is fast. In recent elections most of the vote was tallied within two hours of the polls closing, and the winner was usually clear early in the evening."],
     ["What are valid votes?", "Votes cast for one of the two candidates, leaving out blank and spoiled ballots. The TSE reports each candidate's share of the valid vote, and whoever wins more than half of it wins the election."],
     ["How does the On Point forecast work?", "The model blends three sources: the average of runoff polls, weighted 65%; a structural estimate built from each state's first round vote, with the eliminated candidates' voters reassigned, weighted 35%; and how each state moved in the 2022 runoff. It then runs 40,000 simulations with national, regional and state errors."],
-    ["Where can I follow the count live?", "On the On Point Politics live results page, with the TSE's numbers by state and municipality against what the model expected, and a projection of the final result updated every 30 seconds."],
+    ["Where are the results?", "On the On Point Politics results page, now archived: the provider's last count by state and municipality, against what the model expected. Official results are those certified by the TSE."],
   ];
 }
 
@@ -118,7 +119,7 @@ export default function Page() {
           <div className="cap">{B((x) => x.t("Chance of winning", "Chance de vitória"))}</div>
           <div className="br-prob thin"><i className="f" style={{ width: `${n.flavio}%` }} /><i className="l" style={{ width: `${n.lula}%` }} /><span className="mid" /></div>
           <div className="br-vote">{B((x) => <><span className="fl">{x.pct(n.flavio)} {x.t("of valid votes", "dos válidos")}</span><span className="lu">{x.pct(n.lula)} {x.t("of valid votes", "dos válidos")}</span></>)}</div>
-          <Countdown />
+          <Link href="/brasil/resultados" className="br-chip gold" style={{ justifySelf: "center", textDecoration: "none" }}>{B((x) => x.t("Runoff held October 25 · see the archived results", "2º turno realizado em 25 de outubro · ver o resultado arquivado"))}</Link>
         </div>
       </section>
 
@@ -234,8 +235,8 @@ export default function Page() {
           {B((x) => <>{faq(n, x).map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</>)}
         </div>
         <p className="br-note">{B((x) => x.lang === "pt"
-          ? <>Previsão do On Point Politics, gerada em {day(b.updated, x)}. Os resultados oficiais são os do Tribunal Superior Eleitoral. Na noite da eleição, acompanhe a <Link href="/brasil/resultados" style={gold}>apuração ao vivo</Link>.</>
-          : <>On Point Politics forecast, generated {day(b.updated, x)}. Official results are those of Brazil&rsquo;s Superior Electoral Court, the TSE. On election night, follow the <Link href="/brasil/resultados" style={gold}>live results</Link>.</>)}</p>
+          ? <>Previsão do On Point Politics, gerada em {day(b.updated, x)}, antes da votação, e mantida como foi publicada. Os resultados oficiais são os do Tribunal Superior Eleitoral. Veja o <Link href="/brasil/resultados" style={gold}>resultado arquivado</Link>.</>
+          : <>On Point Politics forecast, generated {day(b.updated, x)}, before the vote, and kept as published. Official results are those of Brazil&rsquo;s Superior Electoral Court, the TSE. See the <Link href="/brasil/resultados" style={gold}>archived results</Link>.</>)}</p>
       </section>
     </div>
   );

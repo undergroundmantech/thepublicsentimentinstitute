@@ -7,7 +7,9 @@ export type Exp = { states: Record<string, [number, number, number, number, stri
 export type RawState = { pr: number; fv: number; lv: number; m: Record<string, [number, number, number]>; win?: "F" | "L" | null };
 export type Proj = { f: number; lo: number; hi: number; p: number; total: number; counted: number; call: "F" | "L" | null; swing: number | null };
 export type LiveState = { pr: number; fv: number; lv: number; m: Record<string, [number, number, number]>; proj: Proj };
-export type Live = { t: string; test: boolean; sim?: boolean; nat: { pr: number; fv: number; lv: number; proj: Proj }; st: Record<string, LiveState> };
+/** where an archived count came from: the provider, its last update, and when On Point saved it */
+export type ArchiveMeta = { source: string; raceIds: Record<string, number>; providerUpdated: string; capturedAt: string; reporting: number; official: false; note: string };
+export type Live = { t: string; test: boolean; sim?: boolean; archive?: ArchiveMeta; nat: { pr: number; fv: number; lv: number; proj: Proj }; st: Record<string, LiveState> };
 
 export function phi(z: number) {
   const t = 1 / (1 + 0.2316419 * Math.abs(z)), d = 0.3989423 * Math.exp((-z * z) / 2);

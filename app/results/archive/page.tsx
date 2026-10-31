@@ -40,6 +40,20 @@ export default function ResultsArchive() {
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        <section>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--foreground)", margin: 0 }}>
+              Brazil · Sunday, October 25, 2026
+            </h2>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+            <Link href="/brasil/arquivo" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
+              Open Archive →
+            </Link>
+          </div>
+          <Link href="/brasil/arquivo" style={{ display: "block", padding: "10px 14px", background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)", textDecoration: "none", fontSize: 13, color: "var(--foreground)", maxWidth: 560 }}>
+            Presidential runoff: Lula vs Flávio Bolsonaro. Our forecast as published and the archived count by state and municipality.
+          </Link>
+        </section>
         {ELECTION_DATES.map(date => {
           const races = getRacesByDate(date);
           const dayHref =

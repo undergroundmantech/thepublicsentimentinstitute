@@ -17,7 +17,7 @@ import { bmHref, getMeasures } from "@/app/forecast/measures/data";
 import { ELECTION_DATES, RACE_REGISTRY } from "@/app/results/_data/raceRegistry";
 import { DEDICATED_BOARDS, RACE_PAGES } from "@/app/results/archive/nightBoards";
 import { STN as STATE_NAMES } from "@/app/results/2026/live";
-import { brStates } from "@/app/brasil/data";
+import { BR_ARCHIVED, brStates } from "@/app/brasil/data";
 import { slugOf } from "@/app/brasil/lib";
 
 type Entry = MetadataRoute.Sitemap[number];
@@ -56,11 +56,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/accountability/methodology", today, "monthly", 0.5),
     // the Ledger pages are listed only once a Ledger snapshot is exported into public/watchdog/ledger-data
     ...(ledgerReady() ? ["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)) : []),
-    // Brazil 2026, in English with a Portuguese version
-    u("/brasil", today, "hourly", 1),
-    u("/brasil/resultados", today, "always", 1),
-    u("/brasil/estados", today, "daily", 0.9),
-    ...brStates().flatMap((s) => [u(`/brasil/${slugOf(s.name)}`, today, "daily", 0.8), u(`/brasil/resultados/${slugOf(s.name)}`, today, "always", 0.8)]),
+    // Brazil 2026, archived: English with a Portuguese version, fixed date, no longer changing
+    u("/brasil/arquivo", BR_ARCHIVED, "yearly", 0.5),
+    u("/brasil", BR_ARCHIVED, "yearly", 0.4),
+    u("/brasil/resultados", BR_ARCHIVED, "yearly", 0.4),
+    u("/brasil/estados", BR_ARCHIVED, "yearly", 0.3),
+    ...brStates().flatMap((s) => [u(`/brasil/${slugOf(s.name)}`, BR_ARCHIVED, "yearly", 0.3), u(`/brasil/resultados/${slugOf(s.name)}`, BR_ARCHIVED, "yearly", 0.3)]),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),
