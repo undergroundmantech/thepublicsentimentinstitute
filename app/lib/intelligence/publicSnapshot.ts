@@ -42,7 +42,7 @@ export interface PublicSnapshotDocument {
   checksum: string;
 }
 
-interface PublicHead { snapshotId: string | null; publicationId: string | null; documentKey: string | null; documentSha256: string | null; publishedAt: string | null; checksum: string }
+interface PublicHead { snapshotId: string | null; publicationId: string | null; documentKey: string | null; documentSha256: string | null; publishedAt: string | null; checkpointStartedAt?: string | null; checksum: string }
 
 export type PublishResult =
   | { status: "PUBLISHED"; event: PublicationEvent; timeline: "UPDATED" | "SKIPPED" | "FAILED" }
@@ -74,6 +74,9 @@ export async function publishCheckpoint(store: ObjectStore, manifestKey: string,
   if (cp.manifest.layers.calculated.status !== "WRITTEN" || cp.manifest.layers.snapshot.status !== "WRITTEN") return fail("CHECKPOINT_INCOMPLETE");
   if (cp.publication) return fail("ALREADY_PUBLISHED");
   if (!cp.snapshot.length || cp.snapshot.some((s) => s.classification !== "PUBLICATION_READY")) return fail("NOT_PUBLICATION_READY");
+  // a run that finishes late must not replace newer published output; its checkpoint stays archived, unpublished
+  const since = prev?.head.checkpointStartedAt;
+  if (since && Date.parse(cp.manifest.startedAt) <= Date.parse(since)) return fail("OUT_OF_ORDER");
 
   const id = cp.manifest.checkpointId;
   const snapshotId = `snap_${id}`, publicationId = `pub_${id}`;
@@ -81,7 +84,7 @@ export async function publishCheckpoint(store: ObjectStore, manifestKey: string,
   const doc = withChecksum<Omit<PublicSnapshotDocument, "checksum">>({ type: "ONPOINT_PUBLIC_SNAPSHOT", schema: CHECKPOINT_SCHEMA, snapshotId, publicationId, checkpointId: id, publishedAt, races: cp.snapshot.map(toPublic) });
   const docBuf = jsonBytes(doc), documentKey = `public/snapshots/${cp.manifest.startedAt.slice(0, 10)}/${snapshotId}.json`, documentSha256 = sha256Hex(docBuf);
   try { await store.putIfAbsent(documentKey, docBuf, "application/json"); } catch { return fail("DOCUMENT_WRITE_FAILED"); }
-  try { await store.put(PUBLIC_HEAD, jsonBytes(withChecksum({ snapshotId, publicationId, documentKey, documentSha256, publishedAt })), "application/json"); } catch { return fail("ACTIVATION_FAILED"); }
+  try { await store.put(PUBLIC_HEAD, jsonBytes(withChecksum({ snapshotId, publicationId, documentKey, documentSha256, publishedAt, checkpointStartedAt: cp.manifest.startedAt })), "application/json"); } catch { return fail("ACTIVATION_FAILED"); }
 
   const event = withChecksum<Omit<PublicationEvent, "checksum">>({
     layer: "PUBLISHED", classification: "PUBLISHED", schema: CHECKPOINT_SCHEMA, publicationId, snapshotId, checkpointId: id, publishedAt, delivery: PUBLIC_DELIVERY,

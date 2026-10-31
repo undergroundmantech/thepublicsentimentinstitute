@@ -97,6 +97,25 @@ test("3. a failed publication keeps raw and calculated records and creates no pu
   assert.equal((await readPublicSnapshot(flaky))!.publicationId, good.publicationId, "the previous publication stays live");
 });
 
+test("a checkpoint that finishes late is never published over newer output; a duplicate publication is refused", async () => {
+  const flaky = new FlakyStore();
+  const s = setup({}, flaky);
+  flaky.failPrefix = "public/snapshots/"; // archive two checkpoints without publishing either
+  sen(s.provider, 1000, 900, "2026-11-04T00:59:00Z");
+  await s.tick();
+  sen(s.provider, 1200, 900, "2026-11-04T01:00:30Z");
+  await s.tick();
+  flaky.failPrefix = null;
+  const [older, newer] = await listCheckpoints(flaky, "2026-11-04", "2026-11-04");
+  const pub = await publishCheckpoint(flaky, newer, s.clock.now);
+  assert.equal(pub.status, "PUBLISHED");
+  assert.deepEqual(await publishCheckpoint(flaky, older, s.clock.now), { status: "NOT_PUBLISHED", code: "OUT_OF_ORDER" });
+  assert.deepEqual(await publishCheckpoint(flaky, newer, s.clock.now), { status: "NOT_PUBLISHED", code: "ALREADY_PUBLISHED" });
+  const live = (await readPublicSnapshot(flaky))!;
+  assert.equal(live.publicationId, (pub as { event: { publicationId: string } }).event.publicationId, "the newer publication stays live");
+  assert.equal((await readCheckpoint(flaky, older))!.publication, null, "the older checkpoint stays archived and unpublished");
+});
+
 test("9. untracked nationwide contests keep their raw rows and are recorded as calculation-unavailable", async () => {
   const s = setup();
   s.provider.races[555] = { ...fakeRaces()[101], id: 555, province: "OH", names: ["Golf", "Hotel"], votes: { d: 10, r: 20, o: 0 } };
