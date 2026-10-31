@@ -151,6 +151,16 @@ Also captured: `national` (`/results/2026`) at 390/1280 to confirm the dashboard
 - `NightDesk.tsx` eslint: 5× `react-hooks/set-state-in-effect` and one unused-disable warning, identical to the file before this work. Fixing them means restructuring `useLive`/view sync, which is shared behaviour — out of scope.
 - 1280px masthead P1 noted in [ONPOINT_SITEWIDE_UI_AUDIT.md](ONPOINT_SITEWIDE_UI_AUDIT.md) is sitewide chrome, not this page.
 - `middleware` deprecation warning from Next 16 is sitewide.
+- **For model review: live win probability saturates to exactly 1.0.** `Phi()` in `app/results/2026/live.ts` is
+  `0.5 * (1 + erf(z/√2))` with the Abramowitz–Stegun 7.1.26 `erf` (absolute error up to 1.5e-7). Measured: `1 - Phi(z)`
+  is 1.3e-12 at z = 7 and 6.7e-16 at z = 8, and `Phi(z) === 1` from z ≈ 8.25. `liveOdds()` divides the counted margin
+  by a spread that shrinks toward 0.35 points (0.05 once 99.9% of the expected vote is in), so a large lead late in the
+  count passes that point: the Georgia Senate near-final test state (+14.4, spread about 0.6, z ≈ 24) computes
+  `pA = 1` and displays "100.0%". That is floating-point saturation, not a mathematical certainty. It is left
+  unchanged on purpose in this integration pass: the display shows the computed value to one decimal with no cap,
+  and a probability never makes an official call. "Race called" comes only from the provider's winner flag
+  (`civWinner`); a high probability can at most produce the separately labelled "OnPoint Projection · not an
+  official call" band, which also needs a published forecast, counted votes and at least 50% of the estimated vote in.
 
 ## 11. Future Race History placement
 

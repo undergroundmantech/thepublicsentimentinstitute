@@ -251,6 +251,7 @@ export const showTest = () => { try { return new URLSearchParams(window.location
 export const beforeClose = () => Date.now() < FIRST_CLOSE;
 
 const erf = (x: number) => { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; };
+// Returns exactly 1.0 from z ≈ 8.25 (exactly 0.0 from z ≈ -8.38) in floating point: a saturated value, not a certainty. Pending model review.
 export const Phi = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
 const PhiInv = (p: number) => { // Acklam's approximation
   const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239];
