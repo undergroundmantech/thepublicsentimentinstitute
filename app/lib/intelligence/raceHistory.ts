@@ -445,7 +445,9 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
     return finish(chart, series, markers, notShown, reference, emptyReason, [-ext, ext]);
   }
 
-  // votes: solid lines are what a results source reported; dashed lines are a model's estimate of the final count
+  // votes: solid lines are what a results source reported; dashed lines are a model's estimate of the final count.
+  // Before any vote is reported the chart stays empty: an estimate alone on a vote chart reads as a count.
+  const anyReported = p.results.some((r) => Object.values(r.reportedVotes).some((v) => v != null));
   for (const c of p.candidates) {
     const rep: SeriesPoint[] = [];
     p.results.forEach((r, i) => {
@@ -458,6 +460,7 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
       series.push({ key: `votes:${c.id}:reported`, candidateId: c.id, label: c.name, color: colorOf(c.id), dash: "SOLID", phase: "LIVE", source: "RESULT", meaning: "Votes reported by the results source", breakAfterMs: null, extendTo: null, band: false, pts: rep });
     }
     for (const phase of ["FROZEN", "LIVE", "SHADOW"] as const) {
+      if (!anyReported) break;
       const est: SeriesPoint[] = [];
       for (const set of modelSets) set.pts.forEach((m, i) => {
         if (phaseOf(m.sourceClass) !== phase) return;
@@ -472,9 +475,9 @@ export function buildChart(p: PreparedHistory, chart: ChartId, opts: BuildOption
         breakAfterMs: null, extendTo: extendFor(p, phase), band: false, pts: est,
       });
     }
-    if (!any) notShown.push({ candidateId: c.id, name: c.name, reason: "no vote figure for this candidate" });
+    if (!any && anyReported) notShown.push({ candidateId: c.id, name: c.name, reason: "no vote figure for this candidate" });
   }
-  if (!series.length) emptyReason = "No votes have been reported or estimated for this race.";
+  if (!series.length) emptyReason = anyReported ? "No votes have been reported or estimated for this race." : "No votes have been reported yet. Estimates of the final vote appear here once counting starts.";
   const vmax = Math.max(0, ...series.flatMap((s) => s.pts.map((q) => q.v ?? 0)));
   return finish(chart, series, markers, notShown, null, emptyReason, [0, niceMax(vmax)]);
 }

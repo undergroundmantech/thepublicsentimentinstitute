@@ -190,6 +190,9 @@ test("no live data: only the frozen forecast shows, election night is unavailabl
   assert.equal(defaultRange(prob, p.bounds), "ALL");
   assert.equal(p.results.length, 0);
   assert.ok(buildChart(p, "votes").series.every((s) => s.dash === "DASHED"), "frozen votes are estimates, never reported counts");
+  // before any vote is reported the vote chart shows no estimate lines at all
+  assert.equal(buildChart(p, "votes").series.length, 0);
+  assert.match(buildChart(p, "votes").emptyReason ?? "", /No votes have been reported yet/);
   const empty = buildChart(prep([]), "prob");
   assert.ok(empty.emptyReason);
   assert.equal(empty.series.length, 0);
