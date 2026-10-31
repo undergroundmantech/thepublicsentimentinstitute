@@ -5,6 +5,7 @@
 // public/earlyvote-history.json, built by scripts/earlyvote/build_history.py from state counts reported during early
 // voting in 2022 and 2024, final turnout and the EAC's count of ballots cast by mail and early in person.
 
+import { pctFraction, pctPoints } from "@/app/lib/fmtPct";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { STATE_NAME, commas, compact, sumRow, type CategoryPayload, type RegionRow } from "./lib";
 
@@ -56,13 +57,13 @@ export function verdict(r: number): { word: string; tone: Tone } {
   if (r > 0.75) return { word: "Behind", tone: "down" };
   return { word: "Well behind", tone: "down2" };
 }
-const chg = (r: number) => { const p = Math.round((r - 1) * 100); return p === 0 ? "even" : `${p > 0 ? "+" : "−"}${Math.abs(p)}%`; };
+const chg = (r: number) => { const p = Math.round((r - 1) * 1000) / 10; return p === 0 ? "even" : `${p > 0 ? "+" : "−"}${pctPoints(Math.abs(p))}`; };
 const moreFewer = (r: number) => {
-  const p = Math.round(Math.abs(r - 1) * 100);
-  return p === 0 ? "about the same number of ballots as" : `${p}% ${r > 1 ? "more ballots than" : "fewer ballots than"}`;
+  const p = Math.round(Math.abs(r - 1) * 1000) / 10;
+  return p === 0 ? "about the same number of ballots as" : `${pctPoints(p)} ${r > 1 ? "more ballots than" : "fewer ballots than"}`;
 };
 const vsWord = (w: string, y: string) => (w === "On pace" ? `On pace with ${y}` : w === "Behind" || w === "Well behind" ? `${w} ${y}` : `${w} of ${y}`);
-const sharePct = (x: number) => (x < 0.095 ? `${(x * 100).toFixed(1)}%` : `${Math.round(x * 100)}%`);
+const sharePct = (x: number) => pctFraction(x);
 const NUMWORD = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
 const daysWord = (d: number) => (d === 0 ? "On Election Day" : d === 1 ? "With one day to go" : `With ${d <= 20 ? NUMWORD[d] : d} days to go`);
 const lead = (dd: number, rr: number) => { const m = (dd - rr) * 100; return Math.abs(m) < 0.5 ? "even" : `${m > 0 ? "D" : "R"}+${Math.abs(m).toFixed(0)}`; };

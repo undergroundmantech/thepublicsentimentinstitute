@@ -1,5 +1,6 @@
 // The Accountability Index, read at build time from public/accountability/index.json.
 // Built by scripts/accountability/build_index.py from TrackAIPAC, FEC, Quiver Quantitative and the scorecards.
+import { pctFraction } from "@/app/lib/fmtPct";
 import fs from "node:fs";
 import path from "node:path";
 import type { Dot } from "./AxViz";
@@ -50,7 +51,7 @@ export function money(n: number | null | undefined) {
   if (a >= 1e3) return `$${Math.round(n / 1e3).toLocaleString()}K`;
   return `$${Math.round(n).toLocaleString()}`;
 }
-export const pct = (x: number | null | undefined) => (x == null ? "Not listed" : `${Math.round(x * 100)}%`);
+export const pct = (x: number | null | undefined) => (x == null ? "Not listed" : pctFraction(x));
 export const seatLong = (m: Pick<Member, "ch" | "st" | "dist">) =>
   m.ch === "S" ? `Senator from ${STATE_NAME[m.st] ?? m.st}` : !m.dist ? `${STATE_NAME[m.st] ?? m.st} at large` : `${STATE_NAME[m.st] ?? m.st} District ${m.dist}`;
 

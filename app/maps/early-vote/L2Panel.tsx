@@ -1,6 +1,7 @@
 // Oct 31 2026: the L2 county early vote file, modeled with the On Point national dataset. Each state's returned ballots are
 // raked to their county's L2 party, age, race and sex mix and given the dataset's vote for voters like them, which gives
 // a modeled margin among ballots already cast and what the rest of the vote has to do for the forecast to hold.
+import { pctFraction } from "@/app/lib/fmtPct";
 import fs from "node:fs";
 import path from "node:path";
 import Link from "@/app/components/Link";
@@ -22,7 +23,7 @@ export default function L2Panel({ names }: { names: Record<string, string> }) {
   const S = d.summary;
   const rows = d.states.filter((s) => s.forecast_margin != null && Number.isFinite(s.forecast_margin)).sort((a, b) => b.returned - a.returned);
   const mk = S.makeup;
-  const pc = (x: number) => `${Math.round(x * 100)}%`;
+  const pc = (x: number) => pctFraction(x);
   return (
     <section className="card" style={{ marginTop: 18 }} aria-label="Modeled early vote from L2">
       <div className="card-h"><h3>Who has voted, modeled</h3><span className="eye" style={{ marginLeft: "auto" }}>L2 county files · {S.ballots_in_l2.toLocaleString("en-US")} ballots</span></div>
@@ -47,7 +48,7 @@ export default function L2Panel({ names }: { names: Record<string, string> }) {
                 <tr key={s.state}>
                   <td><Link href={`/maps/early-vote/${STATE_SLUG(names[s.state] ?? s.state)}`}>{names[s.state] ?? s.state}</Link>{ALL_MAIL.has(s.state) ? <small style={{ color: "var(--mute)" }}> · mostly mail</small> : null}</td>
                   <td className="n">{s.returned.toLocaleString("en-US")}</td>
-                  <td className="n">{s.share_cast != null ? `${Math.round(s.share_cast * 100)}%` : ""}</td>
+                  <td className="n">{s.share_cast != null ? pctFraction(s.share_cast) : ""}</td>
                   <td className={`n ${cls(s.modeled_early_margin)}`}>{fm(s.modeled_early_margin)}</td>
                   <td className={`n ${cls(s.forecast_margin)}`}>{fm(s.forecast_margin)}</td>
                   <td className={`n ${cls(s.rest_needed_margin)}`}>{fm(s.rest_needed_margin)}</td>

@@ -1,3 +1,4 @@
+import { probFraction } from "@/app/lib/fmtPct";
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import fs from "node:fs";
@@ -33,7 +34,7 @@ function odds(): Odds | null {
     return { senate: m.chambers.senate.demControl, house: m.chambers.house.demControl, governor: m.chambers.governor.demControl, daysOut: m.meta.daysOut };
   } catch { return null; }
 }
-const pc = (x: number) => `${Math.round(x * 100)}%`;
+const pc = (x: number) => probFraction(x);
 
 export default function NewsPage() {
   const desk = getDesk();

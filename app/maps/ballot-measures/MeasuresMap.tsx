@@ -1,6 +1,7 @@
 "use client";
 // Ballot measures map: every statewide question on the November 3, 2026 ballot. Pick a state on the national map or
 // in the list, then a measure, and the county map shows the projected Yes share with each county's Yes and No votes.
+import { probFraction } from "@/app/lib/fmtPct";
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { type GeoTip } from "@/app/components/opp/GeoMap";
@@ -134,8 +135,8 @@ export default function MeasuresMap({ measures, states, frame, names }: {
             <div className="card-h"><h3>{m.st} {m.label}</h3><Link className="btn sm" href={m.href} style={{ marginLeft: "auto" }}>Full forecast</Link></div>
             <div className="card-b">
               <p style={{ margin: "0 0 10px", color: "var(--ink2)" }}>{m.title}</p>
-              <div className="bmm-big"><b style={{ color: m.yes >= m.threshold * 100 ? "#2fbf9b" : "#e8794a" }}>{m.yes.toFixed(1)}% Yes</b><span className="eye">{verdict(m.prob)}, {Math.round(m.prob * 100)}% chance</span></div>
-              <p style={{ fontSize: 13, color: "var(--mute)", margin: "6px 0 0" }}>Needs {(m.threshold * 100).toFixed(1)}% to pass. 80 percent range {m.p10.toFixed(0)} to {m.p90.toFixed(0)} percent Yes.</p>
+              <div className="bmm-big"><b style={{ color: m.yes >= m.threshold * 100 ? "#2fbf9b" : "#e8794a" }}>{m.yes.toFixed(1)}% Yes</b><span className="eye">{verdict(m.prob)}, {probFraction(m.prob)} chance</span></div>
+              <p style={{ fontSize: 13, color: "var(--mute)", margin: "6px 0 0" }}>Needs {(m.threshold * 100).toFixed(1)}% to pass. 80 percent range {m.p10.toFixed(1)} to {m.p90.toFixed(1)} percent Yes.</p>
               {m.votes ? (
                 <div className="bmm-yn">
                   <div><span>Projected Yes</span><b style={{ color: "#2fbf9b" }}>{fmt(m.votes.yes)}</b></div>

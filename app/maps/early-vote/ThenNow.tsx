@@ -6,6 +6,7 @@
 // Read top to bottom: one sentence that says how 2026 compares, a ballot race between the three years, a tug of war
 // for the party lead, then one big chart you can hover day by day (ballots, party lead, or pace against a past year),
 // and for the nation a table of every state with its gap drawn in.
+import { pctFraction } from "@/app/lib/fmtPct";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Count from "@/app/components/opp/Count";
 import type { EvConsole, EvRow } from "./consoleData";
@@ -28,7 +29,7 @@ const commas = (n: number) => Math.round(n).toLocaleString("en-US");
 const short = (n: number) => { const a = Math.abs(n); return a >= 1e6 ? `${(n / 1e6).toFixed(a >= 1e7 ? 1 : 2)}M` : a >= 1e4 ? `${Math.round(n / 1e3)}K` : commas(n); };
 const pct = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;
 const mLab = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
-const chg = (r: number) => `${r >= 1 ? "+" : ""}${((r - 1) * 100).toFixed(0)}%`;
+const chg = (r: number) => `${r >= 1 ? "+" : ""}${pctFraction(r - 1)}`;
 const margin = (p: P | null | undefined) => (p ? (p.r - p.d) * 100 : null);
 const lerp = (pts: Pt[], d: number): number | null => {
   const s = [...pts].sort((a, b) => b[0] - a[0]);
@@ -89,7 +90,7 @@ function Verdict({ v }: { v: View }) {
   const part = (n: number | null, y: Y) => {
     if (!n) return null;
     const r = v.now / n, up = r >= 1;
-    return <span className={`tn-hl ${up ? "up" : "dn"}`} key={y}>{Math.abs((r - 1) * 100).toFixed(0)}% {up ? "ahead of" : "behind"} {y}</span>;
+    return <span className={`tn-hl ${up ? "up" : "dn"}`} key={y}>{pctFraction(Math.abs(r - 1))} {up ? "ahead of" : "behind"} {y}</span>;
   };
   const a = part(v.n22, "2022"), b = part(v.n24, "2024");
   const m26 = margin(v.p26), m22 = margin(v.p22);
@@ -444,7 +445,7 @@ export default function ThenNow({ data, scope, onOpen }: { data: EvConsole; scop
         </div>
       ) : null}
 
-      <p className="evc-note tn-foot">{scope === "US" ? `Past years are added up over the same ${data.rows.length} states that report in 2026. ` : ""}{anyModeled ? `A state that published no count for a past day, or no party split, is modeled: its ballots from its own final early vote and mail and in person mix on the national early vote clocks, lined up with the states that did publish, and its party split from its 2026 split moved by how much the publishing states shifted between that year and today, more where the state leans further. On this day the model misses a published count by about ${Math.round(errN * 100)} percent and a party lead by about ${errP ?? "n/a"} points, so read modeled numbers as direction more than decimals. ` : ""}Party is registration, not votes. 2022 tallies of the day are from the US Elections Project.</p>
+      <p className="evc-note tn-foot">{scope === "US" ? `Past years are added up over the same ${data.rows.length} states that report in 2026. ` : ""}{anyModeled ? `A state that published no count for a past day, or no party split, is modeled: its ballots from its own final early vote and mail and in person mix on the national early vote clocks, lined up with the states that did publish, and its party split from its 2026 split moved by how much the publishing states shifted between that year and today, more where the state leans further. On this day the model misses a published count by about ${pctFraction(errN).slice(0, -1)} percent and a party lead by about ${errP ?? "n/a"} points, so read modeled numbers as direction more than decimals. ` : ""}Party is registration, not votes. 2022 tallies of the day are from the US Elections Project.</p>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 // Early vote by precinct: where a state publishes each early voter's precinct, the ballots so far are matched to
 // the precinct's 2024 presidential vote, so the page can show whether Democratic, middle or Republican precincts
 // are turning out faster than at the same point in 2024. Built by scripts/earlyvote/precinct/pull_<state>_precinct.py.
+import { pctFraction } from "@/app/lib/fmtPct";
 import fs from "node:fs";
 import path from "node:path";
 import { STATE_NAME } from "./lib";
@@ -37,18 +38,18 @@ export default function PrecinctRead({ st }: { st: string }) {
           return (
             <div key={b.band} className="pr-band">
               <div className="pr-bh"><b style={{ color: TONE[b.band] }}>{b.band}</b><span>{b.lo <= -999 ? `D+30 or more` : b.hi >= 999 ? `R+30 or more` : `${bl(b.lo)} to ${bl(b.hi)}`} in 2024 · {n(b.precincts)} precincts</span></div>
-              <div className="pr-bar" aria-label={`${b.band} precincts are at ${Math.round(rp * 100)} percent of the state's pace`}>
+              <div className="pr-bar" aria-label={`${b.band} precincts are at ${pctFraction(rp).slice(0, -1)} percent of the state's pace`}>
                 <i style={{ width: `${(100 * rp) / max}%`, background: TONE[b.band] }} /><em style={{ left: `${100 / max}%` }} />
               </div>
               <div className="pr-bf">
-                <span>{b.pace != null ? `${Math.round(b.pace * 100)}% of its same day 2024 vote` : "no 2024 ballots yet"} · {rp ? `${rp >= 1 ? "+" : ""}${Math.round((rp - 1) * 100)}% against the state` : ""}</span>
+                <span>{b.pace != null ? `${pctFraction(b.pace)} of its same day 2024 vote` : "no 2024 ballots yet"} · {rp ? `${rp >= 1 ? "+" : ""}${pctFraction(rp - 1)} against the state` : ""}</span>
                 <span>{n(b.ev26)} ballots · D {Math.round((100 * b.party.dem) / t)}% R {Math.round((100 * b.party.rep) / t)}% U {Math.round((100 * b.party.una) / t)}%</span>
               </div>
             </div>
           );
         })}
       </div>
-      <p className="pr-foot">The line marks the state&rsquo;s own pace. Bands are precincts grouped by Trump&rsquo;s 2024 margin. {Math.round(r.matched.ev26 * 100)}% of 2026 ballots matched to a precinct. Source: {name} State Board of Elections absentee and early voting files, 2024 precinct results and voter file.</p>
+      <p className="pr-foot">The line marks the state&rsquo;s own pace. Bands are precincts grouped by Trump&rsquo;s 2024 margin. {pctFraction(r.matched.ev26)} of 2026 ballots matched to a precinct. Source: {name} State Board of Elections absentee and early voting files, 2024 precinct results and voter file.</p>
     </section>
   );
 }

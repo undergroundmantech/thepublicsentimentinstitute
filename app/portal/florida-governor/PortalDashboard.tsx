@@ -9,6 +9,7 @@
  * baseline — no county is ever called, and nothing here is published output.
  */
 
+import { percentIn } from "@/app/lib/fmtPct";
 import React, { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { projectCounties } from "../../results/2026-08-18/countyForecast";
@@ -515,7 +516,7 @@ export default function PortalDashboard() {
                     </td>
                     <td className="num">{int(g.projectedTurnout)}</td>
                     <td className="num">{g.reportedVotes > 0 ? int(g.reportedVotes) : "—"}</td>
-                    <td className="num">{g.reporting > 0 ? `${g.reporting.toFixed(0)}%` : "—"}</td>
+                    <td className="num">{g.reporting > 0 ? percentIn(g.reporting) : "—"}</td>
                     <td className="num">{pct(g.expected)}</td>
                     <td className="num">{g.actual === null ? "—" : pct(g.actual)}</td>
                     <td className={`num ${g.delta === null ? "" : g.delta >= 0 ? "good" : "bad"}`}>
@@ -565,7 +566,7 @@ function CountyCard({
           <small>{g.region}</small>
         </div>
         <span className="pd-cc-rep">
-          {g.reporting > 0 ? `${g.reporting.toFixed(0)}% in` : "no returns"}
+          {g.reporting > 0 ? `${percentIn(g.reporting)} in` : "no returns"}
         </span>
       </div>
 

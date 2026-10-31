@@ -1,6 +1,7 @@
 // Evidence-recorder health for /portal/intelligence. The page has already checked the session before rendering this.
 // It reads the capture store and reports; it changes nothing and publishes nothing.
 
+import { pctFraction } from "@/app/lib/fmtPct";
 import { foldObservations, readObservationRecords } from "@/app/lib/intelligence/capture";
 import { loadTrackedRaces, runnerConfig } from "@/app/lib/intelligence/captureConfig";
 import { computeHealth, readHealthInputs, type RecorderStatus } from "@/app/lib/intelligence/captureHealth";
@@ -24,7 +25,7 @@ const ago = (iso: string | null, now: string) => {
   const m = Math.round((Date.parse(now) - Date.parse(iso)) / 60000);
   return `${iso} (${m < 1 ? "under a minute" : m < 120 ? `${m} min` : `${Math.round(m / 60)} h`} ago)`;
 };
-const pct = (x: number | null) => (x === null ? "—" : `${(x * 100).toFixed(0)}%`);
+const pct = (x: number | null) => pctFraction(x);
 
 export async function RecorderPanel() {
   const now = new Date().toISOString();

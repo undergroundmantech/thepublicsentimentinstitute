@@ -144,7 +144,7 @@ export default function CountyCenter() {
               {prof?.c[tip.f]?.vp ? <div>Low propensity Trump voters: <b>{prof.c[tip.f].vp![1][0].toLocaleString()}</b>, {pct(loTrump(prof.c[tip.f]))} of adults</div> : null}
               {prof?.c[tip.f]?.appr ? <div>Trump approval: <b>{prof.c[tip.f].appr![0]}%</b> approve, {prof.c[tip.f].appr![1]}% disapprove</div> : null}
               {prof?.c[tip.f]?.gas ? <div>Gas, regular: <b>${prof.c[tip.f].gas!.toFixed(2)}</b></div> : null}
-              {turnOf(data[tip.f]) != null ? <div>2024 turnout: <b>{turnOf(data[tip.f])!.toFixed(0)}%</b> of voting age citizens</div> : null}
+              {turnOf(data[tip.f]) != null ? <div>2024 turnout: <b>{turnOf(data[tip.f])!.toFixed(1)}%</b> of voting age citizens</div> : null}
               {stops[tip.f]?.length ? <div className="g">{stops[tip.f].length} campaign {stops[tip.f].length === 1 ? "stop" : "stops"}: {[...new Set(stops[tip.f].map((v) => v.who))].slice(0, 3).join(", ")}</div> : null}
               {dcBy[tip.f] ? <div className="g">{dcBy[tip.f].length} data center {dcBy[tip.f].length === 1 ? "project" : "projects"}</div> : null}
             </FloatTip>
@@ -224,7 +224,7 @@ export default function CountyCenter() {
                 <td className={sh == null ? "" : sh < 0 ? "d" : "r"}>{sh == null ? "n/a" : `${sh < 0 ? "D" : "R"} +${Math.abs(sh).toFixed(1)}`}</td>
                 <td className={sn == null ? "" : sn < 0 ? "d" : "r"}>{sn == null ? "" : fm(sn)}</td>
                 <td className={gv == null ? "" : gv < 0 ? "d" : "r"}>{gv == null ? "" : fm(gv)}</td>
-                <td>{tu == null ? "" : `${tu.toFixed(0)}%`}</td>
+                <td>{tu == null ? "" : `${tu.toFixed(1)}%`}</td>
                 <td>{r.v24 ? r.v24.toLocaleString() : ""}</td>
                 <td>{r.pop?.adults ? r.pop.adults.toLocaleString() : ""}</td>
                 <td>{loTrump(prof?.c[f]) == null ? "" : pct(loTrump(prof?.c[f]))}</td>
@@ -285,7 +285,7 @@ function ProfilePanel({ p, L, gasDate }: { p: Prof; L: Record<string, string[]>;
               <small className="cc-gn">High propensity means a modeled chance of voting of 80 percent or more. Lower propensity Trump voters are the ones Republicans most need to turn out.</small>
             </div>
           ) : null}
-          {p.prop ? <Rows title="Turnout propensity, share of expected voters" labels={L.prop} rows={p.prop.map((x) => [x[1], x[2]] as GR)} note={`Share of adults: ${p.prop.map((x, i) => `${L.prop[i].split(" ")[0].toLowerCase()} ${x[0].toFixed(0)}%`).join(", ")}.`} /> : null}
+          {p.prop ? <Rows title="Turnout propensity, share of expected voters" labels={L.prop} rows={p.prop.map((x) => [x[1], x[2]] as GR)} note={`Share of adults: ${p.prop.map((x, i) => `${L.prop[i].split(" ")[0].toLowerCase()} ${x[0].toFixed(1)}%`).join(", ")}.`} /> : null}
           {p.pp ? <Rows title="Party and propensity" labels={L.pp} rows={p.pp} /> : null}
           {p.ap ? <Rows title="Trump approval in the electorate" labels={L.ap} rows={p.ap} /> : null}
           {p.age ? <Rows title="Age" labels={L.age} rows={p.age} /> : null}

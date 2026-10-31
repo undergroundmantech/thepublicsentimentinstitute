@@ -2,6 +2,7 @@
 // The early vote console. One count, one map, one readout: pick what the map shows (ballots against 2022
 // turnout, pace against 2022 at the same point, the party of the ballots, or mail against in person), click a
 // state to drop into its counties, and read the state's numbers, its pace chart and every county below.
+import { pctFraction, pctPoints } from "@/app/lib/fmtPct";
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
@@ -26,7 +27,7 @@ const mix = (a: number[], b: number[], t: number) => `rgb(${a.map((v, i) => Math
 const castFill = (t: number) => mix([46, 34, 78], [206, 178, 255], t / 0.6);
 const paceFill = (r: number) => { const a = Math.min(1, Math.abs(Math.log2(r)) / 0.9); return r >= 1 ? mix([180, 236, 214], [16, 140, 104], a) : mix([255, 214, 186], [196, 82, 30], a); };
 const methodFill = (mailShare: number) => mix([231, 179, 65], [86, 196, 255], mailShare);
-const paceLabel = (r: number | null) => (r == null ? "No 2022 count" : Math.abs(r - 1) < 0.005 ? "Even with 2022" : `${r > 1 ? "+" : ""}${((r - 1) * 100).toFixed(0)}% vs 2022`);
+const paceLabel = (r: number | null) => (r == null ? "No 2022 count" : Math.abs(r - 1) < 0.0005 ? "Even with 2022" : `${r > 1 ? "+" : ""}${pctFraction(r - 1)} vs 2022`);
 const partyM = (d: number, r: number, i: number) => (d + r > 0 ? ((r - d) / (d + r + i)) * 100 : null);
 const mLabel = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
 const pmM = (pm: { d: number; r: number } | null | undefined) => (pm ? (pm.r - pm.d) * 100 : null);
@@ -73,7 +74,7 @@ function Meter({ have, of, label }: { have: number; of: number; label: string })
   return (
     <div className="evc-meter" role="img" aria-label={label}>
       <div className="evc-px">{Array.from({ length: 100 }, (_, i) => <i key={i} className={i < n ? "on" : ""} style={{ animationDelay: `${(i % 20) * 0.02 + Math.floor(i / 20) * 0.05}s` }} />)}</div>
-      <div className="evc-mcap"><b>{n}%</b> {label}</div>
+      <div className="evc-mcap"><b>{pctPoints(Math.max(0, Math.min(100, (have / of) * 100)))}</b> {label}</div>
     </div>
   );
 }
@@ -180,14 +181,14 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   const rM = row ? (row.partyShare > 0.5 ? partyM(row.dem, row.rep, row.ind) : null) : natM;
   const tiles: Record<Metric, { lb: string; big: string; sub: string }> = row ? {
     cast: { lb: "Ballots cast", big: short(row.total), sub: row.t22 ? `${pctS(row.total / row.t22, 1)} of all ${row.name} 2022 votes` : "No 2022 turnout on file" },
-    pace: { lb: "Pace vs 2022", big: row.pace22 == null ? "n/a" : `${row.pace22 >= 1 ? "+" : ""}${((row.pace22 - 1) * 100).toFixed(0)}%`, sub: row.pace22 == null ? "No 2022 count this far out" : `Against ${row.name} at this point in 2022` },
+    pace: { lb: "Pace vs 2022", big: row.pace22 == null ? "n/a" : `${row.pace22 >= 1 ? "+" : ""}${pctFraction(row.pace22 - 1)}`, sub: row.pace22 == null ? "No 2022 count this far out" : `Against ${row.name} at this point in 2022` },
     party: { lb: "Party of ballots", big: rM == null ? "Not reported" : mLabel(rM), sub: rM == null ? `${row.name} does not publish party` : "By party registration" },
     model: { lb: "Party model", big: row.pm ? mLabel(pmM(row.pm) as number) : "n/a", sub: row.pm ? (row.pm.est > 0.5 ? "Modeled by On Point Polling" : row.pm.est > 0 ? "Partly modeled by On Point Polling" : "Reported by the state") : "No model for this state yet" },
     expect: { lb: "Vs expectations", big: row.pm ? dLabel(row.pm.delta) : "n/a", sub: "Ballots so far against what the forecast expected by now" },
     method: { lb: "Mail or in person", big: pctS(row.mail / Math.max(1, row.total)), sub: "of ballots came by mail" },
   } : {
     cast: { lb: "Ballots cast", big: short(data.total), sub: `${pctS(data.total / data.t22, 1)} of all 2022 votes` },
-    pace: { lb: "Pace vs 2022", big: natPace ? `${natPace >= 1 ? "+" : ""}${((natPace - 1) * 100).toFixed(0)}%` : "n/a", sub: `${paceRows.length} states with a 2022 count this far out` },
+    pace: { lb: "Pace vs 2022", big: natPace ? `${natPace >= 1 ? "+" : ""}${pctFraction(natPace - 1)}` : "n/a", sub: `${paceRows.length} states with a 2022 count this far out` },
     party: { lb: "Party of ballots", big: natM == null ? "n/a" : mLabel(natM), sub: `Where ${data.rows.filter((r) => r.partyShare > 0.5).length} states report party` },
     model: { lb: "Party model", big: data.pm ? mLabel(pmM(data.pm) as number) : "n/a", sub: "Every state, modeled where party is not reported" },
     expect: { lb: "Vs expectations", big: data.pm ? dLabel(data.pm.delta) : "n/a", sub: "Ballots so far against what the forecast expected" },
@@ -418,7 +419,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
           </div>
           <div className="evc-stats">
             <div><span>Of 2022 turnout</span><b>{R.t22 ? pctS(R.total / R.t22, 1) : "n/a"}</b></div>
-            <div><span>Pace</span><b className={R.pace22 == null ? "" : R.pace22 >= 1 ? "up" : "dn"}>{R.pace22 == null ? "n/a" : `${R.pace22 >= 1 ? "+" : ""}${((R.pace22 - 1) * 100).toFixed(0)}%`}</b></div>
+            <div><span>Pace</span><b className={R.pace22 == null ? "" : R.pace22 >= 1 ? "up" : "dn"}>{R.pace22 == null ? "n/a" : `${R.pace22 >= 1 ? "+" : ""}${pctFraction(R.pace22 - 1)}`}</b></div>
             <div><span>Mail not back yet</span><b>{outstanding ? short(outstanding) : "n/a"}</b></div>
           </div>
           {R.e22 ? <Meter have={R.total} of={R.e22} label={`of the ${short(R.e22)} early ballots cast in 2022`} /> : null}
@@ -461,7 +462,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                 <tr key={r.st} onClick={() => go(r.st)}>
                   <td><b>{r.name}</b></td><td className="n mono">{commas(r.total)}</td><td className="n mono">{commas(r.mail)}</td><td className="n mono">{commas(r.inperson)}</td>
                   <td className="n mono">{r.t22 ? pctS(r.total / r.t22, 1) : "n/a"}</td>
-                  <td className={`n mono ${r.pace22 == null ? "" : r.pace22 >= 1 ? "up" : "dn"}`}>{r.pace22 == null ? "n/a" : `${r.pace22 >= 1 ? "+" : ""}${((r.pace22 - 1) * 100).toFixed(0)}%`}</td>
+                  <td className={`n mono ${r.pace22 == null ? "" : r.pace22 >= 1 ? "up" : "dn"}`}>{r.pace22 == null ? "n/a" : `${r.pace22 >= 1 ? "+" : ""}${pctFraction(r.pace22 - 1)}`}</td>
                   <td className="n mono d">{rep ? pctS(r.dem / pt, 1) : "n/a"}</td><td className="n mono r">{rep ? pctS(r.rep / pt, 1) : "n/a"}</td>
                   <td className="n mono d">{r.pm ? <>{commas(r.pm.d * r.total)}<small>{pctS(r.pm.d, 1)}{r.pm.est > 0.5 ? " modeled" : ""}</small></> : "n/a"}</td><td className="n mono r">{r.pm ? <>{commas(r.pm.r * r.total)}<small>{pctS(r.pm.r, 1)}</small></> : "n/a"}</td>
                   <td className={`n mono ${r.pm ? (r.pm.delta < 0 ? "d" : "r") : ""}`}>{r.pm ? (Math.abs(r.pm.delta) < 0.05 ? "Even" : `${r.pm.delta < 0 ? "D" : "R"} +${Math.abs(r.pm.delta).toFixed(1)}`) : "n/a"}</td>

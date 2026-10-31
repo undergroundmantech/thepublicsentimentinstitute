@@ -1,6 +1,7 @@
 "use client";
 // The Accountability Index charts: the two chambers drawn seat by seat, the money map of lobby money against PAC
 // money, and the strip that places one member among all of Congress. Hover any dot for the member, click to open.
+import { pctFraction } from "@/app/lib/fmtPct";
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import FloatTip from "@/app/components/opp/FloatTip";
@@ -17,7 +18,7 @@ function Tip({ d, x, y }: { d: Dot; x: number; y: number }) {
       <div className="s">{d.seat}{d.rank ? ` · rank ${d.rank}` : ""}</div>
       <div className="g"><b>{d.index != null ? d.index.toFixed(1) : "Not scored"}</b>{d.grade ? <span className={`ax-g g-${d.grade}`}>{d.grade}</span> : null}</div>
       <div className="r"><span>Lobby money</span><b>{money(d.lobby)}</b></div>
-      <div className="r"><span>PAC share</span><b>{d.pac != null ? `${Math.round(d.pac * 100)}%` : "none filed"}</b></div>
+      <div className="r"><span>PAC share</span><b>{d.pac != null ? pctFraction(d.pac) : "none filed"}</b></div>
       <div className="r"><span>Trades, last year</span><b>{d.trades ? d.trades.toLocaleString() : "none listed"}</b></div>
       <div className="r"><span>Crossing the aisle</span><b>{d.cross != null ? d.cross.toFixed(1) : "not scored"}</b></div>
       <div className="r"><span>Left cards · right cards</span><b>{d.sL != null ? Math.round(d.sL) : "?"} · {d.sR != null ? Math.round(d.sR) : "?"}</b></div>

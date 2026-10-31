@@ -1,5 +1,6 @@
 "use client";
 
+import { pctFraction } from "@/app/lib/fmtPct";
 import Link from "@/app/components/Link";
 import { useMemo, useState } from "react";
 import { Card, EntityLink, Gate, Head, Kpis, Tape, Table, ago, day, href, int, side, usd, useLedger, officeLabel, type Row } from "../lib";
@@ -53,7 +54,7 @@ export function LedgerDesk() {
         const total = x.federal + x.ie + x.state;
         const ch = x.prevTotal > 0 ? (total - x.prevTotal) / x.prevTotal : null;
         return <Kpis items={[
-          { k: "Reported", v: usd(total), s: ch == null ? "all reported money" : `${ch >= 0 ? "up" : "down"} ${Math.abs(Math.round(ch * 100))}% on the window before` },
+          { k: "Reported", v: usd(total), s: ch == null ? "all reported money" : `${ch >= 0 ? "up" : "down"} ${pctFraction(Math.abs(ch))} on the window before` },
           { k: "Into super PACs", v: usd(x.superPac), s: `${usd(x.campaigns)} to campaigns` },
           { k: "Outside spending", v: usd(x.ie), s: "for and against candidates" },
           { k: "Big gifts", v: int(x.bigGifts), s: `${int(x.newCommittees)} new committees, ${usd(x.state)} in state money` },

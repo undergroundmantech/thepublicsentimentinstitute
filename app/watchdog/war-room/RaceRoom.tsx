@@ -2,6 +2,7 @@
 // One race in the War Room. Vital signs for both campaigns, then the brief for whichever side the reader works for:
 // the path to victory, the counties and groups that decide it, the scouting report on both candidates, and the
 // forecast, polls, money, air war, early vote, media and trail behind all of it.
+import { pctFraction } from "@/app/lib/fmtPct";
 import React from "react";
 import Link from "@/app/components/Link";
 import type { Health, Intel, Side, WRace, County, Grp } from "./data";
@@ -91,9 +92,9 @@ function GroupBars({ gs, me, op }: { gs: Grp[]; me: string; op: string }) {
     <ul className="wr-grp">
       {gs.map((g) => (
         <li key={g.group + g.label}>
-          <div className="wr-grp-h"><span>{g.label}</span><small>{g.share.toFixed(0)}% of voters · a 5 point gain is worth {g.lever.toFixed(1)}</small></div>
-          <div className="wr-grp-bar" aria-label={`${me} ${g.mine.toFixed(0)}, ${op} ${g.theirs.toFixed(0)}`}>
-            <i className="me" style={{ width: `${g.mine}%` }}>{g.mine.toFixed(0)}</i><i className="op" style={{ width: `${g.theirs}%` }}>{g.theirs.toFixed(0)}</i>
+          <div className="wr-grp-h"><span>{g.label}</span><small>{g.share.toFixed(1)}% of voters · a 5 point gain is worth {g.lever.toFixed(1)}</small></div>
+          <div className="wr-grp-bar" aria-label={`${me} ${g.mine.toFixed(1)} percent, ${op} ${g.theirs.toFixed(1)} percent`}>
+            <i className="me" style={{ width: `${g.mine}%` }}>{g.mine.toFixed(1)}</i><i className="op" style={{ width: `${g.theirs}%` }}>{g.theirs.toFixed(1)}</i>
           </div>
         </li>
       ))}
@@ -240,7 +241,7 @@ export default function RaceRoom({ r, similar }: { r: WRace; similar: { id: stri
           <div className="wr-sh"><h2>The early vote</h2><span className="pf-mute">{ev ? `${r.state}, through ${ev.date}` : "Statewide"}</span></div>
           {ev ? (
             <>
-              <div className="wr-evbar" role="img" aria-label={`Democrats ${Math.round(ev.party.d * 100)}%, Republicans ${Math.round(ev.party.r * 100)}%, others ${Math.round(ev.party.o * 100)}%`}>
+              <div className="wr-evbar" role="img" aria-label={`Democrats ${pctFraction(ev.party.d)}, Republicans ${pctFraction(ev.party.r)}, others ${pctFraction(ev.party.o)}`}>
                 <i className="d" style={{ width: `${ev.party.d * 100}%` }}>{Math.round(ev.party.d * 100)}</i>
                 <i className="o" style={{ width: `${ev.party.o * 100}%` }}>{Math.round(ev.party.o * 100)}</i>
                 <i className="r" style={{ width: `${ev.party.r * 100}%` }}>{Math.round(ev.party.r * 100)}</i>

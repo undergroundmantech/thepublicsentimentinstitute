@@ -1,5 +1,6 @@
 "use client";
 
+import { pctFraction } from "@/app/lib/fmtPct";
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "@/app/components/Link";
@@ -315,7 +316,7 @@ function RegistrationNote({ model, st }: { model: PartyModel; st: string | null 
             mail voters keep their own lean within it. That moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
         : st && src === "primary" && sh !== undefined ? <>{name} has no party registration, so party is
             modeled the way L2 does it: from the primary ballot a voter pulled, county by county from the 2026 primaries,
-            for the {((lam ?? 0) * 100).toFixed(0)}% of voters with a primary history, and the pooled registration gap
+            for the {pctFraction(lam ?? 0)} of voters with a primary history, and the pooled registration gap
             for the rest. Together that moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
         : st ? <>{name} has no party registration and too little primary history to model from, so it takes the pooled
             registration gap, {f.pooled.toFixed(2)} in log odds, measured across every state that registers by party.</>

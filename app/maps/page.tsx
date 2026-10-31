@@ -1,3 +1,4 @@
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import fs from "fs";
@@ -59,7 +60,6 @@ function MiniMap({ geo, fill, label }: { geo: Geo; fill: (st: string) => string;
 }
 
 const fmtM = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n.toLocaleString("en-US"));
-const pct0 = (x: number) => `${Math.round(x * 100)}%`;
 
 function Chev() {
   return <i className="mm-chev" aria-hidden="true" />;
@@ -216,7 +216,7 @@ export default function Page() {
             {(["senate", "house", "governor"] as const).map((k) => (
               <Link key={k} href={`/forecast?office=${k}`} className={`mm-odd ${side(k)}`}>
                 <span className="k">{k === "governor" ? "Governors" : k === "house" ? "House" : "Senate"}</span>
-                <span className="v mono">{odds(k) == null ? "n/a" : pct0(odds(k) as number)}</span>
+                <span className="v mono">{odds(k) == null ? "n/a" : probFraction(odds(k) as number)}</span>
                 <span className="w">{side(k) === "d" ? "Dem control" : side(k) === "r" ? "GOP control" : ""}</span>
                 <Chev />
               </Link>
@@ -260,12 +260,12 @@ export default function Page() {
             </div>
             <div className="mm-odd n">
               <span className="k">By mail</span>
-              <span className="v mono">{ns ? pct0(ns.modeShare.mail) : "n/a"}</span>
+              <span className="v mono">{ns ? pctFraction(ns.modeShare.mail) : "n/a"}</span>
               <span className="w">of all ballots</span>
             </div>
             <div className="mm-odd n">
               <span className="k">Early in person</span>
-              <span className="v mono">{ns ? pct0(ns.modeShare.early) : "n/a"}</span>
+              <span className="v mono">{ns ? pctFraction(ns.modeShare.early) : "n/a"}</span>
               <span className="w">of all ballots</span>
             </div>
           </div>

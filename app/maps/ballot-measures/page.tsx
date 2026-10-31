@@ -1,3 +1,4 @@
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import fs from "node:fs";
@@ -64,7 +65,7 @@ export default function BallotMeasuresMapPage() {
                   <td><Link href={`${PATH}?m=${m.id}`}>{m.label}</Link><span style={{ color: "var(--mute)" }}>{m.title ? `: ${m.title}` : ""}</span></td>
                   <td className="n">{m.votes ? fmt(m.votes.yes) : ""}</td><td className="n">{m.votes ? fmt(m.votes.no) : ""}</td>
                   <td className="n" style={{ color: m.yes >= m.threshold * 100 ? "#2fbf9b" : "#e8794a" }}>{m.yes.toFixed(1)}%</td>
-                  <td className="n">{(m.threshold * 100).toFixed(0)}%</td><td className="n">{Math.round(m.prob * 100)}%</td>
+                  <td className="n">{pctFraction(m.threshold)}</td><td className="n">{probFraction(m.prob)}</td>
                 </tr>
               )))}
             </tbody>

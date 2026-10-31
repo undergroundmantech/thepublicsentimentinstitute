@@ -1,6 +1,7 @@
 "use client";
 // Every member of Congress on one sortable, filterable board. Index columns first, the ideological scorecards
 // after a divider so they read as context, never as part of the score.
+import { pctFraction } from "@/app/lib/fmtPct";
 import React, { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 
@@ -89,7 +90,7 @@ export default function AxTable({ rows, states }: { rows: Row[]; states: string[
                 <td className="seat">{x.seat}</td>
                 <td className="ix">{x.index != null ? <><b>{x.index.toFixed(1)}</b><Grade g={x.grade} /><PartBar parts={x.parts} imputed={x.imputed} /></> : <span className="na">Not enough data</span>}{x.imputed.length && x.index != null ? <em title="A measure is missing and takes the median">partial</em> : null}</td>
                 <td className="num">{x.lobby == null ? <span className="na">{x.lobbyNote ?? "Not listed"}</span> : x.lobby === 0 ? "$0" : fmtMoney(x.lobby)}</td>
-                <td className="num">{x.pacShare == null ? <span className="na">None filed</span> : `${Math.round(x.pacShare * 100)}%`}</td>
+                <td className="num">{x.pacShare == null ? <span className="na">None filed</span> : pctFraction(x.pacShare)}</td>
                 <td className="num">{x.trades ? <>{x.trades.toLocaleString()}{x.vol ? <small>{fmtMoney(x.vol)}</small> : null}</> : <span className="na">None listed</span>}</td>
                 <td className="num">{x.cross != null ? x.cross.toFixed(1) : <span className="na">None</span>}</td>
                 <td className="sc">{x.sL != null ? Math.round(x.sL) : <span className="na">None</span>}</td>
