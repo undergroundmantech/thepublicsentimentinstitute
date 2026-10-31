@@ -10,7 +10,7 @@
  * never imply one did.
  */
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatElectionDate, getRacesByDate, type RaceRegistryEntry } from "../../_data/raceRegistry";
 import { placeOf, titleOf } from "../labels";

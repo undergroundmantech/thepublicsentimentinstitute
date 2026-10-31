@@ -3,7 +3,7 @@
 // offices and every state legislative seat are drawn together as one hemicycle of the whole ballot, one
 // spectrum of every margin, a control strip and a legislature map, with the race desk below for drill down.
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import DaysOut from "@/app/components/DaysOut";
 import { useRouter } from "next/navigation";
 import { useJson } from "./ForecastDesk";

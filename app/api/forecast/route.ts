@@ -146,6 +146,7 @@ export async function POST(req: Request) {
 // GET /api/forecast?action=search&...
 // GET /api/forecast?action=timestamps&raceId=...
 // GET /api/forecast?action=race&raceId=...
+const CACHE = { "cache-control": "public, s-maxage=30, stale-while-revalidate=60" };
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -158,7 +159,7 @@ export async function GET(req: Request) {
       }
       const res = await fetch(`${CIVIC_BASE}/race/search?${params}`);
       if (!res.ok) throw new Error(`CivicAPI error: ${res.status}`);
-      return NextResponse.json(await res.json());
+      return NextResponse.json(await res.json(), { headers: CACHE });
     }
 
     if (action === "timestamps") {
@@ -166,7 +167,7 @@ export async function GET(req: Request) {
       if (!raceId) return NextResponse.json({ error: "raceId required" }, { status: 400 });
       const res = await fetch(`${CIVIC_BASE}/race/${raceId}/history`);
       if (!res.ok) throw new Error(`CivicAPI error: ${res.status}`);
-      return NextResponse.json(await res.json());
+      return NextResponse.json(await res.json(), { headers: CACHE });
     }
 
     if (action === "race") {

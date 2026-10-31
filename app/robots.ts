@@ -3,7 +3,8 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/app/lib/seo";
 
-const PRIVATE = ["/portal/", "/api/freshtake", "/api/flags", "/gone", "/results/timeline-qa", "/v2", "/polling/old/"];
+// /api/ is data for the pages, not pages, and /results/civic/ is one live page per civicAPI race id, thousands of them.
+const PRIVATE = ["/portal/", "/api/", "/results/civic/", "/gone", "/results/timeline-qa", "/v2", "/polling/old/"];
 
 // Named so each one is invited explicitly: search indexes and the crawlers behind AI answers and citations.
 const AI_AND_SEARCH = [

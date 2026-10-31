@@ -3,7 +3,7 @@
 // mail ballots, Election Day votes, and late mail, each county on its own schedule, so the lead can swing. A needle
 // guesses where it ends up, an anchor calls the race when it is sure, and your war room reacts to every drop.
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { raceHref } from "@/app/lib/opp";
 import * as E from "../engine";
 import PixelMap, { type useMapGeo } from "./PixelMap";

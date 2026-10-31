@@ -4,7 +4,7 @@
 // county, click one for everything we have on it.
 import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { marginColor } from "@/app/lib/opp";
 import { Pointy } from "@/app/components/home/Mascot";
 

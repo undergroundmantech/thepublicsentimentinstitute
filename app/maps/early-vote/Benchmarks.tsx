@@ -5,7 +5,7 @@
 // and the 2024 presidential result. The math is in bench.ts. For the nation, a board of every competitive race.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ev, evSettled } from "@/app/lib/ev";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import type { Pose, Prop } from "@/app/components/home/Mascot";
 import type { EvConsole, EvRow } from "./consoleData";

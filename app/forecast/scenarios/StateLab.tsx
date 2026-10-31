@@ -5,7 +5,7 @@
 // them live there. The statewide margin is the sum of every county's votes, and the win chance moves along
 // the race's own forecast range. With nothing changed, every number is the published forecast.
 import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { RATE, RATING_LABEL, RAMP_CSS, RAMP_IND_CSS, rating, raceHref } from "@/app/lib/opp";
 import StateMap, { CHANGE_RAMP, CHANGE_RAMP_IND, type Path, type View } from "./StateMap";
 import { Num, StateBar, Tug } from "./bits";

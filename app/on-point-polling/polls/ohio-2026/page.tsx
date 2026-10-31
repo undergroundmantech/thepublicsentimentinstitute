@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, ORG_ID, SITE, SITE_ID, abs, seo } from "@/app/lib/seo";
 

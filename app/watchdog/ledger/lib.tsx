@@ -3,7 +3,7 @@
 // Shared pieces for the Ledger records inside Watchdog. Everything here reads the snapshot that
 // scripts/watchdog/ledger/export-onpoint.ts writes to public/watchdog/ledger-data, in the browser,
 // so a new export shows up on the next deploy with no rebuild of these pages.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 

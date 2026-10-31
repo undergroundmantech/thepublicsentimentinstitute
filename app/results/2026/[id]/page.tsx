@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import NightDesk from "../NightDesk";
 import StateLive, { type LiveGroup } from "./StateLive";
 import AlertSignup from "@/app/components/AlertSignup";

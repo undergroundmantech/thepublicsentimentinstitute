@@ -2,7 +2,7 @@ import PollingAveragesPage, { type ForecastLink } from "@/app/_polling/genericba
 import { getModel, isInd } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import JsonLd from "@/app/components/JsonLd";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import "./promo.css";
 import { aggById } from "./registry";
 import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";

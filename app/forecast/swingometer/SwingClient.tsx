@@ -1,7 +1,7 @@
 "use client";
 // The swingometer: move any group of voters, in vote margin or in turnout, and every Senate, governor and
 // House race moves with it. Every slider starts at zero, which is the published forecast to the decimal.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Hemicycle, { probFill, type HemiSeat } from "@/app/components/opp/Hemicycle";
 import type { SwingData, SwingRace } from "./data";

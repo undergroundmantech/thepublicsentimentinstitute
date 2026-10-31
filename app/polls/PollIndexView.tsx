@@ -2,7 +2,7 @@
 // The polling averages board: national readings up top, then every average as a tile with its margin bar and
 // trend, filterable by name and sortable by how close the race is, how many polls it has, or by name.
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import Ambient from "@/app/components/opp/Ambient";
 import "@/app/_polling/genericballot/polls2.css";

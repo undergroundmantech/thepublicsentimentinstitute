@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useMemo, useState } from "react";
 import type { Endorsements, ERace, EItem } from "../data";
 import PersonToken from "../PersonToken";

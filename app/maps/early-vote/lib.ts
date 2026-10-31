@@ -97,7 +97,7 @@ const API = "/api/earlyvote";
 
 async function get<T>(path: string): Promise<T | null> {
   try {
-    const r = await fetch(`${API}/${path}`, { cache: "no-store" });
+    const r = await fetch(`${API}/${path}`);
     if (!r.ok) return null;          // 400 means "not published", not an error
     return (await r.json()) as T;
   } catch {

@@ -3,7 +3,7 @@
 // number today, its month and its year, and the timeline of the term right under them, which you can switch on and
 // off. Every race's average follows on the whiteboard below.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import Timeline, { type TLData } from "./timeline/Timeline";
 
 const DAY = 86400000;

@@ -1,7 +1,7 @@
 // The forecast in brief: every race and chamber as plain server rendered text and links, under the
 // interactive hub. Readers get a quick index; search engines and AI crawlers, which do not run the
 // hub's scripts, get the numbers and a link to every forecast page.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { isInd, type FRace } from "@/app/lib/forecastData";
 import { lastName, raceHref, STATE_NAME } from "@/app/lib/opp";
 import { hubNumbers } from "./seo";

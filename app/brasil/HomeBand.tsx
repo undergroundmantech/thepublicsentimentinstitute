@@ -1,5 +1,5 @@
 // A band on the home page for the Brazil runoff, shown until the count is done.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getBr } from "./data";
 import { nf } from "./lib";
 

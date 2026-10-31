@@ -80,7 +80,7 @@ export function useRaceDetail(raceId: number) {
     };
 
     pull();
-    const t = setInterval(pull, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, REFRESH_MS);
     return () => {
       alive = false;
       ac.abort();
@@ -109,7 +109,7 @@ export function useFreshtake() {
     };
     pull();
     // Banked turnout moves in daily batches, not by the minute.
-    const t = setInterval(pull, 5 * 60_000);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, 5 * 60_000);
     return () => {
       alive = false;
       ac.abort();

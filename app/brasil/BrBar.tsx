@@ -1,6 +1,6 @@
 "use client";
 // The Brasil section bar: the forecast, states and towns, and the live results, with the language switch.
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ELECTION_ISO } from "./lib";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getPeople } from "../data";
 import { Pointy } from "@/app/components/home/Mascot";
 import PeopleIndex from "./PeopleIndex";

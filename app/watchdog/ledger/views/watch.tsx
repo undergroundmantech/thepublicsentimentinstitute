@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { AutoTable, Bar, CAT_LABEL, Card, EntityLink, Gate, Head, Kpis, Tape, Table, day, href, int, officeLabel, partyShort, pct, side, usd, useLedger, type Row } from "../lib";

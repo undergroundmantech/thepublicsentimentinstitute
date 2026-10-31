@@ -1,6 +1,6 @@
 // /brasil/resultados/[state]: live runoff results for one state, municipality by municipality.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/app/components/JsonLd";
 import { brStates, brSeo, brPageLd } from "../../data";

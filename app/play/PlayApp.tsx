@@ -5,7 +5,7 @@
 // your campaign's read of them, as foggy as your polling and your ground team. Voters respond the way the site's own
 // data says they would, and much of what happens is real, from the race research.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { ev as track } from "@/app/lib/ev";
 import * as E from "./engine";

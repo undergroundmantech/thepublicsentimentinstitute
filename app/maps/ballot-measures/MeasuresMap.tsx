@@ -2,7 +2,7 @@
 // Ballot measures map: every statewide question on the November 3, 2026 ballot. Pick a state on the national map or
 // in the list, then a measure, and the county map shows the projected Yes share with each county's Yes and No votes.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { type GeoTip } from "@/app/components/opp/GeoMap";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import type { CountyPath } from "@/app/components/home/countyGeo";

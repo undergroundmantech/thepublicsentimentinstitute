@@ -1,6 +1,6 @@
 // /brasil/estados: the forecast for every state and every municipality in one explorer.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { brStates, brSeo, brPageLd, getBr } from "../data";
 import NationExplorer from "../NationExplorer";

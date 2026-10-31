@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { seo } from "@/app/lib/seo";
 
 export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from On Point Polling and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/on-point-polling/weighting-room"});

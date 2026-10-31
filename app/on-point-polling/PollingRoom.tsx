@@ -3,7 +3,7 @@
 // leader in the chosen race and carry their result on a tag; states in the field pulse; states we are
 // considering next are hatched. Click a state for its full result, the sample, and where the forecast has it.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { marginColor } from "@/app/lib/opp";
 import { STATE_POLLS, FUND_LINE, FUND_URL, type PollRace, type StatePoll } from "./polls/pollMapData";

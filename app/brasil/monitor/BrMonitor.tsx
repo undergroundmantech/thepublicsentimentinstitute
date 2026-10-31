@@ -4,7 +4,7 @@
 // count and the On Point projection in view. Click any state, on the map or in the list, to open its desk: the count,
 // the projection, how it runs against the forecast and its biggest municipalities. Tilt the map for the 3D view.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import NationCanvas, { useAllMun, type CanvasHandle, type Muni } from "../NationCanvas";
 import { useBrLive } from "../useBrLive";
 import { swingColor } from "../LiveBits";

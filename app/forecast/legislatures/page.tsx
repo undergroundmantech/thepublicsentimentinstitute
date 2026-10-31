@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import Hemicycle, { type HemiSeat } from "@/app/components/opp/Hemicycle";
 import LegisTiles from "@/app/components/opp/LegisTiles";

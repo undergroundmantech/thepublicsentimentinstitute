@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useMemo } from "react";
 import { Tip, useTip } from "../home/motion";
 import { fit, pathsBox, type CountyPath } from "../home/countyGeo";

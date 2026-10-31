@@ -2,7 +2,7 @@
 // The On Point Polling state map: every state we have polled, in the field or considering next.
 // Pick Senate or governor, then click a state to see its full results.
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { STATE_POLLS, FUND_LINE, FUND_URL, type StatePoll, type PollRace } from "./pollMapData";
 import "./pollmap.css";
 

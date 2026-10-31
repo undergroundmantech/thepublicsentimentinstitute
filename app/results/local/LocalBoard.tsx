@@ -172,7 +172,7 @@ export default function LocalBoard() {
       );
     }
     fetchAll();
-    const t = setInterval(fetchAll, REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) fetchAll(); }, REFRESH_MS);
     return () => {
       alive = false;
       clearInterval(t);

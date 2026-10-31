@@ -2,7 +2,7 @@
 // Opens any file in the Watchdog database by its id, from public/watchdog/people/p/<id>.json, so the 1,200 roster files
 // do not each need a page built ahead.
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useSearchParams } from "next/navigation";
 import PersonFile, { type PFileX } from "../PersonFile";
 

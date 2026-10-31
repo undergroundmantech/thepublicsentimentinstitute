@@ -1,6 +1,6 @@
 // /brasil/[state]: the runoff forecast for one state, with every municipality, in English with a Portuguese version.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/app/components/JsonLd";
 import { getBr, brStates, brSeo, brPageLd } from "../data";

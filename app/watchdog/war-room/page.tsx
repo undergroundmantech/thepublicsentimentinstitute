@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getWarIndex, type WRow } from "./data";
 import { OFFICE_NAME, lead, pct, raceLabel, surname, usd, warHref } from "./fmt";
 import WarBoard from "./WarBoard";

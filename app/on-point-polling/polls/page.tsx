@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
 import PollingRoom from "../PollingRoom";

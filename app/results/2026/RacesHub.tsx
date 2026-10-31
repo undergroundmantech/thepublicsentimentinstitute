@@ -1,7 +1,7 @@
 "use client";
 // Every November 3 race in one sortable list: the forecast's expected result next to civicAPI's returns.
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useSearchParams } from "next/navigation";
 import { STN, KIND_LABEL, expMargin, fmtK, fmtM, forecastHref, isInd, resultsHref, sides, type Kind, type XRace } from "./live";
 import { useIndex, useLive } from "./useLive";

@@ -627,7 +627,7 @@ function Desk() {
       );
     }
     fetchAll();
-    const t = setInterval(fetchAll, RACE_REFRESH_MS);
+    const t = setInterval(() => { if (!document.hidden) fetchAll(); }, RACE_REFRESH_MS);
     return () => {
       alive = false;
       clearInterval(t);

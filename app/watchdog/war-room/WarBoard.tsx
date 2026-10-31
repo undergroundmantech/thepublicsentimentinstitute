@@ -3,7 +3,7 @@
 // "Brief me as" turns the board around: pick the Democratic or the Republican side and every row reads as your
 // candidate against theirs, with the edge in health and the odds from your chair.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import type { WRow } from "./data";
 import { OFFICE_NAME, healthTone, lead, pct, raceLabel, rating, surname, usd, warHref, winP } from "./fmt";
 import { useLens, LensToggle } from "./lens";

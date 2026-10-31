@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { STATE_NAME } from "@/app/lib/opp";
 import { GROUP_LABEL, bmHref, getMeasures } from "./data";

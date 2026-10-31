@@ -1,6 +1,6 @@
 // /brasil: the On Point forecast for the 2026 Brazilian presidential runoff, in English with a Portuguese version.
 import React from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { getBr, brStates, brSeo, brPageLd } from "./data";
 import { ForecastMap, Countdown } from "./HubClient";

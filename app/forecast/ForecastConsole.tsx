@@ -5,7 +5,7 @@
 // with the odds, a pixel line of every seat and the closest races, then a searchable table of every race in it.
 // Clicking a state or district opens its full race page.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import DaysOut from "@/app/components/DaysOut";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";

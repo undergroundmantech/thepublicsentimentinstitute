@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import ScenarioNav from "@/app/components/opp/ScenarioNav";
 import ScenarioModes, { MODE_BOOT } from "@/app/forecast/scenarios/ScenarioModes";
 import JsonLd from "@/app/components/JsonLd";

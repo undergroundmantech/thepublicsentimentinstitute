@@ -2,7 +2,7 @@
 import { TX_CORNYN_POLLS, TX_PAXTON_POLLS } from "./lib/txSenatePolls";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
 } from "recharts";

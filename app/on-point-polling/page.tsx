@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { seo } from "@/app/lib/seo";
 import PollingRoom from "./PollingRoom";
 import { roomForecast } from "./roomForecast";

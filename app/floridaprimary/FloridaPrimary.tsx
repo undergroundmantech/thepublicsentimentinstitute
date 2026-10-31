@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { FLSE_CSS } from "./flseCss";
 
 /**

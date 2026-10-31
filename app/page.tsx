@@ -1,6 +1,6 @@
 import DaysOut from "@/app/components/DaysOut";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
 import { aggPolls } from "@/app/_polling/lib/aggregates";
 import { getModel, miniRaces, isInd } from "@/app/lib/forecastData";

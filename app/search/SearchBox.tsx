@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { evSettled } from "@/app/lib/ev";
 

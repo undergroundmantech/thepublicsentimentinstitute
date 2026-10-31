@@ -12,7 +12,7 @@
 // the story and the biggest names, the rest on hover, and the layout gives every shown label its own box.
 import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
 import type { Graph, GNode, GEdge } from "../data";
 import { ev } from "@/app/lib/ev";

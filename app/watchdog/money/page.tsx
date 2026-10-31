@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import MoneyFlow from "./MoneyFlow";
 import MoneyRoom from "./MoneyRoom";
 import { getMoney, usd } from "../data";

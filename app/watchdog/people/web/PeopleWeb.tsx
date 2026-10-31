@@ -4,7 +4,7 @@
 // end of each tie on the outer ring. Click anyone to put them at the center; click a tie to list everyone on it.
 // People who share more than one tie with the center are drawn once and wired to every tie they share.
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { ev, evSettled } from "@/app/lib/ev";
 import { fileHref } from "../PersonFile";
 

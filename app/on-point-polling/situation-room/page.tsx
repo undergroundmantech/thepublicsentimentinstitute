@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import WireGlobe from "@/app/components/WireGlobe";
 import { SENATE_MODEL, senateBalance } from "@/app/components/senateModel";
 import { getHomeStats, type HomeStats, type HomeSeriesPoint } from "@/app/_polling/lib/homeStats";

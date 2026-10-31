@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 
 const CSS = `
 .pl { display: grid; place-items: center; padding: 48px 0 32px; }

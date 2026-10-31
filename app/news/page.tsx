@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import fs from "node:fs";
 import path from "node:path";
 import { getDesk, type Cov } from "./data";

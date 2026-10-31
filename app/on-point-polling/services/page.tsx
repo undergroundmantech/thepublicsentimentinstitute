@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { Icon } from "@/app/components/opp/Logo";
 import { seo } from "@/app/lib/seo";
 

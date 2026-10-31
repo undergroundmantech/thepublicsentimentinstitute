@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import fs from "node:fs";
 import path from "node:path";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import RacesHub from "./RacesHub";
 import { seo } from "@/app/lib/seo";
 import { STN } from "./live";

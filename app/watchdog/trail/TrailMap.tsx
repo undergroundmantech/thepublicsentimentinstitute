@@ -4,7 +4,7 @@
 // person to draw their whole route; click a state for everything that happened there.
 import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
 import { Pointy } from "@/app/components/home/Mascot";
 import { ev } from "@/app/lib/ev";

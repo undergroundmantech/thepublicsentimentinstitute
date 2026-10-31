@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { notFound } from "next/navigation";
 import fs from "node:fs";

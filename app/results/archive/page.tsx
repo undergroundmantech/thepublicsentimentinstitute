@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "../_data/raceRegistry";
 import { SITE_V2 } from "../../lib/flags";
 import { seo } from "@/app/lib/seo";

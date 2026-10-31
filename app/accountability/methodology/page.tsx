@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { getAx, GRADES } from "../data";
 import { Grade } from "../AxTable";
 import "../accountability.css";

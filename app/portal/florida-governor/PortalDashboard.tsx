@@ -10,7 +10,7 @@
  */
 
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import { projectCounties } from "../../results/2026-08-18/countyForecast";
 import {
   CANDIDATE_ORDER,
