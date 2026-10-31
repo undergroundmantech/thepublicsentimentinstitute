@@ -242,7 +242,7 @@ export default function RaceHistory({ history: h, title = "Race history", nowMs,
             <linearGradient id={`${uid}gb`} x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopOpacity=".26" style={{ stopColor: minusColor }} /><stop offset="1" stopOpacity="0" style={{ stopColor: minusColor }} /></linearGradient>
           </defs>
           {h.outages.map((o, i) => { const a = Math.max(x(o.from), L), b = Math.min(x(o.to ?? endT), W - R); return b > a ? <g key={`u${i}`} className="rh-out"><rect x={a} y={T} width={b - a} height={H - T - B} /><title>{`Results source unavailable${o.provider !== "*" ? ` (${o.provider})` : ""}: ${o.reason}`}</title></g> : null; })}
-          {preEnd !== null && preEnd > t0 ? <g><rect className="rh-pre" x={L} y={T} width={x(preEnd) - L} height={H - T - B} />{x(preEnd) - L > 120 ? <text className="rh-cap" x={L + 8} y={T + 13}>Pre-election forecast</text> : null}</g> : null}
+          {preEnd !== null && preEnd > t0 ? <g><rect className="rh-pre" x={L} y={T} width={x(preEnd) - L} height={H - T - B} />{x(preEnd) - L > 100 ? <text className="rh-cap" x={L + 8} y={T + 13}>{x(preEnd) - L > 175 ? "Pre-election forecast" : "Pre-election"}</text> : null}</g> : null}
           {preEnd !== null && preEnd < t1 && W - R - x(preEnd) > 70 ? <text className="rh-cap" x={x(preEnd) + 8} y={T + 13}>Live</text> : null}
           {yTicks.map((v) => (
             <g key={v}>
