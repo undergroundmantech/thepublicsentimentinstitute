@@ -279,6 +279,9 @@
 .brm-toast small { display: block; font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: #ffd98a; }
 @keyframes brtoast { 0% { opacity: 0; transform: translate(-50%, -12px); } 8% { opacity: 1; transform: translate(-50%, 0); } 85% { opacity: 1; } 100% { opacity: 0; } }
 .brm .br-tip { background: rgba(8, 7, 20, .96); color: #c9c2d6; } .brm .br-tip h4 { color: #fff; }
+/* the About panel carries the archive source on wide screens; below 1100px it is hidden, so the title carries it */
+.brm-src { display: none; margin-top: 4px; font: 600 11px/1.45 var(--font-b); color: #c9c2d6; }
+.brm-src a { color: #ffd98a; text-decoration: underline; white-space: nowrap; }
 
 @media (max-width: 1100px) {
   .br-hero, .br-mapgrid, .br-live-top { grid-template-columns: 1fr; }
@@ -286,6 +289,7 @@
   .br-legs { grid-template-columns: 1fr; }
   .brm-right { top: auto; bottom: 60px; height: 34%; width: calc(100% - 24px); left: 12px; }
   .brm-feed { display: none; }
+  .brm-src { display: block; }
   .brm-top { width: calc(100% - 24px); }
   .brm-title p { display: none; }
   .brm-title { padding: 10px 14px; }
