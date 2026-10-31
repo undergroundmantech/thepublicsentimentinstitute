@@ -64,4 +64,4 @@ export function toggleTheme(): Theme {
 
 // Inline, blocking, runs in <head> before first paint, so a returning visitor never sees the wrong mode flash. A missing,
 // unknown or unreadable value leaves the server default (Pro Dark) in place.
-export const THEME_INIT_SCRIPT = `(function(){try{var t=null;try{t=localStorage.getItem(${JSON.stringify(THEME_KEY)})}catch(e){}if(t!=="dark"&&t!=="light"&&t!=="themed")return;var r=document.documentElement,s=t==="light"?"light":"dark";r.dataset.mode=t;r.dataset.theme=s;r.dataset.opaTheme=s;r.style.colorScheme=s;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",${JSON.stringify(CHROME)}[t])}catch(e){}})();`;
+export const THEME_INIT_SCRIPT = `(function(){try{var t=null;try{t=localStorage.getItem(${JSON.stringify(THEME_KEY)})}catch(e){}if(t!=="dark"&&t!=="light"&&t!=="themed")t="dark";var r=document.documentElement,s=t==="light"?"light":"dark";r.dataset.mode=t;r.dataset.theme=s;r.dataset.opaTheme=s;r.style.colorScheme=s;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",${JSON.stringify(CHROME)}[t])}catch(e){}})();`;
