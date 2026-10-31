@@ -1,15 +1,15 @@
 {
  "date": "2026-10-31",
- "statewide_run": "full rerun 2026-10-31: S1031CM",
+ "statewide_run": "poll sweep 2026-10-31: S1031NY against S1031CM, change applied to 2026-10-31",
  "house_run": "S1031CM",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 87.9,
+   "d_control": 87.3,
    "d_seats_median": 55.0,
    "p10": 50.0,
    "p90": 59.0,
-   "d_control_without_osborn": 84.4
+   "d_control_without_osborn": 83.8
   },
   "governors": {
    "d_majority": 88.0,
@@ -1607,12 +1607,12 @@
   "NE": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 3.49,
-   "win_d": 71.97,
-   "p10": -3.83,
-   "p90": 11.0,
+   "margin": 2.14,
+   "win_d": 63.24,
+   "p10": -5.18,
+   "p90": 9.65,
    "deterministic_margin": 1.0091572633513266,
-   "n_polls": 17,
+   "n_polls": 18,
    "poll_house_index": 3.0,
    "poll_avg": {
     "D": 46.82216666701836,

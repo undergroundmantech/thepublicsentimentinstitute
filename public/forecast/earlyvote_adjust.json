@@ -868,16 +868,16 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.0,
-   "dem_control_before": 0.8803,
+   "seat_change": -0.0,
+   "dem_control_before": 0.8804,
    "dem_control": 0.8804,
    "dem_seats": 28.96
   },
   "senate": {
    "seat_change": 0.0,
-   "dem_control_before": 0.879,
-   "dem_control": 0.8791,
-   "dem_seats": 54.65
+   "dem_control_before": 0.8734,
+   "dem_control": 0.8734,
+   "dem_seats": 54.56
   },
   "house": {
    "seat_change": 0.0,
