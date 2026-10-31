@@ -10,7 +10,7 @@ const ts = createRequire(import.meta.url)("typescript");
 const src = fs.readFileSync(path.join(root, "app/lib/fmtPct.ts"), "utf8");
 const m = { exports: {} };
 new Function("exports", "module", ts.transpileModule(src, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText)(m.exports, m);
-const { pctPoints, pctFraction, percentIn } = m.exports;
+const { pctPoints, pctFraction, percentIn, probPoints, probFraction } = m.exports;
 
 test("points: one decimal by default", () => {
   assert.equal(pctPoints(52.34), "52.3%");
@@ -65,6 +65,22 @@ test("win probabilities are never capped", () => {
   assert.equal(pctFraction(0.999), "99.9%");
   assert.equal(pctFraction(1), "100.0%");
   assert.equal(pctFraction(0.001), "0.1%");
+});
+
+test("probabilities: one decimal, 100.0% and 0.0% only for a genuine certainty", () => {
+  assert.equal(probFraction(0.995), "99.5%");
+  assert.equal(probFraction(0.3973), "39.7%");
+  assert.equal(probFraction(0.9994), "99.9%");
+  assert.equal(probFraction(0.9999), "99.9%");
+  assert.equal(probFraction(1), "100.0%");
+  assert.equal(probFraction(0.0001), "0.1%");
+  assert.equal(probFraction(0), "0.0%");
+  assert.equal(probPoints(99.95), "99.9%");
+  assert.equal(probPoints(0.05), "0.1%");
+  assert.equal(probPoints(50), "50.0%");
+  assert.equal(probFraction(null), "\u2014");
+  // the two sides of a race still sum to 100.0%
+  for (const p of [0.9999, 0.0001, 0.995, 0.5, 0.1234]) assert.equal((parseFloat(probFraction(p)) + parseFloat(probFraction(1 - p))).toFixed(1), "100.0");
 });
 
 test("missing values give the fallback", () => {

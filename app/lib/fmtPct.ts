@@ -22,6 +22,18 @@ export const pctPoints = (x: number | null | undefined, o: PctOpts = {}): string
 export const pctFraction = (x: number | null | undefined, o: PctOpts = {}): string =>
   pctPoints(x == null || !Number.isFinite(x) ? x : x * 100, o);
 
+// A win (or pass, or control) probability, one decimal. "100.0%" and "0.0%" are kept for a genuine certainty: a value
+// short of it that would round there reads "99.9%" or "0.1%", so the two sides of a race still sum to 100.0%.
+export const probPoints = (x: number | null | undefined, o: Pick<PctOpts, "fallback"> = {}): string => {
+  if (x == null || !Number.isFinite(x)) return o.fallback ?? "\u2014";
+  if (x >= 99.95 && x < 100) return "99.9%";
+  if (x > 0 && x < 0.05) return "0.1%";
+  return pctPoints(x);
+};
+
+export const probFraction = (x: number | null | undefined, o: Pick<PctOpts, "fallback"> = {}): string =>
+  probPoints(x == null || !Number.isFinite(x) ? x : x * 100, o);
+
 // Percent In only (the provider's reporting share, in points): above 99.0, judged on the unrounded value, it reads
 // ">99%" so a race that is still counting never shows "100.0%". Every other percentage, win probabilities included,
 // uses pctPoints / pctFraction unchanged. The caller appends " in" or " reporting".
