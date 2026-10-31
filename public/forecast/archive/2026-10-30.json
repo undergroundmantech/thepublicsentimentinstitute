@@ -1,18 +1,18 @@
 {
  "date": "2026-10-30",
- "statewide_run": "poll sweep 2026-10-30: S1030PM against S1030MV, change applied to 2026-10-30",
+ "statewide_run": "poll sweep 2026-10-30: S1031BD against S1030PM, change applied to 2026-10-30",
  "house_run": "S1030MV",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 85.8,
+   "d_control": 85.7,
    "d_seats_median": 54.0,
    "p10": 50.0,
    "p90": 59.0,
-   "d_control_without_osborn": 82.3
+   "d_control_without_osborn": 82.2
   },
   "governors": {
-   "d_majority": 85.0,
+   "d_majority": 84.9,
    "d_median": 28.0,
    "p10": 25.0,
    "p90": 32.0
@@ -494,12 +494,12 @@
   "FL": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": -5.02,
-   "win_d": 18.7,
-   "p10": -12.24,
-   "p90": 2.21,
+   "margin": -5.36,
+   "win_d": 17.26,
+   "p10": -12.58,
+   "p90": 1.87,
    "deterministic_margin": -4.876050930490166,
-   "n_polls": 23,
+   "n_polls": 24,
    "poll_house_index": 6.0,
    "poll_avg": {
     "D": 43.115316280306665,
@@ -539,12 +539,12 @@
   "FLG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": -3.78,
-   "win_d": 25.08,
-   "p10": -11.57,
-   "p90": 4.34,
+   "margin": -3.93,
+   "win_d": 24.34,
+   "p10": -11.72,
+   "p90": 4.19,
    "deterministic_margin": -2.029526010063705,
-   "n_polls": 41,
+   "n_polls": 42,
    "poll_house_index": 5.0,
    "poll_avg": {
     "D": 44.5045118542151,

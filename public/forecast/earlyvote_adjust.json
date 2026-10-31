@@ -298,7 +298,7 @@
    "ballots": 4717903,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -2.14,
+   "comp": -2.18,
    "level": 0.06
   },
   "GA": {
@@ -868,22 +868,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.0,
-   "dem_control_before": 0.85,
-   "dem_control": 0.85,
-   "dem_seats": 28.42
+   "seat_change": -0.0,
+   "dem_control_before": 0.8494,
+   "dem_control": 0.8493,
+   "dem_seats": 28.41
   },
   "senate": {
-   "seat_change": 0.02,
-   "dem_control_before": 0.8571,
-   "dem_control": 0.8583,
-   "dem_seats": 54.19
+   "seat_change": -0.0,
+   "dem_control_before": 0.8573,
+   "dem_control": 0.8572,
+   "dem_seats": 54.18
   },
   "house": {
-   "seat_change": -0.14,
-   "dem_control_before": 0.9693,
-   "dem_control": 0.9683,
-   "dem_seats": 251.49
+   "seat_change": -0.02,
+   "dem_control_before": 0.9683,
+   "dem_control": 0.9681,
+   "dem_seats": 251.47
   }
  }
 }
