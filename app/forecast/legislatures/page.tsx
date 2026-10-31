@@ -8,10 +8,11 @@ import { BAND_LABEL, controlBand, currentMajority, getStatehouse, slHref, type S
 import "./legislatures.css";
 import JsonLd from "@/app/components/JsonLd";
 import { legislaturesLd, legislaturesMeta } from "../seo";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export function generateMetadata(): Metadata { return legislaturesMeta(); }
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 
 function seatsOf(c: SLChamber): HemiSeat[] {
   const s: HemiSeat[] = [];

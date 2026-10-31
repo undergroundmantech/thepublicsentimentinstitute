@@ -1,6 +1,7 @@
 import { STATE_NAME } from "@/app/lib/opp";
 import { getMeasures } from "../../data";
 import { OG_SIZE, OG_TYPE, ogCard, pctOg, dayOg, C } from "@/app/lib/og";
+import { pctFraction } from "@/app/lib/fmtPct";
 
 export const size = OG_SIZE;
 export const contentType = OG_TYPE;
@@ -23,6 +24,6 @@ export default async function Image({ params }: { params: Promise<{ st: string; 
     left: { label: "Passes", value: pctOg(m.est.prob), color: C.yes },
     right: { label: "Fails", value: pctOg(1 - m.est.prob), color: C.no },
     split: m.est.prob,
-    foot: `Yes projected at ${m.est.yes.toFixed(1)}% · needs ${Math.round(m.threshold * 1000) / 10}%`,
+    foot: `Yes projected at ${m.est.yes.toFixed(1)}% · needs ${pctFraction(m.threshold)}`,
   });
 }

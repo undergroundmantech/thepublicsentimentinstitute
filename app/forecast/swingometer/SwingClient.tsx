@@ -7,6 +7,7 @@ import Hemicycle, { probFill, type HemiSeat } from "@/app/components/opp/Hemicyc
 import type { SwingData, SwingRace } from "./data";
 import { ev, evSettled } from "@/app/lib/ev";
 import "./swing.css";
+import { pctPoints, probFraction, probPoints } from "@/app/lib/fmtPct";
 
 type Office = "s" | "g" | "h";
 type Shift = { m: number[]; t: number[] };
@@ -59,7 +60,7 @@ function move(r: SwingRace, sc: Scenario, keys: string[]): Moved {
 }
 
 // ---------- formatting ----------
-const pct = (p: number) => (p > 0.995 ? ">99%" : p < 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 const fm = (mR: number, ind = false) => (Math.abs(mR) < 0.05 ? "Even" : `${mR < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(mR).toFixed(1)}`);
 const sgn = (x: number, dig = 1) => (Math.abs(x) < 0.05 ? "0.0" : `${x > 0 ? "+" : "−"}${Math.abs(x).toFixed(dig)}`);
 const shiftLabel = (v: number) => (Math.abs(v) < 0.05 ? "Forecast" : `${v > 0 ? "D" : "R"} +${Math.abs(v).toFixed(1)}`);
@@ -368,7 +369,7 @@ function Swing({ data }: { data: SwingData }) {
                   <div key={g} className="sw-g">
                     <div className="sw-g-h">
                       <b>{g}</b>
-                      <span className="mono">{share.toFixed(0)}% of voters</span>
+                      <span className="mono">{pctPoints(share)} of voters</span>
                       <span className={`mono ${mg >= 0 ? "d" : "r"}`}>{fm(-mg)}</span>
                     </div>
                     <div className="sw-sl">
@@ -480,10 +481,10 @@ function ChamberCard({ name, c, unit, note }: { name: string; c: { ctrl: number;
       <div className="card-b">
         <div className="sw-chc-top">
           <div>
-            <div className="sw-big"><b className={`mono ${fav ? "d" : "r"}`}><Num v={(fav ? c.ctrl : 1 - c.ctrl) * 100} f={(x) => `${x > 99.5 ? ">99" : x < 0.5 ? "<1" : Math.round(x)}%`} /></b><span>{fav ? "Democratic" : "Republican"} control</span></div>
+            <div className="sw-big"><b className={`mono ${fav ? "d" : "r"}`}><Num v={(fav ? c.ctrl : 1 - c.ctrl) * 100} f={(x) => probPoints(x)} /></b><span>{fav ? "Democratic" : "Republican"} control</span></div>
             <div className="sw-sub">
               Forecast {pct(c.base)} D
-              {Math.abs(dc) >= 0.005 ? <span className={`sw-chg ${dc > 0 ? "d" : "r"}`}>{dc > 0 ? "+" : "−"}{Math.abs(Math.round(dc * 100))} pts</span> : null}
+              {Math.abs(dc) >= 0.0005 ? <span className={`sw-chg ${dc > 0 ? "d" : "r"}`}>{dc > 0 ? "+" : "−"}{Math.abs(dc * 100).toFixed(1)} pts</span> : null}
             </div>
           </div>
           <div className="sw-seats">
@@ -522,7 +523,7 @@ function Focus({ m, dims }: { m: Moved; dims: SwingData["dims"] }) {
           <div className="sw-sub">Forecast {fm(r.m, r.ind)}, Democratic side {pct(r.pD)}{r.est ? " · electorate estimated from the state" : ""}</div>
         </div>
         <div className="sw-f-odds">
-          <b className={`mono ${m.pD >= 0.5 ? "d" : "r"}`}><Num v={(m.pD >= 0.5 ? m.pD : 1 - m.pD) * 100} f={(x) => `${x > 99.5 ? ">99" : x < 0.5 ? "<1" : Math.round(x)}%`} /></b>
+          <b className={`mono ${m.pD >= 0.5 ? "d" : "r"}`}><Num v={(m.pD >= 0.5 ? m.pD : 1 - m.pD) * 100} f={(x) => probPoints(x)} /></b>
           <span>{m.pD >= 0.5 ? (r.ind ? "Independent" : "Democrat") : "Republican"} wins</span>
         </div>
       </div>

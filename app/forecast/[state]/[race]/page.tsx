@@ -25,6 +25,7 @@ import YouTubeBand from "@/app/components/YouTubeBand";
 import RaceHistorySection from "@/app/components/opp/RaceHistorySection";
 import { frozenPointsFor } from "@/app/lib/intelligence/raceHistoryStore";
 import { FX_CSS } from "@/app/components/opp/fxCss";
+import { pctPoints, probFraction } from "@/app/lib/fmtPct";
 
 export const dynamicParams = false;
 
@@ -187,7 +188,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
           : phrase
             ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">{phrase}</span> to win {raceWhere}.</>
             : <><span className="nm" style={{ color: ind ? "#b78cff" : "#7fa6ff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff8399" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {raceWhere}.</>}
-        lede={<>{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</>}
+        lede={<>{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${probFraction(leadWin).slice(0, -1)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</>}
         pills={<>
           <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
           <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
@@ -202,7 +203,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
-        <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
+        <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{probFraction(leadWin)} chance for {lastName(lead)}</small></div>
         <div className="card fx-k"><span>Model margin</span><b className="mono">{Math.abs(m) >= 99 ? "Uncontested" : fmtM(m, ind)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
         <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtMS(r.est.p10, ind)} to {fmtMS(r.est.p90, ind)}</b><small>{model.meta.sims.toLocaleString()} simulations</small></div>
         <div className="card fx-k"><span>Projected votes</span><b className="mono">{rv.votes ? rv.votes.total.toLocaleString("en-US") : "n/a"}</b><small>{rv.votes && rv.votes.total ? `${lastName(lead)} ${(Math.max(rv.votes.dem, rv.votes.rep) / rv.votes.total * 100).toFixed(1)}%` : ""}</small></div>
@@ -332,8 +333,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
           <div className="card">
             <div className="stat"><div className="k">Model margin</div><div className={`v ${sideCls === "i" ? "" : sideCls}`} style={sideCls === "i" ? { color: "var(--ind)" } : undefined}>{Math.abs(m) >= 99 ? "Uncontested" : `${lastName(lead)} +${Math.abs(m).toFixed(1)}`}</div></div>
             <div className="stat"><div className="k">Chance of winning</div>
-              <div className="cand"><i style={{ background: partyColor(r.cands[0]?.party ?? "D") }} /><span>{r.dem}</span><span className="p">{Math.round(demWin * 100)}%</span></div>
-              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{Math.round((1 - demWin) * 100)}%</span></div>
+              <div className="cand"><i style={{ background: partyColor(r.cands[0]?.party ?? "D") }} /><span>{r.dem}</span><span className="p">{probFraction(demWin)}</span></div>
+              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{probFraction(1 - demWin)}</span></div>
             </div>
             {r.cands?.length > 0 && (
               <div className="stat"><div className="k">Simulated vote</div>
@@ -401,7 +402,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
                   <thead><tr><th>Group</th><th style={{ textAlign: "right" }}>Share</th><th style={{ textAlign: "right" }}>{lastName(r.dem)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop)}</th></tr></thead>
                   <tbody>
                     {cuts.flatMap((c) => xt.filter((x) => x[0] === c).map((x, i) => (
-                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{x[2].toFixed(0)}%</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
+                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{pctPoints(x[2])}</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
                     )))}
                   </tbody>
                 </table>

@@ -2,6 +2,7 @@
 // the raw simulation counts: statewide offices, ballot measures and legislative chambers. The bars are the normal curve
 // that range implies, split at the line that decides the race.
 import React from "react";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export default function OutcomeHist({ center, p10, p90, line, below, above, fmt, title, eye, note, lo: loIn, hi: hiIn }: {
   center: number; p10: number; p90: number; line: number; below: string; above: string; fmt: (x: number) => string;
@@ -28,7 +29,7 @@ export default function OutcomeHist({ center, p10, p90, line, below, above, fmt,
           <text x={X(center)} y={142} textAnchor="middle" style={{ font: "700 10px var(--font-m)", fill: "#f3eff8" }}>{fmt(center)}</text>
           <text x={580} y={142} textAnchor="end" style={{ font: "500 10px var(--font-m)", fill: "#8e86a3" }}>{fmt(hi)}</text>
         </svg>
-        <p style={{ fontSize: 13, marginTop: 8 }}>{note ?? <>80 percent of simulations fall between {fmt(Math.min(p10, p90))} and {fmt(Math.max(p10, p90))}; {Math.round(share * 100)} percent land past the line.</>}</p>
+        <p style={{ fontSize: 13, marginTop: 8 }}>{note ?? <>80 percent of simulations fall between {fmt(Math.min(p10, p90))} and {fmt(Math.max(p10, p90))}; {probFraction(share).slice(0, -1)} percent land past the line.</>}</p>
       </div>
     </div>
   );

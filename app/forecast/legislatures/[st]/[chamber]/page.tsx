@@ -17,6 +17,7 @@ import { FX_CSS } from "@/app/components/opp/fxCss";
 import { RATE } from "@/app/lib/opp";
 import JsonLd from "@/app/components/JsonLd";
 import { chamberLd, chamberMeta } from "../../../seo";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ st: strin
   return c ? chamberMeta(c) : {};
 }
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 
 export default async function Page({ params }: { params: Promise<{ st: string; chamber: string }> }) {
   const { st, chamber } = await params;
@@ -60,7 +61,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
     if (m) map = { box: sm.box, outline: sm.outline, d: m.d, hold: m.hold ?? {} };
   } catch { map = null; }
   const lede =
-    `${fav === "D" ? "Democrats" : "Republicans"} win control of the ${c.name} in ${favP > 0.995 ? "nearly every one" : `${Math.round(favP * 100)}%`} of 2,000 simulations` +
+    `${fav === "D" ? "Democrats" : "Republicans"} win control of the ${c.name} in ${probFraction(favP)} of 2,000 simulations` +
     (cur ? `, against a ${cur === "D" ? "Democratic" : "Republican"} majority today` : "") +
     `. ${c.up === c.seats ? `All ${c.seats} seats are` : `${c.up} of the ${c.seats} seats are`} on the 2026 ballot${holdN ? ` and ${holdN} carry over until 2028` : ""}; ${toss} ${toss === 1 ? "race is" : "races are"} within a 35 to 65 split.`;
 
@@ -178,7 +179,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
             <section id="polls" className="st-sec">
               <SecTitle title="Polling" sub="Legislative ballot polls of the state, as published" />
               <div className="card">
-                <div className="card-h"><h3>Legislative ballot polls</h3><span className="eye" style={{ marginLeft: "auto" }}>Weight {Math.round(c.env.genericWeight * 100)}%</span></div>
+                <div className="card-h"><h3>Legislative ballot polls</h3><span className="eye" style={{ marginLeft: "auto" }}>Weight {pctFraction(c.env.genericWeight)}</span></div>
                 <div className="tblwrap"><table className="tbl"><thead><tr><th>Pollster</th><th>Field end</th><th style={{ textAlign: "right" }}>D</th><th style={{ textAlign: "right" }}>R</th></tr></thead>
                   <tbody>{c.env.genericPolls.map((p, i) => <tr key={i}><td>{p.source}</td><td className="mono">{p.end}</td><td className="n d">{p.D}</td><td className="n r">{p.R}</td></tr>)}</tbody></table></div>
               </div>

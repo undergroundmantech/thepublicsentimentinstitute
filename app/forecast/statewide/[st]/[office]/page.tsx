@@ -19,6 +19,7 @@ import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
 import { dbLd, dbMeta } from "../../../seo";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 export const dynamicParams = false;
 
@@ -95,7 +96,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
     ...(L.history != null ? [{ label: "Down ballot history", m: L.history, note: "this office's past results, moved to 2026" }] : []),
     ...(L.blend != null ? [{ label: "Blend of every leg", m: L.blend, note: "with approval, Gallup and the primaries" }] : []),
     ...(L.withCandidates != null ? [{ label: "Candidates", m: L.withCandidates, note: "incumbency and primary unity" }] : []),
-    { label: "With polls", m, note: r.pollWeight ? `polls carry ${Math.round(r.pollWeight * 100)} percent` : "no polls in the race" },
+    { label: "With polls", m, note: r.pollWeight ? `polls carry ${pctFraction(r.pollWeight).slice(0, -1)} percent` : "no polls in the race" },
   ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
   const navItems = [
     { id: "map", label: "Counties map" }, { id: "vote", label: "Vote share" }, { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
@@ -118,7 +119,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
         title={phraseFor(leadWin)
           ? <><span className="nm" style={{ color: m < 0 ? "#7fa6ff" : "#ff8399" }}>{lead}</span> is <span className="ph-w">{phraseFor(leadWin)}</span> to win {r.state}&apos;s {r.officeLabel.toLowerCase()} race.</>
           : <><span className="nm" style={{ color: "#7fa6ff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff8399" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {r.state}&apos;s {r.officeLabel.toLowerCase()}.</>}
-        lede={<>{r.dem} vs {r.gop}{!r.incRunning ? ", an open seat" : r.incumbent ? `, with ${r.incumbent} running again` : ""}. The model has {lastName(lead)} ahead by {Math.abs(m).toFixed(1)} points, with a {Math.round(leadWin * 100)} percent chance of winning.</>}
+        lede={<>{r.dem} vs {r.gop}{!r.incRunning ? ", an open seat" : r.incumbent ? `, with ${r.incumbent} running again` : ""}. The model has {lastName(lead)} ahead by {Math.abs(m).toFixed(1)} points, with a {probFraction(leadWin).slice(0, -1)} percent chance of winning.</>}
         pills={<>
           <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
           <span>Model <b className="mono">{fmtM(m)}</b></span>
@@ -133,7 +134,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
-        <div className="card fx-k"><span>Rating</span><b style={{ color: m < 0 ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
+        <div className="card fx-k"><span>Rating</span><b style={{ color: m < 0 ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{probFraction(leadWin)} chance for {lastName(lead)}</small></div>
         <div className="card fx-k"><span>Model margin</span><b className="mono">{fmtM(m)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
         <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtM(Math.min(p10, p90))} to {fmtM(Math.max(p10, p90))}</b><small>{flips} of {paths.length} {unit} lean Democratic</small></div>
         <div className="card fx-k"><span>Projected votes</span><b className="mono">{v ? v.total.toLocaleString("en-US") : "n/a"}</b><small>{v && v.total ? `${lastName(lead)} ${(Math.max(v.dem, v.rep) / v.total * 100).toFixed(1)}%` : ""}</small></div>
@@ -193,7 +194,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
           <section id="path" className="st-sec">
             <SecTitle title="How we got here" sub="From the top of the ticket to the forecast, one stage at a time" />
             <ModelPath steps={steps} />
-            {L.weights && <p style={{ fontSize: 13, margin: 0, color: "var(--ink2)" }}>Leg weights: {Object.entries(L.weights).map(([k, w]) => `${LEG_NAME[k] ?? k} ${Math.round(w * 100)}%`).join(", ")}.</p>}
+            {L.weights && <p style={{ fontSize: 13, margin: 0, color: "var(--ink2)" }}>Leg weights: {Object.entries(L.weights).map(([k, w]) => `${LEG_NAME[k] ?? k} ${pctFraction(w)}`).join(", ")}.</p>}
           </section>
 
           {r.primary || Object.keys(r.history).length ? (

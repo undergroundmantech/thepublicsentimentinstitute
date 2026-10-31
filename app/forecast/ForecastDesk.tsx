@@ -16,6 +16,7 @@ import {
   isPlaceholderName,
 } from "./lib";
 import { raceHref } from "@/app/lib/opp";
+import { pctPoints, probFraction, probPoints } from "@/app/lib/fmtPct";
 import ForecastAtlas, { ATLAS_CSS } from "./ForecastAtlas";
 import SpendingTracker, { RaceMoney, SPENDING_CSS } from "./Spending";
 import { TIP_CSS, TipPortal, VoteTip, commas, shareOf } from "./Tips";
@@ -125,7 +126,7 @@ function DeskHeader({ model, office, dbRows, embedded }: { model: Model | null; 
   } else if (chamber) {
     const dem = chamber.demControl;
     const fav = dem >= 0.5 ? "d" : "r";
-    const p = Math.round(Math.max(dem, 1 - dem) * 100);
+    const p = probFraction(Math.max(dem, 1 - dem)).slice(0, -1);
     const partyName = fav === "d" ? "Democrats" : "Republicans";
     const [pre, word] =
       office === "house" ? ["of winning the", "House"] :
@@ -650,7 +651,7 @@ const OVERVIEW = "Overview";
 const ALLCUTS = "All cuts";
 
 // "an 83% chance", not "a 83% chance": 8, 11 and 18 lead with a vowel sound.
-const article = (n: number) => (/^(8|11$|11\d|18$|18\d)/.test(String(n)) ? "an" : "a");
+const article = (n: number | string) => (/^(8|1[18](\.|$)|1[18]\d)/.test(String(n)) ? "an" : "a");
 
 function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   race: Race; detail: StateDetail | null;
@@ -911,9 +912,8 @@ function SectionDistribution({ chamber, office, sims }: { chamber: ChamberT; off
   const bw = Math.min(16, Math.max(2.5, (W / span) * binW * 0.66));
   const demP = chamber.demControl;
   const demRuns = Math.round(demP * sims), gopRuns = sims - demRuns;
-  const dp = Math.round(demP * 100);
-  const demLabel = dp > 99 ? ">99%" : dp < 1 ? "<1%" : `${dp}%`;
-  const gopLabel = dp > 99 ? "<1%" : dp < 1 ? ">99%" : `${100 - dp}%`;
+  const demLabel = probFraction(demP);
+  const gopLabel = probFraction(1 - demP);
   const chamberNoun = office === "house" ? "House majority" : office === "senate" ? "Senate control" : "majority of governorships";
   const bx1 = x(chamber.demP10), bx2 = x(chamber.demP90);
 
@@ -1187,7 +1187,7 @@ function RaceTable({ rows, onPick }: { rows: Race[]; onPick: (id: string) => voi
             </span>
             <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : ind ? "var(--ind)" : "var(--fc-dem)" }}>{fmtRaceMargin(r, s.margin)}</span>
             <span role="cell" className="fc-td-bar"><MarginBar m={s.margin} p10={s.p10} p90={s.p90} /></span>
-            <span role="cell" className="fc-td-prob num">{fmtPct(favProb, 1)}</span>
+            <span role="cell" className="fc-td-prob num">{fmtPct(favProb)}</span>
             <span role="cell"><RatingChip color={rt.color} cat={rt.cat} /></span>
             <span role="cell"><Spark pts={r.trend.map((t) => 100 - t.p * 100)} color={tone} /></span>
           </div>
@@ -1295,8 +1295,8 @@ function StageFlow({ race, env, sims }: {
   const complete = true;   // the desk runs all six stages; there is no shorter cut any more
   const s = race.est;
   const wMkt = complete && race.market ? race.wMkt : 0;
-  const pollShare = Math.round((race.pollAvg != null ? race.wPoll : 0) * (1 - wMkt) * 100);
-  const mktShare = Math.round(wMkt * 100);
+  const pollShare = (race.pollAvg != null ? race.wPoll : 0) * (1 - wMkt) * 100;
+  const mktShare = wMkt * 100;
   const fundShare = Math.max(0, 100 - pollShare - mktShare);
 
   const final = complete ? st.market : st.poll;
@@ -1312,12 +1312,12 @@ function StageFlow({ race, env, sims }: {
       cap: <>Presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, st.anchor)}</b>, from the last two presidential results with the candidate record priced in</>,
     },
     {
-      k: "the environment", v: st.fund, on: true, carry: `${fundShare}%`,
+      k: "the environment", v: st.fund, on: true, carry: pctPoints(fundShare),
       cap: <>A <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? `R+${Math.abs(env.npe).toFixed(1)}` : `D+${Math.abs(env.npe).toFixed(1)}`}</b> national
         environment lands through a {race.elast.toFixed(2)} elasticity · {race.open ? "open seat" : "incumbent running"}</>,
     },
     {
-      k: "the polls", v: st.poll, on: true, carry: `${pollShare}%`,
+      k: "the polls", v: st.poll, on: true, carry: pctPoints(pollShare),
       cap: race.pollAvg != null
         ? race.pollLevel === "lowess"
           ? <>{race.enop.toFixed(0)} polls project to an Election Day polling average of <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · LOWESS trend, every poll counted once{race.pollPsi != null ? <> · weighted average {fmtRaceMargin(race, race.pollPsi)}</> : null}</>
@@ -1340,10 +1340,10 @@ function StageFlow({ race, env, sims }: {
     },
     {
       k: "the market", v: st.market, on: complete,
-      carry: complete && mktShare ? `${mktShare}%` : undefined,
+      carry: complete && mktShare ? pctPoints(mktShare) : undefined,
       cap: complete
         ? race.market
-          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q), 0)}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade and book blend</>
+          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q))}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade and book blend</>
           : <>No usable order book, so the estimate passes through</>
         : null,
     },
@@ -1675,9 +1675,8 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
           <div className="fc-odds">
             <div className="fc-score">
               {(() => {
-                const dpp = Math.round(demProb * 100);
-                const dLab = dpp > 99 ? ">99%" : dpp < 1 ? "<1%" : `${dpp}%`;
-                const rLab = dpp > 99 ? "<1%" : dpp < 1 ? ">99%" : `${100 - dpp}%`;
+                const dLab = probFraction(demProb);
+                const rLab = probFraction(1 - demProb);
                 return [
                   { name: race.dem, party: "D", tone: sideColor(race, "dem"), prob: demProb, label: dLab, margin: -s.margin },
                   { name: race.gop, party: "R", tone: GOP, prob: s.prob, label: rLab, margin: s.margin },
@@ -1751,8 +1750,8 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
             {ti != null ? (
               <div className="fc-xhair" style={{ left: `${(ti / (demPts.length - 1)) * 100}%`, transform: ti / (demPts.length - 1) > 0.72 ? "translateX(calc(-100% - 10px))" : "translateX(10px)" }}>
                 <em>{dayLabel(updated, demPts.length, ti)}</em>
-                <span style={{ color: "var(--fc-dem)" }}>{surname(race.dem)} {demPts[ti].toFixed(0)}%</span>
-                <span style={{ color: "var(--fc-gop)" }}>{surname(race.gop)} {(100 - demPts[ti]).toFixed(0)}%</span>
+                <span style={{ color: "var(--fc-dem)" }}>{surname(race.dem)} {probPoints(demPts[ti])}</span>
+                <span style={{ color: "var(--fc-gop)" }}>{surname(race.gop)} {probPoints(100 - demPts[ti])}</span>
               </div>
             ) : null}
           </div>

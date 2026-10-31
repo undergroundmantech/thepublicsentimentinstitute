@@ -6,10 +6,11 @@ import { RATING_LABEL, RATE, fmtM, rating, ratingPill } from "@/app/lib/opp";
 import { districtFill, MODE_LABEL, type LegisMode } from "@/app/components/opp/legisColor";
 import DistrictTable from "./DistrictTable";
 import type { SLDistrict } from "./data";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type ChamberMapData = { box: [number, number, number, number]; outline: string; d: Record<string, [string, number, number]>; hold: Record<string, string> };
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 const partyWord = (p?: string | null) => (p === "D" ? "Democrats" : p === "R" ? "Republicans" : "another party");
 
 function bb(s: string) {

@@ -3,6 +3,7 @@
 import React, { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { DEM, GOP, fmtMargin, partyColor, surname } from "./lib";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export const TIP_CSS = `\n.fc-tip-odds { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 9px; padding-top: 8px; border-top: 1px solid rgba(var(--fc-line-rgb),0.08); font-size: 12.5px; }\n.fc-tip-odds span { width: 100%; font-family: var(--font-m); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }\n.fc-tip-odds b { font-family: var(--font-m); font-weight: 700; font-variant-numeric: tabular-nums; }\n.fc-tip-kv { display: flex; justify-content: space-between; gap: 12px; margin-top: 5px; font-size: 12px; color: rgba(var(--fc-ink-rgb),calc(0.55 * var(--fc-mute) + var(--fc-floor))); }\n.fc-tip-kv:first-of-type { margin-top: 9px; }\n.fc-tip-kv b { color: var(--hi); font-family: var(--font-m); font-weight: 700; font-variant-numeric: tabular-nums; }\n`;
 
@@ -72,8 +73,8 @@ export function VoteTip({ title, sub, demName, gopName, demColor = DEM, dem, rep
       {odds ? (
         <div className="fc-tip-odds">
           <span>Odds to win</span>
-          <b style={{ color: demColor }}>{demName} {Math.round(odds.dem * 100)}%</b>
-          <b style={{ color: GOP }}>{gopName} {Math.round(odds.gop * 100)}%</b>
+          <b style={{ color: demColor }}>{demName} {probFraction(odds.dem)}</b>
+          <b style={{ color: GOP }}>{gopName} {probFraction(odds.gop)}</b>
         </div>
       ) : null}
       {rows?.length ? rows.map(([k, v]) => <div key={k} className="fc-tip-kv"><span>{k}</span><b>{v}</b></div>) : null}

@@ -15,6 +15,7 @@ import {
   exactEdit, groupState, shareToTurnout, marginToShift, parseMargin,
 } from "./engine";
 import { ev, evSettled } from "@/app/lib/ev";
+import { pctPoints, probPoints } from "@/app/lib/fmtPct";
 import "./scenarios.css";
 
 export type Tool = "counties" | "groups";
@@ -259,7 +260,7 @@ function Lab({ rf, paths, tool, base, bootX }: { rf: RaceFile; paths: Path[]; to
         <div className="sl-score-r">
           <div className="sl-kpi"><span>Margin</span><b className={`mono ${out.M < 0 ? "d" : "rr"}`}><Num v={out.M} f={(x) => fmM(x, L)} /></b>
             <small className={Math.abs(out.dM) < 0.05 ? "" : out.dM < 0 ? "d" : "rr"}>{Math.abs(out.dM) < 0.05 ? `Forecast ${fmM(rf.m, L)}` : `${fmShift(-out.dM, L)} from the forecast`}</small></div>
-          <div className="sl-kpi"><span>Win chance</span><b className={`mono ${dWin ? "d" : "rr"}`}><Num v={fp * 100} f={(x) => `${x > 99.5 ? ">99" : x < 0.5 ? "<1" : Math.round(x)}%`} /></b>
+          <div className="sl-kpi"><span>Win chance</span><b className={`mono ${dWin ? "d" : "rr"}`}><Num v={fp * 100} f={(x) => probPoints(x)} /></b>
             <small>{fav} · forecast {pct(dWin ? rf.pD : 1 - rf.pD)}</small></div>
           <div className="sl-kpi"><span>Expected votes</span><b className="mono"><Num v={out.T} f={short} /></b>
             <small>{Math.abs(out.T - out.T0) < 1 ? `${short(Math.abs(out.net) / 2)} votes switching sides flips it` : `${out.T > out.T0 ? "+" : "−"}${short(Math.abs(out.T - out.T0))} from the forecast`}</small></div>
@@ -455,7 +456,7 @@ function CountyRail({ rf, sc, S, mem, setL, sel, setSel, setC, setR, region, set
       </section>
 
       <section className="card sl-box" aria-label="Swing an area">
-        <div className="card-h"><h3>Swing an area</h3><span className="eye" style={{ marginLeft: "auto" }}>{reg.i.length} {reg.i.length === 1 ? one : rf.unit} · {((100 * regVotes) / (out.T0 || 1)).toFixed(0)}% of the vote</span></div>
+        <div className="card-h"><h3>Swing an area</h3><span className="eye" style={{ marginLeft: "auto" }}>{reg.i.length} {reg.i.length === 1 ? one : rf.unit} · {pctPoints((100 * regVotes) / (out.T0 || 1))} of the vote</span></div>
         <div className="card-b">
           <div className="sl-regs" role="group" aria-label="Area">
             {regs.map((r) => <button key={r.k} type="button" className={`${region === r.k ? "on" : ""}${editZero(sc.r[r.k]) ? "" : " has"}`} aria-pressed={region === r.k} onClick={() => setRegion(r.k)}>{r.l}</button>)}
@@ -566,7 +567,7 @@ function GroupRail({ rf, sc, setSc, dim, setDim, setG, preset, applyPreset, sel,
               const sm = sc.g[d.k]?.m[gi] ?? 0, st = sc.g[d.k]?.t[gi] ?? 0;
               return (
                 <div key={g} className={`sl-g${sm || st ? " live" : ""}`} style={{ animationDelay: `${gi * 0.04}s` }}>
-                  <div className="sl-g-h"><b>{g}</b><span className="mono">{share.toFixed(0)}% of voters</span><span className={`mono ${mg < 0 ? "d" : "rr"}`}>{fmM(mg, L)}</span></div>
+                  <div className="sl-g-h"><b>{g}</b><span className="mono">{pctPoints(share)} of voters</span><span className={`mono ${mg < 0 ? "d" : "rr"}`}>{fmM(mg, L)}</span></div>
                   <Slider id={`sl-${d.k}-${gi}-m`} label="Margin" v={sm} min={-20} max={20} step={0.5} kind="m" out={fmShift(sm, L)} onChange={(v) => setG(d.k, gi, "m", v)} />
                   <Slider id={`sl-${d.k}-${gi}-t`} label="Turnout" v={st} min={-40} max={40} step={1} kind="t" out={st ? `${st > 0 ? "+" : "−"}${Math.abs(st)}%` : "Forecast"} onChange={(v) => setG(d.k, gi, "t", v)} />
                 </div>
@@ -612,7 +613,7 @@ function GroupRail({ rf, sc, setSc, dim, setDim, setG, preset, applyPreset, sel,
                   <div key={g} className="sl-mixr">
                     <span>{g}</span>
                     <span className="bars"><i style={{ width: `${crow[2 * gi]}%` }} /><s style={{ left: `${state[d.k][gi][0]}%` }} /></span>
-                    <b className="mono">{crow[2 * gi].toFixed(0)}%</b>
+                    <b className="mono">{pctPoints(crow[2 * gi])}</b>
                   </div>
                 ))}
                 <p className="sl-fine">The bar is this {rf.unit === "parishes" ? "parish" : rf.unit === "boroughs" ? "borough" : "county"}&apos;s share of its voters, the tick is the state&apos;s.</p>

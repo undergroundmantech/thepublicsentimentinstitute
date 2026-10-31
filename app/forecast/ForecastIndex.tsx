@@ -8,8 +8,9 @@ import { hubNumbers } from "./seo";
 import { slHref } from "./legislatures/data";
 import { bmHref } from "./measures/data";
 import { dbHref, getDownballot } from "./statewide/data";
+import { probFraction } from "@/app/lib/fmtPct";
 
-const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 const day = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
 function lead(r: FRace) {

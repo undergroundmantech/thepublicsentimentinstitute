@@ -5,8 +5,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { prep, compute, type Data, type Model, type Pin } from "@/app/forecast/what-if/WhatIf";
 import { Pointy } from "./Mascot";
+import { probFraction } from "@/app/lib/fmtPct";
 
-const pc = (p: number) => (p > 0.995 ? ">99%" : p < 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 
 export default function HomeWhatIf() {
@@ -30,7 +31,7 @@ export default function HomeWhatIf() {
       <div className="hw-ch">
         <span>{label}</span>
         <b className={c.now >= 0.5 ? "d" : "r"}>{pc(c.now >= 0.5 ? c.now : 1 - c.now)} {c.now >= 0.5 ? "D" : "R"}</b>
-        <small>{Math.abs(d) < 0.005 ? "As forecast" : `${d > 0 ? "+" : "-"}${Math.abs(d * 100).toFixed(0)} pts for Democrats`}</small>
+        <small>{Math.abs(d) < 0.0005 ? "As forecast" : `${d > 0 ? "+" : "-"}${Math.abs(d * 100).toFixed(1)} pts for Democrats`}</small>
         <i className="bar"><s style={{ width: `${c.now * 100}%` }} /></i>
       </div>
     );

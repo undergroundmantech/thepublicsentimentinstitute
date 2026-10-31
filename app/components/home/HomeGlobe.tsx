@@ -15,26 +15,26 @@ import Mascot from "./Mascot";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
 import { useThemeRef } from "@/app/lib/useSiteTheme";
+import { probFraction, probPoints } from "@/app/lib/fmtPct";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
 type Office = "senate" | "governor";
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
-const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 type SF = Feature<Geometry, { name: string }> & { st: string };
-// the odds count up from zero on load
+// the odds count up from zero on load; `to` is a chance in points, shown to one decimal
 function CountUp({ to }: { to: number }) {
   const [v, setV] = useState(to);
   useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setV(to); return; }
     let raf = 0; const t0 = performance.now();
-    const step = (now: number) => { const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3); setV(Math.round(to * e)); if (k < 1) raf = requestAnimationFrame(step); };
+    const step = (now: number) => { const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3); setV(k < 1 ? to * e : to); if (k < 1) raf = requestAnimationFrame(step); };
     setV(0); raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
   }, [to]);
-  return <>{v}%</>;
+  return <>{probPoints(v)}</>;
 }
-const pcN = (p: number) => (p > 0.99 || p < 0.01 ? null : Math.round(p * 100));
 
 export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
   const router = useRouter();
@@ -254,7 +254,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
           <p>The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races.</p>
           <div className="hg-odds">
             {([["Senate", odds.senate, "/forecast?office=senate"], ["House", odds.house, "/forecast?office=house"], ["Governors", odds.governor, "/forecast?office=governor"]] as const).map(([l, v, h]) => (
-              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pcN(v >= 0.5 ? v : 1 - v) == null ? pc(v >= 0.5 ? v : 1 - v) : <CountUp to={pcN(v >= 0.5 ? v : 1 - v)!} />}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
+              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b><CountUp to={100 * (v >= 0.5 ? v : 1 - v)} /></b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
             ))}
           </div>
           <div className="hg-cta"><Link className="btn g" href="/forecast">Open the forecast</Link><Link className="btn" href="/what-if">Play What if</Link><Link className="btn" href="/maps/electoral">Make a map</Link></div>

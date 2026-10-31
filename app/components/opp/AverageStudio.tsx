@@ -5,6 +5,7 @@
 // switch between the margin and each side's share, and zoom from the last 30 days to the whole cycle.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./studio.css";
+import { pctFraction } from "@/app/lib/fmtPct";
 
 export type StudioDaily = { t: number; a: number; b: number; net: number };
 export type StudioPoll = { pollster: string; t: number; a: number; b: number; margin: number; sampleSize: number; sampleType: string; grade: string; share?: number; op?: boolean; rLean?: number;
@@ -18,7 +19,7 @@ const DAY = 86400000;
 const RANGES: { k: Range; l: string; d: number }[] = [{ k: "30", l: "30D", d: 30 }, { k: "60", l: "60D", d: 60 }, { k: "90", l: "90D", d: 90 }, { k: "180", l: "6M", d: 182 }, { k: "all", l: "All", d: 1e5 }];
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 const fmtDate = (t: number, y = false) => new Date(t).toLocaleDateString("en-US", y ? { month: "short", day: "numeric", year: "numeric" } : { month: "short", day: "numeric" });
-const pc = (x: number) => (x >= 0.995 ? ">99%" : x < 0.005 ? "<1%" : `${(x * 100).toFixed(x < 0.1 ? 1 : 0)}%`);
+const pc = (x: number) => pctFraction(x);
 
 export function defaultFmt(a: Side, b: Side, marginLabel: string) {
   const race = marginLabel === "Margin";

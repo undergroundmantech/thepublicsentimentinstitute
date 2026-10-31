@@ -3,6 +3,7 @@
 // time (a Senate seat, a House district, a governor, the 2024 presidency), or the shift in the Democratic share of donor
 // dollars between two cycles, for the whole map or a race against an earlier race.
 import React, { useEffect, useMemo, useState } from "react";
+import { pctFraction } from "@/app/lib/fmtPct";
 
 type Cell = number[]; // [donations, donations under $200, D $ by band x4, R $ by band x4, all $]; -1 means unknown
 type RaceRow = [string, string, string, string, string | null, string, string, number, number, number, number, number];
@@ -38,7 +39,7 @@ const OFFN: Record<string, string> = { H: "House", S: "Senate", P: "President", 
 
 const usd = (n: number | null) => (n == null || n < 0 ? "n/a" : n >= 1e9 ? `$${(n / 1e9).toFixed(2)}B` : n >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : n >= 1e4 ? `$${Math.round(n / 1e3)}K` : n >= 1e3 ? `$${(n / 1e3).toFixed(1)}K` : `$${Math.round(n)}`);
 const num = (n: number | null) => (n == null || n < 0 ? "n/a" : n >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}K` : Math.round(n).toLocaleString());
-const pc = (x: number | null) => (x == null ? "n/a" : `${Math.round(x * 100)}%`);
+const pc = (x: number | null) => (x == null ? "n/a" : pctFraction(x));
 const lean = (x: number | null) => (x == null ? "n/a" : x >= 0.5 ? `D ${(x * 100).toFixed(x > 0.995 ? 0 : 1)}%` : `R ${((1 - x) * 100).toFixed(x < 0.005 ? 0 : 1)}%`);
 const shiftTxt = (v: number | null) => (v == null ? "n/a" : Math.abs(v) < 0.0005 ? "even" : `${v > 0 ? "D" : "R"} +${Math.abs(v * 100).toFixed(1)}`);
 const pres = (m: number | null) => (m == null ? "n/a" : m >= 0 ? `Trump +${m.toFixed(1)}` : `Harris +${(-m).toFixed(1)}`);
@@ -77,7 +78,7 @@ function fmt(m: string, v: number | null) {
   if (m === "adult") return `$${v < 10 ? v.toFixed(2) : Math.round(v).toLocaleString()}`;
   if (m === "per1k") return v.toFixed(v < 10 ? 1 : 0);
   if (m === "dshift") return shiftTxt(v);
-  if (m === "growth") return `${v >= 0 ? "+" : ""}${Math.round(v * 100)}%`;
+  if (m === "growth") return `${v >= 0 && pctFraction(v) !== "0.0%" ? "+" : ""}${pctFraction(v)}`;
   return String(v);
 }
 function quantiles(vals: number[], k: number) {

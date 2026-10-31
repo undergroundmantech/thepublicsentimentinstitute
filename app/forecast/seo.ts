@@ -7,10 +7,11 @@ import { crumbsLd, datasetLd, graph, pageLd, seo } from "@/app/lib/seo";
 import { dbHref, getDownballot, type DBRace } from "./statewide/data";
 import { getStatehouse, slHref, type SLChamber } from "./legislatures/data";
 import { bmHref, getMeasures, type Measure } from "./measures/data";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
-const pc = (p: number) => (p > 0.99 ? "more than 99%" : p < 0.01 ? "less than 1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 /** "a 61%" or "an 80%", read the way the number is spoken. */
-const aPc = (p: number) => { const t = pc(p); return /^(8|11%|18%)/.test(t) ? `an ${t}` : `a ${t}`; };
+const aPc = (p: number) => { const t = pc(p); return /^(8|1[18]\.)/.test(t) ? `an ${t}` : `a ${t}`; };
 const day = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 const pts = (m: number) => Math.abs(m).toFixed(1);
 
@@ -115,7 +116,7 @@ export function measureMeta(m: Measure): Metadata {
   const updated = getMeasures().meta.updated;
   const st = STATE_NAME[m.st] ?? m.st;
   const title = `${st} ${m.label} 2026 forecast: will it pass?`;
-  const description = `${st} ${m.label}, ${m.title}: On Point Politics gives it ${aPc(m.est.prob)} chance to pass, with Yes projected at ${m.est.yes.toFixed(1)}% against the ${Math.round(m.threshold * 1000) / 10}% it needs. County by county forecast and every poll, updated ${day(updated)}.`;
+  const description = `${st} ${m.label}, ${m.title}: On Point Politics gives it ${aPc(m.est.prob)} chance to pass, with Yes projected at ${m.est.yes.toFixed(1)}% against the ${pctFraction(m.threshold)} it needs. County by county forecast and every poll, updated ${day(updated)}.`;
   return seo({ ownImage: true, title, description, path: bmHref(m), modified: updated, keywords: [`${st} ${m.label}`, `${st} ballot measures 2026`, m.title] });
 }
 

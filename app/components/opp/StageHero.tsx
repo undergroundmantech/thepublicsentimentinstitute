@@ -4,6 +4,7 @@
 import React from "react";
 import PixelStage, { type StageLabel } from "./PixelStage";
 import { Pointy } from "@/app/components/home/Mascot";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type StageCand = { name: string; label: string; pct: number; votes: number; color: string };
 
@@ -128,7 +129,10 @@ export default function StageHero({ eyebrow, title, lede, pills, cands, paths, f
   cands: StageCand[]; paths: { id: string; d: string }[]; fills: Record<string, string>; labels?: Record<string, StageLabel>;
   win: number | null; lead: { name: string; color: string }; other: { name: string; color: string }; mapLabel: string; focus?: string;
 }) {
-  const n = win == null ? 0 : Math.round(win * 100);
+  // squares in the 100-square grid; whole squares by nature, so a 99.5% chance fills
+  // 99 of them, never all 100 unless the model value is exactly 100%
+  const n = win == null ? 0 : win >= 1 ? 100 : win <= 0 ? 0 : Math.min(99, Math.max(1, Math.round(win * 100)));
+  const winL = win == null ? "" : probFraction(win), otherL = win == null ? "" : probFraction(1 - win);
   const verdict = win == null ? "" : `${lead.name} ${win >= 0.95 ? "all but certain" : win >= 0.85 ? "very likely" : win >= 0.65 ? "favored" : "slightly favored"}`;
   return (
     <header className="sg" aria-label="Race overview">
@@ -149,13 +153,13 @@ export default function StageHero({ eyebrow, title, lede, pills, cands, paths, f
         </div>
       </div>
       {win != null ? (
-        <div className="sg-odds" aria-label={`${lead.name} wins ${n} of 100 simulated elections`}>
-          <div className="side"><b style={{ color: lead.color }}>{n}%</b><span>{lead.name}</span></div>
+        <div className="sg-odds" aria-label={`${lead.name} wins ${winL} of simulated elections`}>
+          <div className="side"><b style={{ color: lead.color }}>{winL}</b><span>{lead.name}</span></div>
           <div className="sg-grid" aria-hidden="true">
             {Array.from({ length: 100 }, (_, i) => <i key={i} style={{ "--c": i < n ? lead.color : other.color, animationDelay: `${0.9 + (i % 25) * 0.025 + Math.floor(i / 25) * 0.05}s`, opacity: i < n ? 1 : 0.55 } as React.CSSProperties} />)}
           </div>
-          <div className="side r"><b style={{ color: other.color }}>{100 - n}%</b><span>{other.name}</span></div>
-          <div className="cap"><b>{verdict}</b>Each square is one simulated election night, {lead.name} wins about {n} of 100</div>
+          <div className="side r"><b style={{ color: other.color }}>{otherL}</b><span>{other.name}</span></div>
+          <div className="cap"><b>{verdict}</b>Each square stands for one in 100 simulated election nights; {lead.name} wins {winL} of them</div>
         </div>
       ) : null}
     </header>

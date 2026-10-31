@@ -6,6 +6,7 @@ import { OFFICE_ORDER, dbHref, getDownballot, type DBRace } from "./data";
 import { seo } from "@/app/lib/seo";
 import JsonLd from "@/app/components/JsonLd";
 import { statewideLd } from "../seo";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export const metadata: Metadata = seo({"title": "2026 statewide offices forecast: attorney general, secretary of state and more", "description": "County by county On Point Politics forecasts for every 2026 partisan statewide race: lieutenant governor, attorney general, secretary of state, treasurer, auditor, comptroller, superintendent, insurance, labor, land and agriculture commissioners, utility commissions, education boards and partisan supreme court seats.", "path": "/forecast/statewide"});
 
@@ -30,7 +31,7 @@ function Row({ r }: { r: DBRace }) {
       <td><span className="d">{r.dem}</span> <span style={{ color: "var(--mute)" }}>vs</span> <span className="r">{r.gop}</span>{r.incRunning && r.incumbent ? <span style={{ color: "var(--mute)", fontSize: 12 }}> · {lastName(r.incumbent)} is the incumbent</span> : null}</td>
       <td><span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span></td>
       <td className={`n ${m < 0 ? "d" : "r"}`}>{fmtM(m)}</td>
-      <td className="n">{Math.round(dWin * 100)}%</td>
+      <td className="n">{probFraction(dWin)}</td>
       <td className="n">{r.polls.length || ""}</td>
     </tr>
   );

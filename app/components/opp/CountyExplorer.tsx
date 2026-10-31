@@ -4,6 +4,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { marginColor, marginColorInd, RAMP_CSS, RAMP_IND_CSS } from "@/app/lib/opp";
 import { pathsBox, type CountyPath } from "../home/countyGeo";
+import { pctPoints } from "@/app/lib/fmtPct";
 
 export type XRow = { id: string; name: string; a: number; b: number; other: number; total: number };
 export type XSide = { name: string; short: string; color: string; letter: string };
@@ -238,7 +239,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
               }) : null}
               {hov && hov !== sel && boxes[hov] ? <path className="cx-hov" d={P.find((p) => p.id === hov)?.d} /> : null}
               {sel && boxes[sel] ? <path className="cx-out" d={P.find((p) => p.id === sel)?.d} /> : null}
-              {mode !== "bubbles" ? labels.map((r) => { const b = boxes[r.id], x = (b[0] + b[2]) / 2, y = (b[1] + b[3]) / 2; const v = mode === "p24" ? m24(r.id) : mode === "shift" ? shift(r.id) : mode === "turnout" ? null : mOf(r); const sub = mode === "turnout" ? short(r.total) : v == null ? "" : mode === "shift" ? sMLabel(v) : mode === "p24" ? (Math.abs(v) < 0.05 ? "Even" : `${v < 0 ? "D" : "R"} +${Math.abs(v).toFixed(1)}`) : kind === "measure" ? `Yes ${(r.total ? (100 * r.a) / (r.a + r.b) : 50).toFixed(0)}%` : mLabel(v); return <text key={r.id} x={x} y={y - fs * 0.55} fontSize={fs} strokeWidth={fs / 4} textAnchor="middle" dominantBaseline="middle">{r.name.replace(/ (County|Parish|Borough|city)$/i, "")}{sub ? <tspan x={x} dy={fs * 1.1} fontSize={fs * 0.86} className="cx-sub">{sub}</tspan> : null}</text>; }) : null}
+              {mode !== "bubbles" ? labels.map((r) => { const b = boxes[r.id], x = (b[0] + b[2]) / 2, y = (b[1] + b[3]) / 2; const v = mode === "p24" ? m24(r.id) : mode === "shift" ? shift(r.id) : mode === "turnout" ? null : mOf(r); const sub = mode === "turnout" ? short(r.total) : v == null ? "" : mode === "shift" ? sMLabel(v) : mode === "p24" ? (Math.abs(v) < 0.05 ? "Even" : `${v < 0 ? "D" : "R"} +${Math.abs(v).toFixed(1)}`) : kind === "measure" ? `Yes ${pctPoints(r.total ? (100 * r.a) / (r.a + r.b) : 50)}` : mLabel(v); return <text key={r.id} x={x} y={y - fs * 0.55} fontSize={fs} strokeWidth={fs / 4} textAnchor="middle" dominantBaseline="middle">{r.name.replace(/ (County|Parish|Borough|city)$/i, "")}{sub ? <tspan x={x} dy={fs * 1.1} fontSize={fs * 0.86} className="cx-sub">{sub}</tspan> : null}</text>; }) : null}
             </svg>
             <div className="cx-zoom">
               <button aria-label="Zoom in" onClick={() => zoom(1.6)}>+</button>
@@ -302,7 +303,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
               return (
                 <li key={r.id}><button aria-current={sel === r.id} onMouseEnter={() => setHov(r.id)} onClick={() => pick(r.id, true)}>
                   <span className="rk">{i + 1}</span><span>{r.name}</span>
-                  <span className="mv" style={{ color: col }}>{tab === "big" ? short(r.total) : tab === "shift" ? sMLabel(v) : kind === "measure" ? `${((100 * r.a) / ((r.a + r.b) || 1)).toFixed(0)}% Yes` : mLabel(v)}</span>
+                  <span className="mv" style={{ color: col }}>{tab === "big" ? short(r.total) : tab === "shift" ? sMLabel(v) : kind === "measure" ? `${pctPoints((100 * r.a) / ((r.a + r.b) || 1))} Yes` : mLabel(v)}</span>
                 </button></li>
               );
             })}

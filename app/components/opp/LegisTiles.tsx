@@ -1,6 +1,7 @@
 // Tile map of every state legislature: each state is one square split in two, the senate on the left and
 // the house on the right, filled by the chance Democrats control that chamber after 2026.
 import { RATE } from "@/app/lib/opp";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type TileChamber = { st: string; chamber: "house" | "senate"; demControl: number; name: string; href?: string; current?: "D" | "R" | null };
 
@@ -46,7 +47,7 @@ export default function LegisTiles({ chambers, cell = 58, onPick }: { chambers: 
           const el = (
             <rect x={left ? x : x + half} y={y} width={half} height={s} fill={fill} className={c ? "lt-half" : undefined}
               onClick={c && onPick ? () => onPick(c) : undefined} style={c ? { cursor: "pointer" } : undefined}>
-              <title>{c ? `${c.name}: Democrats ${Math.round(c.demControl * 100)}% to control` : `${st} ${left ? "Senate" : "House"}: no partisan election in 2026`}</title>
+              <title>{c ? `${c.name}: Democrats ${probFraction(c.demControl)} to control` : `${st} ${left ? "Senate" : "House"}: no partisan election in 2026`}</title>
             </rect>
           );
           return c?.href && !onPick ? <a href={c.href}>{el}</a> : el;

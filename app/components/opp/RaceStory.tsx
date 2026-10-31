@@ -2,6 +2,10 @@
 // with its range, the forecast over time and the path the model takes to its number. Server rendered SVG and CSS,
 // animated by motion.css and the keyframes below, and fully readable with motion off.
 import React from "react";
+import { probFraction } from "@/app/lib/fmtPct";
+
+/** Whole dots of a k-dot graphic for a chance p: never all k (or none) unless p is exactly 1 (or 0). */
+const dotsFor = (p: number, k: number) => (p >= 1 ? k : p <= 0 ? 0 : Math.min(k - 1, Math.max(1, Math.round(p * k))));
 
 const fmtM = (m: number, ind = false) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
 
@@ -62,17 +66,17 @@ export function phraseFor(p: number) {
 
 /** 100 simulated election nights as dots, filled one by one: the leader's wins first, then the other side's. */
 export function NightsGrid({ win, leadName, otherName, leadColor, otherColor, sims }: { win: number; leadName: string; otherName: string; leadColor: string; otherColor: string; sims: number }) {
-  const n = Math.round(win * 100);
+  const n = dotsFor(win, 100), wL = probFraction(win);
   return (
     <div className="card st-nights sx-rv-r">
       <div className="st-odds">
-        <div><small>{leadName}</small><b style={{ color: leadColor }}>{n}%</b></div>
-        <div style={{ textAlign: "right" }}><small>{otherName}</small><b style={{ color: otherColor, fontSize: 30 }}>{100 - n}%</b></div>
+        <div><small>{leadName}</small><b style={{ color: leadColor }}>{wL}</b></div>
+        <div style={{ textAlign: "right" }}><small>{otherName}</small><b style={{ color: otherColor, fontSize: 30 }}>{probFraction(1 - win)}</b></div>
       </div>
-      <div className="st-grid" role="img" aria-label={`${leadName} wins ${n} of 100 simulated elections`}>
+      <div className="st-grid" role="img" aria-label={`${leadName} wins ${wL} of simulated elections`}>
         {Array.from({ length: 100 }, (_, i) => <i key={i} style={{ background: i < n ? leadColor : otherColor, opacity: i < n ? 1 : 0.85, animationDelay: `${i * 9}ms` }} />)}
       </div>
-      <p style={{ margin: 0, fontSize: 13, color: "var(--ink2)" }}>{leadName} wins about {n} of every 100 election nights in {sims.toLocaleString("en-US")} simulations. Each dot is one night.</p>
+      <p style={{ margin: 0, fontSize: 13, color: "var(--ink2)" }}>{leadName} wins {wL} of election nights in {sims.toLocaleString("en-US")} simulations. Each dot is one in 100 nights.</p>
     </div>
   );
 }
@@ -84,7 +88,7 @@ export function ShareBars({ cands, half }: { cands: { name: string; party: strin
     <div className="card st-share">
       {cands.map((c) => (
         <div className="row" key={c.name}>
-          <div className="nm">{c.name}<small>{c.party}{c.win != null ? ` · ${Math.round(c.win * 100)}% to win` : ""}</small></div>
+          <div className="nm">{c.name}<small>{c.party}{c.win != null ? ` · ${probFraction(c.win)} to win` : ""}</small></div>
           <div className="st-trk" role="img" aria-label={`${c.name} ${c.pct.toFixed(1)} percent, 80 percent range ${(c.pct - half).toFixed(1)} to ${(c.pct + half).toFixed(1)}`}>
             {[30, 40, 50, 60, 70].map((t) => <span key={t} className={`st-tk${t === 50 ? " mid" : ""}`} style={{ left: `${X(t)}%` }}><em>{t}</em></span>)}
             <span className="st-band" style={{ left: `${X(c.pct - half)}%`, width: `${Math.max(0.5, X(c.pct + half) - X(c.pct - half))}%`, background: c.color }} />
@@ -110,15 +114,15 @@ export function TrendChart({ trend, demName, gopName, demColor, gopColor }: { tr
   const dW = 1 - last.p, gW = last.p;
   return (
     <div className="card st-trend" style={{ padding: "14px 10px 8px" }}>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Chance of winning over the last ${trend.length} forecast updates, now ${demName} ${Math.round(dW * 100)} percent and ${gopName} ${Math.round(gW * 100)} percent`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Chance of winning over the last ${trend.length} forecast updates, now ${demName} ${probFraction(dW).slice(0, -1)} percent and ${gopName} ${probFraction(gW).slice(0, -1)} percent`}>
         {[0, 0.25, 0.5, 0.75, 1].map((g) => <g key={g}><line x1={L} x2={W - Rr} y1={y(g)} y2={y(g)} stroke={g === 0.5 ? "rgba(255,255,255,.28)" : "rgba(255,255,255,.07)"} strokeDasharray={g === 0.5 ? "4 5" : undefined} /><text x={L - 8} y={y(g) + 4} textAnchor="end">{Math.round(g * 100)}%</text></g>)}
         <path d={`${line((t) => 1 - t.p)}L${x(trend.length - 1)},${y(0)}L${x(0)},${y(0)}Z`} fill={demColor} opacity=".08" />
         <path d={line((t) => 1 - t.p)} fill="none" stroke={demColor} strokeWidth="3" strokeLinejoin="round" pathLength={1} className="sx-draw" />
         <path d={line((t) => t.p)} fill="none" stroke={gopColor} strokeWidth="3" strokeLinejoin="round" pathLength={1} className="sx-draw" />
         <circle cx={x(trend.length - 1)} cy={y(dW)} r="5" fill={demColor} stroke="#fff" strokeWidth="2" />
         <circle cx={x(trend.length - 1)} cy={y(gW)} r="5" fill={gopColor} stroke="#fff" strokeWidth="2" />
-        <text x={W - Rr + 12} y={y(dW) + 5} style={{ font: "800 15px var(--font-m)", fill: demColor }}>{Math.round(dW * 100)}% {demName}</text>
-        <text x={W - Rr + 12} y={y(gW) + 5} style={{ font: "800 15px var(--font-m)", fill: gopColor }}>{Math.round(gW * 100)}% {gopName}</text>
+        <text x={W - Rr + 12} y={y(dW) + 5} style={{ font: "800 15px var(--font-m)", fill: demColor }}>{probFraction(dW)} {demName}</text>
+        <text x={W - Rr + 12} y={y(gW) + 5} style={{ font: "800 15px var(--font-m)", fill: gopColor }}>{probFraction(gW)} {gopName}</text>
         <text x={L} y={H - 8}>{trend.length} updates ago</text>
         <text x={W - Rr} y={H - 8} textAnchor="end">Today</text>
       </svg>
@@ -210,22 +214,22 @@ export function WinGauge({ win, leadName, otherName, leadColor, otherColor, lead
   const N = 220, pts: { x: number; y: number; a: number }[] = [];
   while (pts.length < N) { const a = rnd() * Math.PI, r = 70 + rnd() * 62; pts.push({ x: 150 - Math.cos(a) * r, y: 150 - Math.sin(a) * r, a }); }
   pts.sort((p, q) => p.a - q.a);
-  const k = Math.round(win * N);
+  const k = dotsFor(win, N), wL = probFraction(win);
   return (
     <div className="card st-gauge sx-rv-r">
       <div className="lab">Chance of winning</div>
-      <svg viewBox="0 0 300 160" role="img" aria-label={`${leadName} ${Math.round(win * 100)} percent chance of winning`}>
+      <svg viewBox="0 0 300 160" role="img" aria-label={`${leadName} ${wL.slice(0, -1)} percent chance of winning`}>
         <path d="M18 150 A132 132 0 0 1 282 150" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth="64" />
         {pts.map((p, i) => <circle key={i} className="g" cx={p.x} cy={p.y} r={2.4} fill={i < k ? leadColor : otherColor} opacity={i < k ? 0.95 : 0.6} style={{ animationDelay: `${i * 5}ms` }} />)}
       </svg>
-      <div className="big" style={{ color: leadColor }}>{Math.round(win * 100)}%</div>
+      <div className="big" style={{ color: leadColor }}>{wL}</div>
       <div className="who">{leadName}</div>
       <div className="duo">
-        <div><span className="av" style={{ background: leadColor }}>{initials(leadFull)}</span><span><small>{leadName}</small><b style={{ color: leadColor }}>{Math.round(win * 100)}%</b></span></div>
-        <div><span className="av" style={{ background: otherColor }}>{initials(otherFull)}</span><span><small>{otherName}</small><b style={{ color: otherColor }}>{100 - Math.round(win * 100)}%</b></span></div>
+        <div><span className="av" style={{ background: leadColor }}>{initials(leadFull)}</span><span><small>{leadName}</small><b style={{ color: leadColor }}>{wL}</b></span></div>
+        <div><span className="av" style={{ background: otherColor }}>{initials(otherFull)}</span><span><small>{otherName}</small><b style={{ color: otherColor }}>{probFraction(1 - win)}</b></span></div>
       </div>
       <div className="verdict" style={{ color: leadColor }}>{verdict}</div>
-      <div className="sub">{leadName} wins about {Math.round(win * 100)} of 100 nights like this</div>
+      <div className="sub">{leadName} wins {wL} of nights like this</div>
     </div>
   );
 }

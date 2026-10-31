@@ -6,6 +6,7 @@ import ForecastNav from "@/app/components/opp/ForecastNav";
 import { seo } from "@/app/lib/seo";
 import DonorExplorer, { type DRace } from "./DonorExplorer";
 import "./donors.css";
+import { pctFraction, pctPoints } from "@/app/lib/fmtPct";
 
 export const metadata: Metadata = seo({
   title: "Donor coalitions: who funds the 2026 midterms, and where",
@@ -41,8 +42,8 @@ export default function Page() {
       <section className="dn-kpis">
         <div className="glass"><span>Democratic candidates</span><b className="d">{usd(P.dem.mapped)}</b><small>mapped, of {usd(P.dem.raised)} raised</small></div>
         <div className="glass"><span>Republican candidates</span><b className="r">{usd(P.rep.mapped)}</b><small>mapped, of {usd(P.rep.raised)} raised</small></div>
-        <div className="glass"><span>Through ActBlue</span><b>{Math.round((100 * src.actblue) / srcT)}%</b><small>WinRed {Math.round((100 * src.winred) / srcT)}%, direct to campaigns {Math.round((100 * src.campaign) / srcT)}%</small></div>
-        <div className="glass"><span>Gifts under $200</span><b>{Math.round((100 * nb[0]) / nbT)}%</b><small>of every donation counted, {Math.round((100 * nb[3]) / nbT * 10) / 10}% are $2,500 and up</small></div>
+        <div className="glass"><span>Through ActBlue</span><b>{pctPoints((100 * src.actblue) / srcT)}</b><small>WinRed {pctPoints((100 * src.winred) / srcT)}, direct to campaigns {pctPoints((100 * src.campaign) / srcT)}</small></div>
+        <div className="glass"><span>Gifts under $200</span><b>{pctPoints((100 * nb[0]) / nbT)}</b><small>of every donation counted, {pctPoints((100 * nb[3]) / nbT)} are $2,500 and up</small></div>
       </section>
 
       <section className="dn-sec glass">
@@ -70,7 +71,7 @@ export default function Page() {
         <div className="dn-sh"><h2>Where the donations come from</h2><span>Donations per 1,000 votes cast in 2024, every party</span></div>
         <div className="dn-states">
           {d.states.slice(0, 51).map((s) => (
-            <div key={s.st} title={`${s.donations.toLocaleString()} donations, ${Math.round(s.small * 100)}% under $200`}>
+            <div key={s.st} title={`${s.donations.toLocaleString()} donations, ${pctFraction(s.small)} under $200`}>
               <b>{s.st}</b><span className="bar"><i style={{ width: `${Math.min(100, (100 * s.per1k) / d.states[0].per1k)}%` }} /></span><em>{Math.round(s.per1k)}</em>
             </div>
           ))}

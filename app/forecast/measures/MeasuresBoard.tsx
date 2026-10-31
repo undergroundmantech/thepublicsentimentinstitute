@@ -1,15 +1,16 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 export type BoardMeasure = { id: string; st: string; state: string; href: string; label: string; title: string; group: string; groupLabel: string; yes: number; p10: number; p90: number; prob: number; threshold: number; polled: boolean };
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 
 function Bar({ m }: { m: BoardMeasure }) {
   const x = (v: number) => `${Math.max(0, Math.min(100, ((v - 20) / 60) * 100))}%`;
   return (
-    <div className="bm-bar" title={`Yes ${m.yes.toFixed(1)}%, 80% range ${m.p10.toFixed(0)} to ${m.p90.toFixed(0)}, needs ${Math.round(m.threshold * 1000) / 10}%`}>
+    <div className="bm-bar" title={`Yes ${m.yes.toFixed(1)}%, 80% range ${m.p10.toFixed(1)} to ${m.p90.toFixed(1)}, needs ${pctFraction(m.threshold)}`}>
       <i style={{ width: x(m.yes) }} />
       <u style={{ left: x(m.p10), width: `calc(${x(m.p90)} - ${x(m.p10)})` }} />
       <s style={{ left: x(m.threshold * 100) }} />

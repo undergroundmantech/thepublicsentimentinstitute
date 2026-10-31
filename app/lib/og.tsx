@@ -3,6 +3,7 @@
 import { ImageResponse } from "next/og";
 import fs from "node:fs";
 import path from "node:path";
+import { probFraction } from "./fmtPct";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_TYPE = "image/png";
@@ -94,5 +95,5 @@ export function ogCard(c: Card) {
   );
 }
 
-export const pctOg = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+export const pctOg = (p: number) => probFraction(p);
 export const dayOg = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase();

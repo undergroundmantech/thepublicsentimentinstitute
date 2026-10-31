@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import { RATE, RATING_LABEL, rating, raceHref, ELECTION_ISO, type Rating } from "@/app/lib/opp";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type BRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean };
 export type BChamber = { demControl: number; demSeats: number; median: number; seatsTotal: number; p10: number; p90: number; notUpD: number; notUpR: number; majority: number };
@@ -185,11 +186,11 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
         <div className="fb-left">
           <div className="fb-eye">{office === "senate" ? "Senate · 51 for control" : office === "house" ? "House · 218 for a majority" : `Governors · ${races.length} races in 2026`}</div>
           <div className="fb-party d">
-            <div className="fb-top"><span className="nm">Democrats</span><span className="tag">{Math.round(ch.demControl * 100)}% control</span></div>
+            <div className="fb-top"><span className="nm">Democrats</span><span className="tag">{probFraction(ch.demControl)} control</span></div>
             <div className="big"><div><b>{dSeats}</b><small>{office === "governor" ? "governors" : "seats"} · favored in {favD}</small></div><Arc total={ch.seatsTotal} d={dSeats} color="#bcd0ff" /></div>
           </div>
           <div className="fb-party r">
-            <div className="fb-top"><span className="nm">Republicans</span><span className="tag">{Math.round((1 - ch.demControl) * 100)}% control</span></div>
+            <div className="fb-top"><span className="nm">Republicans</span><span className="tag">{probFraction(1 - ch.demControl)} control</span></div>
             <div className="big"><div><b>{rSeats}</b><small>{office === "governor" ? "governors" : "seats"} · favored in {favR}</small></div><Arc total={ch.seatsTotal} d={rSeats} color="#ffc2cb" /></div>
           </div>
           <div className="fb-eye" style={{ marginTop: 16 }}>The closest {office === "house" ? "seats" : "races"}</div>
@@ -231,8 +232,8 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
           {tip && tipRace ? (
             <div className="fb-tip" style={{ left: tip.x, top: tip.y , ...tipFlip(tip!) }}>
               <h4>{tipRace.name}</h4>
-              <div className="r"><span style={{ color: tipRace.ind ? "var(--ind)" : "var(--dem2)" }}>{tipRace.dem}</span><b>{Math.round((1 - tipRace.p) * 100)}%</b></div>
-              <div className="r"><span style={{ color: "var(--gop2)" }}>{tipRace.gop}</span><b>{Math.round(tipRace.p * 100)}%</b></div>
+              <div className="r"><span style={{ color: tipRace.ind ? "var(--ind)" : "var(--dem2)" }}>{tipRace.dem}</span><b>{probFraction(1 - tipRace.p)}</b></div>
+              <div className="r"><span style={{ color: "var(--gop2)" }}>{tipRace.gop}</span><b>{probFraction(tipRace.p)}</b></div>
               <div className="r"><span>{RATING_LABEL[rate(tipRace)]}</span><b>{fm(tipRace.m, tipRace.ind)}</b></div>
               <div className="cta">Click for the full race</div>
             </div>
@@ -252,7 +253,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
             <div className="mk">{office === "governor" ? "half" : `${ch.majority} for control`}</div>
             <div className="fb-chips">
               <span>{toss} toss {toss === 1 ? "up" : "ups"}</span>
-              <span>{Math.round(Math.max(ch.demControl, 1 - ch.demControl) * 100)}% chance</span>
+              <span>{probFraction(Math.max(ch.demControl, 1 - ch.demControl))} chance</span>
               <span>Range {ch.p10} to {ch.p90} D</span>
             </div>
           </div>

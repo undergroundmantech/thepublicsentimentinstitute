@@ -7,6 +7,7 @@ import { RATE } from "@/app/lib/opp";
 import { districtFill, MODE_LABEL, type LegisMode } from "./legisColor";
 import "./usl.css";
 import { useSiteMode } from "@/app/lib/useSiteTheme";
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type USChamber = {
   id: string; st: string; chamber: "house" | "senate"; name: string; demControl: number;
@@ -17,7 +18,7 @@ type GeoStates = { frame: [number, number]; states: Record<string, string> };
 
 const cache = new Map<string, Promise<unknown>>();
 const getJson = <T,>(u: string) => { if (!cache.has(u)) cache.set(u, fetch(u).then((r) => r.json())); return cache.get(u) as Promise<T>; };
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 const cssVar = (el: Element, v: string, fb: string) => getComputedStyle(el).getPropertyValue(v).trim() || fb;
 
 type Cell = { key: string; ch: USChamber; d: string; seats: number; p: number | null; m: number | null; last: string | null; ind: boolean; hold?: string; path: Path2D; bb: [number, number, number, number] };

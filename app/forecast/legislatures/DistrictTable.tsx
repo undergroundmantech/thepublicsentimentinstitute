@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { RATING_LABEL, fmtM, rating, ratingPill } from "@/app/lib/opp";
 import type { SLDistrict } from "./data";
+import { probFraction } from "@/app/lib/fmtPct";
 
 type View = "close" | "all" | "safe";
 const num = (d: string) => { const m = d.match(/\d+/); return m ? Number(m[0]) : 0; };
@@ -68,7 +69,7 @@ export default function DistrictTable({ rows, label, selected, onSelect }: { row
                   <td>{x.dem || x.gop || x.ind ? <>{x.indMain && x.ind ? <span style={{ color: "var(--ind)" }}>{x.ind} ({x.indParty ?? "I"})</span> : <span className="d">{x.dem ?? "No Democrat"}</span>} <span style={{ color: "var(--mute)" }}>vs</span> <span className="r">{x.gop ?? "No Republican"}</span>{!x.indMain && x.ind ? <span style={{ color: "var(--mute)", fontSize: 11.5 }}> · {x.ind} ({x.indParty ?? "I"})</span> : null}</> : <span style={{ color: "var(--mute)" }}>{st ?? "Primary results not posted"}</span>}{x.note ? <span className="sl-yr" title={x.note}> · {x.note}</span> : null}{x.polls?.length ? <span className="pill t sl-poll">{x.polls.length} {x.polls.length === 1 ? "poll" : "polls"}</span> : null}</td>
                   <td className={`n ${x.lean == null ? "" : x.lean < 0 ? "d" : "r"}`}>{x.lean == null ? "" : fmtM(x.lean)}</td>
                   <td className={`n ${modeled ? (m! < 0 ? "d" : "r") : ""}`} style={modeled && x.indMain && m! < 0 ? { color: "var(--ind)" } : undefined}>{modeled ? (x.indMain ? fmtM(m!).replace("D +", "I +") : fmtM(m!)) : st ?? ""}</td>
-                  <td className="n">{x.probD == null ? "" : `${Math.round(x.probD * 100)}%${x.indMain ? " I" : ""}`}</td>
+                  <td className="n">{x.probD == null ? "" : `${probFraction(x.probD)}${x.indMain ? " I" : ""}`}</td>
                   <td className="n d">{x.votes ? (x.indMain ? `${x.votes[2].toLocaleString("en-US")} I` : x.votes[0].toLocaleString("en-US")) : ""}</td>
                   <td className="n r">{x.votes ? x.votes[1].toLocaleString("en-US") : ""}</td>
                   <td className="n">{x.votes ? x.votes[3].toLocaleString("en-US") : ""}</td>

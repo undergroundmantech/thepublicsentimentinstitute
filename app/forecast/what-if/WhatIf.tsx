@@ -10,6 +10,7 @@ import { Pointy } from "@/app/components/home/Mascot";
 import { RATE, RATING_LABEL, rating, raceHref, STATE_NAME, type Rating } from "@/app/lib/opp";
 import { ev, evSettled } from "@/app/lib/ev";
 import "./whatif.css";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 type Race = { id: string; k: string; office: string; st: string; state: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean };
 type HRace = { id: string; st: string; d: number; name: string; dem: string; gop: string; m: number; p: number };
@@ -22,7 +23,7 @@ type Office = "senate" | "governor" | "house";
 const lg = (p: number) => { const q = Math.min(0.999, Math.max(0.001, p)); return Math.log(q / (1 - q)); };
 const ex = (x: number) => 1 / (1 + Math.exp(-x));
 const calib = (pub: number, now: number, base: number) => ex(lg(pub) + lg(now) - lg(base));
-const pc = (p: number) => (p > 0.995 ? ">99%" : p < 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
 function probFill(pD: number) {
@@ -231,7 +232,7 @@ export default function WhatIf() {
       <div className={`wif-ch ${c.now >= 0.5 ? "d" : "r"}`}>
         <span className="lb">{label}</span>
         <b>{pc(c.now >= 0.5 ? c.now : 1 - c.now)} <small>{c.now >= 0.5 ? "D control" : "R control"}</small></b>
-        <span className={`dl ${Math.abs(d) < 0.005 ? "" : d > 0 ? "up" : "dn"}`}>{Math.abs(d) < 0.005 ? "No change from the forecast" : `${d > 0 ? "+" : "-"}${Math.abs(d * 100).toFixed(0)} pts for Democrats, from ${pc(c.base)}`}</span>
+        <span className={`dl ${Math.abs(d) < 0.0005 ? "" : d > 0 ? "up" : "dn"}`}>{Math.abs(d) < 0.0005 ? "No change from the forecast" : `${d > 0 ? "+" : "-"}${Math.abs(d * 100).toFixed(1)} pts for Democrats, from ${pc(c.base)}`}</span>
         <span className="sb">{c.seats.toFixed(1)} D {of} on average</span>
         <i className="bar"><s style={{ width: `${c.now * 100}%` }} /><em style={{ left: `${c.base * 100}%` }} /></i>
       </div>
@@ -360,7 +361,7 @@ export default function WhatIf() {
                     <td><Link href={r.href}><b>{r.name}</b></Link>{flip ? <span className="fl">Flips</span> : null}{r.pinned ? <span className="pn">Your pick</span> : null}</td>
                     <td className="n mono">{pc(r.pb)} {r.ind ? "I" : "D"}{r.mb != null && Math.abs(r.mb) < 99 ? <small>{fm(r.mb, r.ind)}</small> : null}</td>
                     <td className="n mono">{pc(r.pa)} {r.ind ? "I" : "D"}{r.ma != null ? <small>{fm(r.ma, r.ind)}</small> : null}</td>
-                    <td className={`n mono ${d > 0 ? "d" : d < 0 ? "r" : ""}`}>{d > 0 ? "+" : ""}{(d * 100).toFixed(0)} pts</td>
+                    <td className={`n mono ${d > 0 ? "d" : d < 0 ? "r" : ""}`}>{d > 0 && pctFraction(d) !== "0.0%" ? "+" : ""}{pctFraction(d).slice(0, -1)} pts</td>
                     <td><span className="wif-cb"><i style={{ width: `${r.pa * 100}%`, background: r.ind ? "#b78cff" : "#3d7bff" }} /><s style={{ width: `${(1 - r.pa) * 100}%` }} /></span></td>
                   </tr>
                 );

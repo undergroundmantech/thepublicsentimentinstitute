@@ -2,6 +2,7 @@
 // Inputs come from public/forecast/scenarios/{id}.json, built by scripts/forecast/scenarios/build_scenarios.mjs.
 // Margins are R minus D in points, the sign the site uses. Every shift the user sets is "toward Democrats"
 // when positive, the way the statewide swingometer reads.
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type Dim = { k: string; l: string; g: string[] };
 export type County = [id: string, name: string, dem: number, rep: number, other: number];
@@ -256,7 +257,7 @@ export function decodeScen(h: string, rf: RaceFile): Scen | null {
 }
 
 // ---------- formatting ----------
-export const pct = (p: number) => (p > 0.995 ? ">99%" : p < 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+export const pct = (p: number) => probFraction(p);
 /** an R minus D margin as "D +4.2" or "R +1.0" */
 export const fmM = (m: number, L = "D") => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? L : "R"} +${Math.abs(m).toFixed(1)}`);
 /** a shift toward Democrats as "D +3.0" */

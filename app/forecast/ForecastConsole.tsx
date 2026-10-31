@@ -16,6 +16,7 @@ import SpendingTracker, { SPENDING_CSS } from "./Spending";
 import Ambient from "@/app/components/opp/Ambient";
 import SeatBars from "./SeatBars";
 import "./console.css";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 export type Layer = "senate" | "house" | "governor" | "statewide" | "legis" | "measures";
 export type CRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; open: boolean; p10: number; p90: number; office?: string; officeLabel?: string; pl?: [number, number, number, number][] };
@@ -32,7 +33,7 @@ const LAYERS: { k: Layer; label: string; q: string }[] = [
   { k: "senate", label: "Senate", q: "senate" }, { k: "house", label: "House", q: "house" }, { k: "governor", label: "Governors", q: "governor" },
   { k: "statewide", label: "Statewide offices", q: "statewide" }, { k: "legis", label: "State legislatures", q: "legislatures" }, { k: "measures", label: "Ballot measures", q: "measures" },
 ];
-const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const unc = (r: CRace) => Math.abs(r.m) >= 99;
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
@@ -179,7 +180,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       const dWin = c.demControl >= 0.5;
       return {
         verdict: layer === "senate"
-          ? <>{dWin ? "Democrats win the Senate" : "Republicans hold the Senate"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>
+          ? <>{dWin ? "Democrats win the Senate" : "Republicans hold the Senate"} in <b className={dWin ? "d" : "r"}>{pc(dWin ? c.demControl : 1 - c.demControl)}</b> of simulations</>
           : <>Democrats are favored in <b className="d">{govFav} of {rs.length}</b> governor races and lead most governorships in <b className="d">{pc(c.demControl)}</b> of simulations</>,
         cells, cols: 25, mark: layer === "senate" ? 50 : 25, markLabel: layer === "senate" ? "51 for control" : "26 for most",
         stats: [[layer === "senate" ? "Average D seats" : "Average D governors", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(rs.filter((r) => rateOf(r) === "toss").length)]] as [string, string][],
@@ -187,7 +188,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
     }
     if (layer === "house") {
       const c = ch.house, dWin = c.demControl >= 0.5;
-      return { verdict: <>{dWin ? "Democrats win the House" : "Republicans hold the House"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>,
+      return { verdict: <>{dWin ? "Democrats win the House" : "Republicans hold the House"} in <b className={dWin ? "d" : "r"}>{pc(dWin ? c.demControl : 1 - c.demControl)}</b> of simulations</>,
         cells: cellsOf(data.house), cols: 29, mark: 217, markLabel: "218 for control",
         stats: [["Average D seats", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(data.house.filter((r) => rateOf(r) === "toss").length)]] as [string, string][] };
     }
@@ -404,7 +405,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                 <tr key={x.href} onClick={() => router.push(x.href)}>
                   <td><Link href={x.href}><b>{STATE_NAME[x.st] ?? x.st} {x.label}</b></Link></td>
                   <td className="ttl">{x.title}</td>
-                  <td className="n mono">{x.yes.toFixed(1)}%<small>needs {(x.thr * 100).toFixed(0)}%</small></td>
+                  <td className="n mono">{x.yes.toFixed(1)}%<small>needs {pctFraction(x.thr)}</small></td>
                   <td><span className="fcx-cb ms"><i style={{ width: `${x.prob * 100}%` }} /></span><small className={`mono ${x.prob > 0.5 ? "y" : "no"}`}>{pc(x.prob)}</small></td>
                 </tr>))}
             </tbody>

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { US_STATE_PATHS } from "@/app/_polling/lib/usStatePaths";
 import { RATE, RATING_LABEL, darkLabel, fmtM, lastName, marginColor, partyColor, rating, ratingPill, raceHref, RAMP_CSS, STATE_NAME, type Rating } from "@/app/lib/opp";
 import type { MiniRace } from "@/app/lib/forecastData";
+import { probFraction } from "@/app/lib/fmtPct";
 import { Tip, useTip } from "./motion";
 import { fit, pathsBox, type CountyPath, type CountyRow } from "./countyGeo";
 import Walker, { WALKER_CSS, type WalkStop } from "./Walker";
@@ -189,7 +190,7 @@ function Seats({ office, chamber, races, notUp }: { office: Office; chamber: Cha
     <div className="card">
       <div className="card-h"><h3>{office === "senate" ? "Senate seats" : "Governorships"}</h3><span className="eye" style={{ marginLeft: "auto" }}>2,000 sims</span></div>
       <div className="card-b">
-        <div className="seatline"><span className="d">{chamber.demSeats.toFixed(1)} D</span><span style={{ color: "var(--mute)" }}>mean seats · D control {Math.round(chamber.demControl * 100)}%</span><span className="r">{chamber.gopSeats.toFixed(1)} R</span></div>
+        <div className="seatline"><span className="d">{chamber.demSeats.toFixed(1)} D</span><span style={{ color: "var(--mute)" }}>mean seats · D control {probFraction(chamber.demControl)}</span><span className="r">{chamber.gopSeats.toFixed(1)} R</span></div>
         <div className="seatbar">{segs.map(([k, n]) => <i key={k} style={{ background: RATE[k], width: on ? `${(n / tot) * 100}%` : 0 }} title={`${RATING_LABEL[k]}: ${n}`} />)}</div>
         <svg className="hist" viewBox={`0 0 ${W} ${H}`} style={{ marginTop: 14 }} role="img" aria-label="Democratic seats across the simulations">
           <text x={pad} y={10} style={{ font: "600 9px var(--font-m)", fill: "#8e86a3", letterSpacing: ".1em" }}>DEM SEATS, SHARE OF SIMULATIONS</text>

@@ -13,6 +13,7 @@ import USLegisMap from "@/app/components/opp/USLegisMap";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { useSiteMode } from "@/app/lib/useSiteTheme";
 import "./hub.css";
+import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 type Lvl = "sen" | "gov" | "db" | "house" | "sl";
 type Item = { lvl: Lvl; p: number; m: number | null; name: string; sub: string; href: string; ind?: boolean };
@@ -33,7 +34,7 @@ const LEVELS: { k: Lvl; label: string; one: string }[] = [
 ];
 const LVL_LABEL = Object.fromEntries(LEVELS.map((l) => [l.k, l.label])) as Record<Lvl, string>;
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 const fmtM = (m: number) => `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`;
 function probFill(p: number, ind = false) {
   if (ind && p > 0.5) return RATE.ind;
@@ -489,7 +490,7 @@ export default function ForecastHub() {
                   <Link key={href} href={href} className="hub-bm-row">
                     <span className="hub-tag sl">{st}</span>
                     <span className="hub-bm-name"><b>{label}</b><small>{title}</small></span>
-                    <span className="hub-bm-bar" title={`Yes ${yes.toFixed(1)}%, needs ${Math.round(thr * 1000) / 10}%`}><i style={{ width: `${Math.max(0, Math.min(100, ((yes - 20) / 60) * 100))}%` }} /><s style={{ left: `${((thr * 100 - 20) / 60) * 100}%` }} /></span>
+                    <span className="hub-bm-bar" title={`Yes ${yes.toFixed(1)}%, needs ${pctFraction(thr)}`}><i style={{ width: `${Math.max(0, Math.min(100, ((yes - 20) / 60) * 100))}%` }} /><s style={{ left: `${((thr * 100 - 20) / 60) * 100}%` }} /></span>
                     <span className="mono hub-bm-p" style={{ color: prob >= 0.6 ? "#2fbf9b" : prob <= 0.4 ? "#e8794a" : "var(--gold)" }}>{pct(prob)}</span>
                   </Link>
                 ))}

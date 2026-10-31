@@ -19,6 +19,7 @@ import OutcomeHist from "@/app/components/opp/OutcomeHist";
 import { FX_CSS } from "@/app/components/opp/fxCss";
 import JsonLd from "@/app/components/JsonLd";
 import { measureLd, measureMeta } from "../../../seo";
+import { pctPoints, probFraction } from "@/app/lib/fmtPct";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ st: strin
   return m ? measureMeta(m) : {};
 }
 
-const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+const pct = (p: number) => probFraction(p);
 const TYPE: Record<string, string> = {
   "legislative referral constitutional": "Constitutional amendment referred by the legislature", "legislative referral statute": "Statute referred by the legislature",
   "initiated constitutional amendment": "Citizen initiated constitutional amendment", "initiated statute": "Citizen initiated statute", "veto referendum": "Referendum on a law",
@@ -68,7 +69,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
   for (const p of paths) { const c = cvs[p.id]; if (c && tips[p.id]) tips[p.id].rows.push(["Yes votes", c[1].toLocaleString()], ["No votes", c[2].toLocaleString()]); }
   const thr = m.threshold * 100;
   const X = (val: number) => `${Math.max(0, Math.min(100, ((val - 20) / 60) * 100))}%`;
-  const thrS = (Math.round(thr * 10) / 10).toString();
+  const thrS = thr.toFixed(1);
   const lede = `${m.summary} The forecast has Yes at ${m.est.yes.toFixed(1)} percent against the ${thrS} percent it needs, a ${pct(m.est.prob)} chance to pass.`;
   const YES = "#2fbf9b", NO = "#e8794a";
   const passes = m.est.prob >= 0.5;
@@ -80,7 +81,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
   const pathRows: [string, string, number | null][] = [
     ["History and structure", "comparable measures, the state's lean and how it reached the ballot", m.prior],
     ["Polls", m.pollAvg != null ? `${m.polls.length} ${m.polls.length === 1 ? "poll" : "polls"}, undecided split two to one for No` : "no public polls", m.pollAvg],
-    ["Forecast", m.pollWeight ? `polls carry ${Math.round(m.pollWeight * 100)} percent of the weight` : "history and structure alone", m.est.yes],
+    ["Forecast", m.pollWeight ? `polls carry ${(m.pollWeight * 100).toFixed(1)} percent of the weight` : "history and structure alone", m.est.yes],
   ];
   const navItems = [
     { id: "map", label: "County map" }, { id: "vote", label: "Yes and No" }, { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
@@ -119,7 +120,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
         <div className="card fx-k"><span>Chance to pass</span><b className={`mono ${v.cls}`}>{pct(m.est.prob)}</b><small>{v.label}, 2,000 simulations</small></div>
-        <div className="card fx-k"><span>Forecast Yes</span><b className="mono">{m.est.yes.toFixed(1)}%</b><small>80% range {m.est.p10.toFixed(0)} to {m.est.p90.toFixed(0)}</small></div>
+        <div className="card fx-k"><span>Forecast Yes</span><b className="mono">{m.est.yes.toFixed(1)}%</b><small>80% range {m.est.p10.toFixed(1)} to {m.est.p90.toFixed(1)}</small></div>
         <div className="card fx-k"><span>Needs</span><b className="mono ct">{thrS}%</b><small>{m.thresholdNote}</small></div>
         <div className="card fx-k"><span>Polling average</span><b className="mono">{m.pollAvg != null ? `${m.pollAvg.toFixed(1)}%` : "None"}</b><small>{m.pollAvg != null ? "Yes, undecided split two to one for No" : "No public polls found"}</small></div>
       </div>
@@ -148,7 +149,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
             <div className="fx-grid2">
               <div className="card bm-odds">
                 <div className="lab">Where the Yes vote lands</div>
-                <div className="bm-scale" aria-label={`Forecast Yes ${m.est.yes.toFixed(1)} percent, 80 percent range ${m.est.p10.toFixed(0)} to ${m.est.p90.toFixed(0)}, needs ${thr.toFixed(1)}`}>
+                <div className="bm-scale" aria-label={`Forecast Yes ${m.est.yes.toFixed(1)} percent, 80 percent range ${m.est.p10.toFixed(1)} to ${m.est.p90.toFixed(1)}, needs ${thr.toFixed(1)}`}>
                   <div className="trk" />
                   <div className="rng" style={{ left: X(m.est.p10), width: `calc(${X(m.est.p90)} - ${X(m.est.p10)})` }} />
                   <div className="thr" style={{ left: X(thr) }}><span>needs {thrS}</span></div>
@@ -163,7 +164,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
                 </dl>
               </div>
               <OutcomeHist title="Every simulated outcome" eye="2,000 sims" center={m.est.yes} p10={m.est.p10} p90={m.est.p90} line={thr} below={NO} above={YES}
-                fmt={(x) => `${x.toFixed(0)}% Yes`} note={<>80 percent of simulations put Yes between {m.est.p10.toFixed(0)} and {m.est.p90.toFixed(0)} percent. Bars past the white line pass; it passes in {pct(m.est.prob)} of them.</>} />
+                fmt={(x) => `${pctPoints(x)} Yes`} note={<>80 percent of simulations put Yes between {m.est.p10.toFixed(1)} and {m.est.p90.toFixed(1)} percent. Bars past the white line pass; it passes in {pct(m.est.prob)} of them.</>} />
             </div>
           </section>
 

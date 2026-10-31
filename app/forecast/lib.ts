@@ -1,4 +1,5 @@
 // Shared types + scales for the forecast desk.
+import { probFraction } from "@/app/lib/fmtPct";
 
 export type Office = "governor" | "senate" | "house";
 // The statewide offices below the top of the ticket, forecast county by county like the Senate and governor races.
@@ -309,16 +310,9 @@ export function raceColor(r: Race, view: ViewMode) {
   return ratingFor(side.margin, indSide(r)).color;
 }
 
-// Never print certainty — a 10,000-sim forecast rounds to 100%/0% long before
-// the tails are actually empty, so extremes are pinned to >99% / <1%.
-export const fmtPct = (p: number, dp = 0) => {
-  const hi = 1 - 0.005 * 10 ** -dp;
-  // >= rather than >: 0.995 exactly otherwise printed as "100%", the one figure this
-  // guard exists to keep off the page (Alaska Governor, Sept 25).
-  if (p >= hi) return ">99%";
-  if (p <= 1 - hi) return "<1%";
-  return `${(p * 100).toFixed(dp)}%`;
-};
+// A win probability, one decimal, from the model value as calculated (sitewide
+// standard, Oct 31). 100.0% / 0.0% only for a genuine certainty; see probFraction.
+export const fmtPct = (p: number) => probFraction(p);
 export const fmtMargin = (m: number) =>
   Math.abs(m) < 0.05 ? "Even" : m > 0 ? `R+${Math.abs(m).toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`;
 // Last name for the compact labels. A generational suffix is not a surname, and

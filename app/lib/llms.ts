@@ -8,9 +8,10 @@ import { avgSummary } from "@/app/polls/seo";
 import { dbHref, getDownballot } from "@/app/forecast/statewide/data";
 import { currentMajority, getStatehouse, slHref } from "@/app/forecast/legislatures/data";
 import { bmHref, getMeasures } from "@/app/forecast/measures/data";
+import { pctFraction, probFraction } from "./fmtPct";
 
 const U = (p: string) => `${SITE.url}${p}`;
-const pc = (p: number) => (p > 0.99 ? "more than 99%" : p < 0.01 ? "less than 1%" : `${Math.round(p * 100)}%`);
+const pc = (p: number) => probFraction(p);
 const day = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 const n1 = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
 
@@ -97,7 +98,7 @@ export function llmsText(full: boolean): string {
     });
     h("Every statewide ballot measure");
     [...ms.measures].sort((a, b) => a.st.localeCompare(b.st)).forEach((m) =>
-      L.push(`* ${STATE_NAME[m.st] ?? m.st} ${m.label}, ${m.title}: ${pc(m.est.prob)} chance to pass, Yes projected at ${m.est.yes.toFixed(1)}% against the ${Math.round(m.threshold * 1000) / 10}% it needs. ${U(bmHref(m))}`));
+      L.push(`* ${STATE_NAME[m.st] ?? m.st} ${m.label}, ${m.title}: ${pc(m.est.prob)} chance to pass, Yes projected at ${m.est.yes.toFixed(1)}% against the ${pctFraction(m.threshold)} it needs. ${U(bmHref(m))}`));
     h("Every polling average");
     const seen = new Set<string>();
     for (const d of AGGREGATES) {
