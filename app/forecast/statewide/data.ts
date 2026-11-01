@@ -4,7 +4,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export type DBPoll = { pollster: string; end: string; n?: number | null; kind: string; D: number; R: number; U?: number; margin: number; age: number; url?: string };
+export type DBPoll = { pollster: string; end: string; n?: number | null; kind: string; D: number; R: number; U?: number; margin: number; age: number; url?: string;
+  /** Oct 31 2026: the margin after the site's measured lean or internal correction, and that correction */
+  adjMargin?: number; lean?: { dir: "R" | "D"; pts: number } | null };
 export type DBRace = {
   id: string; st: string; state: string; office: string; officeLabel: string;
   /** the seat, where a state elects several for one office; slug is the page address, the office unless there is a seat */
