@@ -16,15 +16,19 @@ Each race is built from the same parts as the Senate and governor races, on the 
                     is particular to this race's primaries moves it. Primaries carry more weight here than in the
                     Senate model, since these races are barely polled.
 
-  blend   T 0.30, F 0.15, G 0.10, H 0.25, P 0.20; a missing leg's weight is shared out among the rest.
+  blend   T 0.24, F 0.12, G 0.08, H 0.40, P 0.16, history raised from 0.25 by the publisher Oct 31 2026; a missing leg's weight is shared out among the rest.
   ticket splitting   the candidate terms, incumbency, primary unity and polls, move each county by its voters'
                     looseness from the ticket splitting model, the switching chance of its voter types, so a county
                     of straight party voters moves less than a county of loose ones.
   incumbency        0.07 in log odds, about 3.5 points of margin, toward an incumbent on the ballot.
   unity             0.15 times the gap in log odds between the two nominees' primary shares, capped at 0.08.
-  polls             undecided voters are split by half the model's own lean before the poll is read; partisan polls
-                    are moved 3 points of margin against their sponsor; each poll counts by recency, a 45 day decay, and
-                    sample size, and the polls take 0.25 per full weight poll of the statewide level, at most 0.65.
+  polls             undecided voters are split by half the model's own lean before the poll is read. Oct 31 2026, by the
+                    publisher: the polls are read the way the site's adjusted Senate and governor averages read them.
+                    ActiVote and Wedgewood are dropped; a partisan firm or a campaign internal is moved back by its
+                    measured lean, the same numbers aggregates.ts measures, Republican internals 3.7 points and
+                    Democratic internals 1.6 as of Oct 31; and the pollster grade sets each poll's share within the race.
+                    Each poll also counts by recency, a 45 day decay, and sample size, and the polls take 0.25 per full
+                    weight poll of the statewide level, at most 0.65. Without the lean file it falls back to 3 points.
   uncertainty       the top of ticket's own 80 percent range plus 3 points of down ballot error, narrowed by polls.
 
 Writes public/forecast/downballot.json and public/forecast/downballot_counties.json.
@@ -39,7 +43,7 @@ STORE = "/tmp/elecdata/store"
 RESEARCH = ["/tmp/elecdata/research_ag.json", "/tmp/elecdata/research_sos_lg.json", "/tmp/elecdata/research_treas_aud.json",
             "/tmp/elecdata/research_new_offices.json"]   # Oct 19 2026: the remaining partisan statewide offices (convert_new_offices.py)
 COUNTY = glob.glob("/tmp/fcrun/TPSI_B/model/41050065*/TEXASMODELFINAL/TPSI_Trump_Approval_By_County_Combined_FULL.csv")[0]
-W = dict(T=0.30, F=0.15, G=0.10, H=0.25, P=0.20)
+W = dict(T=0.24, F=0.12, G=0.08, H=0.40, P=0.16)   # Oct 31 2026, by the publisher: history up from 0.25, the rest scaled down
 INC, UNITY_K, UNITY_CAP = 0.07, 0.15, 0.08
 NAT26 = 0.56
 NAT_HOUSE_D2 = {2014: 0.4705, 2018: 0.5431, 2022: 0.4858}
@@ -205,6 +209,35 @@ def history_leg(st, office, fips, e_state, top_lean):
     oth = [h["oshare"] for h in hs if h["office"] == office] or [h["oshare"] for h in hs]
     return level, lean, float(np.mean(oth)), {y: round(float(inv(lvl[y])) * 100, 1) for y in years}
 
+# ── ticket gap: how much redder or bluer this state's down ballot ran than its governor race ─────────────────────
+# Oct 31 2026, by the publisher: the top of ticket leg was read straight from the 2026 Senate and governor forecasts,
+# which misses states like Kansas, where Republicans down the ballot run well ahead of the governor's race. For 2022 and
+# 2018, weighted 0.65 and 0.35 as in the history leg, the gap is the mean of the year's down ballot offices less the
+# governor's two party share, in log odds. GAP_K of it is added to the top of ticket leg, holding back a share for
+# candidate and incumbency effects in those years. States without a governor file get no gap.
+GAP_K = float(os.environ.get("DB_GAP_K", "0.75"))
+GAP_CAP = 0.24   # about 12 points of margin
+GOV_HIST = {}
+for _f in glob.glob("/tmp/fcrun/TPSI_B/model/*/*_gov20[12][28]_county.csv"):
+    _m = re.search(r"/([a-z]{2})_gov(\d{4})_county\.csv$", _f)
+    try: _d = pd.read_csv(_f)
+    except Exception: continue
+    if not _m or "D" not in _d or "R" not in _d: continue
+    _D, _R = float(_d["D"].sum()), float(_d["R"].sum())
+    if _D + _R > 0: GOV_HIST[(_m.group(1).upper(), int(_m.group(2)))] = _D / (_D + _R)
+GAPS = {}
+def ticket_gap(st):
+    if st in GAPS: return GAPS[st]
+    hs = history(st); parts = []
+    for y, wy in ((2022, 0.65), (2018, 0.35)):
+        hy = [h for h in hs if h["year"] == y and h["office"] not in ("governor", "us-senate")]
+        g = GOV_HIST.get((st, y))
+        if hy and g: parts.append((wy, float(np.mean([lg(h["d2"]) for h in hy])) - lg(g)))
+    gap = sum(w * x for w, x in parts) / sum(w for w, x in parts) if parts else 0.0
+    gap = float(np.clip(gap, -GAP_CAP, GAP_CAP))   # a governor far stronger than the party, a Phil Scott or a Charlie Baker, is not the down ballot's lean
+    GAPS[st] = (gap, [y for y, _ in ((2022, 0), (2018, 0)) if (st, y) in GOV_HIST])
+    return GAPS[st]
+
 # ── 2026 primaries ────────────────────────────────────────────────────────────────────────────────────────────────
 def primary_votes(st, files):
     """{party: (county votes {fips: total}, nominee share of the deciding round)} from the race's primary files."""
@@ -226,8 +259,21 @@ def primary_votes(st, files):
     return out
 
 # ── polls ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+LEAN_FILE = os.environ.get("DB_LEANS", "/tmp/fcrun/db_leans.json")
+def load_leans():
+    """The site's measured leans and grade weights for every down ballot poll, from scripts/forecast/downballot/lean_export.ts."""
+    import subprocess
+    try:
+        subprocess.run(["npx", "tsx", f"{SITE}/scripts/forecast/downballot/lean_export.ts", LEAN_FILE] + RESEARCH,
+                       cwd=SITE, check=True, timeout=600, capture_output=True)
+    except Exception as e:
+        print("lean export failed, using the last file if there is one:", e)
+    try: return json.load(open(LEAN_FILE))["polls"]
+    except Exception: return None
+LEANS = load_leans()
+
 def poll_d2(polls, base_d2):
-    num = den = 0.0; used = []
+    rows = []; used = []
     for p in polls or []:
         D, R = p.get("D"), p.get("R")
         if D is None or R is None or not p.get("end"): continue
@@ -235,17 +281,32 @@ def poll_d2(polls, base_d2):
         except Exception: continue
         age = (TODAY - end).days
         if age > 150 or age < 0: continue
+        src = str(p.get("source", ""))
+        info = (LEANS or {}).get(src)
+        if re.search(r"activote|wedgewood", src, re.I) or (info and info.get("excluded")): continue
         U = p.get("U") or 0
         d2 = (D + U * (0.5 + 0.5 * (base_d2 - 0.5))) / (D + R + U)  # undecideds break by half the model's lean
-        src = str(p.get("source", ""))
-        if re.search(r"\(D\)|for .*(campaign)|Democrat", src): d2 -= 0.015
-        if re.search(r"\(R\)", src): d2 += 0.015
+        lean_pts, lean_dir = 0.0, None
+        if LEANS is not None:
+            if info and info.get("lean", 0) > 0:
+                lean_pts, lean_dir = float(info["lean"]), info["dir"]
+                d2 += (-1 if lean_dir == "D" else 1) * lean_pts / 200.0   # a lean of L points of margin is L/2 of share
+            g = float(info["weight"]) if info else 0.6
+        else:
+            if re.search(r"\(D\)|for .*(campaign)|Democrat", src): lean_pts, lean_dir, d2 = 3.0, "D", d2 - 0.015
+            if re.search(r"\(R\)", src): lean_pts, lean_dir, d2 = 3.0, "R", d2 + 0.015
+            g = 1.0
         n = p.get("n") or 400
         w = math.exp(-age / 45) * min(1.5, math.sqrt(n / 600)) * (0.8 if str(p.get("pop", "LV")).upper() == "RV" else 1.0)
-        num += w * lg(d2); den += w
+        rows.append((w, g, lg(d2)))
+        adj = R - D + (lean_pts if lean_dir == "D" else -lean_pts if lean_dir == "R" else 0.0)
         used.append(dict(pollster=src, end=p["end"], n=p.get("n"), kind=p.get("pop") or "", D=D, R=R, U=U,
-                         margin=round(R - D, 1), age=age, url=p.get("url")))
-    if den == 0: return None, 0.0, used
+                         margin=round(R - D, 1), adjMargin=round(adj, 1), lean=(dict(dir=lean_dir, pts=round(lean_pts, 1)) if lean_dir else None),
+                         age=age, url=p.get("url")))
+    if not rows: return None, 0.0, used
+    den = sum(w for w, g, x in rows)                      # how much the polls count overall: recency and size, as before
+    gm = sum(w * g for w, g, x in rows) / den             # the grade only sets each poll's share within the race
+    num = sum(w * (g / gm) * x for w, g, x in rows)
     return float(num / den), float(min(0.65, 0.25 * den)), used
 
 # ── build ─────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -366,9 +427,11 @@ for r in sorted(races, key=lambda x: (x["state"], x["office"], x.get("seat_slug"
     if hl is None: ww.pop("H")
     if not P: ww.pop("P")
     tot_w = sum(ww.values()); ww = {k: v / tot_w for k, v in ww.items()}
+    tgap = GAP_K * ticket_gap(r["state"])[0]
     Lc = {}
     for f in fips:
-        legs = {"T": S["T"][f], "F": S["legs"]["F"].get(f, S["T"][f]), "G": S["legs"]["G"].get(f, S["T"][f])}
+        Tg = S["T"][f] + tgap
+        legs = {"T": Tg, "F": S["legs"]["F"].get(f, S["T"][f]), "G": S["legs"]["G"].get(f, S["T"][f])}
         if "H" in ww: legs["H"] = hl + hlean[f]
         if "P" in ww: legs["P"] = P.get(f, S["T"][f])
         Lc[f] = sum(ww[k] * legs[k] for k in ww)
@@ -415,7 +478,7 @@ for r in sorted(races, key=lambda x: (x["state"], x["office"], x.get("seat_slug"
         pollAvg=round(-two(pl), 2) if pl is not None else None,
         legs=dict(weights={k: round(v, 3) for k, v in ww.items()},
                   topOfTicket=-two(S["Tst"]), blend=-two(pre), withCandidates=-two(mid), final=-two(fin),
-                  history=(-two(hl) if hl is not None else None), candidateTerm=round(cand, 3), topRaces=S["tops"], anchor=S["src"]),
+                  history=(-two(hl) if hl is not None else None), candidateTerm=round(cand, 3), topRaces=S["tops"], anchor=S["src"], ticketGap=-round(float(100 * (2 * inv(tgap) - 1)), 2)),
         history=hist_years or {}, primary=prim_note, otherShare=round(100 * osh, 1))
     out_races.append(base)
     out_counties[rid] = rows
