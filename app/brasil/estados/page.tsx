@@ -40,7 +40,7 @@ export default function Page() {
                     <td><span className="br-rt" style={ratingStyle(s.rating)}>{x.rating(s.rating)}</span></td>
                     <td className="n fl">{x.nf(s.flavio)}</td><td className="n lu">{x.nf(s.lula)}</td>
                     <td className={`n ${s.margin > 0 ? "fl" : "lu"}`}>{x.mg(s.margin)}</td>
-                    <td className="n">{x.pct(100 * s.p, 0)}</td><td className="n">{x.nint(s.valid)}</td><td className="n">{x.nf(s.r1)}</td><td className="n">{x.nf(s.r22)}</td>
+                    <td className="n">{x.pct(100 * s.p)}</td><td className="n">{x.nint(s.valid)}</td><td className="n">{x.nf(s.r1)}</td><td className="n">{x.nf(s.r22)}</td>
                   </tr>
                 ))}
               </tbody>

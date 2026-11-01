@@ -145,7 +145,7 @@ export default function Page() {
               {close.map((s) => (
                 <li key={s.uf}><Link href={`/brasil/${slugOf(s.name)}`}>
                   <span className="uf">{s.uf}</span>
-                  <span className="nm">{s.name}<small>{B((x) => `${x.rating(s.rating)} · ${x.t(`Flávio ${x.pct(100 * s.p, 0)} chance`, `Flávio ${x.pct(100 * s.p, 0)} de chance`)}`)}</small>
+                  <span className="nm">{s.name}<small>{B((x) => `${x.rating(s.rating)} · ${x.t(`Flávio ${x.pct(100 * s.p)} chance`, `Flávio ${x.pct(100 * s.p)} de chance`)}`)}</small>
                     <span className="br-meter"><i style={{ left: s.margin < 0 ? `${50 + s.margin * 2}%` : "50%", width: `${Math.min(50, Math.abs(s.margin) * 2)}%`, background: s.margin > 0 ? FL : LU }} /></span></span>
                   <span className={`mg ${s.margin > 0 ? "fl" : "lu"}`}>{B((x) => x.mg(s.margin))}</span>
                 </Link></li>
@@ -216,7 +216,7 @@ export default function Page() {
                   <Link key={s.uf} href={`/brasil/${slugOf(s.name)}`} className="br-sc" style={{ ["--c" as string]: marginColor(s.margin) }}>
                     {B((x) => <>
                       <div className="t"><b>{s.name}</b><span className="br-rt" style={ratingStyle(s.rating)}>{x.rating(s.rating)}</span></div>
-                      <div className="m"><span className={s.margin > 0 ? "fl" : "lu"}>{x.mg(s.margin)}</span><small>{x.t(`${x.pct(100 * Math.max(s.p, 1 - s.p), 0)} chance`, `${x.pct(100 * Math.max(s.p, 1 - s.p), 0)} de chance`)}</small></div>
+                      <div className="m"><span className={s.margin > 0 ? "fl" : "lu"}>{x.mg(s.margin)}</span><small>{x.t(`${x.pct(100 * Math.max(s.p, 1 - s.p))} chance`, `${x.pct(100 * Math.max(s.p, 1 - s.p))} de chance`)}</small></div>
                       <div className="br-prob thin"><i className="f" style={{ width: `${s.flavio}%` }} /><i className="l" style={{ width: `${s.lula}%` }} /><span className="mid" /></div>
                       <div className="f2"><span>2022: Bolsonaro {x.nf(s.r22)}%</span><span>{x.compact(s.valid)} {x.t("votes", "votos")}</span></div>
                     </>)}

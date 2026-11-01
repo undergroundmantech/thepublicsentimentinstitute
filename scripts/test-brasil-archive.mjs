@@ -3,7 +3,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
 
@@ -34,7 +34,7 @@ test("the archived payload is labelled unofficial and dated, and its totals matc
   assert.equal(results.test, false);
   assert.equal(Object.keys(results.st).length, 27 + 1);
   const { lv, fv, pr } = results.nat;
-  const lula = (100 * lv / (lv + fv)).toFixed(2), flavio = (100 * fv / (lv + fv)).toFixed(2);
+  const lula = (100 * lv / (lv + fv)).toFixed(1), flavio = (100 * fv / (lv + fv)).toFixed(1);
   const faq = read("app/brasil/resultados/page.tsx");
   assert.ok(faq.includes(`${pr}% of sections counted, Lula had ${lula}% of the valid vote and Flávio Bolsonaro ${flavio}%`), `${lula}/${flavio} at ${pr}`);
   assert.ok(read("app/lib/llms.ts").includes(`${lula} to ${flavio} percent at ${pr} percent`));
@@ -83,4 +83,14 @@ test("metadata says archive: no hourly or always sitemap entries, no scheduled e
 test("every Brazil route still exists, plus the archive landing", () => {
   for (const p of ["page.tsx", "[slug]/page.tsx", "estados/page.tsx", "resultados/page.tsx", "resultados/[slug]/page.tsx", "monitor/page.tsx", "arquivo/page.tsx"])
     assert.ok(existsSync(join(ROOT, "app/brasil", p)), p);
+});
+
+test("percentages show one decimal on every Brazil page, so a full count reads 100.0%", () => {
+  const pages = readdirSync(join(ROOT, "app/brasil"), { recursive: true }).filter((f) => f.endsWith(".tsx"));
+  assert.ok(pages.length >= 15, `${pages.length} pages`);
+  for (const f of pages) {
+    const src = read(`app/brasil/${f}`);
+    assert.doesNotMatch(src, /(nf|pct)\([^()]*(\([^()]*\))?[^()]*,\s*[02-9]\s*[,)]/, f);
+    assert.doesNotMatch(src, /toFixed\([02-9]\)\}?%|\d[.,]\d{2}\s?%/, f);
+  }
 });

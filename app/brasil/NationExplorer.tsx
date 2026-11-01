@@ -48,7 +48,7 @@ export default function NationExplorer({ states }: { states: BrState[] }) {
             </div>
             <div className="br-tip" style={{ background: "var(--glass)", boxShadow: "none", maxWidth: "none" }}>
               <div className="row"><span>{t("Projected margin", "Margem prevista")}</span><b>{mg(s.margin)}</b></div>
-              <div className="row"><span>{t("Flávio's chance", "Chance de Flávio")}</span><b>{pct(100 * s.p, 0)}</b></div>
+              <div className="row"><span>{t("Flávio's chance", "Chance de Flávio")}</span><b>{pct(100 * s.p)}</b></div>
               <div className="row"><span>{t("Projected valid votes", "Votos válidos previstos")}</span><b>{nint(s.valid)}</b></div>
               <div className="row"><span>{t("Flávio, first round", "Flávio no 1º turno")}</span><b>{pct(s.r1)}</b></div>
               <div className="row"><span>{t("Bolsonaro in 2022", "Bolsonaro em 2022")}</span><b>{pct(s.r22)}</b></div>
