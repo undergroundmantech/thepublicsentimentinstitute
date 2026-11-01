@@ -43,7 +43,7 @@ function StateDesk({ s, live, munis, x, onClose, qs }: { s: BrState; live: LiveS
           return (
             <div key={k} className={`cand ${k === "F" ? "f" : "l"}${p.call === k ? " win" : ""}`}>
               <span className="nm">{WHO(k, true)}{p.call === k && <em>✓</em>}</span>
-              <span className="pc">{c ? pct(sh, 2) : "0"}</span>
+              <span className="pc">{c ? pct(sh, 1) : "0"}</span>
               <span className="bar"><i style={{ width: `${sh}%` }} /></span>
               <span className="vt">{nint(v)} {t("votes", "votos")}</span>
             </div>
@@ -150,7 +150,7 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
   const started = now ? now.getTime() >= new Date(ELECTION_ISO).getTime() || cnt > 0 : false;
   const qs = sim ? "?simular=1" : "";
   const selMunis = useMemo(() => (sel ? munis.filter((m) => m.uf === sel) : []), [munis, sel]);
-  const zero = nf(0, 2);
+  const zero = nf(0, 1);
   return (
     <div className={`brm${tilt ? " t3d" : ""}`} ref={box}>
       <div className="brm-stage">
@@ -162,8 +162,8 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
               <>
                 <h4>{m.row[1]} <span style={{ color: "#8e86a3", fontWeight: 600 }}>{m.uf}</span></h4>
                 {f == null ? <p style={{ margin: 0 }}>{t("No votes counted yet.", "Ainda sem votos apurados.")}{m.row[2] != null && ` ${t("Forecast", "Previsão")}: ${mg(2 * m.row[2] - 100)}.`}</p> : <>
-                  <div className="row"><span className="fl">Flávio</span><b>{pct(f, 2)}</b></div>
-                  <div className="row"><span className="lu">Lula</span><b>{pct(100 - f, 2)}</b></div>
+                  <div className="row"><span className="fl">Flávio</span><b>{pct(f, 1)}</b></div>
+                  <div className="row"><span className="lu">Lula</span><b>{pct(100 - f, 1)}</b></div>
                   <div className="row"><span>{t("Votes counted", "Votos contados")}</span><b>{nint(v![0] + v![1])}</b></div>
                   {m.row[2] != null && <div className="row"><span>{t("Against the forecast", "Contra a previsão")}</span><b>{f - m.row[2] >= 0 ? "Flávio +" : "Lula +"}{nf(Math.abs(f - m.row[2]))}</b></div>}
                 </>}
@@ -184,9 +184,9 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
           {archive && <small className="brm-src">{t(`civicAPI, last update ${archivedAt(archive.providerUpdated, "en")}, ${nf(archive.reporting, 1)}% counted. Not the TSE's certified result.`, `civicAPI, última atualização em ${archivedAt(archive.providerUpdated, "pt")}, ${nf(archive.reporting, 1)}% apurado. Não é o resultado certificado pelo TSE.`)} <Link href="/brasil/arquivo">{t("About the archive", "Sobre o arquivo")}</Link></small>}
         </div>
         <div className="brm-nat gl">
-          <div className="row"><span><small>Flávio Bolsonaro</small><br /><b className="f">{fsh == null ? zero : nf(fsh, 2)}%</b></span><span style={{ textAlign: "right" }}><small>Lula</small><br /><b className="l">{fsh == null ? zero : nf(100 - fsh, 2)}%</b></span></div>
+          <div className="row"><span><small>Flávio Bolsonaro</small><br /><b className="f">{fsh == null ? zero : nf(fsh, 1)}%</b></span><span style={{ textAlign: "right" }}><small>Lula</small><br /><b className="l">{fsh == null ? zero : nf(100 - fsh, 1)}%</b></span></div>
           <div className="br-prob thin"><i className="f" style={{ width: `${fsh ?? 50}%` }} /><i className="l" style={{ width: `${fsh == null ? 50 : 100 - fsh}%` }} /><span className="mid" /></div>
-          <div className="sub"><span>{t(`${nf(pr, 2)}% counted`, `${nf(pr, 2)}% apurado`)}</span><span>{nint(cnt)} {t("votes", "votos")}</span></div>
+          <div className="sub"><span>{t(`${nf(pr, 1)}% counted`, `${nf(pr, 1)}% apurado`)}</span><span>{nint(cnt)} {t("votes", "votos")}</span></div>
           <div className="sub" style={{ color: "#ffd98a" }}><span>{cnt ? t("On Point projection", "Projeção On Point") : t("Forecast", "Previsão")}</span><span>{proj.call ? t(`${WHO(proj.call)} wins`, `${WHO(proj.call)} vence`) : `${mg(2 * proj.f - 100)} · Flávio ${pct(100 * proj.p, 0)}`}</span></div>
           <div className="sub"><span>{t("States projected", "Estados projetados")}</span><span><b className="f" style={{ fontSize: 12 }}>Flávio {calls.filter((c) => c === "F").length}</b> · <b className="l" style={{ fontSize: 12 }}>Lula {calls.filter((c) => c === "L").length}</b></span></div>
         </div>
