@@ -69,7 +69,7 @@ function StateDesk({ s, live, munis, x, onClose, qs }: { s: BrState; live: LiveS
             return (
               <tr key={r.m.row[0]}>
                 <td>{r.m.row[1]}</td>
-                <td>{r.f != null ? `${nf(r.pr, 0)}%` : compact(r.m.row[3])}</td>
+                <td>{r.f != null ? `${nf(r.pr, 1)}%` : compact(r.m.row[3])}</td>
                 <td className={m == null ? "" : m > 0 ? "fl" : "lu"}>{m == null ? "" : mg(m)}</td>
                 <td className={d == null ? "" : d > 0 ? "fl" : "lu"}>{d == null ? "" : `${d > 0 ? "F" : "L"}+${nf(Math.abs(d))}`}</td>
               </tr>
@@ -208,7 +208,7 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
                   <li key={s.uf}><button type="button" onClick={() => pick(s.uf)}>
                     <span className="uf">{s.uf}</span><span className="nm">{s.name}</span>
                     <span className={`v ${f == null ? (s.margin > 0 ? "fl" : "lu") : f > 50 ? "fl" : "lu"}`}>{call ? <span className={`br-call ${call === "F" ? "f" : "l"}`}>{WHO(call)}</span> : f == null ? mg(s.margin) : mg(2 * f - 100)}</span>
-                    <span className="r">{nf(st?.pr ?? 0, 0)}%</span>
+                    <span className="r">{nf(st?.pr ?? 0, 1)}%</span>
                     <span className="mini"><i style={{ width: `${st?.pr ?? 0}%` }} /></span>
                   </button></li>
                 );

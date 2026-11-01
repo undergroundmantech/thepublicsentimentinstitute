@@ -84,3 +84,11 @@ test("every Brazil route still exists, plus the archive landing", () => {
   for (const p of ["page.tsx", "[slug]/page.tsx", "estados/page.tsx", "resultados/page.tsx", "resultados/[slug]/page.tsx", "monitor/page.tsx", "arquivo/page.tsx"])
     assert.ok(existsSync(join(ROOT, "app/brasil", p)), p);
 });
+
+test("reported percentages show one decimal, so a full count reads 100.0%", () => {
+  for (const f of ["app/brasil/monitor/BrMonitor.tsx", "app/brasil/LiveBits.tsx", "app/brasil/resultados/LiveState.tsx"]) {
+    const src = read(f);
+    assert.doesNotMatch(src, /nf\([^()]*(\([^()]*\))?[^()]*,\s*0\s*[,)]/, f);
+    assert.doesNotMatch(src, /toFixed\(0\)\}?%/, f);
+  }
+});
