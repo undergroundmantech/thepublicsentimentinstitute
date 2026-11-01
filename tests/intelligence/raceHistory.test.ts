@@ -529,7 +529,17 @@ test("the cursor readout names the figure's time, source class and model", () =>
 
 // ---- display performance ----------------------------------------------------------------------------------------------------
 
-test("thousands of observations: building, windowing and decimating stay fast, and extremes and corrections survive", () => {
+// Timed against a fixed reference workload in the same process, best of three interleaved runs: a busy shared runner
+// slows both alike (a wall-clock limit failed at 11 s during a parallel build), while a quadratic slip is still caught.
+const referenceMs = () => {
+  const t = performance.now();
+  const xs: { t: number; v: number }[] = [];
+  for (let i = 0; i < 200_000; i++) xs.push({ t: i, v: Math.sin(i * 7.1) });
+  xs.sort((p, q) => p.v - q.v);
+  return performance.now() - t;
+};
+
+test("thousands of observations: building, windowing and decimating stay fast, and extremes and corrections survive", (t) => {
   const N = 20_000;
   const pts: HistoryPoint[] = [];
   let a = 0, b = 0;
@@ -540,14 +550,27 @@ test("thousands of observations: building, windowing and decimating stay fast, a
     pts.push(result(`r${i}`, iso(t), { a, b, c: Math.floor(i / 9) }, { totalsDecreased: i === 12_345, confirmedThrough: null }));
     if (i % 4 === 0) pts.push(model(`m${i}`, iso(t), { winProbability: { a: 0.5 + Math.sin(i / 900) * 0.4, b: 0.4 - Math.sin(i / 900) * 0.4, c: 0.1 } }));
   }
-  const t0 = performance.now();
-  const p = prepareHistory("r1", pts, { surface: "PUBLIC" });
-  const prob = buildChart(p, "prob"), votes = buildChart(p, "votes"), margin = buildChart(p, "margin");
-  const [w0, w1] = rangeWindow("ALL", p.bounds);
   const cols = 900;
-  const shown = [prob, votes, margin].flatMap((c) => c.series.map((s) => decimate(windowSeries(s, w0, w1), w0, w1, cols)));
-  const ms = performance.now() - t0;
-  assert.ok(ms < 3000, `built in ${ms.toFixed(0)} ms`);
+  const pipeline = () => {
+    const p = prepareHistory("r1", pts, { surface: "PUBLIC" });
+    const prob = buildChart(p, "prob"), votes = buildChart(p, "votes"), margin = buildChart(p, "margin");
+    const [w0, w1] = rangeWindow("ALL", p.bounds);
+    const shown = [prob, votes, margin].flatMap((c) => c.series.map((s) => decimate(windowSeries(s, w0, w1), w0, w1, cols)));
+    return { p, prob, votes, w0, w1, shown };
+  };
+  const lookups = (s: Series) => { for (let i = 0; i < 20_000; i++) heldAt(s, DEMO_NIGHT_START + (i % N) * 1000); };
+  let ref = Infinity, ms = Infinity, look = Infinity, out!: ReturnType<typeof pipeline>;
+  for (let k = 0; k < 3; k++) {
+    ref = Math.min(ref, referenceMs());
+    const t0 = performance.now(); out = pipeline(); ms = Math.min(ms, performance.now() - t0);
+    const t1 = performance.now(); lookups(out.votes.series[0]); look = Math.min(look, performance.now() - t1);
+  }
+  t.diagnostic(`pipeline ${ms.toFixed(0)} ms, lookups ${look.toFixed(1)} ms, reference ${ref.toFixed(0)} ms, ratio ${(ms / ref).toFixed(2)}`);
+  // 2.6x to 3.7x the reference on a 2-core codespace, idle or saturated; a quadratic step at this size would be hundreds of times
+  assert.ok(ms < 12 * ref, `the display pipeline took ${ms.toFixed(0)} ms, ${(ms / ref).toFixed(1)}x the reference workload`);
+  // 20,000 binary searches are a small fraction of the reference; a linear scan would be many times it
+  assert.ok(look < ref, `cursor lookups took ${look.toFixed(0)} ms against a ${ref.toFixed(0)} ms reference: are they still binary searches?`);
+  const { p, prob, votes, w0, w1, shown } = out;
   assert.equal(p.results.length, N);
   assert.equal(p.models.length, N / 4);
   for (const s of shown) assert.ok(s.length <= cols * 4 + 8, `a series is reduced to ${s.length} points`);
@@ -562,10 +585,6 @@ test("thousands of observations: building, windowing and decimating stay fast, a
   const vals = pa.pts.map((q) => q.v as number);
   assert.equal(Math.max(...da.map((q) => q.v as number)), Math.max(...vals));
   assert.equal(Math.min(...da.map((q) => q.v as number)), Math.min(...vals));
-  const t1 = performance.now();
-  const s = votes.series[0];
-  for (let i = 0; i < 20_000; i++) heldAt(s, DEMO_NIGHT_START + (i % N) * 1000);
-  assert.ok(performance.now() - t1 < 500, "cursor lookups are binary searches");
 });
 
 test("decimation never drops a gap or a flagged point", () => {
