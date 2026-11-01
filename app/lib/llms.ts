@@ -128,7 +128,7 @@ export function llmsText(full: boolean): string {
     `* Electoral map builder: ${U("/maps/electoral")}`,
     `* Live election results: ${U("/results")}`,
     `* Brazil 2026 archive (the October 25 presidential runoff is over; pages are kept as published): ${U("/brasil/arquivo")}`,
-    `* Brazil 2026 forecast as published, in English with a Portuguese version: Flávio Bolsonaro 51.0 Lula 49.0 of valid votes with a 71.5 percent chance for Flávio. Lula won the runoff, 51.79 to 48.21 percent at 99.9 percent of polls counted in the archived count: ${U("/brasil")}`,
+    `* Brazil 2026 forecast as published, in English with a Portuguese version: Flávio Bolsonaro 51.0 Lula 49.0 of valid votes with a 71.5 percent chance for Flávio. Lula won the runoff, 51.8 to 48.2 percent at 99.9 percent of polls counted in the archived count: ${U("/brasil")}`,
     `* Brazil 2026 forecast by state and municipality: ${U("/brasil/estados")}`,
     `* Brazil 2026 archived runoff count by state, last provider update October 26, 2026 (not the certified TSE result): ${U("/brasil/resultados")}`,
     `* On Point Polling Texas poll, October 17 to 18, 2026, Talarico 48.8 Paxton 43.0 for Senate, Abbott 47.7 Hinojosa 45.2 for governor and French 45.1 Rosenthal 39.8 for Railroad Commissioner among likely voters, 661 registered voters: ${U("/on-point-polling/polls/texas-2026")}`,

@@ -42,8 +42,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <div className="br-eye">{B((x) => `${x.region(s.region)} · ${s.uf} · ${x.t("2026 runoff", "2º turno 2026")}`)}</div>
           <h1>{s.name}</h1>
           <p>{B((x) => x.lang === "pt"
-            ? `${leader} é ${strong ? "o favorito" : "um leve favorito"} ${x.inState(s.uf, s.name)}, com ${x.pct(Math.max(s.flavio, s.lula))} dos votos válidos previstos e ${x.pct(100 * Math.max(s.p, 1 - s.p), 0)} de chance de vencer no estado. Isso representa um saldo de ${x.compact(Math.abs(net))} de votos para ${leader}, ${big ? "uma fatia relevante da disputa nacional" : `num total previsto de ${x.compact(s.valid)} votos válidos`}.`
-            : `${leader} is ${strong ? "the favorite" : "a slight favorite"} ${x.inState(s.uf, s.name)}, with ${x.pct(Math.max(s.flavio, s.lula))} of the projected valid vote and a ${x.pct(100 * Math.max(s.p, 1 - s.p), 0)} chance of carrying the state. That is a net ${x.compact(Math.abs(net))} votes for ${leader}, ${big ? "a real share of the national race" : `out of about ${x.compact(s.valid)} projected valid votes`}.`)}</p>
+            ? `${leader} é ${strong ? "o favorito" : "um leve favorito"} ${x.inState(s.uf, s.name)}, com ${x.pct(Math.max(s.flavio, s.lula))} dos votos válidos previstos e ${x.pct(100 * Math.max(s.p, 1 - s.p))} de chance de vencer no estado. Isso representa um saldo de ${x.compact(Math.abs(net))} de votos para ${leader}, ${big ? "uma fatia relevante da disputa nacional" : `num total previsto de ${x.compact(s.valid)} votos válidos`}.`
+            : `${leader} is ${strong ? "the favorite" : "a slight favorite"} ${x.inState(s.uf, s.name)}, with ${x.pct(Math.max(s.flavio, s.lula))} of the projected valid vote and a ${x.pct(100 * Math.max(s.p, 1 - s.p))} chance of carrying the state. That is a net ${x.compact(Math.abs(net))} votes for ${leader}, ${big ? "a real share of the national race" : `out of about ${x.compact(s.valid)} projected valid votes`}.`)}</p>
           <div className="meta">
             <span className="br-rt" style={{ ...ratingStyle(s.rating), padding: "6px 12px", fontSize: 12.5 }}>{B((x) => x.rating(s.rating))}</span>
             <Link href={`/brasil/resultados/${slugOf(s.name)}`} className="br-chip gold">{B((x) => x.t(`Archived results ${x.inState(s.uf, s.name)}`, `Resultado arquivado ${x.inState(s.uf, s.name)}`))}</Link>
@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </section>
 
       <section className="br-kpis">
-        <div className="br-kpi">{B((x) => <><small>{x.t("Projected margin", "Margem prevista")}</small><b className={s.margin > 0 ? "fl" : "lu"}>{x.mg(s.margin)}</b><span>{x.t(`Flávio has a ${x.pct(100 * s.p, 0)} chance`, `Flávio tem ${x.pct(100 * s.p, 0)} de chance`)}</span></>)}</div>
+        <div className="br-kpi">{B((x) => <><small>{x.t("Projected margin", "Margem prevista")}</small><b className={s.margin > 0 ? "fl" : "lu"}>{x.mg(s.margin)}</b><span>{x.t(`Flávio has a ${x.pct(100 * s.p)} chance`, `Flávio tem ${x.pct(100 * s.p)} de chance`)}</span></>)}</div>
         <div className="br-kpi">{B((x) => <><small>{x.t("Projected valid votes", "Votos válidos previstos")}</small><b>{x.compact(s.valid)}</b><span>{x.nint(s.valid)}</span></>)}</div>
         <div className="br-kpi">{B((x) => <><small>{x.t("Flávio, first round", "Flávio no 1º turno")}</small><b>{x.pct(s.r1)}</b><span>{x.t(`Flávio and Lula votes only · ${sgn(s.sw1, x)} pts now`, `Só os votos de Flávio e Lula · ${sgn(s.sw1, x)} pts agora`)}</span></>)}</div>
         <div className="br-kpi">{B((x) => <><small>{x.t("Bolsonaro in 2022", "Bolsonaro em 2022")}</small><b>{x.pct(s.r22)}</b><span>{x.t(`Runoff against Lula · ${sgn(s.sw22, x)} pts now`, `2º turno contra Lula · ${sgn(s.sw22, x)} pts agora`)}</span></>)}</div>

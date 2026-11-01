@@ -57,7 +57,7 @@ function StateDesk({ s, live, munis, x, onClose, qs }: { s: BrState; live: LiveS
       <div className="dp">
         <div className="dl"><span>{c ? t("On Point projection", "Projeção On Point") : t("Forecast before the count", "Previsão antes da apuração")}</span><b className={p.f >= 50 ? "fl" : "lu"}>{mg(2 * p.f - 100)}</b></div>
         <div className="band"><span className="mid" style={{ left: X(50) }} /><span className="rng" style={{ left: X(p.lo), width: `calc(${X(p.hi)} - ${X(p.lo)})` }} /><span className="pt" style={{ left: X(p.f) }} /></div>
-        <div className="dl sm"><span>{t(`Flávio ${pct(p.lo)} to ${pct(p.hi)}`, `Flávio de ${pct(p.lo)} a ${pct(p.hi)}`)}</span><span>{t(`Flávio wins ${pct(100 * p.p, 0)}`, `Flávio vence ${pct(100 * p.p, 0)}`)}</span></div>
+        <div className="dl sm"><span>{t(`Flávio ${pct(p.lo)} to ${pct(p.hi)}`, `Flávio de ${pct(p.lo)} a ${pct(p.hi)}`)}</span><span>{t(`Flávio wins ${pct(100 * p.p)}`, `Flávio vence ${pct(100 * p.p)}`)}</span></div>
         {c > 0 && p.swing != null && <div className="dl sm"><span>{t("Counted towns against the forecast", "Municípios apurados contra a previsão")}</span><b className={p.swing >= 0 ? "fl" : "lu"}>{p.swing >= 0 ? "Flávio" : "Lula"} +{nf(Math.abs(p.swing))}</b></div>}
       </div>
       <h4>{c ? t("Largest municipalities counted", "Maiores municípios apurados") : t("Largest municipalities, forecast", "Maiores municípios, previsão")}</h4>
@@ -187,7 +187,7 @@ export default function BrMonitor({ states, nat }: { states: BrState[]; nat: { f
           <div className="row"><span><small>Flávio Bolsonaro</small><br /><b className="f">{fsh == null ? zero : nf(fsh, 1)}%</b></span><span style={{ textAlign: "right" }}><small>Lula</small><br /><b className="l">{fsh == null ? zero : nf(100 - fsh, 1)}%</b></span></div>
           <div className="br-prob thin"><i className="f" style={{ width: `${fsh ?? 50}%` }} /><i className="l" style={{ width: `${fsh == null ? 50 : 100 - fsh}%` }} /><span className="mid" /></div>
           <div className="sub"><span>{t(`${nf(pr, 1)}% counted`, `${nf(pr, 1)}% apurado`)}</span><span>{nint(cnt)} {t("votes", "votos")}</span></div>
-          <div className="sub" style={{ color: "#ffd98a" }}><span>{cnt ? t("On Point projection", "Projeção On Point") : t("Forecast", "Previsão")}</span><span>{proj.call ? t(`${WHO(proj.call)} wins`, `${WHO(proj.call)} vence`) : `${mg(2 * proj.f - 100)} · Flávio ${pct(100 * proj.p, 0)}`}</span></div>
+          <div className="sub" style={{ color: "#ffd98a" }}><span>{cnt ? t("On Point projection", "Projeção On Point") : t("Forecast", "Previsão")}</span><span>{proj.call ? t(`${WHO(proj.call)} wins`, `${WHO(proj.call)} vence`) : `${mg(2 * proj.f - 100)} · Flávio ${pct(100 * proj.p)}`}</span></div>
           <div className="sub"><span>{t("States projected", "Estados projetados")}</span><span><b className="f" style={{ fontSize: 12 }}>Flávio {calls.filter((c) => c === "F").length}</b> · <b className="l" style={{ fontSize: 12 }}>Lula {calls.filter((c) => c === "L").length}</b></span></div>
         </div>
         <div className="brm-seg gl" role="group" aria-label={t("Map color", "Cor do mapa")}>

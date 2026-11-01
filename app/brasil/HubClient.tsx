@@ -18,7 +18,7 @@ export function ForecastMap({ states }: { states: BrState[] }) {
             <div className="row" style={{ marginTop: 8 }}><span className="fl">Flávio</span><b>{x.pct(s.flavio)}</b></div>
             <div className="row"><span className="lu">Lula</span><b>{x.pct(s.lula)}</b></div>
             <div className="row"><span>{x.t("Margin", "Margem")}</span><b>{x.mg(s.margin)}</b></div>
-            <div className="row"><span>{x.t("Flávio's chance", "Chance de Flávio")}</span><b>{x.pct(100 * s.p, 0)}</b></div>
+            <div className="row"><span>{x.t("Flávio's chance", "Chance de Flávio")}</span><b>{x.pct(100 * s.p)}</b></div>
             <div className="row"><span>{x.t("Projected valid votes", "Votos válidos previstos")}</span><b>{x.nint(s.valid)}</b></div>
             <small>{x.t("Click to see every municipality", "Clique para ver os municípios")}</small>
           </>

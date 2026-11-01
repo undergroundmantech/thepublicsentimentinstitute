@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <>
       <JsonLd data={brPageLd({ name: "Brazil 2026 runoff results (archive)", description: DESC, path: "/brasil/resultados", crumbs: [["Home", "/"], ["Brazil 2026", "/brasil"], ["Results", "/brasil/resultados"]],
-        faq: [["Who won Brazil's 2026 runoff?", "In the provider's last count of the October 25, 2026 runoff, saved by On Point Politics with 99.9% of sections counted, Lula had 51.79% of the valid vote and Flávio Bolsonaro 48.21%. The official result is the one certified by the TSE."],
+        faq: [["Who won Brazil's 2026 runoff?", "In the provider's last count of the October 25, 2026 runoff, saved by On Point Politics with 99.9% of sections counted, Lula had 51.8% of the valid vote and Flávio Bolsonaro 48.2%. The official result is the one certified by the TSE."],
           ["How does the On Point projection work?", "With each update, every counted municipality was compared with the forecast for it, and that gap was used to estimate the votes still to be counted in each state. A winner was projected only once the gap was too large to be overturned."]] })} />
       <BrMonitor states={brStates()} nat={{ flavio: n.flavio, p_flavio: n.p_flavio, valid: n.valid, p10: n.p10, p90: n.p90 }} />
     </>
