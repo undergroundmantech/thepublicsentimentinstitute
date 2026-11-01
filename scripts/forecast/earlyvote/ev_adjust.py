@@ -32,8 +32,8 @@ How a state's early vote becomes a turnout correction
   4. Primary turnout. The Democratic share of 2026 primary ballots against the 2018 and 2022 midterm primaries is a
      weak prior on which party's voters are more engaged, for every state with primary counts.
   5. Neighbours. Every state, with ballots in or not, also reads the gaps of the reporting states most like it, by the
-     forecast's own correlation between races and by 2024 vote, race and education. A state with no early vote takes
-     its correction from its neighbours and its primary alone.
+     forecast's own correlation between races and by 2024 vote, race and education. Since Nov 1 2026 a state with no early
+     vote ballots gets no correction at all.
   6. Turnout level. Ballots cast against the early vote the forecast expects by this day, timed by the state's own
      2022 and 2024 counts on the same number of days out: running ahead points to a larger electorate.
   7. The forecast itself is the prior: the posterior gap is the weighted readings over one plus their weights, so a
@@ -48,6 +48,9 @@ How the correction moves a race (not a linear shift)
   on habitual voters, and every county moves by its own voters. House districts take their state's correction in
   proportion to p (1 - p) of their own two party vote, so a lopsided seat moves less than a close one. Statewide down
   ballot races and the legislatures are rebuilt on the adjusted forecast by their own builders.
+
+Nov 1 2026, by the user: each race's correction is scaled by one minus its polling leg weight, since likely voter polls
+  already include the people who have voted, and capped at 2 points.
 
 The correction is stored on each race as ev, so the next run replaces it rather than adding to it.
 Margins in the published files are Republican minus Democratic.
@@ -71,7 +74,7 @@ TODAY = os.environ.get("TODAY", "2026-10-18")
 ELECTION = "2026-11-03"
 
 KAPPA, RHO, N0, W_MAX, EST_W = 0.5, 0.85, 25000.0, 3.0, 0.35
-W_HIST, W_NBR, W_PRIM, W_VOL, CAP = 0.25, 0.6, 0.3, 0.6, 4.0
+W_HIST, W_NBR, W_PRIM, W_VOL, CAP = 0.25, 0.6, 0.3, 0.6, 2.0   # Nov 1 2026, by the user: cap 2 points, down from 4
 
 H = json.load(open(f"{SITE}/public/earlyvote-history.json"))
 E = json.load(open(f"{SITE}/public/earlyvote-electorate.json"))
@@ -293,9 +296,11 @@ for st in states:
     g = num / den
     vn = nbr(st, vol_sh) if vol_sh else 0.0
     vv = ((W_VOL * o["vol"] if o and "vol" in o else 0.0) + 0.5 * vn) / (1 + (W_VOL if o and "vol" in o else 0.0) + 0.5)
+    if not o or not SIG["states"].get(st, {}).get("ballots", 0):
+        g, vv = 0.0, 0.0                       # Nov 1 2026, by the user: no early vote data, no correction
     post[st] = {"gap": g, "vol": vv, "nbr": gn, "own": o["g"] if o else None, "w": o["w"] if o else 0.0,
                 "hist": o.get("g_hist") if o else None, "prim": prim.get(st, {}).get("g"), "ballots": SIG["states"].get(st, {}).get("ballots", 0),
-                "estimatedShare": SIG["states"].get(st, {}).get("estimatedShare"), "source": "early vote" if o else "neighbours and primaries"}
+                "estimatedShare": SIG["states"].get(st, {}).get("estimatedShare"), "source": "early vote" if o and SIG["states"].get(st, {}).get("ballots", 0) else "no early vote data"}
 
 
 # ── turning a state's correction into each race's change, from its simulated voters ───────────────────────────
@@ -385,11 +390,14 @@ for r in M["races"]:
     rc = recount(key_of(r), ps["gap"], ps["vol"])
     if rc is None: continue
     third = 1 - (r["votes"]["dem"] + r["votes"]["rep"]) / max(1, r["votes"]["total"]) if r.get("votes") and not r.get("rcv") else 0.0
-    s_new = max(-CAP, min(CAP, -rc["dm"] * (1 - third)))
+    # Nov 1 2026, by the user: likely voter polls already include the people who have voted, so the correction moves only
+    # the part of the forecast the polls do not cover, one minus the race's polling leg weight
+    kp = max(0.0, 1.0 - float(r.get("wPoll") or 0.0))
+    s_new = max(-CAP, min(CAP, -rc["dm"] * (1 - third) * kp))
     if r["office"] == "senate" or st not in state_comp:
         state_comp[st] = dict(comp=rc["dm_comp"], level=rc["dm"] - rc["dm_comp"], d2=rc["d2_before"])
     extra = {"gap": round(ps["gap"], 2), "turnout": round(ps["vol"], 3), "theta": round(rc["theta"], 3),
-             "source": ps["source"], "ballots": int(ps["ballots"]), "run": rc["run"]}
+             "source": ps["source"], "ballots": int(ps["ballots"]), "run": rc["run"], "pollScale": round(kp, 3)}
     s_old = (r.get("ev") or {}).get("shift", 0.0)
     dp = move(r, s_new, extra)
     dprob[r["office"]] += -dp
@@ -397,7 +405,7 @@ for r in M["races"]:
     cc = C.get(r["id"])
     if cc:
         rows = [(f, v) for f, v in cc.items() if not f.startswith("_")]
-        cs = {f: -rc["county"].get(f, rc["county"].get(f.lstrip("0"), rc["dm"])) * (1 - third) for f, _ in rows}
+        cs = {f: -rc["county"].get(f, rc["county"].get(f.lstrip("0"), rc["dm"])) * (1 - third) * kp for f, _ in rows}
         tw = sum(v[3] for _, v in rows) or 1
         fix = s_new - sum(cs[f] * v[3] for f, v in rows) / tw
         old = cc.get("_ev") or {}
@@ -423,9 +431,10 @@ for r in M["races"]:
         dm = (sc["comp"] + sc["level"]) * (pd_ * (1 - pd_)) / ref
     else:
         dm = -RHO * ps["gap"] * (pd_ * (1 - pd_)) / 0.25
-    s_new = max(-CAP, min(CAP, -dm))
+    kp = max(0.0, 1.0 - float(r.get("wPoll") or 0.0))   # Nov 1 2026: polled districts move only by the unpolled share
+    s_new = max(-CAP, min(CAP, -dm * kp))
     s_old = (r.get("ev") or {}).get("shift", 0.0)
-    dp = move(r, s_new, {"gap": round(ps["gap"], 2), "source": ps["source"]})
+    dp = move(r, s_new, {"gap": round(ps["gap"], 2), "source": ps["source"], "pollScale": round(kp, 3)})
     dprob["house"] += -dp
     log.append(dict(race=r["id"], shift_r=round(s_new, 2), change_r=round(s_new - s_old, 2), prob_r=e["prob"], gap=round(ps["gap"], 2), vol=round(ps["vol"], 3)))
 

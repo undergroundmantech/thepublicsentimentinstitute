@@ -59,6 +59,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-SEN-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 916, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.7, "Ashley Moody (R)": 49.0, "Other": 2.6, "Undecided": 3.7}},
     {"raceId": "FL-SEN-2026", "pollster": "Workbench Strategy for the Nixon campaign (D)", "startDate": "2026-10-18", "endDate": "2026-10-22", "sampleSize": 600, "sampleType": "LV", "results": {"Angie Nixon (D)": 47.0, "Ashley Moody (R)": 49.0, "Undecided": 4.0}},
     {"raceId": "FL-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 1200, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 49.0, "Other": 2.0, "Undecided": 6.0}},
-    {"raceId": "FL-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 1129, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.1, "Ashley Moody (R)": 52.6, "Other": 3.3}}
+    {"raceId": "FL-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 1129, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.1, "Ashley Moody (R)": 52.6, "Other": 3.3}},
+    {"raceId": "FL-SEN-2026", "pollster": "Political Matrix/The Listener Group", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 500, "sampleType": "LV", "results": {"Angie Nixon (D)": 35.8, "Ashley Moody (R)": 41.8, "Undecided": 22.4}},
+    {"raceId": "FL-SEN-2026", "pollster": "Stetson University", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 859, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 49.0, "Other": 3.0, "Undecided": 3.0}}
   ],
 };
