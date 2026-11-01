@@ -70,8 +70,8 @@ export default function LiveState({ s }: { s: BrState }) {
           <>
             <h4>{r[1]}</h4>
             {f == null ? <p style={{ margin: 0 }}>{t("No votes counted yet.", "Ainda sem votos apurados.")}{r[2] != null && ` ${t("Forecast", "Previsão")}: ${mg(2 * r[2] - 100)}.`}</p> : <>
-              <div className="row"><span className="fl">Flávio</span><b>{pct(f, 2)}</b></div>
-              <div className="row"><span className="lu">Lula</span><b>{pct(100 - f, 2)}</b></div>
+              <div className="row"><span className="fl">Flávio</span><b>{pct(f, 1)}</b></div>
+              <div className="row"><span className="lu">Lula</span><b>{pct(100 - f, 1)}</b></div>
               <div className="row"><span>{t("Votes counted", "Votos contados")}</span><b>{nint(v![0] + v![1])}</b></div>
               <div className="row"><span>{t("Counted", "Apurado")}</span><b>{pct(v![2], 0)}</b></div>
               {r[2] != null && <div className="row"><span>{t("Forecast", "Previsão")}</span><b>{pct(r[2])}</b></div>}
@@ -101,7 +101,7 @@ export default function LiveState({ s }: { s: BrState }) {
                 return (
                   <tr key={r[0]} className={fresh.has(keyOf(r[1])) ? "on" : ""}>
                     <td><b>{r[1]}</b></td><td className="n">{nint(c)}</td><td className="n">{pct(v ? v[2] : 0, 0)}</td>
-                    <td className="n fl">{f == null ? "" : nf(f, 2)}</td><td className="n lu">{f == null ? "" : nf(100 - f, 2)}</td>
+                    <td className="n fl">{f == null ? "" : nf(f, 1)}</td><td className="n lu">{f == null ? "" : nf(100 - f, 1)}</td>
                     <td className="n">{r[2] == null ? "" : nf(r[2])}</td>
                     <td className={`n ${d == null ? "" : d > 0 ? "fl" : "lu"}`}>{d == null ? "" : `${d > 0 ? "+" : "−"}${nf(Math.abs(d))}`}</td>
                   </tr>

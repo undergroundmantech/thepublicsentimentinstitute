@@ -34,7 +34,7 @@ export function Cards({ fv, lv, call, winLabel }: { fv: number; lv: number; call
     <div className={`c${call === k ? " win" : ""}`} style={{ ["--c" as string]: k === "F" ? "var(--fl)" : "var(--lu)" }}>
       {call === k && <span className="ok">{winLabel ?? t("Elected", "Eleito")}</span>}
       <small>{party}</small><b>{nm}</b>
-      <span className={`p ${k === "F" ? "fl" : "lu"}`}>{nf(tot ? p : 0, 2)}%</span>
+      <span className={`p ${k === "F" ? "fl" : "lu"}`}>{nf(tot ? p : 0, 1)}%</span>
       <span className="v">{nint(v)} {t("votes", "votos")}</span>
     </div>
   );
@@ -47,7 +47,7 @@ export function Reporting({ pr, counted, total }: { pr: number; counted: number;
   const p = pr > 0 ? pr : share;
   return (
     <div className="br-rep">
-      <div className="lab"><span>{t(`${nf(p, 2)}% of sections counted`, `${nf(p, 2)}% das seções apuradas`)}</span><span>{t(`${nint(counted)} valid votes counted`, `${nint(counted)} votos válidos contados`)}</span></div>
+      <div className="lab"><span>{t(`${nf(p, 1)}% of sections counted`, `${nf(p, 1)}% das seções apuradas`)}</span><span>{t(`${nint(counted)} valid votes counted`, `${nint(counted)} votos válidos contados`)}</span></div>
       <div className="track"><i style={{ width: `${p}%` }} /></div>
     </div>
   );
