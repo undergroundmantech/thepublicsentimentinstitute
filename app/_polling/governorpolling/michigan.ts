@@ -2,7 +2,7 @@
 // Michigan — 2026 Governor: Jocelyn Benson (D) vs. John James (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-29.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -76,6 +76,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 768, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 53.0, "John James (R)": 41.0, "Undecided": 6.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-25", "sampleSize": 622, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 43.0, "Other": 2.0, "Undecided": 3.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 745, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 50.0, "John James (R)": 40.0, "Other": 3.0, "Undecided": 7.0}},
-    {"raceId": "MI-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2093, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 46.0, "Other": 1.0}}
+    {"raceId": "MI-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2093, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 46.0, "Other": 1.0}},
+    {"raceId": "MI-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1009, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 39.0, "Undecided": 9.0}}
   ],
 };
