@@ -399,7 +399,7 @@ const ND_CSS = `
 @media(min-width:1101px){.mon .desk.nd.nd-embed #nd-counties>.county-head,.mon .desk.nd.nd-embed #nd-counties>.rd-map,.mon .desk.nd.nd-embed #nd-counties>.rd-map-legend{display:none}.mon .desk.nd.nd-embed .nd-mapnote{display:block}}
 `;
 
-// the site's own look on the board layout: glass cards, the display face, gold for what is selected, and motion that
+// the site's own look on the board layout: glass cards, the display face, neutral fills for what is selected, and motion that
 // plays once as the desk opens and whenever a number changes
 const THEME_CSS = `
 @property --value{syntax:'<number>';inherits:true;initial-value:0}
@@ -435,7 +435,7 @@ const THEME_CSS = `
 .desk.nd .topline-bar{height:8px;background:rgba(var(--line-rgb),.08)}
 .desk.nd .topline-bar span,.desk.nd .projected-bar-fill{transform-origin:left;animation:nd-grow 1.1s cubic-bezier(.2,.8,.2,1) .25s both;transition:width .8s cubic-bezier(.2,.8,.2,1)}
 .desk.nd .topline-bar span{box-shadow:0 0 14px -2px currentColor}
-.desk.nd .winner-band{background:linear-gradient(90deg,rgba(255,217,138,.18),transparent);border-bottom:1px solid rgba(255,217,138,.3)}
+.desk.nd .winner-band{background:linear-gradient(90deg,var(--purple-dim),transparent);border-bottom:1px solid var(--line2)}
 .desk.nd .prob-ring,.desk.nd .rep-ring{animation:nd-ring 1.3s cubic-bezier(.2,.8,.2,1) .2s both;filter:drop-shadow(0 0 18px color-mix(in srgb,var(--ring,var(--live)) 35%,transparent))}
 .desk.nd .prob-ring::before,.desk.nd .rep-ring::before{background:rgb(var(--bg2-rgb))}
 .desk.nd .ring-center b{font-family:var(--font-d);font-size:28px;letter-spacing:-.03em}
@@ -499,7 +499,7 @@ html[data-theme="light"] .desk.nd .race-header h1{background-image:linear-gradie
 html[data-theme="light"] .desk.nd .card{background:linear-gradient(170deg,rgba(255,255,255,.96),rgba(255,255,255,.78));border-color:rgba(17,0,25,.09);box-shadow:0 26px 50px -38px rgba(40,20,80,.45)}
 html[data-theme="light"] .desk.nd .race-meta{background:rgba(255,255,255,.85);border-color:rgba(17,0,25,.09)}
 html[data-theme="light"] .desk.nd .meta-block{border-color:rgba(17,0,25,.09)}
-html[data-theme="light"] .desk.nd .winner-band{background:linear-gradient(90deg,rgba(224,162,28,.16),transparent);border-bottom-color:rgba(154,106,6,.3)}
+html[data-theme="light"] .desk.nd .winner-band{background:linear-gradient(90deg,var(--purple-dim),transparent);border-bottom-color:rgba(17,0,25,.09)}
 html[data-theme="light"] .desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(17,0,25,.04)}
 html[data-theme="light"] .desk.nd .topline-bar span{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 55%);box-shadow:none}
 html[data-theme="light"] .desk.nd .prob-ring,html[data-theme="light"] .desk.nd .rep-ring{filter:drop-shadow(0 8px 18px rgba(40,20,80,.18))}
