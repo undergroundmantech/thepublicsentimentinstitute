@@ -77,6 +77,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 500, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0, "Other": 3.0, "Undecided": 4.0}},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 47.0, "Undecided": 4.0}, "notes": "Sample size not given; 1200 as in the firm's earlier releases."},
     {"raceId": "OH-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2090, "sampleType": "LV", "results": {"Sherrod Brown (D)": 50.0, "Jon Husted (R)": 48.0, "Other": 2.0, "Undecided": 1.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 753, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 44.0, "Undecided": 7.0}}
+    {"raceId": "OH-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 753, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 44.0, "Undecided": 7.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 44.0, "Other": 2.0, "Undecided": 9.0}}
   ],
 };

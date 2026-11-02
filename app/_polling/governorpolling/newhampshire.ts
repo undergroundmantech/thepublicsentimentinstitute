@@ -2,7 +2,7 @@
 // New Hampshire — 2026 Governor: Cinde Warmington (D) vs. Kelly Ayotte (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-10-31.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,6 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-GOV-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 38.0, "Kelly Ayotte (R)": 54.0, "Other": 3.0, "Undecided": 5.0}},
     {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 1672, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 50.0, "Undecided": 8.0}},
     {"raceId": "NH-GOV-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 600, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 48.0, "Other": 3.0, "Undecided": 7.0}},
-    {"raceId": "NH-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 970, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 52.0, "Other": 2.0, "Undecided": 4.0}}
+    {"raceId": "NH-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 970, "sampleType": "LV", "results": {"Cinde Warmington (D)": 42.0, "Kelly Ayotte (R)": 52.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "NH-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1418, "sampleType": "LV", "results": {"Cinde Warmington (D)": 48.0, "Kelly Ayotte (R)": 48.0, "Undecided": 4.0}}
   ],
 };

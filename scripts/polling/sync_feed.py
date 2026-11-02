@@ -12,6 +12,7 @@ import sys, os, re, json, csv, glob
 SITE, MODEL = sys.argv[1], sys.argv[2]; DRY = "--dry" in sys.argv
 SKIP = {"AK", "AKG", "MT", "RIG"}
 EXCLUDE = re.compile(r"wedgewood", re.I)
+PRIVATE = re.compile(r"PRIVATE INTERNAL")
 MON = {m: i for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"], 1)}
 norm = lambda s: re.sub(r"[^a-z]", "", re.sub(r"\((?:r|d|i)\)|^the |^fox news/", "", str(s).lower()))[:6]
 
@@ -59,6 +60,7 @@ for r in model["races"]:
             end = str(p["end"]).strip(); n = int(float(p["n"])); D = float(p["D"]); R = float(p["R"])
         except (ValueError, KeyError, TypeError): continue
         if not re.match(r"2026-\d{2}-\d{2}$", end) or EXCLUDE.search(str(p["source"])): continue
+        if PRIVATE.search(str(p.get("dates", ""))): continue    # Nov 1 2026, by the user: private internal polls feed the model only, never the site
         nn = norm(p["source"])
         if any((e == end and (sz == n or nm == nn)) or (nm == nn and sz == n and abs(days(e) - days(end)) <= 10) for e, sz, nm in have): continue
         O = float(p.get("O") or 0); U = float(p.get("U") or 0)

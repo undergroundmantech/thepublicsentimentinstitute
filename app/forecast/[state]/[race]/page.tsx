@@ -139,7 +139,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const shareCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 3).map((c) => ({ name: c.name, party: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : c.party, pct: c.pct,
     color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.party === "R" ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
   const pathSteps = [
-    { label: "Partisan lean", m: r.stages.anchor, note: "the state's baseline" },
+    { label: "Partisan lean", m: r.stages.anchor, note: r.office === "house" ? "the district's 2024 presidential margin" : "the state's baseline" },
     { label: "Fundamentals", m: r.stages.fund, note: "approval, economy, candidates" },
     { label: "With polls", m: r.ev ? r.est.margin - r.ev.shift : r.stages.poll, note: r.pollAvg != null ? `average ${fmtM(r.pollAvg)}` : "no polls" },
     ...(r.ev ? [{ label: "With early vote", m: r.est.margin, note: "turnout so far" }] : []),

@@ -98,6 +98,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-26", "sampleSize": 712, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 48.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-GOV-2026", "pollster": "254 Labs/YouGov Blue", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 49.0, "Greg Abbott (R)": 46.0, "Undecided": 5.0}},
     {"raceId": "TX-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2141, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 49.0, "Greg Abbott (R)": 50.0, "Other": 1.0}},
-    {"raceId": "TX-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1223, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.0, "Greg Abbott (R)": 47.0, "Undecided": 5.0}}
+    {"raceId": "TX-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1223, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.0, "Greg Abbott (R)": 47.0, "Undecided": 5.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "AtlasIntel", "startDate": "2026-10-31", "endDate": "2026-10-31", "sampleSize": 1500, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 50.1, "Greg Abbott (R)": 48.5, "Other": 1.4}},
+    {"raceId": "TX-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-11-01", "endDate": "2026-11-01", "sampleSize": 544, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 51.6, "Other": 1.4, "Undecided": 0.1}}
   ],
 };
