@@ -49,7 +49,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const sf = useStateFile(r?.st ?? null);
   const [paths, setPaths] = useState<Paths | null>(null);
   const [det, setDet] = useState<CDetail | null>(null);
-  const [view, setView] = useState<"forecast" | "results">("results");
+  const [view, setView] = useState<"forecast" | "results">("forecast");
   const [mode, setMode] = useState<"margin" | "turnout">("margin");
   const [rmode, setRmode] = useState<"margin" | "vs" | "reporting">("margin");
   const [tip, setTip] = useState<{ x: number; y: number; f: string } | null>(null);
@@ -343,6 +343,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
 
       {exp && vb ? (
         <section id="nd-counties" className="county card" aria-label={`${STN[r.st]} county map and county by county detail`}>
+          {embedded ? <p className="nd-mapnote">The globe beside this desk shows {STN[r.st]}&apos;s counties for this race: hover a county there for its expected and counted vote.</p> : null}
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={view === "forecast" ? "on" : ""} onClick={() => setView("forecast")}>forecast</button>
@@ -476,7 +477,10 @@ const ND_CSS = `
 .desk.nd .nd-method{margin-top:20px;padding:18px 20px;display:grid;gap:8px}
 .desk.nd .race-tabs a{cursor:pointer}
 .desk.nd.nd-embed{min-height:0}
-.desk.nd.nd-embed .shell{padding-top:16px}
+.desk.nd.nd-embed .shell{padding-top:12px}
+.desk.nd .nd-mapnote{display:none;margin:0 0 12px;font:600 12.5px var(--font-b);color:var(--mute)}
+/* beside the monitor's globe, which then shows this race's counties, the desk keeps its county table and drops its own map */
+@media(min-width:1101px){.mon .desk.nd.nd-embed #nd-counties>.county-head,.mon .desk.nd.nd-embed #nd-counties>.rd-map,.mon .desk.nd.nd-embed #nd-counties>.rd-map-legend{display:none}.mon .desk.nd.nd-embed .nd-mapnote{display:block}}
 /* breadcrumb back to the national dashboard, the category and the state */
 .desk.nd .nd-crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:600 12px var(--font-b);color:var(--mute);margin:0 0 14px}
 .desk.nd .nd-crumbs a{color:var(--ink2);text-decoration:none}.desk.nd .nd-crumbs a:hover{color:var(--hi)}
@@ -516,20 +520,29 @@ html[data-theme="light"] .desk.nd .nd-key i{background:var(--ink)}
 html[data-theme="light"] .desk.nd .nd-status.s-count{border-color:rgba(225,29,72,.35)}
 `;
 
-// the site's own look on the board layout: glass cards, the display face, gold for what is selected, and motion that
+// the site's own look on the board layout: glass cards, the display face, neutral fills for what is selected, and motion that
 // plays once as the desk opens and whenever a number changes
 const THEME_CSS = `
 @property --value{syntax:'<number>';inherits:true;initial-value:0}
 .desk.nd{--sans:var(--font-b),system-ui,sans-serif;--mono:var(--font-m),ui-monospace,monospace;--map-await:rgba(150,130,230,.13);--panel3:rgba(var(--line-rgb),.08);
   background:radial-gradient(70% 50% at 10% 0%,rgba(61,123,255,.12),transparent 60%),radial-gradient(60% 50% at 100% 10%,rgba(255,59,92,.1),transparent 60%)}
 .desk.nd h1,.desk.nd h2,.desk.nd h3,.desk.nd .projected-name,.desk.nd .snapshot-heading strong{font-family:var(--font-d)}
-.desk.nd .race-header h1{font-size:clamp(30px,3.4vw,54px);line-height:1;letter-spacing:-.04em;background:linear-gradient(90deg,#fff,#c9c3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.desk.nd .race-kicker{color:var(--gold);font-size:10px}
-.desk.nd .meta-block{padding:10px 14px;border-radius:14px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.04)}
-.desk.nd .meta-block span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.desk.nd .meta-block b{font-size:22px;color:var(--hi)}
+.desk.nd .race-header{padding-bottom:12px}
+.desk.nd .race-header h1{font-size:clamp(26px,2.6vw,40px);line-height:1.05;letter-spacing:-.035em;background:linear-gradient(90deg,#fff,#c9c3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desk.nd .race-kicker{color:var(--mute);font-size:10px}
+.desk.nd .race-deck{margin-top:6px;max-width:none}
+/* the five reporting fields in one framed strip under the title */
+.desk.nd .race-heading-row{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:8px}
+.desk.nd .race-meta{grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--line2);border-radius:14px;background:linear-gradient(170deg,rgba(var(--line-rgb),.06),rgba(var(--line-rgb),.02));overflow:hidden}
+.desk.nd .meta-block{padding:9px 14px;min-width:0;border-left:1px solid var(--line2)}
+.desk.nd .meta-block:first-child{border-left:0}
+.desk.nd .meta-block span{font-family:var(--mono);font-size:9.5px;line-height:1.35;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.desk.nd .meta-block b{font-size:17px;color:var(--hi);margin-top:2px;overflow-wrap:anywhere}
+@media(max-width:720px){.desk.nd .race-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.desk.nd .meta-block{border-left:0;border-top:1px solid var(--line2)}.desk.nd .meta-block:nth-child(-n+2){border-top:0}.desk.nd .meta-block:nth-child(even){border-left:1px solid var(--line2)}.desk.nd .meta-block:last-child{grid-column:1/-1}}
+.desk.nd .race-tabs{margin-top:12px}
 .desk.nd .race-tabs a{font-family:var(--font-b);font-weight:700;font-size:13px;position:relative;border-bottom:0}
-.desk.nd .race-tabs a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--gold);transform-origin:left;animation:nd-grow .5s cubic-bezier(.2,.8,.2,1) both}
+.desk.nd .race-tabs a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--hi);transform-origin:left;animation:nd-grow .5s cubic-bezier(.2,.8,.2,1) both}
+.desk.nd .dashboard-grid{margin-top:14px}
 .desk.nd .card{position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--line2);
   background:linear-gradient(170deg,rgba(var(--line-rgb),.075),rgba(var(--line-rgb),.02));backdrop-filter:blur(12px);box-shadow:0 30px 60px -40px rgba(0,0,0,.85);
   animation:nd-rise .7s cubic-bezier(.2,.8,.2,1) both}
@@ -543,7 +556,7 @@ const THEME_CSS = `
 .desk.nd .topline-bar{height:8px;background:rgba(var(--line-rgb),.08)}
 .desk.nd .topline-bar span,.desk.nd .projected-bar-fill{transform-origin:left;animation:nd-grow 1.1s cubic-bezier(.2,.8,.2,1) .25s both;transition:width .8s cubic-bezier(.2,.8,.2,1)}
 .desk.nd .topline-bar span{box-shadow:0 0 14px -2px currentColor}
-.desk.nd .winner-band{background:linear-gradient(90deg,rgba(255,217,138,.18),transparent);border-bottom:1px solid rgba(255,217,138,.3)}
+.desk.nd .winner-band{background:linear-gradient(90deg,var(--purple-dim),transparent);border-bottom:1px solid var(--line2)}
 .desk.nd .prob-ring,.desk.nd .rep-ring{animation:nd-ring 1.3s cubic-bezier(.2,.8,.2,1) .2s both;filter:drop-shadow(0 0 18px color-mix(in srgb,var(--ring,var(--live)) 35%,transparent))}
 .desk.nd .prob-ring::before,.desk.nd .rep-ring::before{background:rgb(var(--bg2-rgb))}
 .desk.nd .ring-center b{font-family:var(--font-d);font-size:28px;letter-spacing:-.03em}
@@ -556,24 +569,24 @@ const THEME_CSS = `
 .desk.nd .model-stats>div{padding:8px 10px;border-radius:12px;background:rgba(var(--line-rgb),.04)}
 .desk.nd .rd-view-toggles,.desk.nd .rd-map-toggles{padding:3px;border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05)}
 .desk.nd .rd-view-toggles button,.desk.nd .rd-map-toggles button{border-radius:9px;font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:capitalize;transition:background .25s,color .25s}
-.desk.nd .rd-view-toggles button.on,.desk.nd .rd-map-toggles button.on{background:var(--gold);color:#1a1200}
+.desk.nd .rd-view-toggles button.on,.desk.nd .rd-map-toggles button.on{background:rgba(var(--line-rgb),.16);color:var(--hi)}
 .desk.nd .rd-map{border-radius:16px;background:radial-gradient(80% 80% at 50% 40%,rgba(120,90,255,.08),transparent 70%),rgba(var(--line-rgb),.02);border:1px solid var(--line)}
 .desk.nd .nd-svg path{animation:nd-pop .6s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center;transition:fill .6s ease,fill-opacity .6s ease}
 .desk.nd .map-empty{top:auto;bottom:14px;left:50%;right:auto;transform:translateX(-50%);padding:10px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(var(--bg2-rgb),.85);backdrop-filter:blur(8px);text-align:center;pointer-events:none;inset:auto auto 14px 50%;position:absolute}
 .desk.nd .map-empty p{font:700 13px var(--font-b);color:var(--hi);display:flex;align-items:center;justify-content:center;gap:8px}
 .desk.nd .map-empty .map-empty-sub{font:500 12px var(--font-b);color:var(--mute);margin-top:3px}
 .desk.nd .nd-banner-acts{display:flex;gap:8px;flex-wrap:wrap}
-.desk.nd .archive-banner a.nd-main{background:var(--gold);color:#1a1200;border-color:var(--gold)}
+.desk.nd .archive-banner a.nd-main{background:var(--grad);color:#fff;border-color:transparent}
 .desk.nd .rd-county-search{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05)}
 .desk.nd .rd-county-search input{border:0;background:none;outline:0;font-family:var(--font-b)}
 .desk.nd .rd-county-sorts{border-radius:12px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.05);padding:3px}
 .desk.nd .rd-county-sorts button{border-radius:9px;font-family:var(--font-b);font-weight:700;text-transform:capitalize;letter-spacing:0;font-size:12px}
-.desk.nd .rd-county-sorts button.on{background:var(--gold);color:#1a1200}
+.desk.nd .rd-county-sorts button.on{background:rgba(var(--line-rgb),.16);color:var(--hi)}
 .desk.nd .rd-county-tablewrap{border-radius:14px;border-color:var(--line2);background:rgba(var(--line-rgb),.02)}
 .desk.nd .rd-county-tablewrap thead th{background:rgb(var(--bg2-rgb));backdrop-filter:blur(8px)}
 .desk.nd .rd-county-tablewrap tbody tr{animation:nd-fade .5s ease both;transition:background .2s}
 .desk.nd .rd-county-tablewrap tbody tr:nth-child(-n+20){animation-delay:calc(var(--r,0)*1ms)}
-.desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(255,217,138,.06)}
+.desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(var(--line-rgb),.05)}
 .desk.nd .rhd-pane{margin-top:0;padding:16px 18px 18px}
 .desk.nd #nd-history{padding:16px 18px}
 .desk.nd .rd-county-table{table-layout:auto;min-width:1180px}
@@ -603,7 +616,6 @@ const THEME_CSS = `
 .desk.nd .projected-bar-track{height:12px;border-radius:6px;background:rgba(var(--line-rgb),.07);overflow:hidden}
 .desk.nd .projected-bar-fill{border-radius:6px;background-color:color-mix(in srgb,currentColor 32%,transparent);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.18) 0 6px,transparent 6px 12px);background-size:24px 24px;animation:nd-grow 1.1s cubic-bezier(.2,.8,.2,1) .25s both,nd-stripes 1.2s linear infinite}
 .desk.nd .model-stats>div{transition:transform .25s,border-color .25s;border:1px solid transparent}.desk.nd .model-stats>div:hover{transform:translateY(-2px);border-color:var(--line2)}
-.desk.nd .meta-block{transition:transform .25s}.desk.nd .meta-block:hover{transform:translateY(-2px)}
 @keyframes nd-spin{to{transform:rotate(360deg)}}
 @keyframes nd-sheen{to{transform:translateX(100%)}}
 @keyframes nd-stripes{to{background-position:24px 0}}
@@ -612,9 +624,10 @@ const THEME_CSS = `
 html[data-theme="light"] .desk.nd{background:radial-gradient(70% 50% at 10% 0%,rgba(42,99,240,.07),transparent 60%),radial-gradient(60% 50% at 100% 10%,rgba(232,38,75,.05),transparent 60%)}
 html[data-theme="light"] .desk.nd .race-header h1{background-image:linear-gradient(90deg,#110019,#5b3fd0)}
 html[data-theme="light"] .desk.nd .card{background:linear-gradient(170deg,rgba(255,255,255,.96),rgba(255,255,255,.78));border-color:rgba(17,0,25,.09);box-shadow:0 26px 50px -38px rgba(40,20,80,.45)}
-html[data-theme="light"] .desk.nd .meta-block{background:rgba(255,255,255,.85);border-color:rgba(17,0,25,.09)}
-html[data-theme="light"] .desk.nd .winner-band{background:linear-gradient(90deg,rgba(224,162,28,.16),transparent);border-bottom-color:rgba(154,106,6,.3)}
-html[data-theme="light"] .desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(154,106,6,.06)}
+html[data-theme="light"] .desk.nd .race-meta{background:rgba(255,255,255,.85);border-color:rgba(17,0,25,.09)}
+html[data-theme="light"] .desk.nd .meta-block{border-color:rgba(17,0,25,.09)}
+html[data-theme="light"] .desk.nd .winner-band{background:linear-gradient(90deg,var(--purple-dim),transparent);border-bottom-color:rgba(17,0,25,.09)}
+html[data-theme="light"] .desk.nd .rd-county-tablewrap tbody tr:hover{background:rgba(17,0,25,.04)}
 html[data-theme="light"] .desk.nd .topline-bar span{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 55%);box-shadow:none}
 html[data-theme="light"] .desk.nd .prob-ring,html[data-theme="light"] .desk.nd .rep-ring{filter:drop-shadow(0 8px 18px rgba(40,20,80,.18))}
 html[data-theme="light"] .desk.nd .rd-map{background:radial-gradient(80% 80% at 50% 40%,rgba(120,90,255,.06),transparent 70%),#fff}
