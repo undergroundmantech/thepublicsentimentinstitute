@@ -7,6 +7,10 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 31, 2026 evening ──
+  { pollster: "Big Data Poll", endDate: "2026-10-30", sampleSize: 3418, sampleType: "RV", results: { Approve: 39.3, Disapprove: 59.1 } },   // The National Signal, Oct 27 to 30, registered voters, 20.5 strongly approve and 47.3 strongly disapprove; bigdatapoll.com Oct 31
+  // ── Added Oct 31, 2026 morning ──
+  { pollster: "RMG Research", endDate: "2026-10-27", sampleSize: 2000, sampleType: "RV", results: { Approve: 43, Disapprove: 55 } },   // Napolitan News, Oct 19 to 27, from the RMG release
   // ── Added Oct 30, 2026 evening ──
   { pollster: "Rasmussen Reports (R)", endDate: "2026-10-30", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },   // daily tracking Oct 26 to 30, posted Oct 30
   // ── Added Oct 30, 2026 midday ──

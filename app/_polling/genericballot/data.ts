@@ -9,6 +9,11 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 31, 2026 8 PM sweep ──
+  { pollster: "Targoz Market Research", endDate: "2026-10-22", sampleSize: 1118, sampleType: "LV", results: { Democrats: 49, Republicans: 46 } },   // Oct 20 to 22, 1,400 RV screened to 1,118 LV, other 1, undecided 3; Targoz blog Oct 28
+  { pollster: "The Argument/Verasight", endDate: "2026-10-23", sampleSize: 1549, sampleType: "LV", results: { Democrats: 52, Republicans: 41 } },   // Oct 21 to 23, D+11 LV and D+9 RV in The Argument Oct 30; shares from pollcheck match; n is the RV sample, LV count not published
+  // ── Added Oct 31, 2026 evening ──
+  { pollster: "Big Data Poll", endDate: "2026-10-30", sampleSize: 3214, sampleType: "LV", results: { Democrats: 52.3, Republicans: 40.0 } },   // The National Signal, Public Polling Project, Oct 27 to 30, 3,418 RV and 3,214 LV, leaners included; bigdatapoll.com Oct 31
   // ── Added Oct 30, 2026 evening ──
   { pollster: "Rasmussen Reports (R)", endDate: "2026-10-21", sampleSize: 1755, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },   // Oct 15 and Oct 18 to 21, posted Oct 26
   { pollster: "Penn State McCourtney Institute/YouGov", endDate: "2026-10-20", sampleSize: 724, sampleType: "LV", results: { Democrats: 47, Republicans: 43 } },   // Oct 14 to 20, registered voters who plan to vote; Penn State release gives Democrats by 4, shares as listed by callthemap

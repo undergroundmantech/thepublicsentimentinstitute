@@ -2,7 +2,7 @@
 // Alabama — 2026 Governor: Doug Jones (D) vs. Tommy Tuberville (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-17.
+// ballot were dropped. Newest poll: 2026-10-24.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -38,6 +38,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
   AL: [
     {"raceId": "AL-GOV-2026", "pollster": "yes. every kid.", "startDate": "2026-07-08", "endDate": "2026-07-11", "sampleSize": 601, "sampleType": "LV", "results": {"Doug Jones (D)": 41.0, "Tommy Tuberville (R)": 49.0, "Undecided": 11.0}},
     {"raceId": "AL-GOV-2026", "pollster": "Napolitan News Service/RMG Research for Alabama Policy Action (R)", "startDate": "2026-09-21", "endDate": "2026-09-25", "sampleSize": 800, "sampleType": "RV", "results": {"Doug Jones (D)": 37.0, "Tommy Tuberville (R)": 50.0, "Other": 2.0, "Undecided": 8.0}},
-    {"raceId": "AL-GOV-2026", "pollster": "Cygnal (R) for Gray Media and Alabama Daily News", "startDate": "2026-10-16", "endDate": "2026-10-17", "sampleSize": 500, "sampleType": "LV", "results": {"Doug Jones (D)": 40.0, "Tommy Tuberville (R)": 51.2, "Undecided": 8.9}}
+    {"raceId": "AL-GOV-2026", "pollster": "Cygnal (R) for Gray Media and Alabama Daily News", "startDate": "2026-10-16", "endDate": "2026-10-17", "sampleSize": 500, "sampleType": "LV", "results": {"Doug Jones (D)": 40.0, "Tommy Tuberville (R)": 51.2, "Undecided": 8.9}},
+    {"raceId": "AL-GOV-2026", "pollster": "Chism Strategies (D)", "startDate": "2026-10-22", "endDate": "2026-10-24", "sampleSize": 695, "sampleType": "LV", "results": {"Doug Jones (D)": 45.0, "Tommy Tuberville (R)": 48.0, "Undecided": 7.0}}
   ],
 };
