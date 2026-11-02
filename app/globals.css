@@ -34,9 +34,20 @@
   --b2: #83449c;
   --b3: #f9064b;
   --grad: linear-gradient(90deg, #064bf9 0%, #83449c 50%, #f9064b 100%);
-  --gold: #e7b341;
-  --gold2: #bb831c;
-  --gold-fill: #e7b341;   /* gold as a surface, with dark text on it, in both themes */
+  /* UI accent: brand purple, lifted on dark ground so it reads as text; --accent-fill is the button/chip surface */
+  --accent: #c08ad9;
+  --accent2: #9a5cb8;
+  --accent-fill: #83449c;
+  --accent-rgb: 192, 138, 217;
+  --on-accent: #ffffff;
+  /* legacy names: every former gold UI accent now resolves to the brand accent */
+  --gold: var(--accent);
+  --gold2: var(--accent2);
+  --gold-fill: var(--accent-fill);
+  /* caution (stale feed, test data, errors): amber, kept apart from the toss-up rating */
+  --warn: #e0a83a;
+  --warn-rgb: 224, 168, 58;
+  --focus: #7aa2ff;
 
   /* party, brightened for dark ground, data only */
   --dem: #3d7bff;  --dem2: #7fa6ff;  --dem3: #b9ccff;
@@ -167,8 +178,12 @@
   --hi: #110019;
   --logo: #110019;
 
-  --gold: #9a6a06;
-  --gold2: #7a5204;
+  --accent: #83449c;
+  --accent2: #6a3580;
+  --accent-rgb: 131, 68, 156;
+  --warn: #8a5c00;
+  --warn-rgb: 138, 92, 0;
+  --focus: #064bf9;
 
   --dem: #2a63f0;  --dem2: #1d4ed8;  --dem3: #4a74e8;
   --gop: #e8264b;  --gop2: #c8102e;  --gop3: #de5a74;
@@ -224,14 +239,14 @@
   --text-muted: var(--mute);
   --text-faint: var(--mute2);
   --text-on-grad: #ffffff;
-  --text-on-gold: #1a1200;
+  --text-on-gold: var(--on-accent);
   /* borders */
   --border-subtle: var(--line);
   --border-strong: var(--line2);
   /* accents and focus */
   --accent-grad: var(--grad);
-  --accent-2: var(--gold);
-  --focus-ring: var(--gold);
+  --accent-2: var(--accent);
+  --focus-ring: var(--focus);
   /* buttons */
   --btn-bg: var(--glass2);
   --btn-border: var(--line2);
@@ -256,11 +271,18 @@
   /* maps: geography outlines and hover; fills stay party and rating tokens */
   --map-stroke: var(--bg);
   --map-stroke-hover: var(--hi);
+  --map-stroke-hi: rgba(var(--line-rgb),.55);
+  --map-select: var(--accent);
   --map-empty: var(--rate-none);
+  /* screen-space boundary widths, for non-scaling strokes: county < state < hover < selected */
+  --map-w-county: .6px;
+  --map-w-state: 1.3px;
+  --map-w-hover: 1.5px;
+  --map-w-select: 2px;
   /* status */
   --status-live: var(--live);
   --status-win: var(--win);
-  --status-warn: var(--gold);
+  --status-warn: var(--warn);
   /* elevation */
   --shadow-overlay: 0 30px 70px -24px #000;
   /* ambient brand art (orbs, grain) in the dark modes, 1 = the approved mock; Pro Light keeps its own values in opp.css */
@@ -457,7 +479,7 @@ html[data-theme="light"] .desk {
   --ink:#17171b; --foreground:#17171b; --foreground2:#3a3a3f; --ink2:#5d5d58; --muted:#5d5d58; --ink3:#62625b; --muted2:#62625b; --muted3:rgba(23,23,27,.68);
   --hairline:#e8e8e2; --hairline2:#d9d9d1; --border:#e8e8e2; --border2:#d9d9d1; --border3:#c4c4ba;
   --dem:#1d5fc4; --gop:#c22f3b; --rep:#c22f3b; --c2:#b5338f; --dem-dim:rgba(29,95,196,.10); --gop-dim:rgba(194,47,59,.10);
-  --live:#0d9488; --called:#15803d; --win:#15803d; --gold:#a16207;
+  --live:#0d9488; --called:#15803d; --win:#15803d;
   --purple:#6d3ee9; --purple2:#8a63ef; --red:#c22f3b; --red2:#d64550; --blue:#1d5fc4; --blue2:#3b7bde;
   --purple-dim:rgba(109,62,233,.10); --red-dim:rgba(194,47,59,.10); --blue-dim:rgba(29,95,196,.10); --white-accent:#17171b;
   --shadow-sm:0 1px 2px rgba(23,23,27,.04),0 2px 8px rgba(23,23,27,.05); --shadow-md:0 4px 12px rgba(23,23,27,.05),0 12px 32px rgba(23,23,27,.07); --shadow-lg:0 6px 16px rgba(23,23,27,.05),0 24px 64px rgba(23,23,27,.10);
@@ -469,7 +491,7 @@ html[data-theme="dark"] .desk {
   --ink:#f2f2f0; --foreground:#f2f2f0; --foreground2:rgba(242,242,240,.78); --ink2:rgba(242,242,240,.62); --muted:rgba(242,242,240,.62); --ink3:rgba(242,242,240,.50); --muted2:rgba(242,242,240,.50); --muted3:rgba(242,242,240,.52);
   --hairline:rgba(255,255,255,.08); --hairline2:rgba(255,255,255,.15); --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.15); --border3:rgba(255,255,255,.24);
   --dem:#3b7bde; --gop:#d64550; --rep:#d64550; --c2:#c757a8; --dem-dim:rgba(59,123,222,.16); --gop-dim:rgba(214,69,80,.16);
-  --live:#2dd4bf; --called:#37b26c; --win:#37b26c; --gold:#e8b93c;
+  --live:#2dd4bf; --called:#37b26c; --win:#37b26c;
   --purple:#8a63ef; --purple2:#a486f3; --red:#d64550; --red2:#e4737c; --blue:#3b7bde; --blue2:#6ea3ee;
   --purple-dim:rgba(138,99,239,.18); --red-dim:rgba(214,69,80,.18); --blue-dim:rgba(59,123,222,.18); --white-accent:#f2f2f0;
   --shadow-sm:0 1px 2px rgba(0,0,0,.40),0 2px 8px rgba(0,0,0,.30); --shadow-md:0 4px 12px rgba(0,0,0,.45),0 12px 32px rgba(0,0,0,.40); --shadow-lg:0 6px 16px rgba(0,0,0,.50),0 24px 64px rgba(0,0,0,.55);

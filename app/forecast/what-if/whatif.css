@@ -89,9 +89,9 @@
 .wif-tw td a { color: var(--ink); text-decoration: none; }
 .wif-tw td small { display: block; font-size: 11px; color: var(--mute); }
 .wif-tw .n { text-align: right; font-variant-numeric: tabular-nums; }
-.wif-tw tr.flip { background: rgba(231,179,65,.06); }
+.wif-tw tr.flip { background: rgba(var(--accent-rgb), .06); }
 .wif-tw .fl, .wif-tw .pn { margin-left: 8px; font: 800 9.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; }
-.wif-tw .fl { background: rgba(231,179,65,.2); color: var(--gold); } .wif-tw .pn { background: rgba(130,90,255,.2); color: #cbb8ff; }
+.wif-tw .fl { background: rgba(var(--accent-rgb), .2); color: var(--gold); } .wif-tw .pn { background: rgba(130,90,255,.2); color: #cbb8ff; }
 .wif-cb { display: inline-flex; width: 110px; height: 6px; border-radius: 3px; overflow: hidden; background: rgba(var(--line-rgb), .08); }
 .wif-cb i { display: block; height: 100%; } .wif-cb s { display: block; height: 100%; background: #ff3b5c; text-decoration: none; }
 .wif-how { margin-top: 24px; max-width: 860px; }

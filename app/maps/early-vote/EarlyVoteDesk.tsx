@@ -1195,7 +1195,7 @@ const CSS = `
 .ev-seg button:hover { color: var(--ink); }
 .ev-seg button.on { background: var(--hi); color: var(--bg); }
 .ev-seg.sm button { padding: 5px 11px; font-size: 11.5px; }
-.ev-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ev-seg button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 .ev-empty { margin-top: 18px; padding: 28px 22px; border: 1px solid var(--line); border-radius: var(--r); background: var(--glass);
   color: var(--mute); font-size: 14.5px; line-height: 1.6; }
@@ -1314,7 +1314,7 @@ table.ev-table td.name { color: var(--ink); font-weight: 600; }
 table.ev-table td.tot { color: var(--ink); font-weight: 700; }
 table.ev-table tr.clickable { cursor: pointer; }
 table.ev-table tr.clickable:hover td { background: rgba(var(--line-rgb),0.04); }
-table.ev-table tr.clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+table.ev-table tr.clickable:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 table.ev-table td.split { min-width: 120px; }
 
 .ev-hatch { pointer-events: none; }
@@ -1358,7 +1358,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
   border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
 .ev-nat-card:hover { border-color: var(--border3, var(--border2)); }
 .ev-nat-card.on { border-color: var(--hi); background: var(--glass2); }
-.ev-nat-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ev-nat-card:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .ev-nat-card .lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
 .ev-nat-card .lab em { font-style: normal; font-weight: 600; letter-spacing: 0.06em; text-transform: none; color: var(--muted2); font-size: 11px; }

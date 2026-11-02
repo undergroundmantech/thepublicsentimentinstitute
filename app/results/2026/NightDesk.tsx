@@ -151,7 +151,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const fillOf = (f: string) => {
     if (view === "results") {
       const g = regM(f); if (!g) return "var(--map-await)";
-      if (rmode === "reporting") return `rgba(231,179,65,${(0.14 + 0.84 * Math.min(1, g.pr / 100)).toFixed(3)})`;
+      if (rmode === "reporting") return `rgba(var(--accent-rgb),${(0.14 + 0.84 * Math.min(1, g.pr / 100)).toFixed(3)})`;
       if (rmode === "vs") { const x = expCM(f); return x == null ? shade(g.m) : vsShade(g.m - x); }
       return shade(g.m);
     }
@@ -378,7 +378,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           </div>
           <div className="rd-map-legend">
             {view === "forecast" && mode === "turnout" ? <><span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(15,95,85))" }} /><span>lower to higher expected turnout</span></>
-              : view === "results" && rmode === "reporting" ? <><span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg,rgba(231,179,65,.14),rgba(231,179,65,.98))" }} /><span>share of each county&apos;s vote counted</span></>
+              : view === "results" && rmode === "reporting" ? <><span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg,rgba(var(--accent-rgb),.14),rgba(var(--accent-rgb),.98))" }} /><span>share of each county&apos;s vote counted</span></>
               : view === "results" && rmode === "vs" ? <><span className="rd-map-legend-sw" style={{ background: isM ? "linear-gradient(90deg,#2fbf9b,rgba(47,191,155,.15) 48%,rgba(231,121,74,.15) 52%,#e7794a)" : ind ? "linear-gradient(90deg,#b78cff,rgba(183,140,255,.15) 48%,rgba(255,59,92,.15) 52%,#ff3b5c)" : "linear-gradient(90deg,#3d7bff,rgba(61,123,255,.15) 48%,rgba(255,59,92,.15) 52%,#ff3b5c)" }} /><span>returns against the forecast · {last(A)} beating it to {last(B)} beating it</span></>
               : <><span className="rd-map-legend-sw" style={{ background: isM ? "linear-gradient(90deg,#2fbf9b,#e7794a)" : ind ? "linear-gradient(90deg,#4e24aa,#eae2ff 48%,#ffdce4 52%,#8c0a28)" : "linear-gradient(90deg,#10288c,#d6e2ff 48%,#ffdce4 52%,#8c0a28)" }} /><span>{view === "results" ? `margin in counted votes · paler means less counted` : `forecast margin · ${last(A)} to ${last(B)}`}</span></>}
             {view === "results" ? <span className="nd-lg"><i className="rd-map-legend-sw hatch" aria-hidden /> hatched: no votes yet, expected lean only</span> : null}
@@ -469,10 +469,10 @@ const ND_CSS = `
 .desk.nd .nd-load{height:70vh;border-radius:14px}
 .desk.nd .nd-dot{display:inline-block;width:12px;height:12px;border-radius:50%;flex:0 0 auto;margin-top:3px}
 .desk.nd .nd-svg{position:absolute;inset:0;width:100%;height:100%}
-.desk.nd .nd-svg path{stroke:var(--map-stroke);stroke-width:.7;vector-effect:non-scaling-stroke;transition:fill .35s}
-.desk.nd .nd-svg path:hover,.desk.nd .nd-svg path.on{stroke:var(--map-stroke-hi);stroke-width:2}
+.desk.nd .nd-svg path{stroke:var(--map-stroke);stroke-width:var(--map-w-county);stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:fill .35s}
+.desk.nd .nd-svg path:hover{stroke:var(--map-stroke-hi);stroke-width:var(--map-w-hover)}.desk.nd .nd-svg path.on{stroke:var(--map-select);stroke-width:var(--map-w-select)}
 .desk.nd .archive-banner button,.desk.nd .archive-banner a{font:700 12px var(--sans);color:var(--ink);background:none;border:1px solid var(--rule,rgba(255,255,255,.2));border-radius:999px;padding:5px 12px;cursor:pointer}
-.desk.nd .nd-test{border-color:rgba(231,179,65,.5)!important;background:rgba(231,179,65,.08)!important}
+.desk.nd .nd-test{border-color:rgba(var(--warn-rgb),.5)!important;background:rgba(var(--warn-rgb),.08)!important}
 .desk.nd .nd-h{font-size:16px}
 .desk.nd .nd-method{margin-top:20px;padding:18px 20px;display:grid;gap:8px}
 .desk.nd .race-tabs a{cursor:pointer}
@@ -491,10 +491,10 @@ const ND_CSS = `
 .desk.nd .nd-status.s-count{border-color:rgba(255,59,92,.4)}.desk.nd .nd-status.s-count b{color:var(--live)}
 .desk.nd .nd-status.s-called{border-color:color-mix(in srgb,var(--called) 50%,transparent);background:color-mix(in srgb,var(--called) 10%,transparent)}.desk.nd .nd-status.s-called b{color:var(--called)}
 .desk.nd .nd-status.s-proj{border-style:dashed}
-.desk.nd .nd-status.s-err b{color:var(--gold)}
+.desk.nd .nd-status.s-err b{color:var(--warn)}
 .desk.nd .nd-fc b{font-size:17px}.desk.nd .nd-fc b small{font-size:12px;font-weight:600;color:var(--mute);font-family:var(--font-m)}
 .desk.nd .nd-tab-gap{flex:1 1 auto;min-width:4px}
-.desk.nd .nd-err{margin:12px 0 0;font-size:12.5px;color:var(--gold)}
+.desk.nd .nd-err{margin:12px 0 0;font-size:12.5px;color:var(--warn)}
 /* candidate rows: the counted leader and the called winner */
 .desk.nd .topline-row.lead{background:rgba(var(--line-rgb),.035);margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:12px}
 .desk.nd .topline-row.won{background:color-mix(in srgb,var(--called) 7%,transparent);margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:12px}

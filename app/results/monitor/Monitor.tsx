@@ -258,7 +258,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       }
       return p;
     };
-    const GOLD = LT ? "176,122,0" : "255,217,138";
+    // brand purple for selection, calls and fresh counts; party colours stay on the fills
+    const ACC = LT ? "131,68,156" : "192,138,217";
+    const HOV = LT ? "rgba(17,0,25,.72)" : "rgba(255,255,255,.95)";
     // frames run only while something moves: a flight, a drag, the count sweep or a call glowing; otherwise the
     // globe is drawn once and waits, which keeps a laptop or phone cool on a long election night
     const draw = (now = performance.now()) => {
@@ -275,6 +277,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       }
       proj.rotate(v.rot).scale(base * v.k).translate([W / 2, H / 2]);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      // round joins: mitred joins spike out at the sharp vertices of coastlines and islands
+      ctx.lineJoin = "round"; ctx.lineCap = "round";
       const R = proj.scale(), [cx, cy] = proj.translate();
       const atm = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.1); atm.addColorStop(0, LT ? "rgba(120,90,255,.2)" : "rgba(120,90,255,.32)"); atm.addColorStop(1, "rgba(120,90,255,0)");
       ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(cx, cy, R * 1.1, 0, 6.283); ctx.fill();
@@ -289,7 +293,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         ctx.fillStyle = fx(stateColor[f.st] ?? NO_RACE); ctx.globalAlpha = dim; ctx.fill();
         if (gh) { ctx.fillStyle = hatch(gh); ctx.globalAlpha = dim * (LT ? 0.75 : 0.6); ctx.fill(); }
         ctx.globalAlpha = 1;
-        ctx.strokeStyle = hv?.st === f.st && !hv.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 2 : 0.7; ctx.stroke();
+        ctx.strokeStyle = hv?.st === f.st && !hv.f ? HOV : LT ? "rgba(255,255,255,.95)" : "rgba(8,5,16,.9)"; ctx.lineWidth = hv?.st === f.st && !hv.f ? 1.5 : 0.7; ctx.stroke();
       }
       if (mode === "house" && dGeo.length) {
         for (const x of dGeo) {
@@ -298,9 +302,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           ctx.beginPath(); path(x.g); ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill();
           if (dc.h) { ctx.fillStyle = hatch(dc.h); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * (LT ? 0.75 : 0.6); ctx.fill(); }
           ctx.globalAlpha = 1;
-          ctx.strokeStyle = hv?.d === x.id ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.85)" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 2 : v.k > 5 ? 0.8 : 0.45; ctx.stroke();
+          ctx.strokeStyle = hv?.d === x.id ? HOV : LT ? "rgba(255,255,255,.85)" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 1.5 : v.k > 5 ? 0.6 : 0.45; ctx.stroke();
         }
-        ctx.strokeStyle = LT ? "rgba(17,0,25,.4)" : "rgba(255,255,255,.38)"; ctx.lineWidth = 1;
+        ctx.strokeStyle = LT ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.32)"; ctx.lineWidth = 1.2;
         for (const f of geo.states) { ctx.beginPath(); path(f as GeoPermissibleObjects); ctx.stroke(); }
         if (v.k >= 4) {
           ctx.font = "700 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -323,10 +327,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           // no votes yet: hatched in the expected lean, never filled like a result
           if (p.kind === "expected" && color === "results") { ctx.fillStyle = hatch(shade(p.m, layerRace.k, ind)); ctx.globalAlpha = LT ? 0.75 : 0.6; ctx.fill(); }
           ctx.globalAlpha = 1;
-          ctx.strokeStyle = hv?.f === x.f ? (LT ? "#110019" : "#fff") : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.8)"; ctx.lineWidth = hv?.f === x.f ? 1.8 : 0.5; ctx.stroke();
+          ctx.strokeStyle = hv?.f === x.f ? HOV : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.7)"; ctx.lineWidth = hv?.f === x.f ? 1.5 : 0.55; ctx.stroke();
         }
       }
-      // a county whose count just moved shines: a white glow that fades, a gold outline, a ring that opens out from its
+      // a county whose count just moved shines: a white glow that fades, an accent outline, a ring that opens out from its
       // centre and the share now in
       if (mode !== "house" && cGeo.length && freshC.current.size && !reduce) {
         const tn = performance.now();
@@ -334,27 +338,27 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           const fr = freshC.current.get(x.f); if (!fr) continue; const k = Math.min(1, (tn - fr.t) / SHINE), fade = 1 - k;
           ctx.beginPath(); path(x.g);
           ctx.fillStyle = `rgba(255,255,255,${0.55 * fade * fade})`; ctx.fill();
-          ctx.strokeStyle = `rgba(${GOLD},${0.95 * fade})`; ctx.lineWidth = 2.4; ctx.shadowColor = `rgba(${GOLD},.9)`; ctx.shadowBlur = 14 * fade; ctx.stroke(); ctx.shadowBlur = 0;
+          ctx.strokeStyle = `rgba(${ACC},${0.95 * fade})`; ctx.lineWidth = 1.5; ctx.stroke();
           const p = proj(x.c); if (!p) continue;
           ctx.strokeStyle = `rgba(255,255,255,${0.8 * fade})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(p[0], p[1], 4 + 26 * Math.sqrt(k), 0, 6.283); ctx.stroke();
           if (k < 0.85 && v.k > 3.2) { ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "bottom"; ctx.fillStyle = `rgba(255,255,255,${Math.min(1, fade * 1.6)})`; ctx.fillText(`${Math.round(fr.pr)}% in`, p[0], p[1] - 8 - 10 * k); }
         }
       }
-      // a state whose statewide race was just called flashes gold
+      // a state whose statewide race was just called flashes in the brand accent
       if (callFlash.current.size && !reduce) {
         const tn = performance.now();
         for (const f of geo.states) {
           const t0 = callFlash.current.get(f.st); if (t0 == null) continue; const k = Math.min(1, (tn - t0) / FLASH), pulse = (1 - k) * (0.6 + 0.4 * Math.sin(k * 18));
-          ctx.beginPath(); path(f as GeoPermissibleObjects); ctx.fillStyle = `rgba(${GOLD},${0.35 * pulse})`; ctx.fill();
-          ctx.strokeStyle = `rgba(${GOLD},${pulse})`; ctx.lineWidth = 3.4; ctx.shadowColor = `rgba(${GOLD},1)`; ctx.shadowBlur = 22 * (1 - k); ctx.stroke(); ctx.shadowBlur = 0;
+          ctx.beginPath(); path(f as GeoPermissibleObjects); ctx.fillStyle = `rgba(${ACC},${0.22 * pulse})`; ctx.fill();
+          ctx.strokeStyle = `rgba(${ACC},${pulse})`; ctx.lineWidth = 2; ctx.stroke();
         }
       }
-      if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = `rgb(${GOLD})`; ctx.lineWidth = 2.2; ctx.stroke(); }
-      // states whose race civicAPI has called glow gold, breathing slowly
+      if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = `rgba(${ACC},.9)`; ctx.lineWidth = 1.4; ctx.stroke(); }
+      // states whose race civicAPI has called carry a thin accent outline, breathing slowly
       const breathe = 0.45 + 0.35 * Math.sin(performance.now() / 700);
       for (const f of geo.states) {
         if (!calledSt.has(f.st)) continue; ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.strokeStyle = `rgba(${GOLD},${breathe})`; ctx.lineWidth = 2.6; ctx.shadowColor = `rgba(${GOLD},.8)`; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
+        ctx.strokeStyle = `rgba(${ACC},${breathe})`; ctx.lineWidth = 1.4; ctx.stroke();
       }
       // a radar sweep across the globe while votes are being counted
       if (sweepOn && !reduce) {
@@ -368,7 +372,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       for (const f of geo.states) {
         if (!fresh.has(f.st)) continue; const ll = geoCentroid(f as GeoPermissibleObjects) as [number, number];
         if (geoDistance(ll, [-v.rot[0], -v.rot[1]]) > 1.4) continue; const p = proj(ll); if (!p) continue;
-        const ph = (tt / 1600) % 1; ctx.strokeStyle = `rgba(${GOLD},${1 - ph})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(p[0], p[1], 6 + ph * 30, 0, 6.283); ctx.stroke();
+        const ph = (tt / 1600) % 1; ctx.strokeStyle = `rgba(${ACC},${1 - ph})`; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p[0], p[1], 6 + ph * 30, 0, 6.283); ctx.stroke();
       }
       ctx.font = "700 10.5px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = LT ? "rgba(17,0,25,.78)" : "rgba(255,255,255,.86)";
       ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 3; ctx.lineJoin = "round";

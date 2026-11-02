@@ -47,10 +47,10 @@ export const CX_CSS = `
 .cx-search{margin-left:auto;min-width:190px;font:600 13px var(--font-b);color:var(--ink);background:rgba(var(--line-rgb),.04);border:1px solid var(--line2);border-radius:10px;padding:8px 11px}
 .cx-stage{position:relative;background:radial-gradient(ellipse at 50% 40%,rgba(var(--line-rgb),.05),transparent 70%)}
 .cx-svg{display:block;width:100%;height:max(600px,calc(100vh - 190px));touch-action:manipulation}
-.cx-svg path{stroke:rgba(var(--canvas-rgb),.85);stroke-width:.8;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .45s ease,opacity .25s}
+.cx-svg path{stroke:rgba(var(--canvas-rgb),.85);stroke-width:var(--map-w-county);stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .45s ease,opacity .25s}
 .cx-svg path.dim{opacity:.35}
-.cx-svg .cx-out{fill:none;stroke:var(--hi);stroke-width:2.6;vector-effect:non-scaling-stroke;pointer-events:none}
-.cx-svg .cx-hov{fill:none;stroke:var(--hi);stroke-width:1.6;vector-effect:non-scaling-stroke;pointer-events:none;opacity:.8}
+.cx-svg .cx-out{fill:none;stroke:var(--map-select);stroke-width:var(--map-w-select);vector-effect:non-scaling-stroke;pointer-events:none}
+.cx-svg .cx-hov{fill:none;stroke:var(--hi);stroke-width:var(--map-w-hover);vector-effect:non-scaling-stroke;pointer-events:none;opacity:.8}
 .cx-svg circle{stroke:rgba(var(--canvas-rgb),.9);vector-effect:non-scaling-stroke;stroke-width:1;pointer-events:none;transition:r .45s ease,opacity .3s}
 .cx-svg .cx-sub{font-family:var(--font-m);font-weight:700;fill:rgba(255,255,255,.88)}
 .cx-svg text{pointer-events:none;font-family:var(--font-b);font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(var(--canvas-rgb),.85);stroke-linejoin:round}

@@ -23,7 +23,7 @@ html[data-phone] .opp-tabs.kb, html.cx-fs .opp-tabs, html[data-phone]:has(.opp .
 .opp-tabs .on svg { color: var(--gold); }
 .opp-tabs .on::before { content: ""; position: absolute; top: 0; left: 50%; width: 28px; height: 2px; margin-left: -14px; border-radius: 0 0 2px 2px; background: var(--gold); }
 .opp-tabs a:active, .opp-tabs button:active { background: var(--glass2); }
-.opp-tabs a:focus-visible, .opp-tabs button:focus-visible { outline: 2px solid var(--gold); outline-offset: -4px; border-radius: 10px; }
+.opp-tabs a:focus-visible, .opp-tabs button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -4px; border-radius: 10px; }
 html[data-phone] body { padding-bottom: var(--tabbar); }
 
 /* the masthead: compact, and out of the way while reading down */

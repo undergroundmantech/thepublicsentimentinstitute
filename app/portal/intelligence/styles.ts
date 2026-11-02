@@ -24,7 +24,7 @@ export const ENI_CSS = `
 .eni .scroll{overflow-x:auto}
 .eni .pill{display:inline-block;font:700 9.5px var(--font-m);letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--line2);color:var(--mute);white-space:nowrap}
 .eni .pill.ok{color:var(--win);border-color:currentColor}
-.eni .pill.warn{color:var(--gold);border-color:currentColor}
+.eni .pill.warn{color:var(--warn);border-color:currentColor}
 .eni .pill.bad{color:var(--live);border-color:currentColor}
 .eni ul{margin:6px 0 0;padding-left:18px;font-size:13px}
 .eni li{margin:3px 0}

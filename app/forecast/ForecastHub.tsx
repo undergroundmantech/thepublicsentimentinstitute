@@ -491,7 +491,7 @@ export default function ForecastHub() {
                     <span className="hub-tag sl">{st}</span>
                     <span className="hub-bm-name"><b>{label}</b><small>{title}</small></span>
                     <span className="hub-bm-bar" title={`Yes ${yes.toFixed(1)}%, needs ${pctFraction(thr)}`}><i style={{ width: `${Math.max(0, Math.min(100, ((yes - 20) / 60) * 100))}%` }} /><s style={{ left: `${((thr * 100 - 20) / 60) * 100}%` }} /></span>
-                    <span className="mono hub-bm-p" style={{ color: prob >= 0.6 ? "#2fbf9b" : prob <= 0.4 ? "#e8794a" : "var(--gold)" }}>{pct(prob)}</span>
+                    <span className="mono hub-bm-p" style={{ color: prob >= 0.6 ? "#2fbf9b" : prob <= 0.4 ? "#e8794a" : "var(--toss)" }}>{pct(prob)}</span>
                   </Link>
                 ))}
               </div>
