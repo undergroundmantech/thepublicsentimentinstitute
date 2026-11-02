@@ -5,9 +5,11 @@ name: flight-recorder
 # every slot record carries its real start time and names any missed slots. See docs/FLIGHT_RECORDER_GITHUB.md.
 # Review before merging to main: merging is what turns the schedule on.
 
+# The 10-minute schedule is held back on main until the recorder is authorized and its archive target verified.
+# To enable, restore:
+#   schedule:
+#     - cron: "*/10 * * * *"
 on:
-  schedule:
-    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
