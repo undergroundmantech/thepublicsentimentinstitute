@@ -2,7 +2,7 @@
 // Ohio — 2026 Governor: Amy Acton (D) vs. Vivek Ramaswamy (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-27.
+// ballot were dropped. Newest poll: 2026-10-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -69,6 +69,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2998, "sampleType": "LV", "results": {"Amy Acton (D)": 48.2, "Vivek Ramaswamy (R)": 43.8, "Other": 3.8, "Undecided": 4.3}},
     {"raceId": "OH-GOV-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Amy Acton (D)": 45.0, "Vivek Ramaswamy (R)": 47.0, "Other": 4.0, "Undecided": 3.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Suffolk University/USA TODAY Network", "startDate": "2026-10-21", "endDate": "2026-10-26", "sampleSize": 500, "sampleType": "LV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 44.0, "Other": 3.6, "Undecided": 4.4}},
-    {"raceId": "OH-GOV-2026", "pollster": "Unnamed Republican group internal (R)", "startDate": "2026-10-27", "endDate": "2026-10-27", "sampleSize": 800, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 42.0, "Undecided": 8.0}}
+    {"raceId": "OH-GOV-2026", "pollster": "Unnamed Republican group internal (R)", "startDate": "2026-10-27", "endDate": "2026-10-27", "sampleSize": 800, "sampleType": "LV", "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 42.0, "Undecided": 8.0}},
+    {"raceId": "OH-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 46.0, "Undecided": 5.0}},
+    {"raceId": "OH-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2090, "sampleType": "LV", "results": {"Amy Acton (D)": 52.0, "Vivek Ramaswamy (R)": 46.0, "Other": 1.0}}
   ],
 };

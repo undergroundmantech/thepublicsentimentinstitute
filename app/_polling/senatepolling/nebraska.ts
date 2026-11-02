@@ -55,6 +55,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 41.0, "Other": 6.0, "Undecided": 5.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 407, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 47.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "NE-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 1555, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.7, "Pete Ricketts (R)": 47.2, "Other": 4.0, "Undecided": 0.2}},
-    {"raceId": "NE-SEN-2026", "pollster": "The New York Times/Siena College", "startDate": "2026-10-23", "endDate": "2026-10-29", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 49.0, "Undecided": 8.0}}
+    {"raceId": "NE-SEN-2026", "pollster": "The New York Times/Siena College", "startDate": "2026-10-23", "endDate": "2026-10-29", "sampleSize": 809, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 49.0, "Undecided": 8.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-25", "endDate": "2026-10-29", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 45.0, "Pete Ricketts (R)": 48.0, "Other": 4.0, "Undecided": 3.0}, "notes": "Full five candidate ballot; head to head Ricketts 49 Osborn 48."},
+    {"raceId": "NE-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1979, "sampleType": "LV", "results": {"Dan Osborn (I)": 49.0, "Pete Ricketts (R)": 49.0, "Other": 1.0}}
   ],
 };

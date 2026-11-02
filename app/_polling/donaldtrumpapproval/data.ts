@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 1, 2026 8 PM sweep ──
+  { pollster: "NBC News", endDate: "2026-10-30", sampleSize: 1000, sampleType: "RV", results: { Approve: 40, Disapprove: 60 } },   // Hart Research and Public Opinion Strategies, Oct 28 to 30, registered voters, NBC final poll published Nov 1
   // ── Added Oct 31, 2026 evening ──
   { pollster: "Big Data Poll", endDate: "2026-10-30", sampleSize: 3418, sampleType: "RV", results: { Approve: 39.3, Disapprove: 59.1 } },   // The National Signal, Oct 27 to 30, registered voters, 20.5 strongly approve and 47.3 strongly disapprove; bigdatapoll.com Oct 31
   // ── Added Oct 31, 2026 morning ──

@@ -2,7 +2,7 @@
 // Kansas — 2026 Governor: Cindy Holscher (D) vs. Ty Masterson (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-28.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -47,6 +47,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 1301, "sampleType": "LV", "results": {"Cindy Holscher (D)": 45.6, "Ty Masterson (R)": 48.0, "Other": 2.0, "Undecided": 4.5}},
     {"raceId": "KS-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-26", "sampleSize": 838, "sampleType": "LV", "results": {"Cindy Holscher (D)": 45.0, "Ty Masterson (R)": 50.0, "Undecided": 5.0}},
     {"raceId": "KS-GOV-2026", "pollster": "Washington Post/Schar School", "startDate": "2026-10-22", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"Cindy Holscher (D)": 51.0, "Ty Masterson (R)": 45.0, "Undecided": 4.0}},
-    {"raceId": "KS-GOV-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 800, "sampleType": "LV", "results": {"Cindy Holscher (D)": 46.0, "Ty Masterson (R)": 50.0, "Undecided": 4.0}}
+    {"raceId": "KS-GOV-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 800, "sampleType": "LV", "results": {"Cindy Holscher (D)": 46.0, "Ty Masterson (R)": 50.0, "Undecided": 4.0}},
+    {"raceId": "KS-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2092, "sampleType": "LV", "results": {"Cindy Holscher (D)": 49.0, "Ty Masterson (R)": 50.0}},
+    {"raceId": "KS-GOV-2026", "pollster": "New York Times/Siena College", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 736, "sampleType": "LV", "results": {"Cindy Holscher (D)": 48.0, "Ty Masterson (R)": 47.0, "Undecided": 5.0}}
   ],
 };
