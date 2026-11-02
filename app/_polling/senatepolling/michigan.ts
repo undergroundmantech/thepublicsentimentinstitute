@@ -85,6 +85,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "Mitchell Research & Communications", "startDate": "2026-10-26", "endDate": "2026-10-27", "sampleSize": 636, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 44.0, "Other": 2.0, "Undecided": 3.0}},
     {"raceId": "MI-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-27", "sampleSize": 768, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 42.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "MI-SEN-2026", "pollster": "Michigan State University/Verasight", "startDate": "2026-10-08", "endDate": "2026-10-23", "sampleSize": 1383, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 41.8, "Other": 3.4, "Undecided": 6.8}},
-    {"raceId": "MI-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 745, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Other": 3.0, "Undecided": 4.0}}
+    {"raceId": "MI-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 745, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Other": 3.0, "Undecided": 4.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-25", "sampleSize": 622, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 50.0, "Mike Rogers (R)": 46.0, "Other": 2.0, "Undecided": 3.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2093, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 47.0, "Other": 1.0, "Undecided": 1.0}}
   ],
 };

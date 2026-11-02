@@ -9,6 +9,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 1, 2026 8 PM sweep ──
+  { pollster: "NBC News", endDate: "2026-10-30", sampleSize: 1000, sampleType: "RV", results: { Democrats: 52, Republicans: 45 } },   // Hart Research and Public Opinion Strategies, Oct 28 to 30, registered voters, NBC final poll published Nov 1
   // ── Added Oct 31, 2026 8 PM sweep ──
   { pollster: "Targoz Market Research", endDate: "2026-10-22", sampleSize: 1118, sampleType: "LV", results: { Democrats: 49, Republicans: 46 } },   // Oct 20 to 22, 1,400 RV screened to 1,118 LV, other 1, undecided 3; Targoz blog Oct 28
   { pollster: "The Argument/Verasight", endDate: "2026-10-23", sampleSize: 1549, sampleType: "LV", results: { Democrats: 52, Republicans: 41 } },   // Oct 21 to 23, D+11 LV and D+9 RV in The Argument Oct 30; shares from pollcheck match; n is the RV sample, LV count not published

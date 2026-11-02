@@ -2,7 +2,7 @@
 // Minnesota — 2026 U.S. Senate: Peggy Flanagan (D) vs. Michele Tafoya (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-28.
+// ballot were dropped. Newest poll: 2026-10-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -53,6 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-20", "endDate": "2026-10-21", "sampleSize": 1182, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 45.0, "Undecided": 7.0}},
     {"raceId": "MN-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 752, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 54.0, "Michele Tafoya (R)": 40.0, "Undecided": 6.0}},
     {"raceId": "MN-SEN-2026", "pollster": "Victory Insights for the Tafoya campaign (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1194, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 47.8, "Michele Tafoya (R)": 44.4, "Other": 2.2, "Undecided": 5.6}},
-    {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-24", "endDate": "2026-10-28", "sampleSize": 714, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 41.0, "Other": 4.0, "Undecided": 7.0}}
+    {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-24", "endDate": "2026-10-28", "sampleSize": 714, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 41.0, "Other": 4.0, "Undecided": 7.0}},
+    {"raceId": "MN-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 49.0, "Michele Tafoya (R)": 46.0, "Undecided": 5.0}}
   ],
 };

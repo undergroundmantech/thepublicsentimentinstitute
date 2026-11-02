@@ -50,6 +50,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 43.0, "Jim Pillen (R)": 40.0, "Other": 9.0, "Undecided": 8.0}},
     {"raceId": "NE-GOV-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 407, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 47.0, "Other": 11.0, "Undecided": 2.0}},
     {"raceId": "NE-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 1555, "sampleType": "LV", "results": {"Lynne Walz (D)": 46.0, "Jim Pillen (R)": 48.8, "Other": 5.1, "Undecided": 0.2}},
-    {"raceId": "NE-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-23", "endDate": "2026-10-29", "sampleSize": 809, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 53.0, "Undecided": 7.0}}
+    {"raceId": "NE-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-23", "endDate": "2026-10-29", "sampleSize": 809, "sampleType": "LV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 53.0, "Undecided": 7.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1979, "sampleType": "LV", "results": {"Lynne Walz (D)": 47.0, "Jim Pillen (R)": 50.0, "Other": 1.0}}
   ],
 };
