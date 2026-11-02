@@ -238,6 +238,9 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
   const LIMIT = 18, shown = all ? tableRows.rows.length : Math.min(LIMIT, tableRows.rows.length);
 
   const layerLabel = LAYERS.find((l) => l.k === layer)!.label;
+  const top = closest.reduce<(typeof closest)[number] | undefined>((a, c) => (!a || Math.abs(c.pD - 0.5) < Math.abs(a.pD - 0.5) ? c : a), undefined);
+  const topLabel = layer === "measures" ? (mst ? `Closest ${STATE_NAME[mst] ?? mst} measure` : "Closest ballot measure")
+    : layer === "legis" ? `Closest state ${chamber}` : `Closest ${layer === "senate" ? "Senate" : layer === "house" ? "House" : layer === "governor" ? "governor" : "statewide"} race`;
   const tipKey = tip?.k;
   const tipRaces = tipKey ? byKey[tipKey] ?? [] : [];
   const tipMeas = tipKey && layer === "measures" ? measBySt[tipKey] ?? [] : [];
@@ -250,13 +253,21 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       <Ambient />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span></nav>
       <header className="fcx-head">
-          <Pointy key={layer} className="fcx-pty pty-side" pose={layer === "measures" ? "think" : "point"} prop="none" size={92} look={-1} flip cap
-            say={closest[0] ? <>Closest {layer === "legis" ? "chamber" : layer === "measures" ? "measure" : "race"}: <b>{closest[0].name}</b>, <span className={closest[0].cls === "r" || closest[0].cls === "no" ? "r" : "d"}>{closest[0].val}</span></> : undefined} />
-        <div>
+        <div className="fcx-title">
           <div className="eye g">2026 midterm forecast · <DaysOut initial={data.daysOut} suffix=" days out" /></div>
           <h1 id="fcx-h">Every 2026 race, <em>in one place.</em></h1>
           <p className="lede">Pick a layer to see its map, its odds and its closest races. Click any state or district to open the full forecast for that race.</p>
         </div>
+        {top ? (
+          <Link href={top.href} className="fcx-closest">
+            <span className="eye">{topLabel}</span>
+            <b className="nm">{top.name}</b>
+            <span className="vl"><b className={top.cls}>{top.val}</b>{layer === "measures" ? <span className="fcx-cb ms"><i style={{ width: `${top.pD * 100}%` }} /></span> : <ChanceBar pD={top.pD} ind={top.ind} />}</span>
+            <small>{top.sub}</small>
+            <span className="go">Open the forecast →</span>
+            <Pointy key={layer} className="fcx-pty" pose={layer === "measures" ? "think" : "point"} prop="none" size={76} look={-1} flip cap />
+          </Link>
+        ) : null}
         <dl className="fcx-meta">
           <div><dt>Updated</dt><dd>{new Date(data.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</dd></div>
           <div><dt>Simulations</dt><dd>{data.sims.toLocaleString()}</dd></div>

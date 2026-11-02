@@ -1,13 +1,30 @@
 /* The forecast console on /forecast. One layer at a time: tiles, map and readout, then the table. */
 .fcx { position: relative; padding-bottom: 10px; }
-.fcx-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin: 6px 0 22px; }
+/* The hero: the title upper right, the closest race as a featured stat on the left, then the four facts as cards. */
+.fcx-head { position: relative; display: grid; grid-template-columns: minmax(260px, 360px) minmax(0, 1fr); grid-template-areas: "close title" "meta meta"; gap: 18px 28px; align-items: stretch; margin: 6px 0 10px; }
+.fcx-title { grid-area: title; align-self: center; justify-self: end; max-width: 760px; text-align: right; }
 .fcx-head h1 { font: 800 clamp(30px, 3.2vw, 48px)/1.04 var(--font-d); letter-spacing: -.04em; margin: 8px 0 10px; text-wrap: balance; }
 .fcx-head h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.fcx-head .lede { max-width: 640px; margin: 0; color: var(--ink2); }
-.fcx-meta { display: flex; gap: 8px; margin: 0; flex-wrap: wrap; justify-content: flex-end; }
-.fcx-meta div { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; background: var(--glass); min-width: 98px; }
-.fcx-meta dt { font: 700 9.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.fcx-meta dd { margin: 3px 0 0; font: 800 16px var(--font-d); font-variant-numeric: tabular-nums; }
+.fcx-head .lede { max-width: 640px; margin: 0 0 0 auto; color: var(--ink2); text-wrap: pretty; }
+.fcx-closest { grid-area: close; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; padding: 16px 18px 14px 20px; border-radius: 16px; border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(130,90,255,.12), rgba(130,90,255,.03)); color: var(--ink); text-decoration: none; overflow: hidden; transition: border-color .2s, transform .2s; }
+.fcx-closest::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: var(--grad); }
+.fcx-closest:hover { border-color: var(--line2); transform: translateY(-2px); }
+.fcx-closest:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+.fcx-closest .eye { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.fcx-closest .nm { font: 800 clamp(20px, 1.6vw, 26px)/1.1 var(--font-d); letter-spacing: -.02em; overflow-wrap: anywhere; }
+.fcx-closest .vl { display: flex; align-items: center; gap: 12px; }
+.fcx-closest .vl > b { font: 800 clamp(22px, 1.75vw, 30px)/1 var(--font-d); letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fcx-closest .fcx-cb { flex: 1; width: auto; height: 8px; border-radius: 4px; }
+.fcx-closest small { font-size: 12.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fcx-closest .go { font: 700 10.5px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); }
+.fcx-closest .fcx-pty { right: 8px; bottom: 4px; }
+:root:not([data-mode="themed"]) .fcx-closest .pty-cameo { display: none; }
+@media (min-width: 901px) { :root[data-mode="themed"] .fcx-closest { padding-right: 100px; } }
+.fcx-meta { grid-area: meta; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; margin: 0; }
+.fcx-meta div { display: grid; align-content: start; gap: 8px; min-width: 0; padding: 14px 14px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--glass); }
+.fcx-meta dt { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.fcx-meta dd { margin: 0; font: 800 clamp(22px, 1.75vw, 30px)/1 var(--font-d); letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .fcx-meta dd a { color: inherit; text-decoration: none; }
 .fcx .d { color: var(--dem2); } .fcx .r { color: var(--gop2); } .fcx .i { color: var(--ind); }
 .fcx .t, .fcx .y { color: #2fbf9b; } .fcx .no { color: #e8794a; }
@@ -134,8 +151,12 @@
 @media (max-width: 1240px) { .fcx-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 1100px) { .fcx-stage { grid-template-columns: 1fr; } .fcx-read { position: static; } .fcx-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
-  .fcx-head { grid-template-columns: 1fr; }
-  .fcx-meta { justify-content: flex-start; }
+  .fcx-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "close" "meta"; gap: 14px; }
+  .fcx-title { justify-self: stretch; text-align: left; }
+  .fcx-head .lede { margin-left: 0; }
+  .fcx-meta { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fcx-meta div { padding: 12px 12px 10px; }
+  .fcx-meta dd { font-size: 22px; }
   .fcx-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .fcx-tile { flex: 0 0 168px; scroll-snap-align: start; }
   .fcx-mapcard { padding: 12px 10px; border-radius: 18px; }
@@ -147,8 +168,6 @@
 
 /* Pointy on the map card, and poll trails in the tooltip and table */
 .fcx-mapcard { position: relative; }
-.fcx-head { position: relative; }
-.fcx-head .fcx-pty { right: 0; bottom: 62px; }
 .fcx-tptr { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); }
 .fcx-tptr .eye { font: 800 9px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: #a79fbd; margin-bottom: 2px; }
 .fcx-tptr .ptr { height: 42px; }
