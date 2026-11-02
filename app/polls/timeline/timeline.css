@@ -47,6 +47,7 @@
 .tl-runner { position: absolute; left: 0; top: 0; pointer-events: none; will-change: transform; z-index: 2; }
 .tl-runner > div { transition: transform .15s ease; transform-origin: 50% 100%; }
 .tl-runner .pty { display: block; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .4)); }
+:root:not([data-mode="themed"]) .tl-runner { display: none; }
 .tl-runner.jog .pty .pty-leg, .tl-runner.jog .pty .pty-arm { animation-duration: .22s !important; }
 .tl-runner.jog .pty .pty-body, .tl-runner.jog .pty .pty-sh { animation-duration: .11s !important; }
 .tl-runner.jog > div::after { content: ""; position: absolute; right: 72%; bottom: 14%; width: 26px; height: 10px; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(231, 179, 65, .5)); filter: blur(1px); }

@@ -391,6 +391,7 @@ html[data-theme="light"] .tn-bar .num.in { color: #fff; }
 .evh-foot .url { font: 800 11px var(--font-m); letter-spacing: .08em; color: var(--gold); }
 .evh-lede { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; margin: 0 0 18px; }
 .evh-lede .pty-side { margin: 0; }
+:root:not([data-mode="themed"]) .evh-lede { grid-template-columns: minmax(0, 1fr); }
 
 /* the details row */
 .evd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 18px 0; }
@@ -476,6 +477,10 @@ html[data-theme="light"] .tn-bar .num.in { color: #fff; }
 .evb-topics button.on { color: #1a1030; background: var(--gold); border-color: var(--gold); }
 .evb-topics button:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
 .evb-pty { margin: 0; align-items: flex-start; }
+/* Pro Dark and Pro Light: the same explainer as plain text, since Pointy and his bubble are Theme only */
+.evb-plain { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--ink2); }
+.evb-plain b { color: var(--ink); } .evb-plain .d { color: var(--dem2); } .evb-plain .r { color: var(--gop2); }
+:root[data-mode="themed"] .evb-plain { display: none; }
 .evb-pty .pty-say, .evb-pty [class*="say"] { font-size: 13.5px; line-height: 1.5; animation: evb-up .45s cubic-bezier(.2,.8,.2,1) backwards; }
 .evb-sim { display: grid; gap: 10px; padding: 14px; border-radius: 18px; border: 1px solid var(--line); background: rgba(var(--line-rgb), .025); }
 .evb-simh { display: grid; gap: 2px; } .evb-simh b { font: 800 15px var(--font-d); } .evb-simh span { font-size: 12px; color: var(--mute); }

@@ -3,8 +3,6 @@
 // where it walks, with arms, legs and sneakers. Pure SVG; every pose is CSS on the limbs, so the parent only moves and
 // flips it. Poses: walk, idle, wave, point, cheer, think, sit. Props sit in the front hand.
 import React from "react";
-import { usePathname } from "next/navigation";
-import { useSiteMode } from "@/app/lib/useSiteTheme";
 import { ICON_PATH } from "@/app/components/opp/Logo";
 import "./pointy.css";
 
@@ -113,13 +111,10 @@ export default function Mascot({ size = 96, walking, pose, prop = "clipboard", l
 export const MASCOT_CSS = "";
 
 // Pointy as a page cameo: the mascot plus an optional speech bubble, placed by the parent with a class.
-// In Pro Dark and Pro Light Pointy is decoration-free: on the home page, any cameo without a speech bubble, and any
-// cameo marked "quip" (footer, race heroes, video promo) render nothing. The server and first client render use Pro
-// Dark, so Pro never flashes him; Theme shows him once the mode is read after mount.
+// Pointy is Theme only. In Pro Dark and Pro Light every cameo, with or without a bubble, is display:none from
+// pointy.css keyed on <html data-mode>, which the init script sets before first paint: Pro never flashes him and
+// Theme has him in the server HTML, so neither mode shifts layout on hydration or on a live mode switch.
 export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, detective, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; detective?: boolean; className?: string; flip?: boolean }) {
-  const themed = useSiteMode() === "themed";
-  const home = usePathname() === "/";
-  if (!themed && (home || !say || className?.split(/\s+/).includes("quip"))) return null;
   return (
     <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} aria-hidden={say ? undefined : true}>
       {say ? <div className="pty-say">{say}</div> : null}

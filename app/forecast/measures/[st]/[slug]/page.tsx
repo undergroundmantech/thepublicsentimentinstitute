@@ -13,6 +13,7 @@ import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import "../../measures.css";
 import { STORY_CSS, ShareBars, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
+import { measureOdds } from "@/app/components/opp/heroOdds";
 import Ambient from "@/app/components/opp/Ambient";
 import SectionNav from "@/app/components/opp/SectionNav";
 import OutcomeHist from "@/app/components/opp/OutcomeHist";
@@ -77,6 +78,8 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
   const unit = m.st === "LA" ? "parishes" : m.st === "AK" ? "boroughs" : "counties";
   const half = Math.max(0.5, Math.abs(m.est.p90 - m.est.p10) / 4);
   const yesV = m.votes?.yes ?? 0, noV = m.votes?.no ?? 0;
+  // pass or fail is the whole outcome space: est.prob is the chance to pass
+  const heroOdds = measureOdds(m.est.prob, YES, NO);
   const pathRows: [string, string, number | null][] = [
     ["History and structure", "comparable measures, the state's lean and how it reached the ballot", m.prior],
     ["Polls", m.pollAvg != null ? `${m.polls.length} ${m.polls.length === 1 ? "poll" : "polls"}, undecided split two to one for No` : "no public polls", m.pollAvg],
@@ -111,10 +114,18 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
           <span>{TYPE[m.type] ?? GROUP_LABEL[m.group] ?? m.type}</span>
           <span>Updated <b>{updated}</b></span>
         </>}
-        cands={m.votes ? [{ name: "Yes", label: "For the measure", pct: (100 * yesV) / Math.max(1, yesV + noV), votes: yesV, color: YES }, { name: "No", label: "Against the measure", pct: (100 * noV) / Math.max(1, yesV + noV), votes: noV, color: NO }] : []}
+        facts={[
+          { k: "Forecast", v: <span className={`pill ${v.cls}`}>{v.label}</span> },
+          { k: "Forecast Yes", v: <span className="mono">{m.est.yes.toFixed(1)}%</span> },
+          { k: "Needs", v: <span className="mono">{thrS}%</span> },
+          { k: "Polling average", v: <span className="mono">{m.pollAvg != null ? `${m.pollAvg.toFixed(1)}%` : "No polls"}</span> },
+          { k: "Updated", v: updated },
+        ]}
+        cands={m.votes ? [{ key: "yes", name: "Yes", label: "For the measure", pct: (100 * yesV) / Math.max(1, yesV + noV), share: "vote" as const, votes: yesV, color: YES }, { key: "no", name: "No", label: "Against the measure", pct: (100 * noV) / Math.max(1, yesV + noV), share: "vote" as const, votes: noV, color: NO }] : []}
+        odds={heroOdds} probLabel="Chance to prevail"
         paths={paths} fills={fills} mapLabel={`${state} ${m.label} drawn in pixels, shaded by the Yes vote`}
         labels={Object.fromEntries(paths.map((p) => { const y = m.counties[p.id]; return [p.id, { t: tips[p.id]?.title ?? p.id, s: `Yes ${y.toFixed(1)}%`, c: y >= 50 ? "#7fe0c4" : "#f2a27f" }]; }))}
-        win={leadWin} lead={{ name: passes ? "Yes" : "No", color: passes ? YES : NO }} other={{ name: passes ? "No" : "Yes", color: passes ? NO : YES }} />
+      />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">

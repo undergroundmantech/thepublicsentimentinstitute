@@ -68,6 +68,8 @@
 @keyframes pty-blink { 0%, 93%, 100% { height: 0; } 95%, 97% { height: 48px; } }
 
 /* Pointy as a cameo on a page */
+/* Theme only: Pro Dark and Pro Light never show Pointy, set on <html data-mode> before first paint */
+:root:not([data-mode="themed"]) .pty-cameo { display: none !important; }
 .pty-cameo { position: absolute; z-index: 3; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; animation: pty-in .7s cubic-bezier(.2,.9,.3,1.2) both; }
 .pty-cameo .pty-fig { filter: drop-shadow(0 14px 18px rgba(0,0,0,.55)); }
 .pty-cameo.flip .pty-fig { transform: scaleX(-1); }

@@ -1,13 +1,15 @@
 // The race page opener, staged like a show: a dark band, marquee bulbs on the race name, the headline, then the
 // state as floating pixel art under a spotlight with the two candidates in the wings, and the odds below as
-// 100 pixel nights. Shared by the main race pages and the statewide office pages. Pro Dark and Pro Light get
-// ProHero instead, built here from the same numbers; CSS on <html data-mode> shows exactly one of the two.
+// 100 pixel nights. Shared by the main race pages, statewide offices, ballot measures and state legislatures.
+// Pro Dark and Pro Light get ProHero instead, built here from the same props; CSS on <html data-mode> shows exactly
+// one of the two. Both read the odds from `odds`, explicit outcomes with the model's own probabilities.
 import React from "react";
 import PixelStage, { type StageLabel } from "./PixelStage";
-import ProHero, { PRO_HERO_CSS, type ProCand } from "./ProHero";
+import ProHero, { PRO_HERO_CSS, type ProCand, type ProFact } from "./ProHero";
+import { fmtChance, isDistribution, leaders, squares, verdictFor, type Outcome } from "./heroOdds";
 import { Pointy } from "@/app/components/home/Mascot";
 
-export type StageCand = { name: string; label: string; pct: number; votes: number; color: string };
+export type StageCand = ProCand;
 
 const initials = (n: string) => n.split(/\s+/).filter((w) => /^[A-Za-z]/.test(w)).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 
@@ -61,6 +63,7 @@ export const STAGE_CSS = `
 .sg-grid{display:grid;grid-template-columns:repeat(25,1fr);gap:3px;max-width:600px;width:100%;justify-self:center}
 .sg-grid i{aspect-ratio:1;border-radius:2px;background:var(--c);opacity:.95;animation:sg-pop .35s steps(3) both}
 .sg-odds .cap{grid-column:1/-1;text-align:center;font:700 11px var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:#a79fbd}
+.sg-note{position:relative;z-index:2;margin:10px auto 0;text-align:center;font:700 11px var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:#a79fbd}
 .sg-odds .cap b{color:#fff;font-family:var(--font-d);letter-spacing:-.01em;text-transform:none;font-size:18px;display:block;margin-bottom:4px}
 @media (max-width:1120px){
   .sg-stage{height:auto}
@@ -103,7 +106,7 @@ html[data-theme="light"] .ps-tip b{color:var(--ink)}
 html[data-theme="light"] .sg-c{background:linear-gradient(180deg,#fff,rgba(255,255,255,.8));border-color:rgba(17,0,25,.08);box-shadow:0 30px 60px -32px rgba(40,20,80,.4),inset 0 1px 0 #fff}
 html[data-theme="light"] .sg-c::before{box-shadow:0 0 12px 0 var(--c)}
 html[data-theme="light"] .sg-c .nm{color:var(--ink)}
-html[data-theme="light"] .sg-c .pt,html[data-theme="light"] .sg-odds .side span,html[data-theme="light"] .sg-odds .cap{color:#6b6384}
+html[data-theme="light"] .sg-c .pt,html[data-theme="light"] .sg-odds .side span,html[data-theme="light"] .sg-odds .cap,html[data-theme="light"] .sg-note{color:#6b6384}
 html[data-theme="light"] .sg-c .pc{text-shadow:none}
 html[data-theme="light"] .sg-c .vt{color:#4a4360}
 html[data-theme="light"] .sg-seg i{background:rgba(17,0,25,.08)}
@@ -112,14 +115,14 @@ html[data-theme="light"] .sg-odds .cap b{color:var(--ink)}
 `;
 
 function Wing({ c, side }: { c: StageCand; side: "a" | "b" }) {
-  const on = Math.round(c.pct / 5);
+  const on = c.pct == null ? 0 : Math.round(c.pct / 5);
   return (
     <div className={`sg-c ${side}`} style={{ "--c": c.color } as React.CSSProperties}>
       <div className="sg-av" aria-hidden="true">{initials(c.name)}</div>
       <div className="nm">{c.name}</div>
       <div className="pt">{c.label}</div>
-      <div className="pc">{c.pct.toFixed(1)}%</div>
-      <div className="vt">{c.votes ? `${c.votes.toLocaleString("en-US")} projected votes` : "projected share"}</div>
+      <div className="pc">{c.pct == null ? "\u2014" : `${c.pct.toFixed(1)}%`}</div>
+      <div className="vt">{c.pct == null ? "no vote projection" : c.votes ? `${c.votes.toLocaleString("en-US")} projected votes` : c.share === "seat" ? "projected seat share" : "projected vote share"}</div>
       <div className="sg-seg" aria-hidden="true">{Array.from({ length: 20 }, (_, i) => <i key={i} className={i < on ? "on" : ""} style={i < on ? { animationDelay: `${0.6 + i * 0.04}s` } : undefined} />)}</div>
     </div>
   );
@@ -127,24 +130,25 @@ function Wing({ c, side }: { c: StageCand; side: "a" | "b" }) {
 
 const DEFAULT_LINKS = [{ label: "Polling", href: "#polls" }, { label: "How the model works", href: "/forecast/methodology" }];
 
-export default function StageHero({ eyebrow, title, lede, pills, cands, paths, fills, labels, win, lead, other, mapLabel, focus, links = DEFAULT_LINKS, probLabel = "Chance of winning" }: {
-  eyebrow: string; title: React.ReactNode; lede: React.ReactNode; pills: React.ReactNode;
-  cands: StageCand[]; paths: { id: string; d: string }[]; fills: Record<string, string>; labels?: Record<string, StageLabel>;
-  win: number | null; lead: { name: string; color: string }; other: { name: string; color: string }; mapLabel: string; focus?: string;
+export default function StageHero({ eyebrow, title, lede, pills, facts, cands, others, paths, fills, labels, odds, mapLabel, focus, note, links = DEFAULT_LINKS, probLabel = "Chance of winning" }: {
+  eyebrow: string; title: React.ReactNode; lede: React.ReactNode; pills: React.ReactNode; facts: ProFact[];
+  cands: StageCand[]; others?: ProCand[]; paths: { id: string; d: string }[]; fills: Record<string, string>; labels?: Record<string, StageLabel>;
+  /** every outcome the model gives a probability, keyed to cands; null when there is no contest to simulate */
+  odds: Outcome[] | null; mapLabel: string; focus?: string; note?: string;
   links?: { label: string; href: string }[]; probLabel?: string;
 }) {
-  const n = win == null ? 0 : Math.round(win * 100);
-  const verdict = win == null ? "" : `${lead.name} ${win >= 0.95 ? "all but certain" : win >= 0.85 ? "very likely" : win >= 0.65 ? "favored" : "slightly favored"}`;
-  // Which card is the leader: its color when that is unique, else its name (pages pass the last name for lead).
-  const pair = cands.slice(0, 2);
-  const byColor = pair.filter((c) => c.color === lead.color);
-  const leadIdx = byColor.length === 1 ? pair.indexOf(byColor[0])
-    : pair.findIndex((c) => c.name === lead.name || c.name.split(/\s+/).pop() === lead.name);
-  const proCands: ProCand[] = pair.map((c, i) => ({ ...c, chance: win == null || leadIdx < 0 ? null : i === leadIdx ? n : 100 - n }));
+  const dist = isDistribution(odds) ? odds : null;
+  const L = dist ? leaders(dist) : null;
+  // the hundred squares: favourite first, then a tied chamber, then everyone else
+  const order = L ? [L.lead, ...(L.tie ? [L.tie] : []), ...dist!.filter((o) => o !== L.lead && o !== L.tie)] : [];
+  const sq = squares(order);
+  const fill = order.flatMap((o, k) => Array.from({ length: sq[k] }, () => o));
+  const n = sq[0] ?? 0, nTie = L?.tie ? sq[1] : 0;
+  const verdict = L ? verdictFor(L.lead) : "";
   return (
     <>
     <style>{PRO_HERO_CSS}</style>
-    <ProHero eyebrow={eyebrow} title={title} lede={lede} pills={pills} cands={proCands} verdict={verdict} probLabel={probLabel} links={links} />
+    <ProHero eyebrow={eyebrow} title={title} lede={lede} facts={facts} cands={cands} others={others} odds={dist} probLabel={probLabel} links={links} note={note} />
     <header className="sg" aria-label="Race overview">
       <style>{STAGE_CSS}</style>
       <Pointy className="cam-sg" pose="wave" prop="clipboard" size={96} look={-1} flip />
@@ -162,16 +166,16 @@ export default function StageHero({ eyebrow, title, lede, pills, cands, paths, f
           {cands[1] ? <Wing c={cands[1]} side="b" /> : null}
         </div>
       </div>
-      {win != null ? (
-        <div className="sg-odds" aria-label={`${lead.name} wins ${n} of 100 simulated elections`}>
-          <div className="side"><b style={{ color: lead.color }}>{n}%</b><span>{lead.name}</span></div>
+      {L ? (
+        <div className="sg-odds" aria-label={`${L.lead.name} wins ${n} of 100 simulated elections${nTie ? `, ${nTie} end tied` : ""}`}>
+          <div className="side"><b style={{ color: L.lead.color }}>{fmtChance(L.lead.p)}</b><span>{L.lead.name}</span></div>
           <div className="sg-grid" aria-hidden="true">
-            {Array.from({ length: 100 }, (_, i) => <i key={i} style={{ "--c": i < n ? lead.color : other.color, animationDelay: `${0.9 + (i % 25) * 0.025 + Math.floor(i / 25) * 0.05}s`, opacity: i < n ? 1 : 0.55 } as React.CSSProperties} />)}
+            {fill.map((o, i) => <i key={i} style={{ "--c": o.color, animationDelay: `${0.9 + (i % 25) * 0.025 + Math.floor(i / 25) * 0.05}s`, opacity: o === L.lead ? 1 : o.tie ? 0.4 : 0.55 } as React.CSSProperties} />)}
           </div>
-          <div className="side r"><b style={{ color: other.color }}>{100 - n}%</b><span>{other.name}</span></div>
-          <div className="cap"><b>{verdict}</b>Each square is one simulated election night, {lead.name} wins about {n} of 100</div>
+          {L.rival ? <div className="side r"><b style={{ color: L.rival.color }}>{fmtChance(L.rival.p)}</b><span>{L.rival.name}</span></div> : <div />}
+          <div className="cap"><b>{verdict}</b>Each square is one simulated election night, {L.lead.name} wins about {n} of 100{L.tie ? `, ${nTie} end in a tie (${fmtChance(L.tie.p)})` : ""}</div>
         </div>
-      ) : null}
+      ) : note ? <p className="sg-note">{note}</p> : null}
     </header>
     </>
   );

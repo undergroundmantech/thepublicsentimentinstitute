@@ -2,10 +2,11 @@
 // The race stage: the state built from square pixels in each county's forecast color, floating under a spotlight
 // over a glossy floor, with dust drifting through the beam. Pixels fly in and lock into place on load, the state
 // bobs slowly, and hovering a pixel lifts its whole county and names it. One canvas, paused when off screen,
-// a still frame under reduced motion.
+// a still frame under reduced motion. Theme only: in Pro Dark and Pro Light the stage is display:none and the canvas is
+// never built or animated; it starts when the mode switches to Theme and stops when it leaves.
 import { useEffect, useRef, useState } from "react";
 import { canvasDpr, frameGap } from "@/app/lib/lite";
-import { useThemeRef } from "@/app/lib/useSiteTheme";
+import { useSiteMode, useThemeRef } from "@/app/lib/useSiteTheme";
 
 type P = { id: string; d: string };
 export type StageLabel = { t: string; s: string; c: string };
@@ -32,8 +33,10 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
   const hovRef = useRef<string | null>(null);
   const themeRef = useThemeRef();
   const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null);
+  const themed = useSiteMode() === "themed";
 
   useEffect(() => {
+    if (!themed) return;
     const cv = ref.current, box = wrap.current; if (!cv || !box || !paths.length) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const dpr = canvasDpr(), gap = frameGap();
@@ -178,7 +181,7 @@ export default function PixelStage({ paths, fills, labels, beam = "#d9ccff", sid
     const onLeave = () => { hovRef.current = null; setTip(null); if (reduce) draw(performance.now()); };
     box.addEventListener("pointermove", onMove); box.addEventListener("pointerleave", onLeave);
     return () => { alive = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); box.removeEventListener("pointermove", onMove); box.removeEventListener("pointerleave", onLeave); };
-  }, [paths, fills, beam, side, focus]);
+  }, [paths, fills, beam, side, focus, themed]);
 
   const L = tip && labels?.[tip.id];
   return (

@@ -13,6 +13,7 @@ import SectionNav from "@/app/components/opp/SectionNav";
 import OutcomeHist from "@/app/components/opp/OutcomeHist";
 import { FX_CSS } from "@/app/components/opp/fxCss";
 import StageHero from "@/app/components/opp/StageHero";
+import { statewideHero } from "@/app/components/opp/heroOdds";
 import Ambient from "@/app/components/opp/Ambient";
 import PollTrail from "@/app/components/opp/PollTrail";
 import type { CountyPath } from "@/app/components/home/countyGeo";
@@ -90,6 +91,9 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
     { name: r.gop ?? "Republican", party: "Republican", pct: (100 * v.rep) / v.total, color: "#ff4d6a", win: 1 - dWin },
     ...(r.others ?? []).length && v.other / v.total >= 0.03 ? [{ name: r.others.map((o) => o.name).join(", "), party: r.others.map((o) => o.party).join(", ") || "Others", pct: (100 * v.other) / v.total, color: "#b78cff" }] : [],
   ] : [];
+  // The hero: Democrat against Republican with the model's own chances, others pooled (see statewideHero)
+  const hero = statewideHero(r, v, m);
+  const contested = hero.contested;
   const steps = [
     ...(L.topOfTicket != null ? [{ label: "Top of ticket", m: L.topOfTicket, note: L.topRaces?.length ? L.topRaces.map((t) => (t.startsWith("sen") ? "Senate" : "governor")).join(" and ") : "the 2026 statewide races" }] : []),
     ...(L.history != null ? [{ label: "Down ballot history", m: L.history, note: "this office's past results, moved to 2026" }] : []),
@@ -125,11 +129,18 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
           {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
           <span>Updated <b>{updated}</b></span>
         </>}
-        cands={v && v.total > 0 ? [{ name: r.dem ?? "Democrat", label: "Democrat", pct: (100 * v.dem) / v.total, votes: v.dem, color: "#5b8fff" }, { name: r.gop ?? "Republican", label: "Republican", pct: (100 * v.rep) / v.total, votes: v.rep, color: "#ff4d6a" }] : []}
+        facts={[
+          { k: "Forecast rating", v: <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span> },
+          { k: "Expected margin", v: <span className="mono">{contested ? fmtM(m) : "Uncontested"}</span> },
+          ...(contested ? [{ k: "80% range", v: <span className="mono">{fmtM(Math.min(p10, p90))} to {fmtM(Math.max(p10, p90))}</span> }] : []),
+          { k: "Polling average", v: <span className="mono">{r.pollAvg != null ? fmtM(r.pollAvg) : "No polls"}</span> },
+          { k: "Updated", v: updated },
+        ]}
+        cands={hero.cands}
+        others={hero.others} odds={hero.odds} note={contested ? undefined : "No two-party contest, so the model publishes no win probability"}
         paths={paths} fills={fills} mapLabel={`${title} drawn in pixels, shaded by the forecast`}
         labels={Object.fromEntries(paths.map((p) => { const row = rows[p.id]; return [p.id, { t: tips[p.id]?.title ?? p.id, s: `Projected margin ${fmtM(row[0])}`, c: row[0] < 0 ? "#7fa6ff" : "#ff8399" }]; }))}
-        win={leadWin}
-        lead={{ name: lastName(lead), color: m < 0 ? "#5b8fff" : "#ff4d6a" }} other={{ name: lastName(m < 0 ? r.gop! : r.dem!), color: m < 0 ? "#ff4d6a" : "#5b8fff" }} />
+      />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
