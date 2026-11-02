@@ -147,6 +147,13 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const cands = selRaces.filter((r) => r.cty);
     return cands.find((r) => r.id === pick) ?? (mode === "state" && office !== "all" ? cands.find((r) => r.k === "state" && officeGroup(r.off) === office) : undefined) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
   }, [sel, selRaces, pick, mode, office]);
+  // an open race desk puts its race's counties on the globe, which stands in for the desk's own map beside it
+  useEffect(() => {
+    const r = desk ? (ix?.races ?? []).find((x) => x.id === desk) : null;
+    if (!r || !r.cty) return;
+    if (r.st !== sel) fly.current(r.st);
+    setPick(r.id);
+  }, [desk]); // eslint-disable-line react-hooks/exhaustive-deps
   // the race shown in brief in the side panel: the state's race for this view when a state is picked
   useEffect(() => {
     // keep a race picked in this state, such as a clicked district; otherwise show the state's race for this view
