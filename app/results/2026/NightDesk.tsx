@@ -415,7 +415,7 @@ const THEME_CSS = `
 .desk.nd .race-meta{grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--line2);border-radius:14px;background:linear-gradient(170deg,rgba(var(--line-rgb),.06),rgba(var(--line-rgb),.02));overflow:hidden}
 .desk.nd .meta-block{padding:9px 14px;min-width:0;border-left:1px solid var(--line2)}
 .desk.nd .meta-block:first-child{border-left:0}
-.desk.nd .meta-block span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.desk.nd .meta-block span{font-family:var(--mono);font-size:9.5px;line-height:1.35;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .desk.nd .meta-block b{font-size:17px;color:var(--hi);margin-top:2px;overflow-wrap:anywhere}
 @media(max-width:720px){.desk.nd .race-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.desk.nd .meta-block{border-left:0;border-top:1px solid var(--line2)}.desk.nd .meta-block:nth-child(-n+2){border-top:0}.desk.nd .meta-block:nth-child(even){border-left:1px solid var(--line2)}.desk.nd .meta-block:last-child{grid-column:1/-1}}
 .desk.nd .race-tabs{margin-top:12px}

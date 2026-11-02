@@ -17,6 +17,8 @@ test("header keeps all five reporting fields in one strip", () => {
     assert.ok(tsx.includes(label), `missing ${label}`);
   assert.match(theme, /\.desk\.nd \.race-meta\{grid-template-columns:repeat\(5,minmax\(0,1fr\)\);gap:0;border:1px solid var\(--line2\)/);
   assert.match(theme, /@media\(max-width:720px\)\{\.desk\.nd \.race-meta\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}/);
+  const label = theme.slice(theme.indexOf(".desk.nd .meta-block span{"));
+  assert.doesNotMatch(label.slice(0, label.indexOf("}")), /ellipsis|nowrap/, "labels wrap rather than clip");
 });
 
 test("embedded desk beside the globe hides its own county map but keeps the county table", () => {
