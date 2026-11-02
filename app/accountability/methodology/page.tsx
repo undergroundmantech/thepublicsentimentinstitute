@@ -7,7 +7,7 @@ import "../accountability.css";
 export const metadata: Metadata = {
   title: "How the Accountability Index works",
   description: "The sources, formulas, weights, grade cutoffs and every known gap behind the On Point Politics Accountability Index.",
-  alternates: { canonical: "https://onpointpolitics.com/accountability/methodology" },
+  alternates: { canonical: "/accountability/methodology" },
 };
 
 const GAP: Record<string, string> = {"lcv": "Members seated after the 2025 scorecard have no score.", "ppunch": "The six non-voting delegates are not scored. Read from the chamber tables; only the first rows of each were checked a second time.", "aflcio": "Three senators and six House members seated after the 2025 list, and the delegates, have no score.", "hrc": "Read from the 119th Congress PDF, whose text could be read only through the Texas House table; the remaining House members, Texas 29 on and Utah to Wyoming, are scored on the other three left cards.", "heritage": "A weekly snapshot while Congress sits. Five delegate pages and a few others could not be read.", "acu": "2025 ratings from each member\u2019s CPAC page. Late seated members and delegates show no rating.", "cfg": "2025 Economic Growth Score. Delegates and members seated after 2025 have no score.", "aff": "Alignment share of scored actions. Seven members are ungraded and four not listed."};

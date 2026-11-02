@@ -165,7 +165,7 @@ export default function Night({ r, s, geo, again, menu }: { r: E.RaceFile; s: E.
 
   const g = E.grade(s);
   const ach = useMemo(() => (done ? achievements(r, s, myCall, calledAt) : []), [done, r, s, myCall, calledAt]);
-  const share = `I ran ${c.me.name}'s campaign for ${r.name} on ${E.DIFF[s.diff].name} and ${res.win ? "won" : "lost"} by ${Math.abs(res.m).toFixed(1)} points. Grade ${g.letter}.${s.mkt ? ` Kalshi opened me at ${Math.round(s.mkt.open * 100)} cents.` : ""} ${myCall ? (myCall.me === res.win ? ` I called it with ${Math.round(myCall.rep * 100)}% counted.` : " I blew the call.") : ""} Seed ${s.seed}. Play at onpointpolitics.com/play`;
+  const share = `I ran ${c.me.name}'s campaign for ${r.name} on ${E.DIFF[s.diff].name} and ${res.win ? "won" : "lost"} by ${Math.abs(res.m).toFixed(1)} points. Grade ${g.letter}.${s.mkt ? ` Kalshi opened me at ${Math.round(s.mkt.open * 100)} cents.` : ""} ${myCall ? (myCall.me === res.win ? ` I called it with ${Math.round(myCall.rep * 100)}% counted.` : " I blew the call.") : ""} Seed ${s.seed}. Play at onpointpolitics.us/play`;
   const SPEECH = res.win ? [["Unity", "Thank both campaigns and promise to work for every voter, including the ones who did not pick you."], ["Victory lap", "Declare a mandate and rip the other side."], ["Thank the volunteers", "Bring the field team on stage."]] : [["Gracious", "Call your opponent, concede, and thank your volunteers."], ["Fight on", "Say the movement is just getting started."], ...(Math.abs(res.m) < 0.5 ? [["Demand a recount", "Say every vote must be counted, and lawyer up."]] : [])];
   const meName = sur(c.me.name), opName = sur(c.op.name);
   return (

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${m.name} on the Accountability Index`,
     description: m.index != null ? `${m.name}, ${seatLong(m)}, scores ${m.index.toFixed(1)} of 100 for independence from special interest money, grade ${m.grade}, rank ${m.rank} of ${getAx().ranked}.` : `${m.name}, ${seatLong(m)}, on the On Point Politics Accountability Index.`,
-    alternates: { canonical: `https://onpointpolitics.com/accountability/${m.slug}` },
+    alternates: { canonical: `/accountability/${m.slug}` },
   };
 }
 

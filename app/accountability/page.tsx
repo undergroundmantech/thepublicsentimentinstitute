@@ -8,7 +8,7 @@ import "./accountability.css";
 export const metadata: Metadata = {
   title: "Accountability Index",
   description: "Every member of Congress scored for independence from special interest money: pro-Israel lobby money, PAC money, stock trading and eight left and right scorecards blended so neither party starts ahead.",
-  alternates: { canonical: "https://onpointpolitics.com/accountability" },
+  alternates: { canonical: "/accountability" },
 };
 
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
