@@ -6,7 +6,7 @@ import "./monitor.css";
 export const metadata: Metadata = {
   title: "Situation monitor: every November 3 race",
   description: "A full screen globe of every 2026 Senate, House, governor, statewide, ballot measure and legislative race, live from civicAPI against the On Point Politics forecast.",
-  alternates: { canonical: "https://onpointpolitics.com/results/monitor" },
+  alternates: { canonical: "/results/monitor" },
 };
 
 export default function Page() {

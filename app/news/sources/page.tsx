@@ -7,7 +7,7 @@ import "../news.css";
 export const metadata: Metadata = {
   title: "News outlets and how we rate them",
   description: "Every outlet the On Point Politics news desk reads, rated Left, Center or Right, with the reason for each rating and how the ratings are made.",
-  alternates: { canonical: "https://onpointpolitics.com/news/sources" },
+  alternates: { canonical: "/news/sources" },
 };
 
 export default function SourcesPage() {

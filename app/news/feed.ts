@@ -66,7 +66,7 @@ export function parseFeed(xml: string, outlet: string, cat: Cat): Item[] {
 async function get(url: string, ms = 4000): Promise<string | null> {
   const ac = new AbortController(); const t = setTimeout(() => ac.abort(), ms);
   try {
-    const r = await fetch(url, { signal: ac.signal, headers: { "user-agent": "OnPointPoliticsNewsDesk/1.0 (+https://onpointpolitics.com/news/sources)", accept: "application/rss+xml, application/atom+xml, application/xml, text/xml" }, next: { revalidate: 600 } });
+    const r = await fetch(url, { signal: ac.signal, headers: { "user-agent": "OnPointPoliticsNewsDesk/1.0 (+https://onpointpolitics.us/news/sources)", accept: "application/rss+xml, application/atom+xml, application/xml, text/xml" }, next: { revalidate: 600 } });
     return r.ok ? await r.text() : null;
   } catch { return null; } finally { clearTimeout(t); }
 }
