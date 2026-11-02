@@ -66,8 +66,24 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .mm-t.live .mm-l { padding-left: 24px; }
 .opp .mm-t.live::before { content: ""; position: absolute; left: 10px; top: 50%; width: 7px; height: 7px; margin-top: -4px; border-radius: 50%; background: var(--live); animation: pulse 1.8s infinite; }
 .opp .mm-t .mm-l:focus-visible, .opp .mm-t .mm-c:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
-@media (max-width: 1180px) { .opp .mm-i > a, .opp .mm-i > button { padding: 0 9px; font-size: 13.5px; } .opp .mm-t .mm-l { padding-left: 9px; font-size: 13.5px; } .opp .mm-t.live .mm-l { padding-left: 22px; } .opp .top .right .btn.gold { display: none; } }
-@media (max-width: 1060px) { .opp .nav.mmenu { display: none; } .opp .burger { display: inline-flex; padding: 8px 12px; } }
+/* Masthead fit, measured: logo + nav + tools need about 1460px at full size. Stage 1 (<=1480) compacts the nav and turns
+   Search into an icon, stage 2 (<=1400) drops the Weighting Room button, stage 3 (<=1240) tightens further, and the
+   burger takes over at <=1120. Each stage leaves 70px or more of slack at its narrowest width. */
+@media (max-width: 1480px) {
+  .opp .top .wrap { gap: 14px; }
+  .opp .mm-i > a, .opp .mm-i > button { padding: 0 9px; font-size: 13.5px; }
+  .opp .mm-t .mm-l { padding-left: 9px; font-size: 13.5px; } .opp .mm-t.live .mm-l { padding-left: 22px; }
+  .opp .top .right .btn.ghost.search { width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
+  .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
+}
+@media (max-width: 1400px) { .opp .top .right .btn.gold { display: none; } }
+@media (max-width: 1240px) {
+  .opp .top .wrap { padding-inline: 20px; }
+  .opp .top .right { gap: 8px; }
+  .opp .mm-i > a, .opp .mm-i > button { padding: 0 7px; font-size: 13px; }
+  .opp .mm-t .mm-l { padding-left: 7px; font-size: 13px; } .opp .mm-t.live .mm-l { padding-left: 20px; }
+}
+@media (max-width: 1120px) { .opp .nav.mmenu { display: none; } .opp .burger { display: inline-flex; padding: 8px 12px; } }
 
 /* phone menu */
 .opp .mnav { overflow-y: auto; }
