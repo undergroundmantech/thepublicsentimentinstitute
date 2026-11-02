@@ -77,6 +77,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-GOV-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-25", "sampleSize": 622, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 43.0, "Other": 2.0, "Undecided": 3.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 745, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 50.0, "John James (R)": 40.0, "Other": 3.0, "Undecided": 7.0}},
     {"raceId": "MI-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2093, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 46.0, "Other": 1.0}},
-    {"raceId": "MI-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1009, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 39.0, "Undecided": 9.0}}
+    {"raceId": "MI-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1009, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 52.0, "John James (R)": 39.0, "Undecided": 9.0}},
+    {"raceId": "MI-GOV-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 53.0, "John James (R)": 41.0, "Other": 1.0, "Undecided": 5.0}}
   ],
 };

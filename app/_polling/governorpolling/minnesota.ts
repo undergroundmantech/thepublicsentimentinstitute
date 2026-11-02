@@ -2,7 +2,7 @@
 // Minnesota — 2026 Governor: Amy Klobuchar (D) vs. Lisa Demuth (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-28.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -46,6 +46,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 752, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 56.0, "Lisa Demuth (R)": 38.0, "Undecided": 6.0}},
     {"raceId": "MN-GOV-2026", "pollster": "State Navigate", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 806, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 52.0, "Lisa Demuth (R)": 42.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-24", "endDate": "2026-10-28", "sampleSize": 714, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 51.0, "Lisa Demuth (R)": 39.0, "Other": 3.0, "Undecided": 7.0}},
-    {"raceId": "MN-GOV-2026", "pollster": "Victory Insights for the Tafoya campaign (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1194, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 50.1, "Lisa Demuth (R)": 43.1, "Other": 2.4, "Undecided": 4.4}}
+    {"raceId": "MN-GOV-2026", "pollster": "Victory Insights for the Tafoya campaign (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1194, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 50.1, "Lisa Demuth (R)": 43.1, "Other": 2.4, "Undecided": 4.4}},
+    {"raceId": "MN-GOV-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 53.0, "Lisa Demuth (R)": 40.0, "Other": 1.0, "Undecided": 6.0}}
   ],
 };

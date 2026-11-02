@@ -300,7 +300,7 @@ for ab, st in H["states"].items():
             open=not row.get("inc"), marquee=abs(m) < 6,
             pvi=round(-(row.get("pvi") or 0), 1), elast=round(row.get("e") or 1.0, 2),
             fundamentals=round(-m, 2),
-            stages=dict(anchor=round(-(row.get("t24") or 0), 2), fund=round(-m, 2), poll=round(-m, 2),
+            stages=dict(anchor=round((row.get("t24") or 0), 2), fund=round(-m, 2), poll=round(-m, 2),   # Nov 1 2026: t24 is already Trump minus Harris, R minus D; it was negated by mistake
                         rate=round(-m, 2), market=round(-m, 2)),
             pollAvg=(round(-(row.get("cand") or 0), 2) if row.get("poll") else None),
             enop=1.0 if row.get("poll") else 0.0, wPoll=0.5 if row.get("poll") else 0.0, wMkt=0.0, market=None,

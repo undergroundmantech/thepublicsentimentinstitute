@@ -22,6 +22,7 @@ def add(key, src, end, n, R, D):
 for k, f in sorted(files.items()):
     if not os.path.exists(f) or not re.fullmatch(r"[A-Z]{2}G?", k): continue
     for r in csv.DictReader(open(f)):
+            if "PRIVATE INTERNAL" in (r.get("dates") or ""): continue    # Nov 1 2026, by the user: model only, never published
             add(k, (r.get("source") or "").strip(), r.get("end"), r.get("n"), num(r.get("R")), num(r.get("D")))
 h = json.load(open(f"{M}/polls_oct12_hook.json"))
 for st, rows in h.items():
