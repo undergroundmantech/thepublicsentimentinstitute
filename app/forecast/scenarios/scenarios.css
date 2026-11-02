@@ -51,7 +51,7 @@ html[data-scn="state"] .scn-state-ph,html[data-scn="state"] .scn-state-ph.sl-loa
 /* ---------- scoreboard ---------- */
 .sl-score{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);gap:22px;align-items:center;padding:18px 20px;overflow:hidden;transition:border-color .4s,box-shadow .4s}
 .sl-score.flipped{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
-.opp .sl-score.flipped::after{opacity:1;content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(60% 120% at 0% 0%,rgba(231,179,65,.14),transparent 60%);animation:sl-fade 1.2s ease-out both}
+.opp .sl-score.flipped::after{opacity:1;content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(60% 120% at 0% 0%,rgba(var(--accent-rgb), .14),transparent 60%);animation:sl-fade 1.2s ease-out both}
 @keyframes sl-fade{from{opacity:0}to{opacity:1}}
 .sl-score-l h2{font:800 clamp(22px,2.2vw,30px)/1.1 var(--font-d);letter-spacing:-.03em;margin:6px 0 10px}
 .sl-score-l h2 a:hover{text-decoration:underline}
@@ -106,7 +106,7 @@ html[data-scn="state"] .scn-state-ph,html[data-scn="state"] .scn-state-ph.sl-loa
 @keyframes sl-in{from{opacity:0}to{opacity:1}}
 .sl-map .sl-hov{fill:none;stroke:var(--hi);stroke-width:1.6;vector-effect:non-scaling-stroke;pointer-events:none;opacity:.85}
 .sl-map .sl-sel{fill:none;stroke:var(--hi);stroke-width:3;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 4px rgba(var(--line-rgb),.45))}
-.sl-map .sl-pulse{fill:rgba(231,179,65,.16);stroke:var(--gold);stroke-width:2.5;vector-effect:non-scaling-stroke;pointer-events:none;animation:sl-pulse 1.4s ease-out both}
+.sl-map .sl-pulse{fill:rgba(var(--accent-rgb), .16);stroke:var(--gold);stroke-width:2.5;vector-effect:non-scaling-stroke;pointer-events:none;animation:sl-pulse 1.4s ease-out both}
 @keyframes sl-pulse{0%{opacity:0;stroke-width:6}20%{opacity:1}100%{opacity:0;stroke-width:1}}
 .sl-map .sl-edot{fill:var(--gold);stroke:rgba(var(--canvas-rgb),.9);stroke-width:1.5;vector-effect:non-scaling-stroke;pointer-events:none;animation:sl-pop .4s cubic-bezier(.2,.8,.2,1.4) both;transform-box:fill-box;transform-origin:center}
 @keyframes sl-pop{from{transform:scale(0)}to{transform:scale(1)}}
@@ -120,7 +120,7 @@ html[data-scn="state"] .scn-state-ph,html[data-scn="state"] .scn-state-ph.sl-loa
 .sl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:10px;font-size:12px;color:var(--mute)}
 .sl-legend .ramp{display:block;height:8px;border-radius:4px;flex:1;min-width:120px;max-width:280px}
 .sl-legend .k{display:inline-flex;align-items:center;gap:6px}
-.sl-legend .pul{width:12px;height:12px;border-radius:3px;border:2px solid var(--gold);background:rgba(231,179,65,.16)}
+.sl-legend .pul{width:12px;height:12px;border-radius:3px;border:2px solid var(--gold);background:rgba(var(--accent-rgb), .16)}
 .sl-legend .dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
 .sl-legend .k:first-of-type{margin-left:auto}
 @media (max-width:760px){.sl-tip{display:none}.sl-legend .k:first-of-type{margin-left:0}.sl-map{max-height:none}}
@@ -252,19 +252,19 @@ html[data-scn="state"] .scn-state-ph,html[data-scn="state"] .scn-state-ph.sl-loa
 .sl-twins li button:hover{background:rgba(var(--line-rgb),.06)}
 .sl-twins .nm{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sl-twins .bar{height:7px;border-radius:4px;background:rgba(var(--line-rgb),.1);overflow:hidden}
-.sl-twins .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#9b7bff,#e7b341);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.sl-twins .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--b1),var(--b2));transition:width .4s cubic-bezier(.2,.8,.2,1)}
 .sl-twins b{font-size:12px;text-align:right}
 .sl-twins small{font-size:11px;color:var(--mute);padding-left:2px}
 /* typed numbers */
 .sl-mode{display:inline-flex;gap:4px;padding:3px;border-radius:999px;border:1px solid var(--line2);background:rgba(var(--line-rgb),.04);margin:4px 0 2px}
 .sl-mode button{font:700 12px var(--font-b);color:var(--ink2);background:none;border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
-.sl-mode button.on{background:var(--gold);color:#1a1030}
+.sl-mode button.on{background:var(--gold-fill);color:var(--on-accent)}
 .sl-mode button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
 .sl-nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .sl-num{display:grid;gap:3px}
 .sl-num span{font:700 10px var(--font-m);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .sl-num input{width:100%;font:800 15px var(--font-m);font-variant-numeric:tabular-nums;color:var(--ink);background:rgba(var(--line-rgb),.05);border:1px solid var(--line2);border-radius:10px;padding:8px 10px}
-.sl-num input:focus{outline:2px solid var(--gold);border-color:transparent}
+.sl-num input:focus{outline:2px solid var(--focus-ring);border-color:transparent}
 .sl-num small{font-size:11px;color:var(--mute)}
 .sl-cx{margin:4px 0 2px}
 .sl-gx .sl-g-h{margin-bottom:6px}

@@ -440,7 +440,7 @@ export const DASH_CSS = `
   padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
 .db-kpi:hover { border-color: var(--border3, var(--border2)); }
 .db-kpi.on { border-color: #9b8cff; background: var(--glass2, rgba(155,140,255,.08)); box-shadow: inset 0 0 0 1px rgba(155,140,255,.35); }
-.db-kpi:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.db-kpi:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .db-kpi .txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .db-kpi b { font-family: var(--font-d); font-size: clamp(20px, 2.2vw, 27px); font-weight: 800; letter-spacing: -0.02em; color: var(--hi); font-variant-numeric: tabular-nums; }
 .db-kpi.on b { color: var(--ind); }

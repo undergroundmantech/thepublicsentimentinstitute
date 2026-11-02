@@ -156,7 +156,7 @@ export default function Home() {
             <div className="card-b"><h3>{storyRace(govPick)}</h3><p>The closest governor&apos;s race in the model, {fmtM(govPick.stages.rate, isInd(govPick))}.</p><div className="meta">{updated} · Forecast note</div></div>
           </Link>
           <Link href="/forecast/methodology" className="card story">
-            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect className="thb-bg" width="320" height="180" /><g fill="none" stroke="#e7b341" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="#e7b341" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
+            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect className="thb-bg" width="320" height="180" /><g fill="none" stroke="var(--accent)" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="var(--accent)" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
             <div className="card-b"><h3>How On Point averages polls: one robust LOWESS line, weighted</h3><p>The trend fit is now the average itself, with a 16 day recency half life.</p><div className="meta">Oct 22 · Methodology</div></div>
           </Link>
         </div>

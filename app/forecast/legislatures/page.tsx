@@ -58,7 +58,7 @@ export default function LegislaturesPage() {
         <div className="card kpi"><div><div className="lab">Expected Democratic chambers</div><div className="v d mono">{expD.toFixed(1)}</div><div className="sub">Out of {ch.length}, {curD} today</div></div></div>
         <div className="card kpi"><div><div className="lab">Favored to flip to Democrats</div><div className="v d mono">{flipsToD.length}</div><div className="sub">{flipsToD.slice(0, 4).map((c) => c.name).join(", ") || "None"}{flipsToD.length > 4 ? " and more" : ""}</div></div></div>
         <div className="card kpi"><div><div className="lab">Favored to flip to Republicans</div><div className="v r mono">{flipsToR.length}</div><div className="sub">{flipsToR.slice(0, 4).map((c) => c.name).join(", ") || "None"}</div></div></div>
-        <div className="card kpi"><div><div className="lab">Chambers in play</div><div className="v mono" style={{ color: "var(--gold)" }}>{inPlay.length}</div><div className="sub">Between 8% and 92% for either party</div></div></div>
+        <div className="card kpi"><div><div className="lab">Chambers in play</div><div className="v mono" style={{ color: "var(--toss)" }}>{inPlay.length}</div><div className="sub">Between 8% and 92% for either party</div></div></div>
       </section>
 
       <div className="card sl-map-us">

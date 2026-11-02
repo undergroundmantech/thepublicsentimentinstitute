@@ -138,7 +138,7 @@ const PARTY_TONE: Record<string, string> = {
   "No Party Affiliation": "var(--muted2)",
   Independent: "var(--muted2)",
   "Other/Independent": "var(--muted2)",
-  Libertarian: "var(--gold)",
+  Libertarian: "#d9a53a",
   Green: "var(--win)",
   Other: "var(--muted3)",
   Unspecified: "var(--muted3)",

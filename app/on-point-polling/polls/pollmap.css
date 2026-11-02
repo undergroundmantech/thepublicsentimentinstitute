@@ -7,7 +7,7 @@
 .pm-tog { display: inline-flex; border: 1px solid var(--line2); border-radius: 999px; padding: 3px; background: var(--glass); }
 .pm-tog button { font: 700 13px var(--font-b); color: var(--mute); background: none; border: 0; border-radius: 999px; padding: 7px 16px; cursor: pointer; }
 .pm-tog button.on { background: var(--ink); color: var(--bg); }
-.pm-tog button:focus-visible, .pm-row:focus-visible, .pm-chip:focus-visible, .pm-back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pm-tog button:focus-visible, .pm-row:focus-visible, .pm-chip:focus-visible, .pm-back:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .pm-body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 900px) { .pm-body { grid-template-columns: 1fr; } }
 .pm-mapwrap { min-width: 0; }
@@ -68,7 +68,7 @@
 .pm-kv { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .pm-kv > span:last-child { display: flex; gap: 6px; }
 .pm-chip { font: 700 12px var(--font-m); padding: 5px 9px; border-radius: 6px; border: 1px solid var(--gold); color: var(--gold); background: none; cursor: pointer; }
-.pm-chip.on { background: var(--gold-fill); color: #1a1205; }
+.pm-chip.on { background: var(--gold-fill); color: var(--on-accent); }
 .pm-fund { display: flex; flex-direction: column; gap: 10px; }
 .pm .btn { align-self: flex-start; margin-top: 4px; }
 .pm-src { margin: 0; font-size: 11.5px; color: var(--mute); line-height: 1.5; }

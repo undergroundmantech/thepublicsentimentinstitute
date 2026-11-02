@@ -59,7 +59,7 @@
 .ax-seg { display: inline-flex; flex-wrap: wrap; gap: 3px; padding: 3px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); }
 .ax-seg button { font: 700 12px var(--font-b); color: var(--mute); background: none; border: 0; border-radius: 8px; padding: 6px 11px; cursor: pointer; }
 .ax-seg button[aria-pressed="true"] { color: var(--hi); background: rgba(var(--line-rgb), .12); }
-.ax button:focus-visible, .ax a:focus-visible, .ax input:focus-visible, .ax select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ax button:focus-visible, .ax a:focus-visible, .ax input:focus-visible, .ax select:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .ax-tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--glass); }
 .ax-t { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .ax-t th, .ax-t td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }

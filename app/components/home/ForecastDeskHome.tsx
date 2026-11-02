@@ -234,7 +234,7 @@ function CountyPanel({ build, race, loading, show, hide }: { build: CountyBuild;
                 const row = build.rows[c.id];
                 const m = row[0];
                 return (
-                  <path key={c.id} d={c.d} fill={marginColor(m)} style={{ strokeWidth: 1 / sc, animationDelay: `${Math.min(i, 250) * 4}ms` }}
+                  <path key={c.id} d={c.d} fill={marginColor(m)} style={{ animationDelay: `${Math.min(i, 250) * 4}ms` }}
                     onMouseMove={(e) => show(<>
                       <b>{build.names[c.id] ?? c.id}{/county|parish|borough|city/i.test(build.names[c.id] ?? "") ? "" : " County"}</b>
                       <div className="row"><span>Simulated margin</span><span style={{ color: m < 0 ? "var(--dem2)" : "var(--gop2)" }}>{fmtM(m)}</span></div>

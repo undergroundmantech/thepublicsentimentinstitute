@@ -418,7 +418,7 @@ export const PACE_CSS = `
 button.pc-tile { cursor: pointer; }
 button.pc-tile:hover { border-color: var(--line2); }
 .pc-tile.on { border-color: #9b8cff; box-shadow: inset 0 0 0 1px rgba(155,140,255,.35); }
-.pc-tile:focus-visible, .pc-tr:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pc-tile:focus-visible, .pc-tr:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .pc-tile em { font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
 .pc-tile b { font-family: var(--font-d); font-size: clamp(22px, 2.6vw, 30px); font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .pc-tile small { font-size: 12px; line-height: 1.35; color: var(--ink2); }

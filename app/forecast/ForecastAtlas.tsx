@@ -836,7 +836,7 @@ export const ATLAS_CSS = `
 .atl-chip.on { color: #0a0711; background: var(--ink); border-color: var(--ink); }
 .atl-chip.on::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(var(--line-rgb),.75) 50%, transparent 70%); transform: translateX(-120%); animation: atlGlint .9s ease-out; }
 @keyframes atlGlint { to { transform: translateX(120%); } }
-.atl-chip:focus-visible, .atl-seg button:focus-visible, .atl-tour:focus-visible, .atl-li:focus-visible, .atl-race:focus-visible, .atl-jchips button:focus-visible, .atl-crumbs button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.atl-chip:focus-visible, .atl-seg button:focus-visible, .atl-tour:focus-visible, .atl-li:focus-visible, .atl-race:focus-visible, .atl-jchips button:focus-visible, .atl-crumbs button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 .atl-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
 .atl-note { font-size: 13px; color: #a9a2b8; }
@@ -850,7 +850,7 @@ export const ATLAS_CSS = `
 .atl-tog i::after { content: ""; position: absolute; left: 2px; top: 2px; width: 13px; height: 13px; border-radius: 50%; background: var(--ink2); transition: transform .25s cubic-bezier(.16,1,.3,1), background .2s; }
 .atl-tog input:checked + i { background: rgba(79,224,255,.35); }
 .atl-tog input:checked + i::after { transform: translateX(13px); background: #4fe0ff; box-shadow: 0 0 10px #4fe0ff; }
-.atl-tog input:focus-visible + i { outline: 2px solid var(--gold); outline-offset: 2px; }
+.atl-tog input:focus-visible + i { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .atl-tour { padding: 7px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #fff; background: var(--grad); border: 0; cursor: pointer; box-shadow: var(--shadow-grad); }
 .atl-tour.on { background: rgba(var(--line-rgb),.12); box-shadow: none; }
 
@@ -890,8 +890,8 @@ export const ATLAS_CSS = `
 @keyframes atlDot { from { opacity: 0; transform: scale(0); } }
 .atl-ring { fill: none; stroke: #4fe0ff; stroke-width: 1.4; opacity: 0; transform-box: fill-box; transform-origin: center; animation: atlRing 1.6s ease-out both; pointer-events: none; }
 @keyframes atlRing { 0% { opacity: .9; transform: scale(.3); } 100% { opacity: 0; transform: scale(2.4); } }
-.atl-halo { fill: none; stroke: var(--hi); stroke-width: 1.1; pointer-events: none; filter: drop-shadow(0 0 4px rgba(var(--hi-rgb),.7)); }
-.atl-halo.st { stroke-width: 2.4; }
+.atl-halo { fill: none; stroke: var(--hi); stroke-width: 1.1; stroke-linejoin: round; pointer-events: none; filter: drop-shadow(0 0 2px rgba(var(--hi-rgb),.35)); }
+.atl-halo.st { stroke-width: 1.6; }
 
 .atl-crumbs { position: absolute; left: 16px; top: 14px; z-index: 2; display: flex; align-items: center; gap: 8px; }
 .atl-crumbs button { padding: 5px 11px; border-radius: 999px; font-family: var(--font-m); font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); background: rgba(var(--line-rgb),.04); border: 1px solid rgba(var(--line-rgb),.08); cursor: pointer; }

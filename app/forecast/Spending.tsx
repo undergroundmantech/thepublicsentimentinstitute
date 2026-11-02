@@ -83,7 +83,7 @@ function signal(r: FedRow | GovRow, medianPv: number): { label: string; tone: st
   if ((r as FedRow).oneParty) return null;
   const close = Math.abs(r.margin) <= CLOSE;
   const pv = r.perVoter ?? 0;
-  if (close && pv < medianPv * 0.5) return { label: "Close, little money", tone: "var(--gold)" };
+  if (close && pv < medianPv * 0.5) return { label: "Close, little money", tone: "var(--warn)" };
   if (close && pv >= medianPv * 1.5) return { label: "Battleground money", tone: "var(--hi)" };
   if (Math.abs(r.margin) >= 15 && pv >= medianPv * 2) return { label: "Money in a safe seat", tone: "var(--mute)" };
   if (r.shareD != null && r.shareD >= 0.7 && r.margin > 0) return { label: "Democrats outspending the leader", tone: "var(--dem)" };

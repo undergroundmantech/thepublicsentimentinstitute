@@ -24,10 +24,10 @@
 .rl-cand span, .rl-cand em { font: 700 12.5px var(--font-m); font-style: normal; text-align: right; color: var(--ink2); font-variant-numeric: tabular-nums; }
 .rl-cand .dot { width: 9px; height: 9px; border-radius: 50%; background: #8e86a3; } .rl-cand .p-D, .rl-cand .p-Y { background: #3d7bff; } .rl-cand .p-R, .rl-cand .p-N { background: #ff3b5c; } .rl-cand .p-I { background: #b78cff; }
 .rl-cand .p-Y { background: #2fbf9b; } .rl-cand .p-N { background: #e7794a; }
-.rl-cand .won { font: 700 9.5px var(--font-m); font-style: normal; text-transform: uppercase; letter-spacing: .1em; color: #1a1200; background: var(--gold); padding: 1px 5px; border-radius: 4px; margin-left: 6px; }
+.rl-cand .won { font: 700 9.5px var(--font-m); font-style: normal; text-transform: uppercase; letter-spacing: .1em; color: var(--on-accent); background: var(--gold-fill); padding: 1px 5px; border-radius: 4px; margin-left: 6px; }
 .rl-big { display: flex; gap: 16px; font: 800 34px var(--font-d); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .rl-big .d { color: var(--dem2, #8fb0ff); } .rl-big .r { color: var(--gop2, #ff8399); }
-.rl-card.est { border-color: rgba(231, 179, 65, .35); }
+.rl-card.est { border-color: rgba(var(--accent-rgb), .35); }
 .rl-map { padding: 0 0 12px; margin-bottom: 14px; overflow: visible; }
 .rl-map .card-h { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .rl-map .card-h h3 { margin: 0; font: 700 16px var(--font-d); }
@@ -43,7 +43,7 @@
 .rl-seg button { font: 700 12px var(--font-b); color: var(--mute); background: none; border: 0; border-radius: 8px; padding: 6px 11px; cursor: pointer; }
 .rl-seg button em { font-style: normal; font-family: var(--font-m); font-size: 11px; opacity: .7; margin-left: 3px; }
 .rl-seg button[aria-pressed="true"] { color: var(--hi); background: rgba(var(--line-rgb), .12); }
-.rl-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.rl-seg button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .rl-tbl { margin-bottom: 14px; }
 .rl-tbl .card-h { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .rl-tbl .card-h h3 { margin: 0; font: 700 16px var(--font-d); }
@@ -72,7 +72,7 @@
 .nat-eye { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); }
 .nat-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); }
 .nat-dot.on { background: var(--live); animation: nat-pulse 1.8s ease-out infinite; }
-.nat-test { margin: 10px 0 0; font-size: 12.5px; color: var(--gold); } .nat-test a { color: inherit; }
+.nat-test { margin: 10px 0 0; font-size: 12.5px; color: var(--warn); } .nat-test a { color: inherit; }
 .nat-side { display: grid; gap: 10px; justify-items: end; }
 .nat-meta { display: flex; gap: 8px; margin: 0; flex-wrap: wrap; justify-content: flex-end; }
 .nat-meta div { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; background: var(--glass); min-width: 98px; }
@@ -83,7 +83,7 @@
 .nat-board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
 .nat-card { position: relative; display: grid; gap: 8px; align-content: start; text-align: left; padding: 14px 14px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--glass); color: var(--ink); cursor: pointer; font: inherit; transition: border-color .2s, transform .2s, background .2s; animation: nat-rise .6s cubic-bezier(.2, .8, .2, 1) both; }
 .nat-card:hover { border-color: var(--line2); transform: translateY(-2px); }
-.nat-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nat-card:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .nat-card.on { border-color: transparent; background: linear-gradient(180deg, rgba(130, 90, 255, .16), rgba(130, 90, 255, .04)); box-shadow: 0 0 0 1px rgba(170, 140, 255, .55), 0 18px 50px -26px rgba(130, 80, 255, .9); }
 .nat-card.on::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--grad); }
 .nat-card-h { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
@@ -113,9 +113,9 @@
 .nat-map .u path.g { fill: var(--off); stroke: rgba(var(--canvas-rgb), .9); stroke-width: .7; vector-effect: non-scaling-stroke; transition: fill .5s, fill-opacity .5s; }
 .nat-map .u.expected path.g { fill: var(--await); }
 .nat-map .u path.lean { opacity: .75; pointer-events: none; }
-.nat-map .u.called path.g { stroke: var(--gold); stroke-width: 1.8; }
+.nat-map .u.called path.g { stroke: var(--map-select); stroke-width: var(--map-w-state); }
 .nat-map .u[role="button"] { cursor: pointer; outline: none; }
-.nat-map .u[role="button"]:hover path.g, .nat-map .u.hov path.g, .nat-map .u[role="button"]:focus-visible path.g { stroke: var(--hi); stroke-width: 1.6; }
+.nat-map .u[role="button"]:hover path.g, .nat-map .u.hov path.g, .nat-map .u[role="button"]:focus-visible path.g { stroke: var(--hi); stroke-width: var(--map-w-hover); }
 .nat-map .u.expected, .nat-map .u.reported { animation: nat-fade .5s ease both; }
 .nat-map text { font: 700 10px var(--font-m); fill: var(--hi); text-anchor: middle; pointer-events: none; opacity: .85; } .nat-map text.off { opacity: .3; }
 .nat-map.hs .u path.g { stroke-width: .35; }
@@ -153,7 +153,7 @@
 .nat-watch .key { margin-bottom: 4px; font: 600 10.5px var(--font-m); color: var(--mute); }
 .nat-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px; margin: 0 -8px; border-radius: 10px; color: var(--ink); text-decoration: none; transition: background .15s; }
 .nat-row:hover { background: rgba(var(--line-rgb), .06); }
-.nat-row:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.nat-row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 .nat-row .nm { min-width: 0; } .nat-row .nm b { display: block; font: 700 13.5px var(--font-b); color: var(--hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nat-row .nm small { display: block; font-size: 11.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nat-row .vl { display: grid; justify-items: end; gap: 4px; } .nat-row .vl b { font: 800 12.5px var(--font-m); white-space: nowrap; } .nat-row .vl b small { font-weight: 600; color: var(--mute); }

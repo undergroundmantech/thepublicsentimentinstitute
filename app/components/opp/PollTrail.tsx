@@ -77,15 +77,15 @@ export default function PollTrail({ polls, avg, asOf, ind, dem = "Democrat", gop
       {ps.map((p, i) => {
         const cx = x(-p.age), cy = y(-p.margin), c = p.margin < 0 ? dCol : rCol;
         return p.op && !compact
-          ? <g key={i}><rect x={cx - 5.5} y={cy - 5.5} width="11" height="11" transform={`rotate(45 ${cx} ${cy})`} fill={c} stroke="#e7b341" strokeWidth="2" /><title>{`${p.pollster ?? "On Point Polling"}, ${fmt(-p.margin, ind)}, ${p.age} days ago`}</title></g>
+          ? <g key={i}><rect x={cx - 5.5} y={cy - 5.5} width="11" height="11" transform={`rotate(45 ${cx} ${cy})`} fill={c} stroke="var(--accent)" strokeWidth="2" /><title>{`${p.pollster ?? "On Point Polling"}, ${fmt(-p.margin, ind)}, ${p.age} days ago`}</title></g>
           : <circle key={i} cx={cx} cy={cy} r={rad(p.n)} fill={c} opacity={compact ? 0.55 : 0.5} className="ptr-dot"><title>{`${p.pollster ?? "Poll"}${p.n ? `, ${p.n.toLocaleString()}` : ""}, ${fmt(-p.margin, ind)}, ${p.age} days ago`}</title></circle>;
       })}
       {pathD ? <g className="ptr-line"><path d={pathD} fill="none" stroke={dCol} strokeWidth={compact ? 2 : 3} strokeLinecap="round" clipPath={`url(#${id}u)`} /><path d={pathD} fill="none" stroke={rCol} strokeWidth={compact ? 2 : 3} strokeLinecap="round" clipPath={`url(#${id}d)`} /></g> : null}
       {end ? <circle cx={x(0)} cy={y(end.v)} r={compact ? 2.6 : 5} fill={end.v >= 0 ? dCol : rCol} stroke="#0a0711" strokeWidth="2" className="ptr-end" /> : null}
       {!compact && end ? <g>
         <text x={W - R + 10} y={y(end.v) + (avg != null && Math.abs(y(end.v) - y(-avg)) < 30 ? (y(end.v) <= y(-avg) ? -6 : 18) : 5)} className="ptr-end-l" fill={end.v >= 0 ? dCol : rCol}>{fmt(end.v, ind)}<tspan className="ptr-ax" x={W - R + 10} dy="13">poll trend</tspan></text>
-        {avg != null ? <g><path d={`M${x(0) + 1},${y(-avg)} l7,-5 v10 z`} fill="#e7b341" />
-          <text x={W - R + 10} y={y(-avg) + (Math.abs(y(end.v) - y(-avg)) < 30 ? (y(end.v) <= y(-avg) ? 26 : -22) : 4)} className="ptr-end-l" fill="#e7b341">{fmt(-avg, ind)}<tspan className="ptr-ax" x={W - R + 10} dy="13">average</tspan></text></g> : null}
+        {avg != null ? <g><path d={`M${x(0) + 1},${y(-avg)} l7,-5 v10 z`} fill="var(--accent)" />
+          <text x={W - R + 10} y={y(-avg) + (Math.abs(y(end.v) - y(-avg)) < 30 ? (y(end.v) <= y(-avg) ? 26 : -22) : 4)} className="ptr-end-l" fill="var(--accent)">{fmt(-avg, ind)}<tspan className="ptr-ax" x={W - R + 10} dy="13">average</tspan></text></g> : null}
       </g> : null}
     </svg>
   );

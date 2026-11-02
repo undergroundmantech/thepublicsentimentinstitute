@@ -594,7 +594,7 @@ function USMap({ moved, office, onPick }: { moved: Moved[]; office: Office; onPi
                 onMouseEnter={() => setHover(id)} onClick={() => m?.r.x && onPick(id)} style={{ cursor: m?.r.x ? "pointer" : "default" }} />;
             })}
             {Object.entries(geo.states).map(([st, d]) => <path key={st} d={d} fill="none" stroke="var(--bg)" strokeWidth={1.1} pointerEvents="none" />)}
-            {Object.entries(geo.districts).filter(([id]) => flipped(by.get(id))).map(([id, g]) => <path key={`f${id}`} d={g.d} fill="none" stroke="var(--gold)" strokeWidth={1.4} pointerEvents="none" />)}
+            {Object.entries(geo.districts).filter(([id]) => flipped(by.get(id))).map(([id, g]) => <path key={`f${id}`} d={g.d} fill="none" stroke="var(--map-select)" strokeWidth={1.2} strokeLinejoin="round" pointerEvents="none" />)}
           </>
         ) : (
           <>
@@ -603,7 +603,7 @@ function USMap({ moved, office, onPick }: { moved: Moved[]; office: Office; onPi
               return <path key={st} d={d} fill={fill(m)} stroke="var(--bg)" strokeWidth={0.9} className="sw-shape"
                 onMouseEnter={() => setHover(m ? id : `st-${st}`)} onClick={() => m?.r.x && onPick(id)} style={{ cursor: m?.r.x ? "pointer" : "default" }} />;
             })}
-            {Object.entries(geo.states).filter(([st]) => flipped(by.get(`${pre}-${st}`))).map(([st, d]) => <path key={`f${st}`} d={d} fill="none" stroke="var(--gold)" strokeWidth={2.4} pointerEvents="none" />)}
+            {Object.entries(geo.states).filter(([st]) => flipped(by.get(`${pre}-${st}`))).map(([st, d]) => <path key={`f${st}`} d={d} fill="none" stroke="var(--map-select)" strokeWidth={1.6} strokeLinejoin="round" pointerEvents="none" />)}
           </>
         )}
       </svg>

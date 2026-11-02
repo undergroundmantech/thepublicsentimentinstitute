@@ -399,7 +399,7 @@ function DBBar({ races, label }: { races: Race[]; label: string }) {
       </div>
       <div className="fc-seatbar-track" role="img" aria-label={`${d + unD} lean Democratic, ${t} toss ups, ${rr + unR} lean Republican`}>
         <span className="fc-seatbar-fill" style={{ width: `${((d + unD) / tot) * 100}%` }} />
-        <span className="fc-seatbar-fill" style={{ left: `${((d + unD) / tot) * 100}%`, width: `${(t / tot) * 100}%`, background: "var(--gold)" }} />
+        <span className="fc-seatbar-fill" style={{ left: `${((d + unD) / tot) * 100}%`, width: `${(t / tot) * 100}%`, background: "var(--toss)" }} />
       </div>
       <div className="fc-seatbar-note">Each race is called for the side its model margin favors, gold within 2 points{un ? `; ${un} ${un === 1 ? "has" : "have"} only one major party nominee` : ""}. Pick a state for its county forecast.</div>
     </div>
@@ -1846,7 +1846,7 @@ const CSS = `
 .fc-card .card-h h3 { font-family: var(--font-d); font-weight: 700; letter-spacing: -.02em; }
 .fc-page .seg.fc-segc { flex-shrink: 0; }
 .fc-page .seg.sm button { padding: 5px 11px; font-size: 11.5px; }
-.fc-page .seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.fc-page .seg button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .fc-body { margin: 0; max-width: 70ch; font-size: 14px; line-height: 1.6; color: var(--ink2); }
 .fc-foot { margin: 22px 0 0; font-size: 12.5px; color: var(--mute); }
 .fc-foot a { color: var(--ink2); text-decoration: underline; text-underline-offset: 3px; }
@@ -1977,7 +1977,7 @@ const CSS = `
   width: 100%; text-align: left; padding: 14px 10px; background: none; border: 0; border-top: 1px solid rgba(var(--fc-line-rgb),0.08); cursor: pointer; transition: background .15s ease; font-family: inherit; color: inherit; }
 .fc-tr:last-of-type { border-bottom: 1px solid rgba(var(--fc-line-rgb),0.08); }
 .fc-tr:not(.fc-th):hover { background: var(--glass2); }
-.fc-tr:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.fc-tr:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 .fc-td-name a { color: var(--hi); }
 .fc-td-name a:hover b { text-decoration: underline; text-underline-offset: 3px; }
 .fc-th { cursor: default; border-top: 0; padding-bottom: 8px; }
@@ -2127,7 +2127,7 @@ const CSS = `
 .fc-xt-tab.alt { letter-spacing: 0.14em; }
 .fc-xt-tab em { font-style: normal; font-size: 9.5px; font-weight: 700; color: rgba(var(--fc-ink-rgb),calc(0.42 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xt-tab.on em { color: rgba(var(--fc-bg-rgb),0.45); }
-.fc-xt-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.fc-xt-tab:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .fc-xt-panel { margin-top: 18px; }
 .fc-xt-one { padding: 6px 18px 10px; border: 1px solid rgba(var(--fc-line-rgb),0.08); border-radius: 14px; background: rgba(var(--fc-line-rgb),0.02); overflow-x: auto; }
 .fc-page .fc-xt-ph { margin: 0 0 6px; font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
@@ -2135,7 +2135,7 @@ const CSS = `
 table.fc-xt.lead-table { padding: 0; }
 table.fc-xt.lead-table tr.clickable { cursor: pointer; }
 table.fc-xt.lead-table tr.clickable:hover td { background: rgba(var(--fc-line-rgb),0.04); }
-table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 table.fc-xt td.pull { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 table.fc-xt.lead-table td.g { width: 26%; min-width: 150px; }
 table.fc-xt.lead-table td.sh, table.fc-xt.lead-table th.sh { text-align: left; padding-left: 22px; }
@@ -2207,7 +2207,6 @@ html.fc-black:not([data-theme="light"]) .opp.ambient .orbs { opacity: .22; }
   --glass: rgba(var(--line-rgb),.035); --glass2: rgba(var(--line-rgb),.06);
   --line: rgba(var(--line-rgb),.09); --line2: rgba(var(--line-rgb),.16);
   --ink: var(--ink); --ink2: var(--ink2); --mute: var(--mute); --mute2: var(--mute2); --hi: #ffffff;
-  --gold: #e7b341; --gold2: #bb831c;
   --dem: #3d7bff; --dem2: #7fa6ff; --dem3: #b9ccff;
   --gop: #ff3b5c; --gop2: #ff8399; --gop3: #ffbfcb;
   --ind: #b78cff; --toss: #e7b341; --win: #3ddc97;
