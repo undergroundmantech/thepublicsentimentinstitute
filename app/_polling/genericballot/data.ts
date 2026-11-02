@@ -10,7 +10,7 @@ export const GOLD_STANDARD_NAMES = [
 
 export const RAW_POLLS: Poll[] = [
   // ── Added Nov 1, 2026 late night ──
-  { pollster: "Atlas Intel", endDate: "2026-11-01", sampleSize: 2000, sampleType: "LV", results: { Democrats: 55.5, Republicans: 41.4 } },   // released Nov 1, sent by the user, D+14.1; n not given so 2000 placeholder
+  { pollster: "Atlas Intel", endDate: "2026-11-01", sampleSize: 3566, sampleType: "LV", results: { Democrats: 55.5, Republicans: 41.4 } },   // Oct 28 to Nov 1, sent by the user, D+14.1; 3,566 likely voters as listed by RealClearPolling
   // ── Added Nov 1, 2026 8 PM sweep ──
   { pollster: "NBC News", endDate: "2026-10-30", sampleSize: 1000, sampleType: "RV", results: { Democrats: 52, Republicans: 45 } },   // Hart Research and Public Opinion Strategies, Oct 28 to 30, registered voters, NBC final poll published Nov 1
   // ── Added Oct 31, 2026 8 PM sweep ──

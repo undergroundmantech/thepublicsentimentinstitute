@@ -85,6 +85,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 3292, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.8, "Michael Whatley (R)": 43.5, "Other": 2.1, "Undecided": 4.7}},
     {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-24", "endDate": "2026-10-25", "sampleSize": 722, "sampleType": "LV", "results": {"Roy Cooper (D)": 51.0, "Michael Whatley (R)": 43.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "NC-SEN-2026", "pollster": "High Point University/YouGov", "startDate": "2026-10-01", "endDate": "2026-10-20", "sampleSize": 620, "sampleType": "LV", "results": {"Roy Cooper (D)": 54.0, "Michael Whatley (R)": 40.0, "Other": 3.0, "Undecided": 4.0}},
-    {"raceId": "NC-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2130, "sampleType": "LV", "results": {"Roy Cooper (D)": 55.0, "Michael Whatley (R)": 44.0, "Other": 1.0, "Undecided": 1.0}}
+    {"raceId": "NC-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2130, "sampleType": "LV", "results": {"Roy Cooper (D)": 55.0, "Michael Whatley (R)": 44.0, "Other": 1.0, "Undecided": 1.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1041, "sampleType": "LV", "results": {"Roy Cooper (D)": 54.0, "Michael Whatley (R)": 45.0, "Other": 1.0}}
   ],
 };

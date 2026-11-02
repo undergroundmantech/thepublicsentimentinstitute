@@ -7,6 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 2, 2026 8 AM sweep ──
+  { pollster: "The Honest Poll", endDate: "2026-10-29", sampleSize: 1158, sampleType: "LV", results: { Approve: 38, Disapprove: 61 } },   // Oct 28 to 29, likely voters, from the pollster's Nov 1 release; registered voters 38 to 62 at 1,310
   // ── Added Nov 1, 2026 8 PM sweep ──
   { pollster: "NBC News", endDate: "2026-10-30", sampleSize: 1000, sampleType: "RV", results: { Approve: 40, Disapprove: 60 } },   // Hart Research and Public Opinion Strategies, Oct 28 to 30, registered voters, NBC final poll published Nov 1
   // ── Added Oct 31, 2026 evening ──
