@@ -17,6 +17,7 @@ import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import SectionNav from "@/app/components/opp/SectionNav";
 import { STORY_CSS, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
+import { raceHero } from "@/app/components/opp/heroOdds";
 import Ambient from "@/app/components/opp/Ambient";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
@@ -133,22 +134,21 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const sideCls = ind ? "i" : m < 0 ? "d" : "r";
 
   const leadColor = m < 0 ? (ind ? "#b78cff" : "#5b8fff") : "#ff4d6a";
-  const otherColor = m < 0 ? "#ff4d6a" : (ind ? "#b78cff" : "#5b8fff");
   const phrase = phraseFor(leadWin);
   const raceWhere = r.office === "senate" ? `${r.state}'s Senate seat` : r.office === "governor" ? `${r.state}'s governorship` : `${r.state}'s ${r.name.replace(`${r.state} `, "")} District`;
   const half = Math.abs((r.est.p90 ?? 0) - (r.est.p10 ?? 0)) / 4;
   const shareHalf = Math.max(0.5, half);
   const shareCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 3).map((c) => ({ name: c.name, party: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : c.party, pct: c.pct,
-    color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.party === "R" ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
+    color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.name === r.gop ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
   const pathSteps = [
     { label: "Partisan lean", m: r.stages.anchor, note: r.office === "house" ? "the district's 2024 presidential margin" : "the state's baseline" },
     { label: "Fundamentals", m: r.stages.fund, note: "approval, economy, candidates" },
     { label: "With polls", m: r.ev ? r.est.margin - r.ev.shift : r.stages.poll, note: r.pollAvg != null ? `average ${fmtM(r.pollAvg)}` : "no polls" },
     ...(r.ev ? [{ label: "With early vote", m: r.est.margin, note: "turnout so far" }] : []),
   ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
-  const heroCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 2).map((c) => ({ name: c.name, party: c.party,
-    label: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : "Independent", pct: c.pct, votes: c.votes ?? 0,
-    cls: (c.party === "D" ? "d" : c.party === "R" ? "r" : "i") as "d" | "r" | "i" }));
+  // The hero, built from the model's two simulated slots matched by exact name (see raceHero)
+  const hero = raceHero(r, m, ind);
+  const contested = hero.contested;
   // Oct 22 2026: endorsements and media attention from Watchdog, read at build time
   let endorse: { n: number; cands: { name: string; party: string | null; list: { by: string; byRole: string; src: string }[] }[] } | null = null;
   let mediaHere: { who: string; what: string; src: string }[] = [];
@@ -195,11 +195,18 @@ export default async function Page({ params }: { params: Promise<{ state: string
           {r.pollAvg != null && <span>Polls <b className="mono">{fmtMS(r.pollAvg, ind)}</b></span>}
           <span>Updated <b>{updated}</b></span>
         </>}
-        cands={heroCands.map((c) => ({ name: c.name, label: c.label, pct: c.pct, votes: c.votes, color: c.cls === "d" ? "#5b8fff" : c.cls === "r" ? "#ff4d6a" : "#b78cff" }))}
+        facts={[
+          { k: "Forecast rating", v: <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span> },
+          { k: "Expected margin", v: <span className="mono">{contested ? fmtM(m, ind) : "Uncontested"}</span> },
+          ...(contested ? [{ k: "80% range", v: <span className="mono">{fmtMS(r.est.p10, ind)} to {fmtMS(r.est.p90, ind)}</span> }] : []),
+          { k: "Polling average", v: <span className="mono">{r.pollAvg != null ? fmtMS(r.pollAvg, ind) : "No polls"}</span> },
+          { k: "Updated", v: updated },
+        ]}
+        cands={hero.cands} others={hero.others} odds={hero.odds}
+        note={contested ? undefined : "Uncontested: no win probability is simulated for this seat"}
         paths={paths} fills={fills} mapLabel={`${officeTitle} drawn in pixels, shaded by the forecast`}
         labels={Object.fromEntries(Object.entries(tips).map(([id, t]) => { const row = t.rows.find((x) => x[0] === "Simulated margin" || x[0] === "Model"); const v = String(row?.[1] ?? ""); return [id, { t: t.title, s: row ? `${row[0]} ${v}` : "", c: v.startsWith("R") ? "#ff8399" : ind ? "#b78cff" : "#7fa6ff" }]; }))}
-        win={Math.abs(m) < 99 ? leadWin : null} focus={r.office === "house" ? r.id : undefined}
-        lead={{ name: lastName(lead), color: leadColor }} other={{ name: lastName(m < 0 ? r.gop : r.dem), color: otherColor }} />
+        focus={r.office === "house" ? r.id : undefined} />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">

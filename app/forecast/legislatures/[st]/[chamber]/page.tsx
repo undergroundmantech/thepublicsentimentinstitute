@@ -11,6 +11,7 @@ import path from "node:path";
 import "../../legislatures.css";
 import { STORY_CSS, ShareBars, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
+import { chamberHero } from "@/app/components/opp/heroOdds";
 import Ambient from "@/app/components/opp/Ambient";
 import SectionNav from "@/app/components/opp/SectionNav";
 import { FX_CSS } from "@/app/components/opp/fxCss";
@@ -78,6 +79,8 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
   }
   const vt = c.votes && c.votes.total > 0 ? c.votes : null;
   const half = Math.max(0.6, ((c.p90 - c.p10) / Math.max(1, c.seats)) * 25);
+  // The hero: D, R and tie control chances as published, seats and vote or seat share labelled (see chamberHero)
+  const hero = chamberHero(c, DEM, GOP);
   const navItems = [
     { id: "map", label: "District map" }, { id: "seats", label: "Seats" }, ...(vt ? [{ id: "vote", label: "Vote share" }] : []),
     ...(c.env.genericPolls.length ? [{ id: "polls", label: "Polling" }] : []), { id: "how", label: "How we got here" },
@@ -104,10 +107,18 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
           <span>Seats <b className="mono">{c.seats}</b></span><span>On the ballot <b className="mono">{c.up}</b></span>
           <span>Majority <b className="mono">{c.majority}</b></span><span>Updated <b>{updated}</b></span>
         </>}
-        cands={[{ name: "Democrats", label: `Median ${c.median} seats`, pct: vt ? (100 * vt.dem) / vt.total : (100 * c.demSeats) / c.seats, votes: vt?.dem ?? 0, color: DEM },
-          { name: "Republicans", label: `Median ${c.seats - c.median} seats`, pct: vt ? (100 * vt.rep) / vt.total : (100 * c.gopSeats) / c.seats, votes: vt?.rep ?? 0, color: GOP }]}
+        facts={[
+          { k: "Forecast rating", v: <span className={`pill ${band === "toss" ? "t" : band.endsWith("D") ? "d" : "r"}`}>{BAND_LABEL[band]}</span> },
+          { k: "Majority", v: <span className="mono">{c.majority} of {c.seats}</span> },
+          { k: "On the ballot", v: <span className="mono">{c.up}</span> },
+          { k: "Democratic seats, 80% range", v: <span className="mono">{c.p10} to {c.p90}</span> },
+          { k: "Updated", v: updated },
+        ]}
+        cands={hero.cands}
         paths={stagePaths} fills={stageFills} labels={stageLabels} mapLabel={`${c.name} districts drawn in pixels, shaded by each seat's forecast`}
-        win={favP} lead={{ name: favWord, color: fav === "D" ? DEM : GOP }} other={{ name: fav === "D" ? "Republicans" : "Democrats", color: fav === "D" ? GOP : DEM }} />
+        odds={hero.odds}
+        probLabel="Chance of control"
+        links={[...(c.env.genericPolls.length ? [{ label: "Polling", href: "#polls" }] : []), { label: "How the model works", href: "/forecast/methodology" }]} />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">

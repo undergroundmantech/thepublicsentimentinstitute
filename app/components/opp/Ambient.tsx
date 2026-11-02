@@ -1,12 +1,15 @@
 "use client";
 // A fixed layer of slow pixel dust behind the race pages. It drifts upward, leans a little toward the pointer,
-// pauses when the tab is hidden, and is a single still frame under reduced motion.
+// pauses when the tab is hidden, and is a single still frame under reduced motion. Theme mode only.
 import { useEffect, useRef } from "react";
 import { canvasDpr, isLite } from "@/app/lib/lite";
+import { useSiteMode } from "@/app/lib/useSiteTheme";
 
 export default function Ambient({ tint = "#b8a4ff" }: { tint?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const themed = useSiteMode() === "themed";
   useEffect(() => {
+    if (!themed) return;
     const cv = ref.current; if (!cv) return;
     const ctx = cv.getContext("2d"); if (!ctx) return;
     // light rendering draws one still frame, like reduced motion
@@ -40,6 +43,6 @@ export default function Ambient({ tint = "#b8a4ff" }: { tint?: string }) {
     onResize();
     window.addEventListener("resize", onResize); window.addEventListener("pointermove", onMove); document.addEventListener("visibilitychange", onVis);
     return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); window.removeEventListener("pointermove", onMove); document.removeEventListener("visibilitychange", onVis); };
-  }, [tint]);
-  return <canvas ref={ref} className="amb-cv" aria-hidden="true" />;
+  }, [tint, themed]);
+  return themed ? <canvas ref={ref} className="amb-cv" aria-hidden="true" /> : null;
 }
