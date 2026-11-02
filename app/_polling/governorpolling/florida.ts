@@ -2,7 +2,7 @@
 // Florida — 2026 Governor: David Jolly (D) vs. Byron Donalds (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-30. Full public poll list as of 2026-09-28.
+// ballot were dropped. Newest poll: 2026-10-31. Full public poll list as of 2026-09-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -79,6 +79,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-28", "endDate": "2026-10-29", "sampleSize": 1200, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 49.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "FL-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 1129, "sampleType": "LV", "results": {"David Jolly (D)": 44.2, "Byron Donalds (R)": 47.4, "Undecided": 8.4}},
     {"raceId": "FL-GOV-2026", "pollster": "Political Matrix/The Listener Group", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 500, "sampleType": "LV", "results": {"David Jolly (D)": 38.8, "Byron Donalds (R)": 40.3, "Undecided": 20.9}},
-    {"raceId": "FL-GOV-2026", "pollster": "Stetson University", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 859, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 51.0, "Undecided": 4.0}}
+    {"raceId": "FL-GOV-2026", "pollster": "Stetson University", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 859, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 51.0, "Undecided": 4.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-30", "endDate": "2026-10-31", "sampleSize": 2898, "sampleType": "LV", "results": {"David Jolly (D)": 46.0, "Byron Donalds (R)": 47.0, "Other": 2.0, "Undecided": 4.0}}
   ],
 };

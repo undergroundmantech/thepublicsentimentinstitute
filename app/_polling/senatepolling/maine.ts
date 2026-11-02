@@ -67,6 +67,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-26", "sampleSize": 783, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 45.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-27", "sampleSize": 652, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 45.0, "Other": 1.0, "Undecided": 4.0}},
     {"raceId": "ME-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1503, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 47.0}},
-    {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 729, "sampleType": "LV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 45.0, "Undecided": 4.0}}
+    {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 729, "sampleType": "LV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 45.0, "Undecided": 4.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1654, "sampleType": "LV", "results": {"Troy Jackson (D)": 54.0, "Susan Collins (R)": 45.0, "Other": 1.0}}
   ],
 };
