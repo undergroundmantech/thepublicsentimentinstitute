@@ -1,8 +1,10 @@
 // The race page opener, staged like a show: a dark band, marquee bulbs on the race name, the headline, then the
 // state as floating pixel art under a spotlight with the two candidates in the wings, and the odds below as
-// 100 pixel nights. Shared by the main race pages and the statewide office pages.
+// 100 pixel nights. Shared by the main race pages and the statewide office pages. Pro Dark and Pro Light get
+// ProHero instead, built here from the same numbers; CSS on <html data-mode> shows exactly one of the two.
 import React from "react";
 import PixelStage, { type StageLabel } from "./PixelStage";
+import ProHero, { PRO_HERO_CSS, type ProCand } from "./ProHero";
 import { Pointy } from "@/app/components/home/Mascot";
 
 export type StageCand = { name: string; label: string; pct: number; votes: number; color: string };
@@ -123,14 +125,26 @@ function Wing({ c, side }: { c: StageCand; side: "a" | "b" }) {
   );
 }
 
-export default function StageHero({ eyebrow, title, lede, pills, cands, paths, fills, labels, win, lead, other, mapLabel, focus }: {
+const DEFAULT_LINKS = [{ label: "Polling", href: "#polls" }, { label: "How the model works", href: "/forecast/methodology" }];
+
+export default function StageHero({ eyebrow, title, lede, pills, cands, paths, fills, labels, win, lead, other, mapLabel, focus, links = DEFAULT_LINKS, probLabel = "Chance of winning" }: {
   eyebrow: string; title: React.ReactNode; lede: React.ReactNode; pills: React.ReactNode;
   cands: StageCand[]; paths: { id: string; d: string }[]; fills: Record<string, string>; labels?: Record<string, StageLabel>;
   win: number | null; lead: { name: string; color: string }; other: { name: string; color: string }; mapLabel: string; focus?: string;
+  links?: { label: string; href: string }[]; probLabel?: string;
 }) {
   const n = win == null ? 0 : Math.round(win * 100);
   const verdict = win == null ? "" : `${lead.name} ${win >= 0.95 ? "all but certain" : win >= 0.85 ? "very likely" : win >= 0.65 ? "favored" : "slightly favored"}`;
+  // Which card is the leader: its color when that is unique, else its name (pages pass the last name for lead).
+  const pair = cands.slice(0, 2);
+  const byColor = pair.filter((c) => c.color === lead.color);
+  const leadIdx = byColor.length === 1 ? pair.indexOf(byColor[0])
+    : pair.findIndex((c) => c.name === lead.name || c.name.split(/\s+/).pop() === lead.name);
+  const proCands: ProCand[] = pair.map((c, i) => ({ ...c, chance: win == null || leadIdx < 0 ? null : i === leadIdx ? n : 100 - n }));
   return (
+    <>
+    <style>{PRO_HERO_CSS}</style>
+    <ProHero eyebrow={eyebrow} title={title} lede={lede} pills={pills} cands={proCands} verdict={verdict} probLabel={probLabel} links={links} />
     <header className="sg" aria-label="Race overview">
       <style>{STAGE_CSS}</style>
       <Pointy className="cam-sg" pose="wave" prop="clipboard" size={96} look={-1} flip />
@@ -159,5 +173,6 @@ export default function StageHero({ eyebrow, title, lede, pills, cands, paths, f
         </div>
       ) : null}
     </header>
+    </>
   );
 }

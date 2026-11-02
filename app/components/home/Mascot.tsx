@@ -113,13 +113,13 @@ export default function Mascot({ size = 96, walking, pose, prop = "clipboard", l
 export const MASCOT_CSS = "";
 
 // Pointy as a page cameo: the mascot plus an optional speech bubble, placed by the parent with a class.
-// On the home page Pointy is Theme only: in Pro Dark and Pro Light every cameo there (page, footer, video promo)
-// renders nothing. The server and first client render use Pro Dark, so a Pro home page never flashes him; Theme shows
-// him once the mode is read after mount. Other pages are unchanged.
+// In Pro Dark and Pro Light Pointy is decoration-free: on the home page, any cameo without a speech bubble, and any
+// cameo marked "quip" (footer, race heroes, video promo) render nothing. The server and first client render use Pro
+// Dark, so Pro never flashes him; Theme shows him once the mode is read after mount.
 export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, detective, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; detective?: boolean; className?: string; flip?: boolean }) {
   const themed = useSiteMode() === "themed";
   const home = usePathname() === "/";
-  if (home && !themed) return null;
+  if (!themed && (home || !say || className?.split(/\s+/).includes("quip"))) return null;
   return (
     <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} aria-hidden={say ? undefined : true}>
       {say ? <div className="pty-say">{say}</div> : null}

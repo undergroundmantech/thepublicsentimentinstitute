@@ -106,7 +106,9 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
         cands={[{ name: "Democrats", label: `Median ${c.median} seats`, pct: vt ? (100 * vt.dem) / vt.total : (100 * c.demSeats) / c.seats, votes: vt?.dem ?? 0, color: DEM },
           { name: "Republicans", label: `Median ${c.seats - c.median} seats`, pct: vt ? (100 * vt.rep) / vt.total : (100 * c.gopSeats) / c.seats, votes: vt?.rep ?? 0, color: GOP }]}
         paths={stagePaths} fills={stageFills} labels={stageLabels} mapLabel={`${c.name} districts drawn in pixels, shaded by each seat's forecast`}
-        win={favP} lead={{ name: favWord, color: fav === "D" ? DEM : GOP }} other={{ name: fav === "D" ? "Republicans" : "Democrats", color: fav === "D" ? GOP : DEM }} />
+        win={favP} lead={{ name: favWord, color: fav === "D" ? DEM : GOP }} other={{ name: fav === "D" ? "Republicans" : "Democrats", color: fav === "D" ? GOP : DEM }}
+        probLabel="Chance of control"
+        links={[...(c.env.genericPolls.length ? [{ label: "Polling", href: "#polls" }] : []), { label: "How the model works", href: "/forecast/methodology" }]} />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
