@@ -207,7 +207,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
           <Link href={forecastHref(r)}>The forecast page</Link>
           {!embedded ? <><Link href={`/results/2026/${stSlug}`}>Every {STN[r.st]} result</Link><Link href="/results/2026">National dashboard</Link><Link href="/results/monitor">Situation monitor</Link></> : null}
         </nav>
-        {live.error && !c ? <p className="nd-err">{live.error}</p> : null}
+        {live.error ? <p className="nd-err" role="status">{live.error}</p> : null}
       </section>
 
       <div className="dashboard-grid">

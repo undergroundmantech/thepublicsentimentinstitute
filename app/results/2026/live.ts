@@ -44,10 +44,15 @@ export const TYPE_SETS: Record<string, string[]> = {
     "Superintendent of Public Instruction", "Superintendent", "Insurance Commissioner", "Labor Commissioner", "State Mine Inspector", "Public Service Commissioner",
     "Public Service Commission", "Railroad Commissioner", "State Board of Education", "Supreme Court", "Judicial"],
 };
-export async function civicSearch(type: string, signal?: AbortSignal): Promise<CRace[]> {
+/** One race type's search, with the time the proxy read it from civicAPI (null if the proxy did not say). */
+export async function civicRead(type: string, signal?: AbortSignal): Promise<{ races: CRace[]; at: number | null }> {
   const r = await fetch(`/api/civic/search?type=${encodeURIComponent(type)}`, { signal, cache: "no-store" });
   if (!r.ok) throw new Error(`search ${r.status}`);
-  return ((await r.json()).races || []) as CRace[];
+  const j = await r.json(); const at = j.at ? Date.parse(j.at) : NaN;
+  return { races: (j.races || []) as CRace[], at: Number.isFinite(at) ? at : null };
+}
+export async function civicSearch(type: string, signal?: AbortSignal): Promise<CRace[]> {
+  return (await civicRead(type, signal)).races;
 }
 export async function civicRace(id: number, signal?: AbortSignal): Promise<CDetail> {
   const r = await fetch(`/api/civic/race/${id}`, { signal, cache: "no-store" });
