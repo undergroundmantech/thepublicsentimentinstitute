@@ -347,3 +347,12 @@ html[data-theme="light"] .mon-office button { color: var(--ink2); background: rg
 html[data-theme="light"] .mon-office button[aria-pressed="true"] { color: var(--on-accent); background: var(--gold-fill); }
 html[data-theme="light"] .mon-row .lv.ex { color: #9a94ae; } html[data-theme="light"] .mon-row:not(:has(.ex)) .nm { color: var(--ink); }
 @media (max-width: 1100px) { .mon-office { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; } .mon-jump select { max-width: 160px; } }
+
+/* Nov 3: an open race desk reads top to bottom in page flow at every width: header, the map, then the desk's results,
+   forecast and counties, each across the full width. The monitor is the whole page, so it carries no site footer. */
+:root:has(.mon) footer.opp { display: none; }
+.mon.desk-on { height: auto; overflow: visible; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "top" "map" "desk"; }
+.mon.desk-on .mon-map { height: clamp(320px, 50vh, 720px); min-height: 0; border-bottom: 1px solid rgba(255, 255, 255, .09); }
+.mon.desk-on .mon-desk { position: relative; inset: auto; z-index: 1; width: auto; overflow: visible; border-left: 0; box-shadow: none; animation: none; }
+.mon-desk:focus { outline: none; }
+html[data-theme="light"] .mon.desk-on .mon-map { border-bottom-color: rgba(17, 0, 25, .1); }

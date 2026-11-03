@@ -96,6 +96,17 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   useEffect(() => { if (!desk) return; const r = (ix?.races ?? []).find((x) => x.id === desk); if (r) fly.current(r.st); }, [desk]); // eslint-disable-line react-hooks/exhaustive-deps
   const escRef = useRef<() => void>(() => {});
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === "Escape") escRef.current(); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
+  // the desk opens inline under the map: focus moves into it, and back to whatever opened it when it closes
+  const deskEl = useRef<HTMLElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+  // with a desk open the page scrolls past the map, so a plain wheel scrolls; ctrl or pinch still zooms
+  const deskOpen = useRef(false);
+  useEffect(() => { deskOpen.current = !!desk; }, [desk]);
+  const openDesk = (id: string) => { if (!desk) opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setDesk(id); };
+  useEffect(() => {
+    if (desk) deskEl.current?.focus({ preventScroll: true });
+    else if (opener.current) { if (opener.current.isConnected) opener.current.focus({ preventScroll: true }); opener.current = null; }
+  }, [desk]);
 
   const allMode = useMemo(() => (ix?.races ?? []).filter((r) => r.k === mode), [ix, mode]);
   const officeCounts = useMemo(() => { const m: Record<string, number> = {}; if (mode === "state") for (const r of allMode) { const g = officeGroup(r.off); m[g] = (m[g] ?? 0) + 1; } return m; }, [allMode, mode]);
@@ -417,7 +428,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       view.current.target = { rot: [-ll[0], -ll[1], 0], k: Math.max(1.6, Math.min(14, 60 / span)) }; setZoomK(view.current.target.k);
       setSel(st); setPick(null); running = false; cancelAnimationFrame(raf); kick();
     };
-    const wheel = (e: WheelEvent) => { e.preventDefault(); autoFit.current = false; const k = Math.max(0.7, Math.min(16, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); running = false; cancelAnimationFrame(raf); kick(); };
+    const wheel = (e: WheelEvent) => { if (deskOpen.current && !e.ctrlKey && !e.metaKey) return; e.preventDefault(); autoFit.current = false; const k = Math.max(0.7, Math.min(16, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); running = false; cancelAnimationFrame(raf); kick(); };
     const leave = () => { hovRef.current = null; setHov(null); running = false; cancelAnimationFrame(raf); kick(); };
     box.addEventListener("pointerdown", down); box.addEventListener("pointermove", move); box.addEventListener("pointerup", up); box.addEventListener("wheel", wheel, { passive: false }); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); box.removeEventListener("pointerdown", down); box.removeEventListener("pointermove", move); box.removeEventListener("pointerup", up); box.removeEventListener("wheel", wheel); box.removeEventListener("pointerleave", leave); };
@@ -468,7 +479,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const e = expM(r);
     return (
       <li key={r.id}>
-        <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => setDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
+        <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => openDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
           <span className="nm">{label(r, inState)}</span>
           {lm == null
             ? <span className={`lv ex ${e == null ? "" : e < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{e == null ? "" : fmtM(e, r.k, isInd(r))}</span>
@@ -581,7 +592,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       </div>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
-        {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
+        {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => openDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
         {sel ? (
           <>
             <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
@@ -632,9 +643,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       })() : null}
 
       {desk ? (
-        <div className="mon-desk" role="dialog" aria-modal="true" aria-label="Race results desk">
+        <section className="mon-desk" ref={deskEl} tabIndex={-1} aria-label="Race results desk">
           <NightDesk id={desk} embedded onClose={() => setDesk(null)} />
-        </div>
+        </section>
       ) : null}
       <noscript><p>Turn on JavaScript to use the monitor. <Link href="/results/2026">Every race as a list</Link>.</p></noscript>
     </div>

@@ -343,7 +343,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
 
       {exp && vb ? (
         <section id="nd-counties" className="county card" aria-label={`${STN[r.st]} county map and county by county detail`}>
-          {embedded ? <p className="nd-mapnote">The globe beside this desk shows {STN[r.st]}&apos;s counties for this race: hover a county there for its expected and counted vote.</p> : null}
+          {embedded ? <p className="nd-mapnote">The globe above this desk shows {STN[r.st]}&apos;s counties for this race: hover a county there for its expected and counted vote.</p> : null}
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={view === "forecast" ? "on" : ""} onClick={() => setView("forecast")}>forecast</button>
@@ -481,6 +481,15 @@ const ND_CSS = `
 .desk.nd .nd-mapnote{display:none;margin:0 0 12px;font:600 12.5px var(--font-b);color:var(--mute)}
 /* beside the monitor's globe, which then shows this race's counties, the desk keeps its county table and drops its own map */
 @media(min-width:1101px){.mon .desk.nd.nd-embed #nd-counties>.county-head,.mon .desk.nd.nd-embed #nd-counties>.rd-map,.mon .desk.nd.nd-embed #nd-counties>.rd-map-legend{display:none}.mon .desk.nd.nd-embed .nd-mapnote{display:block}}
+/* under the monitor's map the desk runs full width: reported results, then the forecast snapshot, each its own band */
+.desk.nd.nd-embed .dashboard-grid{grid-template-columns:minmax(0,1fr)}
+.desk.nd.nd-embed .dashboard-grid>.span-3{grid-column:1/-1}
+@media(min-width:1101px){
+.desk.nd.nd-embed .topline-columns,.desk.nd.nd-embed .topline-row-top{grid-template-columns:minmax(0,1fr) 150px 110px}
+.desk.nd.nd-embed #nd-forecast:has(>.projection-zone){display:grid;grid-template-columns:minmax(380px,5fr) minmax(0,7fr)}
+.desk.nd.nd-embed #nd-forecast:has(>.projection-zone)>.snapshot{border-bottom:0;border-right:1px solid var(--hairline)}
+.desk.nd.nd-embed #nd-forecast:has(>.projection-zone)>.projection-zone{border-top:0}
+.desk.nd.nd-embed #nd-forecast>:not(.snapshot):not(.projection-zone){grid-column:1/-1}}
 /* breadcrumb back to the national dashboard, the category and the state */
 .desk.nd .nd-crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:600 12px var(--font-b);color:var(--mute);margin:0 0 14px}
 .desk.nd .nd-crumbs a{color:var(--ink2);text-decoration:none}.desk.nd .nd-crumbs a:hover{color:var(--hi)}
