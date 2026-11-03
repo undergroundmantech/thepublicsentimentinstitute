@@ -1,5 +1,5 @@
-// The GitHub Actions flight recorder: one complete, idempotent snapshot per 10-minute UTC slot, committed to an
-// archive branch (or repository) by .github/workflows/flight-recorder.yml. A redundant, independent recorder: it does not
+// The GitHub Actions flight recorder: one complete, idempotent snapshot per UTC slot (10 minutes by default; 30 seconds
+// to 10 minutes when configured), committed to an archive branch (or repository) by .github/workflows/flight-recorder.yml. A redundant, independent recorder: it does not
 // replace the Vercel capture path and it changes no official forecast value.
 //
 // Each slot writes into an ObjectStore rooted in a checkout of the archive:
@@ -26,20 +26,28 @@ export const HEALTH_KEY = "heads/gh-recorder.json";
 const SLOT_MS = SLOT_MINUTES * 60_000;
 const MAX_PUBLISHED_BYTES = 16 * 1024 * 1024;
 
-/** The slot an instant falls in: the UTC ten-minute floor. */
-export const slotOf = (d: Date) => new Date(Math.floor(d.getTime() / SLOT_MS) * SLOT_MS).toISOString();
+/** Allowed slot lengths in seconds: each divides ten minutes, so every 10-minute slot is also a slot at any length. */
+export const SLOT_SECONDS_ALLOWED = [30, 60, 120, 300, 600] as const;
+export function slotMsFrom(seconds: string | number | undefined): number {
+  const n = Number(seconds);
+  return (SLOT_SECONDS_ALLOWED as readonly number[]).includes(n) ? n * 1000 : SLOT_MS;
+}
+
+/** The slot an instant falls in: the UTC floor at the slot length (ten minutes by default). */
+export const slotOf = (d: Date, slotMs = SLOT_MS) => new Date(Math.floor(d.getTime() / slotMs) * slotMs).toISOString();
 export const slotKey = (slot: string) => `slots/${slot.slice(0, 10)}/${compactTime(slot)}.json`;
 
 /** Slots strictly between two slots, oldest first. */
-export function slotsBetween(fromSlot: string, toSlot: string, cap = 2_000): string[] {
+export function slotsBetween(fromSlot: string, toSlot: string, cap = 2_000, slotMs = SLOT_MS): string[] {
   const out: string[] = [];
-  for (let t = Date.parse(fromSlot) + SLOT_MS; t < Date.parse(toSlot) && out.length < cap; t += SLOT_MS) out.push(new Date(t).toISOString());
+  const first = Math.floor(Date.parse(fromSlot) / slotMs) * slotMs + slotMs;
+  for (let t = first; t < Date.parse(toSlot) && out.length < cap; t += slotMs) out.push(new Date(t).toISOString());
   return out;
 }
 
 /** The capture windows with every live window polled each slot and every tracked race read in full. */
-export function recorderWindows(until?: string): Window[] {
-  return defaultWindows(until).map((w) => (w.intervalMinutes === null ? w : { ...w, intervalMinutes: SLOT_MINUTES, details: "ALL" as const }));
+export function recorderWindows(until?: string, slotMs = SLOT_MS): Window[] {
+  return defaultWindows(until).map((w) => (w.intervalMinutes === null ? w : { ...w, intervalMinutes: slotMs / 60_000, details: "ALL" as const }));
 }
 
 // ---- published layer ---------------------------------------------------------------------------------------------------
@@ -144,6 +152,8 @@ export interface SlotDeps {
   siteBase: string | null;
   context: SlotContext;
   newId?: () => string;
+  /** Slot length in milliseconds; ten minutes when absent. */
+  slotMs?: number;
 }
 
 export interface CheckpointCheck { key: string; present: boolean; complete: boolean | null; rawStatus: string | null; counts: Record<string, number> | null; calculated: number; incompleteReasons: string[]; problems: string[] }
@@ -152,6 +162,8 @@ export interface SlotRecord {
   schema: typeof SLOT_SCHEMA;
   electionId: string;
   slot: string;
+  /** Slot length in seconds. Absent in records written before slot lengths were configurable (600). */
+  slotSeconds?: number;
   startedAt: string;
   finishedAt: string;
   /** Seconds between the slot's start and the job's start. GitHub's scheduler is best-effort; this shows by how much. */
@@ -205,9 +217,10 @@ export async function checkCheckpoint(store: ObjectStore, key: string): Promise<
 }
 
 export async function runSlot(deps: SlotDeps): Promise<{ outcome: SlotOutcome; slot: string; key: string; record: SlotRecord | null }> {
+  const slotMs = deps.slotMs ?? SLOT_MS;
   const started = deps.now();
   const startedAt = started.toISOString();
-  const slot = slotOf(started);
+  const slot = slotOf(started, slotMs);
   const key = slotKey(slot);
   if (await deps.store.get(key)) return { outcome: "ALREADY_RECORDED", slot, key, record: null };
   const plan = planTick(startedAt, { lastPollAt: null, quietPolls: 0 }, deps.config.windows);
@@ -216,7 +229,9 @@ export async function runSlot(deps: SlotDeps): Promise<{ outcome: SlotOutcome; s
   const store = new TrackingStore(deps.store);
   const health = await readHealth(deps.store);
   const prev = await previousSlot(deps.store, slot, health);
-  const missedSlots = prev ? slotsBetween(prev, slot) : [];
+  // across a change of slot length, misses are counted at the coarser length, so the change itself is not a miss
+  const prevSeconds = prev ? (parseJson(await deps.store.get(slotKey(prev))) as SlotRecord | null)?.slotSeconds : undefined;
+  const missedSlots = prev ? slotsBetween(prev, slot, 2_000, Math.max(slotMs, slotMsFrom(prevSeconds))) : [];
 
   let run: SlotRecord["run"] = null, checkpoint: CheckpointCheck | null = null, ok = false;
   try {
@@ -240,7 +255,7 @@ export async function runSlot(deps: SlotDeps): Promise<{ outcome: SlotOutcome; s
   const status: SlotStatus = !ok ? "FAILED" : degraded ? "PARTIAL" : "RECORDED";
   const finishedAt = deps.now().toISOString();
   const record = withChecksum<Omit<SlotRecord, "checksum">>({
-    schema: SLOT_SCHEMA, electionId: deps.config.electionId, slot, startedAt, finishedAt, delaySeconds: Math.round((started.getTime() - Date.parse(slot)) / 1000),
+    schema: SLOT_SCHEMA, electionId: deps.config.electionId, slot, slotSeconds: slotMs / 1000, startedAt, finishedAt, delaySeconds: Math.round((started.getTime() - Date.parse(slot)) / 1000),
     context: deps.context, phase: plan.phase, status, previousSlot: prev, missedSlots, run, checkpoint, published,
     files: [...store.created].sort((a, b) => a.key.localeCompare(b.key)), heads: [...store.heads].sort(),
   });

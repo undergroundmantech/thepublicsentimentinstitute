@@ -50,9 +50,34 @@ The RAW, CALCULATED and PUBLISHED layers are kept separate.
 ```bash
 R="node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs scripts/recorder/gh-recorder.ts"
 $R capture --store <archive-dir>
+$R session --store <archive-dir> --until 2026-11-04T12:00:00Z [--max-minutes 345] [--git --branch <archive-branch>]   # RECORDER_SLOT_SECONDS=30
 $R verify  --store <archive-dir> [--from 2026-11-03 --to 2026-11-12]   # exit 1 on any problem
 $R restore --store <archive-dir> --at 2026-11-04T02:15:00Z --race sen-GA
 ```
+
+## 30-second session (election night)
+
+Cron cannot run more often than every 5 minutes, and GitHub often runs it late. For 30-second checkpoints, start one long run with `session` mode:
+
+```bash
+gh workflow run flight-recorder.yml --ref main -f mode=session -f until=2026-11-04T12:00:00Z -f slot_seconds=30
+```
+
+- **Slots.** One process records a slot at every 30-second UTC boundary, then commits and pushes each slot. Slots that finish during a push go into the next commit.
+- **Run length.**
+  - A GitHub-hosted job stops at 6 hours, so each run records for up to 345 minutes.
+  - It then dispatches the next run with the same inputs, and that run continues the archive.
+  - A run that ends within 30 minutes of starting does not hand off.
+  - An `until` that is missing, already past, or more than 48 hours away is refused.
+- **Gaps.**
+  - Each handoff loses about a minute (2–4 slots).
+  - A slot that is still capturing at the next boundary makes that boundary a miss. The first slot of a run takes about 40 s.
+  - Every miss is named in `missedSlots` of the next slot record.
+- **Measured locally against live civicAPI on 2026-11-03:**
+  - 506 races; first slot 42 s, then 12–16 s per slot, 0 errors.
+  - About 4 MB of new files per slot even when nothing changed (the checkpoint and its calc head).
+  - After `git gc` the archive kept about 150 KB per extra slot.
+- **Stopping.** Cancel the running workflow run. The archive keeps every slot already pushed.
 
 ## Verified on 2026-10-31 (real civicAPI and production)
 

@@ -6,7 +6,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { FsStore, MemoryStore, type ObjectStore } from "../../app/lib/intelligence/captureStore";
-import { readHealth, recorderWindows, restoreAt, runSlot, slotKey, slotOf, slotsBetween, verifyArchive, type FetchPublished, type SlotDeps } from "../../app/lib/intelligence/ghRecorder";
+import { readHealth, recorderWindows, restoreAt, runSlot, slotKey, slotMsFrom, slotOf, slotsBetween, verifyArchive, type FetchPublished, type SlotDeps } from "../../app/lib/intelligence/ghRecorder";
 import { Clock, FakeProvider, RACES, sen, testConfig } from "./captureFixtures";
 
 const T0 = Date.parse("2026-11-04T01:03:00Z");
@@ -20,13 +20,13 @@ function published(mode: { status?: number; body?: string; down?: boolean } = {}
   };
 }
 
-function rig(store: ObjectStore = new MemoryStore(), t = T0) {
+function rig(store: ObjectStore = new MemoryStore(), t = T0, slotMs?: number) {
   const clock = new Clock(t);
   const provider = new FakeProvider(clock);
   let n = 0;
   let pub = published();
   const deps = (): SlotDeps => ({
-    store, fetchText: provider.fetchText, fetchPublished: pub, now: clock.now, races: RACES, config: testConfig({ windows: recorderWindows() }),
+    store, fetchText: provider.fetchText, fetchPublished: pub, now: clock.now, races: RACES, config: testConfig({ windows: recorderWindows(undefined, slotMs) }), slotMs,
     archive: { now: clock.now, expFor: async () => null }, siteBase: "https://example.test", newId: () => `r${++n}`,
     context: { trigger: "SCHEDULE", githubRunId: "1", githubRunAttempt: "1", codeSha: "abc" },
   });
@@ -162,4 +162,38 @@ test("after the capture window ends, scheduled runs record nothing", async () =>
   const r = rig(new MemoryStore(), Date.parse("2026-12-01T00:05:00Z"));
   assert.equal((await r.slot()).outcome, "WINDOW_ENDED");
   assert.deepEqual(await r.store.list(""), []);
+});
+
+test("slot lengths: only divisors of ten minutes are accepted, anything else is ten minutes", () => {
+  assert.equal(slotMsFrom("30"), 30_000);
+  assert.equal(slotMsFrom(600), 600_000);
+  for (const bad of [undefined, "", "0", "-30", "45", "7", "abc", "1200"]) assert.equal(slotMsFrom(bad), 600_000, String(bad));
+  assert.equal(slotOf(new Date("2026-11-04T00:00:59.999Z"), 30_000), "2026-11-04T00:00:30.000Z");
+  assert.equal(slotKey("2026-11-04T00:00:30.000Z"), "slots/2026-11-04/20261104T000030.000Z.json");
+  assert.deepEqual(slotsBetween("2026-11-04T00:00:00.000Z", "2026-11-04T00:02:00.000Z", 2_000, 30_000),
+    ["2026-11-04T00:00:30.000Z", "2026-11-04T00:01:00.000Z", "2026-11-04T00:01:30.000Z"]);
+  assert.equal(recorderWindows(undefined, 30_000).find((w) => w.intervalMinutes !== null)!.intervalMinutes, 0.5);
+});
+
+test("30-second slots: each half minute records once, misses are named, and the record says its length", async () => {
+  const r = rig(new MemoryStore(), Date.parse("2026-11-04T00:00:02Z"), 30_000);
+  sen(r.provider, 100, 90, "2026-11-04T00:00:00Z");
+  const a = await r.slot();
+  assert.equal(a.outcome, "RECORDED");
+  assert.equal(a.slot, "2026-11-04T00:00:00.000Z");
+  assert.equal(a.record!.slotSeconds, 30);
+  r.clock.advance(20_000);
+  assert.equal((await r.slot()).outcome, "ALREADY_RECORDED", "00:00:22 is still the first slot");
+  r.clock.advance(15_000);
+  const b = await r.slot();
+  assert.equal(b.slot, "2026-11-04T00:00:30.000Z");
+  assert.deepEqual(b.record!.missedSlots, []);
+  r.clock.advance(60_000);
+  const c = await r.slot();
+  assert.equal(c.slot, "2026-11-04T00:01:30.000Z");
+  assert.deepEqual(c.record!.missedSlots, ["2026-11-04T00:01:00.000Z"]);
+  const rep = await verifyArchive(r.store, "2026-11-04", "2026-11-04");
+  assert.equal(rep.slots, 3);
+  assert.deepEqual(rep.problems, []);
+  assert.equal((await readHealth(r.store))!.missedTotal, 1);
 });

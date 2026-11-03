@@ -9,11 +9,35 @@ name: flight-recorder
 # To enable, restore:
 #   schedule:
 #     - cron: "*/10 * * * *"
+# mode=session records one slot every slot_seconds until `until`. A GitHub-hosted job stops at six hours, so each run
+# records for at most max_minutes and then dispatches the next run, which resumes the archive where this one stopped.
+# The handoff gap (about a minute) is recorded as missed slots.
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "slot = one 10-minute snapshot; session = continuous recording until `until`"
+        type: choice
+        options: [slot, session]
+        default: slot
+      until:
+        description: "session end, ISO UTC (for example 2026-11-04T12:00:00Z)"
+        required: false
+      slot_seconds:
+        description: "session slot length: 30, 60, 120, 300 or 600"
+        required: false
+        default: "30"
+      max_minutes:
+        description: "minutes per run before handing off to the next run"
+        required: false
+        default: "345"
+      archive_branch:
+        description: "archive branch override (for a verification run)"
+        required: false
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: flight-recorder
@@ -22,12 +46,13 @@ concurrency:
 env:
   # A separate repository is recommended (see the doc). Defaults to an orphan branch of this repository.
   ARCHIVE_REPO: ${{ vars.RECORDER_ARCHIVE_REPO || github.repository }}
-  ARCHIVE_BRANCH: ${{ vars.RECORDER_ARCHIVE_BRANCH || 'recorder/archive-2026' }}
+  ARCHIVE_BRANCH: ${{ inputs.archive_branch || vars.RECORDER_ARCHIVE_BRANCH || 'recorder/archive-2026' }}
+  SESSION: ${{ inputs.mode == 'session' }}
 
 jobs:
   record:
     runs-on: ubuntu-latest
-    timeout-minutes: 9
+    timeout-minutes: ${{ inputs.mode == 'session' && 358 || 9 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -67,12 +92,54 @@ jobs:
 
       - name: Record this slot
         id: capture
+        if: inputs.mode != 'session'
         working-directory: code
         run: |
           set +e
           node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs \
             scripts/recorder/gh-recorder.ts capture --store ../archive | tee ../capture.json
           echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Record the session
+        id: session
+        if: inputs.mode == 'session'
+        working-directory: code
+        env:
+          UNTIL: ${{ inputs.until }}
+          MAX_MINUTES: ${{ inputs.max_minutes || '345' }}
+          RECORDER_SLOT_SECONDS: ${{ inputs.slot_seconds || '30' }}
+          RECORDER_CONCURRENCY: "8"
+        run: |
+          set +e
+          end=$(date -u -d "$UNTIL" +%s 2>/dev/null || echo 0)
+          now=$(date -u +%s)
+          # refuse a missing, past, or more-than-two-days-away end, so a typo cannot start a long chain
+          if [ "$end" -le "$now" ] || [ "$end" -gt $((now + 172800)) ]; then
+            echo "::error::until must be a UTC time within the next 48 hours (got '${UNTIL}')"; echo "exit=64" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ "$MAX_MINUTES" -gt 345 ] 2>/dev/null; then MAX_MINUTES=345; fi
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/intelligence/ts-resolve.mjs \
+            scripts/recorder/gh-recorder.ts session --store ../archive --until "$UNTIL" --max-minutes "$MAX_MINUTES" \
+            --git --branch "$ARCHIVE_BRANCH" | tee ../session.log
+          echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          echo "ran=$(( $(date -u +%s) - now ))" >> "$GITHUB_OUTPUT"
+
+      - name: Hand off to the next run
+        if: always() && inputs.mode == 'session' && steps.session.outputs.exit != '64'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UNTIL: ${{ inputs.until }}
+          RAN: ${{ steps.session.outputs.ran || '0' }}
+        run: |
+          set -euo pipefail
+          left=$(( $(date -u -d "$UNTIL" +%s) - $(date -u +%s) ))
+          if [ "$left" -le 90 ]; then echo "session window complete"; exit 0; fi
+          # a run that ended early has failed in a way the next run would repeat; stop instead of looping
+          if [ "$RAN" -lt 1800 ]; then echo "::error::session ended after ${RAN}s with ${left}s left; not handing off"; exit 1; fi
+          gh workflow run flight-recorder.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" \
+            -f mode=session -f until="$UNTIL" -f slot_seconds="${{ inputs.slot_seconds || '30' }}" \
+            -f max_minutes="${{ inputs.max_minutes || '345' }}" -f archive_branch="${{ inputs.archive_branch }}"
+          echo "next run dispatched with ${left}s left"
 
       - name: Commit and push (retry)
         if: always()
@@ -92,7 +159,13 @@ jobs:
           exit 1
 
       - name: Fail the job when the slot failed
-        if: steps.capture.outputs.exit != '0'
+        if: inputs.mode != 'session' && steps.capture.outputs.exit != '0'
         run: |
           echo "::error::flight recorder slot did not record (exit ${{ steps.capture.outputs.exit }})"
+          exit 1
+
+      - name: Fail the job when the session failed
+        if: always() && inputs.mode == 'session' && steps.session.outputs.exit != '0'
+        run: |
+          echo "::error::flight recorder session ended with exit ${{ steps.session.outputs.exit }}"
           exit 1
