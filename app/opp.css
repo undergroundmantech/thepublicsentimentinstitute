@@ -27,6 +27,9 @@
 .opp .btn:hover{background:var(--btn-hover-bg);transform:translateY(-1px)}
 .opp .btn.g{border:0;background:var(--accent-grad);color:var(--text-on-grad);box-shadow:var(--btn-primary-shadow)}
 .opp .btn.gold{border:0;background:var(--gold-fill);color:var(--text-on-gold)}
+/* The Weighting Room button is the one gold thing on the site. */
+.opp .btn.gold.wr{background:linear-gradient(135deg,#fbe39a 0%,#e9b949 48%,#b8860b 100%);color:#2b1d00;box-shadow:0 6px 18px -8px rgba(184,134,11,.75),inset 0 1px 0 rgba(255,255,255,.45)}
+.opp .btn.gold.wr:hover{filter:brightness(1.06)}
 .opp .btn.white{border:0;background:var(--hi);color:var(--bg)}
 .opp .btn.sm{padding:6px 12px;font-size:12px}
 @media (max-width:960px){

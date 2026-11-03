@@ -26,6 +26,7 @@ export type CMeas = { st: string; label: string; title: string; yes: number; pro
 export type ConsoleData = {
   senate: CRace[]; governor: CRace[]; house: CRace[]; statewide: CRace[]; legis: CLeg[]; measures: CMeas[];
   ch: Record<"senate" | "governor" | "house", CChamber>; updated: string; daysOut: number; sims: number; generic: number | null; ev: { ballots: number; states: number } | null;
+  turnout: { total: number; votes24: number | null } | null;
 };
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
 
@@ -259,22 +260,40 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
           <h1 id="fcx-h">Every 2026 race, <em>in one place.</em></h1>
           <p className="lede">Pick a layer to see its map, its odds and its closest races. Click any state or district to open the full forecast for that race.</p>
         </div>
-        {top ? (
-          <Link href={top.href} className="fcx-closest">
-            <span className="eye">{topLabel}</span>
-            <b className="nm">{top.name}</b>
-            <span className="vl"><b className={top.cls}>{top.val}</b>{layer === "measures" ? <span className="fcx-cb ms"><i style={{ width: `${top.pD * 100}%` }} /></span> : <ChanceBar pD={top.pD} ind={top.ind} />}</span>
-            <small>{top.sub}</small>
-            <span className="go">Open the forecast →</span>
-            <Pointy key={layer} className="fcx-pty" pose={layer === "measures" ? "think" : "point"} prop="none" size={76} look={-1} flip cap />
-          </Link>
-        ) : null}
-        <dl className="fcx-meta">
-          <div><dt>Updated</dt><dd>{new Date(data.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</dd></div>
-          <div><dt>Simulations</dt><dd>{data.sims.toLocaleString()}</dd></div>
-          {data.generic != null ? <div><dt>Generic ballot</dt><dd className={data.generic < 0 ? "d" : "r"}>{data.generic < 0 ? "D" : "R"} +{Math.abs(data.generic).toFixed(1)}</dd></div> : null}
-          {data.ev ? <div><dt>Early ballots</dt><dd><Link href="/maps/early-vote">{(data.ev.ballots / 1e6).toFixed(1)}M</Link></dd></div> : null}
-        </dl>
+        <div className="fcx-key">
+          {data.generic != null ? (
+            <div className="k">
+              <span className="lb">Generic ballot</span>
+              <b className={`v ${data.generic < 0 ? "d" : "r"}`}>{data.generic < 0 ? "D" : "R"} +{Math.abs(data.generic).toFixed(1)}</b>
+              <small>The national House vote in the forecast</small>
+            </div>
+          ) : null}
+          {data.turnout ? (
+            <div className="k">
+              <span className="lb">Projected turnout</span>
+              <b className="v">{(data.turnout.total / 1e6).toFixed(1)}M</b>
+              {data.ev ? (
+                <Link href="/maps/early-vote" className="cast">
+                  <span className="bar"><i style={{ width: `${Math.min(100, (data.ev.ballots / data.turnout.total) * 100)}%` }} /></span>
+                  <small><b>{((data.ev.ballots / data.turnout.total) * 100).toFixed(1)}%</b> already cast · {(data.ev.ballots / 1e6).toFixed(1)}M early ballots</small>
+                </Link>
+              ) : null}
+            </div>
+          ) : null}
+          <Pointy key={layer} className="fcx-pty" pose={layer === "measures" ? "think" : "point"} prop="none" size={64} look={-1} flip cap />
+        </div>
+        <div className="fcx-meta">
+          {top ? (
+            <Link href={top.href} className="fcx-closest">
+              <span className="eye">{topLabel}</span>
+              <b className="nm">{top.name}</b>
+              <b className={`vl ${top.cls}`}>{top.val}</b>
+              <span className="go">Open →</span>
+            </Link>
+          ) : null}
+          <span><em>Updated</em> {new Date(data.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+          <span><em>Simulations</em> {data.sims.toLocaleString()}</span>
+        </div>
       </header>
 
       <SeatBars ch={ch} data={data} onPick={choose} active={layer} />

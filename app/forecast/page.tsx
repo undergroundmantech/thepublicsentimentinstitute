@@ -13,6 +13,13 @@ import YouTubeBand from "@/app/components/YouTubeBand";
 export function generateMetadata(): Metadata { return hubMeta(); }
 
 const readPub = <T,>(f: string): T => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", f), "utf8")) as T;
+// The early-vote model's projected 2026 electorate, the same total the early vote desk measures against.
+const readTurnout = (): ConsoleData["turnout"] => {
+  try {
+    const n = (JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "earlyvote-electorate.json"), "utf8")) as { nation?: { turnout?: number; votes24?: number } }).nation;
+    return n?.turnout ? { total: n.turnout, votes24: n.votes24 ?? null } : null;
+  } catch { return null; }
+};
 
 // /forecast is one console: pick a layer, read its map, its odds and its closest races, then every race in it.
 // Static on purpose: the page reads public/forecast at build time, so it never needs those files inside a serverless
@@ -47,6 +54,7 @@ export default function ForecastPage() {
     ch: { senate: chOf("senate"), governor: chOf("governor"), house: chOf("house") },
     updated: model.meta.updated, daysOut: model.meta.daysOut, sims: model.meta.sims, generic: model.meta.genericBallot?.avg ?? null,
     ev: model.meta.earlyVote ? { ballots: model.meta.earlyVote.ballots, states: model.meta.earlyVote.states } : null,
+    turnout: readTurnout(),
   };
   return (
     <>

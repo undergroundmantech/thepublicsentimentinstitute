@@ -142,7 +142,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
             <Link className="btn ghost search" href="/search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" /></svg>Search</Link>
             <LangPicker />
             <ThemeToggle />
-            <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
+            <Link className="btn gold wr" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
             <Link href="/search" className="macc-l">Search</Link>
           </nav>
           <div className="mfoot">
-            <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
+            <Link className="btn gold wr" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <Link className="btn" href="/contact">Contact</Link>
             <ThemeToggle variant="inline" />
             <LangPicker className="btn" inMenu />

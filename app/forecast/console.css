@@ -1,31 +1,33 @@
 /* The forecast console on /forecast. One layer at a time: tiles, map and readout, then the table. */
 .fcx { position: relative; padding-bottom: 10px; }
-/* The hero: the title upper right, the closest race as a featured stat on the left, then the four facts as cards. */
-.fcx-head { position: relative; display: grid; grid-template-columns: minmax(260px, 360px) minmax(0, 1fr); grid-template-areas: "close title" "meta meta"; gap: 18px 28px; align-items: stretch; margin: 6px 0 10px; }
-.fcx-title { grid-area: title; align-self: center; justify-self: end; max-width: 760px; text-align: right; }
-.fcx-head h1 { font: 800 clamp(30px, 3.2vw, 48px)/1.04 var(--font-d); letter-spacing: -.04em; margin: 8px 0 10px; text-wrap: balance; }
+/* The hero: the title large on the left, the generic ballot and projected turnout as the key numbers on the right,
+   then a quiet strip with the closest race, the update date and the simulation count. */
+.fcx-head { position: relative; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr); grid-template-areas: "title key" "meta meta"; gap: 16px 36px; align-items: center; margin: 6px 0 14px; }
+.fcx-title { grid-area: title; min-width: 0; max-width: 860px; }
+.fcx-head h1 { font: 800 clamp(40px, 5vw, 76px)/1 var(--font-d); letter-spacing: -.045em; margin: 10px 0 14px; text-wrap: balance; }
 .fcx-head h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.fcx-head .lede { max-width: 640px; margin: 0 0 0 auto; color: var(--ink2); text-wrap: pretty; }
-.fcx-closest { grid-area: close; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; padding: 16px 18px 14px 20px; border-radius: 16px; border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(130,90,255,.12), rgba(130,90,255,.03)); color: var(--ink); text-decoration: none; overflow: hidden; transition: border-color .2s, transform .2s; }
-.fcx-closest::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: var(--grad); }
-.fcx-closest:hover { border-color: var(--line2); transform: translateY(-2px); }
-.fcx-closest:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
-.fcx-closest .eye { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.fcx-closest .nm { font: 800 clamp(20px, 1.6vw, 26px)/1.1 var(--font-d); letter-spacing: -.02em; overflow-wrap: anywhere; }
-.fcx-closest .vl { display: flex; align-items: center; gap: 12px; }
-.fcx-closest .vl > b { font: 800 clamp(22px, 1.75vw, 30px)/1 var(--font-d); letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.fcx-closest .fcx-cb { flex: 1; width: auto; height: 8px; border-radius: 4px; }
-.fcx-closest small { font-size: 12.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fcx-closest .go { font: 700 10.5px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); }
-.fcx-closest .fcx-pty { right: 8px; bottom: 4px; }
-:root:not([data-mode="themed"]) .fcx-closest .pty-cameo { display: none; }
-@media (min-width: 901px) { :root[data-mode="themed"] .fcx-closest { padding-right: 100px; } }
-.fcx-meta { grid-area: meta; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; margin: 0; }
-.fcx-meta div { display: grid; align-content: start; gap: 8px; min-width: 0; padding: 14px 14px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--glass); }
-.fcx-meta dt { font: 800 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.fcx-meta dd { margin: 0; font: 800 clamp(22px, 1.75vw, 30px)/1 var(--font-d); letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.fcx-meta dd a { color: inherit; text-decoration: none; }
+.fcx-head .lede { max-width: 620px; margin: 0; font-size: clamp(15px, 1.15vw, 18px); color: var(--ink2); text-wrap: pretty; }
+.fcx-key { grid-area: key; position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }
+.fcx-key .k { display: grid; align-content: start; gap: 10px; min-width: 0; padding: 18px 18px 16px; border-radius: 18px; border: 1px solid var(--line); background: var(--glass); }
+.fcx-key .lb { font: 800 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.fcx-key .v { font: 800 clamp(38px, 3.6vw, 60px)/.95 var(--font-d); letter-spacing: -.04em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fcx-key small { font-size: 12.5px; line-height: 1.35; color: var(--mute); }
+.fcx-key small b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fcx-key .cast { display: grid; gap: 8px; color: inherit; text-decoration: none; }
+.fcx-key .cast:hover small { color: var(--ink2); }
+.fcx-key .bar { display: block; height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.fcx-key .bar i { display: block; height: 100%; border-radius: 4px; background: var(--grad); }
+.fcx-key .fcx-pty { right: -6px; top: -54px; }
+:root:not([data-mode="themed"]) .fcx-key .pty-cameo { display: none; }
+.fcx-meta { grid-area: meta; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding-top: 12px; border-top: 1px solid var(--line); font: 600 12.5px var(--font-b); color: var(--ink2); }
+.fcx-meta em { font: 800 10px var(--font-m); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin-right: 4px; }
+.fcx-closest { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; color: var(--ink2); text-decoration: none; }
+.fcx-closest .eye { font: 800 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.fcx-closest .nm { font-weight: 700; color: var(--ink); }
+.fcx-closest .vl { font-weight: 800; font-variant-numeric: tabular-nums; }
+.fcx-closest .go { font: 700 10px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.fcx-closest:hover .nm { text-decoration: underline; }
+.fcx-closest:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; border-radius: 4px; }
 .fcx .d { color: var(--dem2); } .fcx .r { color: var(--gop2); } .fcx .i { color: var(--ind); }
 .fcx .t, .fcx .y { color: #2fbf9b; } .fcx .no { color: #e8794a; }
 
@@ -149,14 +151,14 @@
 .fcx-index[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 14px; }
 
 @media (max-width: 1240px) { .fcx-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 1100px) { .fcx-stage { grid-template-columns: 1fr; } .fcx-read { position: static; } .fcx-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .fcx-stage { grid-template-columns: 1fr; } .fcx-read { position: static; } .fcx-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fcx-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "key" "meta"; } }
 @media (max-width: 760px) {
-  .fcx-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "close" "meta"; gap: 14px; }
-  .fcx-title { justify-self: stretch; text-align: left; }
-  .fcx-head .lede { margin-left: 0; }
-  .fcx-meta { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .fcx-meta div { padding: 12px 12px 10px; }
-  .fcx-meta dd { font-size: 22px; }
+  .fcx-head { gap: 14px; }
+  .fcx-key { gap: 10px; }
+  .fcx-key .k { padding: 14px 14px 12px; }
+  .fcx-key .v { font-size: 34px; }
+  .fcx-key .fcx-pty { display: none; }
   .fcx-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .fcx-tile { flex: 0 0 168px; scroll-snap-align: start; }
   .fcx-mapcard { padding: 12px 10px; border-radius: 18px; }
