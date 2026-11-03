@@ -2,7 +2,7 @@
 // Maine — 2026 U.S. Senate: Troy Jackson (D) vs. Susan Collins (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-11-01.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -68,6 +68,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-27", "sampleSize": 652, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 45.0, "Other": 1.0, "Undecided": 4.0}},
     {"raceId": "ME-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1503, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 47.0}},
     {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 729, "sampleType": "LV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 45.0, "Undecided": 4.0}},
-    {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1654, "sampleType": "LV", "results": {"Troy Jackson (D)": 54.0, "Susan Collins (R)": 45.0, "Other": 1.0}}
+    {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1654, "sampleType": "LV", "results": {"Troy Jackson (D)": 54.0, "Susan Collins (R)": 45.0, "Other": 1.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Troy Jackson (D)": 53.1, "Susan Collins (R)": 44.0, "Undecided": 2.9}},
+    {"raceId": "ME-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-11-02", "sampleSize": 896, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 46.0, "Undecided": 5.0}}
   ],
 };

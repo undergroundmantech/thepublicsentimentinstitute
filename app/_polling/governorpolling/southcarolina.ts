@@ -2,7 +2,7 @@
 // South Carolina — 2026 Governor: Jermaine Johnson (D) vs. Alan Wilson (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-26.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -45,6 +45,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "SC-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-19", "sampleSize": 294, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 44.9, "Alan Wilson (R)": 53.1, "Other": 1.3, "Undecided": 0.8}},
     {"raceId": "SC-GOV-2026", "pollster": "Targoz Market Research for the South Carolina Policy Council", "startDate": "2026-10-16", "endDate": "2026-10-25", "sampleSize": 895, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 41.0, "Alan Wilson (R)": 51.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "SC-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 707, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 44.0, "Alan Wilson (R)": 51.0, "Undecided": 5.0}},
-    {"raceId": "SC-GOV-2026", "pollster": "The Citadel Poll", "startDate": "2026-10-14", "endDate": "2026-10-25", "sampleSize": 890, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 31.0, "Alan Wilson (R)": 42.0, "Other": 1.0, "Undecided": 26.0}}
+    {"raceId": "SC-GOV-2026", "pollster": "The Citadel Poll", "startDate": "2026-10-14", "endDate": "2026-10-25", "sampleSize": 890, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 31.0, "Alan Wilson (R)": 42.0, "Other": 1.0, "Undecided": 26.0}},
+    {"raceId": "SC-GOV-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-31", "endDate": "2026-11-01", "sampleSize": 1095, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 39.1, "Alan Wilson (R)": 54.1, "Undecided": 6.8}},
+    {"raceId": "SC-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1028, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 43.0, "Alan Wilson (R)": 51.0, "Undecided": 6.0}},
+    {"raceId": "SC-GOV-2026", "pollster": "Resonance Media", "startDate": "2026-10-30", "endDate": "2026-10-30", "sampleSize": 600, "sampleType": "LV", "results": {"Jermaine Johnson (D)": 42.3, "Alan Wilson (R)": 50.6, "Other": 1.2, "Undecided": 5.9}}
   ],
 };

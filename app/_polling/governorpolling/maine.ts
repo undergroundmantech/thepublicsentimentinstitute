@@ -57,6 +57,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-10-20", "endDate": "2026-10-26", "sampleSize": 783, "sampleType": "LV", "results": {"Hannah Pingree (D)": 53.0, "Bobby Charles (R)": 39.0, "Undecided": 8.0}},
     {"raceId": "ME-GOV-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-27", "sampleSize": 652, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 37.0, "Other": 7.0, "Undecided": 6.0}},
     {"raceId": "ME-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1503, "sampleType": "LV", "results": {"Hannah Pingree (D)": 53.0, "Bobby Charles (R)": 45.0, "Other": 2.0}},
-    {"raceId": "ME-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 729, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 37.0, "Other": 8.0, "Undecided": 6.0}}
+    {"raceId": "ME-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 729, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 37.0, "Other": 8.0, "Undecided": 6.0}},
+    {"raceId": "ME-GOV-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.5, "Bobby Charles (R)": 42.1, "Other": 5.3, "Undecided": 3.0}}
   ],
 };

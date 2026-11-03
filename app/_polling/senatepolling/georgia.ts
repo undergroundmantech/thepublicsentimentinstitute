@@ -2,7 +2,7 @@
 // Georgia — 2026 U.S. Senate: Jon Ossoff (D) vs. Mike Collins (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-23.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -55,6 +55,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-SEN-2026", "pollster": "UGA SPIA for the Atlanta Journal-Constitution", "startDate": "2026-10-07", "endDate": "2026-10-15", "sampleSize": 1000, "sampleType": "LV", "results": {"Jon Ossoff (D)": 48.0, "Mike Collins (R)": 40.0, "Undecided": 12.0}},
     {"raceId": "GA-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-15", "endDate": "2026-10-17", "sampleSize": 755, "sampleType": "LV", "results": {"Jon Ossoff (D)": 51.8, "Mike Collins (R)": 44.9, "Undecided": 3.3}},
     {"raceId": "GA-SEN-2026", "pollster": "ActiVote", "startDate": "2026-10-06", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Jon Ossoff (D)": 54.0, "Mike Collins (R)": 46.0}},
-    {"raceId": "GA-SEN-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 40.0, "Other": 3.0, "Undecided": 2.0}}
+    {"raceId": "GA-SEN-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 508, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 40.0, "Other": 3.0, "Undecided": 2.0}},
+    {"raceId": "GA-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 450, "sampleType": "LV", "results": {"Jon Ossoff (D)": 55.0, "Mike Collins (R)": 45.0}},
+    {"raceId": "GA-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 2500, "sampleType": "LV", "results": {"Jon Ossoff (D)": 53.0, "Mike Collins (R)": 46.0, "Undecided": 1.0}}
   ],
 };

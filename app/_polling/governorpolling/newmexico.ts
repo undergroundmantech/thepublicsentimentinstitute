@@ -2,7 +2,7 @@
 // New Mexico — 2026 Governor: Deb Haaland (D) vs. Gregg Hull (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-09.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NM-GOV-2026", "pollster": "Research & Polling for the Albuquerque Journal", "startDate": "2026-08-28", "endDate": "2026-08-28", "sampleSize": 516, "sampleType": "LV", "results": {"Deb Haaland (D)": 49.0, "Gregg Hull (R)": 43.0, "Undecided": 8.0}},
     {"raceId": "NM-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-09-25", "endDate": "2026-09-30", "sampleSize": 567, "sampleType": "LV", "results": {"Deb Haaland (D)": 47.0, "Gregg Hull (R)": 41.0, "Undecided": 12.0}},
     {"raceId": "NM-GOV-2026", "pollster": "SurveyUSA for KOB 4", "startDate": "2026-10-02", "endDate": "2026-10-02", "sampleSize": 567, "sampleType": "LV", "results": {"Deb Haaland (D)": 47.0, "Gregg Hull (R)": 41.0, "Undecided": 12.0}, "notes": "Released Oct 5; field dates not published, so the dates shown are placeholders."},
-    {"raceId": "NM-GOV-2026", "pollster": "Research & Polling for the Albuquerque Journal", "startDate": "2026-10-01", "endDate": "2026-10-09", "sampleSize": 1125, "sampleType": "LV", "results": {"Deb Haaland (D)": 49.0, "Gregg Hull (R)": 42.0, "Undecided": 9.0}}
+    {"raceId": "NM-GOV-2026", "pollster": "Research & Polling for the Albuquerque Journal", "startDate": "2026-10-01", "endDate": "2026-10-09", "sampleSize": 1125, "sampleType": "LV", "results": {"Deb Haaland (D)": 49.0, "Gregg Hull (R)": 42.0, "Undecided": 9.0}},
+    {"raceId": "NM-GOV-2026", "pollster": "Research Co.", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 450, "sampleType": "LV", "results": {"Deb Haaland (D)": 54.0, "Gregg Hull (R)": 46.0}}
   ],
 };

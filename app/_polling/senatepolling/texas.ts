@@ -2,7 +2,7 @@
 // Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-11-01.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -109,8 +109,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-26", "sampleSize": 712, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 45.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2141, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 47.0, "Other": 1.0, "Undecided": 1.0}},
     {"raceId": "TX-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1223, "sampleType": "LV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 43.0, "Undecided": 7.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-31", "endDate": "2026-10-31", "sampleSize": 1500, "sampleType": "LV", "results": {"James Talarico (D)": 52.2, "Ken Paxton (R)": 46.2, "Other": 1.6}},
+    {"raceId": "TX-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1678, "sampleType": "LV", "results": {"James Talarico (D)": 52.2, "Ken Paxton (R)": 46.2, "Other": 1.6}},
     {"raceId": "TX-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-31", "endDate": "2026-11-01", "sampleSize": 1086, "sampleType": "LV", "results": {"James Talarico (D)": 47.5, "Ken Paxton (R)": 48.1, "Other": 2.4, "Undecided": 2.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-11-01", "endDate": "2026-11-01", "sampleSize": 544, "sampleType": "LV", "results": {"James Talarico (D)": 51.6, "Ken Paxton (R)": 46.1, "Other": 2.2, "Undecided": 0.1}}
+    {"raceId": "TX-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-11-01", "endDate": "2026-11-01", "sampleSize": 544, "sampleType": "LV", "results": {"James Talarico (D)": 51.6, "Ken Paxton (R)": 46.1, "Other": 2.2, "Undecided": 0.1}},
+    {"raceId": "TX-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 450, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 48.0, "Other": 1.0}}
   ],
 };

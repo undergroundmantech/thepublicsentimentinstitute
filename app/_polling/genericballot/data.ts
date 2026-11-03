@@ -9,6 +9,14 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 3, 2026 8 AM sweep ──
+  { pollster: "Reuters/Ipsos", endDate: "2026-11-02", sampleSize: 1357, sampleType: "RV", results: { Democrats: 49, Republicans: 42 } },   // Oct 29 to Nov 2, final, registered voters; likely voters 52 to 44 at 1,212
+  // ── Added Nov 2, 2026 8 PM sweep ──
+  { pollster: "Financial Times", endDate: "2026-11-01", sampleSize: 2090, sampleType: "LV", results: { Democrats: 52.3, Republicans: 44.8 } },   // FT/Focaldata final, Oct 30 to Nov 1, 2,444 adults and 2,090 LV, D+7.4 per Focaldata's Nov 2 page; shares as listed by pollcheck
+  { pollster: "I&I/TIPP", endDate: "2026-10-30", sampleSize: 1158, sampleType: "LV", results: { Democrats: 52.5, Republicans: 42.4 } },   // Oct 27 to 30, D+10 per TIPP's Nov 2 release; shares as listed by pollcheck
+  // ── Added Nov 2, 2026, sent by the user ──
+  { pollster: "Morning Consult", endDate: "2026-11-01", sampleSize: 0, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },   // Oct 26 to Nov 1, likely voters; sample size not given
+  { pollster: "Change Research", endDate: "2026-10-18", sampleSize: 0, sampleType: "RV", results: { Democrats: 50, Republicans: 39 } },   // Oct 12 to 18, registered voters; sample size not given
   // ── Added Nov 1, 2026 late night ──
   { pollster: "Atlas Intel", endDate: "2026-11-01", sampleSize: 3566, sampleType: "LV", results: { Democrats: 55.5, Republicans: 41.4 } },   // Oct 28 to Nov 1, sent by the user, D+14.1; 3,566 likely voters as listed by RealClearPolling
   // ── Added Nov 1, 2026 8 PM sweep ──

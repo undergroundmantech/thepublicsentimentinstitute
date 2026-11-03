@@ -2,7 +2,7 @@
 // Florida — 2026 U.S. Senate: Angie Nixon (D) vs. Ashley Moody (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-31.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -62,6 +62,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 1129, "sampleType": "LV", "results": {"Angie Nixon (D)": 44.1, "Ashley Moody (R)": 52.6, "Other": 3.3}},
     {"raceId": "FL-SEN-2026", "pollster": "Political Matrix/The Listener Group", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 500, "sampleType": "LV", "results": {"Angie Nixon (D)": 35.8, "Ashley Moody (R)": 41.8, "Undecided": 22.4}},
     {"raceId": "FL-SEN-2026", "pollster": "Stetson University", "startDate": "2026-10-26", "endDate": "2026-10-30", "sampleSize": 859, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 49.0, "Other": 3.0, "Undecided": 3.0}},
-    {"raceId": "FL-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-30", "endDate": "2026-10-31", "sampleSize": 2898, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 47.0, "Other": 2.0, "Undecided": 6.0}}
+    {"raceId": "FL-SEN-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-30", "endDate": "2026-10-31", "sampleSize": 2898, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 47.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "Targoz Market Research", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1000, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 52.0, "Undecided": 5.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 450, "sampleType": "LV", "results": {"Angie Nixon (D)": 46.0, "Ashley Moody (R)": 53.0, "Other": 1.0}}
   ],
 };

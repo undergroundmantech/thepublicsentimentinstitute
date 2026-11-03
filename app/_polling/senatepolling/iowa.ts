@@ -76,6 +76,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-SEN-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 403, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 43.0, "Other": 7.0, "Undecided": 3.0}},
     {"raceId": "IA-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-28", "endDate": "2026-10-28", "sampleSize": 1020, "sampleType": "LV", "results": {"Josh Turek (D)": 46.0, "Ashley Hinson (R)": 48.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "IA-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2020, "sampleType": "LV", "results": {"Josh Turek (D)": 50.0, "Ashley Hinson (R)": 49.0, "Other": 1.0}},
-    {"raceId": "IA-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 719, "sampleType": "LV", "results": {"Josh Turek (D)": 48.0, "Ashley Hinson (R)": 47.0, "Undecided": 5.0}}
+    {"raceId": "IA-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 719, "sampleType": "LV", "results": {"Josh Turek (D)": 48.0, "Ashley Hinson (R)": 47.0, "Undecided": 5.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 901, "sampleType": "LV", "results": {"Josh Turek (D)": 46.0, "Ashley Hinson (R)": 47.0, "Other": 3.0, "Undecided": 4.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "GrayHouse (R)", "startDate": "2026-10-28", "endDate": "2026-10-31", "sampleSize": 601, "sampleType": "LV", "results": {"Josh Turek (D)": 46.0, "Ashley Hinson (R)": 48.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Josh Turek (D)": 50.5, "Ashley Hinson (R)": 46.4, "Other": 2.7, "Undecided": 0.5}}
   ],
 };

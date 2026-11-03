@@ -7,6 +7,13 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 3, 2026 8 AM sweep ──
+  { pollster: "Reuters/Ipsos", endDate: "2026-11-02", sampleSize: 1765, sampleType: "A", results: { Approve: 32, Disapprove: 64 } },   // Oct 29 to Nov 2, adults; registered voters 36 to 63
+  // ── Added Nov 2, 2026 8 PM sweep ──
+  { pollster: "I&I/TIPP", endDate: "2026-10-30", sampleSize: 1480, sampleType: "A", results: { Approve: 41, Disapprove: 51 } },   // Oct 27 to 30, adults, from TIPP's Nov 2 release
+  // ── Added Nov 2, 2026, sent by the user ──
+  { pollster: "Morning Consult", endDate: "2026-11-01", sampleSize: 2200, sampleType: "RV", results: { Approve: 41, Disapprove: 57 } },   // Oct 30 to Nov 1, registered voters; n not given so 2200 as in the weekly tracker
+  { pollster: "Change Research", endDate: "2026-10-18", sampleSize: 0, sampleType: "RV", results: { Approve: 37, Disapprove: 62 } },   // Oct 12 to 18, registered voters; sample size not given
   // ── Added Nov 2, 2026 8 AM sweep ──
   { pollster: "The Honest Poll", endDate: "2026-10-29", sampleSize: 1158, sampleType: "LV", results: { Approve: 38, Disapprove: 61 } },   // Oct 28 to 29, likely voters, from the pollster's Nov 1 release; registered voters 38 to 62 at 1,310
   // ── Added Nov 1, 2026 8 PM sweep ──

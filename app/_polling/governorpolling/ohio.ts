@@ -73,6 +73,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 46.0, "Undecided": 5.0}},
     {"raceId": "OH-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2090, "sampleType": "LV", "results": {"Amy Acton (D)": 52.0, "Vivek Ramaswamy (R)": 46.0, "Other": 1.0}},
     {"raceId": "OH-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 753, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 43.0, "Undecided": 8.0}},
-    {"raceId": "OH-GOV-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 42.0, "Other": 1.0, "Undecided": 9.0}}
+    {"raceId": "OH-GOV-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 42.0, "Other": 1.0, "Undecided": 9.0}},
+    {"raceId": "OH-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1119, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 45.0, "Other": 4.0, "Undecided": 2.0}},
+    {"raceId": "OH-GOV-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Amy Acton (D)": 51.8, "Vivek Ramaswamy (R)": 43.9, "Other": 3.2, "Undecided": 1.2}}
   ],
 };

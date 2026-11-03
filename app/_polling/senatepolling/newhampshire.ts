@@ -2,7 +2,7 @@
 // New Hampshire — 2026 U.S. Senate: Chris Pappas (D) vs. John E. Sununu (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-31.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -63,6 +63,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-SEN-2026", "pollster": "Saint Anselm College", "startDate": "2026-10-19", "endDate": "2026-10-20", "sampleSize": 1672, "sampleType": "LV", "results": {"Chris Pappas (D)": 50.0, "John E. Sununu (R)": 43.0, "Other": 5.0, "Undecided": 2.0}},
     {"raceId": "NH-SEN-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-10-02", "endDate": "2026-10-19", "sampleSize": 600, "sampleType": "LV", "results": {"Chris Pappas (D)": 48.0, "John E. Sununu (R)": 41.0, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "NH-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 970, "sampleType": "LV", "results": {"Chris Pappas (D)": 50.0, "John E. Sununu (R)": 44.0, "Other": 5.0, "Undecided": 2.0}},
-    {"raceId": "NH-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1418, "sampleType": "LV", "results": {"Chris Pappas (D)": 54.0, "John E. Sununu (R)": 42.0, "Other": 2.0, "Undecided": 2.0}}
+    {"raceId": "NH-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1418, "sampleType": "LV", "results": {"Chris Pappas (D)": 54.0, "John E. Sununu (R)": 42.0, "Other": 2.0, "Undecided": 2.0}},
+    {"raceId": "NH-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-25", "endDate": "2026-10-29", "sampleSize": 600, "sampleType": "LV", "results": {"Chris Pappas (D)": 51.0, "John E. Sununu (R)": 45.0, "Undecided": 4.0}},
+    {"raceId": "NH-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Chris Pappas (D)": 52.3, "John E. Sununu (R)": 44.2, "Undecided": 3.5}}
   ],
 };

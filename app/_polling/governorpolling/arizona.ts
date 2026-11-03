@@ -67,6 +67,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AZ-GOV-2026", "pollster": "RedBox Research (D)", "startDate": "2026-10-20", "endDate": "2026-10-23", "sampleSize": 2686, "sampleType": "LV", "results": {"Katie Hobbs (D)": 47.4, "Andy Biggs (R)": 42.3, "Other": 4.4, "Undecided": 5.9}},
     {"raceId": "AZ-GOV-2026", "pollster": "HighGround Public Affairs", "startDate": "2026-10-21", "endDate": "2026-10-25", "sampleSize": 400, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.5, "Andy Biggs (R)": 39.3, "Undecided": 9.2}},
     {"raceId": "AZ-GOV-2026", "pollster": "KStrat for American Encore (R)", "startDate": "2026-10-25", "endDate": "2026-10-27", "sampleSize": 900, "sampleType": "LV", "results": {"Katie Hobbs (D)": 48.3, "Andy Biggs (R)": 43.1, "Other": 1.4, "Undecided": 7.1}},
-    {"raceId": "AZ-GOV-2026", "pollster": "Noble Predictive Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 511, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 1.0, "Undecided": 3.0}}
+    {"raceId": "AZ-GOV-2026", "pollster": "Noble Predictive Insights", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 511, "sampleType": "LV", "results": {"Katie Hobbs (D)": 51.0, "Andy Biggs (R)": 45.0, "Other": 1.0, "Undecided": 3.0}},
+    {"raceId": "AZ-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-09-16", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "RV", "results": {"Katie Hobbs (D)": 56.0, "Andy Biggs (R)": 33.0, "Undecided": 11.0}}
   ],
 };

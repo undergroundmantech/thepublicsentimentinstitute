@@ -55,6 +55,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-SEN-2026", "pollster": "Victory Insights for the Tafoya campaign (R)", "startDate": "2026-10-21", "endDate": "2026-10-22", "sampleSize": 1194, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 47.8, "Michele Tafoya (R)": 44.4, "Other": 2.2, "Undecided": 5.6}},
     {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-24", "endDate": "2026-10-28", "sampleSize": 714, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 41.0, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "MN-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 49.0, "Michele Tafoya (R)": 46.0, "Undecided": 5.0}},
-    {"raceId": "MN-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 43.0, "Other": 2.0, "Undecided": 7.0}}
+    {"raceId": "MN-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 43.0, "Other": 2.0, "Undecided": 7.0}},
+    {"raceId": "MN-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.1, "Michele Tafoya (R)": 45.7, "Other": 2.5, "Undecided": 3.6}}
   ],
 };

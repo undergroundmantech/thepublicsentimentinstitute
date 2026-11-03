@@ -36,6 +36,8 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   CO: [
-
+    {"raceId": "CO-SEN-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-09-16", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "RV", "results": {"John Hickenlooper (D)": 52.0, "Mark Baisley (R)": 38.0, "Undecided": 10.0}},
+    {"raceId": "CO-SEN-2026", "pollster": "University of Colorado/YouGov", "startDate": "2026-10-09", "endDate": "2026-10-20", "sampleSize": 710, "sampleType": "LV", "results": {"John Hickenlooper (D)": 57.0, "Mark Baisley (R)": 39.0, "Other": 1.0, "Undecided": 3.0}},
+    {"raceId": "CO-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 450, "sampleType": "LV", "results": {"John Hickenlooper (D)": 61.0, "Mark Baisley (R)": 37.0, "Other": 2.0}}
   ],
 };

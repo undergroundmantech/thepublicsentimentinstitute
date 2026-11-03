@@ -2,7 +2,7 @@
 // Nebraska — 2026 U.S. Senate: Dan Osborn (I) vs. Pete Ricketts (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-29.
+// ballot were dropped. Newest poll: 2026-11-01.
 // Osborn runs as an independent. The Democratic nominee withdrew, so he holds the
 // only non Republican line on the ballot and the forecast models him in that column.
 
@@ -57,6 +57,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 1555, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.7, "Pete Ricketts (R)": 47.2, "Other": 4.0, "Undecided": 0.2}},
     {"raceId": "NE-SEN-2026", "pollster": "The New York Times/Siena College", "startDate": "2026-10-23", "endDate": "2026-10-29", "sampleSize": 809, "sampleType": "LV", "results": {"Dan Osborn (I)": 43.0, "Pete Ricketts (R)": 49.0, "Undecided": 8.0}},
     {"raceId": "NE-SEN-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-10-25", "endDate": "2026-10-29", "sampleSize": 800, "sampleType": "LV", "results": {"Dan Osborn (I)": 45.0, "Pete Ricketts (R)": 48.0, "Other": 4.0, "Undecided": 3.0}, "notes": "Full five candidate ballot; head to head Ricketts 49 Osborn 48."},
-    {"raceId": "NE-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1979, "sampleType": "LV", "results": {"Dan Osborn (I)": 49.0, "Pete Ricketts (R)": 49.0, "Other": 1.0}}
+    {"raceId": "NE-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 1979, "sampleType": "LV", "results": {"Dan Osborn (I)": 49.0, "Pete Ricketts (R)": 49.0, "Other": 1.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "GrayHouse (R)", "startDate": "2026-10-29", "endDate": "2026-11-01", "sampleSize": 534, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 50.0, "Undecided": 4.0}}
   ],
 };

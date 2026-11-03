@@ -78,6 +78,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-10-29", "endDate": "2026-10-30", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 47.0, "Undecided": 4.0}, "notes": "Sample size not given; 1200 as in the firm's earlier releases."},
     {"raceId": "OH-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2090, "sampleType": "LV", "results": {"Sherrod Brown (D)": 50.0, "Jon Husted (R)": 48.0, "Other": 2.0, "Undecided": 1.0}},
     {"raceId": "OH-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 753, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 44.0, "Undecided": 7.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 44.0, "Other": 2.0, "Undecided": 9.0}}
+    {"raceId": "OH-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 44.0, "Other": 2.0, "Undecided": 9.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1119, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.0, "Jon Husted (R)": 46.0, "Undecided": 8.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-31", "endDate": "2026-11-01", "sampleSize": 1092, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.6, "Jon Husted (R)": 45.1, "Other": 4.8, "Undecided": 3.5}},
+    {"raceId": "OH-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Sherrod Brown (D)": 51.4, "Jon Husted (R)": 43.9, "Other": 2.9, "Undecided": 1.8}}
   ],
 };

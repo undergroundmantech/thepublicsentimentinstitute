@@ -61,6 +61,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "Echelon Insights for NetChoice (R)", "startDate": "2026-10-16", "endDate": "2026-10-23", "sampleSize": 403, "sampleType": "LV", "results": {"Rob Sand (D)": 50.0, "Zach Lahn (R)": 46.0, "Undecided": 3.0}},
     {"raceId": "IA-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-28", "endDate": "2026-10-28", "sampleSize": 1020, "sampleType": "LV", "results": {"Rob Sand (D)": 50.0, "Zach Lahn (R)": 45.0, "Undecided": 5.0}},
     {"raceId": "IA-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2020, "sampleType": "LV", "results": {"Rob Sand (D)": 53.0, "Zach Lahn (R)": 46.0}},
-    {"raceId": "IA-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 719, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 43.0, "Undecided": 6.0}}
+    {"raceId": "IA-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 719, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 43.0, "Undecided": 6.0}},
+    {"raceId": "IA-GOV-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Rob Sand (D)": 54.1, "Zach Lahn (R)": 44.0, "Other": 1.9}}
   ],
 };

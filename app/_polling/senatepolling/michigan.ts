@@ -2,7 +2,7 @@
 // Michigan — 2026 U.S. Senate: Abdul El-Sayed (D) vs. Mike Rogers (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-11-01.
+// ballot were dropped. Newest poll: 2026-11-02.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -89,6 +89,10 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-10-23", "endDate": "2026-10-25", "sampleSize": 622, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 50.0, "Mike Rogers (R)": 46.0, "Other": 2.0, "Undecided": 3.0}},
     {"raceId": "MI-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2093, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 47.0, "Other": 1.0, "Undecided": 1.0}},
     {"raceId": "MI-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 1009, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 53.0, "Mike Rogers (R)": 42.0, "Undecided": 5.0}},
-    {"raceId": "MI-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 46.0, "Other": 1.0, "Undecided": 5.0}}
+    {"raceId": "MI-SEN-2026", "pollster": "Research Co.", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 450, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 46.0, "Other": 1.0, "Undecided": 5.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-31", "endDate": "2026-11-01", "sampleSize": 1085, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 47.1, "Mike Rogers (R)": 45.9, "Undecided": 7.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 53.5, "Mike Rogers (R)": 46.4, "Undecided": 0.1}},
+    {"raceId": "MI-SEN-2026", "pollster": "Concord Public Opinion Partners for Education Reform Now Advocacy (D)", "startDate": "2026-10-30", "endDate": "2026-11-01", "sampleSize": 510, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 41.0, "Other": 4.0, "Undecided": 4.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "John Zogby Strategies", "startDate": "2026-10-31", "endDate": "2026-11-02", "sampleSize": 1001, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 49.0}}
   ],
 };

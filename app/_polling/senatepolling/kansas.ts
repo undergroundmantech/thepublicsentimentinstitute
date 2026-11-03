@@ -56,6 +56,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-SEN-2026", "pollster": "Washington Post/Schar School", "startDate": "2026-10-22", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"Adam Hamilton (D)": 52.0, "Roger Marshall (R)": 43.0, "Other": 4.0, "Undecided": 1.0}},
     {"raceId": "KS-SEN-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 800, "sampleType": "LV", "results": {"Adam Hamilton (D)": 49.0, "Roger Marshall (R)": 45.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "KS-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2092, "sampleType": "LV", "results": {"Adam Hamilton (D)": 50.0, "Roger Marshall (R)": 49.0, "Other": 1.0}},
-    {"raceId": "KS-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 736, "sampleType": "LV", "results": {"Adam Hamilton (D)": 49.0, "Roger Marshall (R)": 44.0, "Other": 4.0, "Undecided": 3.0}}
+    {"raceId": "KS-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 736, "sampleType": "LV", "results": {"Adam Hamilton (D)": 49.0, "Roger Marshall (R)": 44.0, "Other": 4.0, "Undecided": 3.0}},
+    {"raceId": "KS-SEN-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Adam Hamilton (D)": 51.9, "Roger Marshall (R)": 44.9, "Other": 1.6, "Undecided": 1.7}}
   ],
 };

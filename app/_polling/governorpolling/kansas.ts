@@ -49,6 +49,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-GOV-2026", "pollster": "Washington Post/Schar School", "startDate": "2026-10-22", "endDate": "2026-10-26", "sampleSize": 1000, "sampleType": "LV", "results": {"Cindy Holscher (D)": 51.0, "Ty Masterson (R)": 45.0, "Undecided": 4.0}},
     {"raceId": "KS-GOV-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-10-26", "endDate": "2026-10-28", "sampleSize": 800, "sampleType": "LV", "results": {"Cindy Holscher (D)": 46.0, "Ty Masterson (R)": 50.0, "Undecided": 4.0}},
     {"raceId": "KS-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-26", "endDate": "2026-10-29", "sampleSize": 2092, "sampleType": "LV", "results": {"Cindy Holscher (D)": 49.0, "Ty Masterson (R)": 50.0}},
-    {"raceId": "KS-GOV-2026", "pollster": "New York Times/Siena College", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 736, "sampleType": "LV", "results": {"Cindy Holscher (D)": 48.0, "Ty Masterson (R)": 47.0, "Undecided": 5.0}}
+    {"raceId": "KS-GOV-2026", "pollster": "New York Times/Siena College", "startDate": "2026-10-27", "endDate": "2026-11-01", "sampleSize": 736, "sampleType": "LV", "results": {"Cindy Holscher (D)": 48.0, "Ty Masterson (R)": 47.0, "Undecided": 5.0}},
+    {"raceId": "KS-GOV-2026", "pollster": "AtlasIntel", "startDate": "2026-10-28", "endDate": "2026-11-01", "sampleSize": 1500, "sampleType": "LV", "results": {"Cindy Holscher (D)": 49.9, "Ty Masterson (R)": 45.6, "Other": 1.5, "Undecided": 2.9}}
   ],
 };

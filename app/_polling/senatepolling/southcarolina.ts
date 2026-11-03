@@ -2,7 +2,7 @@
 // South Carolina — 2026 U.S. Senate: Annie Andrews (D) vs. Darline Graham (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-29.
+// ballot were dropped. Newest poll: 2026-11-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -50,6 +50,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "SC-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-10-19", "endDate": "2026-10-26", "sampleSize": 707, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 48.0, "Undecided": 4.0}},
     {"raceId": "SC-SEN-2026", "pollster": "The Citadel Poll", "startDate": "2026-10-14", "endDate": "2026-10-25", "sampleSize": 890, "sampleType": "LV", "results": {"Annie Andrews (D)": 39.0, "Darline Graham (R)": 43.0, "Other": 4.0, "Undecided": 14.0}},
     {"raceId": "SC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-10-19", "endDate": "2026-10-24", "sampleSize": 955, "sampleType": "LV", "results": {"Annie Andrews (D)": 47.0, "Darline Graham (R)": 51.0, "Other": 2.0}},
-    {"raceId": "SC-SEN-2026", "pollster": "Patinkin Research Strategies (D)", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 500, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 43.0, "Other": 8.0}}
+    {"raceId": "SC-SEN-2026", "pollster": "Patinkin Research Strategies (D)", "startDate": "2026-10-27", "endDate": "2026-10-29", "sampleSize": 500, "sampleType": "LV", "results": {"Annie Andrews (D)": 48.0, "Darline Graham (R)": 43.0, "Other": 8.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-31", "endDate": "2026-11-01", "sampleSize": 1095, "sampleType": "LV", "results": {"Annie Andrews (D)": 45.5, "Darline Graham (R)": 47.5, "Undecided": 7.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-27", "endDate": "2026-10-31", "sampleSize": 1028, "sampleType": "LV", "results": {"Annie Andrews (D)": 47.0, "Darline Graham (R)": 50.0, "Undecided": 3.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "Resonance Media", "startDate": "2026-10-30", "endDate": "2026-10-30", "sampleSize": 600, "sampleType": "LV", "results": {"Annie Andrews (D)": 46.2, "Darline Graham (R)": 44.6, "Other": 2.7, "Undecided": 6.5}}
   ],
 };
