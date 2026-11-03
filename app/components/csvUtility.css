@@ -1,0 +1,12 @@
+.csvu { position: relative; z-index: 1; max-width: 1440px; margin: 28px auto 0; padding: 0 clamp(12px, 2vw, 28px); }
+.csvu-in { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid var(--line2, rgba(255,255,255,.15)); border-radius: 12px; background: rgba(var(--line-rgb, 255,255,255), .04); }
+.csvu-copy { display: grid; gap: 2px; min-width: 0; flex: 1 1 320px; }
+.csvu-copy b { font: 700 11px var(--font-m, monospace); letter-spacing: .14em; text-transform: uppercase; color: var(--hi, inherit); }
+.csvu-copy span { font-size: 12.5px; color: var(--mute, inherit); line-height: 1.4; }
+.csvu-btn { font: 700 13px var(--font-b, sans-serif); color: var(--hi, inherit); background: rgba(var(--line-rgb, 255,255,255), .1); border: 1px solid var(--line2, rgba(255,255,255,.2)); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; min-height: 40px; }
+.csvu-btn:hover:not(:disabled) { background: rgba(var(--line-rgb, 255,255,255), .18); }
+.csvu-btn:disabled { opacity: .6; cursor: progress; }
+.csvu-btn:focus-visible { outline: 2px solid var(--focus-ring, currentColor); outline-offset: 2px; }
+.csvu-st { margin: 8px 2px 0; font-size: 12px; color: var(--mute, inherit); min-height: 1em; overflow-wrap: anywhere; }
+.csvu-st code { font-family: var(--font-m, monospace); }
+@media (max-width: 640px) { .csvu-btn { width: 100%; } }

@@ -2,7 +2,7 @@
 
 import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
 import LangPicker from "./LangPicker";
@@ -26,6 +26,13 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
   const [acc, setAcc] = useState<string | null>(null);   // phone accordion
   const timer = useRef<number | null>(null);
   const bar = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const dlgRef = useRef<HTMLDivElement>(null);
+  // Does the full desktop navigation fit beside the logo and the tools? null until measured (the CSS breakpoints cover the
+  // first paint). When it does not fit, the whole nav folds into the Menu button at once, so no link is ever clipped or dropped.
+  const [fit, setFit] = useState<"on" | "off" | null>(null);
 
   useEffect(() => { setOpen(false); setMenu(null); }, [pathname]);
   const head = useRef<HTMLElement>(null);
@@ -66,6 +73,45 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
     return () => { window.removeEventListener("keydown", onKey); window.removeEventListener("mousedown", onDown); };
   }, [menu]);
 
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current, nav = navRef.current; if (!wrap || !nav) return;
+    const logo = wrap.querySelector<HTMLElement>(".logo"), right = wrap.querySelector<HTMLElement>(".right"); if (!logo || !right) return;
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      const cs = getComputedStyle(wrap), gap = parseFloat(cs.columnGap) || 0, pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      const tools = [...right.children].filter((el) => !el.classList.contains("burger") && getComputedStyle(el).display !== "none") as HTMLElement[];
+      const rgap = parseFloat(getComputedStyle(right).columnGap) || 0;
+      const rightW = tools.reduce((n, el) => n + el.getBoundingClientRect().width, 0) + rgap * Math.max(0, tools.length - 1);
+      const avail = wrap.clientWidth - pad - logo.getBoundingClientRect().width - rightW - gap * 2;
+      const need = nav.getBoundingClientRect().width;
+      // 12px of slack to open, 0 to close: no flicker at the boundary
+      setFit((cur) => (need <= avail - (cur === "off" ? 12 : 0) ? "on" : "off"));
+    };
+    const run = () => { if (!raf) raf = requestAnimationFrame(measure); };
+    measure();
+    const ro = new ResizeObserver(run); [wrap, nav, logo, right].forEach((el) => ro.observe(el));
+    window.addEventListener("resize", run);
+    document.fonts?.ready.then(run).catch(() => {});
+    return () => { ro.disconnect(); window.removeEventListener("resize", run); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+  // the phone menu is a modal dialog: focus moves into it, Tab stays inside it, and focus goes back to where it came from
+  useEffect(() => {
+    if (!open) return;
+    const from = document.activeElement as HTMLElement | null;
+    const d = dlgRef.current, burger = burgerRef.current; d?.querySelector<HTMLElement>(".mhead .btn")?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !d) return;
+      const f = [...d.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])")].filter((el) => el.offsetParent !== null);
+      if (!f.length) return;
+      const a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    };
+    window.addEventListener("keydown", trap);
+    return () => { window.removeEventListener("keydown", trap); const back = burger && burger.offsetParent !== null ? burger : from; back?.focus?.(); };
+  }, [open]);
+
   const inGroup = (g: NavGroup) => {
     if (g.key === "early") return pathname.startsWith("/maps/early-vote");
     if (g.key === "maps") return pathname.startsWith("/maps") && !pathname.startsWith("/maps/early-vote");
@@ -95,10 +141,10 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
           </div>
         </div>
       ) : null}
-      <div className="top" ref={bar}>
-        <div className="wrap">
+      <div className="top" ref={bar} data-navfit={fit ?? undefined}>
+        <div className="wrap" ref={wrapRef}>
           <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={40} /></Link>
-          <nav className="nav mmenu" aria-label="Primary">
+          <nav className="nav mmenu" aria-label="Primary" ref={navRef} aria-hidden={fit === "off" ? true : undefined}>
             {MENU.map((g) => {
               const has = g.cols.length > 0, on = inGroup(g), op = menu === g.key;
               return (
@@ -143,12 +189,12 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
             <LangPicker />
             <ThemeToggle />
             <Link className="btn gold wr" href="/on-point-polling/weighting-room">The Weighting Room</Link>
-            <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
+            <button type="button" className="btn burger" ref={burgerRef} aria-haspopup="dialog" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
           </div>
         </div>
       </div>
       {open && (
-        <div className="mnav" id="opp-mnav" role="dialog" aria-modal="true" aria-label="Menu">
+        <div className="mnav" id="opp-mnav" role="dialog" aria-modal="true" aria-label="Menu" ref={dlgRef}>
           <div className="mhead">
             <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={36} /></Link>
             <button type="button" className="btn sm" onClick={() => setOpen(false)}>Close</button>
@@ -156,9 +202,9 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
           <nav aria-label="Menu" className="macc">
             {MENU.map((g) => g.cols.length ? (
               <div key={g.key} className={`macc-g${acc === g.key ? " open" : ""}`}>
-                <button type="button" aria-expanded={acc === g.key} onClick={() => setAcc(acc === g.key ? null : g.key)}>{g.label}<Caret /></button>
+                <button type="button" aria-expanded={acc === g.key} aria-controls={`macc-${g.key}`} onClick={() => setAcc(acc === g.key ? null : g.key)}>{g.label}<Caret /></button>
                 {acc === g.key ? (
-                  <div className="macc-b">
+                  <div className="macc-b" id={`macc-${g.key}`}>
                     <Link href={g.href} className="all">All of {g.label}</Link>
                     {g.cols.map((c) => (
                       <div key={c.h}><h3>{c.h}</h3>{c.links.map((l) => <Link key={l.href + l.label} href={l.href}>{l.label}</Link>)}</div>
@@ -168,6 +214,9 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
               </div>
             ) : <Link key={g.key} href={g.href} className="macc-l">{g.label}</Link>)}
             <Link href="/search" className="macc-l">Search</Link>
+            {/* the status strip's utility links are hidden on narrow screens; they live here instead */}
+            <Link href="/on-point-polling/polls" className="macc-l">Poll releases</Link>
+            <Link href="/portal/login" className="macc-l">Client portal</Link>
           </nav>
           <div className="mfoot">
             <Link className="btn gold wr" href="/on-point-polling/weighting-room">The Weighting Room</Link>

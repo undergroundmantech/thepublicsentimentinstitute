@@ -17,6 +17,7 @@
 header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 @media (max-width: 900px) { .opp .ms-upd, .opp .ms-links { display: none; } }
 @media (max-width: 560px) { .opp .ms-odds span:nth-child(3) { display: none; } .opp .mstrip .wrap { gap: 12px; } }
+@media (max-width: 420px) { .opp .mstrip { font-size: 11px; } .opp .mstrip .wrap { gap: 8px; } .opp .ms-odds { gap: 8px; min-width: 0; } .opp .ms-day { min-width: 0; } }
 
 /* main bar */
 .opp .top .wrap { height: 60px; gap: 20px; }
@@ -76,14 +77,27 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
   .opp .top .right .btn.ghost.search { width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
   .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
 }
-@media (max-width: 1400px) { .opp .top .right .btn.gold { display: none; } }
+/* the primary CTA stays in the bar at every width where it fits; at 960px and below it lives in the Menu. Search stays in the bar
+   as an icon at every width (opp.css hides every .ghost button at 960px and 600px; this puts the search icon back). */
+@media (max-width: 960px) {
+  .opp .top .right .btn.gold { display: none; }
+  .opp .top .right .btn.ghost.search { display: inline-flex; width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
+  .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
+}
 @media (max-width: 1240px) {
   .opp .top .wrap { padding-inline: 20px; }
   .opp .top .right { gap: 8px; }
   .opp .mm-i > a, .opp .mm-i > button { padding: 0 7px; font-size: 13px; }
   .opp .mm-t .mm-l { padding-left: 7px; font-size: 13px; } .opp .mm-t.live .mm-l { padding-left: 20px; }
 }
-@media (max-width: 1120px) { .opp .nav.mmenu { display: none; } .opp .burger { display: inline-flex; padding: 8px 12px; } }
+/* Before the width is measured (first paint, no script) the old breakpoint decides. Once measured, data-navfit decides: "off" folds
+   the whole nav into the Menu button the moment it stops fitting; it stays in the DOM, out of sight, so it can be measured again. */
+@media (max-width: 1120px) { .opp .top:not([data-navfit]) .nav.mmenu { display: none; } .opp .top:not([data-navfit]) .burger { display: inline-flex; padding: 8px 12px; } }
+.opp .top[data-navfit="off"] .nav.mmenu { position: absolute; left: 0; visibility: hidden; pointer-events: none; width: max-content; height: 0; overflow: hidden; }
+.opp .top[data-navfit="off"] .burger { display: inline-flex; padding: 8px 12px; }
+.opp .top[data-navfit="on"] .nav.mmenu { display: flex; }
+.opp .top .right { flex-shrink: 0; }
+.opp .burger:focus-visible, .opp .mnav .btn:focus-visible, .opp .mnav a:focus-visible, .opp .macc-g > button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 /* phone menu */
 .opp .mnav { overflow-y: auto; }

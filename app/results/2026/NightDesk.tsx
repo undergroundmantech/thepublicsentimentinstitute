@@ -58,7 +58,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const [now, setNow] = useState(0);
   const [tab, setTab] = useState("nd-results");
   // race history: recorded results and published forecasts by time, one shared cursor across both chart groups
-  const hist = useRaceHistory(!embedded && r && /^(sen|gov|house)-/.test(r.id) ? r.id : null);
+  const hist = useRaceHistory(r && /^(sen|gov|house)-/.test(r.id) ? r.id : null);
   const [hcur, setHcur] = useState<number | null>(null);
   // section tabs scroll the desk itself, never the page behind it, and never change the address
   const jump = (k: string) => {
@@ -631,4 +631,46 @@ html[data-theme="light"] .desk.nd .rd-county-tablewrap tbody tr:hover{background
 html[data-theme="light"] .desk.nd .topline-bar span{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 55%);box-shadow:none}
 html[data-theme="light"] .desk.nd .prob-ring,html[data-theme="light"] .desk.nd .rep-ring{filter:drop-shadow(0 8px 18px rgba(40,20,80,.18))}
 html[data-theme="light"] .desk.nd .rd-map{background:radial-gradient(80% 80% at 50% 40%,rgba(120,90,255,.06),transparent 70%),#fff}
+/* P0 layout: Reported results and Forecast snapshot are stacked, each the full width of the desk (standalone page and the monitor's
+   right-hand desk alike). Panels reflow by their own width (container queries), so nothing is truncated, clipped or squeezed. */
+.desk.nd .dashboard-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+.desk.nd .dashboard-grid>.card.span-3{grid-column:1/-1;min-width:0}
+.desk.nd #nd-results,.desk.nd #nd-forecast{container-type:inline-size}
+/* the six reporting fields: a framed strip that wraps by width instead of squeezing the last field onto its own row */
+.desk.nd .race-meta{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.desk.nd .meta-block{border-left:0;box-shadow:-1px 0 0 var(--line2),0 -1px 0 var(--line2)}
+.desk.nd .meta-block b{white-space:nowrap;overflow-wrap:normal;font-size:clamp(15px,1.3vw,18px)}
+.desk.nd .meta-block.nd-status b{white-space:normal;overflow-wrap:anywhere}
+.desk.nd .meta-block b small{font-size:.7em;font-weight:700;opacity:.7}
+html[data-theme="light"] .desk.nd .meta-block{box-shadow:-1px 0 0 rgba(17,0,25,.09),0 -1px 0 rgba(17,0,25,.09)}
+@media(max-width:720px){.desk.nd .race-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.desk.nd .meta-block{box-shadow:-1px 0 0 var(--line2),0 -1px 0 var(--line2);border:0}.desk.nd .meta-block:last-child{grid-column:1/-1}}
+/* reported results: roomy columns, names whole, figures never clipped */
+.desk.nd .topline-columns,.desk.nd .topline-row-top{grid-template-columns:minmax(0,1fr) minmax(104px,170px) minmax(76px,120px)}
+.desk.nd .topline-copy strong{overflow-wrap:anywhere;line-height:1.2}
+.desk.nd .topline-votes,.desk.nd .topline-pct{white-space:nowrap}
+.desk.nd .topline-foot{flex-wrap:wrap}
+.desk.nd .nd-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+/* forecast snapshot: dial | outcomes | reporting across, then the projection beneath */
+.desk.nd .forecast-model-layout{grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,3cqi,44px);align-items:center}
+.desk.nd .forecast-support{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(16px,2.4cqi,36px);align-items:center}
+.desk.nd .forecast-support .reporting-module{border-top:0;padding-top:0;padding-left:clamp(16px,2.4cqi,36px);border-left:1px solid var(--hairline);min-width:0}
+.desk.nd .outcome-row span{min-width:0;overflow-wrap:anywhere}
+.desk.nd .reporting-copy b{white-space:normal}
+.desk.nd .projected-top{align-items:center}
+.desk.nd .projected-bar-row{grid-template-columns:minmax(96px,160px) minmax(0,1fr) 64px minmax(84px,110px)}
+.desk.nd .projected-bar-name span{overflow-wrap:anywhere}
+.desk.nd .projected-bar-delta{white-space:nowrap}
+@container (max-width:760px){
+  .desk.nd .forecast-model-layout{grid-template-columns:1fr;justify-items:stretch}
+  .desk.nd .forecast-hero{justify-self:center}
+  .desk.nd .forecast-support{grid-template-columns:1fr}
+  .desk.nd .forecast-support .reporting-module{border-left:0;padding-left:0;padding-top:13px;border-top:1px solid var(--hairline)}
+}
+@container (max-width:520px){
+  .desk.nd .projected-bar-row{grid-template-columns:minmax(0,1fr) 58px;row-gap:5px}
+  .desk.nd .projected-bar-track{grid-column:1/-1;order:3}
+  .desk.nd .projected-bar-delta{grid-column:1/-1;order:4;text-align:left}
+  .desk.nd .topline-columns,.desk.nd .topline-row-top{grid-template-columns:minmax(0,1fr) auto auto;gap:8px}
+  .desk.nd .snapshot-heading{flex-wrap:wrap}
+}
 `;

@@ -14,7 +14,7 @@
 .mon-top { left: clamp(12px, 1.4vw, 24px); top: clamp(12px, 1.4vw, 22px); display: grid; gap: 10px; max-width: min(760px, 56vw); pointer-events: none; }
 .mon-top > * { pointer-events: auto; }
 .mon-title { padding: 14px 18px; }
-.mon-title .eye { display: inline-flex; align-items: center; gap: 8px; font: 700 10.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.mon-title .eye { display: inline-flex; align-items: center; gap: 8px; font: 700 clamp(10.5px, .9vw, 12px) var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
 .mon-title .eye i { width: 7px; height: 7px; border-radius: 50%; background: #6b6384; } .mon-title .eye i.on { background: var(--live, #ff3b5c); animation: pulse 1.8s infinite; }
 .mon-title h1 { margin: 6px 0 4px; font: 800 clamp(22px, 2.2vw, 34px)/1.05 var(--font-d); letter-spacing: -.03em; color: #fff; }
 .mon-title h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -195,9 +195,10 @@ html[data-theme="light"] .mon-toast .w { color: var(--ink); }
 .mon.desk-on .mon-left, .mon.desk-on .mon-right { display: none; }
 .mon-top, .mon-left, .mon-right { position: relative; inset: auto; z-index: 2; }
 .mon-top { grid-area: top; display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; max-width: none; padding: 12px clamp(12px, 1.4vw, 22px); border-bottom: 1px solid rgba(255, 255, 255, .09); background: rgba(8, 6, 16, .82); pointer-events: auto; }
-.mon-title { background: none !important; border: 0 !important; backdrop-filter: none !important; padding: 0; border-radius: 0; flex: 1 1 360px; min-width: 0; animation: none; }
-.mon-title h1 { font-size: clamp(20px, 1.6vw, 26px); margin: 3px 0 2px; }
-.mon-title p { font-size: 12.5px; }
+.mon-title { background: none !important; border: 0 !important; backdrop-filter: none !important; padding: 0; border-radius: 0; flex: 1 1 100%; min-width: 0; animation: none; }
+/* Situation monitor masthead: sized like the site's primary page H1s (cf. .opp .ph h1), fluid from phone to desktop. */
+.mon-title h1 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; line-height: 1.02; letter-spacing: -.035em; margin: 6px 0 6px; text-wrap: balance; }
+.mon-title p:not(.mon-test) { font-size: clamp(14px, 1.25vw, 17px); line-height: 1.35; }
 .mon-ctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .mon-clock { display: grid; justify-items: end; gap: 1px; margin-left: auto; font-family: var(--font-m); }
 .mon-clock b { font: 800 20px var(--font-m); color: #fff; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
@@ -305,7 +306,7 @@ html[data-theme="light"] .mon-cp-need .d b { color: var(--dem); } html[data-them
   .mon-seg { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
   .mon-seg::-webkit-scrollbar { display: none; }
   .mon-seg button { flex: none; }
-  .mon-title h1 { font-size: 22px; }
+  .mon-title h1 { margin: 4px 0 4px; }
   .mon-clock { display: flex; align-items: baseline; gap: 8px; }
   .mon-clock b { font-size: 16px; }
 }
@@ -347,3 +348,7 @@ html[data-theme="light"] .mon-office button { color: var(--ink2); background: rg
 html[data-theme="light"] .mon-office button[aria-pressed="true"] { color: var(--on-accent); background: var(--gold-fill); }
 html[data-theme="light"] .mon-row .lv.ex { color: #9a94ae; } html[data-theme="light"] .mon-row:not(:has(.ex)) .nm { color: var(--ink); }
 @media (max-width: 1100px) { .mon-office { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; } .mon-jump select { max-width: 160px; } }
+
+/* P0: the standard footer must not interrupt the monitor's fixed-height results experience (the page itself does not scroll
+   at desktop widths; stacked phone layout keeps its footer after the content). */
+@media (min-width: 1101px) { :root:has(.mon) footer.opp { display: none; } }
