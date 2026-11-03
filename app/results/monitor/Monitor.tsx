@@ -3,6 +3,7 @@
 // States and counties are coloured by the returns civicAPI reports, or by how far the returns run from the expected
 // vote. Click a state to fly in and see its counties; click any race to open its full results desk, with the
 // reported results, the live win probability, the estimate of the final count and the county table.
+import TransparencyButton from "@/app/components/CsvUtility";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "@/app/components/Link";
 import { geoOrthographic, geoPath, geoGraticule10, geoContains, geoCentroid, geoDistance, geoBounds, geoArea, type GeoPermissibleObjects } from "d3-geo";
@@ -540,7 +541,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
             ))}
           </div>
         ) : null}
-        <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
+        <div className="mon-clock-wrap">
+          <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
+          <TransparencyButton />
+        </div>
       </section>
 
       <aside className="mon-left" aria-label="Control of the Senate, the House and the governorships">

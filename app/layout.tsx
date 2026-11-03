@@ -12,7 +12,6 @@ import Navbar from "./components/Navbar";
 import { getModel } from "./lib/forecastData";
 import TickerBar from "./components/TickerBar";
 import Footer from "./components/Footer";
-import CsvUtility from "./components/CsvUtility";
 import Ambient from "./components/Ambient";
 import Spotlight from "./components/Spotlight";
 import RolloutGate from "./components/RolloutGate";
@@ -100,7 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="opp-main">
           <div className="opp-page">{children}</div>
         </main>
-        <CsvUtility />
         <Footer />
         <MobileTabs />
         <VideoPromo />

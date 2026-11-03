@@ -1,12 +1,20 @@
-.csvu { position: relative; z-index: 1; max-width: 1440px; margin: 28px auto 0; padding: 0 clamp(12px, 2vw, 28px); }
-.csvu-in { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid var(--line2, rgba(255,255,255,.15)); border-radius: 12px; background: rgba(var(--line-rgb, 255,255,255), .04); }
-.csvu-copy { display: grid; gap: 2px; min-width: 0; flex: 1 1 320px; }
-.csvu-copy b { font: 700 11px var(--font-m, monospace); letter-spacing: .14em; text-transform: uppercase; color: var(--hi, inherit); }
-.csvu-copy span { font-size: 12.5px; color: var(--mute, inherit); line-height: 1.4; }
-.csvu-btn { font: 700 13px var(--font-b, sans-serif); color: var(--hi, inherit); background: rgba(var(--line-rgb, 255,255,255), .1); border: 1px solid var(--line2, rgba(255,255,255,.2)); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; min-height: 40px; }
-.csvu-btn:hover:not(:disabled) { background: rgba(var(--line-rgb, 255,255,255), .18); }
-.csvu-btn:disabled { opacity: .6; cursor: progress; }
-.csvu-btn:focus-visible { outline: 2px solid var(--focus-ring, currentColor); outline-offset: 2px; }
-.csvu-st { margin: 8px 2px 0; font-size: 12px; color: var(--mute, inherit); min-height: 1em; overflow-wrap: anywhere; }
-.csvu-st code { font-family: var(--font-m, monospace); }
-@media (max-width: 640px) { .csvu-btn { width: 100%; } }
+/* TRANSPARENCY MONITOR: a compact pill beside the time readouts. */
+.tmon { display: inline-flex; align-items: center; }
+.tmon .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.tmon-btn { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border: 1px solid var(--line2, rgba(255,255,255,.2)); border-radius: 999px; background: rgba(var(--line-rgb, 255,255,255), .06); color: var(--hi, inherit); font: 700 10.5px var(--font-m, monospace); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+.tmon-btn:hover:not(:disabled) { background: rgba(var(--line-rgb, 255,255,255), .14); }
+.tmon-btn:disabled { opacity: .65; cursor: progress; }
+.tmon-btn:focus-visible { outline: 2px solid var(--focus-ring, currentColor); outline-offset: 2px; }
+.tmon-btn.s-done { border-color: var(--called, #37b26c); color: var(--called, #37b26c); }
+.tmon-btn.s-error { border-color: var(--gop, #c22f3b); color: var(--gop, #c22f3b); }
+/* in the masthead's status strip it stays at the strip's height */
+.opp .mstrip .tmon-btn { height: 22px; padding: 0 9px; font-size: 10px; }
+/* beside the Situation Monitor clock, aligned to its right edge */
+.mon-clock-wrap { display: grid; justify-items: end; gap: 6px; margin-left: auto; }
+.mon-clock-wrap .mon-clock { margin-left: 0; }
+@media (max-width: 1100px) { .mon-clock-wrap { margin-left: 0; justify-items: start; } }
+/* the Situation Monitor has its own button beside its clock; the strip's copy would be a duplicate there */
+:root:has(.mon) .opp .mstrip .tmon { display: none; }
+/* phones: the status strip is full, so the button lives in the Menu panel instead */
+@media (max-width: 640px) { .opp .mstrip .tmon { display: none; } }
+.opp .mnav .tmon.in-menu .tmon-btn { height: 40px; padding: 0 16px; font-size: 12px; }

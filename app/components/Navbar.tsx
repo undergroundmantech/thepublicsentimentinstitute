@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
+import TransparencyButton from "./CsvUtility";
 import LangPicker from "./LangPicker";
 import { MENU, type NavGroup } from "./navMenu";
 import { daysOut } from "@/app/lib/opp";
@@ -133,6 +134,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
               <span>Senate <b>D {pct(status.sen)}</b></span><span>House <b>D {pct(status.house)}</b></span><span>Governors <b>D {pct(status.gov)}</b></span>
             </Link>
             <span className="ms-upd">Forecast updated {status.updated}</span>
+            <TransparencyButton />
             <nav className="ms-links" aria-label="Utility">
               <Link href="/on-point-polling/polls">Poll releases</Link>
               <Link href="/portal/login">Client portal</Link>
@@ -223,6 +225,7 @@ export default function Navbar({ status }: { status?: { days: number; updated: s
             <Link className="btn" href="/contact">Contact</Link>
             <ThemeToggle variant="inline" />
             <LangPicker className="btn" inMenu />
+            <TransparencyButton className="in-menu" />
           </div>
         </div>
       )}
