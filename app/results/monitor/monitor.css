@@ -365,5 +365,8 @@ html[data-theme="light"] .mon.desk-on .mon-map { border-bottom-color: rgba(17, 0
   .mon.desk-on .mon-desk .shell > *, .mon.desk-on .mon-desk .dashboard-grid > * { grid-column: 1 / -1; min-width: 0; margin: 14px var(--mon-pad) 0; }
   .mon.desk-on .mon-desk .race-header { grid-area: head; margin: 12px var(--mon-pad) 0 clamp(16px, 1.6vw, 28px); }
   .mon.desk-on .mon-desk #nd-results { grid-area: res; align-self: start; margin: 14px var(--mon-pad) 0 clamp(16px, 1.6vw, 28px); }
+  .mon.desk-on .mon-desk .race-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mon.desk-on .mon-desk .meta-block:nth-child(3n + 1) { border-left: 0; }
+  .mon.desk-on .mon-desk .meta-block:nth-child(n + 4) { border-top: 1px solid var(--line2); }
   html[data-theme="light"] .mon.desk-on .mon-map { border-right-color: rgba(17, 0, 25, .1); }
 }

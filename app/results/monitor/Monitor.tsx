@@ -104,8 +104,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   useEffect(() => { deskOpen.current = !!desk; }, [desk]);
   const openDesk = (id: string) => { if (!desk) opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setDesk(id); };
   useEffect(() => {
-    if (desk) deskEl.current?.focus({ preventScroll: true });
-    else if (opener.current) { if (opener.current.isConnected) opener.current.focus({ preventScroll: true }); opener.current = null; }
+    if (desk) {
+      const el = deskEl.current; el?.focus({ preventScroll: true });
+      // on desktop the desk box is display: contents and cannot take focus, so its first control does
+      if (el && document.activeElement !== el) el.querySelector<HTMLElement>("button, a[href]")?.focus({ preventScroll: true });
+    } else if (opener.current) { if (opener.current.isConnected) opener.current.focus({ preventScroll: true }); opener.current = null; }
   }, [desk]);
 
   const allMode = useMemo(() => (ix?.races ?? []).filter((r) => r.k === mode), [ix, mode]);
