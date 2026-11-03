@@ -100,6 +100,7 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
           <li>then every group&rsquo;s voters are drawn: how many turn out, how many vote third party, and how the rest split.</li>
         </ul>
         <p>Because the national and demographic shocks are shared, a bad night for one party in Michigan is also a bad night for that party in Wisconsin and Pennsylvania. Win probabilities, the 80 percent range of each margin and the chamber odds all come from the same 2,000 runs.</p>
+        <p>Since Nov 3 the published Senate and House odds carry wider uncertainty. Each race&rsquo;s spread of possible margins is multiplied by the square root of two, about 1.41, around an unchanged projected margin, and the chamber odds and seat ranges are recomputed from the same correlated structure. Projected margins, ratings and polling averages do not change, and governor races keep the model&rsquo;s original spread.</p>
       </>
     ),
   },
