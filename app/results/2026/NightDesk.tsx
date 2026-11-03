@@ -343,7 +343,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
 
       {exp && vb ? (
         <section id="nd-counties" className="county card" aria-label={`${STN[r.st]} county map and county by county detail`}>
-          {embedded ? <p className="nd-mapnote">The globe above this desk shows {STN[r.st]}&apos;s counties for this race: hover a county there for its expected and counted vote.</p> : null}
+          {embedded ? <p className="nd-mapnote">The globe beside this desk shows {STN[r.st]}&apos;s counties for this race: hover a county there for its expected and counted vote.</p> : null}
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={view === "forecast" ? "on" : ""} onClick={() => setView("forecast")}>forecast</button>

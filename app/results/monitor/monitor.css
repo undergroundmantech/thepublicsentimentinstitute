@@ -196,8 +196,9 @@ html[data-theme="light"] .mon-toast .w { color: var(--ink); }
 .mon-top, .mon-left, .mon-right { position: relative; inset: auto; z-index: 2; }
 .mon-top { grid-area: top; display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; max-width: none; padding: 12px clamp(12px, 1.4vw, 22px); border-bottom: 1px solid rgba(255, 255, 255, .09); background: rgba(8, 6, 16, .82); pointer-events: auto; }
 .mon-title { background: none !important; border: 0 !important; backdrop-filter: none !important; padding: 0; border-radius: 0; flex: 1 1 360px; min-width: 0; animation: none; }
-.mon-title h1 { font-size: clamp(20px, 1.6vw, 26px); margin: 3px 0 2px; }
-.mon-title p { font-size: 12.5px; }
+.mon-title h1 { font-size: clamp(30px, 4vw, 46px); line-height: 1.04; letter-spacing: -.035em; margin: 6px 0 8px; }
+.mon-title p { font-size: 16px; }
+.mon-title .eye { font-size: 11px; }
 .mon-ctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .mon-clock { display: grid; justify-items: end; gap: 1px; margin-left: auto; font-family: var(--font-m); }
 .mon-clock b { font: 800 20px var(--font-m); color: #fff; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
@@ -305,7 +306,6 @@ html[data-theme="light"] .mon-cp-need .d b { color: var(--dem); } html[data-them
   .mon-seg { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
   .mon-seg::-webkit-scrollbar { display: none; }
   .mon-seg button { flex: none; }
-  .mon-title h1 { font-size: 22px; }
   .mon-clock { display: flex; align-items: baseline; gap: 8px; }
   .mon-clock b { font-size: 16px; }
 }
@@ -356,3 +356,14 @@ html[data-theme="light"] .mon-row .lv.ex { color: #9a94ae; } html[data-theme="li
 .mon.desk-on .mon-desk { position: relative; inset: auto; z-index: 1; width: auto; overflow: visible; border-left: 0; box-shadow: none; animation: none; }
 .mon-desk:focus { outline: none; }
 html[data-theme="light"] .mon.desk-on .mon-map { border-bottom-color: rgba(17, 0, 25, .1); }
+/* desktop: the map and the race header with its reported results share a row half and half; the forecast snapshot
+   and everything after it run full width below. The desk's wrappers dissolve so its sections sit on the monitor grid. */
+@media (min-width: 1101px) {
+  .mon.desk-on { --mon-pad: clamp(20px, 2.6vw, 56px); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "top top" "map head" "map res"; padding-bottom: 70px; }
+  .mon.desk-on .mon-map { height: auto; min-height: clamp(460px, 62vh, 820px); border-bottom: 0; border-right: 1px solid rgba(255, 255, 255, .09); }
+  .mon.desk-on .mon-desk, .mon.desk-on .mon-desk > .desk.nd, .mon.desk-on .mon-desk .shell, .mon.desk-on .mon-desk .dashboard-grid { display: contents; }
+  .mon.desk-on .mon-desk .shell > *, .mon.desk-on .mon-desk .dashboard-grid > * { grid-column: 1 / -1; min-width: 0; margin: 14px var(--mon-pad) 0; }
+  .mon.desk-on .mon-desk .race-header { grid-area: head; margin: 12px var(--mon-pad) 0 clamp(16px, 1.6vw, 28px); }
+  .mon.desk-on .mon-desk #nd-results { grid-area: res; align-self: start; margin: 14px var(--mon-pad) 0 clamp(16px, 1.6vw, 28px); }
+  html[data-theme="light"] .mon.desk-on .mon-map { border-right-color: rgba(17, 0, 25, .1); }
+}
