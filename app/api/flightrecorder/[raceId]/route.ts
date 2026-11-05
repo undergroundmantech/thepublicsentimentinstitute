@@ -18,5 +18,5 @@ export async function GET(_req: Request, { params }: { params: Promise<{ raceId:
     return NextResponse.json({ error: "invalid race id" }, { status: 400 });
   }
   const { snapshots } = await timelineFor(raceId, { env: process.env, legacy: readSnapshots, store: () => resolveStore(process.env).store });
-  return NextResponse.json(snapshots, { headers: { "cache-control": "public, s-maxage=30, stale-while-revalidate=60" } });
+  return NextResponse.json(snapshots, { headers: { "cache-control": "public, max-age=600, s-maxage=3600, stale-while-revalidate=86400" } });
 }

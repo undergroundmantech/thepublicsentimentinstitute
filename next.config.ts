@@ -51,6 +51,17 @@ const nextConfig: NextConfig = {
   async redirects() {
     return redirects;
   },
+  // Nov 5 2026 cost cut: the forecast, results and early vote data files were served with max-age=0, so every page view
+  // went back to the CDN for every file. Browsers now keep them five minutes and the CDN a day, refreshed in the background.
+  async headers() {
+    const data = [{ key: "Cache-Control", value: "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }];
+    return [
+      { source: "/forecast/:path(.*\\.json)", headers: data },
+      { source: "/results/:path(.*\\.json)", headers: data },
+      { source: "/:file(earlyvote.*\\.json)", headers: data },
+      { source: "/polls/:path(.*\\.json)", headers: data },
+    ];
+  },
 };
 
 export default nextConfig;

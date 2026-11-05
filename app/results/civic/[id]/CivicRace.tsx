@@ -21,7 +21,7 @@ export default function CivicRace({ id }: { id: number }) {
   useEffect(() => {
     let dead = false;
     const load = () => fetch(`/api/civic/race/${id}`).then((r) => (r.ok ? r.json() : Promise.reject())).then((j) => { if (!dead) { setD(j); setErr(false); } }).catch(() => { if (!dead) setErr(true); });
-    load(); const t = setInterval(() => { if (!document.hidden) load(); }, 30_000);
+    load(); const t = setInterval(() => { if (!document.hidden) load(); }, 300_000);
     return () => { dead = true; clearInterval(t); };
   }, [id]);
   useEffect(() => { if (!LL) fetch("/results/2026/counties_ll.json").then((r) => r.json()).then((j) => { LL = j; setLl(j); }).catch(() => {}); }, []);

@@ -69,7 +69,7 @@ import { percentIn, probPoints } from "@/app/lib/fmtPct";
 
 const OK_GOV_R = 87529;
 const SC_SEN_R = 87534;
-const REFRESH_MS = 30_000;
+const REFRESH_MS = 3_600_000;
 export const RACE_SLUG = "oklahoma-governor-republican-runoff";
 
 /* ═════════════════════ SLATE ═════════════════════ */

@@ -4,7 +4,7 @@ import Link from "@/app/components/Link";
 import { getRaceUrl } from "../_data/raceRegistry";
 
 const CIVIC_BASE = "https://civicapi.org";
-const POLL_MS = 30_000;
+const POLL_MS = 300_000;
 
 // ── SPOTLIGHT RACES ──────────────────────────────────────────────────────────
 const SPOTLIGHT: Array<{

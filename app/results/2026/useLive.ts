@@ -19,7 +19,7 @@ export function useIndex() {
 // `stale` means a read failed or that data is older than STALE_MS; `error` then says so in words.
 export type LiveState = { at: Date | null; byId: Record<string, CRace>; prev: Record<string, CRace>; raw: CRace[]; error: string | null; loading: boolean; hidden: number; test: boolean; stale: boolean };
 
-export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = 60_000): LiveState {
+export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = 300_000): LiveState {
   const [st, setSt] = useState<LiveState>({ at: null, byId: {}, prev: {}, raw: [], error: null, loading: true, hidden: 0, test: false, stale: false });
   const key = sets.join(",");
   const last = useRef<Record<string, CRace>>({});

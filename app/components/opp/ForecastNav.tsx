@@ -6,6 +6,7 @@ import "./forecastnav.css";
 
 const TABS: { href: string; label: string; match?: (p: string) => boolean }[] = [
   { href: "/forecast", label: "Overview", match: (p) => p === "/forecast" },
+  { href: "/forecast/2028", label: "2028 President", match: (p) => p.startsWith("/forecast/2028") },
   { href: "/forecast?office=senate", label: "Senate", match: (p) => /^\/forecast\/[a-z]{2}\/senate$/.test(p) },
   { href: "/forecast?office=house", label: "House", match: (p) => /^\/forecast\/[a-z]{2}\/house-/.test(p) },
   { href: "/forecast?office=governor", label: "Governors", match: (p) => /^\/forecast\/[a-z]{2}\/governor$/.test(p) },

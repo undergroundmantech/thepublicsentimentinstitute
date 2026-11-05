@@ -28,7 +28,7 @@ import { getRaceCapabilities } from "../../_data/raceCapabilities";
 import { getCoverage } from "../../_data/coverage.2026-08-04";
 
 const CIVIC_BASE = "https://civicapi.org";
-const RACE_REFRESH_MS = 30_000;
+const RACE_REFRESH_MS = 300_000;
 import { buildVoteModeRows, voteModeWhyItMatters } from "../../_lib/voteModeModel";
 import type { FlightRecorderSnapshot } from "../../_lib/flightRecorder";
 import { pctPoints, probFraction } from "@/app/lib/fmtPct";

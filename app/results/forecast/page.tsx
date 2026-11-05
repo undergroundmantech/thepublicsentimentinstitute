@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
 import { percentIn, probFraction } from "@/app/lib/fmtPct";
 
-const POLL_MS = 30_000;
+const POLL_MS = 300_000;
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface CivicCandidate { name: string; party: string; color: string; votes: number; percent: number; winner: boolean; }

@@ -1,0 +1,122 @@
+race,counties,vote_weighted_error,share_counties_d_beat_forecast,best_d_county,best_r_county
+sen-IA,99,0.21,0.394,Kossuth -13.8,Winnebago +10.1
+sen-MI,83,2.55,0.229,Ottawa -5.3,Calhoun +13.0
+sen-OH,88,2.37,0.557,Union -11.8,Cuyahoga +9.4
+sen-TX,252,-5.21,0.948,Maverick -27.8,Dallas +21.5
+sen-GA,159,-4.15,0.698,Whitfield -20.2,Stewart +14.3
+sen-NC,100,-7.48,0.75,Johnston -22.3,Northampton +18.4
+sen-SC,46,-3.16,0.609,Kershaw -11.3,Hampton +26.4
+sen-NE,93,8.64,0.086,Hamilton -4.1,Arthur +31.9
+sen-AK,30,5.51,0.167,Kusilvak Census Area -18.2,Lake and Peninsula Borough +37.2
+sen-KS,105,1.26,0.419,Finney -29.2,Hodgeman +15.2
+sen-NH,10,2.27,0.4,Merrimack -4.7,Strafford +14.2
+sen-ME,16,-1.8,0.438,Cumberland -7.0,Franklin +6.7
+sen-FL,67,-0.68,0.448,Hendry -21.5,Sumter +8.5
+sen-SD,65,7.87,0.046,Harding -1.4,Ziebach +28.3
+sen-ID,42,5.24,0.238,Franklin -11.5,Latah +25.9
+sen-MT,55,-7.84,0.873,Powder River -21.5,Roosevelt +14.1
+sen-VA,95,-2.37,0.789,Orange -11.3,Sussex +8.7
+sen-MN,84,0.97,0.179,Carver -4.2,Koochiching +17.7
+sen-MS,82,0.15,0.451,DeSoto -13.2,Issaquena +29.5
+sen-LA,64,-3.13,0.672,Livingston -17.6,East Carroll +10.7
+sen-AR,75,4.04,0.08,Sevier -14.6,Woodruff +21.5
+sen-KY,120,2.78,0.3,Hart -6.0,Nicholas +16.1
+sen-OR,36,9.67,0.028,Malheur -1.2,Lane +12.3
+sen-WY,23,-6.89,0.783,Sheridan -17.6,Niobrara +9.9
+sen-CO,64,-4.1,0.578,Archuleta -16.3,Conejos +9.2
+sen-NM,33,-3.85,0.909,Luna -14.3,Harding +3.0
+sen-OK,76,0.64,0.276,Wagoner -8.8,Roger Mills +28.9
+sen-NJ,21,-1.65,0.619,Gloucester -23.0,Salem +7.8
+sen-AL,67,-1.25,0.463,DeKalb -12.7,Lowndes +15.7
+sen-TN,95,-5.43,0.947,McMinn -14.7,Lake +6.0
+sen-IL,73,-7.8,0.521,McLean -17.9,Schuyler +24.9
+sen-WV,55,-6.33,0.909,Berkeley -12.6,Clay +3.7
+sen-DE,3,0.06,0.667,Sussex -6.3,New Castle +4.1
+sen-RI,5,3.11,0.0,Washington +2.1,Providence +3.4
+sen-MA,14,1.26,0.429,Nantucket -10.3,Plymouth +8.4
+gov-FL,67,-0.18,0.358,Hendry -23.2,Jefferson +9.8
+gov-TX,252,-6.77,0.972,Moore -29.0,Travis +2.8
+gov-IA,99,-2.52,0.707,Clarke -23.5,Kossuth +19.4
+gov-OH,88,-1.85,0.693,Henry -15.7,Monroe +12.8
+gov-GA,159,-3.63,0.686,Whitfield -20.3,Stewart +12.8
+gov-WI,71,-1.46,0.423,Walworth -15.3,Buffalo +15.3
+gov-MI,83,4.5,0.072,Saginaw -1.6,Calhoun +16.2
+gov-NY,62,-4.55,0.597,Orange -16.3,Chenango +17.2
+gov-PA,67,3.92,0.06,Mifflin -2.8,Montour +18.0
+gov-AZ,15,-5.8,1.0,Pinal -13.3,Apache -0.3
+gov-NV,17,-3.56,0.647,Washoe -8.4,Lincoln +7.6
+gov-CA,58,-2.12,0.759,Colusa -20.6,San Francisco +10.7
+gov-OR,36,-5.88,0.972,Malheur -18.6,Multnomah +2.4
+gov-KS,105,4.39,0.114,Seward -27.3,Chase +23.3
+gov-NE,93,4.7,0.29,Dakota -17.1,McPherson +26.9
+gov-OK,76,1.44,0.237,Mayes -9.9,Coal +16.7
+gov-AL,67,-4.68,0.746,DeKalb -21.5,Bullock +11.1
+gov-SD,65,11.79,0.015,Jerauld -78.9,Jackson +25.6
+gov-VT,14,1.66,0.357,Caledonia -4.4,Chittenden +4.2
+gov-CO,64,-9.1,0.953,Archuleta -23.6,Crowley +1.6
+gov-NH,10,2.93,0.3,Belknap -8.4,Grafton +17.2
+gov-TN,95,-5.09,0.958,Rhea -22.3,Shelby +6.1
+gov-MN,84,2.44,0.143,Nobles -7.3,Koochiching +24.6
+gov-SC,46,-2.52,0.522,Spartanburg -13.0,Hampton +25.1
+gov-ID,42,6.37,0.214,Bannock -19.5,Latah +26.1
+gov-WY,23,25.03,0.043,Crook -2.9,Teton +70.9
+gov-AK,30,2.23,0.4,Prince of Wales-Hyder Census Area -10.4,Lake and Peninsula Borough +34.2
+gov-HI,4,-14.64,1.0,Kauai -26.7,Maui -10.6
+gov-NM,33,-2.19,0.697,Luna -15.9,Mora +11.0
+gov-AR,75,2.75,0.293,Sevier -28.4,Phillips +25.4
+gov-IL,72,0.42,0.153,Alexander -44.4,Schuyler +31.1
+gov-ME,16,-5.55,0.938,Kennebec -10.2,Washington +1.7
+gov-CT,8,2.12,0.375,Windham -2.7,Tolland +5.1
+gov-RI,5,-30.18,1.0,Kent -32.6,Newport -24.5
+gov-MA,14,-3.87,0.714,Hampshire -11.2,Suffolk +3.3
+gov-MD,24,0.76,0.458,Washington -11.8,Kent +13.5
+house-AK,30,31.72,0.0,Southeast Fairbanks Census Area +6.2,Kusilvak Census Area +69.0
+house-AL,67,-13.62,1.0,Limestone -22.9,Bullock -0.1
+house-AR,75,-4.32,0.853,Sevier -17.8,Woodruff +6.0
+house-AZ,15,-0.84,0.8,Greenlee -10.7,Cochise +4.3
+house-CA,58,3.19,0.328,Colusa -116.8,Orange +18.6
+house-CO,64,-2.4,0.641,Morgan -21.5,San Miguel +10.2
+house-CT,8,4.37,0.375,Windham -20.3,Fairfield +9.4
+house-DE,3,-1.71,0.667,Sussex -9.2,New Castle +2.9
+house-FL,67,1.57,0.478,Hendry -19.6,Charlotte +8.8
+house-GA,159,-7.68,0.943,Whitfield -25.0,Greene +4.1
+house-HI,4,-1.34,0.25,Honolulu -4.6,Maui +9.4
+house-IA,99,-2.68,0.879,Lee -13.6,Polk +7.3
+house-ID,42,-1.58,0.81,Bannock -29.3,Madison +16.2
+house-IL,72,1.11,0.292,Kane -11.5,Schuyler +21.6
+house-IN,90,-11.06,0.989,Dubois -29.7,LaPorte +4.6
+house-KS,105,1.2,0.295,Neosho -23.2,Decatur +12.4
+house-KY,120,-8.05,0.933,Nicholas -25.0,Hickman +3.2
+house-LA,64,-3.95,0.766,St. Bernard -20.2,East Carroll +10.2
+house-MA,14,-0.51,0.5,Hampden -45.4,Middlesex +19.6
+house-MD,24,7.16,0.125,Queen Anne's -5.4,Calvert +14.1
+house-ME,16,-3.92,0.875,Knox -8.6,Franklin +3.0
+house-MI,83,6.22,0.229,Bay -7.7,Livingston +16.6
+house-MN,84,7.07,0.262,Nobles -9.3,Hennepin +15.7
+house-MO,115,-4.51,0.965,Scotland -23.2,St. Louis County +4.7
+house-MS,82,-6.0,0.817,DeSoto -16.1,Issaquena +9.5
+house-MT,55,-2.51,0.309,Lincoln -16.9,Carbon +14.7
+house-NC,100,-10.21,1.0,Madison -26.8,Jones -0.6
+house-ND,53,3.02,0.245,Williams -9.8,Sioux +23.4
+house-NE,93,4.58,0.161,Dakota -11.5,Gosper +19.2
+house-NH,10,4.59,0.4,Coos -10.3,Strafford +14.3
+house-NJ,21,-3.88,0.714,Hudson -23.5,Essex +4.5
+house-NM,33,-3.21,0.879,Luna -21.0,Los Alamos +7.6
+house-NV,17,4.34,0.647,Humboldt -13.7,Washoe +11.0
+house-NY,62,3.33,0.516,Chenango -19.8,Rockland +16.9
+house-OH,88,-2.69,0.886,Henry -14.5,Clark +5.0
+house-OK,76,-3.2,0.882,Mayes -19.1,Comanche +6.1
+house-OR,36,6.72,0.111,Columbia -2.2,Deschutes +12.9
+house-PA,67,-4.47,0.94,Greene -13.2,Montour +12.7
+house-RI,5,-1.94,0.4,Providence -4.8,Newport +6.6
+house-SC,46,-6.92,0.891,Spartanburg -17.4,McCormick +4.5
+house-SD,65,18.71,0.0,Aurora +4.3,Buffalo +38.1
+house-TN,95,-13.23,1.0,Washington -53.0,Shelby -5.6
+house-TX,252,-4.95,0.849,Starr -62.5,Irion +6.1
+house-UT,29,-3.29,0.552,Cache -24.1,Rich +12.5
+house-VA,95,-0.61,0.663,Smyth -9.8,Northumberland +10.4
+house-VT,14,5.63,0.143,Essex -3.1,Lamoille +10.6
+house-WA,39,0.96,0.641,Clallam -11.7,Garfield +12.5
+house-WI,71,-1.83,0.437,Lafayette -109.2,Sauk +28.0
+house-WV,55,-15.79,1.0,Mingo -23.4,Doddridge -6.0
+house-WY,23,-11.46,0.957,Sheridan -18.6,Teton +12.9

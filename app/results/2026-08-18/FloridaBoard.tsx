@@ -55,7 +55,7 @@ import { percentIn, probPoints } from "@/app/lib/fmtPct";
 import type { FreshtakePayload } from "../../api/freshtake/route";
 
 const FL_GOV_R = 86349;
-const REFRESH_MS = 30_000;
+const REFRESH_MS = 3_600_000;
 export const RACE_SLUG = "florida-governor-republican-primary";
 
 /* ═════════════════════ SLATE ═════════════════════ */
@@ -276,7 +276,7 @@ function useFreshtake(enabled: boolean) {
     };
     pull();
     // Banked turnout moves in daily batches, not by the minute.
-    const t = setInterval(() => { if (!document.hidden) pull(); }, 5 * 60_000);
+    const t = setInterval(() => { if (!document.hidden) pull(); }, 3_600_000);
     return () => { alive = false; ac.abort(); clearInterval(t); };
   }, [enabled]);
 

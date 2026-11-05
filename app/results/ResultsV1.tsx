@@ -7,7 +7,7 @@ import ResultsLanding from "./components/ResultsLanding";
 import { percentIn } from "@/app/lib/fmtPct";
 
 const CIVIC_BASE = "https://civicapi.org";
-const POLL_MS = 30_000;
+const POLL_MS = 300_000;
 
 function calculateWinProbability(leaderVotes: number, runnerUpVotes: number, percentReporting: number): number {
   if (percentReporting >= 99) return 100;

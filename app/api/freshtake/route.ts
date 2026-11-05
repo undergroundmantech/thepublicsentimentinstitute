@@ -25,7 +25,7 @@ import { NextResponse } from "next/server";
 
 const SRC = "https://www.freshtake.vote/2026P/countydata.php";
 
-export const revalidate = 0;
+export const revalidate = 86400;
 
 export interface CountyTurnout {
   county: string;
@@ -168,7 +168,7 @@ export async function GET() {
 
     return NextResponse.json(payload, {
       status: 200,
-      headers: { "Cache-Control": "no-store" },
+      headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
     });
   } catch (err) {
     return NextResponse.json(empty(err instanceof Error ? err.message : "fetch failed"), {

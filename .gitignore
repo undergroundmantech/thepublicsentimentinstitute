@@ -61,3 +61,6 @@ __pycache__/
 # L2 early vote downloads
 l2_early_vote/data/
 L2_county_early_vote.zip
+
+/on-point-*.zip
+/onpoint-*.zip

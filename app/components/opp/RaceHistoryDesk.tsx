@@ -13,7 +13,7 @@ const RaceHistory = dynamic(() => import("./RaceHistory"), { ssr: false, loading
 
 export type HistoryState = { s: "idle" } | { s: "ready"; history: PreparedHistory; nowMs: number } | { s: "error" };
 
-const REFRESH_MS = 60_000;
+const REFRESH_MS = 600_000;
 
 /** Loads /api/race-history/{id} and refreshes it while the tab is visible. Pass null to load nothing. */
 export function useRaceHistory(raceId: string | null): HistoryState {

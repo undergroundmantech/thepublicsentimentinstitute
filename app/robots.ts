@@ -13,10 +13,14 @@ const AI_AND_SEARCH = [
   "PerplexityBot", "Perplexity-User", "Amazonbot", "meta-externalagent", "MistralAI-User", "cohere-ai", "YouBot", "CCBot",
 ];
 
+// Crawlers that only collect training data: they bring no readers or citations and pull thousands of pages each pass.
+const TRAINING_ONLY = ["GPTBot", "CCBot", "Google-Extended", "Applebot-Extended", "anthropic-ai", "cohere-ai", "meta-externalagent", "Bytespider", "Amazonbot"];
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: AI_AND_SEARCH, allow: "/", disallow: PRIVATE },
+      { userAgent: TRAINING_ONLY, disallow: "/" },
+      { userAgent: AI_AND_SEARCH.filter((u) => !TRAINING_ONLY.includes(u)), allow: "/", disallow: PRIVATE },
       { userAgent: "*", allow: "/", disallow: PRIVATE },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

@@ -24,5 +24,5 @@ export async function GET(req: Request) {
   const out: Record<string, KalshiRace | null> = {};
   const q = [...ids];
   await Promise.all(Array.from({ length: Math.min(4, q.length) }, async () => { for (let id = q.shift(); id; id = q.shift()) out[id] = await one(id); }));
-  return NextResponse.json({ at: new Date().toISOString(), races: out }, { headers: { "cache-control": "public, s-maxage=120, stale-while-revalidate=600" } });
+  return NextResponse.json({ at: new Date().toISOString(), races: out }, { headers: { "cache-control": "public, max-age=300, s-maxage=900, stale-while-revalidate=3600" } });
 }

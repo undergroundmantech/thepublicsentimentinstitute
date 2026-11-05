@@ -7,7 +7,7 @@ import { classifyRaceTier } from "../_data/raceCapabilities";
 import { percentIn } from "@/app/lib/fmtPct";
 
 const CIVIC_BASE = "https://civicapi.org";
-const REFRESH_MS = 30_000;
+const REFRESH_MS = 300_000;
 const MAX_POLL = 80; // don't hammer civicAPI for a whole season's worth of races
 
 type CivicCandidate = {

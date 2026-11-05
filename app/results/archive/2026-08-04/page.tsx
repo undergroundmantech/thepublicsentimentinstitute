@@ -59,7 +59,7 @@ import { fetchRace } from "../../onpoint/electionLib.js";
 import { percentIn, probPoints } from "@/app/lib/fmtPct";
 
 const MI_ID = 84778;
-const REFRESH_MS = 30_000;
+const REFRESH_MS = 3_600_000;
 
 /* ═════════════════════ SLATE ═════════════════════ */
 

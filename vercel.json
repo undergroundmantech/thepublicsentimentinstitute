@@ -1,12 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/flightrecorder/capture",
-      "schedule": "*/1 * * * *"
-    },
-    {
       "path": "/api/indexnow",
-      "schedule": "17 */6 * * *"
+      "schedule": "17 9 * * *"
     }
   ]
 }
