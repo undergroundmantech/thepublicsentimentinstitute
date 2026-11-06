@@ -1,0 +1,910 @@
+chamber,side,district,status
+sl-AR-senate,civicAPI,District 1,pct 99.9
+sl-FL-house,forecast,7,no Democrat filed
+sl-FL-house,forecast,8,no Republican filed
+sl-FL-house,forecast,11,no Democrat filed
+sl-FL-house,forecast,14,no Republican filed
+sl-FL-house,forecast,16,no Democrat filed
+sl-FL-house,forecast,21,no Republican filed
+sl-FL-house,forecast,24,no Democrat filed
+sl-FL-house,forecast,41,no Republican filed
+sl-FL-house,forecast,44,no Republican filed
+sl-FL-house,forecast,47,no Republican filed
+sl-FL-house,forecast,54,contested
+sl-FL-house,forecast,62,no Republican filed
+sl-FL-house,forecast,63,no Republican filed
+sl-FL-house,forecast,79,no Democrat filed
+sl-FL-house,forecast,95,no Republican filed
+sl-FL-house,forecast,96,no Republican filed
+sl-FL-house,forecast,97,no Republican filed
+sl-FL-house,forecast,98,no Republican filed
+sl-FL-house,forecast,99,no Republican filed
+sl-FL-house,forecast,104,no Republican filed
+sl-FL-house,forecast,105,no Republican filed
+sl-FL-house,forecast,107,no Republican filed
+sl-FL-house,forecast,109,no Republican filed
+sl-FL-house,forecast,110,no Democrat filed
+sl-FL-house,forecast,111,no Democrat filed
+sl-FL-house,forecast,112,no Democrat filed
+sl-FL-house,forecast,114,no Democrat filed
+sl-FL-house,forecast,120,no Democrat filed
+sl-FL-senate,forecast,4,no Democrat filed
+sl-FL-senate,forecast,16,no Republican filed
+sl-FL-senate,civicAPI,District 21 Special,pct 99.9
+sl-HI-house,forecast,1,no Republican filed
+sl-HI-house,forecast,6,no Republican filed
+sl-HI-house,forecast,7,no Republican filed
+sl-HI-house,forecast,9,no Republican filed
+sl-HI-house,forecast,15,no Republican filed
+sl-HI-house,forecast,19,no Republican filed
+sl-HI-house,forecast,21,no Republican filed
+sl-HI-house,forecast,22,no Republican filed
+sl-HI-house,forecast,24,no Republican filed
+sl-HI-house,forecast,25,no Republican filed
+sl-HI-house,forecast,27,no Republican filed
+sl-HI-house,forecast,28,no Republican filed
+sl-HI-house,forecast,33,no Republican filed
+sl-HI-house,forecast,35,no Republican filed
+sl-HI-house,forecast,36,no Republican filed
+sl-HI-house,forecast,37,no Republican filed
+sl-HI-house,forecast,38,no Democrat filed
+sl-HI-house,forecast,41,no Democrat filed
+sl-HI-house,forecast,48,no Republican filed
+sl-HI-house,forecast,51,no Republican filed
+sl-HI-senate,forecast,1,contested
+sl-HI-senate,forecast,4,contested
+sl-HI-senate,forecast,5,no Republican filed
+sl-HI-senate,forecast,8,no Republican filed
+sl-HI-senate,forecast,10,no Republican filed
+sl-HI-senate,forecast,11,no Republican filed
+sl-HI-senate,forecast,14,no Republican filed
+sl-HI-senate,forecast,15,no Republican filed
+sl-HI-senate,forecast,17,no Republican filed
+sl-HI-senate,forecast,19,no data
+sl-HI-senate,forecast,21,no Republican filed
+sl-HI-senate,forecast,24,contested
+sl-HI-senate,forecast,25,no Republican filed
+sl-HI-senate,civicAPI,District 18 Unexpired Term,pct 0
+sl-HI-senate,civicAPI,District 19 Unexpired Term,pct 0
+sl-ID-house,forecast,1A,contested
+sl-ID-house,forecast,1B,independent challenger
+sl-ID-house,forecast,2A,contested
+sl-ID-house,forecast,2B,contested
+sl-ID-house,forecast,3A,contested
+sl-ID-house,forecast,3B,no Democrat filed
+sl-ID-house,forecast,4A,contested
+sl-ID-house,forecast,4B,contested
+sl-ID-house,forecast,5A,contested
+sl-ID-house,forecast,5B,contested
+sl-ID-house,forecast,6A,contested
+sl-ID-house,forecast,6B,contested
+sl-ID-house,forecast,7A,contested
+sl-ID-house,forecast,7B,contested
+sl-ID-house,forecast,8A,independent challenger
+sl-ID-house,forecast,8B,contested
+sl-ID-house,forecast,9A,no Democrat filed
+sl-ID-house,forecast,9B,contested
+sl-ID-house,forecast,10A,contested
+sl-ID-house,forecast,10B,contested
+sl-ID-house,forecast,11A,no Democrat filed
+sl-ID-house,forecast,11B,contested
+sl-ID-house,forecast,12A,contested
+sl-ID-house,forecast,12B,contested
+sl-ID-house,forecast,13A,contested
+sl-ID-house,forecast,13B,"uncontested, last held by R"
+sl-ID-house,forecast,14A,contested
+sl-ID-house,forecast,14B,contested
+sl-ID-house,forecast,15A,contested
+sl-ID-house,forecast,15B,contested
+sl-ID-house,forecast,16A,contested
+sl-ID-house,forecast,16B,contested
+sl-ID-house,forecast,17A,contested
+sl-ID-house,forecast,17B,contested
+sl-ID-house,forecast,18A,no Republican filed
+sl-ID-house,forecast,18B,no Republican filed
+sl-ID-house,forecast,19A,contested
+sl-ID-house,forecast,19B,contested
+sl-ID-house,forecast,20A,contested
+sl-ID-house,forecast,20B,contested
+sl-ID-house,forecast,21A,contested
+sl-ID-house,forecast,21B,contested
+sl-ID-house,forecast,22A,contested
+sl-ID-house,forecast,22B,contested
+sl-ID-house,forecast,23A,independent challenger
+sl-ID-house,forecast,23B,contested
+sl-ID-house,forecast,24A,independent challenger
+sl-ID-house,forecast,24B,no Democrat filed
+sl-ID-house,forecast,25A,contested
+sl-ID-house,forecast,25B,independent challenger
+sl-ID-house,forecast,26A,contested
+sl-ID-house,forecast,26B,contested
+sl-ID-house,forecast,27A,no Democrat filed
+sl-ID-house,forecast,27B,no Democrat filed
+sl-ID-house,forecast,28A,contested
+sl-ID-house,forecast,28B,contested
+sl-ID-house,forecast,29A,contested
+sl-ID-house,forecast,29B,contested
+sl-ID-house,forecast,30A,no Democrat filed
+sl-ID-house,forecast,30B,contested
+sl-ID-house,forecast,31A,contested
+sl-ID-house,forecast,31B,contested
+sl-ID-house,forecast,32A,no Democrat filed
+sl-ID-house,forecast,32B,contested
+sl-ID-house,forecast,33A,contested
+sl-ID-house,forecast,33B,"uncontested, last held by R"
+sl-ID-house,forecast,34A,no Democrat filed
+sl-ID-house,forecast,34B,no Democrat filed
+sl-ID-house,forecast,35A,contested
+sl-ID-house,forecast,35B,contested
+sl-ID-house,civicAPI,District 1 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 1 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 2 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 2 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 3 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 3 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 4 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 4 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 5 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 5 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 6 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 6 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 7 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 7 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 8 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 8 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 9 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 9 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 10 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 10 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 11 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 11 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 12 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 12 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 13 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 13 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 14 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 14 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 15 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 15 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 16 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 16 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 17 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 17 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 18 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 18 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 19 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 19 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 20 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 20 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 21 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 21 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 22 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 22 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 23 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 23 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 24 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 24 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 25 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 25 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 26 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 26 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 27 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 27 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 28 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 28 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 29 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 29 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 30 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 30 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 31 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 31 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 32 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 32 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 33 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 33 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 34 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 34 Seat B,pct 99.9
+sl-ID-house,civicAPI,District 35 Seat A,pct 99.9
+sl-ID-house,civicAPI,District 35 Seat B,pct 99.9
+sl-MA-house,forecast,21ST MIDDLESEX,contested
+sl-MA-house,forecast,22ND MIDDLESEX,contested
+sl-MA-house,forecast,23RD MIDDLESEX,contested
+sl-MA-house,forecast,24TH MIDDLESEX,contested
+sl-MA-house,forecast,25TH MIDDLESEX,contested
+sl-MA-house,forecast,26TH MIDDLESEX,contested
+sl-MA-house,forecast,27TH MIDDLESEX,contested
+sl-MA-house,forecast,28TH MIDDLESEX,contested
+sl-MA-house,forecast,29TH MIDDLESEX,contested
+sl-MA-house,forecast,30TH MIDDLESEX,contested
+sl-MA-house,forecast,31ST MIDDLESEX,contested
+sl-MA-house,forecast,32ND MIDDLESEX,contested
+sl-MA-house,forecast,33RD MIDDLESEX,contested
+sl-MA-house,forecast,34TH MIDDLESEX,contested
+sl-MA-house,forecast,35TH MIDDLESEX,contested
+sl-MA-house,forecast,36TH MIDDLESEX,contested
+sl-MA-house,forecast,37TH MIDDLESEX,contested
+sl-MA-house,civicAPI,Twenty-First Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Second Middlesex,pct 99.9
+sl-MA-house,civicAPI,Twenty-Third Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Fourth Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Fifth Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Sixth Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Seventh Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Eighth Middlesex,pct 0
+sl-MA-house,civicAPI,Twenty-Ninth Middlesex,pct 0
+sl-MA-house,civicAPI,Thirtieth Middlesex,pct 0
+sl-MA-house,civicAPI,Thirty-First Middlesex,pct 99.9
+sl-MA-house,civicAPI,Thirty-Second Middlesex,pct 0
+sl-MA-house,civicAPI,Thirty-Third Middlesex,pct 0
+sl-MA-house,civicAPI,Thirty-Fourth Middlesex,pct 0
+sl-MA-house,civicAPI,Thirty-Fifth Middlesex,pct 53.3
+sl-MA-house,civicAPI,Thirty-Sixth Middlesex,pct 0
+sl-MA-house,civicAPI,Thirty-Seventh Middlesex,pct 0
+sl-ND-house,forecast,26,no Democrat filed
+sl-ND-house,forecast,42,contested
+sl-ND-house,civicAPI,District 20 Unexpired 2-Year Term,pct 99.9
+sl-ND-house,civicAPI,District 26 Unexpired 2-Year Term,pct 99.9
+sl-ND-house,civicAPI,District 42 Unexpired 2-Year Term,pct 99.9
+sl-NH-house,forecast,BELKNAP 001,contested
+sl-NH-house,forecast,BELKNAP 002,contested
+sl-NH-house,forecast,BELKNAP 003,contested
+sl-NH-house,forecast,BELKNAP 004,"uncontested, last held by R"
+sl-NH-house,forecast,BELKNAP 005,contested
+sl-NH-house,forecast,BELKNAP 006,contested
+sl-NH-house,forecast,BELKNAP 007,contested
+sl-NH-house,forecast,BELKNAP 008,contested
+sl-NH-house,forecast,CARROLL 001,contested
+sl-NH-house,forecast,CARROLL 002,contested
+sl-NH-house,forecast,CARROLL 003,contested
+sl-NH-house,forecast,CARROLL 004,contested
+sl-NH-house,forecast,CARROLL 005,contested
+sl-NH-house,forecast,CARROLL 006,contested
+sl-NH-house,forecast,CARROLL 007,contested
+sl-NH-house,forecast,CARROLL 008,contested
+sl-NH-house,forecast,CHESHIRE 001,"uncontested, last held by D"
+sl-NH-house,forecast,CHESHIRE 002,no Republican filed
+sl-NH-house,forecast,CHESHIRE 003,"uncontested, last held by D"
+sl-NH-house,forecast,CHESHIRE 004,contested
+sl-NH-house,forecast,CHESHIRE 005,contested
+sl-NH-house,forecast,CHESHIRE 006,contested
+sl-NH-house,forecast,CHESHIRE 007,"uncontested, last held by D"
+sl-NH-house,forecast,CHESHIRE 008,no Republican filed
+sl-NH-house,forecast,CHESHIRE 009,contested
+sl-NH-house,forecast,CHESHIRE 010,contested
+sl-NH-house,forecast,CHESHIRE 011,contested
+sl-NH-house,forecast,CHESHIRE 012,contested
+sl-NH-house,forecast,CHESHIRE 013,contested
+sl-NH-house,forecast,CHESHIRE 014,contested
+sl-NH-house,forecast,CHESHIRE 015,contested
+sl-NH-house,forecast,CHESHIRE 016,contested
+sl-NH-house,forecast,CHESHIRE 017,contested
+sl-NH-house,forecast,CHESHIRE 018,contested
+sl-NH-house,forecast,COOS 001,contested
+sl-NH-house,forecast,COOS 002,contested
+sl-NH-house,forecast,COOS 003,no Democrat filed
+sl-NH-house,forecast,COOS 004,contested
+sl-NH-house,forecast,COOS 005,independent challenger
+sl-NH-house,forecast,COOS 006,contested
+sl-NH-house,forecast,COOS 007,contested
+sl-NH-house,forecast,GRAFTON 001,contested
+sl-NH-house,forecast,GRAFTON 002,no Republican filed
+sl-NH-house,forecast,GRAFTON 003,contested
+sl-NH-house,forecast,GRAFTON 004,contested
+sl-NH-house,forecast,GRAFTON 005,contested
+sl-NH-house,forecast,GRAFTON 006,contested
+sl-NH-house,forecast,GRAFTON 007,contested
+sl-NH-house,forecast,GRAFTON 008,contested
+sl-NH-house,forecast,GRAFTON 009,contested
+sl-NH-house,forecast,GRAFTON 010,contested
+sl-NH-house,forecast,GRAFTON 011,contested
+sl-NH-house,forecast,GRAFTON 012,no Republican filed
+sl-NH-house,forecast,GRAFTON 013,no Republican filed
+sl-NH-house,forecast,GRAFTON 014,no Republican filed
+sl-NH-house,forecast,GRAFTON 015,no Republican filed
+sl-NH-house,forecast,GRAFTON 016,no Republican filed
+sl-NH-house,forecast,GRAFTON 017,no Republican filed
+sl-NH-house,forecast,GRAFTON 018,contested
+sl-NH-house,forecast,HILLSBOROUGH 001,contested
+sl-NH-house,forecast,HILLSBOROUGH 002,contested
+sl-NH-house,forecast,HILLSBOROUGH 003,contested
+sl-NH-house,forecast,HILLSBOROUGH 004,contested
+sl-NH-house,forecast,HILLSBOROUGH 005,contested
+sl-NH-house,forecast,HILLSBOROUGH 006,contested
+sl-NH-house,forecast,HILLSBOROUGH 007,contested
+sl-NH-house,forecast,HILLSBOROUGH 008,contested
+sl-NH-house,forecast,HILLSBOROUGH 009,contested
+sl-NH-house,forecast,HILLSBOROUGH 010,contested
+sl-NH-house,forecast,HILLSBOROUGH 011,contested
+sl-NH-house,forecast,HILLSBOROUGH 012,contested
+sl-NH-house,forecast,HILLSBOROUGH 013,contested
+sl-NH-house,forecast,HILLSBOROUGH 014,contested
+sl-NH-house,forecast,HILLSBOROUGH 015,contested
+sl-NH-house,forecast,HILLSBOROUGH 016,contested
+sl-NH-house,forecast,HILLSBOROUGH 017,contested
+sl-NH-house,forecast,HILLSBOROUGH 018,contested
+sl-NH-house,forecast,HILLSBOROUGH 019,contested
+sl-NH-house,forecast,HILLSBOROUGH 020,contested
+sl-NH-house,forecast,HILLSBOROUGH 021,contested
+sl-NH-house,forecast,HILLSBOROUGH 022,contested
+sl-NH-house,forecast,HILLSBOROUGH 023,no Republican filed
+sl-NH-house,forecast,HILLSBOROUGH 024,contested
+sl-NH-house,forecast,HILLSBOROUGH 025,contested
+sl-NH-house,forecast,HILLSBOROUGH 026,contested
+sl-NH-house,forecast,HILLSBOROUGH 027,independent challenger
+sl-NH-house,forecast,HILLSBOROUGH 028,contested
+sl-NH-house,forecast,HILLSBOROUGH 029,contested
+sl-NH-house,forecast,HILLSBOROUGH 030,contested
+sl-NH-house,forecast,HILLSBOROUGH 031,contested
+sl-NH-house,forecast,HILLSBOROUGH 032,contested
+sl-NH-house,forecast,HILLSBOROUGH 033,contested
+sl-NH-house,forecast,HILLSBOROUGH 034,contested
+sl-NH-house,forecast,HILLSBOROUGH 035,contested
+sl-NH-house,forecast,HILLSBOROUGH 036,contested
+sl-NH-house,forecast,HILLSBOROUGH 037,contested
+sl-NH-house,forecast,HILLSBOROUGH 038,contested
+sl-NH-house,forecast,HILLSBOROUGH 039,contested
+sl-NH-house,forecast,HILLSBOROUGH 040,contested
+sl-NH-house,forecast,HILLSBOROUGH 041,contested
+sl-NH-house,forecast,HILLSBOROUGH 042,contested
+sl-NH-house,forecast,HILLSBOROUGH 043,contested
+sl-NH-house,forecast,HILLSBOROUGH 044,contested
+sl-NH-house,forecast,HILLSBOROUGH 045,contested
+sl-NH-house,forecast,MERRIMACK 001,contested
+sl-NH-house,forecast,MERRIMACK 002,"uncontested, last held by R"
+sl-NH-house,forecast,MERRIMACK 003,contested
+sl-NH-house,forecast,MERRIMACK 004,contested
+sl-NH-house,forecast,MERRIMACK 005,contested
+sl-NH-house,forecast,MERRIMACK 006,contested
+sl-NH-house,forecast,MERRIMACK 007,contested
+sl-NH-house,forecast,MERRIMACK 008,contested
+sl-NH-house,forecast,MERRIMACK 009,contested
+sl-NH-house,forecast,MERRIMACK 010,contested
+sl-NH-house,forecast,MERRIMACK 011,contested
+sl-NH-house,forecast,MERRIMACK 012,contested
+sl-NH-house,forecast,MERRIMACK 013,independent challenger
+sl-NH-house,forecast,MERRIMACK 014,"uncontested, last held by R"
+sl-NH-house,forecast,MERRIMACK 015,no Republican filed
+sl-NH-house,forecast,MERRIMACK 016,contested
+sl-NH-house,forecast,MERRIMACK 017,no Republican filed
+sl-NH-house,forecast,MERRIMACK 018,contested
+sl-NH-house,forecast,MERRIMACK 019,no Republican filed
+sl-NH-house,forecast,MERRIMACK 020,contested
+sl-NH-house,forecast,MERRIMACK 021,contested
+sl-NH-house,forecast,MERRIMACK 022,contested
+sl-NH-house,forecast,MERRIMACK 023,contested
+sl-NH-house,forecast,MERRIMACK 024,no Republican filed
+sl-NH-house,forecast,MERRIMACK 025,contested
+sl-NH-house,forecast,MERRIMACK 026,contested
+sl-NH-house,forecast,MERRIMACK 027,contested
+sl-NH-house,forecast,MERRIMACK 028,no Republican filed
+sl-NH-house,forecast,MERRIMACK 029,no Republican filed
+sl-NH-house,forecast,MERRIMACK 030,contested
+sl-NH-house,forecast,ROCKINGHAM 001,contested
+sl-NH-house,forecast,ROCKINGHAM 002,contested
+sl-NH-house,forecast,ROCKINGHAM 003,contested
+sl-NH-house,forecast,ROCKINGHAM 004,contested
+sl-NH-house,forecast,ROCKINGHAM 005,contested
+sl-NH-house,forecast,ROCKINGHAM 006,contested
+sl-NH-house,forecast,ROCKINGHAM 007,"uncontested, last held by R"
+sl-NH-house,forecast,ROCKINGHAM 008,no Democrat filed
+sl-NH-house,forecast,ROCKINGHAM 009,no Democrat filed
+sl-NH-house,forecast,ROCKINGHAM 010,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 011,contested
+sl-NH-house,forecast,ROCKINGHAM 012,contested
+sl-NH-house,forecast,ROCKINGHAM 013,contested
+sl-NH-house,forecast,ROCKINGHAM 014,contested
+sl-NH-house,forecast,ROCKINGHAM 015,contested
+sl-NH-house,forecast,ROCKINGHAM 016,contested
+sl-NH-house,forecast,ROCKINGHAM 017,contested
+sl-NH-house,forecast,ROCKINGHAM 018,contested
+sl-NH-house,forecast,ROCKINGHAM 019,contested
+sl-NH-house,forecast,ROCKINGHAM 020,contested
+sl-NH-house,forecast,ROCKINGHAM 021,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 022,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 023,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 024,contested
+sl-NH-house,forecast,ROCKINGHAM 025,contested
+sl-NH-house,forecast,ROCKINGHAM 026,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 027,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 028,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 029,contested
+sl-NH-house,forecast,ROCKINGHAM 030,contested
+sl-NH-house,forecast,ROCKINGHAM 031,contested
+sl-NH-house,forecast,ROCKINGHAM 032,independent challenger
+sl-NH-house,forecast,ROCKINGHAM 033,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 034,contested
+sl-NH-house,forecast,ROCKINGHAM 035,contested
+sl-NH-house,forecast,ROCKINGHAM 036,contested
+sl-NH-house,forecast,ROCKINGHAM 037,no Republican filed
+sl-NH-house,forecast,ROCKINGHAM 038,"uncontested, last held by D"
+sl-NH-house,forecast,ROCKINGHAM 039,"uncontested, last held by D"
+sl-NH-house,forecast,ROCKINGHAM 040,contested
+sl-NH-house,forecast,STRAFFORD 001,contested
+sl-NH-house,forecast,STRAFFORD 002,contested
+sl-NH-house,forecast,STRAFFORD 003,contested
+sl-NH-house,forecast,STRAFFORD 004,contested
+sl-NH-house,forecast,STRAFFORD 005,independent challenger
+sl-NH-house,forecast,STRAFFORD 006,contested
+sl-NH-house,forecast,STRAFFORD 007,contested
+sl-NH-house,forecast,STRAFFORD 008,contested
+sl-NH-house,forecast,STRAFFORD 009,contested
+sl-NH-house,forecast,STRAFFORD 010,no Republican filed
+sl-NH-house,forecast,STRAFFORD 011,contested
+sl-NH-house,forecast,STRAFFORD 012,contested
+sl-NH-house,forecast,STRAFFORD 013,contested
+sl-NH-house,forecast,STRAFFORD 014,no Republican filed
+sl-NH-house,forecast,STRAFFORD 015,no Republican filed
+sl-NH-house,forecast,STRAFFORD 016,no Republican filed
+sl-NH-house,forecast,STRAFFORD 017,contested
+sl-NH-house,forecast,STRAFFORD 018,contested
+sl-NH-house,forecast,STRAFFORD 019,contested
+sl-NH-house,forecast,STRAFFORD 020,contested
+sl-NH-house,forecast,STRAFFORD 021,contested
+sl-NH-house,forecast,SULLIVAN 001,contested
+sl-NH-house,forecast,SULLIVAN 002,contested
+sl-NH-house,forecast,SULLIVAN 003,contested
+sl-NH-house,forecast,SULLIVAN 004,contested
+sl-NH-house,forecast,SULLIVAN 005,contested
+sl-NH-house,forecast,SULLIVAN 006,contested
+sl-NH-house,forecast,SULLIVAN 007,contested
+sl-NH-house,forecast,SULLIVAN 008,contested
+sl-NH-house,civicAPI,Belknap County District 1,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 2,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 3,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 4,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 5,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 6,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 7,pct 99.9
+sl-NH-house,civicAPI,Belknap County District 8,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 1,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 2,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 3,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 4,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 5,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 6,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 7,pct 99.9
+sl-NH-house,civicAPI,Carroll County District 8,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 1,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 2,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 3,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 4,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 5,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 6,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 7,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 8,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 9,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 10,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 11,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 12,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 13,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 14,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 15,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 16,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 17,pct 99.9
+sl-NH-house,civicAPI,Cheshire County District 18,pct 99.9
+sl-NH-house,civicAPI,Coos County District 1,pct 99.9
+sl-NH-house,civicAPI,Coos County District 2,pct 99.9
+sl-NH-house,civicAPI,Coos County District 3,pct 99.9
+sl-NH-house,civicAPI,Coos County District 4,pct 99.9
+sl-NH-house,civicAPI,Coos County District 5,pct 99.9
+sl-NH-house,civicAPI,Coos County District 6,pct 99.9
+sl-NH-house,civicAPI,Coos County District 7,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 1,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 2,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 3,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 4,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 5,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 6,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 7,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 8,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 9,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 10,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 11,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 12,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 13,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 14,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 15,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 16,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 17,pct 99.9
+sl-NH-house,civicAPI,Grafton County District 18,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 1,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 2,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 3,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 4,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 5,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 6,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 7,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 8,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 9,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 10,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 11,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 12,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 13,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 14,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 15,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 16,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 17,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 18,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 19,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 20,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 21,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 22,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 23,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 24,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 25,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 26,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 27,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 28,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 29,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 30,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 31,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 32,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 33,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 34,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 35,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 36,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 37,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 38,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 39,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 40,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 41,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 42,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 43,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 44,pct 99.9
+sl-NH-house,civicAPI,Hillsborough County District 45,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 1,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 2,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 3,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 4,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 5,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 6,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 7,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 8,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 9,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 10,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 11,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 12,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 13,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 14,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 15,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 16,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 17,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 18,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 19,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 20,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 21,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 22,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 23,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 24,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 25,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 26,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 27,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 28,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 29,pct 99.9
+sl-NH-house,civicAPI,Merrimack County District 30,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 1,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 2,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 3,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 4,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 5,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 6,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 7,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 8,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 9,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 10,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 11,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 12,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 13,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 14,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 15,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 16,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 17,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 18,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 19,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 20,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 21,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 22,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 23,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 24,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 25,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 26,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 27,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 28,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 29,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 30,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 31,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 32,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 33,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 34,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 35,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 36,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 37,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 38,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 39,pct 99.9
+sl-NH-house,civicAPI,Rockingham County District 40,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 1,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 2,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 3,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 4,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 5,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 6,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 7,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 8,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 9,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 10,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 11,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 12,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 13,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 14,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 15,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 16,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 17,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 18,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 19,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 20,pct 99.9
+sl-NH-house,civicAPI,Strafford County District 21,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 1,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 2,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 3,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 4,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 5,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 6,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 7,pct 99.9
+sl-NH-house,civicAPI,Sullivan County District 8,pct 99.9
+sl-OK-house,forecast,1,contested
+sl-OK-house,forecast,2,contested
+sl-OK-house,forecast,5,contested
+sl-OK-house,forecast,6,contested
+sl-OK-house,forecast,7,contested
+sl-OK-house,forecast,8,contested
+sl-OK-house,forecast,11,no data
+sl-OK-house,forecast,13,contested
+sl-OK-house,forecast,15,contested
+sl-OK-house,forecast,17,contested
+sl-OK-house,forecast,18,contested
+sl-OK-house,forecast,19,contested
+sl-OK-house,forecast,21,no data
+sl-OK-house,forecast,22,contested
+sl-OK-house,forecast,25,contested
+sl-OK-house,forecast,29,contested
+sl-OK-house,forecast,31,contested
+sl-OK-house,forecast,35,contested
+sl-OK-house,forecast,37,contested
+sl-OK-house,forecast,39,contested
+sl-OK-house,forecast,40,contested
+sl-OK-house,forecast,42,contested
+sl-OK-house,forecast,43,contested
+sl-OK-house,forecast,44,contested
+sl-OK-house,forecast,46,contested
+sl-OK-house,forecast,48,contested
+sl-OK-house,forecast,50,no data
+sl-OK-house,forecast,51,no data
+sl-OK-house,forecast,52,no data
+sl-OK-house,forecast,55,contested
+sl-OK-house,forecast,57,no data
+sl-OK-house,forecast,59,no data
+sl-OK-house,forecast,61,contested
+sl-OK-house,forecast,65,contested
+sl-OK-house,forecast,67,contested
+sl-OK-house,forecast,70,contested
+sl-OK-house,forecast,71,contested
+sl-OK-house,forecast,73,no data
+sl-OK-house,forecast,77,contested
+sl-OK-house,forecast,88,contested
+sl-OK-house,forecast,89,no data
+sl-OK-house,forecast,92,no data
+sl-OK-house,forecast,93,contested
+sl-OK-house,forecast,94,contested
+sl-OK-house,forecast,97,contested
+sl-OK-house,forecast,101,contested
+sl-OK-senate,forecast,14,no data
+sl-OK-senate,forecast,16,no data
+sl-OK-senate,forecast,20,no data
+sl-OK-senate,forecast,26,no data
+sl-OK-senate,forecast,30,contested
+sl-OK-senate,forecast,38,no data
+sl-OK-senate,forecast,40,contested
+sl-OK-senate,forecast,44,no data
+sl-OK-senate,forecast,46,no data
+sl-OK-senate,forecast,48,no data
+sl-OK-senate,civicAPI,District 17 Unexpired Term,pct 25
+sl-TX-house,civicAPI,District 93 - Unexpired Term,pct 59
+sl-TX-senate,civicAPI,District 22 - Unexpired Term,pct 99
+sl-WA-house,forecast,1-1,contested
+sl-WA-house,forecast,1-2,"uncontested, last held by D"
+sl-WA-house,forecast,2-1,contested
+sl-WA-house,forecast,2-2,contested
+sl-WA-house,forecast,3-1,contested
+sl-WA-house,forecast,3-2,"uncontested, last held by D"
+sl-WA-house,forecast,4-1,no Democrat filed
+sl-WA-house,forecast,4-2,contested
+sl-WA-house,forecast,5-1,contested
+sl-WA-house,forecast,5-2,contested
+sl-WA-house,forecast,6-1,contested
+sl-WA-house,forecast,6-2,contested
+sl-WA-house,forecast,7-1,no Democrat filed
+sl-WA-house,forecast,7-2,no Democrat filed
+sl-WA-house,forecast,8-1,no Democrat filed
+sl-WA-house,forecast,8-2,no Democrat filed
+sl-WA-house,forecast,9-1,no Democrat filed
+sl-WA-house,forecast,9-2,contested
+sl-WA-house,forecast,10-1,contested
+sl-WA-house,forecast,10-2,contested
+sl-WA-house,forecast,11-1,no Republican filed
+sl-WA-house,forecast,11-2,no Republican filed
+sl-WA-house,forecast,12-1,contested
+sl-WA-house,forecast,12-2,"uncontested, last held by R"
+sl-WA-house,forecast,13-1,contested
+sl-WA-house,forecast,13-2,no Democrat filed
+sl-WA-house,forecast,14-1,contested
+sl-WA-house,forecast,14-2,contested
+sl-WA-house,forecast,15-1,contested
+sl-WA-house,forecast,15-2,independent challenger
+sl-WA-house,forecast,16-1,contested
+sl-WA-house,forecast,16-2,contested
+sl-WA-house,forecast,17-1,"uncontested, last held by R"
+sl-WA-house,forecast,17-2,contested
+sl-WA-house,forecast,18-1,contested
+sl-WA-house,forecast,18-2,contested
+sl-WA-house,forecast,19-1,contested
+sl-WA-house,forecast,19-2,contested
+sl-WA-house,forecast,20-1,contested
+sl-WA-house,forecast,20-2,contested
+sl-WA-house,forecast,21-1,no Republican filed
+sl-WA-house,forecast,21-2,no Republican filed
+sl-WA-house,forecast,22-1,contested
+sl-WA-house,forecast,22-2,no Republican filed
+sl-WA-house,forecast,23-1,no Republican filed
+sl-WA-house,forecast,23-2,contested
+sl-WA-house,forecast,24-1,contested
+sl-WA-house,forecast,24-2,no Republican filed
+sl-WA-house,forecast,25-1,contested
+sl-WA-house,forecast,25-2,contested
+sl-WA-house,forecast,26-1,contested
+sl-WA-house,forecast,26-2,contested
+sl-WA-house,forecast,27-1,contested
+sl-WA-house,forecast,27-2,no Republican filed
+sl-WA-house,forecast,28-1,contested
+sl-WA-house,forecast,28-2,no Republican filed
+sl-WA-house,forecast,29-1,no Republican filed
+sl-WA-house,forecast,29-2,no Republican filed
+sl-WA-house,forecast,30-1,contested
+sl-WA-house,forecast,30-2,no Republican filed
+sl-WA-house,forecast,31-1,contested
+sl-WA-house,forecast,31-2,contested
+sl-WA-house,forecast,32-1,no Republican filed
+sl-WA-house,forecast,32-2,no Republican filed
+sl-WA-house,forecast,33-1,contested
+sl-WA-house,forecast,33-2,"uncontested, last held by D"
+sl-WA-house,forecast,34-1,no Republican filed
+sl-WA-house,forecast,34-2,no Republican filed
+sl-WA-house,forecast,35-1,"uncontested, last held by R"
+sl-WA-house,forecast,35-2,contested
+sl-WA-house,forecast,36-1,no Republican filed
+sl-WA-house,forecast,36-2,no Republican filed
+sl-WA-house,forecast,37-1,no Republican filed
+sl-WA-house,forecast,37-2,no Republican filed
+sl-WA-house,forecast,38-1,no Republican filed
+sl-WA-house,forecast,38-2,no Republican filed
+sl-WA-house,forecast,39-1,contested
+sl-WA-house,forecast,39-2,contested
+sl-WA-house,forecast,40-1,contested
+sl-WA-house,forecast,40-2,no Republican filed
+sl-WA-house,forecast,41-1,contested
+sl-WA-house,forecast,41-2,no Republican filed
+sl-WA-house,forecast,42-1,contested
+sl-WA-house,forecast,42-2,contested
+sl-WA-house,forecast,43-1,no Republican filed
+sl-WA-house,forecast,43-2,no Republican filed
+sl-WA-house,forecast,44-1,"uncontested, last held by D"
+sl-WA-house,forecast,44-2,contested
+sl-WA-house,forecast,45-1,"uncontested, last held by D"
+sl-WA-house,forecast,45-2,"uncontested, last held by D"
+sl-WA-house,forecast,46-1,no Republican filed
+sl-WA-house,forecast,46-2,no Republican filed
+sl-WA-house,forecast,47-1,no Republican filed
+sl-WA-house,forecast,47-2,contested
+sl-WA-house,forecast,48-1,contested
+sl-WA-house,forecast,48-2,no Republican filed
+sl-WA-house,forecast,49-1,contested
+sl-WA-house,forecast,49-2,contested
+sl-WA-house,civicAPI,District 1 Position 1,pct 0
+sl-WA-house,civicAPI,District 1 Position 2,pct 0
+sl-WA-house,civicAPI,District 2 Position 1,pct 0
+sl-WA-house,civicAPI,District 2 Position 2,pct 0
+sl-WA-house,civicAPI,District 3 Position 1,pct 0
+sl-WA-house,civicAPI,District 3 Position 2,pct 0
+sl-WA-house,civicAPI,District 4 Position 1,pct 0
+sl-WA-house,civicAPI,District 4 Position 2,pct 0
+sl-WA-house,civicAPI,District 5 Position 1,pct 0
+sl-WA-house,civicAPI,District 5 Position 2,pct 0
+sl-WA-house,civicAPI,District 6 Position 1,pct 0
+sl-WA-house,civicAPI,District 6 Position 2,pct 0
+sl-WA-house,civicAPI,District 7 Position 1,pct 0
+sl-WA-house,civicAPI,District 7 Position 2,pct 0
+sl-WA-house,civicAPI,District 8 Position 1,pct 0
+sl-WA-house,civicAPI,District 8 Position 2,pct 0
+sl-WA-house,civicAPI,District 9 Position 1,pct 0
+sl-WA-house,civicAPI,District 9 Position 2,pct 0
+sl-WA-house,civicAPI,District 10 Position 1,pct 0
+sl-WA-house,civicAPI,District 10 Position 2,pct 0
+sl-WA-house,civicAPI,District 11 Position 1,pct 0
+sl-WA-house,civicAPI,District 11 Position 2,pct 0
+sl-WA-house,civicAPI,District 12 Position 1,pct 0
+sl-WA-house,civicAPI,District 12 Position 2,pct 0
+sl-WA-house,civicAPI,District 13 Position 1,pct 0
+sl-WA-house,civicAPI,District 13 Position 2,pct 0
+sl-WA-house,civicAPI,District 14 Position 1,pct 0
+sl-WA-house,civicAPI,District 14 Position 2,pct 0
+sl-WA-house,civicAPI,District 15 Position 1,pct 0
+sl-WA-house,civicAPI,District 15 Position 2,pct 0
+sl-WA-house,civicAPI,District 16 Position 1,pct 0
+sl-WA-house,civicAPI,District 16 Position 2,pct 0
+sl-WA-house,civicAPI,District 17 Position 1,pct 0
+sl-WA-house,civicAPI,District 17 Position 2,pct 0
+sl-WA-house,civicAPI,District 18 Position 1,pct 0
+sl-WA-house,civicAPI,District 18 Position 2,pct 0
+sl-WA-house,civicAPI,District 19 Position 1,pct 0
+sl-WA-house,civicAPI,District 19 Position 2,pct 0
+sl-WA-house,civicAPI,District 20 Position 1,pct 0
+sl-WA-house,civicAPI,District 20 Position 2,pct 0
+sl-WA-house,civicAPI,District 21 Position 1,pct 0
+sl-WA-house,civicAPI,District 21 Position 2,pct 0
+sl-WA-house,civicAPI,District 22 Position 1,pct 0
+sl-WA-house,civicAPI,District 22 Position 2,pct 0
+sl-WA-house,civicAPI,District 23 Position 1,pct 0
+sl-WA-house,civicAPI,District 23 Position 2,pct 0
+sl-WA-house,civicAPI,District 24 Position 1,pct 0
+sl-WA-house,civicAPI,District 24 Position 2,pct 0
+sl-WA-house,civicAPI,District 25 Position 1,pct 0
+sl-WA-house,civicAPI,District 25 Position 2,pct 0
+sl-WA-house,civicAPI,District 26 Position 1,pct 0
+sl-WA-house,civicAPI,District 26 Position 2,pct 0
+sl-WA-house,civicAPI,District 27 Position 1,pct 0
+sl-WA-house,civicAPI,District 27 Position 2,pct 0
+sl-WA-house,civicAPI,District 28 Position 1,pct 0
+sl-WA-house,civicAPI,District 28 Position 2,pct 0
+sl-WA-house,civicAPI,District 29 Position 1,pct 0
+sl-WA-house,civicAPI,District 29 Position 2,pct 0
+sl-WA-house,civicAPI,District 30 Position 1,pct 0
+sl-WA-house,civicAPI,District 30 Position 2,pct 0
+sl-WA-house,civicAPI,District 31 Position 1,pct 0
+sl-WA-house,civicAPI,District 31 Position 2,pct 0
+sl-WA-house,civicAPI,District 32 Position 1,pct 0
+sl-WA-house,civicAPI,District 32 Position 2,pct 0
+sl-WA-house,civicAPI,District 33 Position 1,pct 0
+sl-WA-house,civicAPI,District 33 Position 2,pct 0
+sl-WA-house,civicAPI,District 34 Position 1,pct 0
+sl-WA-house,civicAPI,District 34 Position 2,pct 0
+sl-WA-house,civicAPI,District 35 Position 1,pct 0
+sl-WA-house,civicAPI,District 35 Position 2,pct 0
+sl-WA-house,civicAPI,District 36 Position 1,pct 0
+sl-WA-house,civicAPI,District 36 Position 2,pct 0
+sl-WA-house,civicAPI,District 37 Position 1,pct 0
+sl-WA-house,civicAPI,District 37 Position 2,pct 0
+sl-WA-house,civicAPI,District 38 Position 1,pct 0
+sl-WA-house,civicAPI,District 38 Position 2,pct 0
+sl-WA-house,civicAPI,District 39 Position 1,pct 0
+sl-WA-house,civicAPI,District 39 Position 2,pct 0
+sl-WA-house,civicAPI,District 40 Position 1,pct 0
+sl-WA-house,civicAPI,District 40 Position 2,pct 0
+sl-WA-house,civicAPI,District 41 Position 1,pct 0
+sl-WA-house,civicAPI,District 41 Position 2,pct 0
+sl-WA-house,civicAPI,District 42 Position 1,pct 0
+sl-WA-house,civicAPI,District 42 Position 2,pct 0
+sl-WA-house,civicAPI,District 43 Position 1,pct 0
+sl-WA-house,civicAPI,District 43 Position 2,pct 0
+sl-WA-house,civicAPI,District 44 Position 1,pct 0
+sl-WA-house,civicAPI,District 44 Position 2,pct 0
+sl-WA-house,civicAPI,District 45 Position 1,pct 0
+sl-WA-house,civicAPI,District 45 Position 2,pct 0
+sl-WA-house,civicAPI,District 46 Position 1,pct 0
+sl-WA-house,civicAPI,District 46 Position 2,pct 0
+sl-WA-house,civicAPI,District 47 Position 1,pct 0
+sl-WA-house,civicAPI,District 47 Position 2,pct 0
+sl-WA-house,civicAPI,District 48 Position 1,pct 0
+sl-WA-house,civicAPI,District 48 Position 2,pct 0
+sl-WA-house,civicAPI,District 49 Position 1,pct 0
+sl-WA-house,civicAPI,District 49 Position 2,pct 0
+sl-WV-senate,civicAPI,District 3 Unexpired Term,pct 99.9
+sl-WV-senate,civicAPI,District 17 Unexpired Term,pct 99
