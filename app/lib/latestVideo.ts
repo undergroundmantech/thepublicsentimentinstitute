@@ -11,6 +11,8 @@ export const LATEST_VIDEO = {
   published: "2026-10-26",
   // pages where the card comes up sooner, because the video is about what is on them
   hot: [/^\/maps\/early-vote/, /^\/earlyvote/, /^\/forecast/],
+  // after Election Day an early vote video only fits the early vote pages; null shows it everywhere
+  onlyOn: [/^\/maps\/early-vote/, /^\/earlyvote/] as RegExp[] | null,
 } as const;
 
 export const videoUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;

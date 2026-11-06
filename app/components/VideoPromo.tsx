@@ -43,7 +43,7 @@ export default function VideoPromo() {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const shownPath = useRef(path);
-  const skip = SKIP.some((r) => r.test(path));
+  const skip = SKIP.some((r) => r.test(path)) || (!!V.onlyOn && !V.onlyOn.some((r) => r.test(path)));
   useEffect(() => {
     if (skip || open) return;
     const s = read();
@@ -78,7 +78,7 @@ export default function VideoPromo() {
   };
   return (
     <aside className={`opp vpp${playing ? " is-playing" : ""}`} role="complementary" aria-label="New On Point video">
-      <Pointy className="vpp-pty keep quip" pose="point" prop="megaphone" size={124} look={1}
+      <Pointy className="vpp-pty keep" pose="point" prop="megaphone" size={124} look={1}
         say={<button type="button" className="vpp-say" onClick={() => { play("button"); ev("Video promo Pointy", { video: V.id, from: "bubble" }); }}>{V.pointy}</button>} />
       <div className="vpp-card">
         <button type="button" className="vpp-x" onClick={close} aria-label="Close">×</button>

@@ -17,7 +17,6 @@
 header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 @media (max-width: 900px) { .opp .ms-upd, .opp .ms-links { display: none; } }
 @media (max-width: 560px) { .opp .ms-odds span:nth-child(3) { display: none; } .opp .mstrip .wrap { gap: 12px; } }
-@media (max-width: 420px) { .opp .mstrip { font-size: 11px; } .opp .mstrip .wrap { gap: 8px; } .opp .ms-odds { gap: 8px; min-width: 0; } .opp .ms-day { min-width: 0; } }
 
 /* main bar */
 .opp .top .wrap { height: 60px; gap: 20px; }
@@ -31,7 +30,7 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .mm-i.open > button .cr { transform: rotate(180deg); opacity: 1; }
 .opp .mm-i > button.live { padding-left: 24px; position: relative; }
 .opp .mm-i > button.live::before { content: ""; position: absolute; left: 10px; top: 50%; width: 7px; height: 7px; margin-top: -4px; border-radius: 50%; background: var(--live); animation: pulse 1.8s infinite; }
-.opp .mm-i > a:focus-visible, .opp .mm-i > button:focus-visible, .opp .mm-panel a:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.opp .mm-i > a:focus-visible, .opp .mm-i > button:focus-visible, .opp .mm-panel a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .opp .top .right .search { gap: 7px; }
 .opp .top .right .search svg { opacity: .8; }
 .opp .top { position: relative; }
@@ -44,7 +43,7 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .mm-col a { display: grid; gap: 2px; padding: 8px 10px; margin-inline: -10px; border-radius: 8px; color: var(--hi); }
 .opp .mm-col a:hover, .opp .mm-col a[aria-current="page"] { background: var(--glass2); }
 .opp .mm-col .t { font: 600 14px var(--font-b); display: inline-flex; align-items: center; gap: 8px; }
-.opp .mm-col .t em { font: 700 9.5px var(--font-m); font-style: normal; letter-spacing: .12em; text-transform: uppercase; color: var(--on-accent); background: var(--gold-fill); padding: 2px 6px; border-radius: 4px; }
+.opp .mm-col .t em { font: 700 9.5px var(--font-m); font-style: normal; letter-spacing: .12em; text-transform: uppercase; color: #1a1200; background: var(--gold); padding: 2px 6px; border-radius: 4px; }
 .opp .mm-col .n { font-size: 12.5px; color: var(--mute); line-height: 1.35; }
 .opp .mm-feat { display: grid; align-content: start; align-self: start; gap: 6px; padding: 18px; border-radius: 12px; border: 1px solid var(--line2); background: linear-gradient(160deg, rgba(var(--line-rgb), .07), rgba(var(--line-rgb), .02)); color: var(--hi); }
 .opp .mm-feat:hover { border-color: var(--gold); }
@@ -66,38 +65,9 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .mm-t.on { box-shadow: inset 0 -2px 0 var(--gold); border-radius: 8px 8px 0 0; }
 .opp .mm-t.live .mm-l { padding-left: 24px; }
 .opp .mm-t.live::before { content: ""; position: absolute; left: 10px; top: 50%; width: 7px; height: 7px; margin-top: -4px; border-radius: 50%; background: var(--live); animation: pulse 1.8s infinite; }
-.opp .mm-t .mm-l:focus-visible, .opp .mm-t .mm-c:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 6px; }
-/* Masthead fit, measured: logo + nav + tools need about 1460px at full size. Stage 1 (<=1480) compacts the nav and turns
-   Search into an icon, stage 2 (<=1400) drops the Weighting Room button, stage 3 (<=1240) tightens further, and the
-   burger takes over at <=1120. Each stage leaves 70px or more of slack at its narrowest width. */
-@media (max-width: 1480px) {
-  .opp .top .wrap { gap: 14px; }
-  .opp .mm-i > a, .opp .mm-i > button { padding: 0 9px; font-size: 13.5px; }
-  .opp .mm-t .mm-l { padding-left: 9px; font-size: 13.5px; } .opp .mm-t.live .mm-l { padding-left: 22px; }
-  .opp .top .right .btn.ghost.search { width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
-  .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
-}
-/* the primary CTA stays in the bar at every width where it fits; at 960px and below it lives in the Menu. Search stays in the bar
-   as an icon at every width (opp.css hides every .ghost button at 960px and 600px; this puts the search icon back). */
-@media (max-width: 960px) {
-  .opp .top .right .btn.gold { display: none; }
-  .opp .top .right .btn.ghost.search { display: inline-flex; width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
-  .opp .top .right .btn.ghost.search svg { width: 18px; height: 18px; }
-}
-@media (max-width: 1240px) {
-  .opp .top .wrap { padding-inline: 20px; }
-  .opp .top .right { gap: 8px; }
-  .opp .mm-i > a, .opp .mm-i > button { padding: 0 7px; font-size: 13px; }
-  .opp .mm-t .mm-l { padding-left: 7px; font-size: 13px; } .opp .mm-t.live .mm-l { padding-left: 20px; }
-}
-/* Before the width is measured (first paint, no script) the old breakpoint decides. Once measured, data-navfit decides: "off" folds
-   the whole nav into the Menu button the moment it stops fitting; it stays in the DOM, out of sight, so it can be measured again. */
-@media (max-width: 1120px) { .opp .top:not([data-navfit]) .nav.mmenu { display: none; } .opp .top:not([data-navfit]) .burger { display: inline-flex; padding: 8px 12px; } }
-.opp .top[data-navfit="off"] .nav.mmenu { position: absolute; left: 0; visibility: hidden; pointer-events: none; width: max-content; height: 0; overflow: hidden; }
-.opp .top[data-navfit="off"] .burger { display: inline-flex; padding: 8px 12px; }
-.opp .top[data-navfit="on"] .nav.mmenu { display: flex; }
-.opp .top .right { flex-shrink: 0; }
-.opp .burger:focus-visible, .opp .mnav .btn:focus-visible, .opp .mnav a:focus-visible, .opp .macc-g > button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.opp .mm-t .mm-l:focus-visible, .opp .mm-t .mm-c:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+@media (max-width: 1180px) { .opp .mm-i > a, .opp .mm-i > button { padding: 0 9px; font-size: 13.5px; } .opp .mm-t .mm-l { padding-left: 9px; font-size: 13.5px; } .opp .mm-t.live .mm-l { padding-left: 22px; } .opp .top .right .btn.gold { display: none; } }
+@media (max-width: 1060px) { .opp .nav.mmenu { display: none; } .opp .burger { display: inline-flex; padding: 8px 12px; } }
 
 /* phone menu */
 .opp .mnav { overflow-y: auto; }
@@ -121,3 +91,23 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .ticker-bar .wrap { height: 34px; }
 .opp .ticker-bar .lbl { font-size: 10.5px; }
 .crumbs { font-size: 12.5px; }
+/* after Election Day: the strip and ticker read results against the final forecast */
+.opp .ms-day.post i { background: var(--win); box-shadow: 0 0 0 3px rgba(61, 220, 151, .18); }
+.opp .ms-odds .ms-fin { color: var(--mute); font-weight: 600; }
+.opp .ms-acc { color: var(--hi); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
+.opp .ticker-track em.fc { font: 500 11px var(--font-m); font-style: normal; color: var(--mute2); margin-left: 8px; }
+/* result band on the race forecast pages */
+.opp.rband { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin: 10px 0 4px; padding: 12px 16px; border: 1px solid var(--line2); border-radius: var(--r); background: var(--glass2); font-size: 13.5px; color: var(--ink2); position: relative; z-index: 2; }
+.opp.rband .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex: none; }
+.opp.rband .dot.fin { background: var(--win); }
+.opp.rband .k { font: 700 11px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.opp.rband .w b { color: var(--hi); }
+.opp.rband b.d { color: var(--dem2); } .opp.rband b.r { color: var(--gop2); } .opp.rband b.i { color: var(--ind); }
+.opp.rband .m { color: var(--mute); } .opp.rband .m b { font-family: var(--font-m); color: var(--ink2); }
+.opp.rband .call { font: 700 10.5px var(--font-b); letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; }
+.opp.rband .call.ok { color: var(--win); background: rgba(61, 220, 151, .12); }
+.opp.rband .call.no { color: var(--hi); border: 1px solid var(--line2); }
+.opp.rband .call.x { color: var(--mute); background: var(--glass2); }
+.opp.rband .more { margin-left: auto; color: var(--hi); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; font-weight: 600; }
+@media (max-width: 760px) { .opp .ms-odds .ms-fin { display: none; } }
+@media (max-width: 560px) { .opp .ms-odds span:nth-child(3) { display: inline; } .opp .ms-odds span:nth-child(4) { display: none; } }

@@ -9,23 +9,20 @@ import { getDownballot } from "./statewide/data";
 import JsonLd from "@/app/components/JsonLd";
 import { hubLd, hubMeta } from "./seo";
 import YouTubeBand from "@/app/components/YouTubeBand";
+import Link from "@/app/components/Link";
+import { getAcc } from "@/app/accuracy/data";
 
 export function generateMetadata(): Metadata { return hubMeta(); }
 
 const readPub = <T,>(f: string): T => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", f), "utf8")) as T;
-// The early-vote model's projected 2026 electorate, the same total the early vote desk measures against.
-const readTurnout = (): ConsoleData["turnout"] => {
-  try {
-    const n = (JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "earlyvote-electorate.json"), "utf8")) as { nation?: { turnout?: number; votes24?: number } }).nation;
-    return n?.turnout ? { total: n.turnout, votes24: n.votes24 ?? null } : null;
-  } catch { return null; }
-};
 
 // /forecast is one console: pick a layer, read its map, its odds and its closest races, then every race in it.
 // Static on purpose: the page reads public/forecast at build time, so it never needs those files inside a serverless
 // function. The ?office= layer pick happens in the browser, in ForecastConsole.
 export default function ForecastPage() {
   const model = getModel();
+  const acc = getAcc();
+  const allRight = (["senate", "house", "governor"] as const).every((o) => acc.chambers[o].right);
   const pick = (o: string): CRace[] => model.races.filter((r) => r.office === o).map((r) => ({
     id: r.id, st: r.st, state: r.state, d: r.district, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id),
     open: !!r.open, p10: r.est.p10 ?? r.est.margin, p90: r.est.p90 ?? r.est.margin,
@@ -54,14 +51,20 @@ export default function ForecastPage() {
     ch: { senate: chOf("senate"), governor: chOf("governor"), house: chOf("house") },
     updated: model.meta.updated, daysOut: model.meta.daysOut, sims: model.meta.sims, generic: model.meta.genericBallot?.avg ?? null,
     ev: model.meta.earlyVote ? { ballots: model.meta.earlyVote.ballots, states: model.meta.earlyVote.states } : null,
-    turnout: readTurnout(),
   };
   return (
     <>
       <JsonLd data={hubLd()} />
-      <div className="opp fc-page fc-xl fx-dark"><ForecastConsole data={data} initial="senate" /></div>
+      <div className="opp fc-page fc-xl fx-dark">
+        <aside className="fc-final" aria-label="Final forecast">
+          <span className="dot" aria-hidden="true" />
+          <p><b>This is the final forecast, frozen on November 3 before the first polls closed.</b> The results are in: we called {acc.headline.all.called_right} of {acc.headline.all.races} races{allRight ? " and all three chambers" : ""}.</p>
+          <span className="acts"><Link className="btn sm white" href="/accuracy">How it did</Link><Link className="btn sm" href="/forecast/2026">As published</Link><Link className="btn sm" href="/results/2026">Every result</Link></span>
+        </aside>
+        <ForecastConsole data={data} initial="senate" />
+      </div>
       <div className="opp fc-page fc-wide">
-        <YouTubeBand from="forecast-hub" title="The 2026 forecast, explained on YouTube" note="Every week: which races moved and why, the Senate and House maps, and election night live on November 3." />
+        <YouTubeBand from="forecast-hub" title="The 2026 forecast, explained on YouTube" note="How the final forecast held up, which calls missed and why, and what the 2026 results mean for 2028." />
         <details className="fcx-index">
           <summary>Browse every forecast page as a plain index</summary>
           <ForecastIndex />

@@ -6,6 +6,13 @@ type Redirect = { source: string; destination: string; permanent: boolean; has?:
 const p = (source: string, destination: string, permanent = true): Redirect => ({ source, destination, permanent });
 
 export const redirects: Redirect[] = [
+  // Nov 6 2026: short addresses for the 2026 pollster ranking and the accuracy report
+  p("/most-accurate-pollster-2026", "/most-accurate-pollster"),
+  p("/most-accurate-poll", "/most-accurate-pollster"),
+  p("/pollster-rankings", "/most-accurate-pollster"),
+  p("/pollster-ratings", "/most-accurate-pollster"),
+  p("/accuracy-report", "/accuracy"),
+  p("/2026-accuracy", "/accuracy"),
   // short addresses people type or search for the early vote tracker
   p("/early-vote", "/maps/early-vote"),
   p("/early-voting", "/maps/early-vote"),

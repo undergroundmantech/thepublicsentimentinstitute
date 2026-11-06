@@ -6,7 +6,6 @@
 // Clicking a state or district opens its full race page.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
-import DaysOut from "@/app/components/DaysOut";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { useRouter } from "next/navigation";
@@ -16,7 +15,6 @@ import SpendingTracker, { SPENDING_CSS } from "./Spending";
 import Ambient from "@/app/components/opp/Ambient";
 import SeatBars from "./SeatBars";
 import "./console.css";
-import { pctFraction, probFraction } from "@/app/lib/fmtPct";
 
 export type Layer = "senate" | "house" | "governor" | "statewide" | "legis" | "measures";
 export type CRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; open: boolean; p10: number; p90: number; office?: string; officeLabel?: string; pl?: [number, number, number, number][] };
@@ -26,7 +24,6 @@ export type CMeas = { st: string; label: string; title: string; yes: number; pro
 export type ConsoleData = {
   senate: CRace[]; governor: CRace[]; house: CRace[]; statewide: CRace[]; legis: CLeg[]; measures: CMeas[];
   ch: Record<"senate" | "governor" | "house", CChamber>; updated: string; daysOut: number; sims: number; generic: number | null; ev: { ballots: number; states: number } | null;
-  turnout: { total: number; votes24: number | null } | null;
 };
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
 
@@ -34,7 +31,7 @@ const LAYERS: { k: Layer; label: string; q: string }[] = [
   { k: "senate", label: "Senate", q: "senate" }, { k: "house", label: "House", q: "house" }, { k: "governor", label: "Governors", q: "governor" },
   { k: "statewide", label: "Statewide offices", q: "statewide" }, { k: "legis", label: "State legislatures", q: "legislatures" }, { k: "measures", label: "Ballot measures", q: "measures" },
 ];
-const pc = (p: number) => probFraction(p);
+const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const unc = (r: CRace) => Math.abs(r.m) >= 99;
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
@@ -181,7 +178,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       const dWin = c.demControl >= 0.5;
       return {
         verdict: layer === "senate"
-          ? <>{dWin ? "Democrats win the Senate" : "Republicans hold the Senate"} in <b className={dWin ? "d" : "r"}>{pc(dWin ? c.demControl : 1 - c.demControl)}</b> of simulations</>
+          ? <>{dWin ? "Democrats win the Senate" : "Republicans hold the Senate"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>
           : <>Democrats are favored in <b className="d">{govFav} of {rs.length}</b> governor races and lead most governorships in <b className="d">{pc(c.demControl)}</b> of simulations</>,
         cells, cols: 25, mark: layer === "senate" ? 50 : 25, markLabel: layer === "senate" ? "51 for control" : "26 for most",
         stats: [[layer === "senate" ? "Average D seats" : "Average D governors", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(rs.filter((r) => rateOf(r) === "toss").length)]] as [string, string][],
@@ -189,7 +186,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
     }
     if (layer === "house") {
       const c = ch.house, dWin = c.demControl >= 0.5;
-      return { verdict: <>{dWin ? "Democrats win the House" : "Republicans hold the House"} in <b className={dWin ? "d" : "r"}>{pc(dWin ? c.demControl : 1 - c.demControl)}</b> of simulations</>,
+      return { verdict: <>{dWin ? "Democrats win the House" : "Republicans hold the House"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>,
         cells: cellsOf(data.house), cols: 29, mark: 217, markLabel: "218 for control",
         stats: [["Average D seats", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(data.house.filter((r) => rateOf(r) === "toss").length)]] as [string, string][] };
     }
@@ -240,9 +237,6 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
   const LIMIT = 18, shown = all ? tableRows.rows.length : Math.min(LIMIT, tableRows.rows.length);
 
   const layerLabel = LAYERS.find((l) => l.k === layer)!.label;
-  const top = closest.reduce<(typeof closest)[number] | undefined>((a, c) => (!a || Math.abs(c.pD - 0.5) < Math.abs(a.pD - 0.5) ? c : a), undefined);
-  const topLabel = layer === "measures" ? (mst ? `Closest ${STATE_NAME[mst] ?? mst} measure` : "Closest ballot measure")
-    : layer === "legis" ? `Closest state ${chamber}` : `Closest ${layer === "senate" ? "Senate" : layer === "house" ? "House" : layer === "governor" ? "governor" : "statewide"} race`;
   const tipKey = tip?.k;
   const tipRaces = tipKey ? byKey[tipKey] ?? [] : [];
   const tipMeas = tipKey && layer === "measures" ? measBySt[tipKey] ?? [] : [];
@@ -255,45 +249,19 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       <Ambient />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span></nav>
       <header className="fcx-head">
-        <div className="fcx-title">
-          <div className="eye g">2026 midterm forecast · <DaysOut initial={data.daysOut} suffix=" days out" /></div>
+          <Pointy key={layer} className="fcx-pty pty-side" pose={layer === "measures" ? "think" : "point"} prop="none" size={92} look={-1} flip cap
+            say={closest[0] ? <>Closest {layer === "legis" ? "chamber" : layer === "measures" ? "measure" : "race"}: <b>{closest[0].name}</b>, <span className={closest[0].cls === "r" || closest[0].cls === "no" ? "r" : "d"}>{closest[0].val}</span></> : undefined} />
+        <div>
+          <div className="eye g">2026 midterm forecast · final, November 3</div>
           <h1 id="fcx-h">Every 2026 race, <em>in one place.</em></h1>
           <p className="lede">Pick a layer to see its map, its odds and its closest races. Click any state or district to open the full forecast for that race.</p>
         </div>
-        <div className="fcx-key">
-          {data.generic != null ? (
-            <div className="k">
-              <span className="lb">Generic ballot</span>
-              <b className={`v ${data.generic < 0 ? "d" : "r"}`}>{data.generic < 0 ? "D" : "R"} +{Math.abs(data.generic).toFixed(1)}</b>
-              <small>The national House vote in the forecast</small>
-            </div>
-          ) : null}
-          {data.turnout ? (
-            <div className="k">
-              <span className="lb">Projected turnout</span>
-              <b className="v">{(data.turnout.total / 1e6).toFixed(1)}M</b>
-              {data.ev ? (
-                <Link href="/maps/early-vote" className="cast">
-                  <span className="bar"><i style={{ width: `${Math.min(100, (data.ev.ballots / data.turnout.total) * 100)}%` }} /></span>
-                  <small><b>{((data.ev.ballots / data.turnout.total) * 100).toFixed(1)}%</b> already cast · {(data.ev.ballots / 1e6).toFixed(1)}M early ballots</small>
-                </Link>
-              ) : null}
-            </div>
-          ) : null}
-          <Pointy key={layer} className="fcx-pty" pose={layer === "measures" ? "think" : "point"} prop="none" size={64} look={-1} flip cap />
-        </div>
-        <div className="fcx-meta">
-          {top ? (
-            <Link href={top.href} className="fcx-closest">
-              <span className="eye">{topLabel}</span>
-              <b className="nm">{top.name}</b>
-              <b className={`vl ${top.cls}`}>{top.val}</b>
-              <span className="go">Open →</span>
-            </Link>
-          ) : null}
-          <span><em>Updated</em> {new Date(data.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
-          <span><em>Simulations</em> {data.sims.toLocaleString()}</span>
-        </div>
+        <dl className="fcx-meta">
+          <div><dt>Updated</dt><dd>{new Date(data.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</dd></div>
+          <div><dt>Simulations</dt><dd>{data.sims.toLocaleString()}</dd></div>
+          {data.generic != null ? <div><dt>Generic ballot</dt><dd className={data.generic < 0 ? "d" : "r"}>{data.generic < 0 ? "D" : "R"} +{Math.abs(data.generic).toFixed(1)}</dd></div> : null}
+          {data.ev ? <div><dt>Early ballots</dt><dd><Link href="/maps/early-vote">{(data.ev.ballots / 1e6).toFixed(1)}M</Link></dd></div> : null}
+        </dl>
       </header>
 
       <SeatBars ch={ch} data={data} onPick={choose} active={layer} />
@@ -435,7 +403,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                 <tr key={x.href} onClick={() => router.push(x.href)}>
                   <td><Link href={x.href}><b>{STATE_NAME[x.st] ?? x.st} {x.label}</b></Link></td>
                   <td className="ttl">{x.title}</td>
-                  <td className="n mono">{x.yes.toFixed(1)}%<small>needs {pctFraction(x.thr)}</small></td>
+                  <td className="n mono">{x.yes.toFixed(1)}%<small>needs {(x.thr * 100).toFixed(0)}%</small></td>
                   <td><span className="fcx-cb ms"><i style={{ width: `${x.prob * 100}%` }} /></span><small className={`mono ${x.prob > 0.5 ? "y" : "no"}`}>{pc(x.prob)}</small></td>
                 </tr>))}
             </tbody>

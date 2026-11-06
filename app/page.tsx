@@ -1,4 +1,3 @@
-import DaysOut from "@/app/components/DaysOut";
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
@@ -11,17 +10,18 @@ import HomeWhatIf from "@/app/components/home/HomeWhatIf";
 import "@/app/components/home/home2.css";
 import AveragePanel, { type TableRow } from "@/app/components/home/AveragePanel";
 import ResultCard from "@/app/components/home/ResultCard";
-import Countdown from "@/app/components/home/Countdown";
 import MiniMap from "@/app/components/home/MiniMap";
 import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
 import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
 import HomeDeck from "@/app/components/home/HomeDeck";
+import ResultsBand from "@/app/components/home/ResultsBand";
+import { getAcc } from "@/app/accuracy/data";
 const APPROVAL_POLLS = aggPolls("trump-approval");
 const GENERIC_POLLS = aggPolls("generic-ballot");
 
-export const metadata: Metadata = seo({"title": "On Point Politics: 2026 midterm forecasts, polling averages and live results", "description": "Who is favored in the 2026 midterms: Senate, House and governor forecasts, every state legislature and statewide ballot measure, daily polling averages and live election night results from On Point Politics.", "path": "/", "absoluteTitle": true});
+export const metadata: Metadata = seo({"title": "On Point Politics: the most accurate pollster of 2026, with forecasts, polls and results", "description": "On Point Polling was the most accurate pollster of the 2026 midterms, D +13.1 on the final generic ballot against a D +13.0 result. The On Point forecast called the Senate, the House and the governors, with every race, county and state legislature scored against the count.", "path": "/", "absoluteTitle": true});
 
 type RawPoll = { pollster: string; startDate?: string; endDate: string; sampleSize?: number; sampleType?: string; results: Record<string, number> };
 
@@ -45,6 +45,7 @@ function latestRows(polls: RawPoll[], ka: string, kb: string, gb: boolean): Tabl
 
 export default function Home() {
   const stats = getHomeStats();
+  const acc = getAcc();
   const model = getModel();
   const { chambers, meta } = model;
   const races = { senate: miniRaces("senate"), governor: miniRaces("governor") };
@@ -84,6 +85,7 @@ export default function Home() {
   return (
     <div className="opp">
       <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
+      <ResultsBand />
       <HomeDeck />
       <HomeWhatIf />
 
@@ -132,11 +134,19 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<><DaysOut initial={meta.daysOut} suffix=" days" /> until the desk goes live.</>} /><div><div className="eye g">Results desk</div><h2>Live returns, called by the desk</h2></div><span className="pill live" style={{ marginBottom: 6 }}>Election night ready</span></div>
+        <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<>{acc.headline.all.called_right} of {acc.headline.all.races} races called right.</>} /><div><div className="eye g">Results desk</div><h2>The returns, county by county</h2></div><span className="pill d" style={{ marginBottom: 6 }}>Results are in</span></div>
         <div className="grid3">
           <ResultCard raceId={86349} title="Florida Governor, GOP primary" date="Aug 18" href="/results/2026-08-18/florida-governor-republican-primary" names={["Byron Donalds", "James Fishback", "Jay Collins"]} />
           <ResultCard raceId={87529} title="Oklahoma Governor, GOP runoff" date="Aug 25" href="/results/2026-08-25/oklahoma-governor-republican-runoff" names={["Gentner Drummond", "Mike Mazzei"]} />
-          <Countdown />
+          <div className="card count post">
+            <div className="card-b">
+              <div className="eye">November 3</div>
+              <div className="bignum" style={{ marginTop: 8 }}>Results in</div>
+              <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 12 }}>Every Senate, House and governor race, county by county, with the final forecast beside the count. {acc.headline.all.counting ? `${acc.headline.all.counting} races were still counting at the last read.` : ""}</div>
+              <Link className="btn white" style={{ marginTop: 14 }} href="/results/2026">Every result</Link>
+              <Link className="btn" style={{ marginTop: 10 }} href="/accuracy">How the forecast did</Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -156,7 +166,7 @@ export default function Home() {
             <div className="card-b"><h3>{storyRace(govPick)}</h3><p>The closest governor&apos;s race in the model, {fmtM(govPick.stages.rate, isInd(govPick))}.</p><div className="meta">{updated} · Forecast note</div></div>
           </Link>
           <Link href="/forecast/methodology" className="card story">
-            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect className="thb-bg" width="320" height="180" /><g fill="none" stroke="var(--accent)" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="var(--accent)" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
+            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect className="thb-bg" width="320" height="180" /><g fill="none" stroke="#e7b341" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="#e7b341" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
             <div className="card-b"><h3>How On Point averages polls: one robust LOWESS line, weighted</h3><p>The trend fit is now the average itself, with a 16 day recency half life.</p><div className="meta">Oct 22 · Methodology</div></div>
           </Link>
         </div>

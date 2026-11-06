@@ -1,9 +1,7 @@
 "use client";
-// The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast.
-// In Theme, Pointy the On Point canvasser walks across it from one close race to the next; Pro Dark and Pro Light keep
-// the globe, tooltips and closest-race list without him. Drag to turn the globe, hover a state for its odds, click it
-// for the full race. Canvas for the globe, SVG for the mascot and its bubble.
-import DaysOut from "@/app/components/DaysOut";
+// The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast,
+// with Pointy the On Point canvasser walking across it from one close race to the next. Drag to turn the globe,
+// hover a state for its odds, click it for the full race. Canvas for the globe, SVG for the mascot and its bubble.
 import { canvasDpr, frameGap, isLite } from "@/app/lib/lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "@/app/components/Link";
@@ -15,27 +13,27 @@ import type { Feature, Geometry } from "geojson";
 import Mascot from "./Mascot";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
-import { useSiteMode, useThemeRef } from "@/app/lib/useSiteTheme";
-import { probFraction, probPoints } from "@/app/lib/fmtPct";
+import { useThemeRef } from "@/app/lib/useSiteTheme";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
 type Office = "senate" | "governor";
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
-const pc = (p: number) => probFraction(p);
+const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 type SF = Feature<Geometry, { name: string }> & { st: string };
-// the odds count up from zero on load; `to` is a chance in points, shown to one decimal
+// the odds count up from zero on load
 function CountUp({ to }: { to: number }) {
   const [v, setV] = useState(to);
   useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setV(to); return; }
     let raf = 0; const t0 = performance.now();
-    const step = (now: number) => { const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3); setV(k < 1 ? to * e : to); if (k < 1) raf = requestAnimationFrame(step); };
+    const step = (now: number) => { const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3); setV(Math.round(to * e)); if (k < 1) raf = requestAnimationFrame(step); };
     setV(0); raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
   }, [to]);
-  return <>{probPoints(v)}</>;
+  return <>{v}%</>;
 }
+const pcN = (p: number) => (p > 0.99 || p < 0.01 ? null : Math.round(p * 100));
 
 export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
   const router = useRouter();
@@ -52,7 +50,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const dragRef = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
   const hoverRef = useRef<string | null>(null);
   const themeRef = useThemeRef();
-  const themed = useSiteMode() === "themed";
 
   useEffect(() => {
     Promise.all([fetch("/us-states.json").then((r) => r.json()), fetch("/geo/world-110m.json").then((r) => r.json())]).then(([us, w]) => {
@@ -66,17 +63,16 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const list = races[office];
   const bySt = useMemo(() => Object.fromEntries(list.map((r) => [r.st, r])) as Record<string, GRace>, [list]);
   const rateOf = (r: GRace): Rating => (Math.abs(r.m) >= 99 ? (r.m < 0 ? "safeD" : "safeR") : rating(r.m, r.ind));
-  // Pointy's route (Theme only): the eight closest races, nearest neighbour order. Empty in Pro, so no walk, route or
-  // footprints are computed or drawn.
+  // Pointy's route: the eight closest races, nearest neighbour order
   const tour = useMemo(() => {
-    if (!geo || !themed) return [] as { r: GRace; ll: [number, number] }[];
+    if (!geo) return [] as { r: GRace; ll: [number, number] }[];
     const pts = [...list].filter((r) => Math.abs(r.m) < 99 && r.st !== "AK" && r.st !== "HI").sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).slice(0, 8)
       .map((r) => { const f = geo.states.find((s) => s.st === r.st); return f ? { r, ll: geoCentroid(f as GeoPermissibleObjects) as [number, number] } : null; }).filter(Boolean) as { r: GRace; ll: [number, number] }[];
     if (!pts.length) return pts;
     const out = [pts.shift()!];
     while (pts.length) { const c = out[out.length - 1]; let bi = 0, bd = 9; pts.forEach((p, i) => { const d = geoDistance(c.ll, p.ll); if (d < bd) { bd = d; bi = i; } }); out.push(pts.splice(bi, 1)[0]); }
     return out;
-  }, [geo, list, themed]);
+  }, [geo, list]);
 
   useEffect(() => {
     const c = cv.current, box = wrap.current; if (!c || !box || !geo) return;
@@ -230,16 +226,14 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     <section className="hg" aria-label="2026 forecast globe">
       <div className="hg-stage" ref={wrap}>
         <canvas ref={cv} className="hg-cv" role="img" aria-label={`The 2026 ${office} forecast on a globe, each state shaded by its rating`} />
-        {themed ? (
-          <div className="hg-man" ref={man} aria-hidden="true">
-            <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
-            {stop ? (
-              <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
-                <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
-              </button>
-            ) : null}
-          </div>
-        ) : null}
+        <div className="hg-man" ref={man} aria-hidden="true">
+          <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
+          {stop ? (
+            <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
+              <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
+            </button>
+          ) : null}
+        </div>
         {tr ? (
           <div className="hg-tip" style={{ left: tip!.x, top: tip!.y, transform: `translate(${tip!.x > tip!.w - 300 ? "calc(-100% - 18px)" : "18px"}, ${tip!.y > tip!.h - 220 ? "calc(-100% - 12px)" : "12px"})` }}>
             <h4>{tr.name}</h4>
@@ -254,16 +248,15 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
 
       <div className="hg-over">
         <div className="hg-copy">
-          <span className="chip"><i /><DaysOut initial={daysOut} suffix=" days" /> to Election Day · updated {updated}</span>
+          <a className="chip" href="/accuracy"><i />Final forecast, frozen {updated} · see how it did</a>
           <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
-          <p>{themed ? "The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races."
-            : "The 2026 midterms on one interactive globe. Explore the closest races, examine state forecasts, and select any state for detailed projections."}</p>
+          <p>The 2026 midterms on one globe, as the final forecast saw them on Election Day. Spin it, hover a state, click it for the race, then see how every call held up against the count.</p>
           <div className="hg-odds">
             {([["Senate", odds.senate, "/forecast?office=senate"], ["House", odds.house, "/forecast?office=house"], ["Governors", odds.governor, "/forecast?office=governor"]] as const).map(([l, v, h]) => (
-              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b><CountUp to={100 * (v >= 0.5 ? v : 1 - v)} /></b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
+              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pcN(v >= 0.5 ? v : 1 - v) == null ? pc(v >= 0.5 ? v : 1 - v) : <CountUp to={pcN(v >= 0.5 ? v : 1 - v)!} />}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
             ))}
           </div>
-          <div className="hg-cta"><Link className="btn g" href="/forecast">Open the forecast</Link><Link className="btn" href="/what-if">Play What if</Link><Link className="btn" href="/maps/electoral">Make a map</Link></div>
+          <div className="hg-cta"><Link className="btn g" href="/accuracy">How the forecast did</Link><Link className="btn" href="/results/2026">Every result</Link><Link className="btn" href="/forecast">The final forecast</Link></div>
         </div>
         <div className="hg-side">
           <div className="hg-tabs" role="tablist" aria-label="Office">

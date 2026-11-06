@@ -10,8 +10,8 @@ const SEEN_KEY = "psi-intro-v2";
 
 const FEATURES: [string, string, string][] = [
   ["Polls", "Polling averages", "Every tracked race, weighted by recency, sample and pollster quality."],
-  ["Forecast", "The 2026 forecast", "Senate, House and governor odds from thousands of simulated elections."],
-  ["Results", "Live results", "Every November 3 race on one globe, county by county, as returns land."],
+  ["Forecast", "The 2026 forecast, scored", "The final forecast as published on November 3, and how every call held up against the count."],
+  ["Results", "The 2026 results", "Every November 3 race on one globe, county by county."],
   ["News", "News from every side", "Headlines from Left, Center and Right outlets, grouped by story, with neutral summaries."],
   ["Fieldwork", "Polls by On Point Polling", "Original surveys fielded by On Point Polling."],
 ];
@@ -137,7 +137,7 @@ export default function SiteIntro() {
           ))}
           <div className="acts">
             <button type="button" className="btn g" onClick={dismiss}>Enter the site</button>
-            <Link className="btn" href="/forecast" onClick={dismiss}>See the forecast</Link>
+            <Link className="btn" href="/accuracy" onClick={dismiss}>How the forecast did</Link>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { seo } from "@/app/lib/seo";
 import PollingRoom from "./PollingRoom";
 import { roomForecast } from "./roomForecast";
 
-export const metadata: Metadata = seo({"title": "On Point Polling: the polling arm behind On Point Politics", "description": "On Point Polling is the polling and research arm behind On Point Politics: statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/on-point-polling"});
+export const metadata: Metadata = seo({"title": "On Point Polling: the most accurate pollster of 2026", "description": "On Point Polling, the polling arm behind On Point Politics, was the most accurate pollster of the 2026 midterms: first of 42 final national polls. Statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/on-point-polling"});
 
 const PILLARS: [string, string, string][] = [
   ["Fieldwork", "Original surveys", "Statewide, district and national polls written, fielded and weighted in house, published with full toplines and crosstabs."],

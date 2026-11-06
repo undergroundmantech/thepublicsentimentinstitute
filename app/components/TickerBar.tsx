@@ -1,36 +1,36 @@
 import Link from "@/app/components/Link";
-import { getModel, isInd } from "@/app/lib/forecastData";
-import { fmtM, lastName, raceHref } from "@/app/lib/opp";
-import DaysOut from "./DaysOut";
+import { getModel } from "@/app/lib/forecastData";
+import { lastName, raceHref } from "@/app/lib/opp";
+import { getAcc, mg, cls, winnerName } from "@/app/accuracy/data";
 
-// The 38px bar under the masthead: days out, then a marquee of model margins for the
-// marquee Senate and governor races in public/forecast/model.json.
+// The 38px bar under the masthead. After Election Day it reads the result against the final forecast in the closest
+// marquee Senate and governor races, from public/accuracy/2026.json, and the label opens the accuracy report.
 export default function TickerBar() {
   const m = getModel();
-  const items = m.races
-    .filter((r) => r.office !== "house" && r.marquee)
-    .sort((a, b) => Math.abs(a.stages.rate) - Math.abs(b.stages.rate))
-    .slice(0, 16)
-    .map((r) => {
-      const ind = isInd(r);
-      const mg = r.stages.rate;
-      return {
-        id: r.id,
-        label: `${r.st} ${r.office === "senate" ? "Sen" : "Gov"}`,
-        lead: lastName(mg < 0 ? r.dem : r.gop),
-        cls: ind ? "i" : mg < 0 ? "d" : "r",
-        text: fmtM(mg, ind),
-      };
-    });
+  const marquee = new Set(m.races.filter((r) => r.office !== "house" && r.marquee).map((r) => r.id));
+  const A = getAcc();
+  const items = A.races
+    .filter((r) => marquee.has(r.id) && r.act != null && Math.abs(r.fm) < 99)
+    .sort((a, b) => Math.abs(a.fm) - Math.abs(b.fm))
+    .slice(0, 18)
+    .map((r) => ({
+      id: r.id,
+      label: `${r.st} ${r.o === "senate" ? "Sen" : "Gov"}`,
+      lead: lastName(winnerName(r)),
+      cls: cls(r.act, r.ind),
+      text: mg(r.act, r.ind),
+      fc: mg(r.fm, r.ind),
+      verb: r.fin ? "" : " leads",
+    }));
   const row = (k: string) => items.map((t) => (
-    <span key={k + t.id}><Link href={raceHref(t.id)} tabIndex={k === "b" ? -1 : undefined}><b>{t.label}</b>{t.lead} <i className={t.cls}>{t.text}</i></Link></span>
+    <span key={k + t.id}><Link href={raceHref(t.id)} tabIndex={k === "b" ? -1 : undefined}><b>{t.label}</b>{t.lead}{t.verb} <i className={t.cls}>{t.text}</i><em className="fc">forecast {t.fc}</em></Link></span>
   ));
   return (
     <div className="opp">
       <div className="ticker-bar">
         <div className="wrap">
-          <span className="lbl"><DaysOut initial={m.meta.daysOut} /></span>
-          <div className="ticker" aria-label="Model margins in the closest races">
+          <Link className="lbl" href="/accuracy">FINAL · RESULTS VS FORECAST</Link>
+          <div className="ticker" aria-label="Results against the final forecast in the closest races">
             <div className="ticker-track">{row("a")}<span aria-hidden="true" style={{ display: "contents" }}>{row("b")}</span></div>
           </div>
         </div>

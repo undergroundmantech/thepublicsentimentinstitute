@@ -1,33 +1,14 @@
 /* The forecast console on /forecast. One layer at a time: tiles, map and readout, then the table. */
 .fcx { position: relative; padding-bottom: 10px; }
-/* The hero: the title large on the left, the generic ballot and projected turnout as the key numbers on the right,
-   then a quiet strip with the closest race, the update date and the simulation count. */
-.fcx-head { position: relative; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr); grid-template-areas: "title key" "meta meta"; gap: 16px 36px; align-items: center; margin: 6px 0 14px; }
-.fcx-title { grid-area: title; min-width: 0; max-width: 860px; }
-.fcx-head h1 { font: 800 clamp(40px, 5vw, 76px)/1 var(--font-d); letter-spacing: -.045em; margin: 10px 0 14px; text-wrap: balance; }
+.fcx-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin: 6px 0 22px; }
+.fcx-head h1 { font: 800 clamp(30px, 3.2vw, 48px)/1.04 var(--font-d); letter-spacing: -.04em; margin: 8px 0 10px; text-wrap: balance; }
 .fcx-head h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.fcx-head .lede { max-width: 620px; margin: 0; font-size: clamp(15px, 1.15vw, 18px); color: var(--ink2); text-wrap: pretty; }
-.fcx-key { grid-area: key; position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }
-.fcx-key .k { display: grid; align-content: start; gap: 10px; min-width: 0; padding: 18px 18px 16px; border-radius: 18px; border: 1px solid var(--line); background: var(--glass); }
-.fcx-key .lb { font: 800 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.fcx-key .v { font: 800 clamp(38px, 3.6vw, 60px)/.95 var(--font-d); letter-spacing: -.04em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.fcx-key small { font-size: 12.5px; line-height: 1.35; color: var(--mute); }
-.fcx-key small b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.fcx-key .cast { display: grid; gap: 8px; color: inherit; text-decoration: none; }
-.fcx-key .cast:hover small { color: var(--ink2); }
-.fcx-key .bar { display: block; height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
-.fcx-key .bar i { display: block; height: 100%; border-radius: 4px; background: var(--grad); }
-.fcx-key .fcx-pty { right: -6px; top: -54px; }
-:root:not([data-mode="themed"]) .fcx-key .pty-cameo { display: none; }
-.fcx-meta { grid-area: meta; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding-top: 12px; border-top: 1px solid var(--line); font: 600 12.5px var(--font-b); color: var(--ink2); }
-.fcx-meta em { font: 800 10px var(--font-m); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin-right: 4px; }
-.fcx-closest { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; color: var(--ink2); text-decoration: none; }
-.fcx-closest .eye { font: 800 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
-.fcx-closest .nm { font-weight: 700; color: var(--ink); }
-.fcx-closest .vl { font-weight: 800; font-variant-numeric: tabular-nums; }
-.fcx-closest .go { font: 700 10px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
-.fcx-closest:hover .nm { text-decoration: underline; }
-.fcx-closest:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; border-radius: 4px; }
+.fcx-head .lede { max-width: 640px; margin: 0; color: var(--ink2); }
+.fcx-meta { display: flex; gap: 8px; margin: 0; flex-wrap: wrap; justify-content: flex-end; }
+.fcx-meta div { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; background: var(--glass); min-width: 98px; }
+.fcx-meta dt { font: 700 9.5px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.fcx-meta dd { margin: 3px 0 0; font: 800 16px var(--font-d); font-variant-numeric: tabular-nums; }
+.fcx-meta dd a { color: inherit; text-decoration: none; }
 .fcx .d { color: var(--dem2); } .fcx .r { color: var(--gop2); } .fcx .i { color: var(--ind); }
 .fcx .t, .fcx .y { color: #2fbf9b; } .fcx .no { color: #e8794a; }
 
@@ -151,14 +132,10 @@
 .fcx-index[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 14px; }
 
 @media (max-width: 1240px) { .fcx-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 1100px) { .fcx-stage { grid-template-columns: 1fr; } .fcx-read { position: static; } .fcx-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .fcx-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "key" "meta"; } }
+@media (max-width: 1100px) { .fcx-stage { grid-template-columns: 1fr; } .fcx-read { position: static; } .fcx-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
-  .fcx-head { gap: 14px; }
-  .fcx-key { gap: 10px; }
-  .fcx-key .k { padding: 14px 14px 12px; }
-  .fcx-key .v { font-size: 34px; }
-  .fcx-key .fcx-pty { display: none; }
+  .fcx-head { grid-template-columns: 1fr; }
+  .fcx-meta { justify-content: flex-start; }
   .fcx-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .fcx-tile { flex: 0 0 168px; scroll-snap-align: start; }
   .fcx-mapcard { padding: 12px 10px; border-radius: 18px; }
@@ -170,6 +147,8 @@
 
 /* Pointy on the map card, and poll trails in the tooltip and table */
 .fcx-mapcard { position: relative; }
+.fcx-head { position: relative; }
+.fcx-head .fcx-pty { right: 0; bottom: 62px; }
 .fcx-tptr { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); }
 .fcx-tptr .eye { font: 800 9px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: #a79fbd; margin-bottom: 2px; }
 .fcx-tptr .ptr { height: 42px; }
@@ -201,3 +180,11 @@
 .fcx-seat .ft .d { color: var(--dem2); } .fcx-seat .ft .r { color: var(--gop2); } .fcx-seat .ft .i { color: var(--ind); }
 @media (prefers-reduced-motion: reduce) { .fcx-seat, .fcx-seat .bar i { transition: none; } }
 @media (max-width: 900px) { .fcx-seats { grid-template-columns: 1fr; gap: 8px; } .fcx-seat { padding: 12px 14px 10px; gap: 6px; } .fcx-seat .cn b { font-size: 24px; } }
+
+/* after Election Day: the console opens under a note that it is the frozen final forecast */
+.fc-final{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:14px 20px 0;padding:12px 18px;border:1px solid var(--line2);border-radius:var(--r);background:var(--glass2);position:relative;z-index:2}
+.fc-final .dot{width:9px;height:9px;border-radius:50%;background:var(--win);box-shadow:0 0 0 4px rgba(61,220,151,.18);flex:none}
+.fc-final p{margin:0;flex:1 1 360px;font-size:14px;line-height:1.5;color:var(--ink2)}
+.fc-final p b{color:var(--hi)}
+.fc-final .acts{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:600px){.fc-final{margin-inline:16px}}

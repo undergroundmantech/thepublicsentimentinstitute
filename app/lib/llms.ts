@@ -1,5 +1,7 @@
 // Builds /llms.txt and /llms-full.txt from the live model output. Plain text, written to be quoted:
 // every number names its page, and every page is a full URL.
+import { getBench } from "@/app/accuracy/bench";
+import { getAcc } from "@/app/accuracy/data";
 import { getModel, isInd, type FRace } from "@/app/lib/forecastData";
 import { fmtM, raceHref, STATE_NAME } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
@@ -8,10 +10,9 @@ import { avgSummary } from "@/app/polls/seo";
 import { dbHref, getDownballot } from "@/app/forecast/statewide/data";
 import { currentMajority, getStatehouse, slHref } from "@/app/forecast/legislatures/data";
 import { bmHref, getMeasures } from "@/app/forecast/measures/data";
-import { pctFraction, probFraction } from "./fmtPct";
 
 const U = (p: string) => `${SITE.url}${p}`;
-const pc = (p: number) => probFraction(p);
+const pc = (p: number) => (p > 0.99 ? "more than 99%" : p < 0.01 ? "less than 1%" : `${Math.round(p * 100)}%`);
 const day = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 const n1 = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
 
@@ -49,7 +50,18 @@ export function llmsText(full: boolean): string {
     `Forecast updated ${day(meta.updated)}. Election day is November 3, 2026, ${meta.daysOut} days after this update. Every forecast number below comes from ${meta.sims.toLocaleString()} correlated simulations of the election.`,
   );
 
-  h("The 2026 forecast right now");
+  {
+    const B = getBench(), A = getAcc(), g = B.generic, P = B.national.polls;
+    h("2026 results: the most accurate pollster and forecast");
+    L.push(
+      `* On Point Polling was the most accurate pollster of the 2026 midterms. Its final national poll had the generic ballot at D +${g.us.margin.toFixed(1)}, ${g.us.d.toFixed(1)} D to ${g.us.r.toFixed(1)} R, against a projected final of D +${g.result.margin.toFixed(1)}; scored on margin and vote share it ranked first of ${P.length} final national polls, score ${P[0].score.toFixed(2)} against ${P[1].score.toFixed(2)} for ${P[1].name}. ${U("/most-accurate-pollster")}`,
+      `* The final On Point forecast, frozen on November 3 before polls closed, called ${A.headline.all.called_right} of ${A.headline.all.races} Senate, House and governor races and called control of the Senate, the House and the governors right. ${U("/accuracy")}`,
+      `* Final seat counts, the winner picked in each race plus seats not up: Senate ${A.chambers.senate.projD} Democratic side, House ${A.chambers.house.projD} Democratic, governors ${A.chambers.governor.projD} Democratic, the closest seat counts of any published forecast. ${U("/accuracy#forecasters")}`,
+      `* The forecast files as published on November 3, with a SHA-256 fingerprint for every file. ${U("/forecast/2026")}`,
+    );
+  }
+
+  h("The final 2026 forecast, November 3");
   L.push(
     `* Senate: Democrats win control in ${pc(ch.senate.demControl)} of simulations and Republicans in ${pc(ch.senate.gopControl)}. Average outcome ${ch.senate.demSeats.toFixed(0)} Democratic seats to ${ch.senate.gopSeats.toFixed(0)} Republican. ${U("/forecast?office=senate")}`,
     `* House: Democrats win control in ${pc(ch.house.demControl)} of simulations and Republicans in ${pc(ch.house.gopControl)}. Average outcome ${ch.house.demSeats.toFixed(0)} Democratic seats to ${ch.house.gopSeats.toFixed(0)} Republican; 218 is a majority. ${U("/forecast?office=house")}`,
@@ -98,7 +110,7 @@ export function llmsText(full: boolean): string {
     });
     h("Every statewide ballot measure");
     [...ms.measures].sort((a, b) => a.st.localeCompare(b.st)).forEach((m) =>
-      L.push(`* ${STATE_NAME[m.st] ?? m.st} ${m.label}, ${m.title}: ${pc(m.est.prob)} chance to pass, Yes projected at ${m.est.yes.toFixed(1)}% against the ${pctFraction(m.threshold)} it needs. ${U(bmHref(m))}`));
+      L.push(`* ${STATE_NAME[m.st] ?? m.st} ${m.label}, ${m.title}: ${pc(m.est.prob)} chance to pass, Yes projected at ${m.est.yes.toFixed(1)}% against the ${Math.round(m.threshold * 1000) / 10}% it needs. ${U(bmHref(m))}`));
     h("Every polling average");
     const seen = new Set<string>();
     for (const d of AGGREGATES) {
@@ -128,10 +140,9 @@ export function llmsText(full: boolean): string {
     `* Ballot measures map, every 2026 statewide question by county with projected Yes and No votes: ${U("/maps/ballot-measures")}`,
     `* Electoral map builder: ${U("/maps/electoral")}`,
     `* Live election results: ${U("/results")}`,
-    `* Brazil 2026 archive (the October 25 presidential runoff is over; pages are kept as published): ${U("/brasil/arquivo")}`,
-    `* Brazil 2026 forecast as published, in English with a Portuguese version: Flávio Bolsonaro 51.0 Lula 49.0 of valid votes with a 71.5 percent chance for Flávio. Lula won the runoff, 51.8 to 48.2 percent at 99.9 percent of polls counted in the archived count: ${U("/brasil")}`,
-    `* Brazil 2026 forecast by state and municipality: ${U("/brasil/estados")}`,
-    `* Brazil 2026 archived runoff count by state, last provider update October 26, 2026 (not the certified TSE result): ${U("/brasil/resultados")}`,
+    `* Brazil 2026, in English with a Portuguese version: the On Point forecast for the October 25 presidential runoff, Flávio Bolsonaro 51.0 Lula 49.0 of valid votes with a 71.5 percent chance for Flávio: ${U("/brasil")}`,
+    `* Brazil 2026 by state and municipality: ${U("/brasil/estados")}`,
+    `* Brazil 2026 live runoff results, with a desk for every state and the On Point projection: ${U("/brasil/resultados")}`,
     `* On Point Polling Texas poll, October 17 to 18, 2026, Talarico 48.8 Paxton 43.0 for Senate, Abbott 47.7 Hinojosa 45.2 for governor and French 45.1 Rosenthal 39.8 for Railroad Commissioner among likely voters, 661 registered voters: ${U("/on-point-polling/polls/texas-2026")}`,
     `* On Point Polling Ohio poll, October 2026, Brown 46.6 Husted 42.3 for Senate and Acton 47.9 Ramaswamy 43.1 for governor among 635 likely voters: ${U("/on-point-polling/polls/ohio-2026")}`,
     `* On Point Polling poll releases: ${U("/on-point-polling/polls")}`,

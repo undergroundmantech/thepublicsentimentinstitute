@@ -1,0 +1,654 @@
+{
+ "asof": "2026-11-05",
+ "asof_label": "the evening of November 5",
+ "generic": {
+  "us": {
+   "margin": 13.1,
+   "d": 55.0,
+   "r": 41.9,
+   "field": "2026-10-28",
+   "n": 1170,
+   "note": "Registered voters, likely voter results with undecideds leaned"
+  },
+  "result": {
+   "margin": 13.0,
+   "label": "Projected final, all votes counted",
+   "counted_margin": 12.6,
+   "counted_d": 55.6,
+   "counted_r": 43.0,
+   "counted_votes_m": 119
+  },
+  "averages": {
+   "margin": 8.5,
+   "lo": 8.0,
+   "hi": 8.8,
+   "label": "Midpoint of the five major averages' final numbers"
+  }
+ },
+ "national": {
+  "polls": [
+   {
+    "rank": 1,
+    "name": "VT Analytics / On Point Polling",
+    "final": 13.1,
+    "score": 0.48,
+    "us": true
+   },
+   {
+    "rank": 2,
+    "name": "The Honest Poll",
+    "final": 13.0,
+    "score": 0.9,
+    "us": false
+   },
+   {
+    "rank": 3,
+    "name": "AtlasIntel",
+    "final": 14.1,
+    "score": 0.98,
+    "us": false
+   },
+   {
+    "rank": 4,
+    "name": "Big Data Poll",
+    "final": 12.3,
+    "score": 1.93,
+    "us": false
+   },
+   {
+    "rank": 5,
+    "name": "Tufts / YouGov",
+    "final": 12.0,
+    "score": 2.15,
+    "us": false
+   },
+   {
+    "rank": 6,
+    "name": "SurveyMonkey",
+    "final": 10.0,
+    "score": 2.16,
+    "us": false
+   },
+   {
+    "rank": 7,
+    "name": "Prolific",
+    "final": 10.7,
+    "score": 2.18,
+    "us": false
+   },
+   {
+    "rank": 8,
+    "name": "NYT / Siena",
+    "final": 11.0,
+    "score": 2.4,
+    "us": false
+   },
+   {
+    "rank": 8,
+    "name": "The Argument / Verasight",
+    "final": 11.0,
+    "score": 2.4,
+    "us": false
+   },
+   {
+    "rank": 10,
+    "name": "Quinnipiac",
+    "final": 12.0,
+    "score": 2.65,
+    "us": false
+   },
+   {
+    "rank": 10,
+    "name": "I&I / TIPP",
+    "final": 10.0,
+    "score": 2.65,
+    "us": false
+   },
+   {
+    "rank": 10,
+    "name": "Emerson",
+    "final": 10.0,
+    "score": 2.65,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "Economist / YouGov",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "YouGov",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "Cygnal",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "Fox News",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "Beacon / Shaw",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 13,
+    "name": "UMass Lowell",
+    "final": 9.0,
+    "score": 2.91,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "RMG Research",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "Reuters / Ipsos",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "Morning Consult",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "NPR / PBS / Marist",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "CBS News",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "ABC / WaPo / Ipsos",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "Clarity",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 19,
+    "name": "Rainey Center",
+    "final": 8.0,
+    "score": 3.66,
+    "us": false
+   },
+   {
+    "rank": 27,
+    "name": "CNN",
+    "final": 10.0,
+    "score": 4.15,
+    "us": false
+   },
+   {
+    "rank": 27,
+    "name": "Centerline",
+    "final": 8.0,
+    "score": 4.15,
+    "us": false
+   },
+   {
+    "rank": 29,
+    "name": "Focaldata / FT",
+    "final": 7.0,
+    "score": 4.41,
+    "us": false
+   },
+   {
+    "rank": 29,
+    "name": "NBC News / Hart / POS",
+    "final": 7.0,
+    "score": 4.41,
+    "us": false
+   },
+   {
+    "rank": 29,
+    "name": "CNBC",
+    "final": 7.0,
+    "score": 4.41,
+    "us": false
+   },
+   {
+    "rank": 29,
+    "name": "ActiVote",
+    "final": 7.0,
+    "score": 4.41,
+    "us": false
+   },
+   {
+    "rank": 33,
+    "name": "TrueDot",
+    "final": 7.0,
+    "score": 4.9,
+    "us": false
+   },
+   {
+    "rank": 34,
+    "name": "Zogby",
+    "final": 6.0,
+    "score": 5.16,
+    "us": false
+   },
+   {
+    "rank": 34,
+    "name": "Ipsos",
+    "final": 6.0,
+    "score": 5.16,
+    "us": false
+   },
+   {
+    "rank": 34,
+    "name": "Rasmussen Reports",
+    "final": 6.0,
+    "score": 5.16,
+    "us": false
+   },
+   {
+    "rank": 37,
+    "name": "Echelon Insights",
+    "final": 5.0,
+    "score": 5.91,
+    "us": false
+   },
+   {
+    "rank": 38,
+    "name": "Harvard / Harris",
+    "final": 4.0,
+    "score": 6.66,
+    "us": false
+   },
+   {
+    "rank": 38,
+    "name": "Penn State",
+    "final": 4.0,
+    "score": 6.66,
+    "us": false
+   },
+   {
+    "rank": 40,
+    "name": "Pew",
+    "final": 8.0,
+    "score": 7.15,
+    "us": false
+   },
+   {
+    "rank": 41,
+    "name": "Targoz",
+    "final": 3.0,
+    "score": 7.41,
+    "us": false
+   },
+   {
+    "rank": 42,
+    "name": "Leger",
+    "final": 6.0,
+    "score": 8.65,
+    "us": false
+   }
+  ],
+  "method": "Score is the average of two misses: the margin miss against the D+13.0 projected final, and the average miss on the Democratic and Republican shares against the 55.6 D, 43.0 R counted so far. Lower is better; ties share a rank. Each pollster's last national generic ballot before Election Day with shares as published, from RealClearPolling, ElectionsUSA and Pollcheck. On Point uses its likely voter results with undecideds leaned."
+ },
+ "called": {
+  "right": 446,
+  "of": 465,
+  "share": 95.9,
+  "senate": [
+   32,
+   34
+  ],
+  "governor": [
+   33,
+   34
+  ],
+  "house": [
+   381,
+   397
+  ],
+  "house_leaders": [
+   408,
+   435
+  ],
+  "senate_miss": "Nebraska and Mississippi",
+  "governor_miss": "Texas",
+  "note": "Every race with a call and two major candidates, matched to the final On Point forecast. A wrong call or a toss up counts as a miss, so Mississippi counts as a miss with Colom leading. The House model covers all 435 districts; 397 were called and 38 still counting."
+ },
+ "seats": {
+  "result": {
+   "house": 261,
+   "senate": 56,
+   "gov": 30,
+   "house_approx": true
+  },
+  "rows": [
+   {
+    "name": "VT Analytics / On Point",
+    "house": 247,
+    "senate": 56,
+    "gov": 29,
+    "us": true
+   },
+   {
+    "name": "Decision Desk HQ",
+    "house": 241,
+    "senate": 52,
+    "gov": 28,
+    "us": false
+   },
+   {
+    "name": "Sabato's Crystal Ball",
+    "house": 239,
+    "senate": 53,
+    "gov": 28,
+    "us": false
+   },
+   {
+    "name": "VoteHub",
+    "house": 234,
+    "senate": 53,
+    "gov": 28,
+    "us": false
+   },
+   {
+    "name": "FiftyPlusOne",
+    "house": 239,
+    "senate": 53,
+    "gov": "no model",
+    "us": false
+   },
+   {
+    "name": "The Economist",
+    "house": 235,
+    "senate": 51,
+    "gov": "no model",
+    "us": false
+   },
+   {
+    "name": "Silver Bulletin",
+    "house": "paywall",
+    "senate": 53,
+    "gov": "paywall",
+    "us": false
+   },
+   {
+    "name": "Race raters' average",
+    "house": 228,
+    "senate": null,
+    "gov": null,
+    "us": false
+   },
+   {
+    "name": "Split Ticket",
+    "house": null,
+    "senate": 53,
+    "gov": null,
+    "us": false
+   },
+   {
+    "name": "Race to the WH",
+    "house": null,
+    "senate": 52,
+    "gov": null,
+    "us": false
+   },
+   {
+    "name": "Inside Elections",
+    "house": null,
+    "senate": 50,
+    "gov": null,
+    "us": false
+   },
+   {
+    "name": "270toWin consensus",
+    "house": null,
+    "senate": 49,
+    "gov": null,
+    "us": false
+   },
+   {
+    "name": "Cook Political Report",
+    "house": null,
+    "senate": 48,
+    "gov": null,
+    "us": false
+   }
+  ],
+  "note": "Democratic seats, independents who caucus with them included, from each forecast's final numbers, November 2 to 3. Results are calls plus current leaders: House about 261 with 38 seats still counting; Senate 54 called plus the Alaska and Mississippi leaders; governors 28 called plus the Kansas and Alaska leaders. Senate totals for Sabato, Split Ticket, Race to the WH, Inside Elections, 270toWin and Cook are counted from their final race ratings plus seats not up, with toss ups counted as not won. The race raters' average is the Cook, Inside Elections and Sabato House average. Silver Bulletin House and governor numbers are paywalled; FiftyPlusOne and the Economist ran no governor model."
+ },
+ "senate": {
+  "races": [
+   "TX",
+   "NC",
+   "OH",
+   "KS",
+   "ME",
+   "IA",
+   "SC",
+   "NE",
+   "AK",
+   "MS"
+  ],
+  "rows": [
+   {
+    "rank": 1,
+    "name": "VT Analytics / On Point",
+    "right": 8,
+    "us": true
+   },
+   {
+    "rank": 2,
+    "name": "FiftyPlusOne",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 2,
+    "name": "Decision Desk HQ",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 2,
+    "name": "VoteHub",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 2,
+    "name": "Sabato's Crystal Ball",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 2,
+    "name": "Silver Bulletin",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 2,
+    "name": "Split Ticket",
+    "right": 7,
+    "us": false
+   },
+   {
+    "rank": 8,
+    "name": "Race to the WH",
+    "right": 6,
+    "us": false
+   },
+   {
+    "rank": 8,
+    "name": "Let's Talk Elections",
+    "right": 6,
+    "us": false
+   },
+   {
+    "rank": 8,
+    "name": "Election Predictions",
+    "right": 6,
+    "us": false
+   },
+   {
+    "rank": 11,
+    "name": "The Economist",
+    "right": 4,
+    "us": false
+   },
+   {
+    "rank": 11,
+    "name": "Red Eagle Politics",
+    "right": 4,
+    "us": false
+   },
+   {
+    "rank": 11,
+    "name": "Inside Elections",
+    "right": 4,
+    "us": false
+   },
+   {
+    "rank": 14,
+    "name": "Fox News",
+    "right": 3,
+    "us": false
+   },
+   {
+    "rank": 14,
+    "name": "270toWin consensus",
+    "right": 3,
+    "us": false
+   },
+   {
+    "rank": 16,
+    "name": "Cook Political Report",
+    "right": 2,
+    "us": false
+   },
+   {
+    "rank": 16,
+    "name": "Election Time",
+    "right": 2,
+    "us": false
+   },
+   {
+    "rank": 18,
+    "name": "RealClearPolitics",
+    "right": 1,
+    "us": false
+   }
+  ],
+  "note": "The 10 Senate races that decided the majority. Picks are the side each forecast favored on Election Eve; a toss up rating or no call counts as a miss. Ratings from each forecaster's final pages, maps and videos, with StateOfTheOdds, TIME and Newsweek for the rating roundups, November 2 to 3, and Fox News Power Rankings from October 29. Alaska and Mississippi were not yet called and are scored for the leaders, Peltola and Colom."
+ },
+ "calls": [
+  {
+   "k": "Mississippi Senate",
+   "v": "R +0.5",
+   "t": "The only major forecast to call it a toss up. Colom leads by 0.2 with 97 percent counted; everyone else had it safe or likely Republican."
+  },
+  {
+   "k": "South Carolina Senate",
+   "v": "Andrews",
+   "t": "The only one of 18 forecasts to make Annie Andrews the favorite. She won by 4.5."
+  },
+  {
+   "k": "Generic ballot",
+   "v": "D +13.1",
+   "t": "The result is D +13.0. Number one of 42 final national polls."
+  },
+  {
+   "k": "Senate flips",
+   "v": "7 for 7",
+   "t": "Texas, North Carolina, Ohio, Kansas, Maine, Iowa and South Carolina. Every seat we said would flip, flipped."
+  },
+  {
+   "k": "Senate seats",
+   "v": "56",
+   "t": "Our number. Exactly 56 if Peltola holds Alaska; every other forecast was off by 3 or more."
+  },
+  {
+   "k": "House seats",
+   "v": "247",
+   "t": "The closest of any major forecast, off by 14. The next closest were off by 20 and 22."
+  },
+  {
+   "k": "Kansas Senate",
+   "v": "D +5.0",
+   "t": "Our forecast for Hamilton. He won by 5.0."
+  },
+  {
+   "k": "Safe calls",
+   "v": "315 of 315",
+   "t": "Every race our model gave a 95 percent chance or higher went our way."
+  }
+ ],
+ "graphics": [
+  {
+   "f": "most-accurate-poll",
+   "t": "The most accurate poll in America"
+  },
+  {
+   "f": "national-polls-top12",
+   "t": "Number one of 42 final national polls"
+  },
+  {
+   "f": "national-polls-all42",
+   "t": "Every final national poll, ranked"
+  },
+  {
+   "f": "closest-to-result",
+   "t": "Closest to the D +13.0 result"
+  },
+  {
+   "f": "seat-counts",
+   "t": "Closest seat counts of any forecast"
+  },
+  {
+   "f": "senate-forecasts",
+   "t": "Number one of 18 forecasts on the Senate"
+  },
+  {
+   "f": "calls-nobody-else-made",
+   "t": "The calls nobody else made"
+  },
+  {
+   "f": "races-called-right",
+   "t": "446 of 465 races called right"
+  }
+ ]
+}

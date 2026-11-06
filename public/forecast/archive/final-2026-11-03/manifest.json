@@ -1,0 +1,124 @@
+{
+ "title": "On Point Politics final 2026 forecast",
+ "frozen": "2026-11-03",
+ "forecast_updated": "2026-11-03",
+ "election": "2026-11-03",
+ "polls_first_close_utc": "2026-11-03T23:00:00Z",
+ "last_written_utc": "2026-11-03T13:49:43Z",
+ "bundle_sha256": "aee837db06f45f1283efd11f98998423c628f9e78dc9b0bf7e693ab971877f85",
+ "bundle_rule": "SHA-256 of the lines '<sha256>  <file>' for every file below, in this order, joined by newlines",
+ "files": [
+  {
+   "file": "model.json",
+   "live_path": "/forecast/model.json",
+   "what": "Senate, House and governor races and chamber odds",
+   "bytes": 784595,
+   "sha256": "cc9fb4f5f08330a179caa7bf39dc09ebeb957c0061acc366537dc5056531d830",
+   "written_utc": "2026-11-03T13:49:43Z"
+  },
+  {
+   "file": "counties.json",
+   "live_path": "/forecast/counties.json",
+   "what": "County forecasts for the statewide races",
+   "bytes": 446975,
+   "sha256": "8341604af4aadf185f5f32b200c64fde9b571f89bdf6f28390e63d418b2ed96c",
+   "written_utc": "2026-11-03T13:14:11Z"
+  },
+  {
+   "file": "downballot.json",
+   "live_path": "/forecast/downballot.json",
+   "what": "Statewide offices below governor",
+   "bytes": 263005,
+   "sha256": "1b77a4047e5cda339ee75b0f64df35e2daa5a7e010cb35af42681acafaae3c9f",
+   "written_utc": "2026-11-03T13:14:25Z"
+  },
+  {
+   "file": "downballot_counties.json",
+   "live_path": "/forecast/downballot_counties.json",
+   "what": "County forecasts for the statewide offices",
+   "bytes": 628889,
+   "sha256": "c3fe4bf8680b62f8fdcee50747d74624e3857cc9cdfd04f39433721ce99ca254",
+   "written_utc": "2026-11-03T13:14:25Z"
+  },
+  {
+   "file": "measures.json",
+   "live_path": "/forecast/measures.json",
+   "what": "Statewide ballot measures",
+   "bytes": 330173,
+   "sha256": "b660f7ae5610ed0d43969156dbad2c957350305f386b6d54a220f67f5d1a3817",
+   "written_utc": "2026-11-03T13:16:15Z"
+  },
+  {
+   "file": "measures_counties.json",
+   "live_path": "/forecast/measures_counties.json",
+   "what": "County forecasts for the ballot measures",
+   "bytes": 218276,
+   "sha256": "c33989743f6498da5f464ab3179b6c1e944287c9c77e3103be8f7ce0fd66d2d8",
+   "written_utc": "2026-11-03T13:16:15Z"
+  },
+  {
+   "file": "measures_hub.json",
+   "live_path": "/forecast/measures_hub.json",
+   "what": "Ballot measure summary",
+   "bytes": 18203,
+   "sha256": "d09663736dfc4637ee2806e31c8af55510246ac36e1ada879bf771014b5d1a3c",
+   "written_utc": "2026-11-03T13:16:15Z"
+  },
+  {
+   "file": "statehouse.json",
+   "live_path": "/forecast/statehouse.json",
+   "what": "Every state legislative district",
+   "bytes": 2008808,
+   "sha256": "80becc53bb060aaaf6cf00e6c099cb260b26f2b5280b69ecc3051a6db94dfaa0",
+   "written_utc": "2026-11-03T13:15:13Z"
+  },
+  {
+   "file": "statehouse_hub.json",
+   "live_path": "/forecast/statehouse_hub.json",
+   "what": "Every state legislative chamber",
+   "bytes": 187926,
+   "sha256": "3347320006ee9f1ab5b2102cbbca38bed9b5f2635d4f7fe9cab78074d5a4a5e1",
+   "written_utc": "2026-11-03T13:15:13Z"
+  },
+  {
+   "file": "polls_published.json",
+   "live_path": "/forecast/polls_published.json",
+   "what": "The polls in the final averages",
+   "bytes": 85114,
+   "sha256": "14fd268191df9effb25ec2c8023d2dfe3539eb0703902d5a1e1f134d7476fb2b",
+   "written_utc": "2026-11-03T13:14:11Z"
+  },
+  {
+   "file": "earlyvote_adjust.json",
+   "live_path": "/forecast/earlyvote_adjust.json",
+   "what": "The early vote adjustment applied on Election Day",
+   "bytes": 14641,
+   "sha256": "85cb4b2459972a9ff0cbf405b1a5c72418702dfe3f533dc7d5856cd7425c3842",
+   "written_utc": "2026-11-03T13:14:10Z"
+  },
+  {
+   "file": "other_races.json",
+   "live_path": "/forecast/other_races.json",
+   "what": "Courts, mayors and local races",
+   "bytes": 155811,
+   "sha256": "a9c84865bfff5aa3f5c5adbc0b03888f6f677a798333500e3577ed84506d867b",
+   "written_utc": "2026-10-19T21:38:17Z"
+  },
+  {
+   "file": "sims_2026-11-03.json",
+   "live_path": "/forecast/archive/2026-11-03.json",
+   "what": "The Election Day simulation run",
+   "bytes": 60146,
+   "sha256": "f02d454bc05c6d262a0eca670bafdc6cd63aab7152181311120b68a8c1ff329f",
+   "written_utc": "2026-11-03T13:14:10Z"
+  },
+  {
+   "file": "sims_index.json",
+   "live_path": "/forecast/archive/index.json",
+   "what": "Chamber odds on every archived day since October 3",
+   "bytes": 14119,
+   "sha256": "74012a7861a047515189b1adba17d27de1981f217b6843ff7f9edaee7ab46206",
+   "written_utc": "2026-11-03T13:14:10Z"
+  }
+ ]
+}

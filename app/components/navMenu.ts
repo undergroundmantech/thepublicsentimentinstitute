@@ -5,8 +5,13 @@ export type NavGroup = { key: string; label: string; href: string; /** where cli
 
 export const MENU: NavGroup[] = [
   { key: "forecast", label: "Forecast", href: "/forecast",
-    feature: { href: "/forecast", eyebrow: "2026 midterms", title: "The full forecast", note: "Every Senate, House and governor race, simulated 2,000 times." },
+    feature: { href: "/accuracy", eyebrow: "After the midterms", title: "How the forecast did", note: "Every race, chamber, county and legislative district, scored against the count." },
     cols: [
+      { h: "The 2026 results", links: [
+        { href: "/accuracy", label: "Accuracy report", note: "The final forecast against the count", badge: "New" },
+        { href: "/most-accurate-pollster", label: "Most accurate pollster", note: "First of 42 final national polls", badge: "New" },
+        { href: "/forecast/2026", label: "Final forecast archive", note: "Every file as published November 3, fingerprinted", badge: "New" },
+      ] },
       { h: "Federal and governors", links: [
         { href: "/forecast?office=senate", label: "Senate", note: "35 races and control odds" },
         { href: "/forecast?office=house", label: "House", note: "All 435 districts" },
@@ -17,6 +22,10 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/legislatures", label: "State legislatures", note: "Every chamber, every district" },
         { href: "/forecast/measures", label: "Ballot measures", note: "145 statewide questions" },
         { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
+      ] },
+      { h: "Around the world", links: [
+        { href: "/brasil", label: "Brazil 2026", note: "Runoff forecast, Flávio Bolsonaro vs Lula", badge: "New" },
+        { href: "/brasil/estados", label: "Brazil by municipality", note: "Every state and town" },
       ] },
       { h: "Scenarios and method", links: [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
@@ -47,19 +56,24 @@ export const MENU: NavGroup[] = [
       { h: "Archive", links: [
         { href: "/polls/archive/2024", label: "2024 presidential polls" },
         { href: "/on-point-polling/polls", label: "On Point Polling releases" },
+        { href: "/most-accurate-pollster", label: "Most accurate pollster of 2026" },
       ] },
     ] },
-  { key: "results", label: "Results", href: "/results", go: "/results/monitor", live: true,
-    feature: { href: "/results/monitor", eyebrow: "November 3", title: "Situation monitor", note: "Every November 3 race on one full screen globe, with expected and reported vote." },
+  { key: "results", label: "Results", href: "/results", go: "/results/2026",
+    feature: { href: "/results/2026", eyebrow: "November 3", title: "The 2026 results", note: "Every race, county by county, with the final forecast beside the count." },
     cols: [
+      { h: "Brazil", links: [
+        { href: "/brasil/resultados", label: "Runoff results", note: "Flávio Bolsonaro vs Lula, every state and town" },
+        { href: "/brasil", label: "Runoff forecast", note: "The On Point Brazil forecast" },
+      ] },
       { h: "November 3", links: [
-        { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race", badge: "New" },
         { href: "/results/2026", label: "Every race", note: "Expected and reported vote, county by county" },
-        { href: "/results", label: "Election night desk", note: "Countdown and coverage" },
+        { href: "/accuracy", label: "Forecast accuracy", note: "How the final forecast did", badge: "New" },
+        { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race" },
+        { href: "/results", label: "Election night desk", note: "The desk and the call log" },
       ] },
       { h: "Past nights", links: [
         { href: "/results/archive", label: "Results archive", note: "Every tracked night" },
-        { href: "/brasil/arquivo", label: "Brazil 2026 runoff", note: "Forecast and results, archived" },
         { href: "/results/archive/2026-08-25", label: "August 25 runoffs" },
         { href: "/results/archive/2026-08-18", label: "August 18 primaries" },
         { href: "/results/archive/2026-08-04", label: "August 4 primaries" },
