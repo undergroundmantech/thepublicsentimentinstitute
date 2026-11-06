@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
-import ResultBand from "@/app/components/opp/ResultBand";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
 import path from "node:path";
@@ -18,12 +17,16 @@ import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import SectionNav from "@/app/components/opp/SectionNav";
 import { STORY_CSS, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
+import { raceHero } from "@/app/components/opp/heroOdds";
 import Ambient from "@/app/components/opp/Ambient";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { Pointy } from "@/app/components/home/Mascot";
 import { raceLd, raceMeta } from "../../seo";
 import YouTubeBand from "@/app/components/YouTubeBand";
+import RaceHistorySection from "@/app/components/opp/RaceHistorySection";
+import { frozenPointsFor } from "@/app/lib/intelligence/raceHistoryStore";
 import { FX_CSS } from "@/app/components/opp/fxCss";
+import { pctPoints, probFraction } from "@/app/lib/fmtPct";
 
 export const dynamicParams = false;
 
@@ -38,8 +41,6 @@ function findRace(state: string, race: string): FRace | undefined {
   const id = raceIdFromRoute(state, race);
   return id ? getModel().races.find((r) => r.id === id) : undefined;
 }
-
-function officeWord(r: FRace) { return r.office === "senate" ? "Senate" : r.office === "governor" ? "governor" : `House, district ${r.district}`; }
 
 export async function generateMetadata({ params }: { params: Promise<{ state: string; race: string }> }): Promise<Metadata> {
   const { state, race } = await params;
@@ -84,7 +85,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const updated = new Date(model.meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   // the map: counties for statewide races, districts for the House
-  let paths: CountyPath[] = [], fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {}, hrefs: Record<string, string> | undefined, unit = "counties";
+  let paths: CountyPath[] = [], hrefs: Record<string, string> | undefined, unit = "counties";
+  const fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {};
   let countyVotes: CountyVote[] = [];
   // the projected vote by candidate, from the race's simulated vote
   const rv = (r as unknown as { votes?: { dem: number; rep: number; other: number; total: number }; cands?: { name: string; party: string; votes: number }[] });
@@ -132,22 +134,21 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const sideCls = ind ? "i" : m < 0 ? "d" : "r";
 
   const leadColor = m < 0 ? (ind ? "#b78cff" : "#5b8fff") : "#ff4d6a";
-  const otherColor = m < 0 ? "#ff4d6a" : (ind ? "#b78cff" : "#5b8fff");
   const phrase = phraseFor(leadWin);
   const raceWhere = r.office === "senate" ? `${r.state}'s Senate seat` : r.office === "governor" ? `${r.state}'s governorship` : `${r.state}'s ${r.name.replace(`${r.state} `, "")} District`;
   const half = Math.abs((r.est.p90 ?? 0) - (r.est.p10 ?? 0)) / 4;
   const shareHalf = Math.max(0.5, half);
   const shareCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 3).map((c) => ({ name: c.name, party: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : c.party, pct: c.pct,
-    color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.party === "R" ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
+    color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.name === r.gop ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
   const pathSteps = [
     { label: "Partisan lean", m: r.stages.anchor, note: r.office === "house" ? "the district's 2024 presidential margin" : "the state's baseline" },
     { label: "Fundamentals", m: r.stages.fund, note: "approval, economy, candidates" },
     { label: "With polls", m: r.ev ? r.est.margin - r.ev.shift : r.stages.poll, note: r.pollAvg != null ? `average ${fmtM(r.pollAvg)}` : "no polls" },
     ...(r.ev ? [{ label: "With early vote", m: r.est.margin, note: "turnout so far" }] : []),
   ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
-  const heroCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 2).map((c) => ({ name: c.name, party: c.party,
-    label: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : "Independent", pct: c.pct, votes: c.votes ?? 0,
-    cls: (c.party === "D" ? "d" : c.party === "R" ? "r" : "i") as "d" | "r" | "i" }));
+  // The hero, built from the model's two simulated slots matched by exact name (see raceHero)
+  const hero = raceHero(r, m, ind);
+  const contested = hero.contested;
   // Oct 22 2026: endorsements and media attention from Watchdog, read at build time
   let endorse: { n: number; cands: { name: string; party: string | null; list: { by: string; byRole: string; src: string }[] }[] } | null = null;
   let mediaHere: { who: string; what: string; src: string }[] = [];
@@ -159,9 +160,12 @@ export default async function Page({ params }: { params: Promise<{ state: string
       mediaHere = ed.media.flatMap((m: { items: { who: string; st: string; race: string; what: string; src: string }[] }) => m.items).filter((a: { st: string; race: string }) => a.st === r.st && a.race.includes(word));
     } catch { endorse = null; }
   }
+  // Race history replaces the trend chart; the trend is a labelled fallback only where no published history exists
+  const hasPublishedHistory = (() => { try { return frozenPointsFor(r.id).length > 0; } catch { return false; } })();
+  const showTrend = !hasPublishedHistory && (r.trend?.length ?? 0) >= 3;
   const navItems = [
     { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
-    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
+    ...(showTrend ? [{ id: "trend", label: "Trend" }] : []), { id: "history", label: "History" }, { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
     ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
   ];
 
@@ -174,7 +178,6 @@ export default async function Page({ params }: { params: Promise<{ state: string
         <Link href={`/forecast?office=${r.office}`}>{r.office === "senate" ? "Senate" : r.office === "governor" ? "Governor" : "House"}</Link><span className="sep">/</span><span>{STATE_NAME[r.st] ?? r.st}{r.office === "house" ? ` ${r.district}` : ""}</span>
       </nav>
       <ForecastNav />
-      <ResultBand id={r.id} />
       <JsonLd data={raceLd(r)} />
       <style>{STORY_CSS}</style>
       <Ambient />
@@ -185,22 +188,29 @@ export default async function Page({ params }: { params: Promise<{ state: string
           : phrase
             ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">{phrase}</span> to win {raceWhere}.</>
             : <><span className="nm" style={{ color: ind ? "#b78cff" : "#7fa6ff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff8399" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {raceWhere}.</>}
-        lede={<>{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</>}
+        lede={<>{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${probFraction(leadWin).slice(0, -1)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</>}
         pills={<>
           <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
           <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
           {r.pollAvg != null && <span>Polls <b className="mono">{fmtMS(r.pollAvg, ind)}</b></span>}
           <span>Updated <b>{updated}</b></span>
         </>}
-        cands={heroCands.map((c) => ({ name: c.name, label: c.label, pct: c.pct, votes: c.votes, color: c.cls === "d" ? "#5b8fff" : c.cls === "r" ? "#ff4d6a" : "#b78cff" }))}
+        facts={[
+          { k: "Forecast rating", v: <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span> },
+          { k: "Expected margin", v: <span className="mono">{contested ? fmtM(m, ind) : "Uncontested"}</span> },
+          ...(contested ? [{ k: "80% range", v: <span className="mono">{fmtMS(r.est.p10, ind)} to {fmtMS(r.est.p90, ind)}</span> }] : []),
+          { k: "Polling average", v: <span className="mono">{r.pollAvg != null ? fmtMS(r.pollAvg, ind) : "No polls"}</span> },
+          { k: "Updated", v: updated },
+        ]}
+        cands={hero.cands} others={hero.others} odds={hero.odds}
+        note={contested ? undefined : "Uncontested: no win probability is simulated for this seat"}
         paths={paths} fills={fills} mapLabel={`${officeTitle} drawn in pixels, shaded by the forecast`}
         labels={Object.fromEntries(Object.entries(tips).map(([id, t]) => { const row = t.rows.find((x) => x[0] === "Simulated margin" || x[0] === "Model"); const v = String(row?.[1] ?? ""); return [id, { t: t.title, s: row ? `${row[0]} ${v}` : "", c: v.startsWith("R") ? "#ff8399" : ind ? "#b78cff" : "#7fa6ff" }]; }))}
-        win={Math.abs(m) < 99 ? leadWin : null} focus={r.office === "house" ? r.id : undefined}
-        lead={{ name: lastName(lead), color: leadColor }} other={{ name: lastName(m < 0 ? r.gop : r.dem), color: otherColor }} />
+        focus={r.office === "house" ? r.id : undefined} />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
-        <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
+        <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{probFraction(leadWin)} chance for {lastName(lead)}</small></div>
         <div className="card fx-k"><span>Model margin</span><b className="mono">{Math.abs(m) >= 99 ? "Uncontested" : fmtM(m, ind)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
         <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtMS(r.est.p10, ind)} to {fmtMS(r.est.p90, ind)}</b><small>{model.meta.sims.toLocaleString()} simulations</small></div>
         <div className="card fx-k"><span>Projected votes</span><b className="mono">{rv.votes ? rv.votes.total.toLocaleString("en-US") : "n/a"}</b><small>{rv.votes && rv.votes.total ? `${lastName(lead)} ${(Math.max(rv.votes.dem, rv.votes.rep) / rv.votes.total * 100).toFixed(1)}%` : ""}</small></div>
@@ -272,12 +282,17 @@ export default async function Page({ params }: { params: Promise<{ state: string
       </div>
           </section>
 
-          {(r.trend?.length ?? 0) >= 3 ? (
+          {showTrend ? (
             <section id="trend" className="st-sec">
-              <SecTitle title="The trend" sub="Each side's chance of winning over the forecast's recent updates" />
+              <SecTitle title="Recent model updates" sub="No verified published forecast history exists for this race yet, so these recent model updates are shown instead. They are not verified as published." />
               <TrendChart trend={r.trend!} demName={lastName(r.dem)} gopName={lastName(r.gop)} demColor={ind ? "#b78cff" : "#3d7bff"} gopColor="#ff3b5c" />
             </section>
           ) : null}
+
+          <section id="history" className="st-sec">
+            <SecTitle title="Race history" sub="Every published forecast for this race, and on election night the live projection and the count, over time" />
+            <RaceHistorySection raceId={r.id} title={`${lastName(r.dem)} vs. ${lastName(r.gop)}`} />
+          </section>
 
           <section id="polls" className="st-sec">
             <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />
@@ -325,8 +340,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
           <div className="card">
             <div className="stat"><div className="k">Model margin</div><div className={`v ${sideCls === "i" ? "" : sideCls}`} style={sideCls === "i" ? { color: "var(--ind)" } : undefined}>{Math.abs(m) >= 99 ? "Uncontested" : `${lastName(lead)} +${Math.abs(m).toFixed(1)}`}</div></div>
             <div className="stat"><div className="k">Chance of winning</div>
-              <div className="cand"><i style={{ background: partyColor(r.cands[0]?.party ?? "D") }} /><span>{r.dem}</span><span className="p">{Math.round(demWin * 100)}%</span></div>
-              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{Math.round((1 - demWin) * 100)}%</span></div>
+              <div className="cand"><i style={{ background: partyColor(r.cands[0]?.party ?? "D") }} /><span>{r.dem}</span><span className="p">{probFraction(demWin)}</span></div>
+              <div className="cand"><i style={{ background: "var(--gop)" }} /><span>{r.gop}</span><span className="p">{probFraction(1 - demWin)}</span></div>
             </div>
             {r.cands?.length > 0 && (
               <div className="stat"><div className="k">Simulated vote</div>
@@ -394,7 +409,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
                   <thead><tr><th>Group</th><th style={{ textAlign: "right" }}>Share</th><th style={{ textAlign: "right" }}>{lastName(r.dem)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop)}</th></tr></thead>
                   <tbody>
                     {cuts.flatMap((c) => xt.filter((x) => x[0] === c).map((x, i) => (
-                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{x[2].toFixed(0)}%</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
+                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{pctPoints(x[2])}</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
                     )))}
                   </tbody>
                 </table>
