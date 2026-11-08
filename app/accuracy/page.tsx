@@ -3,17 +3,21 @@ import ForecastNav from "@/app/components/opp/ForecastNav";
 import { raceHref, STATE_NAME } from "@/app/lib/opp";
 import { seo } from "@/app/lib/seo";
 import AccMap, { type MapRow } from "./AccMap";
-import { Calibration, ErrHist, LeanBars, Ring, SeatHist } from "./Charts";
+import { Calibration, ErrHist, LeanBars, SeatHist } from "./Charts";
 import { RaceTable } from "./RaceTable";
 import HouseExplorer from "./HouseExplorer";
 import SectionNav from "@/app/components/opp/SectionNav";
-import { CountUp } from "@/app/components/home/motion";
 import JsonLd from "@/app/components/JsonLd";
 import { SITE, ORG_ID } from "@/app/lib/seo";
-import { CalledStrip, Calls, Gallery, GenericTrio, PollRanking, SeatTable, SenateRank } from "./Bench";
-import { faqLd, getBench, rankingLd } from "./bench";
+import { PollRanking, SeatTable } from "./Bench";
+import { faqLd, getBench, getPolling, rankingLd } from "./bench";
 import { asofLabel, calledSeats, seatMiss, cls, er, FROZEN_DIR, getAcc, getManifest, mg, OFFICE, pc, who, winnerName, type Blk, type Office, type Race } from "./data";
 import "./acc.css";
+import "./fx/fx.css";
+import AccFX from "./fx/AccFX";
+import BallotScrolly from "./fx/BallotScrolly";
+import HTrack from "./fx/HTrack";
+import { CallCards, Chapter, Dumbbells, PollRace, SeatMiss, Stats } from "./fx/Story";
 
 export const metadata = seo({
   title: "The most accurate pollster of 2026: the On Point accuracy report",
@@ -28,12 +32,11 @@ export const metadata = seo({
 
 const n = (x: number) => x.toLocaleString("en-US");
 const NAV = [
-  { id: "pollster", label: "The poll" }, { id: "forecasters", label: "Against the field" }, { id: "calls", label: "Big calls" },
-  { id: "chambers", label: "Chambers" }, { id: "scorecard", label: "Scorecard" }, { id: "calibration", label: "Calibration" }, { id: "map", label: "Map" },
+  { id: "scorecard", label: "Scorecard" }, { id: "calibration", label: "Calibration" }, { id: "map", label: "Map" },
   { id: "senate", label: "Senate" }, { id: "governor", label: "Governors" }, { id: "house", label: "House" }, { id: "counties", label: "Counties" },
-  { id: "legislatures", label: "Legislatures" }, { id: "lessons", label: "Lessons" }, { id: "graphics", label: "Graphics" }, { id: "method", label: "Method" },
+  { id: "legislatures", label: "Legislatures" }, { id: "lessons", label: "Lessons" }, { id: "method", label: "Method" },
 ];
-const Check = () => <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" className="ck"><circle cx="8" cy="8" r="8" /><path d="M4.6 8.3 7 10.6l4.4-4.9" /></svg>;
+const words = (t: string, from = 0) => t.split(" ").map((w, i) => <span key={i} className="w" style={{ ["--i" as string]: from + i }}>{w}{" "}</span>);
 function ScoreRow({ label, b, h }: { label: string; b: Blk | null; h?: { races: number; called_right: number; counting: number } }) {
   if (!b) return null;
   return (
@@ -54,7 +57,7 @@ function ScoreRow({ label, b, h }: { label: string; b: Blk | null; h?: { races: 
 export default function AccuracyPage() {
   const A = getAcc();
   const B = getBench();
-  const man = getManifest();
+  const P = getPolling();
   const H = A.headline, C = A.chambers, LG = A.legislatures, CO = A.counties;
   const by = (o: Office) => A.races.filter((r) => r.o === o);
   const close = (rs: Race[]) => rs.slice().sort((a, b) => Math.abs(a.fm) - Math.abs(b.fm));
@@ -66,7 +69,6 @@ export default function AccuracyPage() {
   const fedMisses = A.races.filter((r) => !r.right && r.o !== "house");
   const worstState = A.races.filter((r) => r.o !== "house" && !r.excl && r.err != null).sort((a, b) => Math.abs(b.err!) - Math.abs(a.err!)).slice(0, 5);
   const upsets5 = LG.wrong.filter((w) => w.wp <= 0.05);
-  const frozenAt = new Date(man.last_written_utc).toLocaleString("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" });
   const lc = LG.calib, fc = A.calib;
   const midFed = fc.filter((c) => c.lo >= 60 && c.lo < 90), midLeg = lc.filter((c) => c.lo >= 70 && c.lo < 99);
   const sumN = (cs: typeof fc) => cs.reduce((a, c) => a + c.n, 0);
@@ -85,7 +87,7 @@ export default function AccuracyPage() {
   }]));
 
   return (
-    <div className="opp acc">
+    <div className="opp sv acc">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>2026 accuracy</span></nav>
       <ForecastNav />
       <JsonLd data={{ "@context": "https://schema.org", "@graph": [
@@ -100,101 +102,80 @@ export default function AccuracyPage() {
           description: "Every Senate, House and governor race, state legislative chamber and district and statewide county in the 2026 On Point forecast, scored against the count." },
       ] }} />
 
-      <header className="acc-hero rc">
-        <div className="acc-glow" aria-hidden="true"><i /><i /><i /></div>
-        <div className="rc-copy">
-          <p className="eye g">2026 accuracy report · count as of {asofLabel(A.results_asof.federal)}</p>
-          <h1>The most accurate poll in America.{allRight ? <> <em>All three chambers</em> called right.</> : null}</h1>
-          <p className="lede">
-            Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The projected final is {B.generic.result.margin.toFixed(1)}.
-            Below, the final forecast, frozen at {frozenAt} ET on November 3 before the first polls closed, is scored against the count in every race, county and legislative district.
-            {H.all.counting ? ` ${H.all.counting} races were still counting at this read and are marked.` : ""}
-          </p>
-          <div className="acc-cta">
-            <Link className="btn g" href="/forecast/2026">See the forecast as published</Link>
-            <Link className="btn" href="/results/2026">Every result</Link>
-            <a className="btn" href="/accuracy/2026.json">Download the scores</a>
-          </div>
+      <AccFX />
+
+      <header className="sv-hero" data-par>
+        <div className="sv-orbs" aria-hidden="true" data-par><i /><i /><i /></div>
+        <p className="eye g">The 2026 accuracy report · count as of {asofLabel(A.results_asof.federal)}</p>
+        <h1>{words("The most accurate poll")} <em>{words("in America.", 4)}</em></h1>
+        <p className="lede">
+          Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The projected final is {B.generic.result.margin.toFixed(1)}.
+          Scroll through how the poll and the forecast held up: every pollster, every forecaster, every race we polled, and then every race, county and legislative district against the count.
+        </p>
+        <div className="sv-cta">
+          <Link className="btn g" href="/on-point-polling">Commission a poll</Link>
+          <Link className="btn" href="/forecast/2026">The forecast as published</Link>
+          <a className="btn" href="/accuracy/2026.json">Download the scores</a>
         </div>
-        <aside className="rc-card" aria-label="Report card">
-          <div className="rc-gb">
-            <div><span className="k">Our final poll</span><b className="d">D +{B.generic.us.margin.toFixed(1)}</b></div>
-            <div><span className="k">The result</span><b>D +{B.generic.result.margin.toFixed(1)}</b></div>
-            <div><span className="k">The averages</span><b className="dim">D +{B.generic.averages.margin.toFixed(1)}</b></div>
-          </div>
-          <div className="rc-ring"><Ring pct={fed.share} size={92} label={`${fed.share.toFixed(1)} percent of scored races called right`} />
-            <div><b>{H.all.called_right} of {H.all.races}</b><span>Senate, House and governor races called right</span></div></div>
-          <ul className="rc-ch">
-            {(["senate", "house", "governor"] as Office[]).map((o) => (
-              <li key={o} className={C[o].right ? "ok" : "no"}>
-                {C[o].right ? <Check /> : <span className="x" aria-hidden="true" />}
-                <span className="nm">{o === "governor" ? "Governors" : OFFICE[o]}</span>
-                <span className="cl">Called {C[o].projD} D</span>
-                <span className="ct">Count <b className={C[o].control === "D" ? "d" : "r"}>{C[o].actualD} D</b></span>
-              </li>
-            ))}
-          </ul>
-          <div className="rc-f"><span><b>{LG.chambers.right} of {LG.chambers.settled}</b> legislative chambers</span><span><b>{LG.scored.share.toFixed(1)}%</b> of contested districts</span></div>
-        </aside>
+        <div className="sv-cue" aria-hidden="true"><i />Scroll the story</div>
+        <Stats items={[
+          { k: "Final national poll", to: B.generic.us.margin, dec: 1, pre: "D +", cls: "d", s: `The result: D +${B.generic.result.margin.toFixed(1)}. The averages: D +${B.generic.averages.margin.toFixed(1)}.` },
+          { k: "Race winners called", to: H.all.called_right, suf: ` of ${H.all.races}`, s: "Senate, House and governor, by the final forecast" },
+          { k: "Chambers called", to: (["senate", "house", "governor"] as Office[]).filter((o) => C[o].right).length, suf: " of 3", cls: "ok", s: "Senate, House and the governors" },
+          { k: "Our Senate polls", to: P.summary.senate.mae, dec: 1, suf: " pts", s: `Average miss across the ${P.summary.senate.n} Senate races we polled` },
+        ]} />
       </header>
 
-      <div className="acc-kpis">
-        {(["senate", "house", "governor"] as Office[]).map((o) => {
-          const c = C[o];
-          return (
-            <div key={o}>
-              <span className="l">{o === "governor" ? "Governors" : OFFICE[o]} control</span>
-              <span className={`v ${c.control === "D" ? "d" : c.control === "R" ? "r" : ""}`}>{c.actualD} D · {c.actualR} R</span>
-              <span className="s">Forecast called {calledSeats(c)} · seat miss {seatMiss(c.seat_err)} · control {c.right ? "called right" : "missed"}</span>
-            </div>
-          );
-        })}
-        <div><span className="l">Races called right</span><span className="v"><CountUp value={fed.share} decimals={1} suffix="%" /></span><span className="s">{fed.right} of {fed.n} scored races, {H.all.competitive?.right} of {H.all.competitive?.n} within 10 points</span></div>
-        <div><span className="l">Legislative chambers</span><span className="v">{LG.chambers.right} of {LG.chambers.settled}</span><span className="s">Settled chambers called right, average miss of {LG.chambers.seat_mae.toFixed(1)} seats against the called winners</span></div>
-        <div><span className="l">Legislative districts</span><span className="v"><CountUp value={LG.scored.share} decimals={1} suffix="%" /></span><span className="s">{n(LG.scored.right)} of {n(LG.scored.n)} contested districts called right</span></div>
-        <div><span className="l">Statewide margins</span><span className="v"><CountUp value={Math.round(swMae * 10) / 10} decimals={1} suffix=" pts" /></span><span className="s">Average miss across {statewide.length} Senate and governor races</span></div>
-        <div><span className="l">County margins</span><span className="v"><CountUp value={CO.all.wmae} decimals={1} suffix=" pts" /></span><span className="s">Vote weighted miss in {n(CO.all.counties)} counties, {CO.all.within5.toFixed(0)}% within 5</span></div>
-      </div>
+      <Chapter id="poll" eye="The most accurate poll" title={<>A tenth of a point.</>}
+        lede={<>Six days out, every major polling average had Democrats ahead by single digits. Our final national survey of {B.generic.us.n.toLocaleString("en-US")} registered voters said thirteen.</>}>
+        <BallotScrolly polls={B.national.polls.map((p) => ({ name: p.name, final: p.final, us: p.us }))} us={B.generic.us.margin} result={B.generic.result.margin} averages={B.generic.averages.margin}
+          steps={[
+            { k: "The averages", t: `The polling averages closed the race near D +${B.generic.averages.margin.toFixed(1)}.` },
+            { k: "Our final poll", t: `On Point Polling, October 28: Democrats ${B.generic.us.d.toFixed(1)}, Republicans ${B.generic.us.r.toFixed(1)}. D +${B.generic.us.margin.toFixed(1)}.` },
+            { k: "The result", t: `The projected final is D +${B.generic.result.margin.toFixed(1)}. The averages missed by ${(B.generic.result.margin - B.generic.averages.margin).toFixed(1)}. We missed by ${Math.abs(B.generic.us.margin - B.generic.result.margin).toFixed(1)}.` },
+            { k: "Every final poll", t: `${B.national.polls.length} pollsters published a final national poll. Here is where every one of them landed.` },
+          ]} />
+      </Chapter>
 
-      <div className="fx-body acc-body">
-        <SectionNav items={NAV} />
-        <div className="acc-main">
-      <section className="acc-sec" id="pollster">
-        <div className="sec-h"><div><p className="eye">The most accurate pollster</p><h2>D +{B.generic.us.margin.toFixed(1)} on the final generic ballot. The result: D +{B.generic.result.margin.toFixed(1)}.</h2>
-          <p>On Point Polling&apos;s final national survey, fielded {new Date(B.generic.us.field + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" })} among {B.generic.us.n.toLocaleString("en-US")} registered voters. The polling averages finished near D +{B.generic.averages.margin.toFixed(1)}.</p></div></div>
-        <GenericTrio b={B} />
-        <div className="card" style={{ marginTop: 16 }}>
-          <div className="card-h"><h3>Every final national poll, ranked</h3><span className="eye">{B.national.polls.length} pollsters</span></div>
-          <PollRanking b={B} limit={12} />
-        </div>
+      <Chapter id="rankings" eye="The rankings" title={<>Every final national poll, ranked.</>}
+        lede={<>Scored on the margin and on each party&apos;s share. Shorter bars are better. On the margin alone, The Honest Poll matched D +13 exactly and we were a tenth off; on the shares, we were closest.</>}>
+        <div className="ch-body"><PollRace b={B} limit={12} /></div>
         <details className="card acc-more"><summary>All {B.national.polls.length} final national polls</summary><PollRanking b={B} /></details>
-        <p className="bx-src">{B.national.method} The margin miss alone puts The Honest Poll first at D +13 and On Point second, 0.1 off. The D +{B.generic.result.margin.toFixed(1)} result is the projected final once every vote is counted; the {B.generic.result.counted_votes_m} million votes counted by {B.asof_label} show D +{B.generic.result.counted_margin.toFixed(1)}. <Link href="/most-accurate-pollster">The full ranking</Link> has its own page.</p>
-      </section>
+        <p className="bx-src">{B.national.method} The D +{B.generic.result.margin.toFixed(1)} result is the projected final once every vote is counted; the {B.generic.result.counted_votes_m} million votes counted by {B.asof_label} show D +{B.generic.result.counted_margin.toFixed(1)}.</p>
+      </Chapter>
 
-      <section className="acc-sec" id="forecasters">
-        <div className="sec-h"><div><p className="eye">Against every other forecast</p><h2>The closest seat counts of any forecast</h2>
-          <p>Every forecast that published final seat numbers, against calls and current leaders as of {B.asof_label}. That is a day later than the count in the race tables below, so a few leads differ.</p></div></div>
-        <div className="card"><SeatTable b={B} /></div>
+      <Chapter id="our-polls" eye="On Point Polling, race by race" title={<>{P.summary.all.right} of {P.summary.all.n} race winners. Every miss shown.</>}
+        lede={<>Our final poll in every Senate, governor and House race we polled, against the count. The open dot is the poll, the solid dot is the result. Our Senate polls missed by {P.summary.senate.mae.toFixed(1)} points on average, and {P.summary.senate.within1} of {P.summary.senate.n} landed within a point. Governors were harder: Democrats ran {Math.abs(P.summary.governor.bias).toFixed(1)} points ahead of our final governor polls, and we missed Texas and Kansas.</>}>
+        <div className="ch-body"><Dumbbells rows={P.races} /></div>
+        <p className="bx-src">Leaned likely voter results from each release, the last one before Election Day in each race. Texas was polled three times; the November 1 poll is scored. The Nebraska poll was sponsored by the Nebraska Democratic Party, which had no role in the questions or the method. Kansas governor and Nebraska 1 were still counting at this read.</p>
+      </Chapter>
+
+      <Chapter id="field" eye="The forecast against the field" title={<>The closest seat counts of any forecast.</>}
+        lede={<>Every forecast that published final seat numbers, against calls and current leaders as of {B.asof_label}. Shorter bars are better.</>}>
+        <div className="ch-body"><SeatMiss b={B} /></div>
+        <details className="card acc-more"><summary>Every forecast&apos;s seat counts</summary><SeatTable b={B} /></details>
         <p className="bx-src">{B.seats.note}</p>
-        <div className="acc-grid2">
-          <div className="card"><div className="card-h"><h3>The 10 Senate races that decided the majority</h3><span className="eye">{B.senate.rows.length} forecasts</span></div><SenateRank b={B} />
-            <p className="bx-src card-b" style={{ margin: 0 }}>{B.senate.note}</p></div>
-          <div className="bx-stack">
-            <CalledStrip b={B} />
-            <p className="bx-src" style={{ marginTop: 0 }}>{B.called.note} Count as of {B.asof_label}.</p>
-          </div>
+        <div className="ch-body">
+          <div className="sm-h"><h3>The 10 Senate races that decided the majority</h3><span>{B.senate.rows.length} forecasts</span></div>
+          <ol className="bxr sm" data-fx>
+            {B.senate.rows.map((r, i) => (
+              <li key={r.name} className={r.us ? "us" : ""} style={{ ["--i" as string]: i, ["--w" as string]: (r.right / B.senate.races.length).toFixed(3) }}>
+                <span className="nm">{r.name}</span><span className="fn">#{r.rank}</span><span className="br" aria-hidden="true"><i /></span><span className="sc">{r.right} of {B.senate.races.length}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="bx-src">{B.senate.note}</p>
         </div>
-      </section>
+      </Chapter>
 
-      <section className="acc-sec" id="calls">
-        <div className="sec-h"><div><p className="eye">What else we got right</p><h2>The calls nobody else made</h2></div></div>
-        <Calls b={B} />
-        <p className="bx-src">Mississippi and Kansas: the final On Point forecast against the count on {B.asof_label}, with Mississippi 97 percent counted and not yet called. Other forecasters&apos; ratings from their final pages, maps and videos, November 2 to 3. Seat counts are Democratic seats, independents who caucus with them included. Safe calls are races the model gave a 95 percent chance or higher.</p>
-      </section>
+      <Chapter id="calls" eye="What else we got right" title={<>The calls nobody else made.</>}>
+        <HTrack label="The calls nobody else made"><CallCards b={B} /></HTrack>
+        <p className="bx-src">Mississippi and Kansas: the final On Point forecast against the count on {B.asof_label}, with Mississippi 97 percent counted and not yet called. Other forecasters&apos; ratings from their final pages, maps and videos, November 2 to 3. Safe calls are races the model gave a 95 percent chance or higher.</p>
+      </Chapter>
 
-      <section className="acc-sec" id="chambers">
-        <div className="sec-h"><div><p className="eye">Chamber control</p><h2>Where the seats landed inside the forecast</h2>
-          <p>The forecast&apos;s seat count is the called winner in every race plus the seats not up, the gold line. The white line is the count. Behind them is the seat distribution from {n(A.forecast.sims)} simulations, with its 80 percent range shaded.</p></div></div>
+      <Chapter id="chambers-story" eye="Chamber control" title={<>All three chambers, called.</>}
+        lede={<>The gold line is the forecast&apos;s seat count, the winner picked in every race plus the seats not up. The white line is the count.</>}>
+        <div className="ch-body" id="chambers">
         <div className="acc-grid3">
           {(["senate", "house", "governor"] as Office[]).map((o) => {
             const c = C[o];
@@ -214,8 +195,16 @@ export default function AccuracyPage() {
             );
           })}
         </div>
-      </section>
+        </div>
+      </Chapter>
 
+      <div className="audit-h" data-fx>
+        <p className="eye">The full audit</p>
+        <h2 className="sx-h" style={{ font: "800 clamp(28px,4vw,48px)/1.05 var(--font-d)", letterSpacing: "-.035em", margin: "10px 0 0" }}>Every race, county and district, against the count.</h2>
+      </div>
+      <div className="fx-body acc-body">
+        <SectionNav items={NAV} />
+        <div className="acc-main">
       <section className="acc-sec" id="scorecard">
         <div className="sec-h"><div><p className="eye">Scorecard</p><h2>Every office, graded the same way</h2>
           <p>Miss is how far the result landed from the forecast margin. Lean is the average of those misses, the direction the whole map moved. A Brier score of 0 is perfect and 0.25 is a coin flip.</p></div></div>
@@ -384,16 +373,11 @@ export default function AccuracyPage() {
         </div>
       </section>
 
-      <section className="acc-sec" id="graphics">
-        <div className="sec-h"><div><p className="eye">Share it</p><h2>The graphics</h2><p>Open any card for the full size image.</p></div></div>
-        <Gallery b={B} />
-      </section>
-
       <section className="acc-sec" id="method">
         <div className="sec-h"><div><p className="eye">Method</p><h2>How the grade is built</h2></div></div>
         <div className="acc-grid2">
           <div className="card card-b acc-prose">
-            <p>The forecast side is the frozen copy of the November 3 forecast in <a href={`${FROZEN_DIR}/manifest.json`}>the final forecast archive</a>, the same bytes the site served on Election Day, each file hashed so anyone can check it. The results side is the count from the On Point results desk, read {asofLabel(A.results_asof.federal)} for federal and governor races and {asofLabel(A.results_asof.legislatures)} for legislatures.</p>
+            <p>The forecast side is the frozen copy of the November 3 forecast in <a href={`${FROZEN_DIR}/manifest.json`}>the final forecast archive</a>, the same bytes the site served on Election Day, each file hashed so anyone can check it. The results side is the count, read {asofLabel(A.results_asof.federal)} for federal and governor races and {asofLabel(A.results_asof.legislatures)} for legislatures.</p>
             <p>Margins are the Republican share minus the Democratic share of all votes. The miss is the result minus the forecast. A race is called right when the forecast&apos;s favorite, the side with more than half the simulated wins, leads the count. Odds are the published odds, after the November 3 widening of the spread.</p>
             <p>Races still counting are scored on the current count and marked counting. This page is rebuilt as the count finishes, from the same frozen forecast.</p>
             <p>{A.one_party} federal races had only one major party on the count, most of them unopposed, so they count toward calls but not toward margins or odds.</p>

@@ -9,7 +9,7 @@ export const MENU: NavGroup[] = [
     cols: [
       { h: "The 2026 results", links: [
         { href: "/accuracy", label: "Accuracy report", note: "The final forecast against the count", badge: "New" },
-        { href: "/most-accurate-pollster", label: "Most accurate pollster", note: "First of 42 final national polls", badge: "New" },
+        { href: "/most-accurate-pollster", label: "Most accurate pollster", note: "D +13.1 against a D +13.0 result", badge: "New" },
         { href: "/forecast/2026", label: "Final forecast archive", note: "Every file as published November 3, fingerprinted", badge: "New" },
       ] },
       { h: "Federal and governors", links: [
@@ -22,10 +22,6 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/legislatures", label: "State legislatures", note: "Every chamber, every district" },
         { href: "/forecast/measures", label: "Ballot measures", note: "145 statewide questions" },
         { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
-      ] },
-      { h: "Around the world", links: [
-        { href: "/brasil", label: "Brazil 2026", note: "Runoff forecast, Flávio Bolsonaro vs Lula", badge: "New" },
-        { href: "/brasil/estados", label: "Brazil by municipality", note: "Every state and town" },
       ] },
       { h: "Scenarios and method", links: [
         { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
@@ -59,18 +55,13 @@ export const MENU: NavGroup[] = [
         { href: "/most-accurate-pollster", label: "Most accurate pollster of 2026" },
       ] },
     ] },
-  { key: "results", label: "Results", href: "/results", go: "/results/2026",
+  { key: "results", label: "Results", href: "/results/2026",
     feature: { href: "/results/2026", eyebrow: "November 3", title: "The 2026 results", note: "Every race, county by county, with the final forecast beside the count." },
     cols: [
-      { h: "Brazil", links: [
-        { href: "/brasil/resultados", label: "Runoff results", note: "Flávio Bolsonaro vs Lula, every state and town" },
-        { href: "/brasil", label: "Runoff forecast", note: "The On Point Brazil forecast" },
-      ] },
       { h: "November 3", links: [
         { href: "/results/2026", label: "Every race", note: "Expected and reported vote, county by county" },
         { href: "/accuracy", label: "Forecast accuracy", note: "How the final forecast did", badge: "New" },
-        { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race" },
-        { href: "/results", label: "Election night desk", note: "The desk and the call log" },
+        { href: "/forecast/2026", label: "Final forecast archive", note: "The forecast as published November 3" },
       ] },
       { h: "Past nights", links: [
         { href: "/results/archive", label: "Results archive", note: "Every tracked night" },
@@ -94,7 +85,7 @@ export const MENU: NavGroup[] = [
         { href: "/news/sources", label: "Outlets and ratings", note: "Every outlet and why we rate it" },
       ] },
     ] },
-  { key: "early", label: "Early Vote", href: "/maps/early-vote", cols: [] },
+  { key: "accuracy", label: "Accuracy", href: "/accuracy", cols: [] },
   { key: "maps", label: "Maps", href: "/maps",
     cols: [
       { h: "Build and explore", links: [
@@ -103,7 +94,6 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/counties", label: "County data center", note: "Every county, every layer" },
       ] },
       { h: "Voters", links: [
-        { href: "/maps/early-vote", label: "Early vote tracker" },
         { href: "/maps/party-registration", label: "Party registration" },
         { href: "/maps/voter-registration", label: "Voter registration" },
       ] },
@@ -131,14 +121,16 @@ export const MENU: NavGroup[] = [
     ] },
   { key: "play", label: "Play", href: "/play", cols: [] },
   { key: "opp", label: "On Point Polling", href: "/on-point-polling",
+    feature: { href: "/on-point-polling", eyebrow: "Most accurate of 2026", title: "Commission a poll", note: "D +13.1 on the final generic ballot against a D +13.0 result." },
     cols: [
       { h: "Our polling", links: [
         { href: "/on-point-polling/polls", label: "Poll releases" },
         { href: "/on-point-polling/methodology", label: "Methodology" },
-        { href: "/results/monitor", label: "Situation monitor", note: "Election night on one globe" },
+        { href: "/most-accurate-pollster", label: "Most accurate pollster", note: "D +13.1 against a D +13.0 result" },
+        { href: "/accuracy#our-polls", label: "Our 2026 polls, scored", note: "Every race against the count" },
       ] },
       { h: "Work with us", links: [
-        { href: "/on-point-polling/services", label: "Partner with us" },
+        { href: "/on-point-polling#contact", label: "Get a quote", note: "onpointpoliticscontact@gmail.com" },
         { href: "/on-point-polling/weighting-room", label: "The Weighting Room" },
         { href: "/portal/login", label: "Client portal" },
         { href: "/contact", label: "Contact" },

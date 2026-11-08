@@ -9,7 +9,7 @@ export const SITE = {
   publisher: "On Point Polling",
   publisherShort: "On Point Polling",
   description:
-    "Polling averages, county level forecasts and live election results for the 2026 midterms: the Senate, the House, every governor, every state legislative chamber and every statewide ballot measure.",
+    "Home of On Point Polling, the most accurate pollster of the 2026 midterms: polling averages, election forecasts, the 2026 results and an accuracy report scoring every race against the count.",
   logo: "/icon.png",
   election: "2026-11-03",
 } as const;
@@ -91,7 +91,11 @@ export function orgLd(): LD[] {
       "@id": PUB_ID,
       name: SITE.publisher,
       url: abs("/on-point-polling"),
-      description: "On Point Polling is the polling and research arm behind On Point Politics: survey fieldwork, the DSMeridian likely voter model and dual panel surveys.",
+      description: "On Point Polling, with VT Analytics, is the polling and research arm behind On Point Politics and the most accurate pollster of the 2026 midterms: its final national poll had the generic ballot at D +13.1 against a D +13.0 result. Statewide, district and national polls, likely voter modeling, MRP and message testing.",
+      email: "onpointpoliticscontact@gmail.com",
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "onpointpoliticscontact@gmail.com", areaServed: "US", availableLanguage: "English" },
+      award: "Most accurate final national poll of the 2026 midterms",
+      knowsAbout: ["Public opinion polling", "Likely voter modeling", "Multilevel regression and poststratification", "Voter file sampling", "Message testing"],
     },
     {
       "@type": "WebSite",

@@ -1,6 +1,6 @@
 // Builds /llms.txt and /llms-full.txt from the live model output. Plain text, written to be quoted:
 // every number names its page, and every page is a full URL.
-import { getBench } from "@/app/accuracy/bench";
+import { getBench, getPolling } from "@/app/accuracy/bench";
 import { getAcc } from "@/app/accuracy/data";
 import { getModel, isInd, type FRace } from "@/app/lib/forecastData";
 import { fmtM, raceHref, STATE_NAME } from "@/app/lib/opp";
@@ -57,6 +57,8 @@ export function llmsText(full: boolean): string {
       `* On Point Polling was the most accurate pollster of the 2026 midterms. Its final national poll had the generic ballot at D +${g.us.margin.toFixed(1)}, ${g.us.d.toFixed(1)} D to ${g.us.r.toFixed(1)} R, against a projected final of D +${g.result.margin.toFixed(1)}; scored on margin and vote share it ranked first of ${P.length} final national polls, score ${P[0].score.toFixed(2)} against ${P[1].score.toFixed(2)} for ${P[1].name}. ${U("/most-accurate-pollster")}`,
       `* The final On Point forecast, frozen on November 3 before polls closed, called ${A.headline.all.called_right} of ${A.headline.all.races} Senate, House and governor races and called control of the Senate, the House and the governors right. ${U("/accuracy")}`,
       `* Final seat counts, the winner picked in each race plus seats not up: Senate ${A.chambers.senate.projD} Democratic side, House ${A.chambers.house.projD} Democratic, governors ${A.chambers.governor.projD} Democratic, the closest seat counts of any published forecast. ${U("/accuracy#forecasters")}`,
+      `* On Point Polling's final state and district polls called ${getPolling().summary.all.right} of ${getPolling().summary.all.n} race winners in ${getPolling().summary.states} states, with a ${getPolling().summary.senate.mae.toFixed(1)} point average miss in Senate races. Every poll is scored race by race. ${U("/accuracy#our-polls")}`,
+      `* Commission a poll from On Point Polling: statewide, district and national surveys, likely voter modeling, MRP and message testing. Contact onpointpoliticscontact@gmail.com. ${U("/on-point-polling")}`,
       `* The forecast files as published on November 3, with a SHA-256 fingerprint for every file. ${U("/forecast/2026")}`,
     );
   }
@@ -136,13 +138,9 @@ export function llmsText(full: boolean): string {
     `* Governor polling averages: ${U("/polls/governor")}`,
     `* Generic ballot average: ${U("/polls/generic-ballot")}`,
     `* Trump approval average: ${U("/polls/approval")}`,
-    `* Early vote tracker, with each state against its 2022 and 2024 pace on the same day before the election: ${U("/maps/early-vote")}`,
     `* Ballot measures map, every 2026 statewide question by county with projected Yes and No votes: ${U("/maps/ballot-measures")}`,
     `* Electoral map builder: ${U("/maps/electoral")}`,
-    `* Live election results: ${U("/results")}`,
-    `* Brazil 2026, in English with a Portuguese version: the On Point forecast for the October 25 presidential runoff, Flávio Bolsonaro 51.0 Lula 49.0 of valid votes with a 71.5 percent chance for Flávio: ${U("/brasil")}`,
-    `* Brazil 2026 by state and municipality: ${U("/brasil/estados")}`,
-    `* Brazil 2026 live runoff results, with a desk for every state and the On Point projection: ${U("/brasil/resultados")}`,
+    `* 2026 results, every race county by county: ${U("/results/2026")}`,
     `* On Point Polling Texas poll, October 17 to 18, 2026, Talarico 48.8 Paxton 43.0 for Senate, Abbott 47.7 Hinojosa 45.2 for governor and French 45.1 Rosenthal 39.8 for Railroad Commissioner among likely voters, 661 registered voters: ${U("/on-point-polling/polls/texas-2026")}`,
     `* On Point Polling Ohio poll, October 2026, Brown 46.6 Husted 42.3 for Senate and Acton 47.9 Ramaswamy 43.1 for governor among 635 likely voters: ${U("/on-point-polling/polls/ohio-2026")}`,
     `* On Point Polling poll releases: ${U("/on-point-polling/polls")}`,

@@ -262,7 +262,7 @@
 @media (prefers-reduced-motion: reduce) { .rc-card, .acc-ring .rf { animation: none; } }
 .rc-ch li { margin: 0; }
 .rc-gb b { white-space: nowrap; }
-.opp.acc { overflow-x: clip; }
+.opp.acc:not(.sv) { overflow-x: clip; }
 .acc-glow { overflow: visible; }
 @media (max-width: 600px) {
   .rc-card { padding: 16px; gap: 14px; }

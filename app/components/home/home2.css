@@ -188,3 +188,9 @@ html[data-theme="light"] .thb-bg { fill: #ece8f6; } html[data-theme="light"] .th
 .opp .rb-lead .v { color: var(--dem); font-size: 38px; }
 .opp .rb-lead .s { color: var(--bg); opacity: .75; }
 .opp .rb-badge { font: 800 11px var(--font-d); font-style: normal; letter-spacing: 0; text-transform: none; color: #1a1200; background: var(--gold); padding: 3px 7px; border-radius: 6px; opacity: 1; }
+
+/* the accuracy report leads the home deck after the midterms */
+.opp .hd-grid .hd-acc { grid-column: span 3; background: linear-gradient(120deg, rgba(61, 220, 151, .16), rgba(61, 123, 255, .08) 45%, transparent 75%), var(--glass, transparent); }
+.opp .hd-acc .hd-k { color: var(--win); }
+
+@media (max-width: 980px) { .opp .hd-grid .hd-acc { grid-column: 1 / -1; } }

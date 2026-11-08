@@ -6,6 +6,21 @@ type Redirect = { source: string; destination: string; permanent: boolean; has?:
 const p = (source: string, destination: string, permanent = true): Redirect => ({ source, destination, permanent });
 
 export const redirects: Redirect[] = [
+  // Nov 8 2026: after the midterms the early vote tracker, Brazil 2026 and the election night pages are retired; their
+  // addresses go to the pages that replaced them. The code stays in the repo and can be deleted later.
+  p("/maps/early-vote", "/accuracy"),
+  p("/maps/early-vote/:path*", "/accuracy"),
+  p("/brasil", "/"),
+  p("/brasil/:path*", "/"),
+  p("/results", "/results/2026"),
+  p("/results/monitor", "/results/2026"),
+  p("/results/monitor/:path*", "/results/2026"),
+  p("/results/tonight", "/results/2026"),
+  p("/results/tonight/:path*", "/results/2026"),
+  p("/results/live", "/results/2026"),
+  p("/results/live/:path*", "/results/2026"),
+  p("/tpsi/situation-room", "/results/2026"),
+  p("/on-point-polling/services", "/on-point-polling#contact"),
   // Nov 6 2026: short addresses for the 2026 pollster ranking and the accuracy report
   p("/most-accurate-pollster-2026", "/most-accurate-pollster"),
   p("/most-accurate-poll", "/most-accurate-pollster"),
@@ -14,15 +29,15 @@ export const redirects: Redirect[] = [
   p("/accuracy-report", "/accuracy"),
   p("/2026-accuracy", "/accuracy"),
   // short addresses people type or search for the early vote tracker
-  p("/early-vote", "/maps/early-vote"),
-  p("/early-voting", "/maps/early-vote"),
-  p("/early-vote-tracker", "/maps/early-vote"),
-  p("/early-vote/:state", "/maps/early-vote/:state"),
+  p("/early-vote", "/accuracy"),
+  p("/early-voting", "/accuracy"),
+  p("/early-vote-tracker", "/accuracy"),
+  p("/early-vote/:state", "/accuracy"),
   // Oct 24 2026: Indiana's comptroller race was listed twice, as auditor and as comptroller; one page now
   p("/forecast/statewide/in/comptroller", "/forecast/statewide/in/auditor"),
   p("/results/2026/comp-IN", "/results/2026/aud-IN"),
   // Oct 23 2026: retired and unfinished pages fold into the pages that replaced them
-  p("/on-point-polling/situation-room", "/results/monitor", false),
+  p("/on-point-polling/situation-room", "/on-point-polling"),
   p("/results/forecast", "/forecast", false),
   p("/results/timeline-qa", "/results/2026", false),
   // Oct 22 2026: the swingometer and What If are their own pages
@@ -53,20 +68,20 @@ export const redirects: Redirect[] = [
   p("/forecastratings", "/forecast"),
   p("/electoralmap", "/maps/electoral"),
   p("/partymap", "/maps/party-registration"),
-  p("/earlyvote", "/maps/early-vote"),
-  p("/earlyvote/:path*", "/maps/early-vote/:path*"),
+  p("/earlyvote", "/accuracy"),
+  p("/earlyvote/:path*", "/accuracy"),
   // voter registration totals are their own map, kept beside party registration
   p("/voterregistration", "/maps/voter-registration"),
 
   // results
-  p("/results/onpoint", "/results"),
+  p("/results/onpoint", "/results/2026"),
   p("/results/onpoint/:path*", "/results/:path*"),
 
   // tpsi
   p("/tpsipoll", "/on-point-polling/polls"),
   p("/latestpoll", "/on-point-polling/polls"),
   p("/goldstandard", "/on-point-polling/methodology"),
-  p("/situationroom", "/on-point-polling/situation-room"),
+  p("/situationroom", "/results/2026"),
   p("/SMSOptIn", "/on-point-polling/sms"),
   // the polling section moved from /tpsi to /on-point-polling on Oct 19 2026; every old link, including the SMS opt in
   // page and the poll pages linked from Substack, lands on its new address

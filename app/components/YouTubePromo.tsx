@@ -12,15 +12,14 @@ import { videoPromoActive } from "./VideoPromo";
 import "./youtube.css";
 
 const KEY = "opp.yt.until";
-const SKIP = [/^\/results\/monitor/, /^\/brasil/, /^\/maps\/electoral/, /^\/embed/, /^\/on-point-polling\/portal/, /^\/swingometer\/studio/];
+const SKIP = [/^\/accuracy/, /^\/most-accurate-pollster/, /^\/on-point-polling$/, /^\/results\/monitor/, /^\/brasil/, /^\/maps\/electoral/, /^\/embed/, /^\/on-point-polling\/portal/, /^\/swingometer\/studio/];
 const day = 864e5;
 
 function copy(path: string) {
-  if (path.startsWith("/maps/early-vote")) return { t: "Early vote breakdowns on YouTube", s: "Every state's ballots read in a few minutes, and the turnout signals we're watching." };
   if (path.startsWith("/forecast") || path === "/swingometer" || path === "/what-if") return { t: "The forecast, explained on YouTube", s: "Why races move, what the polls miss, and the map, race by race." };
   if (path.startsWith("/polls")) return { t: "The polls, explained on YouTube", s: "Which polls matter, which ones lean, and what the averages say." };
-  if (path.startsWith("/results")) return { t: "Election night on YouTube", s: "Calls, counties and what is still out, live on November 3." };
-  return { t: "Watch On Point on YouTube", s: "Forecast breakdowns, early vote reads and election night coverage." };
+  if (path.startsWith("/results") || path.startsWith("/accuracy")) return { t: "The 2026 results on YouTube", s: "What the midterms meant, how the polls did and what comes next." };
+  return { t: "Watch On Point on YouTube", s: "Poll breakdowns, the 2026 results and what comes next for 2028." };
 }
 const read = () => { try { return Number(localStorage.getItem(KEY) || 0); } catch { return 0; } };
 const hold = (days: number) => { try { localStorage.setItem(KEY, String(Date.now() + days * day)); } catch { /* storage off: it shows again next visit */ } };

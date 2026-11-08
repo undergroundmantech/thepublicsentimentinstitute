@@ -20,7 +20,6 @@ export type Bench = {
   seats: { result: { house: number; senate: number; gov: number; house_approx: boolean }; rows: SeatRow[]; note: string };
   senate: { races: string[]; rows: { rank: number; name: string; right: number; us: boolean }[]; note: string };
   calls: { k: string; v: string; t: string }[];
-  graphics: { f: string; t: string }[];
 };
 
 let cache: Bench | null = null;
@@ -31,7 +30,6 @@ export function getBench(): Bench {
 
 export const dm = (m: number) => `D +${Number.isInteger(m) ? m : m.toFixed(1)}`;
 export const marginMiss = (p: Poll, result: number) => Math.round(Math.abs(p.final - result) * 10) / 10;
-export const GRAPHIC_DIR = "/accuracy/graphics";
 
 /** Structured data for the pollster ranking: an ItemList search engines and answer engines can read. */
 export function rankingLd(b: Bench, url: string) {
@@ -62,3 +60,19 @@ export function faqLd(b: Bench, extra: { q: string; a: string }[] = []) {
   ];
   return { "@type": "FAQPage", mainEntity: qa.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) };
 }
+
+// ---- On Point Polling's own polls, scored race by race (public/accuracy/polling-2026.json, from build_polling.py) ----
+export type PollRow = { id: string; race: string; st: string; office: "Senate" | "Governor" | "House"; date: string; n: number; title: string; sponsor: string | null;
+  d: string; r: string; ind: boolean; dv: number; rv: number; poll: number; earlier: { date: string; poll: number }[];
+  result?: number; pct?: number; final?: boolean; miss?: number; right?: boolean; winner?: string };
+export type PollBlk = { n: number; right: number; mae: number; bias: number; within1: number; within3: number };
+export type Polling = { asof: string; note: string;
+  national: { release: string; date: string; n: number; d: number; r: number; poll: number; result: number; counted: number; miss: number; rank: number; of: number; averages: number };
+  summary: { all: PollBlk; senate: PollBlk; governor: PollBlk; house: PollBlk | null; releases: number; states: number }; races: PollRow[] };
+let pcache: Polling | null = null;
+export function getPolling(): Polling {
+  if (!pcache) pcache = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/accuracy/polling-2026.json"), "utf8")) as Polling;
+  return pcache;
+}
+/** A margin, R minus D, with the independent shown as I where the D slot is one. */
+export const pm = (m: number, ind = false, k = 1) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(k)}`);

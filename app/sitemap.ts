@@ -6,7 +6,6 @@ const ledgerReady = () => { try { return fs.readdirSync(path.join(process.cwd(),
 import { getModel } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
-import { getEarlyVote } from "@/app/maps/early-vote/server";
 import fs from "node:fs";
 import path from "node:path";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
@@ -17,8 +16,6 @@ import { bmHref, getMeasures } from "@/app/forecast/measures/data";
 import { ELECTION_DATES, RACE_REGISTRY } from "@/app/results/_data/raceRegistry";
 import { DEDICATED_BOARDS, RACE_PAGES } from "@/app/results/archive/nightBoards";
 import { STN as STATE_NAMES } from "@/app/results/2026/live";
-import { brStates } from "@/app/brasil/data";
-import { slugOf } from "@/app/brasil/lib";
 
 type Entry = MetadataRoute.Sitemap[number];
 const u = (path: string, lastModified: string | Date, changeFrequency: Entry["changeFrequency"], priority: number): Entry => ({
@@ -32,7 +29,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ms = getMeasures();
   const db = getDownballot();
   const today = new Date();
-  const ev = await getEarlyVote().catch(() => null);
   const out: Entry[] = [];
 
   // section fronts
@@ -41,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/forecast", fc, "daily", 1),
     u("/accuracy", today, "daily", 1),
     u("/most-accurate-pollster", today, "weekly", 1),
+    u("/on-point-polling", today, "weekly", 1),
     u("/forecast/2026", "2026-11-03", "yearly", 0.9),
     u("/swingometer", fc, "daily", 0.9),
     u("/what-if", fc, "daily", 0.9),
@@ -59,11 +56,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/accountability/methodology", today, "monthly", 0.5),
     // the Ledger pages are listed only once a Ledger snapshot is exported into public/watchdog/ledger-data
     ...(ledgerReady() ? ["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)) : []),
-    // Brazil 2026, in English with a Portuguese version
-    u("/brasil", today, "hourly", 1),
-    u("/brasil/resultados", today, "always", 1),
-    u("/brasil/estados", today, "daily", 0.9),
-    ...brStates().flatMap((s) => [u(`/brasil/${slugOf(s.name)}`, today, "daily", 0.8), u(`/brasil/resultados/${slugOf(s.name)}`, today, "always", 0.8)]),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),
@@ -74,15 +66,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/polls/senate", today, "daily", 0.8),
     u("/polls/governor", today, "daily", 0.8),
     u("/maps", today, "weekly", 0.7),
-    u("/maps/early-vote", today, "hourly", 0.95),
     u("/maps/ballot-measures", ms.meta.updated, "daily", 0.85),
     u("/maps/electoral", fc, "weekly", 0.7),
     u("/maps/party-registration", today, "monthly", 0.5),
     u("/maps/voter-registration", today, "monthly", 0.5),
-    u("/results", today, "daily", 0.8),
-    u("/results/monitor", today, "daily", 0.8),
     u("/results/2026", today, "daily", 0.8),
-    u("/results/tonight", today, "daily", 0.7),
     u("/results/archive", today, "weekly", 0.5),
     u("/on-point-polling", today, "monthly", 0.5),
     u("/on-point-polling/methodology", today, "monthly", 0.5),
@@ -104,9 +92,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const r of db.races) out.push(u(dbHref(r), db.meta.updated, "daily", 0.6));
   for (const c of sl.chambers) out.push(u(slHref(c), sl.meta.updated, "daily", 0.7));
   for (const m of ms.measures) out.push(u(bmHref(m), ms.meta.updated, "daily", 0.7));
-  // one early vote tracker page per reporting state
-  for (const m of getAx().members) out.push(u(`/accountability/${m.slug}`, today, "weekly", 0.5));
-  for (const s of ev?.states ?? []) out.push(u(`/maps/early-vote/${s.slug}`, ev!.snapshot, "daily", 0.8));
 
   // polling averages, every one at its canonical route
   const seen = new Set(out.map((e) => e.url));

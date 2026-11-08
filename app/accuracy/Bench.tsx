@@ -1,5 +1,5 @@
 // On Point against every other pollster and forecaster, shared by /accuracy and /most-accurate-pollster.
-import { dm, GRAPHIC_DIR, marginMiss, type Bench, type SeatVal } from "./bench";
+import { dm, marginMiss, type Bench, type SeatVal } from "./bench";
 
 /** The final generic ballot: our poll, the result and the averages. */
 export function GenericTrio({ b }: { b: Bench }) {
@@ -120,16 +120,3 @@ export function CalledStrip({ b }: { b: Bench }) {
   );
 }
 
-/** The share graphics, full size behind each thumbnail. */
-export function Gallery({ b }: { b: Bench }) {
-  return (
-    <div className="bx-gallery">
-      {b.graphics.map((g) => (
-        <a key={g.f} href={`${GRAPHIC_DIR}/${g.f}.jpg`} className="bx-g">
-          <img src={`${GRAPHIC_DIR}/${g.f}-sm.jpg`} alt={g.t} width={960} height={540} loading="lazy" decoding="async" />
-          <span>{g.t}</span>
-        </a>
-      ))}
-    </div>
-  );
-}

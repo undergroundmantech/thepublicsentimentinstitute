@@ -15,9 +15,9 @@ const TABS: Tab[] = [
     icon: I(<><path d="M3 20h18" /><path d="M6 16V10" /><path d="M11 16V5" /><path d="M16 16v-8" /><path d="M21 16v-4" /></>) },
   { key: "polls", label: "Polls", href: "/polls", on: (p) => p.startsWith("/polls"),
     icon: I(<><path d="M4 18 9 12l4 3 7-8" /><circle cx="9" cy="12" r="1.2" /><circle cx="13" cy="15" r="1.2" /></>) },
-  { key: "early", label: "Early vote", href: "/maps/early-vote", on: (p) => p.startsWith("/maps/early-vote"),
-    icon: I(<><rect x="4" y="9" width="16" height="11" rx="2" /><path d="M9 9V6h6v3" /><path d="M8 14h8" /></>) },
-  { key: "results", label: "Results", href: "/results/monitor", on: (p) => p.startsWith("/results"),
+  { key: "accuracy", label: "Accuracy", href: "/accuracy", on: (p) => p.startsWith("/accuracy") || p.startsWith("/most-accurate-pollster"),
+    icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r=".8" /></>) },
+  { key: "results", label: "Results", href: "/results/2026", on: (p) => p.startsWith("/results"),
     icon: I(<><circle cx="12" cy="12" r="8" /><path d="m8.5 12.5 2.3 2.3 4.7-5" /></>) },
 ];
 

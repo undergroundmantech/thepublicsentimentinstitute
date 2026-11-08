@@ -111,3 +111,4 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp.rband .more { margin-left: auto; color: var(--hi); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; font-weight: 600; }
 @media (max-width: 760px) { .opp .ms-odds .ms-fin { display: none; } }
 @media (max-width: 560px) { .opp .ms-odds span:nth-child(3) { display: inline; } .opp .ms-odds span:nth-child(4) { display: none; } }
+@media (max-width: 560px) { .opp .mstrip .wrap { overflow: hidden; } .opp .ms-odds { min-width: 0; overflow: hidden; } }

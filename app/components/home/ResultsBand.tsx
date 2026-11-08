@@ -23,7 +23,7 @@ export default function ResultsBand() {
       <div className="sec-h">
         <div><div className="eye g">The 2026 midterms, scored</div>
           <h2>We called {H.called_right} of {H.races} races{allRight ? " and all three chambers" : ""}.</h2>
-          <p><b>On Point Polling was the most accurate pollster in America:</b> D +13.1 on the final generic ballot against a D +13.0 result, first of 42 final national polls. The final forecast, frozen on November 3 before the first polls closed, is graded against the count in every race, county and state legislative district.</p></div>
+          <p><b>On Point Polling was the most accurate pollster in America:</b> D +13.1 on the final generic ballot against a D +13.0 result. The final forecast, frozen on November 3 before the first polls closed, is graded against the count in every race, county and state legislative district.</p></div>
         <div className="rb-cta"><Link className="btn white" href="/accuracy">Read the accuracy report</Link><Link className="btn" href="/most-accurate-pollster">Most accurate pollster</Link><Link className="btn" href="/forecast/2026">The forecast as published</Link></div>
       </div>
       <div className="rb-grid">

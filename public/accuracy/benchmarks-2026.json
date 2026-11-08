@@ -29,7 +29,7 @@
   "polls": [
    {
     "rank": 1,
-    "name": "VT Analytics / On Point Polling",
+    "name": "On Point Polling / VT Analytics",
     "final": 13.1,
     "score": 0.48,
     "us": true
@@ -357,7 +357,7 @@
   },
   "rows": [
    {
-    "name": "VT Analytics / On Point",
+    "name": "On Point Forecast / VT Analytics",
     "house": 247,
     "senate": 56,
     "gov": 29,
@@ -466,7 +466,7 @@
   "rows": [
    {
     "rank": 1,
-    "name": "VT Analytics / On Point",
+    "name": "On Point Forecast / VT Analytics",
     "right": 8,
     "us": true
    },
@@ -615,40 +615,6 @@
    "k": "Safe calls",
    "v": "315 of 315",
    "t": "Every race our model gave a 95 percent chance or higher went our way."
-  }
- ],
- "graphics": [
-  {
-   "f": "most-accurate-poll",
-   "t": "The most accurate poll in America"
-  },
-  {
-   "f": "national-polls-top12",
-   "t": "Number one of 42 final national polls"
-  },
-  {
-   "f": "national-polls-all42",
-   "t": "Every final national poll, ranked"
-  },
-  {
-   "f": "closest-to-result",
-   "t": "Closest to the D +13.0 result"
-  },
-  {
-   "f": "seat-counts",
-   "t": "Closest seat counts of any forecast"
-  },
-  {
-   "f": "senate-forecasts",
-   "t": "Number one of 18 forecasts on the Senate"
-  },
-  {
-   "f": "calls-nobody-else-made",
-   "t": "The calls nobody else made"
-  },
-  {
-   "f": "races-called-right",
-   "t": "446 of 465 races called right"
   }
  ]
 }

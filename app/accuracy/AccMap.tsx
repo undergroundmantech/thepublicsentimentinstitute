@@ -3,6 +3,7 @@
 // district by its own miss. Blue means Democrats ran ahead of the forecast, red means Republicans did.
 // Paths: /forecast/geo.json (975 x 610), the same file the forecast maps draw from.
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 export type MapRow = { id: string; label: string; fm: string; act: string; err: number; note?: string };
 
@@ -48,14 +49,15 @@ export default function AccMap({ states, house }: { states: Record<string, MapRo
         ) : <p className="acc-note">Loading the map</p>}
         <div className="acc-legend"><span>Democrats ran ahead</span><i style={{ background: `linear-gradient(90deg,${errColor(-10)},${errColor(0)},${errColor(10)})` }} /><span>Republicans ran ahead</span><span className="dim">Unshaded: no scored race</span></div>
       </div>
-      {tip ? (
-        <div className="acc-tip" style={{ left: tip.x + 14, top: tip.y + 14 }}>
+      {tip && typeof document !== "undefined" ? createPortal(
+        // rendered on the body: the card above it is transformed by the scroll reveal, which would pin a fixed tip to the card
+        <div className="opp acc-tip" style={{ left: Math.min(tip.x + 16, window.innerWidth - 300), top: tip.y + 16 }}>
           <b>{tip.row.label}</b>
           <div className="row"><span>Forecast</span><span>{tip.row.fm}</span></div>
           <div className="row"><span>Result</span><span>{tip.row.act}</span></div>
           <div className="row"><span>Miss</span><span>{fmtE(tip.row.err)}</span></div>
           {tip.row.note ? <div className="nt">{tip.row.note}</div> : null}
-        </div>
+        </div>, document.body
       ) : null}
     </div>
   );

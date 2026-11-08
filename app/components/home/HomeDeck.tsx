@@ -1,9 +1,9 @@
 // The home page's front door under the globe: one tile per section people come for, each with a live number
-// from that section so the tile answers something before it is clicked. Brazil leads through its count, then the
-// War Room, the forecasts, What If, the early vote, the news desk and the people web.
+// from that section so the tile answers something before it is clicked. The accuracy report leads, then the
+// War Room, the forecasts, What If, On Point Polling, the news desk and the people web.
 import Link from "@/app/components/Link";
 import { getModel } from "@/app/lib/forecastData";
-import { getBr } from "@/app/brasil/data";
+import { getBench, getPolling } from "@/app/accuracy/bench";
 import { getWarIndex } from "@/app/watchdog/war-room/data";
 import { healthTone, surname } from "@/app/watchdog/war-room/fmt";
 import { getDesk } from "@/app/news/data";
@@ -14,12 +14,10 @@ const pc = (p: number) => `${Math.round(100 * p)}%`;
 
 export default function HomeDeck() {
   const { chambers, meta } = getModel();
-  const br = getBr().national;
+  const B = getBench(), P = getPolling();
   const war = getWarIndex();
   const desk = getDesk();
   const people = getPeople();
-  const now = Date.now();
-  const brLive = now >= Date.parse("2026-10-25T20:00:00Z"), brDone = now >= Date.parse("2026-10-27T12:00:00Z");
   const top = war.races.filter((r) => r.office === "senate" && r.hD != null && r.hR != null).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 3);
   const flags = war.races.filter((r) => r.p > 0.15 && r.p < 0.85 && r.hD != null && r.hR != null && Math.abs(r.hD - r.hR) >= 15 && (r.p < 0.5 ? r.hR! > r.hD! : r.hD! > r.hR!)).length;
   const ctl: [string, number, string][] = [
@@ -34,12 +32,11 @@ export default function HomeDeck() {
         <h2>After the midterms. Everything on the desk.</h2>
       </div>
       <div className="hd-grid">
-        <Link href={brLive && !brDone ? "/brasil/resultados" : "/brasil"} className="hd-t hd-br glass" data-ev="Home tile" data-ev-d='{"tile":"brazil"}'>
-          <span className="hd-k">{brDone ? "Brazil 2026 · final count" : brLive ? "Brazil runoff · counting now" : "Brazil runoff · today"}</span>
-          <b className="hd-title">Flávio Bolsonaro vs Lula</b>
-          <span className="hd-p">{brLive ? "Live results for every state and municipality as Brazil's electoral court reports them, against our forecast." : "Polls close at 5 PM in Brasília. Our forecast, a map of all 5,570 municipalities and the live count at 4 PM Eastern."}</span>
-          <span className="hd-odds"><span className="fl">Flávio {(100 * br.p_flavio).toFixed(1)}%</span><i style={{ ["--w" as string]: `${100 * br.p_flavio}%` }} /><span className="lu">Lula {(100 * br.p_lula).toFixed(1)}%</span></span>
-          <span className="hd-links"><span>Forecast</span><span>Live results</span><span>States</span><span>In Portuguese</span></span>
+        <Link href="/accuracy" className="hd-t hd-acc glass" data-ev="Home tile" data-ev-d='{"tile":"accuracy"}'>
+          <span className="hd-k">The 2026 accuracy report</span>
+          <b className="hd-title">The most accurate poll in America</b>
+          <span className="hd-p">Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The result: D +{B.generic.result.margin.toFixed(1)}. Then every race, county and district against the count.</span>
+          <span className="hd-links"><span>The poll</span><span>Every pollster</span><span>Our polls</span><span>The forecast</span></span>
         </Link>
 
         <Link href="/watchdog/war-room" className="hd-t hd-war glass" data-ev="Home tile" data-ev-d='{"tile":"war room"}'>
@@ -75,10 +72,10 @@ export default function HomeDeck() {
           <span className="hd-links"><span>What If</span><span>Swingometer</span><span>Scenarios</span></span>
         </Link>
 
-        <Link href="/maps/early-vote" className="hd-t glass" data-ev="Home tile" data-ev-d='{"tile":"early vote"}'>
-          <span className="hd-k">Early vote</span>
-          <b className="hd-title hd-num">{war.ballots ? `${(war.ballots / 1e6).toFixed(1)}M` : "Tracker"}</b>
-          <span className="hd-p">{war.ballots ? `ballots cast early in ${war.evStates} states through ${war.ev}, with party of the ballots where states report it, county and precinct reads.` : "Ballots cast so far, by state and party."}</span>
+        <Link href="/on-point-polling" className="hd-t glass" data-ev="Home tile" data-ev-d='{"tile":"on point polling"}'>
+          <span className="hd-k">On Point Polling</span>
+          <b className="hd-title hd-num">{P.summary.all.right} of {P.summary.all.n}</b>
+          <span className="hd-p">race winners called by our final state and district polls, with a {P.summary.senate.mae.toFixed(1)} point average miss in Senate races. Commission a poll.</span>
         </Link>
 
         <Link href="/news" className="hd-t hd-news glass" data-ev="Home tile" data-ev-d='{"tile":"news"}'>

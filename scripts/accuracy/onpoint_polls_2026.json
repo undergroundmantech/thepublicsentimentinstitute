@@ -1,0 +1,38 @@
+{
+ "note": "Every On Point Polling general election release of the 2026 midterms, as published on Substack. Margins are the leaned likely voter results, Republican minus Democratic points. The last release before Election Day in each race is the one scored.",
+ "national": {"release": "National Poll: Democrats Lead by 13 as the Early Vote Breaks Blue", "date": "2026-10-28", "n": 1170, "pop": "registered voters, likely voter results", "d": 55.0, "r": 41.9, "margin": -13.1},
+ "releases": [
+  {"date": "2026-10-17", "st": "OH", "title": "Ohio Poll: Democrats Lead Both Races as Early Voters Bank Their Edge", "n": 635, "races": [
+   {"id": "sen-OH", "d": "Sherrod Brown", "r": "Jon Husted", "dv": 48.4, "rv": 44.8},
+   {"id": "gov-OH", "d": "Amy Acton", "r": "Vivek Ramaswamy", "dv": 49.2, "rv": 45.7}]},
+  {"date": "2026-10-18", "st": "MI", "title": "Michigan Poll: El-Sayed Leads Rogers as Benson Pulls Away", "n": 586, "races": [
+   {"id": "sen-MI", "d": "Abdul El-Sayed", "r": "Mike Rogers", "dv": 51.7, "rv": 45.4},
+   {"id": "gov-MI", "d": "Jocelyn Benson", "r": "John James", "dv": 54.1, "rv": 42.1}]},
+  {"date": "2026-10-18", "st": "TX", "title": "Texas Poll: Talarico Leads Paxton as Abbott Holds On", "n": 661, "races": [
+   {"id": "sen-TX", "d": "James Talarico", "r": "Ken Paxton", "dv": 50.4, "rv": 45.9},
+   {"id": "gov-TX", "d": "Gina Hinojosa", "r": "Greg Abbott", "dv": 47.0, "rv": 49.0}]},
+  {"date": "2026-10-18", "st": "FL", "title": "Florida Poll: Moody Leads Nixon, Donalds Holds a Narrow Edge Over Jolly", "n": 601, "races": [
+   {"id": "sen-FL", "d": "Angie Nixon", "r": "Ashley Moody", "dv": 45.8, "rv": 52.5},
+   {"id": "gov-FL", "d": "David Jolly", "r": "Byron Donalds", "dv": 44.4, "rv": 48.3}]},
+  {"date": "2026-10-19", "st": "SC", "title": "South Carolina Poll: Andrews Leads Graham Nordone for Senate, Wilson Leads for Governor", "n": 511, "races": [
+   {"id": "sen-SC", "d": "Annie Andrews", "r": "Darline Graham Nordone", "dv": 48.5, "rv": 45.0},
+   {"id": "gov-SC", "d": "Jermaine Johnson", "r": "Alan Wilson", "dv": 44.9, "rv": 53.1}]},
+  {"date": "2026-10-21", "st": "IA", "title": "New Polls: Democrats Lead Both Iowa Races, Kansas Senate Is a Toss Up", "n": 491, "races": [
+   {"id": "sen-IA", "d": "Josh Turek", "r": "Ashley Hinson", "dv": 51.6, "rv": 46.9},
+   {"id": "gov-IA", "d": "Rob Sand", "r": "Zach Lahn", "dv": 52.0, "rv": 47.3}]},
+  {"date": "2026-10-21", "st": "KS", "title": "New Polls: Democrats Lead Both Iowa Races, Kansas Senate Is a Toss Up", "n": 479, "races": [
+   {"id": "sen-KS", "d": "Adam Hamilton", "r": "Roger Marshall", "dv": 48.9, "rv": 47.1},
+   {"id": "gov-KS", "d": "Cindy Holscher", "r": "Ty Masterson", "dv": 46.3, "rv": 52.8}]},
+  {"date": "2026-10-27", "st": "TX", "title": "Texas Poll: Talarico Leads Paxton for Senate, Abbott Narrowly Leads for Governor", "n": 1184, "races": [
+   {"id": "sen-TX", "d": "James Talarico", "r": "Ken Paxton", "dv": 51.7, "rv": 45.8},
+   {"id": "gov-TX", "d": "Gina Hinojosa", "r": "Greg Abbott", "dv": 48.3, "rv": 50.1}]},
+  {"date": "2026-10-30", "st": "NE", "title": "New Nebraska Poll: Osborn and Ricketts in a Dead Heat for Senate, Pillen Narrowly Leads for Governor", "n": 1555, "sponsor": "Nebraska Democratic Party", "races": [
+   {"id": "sen-NE", "d": "Dan Osborn", "r": "Pete Ricketts", "dv": 48.7, "rv": 47.2, "ind": true},
+   {"id": "gov-NE", "d": "Lynne Walz", "r": "Jim Pillen", "dv": 46.0, "rv": 48.8},
+   {"id": "house-NE-01", "d": "Chris Backemeyer", "r": "Mike Flood", "dv": 50.8, "rv": 44.9},
+   {"id": "house-NE-02", "d": "Denise Powell", "r": "Brinker Harding", "dv": 58.8, "rv": 39.3}]},
+  {"date": "2026-11-01", "st": "TX", "title": "Final Texas Poll: Talarico Leads Paxton for Senate, Abbott and Patrick Lead Statewide", "n": 847, "races": [
+   {"id": "sen-TX", "d": "James Talarico", "r": "Ken Paxton", "dv": 51.6, "rv": 46.1},
+   {"id": "gov-TX", "d": "Gina Hinojosa", "r": "Greg Abbott", "dv": 47.0, "rv": 51.6}]}
+ ]
+}

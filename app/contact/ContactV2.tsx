@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 
-const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
+const CONTACT_EMAIL = "onpointpoliticscontact@gmail.com";
 
 type FormState = {
   name: string;
