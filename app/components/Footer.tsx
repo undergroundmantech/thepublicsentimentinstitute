@@ -3,11 +3,11 @@ import { Lockup } from "./opp/Logo";
 import { MENU } from "./navMenu";
 import { Pointy } from "@/app/components/home/Mascot";
 
-// The footer lists the same groups as the masthead menus (navMenu.ts), every link in each group.
-const COLS = MENU.filter((g) => g.cols.length).map((g) => ({
-  h: g.label,
-  links: [[g.href, `All of ${g.label}`] as const, ...g.cols.flatMap((c) => c.links.map((l) => [l.href, l.label] as const))].filter((x, i, arr) => arr.findIndex((y) => y[0] === x[0]) === i),
-}));
+// The footer lists the same groups as the masthead (navMenu.ts): the four main tabs, then each section under More.
+const dedupe = (a: (readonly [string, string])[]) => a.filter((x, i, arr) => arr.findIndex((y) => y[0] === x[0]) === i);
+const COLS = MENU.flatMap((g) => g.more
+  ? g.cols.map((c) => ({ h: c.h, links: dedupe([[c.href ?? g.href, `All of ${c.h}`] as const, ...c.links.map((l) => [l.href, l.label] as const)]) }))
+  : [{ h: g.label, links: dedupe([[g.href, `All of ${g.label}`] as const, ...g.cols.flatMap((c) => c.links.map((l) => [l.href, l.label] as const))]) }]);
 
 export default function Footer() {
   return (
@@ -19,7 +19,7 @@ export default function Footer() {
             <div>
               <div className="fbrand"><Lockup height={40} /></div>
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
-                Polling, forecasts and the 2026 results. Fieldwork and modeling by On Point Polling, Miami.
+                Nonpartisan polling and forecasts. The most accurate poll and the #1 forecast of 2026, by On Point Polling, Miami.
               </p>
               <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/accuracy">2026 accuracy report</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link><a href="https://www.youtube.com/@onpointpoliticsofficial?sub_confirmation=1" target="_blank" rel="noopener" data-ev="YouTube subscribe" data-ev-d='{"from":"footer"}'>YouTube</a><a href="https://onpointpolitics.substack.com" target="_blank" rel="noopener">Newsletter</a></p>
             </div>

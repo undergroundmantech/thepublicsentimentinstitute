@@ -48,3 +48,20 @@
 .fx-on .sell-cta:not([data-in]) { opacity: 0; transform: translateY(30px) scale(.98); }
 .sell .cc { min-height: 0; align-content: start; gap: 14px; }
 .sell .cc .sell-rel { margin-top: 4px; }
+
+/* who we work with */
+.who-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+@media (max-width: 900px) { .who-grid { grid-template-columns: 1fr; } }
+.who-card { position: relative; display: grid; gap: 10px; align-content: start; padding: 26px 24px 24px; border-radius: 20px; border: 1px solid var(--line2); background: rgba(var(--line-rgb), .035); overflow: hidden; transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i) * 90ms); }
+.who-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; }
+.who-card.d::before { background: var(--dem); } .who-card.r::before { background: var(--gop); } .who-card.i::before { background: var(--ind); }
+.who-card .dot { width: 12px; height: 12px; border-radius: 50%; }
+.who-card.d .dot { background: var(--dem); } .who-card.r .dot { background: var(--gop); } .who-card.i .dot { background: var(--ind); }
+.who-card h3 { font: 800 24px/1.1 var(--font-d); letter-spacing: -.02em; margin: 0; color: var(--hi); }
+.who-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink2); }
+.fx-on .who-grid:not([data-in]) .who-card { opacity: 0; transform: translateY(24px); }
+.who-rules { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .who-rules { grid-template-columns: 1fr; } }
+.who-rules li { padding: 16px 18px; border-top: 1px solid var(--line2); font-size: 14px; line-height: 1.55; color: var(--ink2); transition: opacity .6s ease, transform .6s ease; transition-delay: calc(var(--i) * 90ms + 200ms); }
+.who-rules b { color: var(--hi); }
+.fx-on .who-rules:not([data-in]) li { opacity: 0; transform: translateY(12px); }

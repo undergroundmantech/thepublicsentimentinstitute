@@ -11,7 +11,7 @@ export interface StateRow {
 export interface PrimField {
   party: "D" | "R"; names: string[]; nomination: Record<string, number>; votes: Record<string, number>; full: Record<string, number>;
   dropout: Record<string, number[]>; calendar: string[][];
-  states: Record<string, { w: string; pw: number; sh: number; tot: number }>;
+  states: Record<string, { w: string; pw: number; sh: number; tot: number; tu?: boolean }>;
 }
 export interface Hub {
   coal: Coal;
@@ -41,11 +41,13 @@ export interface PrimState {
   counties: Record<string, [number, number][]>;
   electorate: { black?: number; hisp?: number; asian: number; young: number; old: number; college: number; female: number; seg: Record<string, number> };
   hist: { year: string; votes: number | null; type: string; caucus: boolean; basis: string } | null; window: number; proxy?: string[] | null;
+  field?: number | null; avg_share?: Record<string, number>;
 }
 export interface StateFile {
   st: string;
   path: { a24: number; base: number; gen: number; mig: number; final: number; deaths: number; newv: number; drift: number; newShare: number; tot24: number; tot28: number } | null;
   general: StateRow | null; districts: Record<string, StateRow>; counties: County28[];
+  cds?: [string, number, number, number, number, number, string, string][];
   prim: Partial<Record<"dem" | "dem_noharris" | "gop" | "gop_novance", PrimState>>;
   gen: { gen_shift: number; mig_shift: number } | null;
 }

@@ -4,13 +4,10 @@ import "./motion.css";
 import "./chrome.css";
 import "./lite.css";
 import "./phone.css";
-import "./modes.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
-import { getModel } from "./lib/forecastData";
-import TickerBar from "./components/TickerBar";
 import Footer from "./components/Footer";
 import Ambient from "./components/Ambient";
 import Spotlight from "./components/Spotlight";
@@ -65,20 +62,11 @@ export const metadata: Metadata = {
   verification,
 };
 
-function navStatus() {
-  try {
-    const m = getModel();
-    const d = new Date(m.meta.updated + "T12:00:00Z");
-    const updated = Number.isFinite(d.getTime()) ? d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) : m.meta.updated;
-    return { days: m.meta.daysOut, updated, sen: m.chambers.senate.demControl, house: m.chambers.house.demControl, gov: m.chambers.governor.demControl };
-  } catch { return undefined; }
-}
-
 export const viewport: Viewport = { themeColor: "#110019", colorScheme: "dark light" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" data-mode="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: LITE_INIT_SCRIPT }} />
@@ -94,8 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="sx-progress" aria-hidden="true" />
         <Ambient />
         <Spotlight />
-        <Navbar status={navStatus()} />
-        <TickerBar />
+        <Navbar />
         <main className="opp-main">
           <div className="opp-page">{children}</div>
         </main>

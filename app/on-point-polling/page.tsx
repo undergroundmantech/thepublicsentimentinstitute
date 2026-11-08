@@ -16,10 +16,10 @@ const CONTACT = "onpointpoliticscontact@gmail.com";
 const MAIL = `mailto:${CONTACT}?subject=${encodeURIComponent("Poll quote request")}&body=${encodeURIComponent("Organization:\nRace or topic:\nGeography:\nSample size or budget:\nTimeline:\n")}`;
 
 export const metadata: Metadata = seo({
-  title: "On Point Polling: hire the most accurate pollster of 2026",
-  description: "On Point Polling, with VT Analytics, was the most accurate pollster of the 2026 midterms: a final national poll of D +13.1 against a D +13.0 result. Statewide, district and national polls on the voter file, likely voter modeling, MRP and message testing, delivered in 48 to 72 hours. Email onpointpoliticscontact@gmail.com for a quote.",
+  title: "On Point Polling: the most accurate pollster of 2026, nonpartisan, for both parties",
+  description: "On Point Polling, with VT Analytics, was the most accurate pollster of the 2026 midterms: a final national poll of D +13.1 against a D +13.0 result. Nonpartisan, polling for Democrats, Republicans and independents. Home of the #1 forecast of 2026. Statewide, district and national polls on the voter file, likely voter modeling, MRP and message testing, delivered in 48 to 72 hours. Email onpointpoliticscontact@gmail.com for a quote.",
   path: "/on-point-polling",
-  keywords: ["hire a pollster", "political polling firm", "most accurate pollster", "most accurate pollster 2026", "campaign polling", "statewide poll", "district poll", "voter file polling", "text to web survey", "MRP", "likely voter model", "On Point Polling", "VT Analytics"],
+  keywords: ["nonpartisan pollster", "bipartisan polling firm", "Republican pollster", "Democratic pollster", "best election forecast 2026", "hire a pollster", "political polling firm", "most accurate pollster", "most accurate pollster 2026", "campaign polling", "statewide poll", "district poll", "voter file polling", "text to web survey", "MRP", "likely voter model", "On Point Polling", "VT Analytics"],
 });
 
 const SERVICES: { k: string; t: string; s: string }[] = [
@@ -29,6 +29,12 @@ const SERVICES: { k: string; t: string; s: string }[] = [
   { k: "Modeling", t: "Likely voters, MRP and turnout", s: "Our Meridian likely voter model scores intention, vote method, close contacts and vote history, and MRP turns a statewide sample into county and district estimates." },
   { k: "Messaging", t: "Message and ballot tests", s: "Informed ballot experiments that show which arguments move which voters, and which ones backfire, before the money is spent." },
   { k: "Election night", t: "Forecasts and a live desk", s: "County level forecasts and a live election night desk built on your polling. We called every state live on election night for an audience of millions." },
+];
+
+const WHO: { t: string; s: string; c: string }[] = [
+  { t: "Democrats", s: "Campaigns, party committees and allied groups that need a straight read on where a race stands and what moves it.", c: "d" },
+  { t: "Republicans", s: "Campaigns, committees and conservative organizations that want polling built on the voter file, not a guess at the electorate.", c: "r" },
+  { t: "Independents and nonpartisan", s: "Independent candidates, ballot measure campaigns, advocacy groups, newsrooms and companies.", c: "i" },
 ];
 
 const STEPS: { t: string; s: string }[] = [
@@ -44,7 +50,7 @@ const RECORD: string[] = [
   "The most accurate poll of the 2026 Michigan Democratic Senate primary.",
   "One of only two polls out of ten to show Larry Rhoden advancing in South Dakota.",
   "Had Graham as the South Carolina Senate nominee and hit Mark Lynch's vote share exactly.",
-  "Commissioned by the Nebraska Democratic Party for statewide and district polls in 2026.",
+  "Commissioned in 2026 for statewide and district polls, with every sponsor disclosed on the release.",
 ];
 
 export default function OnPointPolling() {
@@ -59,6 +65,7 @@ export default function OnPointPolling() {
         { "@type": "ProfessionalService", "@id": `${SITE.url}/on-point-polling#service`, name: "On Point Polling", url: `${SITE.url}/on-point-polling`, email: CONTACT,
           parentOrganization: { "@id": ORG_ID }, areaServed: "US", priceRange: "Quoted per project",
           description: "Political polling and research: statewide, district and national surveys on the voter file, likely voter modeling, MRP, message testing and election night forecasting.",
+          slogan: "Nonpartisan polling for both parties",
           award: `Most accurate final national poll of the 2026 midterms, D +${g.us.margin.toFixed(1)} against a D +${g.result.margin.toFixed(1)} result`,
           hasOfferCatalog: { "@type": "OfferCatalog", name: "Polling services", itemListElement: SERVICES.map((s) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s.t, description: s.s } })) } },
         { "@type": "FAQPage", mainEntity: [
@@ -71,7 +78,7 @@ export default function OnPointPolling() {
 
       <header className="sv-hero">
         <div className="sv-orbs" aria-hidden="true" data-par><i /><i /><i /></div>
-        <p className="eye g">On Point Polling · with VT Analytics</p>
+        <p className="eye g">On Point Polling · with VT Analytics · nonpartisan</p>
         <h1><span className="w" style={{ ["--i" as string]: 0 }}>Hire </span><span className="w" style={{ ["--i" as string]: 1 }}>the </span><em><span className="w" style={{ ["--i" as string]: 2 }}>most </span><span className="w" style={{ ["--i" as string]: 3 }}>accurate </span><span className="w" style={{ ["--i" as string]: 4 }}>pollster </span></em><span className="w" style={{ ["--i" as string]: 5 }}>of </span><span className="w" style={{ ["--i" as string]: 6 }}>2026.</span></h1>
         <p className="lede">
           Our final national poll was a tenth of a point from the result, the closest of {B.national.polls.length}. Campaigns, committees, newsrooms and companies use the same fieldwork and models for statewide, district and national polls, delivered in days.
@@ -83,7 +90,7 @@ export default function OnPointPolling() {
         </div>
         <Stats items={[
           { k: "Final national poll", to: g.us.margin, dec: 1, pre: "D +", cls: "d", s: `The result: D +${g.result.margin.toFixed(1)}` },
-          { k: "Our miss", to: Math.abs(g.us.margin - g.result.margin), dec: 1, suf: " pts", cls: "ok", s: `The polling averages missed by ${(g.result.margin - g.averages.margin).toFixed(1)}` },
+          { k: "Senate forecast", to: 1, pre: "#", cls: "ok", s: `${B.senate.rows.find((r) => r.us)?.right ?? 8} of the ${B.senate.races.length} races that decided the majority, the best of ${B.senate.rows.length} forecasts` },
           { k: "Race winners called", to: S.all.right, suf: ` of ${S.all.n}`, s: `Our final state and district polls in ${S.states} states` },
           { k: "Senate polls", to: S.senate.mae, dec: 1, suf: " pts", cls: "ok", s: `Average miss, ${S.senate.within1} of ${S.senate.n} within a point` },
         ]} />
@@ -99,6 +106,24 @@ export default function OnPointPolling() {
           <div><span className="k">National</span><b>{Math.abs(g.us.margin - g.result.margin).toFixed(1)} off</b><span>closest of {B.national.polls.length} final national polls</span></div>
         </div>
         <p className="bx-src">Leaned likely voter results, the last release before Election Day in each race, against the count as of {new Date(P.asof.replace("Z", ":00Z")).toLocaleDateString("en-US", { month: "long", day: "numeric" })}. <Link href="/accuracy#our-polls">Full method in the accuracy report.</Link></p>
+      </Chapter>
+
+      <Chapter id="who" eye="Who we work with" title={<>Nonpartisan. We poll for both parties.</>}
+        lede={<>On Point Polling is not aligned with either party. Democrats, Republicans and independents get the same fieldwork, the same likely voter model and the same honest read, whether the number is good news or bad.</>}>
+        <div className="who-grid" data-fx>
+          {WHO.map((w, i) => (
+            <article key={w.t} className={`who-card ${w.c}`} style={{ ["--i" as string]: i }}>
+              <span className="dot" aria-hidden="true" />
+              <h3>{w.t}</h3>
+              <p>{w.s}</p>
+            </article>
+          ))}
+        </div>
+        <ul className="who-rules" data-fx>
+          <li style={{ ["--i" as string]: 0 }}><b>Same method for every client.</b> No house lean toward whoever pays, and no thumb on the scale for either side.</li>
+          <li style={{ ["--i" as string]: 1 }}><b>Sponsors are disclosed.</b> When a public release was paid for, it says who paid, and the sponsor has no say in the questions or the method.</li>
+          <li style={{ ["--i" as string]: 2 }}><b>Private work stays private.</b> Your numbers are yours unless you choose to release them.</li>
+        </ul>
       </Chapter>
 
       <Chapter id="services" eye="What we field" title={<>Polling built to be right, not just published.</>}>

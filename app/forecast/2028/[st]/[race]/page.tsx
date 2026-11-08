@@ -84,6 +84,11 @@ function President({ S, sf }: { S: string; sf: StateFile }) {
           </tbody></table></>) : null}
       </div></section>
     </div>
+    {sf.cds && sf.cds.length ? (
+      <section className="card p28-sec"><div className="card-h"><h3>Every congressional district</h3><span className="eye">2026 lines, generic Democrat against Vance</span></div><div className="card-b p28-tbl"><table><thead><tr><th>District</th><th className="n">2024</th><th className="n">2028</th><th className="n">80% range</th><th className="n">D win</th><th>2026 House</th></tr></thead><tbody>
+        {sf.cds.map(([k, m, pD, p10, p90, m24, hp, hw]) => <tr key={k}><td>{k}</td><td className={`n ${m24 < 0 ? "d" : "r"}`}>{fmtMg(m24)}</td><td className={`n ${m < 0 ? "d" : "r"}`}>{fmtMg(m)}</td><td className="n">{fmtMg(p10)} to {fmtMg(p90)}</td><td className="n">{fmtPct(pD)}</td><td className={hp === "D" ? "d" : hp === "R" ? "r" : ""}>{hw || "no result"}</td></tr>)}
+      </tbody></table><p className="note">Each district starts from its own 2024 presidential result and moves with the counties it covers.</p></div></section>
+    ) : null}
     {Object.keys(sf.districts).length ? (
       <section className="card p28-sec"><div className="card-h"><h3>Congressional district electoral votes</h3><span className="eye">built from counties</span></div><div className="card-b p28-tbl"><table><thead><tr><th>District</th><th className="n">Margin</th><th className="n">D win</th><th className="n">D votes</th><th className="n">R votes</th></tr></thead><tbody>
         {Object.entries(sf.districts).map(([k, d]) => <tr key={k}><td>{k}</td><td className={`n ${d.m < 0 ? "d" : "r"}`}>{fmtMg(d.m)}</td><td className="n">{fmtPct(d.pD)}</td><td className="n">{fmtN(d.D)}</td><td className="n">{fmtN(d.R)}</td></tr>)}
@@ -111,7 +116,10 @@ function PrimBlock({ S, sf, key28, party }: { S: string; sf: StateFile; key28: "
   if (!ps) return <p className="note">No primary data for {name}.</p>;
   const names = f.names;
   const rows = names.map((n) => [n, ps.share[n], ps.win[n], ps.votes[n], ps.full[n]] as const).sort((a, b) => b[1] - a[1]);
-  const fav = [...names].sort((a, b) => ps.win[b] - ps.win[a])[0];
+  const [fav, second] = [...names].sort((a, b) => ps.win[b] - ps.win[a]);
+  // share and votes are the typical race the favorite wins, so the table and the call always name the same leader;
+  // when the top two win within ten points of each other it is a toss up
+  const lead = fav, tossup = ps.win[fav] - ps.win[second] < 0.1;
   const paths = geoFor(S); const fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {};
   const cv = Object.fromEntries(sf.counties.map((c) => [c.id, c]));
   for (const [id, top] of Object.entries(ps.counties)) {
@@ -127,15 +135,17 @@ function PrimBlock({ S, sf, key28, party }: { S: string; sf: StateFile; key28: "
   const leader = Object.entries(ps.counties).map(([id, top]) => { const c = cv[id]; return { id, n: c ? cname(c.n, S) : id, v: c ? (party === "D" ? c.dV : c.rV) : 0, top }; }).sort((a, b) => b.v - a.v);
   return (<>
     <div className="p28-kpis wide">
-      <div><span className="v" style={{ color: hub.pal[fav] }}>{fav}</span><span className="l">Favorite, wins {fmtPct(ps.win[fav])} of runs</span></div>
-      <div><span className="v">{ps.share[fav].toFixed(1)}%</span><span className="l">{fav}&apos;s projected share</span></div>
+      {tossup
+        ? <div><span className="v">Toss up</span><span className="l">{fav} wins {fmtPct(ps.win[fav])} of runs, {second} {fmtPct(ps.win[second])}</span></div>
+        : <div><span className="v" style={{ color: hub.pal[fav] }}>{fav}</span><span className="l">Favorite, wins {fmtPct(ps.win[fav])} of runs</span></div>}
+      <div><span className="v">{ps.share[lead].toFixed(1)}%</span><span className="l">{lead}&apos;s projected share</span></div>
       <div><span className="v">{fmtN(ps.total)}</span><span className="l">Projected primary votes</span></div>
       <div><span className="v">{ps.window}</span><span className="l">Calendar window: votes {cal}</span></div>
     </div>
     <div className="p28-two p28-sec">
       <section className="card"><div className="card-h"><h3>Candidates</h3><span className="eye">{fmtN(hub.sims.primary)} primary runs</span></div><div className="card-b p28-tbl"><table><thead><tr><th>Candidate</th><th className="n">Share</th><th className="n">Votes</th><th className="n">Win</th><th className="n">Full field</th></tr></thead><tbody>
         {rows.filter((r) => r[1] >= 0.3 || r[2] > 0.002).map(([n, s, w, v, ff]) => <tr key={n}><td><span className="dot" style={{ background: hub.pal[n] }} />{n}{hub.hypo.includes(n) ? <i className="hyp">HYP</i> : null}</td><td className="n">{s.toFixed(1)}%</td><td className="n">{fmtN(v)}</td><td className="n">{fmtPct(w)}</td><td className="n dim">{ff.toFixed(1)}%</td></tr>)}
-      </tbody></table><p className="note">Share and votes average the simulated races, including dropouts before {name} votes. Full field is the share if every candidate were still running. Undecided and minor candidates hold about {party === "D" ? 11 : 9}%.</p></div></section>
+      </tbody></table><p className="note">Share and votes are the typical race: the runs {fav} wins, with the most common field still on the ballot when {name} votes{ps.field ? `, ${Math.round(ps.field * 100)}% of all runs` : ""}. Win counts every run, dropouts included. Full field is the share if every candidate were still running. Undecided and minor candidates hold about {party === "D" ? 11 : 9}%.</p></div></section>
       <section className="card"><div className="card-h"><h3>County leaders</h3><span className="eye">deeper shade, bigger share</span></div><div className="card-b">
         {paths.length ? <GeoMap paths={paths.filter((x) => fills[x.id])} fills={fills} tips={tips} label={`${name} ${party === "D" ? "Democratic" : "Republican"} primary by county`} /> : <p className="note">Modeled at the state level.</p>}
         <div className="p28-legend">{[...new Set(Object.values(ps.counties).map((t) => names[t[0][0]]))].map((n) => <span key={n} className="sw"><b style={{ background: hub.pal[n] }} />{n}</span>)}</div>

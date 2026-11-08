@@ -2,10 +2,11 @@
 // The 2028 map: general election and both primaries, by state or by county.
 // State and county paths are the site's own projected files: /forecast/geo.json and /forecast/atlas/us.json (975 x 610).
 import { useEffect, useMemo, useState } from "react";
+import FloatTip from "@/app/components/opp/FloatTip";
 import { useRouter } from "next/navigation";
 import { fmtMg, fmtN, fmtPct, leaderColor, marginColor, probColor, shiftColor, shiftFor, simulate, type Cand, type Coal, type SimState } from "./sim28";
 
-type PF = { party: "D" | "R"; names: string[]; nomination: Record<string, number>; votes: Record<string, number>; full: Record<string, number>; dropout: Record<string, number[]>; calendar: string[][]; states: Record<string, { w: string; pw: number; sh: number; tot: number }> };
+type PF = { party: "D" | "R"; names: string[]; nomination: Record<string, number>; votes: Record<string, number>; full: Record<string, number>; dropout: Record<string, number[]>; calendar: string[][]; states: Record<string, { w: string; pw: number; sh: number; tot: number; tu?: boolean }> };
 export interface AtlasProps {
   states: Record<string, SimState & { pD: number; D: number; R: number; O: number; tip: number; a24: number | null; gen: number | null; mig: number | null }>;
   dcand: Record<string, Cand>; rcand: Record<string, Cand>; coal: Coal; pal: Record<string, string>; hypo: string[];
@@ -76,7 +77,7 @@ export default function Atlas28(p: AtlasProps) {
     let rows: [string, string, string?][];
     if (field) {
       const w = field.states[st];
-      rows = w ? [["Favorite", w.w, p.pal[w.w]], ["Win chance", fmtPct(w.pw)], ["Projected share", `${w.sh.toFixed(1)}%`], ["Primary votes", fmtN(w.tot)]] : [["No data", ""]];
+      rows = w ? [[w.tu ? "Slight edge, toss up" : "Favorite", w.w, p.pal[w.w]], ["Win chance", fmtPct(w.pw)], ["Projected share", `${w.sh.toFixed(1)}%`], ["Primary votes", fmtN(w.tot)]] : [["No data", ""]];
     } else {
       const m = s.m + shift(st);
       rows = [["2028 model", fmtMg(m), m < 0 ? "var(--dem2)" : "var(--gop2)"], ["Democratic win", fmtPct(sim ? sim.win[st] ?? s.pD : s.pD)],
@@ -151,10 +152,10 @@ export default function Atlas28(p: AtlasProps) {
           </svg>
           <Legend mode={mode} layer={layer} field={field} pal={p.pal} />
           {tip ? (
-            <div className="p28-tip" style={{ left: tip.x + 14, top: tip.y + 14 }}>
+            <FloatTip x={tip.x} y={tip.y} className="p28-tip" scope="opp">
               <b>{tip.t}</b>
               {tip.rows.map(([k, v, c]) => <div key={k} className="row"><span>{k}</span><span style={c ? { color: c } : undefined}>{v}</span></div>)}
-            </div>
+            </FloatTip>
           ) : null}
         </div>
         <aside className="p28-side">

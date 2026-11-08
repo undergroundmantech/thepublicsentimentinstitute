@@ -94,7 +94,8 @@ export function orgLd(): LD[] {
       description: "On Point Polling, with VT Analytics, is the polling and research arm behind On Point Politics and the most accurate pollster of the 2026 midterms: its final national poll had the generic ballot at D +13.1 against a D +13.0 result. Statewide, district and national polls, likely voter modeling, MRP and message testing.",
       email: "onpointpoliticscontact@gmail.com",
       contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "onpointpoliticscontact@gmail.com", areaServed: "US", availableLanguage: "English" },
-      award: "Most accurate final national poll of the 2026 midterms",
+      award: ["Most accurate final national poll of the 2026 midterms", "#1 forecast of the 2026 midterms"],
+      slogan: "Nonpartisan polling for both parties",
       knowsAbout: ["Public opinion polling", "Likely voter modeling", "Multilevel regression and poststratification", "Voter file sampling", "Message testing"],
     },
     {
