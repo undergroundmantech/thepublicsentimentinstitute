@@ -6,7 +6,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { raceHref } from "@/app/lib/opp";
-import { daysOut as daysOutNow } from "@/app/lib/opp";
 
 type XRow = [string, string, number, number, number, number];
 type Race = {
@@ -154,7 +153,7 @@ export function getSwingData(): SwingData {
     return { hist: c.hist, total: T, thr, offset: c.demControl - base, notUpD, notUpR, demControl: c.demControl, demSeats: c.demSeats };
   };
   cache = {
-    updated: String(meta.updated), daysOut: Math.min(Number(meta.daysOut), daysOutNow()),
+    updated: String(meta.updated), daysOut: Math.min(Number(meta.daysOut), Math.max(0, Math.ceil((new Date("2026-11-03T00:00:00-05:00").getTime() - Date.now()) / 864e5))),
     dims: DIMS.map((d) => ({ key: d.key, label: d.label, groups: d.groups })),
     nat, races,
     chambers: {

@@ -84,12 +84,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/on-point-polling/weighting-room", today, "monthly", 0.4),
     u("/on-point-polling/sms", today, "yearly", 0.2),
     u("/contact", today, "yearly", 0.3),
+    u("/terms", today, "yearly", 0.1),
     u("/about", "2026-11-10", "monthly", 0.5),
     u("/privacy", "2026-11-10", "yearly", 0.2),
-    u("/terms", "2026-11-10", "yearly", 0.1),
     u("/analysis", today, "weekly", 0.9),
     ...ARTICLES.map((a) => u(`/analysis/${a.slug}`, a.modified, "monthly", 0.8)),
-    u("/forecast/2028", today, "daily", 1),
   );
 
 
@@ -120,6 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const nov = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/results/2026/index.json"), "utf8")).races as { id: string; k: string; st: string }[];
     for (const st of [...new Set(nov.map((r) => r.st))]) { const n = STATE_NAMES[st]; if (n) add(u(`/results/2026/${n.toLowerCase().replace(/[^a-z]+/g, "-")}`, today, "hourly", 0.9)); }
+    for (const r of nov) if (["sen", "gov", "house", "state", "measure"].includes(r.k)) add(u(`/results/2026/${encodeURIComponent(r.id)}`, today, "daily", r.k === "sen" || r.k === "gov" ? 0.8 : 0.6));
   } catch { /* no results index on this build */ }
 
   return out;

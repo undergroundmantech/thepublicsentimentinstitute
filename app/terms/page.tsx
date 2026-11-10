@@ -40,14 +40,9 @@ const SECTIONS = [
     content: `CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy. We agree to the following:\n\n· Users can visit our site anonymously.\n· Once this privacy policy is created, we will add a link to it on our home page or on the first significant page after entering our website.\n· Our Privacy Policy link includes the word "Privacy" and can easily be found on the page specified above.\n· Users will be notified of any privacy policy changes on our Privacy Policy page.\n· Users are able to change their personal information by emailing us or calling us.`,
   },
   {
-    id: "advertising",
-    title: "Advertising and Google AdSense",
-    content: `This site uses Google AdSense to show advertising. Third party vendors, including Google, use cookies to serve ads based on your prior visits to this website and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visits to this site and other sites on the internet.\n\nYou can opt out of personalized advertising at adssettings.google.com, and opt out of many third party vendors' cookies at aboutads.info/choices. The full details are in our privacy policy at onpointpolitics.us/privacy.`,
-  },
-  {
     id: "dnt",
     title: "Do Not Track Signals",
-    content: `Browsers do not apply Do Not Track signals in a consistent way, so the site does not change its behavior when it receives one. You can control analytics and advertising cookies with the opt outs described in the advertising section and in your browser settings.`,
+    content: `Browsers do not apply Do Not Track signals in a consistent way, so the site does not change its behavior when it receives one. This site uses Google AdSense: third party vendors, including Google, use cookies to serve ads based on your prior visits to this website and other websites. You can opt out of personalized advertising at adssettings.google.com and of many vendors' cookies at aboutads.info/choices. The full details are in our privacy policy at onpointpolitics.us/privacy.`,
   },
   {
     id: "coppa",
@@ -82,10 +77,10 @@ const SECTIONS = [
 ];
 
 export default function TermsPage() {
-  // every section starts open so the whole policy is readable, and printable, without a click
-  const [closed, setClosed] = useState<Set<string>>(new Set());
+  const [activeId, setActiveId] = useState<string | null>("__all__");
+
   function toggle(id: string) {
-    setClosed((prev) => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+    setActiveId(prev => (prev === id ? null : id));
   }
 
   return (
@@ -117,7 +112,6 @@ export default function TermsPage() {
           This policy has been compiled to better serve those who are concerned with how their
           Personally Identifiable Information (PII) is being used. Please read carefully to get
           a clear understanding of how we collect, use, protect, and handle your information.
-          The full privacy policy, including advertising cookies and how to opt out, is on the <Link href="/privacy" style={{ textDecoration: "underline" }}>privacy policy</Link> page.
         </p>
         <div className="pmeta">
           <span>Site <b>On Point Politics</b></span>
@@ -134,7 +128,7 @@ export default function TermsPage() {
             <div className="card-h"><h3>Privacy Policy &amp; Terms and Conditions</h3><span className="eye" style={{ marginLeft: "auto" }}>Select a section</span></div>
             <div>
               {SECTIONS.map((s, i) => {
-                const isOpen = !closed.has(s.id);
+                const isOpen = activeId === "__all__" || activeId === s.id;
                 return (
                   <div key={s.id} id={s.id} className={`tc-sec${isOpen ? " open" : ""}`}>
                     <button className="tc-trigger" onClick={() => toggle(s.id)} aria-expanded={isOpen} aria-controls={`${s.id}-body`}>
@@ -172,10 +166,10 @@ export default function TermsPage() {
                   <a
                     key={s.id}
                     href={`#${s.id}`}
-                    className=""
+                    className={activeId === s.id ? "on" : ""}
                     onClick={(e) => {
                       e.preventDefault();
-                      setClosed((prev) => { const n = new Set(prev); n.delete(s.id); return n; });
+                      setActiveId(activeId === s.id ? null : s.id);
                       const el = document.getElementById(s.id);
                       if (el) el.scrollIntoView({ behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
                     }}
