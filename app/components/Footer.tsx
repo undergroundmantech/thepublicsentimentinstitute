@@ -21,7 +21,7 @@ export default function Footer() {
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
                 Nonpartisan polling and forecasts. The most accurate poll and the #1 forecast of 2026, by On Point Polling, Miami.
               </p>
-              <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/accuracy">2026 accuracy report</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link><a href="https://www.youtube.com/@onpointpoliticsofficial?sub_confirmation=1" target="_blank" rel="noopener" data-ev="YouTube subscribe" data-ev-d='{"from":"footer"}'>YouTube</a><a href="https://onpointpolitics.substack.com" target="_blank" rel="noopener">Newsletter</a></p>
+              <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/about">About us</Link><Link href="/analysis">Analysis</Link><Link href="/accuracy">2026 accuracy report</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link><a href="https://www.youtube.com/@onpointpoliticsofficial?sub_confirmation=1" target="_blank" rel="noopener" data-ev="YouTube subscribe" data-ev-d='{"from":"footer"}'>YouTube</a><a href="https://onpointpolitics.substack.com" target="_blank" rel="noopener">Newsletter</a></p>
             </div>
             {COLS.map((c) => (
               // a collapsible group: always open on a wide screen, folded on a phone by LiteMotion so the footer is one screen
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
           <div className="bottom">
             <span>© 2026 On Point Politics and On Point Polling</span>
-            <span><Link href="/terms">Terms</Link> · <Link href="/terms#privacy">Privacy</Link> · <Link href="/on-point-polling/sms">SMS opt in</Link></span>
+            <span><Link href="/about">About</Link> · <Link href="/analysis">Analysis</Link> · <Link href="/contact">Contact</Link> · <Link href="/privacy">Privacy</Link> · <Link href="/terms">Terms</Link> · <Link href="/on-point-polling/sms">SMS opt in</Link></span>
           </div>
         </div>
       </div>

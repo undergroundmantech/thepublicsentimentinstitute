@@ -37,6 +37,51 @@ function Hist({ h, lo = -40, w = 2 }: { h: number[]; lo?: number; w?: number }) 
   );
 }
 
+// presidential margins since 2000 and the 2028 forecast, R minus D, with the long run trend against the nation
+function PresHistory({ ph, m, p10, p90, lr, rt, name }: { ph: Record<string, number>; m: number; p10: number; p90: number; lr: number | null | undefined; rt: number | null | undefined; name: string }) {
+  const pts = Object.entries(ph).map(([y, v]) => [Number(y), v] as const).sort((a, b) => a[0] - b[0]);
+  const all = [...pts.map((x) => x[1]), m, p10, p90]; const lo = Math.min(-10, ...all) - 3, hi = Math.max(10, ...all) + 3;
+  const W = 960, H = 250, L = 52, R = 20, T = 14, B = 28;
+  const x = (y: number) => L + ((y - 2000) / 28) * (W - L - R); const yv = (v: number) => T + ((hi - v) / (hi - lo)) * (H - T - B);
+  const ticks = [-40, -30, -20, -10, 0, 10, 20, 30, 40].filter((t) => t > lo && t < hi);
+  const line = pts.map(([y, v]) => `${x(y)},${yv(v)}`).join(" ");
+  const last = pts[pts.length - 1];
+  return (
+    <section className="card p28-sec"><div className="card-h"><h3>{name} for president since 2000</h3><span className="eye">margin, R minus D</span></div><div className="card-b">
+      <svg viewBox={`0 0 ${W} ${H}`} className="p28-curve" role="img" aria-label={`${name} presidential margin by year, 2000 to 2024, and the 2028 forecast`}>
+        {ticks.map((t) => <g key={t}><line x1={L} x2={W - R} y1={yv(t)} y2={yv(t)} className={t === 0 ? "zero" : "grid"} /><text x={L - 6} y={yv(t) + 4} textAnchor="end">{t === 0 ? "Even" : `${t < 0 ? "D" : "R"} ${Math.abs(t)}`}</text></g>)}
+        {[2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028].map((y) => <text key={y} x={x(y)} y={H - 8} textAnchor="middle">{y}</text>)}
+        <polyline points={line} className="hist" />
+        {last ? <line x1={x(last[0])} y1={yv(last[1])} x2={x(2028)} y2={yv(m)} className="fc" /> : null}
+        <line x1={x(2028)} x2={x(2028)} y1={yv(p10)} y2={yv(p90)} className="rng" />
+        {pts.map(([y, v]) => <circle key={y} cx={x(y)} cy={yv(v)} r={4} className={v < 0 ? "pd" : "pr"}><title>{`${y}: ${fmtMg(v)}`}</title></circle>)}
+        <circle cx={x(2028)} cy={yv(m)} r={6} className={m < 0 ? "pd" : "pr"}><title>{`2028 forecast: ${fmtMg(m)}`}</title></circle>
+      </svg>
+      <p className="note">Certified two party results{pts.length < 7 ? `, ${pts.map((p) => p[0]).join(", ")} on file` : ""}. The dot at 2028 is the forecast with its 80% range.{lr != null ? ` Against the nation, ${name} has moved about ${Math.abs(lr).toFixed(1)} points per election toward ${lr < 0 ? "Democrats" : "Republicans"} since ${pts[0]?.[0] ?? 2000}` : ""}{rt != null ? `${lr != null ? " and" : " Against the nation it has moved"} ${Math.abs(rt).toFixed(1)} points per election toward ${rt < 0 ? "Democrats" : "Republicans"} over the last three elections. The forecast carries a blend of both.` : lr != null ? "." : ""}</p>
+    </div></section>
+  );
+}
+const EL_SETS: [string, string[]][] = [
+  ["Age", ["age 18-29", "age 30-44", "age 45-64", "age 65+"]],
+  ["Race", ["White", "Black", "Hispanic", "Asian/Other"]],
+  ["Education", ["white no college", "white college", "no college", "college"]],
+  ["Party", ["Democrats", "Republicans", "independents"]],
+  ["Vote history", ["voted in 2024", "did not vote in 2024"]],
+];
+const EL_LABEL: Record<string, string> = { "age 18-29": "18 to 29", "age 30-44": "30 to 44", "age 45-64": "45 to 64", "age 65+": "65 and up", "Asian/Other": "Asian and other",
+  "white no college": "White, no degree", "white college": "White, degree", "no college": "No degree, all", college: "Degree, all", "voted in 2024": "Voted in 2024", "did not vote in 2024": "Did not vote in 2024" };
+function Electorate({ rows, name }: { rows: [string, number, number][]; name: string }) {
+  const by = Object.fromEntries(rows.map((r) => [r[0], r]));
+  return (
+    <section className="card p28-sec"><div className="card-h"><h3>Who votes in November</h3><span className="eye">simulated 2028 electorate, {name}</span></div><div className="card-b p28-tbl">
+      <p className="note">Every county&apos;s eligible citizens in 192 voter groups by age, race, college, party and 2024 vote, from our national dataset; every voter is drawn in each simulation. Share of the electorate and the generic Democrat&apos;s two party share against Vance.</p>
+      <table><thead><tr><th>Group</th><th className="n">Share of voters</th><th className="n">Democratic two party</th></tr></thead><tbody>
+        {EL_SETS.map(([h, ks]) => [<tr key={h} className="grp"><td colSpan={3}>{h}</td></tr>, ...ks.filter((k) => by[k]).map((k) => (
+          <tr key={k}><td>{EL_LABEL[k] ?? k}</td><td className="n">{by[k][1].toFixed(1)}%</td><td className={`n ${by[k][2] >= 50 ? "d" : "r"}`}>{by[k][2].toFixed(1)}%</td></tr>))])}
+      </tbody></table>
+    </div></section>
+  );
+}
 function President({ S, sf }: { S: string; sf: StateFile }) {
   const hub = getHub(); const g = sf.general as StateRow; const name = STATE_NAME[S] ?? S;
   const m = g.m, dWin = g.pD, lead = m < 0 ? "Democrat" : "Republican";
@@ -64,6 +109,7 @@ function President({ S, sf }: { S: string; sf: StateFile }) {
         <div><span className="v">{fmtPct(g.tip)}</span><span className="l">Chance it is the tipping point</span></div>
       </div>
     </header>
+    {g.ph ? <PresHistory ph={g.ph} m={m} p10={g.p10} p90={g.p90} lr={g.lr} rt={g.rt} name={name} /> : null}
     <div className="p28-two">
       <section className="card"><div className="card-h"><h3>Every county</h3><span className="eye">simulated margin</span></div><div className="card-b">
         {paths.length && sf.counties.length ? <GeoMap paths={paths.filter((x) => fills[x.id])} fills={fills} tips={tips} label={`${name} counties, 2028 forecast`} /> : <p className="note">{name} is modeled at the state level here, from its certified 2024 vote moved by the national swing.</p>}
@@ -75,7 +121,7 @@ function President({ S, sf }: { S: string; sf: StateFile }) {
           <h4 className="p28-h4">From 2024 to 2028</h4>
           <table className="p28-steps"><tbody>
             <tr><td>2024 result</td><td className={p.a24 < 0 ? "d" : "r"}>{fmtMg(p.a24)}</td><td>Certified county votes.</td></tr>
-            <tr><td>National environment</td><td className={p.base < 0 ? "d" : "r"}>{fmtMg(p.base)}</td><td>National swing by county elasticity, 2020 to 2024 trend and 2026 shifts.</td></tr>
+            <tr><td>National environment</td><td className={p.base < 0 ? "d" : "r"}>{fmtMg(p.base)}</td><td>The party ID move by county elasticity, plus each county&apos;s and the state&apos;s recent trend, 2020 to 2024 counting most and 2016 to 2024 next.</td></tr>
             <tr><td>Deaths and aging</td><td>{fmtShift(p.deaths)}</td><td>Older cohorts leave, every cohort ages four years.</td></tr>
             <tr><td>New 18 to 21 voters</td><td>{fmtShift(p.newv)}</td><td>{p.newShare.toFixed(1)}% of the 2028 electorate here.</td></tr>
             <tr><td>Life cycle drift</td><td>{fmtShift(p.drift)}</td><td>Voters under 44 drifting a little right as they age.</td></tr>
@@ -84,6 +130,7 @@ function President({ S, sf }: { S: string; sf: StateFile }) {
           </tbody></table></>) : null}
       </div></section>
     </div>
+    {sf.elect28 && sf.elect28.length ? <Electorate rows={sf.elect28} name={name} /> : null}
     {sf.cds && sf.cds.length ? (
       <section className="card p28-sec"><div className="card-h"><h3>Every congressional district</h3><span className="eye">2026 lines, generic Democrat against Vance</span></div><div className="card-b p28-tbl"><table><thead><tr><th>District</th><th className="n">2024</th><th className="n">2028</th><th className="n">80% range</th><th className="n">D win</th><th>2026 House</th></tr></thead><tbody>
         {sf.cds.map(([k, m, pD, p10, p90, m24, hp, hw]) => <tr key={k}><td>{k}</td><td className={`n ${m24 < 0 ? "d" : "r"}`}>{fmtMg(m24)}</td><td className={`n ${m < 0 ? "d" : "r"}`}>{fmtMg(m)}</td><td className="n">{fmtMg(p10)} to {fmtMg(p90)}</td><td className="n">{fmtPct(pD)}</td><td className={hp === "D" ? "d" : hp === "R" ? "r" : ""}>{hw || "no result"}</td></tr>)}

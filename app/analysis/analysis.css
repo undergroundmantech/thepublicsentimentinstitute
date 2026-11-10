@@ -1,0 +1,29 @@
+/* The analysis desk: readable long form on the site's dark glass. */
+.opp.an { display: grid; gap: 28px; }
+.opp.an .an-art { max-width: 760px; }
+.opp.an .an-prose { display: grid; gap: 16px; font-size: 17px; line-height: 1.72; color: var(--ink2); }
+.opp.an .an-prose p { margin: 0; max-width: 68ch; }
+.opp.an .an-prose h2 { margin: 18px 0 0; font: 700 clamp(20px, 2.4vw, 26px)/1.2 var(--font-d); letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+.opp.an .an-prose b { color: var(--ink); }
+.opp.an .an-prose a, .opp.an .an-note a, .opp.an .an-src a { color: var(--hi); text-decoration: underline; text-underline-offset: 3px; }
+.opp.an .an-prose ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.opp.an .an-fig { margin: 6px 0; display: grid; gap: 8px; }
+.opp.an .an-fig figcaption { font: 700 12px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.opp.an .an-tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--glass); }
+.opp.an .an-fig table { width: 100%; border-collapse: collapse; font: 500 14px var(--font-b); font-variant-numeric: tabular-nums; }
+.opp.an .an-fig th, .opp.an .an-fig td { padding: 9px 12px; text-align: left; border-top: 1px solid var(--line); white-space: nowrap; }
+.opp.an .an-fig thead th { border-top: 0; font: 700 11px var(--font-m); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.opp.an .an-fig td { font-family: var(--font-m); color: var(--ink); }
+.opp.an .an-fn { margin: 0; font-size: 13px; color: var(--mute); }
+.opp.an .an-src, .opp.an .an-note { margin-top: 24px; font-size: 14px; color: var(--mute); max-width: 68ch; }
+.opp.an .an-src h2 { font: 700 13px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin: 0 0 8px; }
+.opp.an .an-src ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.opp.an .an-more h2 { font: 700 20px var(--font-d); margin: 0 0 12px; }
+.opp.an .an-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.opp.an .an-card { display: grid; gap: 8px; align-content: start; padding: 16px; color: var(--ink); transition: border-color .15s; }
+.opp.an .an-card:hover { border-color: var(--line2); }
+.opp.an .an-card b { font: 700 17px/1.3 var(--font-d); }
+.opp.an .an-card small { font-size: 14px; line-height: 1.5; color: var(--ink2); }
+.opp.an .an-lead { display: grid; gap: 10px; padding: 22px; }
+.opp.an .an-lead b { font: 700 clamp(22px, 3vw, 30px)/1.2 var(--font-d); letter-spacing: -.02em; }
+.opp.an .an-lead small { font-size: 16px; line-height: 1.55; color: var(--ink2); max-width: 70ch; }

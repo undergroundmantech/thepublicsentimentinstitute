@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "News outlets and how we rate them",
   description: "Every outlet the On Point Politics news desk reads, rated Left, Center or Right, with the reason for each rating and how the ratings are made.",
   alternates: { canonical: "/news/sources" },
+  robots: { index: false, follow: true },
 };
 
 export default function SourcesPage() {

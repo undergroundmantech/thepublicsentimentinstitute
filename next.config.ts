@@ -1,5 +1,17 @@
 import type { NextConfig } from "next";
+import fs from "node:fs";
+import path from "node:path";
 import { redirects } from "./next.redirects";
+
+// Nov 10 2026: House district pages for seats that were never in play are thin, nearly identical pages to a search
+// engine and an ad reviewer, so they carry noindex while staying open to readers. Marquee seats and any seat the
+// model had within 15 points stay in the index. The list is read from the forecast at build time.
+function quietHousePages(): string[] {
+  try {
+    const m = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/forecast/model.json"), "utf8")) as { races: { id: string; office: string; marquee?: boolean; est?: { margin?: number } }[] };
+    return m.races.filter((r) => r.office === "house" && !r.marquee && Math.abs(r.est?.margin ?? 100) >= 15).map((r) => { const [, st, d] = r.id.split("-"); return `/forecast/${st.toLowerCase()}/house-${Number(d)}`; });
+  } catch { return []; }
+}
 
 // Site-v2 gate, the same check as SITE_V2 in app/lib/flags.ts (next.config
 // can't import app code). The site defaults to v2 unless the env var says off.
@@ -18,11 +30,6 @@ const nextConfig: NextConfig = {
     "/on-point-polling": ["./public/forecast/model.json"],
     "/on-point-polling/polls": ["./public/forecast/model.json"],
     "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json", "./public/results/2026/index.json"],
-    // The recorder reads the tracked-race list and the forecast index from the deployment's files.
-    "/api/intelligence/capture": ["./data/intelligence/states/priority15-2026-10-26.json", "./public/results/2026/index.json"],
-    "/portal/intelligence": ["./data/intelligence/states/priority15-2026-10-26.json", "./public/results/2026/index.json"],
-    "/portal/intelligence/history": ["./data/intelligence/history/frozen-forecasts.json.gz", "./data/intelligence/states/priority15-2026-10-26.json", "./public/results/2026/index.json"],
-    "/api/race-history/[id]": ["./data/intelligence/history/frozen-forecasts.json.gz"],
   },
   // Force the flag into the bundler's define map even when the env var is
   // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which
@@ -51,16 +58,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return redirects;
   },
-  // Nov 5 2026 cost cut: the forecast, results and early vote data files were served with max-age=0, so every page view
-  // went back to the CDN for every file. Browsers now keep them five minutes and the CDN a day, refreshed in the background.
   async headers() {
-    const data = [{ key: "Cache-Control", value: "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }];
-    return [
-      { source: "/forecast/:path(.*\\.json)", headers: data },
-      { source: "/results/:path(.*\\.json)", headers: data },
-      { source: "/:file(earlyvote.*\\.json)", headers: data },
-      { source: "/polls/:path(.*\\.json)", headers: data },
-    ];
+    return quietHousePages().map((source) => ({ source, headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }] }));
   },
 };
 

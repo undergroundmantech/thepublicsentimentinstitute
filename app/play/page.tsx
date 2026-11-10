@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
 import { Press_Start_2P, Pixelify_Sans } from "next/font/google";
-import PlayApp, { type PIndex } from "./PlayApp";
+import { type PIndex } from "./PlayApp";
+import App28 from "./y28/App28";
 import "./play.css";
+import "./y28/play28.css";
 
 const head = Press_Start_2P({ weight: "400", subsets: ["latin"], variable: "--px-d", display: "swap" });
 const body = Pixelify_Sans({ subsets: ["latin"], variable: "--px-b", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Campaign 2026: run a Senate or governor campaign",
-  description: "A pixel campaign game built on the On Point Politics forecast. Pick a close Senate or governor race and run the last eight weeks from a campaign bus: meet the people who matter, fight the air war, build a real turnout operation, take the debate stage and sweat out a long election night, with the real events of each race.",
+  title: "Campaign 2028: run for president",
+  description: "A pixel campaign game built on the On Point Politics 2028 forecast. Run in the Democratic or Republican primaries, win the delegates and the nomination, pick a running mate and take ten weeks to 270 electoral votes, with every state, candidate and voter group from the On Point model.",
   alternates: { canonical: "/play" },
 };
 
@@ -18,20 +20,27 @@ export default function Page() {
   const idx = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "play", "index.json"), "utf8")) as PIndex;
   return (
     <div className={`opp pg ${head.variable} ${body.variable}`}>
-      <PlayApp idx={idx} />
+      <App28 idx={idx} />
       <section className="px-about">
-        <h1>Campaign 2026</h1>
-        <p>Take over a real campaign on Labor Day and run it to Election Day. Send the bus county to county, meet party chairs, union bosses, megadonors and podcasters, fight the air war, register voters and bank early ballots, take the debate stage and watch the returns come in past midnight. You never see the true county numbers, only your campaign&apos;s read of them, as sharp as your polling and as fresh as your last visit. Voters react the way On Point&apos;s data says they would, and the events, ads, endorsements and debates come from what is really happening in each race, with sources.</p>
+        <h1>Campaign 2028</h1>
+        <p>Run for president. Pick any of the 54 Democrats and Republicans in the On Point 2028 model and fight for the nomination state by state, from the first debate stages to the last primaries, or skip ahead to the general election. Every state&apos;s starting margin, every candidate&apos;s pull state by state, the delegate math, the primary standings and the vote history of every group of voters come from the same model that runs the On Point forecast. The midterm edition is still one click away from the title screen.</p>
         <ul className="px-how">
-          <li><b>{idx.races.length} races</b><span>Every Senate and governor race within 15 points.</span></li>
-          <li><b>Fog of war</b><span>Polls and ground teams sharpen your county read; it goes stale.</span></li>
-          <li><b>Real turnout</b><span>Enthusiasm, registration, early votes, Election Day weather and lines.</span></li>
-          <li><b>Debate stage</b><span>Real issues, a delivery meter, comebacks and a live dial.</span></li>
-          <li><b>A real rival</b><span>The other campaign picks a plan every week, as sharp as its real money, incumbency and odds.</span></li>
-          <li><b>Made for the camera</b><span>Work the crowd at rallies, cut ads in the studio, crisis clocks, whale alerts and calling the race yourself.</span></li>
-          <li><b>The Kalshi line</b><span>Your race opens at its live Kalshi price and trades on the public polls all campaign.</span></li>
-          <li><b>Trophies</b><span>Crises, the chaos wheel, viral rallies and hot streaks, with a trophy case to fill.</span></li>
-          <li><b>Election night</b><span>Mail and Election Day votes in batches, a needle, and the call.</span></li>
+          <li><b>Primaries</b><span>Iowa to June, real delegate rules, rivals who drop out and endorse.</span></li>
+          <li><b>Endorsements</b><span>Chase the endorsements that move each party&apos;s voters.</span></li>
+          <li><b>Debate stage</b><span>Real 2028 issues, a timing meter for every answer and a live focus group.</span></li>
+          <li><b>Running mates</b><span>Home state edges from the model, a VP debate and a second campaign trail.</span></li>
+          <li><b>Convention</b><span>Nobody at a majority means a contested floor and a deal to cut.</span></li>
+          <li><b>270 to win</b><span>Every state and the Maine and Nebraska districts on a pixel tile map.</span></li>
+          <li><b>Vote history</b><span>Turnout drives aimed at six vote history groups from 1,152 per county.</span></li>
+          <li><b>Third parties</b><span>Ten third party options, each drawing votes by lane.</span></li>
+          <li><b>Stances follow you</b><span>What you said to win the primary, independents remember in November.</span></li>
+          <li><b>Campaign managers</b><span>Hire a data guru, ad maker, field general, finance chair or message guru.</span></li>
+          <li><b>Scandals</b><span>Hot mics, leaked memos and an October surprise, with safe and risky answers.</span></li>
+          <li><b>Opposition research</b><span>Dig into your opponent&apos;s weakest positions and pick when to drop the hit.</span></li>
+          <li><b>Fog of war</b><span>Your map is your campaign&apos;s read; internal polls sharpen it.</span></li>
+          <li><b>Super PACs and ad tone</b><span>Outside money on both sides, and attack ads that can backfire.</span></li>
+          <li><b>Election night</b><span>Storms and long lines on Election Day, then the calls come in as polls close.</span></li>
+          <li><b>Trophies</b><span>Fifteen to earn, from a clean early sweep to a 400 vote landslide.</span></li>
         </ul>
       </section>
     </div>

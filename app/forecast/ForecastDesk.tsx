@@ -15,8 +15,7 @@ import {
   isUncontested,
   isPlaceholderName,
 } from "./lib";
-import { raceHref } from "@/app/lib/opp";
-import { pctPoints, probFraction, probPoints } from "@/app/lib/fmtPct";
+import { raceHref, daysOut } from "@/app/lib/opp";
 import ForecastAtlas, { ATLAS_CSS } from "./ForecastAtlas";
 import SpendingTracker, { RaceMoney, SPENDING_CSS } from "./Spending";
 import { TIP_CSS, TipPortal, VoteTip, commas, shareOf } from "./Tips";
@@ -126,7 +125,7 @@ function DeskHeader({ model, office, dbRows, embedded }: { model: Model | null; 
   } else if (chamber) {
     const dem = chamber.demControl;
     const fav = dem >= 0.5 ? "d" : "r";
-    const p = probFraction(Math.max(dem, 1 - dem)).slice(0, -1);
+    const p = Math.round(Math.max(dem, 1 - dem) * 100);
     const partyName = fav === "d" ? "Democrats" : "Republicans";
     const [pre, word] =
       office === "house" ? ["of winning the", "House"] :
@@ -168,7 +167,7 @@ function DeskHeader({ model, office, dbRows, embedded }: { model: Model | null; 
         <div className="pmeta">
           <span><b className="mono">{model ? model.meta.sims.toLocaleString() : "2,000"}</b> simulations</span>
           {model ? <span>Updated <b>{fmtDate(model.meta.updated)}</b></span> : null}
-          {model ? <span><b className="mono">{model.meta.daysOut}</b> days to Election Day</span> : null}
+          {model ? (daysOut() > 0 ? <span><b className="mono">{daysOut()}</b> days to Election Day</span> : <span>Final forecast, <b>frozen November 3</b></span>) : null}
           {model ? <span>Environment <b className={`mono ${model.meta.npe > 0 ? "r" : "d"}`}>{signed(model.meta.npe)}</b></span> : null}
           {gb ? <span>Generic ballot <b className={`mono ${gb.avg > 0 ? "r" : "d"}`}>{signed(gb.avg)}</b></span> : null}
           {gb ? <span>Net approval <b className="mono">{gb.netApproval}</b></span> : null}
@@ -399,7 +398,7 @@ function DBBar({ races, label }: { races: Race[]; label: string }) {
       </div>
       <div className="fc-seatbar-track" role="img" aria-label={`${d + unD} lean Democratic, ${t} toss ups, ${rr + unR} lean Republican`}>
         <span className="fc-seatbar-fill" style={{ width: `${((d + unD) / tot) * 100}%` }} />
-        <span className="fc-seatbar-fill" style={{ left: `${((d + unD) / tot) * 100}%`, width: `${(t / tot) * 100}%`, background: "var(--toss)" }} />
+        <span className="fc-seatbar-fill" style={{ left: `${((d + unD) / tot) * 100}%`, width: `${(t / tot) * 100}%`, background: "var(--gold)" }} />
       </div>
       <div className="fc-seatbar-note">Each race is called for the side its model margin favors, gold within 2 points{un ? `; ${un} ${un === 1 ? "has" : "have"} only one major party nominee` : ""}. Pick a state for its county forecast.</div>
     </div>
@@ -651,7 +650,7 @@ const OVERVIEW = "Overview";
 const ALLCUTS = "All cuts";
 
 // "an 83% chance", not "a 83% chance": 8, 11 and 18 lead with a vowel sound.
-const article = (n: number | string) => (/^(8|1[18](\.|$)|1[18]\d)/.test(String(n)) ? "an" : "a");
+const article = (n: number) => (/^(8|11$|11\d|18$|18\d)/.test(String(n)) ? "an" : "a");
 
 function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   race: Race; detail: StateDetail | null;
@@ -912,8 +911,9 @@ function SectionDistribution({ chamber, office, sims }: { chamber: ChamberT; off
   const bw = Math.min(16, Math.max(2.5, (W / span) * binW * 0.66));
   const demP = chamber.demControl;
   const demRuns = Math.round(demP * sims), gopRuns = sims - demRuns;
-  const demLabel = probFraction(demP);
-  const gopLabel = probFraction(1 - demP);
+  const dp = Math.round(demP * 100);
+  const demLabel = dp > 99 ? ">99%" : dp < 1 ? "<1%" : `${dp}%`;
+  const gopLabel = dp > 99 ? "<1%" : dp < 1 ? ">99%" : `${100 - dp}%`;
   const chamberNoun = office === "house" ? "House majority" : office === "senate" ? "Senate control" : "majority of governorships";
   const bx1 = x(chamber.demP10), bx2 = x(chamber.demP90);
 
@@ -1187,7 +1187,7 @@ function RaceTable({ rows, onPick }: { rows: Race[]; onPick: (id: string) => voi
             </span>
             <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : ind ? "var(--ind)" : "var(--fc-dem)" }}>{fmtRaceMargin(r, s.margin)}</span>
             <span role="cell" className="fc-td-bar"><MarginBar m={s.margin} p10={s.p10} p90={s.p90} /></span>
-            <span role="cell" className="fc-td-prob num">{fmtPct(favProb)}</span>
+            <span role="cell" className="fc-td-prob num">{fmtPct(favProb, 1)}</span>
             <span role="cell"><RatingChip color={rt.color} cat={rt.cat} /></span>
             <span role="cell"><Spark pts={r.trend.map((t) => 100 - t.p * 100)} color={tone} /></span>
           </div>
@@ -1295,8 +1295,8 @@ function StageFlow({ race, env, sims }: {
   const complete = true;   // the desk runs all six stages; there is no shorter cut any more
   const s = race.est;
   const wMkt = complete && race.market ? race.wMkt : 0;
-  const pollShare = (race.pollAvg != null ? race.wPoll : 0) * (1 - wMkt) * 100;
-  const mktShare = wMkt * 100;
+  const pollShare = Math.round((race.pollAvg != null ? race.wPoll : 0) * (1 - wMkt) * 100);
+  const mktShare = Math.round(wMkt * 100);
   const fundShare = Math.max(0, 100 - pollShare - mktShare);
 
   const final = complete ? st.market : st.poll;
@@ -1312,12 +1312,12 @@ function StageFlow({ race, env, sims }: {
       cap: <>Presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, st.anchor)}</b>, from the last two presidential results with the candidate record priced in</>,
     },
     {
-      k: "the environment", v: st.fund, on: true, carry: pctPoints(fundShare),
+      k: "the environment", v: st.fund, on: true, carry: `${fundShare}%`,
       cap: <>A <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? `R+${Math.abs(env.npe).toFixed(1)}` : `D+${Math.abs(env.npe).toFixed(1)}`}</b> national
         environment lands through a {race.elast.toFixed(2)} elasticity · {race.open ? "open seat" : "incumbent running"}</>,
     },
     {
-      k: "the polls", v: st.poll, on: true, carry: pctPoints(pollShare),
+      k: "the polls", v: st.poll, on: true, carry: `${pollShare}%`,
       cap: race.pollAvg != null
         ? race.pollLevel === "lowess"
           ? <>{race.enop.toFixed(0)} polls project to an Election Day polling average of <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · LOWESS trend, every poll counted once{race.pollPsi != null ? <> · weighted average {fmtRaceMargin(race, race.pollPsi)}</> : null}</>
@@ -1340,10 +1340,10 @@ function StageFlow({ race, env, sims }: {
     },
     {
       k: "the market", v: st.market, on: complete,
-      carry: complete && mktShare ? pctPoints(mktShare) : undefined,
+      carry: complete && mktShare ? `${mktShare}%` : undefined,
       cap: complete
         ? race.market
-          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q))}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade and book blend</>
+          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q), 0)}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade and book blend</>
           : <>No usable order book, so the estimate passes through</>
         : null,
     },
@@ -1675,8 +1675,9 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
           <div className="fc-odds">
             <div className="fc-score">
               {(() => {
-                const dLab = probFraction(demProb);
-                const rLab = probFraction(1 - demProb);
+                const dpp = Math.round(demProb * 100);
+                const dLab = dpp > 99 ? ">99%" : dpp < 1 ? "<1%" : `${dpp}%`;
+                const rLab = dpp > 99 ? "<1%" : dpp < 1 ? ">99%" : `${100 - dpp}%`;
                 return [
                   { name: race.dem, party: "D", tone: sideColor(race, "dem"), prob: demProb, label: dLab, margin: -s.margin },
                   { name: race.gop, party: "R", tone: GOP, prob: s.prob, label: rLab, margin: s.margin },
@@ -1750,8 +1751,8 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
             {ti != null ? (
               <div className="fc-xhair" style={{ left: `${(ti / (demPts.length - 1)) * 100}%`, transform: ti / (demPts.length - 1) > 0.72 ? "translateX(calc(-100% - 10px))" : "translateX(10px)" }}>
                 <em>{dayLabel(updated, demPts.length, ti)}</em>
-                <span style={{ color: "var(--fc-dem)" }}>{surname(race.dem)} {probPoints(demPts[ti])}</span>
-                <span style={{ color: "var(--fc-gop)" }}>{surname(race.gop)} {probPoints(100 - demPts[ti])}</span>
+                <span style={{ color: "var(--fc-dem)" }}>{surname(race.dem)} {demPts[ti].toFixed(0)}%</span>
+                <span style={{ color: "var(--fc-gop)" }}>{surname(race.gop)} {(100 - demPts[ti]).toFixed(0)}%</span>
               </div>
             ) : null}
           </div>
@@ -1846,7 +1847,7 @@ const CSS = `
 .fc-card .card-h h3 { font-family: var(--font-d); font-weight: 700; letter-spacing: -.02em; }
 .fc-page .seg.fc-segc { flex-shrink: 0; }
 .fc-page .seg.sm button { padding: 5px 11px; font-size: 11.5px; }
-.fc-page .seg button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.fc-page .seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .fc-body { margin: 0; max-width: 70ch; font-size: 14px; line-height: 1.6; color: var(--ink2); }
 .fc-foot { margin: 22px 0 0; font-size: 12.5px; color: var(--mute); }
 .fc-foot a { color: var(--ink2); text-decoration: underline; text-underline-offset: 3px; }
@@ -1977,7 +1978,7 @@ const CSS = `
   width: 100%; text-align: left; padding: 14px 10px; background: none; border: 0; border-top: 1px solid rgba(var(--fc-line-rgb),0.08); cursor: pointer; transition: background .15s ease; font-family: inherit; color: inherit; }
 .fc-tr:last-of-type { border-bottom: 1px solid rgba(var(--fc-line-rgb),0.08); }
 .fc-tr:not(.fc-th):hover { background: var(--glass2); }
-.fc-tr:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+.fc-tr:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 .fc-td-name a { color: var(--hi); }
 .fc-td-name a:hover b { text-decoration: underline; text-underline-offset: 3px; }
 .fc-th { cursor: default; border-top: 0; padding-bottom: 8px; }
@@ -2127,7 +2128,7 @@ const CSS = `
 .fc-xt-tab.alt { letter-spacing: 0.14em; }
 .fc-xt-tab em { font-style: normal; font-size: 9.5px; font-weight: 700; color: rgba(var(--fc-ink-rgb),calc(0.42 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xt-tab.on em { color: rgba(var(--fc-bg-rgb),0.45); }
-.fc-xt-tab:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.fc-xt-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .fc-xt-panel { margin-top: 18px; }
 .fc-xt-one { padding: 6px 18px 10px; border: 1px solid rgba(var(--fc-line-rgb),0.08); border-radius: 14px; background: rgba(var(--fc-line-rgb),0.02); overflow-x: auto; }
 .fc-page .fc-xt-ph { margin: 0 0 6px; font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
@@ -2135,7 +2136,7 @@ const CSS = `
 table.fc-xt.lead-table { padding: 0; }
 table.fc-xt.lead-table tr.clickable { cursor: pointer; }
 table.fc-xt.lead-table tr.clickable:hover td { background: rgba(var(--fc-line-rgb),0.04); }
-table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 table.fc-xt td.pull { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 table.fc-xt.lead-table td.g { width: 26%; min-width: 150px; }
 table.fc-xt.lead-table td.sh, table.fc-xt.lead-table th.sh { text-align: left; padding-left: 22px; }
@@ -2207,6 +2208,7 @@ html.fc-black:not([data-theme="light"]) .opp.ambient .orbs { opacity: .22; }
   --glass: rgba(var(--line-rgb),.035); --glass2: rgba(var(--line-rgb),.06);
   --line: rgba(var(--line-rgb),.09); --line2: rgba(var(--line-rgb),.16);
   --ink: var(--ink); --ink2: var(--ink2); --mute: var(--mute); --mute2: var(--mute2); --hi: #ffffff;
+  --gold: #e7b341; --gold2: #bb831c;
   --dem: #3d7bff; --dem2: #7fa6ff; --dem3: #b9ccff;
   --gop: #ff3b5c; --gop2: #ff8399; --gop3: #ffbfcb;
   --ind: #b78cff; --toss: #e7b341; --win: #3ddc97;

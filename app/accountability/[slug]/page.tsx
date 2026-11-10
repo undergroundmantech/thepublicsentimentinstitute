@@ -1,4 +1,3 @@
-import { pctFraction } from "@/app/lib/fmtPct";
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import { notFound } from "next/navigation";
@@ -60,7 +59,7 @@ function detail(k: Part, m: Member) {
     const F = m.money;
     if (!F) missing = "No FEC campaign committee is on file for this member, so no campaign money can be read.";
     else {
-      big = F.pacShare == null ? "None" : pctFraction(F.pacShare);
+      big = F.pacShare == null ? "None" : `${Math.round(F.pacShare * 100)}%`;
       lines.push(`${money(F.pac)} from PACs and other committees of ${money(F.raised)} raised`);
       if (F.individual) lines.push(`${money(F.individual)} from individual donors`);
       lines.push(`${F.period.replace(/(\d)-(\d)/g, "$1 to $2").replace(/-/g, " ")}, filings through ${new Date(F.coverageThrough + "T12:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`);

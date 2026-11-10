@@ -170,3 +170,9 @@
   .p28-st .ln { font-size: 12px; }
   .p28-st .ln em { display: none; }
 }
+.p28-curve .hist { fill: none; stroke: var(--ink2); stroke-width: 2; stroke-linejoin: round; }
+.p28-curve .fc { stroke: var(--mute); stroke-width: 2; stroke-dasharray: 5 4; }
+.p28-curve .rng { stroke: var(--mute); stroke-width: 6; stroke-linecap: round; opacity: .35; }
+.p28-curve .pd { fill: var(--dem2); stroke: var(--bg); stroke-width: 1.5; }
+.p28-curve .pr { fill: var(--gop2); stroke: var(--bg); stroke-width: 1.5; }
+.p28-tbl tr.grp td { font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); padding-top: 14px; border-bottom: 1px solid var(--line); }

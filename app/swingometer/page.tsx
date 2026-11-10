@@ -39,7 +39,7 @@ export default function Page() {
           Every slider starts at the On Point forecast. Shift how any group votes or how many of them turn out, from low propensity Trump voters to college graduates, and all {n.s} Senate races,
           {" "}{n.g} governor races and {n.h} House races move with them, along with the vote counts and each party&apos;s chance to win the Senate, the House and the governorships.
         </p>
-        <div className="pmeta"><span>Forecast updated <b>{updated}</b></span><span>Days to the election <b className="mono">{d.daysOut}</b></span><span>Groups <b className="mono">{d.dims.reduce((a, x) => a + x.groups.length, 0)}</b></span></div>
+        <div className="pmeta"><span>Forecast updated <b>{updated}</b></span>{d.daysOut > 0 ? <span>Days to the election <b className="mono">{d.daysOut}</b></span> : <span>Final forecast <b>November 3</b></span>}<span>Groups <b className="mono">{d.dims.reduce((a, x) => a + x.groups.length, 0)}</b></span></div>
       </header>
 
       <SwingClient />

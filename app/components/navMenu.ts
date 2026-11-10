@@ -80,6 +80,12 @@ export const MENU: NavGroup[] = [
     ] },
   { key: "more", label: "More", href: "/news", more: true,
     cols: [
+      { h: "Analysis", href: "/analysis", links: [
+        { href: "/analysis", label: "All analysis" },
+        { href: "/analysis/2028-first-look", label: "2028: where it starts" },
+        { href: "/analysis/2026-forecast-review", label: "2026: right and wrong" },
+        { href: "/about", label: "About us" },
+      ] },
       { h: "News", href: "/news", links: [
         { href: "/news", label: "Front page" },
         { href: "/accountability", label: "Accountability Index" },
@@ -100,7 +106,7 @@ export const MENU: NavGroup[] = [
         { href: "/watchdog/people", label: "People files" },
       ] },
       { h: "Play", href: "/play", links: [
-        { href: "/play", label: "Campaign 2026", note: "Run a Senate or governor campaign" },
+        { href: "/play", label: "Campaign 2028", note: "Run for president, primaries to 270" },
       ] },
     ] },
 ];

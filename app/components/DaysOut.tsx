@@ -6,5 +6,6 @@ import { daysOut } from "@/app/lib/opp";
 export default function DaysOut({ initial, suffix = " DAYS OUT" }: { initial: number; suffix?: string }) {
   const [n, setN] = useState(initial);
   useEffect(() => { setN(daysOut()); }, []);
-  return <>{n}{suffix}</>;
+  // after Election Day the countdown would read zero forever, so it says what the page is instead
+  return n > 0 ? <>{n}{suffix}</> : <>final, frozen Nov 3</>;
 }

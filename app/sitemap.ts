@@ -16,6 +16,7 @@ import { bmHref, getMeasures } from "@/app/forecast/measures/data";
 import { ELECTION_DATES, RACE_REGISTRY } from "@/app/results/_data/raceRegistry";
 import { DEDICATED_BOARDS, RACE_PAGES } from "@/app/results/archive/nightBoards";
 import { STN as STATE_NAMES } from "@/app/results/2026/live";
+import { ARTICLES } from "@/app/analysis/lib";
 
 type Entry = MetadataRoute.Sitemap[number];
 const u = (path: string, lastModified: string | Date, changeFrequency: Entry["changeFrequency"], priority: number): Entry => ({
@@ -83,12 +84,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/on-point-polling/weighting-room", today, "monthly", 0.4),
     u("/on-point-polling/sms", today, "yearly", 0.2),
     u("/contact", today, "yearly", 0.3),
-    u("/terms", today, "yearly", 0.1),
+    u("/about", "2026-11-10", "monthly", 0.5),
+    u("/privacy", "2026-11-10", "yearly", 0.2),
+    u("/terms", "2026-11-10", "yearly", 0.1),
+    u("/analysis", today, "weekly", 0.9),
+    ...ARTICLES.map((a) => u(`/analysis/${a.slug}`, a.modified, "monthly", 0.8)),
+    u("/forecast/2028", today, "daily", 1),
   );
 
 
   // forecast pages: marquee races first, so the sitemap reads in order of interest
-  for (const r of model.races) out.push(u(raceHref(r.id), fc, "daily", r.office === "house" ? (r.marquee ? 0.8 : 0.6) : 0.9));
+  const quiet = (r: (typeof model.races)[number]) => r.office === "house" && !r.marquee && Math.abs((r as unknown as { est?: { margin?: number } }).est?.margin ?? 100) >= 15;
+  for (const r of model.races) if (!quiet(r)) out.push(u(raceHref(r.id), fc, "daily", r.office === "house" ? (r.marquee ? 0.8 : 0.6) : 0.9));
   for (const r of db.races) out.push(u(dbHref(r), db.meta.updated, "daily", 0.6));
   for (const c of sl.chambers) out.push(u(slHref(c), sl.meta.updated, "daily", 0.7));
   for (const m of ms.measures) out.push(u(bmHref(m), ms.meta.updated, "daily", 0.7));
@@ -113,7 +120,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const nov = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/results/2026/index.json"), "utf8")).races as { id: string; k: string; st: string }[];
     for (const st of [...new Set(nov.map((r) => r.st))]) { const n = STATE_NAMES[st]; if (n) add(u(`/results/2026/${n.toLowerCase().replace(/[^a-z]+/g, "-")}`, today, "hourly", 0.9)); }
-    for (const r of nov) if (["sen", "gov", "house", "state", "measure"].includes(r.k)) add(u(`/results/2026/${encodeURIComponent(r.id)}`, today, "daily", r.k === "sen" || r.k === "gov" ? 0.8 : 0.6));
   } catch { /* no results index on this build */ }
 
   return out;

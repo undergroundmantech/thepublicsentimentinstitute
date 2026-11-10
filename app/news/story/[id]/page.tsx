@@ -14,7 +14,7 @@ export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params; const s = getDesk().stories.find((x) => x.id === id);
-  return s ? { title: s.title, description: s.dek, alternates: { canonical: `/news/story/${s.id}` } } : {};
+  return s ? { title: s.title, description: s.dek, alternates: { canonical: `/news/story/${s.id}` }, robots: { index: false, follow: true }, } : {};
 }
 const fd = (iso: string) => new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
 

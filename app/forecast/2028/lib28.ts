@@ -7,6 +7,7 @@ export type Cand = [number, Record<string, number>, number?];
 export interface StateRow {
   m: number; p10: number; p90: number; pD: number; D: number; R: number; O: number; ev: number | null; tip: number;
   hist: number[]; reg: string | null; gen: number | null; mig: number | null; a24: number | null; a20: number | null;
+  ph?: Record<string, number> | null; lr?: number | null; rt?: number | null;
 }
 export interface PrimField {
   party: "D" | "R"; names: string[]; nomination: Record<string, number>; votes: Record<string, number>; full: Record<string, number>;
@@ -50,6 +51,7 @@ export interface StateFile {
   cds?: [string, number, number, number, number, number, string, string][];
   prim: Partial<Record<"dem" | "dem_noharris" | "gop" | "gop_novance", PrimState>>;
   gen: { gen_shift: number; mig_shift: number } | null;
+  elect28?: [string, number, number][] | null;
 }
 
 const P = (...p: string[]) => path.join(process.cwd(), "public", "forecast", ...p);
