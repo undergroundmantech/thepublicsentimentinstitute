@@ -178,17 +178,17 @@
   .opp.pg .y28-full .y28-screen:has(> .y28-hq) { overflow: hidden; }
   .opp.pg .y28-full .y28-hq { height: 100%; display: flex; flex-direction: column; }
   .opp.pg .y28-full .y28-hq > * { flex: 0 0 auto; }
-  .opp.pg .y28-full .y28-hq > .y28-main { flex: 1 1 auto; min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(360px, 34%); grid-template-rows: minmax(0, 1fr); align-items: stretch; padding-block: 10px; }
+  .opp.pg .y28-full .y28-hq > .y28-main { flex: 1 1 auto; min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(330px, 28%); grid-template-rows: minmax(0, 1fr); align-items: stretch; padding-block: 10px; }
   .opp.pg .y28-full .y28-mapcol { min-height: 0; overflow-y: auto; align-content: start; }
-  .opp.pg .y28-full .y28-mapcol .y28-map { width: min(100%, calc((100dvh - 390px) * 1.435)); margin-inline: auto; }
+  .opp.pg .y28-full .y28-mapcol .y28-map { width: min(100%, calc((100dvh - 320px) * var(--ar, 1.875))); margin-inline: auto; }
   .opp.pg .y28-full .y28-side { min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
   .opp.pg .y28-full .y28-side > * { flex: 0 0 auto; }
   .opp.pg .y28-full .y28-side > .y28-pane, .opp.pg .y28-full .y28-side > .y28-wire { flex: 1 1 0; min-height: 0; max-height: none; overflow-y: auto; }
   .opp.pg .y28-full .y28-side > .y28-end-bar { margin-top: auto; }
   .opp.pg .y28-full .y28-top { padding-block: 8px; }
   .opp.pg .y28-full .y28-night { height: 100%; grid-template-rows: auto auto minmax(0, 1fr) auto auto auto; }
-  .opp.pg .y28-full .y28-night .y28-map { width: min(100%, calc((100dvh - 360px) * 1.435)); justify-self: center; }
-  .opp.pg .y28-full .y28-result .y28-map { width: min(100%, calc((100dvh - 420px) * 1.435)); margin-inline: auto; }
+  .opp.pg .y28-full .y28-night .y28-map { width: min(100%, calc((100dvh - 300px) * var(--ar, 1.875))); justify-self: center; }
+  .opp.pg .y28-full .y28-result .y28-map { width: min(100%, calc((100dvh - 360px) * var(--ar, 1.875))); margin-inline: auto; }
 }
 .opp.pg .y28-full .px-gobar { position: sticky; bottom: 0; }
 
@@ -221,3 +221,11 @@
 .opp.pg .y28-titlewrap .px-title-cv { object-position: 50% 100%; }
 .opp.pg .y28-titlewrap .px-title-in { position: relative; max-width: 920px; padding: 18px 20px; background: rgba(11, 7, 22, .78); box-shadow: 0 0 0 3px #000, 0 0 0 6px var(--px-line); }
 @media (max-width: 640px) { .opp.pg .y28-foot > .px-k { display: none; } }
+
+/* getting in and out of full screen: a button on the title, the footer button, Esc, and the browser's own exit all agree */
+.opp.pg .y28-titlewrap { position: relative; }
+.opp.pg .y28-exitfs { position: absolute; top: 12px; right: 12px; z-index: 5; }
+.opp.pg .y28-fs.on { background: var(--px-hi); color: #1a1030; }
+.opp.pg .y28-app:fullscreen { width: 100%; height: 100%; }
+.opp.pg .y28-map { max-width: 100%; height: auto; }
+.opp.pg .y28-pane { align-content: start; }

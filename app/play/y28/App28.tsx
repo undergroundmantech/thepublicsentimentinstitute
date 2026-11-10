@@ -19,7 +19,6 @@ const MODES: { k: Mode; name: string; blurb: string }[] = [
   { k: "primary", name: "Primaries only", blurb: "Fight for the nomination state by state, from the first debates to the last delegates." },
   { k: "general", name: "General election", blurb: "Skip to the nominee. Pick your opponent, your running mate and ten weeks to 270." },
 ];
-const FULL_KEY = "opp_play28_windowed";
 
 function otherNominee(d: E.Data, p: E.Party, seed: number): { op: string; opVp: string | null } {
   const cs = d.cands[p].slice().sort((a, b) => b.nom - a.nom); const g = { rng: seed };
@@ -50,9 +49,18 @@ export default function App28({ idx }: { idx: PIndex }) {
 
   useEffect(() => { fetch("/play/2028.json").then((r) => r.json()).then((j: E.Data) => setD(j)).catch(() => setErr("The 2028 campaign data did not load. Refresh to try again.")); }, []);
   useEffect(() => {
-    const s = load28(); const w = (() => { try { return localStorage.getItem(FULL_KEY) === "1"; } catch { return false; } })();
+    const s = load28();
     // read once from this device after the page mounts
-    queueMicrotask(() => { if (s && s.v === 28) setSaved(s); if (w) setFull(false); setOwned(trophyCase()); });
+    queueMicrotask(() => { if (s && s.v === 28) setSaved(s); setOwned(trophyCase()); });
+  }, []);
+  // Leaving full screen any way the browser allows, the Esc key or its own exit control, also leaves the game's full
+  // screen frame, so the page and the game never disagree about which mode they are in.
+  const native = useRef(false);
+  useEffect(() => {
+    const onChange = () => { if (!document.fullscreenElement && native.current) { native.current = false; setFull(false); } };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && !document.fullscreenElement && !document.querySelector(".px-modal")) setFull(false); };
+    document.addEventListener("fullscreenchange", onChange); window.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("fullscreenchange", onChange); window.removeEventListener("keydown", onKey); };
   }, []);
   // full screen covers the site, so the page behind it should not scroll
   useEffect(() => {
@@ -63,11 +71,20 @@ export default function App28({ idx }: { idx: PIndex }) {
     if (x.phase === "over" && !x.trophies) { const t = d ? earned(d, x) : []; x.trophies = t; addTrophies(t); setOwned(trophyCase()); }
     setG(x); save28(x);
   }, [d]);
+  /** Into full screen: the game's frame covers the page, and the browser goes full screen too where it can. Phones
+   * that cannot full screen a page element, such as the iPhone, get the frame alone. Out of it: both undone. */
   const goFull = (on: boolean) => {
-    setFull(on); try { localStorage.setItem(FULL_KEY, on ? "0" : "1"); } catch { /* storage blocked */ }
-    try { if (on && root.current?.requestFullscreen && !document.fullscreenElement) root.current.requestFullscreen().catch(() => {}); else if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {}); } catch { /* not allowed */ }
+    setFull(on);
+    if (on) {
+      const el = root.current;
+      if (el?.requestFullscreen && !document.fullscreenElement) el.requestFullscreen().then(() => { native.current = true; }).catch(() => { native.current = false; });
+    } else {
+      native.current = false;
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    }
   };
-  const enter = () => { unlock(); if (full) { try { if (root.current?.requestFullscreen && !document.fullscreenElement) root.current.requestFullscreen().catch(() => {}); } catch { /* not allowed */ } } };
+  // starting or continuing a campaign always opens the game full screen
+  const enter = () => { unlock(); goFull(true); };
 
   const opP: E.Party = party === "D" ? "R" : "D";
   const mine = useMemo(() => (d ? d.cands[party].slice().sort((a, b) => b.nom - a.nom || b.field - a.field) : []), [d, party]);
@@ -76,7 +93,7 @@ export default function App28({ idx }: { idx: PIndex }) {
   const shell = (body: React.ReactNode, foot?: React.ReactNode) => (
     <div ref={root} className={cls("px-app y28-app", full && "y28-full")}>
       <div className="y28-screen">{body}</div>
-      <div className="y28-foot">{foot ?? <span className="px-k">Campaign 2028 · On Point Politics</span>}<button type="button" className="px-btn sm" onClick={() => goFull(!full)}>{full ? "Windowed" : "Full screen"}</button></div>
+      <div className="y28-foot">{foot ?? <span className="px-k">Campaign 2028 · On Point Politics</span>}<button type="button" className={cls("px-btn sm y28-fs", full && "on")} onClick={() => goFull(!full)}>{full ? "Exit full screen" : "Play full screen"}</button></div>
     </div>
   );
 
@@ -126,6 +143,7 @@ export default function App28({ idx }: { idx: PIndex }) {
   if (screen === "title") return shell(
     <div className="y28-titlewrap">
       <Title28 saved={saved ? label(saved) : null} onNew={() => { enter(); setScreen("setup"); }} onResume={() => { enter(); if (saved) { setG(saved); setScreen("game"); } }} onClassic={() => { goFull(false); setScreen("classic"); }} />
+      {full ? <button type="button" className="px-btn sm y28-exitfs" onClick={() => goFull(false)}>Exit full screen</button> : <button type="button" className="px-press y28-exitfs" onClick={() => goFull(true)}>Play full screen</button>}
       <div className="y28-asof"><span className="px-k">Model data as of {d.asOf} · Election Day {d.election}</span><span className="px-k">Trophies {owned.length} of {TROPHIES.length}</span></div>
     </div>,
   );
