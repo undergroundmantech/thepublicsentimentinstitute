@@ -6,10 +6,11 @@ import * as E from "./engine28";
 import { dealCard, partyName } from "./cards28";
 import TileMap28, { type Mark } from "./TileMap28";
 import { CardModal, CrisisModal, Debate28, FxCard } from "./Scenes28";
-import { DaysBar, DelBar, HorseRace, Ticker, FEMALE, type Game, pct, short, firstSentence } from "./ui28";
-import { Portrait, Roll, cls, sur } from "../px/ui";
+import { DaysBar, DelBar, HorseRace, Ticker, FEMALE, type Game, pct, short, firstSentence, Face28 } from "./ui28";
+import { Roll, cls, sur } from "../px/ui";
 import { seedOf } from "../px/sprites";
 import { sfx, music } from "../px/sound";
+import { onRecord, storyOf, recordOn, recallText } from "./story28";
 
 type Tab = "state" | "nat" | "field" | "wire";
 export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; commit: (x: Game) => void; onDone: (x: Game) => void }) {
@@ -43,7 +44,7 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
   };
   const answer = (i: number) => {
     const x = structuredClone(g); const c = x.P!.cards[x.P!.cards.length - 1]; const o = c.opts[i];
-    const r = E.primStance(d, x.P!, c.k, o.pos); x.P!.ans = x.P!.t;
+    const r = E.primStance(d, x.P!, c.k, o.pos); x.P!.ans = x.P!.t; onRecord(storyOf(x.P!), c.k, o.pos, o.say, 0, `the primary, ${c.title.toLowerCase()}`);
     x.log.push({ t: x.P!.t, kind: "you", s: `${c.title}: you said “${o.say}”`, fx: r.fx }); commit(x);
     setFx({ title: `${o.label}`, lines: [{ l: `${partyName(P.party)} primary voters`, v: r.fx }, { l: "Independents, remembered for November", v: r.gen }] });
     sfx(r.fx > 0 ? "good" : "bad");
@@ -62,9 +63,9 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
     const nx = x.P!.turns[x.P!.t]; if (nx?.states[0]) setSel(nx.states[0]);
     commit(x); setReport(items); sfx("whoosh");
   };
-  const finishDebate = (ans: { k: number; pos: number; mult: number }[]) => {
+  const finishDebate = (ans: { k: number; pos: number; mult: number; say?: string }[]) => {
     const x = structuredClone(g); let tot = 0, gen = 0;
-    for (const a of ans) { const r = E.primStance(d, x.P!, a.k, a.pos, a.mult); tot += r.fx + (a.mult - 1) * 0.04; gen += r.gen; x.P!.field[0].mom += (a.mult - 1) * 0.04 * (x.P!.mgr === "message" ? 1.25 : 1); if (a.mult >= 1.45) x.P!.perfect = (x.P!.perfect ?? 0) + 1; }
+    for (const a of ans) { if (a.say) onRecord(storyOf(x.P!), a.k, a.pos, a.say, 0, "a primary debate"); const r = E.primStance(d, x.P!, a.k, a.pos, a.mult); tot += r.fx + (a.mult - 1) * 0.04; gen += r.gen; x.P!.field[0].mom += (a.mult - 1) * 0.04 * (x.P!.mgr === "message" ? 1.25 : 1); if (a.mult >= 1.45) x.P!.perfect = (x.P!.perfect ?? 0) + 1; }
     // a rival has a moment too
     const riv = x.P!.field.filter((r) => r.alive && r.n !== me); const star = riv[Math.floor(E.rand(x) * riv.length)];
     if (star) { const k = E.gauss(x) * 0.05; star.mom += k; x.log.push({ t: x.P!.t, kind: "rival", s: `${star.n} ${k > 0 ? "had the night's viral moment" : "stumbled on a follow up"}.` }); }
@@ -81,7 +82,7 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
   return (
     <div className="y28-hq">
       <header className="y28-top">
-        <div className="who"><Portrait seed={seedOf(me)} role="cand" party={P.party} size={44} female={FEMALE.has(me)} talking /><div><b>{me}</b><span className="px-k">{partyName(P.party)} primary · turn {P.t + 1} of {P.turns.length} · {E.mgrOf(P).name}</span></div></div>
+        <div className="who"><Face28 seed={seedOf(me)} party={P.party} size={44} female={FEMALE.has(me)} talking /><div><b>{me}</b><span className="px-k">{partyName(P.party)} primary · turn {P.t + 1} of {P.turns.length} · {E.mgrOf(P).name}</span></div></div>
         <div className="kv"><span className="px-k">{T.date}</span><b>{T.label}</b></div>
         <div className="kv"><span className="px-k">Time</span><DaysBar n={P.days} /></div>
         <div className="kv"><span className="px-k">Cash</span><b className="gold"><Roll v={P.cash} fmt={E.usd} /></b></div>
@@ -112,6 +113,15 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
                   {[1e6, 3e6, 8e6].map((a) => <button key={a} type="button" className="px-btn" onClick={() => run((x) => E.primTV(d, x.P!, sel, a), sel)}><small>Ads</small>{E.usd(a)} of TV</button>)}
                 </div>
               )}
+              {(d.groups ?? []).length ? <>
+                <span className="px-k">Who votes in this primary</span>
+                <div className="y28-tblwrap"><table className="y28-tbl"><thead><tr><th>Group</th><th>Share of primary voters</th><th>Court</th></tr></thead><tbody>
+                  {(d.groups ?? []).filter((gr) => gr.fam !== "Vote history" && gr.k !== "mid" && gr.k !== "gx").map((gr) => { const sh = E.primGroupShare(d, P.party, gr.k, sel); return (
+                    <tr key={gr.k}><td>{gr.l}{P.gused?.[gr.k] ? <small> · {P.gused[gr.k]}x</small> : null}</td><td>{Math.round(sh * 100)}%</td><td><button type="button" className="px-btn sm" onClick={() => run((x) => E.primGroup(d, x.P!, gr.k, sel), sel)}>1 day</button></td></tr>
+                  ); })}
+                </tbody></table></div>
+                <p className="px-note y28-small">Courting a group helps most here and a little in every state where that group is a big part of the {P.party === "D" ? "Democratic" : "Republican"} primary vote.</p>
+              </> : null}
             </div>
           ) : null}
           {tab === "nat" ? (
@@ -152,9 +162,9 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
       </div>
       {toast ? <div key={toast.k} className={cls("px-toast", toast.ok ? "ok" : "no")} role="status" onAnimationEnd={() => setToast(null)}>{toast.t}</div> : null}
       {crisis && !fx && !report && !debate ? <CrisisModal c={crisis} me={me} party={P.party} onPick={answerCrisis} /> : null}
-      {curCard && !fx && !report && !debate ? <CardModal card={curCard} me={me} party={P.party} onPick={answer} /> : null}
+      {curCard && !fx && !report && !debate ? <CardModal card={curCard} me={me} party={P.party} onPick={answer} record={(() => { const r = recordOn(P, curCard.k); return r ? recallText(r) : null; })()} /> : null}
       {fx ? <FxCard title={fx.title} lines={fx.lines} onDone={() => setFx(null)} /> : null}
-      {debate ? <Debate28 me={me} op={P.field.filter((r) => r.alive && r.n !== me).sort((a, b) => b.del - a.del || (nat[b.n] ?? 0) - (nat[a.n] ?? 0))[0]?.n ?? me} party={P.party} opParty={P.party} title={`${partyName(P.party)} primary debate`} seed={g.seed + P.t * 31} onDone={finishDebate} /> : null}
+      {debate ? <Debate28 me={me} op={P.field.filter((r) => r.alive && r.n !== me).sort((a, b) => b.del - a.del || (nat[b.n] ?? 0) - (nat[a.n] ?? 0))[0]?.n ?? me} party={P.party} opParty={P.party} title={`${partyName(P.party)} primary debate`} seed={g.seed + P.t * 31} onDone={finishDebate} record={(k) => { const r = recordOn(P, k); return r ? recallText(r) : null; }} /> : null}
       {report ? (
         <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="y28-rep-h">
           <div className="px-card wide report">

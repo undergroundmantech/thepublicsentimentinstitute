@@ -3,13 +3,15 @@
 import React, { useEffect, useRef } from "react";
 import * as E from "./engine28";
 import { figure, paintGrid, seedOf } from "../px/sprites";
+import { portrait28, figure28 } from "./sprites28";
 import { cls } from "../px/ui";
 
 export type Mode = "primary" | "full" | "general";
-export type Phase = "primary" | "convention" | "vp" | "general" | "night" | "over";
+export type Phase = "primary" | "convention" | "vp" | "general" | "night" | "recount" | "hundred" | "over";
 export type Game = { v: 28; mode: Mode; phase: Phase; party: E.Party; me: string; diff: E.Diff; seed: number; rng: number; third: string | null; op?: string; opVp?: string | null;
-  P?: E.PrimS; Gn?: E.GenS; seen: string[]; log: E.LogItem[]; lost?: string; night?: E.NightRes; trophies?: string[]; mgr?: E.Mgr };
-const KEY = "opp_play28_v2";
+  P?: E.PrimS; Gn?: E.GenS; seen: string[]; log: E.LogItem[]; lost?: string; night?: E.NightRes; trophies?: string[]; mgr?: E.Mgr; len?: number; plong?: boolean;
+  scen?: string; hard?: boolean; iron?: boolean; daily?: number; legacy?: number; speech?: string; hund?: import("./more28").Hundred; logged?: boolean };
+const KEY = "opp_play28_v3";
 export function load28(): Game | null { try { const j = localStorage.getItem(KEY); return j ? (JSON.parse(j) as Game) : null; } catch { return null; } }
 export function save28(g: Game | null) { try { if (g) localStorage.setItem(KEY, JSON.stringify(g)); else localStorage.removeItem(KEY); } catch { /* storage blocked */ } }
 export const FEMALE = new Set(["Harris", "Ocasio-Cortez", "Whitmer", "Crockett", "Hinojosa", "Klobuchar", "Haley", "Huckabee Sanders", "Greene", "Noem", "Stefanik", "Candace Owens"]);
@@ -96,4 +98,29 @@ export function Ticker({ items }: { items: string[] }) {
   if (!items.length) return null;
   const line = items.map((s) => s.replace(/\s+/g, " ")).join("   ·   ");
   return <div className="y28-ticker" aria-label="Latest news"><b>Live</b><div className="crawl"><span>{line}   ·   {line}</span></div></div>;
+}
+
+/** The 2028 portrait: 40 by 40, shaded, blinking and talking. */
+export function Face28({ seed, party, size = 64, female, talking = false, role = "cand", className }: { seed: number; party: string; size?: number; female?: boolean; talking?: boolean; role?: "cand" | "staff" | "moderator"; className?: string }) {
+  const ref = useRef<HTMLCanvasElement>(null); const talk = useRef(talking);
+  useEffect(() => { talk.current = talking; }, [talking]);
+  useEffect(() => {
+    const cv = ref.current; if (!cv) return; const g = cv.getContext("2d")!;
+    const frames = [0, 1, 2].map((f) => portrait28(seed, party, f, female, role)); let raf = 0, last = -1;
+    const loop = (t: number) => { raf = requestAnimationFrame(loop); const blink = t % 3700 < 130; const mouth = talk.current && Math.floor(t / 120) % 2 === 1; const f = blink ? 2 : mouth ? 1 : 0; if (f === last) return; last = f; g.clearRect(0, 0, 40, 40); paintGrid(g, frames[f], 0, 0); };
+    raf = requestAnimationFrame(loop); return () => cancelAnimationFrame(raf);
+  }, [seed, party, female, role]);
+  return <canvas ref={ref} width={40} height={40} className={cls("px-portrait y28-face", className)} style={{ width: size, height: size }} aria-hidden="true" />;
+}
+/** The 2028 debate stage figure: 16 by 32. */
+export function Body28({ seed, party, female, talking = false, scale = 4, flip = false }: { seed: number; party: string; female?: boolean; talking?: boolean; scale?: number; flip?: boolean }) {
+  const ref = useRef<HTMLCanvasElement>(null); const talk = useRef(talking);
+  useEffect(() => { talk.current = talking; }, [talking]);
+  useEffect(() => {
+    const cv = ref.current; if (!cv) return; const g = cv.getContext("2d")!;
+    const fr = [figure28(seed, party, 0, female), figure28(seed, party, 1, female)]; let raf = 0, last = -1;
+    const loop = (t: number) => { raf = requestAnimationFrame(loop); const f = talk.current && Math.floor(t / 220) % 2 ? 1 : 0; if (f === last) return; last = f; g.clearRect(0, 0, 16, 32); paintGrid(g, fr[f], 0, 0, flip); };
+    raf = requestAnimationFrame(loop); return () => cancelAnimationFrame(raf);
+  }, [seed, party, female, flip]);
+  return <canvas ref={ref} width={16} height={32} className="px-fig" style={{ width: 16 * scale, height: 32 * scale }} aria-hidden="true" />;
 }

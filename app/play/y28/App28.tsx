@@ -2,14 +2,18 @@
 // Campaign 2028: the title, the setup, and the road from the first debate stage to election night, played full screen.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as E from "./engine28";
+import { LENGTHS } from "./deep28";
+import { newStory } from "./story28";
+import * as MO from "./more28";
+import { Recount28, Speech28, AfterCard, Hundred28, DailyBoard, saveDaily } from "./Extra28";
 import { partyName } from "./cards28";
 import Prim28 from "./Prim28";
 import Gen28 from "./Gen28";
 import { Title28, VPPick, Convention, Night28, Result28, Trophies } from "./Scenes28";
-import { FEMALE, type Game, type Mode, load28, save28, pct, short, firstSentence } from "./ui28";
+import { FEMALE, type Game, type Mode, load28, save28, pct, short, firstSentence, Face28 } from "./ui28";
 import { TROPHIES, earned, addTrophies, trophyCase } from "./trophies28";
 import PlayApp, { type PIndex } from "../PlayApp";
-import { Portrait, cls } from "../px/ui";
+import { cls } from "../px/ui";
 import { seedOf } from "../px/sprites";
 import { sfx, unlock } from "../px/sound";
 
@@ -46,6 +50,11 @@ export default function App28({ idx }: { idx: PIndex }) {
   const [third, setThird] = useState<string>("none");
   const [diff, setDiff] = useState<E.Diff>("lean");
   const [mgr, setMgr] = useState<E.Mgr>("data");
+  const [len, setLen] = useState(12);
+  const [plong, setPlong] = useState(true);
+  const [scen, setScen] = useState("model");
+  const [hard, setHard] = useState(false);
+  const [iron, setIron] = useState(false);
 
   useEffect(() => { fetch("/play/2028.json").then((r) => r.json()).then((j: E.Data) => setD(j)).catch(() => setErr("The 2028 campaign data did not load. Refresh to try again.")); }, []);
   useEffect(() => {
@@ -69,7 +78,10 @@ export default function App28({ idx }: { idx: PIndex }) {
   }, [full, screen]);
   const commit = useCallback((x: Game) => {
     if (x.phase === "over" && !x.trophies) { const t = d ? earned(d, x) : []; x.trophies = t; addTrophies(t); setOwned(trophyCase()); }
-    setG(x); save28(x);
+    if (x.phase === "over" && x.daily && x.night && !x.logged) { x.logged = true; saveDaily({ day: x.daily, me: x.me, ev: x.night.ev, win: x.night.win, pop: x.night.pop }); }
+    setG(x);
+    // ironman: a lost campaign is gone for good
+    if (x.iron && x.phase === "over" && x.night && !x.night.win) save28(null); else save28(x);
   }, [d]);
   /** Into full screen: the game's frame covers the page, and the browser goes full screen too where it can. Phones
    * that cannot full screen a page element, such as the iPhone, get the frame alone. Out of it: both undone. */
@@ -105,22 +117,35 @@ export default function App28({ idx }: { idx: PIndex }) {
   );
   if (!d) return shell(<div className="px-lobby"><p className="px-note">{err || "Loading the 2028 map…"}</p></div>);
 
+  /** The daily challenge: one race for everyone today, picked from the date. */
+  const daily = () => {
+    if (!d) return; sfx("fanfare"); const day = MO.dailySeed(); const G = { rng: day };
+    const p: E.Party = E.rand(G) < 0.5 ? "D" : "R"; const top = (q: E.Party) => d.cands[q].slice().sort((a, b) => b.nom - a.nom).slice(0, 4);
+    const meC = top(p)[Math.floor(E.rand(G) * 4)]; const o = otherNominee(d, p === "D" ? "R" : "D", day);
+    const base: Game = { v: 28, mode: "general", phase: "vp", party: p, me: meC.n, diff: "tossup", seed: day, rng: day ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: day, op: o.op, opVp: o.opVp };
+    commit(base); setScreen("game");
+  };
   const start = () => {
     if (!me) return; enter(); sfx("fanfare");
     const seed = (Date.now() % 1e9) | 0; const t = third === "none" ? null : third;
-    const base: Game = { v: 28, mode, phase: "primary", party, me, diff, seed, rng: seed ^ 0x2028, third: t, seen: [], log: [], mgr };
+    const base: Game = { v: 28, mode, phase: "primary", party, me, diff, seed, rng: seed ^ 0x2028, third: t, seen: [], log: [], mgr, len, plong, scen, hard, iron };
     if (mode === "general") {
       const o = op ?? theirs[0].n; base.op = o; base.opVp = theirs.find((c) => c.n !== o)?.n ?? null; base.phase = "vp";
     } else {
-      base.P = E.newPrimary(d, party, me, diff, seed); base.P.mgr = mgr;
+      base.P = E.newPrimary(d, party, me, diff, seed, plong); base.P.mgr = mgr;
       base.log.push({ t: 0, kind: "event", s: `${me} announces a run for the ${partyName(party)} nomination, with ${E.MGR[mgr].name.toLowerCase()} running the campaign.` });
     }
     commit(base); setScreen("game");
   };
   const toGeneral = (x: Game, vp: string | null) => {
-    const shifts = x.P?.shifts ?? {}; const cashAdd = x.P ? Math.max(0, x.P.cash) * 0.5 : 0;
+    const shifts = x.P?.shifts ?? {}; const cashAdd = x.P ? Math.min(80e6, Math.max(0, x.P.cash) * 0.35) : 0; // primary money carries over, up to a point
     if (!x.op) { const o = otherNominee(d, x.party === "D" ? "R" : "D", x.seed + 77); x.op = o.op; x.opVp = o.opVp; }
-    x.Gn = E.newGeneral(d, x.party, x.me, x.op!, vp, x.opVp ?? null, x.third, x.diff, x.seed + 5, shifts, cashAdd, x.mgr ?? "data");
+    x.Gn = E.newGeneral(d, x.party, x.me, x.op!, vp, x.opVp ?? null, x.third, x.diff, x.seed + 5, shifts, cashAdd, x.mgr ?? "data", x.len ?? 12);
+    // the starting map and hard mode
+    MO.moreOf(d, x.Gn).hard = !!x.hard; if (x.hard) { x.Gn.opCash *= 1.25; x.Gn.cash *= 0.85; }
+    if (x.scen && x.scen !== "model") { x.Gn.scen = MO.scenarioShift(d, x.Gn, x.scen); x.Gn.trend = [{ w: 0, ...E.snapshot(d, x.Gn) }]; x.Gn.lowP = x.Gn.trend[0].p; }
+    // what you said in the primary stays on the record in November
+    if (x.P?.story) x.Gn.story = { ...newStory(), said: x.P.story.said };
     x.phase = "general"; x.log = [{ t: 1, kind: "event", s: `The general election begins: ${x.me}${vp ? ` and ${vp}` : ""} against ${x.op}${x.opVp ? ` and ${x.opVp}` : ""}.` }];
     const promise = x.P?.vpPromise;
     if (promise && vp !== promise) { x.Gn.nat -= 0.4; x.Gn.enth[0] = Math.max(0, x.Gn.enth[0] - 3); x.log.push({ t: 1, kind: "bad", s: `${promise} says you broke your promise of the vice presidency, and their voters are not happy.`, fx: -0.4 }); }
@@ -142,7 +167,7 @@ export default function App28({ idx }: { idx: PIndex }) {
 
   if (screen === "title") return shell(
     <div className="y28-titlewrap">
-      <Title28 saved={saved ? label(saved) : null} onNew={() => { enter(); setScreen("setup"); }} onResume={() => { enter(); if (saved) { setG(saved); setScreen("game"); } }} onClassic={() => { goFull(false); setScreen("classic"); }} />
+      <Title28 extra={d ? <DailyBoard onPlay={() => { enter(); daily(); }} /> : null} saved={saved ? label(saved) : null} onNew={() => { enter(); setScreen("setup"); }} onResume={() => { enter(); if (saved) { setG(saved); setScreen("game"); } }} onClassic={() => { goFull(false); setScreen("classic"); }} />
       {full ? <button type="button" className="px-btn sm y28-exitfs" onClick={() => goFull(false)}>Exit full screen</button> : <button type="button" className="px-press y28-exitfs" onClick={() => goFull(true)}>Play full screen</button>}
       <div className="y28-asof"><span className="px-k">Model data as of {d.asOf} · Election Day {d.election}</span><span className="px-k">Trophies {owned.length} of {TROPHIES.length}</span></div>
     </div>,
@@ -163,7 +188,7 @@ export default function App28({ idx }: { idx: PIndex }) {
           <div className="px-sh"><span className="px-n">3</span><h2>Pick your candidate</h2><span className="px-k">Sorted by the On Point nomination odds</span></div>
           <div className="y28-cands">{mine.map((c) => (
             <button key={c.n} type="button" className={cls("y28-cand", me === c.n && "on")} aria-pressed={me === c.n} onClick={() => { setMe(c.n); sfx("card"); }} style={{ ["--cc" as string]: c.c } as React.CSSProperties}>
-              <Portrait seed={seedOf(c.n)} role="cand" party={party} size={64} female={FEMALE.has(c.n)} talking={me === c.n} />
+              <Face28 seed={seedOf(c.n)} party={party} size={64} female={FEMALE.has(c.n)} talking={me === c.n} />
               <b>{c.n}</b><small>{short(firstSentence(c.lane), 96)}</small>
               <span className="px-k">Nomination {c.nom >= 0.005 ? pct(c.nom) : "long shot"} · vs field {c.nat >= 0 ? "+" : ""}{c.nat.toFixed(1)}</span>
             </button>
@@ -171,7 +196,7 @@ export default function App28({ idx }: { idx: PIndex }) {
         </section>
         <section className="px-step">
           <div className="px-sh"><span className="px-n">4</span><h2>Hire a campaign manager</h2></div>
-          <div className="px-diffs y28-mgrs">{(Object.keys(E.MGR) as E.Mgr[]).map((k) => <button key={k} type="button" className={cls("px-diff", mgr === k && "on")} aria-pressed={mgr === k} onClick={() => { setMgr(k); sfx("click"); }}><Portrait seed={seedOf(`mgr2028${k}`)} role="staff" party={party} size={44} /><b>{E.MGR[k].name}</b><small>{E.MGR[k].blurb}</small></button>)}</div>
+          <div className="px-diffs y28-mgrs">{(Object.keys(E.MGR) as E.Mgr[]).map((k) => <button key={k} type="button" className={cls("px-diff", mgr === k && "on")} aria-pressed={mgr === k} onClick={() => { setMgr(k); sfx("click"); }}><Face28 seed={seedOf(`mgr2028${k}`)} role="staff" party={party} size={44} /><b>{E.MGR[k].name}</b><small>{E.MGR[k].blurb}</small></button>)}</div>
         </section>
         {mode === "general" ? (
           <section className="px-step">
@@ -187,8 +212,21 @@ export default function App28({ idx }: { idx: PIndex }) {
           </section>
         ) : null}
         <section className="px-step">
-          <div className="px-sh"><span className="px-n">{mode === "general" ? 7 : mode === "full" ? 6 : 5}</span><h2>The year</h2></div>
+          <div className="px-sh"><span className="px-n">{mode === "general" ? 7 : mode === "full" ? 6 : 5}</span><h2>How long a campaign</h2></div>
+          {mode !== "general" ? <div className="px-chips"><button type="button" className={plong ? "on" : ""} onClick={() => setPlong(true)}>Long primary, from summer 2027</button><button type="button" className={!plong ? "on" : ""} onClick={() => setPlong(false)}>Short primary, from fall 2027</button></div> : null}
+          {mode !== "primary" ? <div className="px-diffs len">{LENGTHS.map((l) => <button key={l.w} type="button" className={cls("px-diff", len === l.w && "on")} aria-pressed={len === l.w} onClick={() => { setLen(l.w); sfx("click"); }}><b>{l.name} · {l.w} weeks</b><small>{l.blurb}</small></button>)}</div> : null}
+        </section>
+        <section className="px-step">
+          <div className="px-sh"><span className="px-n">{mode === "general" ? 8 : mode === "full" ? 7 : 6}</span><h2>The year</h2></div>
           <div className="px-diffs">{(Object.keys(E.DIFF) as E.Diff[]).map((k) => <button key={k} type="button" className={cls("px-diff", diff === k && "on")} aria-pressed={diff === k} onClick={() => { setDiff(k); sfx("click"); }}><b>{E.DIFF[k].name}</b><small>{E.DIFF[k].blurb}</small></button>)}</div>
+        </section>
+        {mode !== "primary" ? <section className="px-step">
+          <div className="px-sh"><span className="px-n">{mode === "general" ? 9 : 8}</span><h2>The starting map</h2></div>
+          <div className="px-diffs">{MO.SCENARIOS.map((x) => <button key={x.k} type="button" className={cls("px-diff", scen === x.k && "on")} aria-pressed={scen === x.k} onClick={() => { setScen(x.k); sfx("click"); }}><b>{x.l}</b><small>{x.blurb}</small></button>)}</div>
+        </section> : null}
+        <section className="px-step">
+          <div className="px-sh"><span className="px-n">{mode === "general" ? 10 : mode === "full" ? 9 : 7}</span><h2>Challenge</h2></div>
+          <div className="px-chips"><button type="button" className={hard ? "on" : ""} aria-pressed={hard} onClick={() => setHard(!hard)}>Hard mode: a richer rival who answers everything</button><button type="button" className={iron ? "on" : ""} aria-pressed={iron} onClick={() => setIron(!iron)}>Ironman: lose and the save is gone</button></div>
         </section>
       </div>
       <div className="px-gobar"><span>{me ? <><b>{me}</b> for president · {E.MGR[mgr].name}</> : "Choose a candidate"}</span><div className="px-row"><button type="button" className="px-btn sm" onClick={() => setScreen("title")}>Back</button><button type="button" className="px-press" disabled={!me} onClick={start}>Launch the campaign</button></div></div>
@@ -199,15 +237,20 @@ export default function App28({ idx }: { idx: PIndex }) {
   if (!g) return null;
   const menu = () => { setScreen("title"); setSaved(load28()); };
   const again = () => { save28(null); setSaved(null); setG(null); setScreen("setup"); };
-  const foot = <><button type="button" className="px-btn sm" onClick={menu}>Save and quit</button><span className="px-k">{g.me} · {partyName(g.party)} · {E.DIFF[g.diff].name}</span></>;
+  const foot = <><button type="button" className="px-btn sm" onClick={menu}>Save and quit</button><span className="px-k">{g.me} · {partyName(g.party)} · {E.DIFF[g.diff].name}{g.daily ? " · daily challenge" : ""}{g.hard ? " · hard" : ""}{g.iron ? " · ironman" : ""}</span></>;
   return shell(
     <>
       {g.phase === "primary" && g.P ? <Prim28 d={d} g={g} commit={commit} onDone={primDone} /> : null}
       {g.phase === "convention" && g.P ? <Convention d={d} P={g.P} onDone={convDone} /> : null}
       {g.phase === "vp" ? <VPPick d={d} party={g.party} me={g.me} promised={g.P?.vpPromise} onPick={(vp) => { sfx("fanfare"); toGeneral(structuredClone(g), vp); }} /> : null}
       {g.phase === "general" && g.Gn ? <Gen28 d={d} g={g} commit={commit} onDone={(x) => { const y = structuredClone(x); y.phase = "night"; commit(y); }} /> : null}
-      {g.phase === "night" && g.Gn && g.night ? <Night28 d={d} s={g.Gn} res={g.night} onDone={() => { const y = structuredClone(g); y.phase = "over"; commit(y); }} /> : null}
-      {g.phase === "over" && g.Gn && g.night ? <Result28 d={d} s={g.Gn} res={g.night} trophies={g.trophies} start={{ p: g.Gn.trend[0]?.p ?? 0.5, ev: g.Gn.trend[0]?.ev ?? 269 }} onAgain={again} onMenu={menu} /> : null}
+      {g.phase === "night" && g.Gn && g.night ? <Night28 d={d} s={g.Gn} res={g.night} onDone={() => { const y = structuredClone(g); y.phase = MO.recountsFor(y.night!).length ? "recount" : "over"; commit(y); }} /> : null}
+      {g.phase === "recount" && g.Gn && g.night ? <Recount28 d={d} s={g.Gn} res={g.night} seed={g.seed + 270} onDone={(res, lg) => { const y = structuredClone(g); y.night = res; y.Gn!.result = res; y.legacy = (y.legacy ?? 0) + lg; y.phase = "over"; commit(y); }} /> : null}
+      {g.phase === "hundred" && g.Gn && g.night ? <Hundred28 d={d} s={g.Gn} res={g.night} seed={g.seed + 100} legacy={g.legacy ?? 0} onDone={(h) => { const y = structuredClone(g); y.hund = h; y.phase = "over"; commit(y); }} /> : null}
+      {g.phase === "over" && g.Gn && g.night ? <Result28 d={d} s={g.Gn} res={g.night} trophies={g.trophies} start={{ p: g.Gn.trend[0]?.p ?? 0.5, ev: g.Gn.trend[0]?.ev ?? 269 }} onAgain={again} onMenu={menu}
+        extra={<AfterCard d={d} s={g.Gn} res={g.night} legacy={g.legacy ?? 0} iron={g.iron} onGovern={g.night.win && !g.hund ? () => { const y = structuredClone(g); y.phase = "hundred"; commit(y); } : undefined} />} /> : null}
+      {g.phase === "over" && g.Gn && g.night && !g.speech ? <Speech28 s={g.Gn} res={g.night} onPick={(k, v) => { const y = structuredClone(g); y.speech = k; y.legacy = (y.legacy ?? 0) + v; commit(y); }} /> : null}
+      {g.phase === "over" && g.hund ? <div className="y28-hund-sum px-note">Your first hundred days: approval {g.hund.approval.toFixed(0)} percent, {g.hund.passed.length} of 3 priorities signed, 2030 House outlook {g.hund.midHouse >= 0 ? "+" : ""}{g.hund.midHouse} seats.</div> : null}
       {g.phase === "over" && !g.night ? (
         <div className="px-lobby y28-result">
           <section className="px-step">

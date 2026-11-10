@@ -5,6 +5,10 @@
 // Margins in the general are R minus D in the data; the engine turns them into points from the player's side.
 
 import { CRISES } from "./cards28";
+import { worldWeek, dueStory, storyOf, type Story, type Econ } from "./story28";
+import type { Meeting } from "./team28";
+import { moreWeek, weekStart, type More, type Recount } from "./more28";
+import { deepWeek, groupFx, groupStance, toGo, pollSd, payroll, bankOf, skewOf, earlyOf, type Grp, type Dma, type Staff, type Invite, type Closing } from "./deep28";
 
 export type Party = "D" | "R";
 export type Cand = { n: string; c: string; nat: number; home: Record<string, number>; hyp: number; lane: string; grp: Record<string, number>; nom: number; field: number;
@@ -14,7 +18,7 @@ export type St = { st: string; n: string; ev: number; m: number; sd: number; p24
 export type Third = { n: string; who: string; status: string; lane: string; core: string; quotes: string[]; pillars: string; attacks: string; reach: string; risks: string; share: number; rlean: number; dlean: number; home: Record<string, number>; pos: number[] | null };
 export type Issue = { k: string; l: string; d: number; r: number; i: number; cd: number; cr: number; ci: number };
 export type Prim = { total: number; cal: [string, number, number][]; shares: Record<string, Record<string, number>>; rule: string };
-export type Data = { asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
+export type Data = { groups?: Grp[]; dmas?: Dma[]; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; fund: number; opp: number; neg: number }> = {
   safe: { name: "Friendly year", blurb: "The wind at your back: two points better than the model, donors give more, rivals are slower.", start: 2, fund: 1.25, opp: 0.8, neg: 0.8 },
@@ -55,7 +59,8 @@ export type PrimS = {
   visits: Record<string, number>; offices: string[]; results: Record<string, { sh: Record<string, number>; del: Record<string, number>; win: string }>;
   shifts: Record<string, number>; // your stance moves on each issue from your record, carried into November
   endorsed: string[]; debates: number; done: boolean; nominee?: string; contested?: boolean; cards: Card[]; cardT: number; ans?: number; debW?: number;
-  mgr?: Mgr; vpPromise?: string; crisis?: Crisis | null; crisisT?: number; deals?: string[]; perfect?: number; early?: number;
+  mgr?: Mgr; gused?: Record<string, number>; vpPromise?: string; crisis?: Crisis | null; crisisT?: number; deals?: string[]; perfect?: number; early?: number;
+  story?: Story;
 };
 /** Who can endorse in each party's primary, and what the endorsement does. */
 export const ENDORSERS: Record<Party, { id: string; who: string; what: string; mom: number; st?: string[]; local?: number; cash?: number; lean?: string; hard: number }[]> = {
@@ -78,10 +83,23 @@ const PRIM_DATES: Record<Party, Record<string, string>> = {
   D: { SC: "Feb 3", NH: "Feb 10", NV: "Feb 17", MI: "Feb 27" },
   R: { IA: "Jan 17", NH: "Jan 25", NV: "Feb 8", SC: "Feb 22" },
 };
-export function primTurns(d: Data, p: Party): Turn[] {
+export function primTurns(d: Data, p: Party, long = false): Turn[] {
   const cal = d.primary[p].cal; const w = (k: number) => cal.filter((c) => c[1] === k).map((c) => c[0]);
   const early = w(1).sort((a, b) => Date.parse(`${PRIM_DATES[p][a] ?? "Mar 1"} 2028`) - Date.parse(`${PRIM_DATES[p][b] ?? "Mar 1"} 2028`));
   const w4 = w(4); const half = Math.ceil(w4.length / 2);
+  const w3 = w(3); const h3 = Math.ceil(w3.length / 2);
+  if (long) return [
+    { label: "The launch", date: "Summer 2027", states: [] },
+    { label: "The cattle calls", date: "Fall 2027", states: [], debate: true },
+    { label: "The money race", date: "December 2027", states: [] },
+    { label: "The final push", date: "January 2028", states: [], debate: true },
+    ...early.map((st) => ({ label: `${d.states.find((x) => x.st === st)?.n ?? st} ${p === "R" && st === "IA" ? "caucuses" : "primary"}`, date: PRIM_DATES[p][st] ?? "February", states: [st], debate: st === early[1] })),
+    { label: "Super Tuesday", date: "Mar 7", states: w(2), debate: false },
+    { label: "Mid March", date: "Mar 14", states: w3.slice(0, h3), debate: true },
+    { label: "Late March", date: "Mar 21 to 28", states: w3.slice(h3) },
+    { label: "April primaries", date: "April", states: w4.slice(0, half) },
+    { label: "The last primaries", date: "May and June", states: w4.slice(half) },
+  ];
   return [
     { label: "The invisible primary", date: "Fall 2027", states: [], debate: true },
     { label: "The final push", date: "January 2028", states: [], debate: true },
@@ -92,7 +110,7 @@ export function primTurns(d: Data, p: Party): Turn[] {
     { label: "The last primaries", date: "May and June", states: w4.slice(half) },
   ];
 }
-export function newPrimary(d: Data, p: Party, me: string, diff: Diff, seed: number): PrimS {
+export function newPrimary(d: Data, p: Party, me: string, diff: Diff, seed: number, long = false): PrimS {
   const g = { rng: seed };
   const cs = d.cands[p];
   const top = cs.filter((c) => c.n !== me).sort((a, b) => b.nom - a.nom || b.field - a.field).slice(0, 7).map((c) => c.n);
@@ -100,7 +118,7 @@ export function newPrimary(d: Data, p: Party, me: string, diff: Diff, seed: numb
   const meC = cs.find((c) => c.n === me)!;
   const startCash = (c: Cand) => 6e6 + 70e6 * Math.min(1, c.nom * 1.4) + 1.6e6 * c.field;
   const field: Rival[] = names.map((n) => { const c = cs.find((x) => x.n === n)!; return { n, alive: true, cash: startCash(c) * (n === me ? DIFF[diff].fund : 1 / DIFF[diff].opp), mom: n === me ? DIFF[diff].start * 0.04 : gauss(g) * 0.03, del: 0, wins: 0, endorse: [] }; });
-  const s: PrimS = { party: p, turns: primTurns(d, p), t: 0, days: DAYS, cash: field[0].cash, stamina: 100, buzz: 30 + Math.round(meC.field * 2), field, boost: {}, visits: {}, offices: [], results: {}, shifts: {}, endorsed: [], debates: 0, done: false, cards: [], cardT: -1 };
+  const s: PrimS = { party: p, turns: primTurns(d, p, long), t: 0, days: DAYS, cash: field[0].cash, stamina: 100, buzz: 30 + Math.round(meC.field * 2), field, boost: {}, visits: {}, offices: [], results: {}, shifts: {}, endorsed: [], debates: 0, done: false, cards: [], cardT: -1 };
   field[0].cash = 0; // the player's cash lives in s.cash
   return s;
 }
@@ -297,10 +315,19 @@ export type GenS = {
   week: number; weeks: number; days: number; cash: number; opCash: number; stamina: number; enth: [number, number];
   pers: number[]; ads: number[]; opAds: number[]; gotv: number[]; offices: string[]; visits: Record<string, number>; opVisits: string[];
   nat: number; bias: number; vpSt: string | null; prep: number; debates: { w: number; done: boolean; score?: number; kind: "pres" | "vp" }[];
-  polls: { w: number; st: string; m: number }[]; natPolls: { w: number; m: number }[]; segUsed: Record<string, number>; banked: number;
+  polls: { w: number; st: string; m: number; by?: string }[]; natPolls: { w: number; m: number }[]; segUsed: Record<string, number>; banked: number;
   cards: Card[]; cardW: number; done: boolean; result?: NightRes; shifts: Record<string, number>; trend: { w: number; m: number; ev: number; p: number }[]; ans?: number; debW?: number; emailW?: number; opN?: Record<string, number>;
   mgr?: Mgr; fog?: number[]; polledW?: Record<string, number>; oppo?: Hit[]; dug?: number; crisis?: Crisis | null; crisisW?: number; surprise?: boolean;
   pac?: [number, number]; perfect?: number; ralliesW?: number; lowP?: number; promise?: string;
+  // the deep campaign: groups, early votes, staff, field, air time, invitations, the betting line, the final weekend
+  gsup?: Record<string, number>; gturn?: Record<string, number>; opGsup?: Record<string, number>; opGturn?: Record<string, number>; gstate?: Record<string, number>; gused?: Record<string, number>;
+  bank?: number[]; bankM?: number[]; chase?: number[]; opChase?: number[]; ballots?: number; ballotsM?: number;
+  staff?: Staff; vol?: number; contacts?: number; reserved?: { w: number; dma: string; amt: number; tone: string }[];
+  invites?: Invite[]; invW?: number; met?: number; mkt?: { p: number; hist: number[] }; finalDone?: boolean; closing?: Closing; lawyers?: boolean;
+  // the story and the staff: what the campaign has said and done, the world's own calendar, and the weekly staff meeting
+  story?: Story; econ?: Econ; raised?: number; opRaised?: number; spent?: number; spentLast?: number; opFocus?: string[];
+  meeting?: Meeting | null; meetW?: number; metDept?: Record<string, number>;
+  mo?: More; scen?: number[];
 };
 export const nState = (d: Data) => d.states.length;
 export function candOf(d: Data, p: Party, n: string) { return d.cands[p].find((c) => c.n === n)!; }
@@ -321,14 +348,16 @@ export function thirdEffect(d: Data, t: string | null): number[] {
   const x = d.third.find((y) => y.n === t); if (!x) return d.states.map(() => 0);
   return d.states.map((s) => { const comp = Math.max(0.4, 1 - Math.abs(s.m) / 40); return -x.share * comp * (x.rlean - x.dlean) * 0.9; });
 }
-export function newGeneral(d: Data, p: Party, me: string, op: string, vp: string | null, opVp: string | null, third: string | null, diff: Diff, seed: number, shifts: Record<string, number> = {}, cashAdd = 0, mgr: Mgr = "data"): GenS {
-  const g = { rng: seed }; const n = nState(d);
-  const s: GenS = { party: p, me, op, vp, opVp, third, diff, week: 1, weeks: 10, days: DAYS, cash: 260e6 * DIFF[diff].fund + cashAdd, opCash: 260e6 / DIFF[diff].opp,
+export function newGeneral(d: Data, p: Party, me: string, op: string, vp: string | null, opVp: string | null, third: string | null, diff: Diff, seed: number, shifts: Record<string, number> = {}, cashAdd = 0, mgr: Mgr = "data", weeks = 12): GenS {
+  const g = { rng: seed }; const n = nState(d); const W = Math.max(8, Math.min(16, weeks));
+  const cashK = 0.55 + 0.45 * (W / 10); // a longer race means more to raise and more to spend
+  const s: GenS = { party: p, me, op, vp, opVp, third, diff, week: 1, weeks: W, days: DAYS, cash: 200e6 * cashK * DIFF[diff].fund + cashAdd, opCash: 200e6 * cashK / DIFF[diff].opp,
     stamina: 100, enth: [50, 50], pers: Array(n).fill(0), ads: Array(n).fill(0), opAds: Array(n).fill(0), gotv: Array(n).fill(0), offices: [], visits: {}, opVisits: [],
     nat: DIFF[diff].start, bias: Math.round(gauss(g) * 2.0 * 100) / 100, vpSt: null, prep: 0,
-    debates: [{ w: 3, done: false, kind: "pres" }, { w: 5, done: false, kind: "vp" }, { w: 7, done: false, kind: "pres" }],
+    debates: [{ w: W - 5, done: false, kind: "pres" }, { w: W - 3, done: false, kind: "vp" }, { w: W - 1, done: false, kind: "pres" }],
     polls: [], natPolls: [], segUsed: {}, banked: 0, cards: [], cardW: 0, done: false, shifts, trend: [],
-    mgr, fog: d.states.map(() => gauss(g) * 2.2), polledW: {}, oppo: [], pac: [0, 0], perfect: 0 };
+    mgr, fog: d.states.map(() => gauss(g) * 2.2), polledW: {}, oppo: [], pac: [0, 0], perfect: 0,
+    staff: { pollster: 0, media: false, field: false, digital: false, oppo: false }, vol: 15000, gsup: {}, gturn: {}, opGsup: {}, opGturn: {}, gstate: {}, reserved: [], invites: [] };
   // what the primary did to you with independents: every stance you moved, judged by independents and how much they care
   const meC = candOf(d, p, me); let gen = 0;
   d.issues.forEach((is, k) => { const sh = shifts[is.k]; if (!sh || !meC.pos) return; const a = meC.pos[k], b = a + sh; gen += STANCE_IND * is.ci * ((is.i - a) ** 2 - (is.i - b) ** 2); });
@@ -342,7 +371,8 @@ export function marginsRD(d: Data, s: GenS): number[] {
   const base = pairMargins(d, D, R), vD = vpEffect(d, "D", s.party === "D" ? s.vp : s.opVp), vR = vpEffect(d, "R", s.party === "R" ? s.vp : s.opVp), th = thirdEffect(d, s.third);
   const sg = sideSign(s.party);
   const en = ((s.enth[0] - 50) - (s.enth[1] - 50)) / 25; // points from enthusiasm, the player's way
-  return base.map((b, i) => b + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en));
+  const gf = groupFx(d, s);
+  return base.map((b, i) => b + (s.scen?.[i] ?? 0) + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en + gf[i]));
 }
 /** Player margins (positive is the player leading). */
 export const myMargins = (d: Data, s: GenS) => marginsRD(d, s).map((m) => sideSign(s.party) * m);
@@ -390,7 +420,7 @@ export const TONES: Record<Tone, { name: string; blurb: string; k: number; risk:
 export function genTV(d: Data, s: GenS, st: string, amt: number, tone: Tone = "contrast", G?: { rng: number }): Res {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
   const i = si(d, st); if (i < 0) return { ok: false, t: "Unknown state." };
-  const T = TONES[tone]; let k = 0.9 * Math.log(1 + amt / (d.states[i].votes * 1.6)) * (s.week >= 9 ? 1.15 : 1) * mgrOf(s).tv * T.k;
+  const T = TONES[tone]; let k = 0.9 * Math.log(1 + amt / (d.states[i].votes * 1.6)) * (toGo(s) <= 2 ? 1.15 : 1) * mgrOf(s).tv * T.k * (s.staff?.media ? 1.2 : 1);
   s.cash -= amt;
   const risk = T.risk * (s.mgr === "ads" ? 0.5 : 1);
   if (G && rand(G) < risk) { k = -0.35 * k; s.ads[i] += k; s.enth[1] = clamp(s.enth[1] + 0.8, 0, 100); return { ok: true, t: `The ${T.name.toLowerCase()} ad in ${d.states[i].n} backfired: local news called it misleading and ran it free for the other side.`, fx: k }; }
@@ -417,13 +447,13 @@ export function genSegment(d: Data, s: GenS, st: string, seg: number, amt: numbe
   const room = Math.max(0.05, (100 - turn) / 100);
   const lift = room * 0.32 * Math.log(1 + amt / (d.states[i].votes * (share / 100) * 1.2 + 1)) / (1 + 0.6 * used);
   const lean = (s.party === "D" ? dem : 100 - dem) / 100;
-  const fx = share * lift * (2 * lean - 1) * (s.week >= 7 ? 1.2 : 1) * (lean >= 0.5 ? mgrOf(s).field : 1);
+  const fx = share * lift * (2 * lean - 1) * (toGo(s) <= 4 ? 1.2 : 1) * (lean >= 0.5 ? mgrOf(s).field : 1);
   s.cash -= amt; s.gotv[i] += fx; s.segUsed[key] = used + 1;
   return { ok: true, t: `${usd(amt)} to turn out ${d.seg[seg]} voters in ${d.states[i].n}: they vote ${Math.round(lean * 100)} percent your way.${fx < 0 ? " That drive helped the other side." : ""}`, fx };
 }
 export function genFund(d: Data, s: GenS, kind: "call" | "dinner" | "email"): Res {
   const f = DIFF[s.diff].fund * mgrOf(s).fund;
-  if (kind === "email") { const amt = Math.round(9e6 * f * (0.6 + s.enth[0] / 100)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
+  if (kind === "email") { const amt = Math.round(9e6 * f * (0.6 + s.enth[0] / 100) * (s.staff?.digital ? 1.4 : 1)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
   const need = kind === "call" ? 1 : 2; if (s.days < need) return { ok: false, t: "No time left this week." };
   s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100);
   const amt = Math.round((kind === "call" ? 6e6 : 18e6) * f); s.cash += amt;
@@ -437,7 +467,7 @@ export function genMedia(d: Data, s: GenS, G: { rng: number }): Res {
 export function genRest(s: GenS): Res { if (s.days < 2) return { ok: false, t: "No time left this week." }; s.days -= 2; s.stamina = clamp(s.stamina + 30, 0, 100); return { ok: true, t: "A day off the trail." }; }
 export function genPrep(s: GenS): Res { if (s.days < 2) return { ok: false, t: "Debate prep takes a full day." }; s.days -= 2; s.prep += 1; return { ok: true, t: "Mock debate with a stand in for your opponent." }; }
 /** Take a stand in the general: independents weigh it by how much they care, your base by how far you strayed. */
-export function genStance(d: Data, s: GenS, k: number, pos: number, G: { rng: number }, mult = 1): { fx: number; base: number; flip: number } {
+export function genStance(d: Data, s: GenS, k: number, pos: number, G: { rng: number }, mult = 1): { fx: number; base: number; flip: number; groups: { g: string; v: number }[] } {
   const meC = candOf(d, s.party, s.me); const is = d.issues[k];
   const cur = (meC.pos?.[k] ?? (s.party === "D" ? is.d : is.r)) + (s.shifts[is.k] ?? 0);
   const ind = STANCE_IND * is.ci * ((is.i - cur) ** 2 - (is.i - pos) ** 2) * mult;
@@ -447,7 +477,8 @@ export function genStance(d: Data, s: GenS, k: number, pos: number, G: { rng: nu
   const raw = Math.max(-1.2, Math.min(1.0, ind + 0.25 * base + flip));
   const fx = raw * (1 + gauss(G) * 0.2) * (raw < 0 ? DIFF[s.diff].neg : 1);
   s.nat += fx; s.enth[0] = clamp(s.enth[0] + base * 8, 0, 100); s.shifts[is.k] = pos - (meC.pos?.[k] ?? cur);
-  return { fx, base, flip };
+  const groups = groupStance(d, s, k, cur, pos);
+  return { fx, base, flip, groups };
 }
 /** End the week: the rival campaigns, ads decay, polls land, early votes bank. */
 export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
@@ -462,9 +493,10 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
   for (const x of tgt.slice(0, 3)) { const st = d.states[x.i].st, v = s.opN[st] ?? 0; s.pers[x.i] -= sizeK(d.states[x.i]) * 0.5 * k * 0.8 / (1 + 0.5 * v); s.opN[st] = v + 1; }
   out.push({ t: s.week, kind: "rival", s: `${s.op} campaigned in ${s.opVisits.map((st) => nameOf(d, st)).join(", ")} and ran about ${usd(spend)} of ads.` });
   // the running mate works the trail
-  if (s.vp && s.vpSt) { const i = si(d, s.vpSt); s.pers[i] += sizeK(d.states[i]) * 0.3; out.push({ t: s.week, kind: "you", s: `${s.vp} worked ${d.states[i].n} all week.` }); }
+  if (s.vp && s.vpSt && (s.mo?.vpRole ?? "trail") === "trail") { const i = si(d, s.vpSt); s.pers[i] += sizeK(d.states[i]) * 0.3; out.push({ t: s.week, kind: "you", s: `${s.vp} worked ${d.states[i].n} all week.` }); }
   // field programs keep paying
   for (const st of s.offices) s.gotv[si(d, st)] += 0.06 * mgrOf(s).field;
+  moreWeek(d, s, G, out);
   // the super PACs: outside money you cannot direct, spent where the race is closest, at worse ad rates
   const pacMe = 16e6 * DIFF[s.diff].fund * (0.6 + s.enth[0] / 100), pacOp = 16e6 * k * (0.6 + s.enth[1] / 100);
   s.pac = [(s.pac?.[0] ?? 0) + pacMe, (s.pac?.[1] ?? 0) + pacOp];
@@ -478,26 +510,39 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
   const ms2 = myMargins(d, s); const nm = natMargin(d, ms2);
   // the polls see the race as the model does; the truth sits off by an error nobody sees until election night
   s.natPolls.push({ w: s.week, m: Math.round((nm + gauss(G) * 1.6) * 10) / 10 });
-  for (const x of order.slice(0, 5)) s.polls.push({ w: s.week, st: d.states[x.i].st, m: Math.round((ms2[x.i] + gauss(G) * 3) * 10) / 10 });
+  for (const x of order.slice(0, 6)) { const P = POLLSTERS[Math.floor(rand(G) * POLLSTERS.length)]; s.polls.push({ w: s.week, st: d.states[x.i].st, by: P.n, m: Math.round((ms2[x.i] + sideSign(s.party) * P.h + gauss(G) * P.sd) * 10) / 10 }); }
   out.push({ t: s.week, kind: "poll", s: `National polls: ${lead(s.natPolls[s.natPolls.length - 1].m)}.` });
-  if (s.week >= 7) s.banked = clamp(s.banked + 0.14, 0, 0.6);
+  deepWeek(d, s, G, out, order);
+  worldWeek(d, s, G, out);
+  { const tot = d.states.reduce((a, x) => a + (x.st.includes("-") ? 0 : x.votes), 0); s.banked = clamp((s.ballots ?? 0) / Math.max(1, tot), 0, 0.95); }
   // the campaign's read of each state drifts unless it keeps polling there
-  if (s.fog) s.fog = s.fog.map((f, i) => { const age = pollAge(s, d.states[i].st); const sd = age != null && age <= 1 ? 0.5 : Math.min(3.2, 1 + 0.35 * (age ?? 6)); return f * 0.55 + gauss(G) * sd * 0.8 * mgrOf(s).poll; });
+  if (s.fog) s.fog = s.fog.map((f, i) => { const age = pollAge(s, d.states[i].st); const sd = age != null && age <= 1 ? 0.5 : Math.min(3.2, 1 + 0.35 * (age ?? 6)); return f * 0.55 + gauss(G) * sd * 0.8 * mgrOf(s).poll * pollSd(s); });
   // scandals, attacks and the October surprise
   if (!s.crisis && s.week < s.weeks) {
-    if (s.week === 7 && !s.surprise) { s.surprise = true; s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, true); s.crisisW = s.week + 1; }
-    else if (rand(G) < 0.2) { s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true); s.crisisW = s.week + 1; }
+    // a scandal never repeats, and a donor scandal needs a big donor first
+    const F = storyOf(s).flags; const avoid = (id: string) => F[`crisis:${id}`] != null || (id === "donor" && !F.bigDonor);
+    if (toGo(s) === 4 && !s.surprise) { s.surprise = true; s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, true, avoid); s.crisisW = s.week + 1; }
+    else if (rand(G) < (s.mo?.hard ? 0.3 : 0.2) && !storyOf(s).queue.some((q) => q.w === s.week + 1)) { s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, false, avoid); s.crisisW = s.week + 1; }
   }
   s.week += 1; s.days = DAYS; s.stamina = clamp(s.stamina + 16, 0, 100);
+  s.spentLast = (s.spent ?? 0) + payroll(s); s.spent = 0; weekStart(d, s);
+  if (s.week <= s.weeks) dueStory(d, s, G);
   s.trend.push({ w: s.week - 1, ...snapshot(d, s) }); s.lowP = Math.min(s.lowP ?? 1, s.trend[s.trend.length - 1].p);
   if (s.week > s.weeks) s.done = true;
   return out;
 }
+/** The public pollsters, all fictional: a grade for accuracy and a house lean, R minus D, that shows up in every poll. */
+export const POLLSTERS: { n: string; g: string; h: number; sd: number }[] = [
+  { n: "Meridian Opinion", g: "A", h: 0, sd: 2.2 }, { n: "Lakeshore University Poll", g: "A", h: -0.6, sd: 2.4 }, { n: "Keystone Analytics", g: "A", h: 0.4, sd: 2.3 },
+  { n: "Granite Polling Group", g: "B", h: 0.8, sd: 3 }, { n: "Bluewater Research", g: "B", h: -1.5, sd: 3 }, { n: "Heartland Survey Company", g: "B", h: 1.2, sd: 3.1 },
+  { n: "Patriot Insights", g: "C", h: 2.6, sd: 4 }, { n: "Frontline Data", g: "C", h: -2.3, sd: 4 },
+];
+export const pollsterOf = (n?: string) => POLLSTERS.find((p) => p.n === n);
 export const lead = (m: number, me = "You", op = "Them") => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
 
 // ------------------------------------------------------------- election night
-export type Call = { st: string; i: number; at: number; m: number; ev: number; win: boolean; close: number };
-export type NightRes = { calls: Call[]; ev: number; opEv: number; pop: number; win: boolean; nat: number; events?: string[] };
+export type Call = { st: string; i: number; at: number; m: number; ev: number; win: boolean; close: number; early: number; em: number; dm: number };
+export type NightRes = { calls: Call[]; ev: number; opEv: number; pop: number; win: boolean; nat: number; events?: string[]; rc?: Recount[] };
 export function election(d: Data, s: GenS, seed: number): NightRes {
   const G = { rng: seed }; const ms = myMargins(d, s);
   const nat = gauss(G) * 2.2 + s.bias; const rg = [0, 1, 2, 3, 4].map(() => gauss(G) * 1.5);
@@ -509,10 +554,15 @@ export function election(d: Data, s: GenS, seed: number): NightRes {
   const lines = new Set(d.states.map((x, i) => ({ x, i })).filter(({ x, i }) => Math.abs(ms[i]) < 4 && !s.offices.includes(x.st) && !x.st.includes("-") && rand(G) < 0.18).map(({ x }) => x.st));
   for (const st of lines) events.push(`Hours long lines in ${nameOf(d, st)}, where you had no field program.`);
   const calls: Call[] = d.states.map((x, i) => {
-    const r = REGION[x.st.split("-")[0]] ?? 0; const wx = storm[r] * side * 0.7 * (1 - s.banked * 0.6) * (s.offices.includes(x.st) && side < 0 ? 0.5 : 1);
-    const m = ms[i] + nat * (1 - s.banked * 0.3) + rg[r] + gauss(G) * Math.max(1.2, x.sd * 0.4) + wx - (lines.has(x.st) ? 0.6 * lineK : 0);
+    const r = REGION[x.st.split("-")[0]] ?? 0; const b = bankOf(s, i); const cast = Math.min(0.95, b.cast); const rest = 1 - cast;
+    const err = nat + rg[r] + gauss(G) * Math.max(1.2, x.sd * 0.4);
+    const wx = storm[r] * side * 0.7 * (s.offices.includes(x.st) && side < 0 ? 0.5 : 1) - (lines.has(x.st) ? 0.6 * lineK * (s.lawyers ? 0.4 : 1) : 0);
+    // what is left to vote on Election Day leans the other way by as much as the early vote leaned toward Democrats
+    const sideD = s.party === "D" ? 1 : -1; const skewAdj = rest > 0 ? skewOf(x.st) * sideD * Math.min(cast, 0.9) / rest * 0.9 : 0;
+    const dm = ms[i] + err - skewAdj + wx; const em = cast > 0 ? b.m + err : ms[i] + err + skewOf(x.st) * sideD;
+    const m = cast > 0 ? cast * em + rest * dm : ms[i] + err + wx;
     const close = Math.abs(m); const delay = close < 1 ? 5 + rand(G) * 6 : close < 3 ? 1.5 + rand(G) * 3 : close < 6 ? 0.4 + rand(G) * 1 : rand(G) * 0.1;
-    return { st: x.st, i, at: x.close + delay, m, ev: x.ev, win: m > 0, close };
+    return { st: x.st, i, at: x.close + delay, m, ev: x.ev, win: m > 0, close, early: cast > 0 ? cast : Math.min(0.95, earlyOf(x.st)), em, dm };
   }).sort((a, b) => a.at - b.at);
   const ev = calls.filter((c) => c.win).reduce((a, c) => a + c.ev, 0);
   const pop = natMargin(d, calls.slice().sort((a, b) => a.i - b.i).map((c) => c.m));
@@ -558,8 +608,9 @@ export function primDeal(d: Data, s: PrimS, n: string, offer: "cabinet" | "vp", 
   return { ok: true, t: `${n} said no and the meeting leaked. About a ${Math.round(p * 100)} percent shot. A small hit to your momentum.` };
 }
 /** A scandal or attack from the list, written for this race. */
-export function dealCrisis(d: Data, p: Party, me: string, op: string, vp: string | null, G: { rng: number }, general: boolean, surprise = false): Crisis {
-  const pool = CRISES.filter((c) => (general || !c.genOnly) && (vp || !c.vp) && (!surprise || c.big));
+export function dealCrisis(d: Data, p: Party, me: string, op: string, vp: string | null, G: { rng: number }, general: boolean, surprise = false, avoid?: (id: string) => boolean): Crisis {
+  const all = CRISES.filter((c) => (general || !c.genOnly) && (vp || !c.vp) && (!surprise || c.big));
+  const fresh = all.filter((c) => !avoid?.(c.id)); const pool = fresh.length ? fresh : all;
   const c = pool[Math.floor(rand(G) * pool.length)];
   const meC = candOf(d, p, me); let k = 0, worst = -1;
   d.issues.forEach((is, i) => { const v = Math.abs((meC?.pos?.[i] ?? 0) - is.i) * is.ci; if (v > worst) { worst = v; k = i; } });
@@ -581,11 +632,11 @@ export function genDig(d: Data, s: GenS, G: { rng: number }): Res {
   s.days -= 2; s.cash -= 3e6; s.dug = (s.dug ?? 0) + 1;
   const opP: Party = s.party === "D" ? "R" : "D"; const opC = candOf(d, opP, s.op); const have = new Set((s.oppo ?? []).map((h) => h.t));
   const cand = d.issues.map((is, i) => ({ is, v: Math.abs((opC?.pos?.[i] ?? (opP === "D" ? is.d : is.r)) - is.i) * is.ci * (1 + (opC?.emph?.[i] ?? 0) * 0.3) })).sort((a, b) => b.v - a.v);
-  const odds = 0.55 / (1 + 0.25 * (s.dug - 1));
+  const odds = (s.staff?.oppo ? 0.75 : 0.55) / (1 + 0.25 * (s.dug - 1));
   if (rand(G) > odds) return { ok: true, t: `The researchers came back empty this time. About a ${Math.round(odds * 100)} percent shot.` };
   const pick = cand.find((x) => ![...have].some((t) => t.includes(x.is.l.toLowerCase()))) ?? cand[0];
   const t = HIT_T[Math.floor(rand(G) * HIT_T.length)](s.op, pick.is.l.toLowerCase());
-  const h: Hit = { t, power: clamp(0.35 + pick.v * 4, 0.35, 1.3), solid: 0.5 + rand(G) * 0.45 };
+  const h: Hit = { t, power: clamp(0.35 + pick.v * 4, 0.35, 1.3), solid: Math.min(0.97, 0.5 + rand(G) * 0.45 + (s.staff?.oppo ? 0.12 : 0)) };
   s.oppo = [...(s.oppo ?? []), h];
   return { ok: true, t: `Found something: ${t}. Hold it or use it; it hits harder in the last three weeks.` };
 }
@@ -597,7 +648,7 @@ const HIT_T = [
 export function genDrop(d: Data, s: GenS, i: number, G: { rng: number }): Res {
   const h = s.oppo?.[i]; if (!h || h.used) return { ok: false, t: "Already used." };
   if (s.cash < 2e6) return { ok: false, t: "Placing a story and an ad behind it costs $2M." };
-  s.cash -= 2e6; h.used = true; const late = s.week >= 8 ? 1.4 : 1;
+  s.cash -= 2e6; h.used = true; const late = toGo(s) <= 3 ? 1.4 : 1;
   if (rand(G) < h.solid) { h.hit = true; const fx = h.power * late * (0.8 + rand(G) * 0.4); s.nat += fx; s.enth[1] = clamp(s.enth[1] - 1.5, 0, 100); return { ok: true, t: `The story runs everywhere: ${h.t}.`, fx }; }
   const fx = -0.45 * h.power; s.nat += fx; s.enth[1] = clamp(s.enth[1] + 1.5, 0, 100);
   return { ok: true, t: `Fact checkers took the hit apart and ${s.op}'s side rallied. It backfired.`, fx };
@@ -613,3 +664,26 @@ export function genPoll(d: Data, s: GenS, st: string, G: { rng: number }): Res {
 /** What the campaign believes: the true margins plus the error in its read of each state. */
 export const readMargins = (d: Data, s: GenS) => myMargins(d, s).map((m, i) => m + (s.fog?.[i] ?? 0));
 export const pollAge = (s: GenS, st: string) => (s.polledW?.[st] == null ? null : s.week - s.polledW[st]);
+
+// ============================================================= the primary coalition
+/** A group's share of a party's primary electorate in a state: its share of the state's voters, weighted by how much of it
+ * votes with that party. */
+export function primGroupShare(d: Data, p: Party, gk: string, st: string) {
+  const G = d.groups ?? []; const race = ["black_w", "black_m", "hisp_w", "hisp_m", "asian", "wnc_w", "wnc_m", "wcol_w", "wcol_m"];
+  const at = (g: Grp) => g.st[st] ?? g.us; const w = (g: Grp) => at(g)[0] * (p === "D" ? at(g)[1] : 100 - at(g)[1]) / 100;
+  const g = G.find((x) => x.k === gk); if (!g) return 0;
+  const pool = race.includes(gk) ? G.filter((x) => race.includes(x.k)) : [g, ...G.filter((x) => race.includes(x.k))];
+  const tot = race.includes(gk) ? pool.reduce((a, x) => a + w(x), 0) : G.filter((x) => race.includes(x.k)).reduce((a, x) => a + w(x), 0);
+  return Math.min(0.9, w(g) / Math.max(1, tot));
+}
+/** Court a group in the primary: a strong boost in the state you go to and a smaller one wherever the group is big. */
+export function primGroup(d: Data, s: PrimS, gk: string, st: string): Res {
+  if (s.days < 2) return { ok: false, t: "Outreach takes a full day." };
+  if (s.cash < 120e3) return { ok: false, t: "Not enough cash." };
+  const g = (d.groups ?? []).find((x) => x.k === gk); if (!g) return { ok: false, t: "Unknown group." };
+  const n = s.gused?.[gk] ?? 0;
+  s.days -= 2; s.cash -= 120e3; s.gused = { ...(s.gused ?? {}), [gk]: n + 1 }; s.visits[st] = (s.visits[st] ?? 0) + 1; s.stamina = clamp(s.stamina - 8, 0, 100);
+  const k = 0.5 / (1 + 0.4 * n);
+  for (const x of Object.keys(d.primary[s.party].shares)) { const sh = primGroupShare(d, s.party, gk, x); addBoost(s, x, me0(s), k * sh * (x === st ? 1 : 0.18)); }
+  return { ok: true, t: `Courting ${g.l.toLowerCase()} in ${nameOf(d, st)}. They are about ${Math.round(primGroupShare(d, s.party, gk, st) * 100)} percent of the ${s.party === "D" ? "Democratic" : "Republican"} primary vote there.`, fx: k };
+}

@@ -3,16 +3,17 @@
 // election night and the morning after.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as E from "./engine28";
+import * as X2 from "./deep28";
 import { DEBATE_Q, debateLines } from "./cards28";
 import { TROPHIES } from "./trophies28";
 import TileMap28, { shade } from "./TileMap28";
-import { FEMALE, pct, short, firstSentence } from "./ui28";
-import { Portrait, Figure, Type, Roll, cls, sur } from "../px/ui";
+import { FEMALE, pct, short, firstSentence, Face28, Body28 } from "./ui28";
+import { Type, Roll, cls, sur } from "../px/ui";
 import { seedOf } from "../px/sprites";
 import { sfx, music } from "../px/sound";
 
 // ============================================================ title
-export function Title28({ onNew, onResume, saved, onClassic }: { onNew: () => void; onResume: () => void; saved: string | null; onClassic: () => void }) {
+export function Title28({ onNew, onResume, saved, onClassic, extra }: { onNew: () => void; onResume: () => void; saved: string | null; onClassic: () => void; extra?: React.ReactNode }) {
   const cv = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const g = cv.current?.getContext("2d"); if (!g) return; const W = 240, H = 110; let raf = 0, lt = 0;
@@ -52,10 +53,11 @@ export function Title28({ onNew, onResume, saved, onClassic }: { onNew: () => vo
           <button type="button" className="px-press blink" onClick={() => { sfx("coin"); onNew(); }}>New campaign</button>
           {saved ? <button type="button" className="px-press ghost" onClick={() => { sfx("click"); onResume(); }}>Continue: {saved}</button> : null}
         </div>
+        {extra}
         <ul className="px-feat" aria-label="What is new">
           <li>Primaries and delegates</li><li>Dropout deals</li><li>Contested convention</li><li>Running mates</li><li>Campaign managers</li><li>Scandals and the October surprise</li>
           <li>Opposition research</li><li>Ad tone and backfires</li><li>Internal polls and fog of war</li><li>Super PACs</li><li>Turnout drives by vote history</li><li>Third party spoilers</li>
-          <li>Debate timing meter</li><li>Election Day weather</li><li>Election night calls</li><li>Trophies</li>
+          <li>Debate timing meter</li><li>Election Day weather</li><li>Election night calls</li><li>Monday staff meetings</li><li>Twenty voter groups</li><li>A record that comes back</li><li>Debate negotiations</li><li>Graded pollsters</li><li>Jobs reports and FEC filings</li><li>Trophies</li>
         </ul>
         <button type="button" className="px-btn sm y28-classic" onClick={() => { sfx("click"); onClassic(); }}>Play the 2026 midterm edition</button>
       </div>
@@ -64,14 +66,15 @@ export function Title28({ onNew, onResume, saved, onClassic }: { onNew: () => vo
 }
 
 // ============================================================ an issue moment
-export function CardModal({ card, me, party, onPick }: { card: E.Card; me: string; party: E.Party; onPick: (i: number) => void }) {
+export function CardModal({ card, me, party, onPick, record }: { card: E.Card; me: string; party: E.Party; onPick: (i: number) => void; record?: string | null }) {
   useEffect(() => { sfx("alarm"); }, []);
   useEffect(() => { const h = (e: KeyboardEvent) => { const k = Number(e.key) - 1; if (k >= 0 && k < card.opts.length) { e.preventDefault(); onPick(k); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); });
   return (
     <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="y28-card-h">
       <div className="px-card ev y28-ev">
-        <div className="px-row"><Portrait seed={seedOf(me)} role="cand" party={party} size={56} female={FEMALE.has(me)} talking /><div><span className="px-tag hot">Breaking</span><h3 id="y28-card-h">{card.title}</h3></div></div>
+        <div className="px-row"><Face28 seed={seedOf(me)} party={party} size={56} female={FEMALE.has(me)} talking /><div><span className="px-tag hot">Breaking</span><h3 id="y28-card-h">{card.title}</h3></div></div>
         <p><Type text={card.prompt} speed={12} /></p>
+        {record ? <p className="y28-recall">{record} Say something different now and it becomes an ad.</p> : null}
         <div className="y28-opts">{card.opts.map((o, i) => (
           <button key={o.label} type="button" className="px-btn" onClick={() => { sfx("card"); onPick(i); }}>
             <small>{i + 1} · {o.label}</small><span>“{o.say}”</span>
@@ -89,7 +92,7 @@ export function CrisisModal({ c, me, party, onPick }: { c: E.Crisis; me: string;
   return (
     <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="y28-cr-h">
       <div className="px-card ev y28-ev y28-crisis">
-        <div className="px-row"><Portrait seed={seedOf(me)} role="cand" party={party} size={56} female={FEMALE.has(me)} /><div><span className="px-tag hot">{c.sev > 1.3 ? "October surprise" : "Crisis"}</span><h3 id="y28-cr-h">{c.title}</h3></div></div>
+        <div className="px-row"><Face28 seed={seedOf(me)} party={party} size={56} female={FEMALE.has(me)} /><div><span className="px-tag hot">{c.sev > 1.3 ? "October surprise" : "Crisis"}</span><h3 id="y28-cr-h">{c.title}</h3></div></div>
         <p><Type text={c.prompt} speed={12} /></p>
         <div className="y28-opts">{c.opts.map((o, i) => (
           <button key={o.label} type="button" className="px-btn" onClick={() => { sfx("card"); onPick(i); }}>
@@ -115,12 +118,22 @@ export function FxCard({ title, lines, onDone }: { title: string; lines: { l: st
 
 // ============================================================ the debate stage
 type DQ = { k: number; q: string; lines: { label: string; pos: number }[] };
-export function Debate28({ me, op, party, opParty, title, n = 3, seed, onDone }: { me: string; op: string; party: E.Party; opParty: E.Party; title: string; n?: number; seed: number; onDone: (answers: { k: number; pos: number; mult: number }[]) => void }) {
+export function Debate28({ me, op, party, opParty, title, n = 3, seed, onDone, record }: { me: string; op: string; party: E.Party; opParty: E.Party; title: string; n?: number; seed: number; onDone: (answers: { k: number; pos: number; mult: number; say?: string }[]) => void; record?: (k: number) => string | null }) {
   const qs: DQ[] = useMemo(() => { const g = { rng: seed }; const pool = DEBATE_Q.slice(); const out: DQ[] = []; while (out.length < n && pool.length) { const i = Math.floor(E.rand(g) * pool.length); const x = pool.splice(i, 1)[0]; out.push({ ...x, lines: debateLines(x.k) }); } return out; }, [seed, n]);
-  const [i, setI] = useState(0); const [pick, setPick] = useState<number | null>(null); const [ans, setAns] = useState<{ k: number; pos: number; mult: number }[]>([]);
+  const [i, setI] = useState(0); const [pick, setPick] = useState<number | null>(null); const [ans, setAns] = useState<{ k: number; pos: number; mult: number; say?: string }[]>([]);
   const [meter, setMeter] = useState(0); const [stopped, setStopped] = useState<number | null>(null); const raf = useRef(0); const t0 = useRef(0);
   const [dial, setDial] = useState(50);
+  const [reb, setReb] = useState<string | null>(null);
   useEffect(() => { music("debate"); return () => music("trail"); }, []);
+  const HITS = useMemo(() => [`${sur(op)} cuts in: "That is not what you said two years ago."`, `${sur(op)}: "Every family watching knows that plan costs them more."`, `${sur(op)} smirks: "Nice speech. Who wrote it?"`, `${sur(op)}: "You had your chance and you did nothing."`, `${sur(op)} interrupts: "The facts say otherwise, and you know it."`], [op]);
+  /** Answer the rebuttal: a counter with facts is safe, a zinger can win the night or lose it, staying calm steadies the room. */
+  const rebut = (kind: "counter" | "zinger" | "calm") => {
+    const g = { rng: seed + i * 77 + (kind === "zinger" ? 5 : 0) }; let bonus = kind === "counter" ? 0.1 : kind === "calm" ? 0.05 : E.rand(g) < 0.55 ? 0.35 : -0.25;
+    if (kind === "calm" && stopped != null && Math.abs(stopped - 0.5) > 0.3) bonus += 0.1; // calm rescues a flubbed answer
+    setAns((a) => a.map((x, k) => (k === a.length - 1 ? { ...x, mult: x.mult + bonus } : x)));
+    setDial((v) => Math.max(5, Math.min(95, v + bonus * 25))); sfx(bonus > 0.2 ? "crowd" : bonus < 0 ? "boo" : "good");
+    setReb(kind === "zinger" ? (bonus > 0 ? "The zinger lands. The crowd roars." : "The zinger falls flat.") : kind === "counter" ? "A clean counter with the facts." : "You stay calm and above it.");
+  };
   useEffect(() => {
     if (pick == null || stopped != null) return; t0.current = performance.now();
     const step = (t: number) => { const x = ((t - t0.current) / 900) % 2; setMeter(x < 1 ? x : 2 - x); raf.current = requestAnimationFrame(step); };
@@ -131,30 +144,34 @@ export function Debate28({ me, op, party, opParty, title, n = 3, seed, onDone }:
     const off = Math.abs(meter - 0.5); const mult = off < 0.06 ? 1.45 : off < 0.16 ? 1.15 : off < 0.3 ? 0.85 : 0.55;
     sfx(mult >= 1.15 ? "crowd" : mult < 0.7 ? "boo" : "good");
     setDial((v) => Math.max(5, Math.min(95, v + (mult - 0.9) * 18)));
-    setAns((a) => [...a, { k: qs[i].k, pos: qs[i].lines[pick].pos, mult }]);
+    setAns((a) => [...a, { k: qs[i].k, pos: qs[i].lines[pick].pos, mult, say: qs[i].lines[pick].label }]);
   };
   useEffect(() => { const h = (e: KeyboardEvent) => { if (e.code === "Space" && pick != null && stopped == null) { e.preventDefault(); deliver(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); });
-  const next = () => { if (i + 1 >= qs.length) { onDone(ans); return; } setI(i + 1); setPick(null); setStopped(null); setMeter(0); };
+  const next = () => { if (i + 1 >= qs.length) { onDone(ans); return; } setI(i + 1); setPick(null); setStopped(null); setMeter(0); setReb(null); };
   const q = qs[i]; const grade = stopped == null ? null : Math.abs(stopped - 0.5) < 0.06 ? "Perfect delivery" : Math.abs(stopped - 0.5) < 0.16 ? "Strong" : Math.abs(stopped - 0.5) < 0.3 ? "Shaky" : "Flubbed it";
   return (
     <div className="px-modal" role="dialog" aria-modal="true" aria-labelledby="y28-deb-h">
       <div className="px-card wide y28-debate">
         <span className="px-tag hot">{title}</span>
         <div className="y28-stage">
-          <div className="pod"><Figure seed={seedOf(me)} party={party} talking={pick != null && stopped == null} scale={6} /><b>{sur(me)}</b></div>
-          <div className="mod"><Portrait seed={seedOf("moderator2028")} role="moderator" party="O" size={56} talking={pick == null} /><span className="px-k">Moderator</span></div>
-          <div className="pod"><Figure seed={seedOf(op)} party={opParty} flip scale={6} /><b>{sur(op)}</b></div>
+          <div className="pod"><Body28 seed={seedOf(me)} party={party} female={FEMALE.has(me)} talking={pick != null && stopped == null} scale={3} /><b>{sur(me)}</b></div>
+          <div className="mod"><Face28 seed={seedOf("moderator2028")} role="moderator" party="O" size={56} talking={pick == null} /><span className="px-k">Moderator</span></div>
+          <div className="pod"><Body28 seed={seedOf(op)} party={opParty} female={FEMALE.has(op)} flip scale={3} /><b>{sur(op)}</b></div>
         </div>
         <div className="y28-dial" aria-label="Live focus group dial"><span>Focus group</span><i style={{ width: `${dial}%` }} /><b>{Math.round(dial)}</b></div>
         <h3 id="y28-deb-h">Question {i + 1} of {qs.length}</h3>
         <p><Type key={q.q} text={q.q} speed={14} /></p>
+        {pick == null && record?.(q.k) ? <p className="y28-recall">{record(q.k)}</p> : null}
         {pick == null ? (
           <div className="y28-opts">{q.lines.map((l, k) => <button key={k} type="button" className="px-btn" onClick={() => { setPick(k); sfx("click"); }}><span>“{l.label}”</span></button>)}</div>
         ) : (
           <div className="y28-meter-wrap">
             <span className="px-k">Land the line: stop the marker in the gold</span>
             <div className="y28-meter"><span className="zone" /><span className="zone2" /><i style={{ left: `${(stopped ?? meter) * 100}%` }} /></div>
-            {stopped == null ? <button type="button" className="px-press" onClick={deliver}>Deliver (space)</button> : <div className="px-row"><b className="y28-grade">{grade}</b><button type="button" className="px-btn go" onClick={next}>{i + 1 >= qs.length ? "Closing statements" : "Next question"}</button></div>}
+            {stopped == null ? <button type="button" className="px-press" onClick={deliver}>Deliver (space)</button> : reb == null ? (
+              <div className="y28-rebut"><b className="y28-grade">{grade}</b><p className="px-note">{HITS[(i + seed) % HITS.length]}</p>
+                <div className="px-row"><button type="button" className="px-btn" onClick={() => rebut("counter")}><small>Safe</small>Counter with facts</button><button type="button" className="px-btn" onClick={() => rebut("zinger")}><small>Risky</small>Fire a zinger</button><button type="button" className="px-btn" onClick={() => rebut("calm")}><small>Steady</small>Stay calm</button></div></div>
+            ) : <div className="px-row"><b className="y28-grade">{reb}</b><button type="button" className="px-btn go" onClick={next}>{i + 1 >= qs.length ? "Closing statements" : "Next question"}</button></div>}
           </div>
         )}
       </div>
@@ -177,7 +194,7 @@ export function VPPick({ d, party, me, onPick, promised }: { d: E.Data; party: E
         {promised ? <p className="px-note"><b>You promised the spot to {promised}</b> to win their endorsement. Picking anyone else is a broken promise, and the press will say so.</p> : null}
         <div className="y28-cands">{list.map((c) => { const h = help(c.n); return (
           <button key={c.n} type="button" className={cls("y28-cand", sel === c.n && "on")} aria-pressed={sel === c.n} onClick={() => { setSel(c.n); sfx("card"); }} style={{ ["--cc" as string]: c.c } as React.CSSProperties}>
-            <Portrait seed={seedOf(c.n)} role="cand" party={party} size={64} female={FEMALE.has(c.n)} talking={sel === c.n} />
+            <Face28 seed={seedOf(c.n)} party={party} size={64} female={FEMALE.has(c.n)} talking={sel === c.n} />
             <b>{c.n}</b><small>{short(firstSentence(c.lane), 90)}</small>
             <span className="px-k">{h.length ? `Helps in ${h.map((x) => `${x.st} +${x.v.toFixed(1)}`).join(", ")}` : "No home state edge"}</span>
           </button>
@@ -214,6 +231,7 @@ export function Convention({ d, P, onDone }: { d: E.Data; P: E.PrimS; onDone: (w
 // ============================================================ election night
 export function Night28({ d, s, res, onDone }: { d: E.Data; s: E.GenS; res: E.NightRes; onDone: () => void }) {
   const [clock, setClock] = useState(18.8); const [speed, setSpeed] = useState(1);
+  const [myCall, setMyCall] = useState<{ at: number; me: boolean } | null>(null);
   useEffect(() => { music("night"); }, []);
   useEffect(() => {
     let raf = 0, lt = performance.now();
@@ -229,23 +247,62 @@ export function Night28({ d, s, res, onDone }: { d: E.Data; s: E.GenS; res: E.Ni
   const marks = called.slice(-3).map((c) => ({ st: c.st, kind: "call" as const, t0: performance.now() - (clock - c.at) * 1800 }));
   const hh = Math.floor(clock), mm = Math.floor((clock - hh) * 60); const ampm = hh % 24 >= 12 ? "PM" : "AM"; const h12 = ((hh % 24) + 11) % 12 + 1;
   const myP = s.party, sg = myP === "R" ? 1 : -1;
+  const exp = useMemo(() => E.myMargins(d, s), [d, s]);
+  // each state counts at its own pace once its polls close; mail first or Election Day first decides which way early returns lean
+  const counted = (c: E.Call) => { const cl = d.states[c.i].close; if (clock < cl) return 0; return Math.min(99, ((clock - cl) / Math.max(0.6, c.at - cl + 1.4)) * 96 + (clock >= c.at ? 4 : 0)); };
+  const shown = (c: E.Call, pctIn: number) => {
+    const f = pctIn / 100; if (f <= 0) return null; const e = c.early ?? 0.5; const em = c.em ?? c.m, dm = c.dm ?? c.m;
+    const first = X2.COUNTS_EARLY_FIRST.has(c.st.split("-")[0]);
+    const ec = first ? Math.min(f, e) : Math.max(0, f - (1 - e)), dc = f - ec;
+    return (ec * em + dc * dm) / Math.max(1e-6, f);
+  };
+  // the needle: called states fixed, counting states drift toward their final margin as the count rises
+  const q = Math.floor(clock * 4);
+  const needle = useMemo(() => {
+    const G = { rng: 1234 + q }; let w = 0; const N = 300;
+    for (let k = 0; k < N; k++) {
+      const nat = E.gauss(G) * 2.2; let ev = 0;
+      for (const c of res.calls) {
+        if (c.at <= clock) { if (c.win) ev += c.ev; continue; }
+        const p = counted(c); const sm = shown(c, p); const f = p / 100;
+        const mu = sm == null ? exp[c.i] : sm * f + exp[c.i] * (1 - f); const sd = 1 + 4 * (1 - f);
+        if (mu + nat * (1 - f) + E.gauss(G) * sd > 0) ev += c.ev;
+      }
+      if (ev >= 270) w++;
+    }
+    return w / N;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, res, exp]);
+  const key = res.calls.slice().sort((a, b) => (b.ev / (1 + Math.abs(exp[b.i]))) - (a.ev / (1 + Math.abs(exp[a.i])))).slice(0, 8);
+  const finalWin = res.win;
   return (
     <div className="y28-night">
       <div className="y28-night-top"><span className="px-tag hot">Election night</span><b className="y28-clock">{h12}:{String(mm).padStart(2, "0")} {ampm} ET</b>
         <div className="px-chips">{[1, 3, 8].map((k) => <button key={k} type="button" className={speed === k ? "on" : ""} onClick={() => setSpeed(k)}>{k}x</button>)}<button type="button" onClick={() => setClock(32)}>Skip</button></div></div>
       <div className="y28-night-ev">
-        <div className="side me"><Portrait seed={seedOf(s.me)} role="cand" party={myP} size={56} female={FEMALE.has(s.me)} talking={meEV > opEV} /><b><Roll v={meEV} /></b><span>{s.me}</span></div>
+        <div className="side me"><Face28 seed={seedOf(s.me)} party={myP} size={56} female={FEMALE.has(s.me)} talking={meEV > opEV} /><b><Roll v={meEV} /></b><span>{s.me}</span></div>
         <div className="bar"><i className={myP.toLowerCase()} style={{ width: `${(meEV / 538) * 100}%` }} /><i className={(myP === "D" ? "r" : "d") + " right"} style={{ width: `${(opEV / 538) * 100}%` }} /><em /></div>
-        <div className="side op"><Portrait seed={seedOf(s.op)} role="cand" party={myP === "D" ? "R" : "D"} size={56} female={FEMALE.has(s.op)} talking={opEV > meEV} /><b><Roll v={opEV} /></b><span>{s.op}</span></div>
+        <div className="side op"><Face28 seed={seedOf(s.op)} party={myP === "D" ? "R" : "D"} size={56} female={FEMALE.has(s.op)} talking={opEV > meEV} /><b><Roll v={opEV} /></b><span>{s.op}</span></div>
       </div>
-      <TileMap28 states={d.states.map((x) => x.st)} title="States called so far" fill={(st) => { const c = callMap.get(st); return c ? shade(sg * c.m) : "#2f1f5a"; }} marks={marks} dim={(st) => !callMap.has(st)} />
+      <div className="y28-nightgrid">
+        <TileMap28 states={d.states.map((x) => x.st)} title="States called so far" fill={(st) => { const c = callMap.get(st); return c ? shade(sg * c.m) : "#2f1f5a"; }} marks={marks} dim={(st) => !callMap.has(st)} />
+        <div className="y28-nside">
+          <div className="y28-needle" aria-label={`Live chance you win: ${pct(needle)}`}><span className="px-k">The needle</span><div className={cls("dial", myP === "R" && "r")}><i style={{ transform: `rotate(${-90 + needle * 180}deg)` }} /></div><b className={needle >= 0.5 ? "up" : "dn"}>{pct(needle)}</b><small>your chance, live</small></div>
+          <span className="px-k">States to watch</span>
+          <ul className="y28-watch">{key.map((c) => { const p = counted(c); const m = shown(c, p); const isCalled = c.at <= clock; return (
+            <li key={c.st} className={cls(isCalled && (c.win ? "me" : "op"))}><b>{c.st}</b><span className="pb"><i style={{ width: `${p}%` }} /></span><em>{p > 0 ? `${Math.round(p)}%` : `${Math.round(d.states[c.i].close % 12 || 12)} PM`}</em><small className={m == null ? "" : m >= 0 ? "up" : "dn"}>{m == null ? "" : m >= 0 ? `${sur(s.me)} +${m.toFixed(1)}` : `${sur(s.op)} +${Math.abs(m).toFixed(1)}`}{isCalled ? " · called" : ""}</small></li>
+          ); })}</ul>
+          <p className="px-note y28-small">States that count early ballots first start out leaning toward whoever banked more of them. The rest start with Election Day votes.</p>
+          {!myCall && !decided ? <button type="button" className="px-btn" onClick={() => setMyCall({ at: clock, me: needle >= 0.5 })}><small>Before the networks</small>Make your own call</button> : myCall ? <p className="px-note">You called it for {myCall.me ? sur(s.me) : sur(s.op)} at {Math.floor(myCall.at % 12 || 12)}:{String(Math.floor((myCall.at % 1) * 60)).padStart(2, "0")}. {decided ? (myCall.me === finalWin ? "You were right." : "You were wrong.") : ""}</p> : null}
+        </div>
+      </div>
       {res.events?.length ? <div className="y28-wx">{res.events.map((e) => <span key={e}>{e}</span>)}</div> : null}
       <div className="y28-calls">{called.slice(-6).reverse().map((c) => <span key={c.st} className={cls("call", c.win ? "me" : "op")}>{E.nameOf(d, c.st)} · {c.ev} · {c.win ? sur(s.me) : sur(s.op)} +{c.close.toFixed(1)}</span>)}</div>
       {decided ? <button type="button" className="px-press" onClick={onDone}>{meEV >= 270 ? "Victory speech" : opEV >= 270 ? "Concede" : "See the results"}</button> : <span className="px-note">Too close to call: {res.calls.filter((c) => c.at > clock && c.at < clock + 6).map((c) => c.st).slice(0, 8).join(", ") || "polls still open"}</span>}
     </div>
   );
 }
-export function Result28({ d, s, res, onAgain, onMenu, start, trophies = [] }: { d: E.Data; s: E.GenS; res: E.NightRes; onAgain: () => void; onMenu: () => void; start: { p: number; ev: number }; trophies?: string[] }) {
+export function Result28({ d, s, res, onAgain, onMenu, start, trophies = [], extra }: { d: E.Data; s: E.GenS; res: E.NightRes; onAgain: () => void; onMenu: () => void; start: { p: number; ev: number }; trophies?: string[]; extra?: React.ReactNode }) {
   useEffect(() => { sfx(res.win ? "fanfare" : "lose"); }, [res.win]);
   const sg = s.party === "R" ? 1 : -1; const byI = new Map(res.calls.map((c) => [c.st, c]));
   const flips = res.calls.filter((c) => { const x = d.states[c.i]; return x.p24 != null && (sg * x.p24 > 0) !== c.win; });
@@ -255,10 +312,11 @@ export function Result28({ d, s, res, onAgain, onMenu, start, trophies = [] }: {
       <section className="px-step">
         <span className={cls("px-tag", res.win ? "real" : "hot")}>{res.win ? "Elected" : "Defeated"}</span>
         <h2 className="y28-big">{res.win ? `President elect ${s.me}` : `${s.op} wins`}</h2>
-        <p className="px-note">{res.ev} to {res.opEv} electoral votes. Popular vote {res.pop >= 0 ? `${sur(s.me)} +${res.pop.toFixed(1)}` : `${sur(s.op)} +${Math.abs(res.pop).toFixed(1)}`}. The tipping point state was {E.nameOf(d, tp.st)}, {tp.win ? "yours" : "theirs"} by {tp.close.toFixed(1)}. You started with a {pct(start.p)} chance and {start.ev} electoral votes.</p>
+        <p className="px-note">{res.win ? `${res.ev} to ${res.opEv}` : `${res.opEv} to ${res.ev}`} electoral votes. Popular vote {res.pop >= 0 ? `${sur(s.me)} +${res.pop.toFixed(1)}` : `${sur(s.op)} +${Math.abs(res.pop).toFixed(1)}`}. The tipping point state was {E.nameOf(d, tp.st)}, {tp.win ? "yours" : "theirs"} by {tp.close.toFixed(1)}. You started with a {pct(start.p)} chance and {start.ev} electoral votes.</p>
         <TileMap28 states={d.states.map((x) => x.st)} title="The final map" fill={(st) => { const c = byI.get(st); return c ? shade(sg * c.m) : "#2f1f5a"; }} />
         <Trophies ids={trophies} />
         {flips.length ? <p className="px-note">Flipped from 2024: {flips.map((c) => `${E.nameOf(d, c.st)} to ${c.win ? sur(s.me) : sur(s.op)}`).join(", ")}.</p> : null}
+        {extra}
         <div className="px-row"><button type="button" className="px-press" onClick={onAgain}>Run again</button><button type="button" className="px-press ghost" onClick={onMenu}>Main menu</button></div>
       </section>
     </div>

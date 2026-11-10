@@ -1,9 +1,16 @@
 // Trophies for Campaign 2028: earned at the end of a run and kept in a case on this device.
 import type * as E from "./engine28";
 import type { Game } from "./ui28";
+import * as MO from "./more28";
 
 export const TROPHIES: { id: string; name: string; how: string }[] = [
   { id: "nominee", name: "The nominee", how: "Win your party's nomination." },
+  { id: "recount", name: "Every vote counted", how: "Flip a state your way in a recount." },
+  { id: "coattails", name: "Coattails", how: "Win and carry your party to 51 Senate seats." },
+  { id: "endorsed", name: "Endorsement sweep", how: "Earn six endorsements in one campaign." },
+  { id: "ironman", name: "Ironman", how: "Win the presidency in ironman mode." },
+  { id: "hardwin", name: "Against the odds", how: "Win the presidency in hard mode." },
+  { id: "daily", name: "Daily winner", how: "Win the daily challenge." },
   { id: "sweep", name: "Early sweep", how: "Win every early state contest." },
   { id: "floor", name: "Floor fight", how: "Win the nomination at a contested convention." },
   { id: "deal", name: "Dealmaker", how: "Talk a rival into dropping out and endorsing you." },
@@ -18,6 +25,10 @@ export const TROPHIES: { id: string; name: string; how: string }[] = [
   { id: "oppo", name: "Oppo artist", how: "Land two opposition research hits." },
   { id: "ground", name: "Ground game", how: "Run field programs in ten states." },
   { id: "popular", name: "So close", how: "Win the popular vote and lose the electoral college." },
+  { id: "banked", name: "Banked it", how: "Lead the early vote in eight battleground states." },
+  { id: "coalition", name: "Coalition builder", how: "Gain three points or more with five voter groups." },
+  { id: "army", name: "The army", how: "Build a volunteer army of 100,000." },
+  { id: "staffed", name: "Full staff", how: "Hire an A rated pollster and every senior staffer." },
 ];
 const KEY = "opp_play28_trophies";
 export function trophyCase(): string[] { try { return JSON.parse(localStorage.getItem(KEY) ?? "[]") as string[]; } catch { return []; } }
@@ -46,6 +57,16 @@ export function earned(d: E.Data, g: Game): string[] {
     if ((S.oppo ?? []).filter((h) => h.used && h.hit).length >= 2) out.push("oppo");
     if (S.offices.length >= 10) out.push("ground");
     if (!R.win && R.pop > 0) out.push("popular");
+    const bank = S.bank ?? [], bm = S.bankM ?? []; if (d.states.filter((x, i) => (bank[i] ?? 0) > 0 && bm[i] / bank[i] > 0 && Math.abs(x.m) < 8).length >= 8) out.push("banked");
+    if (Object.keys(S.gsup ?? {}).filter((k) => (S.gsup![k] ?? 0) - (S.opGsup?.[k] ?? 0) >= 3).length >= 5) out.push("coalition");
+    if ((S.vol ?? 0) >= 100000) out.push("army");
+    if (R.win && (R.rc ?? []).some((r) => r.after != null && r.after > 0 && r.m <= 0)) out.push("recount");
+    if (R.win && S.mo && MO.senateCount(d, S, R.calls.slice().sort((a, b) => a.i - b.i).map((c) => c.m)).mine >= 51) out.push("coattails");
+    if ((S.mo?.endorsed.length ?? 0) >= 6) out.push("endorsed");
+    if (R.win && g.iron) out.push("ironman");
+    if (R.win && g.hard) out.push("hardwin");
+    if (R.win && g.daily) out.push("daily");
+    if (S.staff?.pollster === 3 && S.staff.media && S.staff.field && S.staff.digital && S.staff.oppo) out.push("staffed");
   }
   return out;
 }
