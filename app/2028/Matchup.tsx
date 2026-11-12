@@ -1,13 +1,14 @@
 "use client";
-// The general election, county by county: pick the nominees (or a whole ticket), the county engine runs every county and
-// 4,000 simulations in the browser, and every state on the map is the sum of its counties.
+// The general election, county by county, as the On Point 2028 Forecast artifact has it. General and Overview show the
+// artifact's General election tab for any pairing; Pick a ticket runs the artifact's Build a ticket engine in the browser.
+// Either way every state on the map is the sum of its counties.
 import { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import Map28 from "./Map28";
 import { useJSON, useTicket, type Ticket } from "./useX";
 import {
-  X, STATE_NAME, FIPS_ST, DEM, REP, IND, RAMP, SHIFT_RAMP, fmtN, fmtK, fmtPct, fmtSh, fmtMg, two, marginColor, probColor, shiftColor, fromDefault, rateLabel, last,
-  type DefaultFile, type CountiesGeo, type StatesGeo, type Res,
+  X, STATE_NAME, FIPS_ST, DEM, REP, IND, RAMP, SHIFT_RAMP, fmtN, fmtK, fmtPct, fmtSh, fmtMg, two, marginColor, probColor, shiftColor, genRes, rateLabel, last,
+  type GenFile, type CountiesGeo, type StatesGeo, type Res,
 } from "./lib";
 
 export interface CandOpt { name: string; party: "D" | "R" | "I"; third: number | null; hyp: boolean }
@@ -16,11 +17,16 @@ type Agg = { n: number; wD: number; wR: number; wI: number; D: number; R: number
 
 const isBase = (t: Ticket) => t.dp === "Generic Democrat" && t.rp === "Vance" && !t.dvp && !t.rvp && !t.tp;
 
-export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands: CandOpt[]; mode: "overview" | "general" | "ticket" }) {
-  const base = useMemo(() => fromDefault(def), [def]);
+export interface Grid { d: string; r: string; pD: number; evD: number; nat: number; odds: number | null }
+export default function Matchup({ base, cands, mode, grid = [], gnames }: { base: Res; cands: CandOpt[]; mode: "overview" | "general" | "ticket"; grid?: Grid[]; gnames?: { D: string[]; R: string[] } }) {
   const [t, setT] = useState<Ticket>({ dp: "Generic Democrat", rp: "Vance", dvp: "", rvp: "", tp: "", tps: null });
-  const { res: r0, busy } = useTicket(t, base, isBase(t));
-  const res: Res = r0 ?? base;
+  const tk = mode === "ticket";
+  const { res: r0, busy: b0 } = useTicket(t, base, !tk || isBase(t));
+  const G = useJSON<GenFile>(!tk && !isBase(t) ? `${X}/gen.json` : null);
+  const rg = useMemo(() => (!tk && G ? genRes(G, t.dp, t.rp) : null), [tk, G, t.dp, t.rp]);
+  const res: Res = tk ? (r0 ?? base) : isBase(t) ? base : (rg ?? base);
+  const busy = tk ? b0 : !isBase(t) && !rg;
+  const sims = res.sims ?? 4000;
   const [view, setView] = useState<"states" | "counties">("states");
   const [layer, setLayer] = useState<Layer>("margin");
   const [focus, setFocus] = useState<string | null>(null);
@@ -87,7 +93,7 @@ export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands:
           <div><span>{last(R)} wins</span><b className="r">{fmtPct(s.pR)}</b></div>
           {a24 != null && <div><span>2024</span><b>{fmtMg(a24)}</b></div>}
         </div>
-        {a && <div className="x28-tipf">Votes added up from {a.n} {st === "AK" ? "borough" : "county"} forecasts · {last(D)} carries {a.wD}, {last(R)} {a.wR}{a.wI ? `, ${T} ${a.wI}` : ""} · {fmtN(s.D + s.R + s.I + s.O)} votes · win chances from 4,000 simulations</div>}
+        {a && <div className="x28-tipf">Votes added up from {a.n} {st === "AK" ? "borough" : "county"} forecasts · {last(D)} carries {a.wD}, {last(R)} {a.wR}{a.wI ? `, ${T} ${a.wI}` : ""} · {fmtN(s.D + s.R + s.I + s.O)} votes · win chances from {sims.toLocaleString("en-US")} simulations</div>}
         {!focus && <div className="x28-tipc">Click to open its counties</div>}
       </>
     );
@@ -121,7 +127,9 @@ export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands:
   const nat = two(res.VD, res.VR);
   const dl = cands.filter((c) => c.party === "D"), rl = cands.filter((c) => c.party === "R"), il = cands.filter((c) => c.party === "I");
   const set = (p: Partial<Ticket>) => { setT((o) => ({ ...o, ...p })); setFocus(null); };
-  const grid = [...def.grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0)).slice(0, 6);
+  const chips = [...grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0)).slice(0, 6);
+  const dOpts = !tk && gnames ? gnames.D.map((n) => ({ name: n, party: "D" as const, third: null, hyp: false })) : dl;
+  const rOpts = !tk && gnames ? gnames.R.map((n) => ({ name: n, party: "R" as const, third: null, hyp: false })) : rl;
   const fcty = focus && cg ? cg.counties.filter((c) => c[1] === focus && res.cty[c[0]]).map((c) => ({ f: c[0], n: c[2], c: res.cty[c[0]] })).sort((a, b) => (b.c[0] + b.c[1]) - (a.c[0] + a.c[1])) : [];
 
   return (
@@ -135,19 +143,20 @@ export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands:
           </div>
           <EvBar d={res.evD} r={res.evR} i={res.evI} />
           <div className="x28-kv">
-            <div><span>Popular vote</span><b className={nat < 0 ? "d" : "r"}>{fmtMg(nat)}</b><em>{fmtSh(res.VD / all)} to {fmtSh(res.VR / all)}{T ? ` to ${fmtSh(res.VI / all)}` : ""}</em></div>
+            <div><span>Popular vote</span><b className={(res.natM ?? nat) < 0 ? "d" : "r"}>{fmtMg(res.natM ?? nat)}</b><em>{fmtSh(res.VD / all)} to {fmtSh(res.VR / all)}{T ? ` to ${fmtSh(res.VI / all)}` : ""}</em></div>
             <div><span>Projected votes</span><b>{fmtK(all)}</b><em>{fmtK(res.VD)} D · {fmtK(res.VR)} R</em></div>
             <div><span>Tipping point</span><b>{res.tip ?? "None"}</b><em>{res.tip && res.states[res.tip] ? fmtMg(res.states[res.tip].m) : ""}</em></div>
-            <div><span>No one reaches 270</span><b>{fmtPct(res.pNone)}</b><em>4,000 simulations</em></div>
+            {res.ev10 != null ? <div><span>80% range</span><b>{res.ev10} to {res.ev90}</b><em>{last(D)} electoral votes · {sims.toLocaleString("en-US")} runs</em></div>
+              : <div><span>No one reaches 270</span><b>{fmtPct(res.pNone)}</b><em>{sims.toLocaleString("en-US")} simulations</em></div>}
           </div>
         </div>
       )}
 
       {mode !== "overview" && (
         <div className="x28-ctl card">
-          <label><span>Democrat</span><select id="x28-dp" value={t.dp} onChange={(e) => set({ dp: e.target.value })}>{dl.map((c) => <option key={c.name} value={c.name}>{c.name}{c.hyp ? " · not polled" : ""}</option>)}</select></label>
+          <label><span>Democrat</span><select id="x28-dp" value={t.dp} onChange={(e) => set({ dp: e.target.value })}>{dOpts.map((c) => <option key={c.name} value={c.name}>{c.name}{c.hyp ? " · not polled" : ""}</option>)}</select></label>
           {mode === "ticket" && <label><span>Democratic running mate</span><select id="x28-dvp" value={t.dvp} onChange={(e) => set({ dvp: e.target.value })}><option value="">No running mate effect</option>{dl.filter((c) => !c.name.startsWith("Generic") && c.name !== t.dp).map((c) => <option key={c.name} value={c.name}>{c.name}</option>)}</select></label>}
-          <label><span>Republican</span><select id="x28-rp" value={t.rp} onChange={(e) => set({ rp: e.target.value })}>{rl.map((c) => <option key={c.name} value={c.name}>{c.name}</option>)}</select></label>
+          <label><span>Republican</span><select id="x28-rp" value={t.rp} onChange={(e) => set({ rp: e.target.value })}>{rOpts.map((c) => <option key={c.name} value={c.name}>{c.name}</option>)}</select></label>
           {mode === "ticket" && <label><span>Republican running mate</span><select id="x28-rvp" value={t.rvp} onChange={(e) => set({ rvp: e.target.value })}><option value="">No running mate effect</option>{rl.filter((c) => !c.name.startsWith("Generic") && c.name !== t.rp).map((c) => <option key={c.name} value={c.name}>{c.name}</option>)}</select></label>}
           {mode === "ticket" && <label><span>Third party</span><select id="x28-tp" value={t.tp} onChange={(e) => { const v = e.target.value; const c = cands.find((x) => `${x.party}|${x.name}` === v); set({ tp: v, tps: c?.third ?? (v ? 5 : null) }); }}>
             <option value="">No named third party</option>
@@ -157,7 +166,7 @@ export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands:
           {mode === "ticket" && t.tp && <label className="sm"><span>Third party share</span><input id="x28-tps" type="number" min={0} max={40} step={1} value={t.tps ?? 5} onChange={(e) => { const v = Number(e.target.value); if (isFinite(v)) set({ tps: Math.max(0, Math.min(40, v)) }); }} /></label>}
           {mode === "general" && (
             <div className="x28-chips"><span className="eye">Likeliest matchups</span>
-              {grid.map((g) => <button type="button" key={g.d + g.r} aria-pressed={t.dp === g.d && t.rp === g.r} onClick={() => set({ dp: g.d, rp: g.r })}>{last(g.d)} v {last(g.r)}<em>{fmtPct(g.odds ?? 0)} likely</em></button>)}
+              {chips.map((g) => <button type="button" key={g.d + g.r} aria-pressed={t.dp === g.d && t.rp === g.r} onClick={() => set({ dp: g.d, rp: g.r })}>{last(g.d)} v {last(g.r)}<em>{fmtPct(g.odds ?? 0)} likely</em></button>)}
               <button type="button" aria-pressed={isBase(t)} onClick={() => set({ dp: "Generic Democrat", rp: "Vance" })}>Generic D v Vance<em>headline</em></button>
             </div>
           )}
@@ -207,7 +216,7 @@ export default function Matchup({ def, cands, mode }: { def: DefaultFile; cands:
 
       {mode !== "overview" && (
         <div className="x28-two">
-          <div className="card"><div className="card-h"><h3>Electoral votes across 4,000 simulations</h3><span className="eye">{last(D)} electoral votes</span></div><Hist h={res.hist} /></div>
+          <div className="card"><div className="card-h"><h3>Electoral votes across {sims.toLocaleString("en-US")} simulations</h3><span className="eye">{last(D)} electoral votes</span></div><Hist h={res.hist} /></div>
           <div className="card x28-tbl"><div className="card-h"><h3>Every state</h3><span className="eye">Sum of its counties</span></div>
             <div className="x28-scroll"><table>
               <thead><tr><th>State</th><th>EV</th><th>{last(D)}</th><th>{last(R)}</th>{T && <th>{last(T)}</th>}<th>Margin</th><th>{last(D)} wins</th><th>Votes</th><th>Counties</th></tr></thead>

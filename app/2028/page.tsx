@@ -3,7 +3,7 @@ import Link from "@/app/components/Link";
 import Matchup, { EvBar } from "./Matchup";
 import PrimView from "./PrimView";
 import Method from "./Method";
-import { getCands, getDefault, getPrimSummary, getPrimVotes, top } from "./server";
+import { getCands, getDefault, getGenBase, getGenNames, getGrid, getPrimSummary, getPrimVotes, top } from "./server";
 import { fmtK, fmtMg, fmtPct, last, two } from "./lib";
 
 export const metadata: Metadata = {
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page2028() {
-  const def = getDefault(); const s = def.summary; const ps = getPrimSummary(); const pv = getPrimVotes();
-  const dT = top(ps.dem), rT = top(ps.gop); const nat = two(s.VD, s.VR);
-  const likely = [...def.grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0)).slice(0, 3);
+  const def = getDefault(); const s = getGenBase(); const grid = getGrid(); const ps = getPrimSummary(); const pv = getPrimVotes();
+  const dT = top(ps.dem), rT = top(ps.gop); const nat = s.natM ?? two(s.VD, s.VR);
+  const likely = [...grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0)).slice(0, 3);
   const built = new Date(def.built + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
   return (
     <main className="wrap x28-main">
@@ -23,7 +23,7 @@ export default function Page2028() {
         <div>
           <div className="eye g">2028 presidential model · built {built}</div>
           <h1>The road to 2028, <span className="gt">county by county.</span></h1>
-          <p className="lede">Every one of the 3,142 counties forecast for both primaries and the general election, then added up into every state. Pick any nominees or a full ticket and the model reruns every county and {def.sims.toLocaleString("en-US")} simulations right in your browser.</p>
+          <p className="lede">Every one of the 3,142 counties forecast for both primaries and the general election, then added up into every state. These are the On Point 2028 Forecast&apos;s own numbers. Pick any pairing, or build a full ticket and the forecast&apos;s ticket engine reruns every county in your browser.</p>
         </div>
         <div className="x28-kpis">
           <div className="card x28-k"><span className="lab">General election, headline</span><b className="d">{fmtPct(s.pD)}</b><em>{s.D} against {s.R} · {fmtMg(nat)} nationally</em><EvBar d={s.evD} r={s.evR} /></div>
@@ -54,9 +54,9 @@ export default function Page2028() {
 
       <section className="x28-sec">
         <div className="x28-sech"><div><div className="eye g">General election</div><h2>{s.D} against {s.R}</h2>
-          <p>Hover any state for its projected votes, added up from its county forecasts, and its win chance across {def.sims.toLocaleString("en-US")} simulations. Click a state to open its counties.</p></div>
+          <p>Hover any state for its projected votes, added up from its county forecasts, and its win chance from the forecast&apos;s 20,000 simulations. Click a state to open its counties.</p></div>
           <Link className="btn" href="/2028/general">Change the nominees</Link></div>
-        <Matchup def={def} cands={getCands()} mode="overview" />
+        <Matchup base={s} cands={getCands()} mode="overview" grid={grid} gnames={getGenNames()} />
       </section>
 
       <section className="x28-sec">

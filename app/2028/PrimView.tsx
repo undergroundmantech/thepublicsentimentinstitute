@@ -107,7 +107,7 @@ export default function PrimView({ sum, initial = "D", compact = false }: { sum:
               <div className="x28-nom">
                 {nom.slice(0, compact ? 5 : 8).map(([n, p, j]) => (
                   <div key={n}><span className="nm"><i style={{ background: col(j) }} />{n}</span><b>{fmtPct(p)}</b><span className="bar"><b style={{ width: `${p * 100}%`, background: col(j) }} /></span>
-                    {F && <em>{fmtK(F.votes[j])} votes</em>}</div>
+                    {F && <em>{fmtK(F.expected?.[j] ?? F.votes[j])} expected votes</em>}</div>
                 ))}
               </div>
               {F && <p className="x28-note">{fmtN(natTot)} projected primary votes, the sum of every state and so of every county.</p>}

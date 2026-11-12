@@ -61,7 +61,7 @@ export default function Map28(p: MapProps) {
     <div className="x28-map">
       <div className="x28-mapbar">
         <span className="x28-where">{p.focus ? <><button type="button" className="x28-back" onClick={() => p.onFocus(null)}>All states</button><b>{STATE_NAME[p.focus]}</b><span className="mute">· {rows.length} {p.focus === "AK" ? "boroughs and census areas" : "counties"}, each forecast and added up</span></> : <span className="mute">{p.label ?? "Hover a state for its votes, click to open its counties"}</span>}</span>
-        {p.busy && <span className="x28-busy" role="status"><i />Running 4,000 simulations</span>}
+        {p.busy && <span className="x28-busy" role="status"><i />Updating every county</span>}
       </div>
       <div className="x28-stage" onMouseMove={move} onMouseLeave={() => { setTip(null); setHov(null); }} onClick={click}>
         {!geo ? <div className="x28-load">Loading the map</div> : (

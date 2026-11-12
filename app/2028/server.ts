@@ -1,7 +1,8 @@
 // Server side reads for the 2028 pages. The files are static (public/forecast/2028/x), so every page builds once.
 import fs from "node:fs";
 import path from "node:path";
-import type { DefaultFile, PrimFile } from "./lib";
+import { genRes, type DefaultFile, type GenFile, type PrimFile, type Res } from "./lib";
+import type { Grid } from "./Matchup";
 import type { CandOpt } from "./Matchup";
 import type { PrimSummary } from "./PrimView";
 
@@ -27,3 +28,14 @@ export function getCands(): CandOpt[] {
   return CO;
 }
 export const top = (s: PrimSummary["dem"], n = 3) => s.names.map((nm, j) => ({ name: nm, p: s.nomination[j], color: s.colors[j] })).sort((a, b) => b.p - a.p).slice(0, n);
+
+let GEN: GenFile | null = null;
+export function getGen(): GenFile { if (!GEN) GEN = JSON.parse(fs.readFileSync(P("gen.json"), "utf8")) as GenFile; return GEN; }
+/** the artifact's headline pairing, the generic Democrat against Vance, with every county */
+export function getGenBase(): Res { return genRes(getGen(), "Generic Democrat", "Vance")!; }
+export function getGenNames() { const g = getGen(); return { D: [...new Set(g.pairs.map((p) => p[0]))], R: [...new Set(g.pairs.map((p) => p[1]))] }; }
+/** every pairing's artifact numbers, with how likely it is from the artifact's nomination odds */
+export function getGrid(): Grid[] {
+  const ps = getPrimSummary(); const nom = (k: "dem" | "gop", n: string) => { const i = ps[k].names.indexOf(n); return i < 0 ? 0 : ps[k].nomination[i]; };
+  return getGen().pairs.map((p) => ({ d: p[0], r: p[1], pD: p[2], evD: p[3], nat: p[6], odds: p[0] === "Generic Democrat" ? null : nom("dem", p[0]) * nom("gop", p[1]) }));
+}

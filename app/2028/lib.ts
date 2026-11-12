@@ -10,6 +10,8 @@ export interface Res {
   pD: number; pR: number; pI: number; pNone: number; evD: number; evR: number; evI: number;
   VD: number; VR: number; VI: number; VO: number; hist: number[]; tip: string | null;
   states: Record<string, StateRes>; cty: Record<string, CtyRes>;
+  /** the artifact's General election tab: its national margin, 80% electoral vote range and simulation count */
+  natM?: number; ev10?: number; ev90?: number; hyp?: boolean; sims?: number;
   prim?: Record<"D" | "R", { share: number; front: string; frontShare: number; quality: number; consol: number; polled: boolean } | null>;
 }
 export interface DefaultFile {
@@ -21,7 +23,7 @@ export interface DefaultFile {
   grid: { d: string; r: string; pD: number; evD: number; nat: number; dShare: number; rShare: number; odds: number | null }[];
 }
 export interface PrimField {
-  party: "D" | "R"; names: string[]; colors: string[]; nomination: number[]; votes: number[]; other: number;
+  party: "D" | "R"; names: string[]; colors: string[]; nomination: number[]; votes: number[]; other: number; expected?: number[];
   calendar: string[][] | null;
   states: Record<string, { votes: number[]; other: number; total: number; win: number[]; window: number | null; proxy: string[] | null; hist: { year: string; votes: number | null; type: string } | null }>;
   /** fips: [other votes, [candidate index, votes], ...] */
@@ -84,4 +86,32 @@ export const DEM = "var(--dem)", REP = "var(--gop)", IND = "var(--ind)";
 export function rateLabel(m: number) {
   const a = Math.abs(m); if (a < 2) return "Toss up"; const s = m < 0 ? "D" : "R";
   return `${a < 6 ? "Lean" : a < 12 ? "Likely" : "Safe"} ${s}`;
+}
+
+/** the On Point 2028 Forecast artifact's General election tab, every pairing, with its county forecasts */
+export type GenPair = [string, string, number, number, number, number, number, string, number, number, number[], ([number, number] | null)[]];
+export interface GenFile { keys: string[]; ev: Record<string, number>; sig: Record<string, number>; base: Record<string, number>;
+  /** fips: two party votes, other votes, margin and Democratic win chance for the generic Democrat against Vance */
+  cty: Record<string, [number, number, number, number]>; dist: Record<string, [number, number, number]>; pairs: GenPair[] }
+function erf(x: number) { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
+const ncdf = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+function ninv(p: number) { let lo = -8, hi = 8; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (ncdf(m) < p) lo = m; else hi = m; } return (lo + hi) / 2; }
+/** A pairing as the artifact shows it: each county moves by its state's change from the generic Democrat against Vance, the
+ * artifact's own county map rule, so a state is the sum of its counties; the headline numbers are the artifact's. */
+export function genRes(G: GenFile, d: string, r: string): Res | null {
+  const p = G.pairs.find((x) => x[0] === d && x[1] === r); if (!p) return null;
+  const dl: Record<string, number> = {}, pm: Record<string, [number, number]> = {};
+  G.keys.forEach((s, k) => { const v = p[11][k]; if (v) { dl[s] = v[0] - G.base[s]; pm[s] = v; } });
+  const cty: Record<string, CtyRes> = {}, states: Record<string, StateRes> = {};
+  const add = (s: string, D: number, R: number, O: number) => { const a = states[s] || (states[s] = { D: 0, R: 0, I: 0, O: 0, m: 0, pD: pm[s]?.[1] ?? 0, pR: 1 - (pm[s]?.[1] ?? 0), pI: 0, ev: G.ev[s] ?? 0 }); a.D += D; a.R += R; a.O += O; };
+  for (const [f, [w, o, m, pd]] of Object.entries(G.cty)) {
+    const st = FIPS_ST[f.slice(0, 2)]; const sh = dl[st] ?? 0; const mm = m + sh; const D = (w * (1 - mm / 100)) / 2, R = w - D;
+    const z = ninv(Math.min(0.999, Math.max(0.001, pd))) - sh / (G.sig[st] ?? 4); const pD = ncdf(z);
+    cty[f] = [D, R, 0, o, pD, 1 - pD]; add(st, D, R, o);
+  }
+  for (const [s, [w, o, m]] of Object.entries(G.dist)) { const mm = pm[s]?.[0] ?? m; const D = (w * (1 - mm / 100)) / 2; add(s, D, w - D, o); }
+  let VD = 0, VR = 0, VO = 0;
+  for (const [s, a] of Object.entries(states)) { a.m = two(a.D, a.R); if (!s.includes("-")) { VD += a.D; VR += a.R; VO += a.O; } }
+  return { D: d, R: r, T: null, pD: p[2], pR: 1 - p[2], pI: 0, pNone: 0, evD: p[3], evR: 538 - p[3], evI: 0, VD, VR, VI: 0, VO, hist: p[10], tip: p[7], states, cty,
+    natM: p[6], ev10: p[4], ev90: p[5], hyp: p[9] === 1, sims: 20000 };
 }
