@@ -12,7 +12,7 @@ export default function Primaries28() {
   return (
     <main className="wrap x28-main">
       <section className="x28-head"><div className="eye g">2028 primaries</div><h1>Both nominations, <span className="gt">state by state.</span></h1>
-        <p className="lede">The calendar simulation runs every primary in order, drops candidates who fall short and moves their voters to the most similar rival. Each state shows its race as it typically stands on its date, spread over its counties so the counties add to the state.</p></section>
+        <p className="lede">The official run puts every candidate on every state&apos;s ballot at once, with no dropouts, and simulates each state 4,000 times with the 2026 model&apos;s error structure. Take any candidate out or put them back in, and every state and county reruns. Each state is the sum of its counties.</p></section>
       <PrimView sum={getPrimSummary()} />
       <Method />
     </main>

@@ -1,6 +1,7 @@
 // 2028 county engine for the site. This is the On Point 2028 dashboard's Build a ticket engine and its primary field
 // shares, unchanged, run on the same datasets (public/forecast/2028/x/engine.json). Two additions, marked "site": Alaska and
 // Connecticut spread from their state rows to their counties, and county win chances counted in the same simulations.
+// The primary is the v45 official run: every candidate in every state at once, no dropouts.
 /* eslint-disable */
 export function createEngine(DATA, AKCT) {
   const op28 = {}; let PARAMS = {};
@@ -58,82 +59,82 @@ export function createEngine(DATA, AKCT) {
     const out = { names, tgt, sh, V, sim, F, cidx: new Map(pm.map((r, i) => [r.fips, i])), hyp: Object.fromEntries(pc.map((c) => [c.name, Number(c.hypothetical) === 1])) };
     pmemo[party] = { key, out }; return out;
   };
+  // v45 official primary: the whole field in every state at once. No one drops out and no state waits on another: every
+  // candidate the reader keeps in is on every state's ballot, and a candidate taken out has their county voters move to the
+  // rest of the field by how alike the two candidates' county support is. 4,000 runs with the 2026 model's error shape: a
+  // national error per candidate with fat tails, a regional error per candidate and a state error, plus turnout error.
   op28.prim = () => {
     if (!op28.primReady()) return null;
-    const p = P(); const out0 = [].concat(p.pout || []); const key = JSON.stringify([p.pparty, out0, p.ptgt, dash.data('prim_polls').status]);
+    const N = 4000;
+    const p = P(); const out0 = [].concat(p.pout || []); const key = JSON.stringify(['v45', p.pparty, out0, p.ptgt, dash.data('prim_polls').status]);
     if (memo.key === key) return memo.out;
     const party = p.pparty === 'R' ? 'R' : 'D';
     const pm = dash.data('prim_model').data, pc = dash.data('prim_cands').data.filter((r) => r.party === party), cal = dash.data('prim_calendar').data.filter((r) => r.party === party);
     const tg = op28.parseTgt(p.ptgt);
-    const names = pc.map((r) => r.name).filter((n) => !out0.includes(n));
-    if (names.length < 2) return null;
-    const K = names.length, nC = pm.length;
-    const L = new Float64Array(nC * K), V = new Float64Array(nC);
-    for (let i = 0; i < nC; i++) { const r = pm[i]; V[i] = Number(party === 'D' ? r.d_votes : r.r_votes); for (let j = 0; j < K; j++) L[i * K + j] = Number(r[party + '|' + names[j]]); }
-    const t0 = names.map((n) => { const c = pc.find((x) => x.name === n); return Math.max(0.1, isFinite(tg[n]) ? tg[n] : Number(c.target)); });
+    const ALL = pc.map((r) => r.name); const KA = ALL.length, nC = pm.length;
+    const act = ALL.map((n) => !out0.includes(n)); const names = ALL.filter((n, j) => act[j]); const K = names.length;
+    if (K < 1) return null;
+    // county support for the whole field, recalibrated so the vote weighted national shares match the targets, then state polls
+    const L = new Float64Array(nC * KA), V = new Float64Array(nC);
+    for (let i = 0; i < nC; i++) { const r = pm[i]; V[i] = Number(party === 'D' ? r.d_votes : r.r_votes); for (let j = 0; j < KA; j++) L[i * KA + j] = Number(r[party + '|' + ALL[j]]); }
+    const t0 = ALL.map((n) => { const c = pc.find((x) => x.name === n); return Math.max(0.1, isFinite(tg[n]) ? tg[n] : Number(c.target)); });
     const ts = t0.reduce((a, b) => a + b, 0); const tgt = t0.map((x) => x / ts);
-    // recalibrate each candidate's base so the vote weighted national shares match the chosen targets
-    const b = new Float64Array(K); const sh = new Float64Array(nC * K); const W = V.reduce((a, x) => a + x, 0);
+    const b = new Float64Array(KA); const sa = new Float64Array(nC * KA); const W = V.reduce((a, x) => a + x, 0);
     for (let it = 0; it < 30; it++) {
-      const nat = new Float64Array(K);
-      for (let i = 0; i < nC; i++) { let mx = -1e9; for (let j = 0; j < K; j++) mx = Math.max(mx, L[i * K + j] + b[j]); let s = 0;
-        for (let j = 0; j < K; j++) { const e = Math.exp(L[i * K + j] + b[j] - mx); sh[i * K + j] = e; s += e; }
-        for (let j = 0; j < K; j++) { sh[i * K + j] /= s; nat[j] += sh[i * K + j] * V[i]; } }
-      for (let j = 0; j < K; j++) b[j] += Math.log(tgt[j] / (nat[j] / W));
+      const nat = new Float64Array(KA);
+      for (let i = 0; i < nC; i++) { let mx = -1e9; for (let j = 0; j < KA; j++) mx = Math.max(mx, L[i * KA + j] + b[j]); let s = 0;
+        for (let j = 0; j < KA; j++) { const e = Math.exp(L[i * KA + j] + b[j] - mx); sa[i * KA + j] = e; s += e; }
+        for (let j = 0; j < KA; j++) { sa[i * KA + j] /= s; nat[j] += sa[i * KA + j] * V[i]; } }
+      for (let j = 0; j < KA; j++) b[j] += Math.log(tgt[j] / Math.max(1e-12, nat[j] / W));
     }
-    const pollFx = op28.applyPrimPolls(party, names, pm, sh, V);
+    const pollFx = op28.applyPrimPolls(party, ALL, pm, sa, V);
+    // a candidate taken out: their voters in each county go to the candidates still in, by similarity times support
+    const simA = ALL.map((n) => { const c = pc.find((x) => x.name === n); const m = JSON.parse(c.sim || '{}'); return ALL.map((o) => (o === n ? 0 : Math.exp(1.5 * (m[o] ?? 0)))); });
+    const sh = new Float64Array(nC * K); const ai = ALL.map((n, j) => j).filter((j) => act[j]);
+    for (let i = 0; i < nC; i++) {
+      const row = new Float64Array(KA); for (let j = 0; j < KA; j++) row[j] = act[j] ? sa[i * KA + j] : 0;
+      for (let d = 0; d < KA; d++) if (!act[d]) { let z = 0; for (const j of ai) z += simA[d][j] * sa[i * KA + j]; if (z > 0) for (const j of ai) row[j] += sa[i * KA + d] * simA[d][j] * sa[i * KA + j] / z; }
+      let s = 0; for (const j of ai) s += row[j]; ai.forEach((j, k) => { sh[i * K + k] = row[j] / Math.max(1e-12, s); });
+    }
     // state base shares and votes
     const sts = [...new Set(pm.map((r) => r.st))]; const si = Object.fromEntries(sts.map((s, k) => [s, k])); const nS = sts.length;
     const S = new Float64Array(nS * K), SV = new Float64Array(nS);
     for (let i = 0; i < nC; i++) { const k = si[pm[i].st]; SV[k] += V[i]; for (let j = 0; j < K; j++) S[k * K + j] += sh[i * K + j] * V[i]; }
     for (let k = 0; k < nS; k++) for (let j = 0; j < K; j++) S[k * K + j] /= Math.max(1, SV[k]);
-    // similarity for dropouts
-    const sim = names.map((n) => { const c = pc.find((x) => x.name === n); const m = JSON.parse(c.sim || '{}'); return names.map((o) => (o === n ? 0 : Math.exp(1.5 * (m[o] ?? 0)))); });
     const win = Object.fromEntries(cal.map((r) => [r.st, Number(r.window)])); const del = Object.fromEntries(cal.map((r) => [r.st, Number(r.delegates)]));
-    const windows = [1, 2, 3, 4].map((w) => sts.filter((s) => (win[s] ?? 4) === w));
+    const regOf = Object.fromEntries(cal.map((r) => [r.st, r.region || 'x'])); const regs = [...new Set(sts.map((s) => regOf[s] || 'x'))]; const ri = sts.map((s) => regs.indexOf(regOf[s] || 'x'));
     const rr = rng(4280 + K);
-    const nom = new Float64Array(K), votes = new Float64Array(K), stWin = new Float64Array(nS * K), stShare = new Float64Array(nS * K), stCond = new Float64Array(nS * K * K), drop = [0, 1, 2, 3].map(() => new Float64Array(K));
+    const nom = new Float64Array(K), votes = new Float64Array(K), stWin = new Float64Array(nS * K), stShare = new Float64Array(nS * K), stVotes = new Float64Array(nS * K), stTot = new Float64Array(nS);
+    const eta = new Float64Array(K), reg = new Float64Array(regs.length * K), v = new Float64Array(K);
     for (let s = 0; s < N; s++) {
-      const eta = names.map(() => 0.45 * gauss(rr)); const mom = new Float64Array(K); let act = names.map(() => true);
-      const cum = new Float64Array(K); const dl = new Float64Array(K);
-      for (let w = 0; w < 4; w++) {
-        for (const st of windows[w]) {
-          const k = si[st]; const eff = new Float64Array(K);
-          for (let j = 0; j < K; j++) eff[j] = act[j] ? S[k * K + j] : 0;
-          for (let d = 0; d < K; d++) if (!act[d]) { let z = 0; for (let j = 0; j < K; j++) if (act[j]) z += sim[d][j] * S[k * K + j]; if (z > 0) for (let j = 0; j < K; j++) if (act[j]) eff[j] += S[k * K + d] * sim[d][j] * S[k * K + j] / z; }
-          let tot = 0; const v = new Float64Array(K);
-          for (let j = 0; j < K; j++) if (act[j]) { v[j] = eff[j] * Math.exp(eta[j] + mom[j] + 0.15 * gauss(rr)); tot += v[j]; }
-          let best = 0; for (let j = 0; j < K; j++) { v[j] /= tot; if (v[j] > v[best]) best = j; stShare[k * K + j] += v[j]; cum[j] += v[j] * SV[k]; votes[j] += v[j] * SV[k]; }
-          stWin[k * K + best]++; for (let j = 0; j < K; j++) stCond[(k * K + best) * K + j] += v[j];
-          const dg = del[st] ?? 3;
-          if (party === 'D') { let q = 0; for (let j = 0; j < K; j++) if (v[j] >= 0.15) q += v[j]; if (q > 0) { for (let j = 0; j < K; j++) { if (v[j] >= 0.15) dl[j] += dg * v[j] / q; } } else { dl[best] += dg; } }
-          else if (v[best] >= 0.5) { dl[best] += dg; } else { let q = 0; for (let j = 0; j < K; j++) if (v[j] >= 0.2) q += v[j]; if (q > 0) { for (let j = 0; j < K; j++) { if (v[j] >= 0.2) dl[j] += dg * v[j] / q; } } else { dl[best] += dg; } }
-        }
-        const cs = cum.reduce((a, x) => a + x, 0) || 1;
-        for (let j = 0; j < K; j++) mom[j] = act[j] ? Math.max(-0.5, Math.min(0.5, 0.35 * Math.log(Math.max(1e-4, cum[j] / cs) / tgt[j]))) : 0;
-        const order = [...Array(K).keys()].filter((j) => act[j]).sort((a, c) => cum[c] - cum[a]);
-        let keep;
-        if (w === 0) keep = new Set([...order.slice(0, 3), ...order.filter((j) => cum[j] / cs >= 0.07)]);
-        else if (w === 1) keep = new Set([...order.slice(0, 2), ...order.filter((j) => cum[j] / cs >= 0.12)]);
-        else if (w === 2) keep = new Set(order.length > 1 && cum[order[1]] / cs >= 0.3 ? order.slice(0, 2) : order.slice(0, 1));
-        else keep = new Set(order);
-        for (let j = 0; j < K; j++) if (act[j] && !keep.has(j)) { act[j] = false; drop[w][j]++; }
+      for (let j = 0; j < K; j++) { let chi = 0; for (let q = 0; q < 6; q++) { const z = gauss(rr); chi += z * z; } eta[j] = 0.35 * gauss(rr) / Math.sqrt(chi / 6); }
+      for (let g = 0; g < reg.length; g++) reg[g] = 0.2 * gauss(rr);
+      const dl = new Float64Array(K);
+      for (let k = 0; k < nS; k++) {
+        const g = ri[k]; let tot = 0;
+        for (let j = 0; j < K; j++) { v[j] = S[k * K + j] * Math.exp(eta[j] + reg[g * K + j] + 0.15 * gauss(rr)); tot += v[j]; }
+        const tf = SV[k] * Math.exp(0.08 * gauss(rr)); let best = 0;
+        for (let j = 0; j < K; j++) { v[j] /= tot; if (v[j] > v[best]) best = j; stShare[k * K + j] += v[j]; stVotes[k * K + j] += v[j] * tf; votes[j] += v[j] * tf; }
+        stTot[k] += tf; stWin[k * K + best]++;
+        const dg = del[sts[k]] ?? 3;
+        if (party === 'D') { let q = 0; for (let j = 0; j < K; j++) if (v[j] >= 0.15) q += v[j]; if (q > 0) { for (let j = 0; j < K; j++) if (v[j] >= 0.15) dl[j] += dg * v[j] / q; } else dl[best] += dg; }
+        else if (v[best] >= 0.5) dl[best] += dg; else { let q = 0; for (let j = 0; j < K; j++) if (v[j] >= 0.2) q += v[j]; if (q > 0) { for (let j = 0; j < K; j++) if (v[j] >= 0.2) dl[j] += dg * v[j] / q; } else dl[best] += dg; }
       }
       let bj = 0; for (let j = 0; j < K; j++) if (dl[j] > dl[bj]) bj = j; nom[bj]++;
     }
     const states = {};
-    // a state's share is the typical race: the runs its favorite wins, so the share leader and the favorite always agree
-    sts.forEach((s, k) => { const share = {}, wins = {}, vv = {}; let f = 0; for (let j = 1; j < K; j++) if (stWin[k * K + j] > stWin[k * K + f]) f = j; const nf = stWin[k * K + f];
-      names.forEach((n, j) => { share[n] = (nf > 0 ? stCond[(k * K + f) * K + j] / nf : stShare[k * K + j] / N) * (1 - OTHER[party]); wins[n] = stWin[k * K + j] / N; vv[n] = share[n] * SV[k]; });
-      states[s] = { share, win: wins, votes: vv, total: SV[k], window: win[s] ?? 4 }; });
-    // counties follow their state's typical race: each candidate's county share is scaled by the state's typical share over
-    // its pre race share, then the county is renormalized, so the county page adds up to what the state map shows
+    // a state's share is its average across the runs, votes at the average turnout
+    sts.forEach((s, k) => { const share = {}, wins = {}, vv = {};
+      names.forEach((n, j) => { share[n] = (stShare[k * K + j] / N) * (1 - OTHER[party]); wins[n] = stWin[k * K + j] / N; vv[n] = share[n] * SV[k]; });
+      states[s] = { share, win: wins, votes: vv, total: SV[k], window: win[s] ?? 4, region: regOf[s] }; });
+    // counties: each candidate's county share scaled by the state's average over its base share, then renormalized
     const csh = new Float64Array(nC * K);
     for (let i = 0; i < nC; i++) { const k = si[pm[i].st]; const st = states[sts[k]]; let z = 0;
-      for (let j = 0; j < K; j++) { const b = S[k * K + j]; const t = st.share[names[j]] / (1 - OTHER[party]); const v = b > 1e-9 ? sh[i * K + j] * t / b : 0; csh[i * K + j] = v; z += v; }
+      for (let j = 0; j < K; j++) { const b0 = S[k * K + j]; const t = st.share[names[j]] / (1 - OTHER[party]); const x = b0 > 1e-9 ? sh[i * K + j] * t / b0 : 0; csh[i * K + j] = x; z += x; }
       if (z > 0) for (let j = 0; j < K; j++) csh[i * K + j] /= z; else for (let j = 0; j < K; j++) csh[i * K + j] = sh[i * K + j]; }
     const county = new Map(); for (let i = 0; i < nC; i++) { const arr = names.map((n, j) => [n, csh[i * K + j] * (1 - OTHER[party])]).sort((a, c) => c[1] - a[1]); county.set(pm[i].fips, { top: arr.slice(0, 3), votes: V[i] }); }
-    const out = { party, names, tgt, pollFx, nom: Object.fromEntries(names.map((n, j) => [n, nom[j] / N])), votes: Object.fromEntries(names.map((n, j) => [n, (votes[j] / N) * (1 - OTHER[party])])),
+    const out = { party, names, all: ALL, out: out0, tgt, pollFx, full: true, N, nom: Object.fromEntries(names.map((n, j) => [n, nom[j] / N])),
+      votes: Object.fromEntries(names.map((n, j) => [n, (votes[j] / N) * (1 - OTHER[party])])),
       states, county, csh, cidx: new Map(pm.map((r, i) => [r.fips, i])), cvotes: V, colors: Object.fromEntries(pc.map((c) => [c.name, c.color])), hyp: Object.fromEntries(pc.map((c) => [c.name, Number(c.hypothetical) === 1])) };
     memo = { key, out };
     return out;
@@ -383,6 +384,9 @@ export function createEngine(DATA, AKCT) {
   return {
     ticket(p) { PARAMS = Object.assign({}, p); return op28.ticket(); },
     primShares(party, p) { PARAMS = Object.assign({}, p || {}); return op28.primShares(party); },
+    /** the v45 official primary: the whole field in every state at once; p = { pparty, pout } */
+    prim(p) { PARAMS = Object.assign({}, p || {}); return op28.prim(); },
+    rows(id) { return DATA[id] || []; },
   };
 }
 /** engine.json stores each dataset as columns and rows; the engine reads row objects with blanks as empty strings */

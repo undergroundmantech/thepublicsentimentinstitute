@@ -29,7 +29,7 @@ export interface PrimField {
   /** fips: [other votes, [candidate index, votes], ...] */
   counties: Record<string, (number | [number, number])[]>;
 }
-export interface PrimFile { dem: PrimField; dem_noharris: PrimField; gop: PrimField; gop_novance: PrimField; sims: { general: number; primary: number }; built: string }
+export interface PrimFile { D: PrimField; R: PrimField; sims: { primary: number }; built: string; method?: string }
 export interface StatesGeo { frame: [number, number]; states: Record<string, string>; labels: Record<string, [number, number, number]>; box: Record<string, [number, number, number, number]>; a24: Record<string, number | null> }
 /** fips, state, name, path, 2024 two party margin, generational shift */
 export type CountyGeo = [string, string, string, string, number | null, number | null];

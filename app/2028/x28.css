@@ -197,3 +197,13 @@
   .x28-odds .side b{font-size:40px}
 }
 @media (prefers-reduced-motion:reduce){.x28-svg path,.x28-pv{transition:none}.x28-busy i{animation:none}}
+
+.x28-field{overflow:hidden}
+.x28-field .card-h .btn{margin-left:auto}
+.x28-field .x28-note{padding:12px 18px 0}
+.x28-cands{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 18px}
+.x28-cands button{display:inline-flex;align-items:center;gap:8px;font:700 13px var(--font-b);color:var(--ink);background:rgba(var(--line-rgb),.05);border:1px solid var(--line2);border-radius:999px;padding:7px 12px;cursor:pointer;transition:opacity .2s,background .2s}
+.x28-cands button i{width:9px;height:9px;border-radius:50%}
+.x28-cands button em{font:600 11px var(--font-m);font-style:normal;color:var(--mute)}
+.x28-cands button.off{opacity:.45;text-decoration:line-through;background:none}
+.x28-cands button:hover{background:rgba(var(--line-rgb),.1)}

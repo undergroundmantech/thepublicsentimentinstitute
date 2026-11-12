@@ -12,8 +12,8 @@ export function getDefault(): DefaultFile { if (!DEF) DEF = JSON.parse(fs.readFi
 export function getPrimSummary(): PrimSummary {
   if (!PS) {
     const p = JSON.parse(fs.readFileSync(P("prim.json"), "utf8")) as PrimFile;
-    PS = Object.fromEntries((["dem", "dem_noharris", "gop", "gop_novance"] as const).map((k) => [k, { names: p[k].names, colors: p[k].colors, nomination: p[k].nomination }])) as PrimSummary;
-    PV = { D: p.dem.votes.reduce((a, b) => a + b, 0) + p.dem.other, R: p.gop.votes.reduce((a, b) => a + b, 0) + p.gop.other };
+    PS = Object.fromEntries((["D", "R"] as const).map((k) => [k, { names: p[k].names, colors: p[k].colors, nomination: p[k].nomination }])) as PrimSummary;
+    PV = { D: p.D.votes.reduce((a, b) => a + b, 0) + p.D.other, R: p.R.votes.reduce((a, b) => a + b, 0) + p.R.other };
   }
   return PS;
 }
@@ -27,7 +27,7 @@ export function getCands(): CandOpt[] {
   }
   return CO;
 }
-export const top = (s: PrimSummary["dem"], n = 3) => s.names.map((nm, j) => ({ name: nm, p: s.nomination[j], color: s.colors[j] })).sort((a, b) => b.p - a.p).slice(0, n);
+export const top = (s: PrimSummary["D"], n = 3) => s.names.map((nm, j) => ({ name: nm, p: s.nomination[j], color: s.colors[j] })).sort((a, b) => b.p - a.p).slice(0, n);
 
 let GEN: GenFile | null = null;
 export function getGen(): GenFile { if (!GEN) GEN = JSON.parse(fs.readFileSync(P("gen.json"), "utf8")) as GenFile; return GEN; }
@@ -36,6 +36,12 @@ export function getGenBase(): Res { return genRes(getGen(), "Generic Democrat", 
 export function getGenNames() { const g = getGen(); return { D: [...new Set(g.pairs.map((p) => p[0]))], R: [...new Set(g.pairs.map((p) => p[1]))] }; }
 /** every pairing's artifact numbers, with how likely it is from the artifact's nomination odds */
 export function getGrid(): Grid[] {
-  const ps = getPrimSummary(); const nom = (k: "dem" | "gop", n: string) => { const i = ps[k].names.indexOf(n); return i < 0 ? 0 : ps[k].nomination[i]; };
-  return getGen().pairs.map((p) => ({ d: p[0], r: p[1], pD: p[2], evD: p[3], nat: p[6], odds: p[0] === "Generic Democrat" ? null : nom("dem", p[0]) * nom("gop", p[1]) }));
+  const ps = getPrimSummary(); const nom = (k: "D" | "R", n: string) => { const i = ps[k].names.indexOf(n); return i < 0 ? 0 : ps[k].nomination[i]; };
+  return getGen().pairs.map((p) => ({ d: p[0], r: p[1], pD: p[2], evD: p[3], nat: p[6], odds: p[0] === "Generic Democrat" ? null : nom("D", p[0]) * nom("R", p[1]) }));
+}
+/** the general election over every pairing, each weighted by both nominations' odds from the official primary run */
+export function getWeighted() {
+  let W = 0, P = 0, E = 0;
+  for (const g of getGrid()) { if (g.odds == null) continue; W += g.odds; P += g.odds * g.pD; E += g.odds * g.evD; }
+  return { pD: W > 0 ? P / W : 0, evD: W > 0 ? E / W : 0, coverage: W };
 }
