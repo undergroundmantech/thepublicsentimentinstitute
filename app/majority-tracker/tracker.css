@@ -1,0 +1,105 @@
+/* Majority Tracker. Both candidates are Democrats, so party blue and red stay off this page:
+   Schumer and Van Hollen get their own pair of hues, set for each theme. */
+.opp.mt { --sch: #9a86ff; --sch-soft: rgba(154,134,255,.42); --vh: #34c79a; --vh-soft: rgba(52,199,154,.42); }
+:root[data-theme="light"] .opp.mt { --sch: #5b44d6; --sch-soft: rgba(91,68,214,.34); --vh: #0f8f68; --vh-soft: rgba(15,143,104,.34); }
+.opp.mt .sp { flex: 1; }
+.opp.mt .mt-c-S { color: var(--sch); }
+.opp.mt .mt-c-V { color: var(--vh); }
+.opp.mt .mt-sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: 0; }
+.opp.mt .mt-sw.p-S { background: var(--sch); }
+.opp.mt .mt-sw.p-V { background: var(--vh); }
+
+.opp.mt .mt-note { display: grid; gap: 4px; padding: 14px 18px; margin: 0 0 18px; border: 1px solid var(--line2); border-left: 3px solid var(--gold); border-radius: var(--r); background: var(--glass2); }
+.opp.mt .mt-note b { font: 700 15px var(--font-d); }
+.opp.mt .mt-note p { margin: 0; color: var(--ink2); max-width: 90ch; }
+
+.opp.mt .mt-kpis { margin-bottom: 14px; }
+.opp.mt .kpi .v small { font-size: 22px; color: var(--mute2); }
+
+.opp.mt .mt-bar-card { padding: 16px 18px; margin-bottom: 14px; }
+.opp.mt .mt-bar { position: relative; display: flex; height: 22px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),.06); }
+.opp.mt .mt-bar .b { display: block; height: 100%; }
+.opp.mt .mt-bar .S.firm { background: var(--sch); }
+.opp.mt .mt-bar .S.est { background: var(--sch-soft); }
+.opp.mt .mt-bar .V.est { background: var(--vh-soft); }
+.opp.mt .mt-bar .V.firm { background: var(--vh); }
+.opp.mt .mt-bar .mk { position: absolute; top: -2px; bottom: -2px; width: 2px; margin-left: -1px; background: var(--ink); }
+.opp.mt .mt-bar-lab { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 13px; color: var(--ink2); }
+.opp.mt .mt-bar-lab b { font: 700 18px var(--font-m); font-variant-numeric: tabular-nums; margin-right: 4px; }
+.opp.mt .mt-bar-lab .mid { color: var(--mute); }
+
+.opp.mt .mt-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; padding: 12px 18px; margin-bottom: 14px; font-size: 13px; color: var(--ink2); }
+.opp.mt .mt-legend .h { font: 700 11px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.opp.mt .mt-legend span { display: inline-flex; align-items: center; gap: 0; }
+.opp.mt .mt-key { display: inline-block; width: 13px; height: 13px; border-radius: 50%; margin-right: 7px; border: 1.5px solid var(--ink2); }
+.opp.mt .mt-key.t-stated { background: var(--ink2); }
+.opp.mt .mt-key.t-reported { background: linear-gradient(90deg, var(--ink2) 50%, transparent 50%); }
+.opp.mt .mt-key.t-high { background: rgba(var(--line-rgb),.55); border-color: rgba(var(--line-rgb),.55); }
+.opp.mt .mt-key.t-med { background: rgba(var(--line-rgb),.28); border-color: rgba(var(--line-rgb),.45); }
+.opp.mt .mt-key.t-low { background: transparent; }
+.opp.mt .mt-key.seat { background: rgba(var(--line-rgb),.28); outline: 1.5px dashed var(--ink2); outline-offset: 2px; }
+
+.opp.mt .mt-panels { display: grid; gap: 14px; margin-bottom: 14px; }
+.opp.mt .mt-panel .card-h h3 { display: inline-flex; align-items: center; }
+.opp.mt .mt-sub { font-size: 13px; color: var(--mute); }
+.opp.mt .mt-dots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 14px 6px; }
+.opp.mt .mt-dot { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; min-width: 0; cursor: default; }
+.opp.mt .mt-dot i { display: block; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--c); background: var(--c); transition: transform .15s; }
+.opp.mt .mt-dot:hover i { transform: scale(1.15); }
+.opp.mt .mt-dot b { font: 600 11.5px/1.15 var(--font-b); color: var(--ink); max-width: 100%; overflow-wrap: anywhere; }
+.opp.mt .mt-dot span { font: 600 10px var(--font-m); color: var(--mute); letter-spacing: .04em; }
+.opp.mt .mt-dot.p-S { --c: var(--sch); }
+.opp.mt .mt-dot.p-V { --c: var(--vh); }
+.opp.mt .mt-dot.t-reported i { background: linear-gradient(90deg, var(--c) 50%, transparent 50%); }
+.opp.mt .mt-dot.t-high i { background: color-mix(in srgb, var(--c) 68%, transparent); }
+.opp.mt .mt-dot.t-med i { background: color-mix(in srgb, var(--c) 34%, transparent); }
+.opp.mt .mt-dot.t-low i { background: transparent; }
+.opp.mt .mt-dot.seat i { outline: 2px dashed var(--c); outline-offset: 3px; }
+.opp.mt .mt-dot.empty i { --c: rgba(var(--line-rgb),.22); background: transparent; border-style: solid; }
+.opp.mt .mt-line { grid-column: 1 / -1; border-top: 2px solid var(--ink); display: flex; justify-content: flex-end; margin: 2px 0 4px; }
+.opp.mt .mt-line span { font: 700 12px var(--font-m); color: var(--ink); padding-top: 4px; letter-spacing: .02em; }
+
+.opp.mt .mt-read { margin-bottom: 14px; }
+.opp.mt .mt-read .card-b p { margin: 0; color: var(--ink2); font-size: 14px; }
+.opp.mt .mt-read .card-b p.eye { margin-bottom: 8px; font: 700 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+
+.opp.mt .mt-table { margin-bottom: 14px; }
+.opp.mt .mt-table input, .opp.mt .mt-table select { height: 34px; border: 1px solid var(--line2); border-radius: 9px; background: var(--glass); color: var(--ink); padding: 0 10px; font: 500 13px var(--font-b); }
+.opp.mt .mt-table input { width: 220px; max-width: 100%; }
+.opp.mt .mt-scroll { overflow-x: auto; }
+.opp.mt .mt-table table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.opp.mt .mt-table th { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line2); font: 700 11px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); white-space: nowrap; }
+.opp.mt .mt-table th button { all: unset; cursor: pointer; }
+.opp.mt .mt-table th button:hover, .opp.mt .mt-table th button:focus-visible { color: var(--ink); text-decoration: underline; }
+.opp.mt .mt-table td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.opp.mt .mt-table td.nm { font-weight: 700; white-space: nowrap; }
+.opp.mt .mt-table td.st { font-family: var(--font-m); color: var(--ink2); }
+.opp.mt .mt-table td.why { color: var(--ink2); min-width: 280px; }
+.opp.mt .mt-table td.none { text-align: center; color: var(--mute); padding: 26px; }
+.opp.mt .mt-pk { display: inline-flex; align-items: center; white-space: nowrap; font-weight: 600; }
+.opp.mt .mt-tier { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 99px; border: 1px solid var(--line2); white-space: nowrap; }
+.opp.mt .mt-tier.rec { color: var(--ink); background: var(--glass2); }
+.opp.mt .mt-tier.est { color: var(--mute); border-style: dashed; }
+.opp.mt .mt-foot { color: var(--mute); font-size: 13px; max-width: 110ch; margin: 6px 0 20px; }
+
+@media (max-width: 900px) {
+  .opp.mt .mt-dots { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .opp.mt .grid4.mt-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) { .opp.mt .grid4.mt-kpis { grid-template-columns: 1fr; } .opp.mt .mt-table input { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .opp.mt .mt-dot i { transition: none; } }
+.opp.mt .mt-panels > .card { margin: 0; width: auto; }
+.opp.mt .mt-pill { color: var(--ink); border-color: var(--line2); }
+.opp.mt .mt-pill.p-S { border-color: var(--sch); }
+.opp.mt .mt-pill.p-V { border-color: var(--vh); }
+@media (max-width: 900px) {
+  .opp.mt .mt-dot b { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; overflow-wrap: normal; width: 100%; }
+  .opp.mt .mt-dot span { font-size: 9px; }
+}
+.opp.mt .mt-pill { border: 1px solid var(--line2); }
+.opp.mt .mt-pill.p-S { border-color: var(--sch); }
+.opp.mt .mt-pill.p-V { border-color: var(--vh); }
+@media (max-width: 520px) {
+  .opp.mt .mt-dots { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 6px; }
+  .opp.mt .mt-dot b { font-size: 11px; }
+}
