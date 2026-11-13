@@ -1,3 +1,4 @@
+import { SCORECARD_2026 } from "./ratings2026";
 export type SampleType = "LV" | "RV" | "A";
 
 export type Poll = {
@@ -20,8 +21,8 @@ export type DailyRow = {
 // Every poll's final weight is multiplied by its pollster's quality factor.
 //
 // ── TIER STRUCTURE ──────────────────────────────────────────────────────────
-//   Gold Standard → 6.00×   On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal,
-//                            Quantus Insights, The New York Times, The Wall Street Journal.
+//   Gold Standard → 6.00×   Nov 13 2026, from 2026 accuracy: On Point Polling, The Honest Poll, Big Data Poll,
+//                            NYT/Siena, Quinnipiac, AtlasIntel, Emerson. See ratings2026.ts.
 //   A++           → 4.00×   Elite accuracy (mean error ~2.0)
 //   A+            → 3.00×   Top tier, strong multi-cycle track record
 //   A             → 2.25×   Above average
@@ -38,207 +39,13 @@ export type DailyRow = {
 //   Super F       → 0.005×  Discarded entirely
 //   Unknown       → 0.60×   Unrated: slight penalty vs B baseline
 // =============================================================================
-export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number }> = {
-  // ── GOLD STANDARD (6.00) ─────────────────────────────────────────────────
-  // Oct 22 2026, set by the publisher: Big Data Poll, The Honest Poll, Emerson, Cygnal,
-  // Quantus Insights, The New York Times and The Wall Street Journal. These keys sit first
-  // so a joint release such as The Hill/Emerson or NY Times/Siena College matches here.
-  "on point polling":                           { grade: "Gold",   weight: 6.00 },
-  "on point":                                   { grade: "Gold",   weight: 6.00 },
-  "the public sentiment institute":             { grade: "Gold",   weight: 6.00 },
-  "tpsi":                                       { grade: "Gold",   weight: 6.00 },
-  "quantus insights":                           { grade: "Gold",   weight: 6.00 },
-  "quantus":                                    { grade: "Gold",   weight: 6.00 },
-  "big data poll":                              { grade: "Gold",   weight: 6.00 },
-  "honest poll":                                { grade: "Gold",   weight: 6.00 },
-  "emerson":                                    { grade: "Gold",   weight: 6.00 },
-  "cygnal":                                     { grade: "Gold",   weight: 6.00 },
-  "ny times/siena":                             { grade: "Gold",   weight: 6.00 },
-  "new york times":                             { grade: "Gold",   weight: 6.00 },
-  "siena/nyt":                                  { grade: "Gold",   weight: 6.00 },
-  "siena college/nyt":                          { grade: "Gold",   weight: 6.00 },
-  "/nyt":                                       { grade: "Gold",   weight: 6.00 },
-  "wall street journal":                        { grade: "Gold",   weight: 6.00 },
-  "[wsj]":                                      { grade: "Gold",   weight: 6.00 },
-  "wsj":                                        { grade: "Gold",   weight: 6.00 },
-
-  // ── A++ (4.00) ───────────────────────────────────────────────────────────
-  "atlasintel":                                 { grade: "A++",    weight: 4.00 },
-  "bsp research/shaw & company":                { grade: "A++",    weight: 4.00 },
-  "bsp research":                               { grade: "A++",    weight: 4.00 },
-  "shaw & company":                             { grade: "A++",    weight: 4.00 },
-  "patriot polling":                            { grade: "A++",    weight: 4.00 },
-  // ── A+ (3.00) ────────────────────────────────────────────────────────────
-  "onmessage inc.":                             { grade: "A+",     weight: 3.00 },
-  "onmessage":                                  { grade: "A+",     weight: 3.00 },
-  "u. georgia spia":                            { grade: "A+",     weight: 3.00 },
-  "georgia spia":                               { grade: "A+",     weight: 3.00 },
-  "the washington post":                        { grade: "A+",     weight: 3.00 },
-  "washington post":                            { grade: "A+",     weight: 3.00 },
-  "insideradvantage":                           { grade: "A+",     weight: 3.00 },
-  "insider advantage":                          { grade: "A+",     weight: 3.00 },
-  // ── A (2.25) ─────────────────────────────────────────────────────────────
-  "research & polling":                         { grade: "A",      weight: 2.25 },
-  "fabrizio, lee & associates":                 { grade: "A",      weight: 2.25 },
-  "fabrizio lee":                               { grade: "A",      weight: 2.25 },
-  "fabrizio lee & associates":                  { grade: "A",      weight: 2.25 },
-  "landmark communications":                    { grade: "A",      weight: 2.25 },
-  "tipp":                                       { grade: "A",      weight: 2.25 },
-  "tarrance":                                   { grade: "A",      weight: 2.25 },
-  "tarrance group":                             { grade: "A",      weight: 2.25 },
-  "data orbital":                               { grade: "A",      weight: 2.25 },
-  // ── A- (1.70) ────────────────────────────────────────────────────────────
-  "susquehanna":                                { grade: "A-",     weight: 1.70 },
-  "fabrizio/gbao":                              { grade: "A-",     weight: 1.70 },
-  "global strategy group":                      { grade: "A-",     weight: 1.70 },
-  "harrisx":                                    { grade: "A-",     weight: 1.70 },
-  "harris x":                                   { grade: "A-",     weight: 1.70 },
-  "trafalgar group":                            { grade: "A-",     weight: 1.70 },
-  "trafalgar":                                  { grade: "A-",     weight: 1.70 },
-  "socal strategies":                           { grade: "A-",     weight: 1.70 },
-  "oh predictive insights":                     { grade: "A-",     weight: 1.70 },
-  "oh predictive insights / mbqf":              { grade: "A-",     weight: 1.70 },
-  "east carolina university":                   { grade: "A-",     weight: 1.70 },
-  // ── B+ (1.30) ────────────────────────────────────────────────────────────
-  "j.l. partners":                              { grade: "B+",     weight: 1.30 },
-  "jl partners":                                { grade: "B+",     weight: 1.30 },
-  "j. l. partners":                             { grade: "B+",     weight: 1.30 },
-  "mitchell research & communications":         { grade: "B+",     weight: 1.30 },
-  "mitchell research":                          { grade: "B+",     weight: 1.30 },
-  "wpai":                                       { grade: "B+",     weight: 1.30 },
-  "suffolk":                                    { grade: "B+",     weight: 1.30 },
-  "suffolk university":                         { grade: "B+",     weight: 1.30 },
-  // ── B (1.00 — baseline) ──────────────────────────────────────────────────
-  "mclaughlin":                                 { grade: "B",      weight: 1.00 },
-  "mclaughlin & associates":                    { grade: "B",      weight: 1.00 },
-  "mclaughlin and associates":                  { grade: "B",      weight: 1.00 },
-  "fabrizio ward":                              { grade: "B",      weight: 1.00 },
-  "harris poll":                                { grade: "B",      weight: 1.00 },
-  "fabrizio/impact":                            { grade: "B",      weight: 1.00 },
-  "uc berkeley":                                { grade: "B",      weight: 1.00 },
-  "echelon insights":                           { grade: "B",      weight: 1.00 },
-  "massinc polling group":                      { grade: "B",      weight: 1.00 },
-  "massinc":                                    { grade: "B",      weight: 1.00 },
-  "kaconsulting llc":                           { grade: "B",      weight: 1.00 },
-  "marquette law school":                       { grade: "B",      weight: 1.00 },
-  "washington post/george mason university":    { grade: "B",      weight: 1.00 },
-  "washington post/george mason":               { grade: "B",      weight: 1.00 },
-  // ── B- (0.75) ────────────────────────────────────────────────────────────
-  "u. massachusetts - lowell":                  { grade: "B-",     weight: 0.75 },
-  "umass lowell":                               { grade: "B-",     weight: 0.75 },
-  "u. massachusetts lowell":                    { grade: "B-",     weight: 0.75 },
-  "wick":                                       { grade: "B-",     weight: 0.75 },
-  // ── C+ (0.50) ────────────────────────────────────────────────────────────
-  "harper polling":                             { grade: "C+",     weight: 0.50 },
-  "co/efficient":                               { grade: "C+",     weight: 0.50 },
-  "roanoke college":                            { grade: "C+",     weight: 0.50 },
-  "spry strategies":                            { grade: "C+",     weight: 0.50 },
-  "targoz market research":                     { grade: "C+",     weight: 0.50 },
-  "hart research associates":                   { grade: "C+",     weight: 0.50 },
-  "hart research":                              { grade: "C+",     weight: 0.50 },
-  "muhlenberg":                                 { grade: "C+",     weight: 0.50 },
-  "muhlenberg college":                         { grade: "C+",     weight: 0.50 },
-  "rmg research":                               { grade: "C+",     weight: 0.50 },
-  "redfield & wilton strategies":               { grade: "C+",     weight: 0.50 },
-  "redfield and wilton strategies":             { grade: "C+",     weight: 0.50 },
-  "redfield & wilton":                          { grade: "C+",     weight: 0.50 },
-  "research co.":                               { grade: "C+",     weight: 0.50 },
-  "research co":                                { grade: "C+",     weight: 0.50 },
-  "opinion insight":                            { grade: "C+",     weight: 0.50 },
-  "epic/mra":                                   { grade: "C+",     weight: 0.50 },
-  "st. anselm":                                 { grade: "C+",     weight: 0.50 },
-  "saint anselm":                               { grade: "C+",     weight: 0.50 },
-  "surveyusa":                                  { grade: "C+",     weight: 0.50 },
-  "survey usa":                                 { grade: "C+",     weight: 0.50 },
-  "glengariff group inc.":                      { grade: "C+",     weight: 0.50 },
-  "glengariff group":                           { grade: "C+",     weight: 0.50 },
-  "noble predictive insights":                  { grade: "C+",     weight: 0.50 },
-  "beacon/shaw":                                { grade: "C+",     weight: 0.50 },
-  // ── C (0.25) ─────────────────────────────────────────────────────────────
-  "benenson strategy group":                    { grade: "C",      weight: 0.25 },
-  "benenson strategy group/gs strategy group":  { grade: "C",      weight: 0.25 },
-  "highground":                                 { grade: "C",      weight: 0.25 },
-  "cnn/ssrs":                                   { grade: "C",      weight: 0.25 },
-  "cnn":                                        { grade: "C",      weight: 0.25 },
-  "quinnipiac":                                 { grade: "C",      weight: 0.25 },
-  "quinnipiac university":                      { grade: "C",      weight: 0.25 },
-  "remington":                                  { grade: "C",      weight: 0.25 },
-  "remington research":                         { grade: "C",      weight: 0.25 },
-  "marist college":                             { grade: "C",      weight: 0.25 },
-  "marist":                                     { grade: "C",      weight: 0.25 },
-  "selzer":                                     { grade: "C",      weight: 0.25 },
-  "selzer & company":                           { grade: "C",      weight: 0.25 },
-  "yougov":                                     { grade: "C",      weight: 0.25 },
-  "leger":                                      { grade: "C",      weight: 0.25 },
-  "ipsos":                                      { grade: "C",      weight: 0.25 },
-  "virginia commonwealth u.":                   { grade: "C",      weight: 0.25 },
-  "virginia commonwealth university":           { grade: "C",      weight: 0.25 },
-  "siena college":                              { grade: "C",      weight: 0.25 },
-  "gravis marketing":                           { grade: "C",      weight: 0.25 },
-  "gravis":                                     { grade: "C",      weight: 0.25 },
-  // ── C- (0.15) ────────────────────────────────────────────────────────────
-  "civiqs":                                     { grade: "C-",     weight: 0.15 },
-  "monmouth":                                   { grade: "C-",     weight: 0.15 },
-  "monmouth university":                        { grade: "C-",     weight: 0.15 },
-  "abc/washington post":                        { grade: "C-",     weight: 0.15 },
-  "data for progress":                          { grade: "C-",     weight: 0.15 },
-  "university of texas at tyler":               { grade: "C-",     weight: 0.15 },
-  "ut tyler":                                   { grade: "C-",     weight: 0.15 },
-  "florida atlantic university":                { grade: "C-",     weight: 0.15 },
-  "florida atlantic university/mainstreet research": { grade: "C-", weight: 0.15 },
-  "florida atlantic":                           { grade: "C-",     weight: 0.15 },
-  "franklin and marshall college":              { grade: "C-",     weight: 0.15 },
-  "franklin & marshall":                        { grade: "C-",     weight: 0.15 },
-  "u. new hampshire":                           { grade: "C-",     weight: 0.15 },
-  "university of new hampshire":                { grade: "C-",     weight: 0.15 },
-  "kaiser family foundation":                   { grade: "C-",     weight: 0.15 },
-  "morning consult":                            { grade: "C-",     weight: 0.15 },
-  "qriously":                                   { grade: "C-",     weight: 0.15 },
-  // ── D+ / D (0.06) ────────────────────────────────────────────────────────
-  "ces / yougov":                               { grade: "D+",     weight: 0.06 },
-  "victory insights":                           { grade: "D+",     weight: 0.06 },
-  "patinkin research strategies":               { grade: "D+",     weight: 0.06 },
-  "patinkin research":                          { grade: "D+",     weight: 0.06 },
-  "change research":                            { grade: "D",      weight: 0.06 },
-  "swayable":                                   { grade: "D",      weight: 0.06 },
-  // ── D- (0.03) ────────────────────────────────────────────────────────────
-  "mason-dixon":                                { grade: "D-",     weight: 0.03 },
-  "mason dixon":                                { grade: "D-",     weight: 0.03 },
-  "focaldata":                                  { grade: "D-",     weight: 0.03 },
-  "surveymonkey":                               { grade: "D-",     weight: 0.03 },
-  "survey monkey":                              { grade: "D-",     weight: 0.03 },
-  "ppp":                                        { grade: "D-",     weight: 0.03 },
-  "public policy polling":                      { grade: "D-",     weight: 0.03 },
-  // ── F / F- (0.01) ────────────────────────────────────────────────────────
-  "navigator":                                  { grade: "F",      weight: 0.01 },
-  "baldwin wallace university":                 { grade: "F",      weight: 0.01 },
-  "bullfinch":                                  { grade: "F",      weight: 0.01 },
-  "gbao":                                       { grade: "F",      weight: 0.01 },
-  "the political matrix/the listener group":    { grade: "F",      weight: 0.01 },
-  "the political matrix":                       { grade: "F",      weight: 0.01 },
-  "big village":                                { grade: "F-",     weight: 0.01 },
-  "usc dornsife":                               { grade: "F-",     weight: 0.01 },
-  "strategies 360":                             { grade: "F-",     weight: 0.01 },
-  "citizen data":                               { grade: "F-",     weight: 0.01 },
-  // ── Super F (0.005) ──────────────────────────────────────────────────────
-  "outward intelligence":                       { grade: "Super F", weight: 0.005 },
-  "research america":                           { grade: "Super F", weight: 0.005 },
-  "ascend action":                              { grade: "Super F", weight: 0.005 },
-  "alaska survey research":                     { grade: "Super F", weight: 0.005 },
-  "prri":                                       { grade: "Super F", weight: 0.005 },
-  "raba research":                              { grade: "Super F", weight: 0.005 },
-  "amber integrated":                           { grade: "Super F", weight: 0.005 },
-  "center street pac":                          { grade: "Super F", weight: 0.005 },
-  "anzalone liszt grove":                       { grade: "Super F", weight: 0.005 },
-  "clarity":                                    { grade: "Super F", weight: 0.005 },
-  "soonerpoll.com":                             { grade: "Super F", weight: 0.005 },
-  "soonerpoll":                                 { grade: "Super F", weight: 0.005 },
-};
+// Nov 13 2026: grades come from 2026 accuracy, set in ratings2026.ts. The old table is retired.
+export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number }> = SCORECARD_2026;
 
 // Oct 22 2026, set by the publisher: ActiVote is left out of every average, and Wedgewood Polls stays out as well.
 // Oct 30 2026, set by the publisher: Rasmussen Reports comes back in, entered as a Republican internal, so it carries
 // the measured Republican internal correction below.
-export const EXCLUDED_POLLSTERS = /activote|wedgewood/i;
+export const EXCLUDED_POLLSTERS = /activote|wedgewood|socal\s*strateg|socalpoll/i;
 export function isExcludedPollster(name: string): boolean { return EXCLUDED_POLLSTERS.test(name || ""); }
 
 // Oct 22 2026: Trafalgar and InsiderAdvantage are labelled Republican leaning. Their lean is
@@ -250,6 +57,8 @@ export type LeanDir = "R" | "D";
 export const LEAN_FIRMS: { id: string; label: string; re: RegExp; dir: LeanDir }[] = [
   { id: "trafalgar", label: "Trafalgar", re: /trafalgar/i, dir: "R" },
   { id: "insideradvantage", label: "InsiderAdvantage", re: /insider\s*advantage/i, dir: "R" },
+  // Nov 13 2026: Quantus ran 4 points right of the nonpartisan polls of the same races in the final month of 2026
+  { id: "quantus", label: "Quantus Insights", re: /quantus/i, dir: "R" },
   { id: "impactresearch", label: "Impact Research", re: /impact\s*research/i, dir: "D" },
   // Oct 23 2026, set by the publisher: Democratic leaning firms get the same measured treatment. Each is moved only
   // if its own polls run to the left of the other polls of the same races, by as much as they do.

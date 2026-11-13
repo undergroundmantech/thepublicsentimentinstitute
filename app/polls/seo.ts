@@ -1,7 +1,7 @@
 // Search metadata for polling averages: the latest numbers go straight into the title, the
 // description and the Dataset record, so a search result or an AI answer can quote them.
 import type { Metadata } from "next";
-import { AGGREGATES, buildAggregate, type AggregateDef, type BuiltAggregate } from "@/app/_polling/lib/aggregates";
+import { DESK_AGGREGATES, buildAggregate, type AggregateDef, type BuiltAggregate } from "@/app/_polling/lib/aggregates";
 import { STATE_NAME } from "@/app/lib/opp";
 import { crumbsLd, datasetLd, graph, pageLd, seo } from "@/app/lib/seo";
 import { pollHref } from "./registry";
@@ -28,7 +28,7 @@ function subject(d: AggregateDef): { place?: string; office?: string; name: stri
   if (d.id === "trump-approval") return { name: "Donald Trump approval rating" };
   if (d.id === "vance-favorability") return { name: "JD Vance favorability" };
   if (d.id === "right-wrong-track") return { name: "Right track or wrong track" };
-  if (d.id === "2028-vance-newsom") return { name: "2028 presidential election: Vance vs Newsom" };
+  if (d.category === "2028") return { name: `2028 presidential election: ${d.seriesA.label} vs ${d.seriesB.label}` };
   let m = d.id.match(/^2024-([a-z]{2})$/);
   if (m) return { place: STATE_NAME[m[1].toUpperCase()], office: "president", name: `${STATE_NAME[m[1].toUpperCase()]} 2024 presidential election` };
   if (d.id === "2024-national") return { name: "2024 presidential election, national" };
@@ -56,7 +56,7 @@ export function avgSummary(def: AggregateDef): AvgSummary {
   };
 }
 
-export const avgById = (id: string) => { const d = AGGREGATES.find((x) => x.id === id); return d ? avgSummary(d) : null; };
+export const avgById = (id: string) => { const d = DESK_AGGREGATES.find((x) => x.id === id); return d ? avgSummary(d) : null; };
 
 function words(s: AvgSummary) {
   const A = s.def.seriesA.label, B = s.def.seriesB.label;

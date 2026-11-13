@@ -14,6 +14,4 @@ export const KY04_POLLS: Poll[] = [
   { pollster: "Neighborhood R&M (R)",     endDate: "2026-05-15", sampleSize: 291, sampleType: "LV", results: { Gallrein: 50, Massie: 50 } },
   // Quantus Insights May 11–12 (standard ballot with undecideds — 48/43/8%)
   { pollster: "Quantus Insights",     endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
-  // SoCal Strategies May 15–16
-  { pollster: "SoCal Strategies (R)",     endDate: "2026-05-16", sampleSize: 450, sampleType: "LV", results: { Gallrein: 54, Massie: 46 } },
 ];

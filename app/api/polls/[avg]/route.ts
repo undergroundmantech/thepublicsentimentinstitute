@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
+import { DESK_AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
 import { pollHref } from "@/app/polls/registry";
 
 // Public JSON for every tracked average, so outlets can cite the number:
@@ -8,7 +8,7 @@ import { pollHref } from "@/app/polls/registry";
 export const dynamic = "force-static";
 
 export function generateStaticParams() {
-  return [{ avg: "index" }, ...AGGREGATES.map((d) => ({ avg: d.id }))];
+  return [{ avg: "index" }, ...DESK_AGGREGATES.map((d) => ({ avg: d.id }))];
 }
 
 const r1 = (n: number) => Math.round(n * 10) / 10;
@@ -17,10 +17,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ avg: st
   const { avg } = await params;
   if (avg === "index") {
     return NextResponse.json({
-      averages: AGGREGATES.map((d) => ({ id: d.id, label: d.label, category: d.category, page: `https://onpointpolitics.us${pollHref(d.id)}`, json: `https://onpointpolitics.us/api/polls/${d.id}` })),
+      averages: DESK_AGGREGATES.map((d) => ({ id: d.id, label: d.label, category: d.category, page: `https://onpointpolitics.us${pollHref(d.id)}`, json: `https://onpointpolitics.us/api/polls/${d.id}` })),
     });
   }
-  const def = AGGREGATES.find((d) => d.id === avg);
+  const def = DESK_AGGREGATES.find((d) => d.id === avg);
   if (!def) return NextResponse.json({ error: "unknown average", index: "/api/polls/index" }, { status: 404 });
   const b = buildAggregate(def);
   const last = b.daily[b.daily.length - 1];

@@ -8,7 +8,7 @@ import { raceHref } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
 import fs from "node:fs";
 import path from "node:path";
-import { AGGREGATES } from "@/app/_polling/lib/aggregates";
+import { DESK_AGGREGATES } from "@/app/_polling/lib/aggregates";
 import { pollHref, stateRaceParams } from "@/app/polls/registry";
 import { dbHref, getDownballot } from "@/app/forecast/statewide/data";
 import { getStatehouse, slHref } from "@/app/forecast/legislatures/data";
@@ -65,8 +65,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/forecast/methodology", fc, "weekly", 0.6),
     u("/forecast/changelog", fc, "daily", 0.4),
     u("/polls", today, "daily", 0.9),
-    u("/polls/senate", today, "daily", 0.8),
-    u("/polls/governor", today, "daily", 0.8),
+    u("/polls/2028", today, "daily", 0.9),
+    u("/polls/2028/republican-primary", today, "daily", 0.8),
+    u("/polls/2028/democratic-primary", today, "daily", 0.8),
+    u("/polls/ratings", today, "monthly", 0.7),
     u("/maps", today, "weekly", 0.7),
     u("/maps/ballot-measures", ms.meta.updated, "daily", 0.85),
     u("/maps/electoral", fc, "weekly", 0.7),
@@ -103,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // polling averages, every one at its canonical route
   const seen = new Set(out.map((e) => e.url));
   const add = (e: Entry) => { if (!seen.has(e.url)) { seen.add(e.url); out.push(e); } };
-  for (const d of AGGREGATES) {
+  for (const d of DESK_AGGREGATES) {
     const href = pollHref(d.id);
     if (href.includes("?")) continue;
     const old = /^\/polls\/archive\//.test(href) || /governor-2025$/.test(href);

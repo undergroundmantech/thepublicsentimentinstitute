@@ -22,7 +22,5 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "YouGov / Yahoo",         endDate: "2025-09-02", sampleSize: 1690, sampleType: "A",  results: { Vance: 41.0, Newsom: 49.0 } },
   { pollster: "Leger360",               endDate: "2025-08-31", sampleSize: 849,  sampleType: "A",  results: { Vance: 46.0, Newsom: 47.0 } },
   { pollster: "Emerson",                endDate: "2025-08-26", sampleSize: 1000, sampleType: "LV", results: { Vance: 44.4, Newsom: 43.5 } },
-  { pollster: "SoCal Strategies",       endDate: "2025-08-18", sampleSize: 700,  sampleType: "A",  results: { Vance: 37.0, Newsom: 39.0 } },
   { pollster: "Emerson",                endDate: "2025-07-22", sampleSize: 1400, sampleType: "RV", results: { Vance: 45.3, Newsom: 42.1 } },
-  { pollster: "SoCal Strategies",       endDate: "2024-12-23", sampleSize: 656,  sampleType: "A",  results: { Vance: 37.0, Newsom: 34.0 } },
 ];

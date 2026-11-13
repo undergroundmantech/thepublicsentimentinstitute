@@ -21,8 +21,6 @@ const GOLD_STANDARD_NAMES = [
   "Rasmussen Reports",
   "AtlasIntel",
   "Atlas Intel",
-  "SoCalStrategies",
-  "SoCal Strategies",
   "Emerson",
   "Trafalgar",
   "InsiderAdvantage",
@@ -140,7 +138,6 @@ const VA_LTGOV_POLLS: Poll[] = [
 
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 52, Other: 1, Undecided: 1 } },
 
-  { pollster: "SoCal Strategies (R)", endDate: "2025-10-29", sampleSize: 800, sampleType: "LV", results: { "John Reid (R)": 45, "Ghazala Hashmi (D)": 47, Undecided: 8 } },
 
   { pollster: "State Navigate", endDate: "2025-10-28", sampleSize: 614, sampleType: "LV", results: { "John Reid (R)": 41, "Ghazala Hashmi (D)": 53, Undecided: 6 } },
 
@@ -186,7 +183,6 @@ const VA_LTGOV_POLLS: Poll[] = [
 
   { pollster: "Virginia Commonwealth University", endDate: "2025-08-28", sampleSize: 804, sampleType: "A", results: { "John Reid (R)": 41, "Ghazala Hashmi (D)": 45, Undecided: 14 } },
 
-  { pollster: "SoCal Strategies (R)", endDate: "2025-09-01", sampleSize: 700, sampleType: "LV", results: { "John Reid (R)": 41, "Ghazala Hashmi (D)": 46, Undecided: 14 } },
 
   { pollster: "co/efficient (R)", endDate: "2025-08-26", sampleSize: 1025, sampleType: "LV", results: { "John Reid (R)": 43, "Ghazala Hashmi (D)": 43, Undecided: 14 } },
 
@@ -209,7 +205,6 @@ const VA_AG_POLLS: Poll[] = [
 
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "Jason Miyares (R)": 48, "Jay Jones (D)": 47, Other: 3, Undecided: 2 } },
 
-  { pollster: "SoCal Strategies (R)", endDate: "2025-10-29", sampleSize: 800, sampleType: "LV", results: { "Jason Miyares (R)": 48, "Jay Jones (D)": 46, Undecided: 6 } },
   { pollster: "State Navigate", endDate: "2025-10-28", sampleSize: 614, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 49, Undecided: 5 } },
   { pollster: "Roanoke College", endDate: "2025-10-27", sampleSize: 1041, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 38, Other: 4, Undecided: 12 } },
 
@@ -253,7 +248,6 @@ const VA_AG_POLLS: Poll[] = [
 
   { pollster: "Virginia Commonwealth University", endDate: "2025-08-28", sampleSize: 804, sampleType: "A", results: { "Jason Miyares (R)": 41, "Jay Jones (D)": 47, Undecided: 12 } },
 
-  { pollster: "SoCal Strategies (R)", endDate: "2025-09-01", sampleSize: 700, sampleType: "LV", results: { "Jason Miyares (R)": 41, "Jay Jones (D)": 46, Undecided: 12 } },
 
   { pollster: "co/efficient (R)", endDate: "2025-08-26", sampleSize: 1025, sampleType: "LV", results: { "Jason Miyares (R)": 44, "Jay Jones (D)": 45, Undecided: 11 } },
 

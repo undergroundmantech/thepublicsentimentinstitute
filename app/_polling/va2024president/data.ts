@@ -27,5 +27,4 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Mainstreet Research/FAU", endDate: "2024-07-15", sampleSize: 265, sampleType: "LV", results: { Harris: 43, Trump: 47 } },
   { pollster: "Mainstreet Research/FAU", endDate: "2024-07-13", sampleSize: 544, sampleType: "LV", results: { Harris: 46, Trump: 42 } },
   { pollster: "NY Times/Siena College", endDate: "2024-07-12", sampleSize: 661, sampleType: "LV", results: { Harris: 49, Trump: 44 } },
-  { pollster: "SoCal Strategies (R)", endDate: "2024-07-11", sampleSize: 1000, sampleType: "RV", results: { Harris: 47, Trump: 47 } },
 ];

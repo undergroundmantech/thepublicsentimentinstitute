@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
-import { AGGREGATES } from "@/app/_polling/lib/aggregates";
-import { pollHref, PRIMARIES } from "@/app/polls/registry";
+import { DESK_AGGREGATES } from "@/app/_polling/lib/aggregates";
+import { pollHref } from "@/app/polls/registry";
+import { PRIMARIES_2028, hrefOf2028 } from "@/app/_polling/2028/matchups";
 import { getModel } from "@/app/lib/forecastData";
 import { STATE_NAME, raceHref } from "@/app/lib/opp";
 import SearchBox, { type Entry } from "./SearchBox";
@@ -24,10 +25,10 @@ export default function Page() {
     const office = r.office === "house" ? "House" : r.office === "senate" ? "Senate" : "Governor";
     entries.push({ href: raceHref(r.id), title: r.name, sub: `${r.dem} vs ${r.gop}`, kind: `${office} forecast`, keys: `${r.name} ${r.state} ${r.st} ${r.dem} ${r.gop} ${office}`.toLowerCase() });
   }
-  for (const d of AGGREGATES) {
+  for (const d of DESK_AGGREGATES) {
     entries.push({ href: pollHref(d.id), title: d.title.replace(/ — /g, ", "), sub: d.category, kind: "Polling averages", keys: `${d.title} ${d.label} ${d.category} ${d.stateAbbr ? STATE_NAME[d.stateAbbr] ?? "" : ""}`.toLowerCase() });
   }
-  for (const [k, v] of Object.entries(PRIMARIES)) entries.push({ href: `/polls/${k}`, title: v.title, kind: "Polling averages", keys: v.title.toLowerCase() });
+  for (const p of PRIMARIES_2028) entries.push({ href: hrefOf2028(p.id), title: p.title, sub: "Every candidate", kind: "Polling averages", keys: `${p.title} 2028 primary`.toLowerCase() });
   return (
     <div className="opp">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Search</span></nav>
@@ -35,7 +36,7 @@ export default function Page() {
         <div className="eye g">Search</div>
         <h1>Find a <em>race</em></h1>
         <p className="lede">Search every forecast, polling average and page on On Point Politics by race, state or candidate.</p>
-        <div className="pmeta"><span>Indexed <b className="mono">{entries.length.toLocaleString()}</b></span><span>Forecasts <b className="mono">{getModel().races.length}</b></span><span>Averages <b className="mono">{AGGREGATES.length + Object.keys(PRIMARIES).length}</b></span></div>
+        <div className="pmeta"><span>Indexed <b className="mono">{entries.length.toLocaleString()}</b></span><span>Forecasts <b className="mono">{getModel().races.length}</b></span><span>Averages <b className="mono">{DESK_AGGREGATES.length + PRIMARIES_2028.length}</b></span></div>
       </header>
       <SearchBox entries={entries} />
     </div>

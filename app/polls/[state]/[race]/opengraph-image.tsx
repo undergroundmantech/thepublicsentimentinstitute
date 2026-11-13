@@ -1,5 +1,5 @@
 import { STATE_NAME } from "@/app/lib/opp";
-import { aggByHref, stateRaceParams, PRIMARIES } from "../../registry";
+import { aggByHref, stateRaceParams } from "../../registry";
 import { avgSummary } from "../../seo";
 import { OG_SIZE, OG_TYPE, ogCard, pctOg, dayOg, C } from "@/app/lib/og";
 
@@ -11,7 +11,7 @@ export function generateStaticParams() { return stateRaceParams(); }
 
 export default async function Image({ params }: { params: Promise<{ state: string; race: string }> }) {
   const { state, race } = await params;
-  const prim = PRIMARIES[`${state}/${race}`];
+  const prim = undefined as { title: string } | undefined;
   const def = aggByHref(`/polls/${state}/${race}`);
   if (prim || !def) return ogCard({ eyebrow: "Polling average", title: prim?.title ?? `${STATE_NAME[state.toUpperCase()] ?? state} polls` });
   return avgCard(avgSummary(def));

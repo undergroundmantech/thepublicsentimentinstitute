@@ -69,10 +69,11 @@ export const MENU: NavGroup[] = [
         { href: "/polls/generic-ballot", label: "Generic ballot" },
         { href: "/polls/right-track", label: "Right track, wrong track" },
       ] },
-      { h: "Races", links: [
-        { href: "/polls/2028", label: "2028 primaries" },
-        { href: "/polls/senate", label: "Senate" },
-        { href: "/polls/governor", label: "Governors" },
+      { h: "2028", links: [
+        { href: "/polls/2028/republican-primary", label: "Republican primary" },
+        { href: "/polls/2028/democratic-primary", label: "Democratic primary" },
+        { href: "/polls/2028", label: "General election matchups" },
+        { href: "/polls/ratings", label: "Pollster ratings" },
       ] },
       { h: "Senate leadership", links: [
         { href: "/majority-tracker", label: "Majority Tracker", note: "Schumer vs Van Hollen", badge: "New" },

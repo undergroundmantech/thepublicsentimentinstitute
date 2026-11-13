@@ -5,7 +5,7 @@ import JsonLd from "@/app/components/JsonLd";
 import Link from "@/app/components/Link";
 import "./promo.css";
 import { aggById } from "./registry";
-import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
+import { DESK_AGGREGATES as AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
 import { avgLd, avgSummary } from "./seo";
 
 /** Forecast race pages the averages page can link to, keyed `sen-GA` / `gov-GA`. Built on the
@@ -34,16 +34,15 @@ function initialBuild(id: string) {
 export default function Average({ id }: { id: string }) {
   const def = aggById(id);
   const s = def ? avgSummary(def) : null;
-  const group = !s ? "" : s.def.category === "2026 Senate" ? "Senate" : s.def.category.includes("overnor") ? "Governor" : "";
   const crumbs: [string, string][] = [["Home", "/"], ["Polls", "/polls"]];
-  if (group) crumbs.push([group, group === "Senate" ? "/polls/senate" : "/polls/governor"]);
+  if (s?.def.category === "2028") crumbs.push(["2028", "/polls/2028"]);
   if (s) crumbs.push([s.headline, s.path]);
   return (
     <>
       {s ? <JsonLd data={avgLd(s, crumbs)} /> : null}
       {TIMELINE[id] ? (
         <Link href={TIMELINE[id]} className="opp avg-tl" data-ev="Timeline opened" data-ev-d={JSON.stringify({ from: id })}>
-          <span className="k">New</span><b>Walk the timeline</b><span>Scroll the whole term day by day, with every major event marked on the line</span><i aria-hidden="true">Open</i>
+          <span className="k">New</span><b>Walk the timeline</b><span>Scroll the whole term day by day with Pointy, with every major event marked on the line</span><i aria-hidden="true">Open</i>
         </Link>
       ) : null}
       <PollingAveragesPage initialId={id} forecast={forecastLinks()} initialBuilt={initialBuild(id)} />

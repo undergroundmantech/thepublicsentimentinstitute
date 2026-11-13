@@ -11,7 +11,6 @@ export const VA_GOV_POLLS: Poll[] = [
   { pollster: "Emerson College", endDate: "2025-10-31", sampleSize: 880, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 44, "Abigail Spanberger (D)": 55, Other: 0, Undecided: 1 } },
   { pollster: "Echelon Insights (R)", endDate: "2025-10-31", sampleSize: 606, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 55, Undecided: 2 } },
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1325, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 45, "Abigail Spanberger (D)": 54, Other: 0, Undecided: 1 } },
-  { pollster: "SoCal Strategies (R)", endDate: "2025-10-29", sampleSize: 800, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 53, Undecided: 4 } },
   { pollster: "State Navigate", endDate: "2025-10-28", sampleSize: 614, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 41, "Abigail Spanberger (D)": 54, Undecided: 5 } },
 
   { pollster: "InsiderAdvantage (R)/Trafalgar (R)", endDate: "2025-10-28", sampleSize: 800, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 42, "Abigail Spanberger (D)": 46, Other: 4, Undecided: 8 } },
@@ -60,7 +59,6 @@ export const VA_GOV_POLLS: Poll[] = [
   { pollster: "Cygnal (R)", endDate: "2025-09-07", sampleSize: 0, sampleType: "RV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 50, Undecided: 7 } },
 
   { pollster: "Pulse Decision Science (R)", endDate: "2025-09-05", sampleSize: 512, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 48, Other: 1, Undecided: 8 } },
-  { pollster: "SoCal Strategies (R)", endDate: "2025-09-01", sampleSize: 700, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 41, "Abigail Spanberger (D)": 53, Undecided: 6 } },
 
   { pollster: "Virginia Commonwealth University", endDate: "2025-08-28", sampleSize: 764, sampleType: "RV", results: { "Winsome Earle-Sears (R)": 40, "Abigail Spanberger (D)": 49, Other: 2, Undecided: 11 } },
   { pollster: "co/efficient (R)", endDate: "2025-08-26", sampleSize: 1025, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 48, Other: 3, Undecided: 7 } },
@@ -99,7 +97,6 @@ export const NJ_GOV_POLLS: Poll[] = [
 
   { pollster: "AtlasIntel", endDate: "2025-10-30", sampleSize: 1639, sampleType: "LV", results: { "Mikie Sherrill (D)": 50, "Jack Ciattarelli (R)": 49, Undecided: 1 } },
 
-  { pollster: "SoCal Strategies (R)", endDate: "2025-10-29", sampleSize: 800, sampleType: "LV", results: { "Mikie Sherrill (D)": 52, "Jack Ciattarelli (R)": 45, Undecided: 3 } },
   { pollster: "Suffolk University", endDate: "2025-10-29", sampleSize: 500, sampleType: "LV", results: { "Mikie Sherrill (D)": 46, "Jack Ciattarelli (R)": 42, Other: 2, Undecided: 7 } },
 
   // Emerson (2 lines, same n)

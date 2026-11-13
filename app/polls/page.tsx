@@ -5,7 +5,7 @@ import { timelineData } from "./timeline/data";
 import { seo } from "@/app/lib/seo";
 import "./timeline/timeline.css";
 import "./promo.css";
-export const metadata: Metadata = seo({"title": "2026 polling averages", "description": "The generic ballot and Trump approval averages with a timeline of the term, then every 2026 Senate, governor and House race On Point Politics tracks.", "path": "/polls"});
+export const metadata: Metadata = seo({"title": "Polling averages: 2028 primaries, 2028 matchups, Trump approval", "description": "The generic ballot and Trump approval averages with a timeline of the term, the 2028 Republican and Democratic primaries with every candidate, every 2028 general election matchup and the 2024 and 2025 archive.", "path": "/polls"});
 export default function Page() {
   const approval = timelineData("trump-approval", {
     title: "Trump approval", kicker: "Polling timeline · second term", kind: "approval", avgHref: "/polls/approval",
@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <>
       {approval && generic ? <PollsHome approval={approval} generic={generic} /> : null}
-      <PollIndex initial="senate" sub title={<>Every race, <em>on one board</em></>} lede="House districts, Senate races, governor races and the national averages, all current polling: each average is a robust LOWESS fit through every public poll, weighted by recency with a 16 day half life, sample size, voter screen and pollster grade, then refit three times so outlying polls count for less." />
+      <PollIndex initial="2028" sub title={<>2028, <em>on one board</em></>} lede="Both 2028 primaries with every candidate, every 2028 general election matchup, the national averages and the 2024 and 2025 archive. The 2026 race averages closed with the election and stay with each race on the forecast. Each average is a robust LOWESS fit through every public poll, weighted by recency with a 16 day half life, sample size, voter screen and pollster grade, then refit three times so outlying polls count for less." />
     </>
   );
 }

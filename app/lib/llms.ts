@@ -5,7 +5,7 @@ import { getAcc } from "@/app/accuracy/data";
 import { getModel, isInd, type FRace } from "@/app/lib/forecastData";
 import { fmtM, raceHref, STATE_NAME } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
-import { AGGREGATES } from "@/app/_polling/lib/aggregates";
+import { DESK_AGGREGATES } from "@/app/_polling/lib/aggregates";
 import { avgSummary } from "@/app/polls/seo";
 import { dbHref, getDownballot } from "@/app/forecast/statewide/data";
 import { currentMajority, getStatehouse, slHref } from "@/app/forecast/legislatures/data";
@@ -37,8 +37,8 @@ export function llmsText(full: boolean): string {
   const db = getDownballot();
   const favD = sl.chambers.filter((c) => c.demControl > c.gopControl).length;
   const pass = ms.measures.filter((m) => m.est.prob > 0.5).length;
-  const gb = avgSummary(AGGREGATES.find((d) => d.id === "generic-ballot")!);
-  const ap = avgSummary(AGGREGATES.find((d) => d.id === "trump-approval")!);
+  const gb = avgSummary(DESK_AGGREGATES.find((d) => d.id === "generic-ballot")!);
+  const ap = avgSummary(DESK_AGGREGATES.find((d) => d.id === "trump-approval")!);
   const L: string[] = [];
   const h = (t: string) => L.push("", `## ${t}`, "");
 
@@ -116,7 +116,7 @@ export function llmsText(full: boolean): string {
       L.push(`* ${STATE_NAME[m.st] ?? m.st} ${m.label}, ${m.title}: ${pc(m.est.prob)} chance to pass, Yes projected at ${m.est.yes.toFixed(1)}% against the ${Math.round(m.threshold * 1000) / 10}% it needs. ${U(bmHref(m))}`));
     h("Every polling average");
     const seen = new Set<string>();
-    for (const d of AGGREGATES) {
+    for (const d of DESK_AGGREGATES) {
       const s = avgSummary(d);
       if (seen.has(s.path) || s.path.includes("?")) continue;
       seen.add(s.path);
@@ -136,8 +136,10 @@ export function llmsText(full: boolean): string {
     `* Forecast methodology: ${U("/forecast/methodology")}`,
     `* Forecast changelog: ${U("/forecast/changelog")}`,
     `* Polling averages, every race and question: ${U("/polls")}`,
-    `* Senate polling averages: ${U("/polls/senate")}`,
-    `* Governor polling averages: ${U("/polls/governor")}`,
+    `* 2028 polling averages, both primaries and every general election matchup: ${U("/polls/2028")}`,
+    `* 2028 Republican primary average, every candidate: ${U("/polls/2028/republican-primary")}`,
+    `* 2028 Democratic primary average, every candidate: ${U("/polls/2028/democratic-primary")}`,
+    `* Pollster ratings after 2026 and the Gold Standard: ${U("/polls/ratings")}`,
     `* Generic ballot average: ${U("/polls/generic-ballot")}`,
     `* Trump approval average: ${U("/polls/approval")}`,
     `* Ballot measures map, every 2026 statewide question by county with projected Yes and No votes: ${U("/maps/ballot-measures")}`,

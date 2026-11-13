@@ -11,7 +11,8 @@ import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../ge
 import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/data";
 import { RAW_POLLS as VANCE, GOLD_STANDARD_NAMES as VANCE_GOLD } from "../jdvanceapproval/data";
 import { RAW_POLLS as TRACK, GOLD_STANDARD_NAMES as TRACK_GOLD } from "../rightorwrongtrack/data";
-import { RAW_POLLS as P2028, GOLD_STANDARD_NAMES as P2028_GOLD } from "../2028polling/data";
+import { GENERAL_2028_AGGS } from "../2028/matchups";
+import { GOLD_2026, LEAN_CAL_2026 } from "./ratings2026";
 
 // 2025 governor races
 import { VA_GOV_POLLS, NJ_GOV_POLLS } from "../2025pollingview/data";
@@ -377,21 +378,8 @@ const RAW_AGGREGATES: AggregateDef[] = [
     fmtMargin: netPM,
     polls: TRACK, gold: TRACK_GOLD, goldMult: 2,
   },
-  {
-    id: "2028-vance-newsom",
-    label: "2028: Vance vs Newsom",
-    category: "2028",
-    title: "2028 · Vance vs. Newsom",
-    subtitle:
-      "An early daily weighted average of hypothetical 2028 general-election matchups, on the On Point Polling model.",
-    unit: "%",
-    keyA: "Vance", keyB: "Newsom",
-    seriesA: { label: "Vance", color: RED },
-    seriesB: { label: "Newsom", color: BLUE },
-    marginLabel: "Margin",
-    fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `Vance +${n.toFixed(1)}` : `Newsom +${Math.abs(n).toFixed(1)}`),
-    polls: P2028, gold: P2028_GOLD, goldMult: 2,
-  },
+  // 2028: every general election matchup with two or more national polls
+  ...GENERAL_2028_AGGS,
   ...EXTRA,
   ...SENATE_AGGS,
   ...GOVERNOR_AGGS,
@@ -463,13 +451,20 @@ function measureLeans(defs: AggregateDef[]): Record<string, LeanEstimate> {
 export const R_LEAN_ESTIMATES: Record<string, LeanEstimate> = measureLeans(RAW_AGGREGATES);
 
 export type PollLean = { dir: "R" | "D"; pts: number; firms: string };
+// Nov 13 2026: a 2028 average moves partisan polls by the lean measured against the nonpartisan polls of the same
+// races in the final month of 2026, the stretch scored against the results, where that lean is known.
+function leanFor(d: AggregateDef, f: string): LeanEstimate | undefined {
+  const e = R_LEAN_ESTIMATES[f], c = LEAN_CAL_2026[f];
+  if (!e || !c || d.category !== "2028") return e;
+  return { ...e, lean: c.lean, n: c.n };
+}
 function cleanPolls(d: AggregateDef): Poll[] {
   const side = rSideOf(d);
   return d.polls.filter((p) => !isExcludedPollster(p.pollster)).map((p) => {
     const firms = rLeanFirms(p.pollster);
     if (!firms.length || !side) return p;
     // a joint release of an R lean and a D lean firm would cancel; every listed joint release is two R lean firms
-    const est = firms.map((f) => R_LEAN_ESTIMATES[f]).filter(Boolean);
+    const est = firms.map((f) => leanFor(d, f)).filter(Boolean) as LeanEstimate[];
     const dir = est[0]?.dir ?? "R";
     const lean = est.filter((e) => e.dir === dir).reduce((s, e) => s + e.lean, 0) / Math.max(1, est.filter((e) => e.dir === dir).length);
     if (!(lean > 0)) return p;
@@ -484,7 +479,13 @@ function cleanPolls(d: AggregateDef): Poll[] {
   });
 }
 
-export const AGGREGATES: AggregateDef[] = RAW_AGGREGATES.map((d) => ({ ...d, polls: cleanPolls(d) }));
+// Nov 13 2026: the national averages weight up the 2026 Gold Standard (ratings2026.ts) in place of their old lists
+const GOLD_CATS = new Set(["Approval", "2026 House", "National mood", "2028"]);
+export const AGGREGATES: AggregateDef[] = RAW_AGGREGATES.map((d) => ({ ...d, gold: GOLD_CATS.has(d.category) ? GOLD_2026 : d.gold, polls: cleanPolls(d) }));
+/** Nov 13 2026: the 2026 Senate and governor averages closed with the election. They stay in AGGREGATES for the
+ *  forecast race pages and are kept off the polling desk, which reads DESK_AGGREGATES. */
+export const RETIRED_CATEGORIES = new Set(["2026 Senate", "2026 Governor"]);
+export const DESK_AGGREGATES: AggregateDef[] = AGGREGATES.filter((d) => !RETIRED_CATEGORIES.has(d.category));
 /** The cleaned poll list of one average: removed firms dropped, Republican lean taken off. */
 export function aggPolls(id: string): Poll[] { return AGGREGATES.find((d) => d.id === id)?.polls ?? []; }
 

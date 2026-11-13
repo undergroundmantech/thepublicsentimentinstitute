@@ -68,9 +68,9 @@ export default function PollsHome({ approval, generic }: { approval: TLData; gen
   return (
     <div className="opp ph">
       <header className="ph-hero">
-        <span className="eye g">Polling averages · 2026</span>
+        <span className="eye g">Polling averages</span>
         <h1>The national mood, <em>poll by poll.</em></h1>
-        <p>The two numbers every race moves with: the generic congressional ballot and Donald Trump&rsquo;s job approval, each a robust LOWESS fit through every public poll, weighted by recency, sample size, voter screen and pollster grade. Below them, walk the whole term day by day, then every Senate, governor and House race on the board.</p>
+        <p>The two numbers every race moves with: the generic congressional ballot and Donald Trump&rsquo;s job approval, each a robust LOWESS fit through every public poll, weighted by recency, sample size, voter screen and pollster grade. Below them, walk the whole term day by day, then both 2028 primaries and every 2028 matchup on the board.</p>
       </header>
       <div className="ph-cards">
         <Card d={generic} on={show && pick === "generic"} onPick={() => choose("generic")} />
@@ -82,7 +82,7 @@ export default function PollsHome({ approval, generic }: { approval: TLData; gen
           <button aria-pressed={pick === "generic"} onClick={() => choose("generic")}>Generic ballot</button>
           <button aria-pressed={pick === "approval"} onClick={() => choose("approval")}>Trump approval</button>
         </div>
-        <span className="ph-hint">{show ? "Scroll through the term. Every stop is an event that made news." : "Switch it on to walk the term day by day."}</span>
+        <span className="ph-hint">{show ? "Scroll through the term with Pointy. Every stop is an event that made news." : "Switch it on to walk the term day by day."}</span>
       </div>
       {show ? <Timeline key={d.id} data={d} embedded /> : null}
     </div>

@@ -16,7 +16,7 @@ import Footer from "@/app/components/Footer";
 
 // ─── Gold Standard helpers ────────────────────────────────────────────────────
 const GS_NAMES = [
-  "Big Data Poll", "AtlasIntel","SoCalStrategies",
+  "Big Data Poll", "AtlasIntel",
   "Emerson","Trafalgar","InsiderAdvantage","Patriot Polling",
 ];
 function normName(s: string) {
@@ -741,7 +741,6 @@ export const KY04_POLLS: Poll[] = [
   { pollster: "Big Data Poll (R)",    endDate: "2026-05-14", sampleSize: 518, sampleType: "LV", results: { Gallrein: 49, Massie: 51 } },
   { pollster: "Neighborhood R&M (R)", endDate: "2026-05-15", sampleSize: 291, sampleType: "LV", results: { Gallrein: 50, Massie: 50 } },
   { pollster: "Quantus Insights", endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
-  { pollster: "SoCal Strategies (R)", endDate: "2026-05-16", sampleSize: 450, sampleType: "LV", results: { Gallrein: 54, Massie: 46 } },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────

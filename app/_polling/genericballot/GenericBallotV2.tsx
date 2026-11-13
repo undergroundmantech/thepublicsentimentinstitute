@@ -6,7 +6,7 @@ import { Pointy } from "@/app/components/home/Mascot";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import { pollHref } from "@/app/polls/registry";
 import {
-  AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti, builtN,
+  DESK_AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti, builtN,
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/_polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
@@ -52,31 +52,32 @@ function canonType(t: string): "LV" | "RV" | "A" | null {
 }
 
 const GROUP_OF = (cat: string) =>
-  cat === "2024 President" ? "2024 President"
+  cat === "2028" ? "2028 General"
+  : cat === "2024 President" ? "2024 President"
   : cat === "2025 Governor" ? "2025 Races"
   : cat === "2026 Senate" ? "2026 Senate"
   : cat === "2026 Governor" ? "2026 Governor"
   : "National";
 const GROUP_TITLE: Record<string, string> = {
-  National: "National", "2026 Senate": "2026 Senate", "2026 Governor": "2026 governor",
+  "2028 General": "2028 general election", National: "National", "2026 Senate": "2026 Senate", "2026 Governor": "2026 governor",
   "2025 Races": "2025 races", "2024 President": "2024 president", Primaries: "Primaries",
 };
-const GROUP_HREF: Record<string, string> = { "2026 Senate": "/polls/senate", "2026 Governor": "/polls/governor" };
+const GROUP_HREF: Record<string, string> = { "2028 General": "/polls/2028" };
 const NATIONAL_HEAD: Record<string, string> = {
   "generic-ballot": "Generic ballot", "trump-approval": "Trump approval", "vance-favorability": "JD Vance favorability",
-  "right-wrong-track": "Right track, wrong track", "2028-vance-newsom": "2028 presidential",
+  "right-wrong-track": "Right track, wrong track",
 };
 
 type Item = { id: string; label: string; group: string; kind: "h2h" | "multi" };
-const H2H_BY_ID: Record<string, AggregateDef> = Object.fromEntries(AGGREGATES.map((d) => [d.id, d]));
+const H2H_BY_ID: Record<string, AggregateDef> = Object.fromEntries(DESK_AGGREGATES.map((d) => [d.id, d]));
 const MULTI_BY_ID: Record<string, MultiAggregateDef> = Object.fromEntries(MULTI_AGGREGATES.map((d) => [d.id, d]));
 const CATALOG: Item[] = [
-  ...AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: GROUP_OF(d.category), kind: "h2h" as const })),
+  ...DESK_AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: GROUP_OF(d.category), kind: "h2h" as const })),
   ...MULTI_AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: d.group, kind: "multi" as const })),
 ];
-const LATEST_POLL = AGGREGATES.reduce((m, d) => d.polls.reduce((mm, p) => (p.endDate > mm ? p.endDate : mm), m), "");
+const LATEST_POLL = DESK_AGGREGATES.reduce((m, d) => d.polls.reduce((mm, p) => (p.endDate > mm ? p.endDate : mm), m), "");
 const freshCut = LATEST_POLL ? new Date(new Date(LATEST_POLL + "T00:00:00").getTime() - 7 * 864e5).toISOString().slice(0, 10) : "";
-const GROUP_ORDER = ["National", "2026 Senate", "2026 Governor", "Primaries", "2025 Races", "2024 President"];
+const GROUP_ORDER = ["2028 General", "National", "2026 Senate", "2026 Governor", "Primaries", "2025 Races", "2024 President"];
 const GROUPS = CATALOG.reduce<string[]>((acc, c) => (acc.includes(c.group) ? acc : [...acc, c.group]), [])
   .sort((a, b) => (GROUP_ORDER.indexOf(a) + 99) % 99 - (GROUP_ORDER.indexOf(b) + 99) % 99);
 
@@ -99,6 +100,7 @@ function heads(it: Item, d: AggregateDef | null, m: MultiAggregateDef | null) {
     const sen = d.category === "2026 Senate";
     return { crumb: st, eyebrow: sen ? "2026 Senate" : "2026 governor", h1: `${st} ${sen ? "Senate" : "governor"}` };
   }
+  if (d.category === "2028") return { crumb: d.label, eyebrow: "2028 general election", h1: `2028 ${d.label}` };
   if (d.category === "2024 President") return { crumb: d.label, eyebrow: "2024 archive", h1: d.id === "2024-national" ? "2024 national presidential" : `2024 ${d.label} presidential` };
   if (d.category === "2025 Governor") { const st = d.label.replace(/ Governor$/, ""); return { crumb: d.label.replace(/ Governor$/, " governor"), eyebrow: "2025 archive", h1: `${st} 2025 governor` }; }
   return { crumb: NATIONAL_HEAD[d.id] ?? d.label, eyebrow: d.category, h1: NATIONAL_HEAD[d.id] ?? d.label };
@@ -145,7 +147,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
   // view: "focus" = one average; "board" = every average on one page
   const [view, setView] = useState<"focus" | "board">("focus");
   const [showAllPolls, setShowAllPolls] = useState(false);
-  const [boardGroup, setBoardGroup] = useState<BoardGroup>(() => { const d = AGGREGATES.find((x) => x.id === initial.id); return d ? boardGroupOf(d) : "archive"; });
+  const [boardGroup, setBoardGroup] = useState<BoardGroup>(() => { const d = DESK_AGGREGATES.find((x) => x.id === initial.id); return d ? boardGroupOf(d) : "archive"; });
   const booted = useRef(false);
 
   // deep link support: ?race=<id> selects an average, ?view=board opens the full board
@@ -203,7 +205,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
   useEffect(() => {
     let cancelled = false;
     const first = initial.group;
-    const order = [...AGGREGATES].sort((x, y) => Number(GROUP_OF(y.category) === first) - Number(GROUP_OF(x.category) === first));
+    const order = [...DESK_AGGREGATES].sort((x, y) => Number(GROUP_OF(y.category) === first) - Number(GROUP_OF(x.category) === first));
     const a: Record<string, BuiltAggregate> = {};
     const tick = () => new Promise<void>((r) => setTimeout(r, 0));
     (async () => {
@@ -267,7 +269,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
   const mapRows = useMemo<MapRow[]>(() => {
     if (!mapOffice) return [];
     const best: Record<string, MapRow> = {};
-    for (const def of AGGREGATES) {
+    for (const def of DESK_AGGREGATES) {
       if (!def.stateAbbr || GROUP_OF(def.category) !== group) continue;
       const b = allBuilt[def.id];
       if (!b?.latest) continue;
@@ -461,7 +463,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
   }
 
   /* ------------------------------ the whiteboard room ------------------------------ */
-  const board = buildBoard(AGGREGATES, allBuilt, freshCut);
+  const board = buildBoard(DESK_AGGREGATES, allBuilt, freshCut);
   const roomGroups = BOARD_GROUPS.map((g) => ({ id: g.id, label: g.label, count: board.items[g.id].length }));
   const boardOffice = boardGroup === "senate" ? "U.S. Senate" : boardGroup === "governor" ? "Governor" : boardGroup === "house" ? "U.S. House" : null;
 
@@ -478,7 +480,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
         activeId={id} onPick={(aid) => { const c = CATALOG.find((x) => x.id === aid); if (!c) return; if (c.group !== group) setGroup(c.group); pickAgg(aid); }}
         mapRows={boardOffice ? board.maps[boardGroup as "senate" | "governor" | "house"] : []} office={boardOffice}
         onMapPick={boardGroup === "house" ? () => {} : undefined} notes={boardGroup !== "house"}
-        listTitle={boardGroup === "house" ? "Every polled district" : boardGroup === "national" ? "National averages" : boardGroup === "archive" ? "Primaries and past races" : "Every race"}
+        listTitle={boardGroup === "house" ? "Every polled district" : boardGroup === "national" ? "National averages" : boardGroup === "archive" ? "Past races" : boardGroup === "2028" ? "2028 primaries and matchups" : "Every race"}
         active={h2hDef && hLatest ? { title: shortLabel(item), value: h2hDef.fmtMargin(hLatest.net), color: leadColor, polls: totalPolls } : { title: shortLabel(item), value: "", color: "", polls: totalPolls }}
         tray={<>
           <span className="eye">Voter sample</span>
