@@ -4,14 +4,14 @@ import {
   getCandidateList,
   buildDailyWeightedSeries, pollSharesOn,
   getPollsterEntry,
-  isExcludedPollster, rLeanFirms, R_LEAN_FIRMS,
+  isExcludedPollster, rLeanFirms, R_LEAN_FIRMS, type ModelOptions,
 } from "./buildDailyModel";
 
 import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../genericballot/data";
 import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/data";
 import { RAW_POLLS as VANCE, GOLD_STANDARD_NAMES as VANCE_GOLD } from "../jdvanceapproval/data";
 import { RAW_POLLS as TRACK, GOLD_STANDARD_NAMES as TRACK_GOLD } from "../rightorwrongtrack/data";
-import { GENERAL_2028_AGGS } from "../2028/matchups";
+import { GENERAL_2028_AGGS, PRIMARY_2028_MULTI } from "../2028/matchups";
 import { GOLD_2026, LEAN_CAL_2026 } from "./ratings2026";
 
 // 2025 governor races
@@ -601,6 +601,10 @@ export type MultiAggregateDef = {
   polls: Poll[];
   gold: string[];
   goldMult: number;
+  /** model weights, when a field needs other than the election profile */
+  opts?: ModelOptions;
+  /** the first day the chart and table show */
+  from?: string;
 };
 export type MultiDaily = { date: string; t: number; v: number[] }; // v aligned to series
 export type MultiPollPoint = { pollster: string; date: string; t: number; v: number[]; sampleSize: number; sampleType: string; grade: string };
@@ -625,15 +629,16 @@ function multiDef(id: string, label: string, title: string, subtitle: string, po
 
 // The Primaries category was retired from the polling desk. The primary poll
 // files stay on disk, but nothing registers them, so no Primaries tab renders.
-export const MULTI_AGGREGATES: MultiAggregateDef[] = [];
+// Nov 13 2026: the 2028 Republican and Democratic primaries, every candidate.
+export const MULTI_AGGREGATES: MultiAggregateDef[] = PRIMARY_2028_MULTI;
 
 export function buildMulti(def0: MultiAggregateDef): BuiltMulti {
   const def = { ...def0, polls: def0.polls.filter((p) => !isExcludedPollster(p.pollster)) };
   const adjusted = def.polls.map((p) => ({ ...p, sampleSize: effSample(p.pollster, p.sampleSize, def.gold, def.goldMult) }));
   const keys = def.series.map((s) => s.key);
   const range = getDateRange(def.polls);
-  const base = buildDailyWeightedSeries(adjusted as Poll[], keys, range.start, range.end);
-  const daily: MultiDaily[] = base.map((row) => ({
+  const base = buildDailyWeightedSeries(adjusted as Poll[], keys, range.start, range.end, def0.opts);
+  const daily: MultiDaily[] = base.filter((row) => !def0.from || String(row.date) >= def0.from).map((row) => ({
     date: row.date,
     t: ts(row.date),
     v: keys.map((k) => round1(Number((row as Record<string, number | string>)[k] ?? 0))),
@@ -648,7 +653,7 @@ export function buildMulti(def0: MultiAggregateDef): BuiltMulti {
       sampleType: p.sampleType,
       grade: getPollsterEntry(p.pollster).grade,
     }))
-    .filter((p) => p.v.some((x) => Number.isFinite(x)));
+    .filter((p) => p.v.some((x) => Number.isFinite(x)) && (!def0.from || p.date >= def0.from));
   const last = daily[daily.length - 1] ?? null;
   return { daily, polls, latest: last ? last.v : null };
 }

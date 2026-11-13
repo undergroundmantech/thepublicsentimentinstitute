@@ -4,7 +4,7 @@ import { builtN, type AggregateDef, type BuiltAggregate } from "./aggregates";
 import type { MapRow } from "./StateRaceMap";
 import type { RoomItem } from "./PollRoom";
 import { pollHref } from "@/app/polls/registry";
-import { PRIMARIES_2028, SINGLES_2028, hrefOf2028 } from "@/app/_polling/2028/matchups";
+import { PRIMARIES_2028, PRIMARY_IDS, SINGLES_2028, hrefOf2028 } from "@/app/_polling/2028/matchups";
 import { STATE_NAME } from "@/app/lib/opp";
 
 // Nov 13 2026: the 2026 Senate, governor and House boards closed with the election. Their averages live on in the
@@ -64,7 +64,7 @@ export function buildBoard(defs: AggregateDef[], built: Record<string, BuiltAggr
   }
   maps.senate = Object.values(bestMap.senate); maps.governor = Object.values(bestMap.governor);
   // 2028: both primaries first, then every matchup, then the matchups with a single poll so far
-  items["2028"].unshift(...PRIMARIES_2028.map((p) => ({ id: `prim:${p.id}`, label: p.short, sub: "Every candidate", value: `${p.polls.length} polls`, color: p.party === "R" ? "var(--gop)" : "var(--dem)", spark: [], n: p.polls.length, margin: null, href: hrefOf2028(p.id) })));
+  items["2028"].unshift(...PRIMARIES_2028.map((p) => ({ id: PRIMARY_IDS[p.id], label: p.short, sub: "Every candidate", value: `${p.polls.length} polls`, color: p.party === "R" ? "var(--gop)" : "var(--dem)", spark: [], n: p.polls.length, margin: null, href: hrefOf2028(p.id) })));
   for (const m of SINGLES_2028) items["2028"].push({ id: `one:${m.id}`, label: `${m.rep} vs. ${m.dem}`, sub: "One poll so far", value: "", color: "", spark: [], n: 1, margin: null, href: "/polls/2028#one-poll" });
 
   const all = (Object.keys(items) as BoardGroup[]).flatMap((g) => items[g].map((x) => ({ id: x.id, label: g === "house" ? `${x.label} House` : x.sub ? `${x.label}: ${x.sub.split(" · ")[0]}` : x.label, group: g, href: x.href })));

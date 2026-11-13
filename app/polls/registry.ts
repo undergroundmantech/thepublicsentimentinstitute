@@ -5,7 +5,7 @@
 // Nov 13 2026: the 2026 Senate and governor averages closed with the election and left the desk. Their ids still
 // resolve, to the forecast race page, which keeps the final average with the result.
 import { AGGREGATES, DESK_AGGREGATES, RETIRED_CATEGORIES, type AggregateDef } from "@/app/_polling/lib/aggregates";
-import { MATCHUPS_2028 } from "@/app/_polling/2028/matchups";
+import { MATCHUPS_2028, PRIMARY_IDS } from "@/app/_polling/2028/matchups";
 
 const NATIONAL: Record<string, string> = {
   "generic-ballot": "/polls/generic-ballot",
@@ -15,6 +15,7 @@ const NATIONAL: Record<string, string> = {
   "2024-national": "/polls/archive/2024",
 };
 for (const m of MATCHUPS_2028) NATIONAL[m.id] = `/polls/2028/${m.slug}`;
+for (const [slug, id] of Object.entries(PRIMARY_IDS)) NATIONAL[id] = `/polls/2028/${slug}`;
 
 /** Race slug from the part of an aggregate id after the state. */
 function raceSlug(rest: string) {

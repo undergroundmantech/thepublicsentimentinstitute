@@ -59,7 +59,7 @@ const GROUP_OF = (cat: string) =>
   : cat === "2026 Governor" ? "2026 Governor"
   : "National";
 const GROUP_TITLE: Record<string, string> = {
-  "2028 General": "2028 general election", National: "National", "2026 Senate": "2026 Senate", "2026 Governor": "2026 governor",
+  "2028 General": "2028", National: "National", "2026 Senate": "2026 Senate", "2026 Governor": "2026 governor",
   "2025 Races": "2025 races", "2024 President": "2024 president", Primaries: "Primaries",
 };
 const GROUP_HREF: Record<string, string> = { "2028 General": "/polls/2028" };
@@ -93,7 +93,7 @@ function shortLabel(it: Item): string {
 
 /** Page words for one average: crumb, eyebrow and the h1 lead (the h1 ends in "average"). */
 function heads(it: Item, d: AggregateDef | null, m: MultiAggregateDef | null) {
-  if (m) return { crumb: m.label, eyebrow: "2026 primary", h1: m.label };
+  if (m) return { crumb: m.label, eyebrow: "2028 presidential primary · national", h1: `2028 ${m.label}` };
   if (!d) return { crumb: it.label, eyebrow: "Polling average", h1: it.label };
   if (d.stateAbbr) {
     const st = STATE_NAME[d.stateAbbr] ?? d.stateAbbr;
@@ -147,7 +147,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
   // view: "focus" = one average; "board" = every average on one page
   const [view, setView] = useState<"focus" | "board">("focus");
   const [showAllPolls, setShowAllPolls] = useState(false);
-  const [boardGroup, setBoardGroup] = useState<BoardGroup>(() => { const d = DESK_AGGREGATES.find((x) => x.id === initial.id); return d ? boardGroupOf(d) : "archive"; });
+  const [boardGroup, setBoardGroup] = useState<BoardGroup>(() => { const d = DESK_AGGREGATES.find((x) => x.id === initial.id); return d ? boardGroupOf(d) : initial.group === "2028 General" ? "2028" : "archive"; });
   const booted = useRef(false);
 
   // deep link support: ?race=<id> selects an average, ?view=board opens the full board
@@ -544,7 +544,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
           ) : dailyArr.length === 0 ? (
             <div className="empty">No {(SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full ?? "matching").toLowerCase()} polls for this average.</div>
           ) : isMulti && builtMulti && multiDef ? (
-            <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
+            <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily.map((x) => ({ ...x, v: x.v.slice(0, 10) }))} polls={builtMulti.polls.map((x) => ({ ...x, v: x.v.slice(0, 10) })).filter((x) => x.v.some((y) => Number.isFinite(y)))} series={multiDef.series.slice(0, 10)} unit={multiDef.unit} />
           ) : builtH2H && h2hDef ? (
             <AverageStudio animKey={`${h2hDef.id}:${sampleFilter}`} title="The average over time" daily={builtH2H.daily} polls={builtH2H.polls.map((q) => ({ ...q, op: q.pollster.startsWith("On Point") }))}
               seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} height={420} />
@@ -559,7 +559,7 @@ export default function PollingAveragesPage({ initialId, forecast, initialBuilt 
               <div className="card-h"><h3>What moves the average today</h3><span className="eye" style={{ marginLeft: "auto" }}>Share of today&apos;s weight</span></div>
               <div className="card-b">
                 <WeightBars polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} />
-                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, and those weights are the kernel of a robust LOWESS fit: a local line read at the day itself, with three bisquare passes that weigh down any poll far from the rest. No single poll can carry more than 15 percent. Gold Standard pollsters, On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked Lean R, and Democratic firms such as Public Policy Polling, Change Research, Global Strategy Group, GBAO, Data for Progress, GQR and Civiqs are marked Lean D. The tables show every poll as published; the average counts a lean firm&apos;s poll moved the other way by its measured lean against other polls of the same races, and the chart shows that move as a hollow dot for the poll as published joined to the filled dot the average counts: {Object.values(R_LEAN_ESTIMATES).filter((e) => e.lean > 0).map((e) => `${e.label} ${e.lean.toFixed(1)} points ${e.dir === "R" ? "right" : "left"} over ${e.n} polls`).join(", ")}. A firm whose polls do not run toward its side is not moved.</p>
+                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, and those weights are the kernel of a robust LOWESS fit: a local line read at the day itself, with three bisquare passes that weigh down any poll far from the rest. No single poll can carry more than 15 percent. Gold Standard pollsters from the 2026 ratings, On Point Polling, The Honest Poll, Big Data Poll, NYT/Siena, Quinnipiac, AtlasIntel and Emerson, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked Lean R, and Democratic firms such as Public Policy Polling, Change Research, Global Strategy Group, GBAO, Data for Progress, GQR and Civiqs are marked Lean D. The tables show every poll as published; the average counts a lean firm&apos;s poll moved the other way by its measured lean against other polls of the same races, and the chart shows that move as a hollow dot for the poll as published joined to the filled dot the average counts: {Object.values(R_LEAN_ESTIMATES).filter((e) => e.lean > 0).map((e) => `${e.label} ${e.lean.toFixed(1)} points ${e.dir === "R" ? "right" : "left"} over ${e.n} polls`).join(", ")}. A firm whose polls do not run toward its side is not moved.</p>
               </div>
             </section>
           ) : null}

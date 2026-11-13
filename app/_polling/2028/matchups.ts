@@ -1,6 +1,6 @@
 // The 2028 averages: every general election matchup with at least two national polls becomes a two way average on the
 // same engine as the generic ballot, and the two primaries are multi candidate averages on the same weights.
-import type { AggregateDef } from "@/app/_polling/lib/aggregates";
+import type { AggregateDef, MultiAggregateDef } from "@/app/_polling/lib/aggregates";
 import type { ModelOptions } from "@/app/_polling/lib/buildDailyModel";
 import { GOLD_2026 } from "@/app/_polling/lib/ratings2026";
 import { D_PRIMARY_2028, GENERAL_2028, R_PRIMARY_2028, type Poll2028 } from "./data";
@@ -67,3 +67,36 @@ export const PRIMARIES_2028: PrimaryDef[] = [
   { id: "democratic-primary", party: "D", title: "2028 Democratic presidential primary", short: "Democratic primary", polls: D_PRIMARY_2028, gold: GOLD_2026 },
 ];
 export const hrefOf2028 = (s: string) => `/polls/2028/${s}`;
+
+/* ----------- the primaries as multi candidate averages on the polling averages page ----------- */
+const SHADES: Record<"R" | "D", string[]> = {
+  R: ["#ff3b5c", "#ff8a5b", "#c2183f", "#ffb3c0", "#e0525e", "#d9798a", "#8f1d33", "#ff6f91", "#c24a2c", "#f2a07b", "#a8455a", "#ffd1d9", "#7a2030", "#e88f6a", "#b86b78", "#ff9fae"],
+  D: ["#3d7bff", "#5fc4e8", "#1a3fb0", "#a6c2ff", "#6f6cf0", "#7d93c9", "#2a9bd6", "#9db8ff", "#3f56a8", "#86d3f0", "#5470d6", "#c9d8ff", "#24357a", "#6aa8d9", "#8a8fd6", "#b3e4f7"],
+};
+export const PRIMARY_IDS: Record<PrimaryDef["id"], string> = { "republican-primary": "2028-gop-primary", "democratic-primary": "2028-dem-primary" };
+/** Candidates in the order of their recent polling: the mean of the polls in the last 150 days that asked them, then all polls. */
+function ordered(polls: Poll2028[]): string[] {
+  const end = polls.reduce((m, p) => (p.endDate > m ? p.endDate : m), "");
+  const cut = new Date(new Date(end).getTime() - 150 * 864e5).toISOString().slice(0, 10);
+  const stat = new Map<string, { r: number[]; a: number[] }>();
+  for (const p of polls) for (const [k, v] of Object.entries(p.results)) {
+    if (k === "Undecided" || k === "Other" || !Number.isFinite(v)) continue;
+    const s = stat.get(k) ?? { r: [], a: [] }; s.a.push(v); if (p.endDate >= cut) s.r.push(v); stat.set(k, s);
+  }
+  const mean = (x: number[]) => (x.length ? x.reduce((a, b) => a + b, 0) / x.length : -1);
+  return [...stat.entries()].sort((a, b) => mean(b[1].r) - mean(a[1].r) || mean(b[1].a) - mean(a[1].a)).map(([k]) => k);
+}
+export const PRIMARY_2028_MULTI: MultiAggregateDef[] = PRIMARIES_2028.map((p) => ({
+  id: PRIMARY_IDS[p.id],
+  label: p.short,
+  group: "2028 General",
+  title: p.title,
+  subtitle: "Every candidate any national poll has named, on the On Point model: recency, sample size, voter screen and pollster grade.",
+  unit: "%",
+  series: ordered(p.polls).map((k, i) => ({ key: k, label: k, color: SHADES[p.party][i % SHADES[p.party].length] })),
+  polls: p.polls,
+  gold: GOLD_2026,
+  goldMult: 2,
+  opts: PRIMARY_PROFILE,
+  from: "2024-11-06",
+}));
