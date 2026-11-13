@@ -1,6 +1,7 @@
 "use client";
 // The phone tab bar: the four desks people come back to, in reach of a thumb, and the full menu. Shown at 860px
 // and narrower (app/phone.css). It steps aside while the on screen keyboard is up and in full screen views.
+// Nov 2026 refresh: a floating capsule with a lit blob that glides between tabs (refresh.css).
 import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,9 +32,12 @@ export default function MobileTabs() {
     vv.addEventListener("resize", on);
     return () => vv.removeEventListener("resize", on);
   }, []);
+  const at = TABS.findIndex((t) => t.on(path));
   const menu = () => { ev("Tab bar", { to: "menu" }); window.dispatchEvent(new Event("opp:menu")); };
   return (
     <nav className={`opp opp-tabs${kb ? " kb" : ""}`} aria-label="Sections">
+      {/* a soft lit blob that glides to the current tab */}
+      <span className={`tb-blob${at >= 0 ? " on" : ""}`} style={{ transform: `translateX(${Math.max(at, 0) * 100}%)` }} aria-hidden="true" />
       {TABS.map((t) => {
         const on = t.on(path);
         return (

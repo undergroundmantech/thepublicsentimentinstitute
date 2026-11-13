@@ -2,7 +2,7 @@
 
 import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
 import LangPicker from "./LangPicker";
@@ -11,6 +11,18 @@ import { MENU, type NavGroup } from "./navMenu";
 // The On Point Politics masthead: the logo, five tabs and three controls. On Point Polling, Accuracy, Forecasts and Polls
 // go straight to their page on a click and open a short panel on hover; More opens the rest of the site. One menu
 // definition (navMenu.ts) drives the desktop panels, the phone menu and the footer.
+// Nov 2026 refresh: a lit pill slides under whichever tab you point at and settles back on the current section,
+// tab labels lean a few pixels toward the pointer, and panels unfold with their links arriving in a short cascade.
+// All of it switches off for reduced motion and light rendering (refresh.css).
+
+const calm = () => typeof window !== "undefined" && (document.documentElement.hasAttribute("data-lite") || window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+const pull = (e: React.PointerEvent<HTMLElement>) => {
+  if (e.pointerType !== "mouse" || calm()) return;
+  const el = e.currentTarget, r = el.getBoundingClientRect();
+  const dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+  el.style.transform = `translate(${(dx * 7).toFixed(1)}px, ${(dy * 5).toFixed(1)}px)`;
+};
+const settle = (e: React.PointerEvent<HTMLElement>) => { e.currentTarget.style.transform = ""; };
 
 const Caret = () => <svg className="cr" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 const SearchIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" /></svg>;
@@ -23,6 +35,10 @@ export default function Navbar() {
   const timer = useRef<number | null>(null);
   const bar = useRef<HTMLDivElement>(null);
   const head = useRef<HTMLElement>(null);
+  const tabs = useRef<HTMLElement>(null);
+  const [hover, setHover] = useState<string | null>(null);
+  const pill = useRef<HTMLSpanElement>(null);
+  const [ind, setInd] = useState<{ x: number; y: number; w: number; h: number; on: boolean; lit: boolean }>({ x: 0, y: 0, w: 0, h: 0, on: false, lit: false });
 
   useEffect(() => { setOpen(false); setMenu(null); }, [pathname]);
   useEffect(() => {
@@ -73,21 +89,35 @@ export default function Navbar() {
   const enter = (k: string) => { if (timer.current) window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setMenu(k), 80); };
   const leave = () => { if (timer.current) window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setMenu(null), 200); };
   const cur = (href: string) => (pathname === href && !href.includes("#") ? "page" : undefined);
+  const active = MENU.find((g) => inGroup(g))?.key ?? null;
+  // the sliding pill: under the tab being pointed at or opened, otherwise the current section
+  const place = useCallback(() => {
+    const nav = tabs.current, p = pill.current; if (!nav || !p) return;
+    const box = (p.offsetParent as HTMLElement | null) ?? nav;
+    const key = menu ?? hover ?? active;
+    const el = key ? nav.querySelector<HTMLElement>(`[data-k="${key}"] .t5-t`) : null;
+    if (!el) { setInd((p) => ({ ...p, on: false })); return; }
+    const a = box.getBoundingClientRect(), b = el.getBoundingClientRect();
+    setInd({ x: b.left - a.left, y: b.top - a.top, w: b.width, h: b.height, on: true, lit: key !== active || !!menu });
+  }, [menu, hover, active]);
+  useLayoutEffect(() => { place(); }, [place, pathname]);
+  useEffect(() => { window.addEventListener("resize", place); document.fonts?.ready.then(place).catch(() => {}); return () => window.removeEventListener("resize", place); }, [place]);
 
   return (
     <header className="opp opp-top" ref={head}>
       <div className="top" ref={bar}>
         <div className="wrap">
           <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={38} /></Link>
-          <nav className="nav tabs5" aria-label="Primary">
+          <nav className="nav tabs5" aria-label="Primary" ref={tabs} onMouseLeave={() => setHover(null)}>
+            <span ref={pill} className={`t5-ind${ind.on ? " on" : ""}${ind.lit ? " lit" : ""}`} style={{ transform: `translate(${ind.x}px, ${ind.y}px)`, width: ind.w, height: ind.h }} aria-hidden="true" />
             {MENU.map((g) => {
               const on = inGroup(g), op = menu === g.key;
               return (
-                <div key={g.key} className={`t5-i${op ? " open" : ""}${on ? " on" : ""}`} onMouseEnter={() => enter(g.key)} onMouseLeave={leave}>
+                <div key={g.key} data-k={g.key} className={`t5-i${op ? " open" : ""}${on ? " on" : ""}`} onMouseEnter={() => { setHover(g.key); enter(g.key); }} onMouseLeave={leave}>
                   {g.more ? (
-                    <button type="button" className="t5-t" aria-expanded={op} aria-controls={`t5-${g.key}`} onClick={() => setMenu(op ? null : g.key)}>{g.label}<Caret /></button>
+                    <button type="button" className="t5-t" onPointerMove={pull} onPointerLeave={settle} aria-expanded={op} aria-controls={`t5-${g.key}`} onClick={() => setMenu(op ? null : g.key)}>{g.label}<Caret /></button>
                   ) : (
-                    <span className="t5-t">
+                    <span className="t5-t" onPointerMove={pull} onPointerLeave={settle}>
                       <Link href={g.href} className="t5-l" aria-current={on ? "page" : undefined} onFocus={() => enter(g.key)}>
                         {g.label}{g.chip ? <em className="t5-chip">{g.chip}</em> : null}
                       </Link>
@@ -98,11 +128,11 @@ export default function Navbar() {
                     <div className={`t5-panel${g.more ? " more" : ""}`} id={`t5-${g.key}`} role="region" aria-label={`${g.label} menu`}>
                       <div className="t5-in">
                         <div className="t5-cols" style={{ ["--n" as string]: g.cols.length }}>
-                          {g.cols.map((c) => (
-                            <div key={c.h} className="t5-col">
+                          {g.cols.map((c, ci) => (
+                            <div key={c.h} className="t5-col" style={{ ["--i" as string]: ci }}>
                               {c.href ? <Link href={c.href} className="t5-h">{c.h}<Caret /></Link> : <p className="t5-h">{c.h}</p>}
-                              <ul>{c.links.map((l) => (
-                                <li key={l.href + l.label}><Link href={l.href} aria-current={cur(l.href)}>
+                              <ul>{c.links.map((l, li) => (
+                                <li key={l.href + l.label} style={{ ["--j" as string]: li }}><Link href={l.href} aria-current={cur(l.href)}>
                                   <span className="t">{l.label}{l.badge ? <em>{l.badge}</em> : null}</span>{l.note ? <span className="n">{l.note}</span> : null}
                                 </Link></li>
                               ))}</ul>

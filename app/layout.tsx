@@ -4,6 +4,7 @@ import "./motion.css";
 import "./chrome.css";
 import "./lite.css";
 import "./phone.css";
+import "./refresh.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -16,6 +17,7 @@ import { THEME_INIT_SCRIPT } from "./lib/theme";
 import { LITE_INIT_SCRIPT } from "./lib/lite";
 import LiteMotion from "./components/LiteMotion";
 import MobileTabs from "./components/MobileTabs";
+import RouteFx from "./components/RouteFx";
 import JsonLd from "./components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
@@ -82,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="sx-progress" aria-hidden="true" />
         <Ambient />
         <Spotlight />
+        <RouteFx />
         <Navbar />
         <main className="opp-main">
           <div className="opp-page">{children}</div>

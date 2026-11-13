@@ -1,0 +1,133 @@
+/* On Point Politics refresh, Nov 2026. Loaded after every other sheet, so it only nudges what is already there:
+   softer, rounder surfaces with depth instead of hard boxes, a capsule masthead with a sliding pill, panels that
+   unfold, a floating phone tab bar, and page to page transitions (RouteFx.tsx). Tokens only; party colours stay on data.
+   Reduced motion and light rendering (html[data-lite]) keep the look and drop the movement. */
+
+:root { --r: 18px; --r-lg: 24px; --spring: cubic-bezier(.34, 1.36, .5, 1); --ease-out: cubic-bezier(.2, .8, .2, 1); }
+
+/* ---------- surfaces: depth instead of outlines ---------- */
+.opp .card {
+  border-radius: var(--r-lg);
+  border-color: rgba(var(--line-rgb), .06);
+  background: linear-gradient(180deg, rgba(var(--line-rgb), .058), rgba(var(--line-rgb), .018) 70%);
+  box-shadow: inset 0 1px 0 rgba(var(--line-rgb), .08), 0 26px 60px -38px rgba(0, 0, 0, .75);
+}
+:root[data-theme="light"] .opp .card { background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .78)); border-color: rgba(var(--line-rgb), .07); box-shadow: inset 0 1px 0 #fff, 0 22px 50px -34px rgba(40, 20, 80, .28); }
+.opp .card-h { border-bottom: 1px solid transparent; border-image: linear-gradient(90deg, rgba(var(--line-rgb), .14), rgba(var(--line-rgb), .03) 70%, transparent) 1; }
+.opp .card.sx-lit { border-color: rgba(var(--line-rgb), .14); }
+.opp .kpi { border-radius: var(--r); }
+.opp .callout { border-radius: var(--r); }
+
+/* buttons and chips become pills */
+.opp .btn { border-radius: 999px; }
+.opp .btn.icon { border-radius: 50%; }
+.opp .btn.sm { border-radius: 999px; }
+.opp .btn:active { transform: translateY(0) scale(.97); }
+
+/* breadcrumbs read as a quiet trail of chips */
+.opp .crumbs a, .opp .crumbs > span:not(.sep) { padding: 3px 10px; border-radius: 999px; background: rgba(var(--line-rgb), .045); transition: background .2s, color .2s; }
+.opp .crumbs a:hover { background: rgba(var(--line-rgb), .1); }
+.opp .crumbs .sep { opacity: .5; }
+
+/* section headers: each line arrives in turn on a new page */
+.sx-route .ph > * { animation: rfx-up .7s var(--ease-out) backwards; }
+.sx-route .ph > *:nth-child(2) { animation-delay: .06s; }
+.sx-route .ph > *:nth-child(3) { animation-delay: .12s; }
+.sx-route .ph > *:nth-child(n+4) { animation-delay: .18s; }
+@keyframes rfx-up { from { opacity: 0; transform: translateY(16px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* ---------- masthead: a capsule of tabs with a sliding lit pill ---------- */
+.opp .top { border-bottom-color: transparent; }
+header.opp-top.scrolled .top { border-bottom-color: transparent; box-shadow: 0 12px 30px -24px rgba(0, 0, 0, .8); }
+.opp .nav.tabs5 { height: auto; align-self: center; padding: 4px; gap: 0; border-radius: 999px; background: rgba(var(--line-rgb), .035); box-shadow: inset 0 0 0 1px rgba(var(--line-rgb), .06); }
+.opp .t5-t { border-radius: 999px; z-index: 1; transition: color .2s, transform .35s var(--spring); }
+.opp .t5-i:hover .t5-t, .opp .t5-i.open .t5-t { background: none; }
+.opp .t5-i.on .t5-t::after { display: none; }
+.opp .t5-ind { position: absolute; left: 0; top: 0; z-index: 0; border-radius: 999px; pointer-events: none; opacity: 0;
+  background: rgba(var(--line-rgb), .07); box-shadow: inset 0 1px 0 rgba(var(--line-rgb), .1);
+  transition: transform .5s var(--spring), width .5s var(--spring), height .3s, opacity .25s, background .3s; }
+.opp .t5-ind.on { opacity: 1; }
+.opp .t5-ind::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: -5px; height: 2px; border-radius: 2px; background: var(--grad); box-shadow: 0 0 12px rgba(131, 68, 156, .9); transition: opacity .3s, left .4s var(--spring), right .4s var(--spring); }
+.opp .t5-ind.lit { background: rgba(var(--line-rgb), .11); }
+.opp .t5-ind.lit::after { left: 38%; right: 38%; opacity: .55; }
+.opp .top .right .btn.hire { box-shadow: 0 8px 26px -12px rgba(255, 255, 255, .45); }
+
+/* the panel unfolds from the bar, then its columns and links arrive in a short cascade */
+.opp .t5-in { border-radius: var(--r-lg); border-color: rgba(var(--line-rgb), .1); background: rgba(var(--bg2-rgb), .975); backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%);
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .85), inset 0 1px 0 rgba(var(--line-rgb), .08);
+  transform-origin: 50% 0; animation: rfx-unfold .46s var(--spring) both; }
+@keyframes rfx-unfold { from { opacity: 0; transform: translateY(-10px) scale(.965); clip-path: inset(0 0 92% 0 round 24px); } 60% { opacity: 1; } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 24px); } }
+.opp .t5-col .t5-h { animation: rfx-in-l .4s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 50ms + 60ms); }
+.opp .t5-col li { animation: rfx-in-l .42s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 50ms + var(--j, 0) * 34ms + 90ms); }
+@keyframes rfx-in-l { from { opacity: 0; transform: translate(-8px, 4px); } to { opacity: 1; transform: none; } }
+.opp .t5-col li a { border-radius: 12px; transition: background .2s, transform .25s var(--spring); }
+.opp .t5-col li a:hover { transform: translateX(4px); }
+.opp .t5-feat { border-radius: 18px; animation: rfx-feat .55s var(--spring) .12s both; }
+@keyframes rfx-feat { from { opacity: 0; transform: translateX(14px) scale(.97); } to { opacity: 1; transform: none; } }
+.opp .t5-feat::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .09) 45%, transparent 60%) -120% 0 / 250% 100% no-repeat; transition: background-position .9s var(--ease-out); }
+.opp .t5-feat:hover::before { background-position: 120% 0; }
+.opp .t5-feat .go { border-radius: 999px; transition: transform .25s var(--spring); }
+.opp .t5-feat:hover .go { transform: translateX(4px); }
+
+/* phone menu: rows slide in */
+.opp .mnav .macc-g { animation: rfx-in-l .4s var(--ease-out) both; }
+.opp .mnav .macc-g:nth-child(2) { animation-delay: .03s; } .opp .mnav .macc-g:nth-child(3) { animation-delay: .06s; }
+.opp .mnav .macc-g:nth-child(4) { animation-delay: .09s; } .opp .mnav .macc-g:nth-child(5) { animation-delay: .12s; }
+.opp .mnav .macc-g:nth-child(n+6) { animation-delay: .15s; }
+
+/* ---------- phone tab bar: a floating capsule with a gliding blob ---------- */
+html[data-phone] { --tabbar: calc(78px + env(safe-area-inset-bottom, 0px)); }
+html[data-phone] .opp-tabs {
+  left: 10px; right: 10px; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); height: 62px; padding: 0;
+  border: 1px solid rgba(var(--line-rgb), .1); border-radius: 22px; background: rgba(var(--bg2-rgb), .82);
+  backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 20px 44px -18px rgba(0, 0, 0, .75), inset 0 1px 0 rgba(var(--line-rgb), .08);
+  transition: transform .35s var(--spring);
+}
+html[data-lite][data-phone] .opp-tabs { background: rgb(var(--bg2-rgb)); }
+.opp-tabs a, .opp-tabs button { height: 62px; z-index: 1; transition: color .2s; }
+.opp-tabs a svg, .opp-tabs button svg { transition: transform .35s var(--spring); }
+.opp-tabs .on svg { transform: translateY(-2px) scale(1.08); }
+.opp-tabs .on::before { display: none; }
+.opp-tabs a:active, .opp-tabs button:active { background: none; }
+.opp-tabs a:active svg, .opp-tabs button:active svg { transform: scale(.88); }
+.opp-tabs .tb-blob { position: absolute; left: 0; top: 0; bottom: 0; width: 20%; z-index: 0; pointer-events: none; opacity: 0; transition: transform .55s var(--spring), opacity .25s; }
+.opp-tabs .tb-blob.on { opacity: 1; }
+.opp-tabs .tb-blob::before { content: ""; position: absolute; inset: 7px 7px; border-radius: 16px; background: rgba(var(--line-rgb), .08); box-shadow: inset 0 1px 0 rgba(var(--line-rgb), .1); }
+.opp-tabs .tb-blob::after { content: ""; position: absolute; left: 34%; right: 34%; top: 0; height: 3px; border-radius: 0 0 3px 3px; background: var(--grad); box-shadow: 0 0 14px rgba(131, 68, 156, .9); }
+
+/* ---------- page to page ---------- */
+/* the sweep: a brand line that runs while the next page loads */
+.rfx-bar { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 96; pointer-events: none; overflow: hidden; }
+.rfx-bar i { display: block; height: 100%; background: var(--grad); transform: scaleX(0); transform-origin: 0 50%; box-shadow: 0 0 14px rgba(131, 68, 156, .9); opacity: 1; }
+.rfx-bar.go i { transform: scaleX(.9); transition: transform 7s cubic-bezier(.04, .72, .1, 1); }
+.rfx-bar.go.done i { transform: scaleX(1); opacity: 0; transition: transform .22s ease-out, opacity .3s ease .22s; }
+
+/* view transitions: the masthead and tab bar stay put while the page changes under them */
+header.opp.opp-top { view-transition-name: rfx-masthead; }
+html[data-phone] .opp-tabs { view-transition-name: rfx-tabbar; }
+::view-transition-group(rfx-masthead), ::view-transition-group(rfx-tabbar) { animation: none; }
+::view-transition-old(rfx-masthead), ::view-transition-old(rfx-tabbar) { display: none; }
+::view-transition-new(rfx-masthead), ::view-transition-new(rfx-tabbar) { animation: none; }
+/* within a section: a crossfade with a lift */
+html[data-fx="step"]::view-transition-old(root) { animation: rfx-out .32s cubic-bezier(.4, 0, 1, 1) both; }
+html[data-fx="step"]::view-transition-new(root) { animation: rfx-in .5s var(--ease-out) .06s both; }
+@keyframes rfx-out { to { opacity: 0; transform: translateY(-10px) scale(.992); filter: blur(3px); } }
+@keyframes rfx-in { from { opacity: 0; transform: translateY(18px) scale(.995); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+/* to another section: the new page opens as a circle from the click, the old one sinks back */
+html[data-fx="jump"]::view-transition-old(root) { animation: rfx-sink .75s cubic-bezier(.6, 0, .2, 1) both; }
+html[data-fx="jump"]::view-transition-new(root) { animation: rfx-iris .75s cubic-bezier(.7, 0, .2, 1) both; }
+@keyframes rfx-sink { to { transform: scale(.955); filter: brightness(.62) blur(2px); } }
+@keyframes rfx-iris { from { clip-path: circle(0px at var(--fx-x, 50%) var(--fx-y, 0)); } to { clip-path: circle(150vmax at var(--fx-x, 50%) var(--fx-y, 0)); } }
+/* the route template's own lift would play inside the snapshot, so it sits out during a transition */
+html[data-fx] .sx-route, html[data-fx] .sx-route .ph > * { animation: none; }
+
+/* ---------- calm modes ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .opp .t5-ind, .opp .t5-t, .opp-tabs .tb-blob, .opp-tabs svg, .opp .t5-col li a { transition: none !important; }
+  .opp .t5-in, .opp .t5-col li, .opp .t5-col .t5-h, .opp .t5-feat, .opp .mnav .macc-g, .sx-route .ph > * { animation: none !important; }
+  .rfx-bar { display: none; }
+}
+html[data-lite] .opp .t5-in { animation-duration: .2s; }
+html[data-lite] .opp .t5-col li, html[data-lite] .opp .t5-col .t5-h, html[data-lite] .opp .mnav .macc-g, html[data-lite] .sx-route .ph > * { animation: none; }
+html[data-lite] .opp .card { box-shadow: none; }
