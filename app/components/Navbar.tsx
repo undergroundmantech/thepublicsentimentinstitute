@@ -66,7 +66,7 @@ export default function Navbar() {
     if (g.key === "opp") return under("/on-point-polling") || under("/portal") || pathname === "/contact";
     if (g.key === "accuracy") return under("/accuracy") || under("/most-accurate-pollster");
     if (g.key === "forecast") return under("/forecast") || under("/what-if") || under("/swingometer");
-    if (g.key === "polls") return under("/polls");
+    if (g.key === "polls") return under("/polls") || under("/majority-tracker");
     if (g.more) return g.cols.some((c) => c.href && under(c.href.split("/").slice(0, 2).join("/"))) || under("/accountability") || under("/results");
     return under(g.href);
   };

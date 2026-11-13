@@ -17,7 +17,7 @@ const TABS: Tab[] = [
     icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r=".8" /></>) },
   { key: "forecast", label: "Forecasts", href: "/forecast", on: (p) => p.startsWith("/forecast") || p.startsWith("/what-if") || p.startsWith("/swingometer"),
     icon: I(<><path d="M3 20h18" /><path d="M6 16V10" /><path d="M11 16V5" /><path d="M16 16v-8" /><path d="M21 16v-4" /></>) },
-  { key: "polls", label: "Polls", href: "/polls", on: (p) => p.startsWith("/polls"),
+  { key: "polls", label: "Polls", href: "/polls", on: (p) => p.startsWith("/polls") || p.startsWith("/majority-tracker"),
     icon: I(<><path d="M4 18 9 12l4 3 7-8" /><circle cx="9" cy="12" r="1.2" /><circle cx="13" cy="15" r="1.2" /></>) },
 ];
 

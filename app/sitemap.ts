@@ -42,6 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/forecast/2026", "2026-11-03", "yearly", 0.9),
     u("/swingometer", fc, "daily", 0.9),
     u("/what-if", fc, "daily", 0.9),
+    u("/majority-tracker", today, "daily", 0.9),
     u("/play", fc, "daily", 0.9),
     u("/watchdog/war-room", fc, "daily", 0.9),
     u("/watchdog/people/web", fc, "weekly", 0.7),

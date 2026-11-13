@@ -18,7 +18,7 @@ function authorized(req: Request) {
 const slug = (st: string) => (STN[st] ?? st).toLowerCase().replace(/[^a-z]+/g, "-");
 
 function urls(): string[] {
-  const out = new Set<string>(["/", "/forecast", "/maps/early-vote", "/results/2026", "/results/monitor", "/polls", "/polls/generic-ballot", "/polls/approval", "/what-if", "/swingometer", "/forecast/legislatures", "/forecast/measures", "/forecast/statewide"]);
+  const out = new Set<string>(["/", "/forecast", "/maps/early-vote", "/results/2026", "/results/monitor", "/polls", "/polls/generic-ballot", "/polls/approval", "/what-if", "/swingometer", "/majority-tracker", "/forecast/legislatures", "/forecast/measures", "/forecast/statewide"]);
   try {
     const races = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/results/2026/index.json"), "utf8")).races as { id: string; k: string; st: string }[];
     for (const r of races) {

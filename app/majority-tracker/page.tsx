@@ -61,10 +61,10 @@ export default function MajorityTrackerPage() {
   return (
     <div className="opp mt">
       <JsonLd data={graph(
-        crumbsLd([["Home", "/"], ["Majority Tracker", "/majority-tracker"]]),
+        crumbsLd([["Home", "/"], ["Polls", "/polls"], ["Majority Tracker", "/majority-tracker"]]),
         pageLd({ name: "Majority Tracker: Senate Democratic leader election", description: DESC, path: "/majority-tracker", modified: isoDay(UPDATED), about: "Senate Democratic leader election" }),
       )} />
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Majority Tracker</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span><span aria-current="page">Majority Tracker</span></nav>
 
       <header className="ph mt-head">
         <div className="eye g">Senate Democratic leader election · {day(VOTE_DATE)}</div>
