@@ -2,6 +2,7 @@
 // It never writes anything and never calls an election provider directly: civicAPI goes through the site's caching proxy.
 import { csvFilename, toCsv, type CsvRow, type DataClass } from "./csv";
 import { beforeClose, civicRace, civicRead, FIRST_CLOSE, liveOdds, matchCivic, project, showTest, STN, TYPE_SETS, type CRace, type StFile, type XIndex, type XRace } from "@/app/results/2026/live";
+import { sideNames } from "@/app/results/2026/candidates";
 import type { PreparedHistory } from "@/app/lib/intelligence/raceHistory";
 
 const slug = (st: string) => (STN[st] ?? st).toLowerCase().replace(/[^a-z]+/g, "-");
@@ -100,9 +101,9 @@ export async function buildExport(pathname: string, fetchFn: typeof fetch = fetc
         const sf = (await (await fetchFn(`/results/2026/st/${r.st}.json`)).json()) as StFile;
         const P = project(sf.counties?.[r.id] ?? null, det.regions ?? null, r, c.c, r.tot); const o = liveOdds(r, P);
         if (P.rep.t > 0) {
-          const A = r.c?.find((x) => x[1] === "D" || x[1] === "Y" || x[1] === "I"), B = r.c?.find((x) => x[1] === "R" || x[1] === "N");
+          const sn = sideNames(r); const A = [sn.a.name, sn.a.party] as const, B = [sn.b.name, sn.b.party] as const;
           const mp = { ...common, record_type: "RACE_PROJECTION", data_class: "MODEL_PROJECTED" satisfies DataClass, is_test_data: !!det.test, observed_at_utc: gen, source_timestamp_utc: det.updated, source_label: "OnPoint live projection (client recompute of project()/liveOdds())", model_version: modelVersion };
-          rows.push({ ...mp, projected_margin_pts: P.m, margin_low_pts: o.lo, margin_high_pts: o.hi, percent_reporting: P.pctIn, note: "Margin = Republican/No minus Democrat/Yes in points; range is 95%. Model estimate, not a race call." });
+          rows.push({ ...mp, projected_margin_pts: P.m, margin_low_pts: o.lo, margin_high_pts: o.hi, percent_reporting: P.pctIn, note: `Margin = ${sn.b.name} minus ${sn.a.name} in points (the forecast's two principal candidates; positive favours ${sn.b.name}); range is the model's own, not validated. Model estimate, not a race call.` });
           for (const [cd, p, v] of [[A, o.pA, P.fin.a], [B, o.pB, P.fin.b]] as const) rows.push({ ...mp, record_type: "CANDIDATE_PROJECTION", candidate_name: cd?.[0], party: cd?.[1], win_probability: p, projected_final_votes: Math.round(v) });
         }
       } catch { notes.push("State county file unavailable; live projection rows omitted."); }

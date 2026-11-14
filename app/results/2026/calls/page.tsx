@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LiveProvider } from "../LiveProvider";
 import CallsBoard from "./CallsBoard";
+import CallsDesk, { CALLS_DESK_CSS } from "./CallsDesk";
 import "../results2026.css";
 import "./calls.css";
 
@@ -8,7 +9,7 @@ import "./calls.css";
 // "Unlinked" is not "private": everything on it is already public, and nothing internal is read.
 export const metadata: Metadata = {
   title: "Election calls board",
-  description: "Every election call in one read-only board: official calls, On Point projections and races not yet called.",
+  description: "Every election call in one read-only board: official calls, On Point model calls (not official) and races not yet called.",
   robots: { index: false, follow: false, nocache: true },
   alternates: { canonical: "/results/2026/calls" },
 };
@@ -16,7 +17,9 @@ export const metadata: Metadata = {
 export default function CallsPage() {
   return (
     <LiveProvider>
-      <CallsBoard />
+      <style>{CALLS_DESK_CSS}</style>
+      {/* the engine's desk; without the engine, the provider-calls board as before */}
+      <CallsDesk fallback={<CallsBoard />} />
     </LiveProvider>
   );
 }

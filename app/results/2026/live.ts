@@ -1,6 +1,9 @@
 // November 3, 2026: the forecast's expected results for every race, civicAPI's live returns, the match between the
 // two, and the arithmetic that turns partial returns into an estimate of the final count. Client side.
 
+import { expectedSides, sideTags, splitSides } from "./candidates";
+import { FLAGS } from "./flags";
+
 export type Kind = "sen" | "gov" | "house" | "state" | "measure" | "leg" | "other";
 export type XRace = {
   id: string; k: Kind; st: string; nm: string; off: string; c?: [string, string, number][]; tot?: number; m?: number | null; pR?: number | null;
@@ -55,6 +58,13 @@ export async function civicSearch(type: string, signal?: AbortSignal): Promise<C
   return (await civicRead(type, signal)).races;
 }
 export async function civicRace(id: number, signal?: AbortSignal): Promise<CDetail> {
+  // in a replay, never read today's live county detail into a past moment: county rows come from the recorded night
+  // itself, as published at the replay's moment, or not at all
+  if (typeof window !== "undefined" && (window as { __onpReplay?: boolean }).__onpReplay) {
+    const get = (window as { __onpReplayCounty?: (id: number) => Promise<CDetail | null> }).__onpReplayCounty;
+    const d = get ? await get(id) : null; if (!d) throw new Error("county detail is not part of this replay");
+    return d;
+  }
   const r = await fetch(`/api/civic/race/${id}`, { signal });
   if (!r.ok) throw new Error(`race ${r.status}`);
   return (await r.json()) as CDetail;
@@ -64,12 +74,34 @@ const norm = (s: string | null | undefined) => String(s || "").normalize("NFKD")
 const lastOf = (n: string) => norm(n).replace(/ (jr|sr|ii|iii|iv)$/, "").split(" ").slice(-1)[0];
 
 /** Find each forecast race in civicAPI's list. Returns our race id to the civicAPI race. */
+/**
+ * Races the type-and-name matcher cannot pair, pinned to civicAPI's own race id for the November 3, 2026 election
+ * (checked against civicAPI's race list for that election). A pin wins over the matcher, and applies only when
+ * the provider race with that id is present.
+ */
+export const CIVIC_PINS: Record<string, number> = {
+  "bm-WA-initiative-measure-no-ip26-645": 130145, "bm-WA-initiative-measure-no-il26-638": 130146, "bm-WA-initiative-measure-no-il26-001": 87525,
+  "bm-NC-photo-id-amendment": 140116, "bm-NC-income-tax-cap-amendment": 140117, "bm-NC-property-tax-limit-amendment": 140118,
+  "sos-SC": 142155, "treas-SC": 142156, "ag-SC": 142157, "comp-SC": 142158, "supt-SC": 142159, "agri-SC": 142160,
+  "bm-KS-constitutional-amendment-no-1": 155538,
+  "edb-MI-university-of-michigan-board-of-regents": 155749, "edb-MI-michigan-state-university-board-of-trustees": 155750, "edb-MI-wayne-state-university-board-of-governors": 155751,
+  "psc-OK": 158933, "psc-AZ": 86927, "supt-AZ": 86932, "treas-FL": 87071, "supt-GA": 87094, "aud-IN": 87146, "comp-NV": 87265,
+  "bm-SD-constitutional-amendment-i": 169502, "bm-SD-constitutional-amendment-j": 169503, "bm-SD-constitutional-amendment-k": 169504, "bm-SD-constitutional-amendment-l": 87482,
+  "bm-ID-reproductive-freedom-and-privacy-act": 179002, "bm-WY-proposed-initiative-proposition-number-one": 179850,
+  "bm-AR-issue-1": 86935, "bm-AR-issue-2": 86941, "bm-AR-issue-3": 86937, "bm-AR-issue-4": 86940,
+};
+
 export function matchCivic(races: XRace[], civ: CRace[]): Record<string, CRace> {
   const out: Record<string, CRace> = {};
+  const byId = new Map(civ.map((c) => [c.id, c])); const pinned = new Set<number>();
+  for (const r of races) { const c = byId.get(CIVIC_PINS[r.id]); if (c) { out[r.id] = c; pinned.add(c.id); } }
   const by = new Map<string, CRace[]>();
   for (const c of civ) { if (!c.province || c.province === "US") continue; const k = c.province.toUpperCase(); by.set(k, [...(by.get(k) ?? []), c]); }
+  const sharedType = new Map<string, number>();
+  for (const r of races) if (r.k === "state") { const k = r.st + "|" + (r.civ.t ?? []).map(norm).sort().join("/"); sharedType.set(k, (sharedType.get(k) ?? 0) + 1); }
   for (const r of races) {
-    const pool = by.get(r.st) ?? []; if (!pool.length) continue;
+    if (out[r.id]) continue;
+    const pool = (by.get(r.st) ?? []).filter((c) => !pinned.has(c.id)); if (!pool.length) continue;
     const types = new Set((r.civ.t ?? []).map(norm));
     let hit: CRace | undefined;
     if (r.k === "sen" || r.k === "gov") hit = pool.find((c) => types.has(norm(c.type)));
@@ -77,9 +109,12 @@ export function matchCivic(races: XRace[], civ: CRace[]): Record<string, CRace> 
     else if (r.k === "leg") hit = pool.find((c) => types.has(norm(c.type)) && !c.district);
     else if (r.k === "state") {
       const cand = pool.filter((c) => types.has(norm(c.type)) || [...types].some((t) => norm(c.type).startsWith(t)));
-      if (cand.length === 1) hit = cand[0];
+      // a slate line ("A and B") names two people; and when several of our races in a state share one provider type
+      // (Michigan's four education boards), a lone provider race is matched by a candidate's name, never by type alone
+      const want = new Set((r.c ?? []).flatMap(([n]) => n.split(/ and /i)).map((n) => lastOf(n)));
+      const shared = (sharedType.get(r.st + "|" + [...types].sort().join("/")) ?? 0) > 1;
+      if (cand.length === 1) hit = !shared || cand[0].c.some(([n]) => want.has(lastOf(n))) ? cand[0] : undefined;
       else if (cand.length > 1) {
-        const want = new Set((r.c ?? []).map(([n]) => lastOf(n)));
         hit = cand.find((c) => c.c.some(([n]) => want.has(lastOf(n)))) ?? (r.civ.seat ? cand.find((c) => norm(c.name).includes(norm(r.civ.seat))) : undefined);
       }
     } else if (r.k === "measure") {
@@ -107,13 +142,26 @@ export function legDistricts(r: XRace, civ: CRace[]): Record<string, CRace> {
 }
 
 // ---- reading a civicAPI race against the forecast ---------------------------------------------------------------
-const P = (p: string) => { const x = norm(p); return x.startsWith("dem") ? "D" : x.startsWith("rep") ? "R" : x.startsWith("ind") ? "I" : x === "yes" ? "Y" : x === "no" ? "N" : "O"; };
-/** Votes for the forecast's two sides (D or Yes, R or No) and everyone else, from a civicAPI candidate list. */
+/**
+ * Votes for the forecast's two sides and everyone else, from a civicAPI candidate list. The sides are the forecast's
+ * two principal CANDIDATES (or Yes and No), matched by name; see `principals` in candidates.ts. They are not party
+ * letters: an independent the forecast does not name is "other", and so is a Democrat or Republican running third.
+ */
 export function sides(r: XRace, c: CCand[]): { a: number; b: number; o: number; t: number } {
+  if (FLAGS.legacySides) return legacySides(r, c);
+  const s = splitSides(r, c);
+  return { a: s.a, b: s.b, o: s.o, t: s.t };
+}
+
+// The pre-Phase-1 reading, kept only behind NEXT_PUBLIC_ONPOINT_LEGACY_SIDES for side-by-side comparison. It reads
+// sides as party letters: a forecast "IND" is not its "I", so Osborn's votes land in "other"; a same-surname
+// candidate is merged into the forecast's; a third-place Democrat is counted as the challenger.
+const legacyP = (p: string) => { const x = norm(p); return x.startsWith("dem") ? "D" : x.startsWith("rep") ? "R" : x.startsWith("ind") ? "I" : x === "yes" ? "Y" : x === "no" ? "N" : "O"; };
+export function legacySides(r: XRace, c: CCand[]): { a: number; b: number; o: number; t: number } {
   let a = 0, b = 0, o = 0;
   const names = (r.c ?? []).map(([n, p]) => [lastOf(n), p] as const);
   for (const [name, party, votes] of c) {
-    let side = P(party);
+    let side = legacyP(party);
     if (r.k === "measure") { const n = norm(name); side = n.startsWith("yes") || n === "for" ? "Y" : n.startsWith("no") || n === "against" ? "N" : side; }
     const nm = names.find(([l]) => l && l === lastOf(name));
     if (nm) side = nm[1];
@@ -219,12 +267,8 @@ function openingShift(fin: { a: number; b: number }, rep: { a: number; b: number
   const mv = Math.max(-(fin.b - rep.b), Math.min(fin.a - rep.a, (mu * rho * U) / 2));
   fin.a -= mv; fin.b += mv;
 }
-/** The forecast's expected votes for side A (D, or I where an independent is the main challenger, or Yes) and side B. */
-export function expSides(r: XRace) {
-  let a = 0, b = 0, o = 0; const ind = isInd(r);
-  for (const [, p, v] of r.c ?? []) { if (p === "D" || p === "Y" || (ind && p === "I")) a += v; else if (p === "R" || p === "N") b += v; else o += v; }
-  return { a, b, o, t: a + b + o };
-}
+/** The forecast's expected votes for side A (its first principal candidate, or Yes) and side B (its second, or No). */
+export function expSides(r: XRace) { return expectedSides(r); }
 /** Half width of the estimate's range in margin points: wide with little in, narrow near the end. */
 export const band = (pctIn: number) => Math.max(0.6, 14 * Math.pow(1 - pctIn / 100, 0.8));
 
@@ -246,7 +290,8 @@ export const fmtN = (n: number) => Math.round(n).toLocaleString("en-US");
 export const fmtK = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}K` : fmtN(n));
 /** Expected margin of a forecast race, side B minus side A. */
 export const expMargin = (r: XRace) => (r.k === "measure" ? (r.yes != null ? 100 - 2 * r.yes : null) : r.k === "leg" ? (r.dS != null && r.rS != null && r.seats ? (100 * (r.rS - r.dS)) / r.seats : null) : r.m ?? null);
-export const isInd = (r: XRace) => r.c?.[0]?.[1] === "I";
+/** True when the forecast's side A is an independent (any spelling: I, IND, Independent, NPA). */
+export const isInd = (r: XRace) => r.k !== "measure" && sideTags(r).a === "I";
 
 // ---- election night rules ---------------------------------------------------------------------------------------
 /** First polls close: 6 PM Eastern on November 3. civicAPI publishes test returns before then. */
@@ -255,9 +300,37 @@ export const FIRST_CLOSE = Date.parse("2026-11-03T23:00:00Z");
 export const showTest = () => { try { return new URLSearchParams(window.location.search).has("test"); } catch { return false; } };
 export const beforeClose = () => Date.now() < FIRST_CLOSE;
 
+// The original normal curve (Abramowitz-Stegun erf). It returns exactly 1.0 from z of about 8.25 and exactly 0.0 from
+// about -8.38: a rounding artefact that read as a certainty. Kept only behind NEXT_PUBLIC_ONPOINT_LEGACY_ODDS.
 const erf = (x: number) => { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; };
-// Returns exactly 1.0 from z ≈ 8.25 (exactly 0.0 from z ≈ -8.38) in floating point: a saturated value, not a certainty. Pending model review.
-export const Phi = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+const legacyPhi = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+const SQRT_PI = Math.sqrt(Math.PI);
+/** erfc(x) for x >= 0: a positive-term series up to 2.5 (no cancellation), a continued fraction beyond. */
+function erfcPos(x: number): number {
+  if (x === 0) return 1;
+  if (x < 2.5) {
+    let term = x, sum = x;
+    for (let n = 1; n < 200; n++) { term *= (2 * x * x) / (2 * n + 1); sum += term; if (term < sum * 1e-17) break; }
+    return 1 - (2 / SQRT_PI) * Math.exp(-x * x) * sum;
+  }
+  let t = x;
+  for (let k = 80; k >= 1; k--) t = x + (k / 2) / t;
+  return Math.exp(-x * x) / (SQRT_PI * t);
+}
+/** Normal CDF. Phi(0) is exactly 0.5; the lower tail is computed directly, so a small tail stays a small real number
+ *  instead of rounding to 0. Accuracy of the arithmetic only: it says nothing about whether the model is calibrated. */
+export const Phi = (z: number) => {
+  if (Number.isNaN(z)) return NaN;
+  if (FLAGS.legacyOdds) return legacyPhi(z);
+  const h = 0.5 * erfcPos(Math.abs(z) / Math.SQRT2);
+  return z >= 0 ? 1 - h : h;
+};
+/**
+ * No live model chance is shown above this or below 1 minus this while a race is uncalled. It is a display and policy
+ * guard, not a statistical claim: the model is not validated against real election-night data, and "100%" belongs
+ * only to a settled race (a provider or editorial call, or an uncontested seat).
+ */
+export const PROB_CEIL = 0.995;
 const PhiInv = (p: number) => { // Acklam's approximation
   const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239];
   const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572];
@@ -282,6 +355,10 @@ export function liveOdds(r: XRace, P: Proj, prior = 0) {
   const sdF = Math.min(20, Math.max(1.5, Math.abs(P.expM - cut) / Math.max(0.15, Math.abs(z0))));
   const f = Math.min(1, P.pctIn / 100);
   const sd = sdF * Math.pow(1 - f, 0.9) + (f >= 0.999 ? 0.05 : 0.35);
-  const pB = P.rep.t > 0 ? Phi((P.m - cut) / sd) : prior ? Phi(z0 + prior / sdF) : pB0;
-  return { pB, pA: 1 - pB, sd, lo: P.m - 1.96 * sd, hi: P.m + 1.96 * sd };
+  const raw = P.rep.t > 0 ? Phi((P.m - cut) / sd) : prior ? Phi(z0 + prior / sdF) : pB0;
+  // With votes counted the chance is the model's, and a model chance is never a certainty. Before any vote it is the
+  // published forecast's own number, passed through untouched (an uncontested seat is a genuine 0 or 1 there).
+  const capped = !FLAGS.legacyOdds && P.rep.t > 0 && (raw > PROB_CEIL || raw < 1 - PROB_CEIL);
+  const pB = capped ? Math.min(PROB_CEIL, Math.max(1 - PROB_CEIL, raw)) : raw;
+  return { pB, pA: 1 - pB, sd, lo: P.m - 1.96 * sd, hi: P.m + 1.96 * sd, capped };
 }

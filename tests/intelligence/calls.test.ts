@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { callRow, passes, partyOf, sortRows, isStale } from "../../app/results/2026/calls/calls";
+import { callRow, passes, partyOf, sortRows, isStale, STALE_MS } from "../../app/results/2026/calls/calls";
+import { LIVE_POLL_MS, PROXY_CACHE_MS } from "../../app/results/2026/liveFeed";
 
 const race = (id: string, k = "sen", st = "FL") => ({ id, k, st, nm: id, off: "", civ: {} }) as never;
 const civ = (pr: number, c: [string, string, number, number, number, number | null][]) => ({ id: 1, type: "x", province: "FL", district: null, name: "x", pr, c }) as never;
@@ -35,5 +36,6 @@ test("sorting puts calls first, then most reported", () => {
 });
 test("staleness", () => {
   const now = Date.now();
-  assert.ok(isStale(true, new Date(now), now)); assert.ok(isStale(false, new Date(now - 6 * 60_000), now)); assert.ok(!isStale(false, new Date(now - 60_000), now));
+  assert.ok(isStale(true, new Date(now), now)); assert.ok(isStale(false, new Date(now - STALE_MS - 1_000), now)); assert.ok(!isStale(false, new Date(now - 60_000), now));
+  assert.ok(!isStale(false, new Date(now - LIVE_POLL_MS - PROXY_CACHE_MS), now), "a healthy read at the end of one poll plus one cache window is not stale");
 });

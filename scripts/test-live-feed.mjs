@@ -71,9 +71,12 @@ test("zero reporting reads are kept as zero, not filled", () => {
   assert.equal(m.races[0].pr, 0); assert.equal(m.races[0].c[0][2], 0);
 });
 
-test("missing proxy timestamp falls back to the poll time", () => {
+test("a read with no proxy timestamp is never given the browser's clock: its age is unknown and it is flagged stale", () => {
   const m = mergeReads({}, { "US Senate": read([race(1, 1, 1)], null) }, T0);
-  assert.equal(m.oldest, T0);
+  assert.equal(m.oldest, null, "the poll time must not stand in for a provider read time");
+  assert.equal(m.stale, true); assert.deepEqual(m.untimed, ["US Senate"]);
+  assert.match(m.warning, /time of the last civicAPI read is unknown/);
+  assert.equal(m.races.length, 1, "the returns themselves are still shown");
 });
 
 test("useLive keeps the last good read per type and surfaces the warning; NightDesk shows it beside counted races", () => {

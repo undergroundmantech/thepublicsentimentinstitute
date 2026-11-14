@@ -9,7 +9,11 @@ import Link from "@/app/components/Link";
 import { useRouter } from "next/navigation";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { STN, KIND_LABEL, FIRST_CLOSE, fmtK, fmtM, isInd, resultsHref, type Kind, type XRace } from "./live";
+import { CADENCE_TEXT } from "./liveFeed";
 import { useSharedLive } from "./LiveProvider";
+import { useEngine } from "./engineClient";
+import { ChamberLine, HouseVotePanel, NATIONAL_LIVE_CSS, NightCharts, controlSentence } from "./NationalLive";
+import { ModeSwitch } from "./ReplayDock";
 import { tally, watchBar } from "./nationalTally";
 import { SeatArc, GovTiles, MajorityBar, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, GOV_HOLD, type Seat, type SeatState, type Tile } from "../monitor/Chambers";
 import { leanStroke } from "../monitor/paint";
@@ -35,6 +39,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
   const router = useRouter();
   // one read of every race type for the whole page, so the four category totals never depend on the open tab
   const shared = useSharedLive();
+  const eng = useEngine();
   if (!shared) throw new Error("NationalDesk must render inside LiveProvider");
   const { ix, live } = shared;
   const [cat, setCat] = useState<Cat>("sen");
@@ -121,7 +126,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
     const t = T[cat], c = ct!, name = cat === "sen" ? "Senate" : cat === "house" ? "House" : "governorships";
     if (!t.counting) return <>No votes are counted yet. The forecast gives Democrats <b className="d">{pct(fc!.pD)}</b> for {cat === "gov" ? "most governorships" : `the ${name}`}, about <b>{fc!.dS.toFixed(0)}</b> {cat === "gov" ? "governors" : "seats"} on average</>;
     const dN = Math.max(0, MAJ[cat] - dTot), rN = Math.max(0, (cat === "sen" ? 50 : MAJ[cat]) - c.rW);
-    return <>Democrats hold or have won <b className="d">{dTot}</b>, Republicans <b className="r">{c.rW}</b>{dN === 0 ? <>. <b className="d">Democrats have a majority</b></> : rN === 0 ? <>. <b className="r">Republicans have a majority</b></> : <>. Democrats need <b>{dN}</b> of the <b>{open}</b> still open, Republicans need <b>{rN}</b></>}</>;
+    return <>Democrats hold or have won <b className="d">{dTot}</b>, Republicans <b className="r">{c.rW}</b>{dN === 0 ? <>. <b className="d">Democrats have a majority</b></> : rN === 0 ? <>. <b className="r">Republicans have a majority</b></> : <>. Democrats need <b>{dN}</b> of the <b>{open}</b> still open, Republicans need <b>{rN}</b></>}.{controlSentence(eng.view?.national, cat)}</>;
   })();
   const stats: [string, string][] = cat === "other"
     ? [["Counting", String(T.other.counting)], ["Called", String(T.other.called)], ["Votes in", T.other.votes ? fmtK(T.other.votes) : "0"]]
@@ -153,6 +158,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
             <div><dt>Counting</dt><dd className={anyLive ? "live" : ""}>{linked ? totalCounting : "—"}</dd></div>
             <div><dt>Called</dt><dd>{linked ? totalCalled : "—"}</dd></div>
           </dl>
+          <ModeSwitch />
           <Link className="btn g" href="/results/monitor">Open the situation monitor</Link>
         </div>
       </header>
@@ -173,7 +179,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
                     <span className="r"><b>{cc.rW}</b><small>Rep{cc.rL ? ` · ${cc.rL} lead` : ""}</small></span>
                   </span>
                   <MajorityBar c={cc} maj={MAJ[c.k as "sen" | "house" | "gov"]} majLabel={`${MAJ[c.k as "sen" | "house" | "gov"]} for ${c.k === "gov" ? "most" : "control"}`} />
-                  <span className="sb">Forecast <b className="d">D {pct(fcx!.pD)}</b> · {fcx!.dS.toFixed(1)} D {c.k === "gov" ? "governors" : "seats"} on average</span>
+                  <ChamberLine k={c.k as "sen" | "house" | "gov"} fallback={{ pD: fcx!.pD, dS: fcx!.dS }} />
                 </>
               ) : (
                 <>
@@ -276,7 +282,10 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
         </aside>
       </div>
       {live.error ? <p className="rh-note">{live.error}</p> : null}
-      <p className="nat-src">Reported votes come from civicAPI through a 30 second cache and are counted returns. Expected leans come from the On Point Politics forecast of {ix ? new Date(ix.asOf + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" }) : "October"} and are modeled. A race is marked called only when civicAPI reports a winner; OnPoint projections appear on race pages, labeled as projections.</p>
+      <style>{NATIONAL_LIVE_CSS}</style>
+      <HouseVotePanel />
+      <NightCharts />
+      <p className="nat-src">Reported votes come from civicAPI, {CADENCE_TEXT}, and are counted returns. {eng.view ? <>Projected seats, control chances and the popular-vote projection come from the On Point Politics election-night model (uncalibrated; computed {eng.view.mode === "LIVE" ? "from each update" : "for the moment shown"}). </> : null}Expected leans come from the On Point Politics forecast of {ix ? new Date(ix.asOf + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" }) : "October"} and are modeled. A race is marked called only when civicAPI reports a winner. A model probability is an estimate and is never shown as a call.</p>
     </section>
   );
 }

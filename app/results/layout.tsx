@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ReplayDock from "./2026/ReplayDock";
+import ResultsNotice from "./ResultsNotice";
 
 // No canonical here: each results page names its own, so none of them points at another.
 export const metadata: Metadata = {
@@ -9,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function ResultsLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <>{children}<ResultsNotice /><ReplayDock /></>;
 }

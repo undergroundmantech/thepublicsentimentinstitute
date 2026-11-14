@@ -10,6 +10,10 @@ import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { DESK_CSS } from "./deskCss";
 import CallBand from "../CallBand";
 import { STN, KIND_LABEL, FIRST_CLOSE, Phi, civicRace, expMargin, expSides, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, liveOdds, project, sides, type CDetail, type CRace, type XRace } from "./live";
+import { assignSides, reportedFor, sideNames } from "./candidates";
+import { useEngine } from "./engineClient";
+import EngineRaceCharts, { engineOdds, engineProj } from "./EngineRaceCharts";
+import { modelSuggestionAllowed } from "./calls/policy";
 import { useIndex, useLive, useStateFile } from "./useLive";
 import { CursorPanel, HistoryPane, useRaceHistory } from "@/app/components/opp/RaceHistoryDesk";
 import { percentIn, pctPoints, probPoints } from "@/app/lib/fmtPct";
@@ -58,6 +62,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const [now, setNow] = useState(0);
   const [tab, setTab] = useState("nd-results");
   // race history: recorded results and published forecasts by time, one shared cursor across both chart groups
+  const eng = useEngine();
   const hist = useRaceHistory(r && /^(sen|gov|house)-/.test(r.id) ? r.id : null);
   const [hcur, setHcur] = useState<number | null>(null);
   // section tabs scroll the desk itself, never the page behind it, and never change the address
@@ -90,8 +95,13 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const ind = isInd(r);
   const exp = sf?.counties[r.id] ?? null;
   const names = sf?.names ?? {};
-  const P = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
-  const odds = liveOdds(r, P);
+  // County detail stays descriptive (old arithmetic, per county). The headline figures (chance, projected margin and
+  // range, projected final shares, share of the vote counted) come from the shared engine whenever it serves this page.
+  const P0 = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
+  const eRow = eng.view?.races[r.id] ?? null;
+  const fromEngine = !!(eRow && eRow.pm && eRow.dataState !== "MISSING");
+  const P = fromEngine ? engineProj(r, eRow!, P0) : P0;
+  const odds = fromEngine ? engineOdds(eRow!) : liveOdds(r, P0);
   const es = expSides(r);
   const isM = r.k === "measure";
   // the published forecast this page is reading: its date comes from the index, never typed in by hand
@@ -104,16 +114,19 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const favP = favSide ? 100 * (favSide === "B" ? pB0 : 1 - pB0) : null;
   const stSlug = (STN[r.st] ?? r.st).toLowerCase().replace(/[^a-z]+/g, "-");
   const catHub = r.k === "sen" ? "sen" : r.k === "gov" ? "gov" : r.k === "house" ? "house" : "state";
-  const A = isM ? "Yes" : ind ? (r.c?.[0]?.[0] ?? "Independent") : (r.c?.find((x) => x[1] === "D")?.[0] ?? "Democrat");
-  const B = isM ? "No" : (r.c?.find((x) => x[1] === "R")?.[0] ?? "Republican");
-  const colA = isM ? "#2fbf9b" : ind ? "#b78cff" : "var(--dem)", colB = isM ? "#e7794a" : "var(--gop)";
+  // the two sides are the forecast's two principal candidates, whatever their parties (candidates.ts)
+  const SN = sideNames(r);
+  const A = SN.a.name, B = SN.b.name;
+  const sideCol = (tag: string) => (tag === "D" ? "var(--dem)" : tag === "R" ? "var(--gop)" : "#b78cff");
+  const colA = isM ? "#2fbf9b" : sideCol(SN.a.tag), colB = isM ? "#e7794a" : sideCol(SN.b.tag);
   const lead = odds.pA >= 0.5 ? "A" : "B";
   const leadName = lead === "A" ? last(A) : last(B), trailName = lead === "A" ? last(B) : last(A);
   const leadCol = lead === "A" ? colA : colB;
   const leadP = 100 * (lead === "A" ? odds.pA : odds.pB);
   const civWinner = c?.c.find((x) => x[4]);
   // a projection needs a published forecast behind it; without one the estimate has no prior and is never shown as a call
-  const projected = hasFc && !civWinner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
+  // a model estimate is not a call. This is false unless the operator flag is on (calls/policy.ts), on every page alike.
+  const projected = modelSuggestionAllowed({ hasForecast: hasFc, providerCalled: !!civWinner, countedVotes: P.rep.t, pctIn: P.pctIn, leadProbPct: leadP });
   const repPct = reporting ? Math.max(c?.pr ?? 0, 0) : 0;
   const statusKey = !c ? (live.loading ? "load" : live.error ? "err" : "nofeed") : civWinner ? "called" : projected ? "proj" : reporting ? "count" : now < FIRST_CLOSE ? "pre" : "await";
   const status = ({ load: "Connecting to civicAPI", err: "Live returns unreachable", nofeed: "Awaiting results feed", called: "Race called", proj: "OnPoint Projection", count: "Counting", pre: "Polls open", await: "Awaiting returns" } as const)[statusKey];
@@ -122,13 +135,17 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
   const cands = c ? [...c.c].sort((x, y) => y[2] - x[2]) : [];
   const counted = cands.reduce((s, x) => s + x[2], 0);
   const gap = cands.length > 1 ? cands[0][2] - cands[1][2] : 0;
+  // the reported view's own reading of the count: top two by votes whatever their parties, with the race's rule (candidates.ts)
+  const rep = c && r.k !== "leg" ? reportedFor(r, c.c) : null;
   const tone = (party: string, name: string) => { const p = party.toLowerCase(); if (isM) return /^yes/i.test(name) ? colA : /^no$/i.test(name) ? colB : "var(--ink3)"; if (p.startsWith("dem")) return "var(--dem)"; if (p.startsWith("rep")) return "var(--gop)"; if (p.startsWith("ind") && ind) return colA; return "var(--ink3)"; };
   // which forecast side a listed candidate is, and the forecast's expected share for them
+  // matched by name against the whole listed field, so a same-surname or same-party candidate is never taken for a principal
+  const listed: (readonly [string, string])[] = cands.length ? cands.map((x) => [x[0], x[1]] as const) : (r.c ?? []).map(([n, p]) => [n, p] as const);
+  const assigned = assignSides(r, listed);
   const fcRow = (party: string, name: string): { side: "A" | "B" | null; share: number | null } => {
-    const rc = (r.c ?? []).find(([n]) => last(n) === last(name));
-    const p = (rc ? rc[1] : isM ? (/^yes/i.test(name) ? "Y" : /^no$/i.test(name) ? "N" : "O") : party.toLowerCase().startsWith("dem") ? "D" : party.toLowerCase().startsWith("rep") ? "R" : party.toLowerCase().startsWith("ind") ? "I" : "O");
-    const side = p === "D" || p === "Y" || (p === "I" && ind) ? "A" : p === "R" || p === "N" ? "B" : null;
-    return { side, share: rc && es.t ? (100 * rc[2]) / es.t : null };
+    const i = listed.findIndex((x) => x[0] === name);
+    const s = i >= 0 ? assigned.side[i] : "o"; const fi = i >= 0 ? assigned.forecast[i] : null; const rc = fi != null ? r.c?.[fi] : undefined;
+    return { side: s === "a" ? "A" : s === "b" ? "B" : null, share: rc && es.t ? (100 * rc[2]) / es.t : null };
   };
   // before any return the projection is the forecast itself, so the bars read the forecast's expected shares
   const F = P.fin.t ? P.fin : es;
@@ -214,7 +231,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
         <article className="card span-3" id="nd-results" aria-labelledby="nd-res">
           <div className="topline-shell">
             {civWinner || projected ? (
-              <CallBand kind={civWinner ? "official" : "projected"} name={civWinner ? civWinner[0] : lead === "A" ? A : B} calledBy="civicAPI"
+              <CallBand kind={civWinner ? "official" : "projected"} name={civWinner ? civWinner[0] : lead === "A" ? A : B} calledBy={civWinner ? "civicAPI" : undefined}
                 detail={`${counted ? `${signed((100 * gap) / counted)} margin · ${fmtN(gap)} votes · ` : ""}${pctLabel(P.pctIn)}% of the estimated vote counted`} />
             ) : null}
             <header className="topline-header">
@@ -250,6 +267,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
                 })}
               </>
             )}
+            {rep?.status === "OK" && rep.caveat ? <p className="prose empty-note" role="note">{rep.caveat}</p> : null}
             <div className="topline-foot">
               <span>{counted ? `${fmtN(counted)} votes counted` : "No votes counted"}</span>
               {counted && cands.length > 1 ? <span className="topline-margin"><b>{signed((100 * gap) / counted)}</b> margin · {fmtN(gap)} votes</span> : null}
@@ -257,7 +275,7 @@ export default function NightDesk({ id, embedded = false, onClose }: { id: strin
               {hasFc || exp ? <span className="topline-reporting"><b>{pctLabel(P.pctIn)}%</b> est. reporting</span> : null}
             </div>
           </div>
-          {hist.s !== "idle" ? <HistoryPane state={hist} charts={["votes", "reported", "counted"]} title="Results over time" cursor={hcur} onCursor={setHcur} /> : null}
+          {eng.available ? <EngineRaceCharts raceId={r.id} /> : hist.s !== "idle" ? <HistoryPane state={hist} charts={["votes", "reported", "counted"]} title="Results over time" cursor={hcur} onCursor={setHcur} /> : null}
         </article>
 
         <article className="card span-3" id="nd-forecast" aria-labelledby="nd-snap">

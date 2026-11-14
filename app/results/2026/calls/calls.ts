@@ -3,6 +3,7 @@
 //   projected  On Point's own estimate (published forecast + counted vote), labelled as ours, never as a call
 //   uncalled   everything else, including races with no civicAPI match
 import type { CRace, Kind, XRace } from "../live";
+import { STALE_MS } from "../liveFeed";
 
 export type CallState = "official" | "projected" | "uncalled";
 export type Chamber = "sen" | "house" | "gov" | "state" | "measure" | "leg" | "other";
@@ -53,6 +54,6 @@ const ORDER: Record<CallState, number> = { official: 0, projected: 1, uncalled: 
 export const sortRows = (rows: CallRow[]) =>
   [...rows].sort((a, b) => ORDER[a.state] - ORDER[b.state] || (b.reporting ?? -1) - (a.reporting ?? -1) || a.r.st.localeCompare(b.r.st) || a.r.nm.localeCompare(b.r.nm));
 
-export const STALE_MS = 5 * 60_000;
-/** A read is stale when a feed failed or the oldest data is older than STALE_MS. */
+export { STALE_MS } from "../liveFeed";
+/** A read is stale when a feed failed, its read time is unknown, or the oldest data is older than STALE_MS (the one shared limit). */
 export const isStale = (liveStale: boolean, at: Date | null, now: number) => liveStale || (at != null && now - at.getTime() > STALE_MS);

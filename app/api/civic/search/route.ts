@@ -1,5 +1,7 @@
 // A caching proxy for civicAPI's race search on November 3, 2026. Every visitor to the results monitor reads the
-// same copy for 30 seconds, so civicAPI sees one request per race type per half minute however many people watch.
+// same copy for five minutes (PROXY_CACHE_MS in app/results/2026/liveFeed.ts; `revalidate` below must match it), so
+// civicAPI sees one request per race type per five minutes however many people watch. `at` in the response is when
+// this server read civicAPI: a receipt time. civicAPI's search carries no per-race source time.
 import { NextResponse } from "next/server";
 
 const BASE = "https://civicapi.org/api/v2/race/search";

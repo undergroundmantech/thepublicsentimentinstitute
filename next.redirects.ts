@@ -13,8 +13,7 @@ export const redirects: Redirect[] = [
   p("/brasil", "/"),
   p("/brasil/:path*", "/"),
   p("/results", "/results/2026"),
-  p("/results/monitor", "/results/2026"),
-  p("/results/monitor/:path*", "/results/2026"),
+  // Nov 2026 (Election Night 2.0): /results/monitor is live again: the Situation Monitor, with LIVE and REPLAY modes.
   p("/results/tonight", "/results/2026"),
   p("/results/tonight/:path*", "/results/2026"),
   p("/results/live", "/results/2026"),

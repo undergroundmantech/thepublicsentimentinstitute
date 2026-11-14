@@ -1,6 +1,6 @@
 "use client";
 // The races on one state's results page, each with its forecast until votes are counted and its live returns after,
-// read from civicAPI through the caching proxy every minute. The server renders the forecast rows, so the page reads
+// read from civicAPI through the caching proxy (cadence: liveFeed.ts). The server renders the forecast rows, so the page reads
 // in full to search engines and before the first live read.
 import React from "react";
 import Link from "@/app/components/Link";

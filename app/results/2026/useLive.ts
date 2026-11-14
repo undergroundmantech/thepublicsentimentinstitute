@@ -1,10 +1,37 @@
 "use client";
 // Loads the expected results index once and polls civicAPI (through the caching proxy) for the race types asked for,
-// every minute, matching each civicAPI race to its forecast race. Keeps the previous read so the monitor can show
+// every LIVE_POLL_MS, matching each civicAPI race to its forecast race. Keeps the previous read so the monitor can show
 // what changed between reads.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { beforeClose, civicRead, matchCivic, showTest, TYPE_SETS, type CRace, type XIndex } from "./live";
-import { mergeReads, type GoodReads, type TypeRead } from "./liveFeed";
+import { LIVE_POLL_MS, STALE_MS, mergeReads, type GoodReads, type TypeRead } from "./liveFeed";
+import { useEngine } from "./engineClient";
+import type { View } from "@/app/lib/engine/serve";
+
+/**
+ * The engine's state as the pages' LiveState: the same snapshot the forecasts were computed from, so the reported
+ * votes and every model number on a page belong to one moment. In a replay this is how every existing component
+ * (maps, seat arcs, race lists, the monitor) follows the replay clock with no code of its own.
+ */
+// one derived LiveState per engine state, and the previous one kept so the monitor can show what changed
+const derived = new Map<string, LiveState>(); let lastDerived: string | null = null;
+function derive(ix: XIndex, v: View, nowMs: number): LiveState {
+  const hit = derived.get(v.stateId); if (hit) return hit;
+  const s = liveFromView(ix, v, lastDerived ? derived.get(lastDerived)?.byId ?? {} : {}, nowMs);
+  derived.set(v.stateId, s); lastDerived = v.stateId; if (derived.size > 8) derived.delete(derived.keys().next().value as string);
+  return s;
+}
+export function liveFromView(ix: XIndex, v: View, prev: Record<string, CRace>, now: number): LiveState {
+  const byId: Record<string, CRace> = {};
+  for (const r of ix.races) {
+    const row = v.races[r.id]; if (!row || row.dataState === "MISSING") continue;
+    const tot = row.c.reduce((s, c) => s + (c[3] ?? 0), 0);
+    byId[r.id] = { id: typeof row.pid === "number" ? row.pid : -1, type: r.civ.t?.[0] ?? "", province: r.st, district: r.civ.d ?? null, name: r.nm, pr: row.providerPct ?? 0,
+      c: row.c.map(([id, name, party, rep]) => [name, party ?? "", rep ?? 0, tot ? Math.round((10000 * (rep ?? 0)) / tot) / 100 : 0, row.call?.winnerId === id ? 1 : 0, null]) };
+  }
+  const at = new Date(v.t);
+  return { at, byId, prev, raw: Object.values(byId), error: v.live && now - at.getTime() > STALE_MS ? "The live forecast has not updated recently; figures may be behind." : null, loading: false, hidden: 0, test: false, stale: v.live && now - at.getTime() > STALE_MS };
+}
 
 let INDEX: Promise<XIndex> | null = null;
 export function loadIndex() { INDEX ??= fetch("/results/2026/index.json").then((r) => r.json()); return INDEX; }
@@ -19,13 +46,15 @@ export function useIndex() {
 // `stale` means a read failed or that data is older than STALE_MS; `error` then says so in words.
 export type LiveState = { at: Date | null; byId: Record<string, CRace>; prev: Record<string, CRace>; raw: CRace[]; error: string | null; loading: boolean; hidden: number; test: boolean; stale: boolean };
 
-export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = 300_000): LiveState {
+export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = LIVE_POLL_MS): LiveState {
   const [st, setSt] = useState<LiveState>({ at: null, byId: {}, prev: {}, raw: [], error: null, loading: true, hidden: 0, test: false, stale: false });
   const key = sets.join(",");
   const last = useRef<Record<string, CRace>>({});
   const good = useRef<GoodReads>({});
+  const eng = useEngine();
+  const engineOn = eng.available && !!eng.view;
   useEffect(() => {
-    if (!ix) return;
+    if (!ix || engineOn) return;   // the engine serves this page: no separate reads
     good.current = {};
     let dead = false; const ac = new AbortController();
     const types = [...new Set(sets.flatMap((s) => TYPE_SETS[s]))];
@@ -48,8 +77,9 @@ export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], eve
     const t = window.setInterval(() => { if (document.visibilityState === "visible") tick(); }, everyMs);
     return () => { dead = true; ac.abort(); window.clearInterval(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ix, key, everyMs]);
-  return st;
+  }, [ix, key, everyMs, engineOn]);
+  const fromEngine = useMemo(() => (ix && engineOn && eng.view ? derive(ix, eng.view, eng.view.live ? eng.receivedMs : Date.parse(eng.view.t)) : null), [ix, engineOn, eng.view, eng.receivedMs]);
+  return fromEngine ?? st;
 }
 
 export function useStateFile(st: string | null) {

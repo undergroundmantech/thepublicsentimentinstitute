@@ -6,6 +6,8 @@ import Link from "@/app/components/Link";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { marginColor } from "@/app/lib/opp";
 import { STN, KIND_LABEL, civicRace, expMargin, expSides, fmtGap, fmtK, fmtM, fmtN, forecastHref, isInd, legDistricts, project, sides, type CDetail, type CRace, type XRace } from "../live";
+import { sideNames } from "../candidates";
+import { CADENCE_TEXT } from "../liveFeed";
 import { useIndex, useLive, useStateFile } from "../useLive";
 
 type Paths = { counties: { id: string; d: string }[]; districts: { id: string; d: string }[] };
@@ -44,8 +46,7 @@ export default function RaceLive({ id }: { id: string }) {
   const ind = isInd(r);
   const P = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
   const es = expSides(r);
-  const A = r.k === "measure" ? "Yes" : ind ? (r.c?.[0]?.[0] ?? "Independent") : (r.c?.find((x) => x[1] === "D")?.[0] ?? "Democrat");
-  const B = r.k === "measure" ? "No" : (r.c?.find((x) => x[1] === "R")?.[0] ?? "Republican");
+  const SN = sideNames(r); const A = SN.a.name, B = SN.b.name;
   const last = (n: string) => n.split(" ").slice(-1)[0];
   const em = expMargin(r);
   const names = sf?.names ?? {};
@@ -171,7 +172,7 @@ export default function RaceLive({ id }: { id: string }) {
         </section>
       ) : null}
 
-      <p className="rl-src">Expected votes are the On Point Politics forecast of October 22 for every county or district. Returns come from civicAPI through a 30 second cache. The estimate of the final count adds each county&apos;s outstanding vote to what is counted; it is arithmetic, not a call, and civicAPI&apos;s winner flags are shown as civicAPI reports them.</p>
+      <p className="rl-src">Expected votes are the On Point Politics forecast of October 22 for every county or district. Returns come from civicAPI, {CADENCE_TEXT}. The estimate of the final count adds each county&apos;s outstanding vote to what is counted; it is arithmetic, not a call, and civicAPI&apos;s winner flags are shown as civicAPI reports them.</p>
     </div>
   );
 }

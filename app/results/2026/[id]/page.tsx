@@ -10,6 +10,7 @@ import { seo, graph, pageLd, crumbsLd } from "@/app/lib/seo";
 import { faqLd } from "@/app/maps/early-vote/Summary";
 import { closeSentence } from "@/app/lib/pollClose";
 import { STN, KIND_LABEL, fmtM, forecastHref, type XRace } from "../live";
+import { sideNames, sideTags } from "../candidates";
 import "../results2026.css";
 import "./stateResults.css";
 
@@ -30,11 +31,11 @@ export function generateStaticParams() {
 export const dynamicParams = false;
 
 const last = (n: string) => n.split(" ").filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).pop() ?? n;
-const isIndR = (r: XRace) => r.c?.[0]?.[1] === "I";
+const isIndR = (r: XRace) => sideTags(r).a === "I";
+/** The forecast's two principal candidates by name (null where it names nobody for a side). */
 function pair(r: XRace) {
-  const c = r.c ?? [];
-  const a = c.find((x) => x[1] === "D") ?? c.find((x) => x[1] === "I"), b = c.find((x) => x[1] === "R");
-  return { a: a?.[0] ?? null, b: b?.[0] ?? null };
+  const named = new Set((r.c ?? []).map((x) => x[0])); const n = sideNames(r);
+  return { a: named.has(n.a.name) ? n.a.name : null, b: named.has(n.b.name) ? n.b.name : null };
 }
 function between(r: XRace) { const p = pair(r); return p.a && p.b ? `${p.a} and ${p.b}` : p.a || p.b || ""; }
 function who(r: XRace) { if (r.k === "measure") return r.off || "Ballot measure"; const p = pair(r); return p.a && p.b ? `${p.a} vs ${p.b}` : p.a || p.b || ""; }

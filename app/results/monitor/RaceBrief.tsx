@@ -4,11 +4,16 @@
 // a button to the full desk. It reads the same returns and the same projection as the race page.
 import React, { useEffect, useState } from "react";
 import { STN, KIND_LABEL, civicRace, expSides, fmtM, isInd, liveOdds, project, sides, type CDetail, type CRace, type StFile, type XRace } from "../2026/live";
+import { sideNames } from "../2026/candidates";
+import { useEngine } from "../2026/engineClient";
+import { engineOdds, engineProj } from "../2026/EngineRaceCharts";
+import { modelSuggestionAllowed } from "../2026/calls/policy";
 import { percentIn, pctFraction, pctPoints } from "@/app/lib/fmtPct";
 
 const last = (n: string) => n.split(" ").filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).pop() ?? n;
 
 export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace; c?: CRace; sf: StFile | null; at: Date | null; onOpen: () => void; onClose: () => void }) {
+  const eng = useEngine();
   const [det, setDet] = useState<CDetail | null>(null);
   const reporting = !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
   // the county detail stays on screen between reads and clears only when another race is opened
@@ -20,15 +25,18 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
     return () => { dead = true; };
   }, [r.id, c, reporting, at]);
   const exp = sf?.counties[r.id] ?? null;
-  const P = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
-  const odds = liveOdds(r, P);
+  const P0 = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
+  const eRow = eng.view?.races[r.id] ?? null; const fromEngine = !!(eRow && eRow.pm && eRow.dataState !== "MISSING");
+  const P = fromEngine ? engineProj(r, eRow!, P0) : P0;
+  const odds = fromEngine ? engineOdds(eRow!) : liveOdds(r, P0);
   const ind = isInd(r), isM = r.k === "measure";
-  const A = isM ? "Yes" : ind ? (r.c?.[0]?.[0] ?? "Independent") : (r.c?.find((x) => x[1] === "D")?.[0] ?? "Democrat");
-  const B = isM ? "No" : (r.c?.find((x) => x[1] === "R")?.[0] ?? "Republican");
-  const colA = isM ? "#2fbf9b" : ind ? "var(--ind)" : "var(--dem)", colB = isM ? "#e7794a" : "var(--gop)";
+  const SN = sideNames(r); const A = SN.a.name, B = SN.b.name;
+  const sideCol = (tag: string) => (tag === "D" ? "var(--dem)" : tag === "R" ? "var(--gop)" : "var(--ind)");
+  const colA = isM ? "#2fbf9b" : sideCol(SN.a.tag), colB = isM ? "#e7794a" : sideCol(SN.b.tag);
   const winner = c?.c.find((x) => x[4]);
   const leadA = odds.pA >= 0.5; const leadP = 100 * (leadA ? odds.pA : odds.pB);
-  const projected = !winner && P.rep.t > 0 && P.pctIn >= 50 && leadP >= 99.5;
+  const hasFc = isM ? r.pPass != null : r.k === "leg" ? r.pD != null : r.pR != null;
+  const projected = modelSuggestionAllowed({ hasForecast: hasFc, providerCalled: !!winner, countedVotes: P.rep.t, pctIn: P.pctIn, leadProbPct: leadP });
   const status = !c ? "Awaiting results feed" : winner ? `civicAPI call: ${winner[0]}` : projected ? `OnPoint Projection: ${last(leadA ? A : B)}` : reporting ? "Counting" : "No returns yet";
   const es = expSides(r);
   // candidates: counted where there are returns, else expected

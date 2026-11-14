@@ -3,6 +3,7 @@
 // States and counties are coloured by the returns civicAPI reports, or by how far the returns run from the expected
 // vote. Click a state to fly in and see its counties; click any race to open its full results desk, with the
 // reported results, the live win probability, the estimate of the final count and the county table.
+import { engine, useEngine } from "../2026/engineClient";
 import TransparencyButton from "@/app/components/CsvUtility";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "@/app/components/Link";
@@ -12,15 +13,20 @@ import type { Topology, GeometryCollection } from "topojson-specification";
 import type { Feature, Geometry } from "geojson";
 import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { STN, KIND_LABEL, FIRST_CLOSE, fmtM, isInd, sides, expSides, type CRace, type CCand, type Kind, type XRace, type Exp } from "../2026/live";
+import { PROXY_CACHE_MS } from "../2026/liveFeed";
+import { sideNames } from "../2026/candidates";
 import { useIndex, useLive, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { paintUnit } from "./paint";
 import RaceBrief from "./RaceBrief";
+import { ModeSwitch } from "../2026/ReplayDock";
+import { ChamberLine } from "../2026/NationalLive";
+import MonitorCharts from "./MonitorCharts";
 import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, raceLabel as label, GOV_HOLD, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
 import { useSiteTheme } from "@/app/lib/useSiteTheme";
-import { percentIn, pctFraction } from "@/app/lib/fmtPct";
+import { percentIn } from "@/app/lib/fmtPct";
 
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 type SF = Feature<Geometry, { name: string }> & { st: string };
@@ -50,9 +56,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const ix = useIndex();
   const [mode, setMode] = useState<Mode>("sen");
   const [color, setColor] = useState<Color>("results");
+  const engS = useEngine();
   const [sel, setSel] = useState<string | null>(null);
   const [pick, setPick] = useState<string | null>(null);
   const [desk, setDesk] = useState<string | null>(null);
+  const deskPushed = useRef(false); const deskReturn = useRef<HTMLElement | null>(null); const deskRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!desk) return;
+    if (!deskPushed.current) { window.history.pushState(window.history.state, "", `${window.location.pathname}${window.location.search}#desk=${encodeURIComponent(desk)}`); deskPushed.current = true; }
+    deskRef.current?.focus();
+    const onPop = () => { deskPushed.current = false; setDesk(null); window.setTimeout(() => deskReturn.current?.focus?.(), 0); };
+    window.addEventListener("popstate", onPop); return () => window.removeEventListener("popstate", onPop);
+  }, [desk]);
   const [focus, setFocus] = useState<string | null>(null);
   const [geo, setGeo] = useState<{ land: Feature<Geometry>; states: SF[] } | null>(null);
   const [cll, setCll] = useState<Record<string, number[][][]> | null>(null);
@@ -139,6 +154,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return out;
   }, [mode, races, live.byId, color]);
   const selRaces = useMemo(() => (sel ? (ix?.races ?? []).filter((r) => r.st === sel) : []), [ix, sel]);
+  // the replay's key-moments list can narrow to the state or race in view here
+  useEffect(() => { engine.focus(desk ?? pick ?? null, sel); return () => engine.focus(null, null); }, [desk, pick, sel]);
   const layerRace = useMemo(() => {
     if (!sel) return null;
     const cands = selRaces.filter((r) => r.cty);
@@ -425,7 +442,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme]);
 
-  escRef.current = () => { if (desk) setDesk(null); else if (sel) home(); };
+  // The race desk is a history entry: browser Back closes it (and leaves the monitor where it was), Escape and the close
+  // button go back through history too, focus moves into the desk when it opens and returns to the row when it closes.
+  const openDesk = (id: string) => { deskReturn.current = document.activeElement as HTMLElement | null; setDesk(id); };
+  const closeDesk = () => { const pushed = deskPushed.current; deskPushed.current = false; setDesk(null); if (pushed) window.history.back(); window.setTimeout(() => deskReturn.current?.focus?.(), 0); };
+  escRef.current = () => { if (desk) closeDesk(); else if (sel) home(); };
   const home = () => { autoFit.current = true; const k = homeK(); view.current.target = { rot: [97, -39, 0], k }; setZoomK(k); setSel(null); setPick(null); wake.current(); };
   const zoomBy = (f: number) => { autoFit.current = false;
     const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); wake.current(); };
@@ -459,17 +480,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   // before returns, the list opens on the closest races by the forecast
   const closest = useMemo(() => races.slice().sort((a, b) => Math.abs(expM(a) ?? 99) - Math.abs(expM(b) ?? 99)), [races]);
   const left = now ? FIRST_CLOSE - now.getTime() : 0;
-  const clock = now ? now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", timeZone: "America/New_York" }) : "";
+  // in a replay the header clock is the replay's clock, never today's
+  const inReplay = engS.mode === "REPLAY" && !!engS.clock;
+  const clock = inReplay ? new Date(engS.clock!.tMs).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", timeZone: "America/New_York" }) : now ? now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", timeZone: "America/New_York" }) : "";
   const modeName = mode === "state" && office !== "all" ? (OFFICE_GROUPS.find((g) => g[0] === office)?.[1] ?? "Other statewide") : MODES.find((m) => m[0] === mode)?.[1] ?? "";
   const found = useMemo(() => { const t = q.trim().toLowerCase(); if (!t) return []; return races.filter((r) => r.nm.toLowerCase().includes(t) || (STN[r.st] ?? "").toLowerCase().includes(t) || r.st.toLowerCase() === t || (r.c ?? []).some((x) => x[0].toLowerCase().includes(t))); }, [q, races]);
   const big: "sen" | "house" | "gov" = mode === "house" || mode === "gov" ? mode : "sen";
-  const pctf = (p: number) => pctFraction(p);
 
   const raceRow = (r: XRace, inState: boolean) => {
     const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const e = expM(r);
     return (
       <li key={r.id}>
-        <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => setDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
+        <button type="button" className={`mon-row${focus === r.id ? " on" : ""}`} onClick={() => setFocus(focus === r.id ? null : r.id)} onDoubleClick={() => openDesk(r.id)} onMouseEnter={() => r.cty && setPick(r.id)}>
           <span className="nm">{label(r, inState)}</span>
           {lm == null
             ? <span className={`lv ex ${e == null ? "" : e < 0 ? (isInd(r) ? "i" : "d") : "r"}`}>{e == null ? "" : fmtM(e, r.k, isInd(r))}</span>
@@ -507,7 +529,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
             <span className="d">{dN ? <>Democrats need <b>{dN}</b> of {ct.aw + ct.dL + ct.rL + ct.iL} still open</> : <b>Democrats have a majority</b>}</span>
             <span className="r">{rN ? <>Republicans need <b>{rN}</b></> : <b>Republicans have a majority</b>}</span>
           </div>); })() : null}
-        <p className="mon-cp-f"><span>{note}</span><span>Forecast <b className="d">D {pctf(fc.pD)}</b> · {fc.dS.toFixed(1)} D {k === "gov" ? "governors" : "seats"} on average</span></p>
+        <p className="mon-cp-f"><span>{note}</span><ChamberLine k={k} fallback={{ pD: fc.pD, dS: fc.dS }} /></p>
       </section>
     );
   };
@@ -523,6 +545,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           {live.test && live.hidden === 0 && anyLive ? <p className="mon-test">Showing civicAPI test returns for preview. These are not real votes. <a href="?">Hide them</a></p> : null}
         </div>
         <div className="mon-ctl">
+          <ModeSwitch />
           <div className="mon-seg" role="group" aria-label="Races">{MODES.map(([k, l]) => <button key={k} aria-pressed={mode === k} onClick={() => { setMode(k); setPick(null); }}>{l}</button>)}</div>
           <label className="mon-jump"><span className="sr">Jump to a state</span>
             <select value={sel ?? ""} onChange={(e) => { const v = e.target.value; if (v) fly.current(v); else home(); }} aria-label="Jump to a state">
@@ -542,7 +565,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           </div>
         ) : null}
         <div className="mon-clock-wrap">
-          <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
+          <div className="mon-clock" aria-hidden="true"><b>{clock || " "}</b><span>ET{inReplay ? " · replay" : ""} · {votesIn ? <><CountUp v={votesIn} /> votes in</> : "awaiting votes"}</span></div>
           <TransparencyButton />
         </div>
       </section>
@@ -568,7 +591,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           {color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
           {color === "results" ? <span className="ex-k"><i className="ex" />Hatched: no votes yet, expected lean</span> : null}
         </div>
-        <div className="mon-hud" aria-hidden="true">{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · 30 second cache</span></div>
+        <div className="mon-hud" aria-hidden="true">{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · {Math.round(PROXY_CACHE_MS / 60_000)} minute cache</span></div>
         <div className="mon-zoom">
           <button onClick={() => zoomBy(1.5)} aria-label="Zoom in">+</button>
           <button onClick={() => zoomBy(1 / 1.5)} aria-label="Zoom out">−</button>
@@ -585,7 +608,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       </div>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
-        {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => setDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
+        {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => openDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
         {sel ? (
           <>
             <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
@@ -596,6 +619,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           </>
         ) : (
           <>
+            <MonitorCharts />
             <div className="mon-rh"><b>{reportingNow.length ? `${modeName} races counting` : `Closest ${modeName.toLowerCase()} races`}</b><span>{reportingNow.length ? "Now · in" : "Forecast"}</span></div>
             <input className="mon-q" type="search" id="mon-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a race, state or candidate" aria-label="Find a race, state or candidate" />
             {!reportingNow.length && !q ? <p className="mon-note">No returns yet. Each race fills in as its first votes are counted; until then the list shows the forecast, closest first, in gray. Click a race or a state to open it.</p> : null}
@@ -636,8 +660,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       })() : null}
 
       {desk ? (
-        <div className="mon-desk" role="dialog" aria-modal="true" aria-label="Race results desk">
-          <NightDesk id={desk} embedded onClose={() => setDesk(null)} />
+        <div className="mon-desk" role="dialog" aria-modal="true" aria-label="Race results desk" ref={deskRef} tabIndex={-1}>
+          <NightDesk id={desk} embedded onClose={closeDesk} />
         </div>
       ) : null}
       <noscript><p>Turn on JavaScript to use the monitor. <Link href="/results/2026">Every race as a list</Link>.</p></noscript>
@@ -654,7 +678,7 @@ function Cands({ r, c, exp }: { r: XRace; c: CCand[] | null; exp?: [string, numb
       <tr key={x[0]}><td><i className={`p p-${(x[1] || "O")[0].toUpperCase()}`} />{x[0]}{x[4] ? <em>Winner</em> : null}</td><td>{x[2].toLocaleString("en-US")}</td><td>{((100 * x[2]) / t).toFixed(1)}%</td></tr>
     ))}</tbody></table>;
   }
-  const rows: [string, string, number][] = exp ? exp.map(([p, v]) => [p === "D" ? (r.c?.find((x) => x[1] === "D" || (isInd(r) && x[1] === "I"))?.[0] ?? "Democrat") : p === "R" ? (r.c?.find((x) => x[1] === "R")?.[0] ?? "Republican") : "Others", p, v] as [string, string, number]).filter((x) => x[2] > 0) : (r.c ?? []);
+  const rows: [string, string, number][] = exp ? exp.map(([p, v]) => [p === "D" ? sideNames(r).a.name : p === "R" ? sideNames(r).b.name : "Others", p, v] as [string, string, number]).filter((x) => x[2] > 0) : (r.c ?? []);
   const t = rows.reduce((s, x) => s + x[2], 0) || 1;
   return <table className="mon-tc exp"><thead><tr><th>Expected</th><th>Votes</th><th>Share</th></tr></thead><tbody>{rows.slice(0, 4).map((x) => (
     <tr key={x[0]}><td><i className={`p p-${x[1][0]}`} />{x[0]}</td><td>{Math.round(x[2]).toLocaleString("en-US")}</td><td>{((100 * x[2]) / t).toFixed(1)}%</td></tr>
