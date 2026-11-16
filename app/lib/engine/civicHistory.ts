@@ -6,6 +6,7 @@
 // The compact form read here is written by scripts/engine/extract_civic_history.py, which only drops fields the site
 // never reads (colours, map names, precinct rows) and stores a county only when it changed.
 import type { CivicRawRace } from "./snapshot";
+import { DEFAULT_CONFIG } from "./config";
 
 /** [percent reporting, ...[candidate index, votes]] */
 export type CompactRegionRow = [number | null, ...[number, number | null][]];
@@ -20,7 +21,7 @@ export type CompactRace = {
   final: (Omit<CompactSnap, "t"> & { district: string | null; ename: string | null; etype: string | null }) | null;
   snaps: CompactSnap[];
 };
-export type HistoryRace = { race: CompactRace; timesMs: number[] };
+export type HistoryRace = { race: CompactRace; timesMs: number[]; /** per snapshot: when the race's total last moved (by more than QUIET_MOVE) */ movedAt: string[]; /** per snapshot: the highest total the race had shown up to then */ peakAt: number[]; /** per snapshot: when the total fell below that high (ms), or null while it stands at or near it */ dropAt: (number | null)[] };
 
 /**
  * Sort each race's snapshots by time, and give every candidate entry its provider id. The export lists a candidate's
@@ -31,7 +32,24 @@ export type HistoryRace = { race: CompactRace; timesMs: number[] };
 export const prepare = (races: CompactRace[]): HistoryRace[] => races.map((r) => {
   const cands = r.cands.map((c) => { if (c[2] != null) return c; const ids = [...new Set(r.cands.filter((x) => x[0] === c[0] && x[2] != null).map((x) => x[2]))]; return ids.length === 1 ? ([c[0], c[1], ids[0]] as CompactRace["cands"][number]) : c; });
   const snaps = [...r.snaps].sort((a, b) => Date.parse(a.t) - Date.parse(b.t));
-  return { race: { ...r, cands, snaps }, timesMs: snaps.map((s) => Date.parse(s.t)) };
+  // A total that has stood still for half a day and then gains a sliver is a canvass correction (provisional and
+  // cured ballots, a late box), not a count reopening: it does not restart the clock unless it passes the larger
+  // threshold. Not in the states that count for days, where a small daily batch is the count itself.
+  const slow = DEFAULT_CONFIG.turnout.quiet.slowStates.includes(r.state);
+  let anchor: number | null = null, at = snaps[0]?.t ?? "", peak = 0, dropMs: number | null = null;
+  const peakAt: number[] = [], dropAt: (number | null)[] = [];
+  const movedAt = snaps.map((s) => {
+    const tot = s.v.reduce((t, [, v]) => t + (v ?? 0), 0);
+    // The highest total so far, for the "count has gone down" check. A lower total that has stood for COUNT_DROP_HOLD_MS
+    // is taken as the provider's correction and becomes the reference (New York's totals were tripled for a day).
+    if (tot >= (1 - COUNT_DROP) * peak) { peak = Math.max(peak, tot); dropMs = null; }
+    else { const ms = Date.parse(s.t); dropMs ??= ms; if (ms - dropMs >= COUNT_DROP_HOLD_MS) { peak = tot; dropMs = null; } }
+    peakAt.push(peak); dropAt.push(dropMs);
+    const th = !slow && anchor != null && Date.parse(s.t) - Date.parse(at) >= QUIET_LONG_MS ? QUIET_MOVE_LONG : QUIET_MOVE;
+    if (anchor == null || Math.abs(tot - anchor) > th * Math.max(anchor, 1)) { anchor = tot; at = s.t; }
+    return at;
+  });
+  return { race: { ...r, cands, snaps }, timesMs: snaps.map((s) => Date.parse(s.t)), movedAt, peakAt, dropAt };
 });
 
 /** Index of the snapshot in force at tMs (the latest at or before it); -1 before the first. */
@@ -48,7 +66,7 @@ export function rawAt(h: HistoryRace, tMs: number, withRegions = false): (CivicR
   const r = h.race, s = r.snaps[i], f = r.final;
   const raw: CivicRawRace & { called_at?: string | null; polls_close?: string | null } = {
     id: r.id, type: f?.etype ?? r.type, election_type: f?.etype ?? r.type, province: r.state, district: f?.district ?? null, election_name: f?.ename ?? r.name,
-    percent_reporting: s.pr, last_updated: s.lu, called_at: s.ca, polls_close: s.pc,
+    percent_reporting: s.pr, last_updated: s.lu, called_at: s.ca, polls_close: s.pc, total_last_changed: h.movedAt[i] ?? null, total_peak: h.dropAt[i] != null && tMs - (h.dropAt[i] as number) >= COUNT_DROP_HOLD_MS ? null : h.peakAt[i] ?? null,
     candidates: s.v.map(([k, v]) => cand(r, k, v, s.w.includes(k))),
   };
   if (withRegions) raw.region_results = regionsAt(h, i);
@@ -62,6 +80,10 @@ const rowCache = new WeakMap<CompactRace, { i: number; rows: Map<string, Compact
  * resetting Florida's counties on election night and its governor's race swung between 96% and 99.5% for hours.
  */
 export const QUIET_MOVE = 0.005;
+/** after QUIET_LONG_MS without a move, a race total restarts its clock only on a change above QUIET_MOVE_LONG */
+/** a total this far below its earlier high is a correction in progress, for this long at most */
+export const COUNT_DROP = 0.02, COUNT_DROP_HOLD_MS = 24 * 3_600_000;
+export const QUIET_LONG_MS = 12 * 3_600_000, QUIET_MOVE_LONG = 0.015;
 const rowTotal = (row: CompactRegionRow) => (row.slice(1) as [number, number | null][]).reduce((t, [, v]) => t + (v ?? 0), 0);
 export function rowsAt(race: CompactRace, i: number): Map<string, CompactRegionRow> {
   let c = rowCache.get(race); if (!c || c.i > i) { c = { i: -1, rows: new Map(), at: new Map(), anchor: new Map() }; rowCache.set(race, c); }   // frames mostly move forward: carry on from the last one

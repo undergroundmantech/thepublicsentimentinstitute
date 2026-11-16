@@ -1,8 +1,8 @@
 "use client";
 // The Calls Desk by office: the country, then each state's Senate and governor's races, then the House by state and
-// district, then the ballot measures. Every row gives who was called, when civicAPI called it (its own stated time
-// where it gives one, else when this site first read the call) and when the model called it. All of it is read from
-// the one engine state, so in a replay it is the record as of the replay clock.
+// district, then the ballot measures. Every row gives who On Point called and when. The calls are On Point's own (the
+// engine's ledger); civicAPI supplies the count and its calls are not shown. All of it is read from the one engine
+// state, so in a replay it is the record as of the replay clock.
 import React, { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import type { Moment } from "@/app/lib/engine/moments";
@@ -18,32 +18,32 @@ const letter = (p: string | null | undefined) => { const s = (p ?? "").toLowerCa
 const pcls = (p: string | null | undefined) => { const l = letter(p); return l === "D" ? "p-D" : l === "R" ? "p-R" : "p-O"; };
 
 export type OfficeRow = { r: XRace; s: RaceCallState | null };
-type Cell = { id: string; nm: string; winner: string | null; party: string | null; official: string | null; stated: boolean; model: string | null; modelName: string | null; fast: boolean; agree: boolean | null; leader: string | null; leaderParty: string | null; pct: number | null; counted: number; alerts: number };
+type Lane = "standard" | "safe-seat" | "count-settled" | "uncontested";
+type Cell = { id: string; nm: string; winner: string | null; party: string | null; at: string | null; lane: Lane | null; leader: string | null; leaderParty: string | null; pct: number | null; counted: number; alerts: number };
 
 function cellOf(x: OfficeRow, v: View): Cell {
   const row = v.races[x.r.id], s = x.s, by = (cid: string | null | undefined) => row?.c.find((c) => c[0] === cid) ?? null;
-  const w = by(s?.official?.candidateId) ?? row?.c.find((c) => c[1] === s?.official?.name) ?? null, lead = by(row?.leaderId);
-  return { id: x.r.id, nm: x.r.nm, winner: s?.official?.name ?? null, party: w?.[2] ?? null, official: s?.official ? s.official.calledAt ?? s.official.firstSeenAt : null, stated: !!s?.official?.calledAt,
-    model: s?.modelCall?.calledAt ?? null, modelName: s?.modelCall?.name ?? null, fast: s?.modelCall?.lane === "safe-seat", agree: s?.official && s?.modelCall ? s.official.candidateId === s.modelCall.candidateId : null,
+  const mc = s?.modelCall ?? null, w = by(mc?.candidateId), lead = by(row?.leaderId);
+  return { id: x.r.id, nm: x.r.nm, winner: mc?.name ?? null, party: w?.[2] ?? mc?.partyRaw ?? null, at: mc?.calledAt ?? null, lane: mc ? ((mc.lane as Lane | undefined) ?? "standard") : null,
     leader: lead?.[1] ?? null, leaderParty: lead?.[2] ?? null, pct: row?.providerPct ?? null, counted: row?.counted ?? 0, alerts: s?.alerts ?? 0 };
 }
-/** minutes the model call came before (+) or after (-) the official call */
-const lead = (c: Cell) => (c.official && c.model ? Math.round((Date.parse(c.official) - Date.parse(c.model)) / 60_000) : null);
-const leadText = (m: number | null) => (m == null ? "" : m === 0 ? "within a minute" : m > 0 ? `model ${m >= 120 ? `${(m / 60).toFixed(1)} h` : `${m} min`} earlier` : `model ${-m >= 120 ? `${(-m / 60).toFixed(1)} h` : `${-m} min`} later`);
+const LANE_NOTE: Record<Lane, string> = { standard: "", "safe-seat": "safe seat", "count-settled": "count settled", uncontested: "unopposed" };
+const LANE_TITLE: Record<Lane, string> = {
+  standard: "On Point's call: the model held above its threshold through every safeguard. A projection, not a certified result.",
+  "safe-seat": "On Point's call in the safe-seat lane: the forecast's heavy favourite, confirmed on an early count. A projection, not a certified result.",
+  "count-settled": "On Point's call on the count itself: it has stopped, or the lead is out of reach. A projection, not a certified result.",
+  uncontested: "Unopposed: recorded when the polls closed.",
+};
 
 function CallCell({ c, measure }: { c: Cell | null; measure?: boolean }) {
   if (!c) return <span className="co-none">no race</span>;
   const href = `/results/2026/${encodeURIComponent(c.id)}`;
-  if (!c.winner && !c.model) return <span className="co-open"><Link href={href}>{c.leader ? <>{c.leader}{!measure && letter(c.leaderParty) ? <i className={`cb-p ${pcls(c.leaderParty)}`}>{letter(c.leaderParty)}</i> : null} leads</> : c.counted > 0 ? "counting" : "no returns yet"}</Link><small>not called{c.pct != null && c.counted > 0 ? ` · ${c.pct.toFixed(0)}% of precincts` : ""}</small></span>;
-  const m = lead(c);
+  if (!c.winner) return <span className="co-open"><Link href={href}>{c.leader ? <>{c.leader}{!measure && letter(c.leaderParty) ? <i className={`cb-p ${pcls(c.leaderParty)}`}>{letter(c.leaderParty)}</i> : null} leads</> : c.counted > 0 ? "counting" : "no returns yet"}</Link><small>not called{c.pct != null && c.counted > 0 ? ` · ${c.pct.toFixed(0)}% of precincts` : ""}</small></span>;
   return (
-    <span className={`co-call${c.agree === false ? " split" : ""}`}>
-      <Link href={href}><b>{c.winner ?? c.modelName}</b>{!measure && letter(c.party) ? <i className={`cb-p ${pcls(c.party)}`}>{letter(c.party)}</i> : null}</Link>
+    <span className="co-call">
+      <Link href={href}><b>{c.winner}</b>{!measure && letter(c.party) ? <i className={`cb-p ${pcls(c.party)}`}>{letter(c.party)}</i> : null}</Link>
       <small>
-        {c.official ? <span title={c.stated ? "civicAPI's own stated call time" : "When this site first read civicAPI's call"}>civicAPI {clock(c.official)}</span> : <span>no official call</span>}
-        {c.model ? <span className="mdl" title={c.fast ? "The model's own call, made in the safe-seat lane: the forecast's heavy favourite, called on an early count. Not an official call." : "The model's own call: not an official call"}> · model {clock(c.model)}{c.fast ? " (safe seat)" : ""}</span> : <span> · no model call</span>}
-        {m != null && c.agree !== false ? <em> · {leadText(m)}</em> : null}
-        {c.agree === false ? <strong> · model call was for {c.modelName}</strong> : null}
+        <span className="mdl" title={LANE_TITLE[c.lane ?? "standard"]}>{c.lane === "uncontested" ? "Unopposed" : "On Point call"} · {clock(c.at)}{c.lane && c.lane !== "uncontested" && LANE_NOTE[c.lane] ? ` (${LANE_NOTE[c.lane]})` : ""}</span>
         {c.alerts ? <strong> · {c.alerts} alert{c.alerts > 1 ? "s" : ""}</strong> : null}
       </small>
     </span>
@@ -58,7 +58,7 @@ export default function CallsByOffice({ rows, v, moments }: { rows: OfficeRow[];
   const cells = useMemo(() => new Map(rows.map((x) => [x.r.id, cellOf(x, v)])), [rows, v]);
   const of = (k: string) => rows.filter((x) => x.r.k === k);
   const states = useMemo(() => [...new Set(rows.filter((x) => x.r.k === "sen" || x.r.k === "gov").map((x) => x.r.st))].sort((a, b) => (STN[a] ?? a).localeCompare(STN[b] ?? b)), [rows]);
-  const firstCall = (st: string) => Math.min(...rows.filter((x) => x.r.st === st && (x.r.k === "sen" || x.r.k === "gov")).map((x) => { const c = cells.get(x.r.id)!; return c.official ? Date.parse(c.official) : Infinity; }));
+  const firstCall = (st: string) => Math.min(...rows.filter((x) => x.r.st === st && (x.r.k === "sen" || x.r.k === "gov")).map((x) => { const c = cells.get(x.r.id)!; return c.at ? Date.parse(c.at) : Infinity; }));
   const stOrder = sort === "state" ? states : [...states].sort((a, b) => firstCall(a) - firstCall(b));
   const houseStates = useMemo(() => { const m = new Map<string, OfficeRow[]>(); for (const x of of("house")) m.set(x.r.st, [...(m.get(x.r.st) ?? []), x]); for (const a of m.values()) a.sort((x, y) => x.r.id.localeCompare(y.r.id, "en", { numeric: true })); return [...m].sort((a, b) => (STN[a[0]] ?? a[0]).localeCompare(STN[b[0]] ?? b[0])); }, [rows]); // eslint-disable-line react-hooks/exhaustive-deps
   const measures = useMemo(() => of("measure").sort((a, b) => (STN[a.r.st] ?? "").localeCompare(STN[b.r.st] ?? "") || a.r.nm.localeCompare(b.r.nm, "en", { numeric: true })), [rows]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -72,21 +72,20 @@ export default function CallsByOffice({ rows, v, moments }: { rows: OfficeRow[];
         <h2 id="co-nat">Nationwide</h2>
         <div className="co-nat">
           {CHAMBERS.map((ch) => {
-            const n = v.national[ch.key], list = of(ch.k).map((x) => cells.get(x.r.id)!), off = list.filter((c) => c.official), mod = list.filter((c) => c.model);
-            const times = off.map((c) => Date.parse(c.official!)).sort((a, b) => a - b); const nu = (n as { notUp?: { D: number; R: number } }).notUp; const dec = decided(ch.k);
-            const med = (() => { const d = list.map(lead).filter((x): x is number => x != null).sort((a, b) => a - b); return d.length ? d[Math.floor(d.length / 2)] : null; })();
+            const n = v.national[ch.key], list = of(ch.k).map((x) => cells.get(x.r.id)!), called = list.filter((c) => c.winner);
+            const times = called.filter((c) => c.lane !== "uncontested" && c.at).map((c) => Date.parse(c.at!)).sort((a, b) => a - b); const nu = (n as { notUp?: { D: number; R: number } }).notUp; const dec = decided(ch.k);
+            const lanes = (l: Lane) => called.filter((c) => c.lane === l).length;
             return (
               <article key={ch.k} className="co-ch">
                 <h3>{ch.label}</h3>
                 <p className="co-seats"><b className="p-D">{n.called.D + (nu?.D ?? 0)}</b><span>Democrats</span><b className="p-R">{n.called.R + (nu?.R ?? 0)}</b><span>Republicans</span></p>
-                <p className="co-sub">Seats on civicAPI&apos;s calls{nu && nu.D + nu.R > 0 ? `, with ${nu.D} Democratic and ${nu.R} Republican ${ch.k === "gov" ? "governorships" : "seats"} not up` : ""}. {ch.k === "gov" ? "" : "Control: "}{ch.need}.</p>
+                <p className="co-sub">Seats on On Point&apos;s calls{nu && nu.D + nu.R > 0 ? `, with ${nu.D} Democratic and ${nu.R} Republican ${ch.k === "gov" ? "governorships" : "seats"} not up` : ""}. {ch.k === "gov" ? "" : "Control: "}{ch.need}.</p>
                 <dl>
-                  <div><dt>Official calls</dt><dd>{off.length} of {list.length}</dd></div>
-                  <div><dt>Model calls</dt><dd>{mod.length} of {list.length}{mod.some((c) => c.fast) ? ` · ${mod.filter((c) => c.fast).length} safe-seat` : ""}</dd></div>
-                  <div><dt>Model first</dt><dd>{(() => { const b = list.filter((c) => c.official && c.model && c.agree !== false); return b.length ? `${b.filter((c) => (lead(c) ?? 0) > 0).length} of ${b.length}` : "—"; })()}</dd></div>
-                  <div><dt>First official call</dt><dd>{times.length ? clock(new Date(times[0]).toISOString()) : "—"}</dd></div>
-                  <div><dt>Latest official call</dt><dd>{times.length ? clock(new Date(times[times.length - 1]).toISOString()) : "—"}</dd></div>
-                  <div><dt>Model against official</dt><dd>{med == null ? "—" : leadText(med).replace("model ", "median ")}</dd></div>
+                  <div><dt>Called by On Point</dt><dd>{called.length} of {list.length}</dd></div>
+                  <div><dt>Of those</dt><dd>{[lanes("safe-seat") ? `${lanes("safe-seat")} safe-seat` : "", lanes("count-settled") ? `${lanes("count-settled")} count-settled` : "", lanes("uncontested") ? `${lanes("uncontested")} unopposed` : ""].filter(Boolean).join(" · ") || "all on the standard rule"}</dd></div>
+                  <div><dt>Not called</dt><dd>{list.length - called.length}</dd></div>
+                  <div><dt>First call</dt><dd>{times.length ? clock(new Date(times[0]).toISOString()) : "—"}</dd></div>
+                  <div><dt>Latest call</dt><dd>{times.length ? clock(new Date(times[times.length - 1]).toISOString()) : "—"}</dd></div>
                   {ch.k !== "gov" ? <div><dt>Control decided</dt><dd>{dec ? `${clock(dec.t)} · ${dec.title.includes("Democrats") ? "Democrats" : "Republicans"}` : "not yet, on calls"}</dd></div> : null}
                 </dl>
               </article>
@@ -112,10 +111,10 @@ export default function CallsByOffice({ rows, v, moments }: { rows: OfficeRow[];
 
       <section aria-labelledby="co-ho">
         <div className="co-hd"><h2 id="co-ho">House, by state and district</h2><div className="co-sort"><button type="button" aria-pressed={openAll} onClick={() => setOpenAll(!openAll)}>{openAll ? "Collapse all" : "Open all"}</button></div></div>
-        {houseStates.map(([st, list]) => { const cs = list.map((x) => cells.get(x.r.id)!); const called = cs.filter((c) => c.official); const d = called.filter((c) => letter(c.party) === "D").length, r = called.filter((c) => letter(c.party) === "R").length;
+        {houseStates.map(([st, list]) => { const cs = list.map((x) => cells.get(x.r.id)!); const called = cs.filter((c) => c.winner); const d = called.filter((c) => letter(c.party) === "D").length, r = called.filter((c) => letter(c.party) === "R").length;
           return (
             <details key={`${st}${openAll}`} className="co-st" open={openAll || undefined}>
-              <summary><b>{STN[st] ?? st}</b><span>{list.length} district{list.length > 1 ? "s" : ""}</span><span>{called.length} called</span>{called.length ? <span><i className="cb-p p-D">D</i> {d} <i className="cb-p p-R">R</i> {r}</span> : null}<span className="mdl">{cs.filter((c) => c.model).length} model calls</span></summary>
+              <summary><b>{STN[st] ?? st}</b><span>{list.length} district{list.length > 1 ? "s" : ""}</span><span className="mdl">{called.length} called by On Point</span>{called.length ? <span><i className="cb-p p-D">D</i> {d} <i className="cb-p p-R">R</i> {r}</span> : null}</summary>
               <div className="co-table" role="table" aria-label={`${STN[st] ?? st} House calls`}>
                 {list.map((x) => <div key={x.r.id} className="co-row two" role="row"><span role="cell" className="st">{x.r.nm}</span><span role="cell"><CallCell c={cells.get(x.r.id) ?? null} /></span></div>)}
               </div>

@@ -28,16 +28,18 @@ export default function RaceBrief({ r, c, sf, at, onOpen, onClose }: { r: XRace;
   const P0 = project(exp, det?.regions ?? null, r, c?.c ?? null, r.tot);
   const eRow = eng.view?.races[r.id] ?? null; const fromEngine = !!(eRow && eRow.pm && eRow.dataState !== "MISSING");
   const P = fromEngine ? engineProj(r, eRow!, P0) : P0;
-  const odds = fromEngine ? engineOdds(eRow!) : liveOdds(r, P0);
+  const mc = eng.view?.ledger.races[r.id]?.modelCall ?? null;
+  const odds = fromEngine ? engineOdds(eRow!, !!mc) : liveOdds(r, P0);
   const ind = isInd(r), isM = r.k === "measure";
   const SN = sideNames(r); const A = SN.a.name, B = SN.b.name;
   const sideCol = (tag: string) => (tag === "D" ? "var(--dem)" : tag === "R" ? "var(--gop)" : "var(--ind)");
   const colA = isM ? "#2fbf9b" : sideCol(SN.a.tag), colB = isM ? "#e7794a" : sideCol(SN.b.tag);
+  // the winner flag is On Point's own call (useLive.ts): civicAPI's calls are not shown
   const winner = c?.c.find((x) => x[4]);
   const leadA = odds.pA >= 0.5; const leadP = 100 * (leadA ? odds.pA : odds.pB);
   const hasFc = isM ? r.pPass != null : r.k === "leg" ? r.pD != null : r.pR != null;
   const projected = modelSuggestionAllowed({ hasForecast: hasFc, providerCalled: !!winner, countedVotes: P.rep.t, pctIn: P.pctIn, leadProbPct: leadP });
-  const status = !c ? "Awaiting results feed" : winner ? `civicAPI call: ${winner[0]}` : projected ? `OnPoint Projection: ${last(leadA ? A : B)}` : reporting ? "Counting" : "No returns yet";
+  const status = !c ? "Awaiting results feed" : winner ? (mc?.lane === "uncontested" ? `Unopposed: ${winner[0]}` : `On Point call: ${winner[0]}`) : projected ? `OnPoint Projection: ${last(leadA ? A : B)}` : reporting ? "Counting" : "No returns yet";
   const es = expSides(r);
   // candidates: counted where there are returns, else expected
   const rows: { n: string; p: string; v: number; s: number; w?: boolean }[] = reporting

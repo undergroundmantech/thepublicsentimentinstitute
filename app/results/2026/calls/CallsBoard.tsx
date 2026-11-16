@@ -1,6 +1,7 @@
 "use client";
 // Read-only election calls board for an operator or a broadcast producer. Reads the same shared civicAPI observation as
-// the rest of /results/2026. Official calls are civicAPI's; a projection is On Point's own estimate and says so.
+// the rest of /results/2026. The calls are On Point's own (the engine's calls on the recorded night, where no live
+// engine is running); civicAPI supplies the count and its calls are not shown.
 import { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { useSharedLive } from "../LiveProvider";
@@ -17,7 +18,7 @@ const STATE_FILES = new Map<string, Promise<StFile | null>>();
 const stateFile = (st: string) => { let p = STATE_FILES.get(st); if (!p) { p = fetch(`/results/2026/st/${st}.json`).then((x) => (x.ok ? (x.json() as Promise<StFile>) : null)).catch(() => null); STATE_FILES.set(st, p); } return p; };
 
 /** Model suggestions, by the one shared policy (calls/policy.ts) that the race desk and the monitor also use. They are OFF by
- *  default: with the operator flag unset this hook does no reads and returns nothing, and the board shows provider calls only. */
+ *  default: with the operator flag unset this hook does no reads and returns nothing, and the board shows On Point's calls only. */
 function useProjections(races: XRace[], byId: Record<string, CRace>, readKey: string) {
   const [out, setOut] = useState<Record<string, Proj>>({});
   useEffect(() => {
@@ -50,7 +51,7 @@ function useProjections(races: XRace[], byId: Record<string, CRace>, readKey: st
   return out;
 }
 
-const STATE_LABEL: Record<CallState, string> = { official: "Official call", projected: "On Point projection", uncalled: "Not called" };
+const STATE_LABEL: Record<CallState, string> = { official: "On Point call", projected: "On Point projection", uncalled: "Not called" };
 const PARTY_LABEL: Record<Party, string> = { D: "Democratic", R: "Republican", O: "Other" };
 
 function Who({ r }: { r: XRace }) {
@@ -91,7 +92,7 @@ export default function CallsBoard() {
         <div>
           <span className="eye">Election calls · read-only</span>
           <h1 id="cb-h">Every call, <em>one board.</em></h1>
-          <p>Official calls come from civicAPI. {sug ? "An On Point projection is our own model estimate and is never an official call." : "A model probability is never shown here as a call."}</p>
+          <p>Every call here is On Point&apos;s own: the calls its election-night model made on the recorded count of November 3 and the days after. civicAPI supplies the count; its calls are not shown. An On Point call is a projection, not a certified result.</p>
         </div>
         <dl className="cb-fresh" aria-live="polite">
           <div><dt>Last civicAPI read</dt><dd>{live?.loading ? "Connecting…" : clock(live?.at ?? null)}</dd></div>
@@ -101,10 +102,10 @@ export default function CallsBoard() {
 
       {stale ? <p className="cb-warn" role="alert"><b>Stale feed.</b> {live?.error ?? `civicAPI data is more than ${Math.round(STALE_MS / 60_000)} minutes old, its read time is unknown, or a read failed.`} Calls shown may be behind; do not treat the absence of a call as a result.</p> : null}
       {live?.test && live.hidden > 0 ? <p className="cb-note">civicAPI is publishing test returns before polls close. They are hidden here, so no calls will appear until real results arrive.</p> : null}
-      {live?.test && live.hidden === 0 && live.raw.some((c) => c.c.some((x) => x[4])) ? <p className="cb-warn" role="alert"><b>Test preview.</b> Calls shown are civicAPI test returns, not real results.</p> : null}
+      {live?.test && live.hidden === 0 && live.raw.some((c) => c.c.some((x) => x[4])) ? <p className="cb-warn" role="alert"><b>Test preview.</b> Figures shown are civicAPI test returns, not real results.</p> : null}
 
       <div className="cb-tiles" role="group" aria-label="Call totals">
-        <div className="t off"><span>Official calls</span><b>{n.official}</b><small>D {n.byP.D} · R {n.byP.R} · other {n.byP.O}</small></div>
+        <div className="t off"><span>On Point calls</span><b>{n.official}</b><small>D {n.byP.D} · R {n.byP.R} · other {n.byP.O}</small></div>
         {sug ? <div className="t prj"><span>On Point projections</span><b>{n.projected}</b><small>model estimates, not calls</small></div> : null}
         <div className="t unc"><span>Not called</span><b>{n.uncalled}</b><small>of {all.length} races tracked</small></div>
       </div>
@@ -120,7 +121,7 @@ export default function CallsBoard() {
 
       {!ix ? <div className="cb-load sx-skel" /> : null}
       {ix && n.official + n.projected === 0 ? (
-        <p className="cb-empty" role="status">{preClose ? "Polls have not closed. No calls yet." : sug ? "No calls yet. Races appear here as civicAPI calls them or as our model estimate clears its threshold." : "No calls yet. Races appear here as civicAPI calls them."}</p>
+        <p className="cb-empty" role="status">{preClose ? "Polls have not closed. No calls yet." : "No calls yet. Races appear here as On Point calls them."}</p>
       ) : null}
 
       {ix ? (

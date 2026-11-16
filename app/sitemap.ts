@@ -75,6 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/maps/party-registration", today, "monthly", 0.5),
     u("/maps/voter-registration", today, "monthly", 0.5),
     u("/results/2026", today, "daily", 0.8),
+    u("/results/2026/calls", today, "daily", 0.6),
     u("/results/archive", today, "weekly", 0.5),
     u("/on-point-polling", today, "monthly", 0.5),
     u("/on-point-polling/methodology", today, "monthly", 0.5),

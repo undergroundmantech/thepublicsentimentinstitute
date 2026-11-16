@@ -51,7 +51,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
 
   const all = useMemo(() => ix?.races ?? [], [ix]);
   const ofKind = (k: Kind) => all.filter((r) => r.k === k);
-  // what each category has counted: civicAPI calls by party, races leading by party, races counting
+  // what each category has counted: On Point's calls by party (the winner flags are On Point's own: useLive.ts), races leading by party, races counting
   const T = useMemo(() => ({ sen: tally(ofKind("sen"), live.byId), house: tally(ofKind("house"), live.byId), gov: tally(ofKind("gov"), live.byId), other: tally(all.filter((r) => CATS[3].kinds.includes(r.k)), live.byId) }), [all, live.byId]); // eslint-disable-line react-hooks/exhaustive-deps
   const seats = useMemo(() => {
     const of = (k: Kind) => ofKind(k).map((r) => seatOf(r, live.byId[r.id]));
@@ -121,7 +121,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
   const verdict = (() => {
     if (cat === "other") {
       const t = T.other; const kinds = CATS[3].kinds.map((k) => `${ofKind(k).length} ${KIND_LABEL[k].toLowerCase()}`);
-      return t.counting ? <><b>{t.counting} of {t.n}</b> other races are counting and civicAPI has called <b>{t.called}</b></> : <>No votes are counted in the <b>{t.n}</b> other races: {kinds.join(", ")}</>;
+      return t.counting ? <><b>{t.counting} of {t.n}</b> other races are counting and On Point has called <b>{t.called}</b></> : <>No votes are counted in the <b>{t.n}</b> other races: {kinds.join(", ")}</>;
     }
     const t = T[cat], c = ct!, name = cat === "sen" ? "Senate" : cat === "house" ? "House" : "governorships";
     if (!t.counting) return <>No votes are counted yet. The forecast gives Democrats <b className="d">{pct(fc!.pD)}</b> for {cat === "gov" ? "most governorships" : `the ${name}`}, about <b>{fc!.dS.toFixed(0)}</b> {cat === "gov" ? "governors" : "seats"} on average</>;
@@ -145,7 +145,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
           <h1 id="nat-h">Election night, <em>as the nation counts.</em></h1>
           <p className="lede">
             {phase === "pre" ? <>First polls close at 6:00 PM ET on November 3, in {countdown(msLeft)}. Until then every map and seat shows the On Point Politics forecast as an expected lean, hatched, never as a result. Returns from civicAPI replace it as votes are counted.</>
-              : phase === "counting" ? <>{totalCounting} races are counting and civicAPI has called {totalCalled}. Reported votes are actual returns; projections and expected leans are modeled and labeled as such.</>
+              : phase === "counting" ? <>{totalCounting} races are counting and On Point has called {totalCalled}. Reported votes are actual returns from civicAPI; calls, projections and expected leans are On Point&apos;s and labeled as such.</>
               : <>Polls are closing. Returns appear here as civicAPI reports them, race by race, against the expected vote.</>}
           </p>
           {live.test && live.hidden > 0 ? <p className="nat-test">civicAPI is publishing test returns before Election Day; they are hidden. <a href="?test=1">Preview with test returns</a></p> : null}
@@ -160,6 +160,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
           </dl>
           <ModeSwitch />
           <Link className="btn g" href="/results/monitor">Open the situation monitor</Link>
+          <Link className="btn g" href="/results/2026/calls">Calls desk</Link>
         </div>
       </header>
 
@@ -232,7 +233,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
                 {tipRaces.slice(0, 6).map((r) => { const c = live.byId[r.id]; const m = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const ind = isInd(r); const e = expM(r); return (
                   <div className="r" key={r.id}>
                     <span>{cat === "house" ? (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" v ") : tipRaces.length > 1 ? r.nm.replace(STN[r.st] + " ", "") : (r.c ?? []).slice(0, 2).map((x) => lastName(x[0])).join(" v ") || r.off}</span>
-                    {w ? <b className="call">Called · {lastName(w[0])}</b> : m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)} · {percentIn(c!.pr)} in</b> : <b className="ex">{e != null ? `Expected ${fmtM(e, r.k, ind)}` : "No votes yet"}</b>}
+                    {w ? <b className="call">On Point call · {lastName(w[0])}</b> : m != null ? <b className={m < 0 ? (ind ? "i" : "d") : "r"}>{fmtM(m, r.k, ind)} · {percentIn(c!.pr)} in</b> : <b className="ex">{e != null ? `Expected ${fmtM(e, r.k, ind)}` : "No votes yet"}</b>}
                   </div>); })}
                 {tipRaces.length > 6 ? <div className="more">and {tipRaces.length - 6} more</div> : null}
                 <div className="cta">{tipRaces.length === 1 ? "Click for the full race" : "Click for every race in the state"}</div>
@@ -243,7 +244,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
             {cat === "other" ? <><span><i className="sw" style={{ background: "rgba(183,140,255,.75)" }} />Deeper purple, more races with votes in</span></>
               : <><span>D +40</span><i className="ramp" /><span>R +40</span><span className="k">counted votes · paler means less counted</span></>}
             <span><i className="sw hatch" />Hatched: no votes yet, expected lean only</span>
-            <span><i className="sw call" />civicAPI call</span>
+            <span><i className="sw call" />On Point call</span>
           </div>
         </div>
 
@@ -285,7 +286,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
       <style>{NATIONAL_LIVE_CSS}</style>
       <HouseVotePanel />
       <NightCharts />
-      <p className="nat-src">Reported votes come from civicAPI, {CADENCE_TEXT}, and are counted returns. {eng.view ? <>Projected seats, control chances and the popular-vote projection come from the On Point Politics election-night model (uncalibrated; computed {eng.view.mode === "LIVE" ? "from each update" : "for the moment shown"}). </> : null}Expected leans come from the On Point Politics forecast of {ix ? new Date(ix.asOf + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" }) : "October"} and are modeled. A race is marked called only when civicAPI reports a winner. A model probability is an estimate and is never shown as a call.</p>
+      <p className="nat-src">Reported votes come from civicAPI, {CADENCE_TEXT}, and are counted returns. {eng.view ? <>Projected seats, control chances and the popular-vote projection come from the On Point Politics election-night model (uncalibrated; computed {eng.view.mode === "LIVE" ? "from each update" : "for the moment shown"}). </> : null}Expected leans come from the On Point Politics forecast of {ix ? new Date(ix.asOf + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" }) : "October"} and are modeled. A race is marked called only when On Point Politics has called it: its model held above its threshold through every safeguard, or the count itself settled the race. civicAPI&apos;s own calls are not shown. An On Point call is a projection, not a certified result; a model probability short of a call is an estimate and is never shown as one.</p>
     </section>
   );
 }

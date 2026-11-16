@@ -22,7 +22,10 @@ import { paintUnit } from "./paint";
 import RaceBrief from "./RaceBrief";
 import { ModeSwitch } from "../2026/ReplayDock";
 import { ChamberLine } from "../2026/NationalLive";
-import MonitorCharts from "./MonitorCharts";
+import MonitorCharts, { type DockSize } from "./MonitorCharts";
+import { tally as tallyOf } from "../2026/nationalTally";
+import { useStateHistory, usePastStates } from "../history/PastResults";
+import { PAST_VIEW_LABEL, contestFor, contestKey, contestLabel, marginOf, marginText, nationalContests, ordered, shareOf, shiftText, shiftTint, surname, turnoutShare, turnoutText, turnoutTint, type Counts, type PastView, twoPartySides, type StateContest } from "../history/pastResults";
 import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, raceLabel as label, GOV_HOLD, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
 import { useSiteTheme } from "@/app/lib/useSiteTheme";
@@ -31,13 +34,17 @@ import { percentIn } from "@/app/lib/fmtPct";
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 type SF = Feature<Geometry, { name: string }> & { st: string };
 type Mode = "sen" | "gov" | "house" | "state" | "measure" | "leg";
-type Color = "results" | "versus";
+type Color = "results" | "versus" | "past";
+const COLOR_LABEL: Record<Color, string> = { results: "Results", versus: "Versus expected vote", past: "Past election" };
+/** The 2026 count set against a past election: its two sides and all votes, the share counted, and whether its sides are parties. */
+type NowCount = { n: Counts; pr: number; label: string; partisan: boolean };
 const MODES: [Mode, string][] = [["sen", "Senate"], ["gov", "Governors"], ["house", "House"], ["state", "Statewide"], ["measure", "Measures"], ["leg", "Legislatures"]];
 const SETS: Record<Mode, ("fed" | "leg" | "ballot" | "state")[]> = { sen: ["fed"], gov: ["fed"], house: ["fed"], state: ["fed", "state"], measure: ["fed", "ballot"], leg: ["fed", "leg"] };
 export type Chambers = { sen: { notD: number; notR: number; dS: number; pD: number }; house: { dS: number; pD: number }; gov: { notD: number; notR: number; dS: number; pD: number } };
-type Feed = { t: Date; id: string; text: string };
+type Feed = { t: Date; id: string; text: string; call?: boolean };
 const NO_RACE = "#16122a", AWAIT = "#2c2547";
 
+const partisanRace = (r: XRace) => r.k !== "measure" && r.k !== "leg" && twoPartySides((r.c ?? []).map((x) => x[1]));
 const vsColor = (d: number) => { const a = Math.min(1, Math.abs(d) / 12); return d < 0 ? `rgba(61,123,255,${0.15 + a * 0.8})` : `rgba(255,59,92,${0.15 + a * 0.8})`; };
 // results colour: purple where an independent leads the Republican, as on every forecast map
 const shade = (m: number, k?: Kind, ind = false) => (k === "measure" ? (m < 0 ? `rgba(47,191,155,${0.25 + Math.min(1, -m / 40) * 0.7})` : `rgba(231,121,74,${0.25 + Math.min(1, m / 40) * 0.7})`) : ind ? marginColorInd(m) : marginColor(m));
@@ -69,6 +76,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     window.addEventListener("popstate", onPop); return () => window.removeEventListener("popstate", onPop);
   }, [desk]);
   const [focus, setFocus] = useState<string | null>(null);
+  // the chart under the map: hidden, under the map, or in place of it
+  const [dock, setDock] = useState<DockSize>("half");
   const [geo, setGeo] = useState<{ land: Feature<Geometry>; states: SF[] } | null>(null);
   const [cll, setCll] = useState<Record<string, number[][][]> | null>(null);
   const [hov, setHov] = useState<{ st: string; f?: string; d?: string; x: number; y: number } | null>(null);
@@ -82,6 +91,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const [q, setQ] = useState("");
   const live = useLive(ix, SETS[mode]);
   const sf = useStateFile(sel);
+  // how the state in view voted from 2018 to 2024, statewide and by county
+  const pastH = useStateHistory(sel);
+  const pastList = useMemo(() => (pastH ? ordered(pastH).filter((c) => !c.part) : []), [pastH]);
+  // the map set to a past election: which one, and whether to show it as it voted, the shift since, or the turnout
+  const [pastView, setPastView] = useState<PastView>("then");
+  const [pastKey, setPastKey] = useState<string | null>(null);
+  const pastS = usePastStates(color === "past");
+  const natOpts = useMemo(() => (pastS ? nationalContests(pastS) : []), [pastS]);
+  const pKey = color !== "past" ? null : pastKey ?? natOpts.find((o) => o.key === "2024P")?.key ?? natOpts[0]?.key ?? null;
+  const pLabel = natOpts.find((o) => o.key === pKey)?.label ?? "";
+  // the open state's counties in that election
+  const pastCty = useMemo(() => { const c = contestFor(pastH?.contests, pKey); return c && !c.nocty ? c : null; }, [pastH, pKey]);
   const stage = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null);
   const view = useRef({ rot: [97, -39, 0] as [number, number, number], k: 2.2, target: null as null | { rot: [number, number, number]; k: number } });
   // the stage's size, so the home view fits the country to whatever room the map has
@@ -118,8 +139,38 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const races = useMemo(() => (mode === "state" && office !== "all" ? allMode.filter((r) => officeGroup(r.off) === office) : allMode), [allMode, mode, office]);
   const byState = useMemo(() => { const m: Record<string, XRace[]> = {}; for (const r of races) (m[r.st] ??= []).push(r); return m; }, [races]);
   // one colour per state: the returns in the mode's races there, or how far they run from the expected vote
+  const selRaces = useMemo(() => (sel ? (ix?.races ?? []).filter((r) => r.st === sel) : []), [ix, sel]);
+  const layerRace = useMemo(() => {
+    if (!sel) return null;
+    const cands = selRaces.filter((r) => r.cty);
+    return cands.find((r) => r.id === pick) ?? (mode === "state" && office !== "all" ? cands.find((r) => r.k === "state" && officeGroup(r.off) === office) : undefined) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
+  }, [sel, selRaces, pick, mode, office]);
+  // each state's 2026 count to hold against a past election: its one race in this view (or the race whose counties are
+  // on the map), or in the House view every district's votes added up
+  const nowBySt = useMemo(() => {
+    const out: Record<string, NowCount> = {};
+    if (color !== "past") return out;
+    for (const [st, rs] of Object.entries(byState)) {
+      const use = mode === "leg" ? [] : mode !== "house" && st === sel && layerRace ? [layerRace] : mode === "house" || rs.length === 1 ? rs : [];
+      const n: Counts = [0, 0, 0]; let pr = 0;
+      for (const r of use) { const c = live.byId[r.id]; if (!hasReturns(c)) continue; const x = sides(r, c!.c); n[0] += x.a; n[1] += x.b; n[2] += x.t; pr += c!.pr || 0; }
+      if (n[2] > 0) out[st] = { n, pr: pr / use.length, label: use.length === 1 ? label(use[0], true) : "U.S. House, all districts", partisan: use.every(partisanRace) };
+    }
+    return out;
+  }, [color, byState, mode, sel, layerRace, live.byId]);
   const stateColor = useMemo(() => {
     const out: Record<string, string> = {};
+    if (color === "past") {
+      // every state that held that election, as it voted; or this view's races against it
+      for (const [st, list] of Object.entries(pastS?.states ?? {})) {
+        const c = contestFor(list, pKey); if (!c) continue;
+        if (pastView === "then") { out[st] = marginColor(marginOf(c.tot) ?? 0); continue; }
+        if (!byState[st]) continue;
+        const n = nowBySt[st]; const a = n ? marginOf(n.n) : null, b = marginOf(c.tot);
+        out[st] = (n ? (pastView === "shift" ? (n.partisan && a != null && b != null ? shiftTint(a - b) : null) : turnoutTint(turnoutShare(n.n, c.tot))) : null) ?? AWAIT;
+      }
+      return out;
+    }
     for (const [st, rs] of Object.entries(byState)) {
       const rep = rs.filter((r) => hasReturns(live.byId[r.id]));
       if (!rep.length) {
@@ -141,7 +192,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       out[st] = color === "results" ? shade(lm, mode === "measure" ? "measure" : undefined, ind) : vsColor(l - e);
     }
     return out;
-  }, [byState, live.byId, color, mode]);
+  }, [byState, live.byId, color, mode, pastS, pKey, pastView, nowBySt]);
   const districtColor = useMemo(() => {
     const out: Record<string, { fill: string; a: number; h?: string }> = {};
     if (mode !== "house") return out;
@@ -153,14 +204,8 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     }
     return out;
   }, [mode, races, live.byId, color]);
-  const selRaces = useMemo(() => (sel ? (ix?.races ?? []).filter((r) => r.st === sel) : []), [ix, sel]);
   // the replay's key-moments list can narrow to the state or race in view here
   useEffect(() => { engine.focus(desk ?? pick ?? null, sel); return () => engine.focus(null, null); }, [desk, pick, sel]);
-  const layerRace = useMemo(() => {
-    if (!sel) return null;
-    const cands = selRaces.filter((r) => r.cty);
-    return cands.find((r) => r.id === pick) ?? (mode === "state" && office !== "all" ? cands.find((r) => r.k === "state" && officeGroup(r.off) === office) : undefined) ?? cands.find((r) => r.k === mode) ?? cands.find((r) => r.k === "sen") ?? cands.find((r) => r.k === "gov") ?? cands[0] ?? null;
-  }, [sel, selRaces, pick, mode, office]);
   // an open race desk puts its race's counties on the globe, which stands in for the desk's own map beside it
   useEffect(() => {
     const r = desk ? (ix?.races ?? []).find((x) => x.id === desk) : null;
@@ -198,31 +243,38 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return () => { dead = true; };
   }, [layerRace, live.at, live.byId]);
 
+  // the open state's counties when the map is set to a past election
+  const nowCty = (f: string): Counts | null => { const lv = layerRace ? liveC?.[f] : null; if (!lv || lv.m == null) return null; const x = sides(layerRace!, lv.c); return x.t ? [x.a, x.b, x.t] : null; };
+  const pastFill = useMemo(() => {
+    if (color !== "past" || !pastCty) return null;
+    const out: Record<string, { fill: string; a: number }> = {};
+    const partisan = !!layerRace && partisanRace(layerRace);
+    for (const [f, t] of Object.entries(pastCty.c)) {
+      if (pastView === "then") { out[f] = { fill: marginColor(marginOf(t) ?? 0), a: 1 }; continue; }
+      const lv = layerRace ? liveC?.[f] : null; const n = nowCty(f);
+      const a = marginOf(n), b = marginOf(t);
+      const tint = !n ? null : pastView === "shift" ? (partisan && a != null && b != null ? shiftTint(a - b) : null) : turnoutTint(turnoutShare(n, t));
+      out[f] = tint ? { fill: tint, a: 0.45 + 0.55 * Math.min(1, (lv?.pr ?? 0) / 100) } : { fill: AWAIT, a: 1 };
+    }
+    return out;
+  }, [color, pastCty, pastView, liveC, layerRace]); // eslint-disable-line react-hooks/exhaustive-deps
   const calledSt = useMemo(() => new Set(races.filter((r) => live.byId[r.id]?.c.some((c) => c[4])).map((r) => r.st)), [races, live.byId]);
   const sweepOn = useMemo(() => Object.values(live.byId).some((c) => hasReturns(c)), [live.byId]);
   const votesIn = useMemo(() => races.reduce((s, r) => { const c = live.byId[r.id]; return s + (c ? c.c.reduce((a, x) => a + x[2], 0) : 0); }, 0), [races, live.byId]);
   // the share of this view's races reporting, read by read, for the sparkline
   const [hist, setHist] = useState<number[]>([]);
   useEffect(() => { if (!live.at || !races.length) return; const rep = races.filter((r) => hasReturns(live.byId[r.id])).length / races.length; setHist((h) => [...h.slice(-39), rep]); }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
-  // a call card for each new call of a statewide race or a House seat, one after another, and the state flashes on
-  // the map as its race is called
-  type Call = { id: string; who: string; race: string; kind: Kind; st: string; p: string; m: number | null; pr: number };
-  const [calls, setCalls] = useState<Call[]>([]);
+  // a state flashes on the map as On Point calls its statewide race. (There is no call card over the map any more:
+  // calls are in the feed beside it, in the replay bar's key moments and on the Calls Desk.)
   const callFlash = useRef<Map<string, number>>(new Map());
   useEffect(() => {
     if (!live.at || !ix) return;
-    const add: Call[] = [];
     for (const r of ix.races) {
-      if (r.k === "leg" || r.k === "other") continue;
-      const a = live.byId[r.id], b = live.prev[r.id]; const w = a?.c.find((c) => c[4]);
-      if (w && b && !b.c.some((c) => c[4])) { add.push({ id: r.id, who: w[0], race: r.nm, kind: r.k, st: r.st, p: (w[1] || "O")[0].toUpperCase(), m: liveMargin(r, a), pr: a!.pr }); if (r.k !== "house") callFlash.current.set(r.st, performance.now()); }
+      if (r.k === "leg" || r.k === "other" || r.k === "house") continue;
+      const a = live.byId[r.id], b = live.prev[r.id];
+      if (a?.c.some((c) => c[4]) && b && !b.c.some((c) => c[4])) callFlash.current.set(r.st, performance.now());
     }
-    // statewide calls first, the biggest offices first
-    const rank: Record<string, number> = { sen: 0, gov: 1, state: 2, measure: 3, house: 4 };
-    if (add.length) setCalls((q0) => [...q0, ...add.sort((x, y) => (rank[x.kind] ?? 9) - (rank[y.kind] ?? 9))].slice(0, 30));
   }, [live.at]); // eslint-disable-line react-hooks/exhaustive-deps
-  const toast = calls[0] ?? null;
-  useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setCalls((q0) => q0.slice(1)), calls.length > 4 ? 3800 : 6500); return () => window.clearTimeout(t); }, [toast, calls.length]);
   // what changed between reads
   useEffect(() => {
     if (!live.at || !ix) return;
@@ -231,7 +283,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
       const a = live.byId[r.id], b = live.prev[r.id]; if (!a) continue;
       const s = sides(r, a.c);
       if (b && a.pr > b.pr) items.push({ t: live.at, id: r.id, text: `${r.nm}: ${percentIn(a.pr)} reporting, ${fmtM(s.t ? (100 * (s.b - s.a)) / s.t : null, r.k, isInd(r))}` });
-      if (a.c.some((c) => c[4]) && !(b?.c.some((c) => c[4]))) { const w = a.c.find((c) => c[4]); if (w) items.push({ t: live.at, id: r.id, text: `${r.nm}: civicAPI calls it for ${w[0]}` }); }
+      if (a.c.some((c) => c[4]) && !(b?.c.some((c) => c[4]))) { const w = a.c.find((c) => c[4]); if (w) items.push({ t: live.at, id: r.id, text: `${r.nm}: On Point calls it for ${w[0]}`, call: true }); }
     }
     if (items.length) setFeed((f) => [...items.slice(0, 20), ...f].slice(0, 60));
   }, [live.at, live.byId, live.prev, ix]);
@@ -317,8 +369,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         for (const x of dGeo) {
           if (geoDistance(x.c, [-v.rot[0], -v.rot[1]]) > 1.6) continue;
           const dc = districtColor[x.id] ?? { fill: NO_RACE, a: 1 };
-          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill();
-          if (dc.h) { ctx.fillStyle = hatch(dc.h); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * (LT ? 0.75 : 0.6); ctx.fill(); }
+          ctx.beginPath(); path(x.g);
+          // set to a past election, the states carry the colour and the districts are only outlined
+          if (color !== "past") { ctx.fillStyle = fx(dc.fill); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * dc.a; ctx.fill(); }
+          if (dc.h && color !== "past") { ctx.fillStyle = hatch(dc.h); ctx.globalAlpha = (sel && sel !== x.st ? 0.5 : 1) * (LT ? 0.75 : 0.6); ctx.fill(); }
           ctx.globalAlpha = 1;
           ctx.strokeStyle = hv?.d === x.id ? HOV : LT ? "rgba(255,255,255,.85)" : "rgba(8,5,16,.75)"; ctx.lineWidth = hv?.d === x.id ? 1.5 : v.k > 5 ? 0.6 : 0.45; ctx.stroke();
         }
@@ -334,7 +388,13 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           }
         }
       }
-      if (mode !== "house" && cGeo.length && layerRace) {
+      if (mode !== "house" && cGeo.length && pastFill) {
+        for (const x of cGeo) {
+          const pf = pastFill[x.f];
+          ctx.beginPath(); path(x.g); ctx.fillStyle = fx(pf?.fill ?? NO_RACE); ctx.globalAlpha = pf?.a ?? 1; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.strokeStyle = hv?.f === x.f ? HOV : LT ? "rgba(255,255,255,.9)" : "rgba(8,5,16,.7)"; ctx.lineWidth = hv?.f === x.f ? 1.5 : 0.55; ctx.stroke();
+        }
+      } else if (mode !== "house" && cGeo.length && layerRace && color !== "past") {
         const ind = isInd(layerRace);
         for (const x of cGeo) {
           const e = expC?.[x.f]; const lv = liveC?.[x.f];
@@ -372,7 +432,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         }
       }
       if (stSel) { ctx.beginPath(); path(stSel as GeoPermissibleObjects); ctx.strokeStyle = `rgba(${ACC},.9)`; ctx.lineWidth = 1.4; ctx.stroke(); }
-      // states whose race civicAPI has called carry a thin accent outline, breathing slowly
+      // states whose race On Point has called carry a thin accent outline, breathing slowly
       const breathe = 0.45 + 0.35 * Math.sin(performance.now() / 700);
       for (const f of geo.states) {
         if (!calledSt.has(f.st)) continue; ctx.beginPath(); path(f as GeoPermissibleObjects);
@@ -431,16 +491,20 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     fly.current = (st: string) => {
       autoFit.current = false;
       const f = geo.states.find((s) => s.st === st); if (!f) return; const bb = geoBounds(f as GeoPermissibleObjects); const ll = geoCentroid(f as GeoPermissibleObjects);
-      const span = Math.max(bb[1][0] - bb[0][0], (bb[1][1] - bb[0][1]) * 1.4, 3);
-      view.current.target = { rot: [-ll[0], -ll[1], 0], k: Math.max(1.6, Math.min(14, 60 / span)) }; setZoomK(view.current.target.k);
+      // fit the state to the room the map has: its width and height on the globe (in radians) against the stage, with a
+      // margin, so a state fills the map whether the chart under it is open or not
+      const lonSpan = ((bb[1][0] - bb[0][0] + 360) % 360) || 360, rad = Math.PI / 180;
+      const wA = Math.max(2.4, lonSpan * Math.cos(ll[1] * rad)) * rad, hA = Math.max(2.4, bb[1][1] - bb[0][1]) * rad;
+      const fitK = W && H ? Math.min((0.74 * W) / (base * wA), (0.74 * H) / (base * hA)) : 60 / Math.max(lonSpan, (bb[1][1] - bb[0][1]) * 1.4, 3);
+      view.current.target = { rot: [-ll[0], -ll[1], 0], k: Math.max(1.6, Math.min(30, fitK)) }; setZoomK(view.current.target.k);
       setSel(st); setPick(null); running = false; cancelAnimationFrame(raf); kick();
     };
-    const wheel = (e: WheelEvent) => { e.preventDefault(); autoFit.current = false; const k = Math.max(0.7, Math.min(16, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); running = false; cancelAnimationFrame(raf); kick(); };
+    const wheel = (e: WheelEvent) => { e.preventDefault(); autoFit.current = false; const k = Math.max(0.7, Math.min(40, view.current.k * Math.exp(-e.deltaY * 0.0015))); view.current.k = k; view.current.target = null; setZoomK(k); running = false; cancelAnimationFrame(raf); kick(); };
     const leave = () => { hovRef.current = null; setHov(null); running = false; cancelAnimationFrame(raf); kick(); };
     box.addEventListener("pointerdown", down); box.addEventListener("pointermove", move); box.addEventListener("pointerup", up); box.addEventListener("wheel", wheel, { passive: false }); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); box.removeEventListener("pointerdown", down); box.removeEventListener("pointermove", move); box.removeEventListener("pointerup", up); box.removeEventListener("wheel", wheel); box.removeEventListener("pointerleave", leave); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme]);
+  }, [geo, stateColor, sel, cll, expC, liveC, color, layerRace, feed, live.at, mode, dGeo, districtColor, byState, calledSt, sweepOn, theme, pastFill]);
 
   // The race desk is a history entry: browser Back closes it (and leaves the monitor where it was), Escape and the close
   // button go back through history too, focus moves into the desk when it opens and returns to the row when it closes.
@@ -449,19 +513,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   escRef.current = () => { if (desk) closeDesk(); else if (sel) home(); };
   const home = () => { autoFit.current = true; const k = homeK(); view.current.target = { rot: [97, -39, 0], k }; setZoomK(k); setSel(null); setPick(null); wake.current(); };
   const zoomBy = (f: number) => { autoFit.current = false;
-    const k = Math.max(0.7, Math.min(16, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); wake.current(); };
+    const k = Math.max(0.7, Math.min(40, view.current.k * f)); view.current.target = { rot: [...view.current.rot] as [number, number, number], k }; setZoomK(k); wake.current(); };
   const full = () => { const el = stage.current?.parentElement; if (!el) return; if (document.fullscreenElement) document.exitFullscreen(); else el.requestFullscreen?.().catch(() => {}); };
 
-  // chambers from the returns: seats not up, races civicAPI has called, races being counted
-  const tally = (k: "sen" | "gov" | "house") => {
-    const rs = (ix?.races ?? []).filter((r) => r.k === k); let cD = 0, cR = 0, lD = 0, lR = 0, counting = 0;
-    for (const x of rs) {
-      const c = live.byId[x.id]; if (!hasReturns(c)) continue; counting++;
-      const w = c!.c.find((y) => y[4]); const m = liveMargin(x, c);
-      if (w) { const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else cD++; } else if (m != null) { if (m < 0) lD++; else lR++; }
-    }
-    return { cD, cR, lD, lR, counting, n: rs.length };
-  };
+  // chambers from the returns: seats not up, races On Point has called, races being counted
+  const tally = (k: "sen" | "gov" | "house") => tallyOf((ix?.races ?? []).filter((r) => r.k === k), live.byId);
   const T = { sen: tally("sen"), house: tally("house"), gov: tally("gov") };
   const anyLive = T.sen.counting + T.house.counting + T.gov.counting > 0;
   // every race of a chamber as one seat: called, leading, not counted yet with its forecast lean, or not up
@@ -486,6 +542,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const modeName = mode === "state" && office !== "all" ? (OFFICE_GROUPS.find((g) => g[0] === office)?.[1] ?? "Other statewide") : MODES.find((m) => m[0] === mode)?.[1] ?? "";
   const found = useMemo(() => { const t = q.trim().toLowerCase(); if (!t) return []; return races.filter((r) => r.nm.toLowerCase().includes(t) || (STN[r.st] ?? "").toLowerCase().includes(t) || r.st.toLowerCase() === t || (r.c ?? []).some((x) => x[0].toLowerCase().includes(t))); }, [q, races]);
   const big: "sen" | "house" | "gov" = mode === "house" || mode === "gov" ? mode : "sen";
+  const deskRace = desk ? (ix?.races ?? []).find((r) => r.id === desk) ?? null : null;
 
   const raceRow = (r: XRace, inState: boolean) => {
     const c = live.byId[r.id]; const lm = liveMargin(r, c); const w = c?.c.find((x) => x[4]); const e = expM(r);
@@ -513,7 +570,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return (
       <section key={k} className={`mon-cp${open ? " open" : ""}`} aria-label={`${name} control`}>
         <button type="button" className="mon-cp-h" onClick={() => { setMode(k); setPick(null); }} aria-pressed={open}>
-          <b>{name}</b><span>{t.cD + t.cR} of {t.n} called · {t.counting} counting</span>
+          <b>{name}</b><span>{t.called} of {t.n} called by On Point · {t.counting} counting</span>
         </button>
         <div className="mon-cp-score">
           <div className="d"><b>{dTot}</b><span>Democrats{ct.iW ? `, ${ct.iW} independent` : ""}{ct.dL + ct.iL ? ` · ${ct.dL + ct.iL} leading` : ""}</span></div>
@@ -537,6 +594,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   return (
     <div className={`mon${desk ? " desk-on" : ""}`}>
       <section className="mon-top" aria-label="Monitor controls">
+        <nav className="mon-nav" aria-label="Where you are">
+          <Link className="mon-nav-out" href="/results/2026"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden><path d="M7.5 1.5 3 6l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>2026 results</Link>
+          <ol>
+            <li>{sel || desk ? <button type="button" onClick={() => { if (desk) closeDesk(); home(); setFocus(null); }}>Situation Monitor</button> : <span aria-current="page">Situation Monitor</span>}</li>
+            {sel ? <li>{desk ? <button type="button" onClick={closeDesk}>{STN[sel]}</button> : <span aria-current="page">{STN[sel]}</span>}</li> : null}
+            {deskRace ? <li><span aria-current="page">{deskRace.nm}</span></li> : null}
+          </ol>
+          <span className="mon-nav-more">
+            <Link href="/results/2026/calls">Calls desk</Link>
+            <Link href="/results/2026#rh">Every race as a list</Link>
+          </span>
+        </nav>
         <div className="mon-title">
           <span className="eye"><i className={anyLive ? "on" : ""} />Situation monitor · November 3, 2026</span>
           <h1>Election night, <em>as it comes in.</em></h1>
@@ -553,7 +622,17 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
               {Object.keys(byState).sort((a, b) => (STN[a] ?? a).localeCompare(STN[b] ?? b)).map((st) => <option key={st} value={st}>{STN[st] ?? st} · {byState[st].length}</option>)}
             </select>
           </label>
-          <div className="mon-seg sm" role="group" aria-label="Colour by">{(["results", "versus"] as Color[]).map((k) => <button key={k} aria-pressed={color === k} onClick={() => setColor(k)}>{k === "results" ? "Results" : "Versus expected vote"}</button>)}</div>
+          <div className="mon-seg sm" role="group" aria-label="Colour by">{(["results", "versus", "past"] as Color[]).map((k) => <button key={k} aria-pressed={color === k} onClick={() => setColor(k)}>{COLOR_LABEL[k]}</button>)}</div>
+          {color === "past" ? (
+            <div className="mon-pastctl">
+              <label className="mon-jump"><span className="sr">Election to compare with</span>
+                <select value={pKey ?? ""} onChange={(e) => setPastKey(e.target.value || null)} aria-label="Election to compare with" disabled={!natOpts.length}>
+                  {natOpts.length ? natOpts.map((o) => <option key={o.key} value={o.key}>{o.label} · {o.states === 51 ? "every state" : `${o.states} states`}</option>) : <option value="">Loading past elections</option>}
+                </select>
+              </label>
+              <div className="mon-seg sm" role="group" aria-label="Past election shading">{(["then", "shift", "turnout"] as PastView[]).map((k) => <button key={k} aria-pressed={pastView === k} onClick={() => setPastView(k)}>{PAST_VIEW_LABEL[k]}</button>)}</div>
+            </div>
+          ) : null}
         </div>
         {mode === "state" ? (
           <div className="mon-office" role="group" aria-label="Statewide office">
@@ -576,19 +655,23 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         <SeatKey />
         <div className="mon-feed">
           <h3>Feed</h3>
-          {feed.length ? <ul>{feed.slice(0, 14).map((f, i) => <li key={i}><time>{clockET(f.t)}</time><button type="button" onClick={() => setFocus(f.id)}>{f.text}</button></li>)}</ul>
-            : <p>{anyLive ? "Returns are in. New counts and calls appear here as each read lands." : "New counts and calls appear here as civicAPI reports them. Nothing has been counted yet."}</p>}
+          {feed.length ? <ul>{feed.slice(0, 14).map((f, i) => <li key={i} className={f.call ? "call" : undefined}><time>{clockET(f.t)}</time><button type="button" onClick={() => setFocus(f.id)}>{f.text}</button></li>)}</ul>
+            : <p>{anyLive ? "Returns are in. New counts and On Point calls appear here as each read lands." : "New counts appear here as civicAPI reports them, and calls as On Point makes them. Nothing has been counted yet."}</p>}
         </div>
       </aside>
 
-      <div className="mon-map">
+      <div className={`mon-map dock-${dock}`}>
+        <div className="mon-globe">
         <div className="mon-stage" ref={stage} aria-label="Globe of every November 3 race. Drag to turn it, scroll or use the buttons to zoom, click a state to open it." role="application">
           <canvas ref={cv} />
           <div className="mon-reticle" aria-hidden="true"><i /><i /></div>
         </div>
-        {sel ? <button type="button" className="mon-back" onClick={home}>{STN[sel]} · Back to the country</button> : null}
+        {sel ? <button type="button" className="mon-back" onClick={() => { home(); setFocus(null); }}><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden><path d="M7.5 1.5 3 6l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>Full monitor<em>{STN[sel]}</em></button> : null}
         <div className="mon-legend">
-          {color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
+          {color === "past" ? (pastView === "then" ? <><span>D +40</span><i className="mg" /><span>R +40</span><span className="ex-k">{pLabel}, final result</span></>
+            : pastView === "shift" ? <><span>Toward D</span><i className="vs" /><span>Toward R</span><span className="ex-k">2026 counted margin against {pLabel} · full colour at 20 points</span></>
+            : <><span>Fewer votes</span><i className="to" /><span>More</span><span className="ex-k">2026 votes counted against all votes in {pLabel} · a count still coming in reads low</span></>)
+          : color === "versus" ? <><span>Bluer than expected</span><i className="vs" /><span>Redder</span></> : mode === "measure" ? <><span>Yes</span><i className="ms" /><span>No</span></> : <><span>D +40</span><i className="mg" /><span>R +40</span></>}
           {color === "results" ? <span className="ex-k"><i className="ex" />Hatched: no votes yet, expected lean</span> : null}
         </div>
         <div className="mon-hud" aria-hidden="true">{hist.length > 1 ? <svg className="spark" viewBox="0 0 80 18" preserveAspectRatio="none"><polyline points={hist.map((v, i) => `${(80 * i) / Math.max(1, hist.length - 1)},${17 - 16 * v}`).join(" ")} /></svg> : null}<span>Zoom {zoomK.toFixed(1)}x</span><span>civicAPI · {Math.round(PROXY_CACHE_MS / 60_000)} minute cache</span></div>
@@ -598,34 +681,35 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
           <button onClick={home} aria-label="Show the whole country" className="t">US</button>
           <button onClick={full} aria-label="Full screen" className="t">Full</button>
         </div>
-        {toast ? (
-          <button type="button" key={toast.id} className={`mon-toast p-${toast.p}`} onClick={() => { setFocus(toast.id); fly.current(toast.st); setCalls((q0) => q0.slice(1)); }}>
-            <span className="k">civicAPI call · {KIND_LABEL[toast.kind]}</span><b>{toast.race}</b>
-            <span className="w"><i />{toast.who}{toast.m != null && toast.kind !== "measure" && Math.abs(toast.m) >= 0.05 ? <>, ahead by {Math.abs(toast.m).toFixed(1)} points</> : null}</span>
-            <span className="s">{percentIn(toast.pr)} reporting{calls.length > 1 ? ` · ${calls.length - 1} more calls` : ""}</span>
-          </button>
-        ) : null}
+        </div>
+        <MonitorCharts race={focusRace ? { id: focusRace.id, nm: focusRace.nm } : null} size={dock} onSize={setDock} />
       </div>
 
       <aside className="mon-right" aria-label={sel ? `${STN[sel]} races` : "Races reporting"}>
         {focusRace ? <RaceBrief r={focusRace} c={live.byId[focusRace.id]} sf={focusRace.st === sel ? sf : null} at={live.at} onOpen={() => openDesk(focusRace.id)} onClose={() => setFocus(null)} /> : null}
         {sel ? (
           <>
-            <div className="mon-rh"><b>{STN[sel]}</b><button onClick={home}>Back to the country</button></div>
-            <p className="mon-note">{layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}{color === "results" ? "Hatched areas have no votes yet and show only the expected lean. " : ""}Click any race to see it here; open the full desk from it.</p>
+            <div className="mon-rh"><b>{STN[sel]}</b><button onClick={() => { home(); setFocus(null); }}>Back to the full monitor</button></div>
+            <p className="mon-note">{color === "past" ? (pastCty ? (pastView === "then" ? `Counties show how they voted for ${contestLabel(pastCty)}. Hover one for its result then and the 2026 count beside it. ` : layerRace ? `Counties show the ${label(layerRace, true)} count so far against ${contestLabel(pastCty)}: ${pastView === "shift" ? "the shift in margin" : "votes counted as a share of the votes cast then"}. ` : `No 2026 race here to set against ${contestLabel(pastCty)}. `) : pLabel ? `${STN[sel]} has no ${pLabel} result by county to show: pick another election above. ` : "") : layerRace ? `Counties show the ${label(layerRace, true)} ${color === "results" ? "returns" : "returns against the expected vote"}. ` : ""}{color === "results" ? "Hatched areas have no votes yet and show only the expected lean. " : ""}Click any race to see it here; open the full desk from it.</p>
             {(["sen", "gov", "house", "state", "measure", "leg", "other"] as Kind[]).map((k) => { const rs = selRaces.filter((r) => r.k === k); if (!rs.length) return null; return (
               <div key={k} className="mon-grp"><h3>{KIND_LABEL[k]} <em>{rs.length}</em></h3><ul>{rs.slice(0, k === "other" ? 8 : 60).map((r) => raceRow(r, true))}</ul></div>
             ); })}
+            {pastList.length ? (
+              <div className="mon-grp mon-past">
+                <h3>How {STN[sel]} voted <em>2018 to 2024</em></h3>
+                <ul>{pastList.slice(0, 10).map((c) => { const m = marginOf(c.tot); return <li key={contestKey(c)}><span>{contestLabel(c)}</span><b className={c.same ? "" : m != null && m < 0 ? "d" : "r"}>{marginText(m, c)}</b></li>; })}</ul>
+                <Link className="mon-all" href={`/results/2026/${(STN[sel] ?? sel).toLowerCase().replace(/[^a-z]+/g, "-")}#past`}>Every county, with the shift between elections</Link>
+              </div>
+            ) : null}
           </>
         ) : (
           <>
-            <MonitorCharts />
             <div className="mon-rh"><b>{reportingNow.length ? `${modeName} races counting` : `Closest ${modeName.toLowerCase()} races`}</b><span>{reportingNow.length ? "Now · in" : "Forecast"}</span></div>
             <input className="mon-q" type="search" id="mon-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a race, state or candidate" aria-label="Find a race, state or candidate" />
             {!reportingNow.length && !q ? <p className="mon-note">No returns yet. Each race fills in as its first votes are counted; until then the list shows the forecast, closest first, in gray. Click a race or a state to open it.</p> : null}
             <ul>{(q ? found : reportingNow.length ? reportingNow : closest).slice(0, 80).map((r) => raceRow(r, false))}</ul>
             {q && !found.length ? <p className="mon-note">No {modeName.toLowerCase()} race matches that. Try a state name or a last name.</p> : null}
-            <Link className="mon-all" href="/results/2026">Every race as a list</Link>
+            <div className="mon-outs"><Link className="mon-all" href="/results/2026">The main results page</Link></div>
           </>
         )}
       </aside>
@@ -635,6 +719,10 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
         const cr = hov.f && layerRace ? layerRace : null;
         const e = cr ? expC?.[hov.f!] : null; const lv = cr ? liveC?.[hov.f!] : null;
         const dr = hov.d ? races.find((r) => r.id === hov.d) : null;
+        // set to a past election: that election here (the county under the pointer, or the state) beside the 2026 count
+        const pc: StateContest | null = color !== "past" ? null : hov.f ? pastCty : contestFor(pastS?.states[hov.st], pKey);
+        const pThen = color !== "past" ? null : hov.f ? pastCty?.c[hov.f] ?? null : pc?.tot ?? null;
+        const pNow: NowCount | null = color !== "past" ? null : hov.f ? (() => { const n = nowCty(hov.f!); return n && layerRace ? { n, pr: liveC?.[hov.f!]?.pr ?? 0, label: label(layerRace, true), partisan: partisanRace(layerRace) } : null; })() : nowBySt[hov.st] ?? null;
         return (
           <FloatTip x={hov.x} y={hov.y} className="mon-tip" scope="opp">
             {dr ? <RaceTip r={dr} c={live.byId[dr.id]} title={`${STN[dr.st]} ${(byState[dr.st]?.length ?? 0) > 1 ? `District ${Number(dr.id.split("-")[2])}` : "at large"}`} hint="Click to see it beside the globe" />
@@ -644,9 +732,11 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
                 <div className="sub">{cr.nm}</div>
                 <Cands r={cr} c={lv?.c ?? null} exp={e ? [["D", e[0]], ["R", e[1]], ["O", e[2]]] : null} />
                 <div className="meta"><span>{lv ? `${percentIn(lv.pr)} reporting` : "No returns yet"}</span>{e ? <span>Expected {Math.round(e[3]).toLocaleString("en-US")} votes</span> : null}</div>
+                {color === "past" ? null : (() => { const prev = pastList.filter((c) => !c.same && c.c[hov.f!]).slice(0, 3); return prev.length ? <div className="past">{prev.map((c) => <span key={contestKey(c)}>{contestLabel(c, true)} <b>{marginText(marginOf(c.c[hov.f!]), c)}</b></span>)}</div> : null; })()}
                 <small>Click to see the race beside the globe</small>
               </>
-            ) : rs.length === 1 ? <RaceTip r={rs[0]} c={live.byId[rs[0].id]} title={STN[hov.st]} hint={hov.st === sel ? "Click to see it beside the globe" : "Click to zoom in and see it beside the globe"} />
+            ) : hov.f && color === "past" ? <h4>{sf?.names?.[hov.f] ?? pastH?.names[hov.f] ?? "County"} · {STN[hov.st]}</h4>
+            : rs.length === 1 ? <RaceTip r={rs[0]} c={live.byId[rs[0].id]} title={STN[hov.st]} hint={hov.st === sel ? "Click to see it beside the globe" : "Click to zoom in and see it beside the globe"} />
             : (
               <>
                 <h4>{STN[hov.st]}</h4>
@@ -655,6 +745,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
                 <small>{hov.st === sel ? "Click a race in the list to see it" : "Click to zoom in"}</small>
               </>
             )}
+            {color === "past" && pKey ? <PastTip c={pc} then={pThen} now={pNow} label={pLabel} place={hov.f ? "county" : STN[hov.st] ?? hov.st} /> : null}
           </FloatTip>
         );
       })() : null}
@@ -686,6 +777,23 @@ function Cands({ r, c, exp }: { r: XRace; c: CCand[] | null; exp?: [string, numb
 }
 
 /** One race at the cursor: who leads, the counted vote, the share reporting and how it compares with the forecast. */
+/** A past election in a tooltip: how the place voted then, and the 2026 count so far against it (shift and turnout). */
+function PastTip({ c, then, now, label: lb, place }: { c: StateContest | null; then: Counts | null; now: NowCount | null; label: string; place: string }) {
+  if (!c || !then) return <div className="pcmp none">No {lb} result for this {place === "county" ? "county" : "state"}</div>;
+  const m = marginOf(then), nm = now ? marginOf(now.n) : null;
+  const sh = now && now.partisan && m != null && nm != null ? nm - m : null, to = now ? turnoutShare(now.n, then) : null;
+  const part = now && now.pr < 99.5 ? " so far" : "";
+  const sa = shareOf(then, 0), sb = shareOf(then, 1);
+  return (
+    <div className="pcmp">
+      <div className="hd"><span>{contestLabel(c)}</span><b className={m != null && m < 0 ? "d" : "r"}>{marginText(m, c)}</b></div>
+      <div><span>{surname(c.a?.[0] ?? "")} {sa?.toFixed(1)}% · {surname(c.b?.[0] ?? "")} {sb?.toFixed(1)}%</span><span>{then[2].toLocaleString("en-US")} votes</span></div>
+      <div><span>Shift since{part}</span><b className={sh == null ? "" : sh < 0 ? "d" : "r"}>{!now ? "no 2026 votes yet" : !now.partisan ? "not a two-party race" : shiftText(sh)}</b></div>
+      <div><span>Turnout{part}</span><b>{now ? `${turnoutText(to)} of ${c.y} · ${now.n[2].toLocaleString("en-US")} votes` : "no 2026 votes yet"}</b></div>
+      {now ? <div className="nt">2026: {now.label}, {percentIn(now.pr)} in</div> : null}
+    </div>
+  );
+}
 function RaceTip({ r, c, title, hint }: { r: XRace; c?: CRace; title: string; hint: string }) {
   const counted = !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
   const s = c ? sides(r, c.c) : null; const lm = s && s.t ? (100 * (s.b - s.a)) / s.t : null;
@@ -693,7 +801,7 @@ function RaceTip({ r, c, title, hint }: { r: XRace; c?: CRace; title: string; hi
   return (
     <>
       <h4>{title}</h4>
-      <div className="sub">{r.nm}{w ? <b className="call"> · civicAPI call: {w[0]}</b> : null}</div>
+      <div className="sub">{r.nm}{w ? <b className="call"> · On Point call: {w[0]}</b> : null}</div>
       <Cands r={r} c={counted ? c!.c : null} />
       <div className="meta">
         <span>{counted ? `${percentIn(c!.pr)} reporting` : c ? "No returns yet" : "Awaiting results feed"}</span>

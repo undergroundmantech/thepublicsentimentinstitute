@@ -107,9 +107,11 @@ test("key moments come only from the two states they lie between", () => {
   const m1 = momentsBetween(s0, s1, meta);
   assert.ok(m1.some((m) => m.kind === "FIRST_VOTES" && m.st === "SC"), "first returns in South Carolina");
   const m2 = momentsBetween(s1, s2, meta), m3 = momentsBetween(s2, s3, meta);
-  const call = m2.find((m) => m.kind === "OFFICIAL_CALL" && m.raceId === "sen-SC");
-  assert.ok(call && call.imp === 3 && call.t === T("03:00") && call.at === "2026-11-04T02:58:15.000Z", "the call shows in the 03:00 frame, with civicAPI's own stated time kept beside it");
-  assert.ok(m3.some((m) => m.kind === "OFFICIAL_CALL_CHANGED" && m.raceId === "sen-SC" && /Andrews/.test(m.title)));
+  // civicAPI called South Carolina at 02:58 and moved its call two minutes later. Both are on the ledger; neither
+  // is a moment: the pages show On Point's calls only (2.5.0).
+  assert.ok(s2.ledger.events.some((e) => e.kind === "OFFICIAL_CALL" && e.raceId === "sen-SC") && s3.ledger.events.some((e) => e.kind === "OFFICIAL_CALL_CHANGED" && e.raceId === "sen-SC"), "the provider's call and its change stay on the ledger");
+  assert.ok(![...m1, ...m2, ...m3].some((m) => m.kind.startsWith("OFFICIAL_")), "no moment is made from a provider call");
+  assert.ok(![...m1, ...m2, ...m3].some((m) => /civicAPI calls|civicAPI moves/.test(m.title)));
   assert.equal(momentsBetween(s3, s3, meta).length, 0, "no change, no moments");
   for (const m of [...m1, ...m2, ...m3]) assert.ok(m.title.length > 8 && [1, 2, 3].includes(m.imp));
   const pc = pollCloseMoments([{ st: "SC", close: T("00:00") }, { st: "GA", close: T("00:00") }, { st: "FL", close: T("01:00") }], [T("00:00"), T("00:20"), T("01:02")]);

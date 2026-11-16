@@ -83,7 +83,8 @@ export default function Navbar() {
     if (g.key === "accuracy") return under("/accuracy") || under("/most-accurate-pollster");
     if (g.key === "forecast") return under("/forecast") || under("/what-if") || under("/swingometer");
     if (g.key === "polls") return under("/polls") || under("/majority-tracker");
-    if (g.more) return g.cols.some((c) => c.href && under(c.href.split("/").slice(0, 2).join("/"))) || under("/accountability") || under("/results");
+    if (g.key === "results") return under("/results");
+    if (g.more) return g.cols.some((c) => c.href && under(c.href.split("/").slice(0, 2).join("/"))) || under("/accountability");
     return under(g.href);
   };
   const enter = (k: string) => { if (timer.current) window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setMenu(k), 80); };

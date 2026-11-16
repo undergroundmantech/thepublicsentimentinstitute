@@ -63,8 +63,14 @@ export type RaceObservation = {
   sourceAsOf: string | null;
   receivedAt: string;
   test: boolean;
+  /** when the race's total last moved, where the source knows it (a recorded history does; a single live read does not) */
+  quietSince?: string | null;
   /** the provider's own stated time of its call, when it gives one (civicAPI's called_at) */
   providerCalledAt?: string | null;
+  /** the provider's listed poll-closing time for this race, when it gives one */
+  pollsCloseAt?: string | null;
+  /** the highest total the race had shown before this read, where the source knows it */
+  peakTotal?: number | null;
   /** what is wrong with the provider's own rows for this race, in words; absent when nothing is, or when it sent no rows */
   integrity?: string[];
 };
@@ -84,7 +90,7 @@ export type Dist = { mean: number; p50: number; i80: Interval; i95: Interval };
 export type QualityFlag =
   | "NO_FORECAST" | "NO_OBSERVATION" | "METHOD_UNKNOWN" | "METHOD_PRIORS_OFF" | "UNIT_TOPLINE_MISMATCH" | "COUNT_UNKNOWN"
   | "AMBIGUOUS_CANDIDATE" | "SAME_PARTY_POOLED" | "TEST_DATA" | "TURNOUT_WEAK_EVIDENCE" | "UNIT_NO_BASELINE"
-  | "RULE_RANKED_CHOICE" | "RULE_RUNOFF" | "RULE_NOT_MODELED" | "UNCONTESTED" | "COUNT_EXCEEDS_FORECAST"
+  | "RULE_RANKED_CHOICE" | "RULE_RUNOFF" | "RULE_NOT_MODELED" | "UNCONTESTED" | "COUNT_EXCEEDS_FORECAST" | "COUNT_DECREASED"
   /** the provider's own county rows contradict its race total (a total row among the counties, or a total far above them) */
   | "PROVIDER_ROWS_INCONSISTENT"
   /** not a fault: the race is modeled county by county (engine 2.4.0), not from its total */
@@ -139,7 +145,9 @@ export type RaceForecast = {
   principalMargin: null | { reported: number | null; projected: Dist; probB: number; prior: { margin: number; probB: number } };
   /** the two candidates with the most projected votes, and the margin between them */
   projectedTopTwo: null | { leaderId: string; runnerUpId: string; marginPp: Dist; marginVotes: Dist };
-  turnout: { counted: number; expectedFinal: Dist | null; outstanding: Dist | null; byUnit: OutstandingUnit[] };
+  turnout: { counted: number; expectedFinal: Dist | null; outstanding: Dist | null; byUnit: OutstandingUnit[];
+    /** minutes since the race's total last moved, where the source knows it; and whether the state is one that counts for days */
+    quietMin?: number; slowCount?: boolean };
   /** for display: the leading model probability, capped below certainty while uncalled */
   display: { leaderId: string | null; probability: number | null; capped: boolean };
   draws: number;
@@ -156,7 +164,7 @@ export type ChamberForecast = {
   controlRule: string;
   pD: number; pR: number; pUnresolved: number;
   seats: { D: SeatDist; R: SeatDist; other: SeatDist };
-  /** NOT probabilistic: seats the provider has called, and seats currently led in the count, by party */
+  /** NOT probabilistic: seats called (On Point's own calls since 2.5.0; the provider's before), and seats currently led in the count, by party */
   called: { D: number; R: number; other: number };
   leading: { D: number; R: number; other: number };
   notUp: { D: number; R: number };

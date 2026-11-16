@@ -12,10 +12,10 @@ export function engineProj(r: XRace, row: RaceRow, P0: Proj): Proj {
   return { ...P0, rep, fin, pctIn, m: row.pm?.mean ?? P0.m, band: row.pm ? (row.pm.hi - row.pm.lo) / 2 : P0.band };
 }
 
-/** The page's two-sided odds from the engine's row. An uncalled, contested race is never shown above the cap
+/** The page's two-sided odds from the engine's row. A contested race On Point has not called is never shown above the cap
  *  (PROB_CEIL), whatever the raw draw fraction: a model probability is not a certainty. */
-export function engineOdds(row: RaceRow) {
-  const raw = row.pm!.probB, open = !row.settled && !row.call;
+export function engineOdds(row: RaceRow, called = false) {
+  const raw = row.pm!.probB, open = !row.settled && !called;
   const pB = open ? Math.min(PROB_CEIL, Math.max(1 - PROB_CEIL, raw)) : raw;
   return { pA: 1 - pB, pB, sd: (row.pm!.hi - row.pm!.lo) / (2 * 1.2816), lo: row.pm!.lo, hi: row.pm!.hi, capped: pB !== raw };
 }

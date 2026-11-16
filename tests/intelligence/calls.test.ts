@@ -6,15 +6,15 @@ import { LIVE_POLL_MS, PROXY_CACHE_MS } from "../../app/results/2026/liveFeed";
 const race = (id: string, k = "sen", st = "FL") => ({ id, k, st, nm: id, off: "", civ: {} }) as never;
 const civ = (pr: number, c: [string, string, number, number, number, number | null][]) => ({ id: 1, type: "x", province: "FL", district: null, name: "x", pr, c }) as never;
 
-test("an official call needs civicAPI's winner flag", () => {
+test("a call needs the winner flag, which the pages set from On Point's own call and from nothing else", () => {
   const row = callRow(race("a"), civ(99, [["A", "Democratic", 60, 60, 1, null], ["B", "Republican", 40, 40, 0, null]]), null);
-  assert.equal(row.state, "official"); assert.equal(row.winner?.name, "A"); assert.equal(row.source, "civicAPI");
+  assert.equal(row.state, "official"); assert.equal(row.winner?.name, "A"); assert.equal(row.source, "On Point Politics call");
 });
 test("a projection is labelled as ours and never official", () => {
   const row = callRow(race("a"), civ(80, [["A", "Democratic", 60, 60, 0, null], ["B", "Republican", 40, 40, 0, null]]), { name: "A", party: "D", side: "A" });
   assert.equal(row.state, "projected"); assert.match(row.source, /not an official call/);
 });
-test("civicAPI winner beats a projection for the same race", () => {
+test("a call beats a projection for the same race", () => {
   const row = callRow(race("a"), civ(99, [["B", "Republican", 60, 60, 1, null]]), { name: "A", party: "D", side: "A" });
   assert.equal(row.state, "official"); assert.equal(row.winner?.name, "B");
 });

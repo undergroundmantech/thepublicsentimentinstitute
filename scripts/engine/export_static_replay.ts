@@ -86,6 +86,15 @@ const info = { id: src, ns: "historical", mode: "HISTORICAL", label: m?.label ??
   modelVersion: a.manifests[a.manifests.length - 1].modelVersion,
   windows: [{ id: "night", label: "Election night", from: "2026-11-03T22:55:00.000Z", to: "2026-11-04T12:00:00.000Z" }, { id: "full", label: "The whole count", from: "2026-11-03T22:55:00.000Z", to: times[times.length - 1] }] };
 put("index.json", JSON.stringify({ v: 1, sources: [info] }));
+// On Point's calls as they stood at the last recorded update, for live pages that have no engine ledger of their own
+// (app/results/2026/onpointCalls.ts). Written beside the pack; --calls names another place (public/results/2026).
+if (prev) {
+  const calls: Record<string, [string, string | null, string, string]> = {};
+  for (const [rid, r] of Object.entries(prev.ledger.races)) if (r.modelCall) calls[rid] = [r.modelCall.name, r.modelCall.partyRaw, r.modelCall.calledAt, r.modelCall.lane ?? "standard"];
+  const body = JSON.stringify({ v: 1, engine: info.modelVersion, source: `On Point model calls on the recorded civicAPI night (${id}), as of its last update`, asOf: prev.t, calls });
+  const callsOut = arg("--calls"); if (callsOut) { fs.mkdirSync(path.dirname(path.resolve(callsOut)), { recursive: true }); fs.writeFileSync(path.resolve(callsOut), body); } else put("onpoint-calls.json", body);
+  console.log(`calls file: ${Object.keys(calls).length} On Point calls as of ${prev.t}`);
+}
 const kinds: Record<string, number> = {}; for (const x of moments) kinds[x.kind] = (kinds[x.kind] ?? 0) + 1;
 bytes += keyBytes + deltaBytes; console.log(`frames: ${(keyBytes / 1e6).toFixed(1)} MB whole, ${(deltaBytes / 1e6).toFixed(1)} MB deltas`);
 console.log(`exported ${times.length} frames, ${byRace.size} race histories (${pts} points), ${pids.size} county files, ${moments.length} moments (${moments.filter((x) => x.imp === 3).length} headline) -> ${(bytes / 1e6).toFixed(1)} MB in ${outDir}`);

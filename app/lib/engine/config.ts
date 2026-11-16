@@ -2,7 +2,7 @@
 // timestamped election-night history in the repository to fit them to (Gate E). They are set to be honest about
 // what is NOT known, which mostly means wide. Change them here, bump MODEL_VERSION, and every output says so.
 
-export const MODEL_VERSION = "onpoint-engine/2.4.0";
+export const MODEL_VERSION = "onpoint-engine/2.5.0";
 
 export type EngineConfig = {
   draws: number;
@@ -52,6 +52,13 @@ export type EngineConfig = {
      * (1 + h), h half-normal with this sd (mean about 0.8 x sd). It stops "counted already beats the forecast total"
      * from reading as "nothing left to count". A judgement (see sdOrderRace for the same caveat), not a fitted value.
      */
+    /**
+     * A race read from its total (2.5.0): the chance its count has stopped, from how long the total has not moved.
+     * Outside the slow states: 0 below fromMin minutes, `max` at fullMin, `maxLong` at longMin. In the slow states: 0
+     * below slowFromMin, slowMax at slowFullMin. Only for a race holding minShare of its forecast vote. Checked
+     * against the House totals of November 3 to 11, 2026 and set below what they showed; one count, not a test.
+     */
+    quietTotal: { fromMin: number; fullMin: number; max: number; longMin: number; maxLong: number; slowFromMin: number; slowFullMin: number; slowMax: number; minShare: number; sdLate: number };
     sdRemainder: number;
     /** hard bound on the log ratio, so a tiny denominator can never project a turnout spike */
     clampLog: number;
@@ -141,7 +148,7 @@ export type EngineConfig = {
   priorSd: { minZ: number; byKind: Record<string, number> };
   /** a model probability shown for an uncalled race never exceeds this (Phase 1 PROB_CEIL) */
   probCeil: number;
-  /** use the provider's own winner flags as settled outcomes in national seat counts */
+  /** use the provider's own winner flags as settled outcomes in national seat counts. Off since 2.5.0: the seat counts follow On Point's own calls (the ledger's), which the pipeline passes in. */
   useProviderCalls: boolean;
   senate: {
     seats: number;
@@ -167,13 +174,14 @@ export const DEFAULT_CONFIG: EngineConfig = {
   spreadFactor: 1,
   turnout: { sdState: 0.12, sdUnit: 0.1, lateMean: 0.02, sdComplete: 0.04, sdPrecinct: 0.2, kPrecinct: 0, minPctForEvidence: 10,
     quiet: { fromMin: 45, fullMin: 150, max: 0.9, minShare: 0.6, base: 0.15, sdLate: 0.008, longMin: 600, maxLong: 0.97, sdLateLong: 0.005, spreadPrior: 5, spreadFloor: 0.03, sdRemainder: 0.06, slowStates: ["AK", "AZ", "CA", "CO", "HI", "IL", "MD", "NJ", "NV", "NY", "OR", "UT", "WA", "CT", "MA", "ME", "NH", "RI", "VT"] },
+    quietTotal: { fromMin: 120, fullMin: 600, max: 0.85, longMin: 2880, maxLong: 0.97, slowFromMin: 4320, slowFullMin: 5760, slowMax: 0.9, minShare: 0.6, sdLate: 0.01 },
     sdRemainder: 0.15, clampLog: 1.2, rhoNational: 0.6 },
   margin: { sdUnit: 4, sdUnitSmall: 7, unitOutlierZ: 2.5, sdOrderRace: 20, sdOrderUnit: 6, sdOutstanding: 14, sdOutstandingLate: 25, outstandingLateBelow: 0.3, outstandingSplit: true, minPriorSd: 1.5, maxPriorSd: 20 },
   others: { sdShift: 1, shrinkVotes: 50_000 },
   national: { sdNational: 5.4, sdState: 4, loading: { sen: 1.15, house: 1, gov: 0.6 }, selectionShare: 0.5, orderNationalShare: 0.5, runoffToFirstRoundSide: true },
   priorSd: { minZ: 0.15, byKind: { sen: 9.3, house: 9.4, gov: 6.1, state: 5.7, measure: 20 } },
   probCeil: 0.995,
-  useProviderCalls: true,
+  useProviderCalls: false,
   senate: { seats: 100, vpParty: "R", caucus: {}, independentsCaucus: "D" },
   rcv: { sdTransfer: 0.15 },
   house: { seats: 435, majority: 218 },

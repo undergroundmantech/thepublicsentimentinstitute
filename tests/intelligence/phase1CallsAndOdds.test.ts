@@ -45,15 +45,16 @@ test("[18] one policy, three pages: no page keeps its own copy of the threshold"
   assert.match(src("app/results/2026/calls/CallsBoard.tsx"), /if \(!modelSuggestionsEnabled\(\)\) return;/, "the calls board does no projection reads while the flag is off");
 });
 
-test("a provider call is sourced to the provider; a model estimate is never attributed to it", () => {
+test("a call on the board is sourced to On Point; a lead or an estimate is never a call", () => {
   const r = race("sen-NE");
   const won = { id: 1, type: "US Senate", province: "NE", district: null, name: "x", pr: 99, c: [["Pete Ricketts", "Republican", 60, 60, 1, null], ["Dan Osborn", "Independent", 40, 40, 0, null]] as CCand[] };
-  const row = callRow(r, won, null); assert.equal(row.state, "official"); assert.equal(row.source, "civicAPI"); assert.equal(row.winner?.name, "Pete Ricketts");
+  const row = callRow(r, won, null); assert.equal(row.state, "official"); assert.equal(row.source, "On Point Politics call"); assert.equal(row.winner?.name, "Pete Ricketts");
   const open = { ...won, c: won.c.map((x) => [x[0], x[1], x[2], x[3], 0, null] as CCand) };
   assert.equal(callRow(r, open, null).state, "uncalled", "a lead, however large, is not a call");
   assert.match(callRow(r, open, { name: "Pete Ricketts", party: "R", side: "B" }).source, /not an official call/);
-  // the race desk passed calledBy="civicAPI" to the band for its own projection
-  assert.match(src("app/results/2026/NightDesk.tsx"), /calledBy=\{civWinner \? "civicAPI" : undefined\}/);
+  // the race desk names On Point as the caller, never the provider
+  assert.match(src("app/results/2026/NightDesk.tsx"), /calledBy=\{civWinner \? "On Point Politics" : undefined\}/);
+  assert.doesNotMatch(src("app/results/2026/NightDesk.tsx"), /Called by civicAPI|calledBy=\{civWinner \? "civicAPI"/);
 });
 
 test("[17] a lopsided, nearly finished count is still not printed as a certainty", () => {

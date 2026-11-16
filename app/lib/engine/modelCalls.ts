@@ -37,6 +37,16 @@ export type CallConfig = {
   minNeededOverExpected?: number;
   /** a race whose 95% range of the projected margin starts below `belowLo` points must have qualified without a break for `holdMin` minutes before it is called. Absent: no hold. */
   close?: { belowLo: number; holdMin: number };
+  /**
+   * When a count has stopped (2.5.0). `quietMin`: minutes without any move in the race's total after which the count is
+   * taken as over (`slowQuietMin` in the states that count for days). Then: the recount floor is read on the counted
+   * margin (`minCountedMargin` points) instead of the low end of the range, so a finished race at 0.7 points can be
+   * called and one at 0.1 cannot; and a race with no forecast at all, which the model cannot reason about, is called
+   * for its leader when he is `noForecastMargin` points clear (the "count-settled" lane: arithmetic, not a model).
+   * `stepMin`: silence itself is an update. A race whose data has not changed is looked at again after this many
+   * minutes, so a count that has gone still can be called without waiting for a correction of three votes.
+   */
+  finished?: { quietMin: number; slowQuietMin: number; minCountedMargin: number; noForecastMargin: number; /** a race with no forecast is also called while counting, when the provider lists at least `noForecastMinPct` percent reporting and the lead is `noForecastLeadOver` times the vote that percent leaves uncounted */ noForecastMinPct?: number; noForecastLeadOver?: number; /** and the counted lead is at least this many points (`...Slow` in the states that count for days, where the provider's percent says little) */ noForecastReachMargin?: number; noForecastReachMarginSlow?: number; /** once the count has stopped, a race the model gives at least `settledMinProb` is called on a counted lead of `settledMargin` points, in the count-settled lane */ settledMinProb?: number; settledMargin?: number; stepMin: number; /** and only once the total has been still this long: a second look at data a few minutes old confirms nothing */ stepAfterMin: number };
   /** the low end of the 95% range of the projected margin must be at least this many points. Absent: only above zero. */
   minMarginLo?: number;
   /** quality flags that block qualification outright */
@@ -69,8 +79,8 @@ export type CallConfig = {
     minUpdates?: number };
 };
 export const DEFAULT_CALL_CONFIG: CallConfig = {
-  threshold: 0.993, consecutive: 2, approach: 0.95, mcZ: 2, minCountedShare: 0.5, minNeededShare: 0.6, minNeededOverExpected: 0.1, minMarginLo: 0.5, close: { belowLo: 2, holdMin: 30 },
-  blockingFlags: ["NO_FORECAST", "NO_OBSERVATION", "TEST_DATA", "COUNT_UNKNOWN", "COUNT_EXCEEDS_FORECAST", "UNIT_TOPLINE_MISMATCH", "PROVIDER_ROWS_INCONSISTENT", "AMBIGUOUS_CANDIDATE", "TURNOUT_WEAK_EVIDENCE", "RULE_RANKED_CHOICE", "RULE_NOT_MODELED"],
+  threshold: 0.993, consecutive: 2, approach: 0.95, mcZ: 2, minCountedShare: 0.5, minNeededShare: 0.6, minNeededOverExpected: 0.1, minMarginLo: 0.5, close: { belowLo: 2, holdMin: 30 }, finished: { quietMin: 4320, slowQuietMin: 7200, minCountedMargin: 0.5, noForecastMargin: 10, noForecastMinPct: 60, noForecastLeadOver: 3, noForecastReachMargin: 20, noForecastReachMarginSlow: 40, settledMinProb: 0.95, settledMargin: 1, stepMin: 30, stepAfterMin: 120 },
+  blockingFlags: ["NO_FORECAST", "NO_OBSERVATION", "TEST_DATA", "COUNT_UNKNOWN", "COUNT_EXCEEDS_FORECAST", "COUNT_DECREASED", "UNIT_TOPLINE_MISMATCH", "PROVIDER_ROWS_INCONSISTENT", "AMBIGUOUS_CANDIDATE", "TURNOUT_WEAK_EVIDENCE", "RULE_RANKED_CHOICE", "RULE_NOT_MODELED"],
   deteriorationAlert: 0.9,
   minUpdates: 3,
   fast: { on: true, minPrior: 0.97, minCountedShare: 0.1, minCountedShareCounty: 0.25, kinds: ["sen", "gov", "house"], minUpdates: 1 },
@@ -99,7 +109,7 @@ export type RaceCallState = {
   updates?: number; safeSeat?: boolean;
   qualifyingCandidateId: string | null;
   firstQualifiedAt: string | null;
-  modelCall: null | { candidateId: string; name: string; partyRaw: string | null; calledAt: string; snapshotId: string; probability: number; threshold: number;
+  modelCall: null | { candidateId: string; name: string; partyRaw: string | null; calledAt: string; snapshotId: string; /** null in the count-settled lane, which has no model */ probability: number | null; threshold: number;
     /** which rule made the call, and the share of the expected vote counted at that moment */
     lane?: CallLane; countedShare?: number | null };
   /** a provider's call: reported, never produced here */
@@ -117,13 +127,15 @@ export const emptyLedger = (mode: DataMode, config: CallConfig = DEFAULT_CALL_CO
 /** What makes two reads of a race "the same data": its counts, winner flags and percent reporting. Never a clock. */
 export const observationKey = (o: RaceObservation | null | undefined): string => (o ? fnv64(canonicalJson([o.candidates.map((c) => [c.candidateId, c.votes, c.providerWinner]), o.providerPctReporting, o.units?.map((u) => [u.unitId, u.votes, u.providerPctReporting]) ?? null])) : "none");
 
-export type CallLane = "standard" | "safe-seat";
+export type CallLane = "standard" | "safe-seat" | "count-settled" | "uncontested";
+/** Polls have closed for a race: the provider's listed closing time has passed, or votes are already reported. */
+const closed = (o: RaceObservation | null | undefined, at: string) => !!o && !o.test && ((o.pollsCloseAt ? Date.parse(at) >= Date.parse(o.pollsCloseAt) : false) || o.candidates.some((c) => (c.votes ?? 0) > 0));
 type Probe = { leader: RaceCallState["leader"]; p: number | null; se: number | null; countedShare: number | null; outstanding: RaceCallState["outstanding"]; blockers: string[]; qualifies: boolean;
   /** which rule the race qualifies under (null when it does not), and whether it is a safe seat at all */
   lane: CallLane | null; safeSeat: boolean };
 
 /** The leader, the probability and every safeguard for one race at one moment. */
-export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean): Probe {
+export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, providerPct: number | null = null): Probe {
   const runoff = f.rule === "majority_runoff";
   const pOf = (c: RaceForecast["candidates"][number]) => (runoff ? c.outrightProbability ?? 0 : c.winProbability ?? -1);
   const top = [...f.candidates].sort((a, b) => pOf(b) - pOf(a))[0];
@@ -135,8 +147,31 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean): Probe {
   const prior = f.principalMargin?.prior.probB ?? null, fast = cfg.fast;
   const safeSeat = !!fast?.on && prior != null && f.rule === "plurality" && fast.kinds.includes(f.raceId.split("-")[0]) && Math.max(prior, 1 - prior) >= fast.minPrior && !!top && top.side === (prior >= 0.5 ? "b" : "a");
   const blockers: string[] = [], slow: string[] = [];      // `slow`: safeguards the safe-seat lane replaces
+  const byVotes = [...f.candidates].filter((c) => c.reportedVotes != null).sort((a, b) => (b.reportedVotes as number) - (a.reportedVotes as number));
+  const countedMargin = byVotes.length > 1 && f.turnout.counted > 0 ? (100 * ((byVotes[0].reportedVotes as number) - (byVotes[1].reportedVotes as number))) / f.turnout.counted : null;
+  const over = !!cfg.finished && f.turnout.quietMin != null && f.turnout.quietMin >= (f.turnout.slowCount ? cfg.finished.slowQuietMin : cfg.finished.quietMin);
+  // no forecast, so no model: once the count has stopped, a leader far enough ahead has won. Arithmetic, and labelled as such.
+  if (cfg.finished && f.flags.includes("NO_FORECAST") && !f.settled && f.rule === "plurality") {
+    const bad = cfg.blockingFlags.filter((fl) => fl !== "NO_FORECAST" && f.flags.includes(fl)), b: string[] = [];
+    if (stale) b.push("the data is stale"); for (const fl of bad) b.push(`data-quality flag ${fl}`);
+    // or before it has stopped, when the lead is several times everything the provider says is still uncounted
+    const F = cfg.finished, leadVotes = byVotes.length > 1 ? (byVotes[0].reportedVotes as number) - (byVotes[1].reportedVotes as number) : 0;
+    const uncounted = providerPct != null && providerPct > 0 ? (f.turnout.counted * (100 - providerPct)) / providerPct : Infinity;
+    // (the provider's percent is of precincts in some states, not of ballots: California showed 100% with half its
+    // mail uncounted on election night. So the lead must also be wide in points, and far wider where counts run for days.)
+    const reachMargin = f.turnout.slowCount ? F.noForecastReachMarginSlow : F.noForecastReachMargin;
+    const outOfReach = F.noForecastMinPct != null && F.noForecastLeadOver != null && reachMargin != null && providerPct != null && providerPct >= F.noForecastMinPct && leadVotes > F.noForecastLeadOver * uncounted && countedMargin != null && countedMargin >= reachMargin;
+    if (countedMargin == null || countedMargin < F.noForecastMargin) b.push(`no forecast for this race, and the leader is under ${F.noForecastMargin} points clear`);
+    else if (!over && !outOfReach) b.push(F.noForecastLeadOver != null ? `no forecast for this race: it is called once its count has stopped, or once the lead is ${reachMargin} points and ${F.noForecastLeadOver} times the vote the provider lists as uncounted` : "no forecast for this race: it is called only once its count has stopped");
+    const lead = byVotes[0] ?? null;
+    return { leader: lead ? { candidateId: lead.candidateId, name: lead.name, partyRaw: lead.partyRaw } : null, p: null, se: null, countedShare, outstanding: null, blockers: b, qualifies: !b.length && !!lead, lane: !b.length && lead ? "count-settled" : null, safeSeat: false };
+  }
   if (stale) blockers.push("the data is stale");
-  for (const fl of cfg.blockingFlags) if (f.flags.includes(fl)) blockers.push(`data-quality flag ${fl}`);
+  // Ranked choice: the transfers are not modeled well enough to call on, but a majority of first choices needs none.
+  // Such a race is called on the chance of that majority, never on the simulated final round.
+  const rcv = !!cfg.finished && f.rule === "ranked_choice", pMaj = rcv ? top?.outrightProbability ?? 0 : null;
+  for (const fl of cfg.blockingFlags) if (f.flags.includes(fl) && !(rcv && fl === "RULE_RANKED_CHOICE")) blockers.push(`data-quality flag ${fl}`);
+  if (rcv && (pMaj as number) < cfg.threshold) blockers.push("ranked choice: called only on a certain majority of first choices, and there is none yet");
   if (f.dataState === "MISSING" || f.dataState === "INVALID" || f.dataState === "STALE") blockers.push(`data state ${f.dataState}`);
   if (p == null) blockers.push("no model probability");
   if (countedShare == null || countedShare < cfg.minCountedShare) slow.push(`under ${(100 * cfg.minCountedShare).toFixed(0)}% of the expected vote is counted`);
@@ -144,7 +179,15 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean): Probe {
   if (safeSeat && (countedShare == null || countedShare < (fastFloor as number))) blockers.push(`under ${(100 * (fastFloor as number)).toFixed(0)}% of the expected vote is counted (safe-seat floor)`);
   if (!out) blockers.push("no estimate of the outstanding vote");
   // stress test against the high estimate of what is still out
-  if (out && top && f.projectedTopTwo) {
+  // (not once the count has stopped: three days of silence is the evidence then, and the tests below are on the votes
+  // actually counted. The model's own tail still holds a small chance that the count reopens, which is what kept a
+  // finished race at 1.2 points "too open to call" for a week.)
+  // (plain plurality races only: a measure with a 60% bar, a runoff rule or ranked choice is not settled by who leads)
+  const overPl = over && f.rule === "plurality";
+  if (overPl && cfg.finished && top) {
+    if (byVotes[0]?.candidateId !== top.candidateId) blockers.push("the model's leader does not lead the count");
+    else if (countedMargin == null || countedMargin < cfg.finished.minCountedMargin) blockers.push(`the count has stopped with the leader under ${cfg.finished.minCountedMargin} points ahead: recount territory`);
+  } else if (out && top && f.projectedTopTwo) {
     const sorted = [...f.candidates].filter((c) => c.reportedVotes != null).sort((a, b) => (b.reportedVotes as number) - (a.reportedVotes as number));
     const lead = sorted.length > 1 && sorted[0].candidateId === top.candidateId ? (sorted[0].reportedVotes as number) - (sorted[1].reportedVotes as number) : -1;
     if (lead < 0) blockers.push("the model's leader does not lead the count");
@@ -162,14 +205,25 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean): Probe {
     }
     if (f.projectedTopTwo.leaderId !== top.candidateId || f.projectedTopTwo.marginPp.i95.lo <= 0) blockers.push("the 95% range of the projected margin includes a loss");
     // too close to call: most states recount at half a point, and provisional and cured ballots are settled at the canvass, days later
-    else if (cfg.minMarginLo != null && f.projectedTopTwo.marginPp.i95.lo < cfg.minMarginLo) blockers.push(`the 95% range of the projected margin reaches below ${cfg.minMarginLo} points: recount territory`);
+    // (once the count has stopped, what matters is the margin actually counted)
+    else if (cfg.minMarginLo != null && (over && cfg.finished && countedMargin != null ? countedMargin < cfg.finished.minCountedMargin : f.projectedTopTwo.marginPp.i95.lo < cfg.minMarginLo))
+      blockers.push(over ? `the count has stopped with the leader under ${cfg.finished!.minCountedMargin} points ahead: recount territory` : `the 95% range of the projected margin reaches below ${cfg.minMarginLo} points: recount territory`);
   }
-  const clears = p != null && se != null && p >= cfg.threshold && p - cfg.mcZ * se >= cfg.threshold;
-  if (p != null && p >= cfg.threshold && !clears) blockers.push("the probability does not clear the threshold after simulation error");
+  const pc = p != null && pMaj != null ? Math.min(p, pMaj) : p;      // ranked choice: the smaller of the two chances
+  const clears = pc != null && se != null && pc >= cfg.threshold && pc - cfg.mcZ * se >= cfg.threshold;
+  if (pc != null && pc >= cfg.threshold && !clears) blockers.push("the probability does not clear the threshold after simulation error");
   // the standard rule needs every safeguard; a safe seat may qualify without the two the lane replaces
   const standard = clears && blockers.length === 0 && slow.length === 0, viaFast = !standard && safeSeat && clears && blockers.length === 0;
+  // A count that has stopped with the leader clearly ahead settles the race even where the probability sits just
+  // under the threshold (the model never quite lets go of the chance that a count reopens): the model must still
+  // favour the leader strongly, and the counted lead must be twice the recount floor.
+  const F = cfg.finished;
+  const settled = !standard && !viaFast && overPl && !!F && F.settledMinProb != null && F.settledMargin != null && pc != null && pc >= F.settledMinProb && countedMargin != null && countedMargin >= F.settledMargin
+    && blockers.every((b) => b === "the probability does not clear the threshold after simulation error") && slow.every((b) => !b.startsWith("under "));
+  const all = settled ? [] : safeSeat ? blockers : [...blockers, ...slow];
+  if (overPl && F && !standard && !viaFast && !settled && !all.length && pc != null) all.push(`the count has stopped, and the model's ${(100 * pc).toFixed(1)}% is under the threshold with the leader under ${F.settledMargin ?? F.minCountedMargin} points ahead`);
   return { leader: top ? { candidateId: top.candidateId, name: top.name, partyRaw: top.partyRaw } : null, p, se, countedShare, outstanding: out ? { mean: out.mean, hi: out.i95.hi } : null,
-    blockers: safeSeat ? blockers : [...blockers, ...slow], qualifies: standard || viaFast, lane: standard ? "standard" : viaFast ? "safe-seat" : null, safeSeat };
+    blockers: all, qualifies: standard || viaFast || settled, lane: standard ? "standard" : viaFast ? "safe-seat" : settled ? "count-settled" : null, safeSeat };
 }
 
 export type StepInput = {
@@ -190,10 +244,12 @@ export function stepLedger(prev: Ledger, inp: StepInput): Ledger {
     const old: RaceCallState = races[raceId] ?? { raceId, status: "MONITORING", leader: null, probability: null, mcStdErr: null, marginI80: null, providerPctReporting: null, countedShare: null, outstanding: null, blockers: [], qualifying: 0, qualifyingCandidateId: null, firstQualifiedAt: null, modelCall: null, official: null, editorial: null, alerts: 0, lastObsKey: null, lastSnapshotId: null, updatedAt: null };
     const obs = inp.observations[raceId]; const key = observationKey(obs);
     const finished = (obs?.providerPctReporting ?? 0) >= 99.5;
-    const distinct = key !== old.lastObsKey || (finished && inp.snapshotId !== old.lastSnapshotId);
-    const pr = probe(f, cfg, !!inp.stale);
+    // silence is an update too: the same data, looked at again after `stepMin` minutes (only where the source says when the total last moved)
+    const quietStep = !!cfg.finished && f.turnout.quietMin != null && f.turnout.quietMin >= cfg.finished.stepAfterMin && !!old.updatedAt && (Date.parse(inp.at) - Date.parse(old.updatedAt)) / 60_000 >= cfg.finished.stepMin;
+    const fresh = key !== old.lastObsKey || (finished && inp.snapshotId !== old.lastSnapshotId), distinct = fresh || quietStep;
+    const pr = probe(f, cfg, !!inp.stale, obs?.providerPctReporting ?? null);
     // first-report quarantine: count the distinct updates that carried votes
-    const updates = (old.updates ?? 0) + (distinct && f.turnout.counted > 0 ? 1 : 0);
+    const updates = (old.updates ?? 0) + (fresh && f.turnout.counted > 0 ? 1 : 0);      // silence does not count toward the quarantine
     // (a safe seat has its own, shorter quarantine: there the forecast and the count must agree, so a faulty first
     // report cannot by itself produce a call against the forecast, which is what happened in NY-01)
     const need = (pr.safeSeat ? cfg.fast.minUpdates : undefined) ?? cfg.minUpdates ?? 0;
@@ -213,13 +269,26 @@ export function stepLedger(prev: Ledger, inp: StepInput): Ledger {
       if (events[events.length - 1]?.kind !== "OFFICIAL_CALL_CHANGED" || events[events.length - 1]?.raceId !== raceId) push("OFFICIAL_CALL", raceId, { candidateId: f.call.winnerId, name: f.call.name }, null, `${f.call.source} called the race`);
       if (s.modelCall && s.modelCall.candidateId !== f.call.winnerId) { s.alerts++; push("ALERT_OFFICIAL_DISAGREES", raceId, { candidateId: f.call.winnerId, name: f.call.name }, null, `the official call is for ${f.call.name}; the model call of ${s.modelCall.calledAt} was for ${s.modelCall.name}`); }
     }
-    if (f.settled) { races[raceId] = { ...s, status: "SETTLED_UNCONTESTED", lastObsKey: key, lastSnapshotId: inp.snapshotId, updatedAt: inp.at }; continue; }
+    if (f.settled) {
+      // an unopposed candidate has won when the polls close. Recorded then, in a lane of its own: nothing is modeled.
+      const st: RaceCallState = { ...s, status: "SETTLED_UNCONTESTED", lastObsKey: key, lastSnapshotId: inp.snapshotId, updatedAt: inp.at };
+      const w = f.candidates.find((c) => c.candidateId === f.settled!.winnerId);
+      if (cfg.finished && !st.modelCall && w && closed(obs, inp.at)) {
+        st.modelCall = { candidateId: w.candidateId, name: w.name, partyRaw: w.partyRaw, calledAt: inp.at, snapshotId: inp.snapshotId, probability: null, threshold: cfg.threshold, lane: "uncontested", countedShare: null };
+        push("MODEL_CALLED", raceId, st.modelCall, null, "unopposed: recorded at poll close. Nothing is modeled.");
+      }
+      races[raceId] = st; continue;
+    }
     if (!distinct) { races[raceId] = s; continue; }      // the same data again: nothing advances, nothing resets
     s.lastObsKey = key; s.lastSnapshotId = inp.snapshotId; s.updatedAt = inp.at;
     if (s.modelCall) {
       // the call stands. Later trouble is added beside it, never in place of it.
       const called = f.candidates.find((c) => c.candidateId === s.modelCall!.candidateId);
       const pc = called ? (f.rule === "majority_runoff" ? called.outrightProbability ?? 0 : called.winProbability ?? 0) : 0;
+      // no model stands behind a count-settled call or an unopposed one, so none can turn against it. (An unopposed
+      // candidate's race can leave the "settled" path later, when the provider adds a line such as Nevada's "None of
+      // These Candidates": the call stands, and there is no probability to alert on.)
+      if (s.modelCall.lane === "count-settled" || s.modelCall.lane === "uncontested") { races[raceId] = s; continue; }
       const wasBad = old.status === "MODEL_CALLED" && (old.leader?.candidateId !== old.modelCall?.candidateId || (old.probability ?? 1) < cfg.deteriorationAlert);
       if (pr.leader && pr.leader.candidateId !== s.modelCall.candidateId) { if (!wasBad || old.leader?.candidateId !== pr.leader.candidateId) { s.alerts++; push("ALERT_MODEL_CONTRADICTS_CALL", raceId, pr.leader, pr.p, `the model now favours ${pr.leader.name}; the model call for ${s.modelCall.name} stands on the record`); } }
       else if (pc < cfg.deteriorationAlert && !wasBad) { s.alerts++; push("ALERT_CONFIDENCE_DETERIORATED", raceId, s.modelCall, pc, `probability for the called candidate fell to ${(100 * pc).toFixed(1)}%`); }
@@ -228,14 +297,14 @@ export function stepLedger(prev: Ledger, inp: StepInput): Ledger {
     if (pr.qualifies && pr.leader) {
       const same = s.qualifyingCandidateId === pr.leader.candidateId;
       s.qualifying = same ? s.qualifying + 1 : 1; s.qualifyingCandidateId = pr.leader.candidateId;
-      if (s.qualifying === 1) { s.firstQualifiedAt = inp.at; s.status = "FIRST_QUALIFIED"; push("FIRST_QUALIFIED", raceId, pr.leader, pr.p, `${pr.leader.name} at ${(pr.p as number) >= 0.9995 ? "over 99.9" : (100 * (pr.p as number)).toFixed(2)}%, threshold ${(100 * cfg.threshold).toFixed(1)}%${same ? "" : old.qualifying ? " (a different candidate than before: the sequence restarted)" : ""}`); }
+      if (s.qualifying === 1) { s.firstQualifiedAt = inp.at; s.status = "FIRST_QUALIFIED"; push("FIRST_QUALIFIED", raceId, pr.leader, pr.p, pr.p == null ? `${pr.leader.name}: the count has stopped with him far ahead (no forecast for this race)` : `${pr.leader.name} at ${(pr.p as number) >= 0.9995 ? "over 99.9" : (100 * (pr.p as number)).toFixed(2)}%, threshold ${(100 * cfg.threshold).toFixed(1)}%${same ? "" : old.qualifying ? " (a different candidate than before: the sequence restarted)" : ""}`); }
       // a close race must hold its qualification for a while, not just for two updates: a count that looks finished at
       // 9 PM and takes another batch at 9:20 is the commonest way to be wrong
       const lo95 = f.projectedTopTwo?.marginPp.i95.lo ?? null, hold = cfg.close && lo95 != null && lo95 < cfg.close.belowLo ? cfg.close.holdMin : 0;
       const held = s.firstQualifiedAt ? (Date.parse(inp.at) - Date.parse(s.firstQualifiedAt)) / 60_000 : 0;
       if (s.qualifying >= cfg.consecutive && held >= hold) {
-        s.status = "MODEL_CALLED"; s.modelCall = { ...pr.leader, calledAt: inp.at, snapshotId: inp.snapshotId, probability: pr.p as number, threshold: cfg.threshold, lane: pr.lane ?? "standard", countedShare: pr.countedShare };
-        push("MODEL_CALLED", raceId, pr.leader, pr.p, `${cfg.consecutive} distinct qualifying updates in a row, first at ${s.firstQualifiedAt}${pr.lane === "safe-seat" ? `; safe-seat lane (the forecast's ${(100 * cfg.fast.minPrior).toFixed(0)}%-or-more favourite, ${(100 * (pr.countedShare ?? 0)).toFixed(0)}% of the expected vote counted)` : ""}. A model call, not an official call.`);
+        s.status = "MODEL_CALLED"; s.modelCall = { ...pr.leader, calledAt: inp.at, snapshotId: inp.snapshotId, probability: pr.p, threshold: cfg.threshold, lane: pr.lane ?? "standard", countedShare: pr.countedShare };
+        push("MODEL_CALLED", raceId, pr.leader, pr.p, `${cfg.consecutive} distinct qualifying updates in a row, first at ${s.firstQualifiedAt}${pr.lane === "safe-seat" ? `; safe-seat lane (the forecast's ${(100 * cfg.fast.minPrior).toFixed(0)}%-or-more favourite, ${(100 * (pr.countedShare ?? 0)).toFixed(0)}% of the expected vote counted)` : pr.lane === "count-settled" ? "; count-settled lane (no forecast for this race: the count has stopped and the leader is far ahead)" : ""}. A model call, not an official call.`);
         if (s.official && s.official.candidateId !== pr.leader.candidateId) { s.alerts++; push("ALERT_OFFICIAL_DISAGREES", raceId, pr.leader, pr.p, `the model call is for ${pr.leader.name}; the official call is for ${s.official.name}`); }
       }
     } else {

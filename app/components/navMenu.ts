@@ -1,5 +1,5 @@
 // The site's one menu: the masthead, the phone menu and the footer all read it.
-// Five tabs. The four that matter most each open a short panel; More gathers the rest of the site, one column per
+// Six tabs. The five that matter most each open a short panel; More gathers the rest of the site, one column per
 // section, with the section's own page as the column heading.
 export type NavLink = { href: string; label: string; note?: string; badge?: string };
 export type NavCol = { h: string; href?: string; links: NavLink[] };
@@ -41,6 +41,20 @@ export const MENU: NavGroup[] = [
         { href: "/forecast/2026", label: "The forecast as published", note: "Frozen November 3, fingerprinted" },
         { href: "/accuracy#method", label: "How it is graded" },
         { href: "/accuracy/2026.json", label: "Download the scores" },
+      ] },
+    ] },
+  { key: "results", label: "2026 Results", href: "/results/2026",
+    feature: { href: "/results/monitor", eyebrow: "Election night", title: "The Situation Monitor", note: "The map, the count and every On Point call on one screen, with the election-night replay.", cta: "Open the monitor" },
+    cols: [
+      { h: "The night", links: [
+        { href: "/results/2026", label: "2026 results", note: "Senate, House, governors and measures" },
+        { href: "/results/monitor", label: "Situation Monitor", note: "One screen for the whole night" },
+        { href: "/results/2026/calls", label: "Calls desk", note: "Every call and every race in one table" },
+        { href: "/results/2026#rh", label: "Every race", note: "One sortable list" },
+      ] },
+      { h: "The record", links: [
+        { href: "/results/archive", label: "Results archive" },
+        { href: "/accuracy", label: "How the forecast did" },
       ] },
     ] },
   { key: "forecast", label: "Forecasts", href: "/forecast",
@@ -96,10 +110,6 @@ export const MENU: NavGroup[] = [
         { href: "/news", label: "Front page" },
         { href: "/accountability", label: "Accountability Index" },
         { href: "/news/sources", label: "Outlets and ratings" },
-      ] },
-      { h: "Results", href: "/results/2026", links: [
-        { href: "/results/2026", label: "2026 results" },
-        { href: "/results/archive", label: "Results archive" },
       ] },
       { h: "Maps", href: "/maps", links: [
         { href: "/maps/electoral", label: "Electoral map" },

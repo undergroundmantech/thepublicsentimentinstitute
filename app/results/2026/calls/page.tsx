@@ -1,25 +1,22 @@
 import type { Metadata } from "next";
 import { LiveProvider } from "../LiveProvider";
-import CallsBoard from "./CallsBoard";
-import CallsDesk, { CALLS_DESK_CSS } from "./CallsDesk";
+import CallsTracker from "./CallsTracker";
 import "../results2026.css";
 import "./calls.css";
 
-// Public but unlinked: no header, footer, sitemap or other link points here, and it asks search engines to stay out.
-// "Unlinked" is not "private": everything on it is already public, and nothing internal is read.
+// The Calls Desk: a page of the site (in the header's 2026 Results tab, on the monitor and on the main results page).
+// It shows On Point's calls and the progress of every other race in one table. It does not make calls and reads
+// nothing internal.
 export const metadata: Metadata = {
-  title: "Election calls board",
-  description: "Every election call in one read-only board: official calls, On Point model calls (not official) and races not yet called.",
-  robots: { index: false, follow: false, nocache: true },
+  title: "Calls desk: every 2026 race in one table",
+  description: "Every On Point Politics call of the 2026 election and where every other race stands: votes in, the lead, the model's win probability and forecast result. Filter by office and by status.",
   alternates: { canonical: "/results/2026/calls" },
 };
 
 export default function CallsPage() {
   return (
     <LiveProvider>
-      <style>{CALLS_DESK_CSS}</style>
-      {/* the engine's desk; without the engine, the provider-calls board as before */}
-      <CallsDesk fallback={<CallsBoard />} />
+      <CallsTracker />
     </LiveProvider>
   );
 }

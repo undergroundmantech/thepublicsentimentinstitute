@@ -3,6 +3,12 @@
 One document for the whole update (Phases 0 to 5, the final audit, and the recorded replay of election night built
 from civicAPI's history). It replaces the four per-phase reports.
 
+> **Patched by engine 2.5.0: read `ELECTION_NIGHT_2_PATCH_1.md` with this.** Since that patch the pages show On
+> Point's own calls and nothing else, so wherever this document says a page shows civicAPI's call as the "official
+> call" (sections 3, 6 and 9), the page now shows On Point's call instead; civicAPI's calls are still recorded on the
+> ledger and used in the evaluation. The replay controls are a bar docked to the foot of the page, the charts are
+> drawn at the size of their container, and the figures of section 9 are superseded by section 4 of the patch note.
+
 - Engine version: `onpoint-engine/2.4.0`. New in 2.4.0: the 71 Senate and governor's races are modeled county by
   county in the recorded replay (section 4), which is what lets a contested state be called while it is still
   counting. House races, statewide offices and measures are modeled exactly as in 2.3.0. The call rule is that of

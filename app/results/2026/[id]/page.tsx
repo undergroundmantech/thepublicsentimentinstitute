@@ -4,6 +4,8 @@ import path from "node:path";
 import Link from "@/app/components/Link";
 import NightDesk from "../NightDesk";
 import StateLive, { type LiveGroup } from "./StateLive";
+import StateCharts from "./StateCharts";
+import PastResults from "../../history/PastResults";
 import AlertSignup from "@/app/components/AlertSignup";
 import JsonLd from "@/app/components/JsonLd";
 import { seo, graph, pageLd, crumbsLd } from "@/app/lib/seo";
@@ -103,13 +105,17 @@ function StatePage({ st }: { st: string }) {
         <h1>{name} election results</h1>
         <p className="lede">{lede}</p>
         <div className="srs-links">
-          <Link className="btn sm" href="/results/monitor">Situation monitor</Link>
+          <Link className="btn sm" href="/results/2026">All 2026 results</Link>
+          <Link className="btn sm" href="/results/monitor">Situation Monitor</Link>
+          <a className="btn sm" href="#past">Past results by county</a>
           <Link className="btn sm" href={`/maps/early-vote/${evSlug}`}>{name} early vote</Link>
           {sen ? <Link className="btn sm" href={forecastHref(sen)}>Senate forecast</Link> : null}
           {gov ? <Link className="btn sm" href={forecastHref(gov)}>Governor forecast</Link> : null}
         </div>
       </header>
       <StateLive groups={groups} st={st} />
+      <StateCharts state={name} races={rs.filter((r) => r.k === "sen" || r.k === "gov").map((r) => ({ id: r.id, label: rs.filter((x) => x.k === r.k).length > 1 ? short(r) : KIND_LABEL[r.k] }))} />
+      <PastResults st={st} stateName={name} />
       <AlertSignup from="results" title={`${name} results in your inbox`} note="The On Point newsletter: the final forecast before Election Day and the results as races are called. Free, and you can leave any time." />
       <section className="srs-faq" aria-labelledby="srs-faq">
         <h2 id="srs-faq">{name} results, answered</h2>

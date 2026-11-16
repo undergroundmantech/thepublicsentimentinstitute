@@ -31,7 +31,18 @@ export type NationalInput = {
   index: XIndex; snapshot: ElectionSnapshot; pre: PreElection;
   seed: string; computedAt: string; draws?: number; cfg?: EngineConfig;
   baselines?: Record<string, UnitBaseline>; priors?: MethodPriorTable | null;
+  /**
+   * On Point's own calls so far: race id -> the called candidate's id (the ledger's model calls up to the previous
+   * update). A called race is a settled outcome in the seat counts, as a network treats its own calls. When given,
+   * the provider's winner flags are not used at all.
+   */
+  calls?: Record<string, string>;
 };
+/** What the seat tallies need to be recounted after this update's own calls are made (pipeline.ts): not stored. */
+export type SeatTallyInfo = Record<string, { key: "sen" | "house" | "gov"; bucket: Record<string, 0 | 1 | 2>; /** counted as called for this party already, or null */ called: 0 | 1 | 2 | null; /** counted as leading for this party, or null */ leading: 0 | 1 | 2 | null }>;
+/** Polls have closed for a race: the provider's listed closing time has passed, or votes are already reported. */
+export const pollsClosed = (obs: { pollsCloseAt?: string | null; test?: boolean; candidates: { votes: number | null }[] } | null | undefined, at: string): boolean =>
+  !!obs && !obs.test && ((obs.pollsCloseAt ? Date.parse(at) >= Date.parse(obs.pollsCloseAt) : false) || obs.candidates.some((c) => (c.votes ?? 0) > 0));
 
 type PartyBucket = 0 | 1 | 2;   // D, R, unresolved / other
 
@@ -44,7 +55,7 @@ export function senateControl(D: number, R: number, vp: "D" | "R", seats = 100):
 }
 const CHAMBER_KINDS = new Set(["sen", "house", "gov"]);
 
-export function nationalForecast(inp: NationalInput): { national: NationalForecast; races: Record<string, RaceForecast> } {
+export function nationalForecast(inp: NationalInput): { national: NationalForecast; races: Record<string, RaceForecast>; tallyInfo: SeatTallyInfo } {
   const cfg = inp.cfg ?? DEFAULT_CONFIG, N = inp.draws ?? cfg.draws, snap = inp.snapshot;
   const races = inp.index.races.filter((r) => CHAMBER_KINDS.has(r.k));
   const preps = races.map((r) => prepareRace(r, snap.races[r.id] ?? null, inp.baselines?.[r.id] ?? null, cfg, inp.priors ?? null));
@@ -101,7 +112,7 @@ export function nationalForecast(inp: NationalInput): { national: NationalForeca
   const pv = [new Float64Array(N), new Float64Array(N), new Float64Array(N)];
   const called = { sen: [0, 0, 0], house: [0, 0, 0], gov: [0, 0, 0] }, leading = { sen: [0, 0, 0], house: [0, 0, 0], gov: [0, 0, 0] };
   const obsPV = [0, 0, 0]; let pvRacesWithVotes = 0, pvRaces = 0; const pvOut = new Float64Array(N);
-  const out: Record<string, RaceForecast> = {}; const safeSeats: string[] = [];
+  const out: Record<string, RaceForecast> = {}; const safeSeats: string[] = []; const tallyInfo: SeatTallyInfo = {};
   const bucketOf = (name: string, partyRaw: string | null, chamberKey: string): PartyBucket => { const p = partyCanon(partyRaw); if (p === "D") return 0; if (p === "R") return 1; const c = cfg.senate.caucus[nameKey(name)] ?? (chamberKey === "sen" && p === "IND" ? cfg.senate.independentsCaucus : null); return c === "D" ? 0 : c === "R" ? 1 : 2; };
   const pvBucket = (partyRaw: string | null): PartyBucket => { const p = partyCanon(partyRaw); return p === "D" ? 0 : p === "R" ? 1 : 2; };
 
@@ -124,7 +135,10 @@ export function nationalForecast(inp: NationalInput): { national: NationalForeca
     out[r.id] = sim.forecast;
     const key = r.k === "sen" ? "sen" : r.k === "house" ? "house" : "gov";
     const tally = key === "sen" ? sen : key === "house" ? house : gov;
-    const prov = cfg.useProviderCalls ? p.cands.findIndex((x) => x.providerWinner) : -1;
+    // a called race is a settled outcome: On Point's own call when the pipeline passes the ledger's calls in, else (older
+    // configurations only) the provider's winner flag. An unopposed candidate is settled by the race model itself.
+    const own = inp.calls ? p.cands.findIndex((x) => x.id === inp.calls![r.id]) : -1;
+    const prov = inp.calls ? own : cfg.useProviderCalls ? p.cands.findIndex((x) => x.providerWinner) : -1;
     const buckets = p.cands.map((x) => bucketOf(x.name, x.partyRaw, key));
     // a seat the index lists with no candidates but as certain for one party (pR 0 or 1, margin -100 or +100: a
     // top-two general between two Democrats, an unopposed seat). The forecast's certainty is the only basis there is.
@@ -132,8 +146,13 @@ export function nationalForecast(inp: NationalInput): { national: NationalForeca
     if (safe != null) safeSeats.push(r.id);
     for (let d = 0; d < N; d++) { let wk = prov >= 0 ? prov : sim.winner[d]; if (wk === -2 && cfg.national.runoffToFirstRoundSide) wk = sim.heir[d]; tally[safe != null ? safe : wk >= 0 ? buckets[wk] : 2][d]++; }
     // what is reported, not modeled
-    if (prov >= 0) called[key][buckets[prov]]++;
-    else if (p.countedTotal > 0) { let l = -1; p.cands.forEach((x, k) => { if (!x.pooledLine && (l < 0 || x.counted > p.cands[l].counted)) l = k; }); if (l >= 0) leading[key][buckets[l]]++; }
+    // (a seat certain for one party with no winner called yet, two Democrats in a top-two general, counts for that
+    // party once its polls have closed: the seat is not in doubt, only the name)
+    const info: SeatTallyInfo[string] = { key, bucket: Object.fromEntries(p.cands.map((x, k) => [x.id, buckets[k]])), called: null, leading: null };
+    if (prov >= 0) { called[key][buckets[prov]]++; info.called = buckets[prov]; }
+    else if (inp.calls && safe != null && pollsClosed(p.obs, inp.computedAt)) { called[key][safe]++; info.called = safe; }
+    else if (p.countedTotal > 0) { let l = -1; p.cands.forEach((x, k) => { if (!x.pooledLine && (l < 0 || x.counted > p.cands[l].counted)) l = k; }); if (l >= 0) { leading[key][buckets[l]]++; info.leading = buckets[l]; } }
+    tallyInfo[r.id] = info;
     if (r.k === "house") {
       pvRaces++; if (p.countedTotal > 0) pvRacesWithVotes++;
       p.cands.forEach((x, k) => { const bk = pvBucket(x.partyRaw); obsPV[bk] += x.counted; const f = sim.finals[k]; const t = pv[bk]; for (let d = 0; d < N; d++) { t[d] += f[d]; pvOut[d] += f[d] - x.counted; } });
@@ -160,7 +179,7 @@ export function nationalForecast(inp: NationalInput): { national: NationalForeca
   // A control probability is shown below certainty unless calls (and seats not up) alone decide control.
   const displayOf = (pD: number, pR: number, decidedBy: "D" | "R" | null) => {
     const lead = pD >= pR ? "D" as const : "R" as const, raw = Math.max(pD, pR);
-    if (decidedBy) return { leader: decidedBy, probability: 1, capped: false, basis: "Decided by provider calls and seats not up" };
+    if (decidedBy) return { leader: decidedBy, probability: 1, capped: false, basis: inp.calls ? "Decided by On Point's calls and seats not up" : "Decided by provider calls and seats not up" };
     return { leader: lead, probability: Math.min(raw, cfg.probCeil), capped: raw > cfg.probCeil, basis: "Model estimate; not a call" };
   };
   const vp = cfg.senate.vpParty, S = cfg.senate.seats, half = S / 2;
@@ -187,7 +206,7 @@ export function nationalForecast(inp: NationalInput): { national: NationalForeca
     },
     flags: safeSeats.length ? [...flags, `${safeSeats.length} seats listed with no candidates are counted for the party the forecast holds certain: ${safeSeats.join(", ")}`] : flags,
   };
-  return { national, races: out };
+  return { national, races: out, tallyInfo };
 }
 
 /** The frozen pre-election comparison from public/forecast/model.json (server side reads it; this only shapes it). */

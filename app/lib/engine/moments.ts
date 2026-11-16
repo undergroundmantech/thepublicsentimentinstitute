@@ -36,14 +36,20 @@ export function momentsBetween(prev: StoredState | null, cur: StoredState, meta:
   const seen = prev?.ledger.events.length ?? 0;
   for (const ev of cur.ledger.events.slice(seen)) {
     const m = meta.get(ev.raceId); if (!m) continue; const st = cur.ledger.races[ev.raceId];
-    if (ev.kind === "OFFICIAL_CALL") out.push({ t, kind: "OFFICIAL_CALL", imp: impOf(m, 3), raceId: m.id, st: m.st, title: `${m.nm}: civicAPI calls it for ${ev.name}`, at: st?.official?.calledAt ?? undefined });
-    else if (ev.kind === "OFFICIAL_CALL_CHANGED") out.push({ t, kind: "OFFICIAL_CALL_CHANGED", imp: 3, raceId: m.id, st: m.st, title: `${m.nm}: civicAPI moves its call to ${ev.name}`, detail: ev.detail, at: st?.official?.calledAt ?? undefined });
-    else if (ev.kind === "OFFICIAL_CALL_WITHDRAWN") out.push({ t, kind: "OFFICIAL_CALL_WITHDRAWN", imp: 3, raceId: m.id, st: m.st, title: `${m.nm}: civicAPI withdraws its call for ${ev.name}`, detail: ev.detail });
-    else if (ev.kind === "MODEL_CALLED") out.push({ t, kind: "MODEL_CALL", imp: impOf(m, 3), raceId: m.id, st: m.st, title: `${m.nm}: ${st?.modelCall?.lane === "safe-seat" ? "safe-seat model call" : "model call"} for ${ev.name}`, detail: st?.modelCall?.lane === "safe-seat" ? "A model call in the safe-seat lane (the forecast's heavy favourite, on an early count). Not an official call." : "A model call, not an official call." });
-    // the model turning on its own call, or an official call against it, is always a headline: the record keeps both
-    else if (ev.kind === "ALERT_MODEL_CONTRADICTS_CALL") out.push({ t, kind: "MODEL_ALERT", imp: 3, raceId: m.id, st: m.st, title: `${m.nm}: the model turns against its own call`, detail: ev.detail });
-    else if (ev.kind === "ALERT_OFFICIAL_DISAGREES") out.push({ t, kind: "MODEL_ALERT", imp: 3, raceId: m.id, st: m.st, title: `${m.nm}: the official call goes against the model call`, detail: ev.detail });
-    else if (ev.kind.startsWith("ALERT_")) out.push({ t, kind: "MODEL_ALERT", imp: impOf(m, 2), raceId: m.id, st: m.st, title: `${m.nm}: the model's confidence in its call drops`, detail: ev.detail });
+    // On Point's own calls are the calls of the night. The provider's (civicAPI's) calls stay on the ledger for
+    // evaluation and are not turned into moments: the pages do not show them.
+    if (ev.kind === "MODEL_CALLED") {
+      const lane = st?.modelCall?.lane ?? "standard";
+      if (lane === "uncontested") out.push({ t, kind: "MODEL_CALL", imp: 1, raceId: m.id, st: m.st, title: `${m.nm}: ${ev.name} is unopposed`, detail: "One candidate on the ballot: recorded as the polls close." });
+      else out.push({ t, kind: "MODEL_CALL", imp: impOf(m, 3), raceId: m.id, st: m.st, title: `${m.nm}: On Point calls it for ${ev.name}`,
+        detail: lane === "safe-seat" ? "An On Point call in the safe-seat lane: the forecast's heavy favourite, confirmed on an early count. A projection, not a certified result."
+          : lane === "count-settled" ? "An On Point call on the count itself: it has stopped, or the lead is out of reach. A projection, not a certified result."
+          : "An On Point call: the model held above its threshold through every safeguard. A projection, not a certified result." });
+    }
+    // the model turning on its own call is always a headline: the record keeps both
+    else if (ev.kind === "ALERT_MODEL_CONTRADICTS_CALL") out.push({ t, kind: "MODEL_ALERT", imp: 3, raceId: m.id, st: m.st, title: `${m.nm}: the model turns against On Point's call`, detail: ev.detail });
+    else if (ev.kind === "ALERT_OFFICIAL_DISAGREES") { /* the provider's call is not shown, so neither is a disagreement with it; it stays on the ledger */ }
+    else if (ev.kind.startsWith("ALERT_")) out.push({ t, kind: "MODEL_ALERT", imp: impOf(m, 2), raceId: m.id, st: m.st, title: `${m.nm}: the model's confidence in On Point's call drops`, detail: ev.detail });
   }
   const firstByState = new Map<string, number>(); const hadVotes = new Set<string>();
   if (prev) for (const [id, row] of Object.entries(prev.races)) if (row.counted > 0) { const m = meta.get(id); if (m) hadVotes.add(m.st); }
@@ -77,7 +83,7 @@ export function momentsBetween(prev: StoredState | null, cur: StoredState, meta:
     for (const th of [0.9, 0.99]) if (pNow >= th && pWas < th && lead === leadWas) out.push({ t, kind: "CHAMBER_THRESHOLD", imp: 3, chamber: ch, title: `${c.label}: ${PARTY[lead]} pass ${Math.round(100 * th)}% in the model`, detail: "A model estimate, not a call." });
     if (c.need) for (const p of ["D", "R"] as const) {
       const base = (x: typeof now) => x.called[p] + ((x as { notUp?: { D: number; R: number } }).notUp?.[p] ?? 0);
-      if (base(now) >= c.need[p] && base(was) < c.need[p]) out.push({ t, kind: "CHAMBER_DECIDED", imp: 3, chamber: ch, title: `${c.label}: ${PARTY[p]} reach ${c.need[p]} seats on civicAPI's calls`, detail: "Counted from civicAPI's race calls and seats not up; not a certified result." });
+      if (base(now) >= c.need[p] && base(was) < c.need[p]) out.push({ t, kind: "CHAMBER_DECIDED", imp: 3, chamber: ch, title: `${c.label}: ${PARTY[p]} reach ${c.need[p]} seats on On Point's calls`, detail: "Counted from On Point's race calls and seats not up; a projection, not a certified result." });
     }
   }
   return out;

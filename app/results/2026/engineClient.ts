@@ -211,6 +211,26 @@ export function useRaceHistory(raceId: string | null): RacePoint[] {
   return ready ? pts : [];
 }
 
+/**
+ * A race's whole recorded night from the static replay pack, for a page that is NOT in a replay and has no live engine
+ * history of its own: the current model run over the recorded count. It is not what the page showed on the night,
+ * and the charts that draw it say so. Empty when there is no pack or the race is not in it.
+ */
+export function useRecordedRaceHistory(raceId: string | null, enabled = true): RacePoint[] {
+  const e = useEngine(); const [got, setGot] = useState<{ k: string; pts: RacePoint[] } | null>(null);
+  const base = enabled && e.mode === "LIVE" ? e.sources.find((s) => s.base && s.mode === "HISTORICAL")?.base ?? null : null;
+  const key = base && raceId ? `${base}|${raceId}` : null;
+  useEffect(() => {
+    if (!key || !base || !raceId) return; let dead = false;
+    const have = raceCache.get(key);
+    void (have ? Promise.resolve(have) : getGz<RacePoint[]>(`${base}/race/${encodeURIComponent(raceId)}.json.gz`).then((r) => { const all = r ?? []; raceCache.set(key, all); if (raceCache.size > 80) raceCache.delete(raceCache.keys().next().value as string); return all; }))
+      .then((all) => { if (!dead) setGot({ k: key, pts: all }); });
+    return () => { dead = true; };
+  }, [key, base, raceId]);
+  // only the points fetched for the race now asked for: a race just switched to shows nothing until its own arrive
+  return key && got?.k === key ? got.pts : [];
+}
+
 /** True when the pages are showing a replay rather than the live election. */
 export const replayActive = () => S.mode === "REPLAY";
 export const engineView = () => S.view;

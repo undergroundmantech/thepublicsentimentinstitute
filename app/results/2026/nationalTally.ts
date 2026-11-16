@@ -1,17 +1,26 @@
 // Pure arithmetic behind the national dashboard: what each category has counted, and the bar beside a watched race.
-// Nothing here estimates a result; it only counts what civicAPI reports and reads the established forecast.
-import { hasReturns, liveMargin } from "../monitor/Chambers";
+// Nothing here estimates a result; it only counts what civicAPI reports, On Point's own calls (the winner flags the
+// pages carry are those and nothing else: useLive.ts) and the established forecast.
+import { hasReturns, liveMargin } from "../monitor/seatMath";
 import { isInd, sides, type CRace, type XRace } from "./live";
+import { certainParty } from "./onpointCalls";
 
 export type Tally = { cD: number; cR: number; cO: number; lD: number; lR: number; counting: number; votes: number; n: number; called: number };
 
-/** civicAPI calls by party, races leading by party, races counting and votes in, for one set of races. */
+/**
+ * On Point's calls by party, races leading by party, races counting and votes in, for one set of races. An unopposed
+ * winner counts as called with no votes reported at all, and a seat contested only within one party counts for that
+ * party once votes are in, before the winner is called.
+ */
 export function tally(rs: XRace[], byId: Record<string, CRace>): Tally {
   let cD = 0, cR = 0, cO = 0, lD = 0, lR = 0, counting = 0, votes = 0;
   for (const r of rs) {
-    const c = byId[r.id]; if (!hasReturns(c)) continue; counting++; votes += c!.c.reduce((s, x) => s + x[2], 0);
-    const w = c!.c.find((y) => y[4]); const m = liveMargin(r, c);
-    if (w) { const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else if (p.startsWith("dem")) cD++; else cO++; } else if (m != null) { if (m < 0) lD++; else lR++; }
+    const c = byId[r.id]; const w = c?.c.find((y) => y[4]);
+    if (hasReturns(c)) { counting++; votes += c!.c.reduce((s, x) => s + x[2], 0); } else if (!w) continue;
+    const m = liveMargin(r, c), sure = w ? null : certainParty(c);
+    if (w) { const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else if (p.startsWith("dem")) cD++; else cO++; }
+    else if (sure) { if (sure === "D") cD++; else cR++; }
+    else if (m != null) { if (m < 0) lD++; else lR++; }
   }
   return { cD, cR, cO, lD, lR, counting, votes, n: rs.length, called: cD + cR + cO };
 }

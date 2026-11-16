@@ -2,13 +2,15 @@
 // The control panels of the situation monitor: the Senate and House as seat arcs, the governors as a tile map of
 // the states, each with the race to a majority and the forecast beside the returns. Every seat or tile is one race.
 // Before a race is counted its seat is neutral with a dashed outline in the forecast lean, so expectations never read
-// as returns; a counted race shows who leads, a race civicAPI has called fills in solid, and seats not up are rings.
+// as returns; a counted race shows who leads, a race On Point has called fills in solid, and seats not up are rings.
 import React from "react";
 import { hemiLayout } from "@/app/components/opp/Hemicycle";
 import { TILE } from "@/app/components/opp/LegisTiles";
 import { leanStroke } from "./paint";
-import { STN, fmtM, isInd, sides, type CRace, type XRace } from "../2026/live";
+import { STN, fmtM, isInd, type CRace, type XRace } from "../2026/live";
+import { expM, hasReturns, liveMargin } from "./seatMath";
 import { percentIn } from "@/app/lib/fmtPct";
+import { certainParty } from "../2026/onpointCalls";
 
 export type SeatState = "nd" | "cd" | "ci" | "ld" | "li" | "aw" | "lr" | "cr" | "nr";
 export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string; label: string };
@@ -16,19 +18,20 @@ export type Seat = { s: SeatState; pR?: number | null; id?: string; st?: string;
 // governorships not on the ballot this year and the party that holds each
 export const GOV_HOLD: Record<string, "D" | "R"> = { DE: "D", NC: "D", WA: "D", NJ: "D", VA: "D", KY: "D", IN: "R", MO: "R", MT: "R", ND: "R", UT: "R", WV: "R", LA: "R", MS: "R" };
 
-export const hasReturns = (c?: CRace) => !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
-export const liveMargin = (r: XRace, c: CRace | undefined) => { if (!c) return null; const s = sides(r, c.c); return s.t > 0 ? (100 * (s.b - s.a)) / s.t : null; };
-export const expM = (r: XRace) => (r.k === "measure" ? (r.yes != null ? 100 - 2 * r.yes : null) : r.m ?? null);
+export { hasReturns, liveMargin, expM };
 export const raceLabel = (r: XRace, inState: boolean) => (r.k === "house" ? `${r.st}-${r.id.split("-")[2]}` : inState ? r.nm.replace(STN[r.st] + " ", "") : r.nm);
 
-/** One race as one seat: called by civicAPI, leading in the count, not counted yet with its forecast lean. */
+/** One race as one seat: called by On Point, leading in the count, not counted yet with its forecast lean. (The
+ *  winner flag is On Point's own call; a seat contested only within one party counts for that party once votes are in.) */
 export function seatOf(r: XRace, c: CRace | undefined): Seat & Tile {
   const w = c?.c.find((y) => y[4]); const m = liveMargin(r, c); const ind = isInd(r);
   let st: SeatState = "aw", txt = `no votes yet · expected ${fmtM(expM(r), r.k, ind)}`;
-  if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `civicAPI call: ${w[0]}`; }
+  const sure = w ? null : certainParty(c);
+  if (w) { const p = w[1].toLowerCase(); st = p.startsWith("rep") ? "cr" : p.startsWith("dem") ? "cd" : "ci"; txt = `On Point call: ${w[0]}`; }
+  else if (sure) { st = sure === "D" ? "cd" : "cr"; txt = `a ${sure === "D" ? "Democratic" : "Republican"} seat (both candidates are ${sure === "D" ? "Democrats" : "Republicans"}); the winner is not called yet`; }
   else if (hasReturns(c) && m != null) { st = m < 0 ? (ind ? "li" : "ld") : "lr"; txt = `${fmtM(m, r.k, ind)} with ${percentIn(c!.pr)} in`; }
   const pR = r.pR ?? (r.m != null ? (r.m > 0 ? 0.75 : 0.25) : 0.5);
-  return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? raceLabel(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w };
+  return { s: st, pR, id: r.id, st: r.st, label: `${r.k === "house" ? raceLabel(r, false) : r.nm}: ${txt}`, counting: hasReturns(c) && !w && !sure };
 }
 
 const ORDER: Record<SeatState, number> = { nd: 0, cd: 1, ci: 2, ld: 3, li: 4, aw: 5, lr: 6, cr: 7, nr: 8 };

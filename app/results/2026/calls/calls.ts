@@ -1,6 +1,7 @@
 // The calls board's rules, pure and unit-tested. Three states only, and a probability is never a call:
-//   official   civicAPI marks a candidate the winner
-//   projected  On Point's own estimate (published forecast + counted vote), labelled as ours, never as a call
+//   official   On Point has called the race (the winner flag the pages carry is On Point's own call and nothing else:
+//              useLive.ts; civicAPI's calls are not shown). The key keeps its old name so stored filters still work.
+//   projected  the old automatic rule's estimate, off unless an operator switches it on (policy.ts)
 //   uncalled   everything else, including races with no civicAPI match
 import type { CRace, Kind, XRace } from "../live";
 import { STALE_MS } from "../liveFeed";
@@ -29,14 +30,14 @@ export type CallRow = {
   source: string; reporting: number | null; counting: boolean;
 };
 
-/** The state of one race. `proj` is only honoured when civicAPI has not called it; it is the caller's own estimate. */
+/** The state of one race. `proj` is only honoured when On Point has not called it. */
 export function callRow(r: XRace, c: CRace | undefined, proj: Proj | null | undefined): CallRow {
   const won = c?.c.find((x) => x[4]);
   const counting = !!c && (c.pr > 0 || c.c.some((x) => x[2] > 0));
   const reporting = c ? (counting ? c.pr : null) : null;
-  if (won) return { r, c, state: "official", winner: { name: won[0], party: won[1] || null }, source: "civicAPI", reporting, counting };
+  if (won) return { r, c, state: "official", winner: { name: won[0], party: won[1] || null }, source: "On Point Politics call", reporting, counting };
   if (proj) return { r, c, state: "projected", winner: { name: proj.name, party: proj.party }, source: "On Point projection (not an official call)", reporting, counting };
-  return { r, c, state: "uncalled", winner: null, source: c ? "civicAPI: not called" : "No civicAPI match yet", reporting, counting };
+  return { r, c, state: "uncalled", winner: null, source: c ? "Not called by On Point" : "No civicAPI match yet", reporting, counting };
 }
 
 export type Filters = { chamber: Chamber | "all"; st: string | "all"; party: Party | "all"; state: CallState | "all" };

@@ -68,8 +68,10 @@ test("a page never shows an uncalled race at 100%: the engine's odds are capped 
     candidates: [{ candidateId: "a", name: "Pete Ricketts", partyRaw: "Republican", votes: 600_000, providerWinner: called }, { candidateId: "b", name: "Dan Osborn", partyRaw: "Independent", votes: 100_000, providerWinner: false }] });
   const open = rowOf(forecastRace(r, mk(false), null, O), 99); assert.equal(open.pm!.probB, 1, "the raw draw fraction can be exactly 1");
   const o = engineOdds(open); assert.equal(o.pB, PROB_CEIL); assert.ok(o.pA > 0); assert.equal(o.capped, true);
-  assert.equal(engineOdds(rowOf(forecastRace(r, mk(true), null, O), 99)).pB, 1, "a provider call is a call");
-  for (const f of ["app/results/2026/NightDesk.tsx", "app/results/monitor/RaceBrief.tsx"]) assert.match(fs.readFileSync(path.join(root, f), "utf8"), /fromEngine \? engineOdds\(eRow!\)/);
+  // since 2.5.0 the only call a page knows is On Point's own: the provider's winner flag lifts nothing
+  assert.equal(engineOdds(rowOf(forecastRace(r, mk(true), null, O), 99)).pB, PROB_CEIL, "a provider call does not lift the cap");
+  assert.equal(engineOdds(open, true).pB, 1, "an On Point call does");
+  for (const f of ["app/results/2026/NightDesk.tsx", "app/results/monitor/RaceBrief.tsx"]) assert.match(fs.readFileSync(path.join(root, f), "utf8"), /fromEngine \? engineOdds\(eRow!, !!/);
 });
 
 test("in a simulated replay a race with no observation is MISSING, not 'simulated': pages treat it as not yet reporting", () => {

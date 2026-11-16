@@ -36,7 +36,7 @@ type Unit = {
   C: number; votes: Float64Array; pr: number | null; y: number | null; oObs: number | null;
   evid: { e: number; q: number } | null; strata: Stratum[] | null;
   /** county mode: the chance that the county's count is finished (null in a race modeled from its total); doneT is the part of it that comes from quiet time alone */
-  done: number | null; doneT?: number; /** sd of the late-ballot allowance once finished */ late?: number;
+  done: number | null; doneT?: number; /** sd of the late-ballot allowance once finished */ late?: number; /** sd of the open remainder, when not the county model's */ rem?: number;
 };
 /** Passing rules beyond the Yes-share threshold. Stated on the race, not modeled. */
 const MEASURE_RULE_NOTES: Record<string, string> = {
@@ -133,7 +133,12 @@ export function prepareRace(race: XRace, obs: RaceObservation | null, baseline: 
 
   const realF = (race.c ?? []).filter(([n, p]) => !isPooledLine(n) && partyCanon(p) !== null).length;
   const realO = cands.filter((c) => !c.pooledLine && c.counted > 0).length;
-  const uncontested = realF <= 1 && realO <= 1 && cands.some((c) => !c.pooledLine) ? cands.findIndex((c) => !c.pooledLine && (realO === 0 || c.counted > 0)) : null;
+  // Unopposed: one real candidate listed, by the forecast and by the provider alike. (Until 2.5.0 a race counted as
+  // unopposed while only one of its candidates had votes, so a two-candidate race was "unopposed" for the first
+  // minutes of its count. Nothing was called on it then; now an unopposed winner is recorded as a call, so the
+  // test is on who is listed, never on who has votes yet.)
+  const realListed = cands.filter((c) => !c.pooledLine).length;
+  const uncontested = realF <= 1 && realO <= 1 && realListed === 1 ? cands.findIndex((c) => !c.pooledLine) : null;
   if (uncontested != null && uncontested >= 0) flags.add("UNCONTESTED");
 
   // units: counties when the provider's county detail reconciles with its own total, else the race total
@@ -180,6 +185,9 @@ export function prepareRace(race: XRace, obs: RaceObservation | null, baseline: 
   }
   if (units.some((u) => !u.strata)) { flags.add("METHOD_UNKNOWN"); if (!priors) flags.add("METHOD_PRIORS_OFF"); }
   const Etot = units.reduce((s, u) => s + u.E, 0);
+  // a total well below what the same race showed earlier: the provider is correcting something (or has broken
+  // something). Indiana's 3rd district lost 27,000 votes and showed the wrong leader for seventeen hours on November 4.
+  if (obs?.peakTotal && countedTotal < 0.98 * obs.peakTotal) { flags.add("COUNT_DECREASED"); notes.push(`the count (${countedTotal.toLocaleString("en-US")}) is below what this race showed earlier (${obs.peakTotal.toLocaleString("en-US")}): a correction is in progress. No model call is made on this race while it lasts.`); }
   if (Etot > 0 && countedTotal > 1.5 * Etot) { flags.add("COUNT_EXCEEDS_FORECAST"); notes.push(`counted votes (${countedTotal}) are ${(countedTotal / Etot).toFixed(1)} times the forecast's expected total: check the provider's figures`); }
 
   // Turnout evidence, then the statewide posterior (normal-normal).
@@ -209,13 +217,25 @@ export function prepareRace(race: XRace, obs: RaceObservation | null, baseline: 
     turnoutEv = { W: P - 1 / T.sdState ** 2, H };
   } else for (const u of units) {
     if (!(u.C > 0) || !(u.E > 0)) continue;
+    // A race read from its total (2.5.0): the same clock as a county, read more slowly. A total that has not moved
+    // for hours is a count that has stopped; on November 3, 2026 a House total outside the slow states that had been
+    // still for 8 to 12 hours was within 3% of final 96% of the time, and 100% after three days. In the slow states
+    // nothing is concluded before three days of silence. Never where the provider already says 100%, and never
+    // without a time of last change (a single live read has none).
+    let dt = 0; const QT = T.quietTotal;
+    if (mode === "topline" && units.length === 1 && obs?.quietSince && !flags.has("COUNT_DECREASED") && !(u.pr != null && u.pr >= 99.5) && u.C / u.E >= QT.minShare) {
+      const m = (Date.parse(obs.receivedAt) - Date.parse(obs.quietSince)) / 60_000;
+      if (Number.isFinite(m)) dt = T.quiet.slowStates.includes(race.st) ? QT.slowMax * clamp((m - QT.slowFromMin) / (QT.slowFullMin - QT.slowFromMin), 0, 1)
+        : QT.max * clamp((m - QT.fromMin) / (QT.fullMin - QT.fromMin), 0, 1) + (QT.maxLong - QT.max) * clamp((m - QT.fullMin) / (QT.longMin - QT.fullMin), 0, 1);
+      if (dt > 0) { u.done = dt; u.doneT = dt; u.late = QT.sdLate; u.rem = T.sdRemainder; const e2 = clamp(Math.log(u.C / u.E), -T.clampLog, T.clampLog), w2 = dt / (T.sdUnit ** 2 + QT.sdLate ** 2); P += w2; H += e2 * w2; }
+    }
     let e: number | null = null, q = 0;
     if (u.pr != null && u.pr >= 99.5) { e = Math.log(u.C / u.E) + T.lateMean; q = T.sdComplete ** 2; }
     else if (u.pr != null && u.pr >= T.minPctForEvidence) { e = Math.log(u.C / (u.pr / 100) / u.E); q = T.sdPrecinct ** 2 + (T.kPrecinct * (1 - u.pr / 100)) ** 2; }
     else weak = true;
     if (e == null) continue;
     e = clamp(e, -T.clampLog, T.clampLog); u.evid = { e, q };
-    const w = 1 / (T.sdUnit ** 2 + q); P += w; H += e * w;
+    const w = (1 - dt) / (T.sdUnit ** 2 + q); P += w; H += e * w;
   }
   if (weak) flags.add("TURNOUT_WEAK_EVIDENCE");
   const prep: RacePrep = { race, rule, obs, cands, units, mode, forecastAvailable, expM, pubFinalM, rcvT0, pB0, sdF, cut, thr, countedTotal, flags, notes, uncontested: uncontested != null && uncontested >= 0 ? uncontested : null, cfg, turnoutPost: { M: H / P, P }, turnoutEv };
@@ -234,6 +254,7 @@ function erfc(x: number): number { const z = Math.abs(x), t = 1 / (1 + 0.5 * z);
  * statewide shift is re-estimated.
  */
 export function placeCounties(p: RacePrep): void {
+  if (p.mode !== "county") return;
   const T = p.cfg.turnout, M = p.turnoutPost.M;
   // How tightly a state's finished counties sit around its level is read from the state itself: where the quiet
   // counties all hold within a few percent of the same share of their forecast (Florida: every county near 89%), a
@@ -288,7 +309,7 @@ function unitT(u: Unit, cfg: EngineConfig, ls: number, z: number | null, zh: num
   const lg = clamp(ls + mean + (z == null ? 0 : Math.sqrt(v) * z), -T.clampLog, T.clampLog);
   const hn = zh == null ? Math.sqrt(2 / Math.PI) : Math.abs(zh);
   const open = u.C > 0 && !(u.done == null && u.pr != null && u.pr >= 99.5);
-  const openT = Math.max(u.C * (1 + (open ? (u.done == null ? T.sdRemainder : T.quiet.sdRemainder) * hn : 0)), u.E * Math.exp(lg));
+  const openT = Math.max(u.C * (1 + (open ? (u.rem ?? (u.done == null ? T.sdRemainder : T.quiet.sdRemainder)) * hn : 0)), u.E * Math.exp(lg));
   if (u.done == null || !(u.done > 0)) return openT;
   const doneT = u.C * (1 + (u.late ?? T.quiet.sdLate) * hn);
   return ud == null ? u.done * doneT + (1 - u.done) * openT : ud < u.done ? doneT : openT;
@@ -428,6 +449,7 @@ export function simulateRace(p: RacePrep, fit: Fit, o: { draws?: number; seed: s
       const ia = topOf("a", fin), ib = topOf("b", fin), a0 = ia >= 0 ? fin[ia] : 0, b0 = ib >= 0 ? fin[ib] : 0, rest = Math.max(0, tot - a0 - b0);
       const t = clamp(p.rcvT0 + cfg.rcv.sdTransfer * rng.normal(), -1, 1);
       const fm = tot > 0 ? (100 * (b0 - a0 + t * rest)) / tot : 0; margB[i] = fm; winner[i] = fm > 0 ? ib : ia;
+      if (lead >= 0 && tot > 0 && fin[lead] / tot > 0.5) outright[lead]++;
     }
     else if (p.rule === "majority_runoff") {
       if (lead >= 0 && tot > 0 && fin[lead] / tot > 0.5) { winner[i] = lead; outright[lead]++; }
@@ -443,7 +465,7 @@ export function simulateRace(p: RacePrep, fit: Fit, o: { draws?: number; seed: s
   const winP = (k: number): number | null => !p.forecastAvailable && p.uncontested == null ? null : p.rule === "majority_runoff" ? null : counts[k] / N;
   const candidates: CandidateForecast[] = p.cands.map((c, k) => {
     const cf: CandidateForecast = { candidateId: c.id, name: c.name, partyRaw: c.partyRaw, side: c.side, reportedVotes: c.unknown ? null : c.counted, projectedVotes: dist(finals[k]), projectedShare: dist(shareOf(k)), winProbability: winP(k) };
-    if (p.rule === "ranked_choice") cf.firstChoiceLeadProbability = fcLead[k] / N;
+    if (p.rule === "ranked_choice") { cf.firstChoiceLeadProbability = fcLead[k] / N; cf.outrightProbability = outright[k] / N; }
     if (p.rule === "majority_runoff") { cf.outrightProbability = outright[k] / N; cf.firstChoiceLeadProbability = fcLead[k] / N; }
     return cf;
   });
@@ -480,7 +502,10 @@ export function simulateRace(p: RacePrep, fit: Fit, o: { draws?: number; seed: s
     candidates,
     principalMargin: p.forecastAvailable ? { reported: p.countedTotal > 0 ? (100 * (repB - repA)) / p.countedTotal : null, projected: dist(margB), probB, prior: { margin: p.pubFinalM, probB: p.pB0 } } : null,
     projectedTopTwo: topTwo,
-    turnout: { counted: p.countedTotal, expectedFinal: p.units.some((u) => u.E > 0) ? dist(total) : null, outstanding: p.units.some((u) => u.E > 0) ? dist(outT) : null, byUnit },
+    turnout: { counted: p.countedTotal, expectedFinal: p.units.some((u) => u.E > 0) ? dist(total) : null, outstanding: p.units.some((u) => u.E > 0) ? dist(outT) : null, byUnit,
+      // (slowCount is set whether or not the source knows how long the count has been still: the call rule reads it for a race with no forecast)
+      ...(cfg.turnout.quiet.slowStates.includes(p.race.st) ? { slowCount: true } : {}),
+      ...(p.obs?.quietSince && Number.isFinite(Date.parse(p.obs.receivedAt) - Date.parse(p.obs.quietSince)) ? { quietMin: Math.max(0, (Date.parse(p.obs.receivedAt) - Date.parse(p.obs.quietSince)) / 60_000), slowCount: cfg.turnout.quiet.slowStates.includes(p.race.st) } : {}) },
     display: { leaderId: lk >= 0 ? p.cands[lk].id : null, probability: raw == null ? null : capped ? cfg.probCeil : raw, capped },
     draws: N, mcStdErr: raw == null ? null : Math.sqrt(Math.max(raw * (1 - raw), 1 / N) / N), flags: flags as QualityFlag[], notes,
   };

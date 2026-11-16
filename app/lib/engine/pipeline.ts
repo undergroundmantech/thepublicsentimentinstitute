@@ -59,13 +59,25 @@ export type EvaluateInput = {
   callConfig?: CallConfig;
 };
 
+/** On Point's calls on a ledger: race id -> the called candidate's id. */
+export const callsOf = (l: Ledger | null | undefined): Record<string, string> => { const o: Record<string, string> = {}; if (l) for (const [id, r] of Object.entries(l.races)) if (r.modelCall) o[id] = r.modelCall.candidateId; return o; };
+
 export function evaluate(inp: EvaluateInput): StoredState {
   const cfg = inp.cfg ?? DEFAULT_CONFIG, snap = inp.snapshot, seed = cfg.seed;
-  const { national, races } = nationalForecast({ index: inp.index, snapshot: snap, pre: inp.pre, seed, computedAt: inp.t, cfg, baselines: inp.baselines, priors: inp.priors });
+  // the seat counts settle on On Point's own calls: the ones on the ledger before this update (this update's calls
+  // are made from the forecasts below, and added to the called and leading counts afterwards)
+  const before = callsOf(inp.ledger);
+  const { national, races, tallyInfo } = nationalForecast({ index: inp.index, snapshot: snap, pre: inp.pre, seed, computedAt: inp.t, cfg, baselines: inp.baselines, priors: inp.priors, calls: before });
   // every other race in the index, on its own forecast: statewide offices, measures; those without a forecast are still followed for provider calls
   const all: Record<string, RaceForecast> = { ...races };
   for (const r of inp.index.races) if (!all[r.id]) all[r.id] = forecastRace(r, snap.races[r.id] ?? null, inp.baselines?.[r.id] ?? null, { seed, computedAt: inp.t, snapshotId: snap.snapshotId, cfg, priors: inp.priors, mode: snap.provenance.mode, draws: 1000 });
   const ledger = stepLedger(inp.ledger ?? emptyLedger(snap.provenance.mode, inp.callConfig ?? DEFAULT_CALL_CONFIG), { snapshotId: snap.snapshotId, at: inp.t, forecasts: all, observations: snap.races, stale: inp.stale });
+  const CH = { sen: "senate", house: "house", gov: "governors" } as const, PB = ["D", "R", "other"] as const;
+  for (const [id, cand] of Object.entries(callsOf(ledger))) {
+    const ti = tallyInfo[id]; if (!ti || before[id] || ti.called != null) continue;
+    const b = ti.bucket[cand]; if (b == null) continue; const c = national[CH[ti.key]];
+    c.called[PB[b]]++; if (ti.leading != null) c.leading[PB[ti.leading]]--;
+  }
   const rows: Record<string, RaceRow> = {}; for (const [id, f] of Object.entries(all)) rows[id] = rowOf(f, snap.races[id]?.providerPctReporting ?? null, snap.races[id]?.providerRaceId ?? null);
   const body = { t: inp.t, snapshotId: snap.snapshotId, mode: snap.provenance.mode, modelVersion: MODEL_VERSION, provenance: snap.provenance, national, races: rows, ledger, racesObserved: Object.keys(snap.races).length, unmatchedProviderRaces: snap.unmatchedProviderRaces };
   return { ...body, stateId: fnv64(canonicalJson(body)) };

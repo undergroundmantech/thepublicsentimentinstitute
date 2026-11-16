@@ -46,7 +46,7 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
                   <Link href={x.href} className="nm">{x.label}</Link>
                   <span className="who">{x.who}</span>
                   {counted
-                    ? <span className={`lv ${lm != null && lm < 0 ? (x.ind ? "i" : "d") : "r"}`}>{fmtM(lm, k, x.ind)}<small>{w ? `Called for ${w[0]}` : `${percentIn(c!.pr)} in`}</small></span>
+                    ? <span className={`lv ${lm != null && lm < 0 ? (x.ind ? "i" : "d") : "r"}`}>{fmtM(lm, k, x.ind)}<small>{w ? `On Point call: ${w[0]}` : `${percentIn(c!.pr)} in`}</small></span>
                     : <span className="ex">{x.m == null ? "" : fmtM(x.m, k, x.ind)}<small>Forecast</small></span>}
                   <Link href={x.fhref} className="fc" aria-label={`${x.label} forecast`}>Forecast</Link>
                 </li>
@@ -61,12 +61,13 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
           <h2 id="srs-more-races">More races on the ballot <em>{extra.length}</em></h2>
           <ul>
             {extra.map((o) => {
-              const t = o.c.reduce((a, x) => a + x[2], 0), top = [...o.c].sort((a, b) => b[2] - a[2]), w = o.c.find((x) => x[4]);
+              // (races the forecast does not cover have no On Point call: civicAPI's own winner flag is not shown)
+              const t = o.c.reduce((a, x) => a + x[2], 0), top = [...o.c].sort((a, b) => b[2] - a[2]);
               return (
                 <li key={o.id} className={t > 0 ? "on" : ""}>
                   <Link href={`/results/civic/${o.id}`} className="nm">{o.name}</Link>
                   <span className="who">{o.c.slice(0, 3).map((x) => x[0]).join(", ")}</span>
-                  {t > 0 ? <span className="lv">{top[0][0].split(" ").slice(-1)[0]} {((100 * top[0][2]) / t).toFixed(1)}%<small>{w ? `Called for ${w[0]}` : `${percentIn(o.pr)} in`}</small></span>
+                  {t > 0 ? <span className="lv">{top[0][0].split(" ").slice(-1)[0]} {((100 * top[0][2]) / t).toFixed(1)}%<small>{`${percentIn(o.pr)} in`}</small></span>
                     : <span className="ex">{o.type}<small>Live returns</small></span>}
                   <Link href={`/results/civic/${o.id}`} className="fc" aria-label={`${o.name} results`}>Results</Link>
                 </li>

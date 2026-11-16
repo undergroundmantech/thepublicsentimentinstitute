@@ -56,12 +56,21 @@ test("[A5][A10] served states: nothing after the requested time, and modes gated
   assert.equal((await stateView("../../etc/passwd", null, on)).ok, false);
 });
 
-test("[A1][A10] the pages' LiveState is the engine's snapshot: provider calls as winners, unobserved races absent, nothing modeled in the counts", async () => {
+test("[A1][A10] the pages' LiveState is the engine's snapshot: On Point's calls as winners (never the provider's), unobserved races absent, nothing modeled in the counts", async () => {
   const { env } = await fixtureStore(); const r = await stateView("historical/night", null, { ...env, ONPOINT_REPLAY: "on" }); assert.ok(r.ok); if (!r.ok) return;
   const s = liveFromView(ix, r.view, {}, Date.parse(r.view.t));
   assert.deepEqual(Object.keys(s.byId), ["sen-NE"], "races with no observation are absent, as with no provider match");
   const ne = s.byId["sen-NE"]; assert.equal(ne.id, 77); assert.equal(ne.pr, 98); assert.equal(s.at?.toISOString(), H(3));
-  assert.deepEqual(ne.c.map((c) => [c[0], c[2], c[4]]), [["Pete Ricketts", 380_000, 1], ["Dan Osborn", 330_000, 0]], "reported votes and the provider's call, never projected votes");
+  // the fixture's provider has called it for Ricketts; the engine's ledger has made no call of its own
+  assert.ok(r.view.ledger.races["sen-NE"]?.official && !r.view.ledger.races["sen-NE"]?.modelCall, "the fixture: a provider call on the ledger, no On Point call");
+  assert.deepEqual(ne.c.map((c) => [c[0], c[2], c[4]]), [["Pete Ricketts", 380_000, 0], ["Dan Osborn", 330_000, 0]], "reported votes, never projected votes; the provider's call is not a winner flag");
+  // with an On Point call on the ledger, that candidate is the winner
+  const called = { ...r.view, ledger: { ...r.view.ledger, races: { ...r.view.ledger.races, "sen-NE": { ...r.view.ledger.races["sen-NE"], modelCall: { candidateId: r.view.races["sen-NE"].c.find((c) => c[1] === "Dan Osborn")![0], name: "Dan Osborn", partyRaw: "Independent", calledAt: r.view.t, snapshotId: "x", probability: 0.999, threshold: 0.993 } } } } };
+  assert.deepEqual(liveFromView(ix, called, {}, Date.parse(r.view.t)).byId["sen-NE"].c.map((c) => [c[0], c[4]]), [["Pete Ricketts", 0], ["Dan Osborn", 1]], "On Point's call, whoever the provider flagged");
+  // the recorded calls file fills in for a LIVE view only, never in a replay
+  const rec = { "sen-NE": { name: "Pete Ricketts", party: "Republican", at: null, lane: "standard" as const } };
+  assert.equal(liveFromView(ix, r.view, {}, Date.parse(r.view.t), rec).byId["sen-NE"].c[0][4], 0, "a replay never reads the recorded calls: it must not know its own future");
+  assert.equal(liveFromView(ix, { ...r.view, live: true }, {}, Date.parse(r.view.t), rec).byId["sen-NE"].c[0][4], 1, "a live view with no ledger call takes the recorded call");
   assert.equal(s.stale, false, "a replay is never 'stale'");
   // the dashboard's numbers move when the data moves
   const e = await stateView("historical/night", H(2), { ...env, ONPOINT_REPLAY: "on" }); assert.ok(e.ok);

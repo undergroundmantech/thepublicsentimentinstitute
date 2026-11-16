@@ -11,6 +11,12 @@ export type CivicRawRace = {
   id: number; type?: string; election_type?: string; province?: string; district?: string | null; election_name?: string;
   percent_reporting?: number | null; candidates?: CivicRawCandidate[]; test_data?: boolean; last_updated?: string | null;
   called_at?: string | null;
+  /** the provider's listed poll-closing time */
+  polls_close?: string | null;
+  /** when the race's total last moved, where the source knows it (a recorded history does) */
+  total_last_changed?: string | null;
+  /** the highest total this race has shown so far, where the source knows it (a recorded history does) */
+  total_peak?: number | null;
   region_results?: Record<string, { name?: string; fips?: string; type?: string | null; percent_reporting?: number | null; candidates?: CivicRawCandidate[];
     /** when this row's figures last changed, where the source knows it */ last_changed?: string | null }>;
 };
@@ -104,7 +110,7 @@ export function observe(raceId: string, raw: CivicRawRace, receivedAt: string, w
   const cands = candidates(raceId, raw.candidates); const integrity = rowIntegrity(raw);
   const base = county?.baselines[raceId];
   return { raceId, providerRaceId: raw.id, candidates: cands, providerPctReporting: num(raw.percent_reporting), units: base && !integrity.length ? countyUnits(raceId, raw, cands, base, county?.names) : withUnits ? units(raceId, raw, cands) : null,
-    sourceAsOf: raw.last_updated ?? null, receivedAt, test: !!raw.test_data, ...(raw.called_at ? { providerCalledAt: raw.called_at } : {}), ...(integrity.length ? { integrity } : {}) };
+    sourceAsOf: raw.last_updated ?? null, receivedAt, test: !!raw.test_data, ...(raw.called_at ? { providerCalledAt: raw.called_at } : {}), ...(raw.polls_close ? { pollsCloseAt: raw.polls_close } : {}), ...(raw.total_last_changed ? { quietSince: raw.total_last_changed } : {}), ...(raw.total_peak ? { peakTotal: raw.total_peak } : {}), ...(integrity.length ? { integrity } : {}) };
 }
 
 /** Before polls close the provider publishes test returns: their counts are blanked, never shown or modeled as votes. */
@@ -124,7 +130,7 @@ export function snapshotFromCivic(index: XIndex, raws: CivicRawRace[], o: { rece
   const m = matchCivic(index.races, trimmed); const byId = new Map(raws.map((x) => [x.id, x]));
   const races: Record<string, RaceObservation> = {}; const used = new Set<number>();
   for (const [rid, cr] of Object.entries(m)) { const raw = byId.get(cr.id)!; used.add(cr.id); let ob = observe(rid, raw, o.receivedAt, false, o.county); if (o.blankTest && ob.test) ob = blankTestCounts(ob); races[rid] = ob; }
-  const content = Object.keys(races).sort().map((k) => ({ k, c: races[k].candidates.map((c) => [c.candidateId, c.votes, c.providerWinner]), pr: races[k].providerPctReporting, t: races[k].test,
+  const content = Object.keys(races).sort().map((k) => ({ k, c: races[k].candidates.map((c) => [c.candidateId, c.votes, c.providerWinner]), pr: races[k].providerPctReporting, t: races[k].test, ...(races[k].quietSince ? { q: races[k].quietSince } : {}),
     ...(races[k].units ? { u: races[k].units!.map((u) => [u.unitId, u.providerPctReporting, u.quietSince ?? null, Object.keys(u.votes).sort().map((id) => [id, u.votes[id]])]) } : {}) }));
   return { snapshotId: `${o.mode.toLowerCase()}-${fnv64(canonicalJson(content))}`, provenance: { mode: o.mode, source: o.source, sourceAsOf: null, receivedAt: o.receivedAt, usesFutureObservation: false, synthetic: false },
     races, unmatchedProviderRaces: raws.filter((x) => !used.has(x.id)).length };

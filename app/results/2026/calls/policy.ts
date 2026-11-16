@@ -1,7 +1,9 @@
 // ONE call policy for every election-night page. Pure.
 //
 // Three different things, never merged:
-//   provider call     the results provider (civicAPI) marks a winner. Shown as an official call, sourced to the provider.
+//   provider call     the results provider (civicAPI) marks a winner. Kept on the engine's ledger for evaluation; NOT
+//                     shown on the pages since 2.5.0, which show On Point's own calls only (onpointCalls.ts).
+//   On Point call     the engine's call ledger (app/lib/engine/modelCalls.ts): the only call the pages display.
 //   model estimate    On Point's probability that a candidate finishes ahead. A probability is NOT a call, at any size.
 //   editorial call    a decision a named person at On Point makes and records. Not implemented yet: the type is here so
 //                     that nothing else can pose as one.
