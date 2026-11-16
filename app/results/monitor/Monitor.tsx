@@ -25,6 +25,7 @@ import { ChamberLine } from "../2026/NationalLive";
 import MonitorCharts, { type DockSize } from "./MonitorCharts";
 import { tally as tallyOf } from "../2026/nationalTally";
 import { useStateHistory, usePastStates } from "../history/PastResults";
+import MonitorSplash from "./MonitorSplash";
 import { PAST_VIEW_LABEL, contestFor, contestKey, contestLabel, marginOf, marginText, nationalContests, ordered, shareOf, shiftText, shiftTint, surname, turnoutShare, turnoutText, turnoutTint, type Counts, type PastView, twoPartySides, type StateContest } from "../history/pastResults";
 import { SeatArc, MajorityBar, GovTiles, SeatKey, countSeats, seatOf, hasReturns, liveMargin, expM, raceLabel as label, GOV_HOLD, type Seat, type SeatState, type Tile } from "./Chambers";
 import { frameGap } from "@/app/lib/lite";
@@ -115,6 +116,18 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const drag = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
 
   useEffect(() => { setNow(new Date()); const t = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(t); }, []);
+  // the opening screen stays up until the map, the races and the results (in a replay, its first frame) are in, for at
+  // least a second and a half so it never flashes, and never longer than twelve seconds whatever happens
+  const ready = !!geo && !!ix && engS.checked && (engS.mode !== "REPLAY" || !!engS.view);
+  const [splash, setSplash] = useState<"on" | "out" | "off">("on");
+  const born = useRef(0);
+  useEffect(() => { born.current = performance.now(); }, []);
+  useEffect(() => {
+    if (splash !== "on") return;
+    const t = window.setTimeout(() => setSplash("out"), ready ? Math.max(400, 1600 - (performance.now() - born.current)) : 12000);
+    return () => window.clearTimeout(t);
+  }, [ready, splash]);
+  useEffect(() => { if (splash !== "out") return; const t = window.setTimeout(() => setSplash("off"), 500); return () => window.clearTimeout(t); }, [splash]);
   useEffect(() => {
     Promise.all([fetch("/us-states.json").then((r) => r.json()), fetch("/geo/world-110m.json").then((r) => r.json())]).then(([us, w]) => {
       const S = feature(us as Topology, (us as Topology).objects.states as GeometryCollection<{ name: string }>) as unknown as { features: (Feature<Geometry, { name: string }> & { id?: string })[] };
@@ -593,6 +606,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
 
   return (
     <div className={`mon${desk ? " desk-on" : ""}`}>
+      {splash !== "off" ? <MonitorSplash out={splash === "out"} /> : null}
       <section className="mon-top" aria-label="Monitor controls">
         <nav className="mon-nav" aria-label="Where you are">
           <Link className="mon-nav-out" href="/results/2026"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden><path d="M7.5 1.5 3 6l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>2026 results</Link>

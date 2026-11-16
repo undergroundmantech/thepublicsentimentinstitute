@@ -43,7 +43,8 @@ export const MENU: NavGroup[] = [
         { href: "/accuracy/2026.json", label: "Download the scores" },
       ] },
     ] },
-  { key: "results", label: "2026 Results", href: "/results/2026",
+  // the tab itself opens the Situation Monitor (the full election-night experience); hovering it lists everything
+  { key: "results", label: "2026 Results", href: "/results/monitor",
     feature: { href: "/results/monitor", eyebrow: "Election night", title: "The Situation Monitor", note: "The map, the count and every On Point call on one screen, with the election-night replay.", cta: "Open the monitor" },
     cols: [
       { h: "The night", links: [

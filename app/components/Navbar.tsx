@@ -7,6 +7,8 @@ import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
 import LangPicker from "./LangPicker";
 import { MENU, type NavGroup } from "./navMenu";
+import { createPortal } from "react-dom";
+import MonitorSplash from "@/app/results/monitor/MonitorSplash";
 
 // The On Point Politics masthead: the logo, five tabs and three controls. On Point Polling, Accuracy, Forecasts and Polls
 // go straight to their page on a click and open a short panel on hover; More opens the rest of the site. One menu
@@ -41,6 +43,22 @@ export default function Navbar() {
   const [ind, setInd] = useState<{ x: number; y: number; w: number; h: number; on: boolean; lit: boolean }>({ x: 0, y: 0, w: 0, h: 0, on: false, lit: false });
 
   useEffect(() => { setOpen(false); setMenu(null); }, [pathname]);
+  // Entering the Situation Monitor from any link on any page: its opening screen goes up at the click and the menu
+  // closes, so nothing half-open is left on screen while the route changes. The monitor then keeps the same screen up
+  // until it is ready. A modified click (new tab) is left alone; the screen never outlives eight seconds.
+  const [enterFrom, setEnterFrom] = useState<string | null>(null);
+  const entering = enterFrom != null && enterFrom === pathname;
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!a || a.target === "_blank" || a.origin !== window.location.origin || a.pathname !== "/results/monitor" || window.location.pathname === "/results/monitor") return;
+      setMenu(null); setOpen(false); setEnterFrom(window.location.pathname);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+  useEffect(() => { if (!entering) return; const t = window.setTimeout(() => setEnterFrom(null), 8000); return () => window.clearTimeout(t); }, [entering]);
   useEffect(() => {
     // on a phone the masthead slides away while reading down the page and comes back on any scroll up
     let lastY = window.scrollY, ticking = false;
@@ -106,6 +124,7 @@ export default function Navbar() {
 
   return (
     <header className="opp opp-top" ref={head}>
+      {entering ? createPortal(<MonitorSplash fixed />, document.body) : null}
       <div className="top" ref={bar}>
         <div className="wrap">
           <Link className="logo notranslate" translate="no" href="/" aria-label="On Point Politics home"><Lockup height={38} /></Link>

@@ -452,3 +452,5 @@ html[data-theme="light"] .mon-dock-cap b { color: var(--ink); }
 html[data-theme="light"] .mon-tip .pcmp { border-top-color: rgba(17, 0, 25, .14); }
 html[data-theme="light"] .mon-tip .pcmp .hd, html[data-theme="light"] .mon-tip .pcmp b { color: var(--ink); }
 html[data-theme="light"] .mon-tip .pcmp b.d { color: #1f4fd1; } html[data-theme="light"] .mon-tip .pcmp b.r { color: #c81e3f; }
+
+.mon.mon-loading { display: block; }

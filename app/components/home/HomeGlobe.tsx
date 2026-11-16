@@ -13,7 +13,7 @@ import type { Feature, Geometry } from "geojson";
 import Mascot from "./Mascot";
 import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
-import { useThemeRef } from "@/app/lib/useSiteTheme";
+import { useSiteMode, useThemeRef } from "@/app/lib/useSiteTheme";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
 type Office = "senate" | "governor";
@@ -46,6 +46,10 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const [stop, setStop] = useState<GRace | null>(null);
   const [dir, setDir] = useState(1);
   const [walking, setWalking] = useState(true);
+  // Pointy, his route and his footprints belong to the Theme mode only: Pro Dark and Pro Light show the globe alone
+  const themed = useSiteMode() === "themed";
+  const themedRef = useRef(themed);
+  useEffect(() => { themedRef.current = themed; }, [themed]);
   const rot = useRef<[number, number, number]>([96, -38, 0]);
   const dragRef = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
   const hoverRef = useRef<string | null>(null);
@@ -155,7 +159,8 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         ctx.fillStyle = `rgba(${bc.c},1)`; ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, 6.283); ctx.fill();
       }
       // Pointy's route between the closest races, a dotted path with a spark running along it
-      if (tour.length > 1) {
+      const pointy = themedRef.current;
+      if (pointy && tour.length > 1) {
         for (let k = 0; k < tour.length; k++) {
           const a = tour[k].ll, b = tour[(k + 1) % tour.length].ll; if (!facing(a) || !facing(b)) continue;
           const ip = geoInterpolate(a, b), pts: [number, number][] = [];
@@ -167,13 +172,13 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       }
       // Pointy's footprints
       for (const s0 of steps) {
-        if (!facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
+        if (!pointy || !facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
         const age = (now - s0.t) / 4200; if (age > 1) continue;
         ctx.fillStyle = L ? `rgba(17,0,25,${(1 - age) * 0.4})` : `rgba(255,255,255,${(1 - age) * 0.55})`; ctx.beginPath(); ctx.ellipse(p[0] + s0.side * 4, p[1], 2.6, 1.6, 0, 0, 6.283); ctx.fill();
       }
       while (steps.length && now - steps[0].t > 4200) steps.shift();
       // the canvasser
-      if (tour.length && man.current) {
+      if (pointy && tour.length && man.current) {
         let ll = tour[leg].ll;
         if (phase === "walk" && interp) {
           const dur = Math.max(1400, geoDistance(tour[leg].ll, tour[(leg + 1) % tour.length].ll) * 26000);
@@ -226,14 +231,14 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     <section className="hg" aria-label="2026 forecast globe">
       <div className="hg-stage" ref={wrap}>
         <canvas ref={cv} className="hg-cv" role="img" aria-label={`The 2026 ${office} forecast on a globe, each state shaded by its rating`} />
-        <div className="hg-man" ref={man} aria-hidden="true">
+        {themed ? <div className="hg-man" ref={man} aria-hidden="true">
           <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
           {stop ? (
             <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
               <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
             </button>
           ) : null}
-        </div>
+        </div> : null}
         {tr ? (
           <div className="hg-tip" style={{ left: tip!.x, top: tip!.y, transform: `translate(${tip!.x > tip!.w - 300 ? "calc(-100% - 18px)" : "18px"}, ${tip!.y > tip!.h - 220 ? "calc(-100% - 12px)" : "12px"})` }}>
             <h4>{tr.name}</h4>
