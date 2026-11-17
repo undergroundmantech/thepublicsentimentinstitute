@@ -583,7 +583,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
     return (
       <section key={k} className={`mon-cp${open ? " open" : ""}`} aria-label={`${name} control`}>
         <button type="button" className="mon-cp-h" onClick={() => { setMode(k); setPick(null); }} aria-pressed={open}>
-          <b>{name}</b><span>{t.called} of {t.n} called by On Point · {t.counting} counting</span>
+          <b>{name}</b><span>{t.onPoint} of {t.n} called by On Point{t.oneParty ? ` · ${t.oneParty} decided within one party` : ""} · {t.counting} counting</span>
         </button>
         <div className="mon-cp-score">
           <div className="d"><b>{dTot}</b><span>Democrats{ct.iW ? `, ${ct.iW} independent` : ""}{ct.dL + ct.iL ? ` · ${ct.dL + ct.iL} leading` : ""}</span></div>

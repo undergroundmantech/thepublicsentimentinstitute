@@ -497,7 +497,7 @@ export function simulateRace(p: RacePrep, fit: Fit, o: { draws?: number; seed: s
   if (p.rule === "ranked_choice") notes.push(`ranked choice: the projected margin is the simulated final round; other candidates' ballots transfer around a net ${(100 * p.rcvT0).toFixed(0)}% to side B (the published forecast's implied split), give or take ${(100 * cfg.rcv.sdTransfer).toFixed(0)} points`);
   if (runoff) notes.push(`a runoff (no candidate above 50%) in ${((100 * runoff) / N).toFixed(1)}% of draws`);
   const forecast: RaceForecast = {
-    raceId: p.race.id, rule: p.rule, computedAt: o.computedAt, snapshotId: o.snapshotId, modelVersion: MODEL_VERSION, dataState, forecastAvailable: p.forecastAvailable, calibration: "UNCALIBRATED",
+    raceId: p.race.id, rule: p.rule, ...(p.rule === "measure" ? { passShare: p.thr } : {}), computedAt: o.computedAt, snapshotId: o.snapshotId, modelVersion: MODEL_VERSION, dataState, forecastAvailable: p.forecastAvailable, calibration: "UNCALIBRATED",
     settled, call: provWin ? { origin: "provider", source: "civicAPI", winnerId: provWin.id, name: provWin.name } : null,
     candidates,
     principalMargin: p.forecastAvailable ? { reported: p.countedTotal > 0 ? (100 * (repB - repA)) / p.countedTotal : null, projected: dist(margB), probB, prior: { margin: p.pubFinalM, probB: p.pB0 } } : null,

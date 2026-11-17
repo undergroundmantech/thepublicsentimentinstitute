@@ -45,8 +45,23 @@ export const TYPE_SETS: Record<string, string[]> = {
   state: ["Lieutenant Governor", "Attorney General", "Secretary of State", "State Treasurer", "Treasurer", "Auditor", "State Auditor", "Comptroller", "Controller",
     "Agriculture Commissioner", "Commissioner of Agriculture and Industries", "Secretary of Agriculture", "Land Commissioner", "Commissioner of State Lands",
     "Superintendent of Public Instruction", "Superintendent", "Insurance Commissioner", "Labor Commissioner", "State Mine Inspector", "Public Service Commissioner",
-    "Public Service Commission", "Railroad Commissioner", "State Board of Education", "Supreme Court", "Judicial"],
+    "Public Service Commission", "Railroad Commissioner", "State Board of Education", "Supreme Court", "Judicial",
+    // the names civicAPI files some of the November 3, 2026 statewide races under (South Carolina's six offices are all "Statewide")
+    "Statewide", "State Supreme Court", "State Comptroller", "State Controller", "Commissioner of Agriculture", "Commissioner of Public Lands",
+    "Public Service Commission 3", "Public Service Commission 5", "Corporation Commissioner", "State Superintendent", "Chief Financial Officer", "Education", "University Board", "Corporation Commission"],
 };
+/**
+ * Races civicAPI files under a type too broad to search ("Local" holds every local race in the country): read by their
+ * own id instead, through the same caching proxy as a race page (one request per race per five minutes, whoever watches).
+ */
+export const CIVIC_BY_ID: number[] = [130145, 130146, 87525];
+/** One race read by id, in the shape of a search result. */
+export async function civicReadById(id: number, signal?: AbortSignal): Promise<CRace | null> {
+  const r = await fetch(`/api/civic/race/${id}`, { signal });
+  if (!r.ok) return null;
+  const d = (await r.json()) as CDetail;
+  return { id: d.id, type: d.type, province: d.province, district: d.district, name: d.name, pr: d.pr, c: d.c };
+}
 /** One race type's search, with the time the proxy read it from civicAPI (null if the proxy did not say). */
 export async function civicRead(type: string, signal?: AbortSignal): Promise<{ races: CRace[]; at: number | null }> {
   const r = await fetch(`/api/civic/search?type=${encodeURIComponent(type)}`, { signal });
@@ -89,6 +104,9 @@ export const CIVIC_PINS: Record<string, number> = {
   "bm-SD-constitutional-amendment-i": 169502, "bm-SD-constitutional-amendment-j": 169503, "bm-SD-constitutional-amendment-k": 169504, "bm-SD-constitutional-amendment-l": 87482,
   "bm-ID-reproductive-freedom-and-privacy-act": 179002, "bm-WY-proposed-initiative-proposition-number-one": 179850,
   "bm-AR-issue-1": 86935, "bm-AR-issue-2": 86941, "bm-AR-issue-3": 86937, "bm-AR-issue-4": 86940,
+  "agri-FL": 87072, "land-NM": 157304, "psc-GA-district-3": 87096, "psc-GA-district-5": 87097,
+  "court-wa-washington-supreme-court-position-1-special": 130156, "court-wa-washington-supreme-court-position-3": 87537,
+  "court-wa-washington-supreme-court-position-5-special": 130158, "court-wa-washington-supreme-court-position-7": 130159,
 };
 
 export function matchCivic(races: XRace[], civ: CRace[]): Record<string, CRace> {
@@ -100,7 +118,9 @@ export function matchCivic(races: XRace[], civ: CRace[]): Record<string, CRace> 
   const sharedType = new Map<string, number>();
   for (const r of races) if (r.k === "state") { const k = r.st + "|" + (r.civ.t ?? []).map(norm).sort().join("/"); sharedType.set(k, (sharedType.get(k) ?? 0) + 1); }
   for (const r of races) {
-    if (out[r.id]) continue;
+    // a pinned race is its pin or nothing: when the pinned race is not in the list, no other race may stand in for it
+    // (two Washington initiatives were once both read from a third)
+    if (out[r.id] || CIVIC_PINS[r.id] != null) continue;
     const pool = (by.get(r.st) ?? []).filter((c) => !pinned.has(c.id)); if (!pool.length) continue;
     const types = new Set((r.civ.t ?? []).map(norm));
     let hit: CRace | undefined;

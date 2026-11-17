@@ -129,6 +129,8 @@ export type OutstandingUnit = {
 export type RaceForecast = {
   raceId: string;
   rule: "plurality" | "measure" | "multi_seat" | "ranked_choice" | "majority_runoff";
+  /** a measure's passing bar as a share of Yes among Yes and No (0.5 unless the race states more, e.g. Florida's 0.6); absent for candidates */
+  passShare?: number;
   computedAt: string;
   snapshotId: string;
   modelVersion: string;

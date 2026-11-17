@@ -64,7 +64,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
 
   const anyLive = T.sen.counting + T.house.counting + T.gov.counting + T.other.counting > 0;
   const linked = Object.keys(live.byId).length;
-  const totalCalled = T.sen.called + T.house.called + T.gov.called + T.other.called;
+  const totalCalled = T.sen.onPoint + T.house.onPoint + T.gov.onPoint + T.other.onPoint;
   const totalCounting = T.sen.counting + T.house.counting + T.gov.counting + T.other.counting;
   const msLeft = FIRST_CLOSE - now;
   const phase: "pre" | "closing" | "counting" = anyLive ? "counting" : now && msLeft > 0 ? "pre" : "closing";
@@ -121,7 +121,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
   const verdict = (() => {
     if (cat === "other") {
       const t = T.other; const kinds = CATS[3].kinds.map((k) => `${ofKind(k).length} ${KIND_LABEL[k].toLowerCase()}`);
-      return t.counting ? <><b>{t.counting} of {t.n}</b> other races are counting and On Point has called <b>{t.called}</b></> : <>No votes are counted in the <b>{t.n}</b> other races: {kinds.join(", ")}</>;
+      return t.counting ? <><b>{t.counting} of {t.n}</b> other races are counting and On Point has called <b>{t.onPoint}</b></> : <>No votes are counted in the <b>{t.n}</b> other races: {kinds.join(", ")}</>;
     }
     const t = T[cat], c = ct!, name = cat === "sen" ? "Senate" : cat === "house" ? "House" : "governorships";
     if (!t.counting) return <>No votes are counted yet. The forecast gives Democrats <b className="d">{pct(fc!.pD)}</b> for {cat === "gov" ? "most governorships" : `the ${name}`}, about <b>{fc!.dS.toFixed(0)}</b> {cat === "gov" ? "governors" : "seats"} on average</>;
@@ -129,8 +129,8 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
     return <>Democrats hold or have won <b className="d">{dTot}</b>, Republicans <b className="r">{c.rW}</b>{dN === 0 ? <>. <b className="d">Democrats have a majority</b></> : rN === 0 ? <>. <b className="r">Republicans have a majority</b></> : <>. Democrats need <b>{dN}</b> of the <b>{open}</b> still open, Republicans need <b>{rN}</b></>}.{controlSentence(eng.view?.national, cat)}</>;
   })();
   const stats: [string, string][] = cat === "other"
-    ? [["Counting", String(T.other.counting)], ["Called", String(T.other.called)], ["Votes in", T.other.votes ? fmtK(T.other.votes) : "0"]]
-    : [["Called", `${T[cat].called} of ${T[cat].n}`], ["Leading", `${T[cat].lD} D · ${T[cat].lR} R`], ["Not counted", String(ct!.aw)]];
+    ? [["Counting", String(T.other.counting)], ["Called", String(T.other.onPoint)], ["Votes in", T.other.votes ? fmtK(T.other.votes) : "0"]]
+    : [["Called", `${T[cat].onPoint} of ${T[cat].n}`], ["Leading", `${T[cat].lD} D · ${T[cat].lR} R`], ["Not counted", String(ct!.aw)]];
   const mapTitle = cat === "sen" ? `${T.sen.n} Senate seats on the ballot` : cat === "house" ? "All 435 House districts" : cat === "gov" ? `${T.gov.n} governor races` : `${T.other.n} statewide, legislative, ballot and local races`;
 
   const tipRaces = tip ? byKey[tip.k] ?? [] : [];
@@ -171,7 +171,7 @@ export default function NationalDesk({ chambers }: { chambers: Chambers }) {
           const fcx = c.k === "sen" ? chambers.sen : c.k === "house" ? chambers.house : c.k === "gov" ? chambers.gov : null;
           return (
             <button key={c.k} role="tab" aria-selected={on} className={`nat-card${on ? " on" : ""}`} onClick={() => { setCat(c.k); setTip(null); }} style={{ animationDelay: `${i * 0.06}s` }}>
-              <span className="nat-card-h"><span className="lb">{c.label}</span><span className="st">{t.called} of {t.n} called · {t.counting} counting</span></span>
+              <span className="nat-card-h"><span className="lb">{c.label}</span><span className="st">{t.onPoint} of {t.n} called · {t.counting} counting</span></span>
               {cc ? (
                 <>
                   <span className="nat-score">

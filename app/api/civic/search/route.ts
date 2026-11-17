@@ -11,7 +11,10 @@ const TYPES = new Set(["US Senate", "Governor", "House of Representatives", "US 
   "Agriculture Commissioner", "Commissioner of Agriculture and Industries", "Secretary of Agriculture", "Commissioner of Agriculture", "Land Commissioner",
   "Commissioner of State Lands", "Commissioner of Public Lands", "Superintendent of Public Instruction", "Superintendent", "Insurance Commissioner",
   "Labor Commissioner", "Commissioner of Labor", "State Mine Inspector", "Public Service Commissioner", "Public Service Commission", "Railroad Commissioner",
-  "State Board of Education", "Education", "Supreme Court", "Judicial", "Mayor"]);
+  "State Board of Education", "Education", "Supreme Court", "Judicial", "Mayor",
+  // the names civicAPI files some November 3, 2026 statewide races under
+  "Statewide", "State Supreme Court", "State Comptroller", "State Controller", "Public Service Commission 3", "Public Service Commission 5",
+  "Corporation Commissioner", "State Superintendent", "Chief Financial Officer", "University Board", "Corporation Commission"]);
 
 type Cand = { name: string; party: string; votes: number; percent: number; winner?: boolean; color?: string; seats?: number };
 type Race = { id: number; type: string; province: string; district: string | null; election_name: string; percent_reporting: number; seats?: number; candidates: Cand[] };

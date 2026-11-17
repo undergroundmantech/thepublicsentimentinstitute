@@ -3,21 +3,22 @@
 // useLive.ts); everything else is sorted into plain-language groups from the count alone.
 import type { CRace, Kind, XRace } from "../live";
 
-/** called: On Point has called it. close: enough of the vote is in and the margin is tight (or the count is nearly
- *  done and it still cannot be called). early: votes are in, too few to say. waiting: no votes yet. */
-export type TrackStatus = "called" | "close" | "early" | "waiting";
-export const TRACK_LABEL: Record<TrackStatus, string> = { called: "Called", close: "Too close to call", early: "Too early to call", waiting: "No votes yet" };
-export const TRACK_ORDER: TrackStatus[] = ["called", "close", "early", "waiting"];
+/** called: On Point has called it. close: enough of the vote is in and the lead is under CLOSE_MARGIN points.
+ *  counting: enough of the vote is in, the lead is wider, and the race is not called yet (the count, or a ranked-choice
+ *  tabulation, is still to finish). early: votes are in, too few to say. waiting: no votes yet. */
+export type TrackStatus = "called" | "close" | "counting" | "early" | "waiting";
+export const TRACK_LABEL: Record<TrackStatus, string> = { called: "Called", close: "Too close to call", counting: "Still counting", early: "Too early to call", waiting: "No votes yet" };
+export const TRACK_ORDER: TrackStatus[] = ["called", "close", "counting", "early", "waiting"];
 
-/** Too close to call: at least this share counted and a lead under CLOSE_MARGIN points; or nearly all counted. */
-export const CLOSE_MIN_PCT = 35, CLOSE_MARGIN = 5, CLOSE_DONE_PCT = 95;
+/** The share counted (as civicAPI reports it) from which a race is judged on its lead; a lead under CLOSE_MARGIN points is too close. */
+export const CLOSE_MIN_PCT = 35, CLOSE_MARGIN = 5;
 export function trackStatus(x: { called: boolean; votes: number; pct: number | null; margin: number | null }): TrackStatus {
   if (x.called) return "called";
   if (!(x.votes > 0)) return "waiting";
-  const pct = x.pct ?? 0;
-  if (pct >= CLOSE_DONE_PCT) return "close";
-  if (pct >= CLOSE_MIN_PCT && x.margin != null && x.margin < CLOSE_MARGIN) return "close";
-  return "early";
+  // (a provider that lists no percent reporting for a race with votes in is judged on its lead)
+  const pct = x.pct == null || x.pct === 0 ? 100 : x.pct;
+  if (pct < CLOSE_MIN_PCT) return "early";
+  return x.margin != null && x.margin < CLOSE_MARGIN ? "close" : "counting";
 }
 
 export type Who = { name: string; party: string | null };
@@ -82,7 +83,7 @@ export function trackSort(rows: TrackRow[], key: SortKey, dir: 1 | -1): TrackRow
 }
 /** How many rows are in each status, for the filter buttons. */
 export function trackCounts(rows: TrackRow[]): Record<TrackStatus | "all", number> {
-  const n = { all: rows.length, called: 0, close: 0, early: 0, waiting: 0 };
+  const n = { all: rows.length, called: 0, close: 0, counting: 0, early: 0, waiting: 0 };
   for (const x of rows) n[x.status]++;
   return n;
 }

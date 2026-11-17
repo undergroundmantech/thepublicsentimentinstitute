@@ -5,7 +5,8 @@ import { hasReturns, liveMargin } from "../monitor/seatMath";
 import { isInd, sides, type CRace, type XRace } from "./live";
 import { certainParty } from "./onpointCalls";
 
-export type Tally = { cD: number; cR: number; cO: number; lD: number; lR: number; counting: number; votes: number; n: number; called: number };
+/** `called`: seats decided (On Point's calls, plus seats contested only within one party); `onPoint`: On Point's calls alone */
+export type Tally = { cD: number; cR: number; cO: number; lD: number; lR: number; counting: number; votes: number; n: number; called: number; onPoint: number; oneParty: number };
 
 /**
  * On Point's calls by party, races leading by party, races counting and votes in, for one set of races. An unopposed
@@ -13,16 +14,16 @@ export type Tally = { cD: number; cR: number; cO: number; lD: number; lR: number
  * party once votes are in, before the winner is called.
  */
 export function tally(rs: XRace[], byId: Record<string, CRace>): Tally {
-  let cD = 0, cR = 0, cO = 0, lD = 0, lR = 0, counting = 0, votes = 0;
+  let cD = 0, cR = 0, cO = 0, lD = 0, lR = 0, counting = 0, votes = 0, onPoint = 0, oneParty = 0;
   for (const r of rs) {
     const c = byId[r.id]; const w = c?.c.find((y) => y[4]);
     if (hasReturns(c)) { counting++; votes += c!.c.reduce((s, x) => s + x[2], 0); } else if (!w) continue;
     const m = liveMargin(r, c), sure = w ? null : certainParty(c);
-    if (w) { const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else if (p.startsWith("dem")) cD++; else cO++; }
-    else if (sure) { if (sure === "D") cD++; else cR++; }
+    if (w) { onPoint++; const p = w[1].toLowerCase(); if (p.startsWith("rep")) cR++; else if (p.startsWith("dem")) cD++; else cO++; }
+    else if (sure) { oneParty++; if (sure === "D") cD++; else cR++; }
     else if (m != null) { if (m < 0) lD++; else lR++; }
   }
-  return { cD, cR, cO, lD, lR, counting, votes, n: rs.length, called: cD + cR + cO };
+  return { cD, cR, cO, lD, lR, counting, votes, n: rs.length, called: cD + cR + cO, onPoint, oneParty };
 }
 
 export type WatchBar = { pD: number; ind: boolean; label: string; caption: "Reported vote share" | "Pre-election forecast" };

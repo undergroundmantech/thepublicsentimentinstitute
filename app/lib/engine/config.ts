@@ -2,7 +2,7 @@
 // timestamped election-night history in the repository to fit them to (Gate E). They are set to be honest about
 // what is NOT known, which mostly means wide. Change them here, bump MODEL_VERSION, and every output says so.
 
-export const MODEL_VERSION = "onpoint-engine/2.5.0";
+export const MODEL_VERSION = "onpoint-engine/2.5.1";
 
 export type EngineConfig = {
   draws: number;

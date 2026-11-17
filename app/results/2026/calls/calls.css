@@ -94,7 +94,7 @@
 .ct-status button i { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); }
 .ct-status button:hover { color: var(--hi); border-color: var(--ink2); }
 .ct-status button[aria-pressed="true"] { color: var(--hi); border-color: var(--hi); background: rgba(var(--line-rgb), .09); }
-.ct .s-called { --st: #2f9e63; } .ct .s-close { --st: #d9902b; } .ct .s-early { --st: #6f8fd6; } .ct .s-waiting { --st: #8a8794; }
+.ct .s-called { --st: #2f9e63; } .ct .s-close { --st: #d9902b; } .ct .s-counting { --st: #3fa7b8; } .ct .s-early { --st: #6f8fd6; } .ct .s-waiting { --st: #8a8794; }
 .ct-status button[class^="s-"] i { background: var(--st); }
 .ct-find { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .ct-find select, .ct-find input { font: 600 13.5px var(--font-b); color: var(--ink); background: rgba(var(--line-rgb), .05); border: 1px solid var(--line2); border-radius: 10px; padding: 0 12px; height: 38px; }

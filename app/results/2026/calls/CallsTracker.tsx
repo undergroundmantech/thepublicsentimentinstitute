@@ -154,7 +154,7 @@ export default function CallsTracker() {
       </div>
       {shown.length > PAGE ? <p className="ct-more"><button type="button" onClick={() => setAll(!all)}>{all ? `Show the first ${PAGE}` : `Show all ${shown.length} races`}</button><span>Showing {list.length} of {shown.length}</span></p> : shown.length ? <p className="ct-more"><span>{shown.length} race{shown.length === 1 ? "" : "s"}</span></p> : null}
       <footer className="ct-key">
-        <p><b>Called:</b> On Point Politics has projected a winner. <b>Too close to call:</b> at least 35% of the vote is counted and the lead is under 5 points, or nearly all of it is counted and the race still cannot be called. <b>Too early to call:</b> votes are in, but too few to say. These labels describe the count; they are not calls.</p>
+        <p><b>Called:</b> On Point Politics has projected a winner. <b>Too close to call:</b> at least 35% of the vote is counted and the lead is under 5 points. <b>Still counting:</b> the lead is wider, but the count (or, in Alaska and Maine, the ranked-choice tabulation) has not settled the race yet. <b>Too early to call:</b> votes are in, but too few to say. These labels describe the count; they are not calls.</p>
         <p>Win probability and forecast result are the model&apos;s estimates{v ? "" : " (the pre-election forecast where no live model is running)"}, not results, and the model is uncalibrated. The range beside a forecast is where the final margin lands four times in five. Vote counts and % in are civicAPI&apos;s. All results are unofficial until certified; for official results see your state election office.</p>
       </footer>
     </section>

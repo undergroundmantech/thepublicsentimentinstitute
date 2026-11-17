@@ -73,8 +73,57 @@ test("a stopped count inside the recount margin is never called, and between the
   assert.match(probe(fc(0.02, { quietMin: F.quietMin }), C, false).blockers.join(" "), /does not lead the count/);
 });
 
-test("the count-settled rule is for plain plurality races: a measure, a runoff rule and ranked choice keep their own tests", () => {
-  for (const rule of ["measure", "majority_runoff"] as const) assert.equal(probe(fc(0.987, { marginLo: -0.4, quietMin: F.quietMin, rule }), C, false).qualifies, false, rule);
+test("the count-settled rule is for plurality races and measures: a runoff rule and ranked choice keep their own tests", () => {
+  assert.equal(probe(fc(0.987, { marginLo: -0.4, quietMin: F.quietMin, rule: "majority_runoff" }), C, false).qualifies, false);
+});
+
+test("2.5.1: a measure is judged against its bar, not by which side has more votes", () => {
+  const m = (pYes: number, counted: [number, number], bar: number, o: Opt = {}) => ({ ...fc(pYes, { rule: "measure", counted, quietMin: F.quietMin, ...o }), passShare: bar });
+  // a simple majority reads exactly as Yes minus No
+  const simple = probe(m(0.987, [52_000, 48_000], 0.5), C, false);
+  assert.equal(simple.qualifies, true); assert.equal(simple.lane, "count-settled"); assert.equal(simple.leader?.candidateId, "A");
+  // Florida: Yes has 58% and needs 60%. The count's leader is No, and the model's No is callable
+  const fl = probe(m(0.004, [58_200, 41_800], 0.6), C, false);
+  assert.equal(fl.leader?.candidateId, "B"); assert.equal(fl.qualifies, true, fl.blockers.join("; "));
+  // ...while a model that still says Yes against that count is blocked
+  assert.match(probe(m(0.996, [58_200, 41_800], 0.6), C, false).blockers.join(" "), /does not lead the count/);
+  // inside half a point of the bar is recount territory, on either side of it
+  assert.match(probe(m(0.004, [59_800, 40_200], 0.6), C, false).blockers.join(" "), /recount territory/);
+  assert.match(probe(m(0.9995, [60_200, 39_800], 0.6), C, false).blockers.join(" "), /recount territory/);
+  assert.equal(probe(m(0.9995, [62_000, 38_000], 0.6), C, false).qualifies, true);
+  // before the count has stopped, the stress test starts from the chaser's side of the bar: No at 58.2-41.8 against a
+  // 60% bar is 1,800 votes short for Yes, who would need 60% of what is out plus those votes
+  const open = probe({ ...fc(0.004, { rule: "measure", counted: [58_200, 41_800], marginLo: 2, outHi: 2_000 }), passShare: 0.6, projectedTopTwo: { leaderId: "B", runnerUpId: "A", marginPp: D(4, 2, 9), marginVotes: D(1) } }, C, false);
+  assert.equal(open.blockers.some((x) => /does not lead the count/.test(x)), false, open.blockers.join("; "));
+});
+
+test("2.5.1: the final phase, ten days after the polls closed, settles a stopped count at the recount floor", () => {
+  const day10 = F.finalAfterMin!, stopped = { marginLo: -0.4, quietMin: F.quietMin };
+  // 0.78 points with the model at 93.6% (Mississippi's Senate race): not callable in the first ten days...
+  const ms = fc(0.936, { ...stopped, counted: [50_390, 49_610] });
+  assert.equal(probe(ms, C, false, 99, day10 - 1).qualifies, false);
+  // ...and callable after, on the count
+  const late = probe(ms, C, false, 99, day10);
+  assert.equal(late.qualifies, true, late.blockers.join("; ")); assert.equal(late.lane, "count-settled");
+  // never under the recount floor, never against the model, never while the count is still moving
+  assert.equal(probe(fc(0.936, { ...stopped, counted: [50_200, 49_800] }), C, false, 99, day10).qualifies, false);
+  assert.equal(probe(fc(F.finalMinProb! - 0.01, { ...stopped, counted: [50_390, 49_610] }), C, false, 99, day10).qualifies, false);
+  assert.equal(probe(fc(0.936, { marginLo: -0.4, quietMin: F.quietMin - 1, counted: [50_390, 49_610] }), C, false, 99, day10).qualifies, false);
+  assert.equal(probe(fc(0.936, { ...stopped, counted: [50_390, 49_610] }), C, false, 99, null).qualifies, false, "no closing time, no final phase");
+  // a stopped count with a 10-point lead is not held back by the provider's percent-reporting field
+  const weak = fc(0.9999, { ...stopped, counted: [58_000, 42_000], flags: ["METHOD_UNKNOWN", "TURNOUT_WEAK_EVIDENCE"] });
+  assert.equal(probe(weak, C, false, 1.3, day10 - 1).qualifies, false); assert.equal(probe(weak, C, false, 1.3, day10).qualifies, true);
+  assert.equal(probe(fc(0.9999, { ...stopped, counted: [54_000, 46_000], flags: ["METHOD_UNKNOWN", "TURNOUT_WEAK_EVIDENCE"] }), C, false, 1.3, day10).qualifies, false, "under 10 points the flag still blocks");
+  // ...or while still counting, once 90% of the expected vote is in and the model is past the threshold
+  const moving = (pA: number, expected: number) => fc(pA, { counted: [58_000, 42_000], expected, outHi: 2_000, marginLo: 12, flags: ["METHOD_UNKNOWN", "TURNOUT_WEAK_EVIDENCE"] });
+  assert.equal(probe(moving(0.9999, 104_000), C, false, 0, day10).qualifies, true, probe(moving(0.9999, 104_000), C, false, 0, day10).blockers.join("; "));
+  assert.equal(probe(moving(0.9999, 104_000), C, false, 0, day10 - 1).qualifies, false, "not before the final phase");
+  assert.equal(probe(moving(0.9999, 125_000), C, false, 0, day10).qualifies, false, "not with under 90% of the expected vote in");
+  assert.equal(probe(moving(0.99, 104_000), C, false, 0, day10).qualifies, false, "not under the call threshold");
+  // no forecast, still counting: 10 points and three times the vote listed as uncounted, in the final phase only
+  const nf = fc(0.5, { counted: [57_000, 43_000], flags: ["NO_FORECAST", "METHOD_UNKNOWN"], slow: true, quietMin: 60 });
+  assert.equal(probe(nf, C, false, 97, day10 - 1).qualifies, false); assert.equal(probe(nf, C, false, 97, day10).qualifies, true);
+  assert.equal(probe(fc(0.5, { counted: [54_000, 46_000], flags: ["NO_FORECAST", "METHOD_UNKNOWN"], slow: true, quietMin: 60 }), C, false, 97, day10).qualifies, false);
 });
 
 test("ranked choice is called only on a certain majority of first choices", () => {

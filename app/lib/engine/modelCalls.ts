@@ -46,7 +46,15 @@ export type CallConfig = {
    * `stepMin`: silence itself is an update. A race whose data has not changed is looked at again after this many
    * minutes, so a count that has gone still can be called without waiting for a correction of three votes.
    */
-  finished?: { quietMin: number; slowQuietMin: number; minCountedMargin: number; noForecastMargin: number; /** a race with no forecast is also called while counting, when the provider lists at least `noForecastMinPct` percent reporting and the lead is `noForecastLeadOver` times the vote that percent leaves uncounted */ noForecastMinPct?: number; noForecastLeadOver?: number; /** and the counted lead is at least this many points (`...Slow` in the states that count for days, where the provider's percent says little) */ noForecastReachMargin?: number; noForecastReachMarginSlow?: number; /** once the count has stopped, a race the model gives at least `settledMinProb` is called on a counted lead of `settledMargin` points, in the count-settled lane */ settledMinProb?: number; settledMargin?: number; stepMin: number; /** and only once the total has been still this long: a second look at data a few minutes old confirms nothing */ stepAfterMin: number };
+  /**
+   * The final phase (2.5.1). `finalAfterMin` minutes after a race's polls closed (ten days: the canvass is over or
+   * nearly so in most states), a count that has stopped is settled by its own arithmetic: the leader in the count is
+   * called at `minCountedMargin` points or more (the recount floor) as long as the model still favours him at
+   * `finalMinProb`; a 10-point lead is called on a stopped count whatever the provider's percent-reporting field says
+   * (the TURNOUT_WEAK_EVIDENCE flag is about that field); and a race with no forecast is called while still counting
+   * at `noForecastMargin` points when the lead is `noForecastLeadOver` times the vote listed as uncounted.
+   */
+  finished?: { finalAfterMin?: number; finalMinProb?: number; quietMin: number; slowQuietMin: number; minCountedMargin: number; noForecastMargin: number; /** a race with no forecast is also called while counting, when the provider lists at least `noForecastMinPct` percent reporting and the lead is `noForecastLeadOver` times the vote that percent leaves uncounted */ noForecastMinPct?: number; noForecastLeadOver?: number; /** and the counted lead is at least this many points (`...Slow` in the states that count for days, where the provider's percent says little) */ noForecastReachMargin?: number; noForecastReachMarginSlow?: number; /** once the count has stopped, a race the model gives at least `settledMinProb` is called on a counted lead of `settledMargin` points, in the count-settled lane */ settledMinProb?: number; settledMargin?: number; stepMin: number; /** and only once the total has been still this long: a second look at data a few minutes old confirms nothing */ stepAfterMin: number };
   /** the low end of the 95% range of the projected margin must be at least this many points. Absent: only above zero. */
   minMarginLo?: number;
   /** quality flags that block qualification outright */
@@ -79,7 +87,7 @@ export type CallConfig = {
     minUpdates?: number };
 };
 export const DEFAULT_CALL_CONFIG: CallConfig = {
-  threshold: 0.993, consecutive: 2, approach: 0.95, mcZ: 2, minCountedShare: 0.5, minNeededShare: 0.6, minNeededOverExpected: 0.1, minMarginLo: 0.5, close: { belowLo: 2, holdMin: 30 }, finished: { quietMin: 4320, slowQuietMin: 7200, minCountedMargin: 0.5, noForecastMargin: 10, noForecastMinPct: 60, noForecastLeadOver: 3, noForecastReachMargin: 20, noForecastReachMarginSlow: 40, settledMinProb: 0.95, settledMargin: 1, stepMin: 30, stepAfterMin: 120 },
+  threshold: 0.993, consecutive: 2, approach: 0.95, mcZ: 2, minCountedShare: 0.5, minNeededShare: 0.6, minNeededOverExpected: 0.1, minMarginLo: 0.5, close: { belowLo: 2, holdMin: 30 }, finished: { finalAfterMin: 14400, finalMinProb: 0.85, quietMin: 4320, slowQuietMin: 7200, minCountedMargin: 0.5, noForecastMargin: 10, noForecastMinPct: 60, noForecastLeadOver: 3, noForecastReachMargin: 20, noForecastReachMarginSlow: 40, settledMinProb: 0.95, settledMargin: 1, stepMin: 30, stepAfterMin: 120 },
   blockingFlags: ["NO_FORECAST", "NO_OBSERVATION", "TEST_DATA", "COUNT_UNKNOWN", "COUNT_EXCEEDS_FORECAST", "COUNT_DECREASED", "UNIT_TOPLINE_MISMATCH", "PROVIDER_ROWS_INCONSISTENT", "AMBIGUOUS_CANDIDATE", "TURNOUT_WEAK_EVIDENCE", "RULE_RANKED_CHOICE", "RULE_NOT_MODELED"],
   deteriorationAlert: 0.9,
   minUpdates: 3,
@@ -135,7 +143,7 @@ type Probe = { leader: RaceCallState["leader"]; p: number | null; se: number | n
   lane: CallLane | null; safeSeat: boolean };
 
 /** The leader, the probability and every safeguard for one race at one moment. */
-export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, providerPct: number | null = null): Probe {
+export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, providerPct: number | null = null, /** minutes since the race's polls closed, where known */ sinceCloseMin: number | null = null): Probe {
   const runoff = f.rule === "majority_runoff";
   const pOf = (c: RaceForecast["candidates"][number]) => (runoff ? c.outrightProbability ?? 0 : c.winProbability ?? -1);
   const top = [...f.candidates].sort((a, b) => pOf(b) - pOf(a))[0];
@@ -148,7 +156,17 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, provider
   const safeSeat = !!fast?.on && prior != null && f.rule === "plurality" && fast.kinds.includes(f.raceId.split("-")[0]) && Math.max(prior, 1 - prior) >= fast.minPrior && !!top && top.side === (prior >= 0.5 ? "b" : "a");
   const blockers: string[] = [], slow: string[] = [];      // `slow`: safeguards the safe-seat lane replaces
   const byVotes = [...f.candidates].filter((c) => c.reportedVotes != null).sort((a, b) => (b.reportedVotes as number) - (a.reportedVotes as number));
-  const countedMargin = byVotes.length > 1 && f.turnout.counted > 0 ? (100 * ((byVotes[0].reportedVotes as number) - (byVotes[1].reportedVotes as number))) / f.turnout.counted : null;
+  // A measure is decided against its bar, not by which side has more votes (2.5.1): Florida's Amendment 2 "led" by 16
+  // points and failed at 58%. Its leader in the count is the side the count puts over the bar, and its margin is the
+  // Yes share's distance from the bar, doubled so that a 50% bar reads exactly as Yes minus No.
+  const mYes = f.rule === "measure" ? f.candidates.find((c) => c.side === "a") : undefined, mNo = f.rule === "measure" ? f.candidates.find((c) => c.side === "b") : undefined;
+  const bar = f.rule === "measure" ? f.passShare ?? 0.5 : null, yn = (mYes?.reportedVotes ?? 0) + (mNo?.reportedVotes ?? 0);
+  const onBar = bar != null && !!mYes && !!mNo && mYes.reportedVotes != null && mNo.reportedVotes != null && yn > 0;
+  const yesShare = onBar ? (mYes!.reportedVotes as number) / yn : null, passing = yesShare != null && (bar! > 0.5 ? yesShare >= bar! : yesShare > 0.5);
+  const countLeaderId = onBar ? (passing ? mYes! : mNo!).candidateId : byVotes[0]?.candidateId ?? null;
+  const countedMargin = onBar ? 200 * Math.abs((yesShare as number) - bar!)
+    : byVotes.length > 1 && f.turnout.counted > 0 ? (100 * ((byVotes[0].reportedVotes as number) - (byVotes[1].reportedVotes as number))) / f.turnout.counted : null;
+  const F0 = cfg.finished, finalPhase = !!F0 && F0.finalAfterMin != null && sinceCloseMin != null && sinceCloseMin >= F0.finalAfterMin;
   const over = !!cfg.finished && f.turnout.quietMin != null && f.turnout.quietMin >= (f.turnout.slowCount ? cfg.finished.slowQuietMin : cfg.finished.quietMin);
   // no forecast, so no model: once the count has stopped, a leader far enough ahead has won. Arithmetic, and labelled as such.
   if (cfg.finished && f.flags.includes("NO_FORECAST") && !f.settled && f.rule === "plurality") {
@@ -160,7 +178,9 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, provider
     // (the provider's percent is of precincts in some states, not of ballots: California showed 100% with half its
     // mail uncounted on election night. So the lead must also be wide in points, and far wider where counts run for days.)
     const reachMargin = f.turnout.slowCount ? F.noForecastReachMarginSlow : F.noForecastReachMargin;
-    const outOfReach = F.noForecastMinPct != null && F.noForecastLeadOver != null && reachMargin != null && providerPct != null && providerPct >= F.noForecastMinPct && leadVotes > F.noForecastLeadOver * uncounted && countedMargin != null && countedMargin >= reachMargin;
+    // (in the final phase the wide-margin guard has done its work: what is left is days of canvass, not half the mail)
+    const reach = finalPhase ? F.noForecastMargin : reachMargin;
+    const outOfReach = F.noForecastMinPct != null && F.noForecastLeadOver != null && reach != null && providerPct != null && providerPct >= F.noForecastMinPct && leadVotes > F.noForecastLeadOver * uncounted && countedMargin != null && countedMargin >= reach;
     if (countedMargin == null || countedMargin < F.noForecastMargin) b.push(`no forecast for this race, and the leader is under ${F.noForecastMargin} points clear`);
     else if (!over && !outOfReach) b.push(F.noForecastLeadOver != null ? `no forecast for this race: it is called once its count has stopped, or once the lead is ${reachMargin} points and ${F.noForecastLeadOver} times the vote the provider lists as uncounted` : "no forecast for this race: it is called only once its count has stopped");
     const lead = byVotes[0] ?? null;
@@ -170,7 +190,11 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, provider
   // Ranked choice: the transfers are not modeled well enough to call on, but a majority of first choices needs none.
   // Such a race is called on the chance of that majority, never on the simulated final round.
   const rcv = !!cfg.finished && f.rule === "ranked_choice", pMaj = rcv ? top?.outrightProbability ?? 0 : null;
-  for (const fl of cfg.blockingFlags) if (f.flags.includes(fl) && !(rcv && fl === "RULE_RANKED_CHOICE")) blockers.push(`data-quality flag ${fl}`);
+  // (final phase: a 10-point lead is not held back by the provider's percent-reporting field once the count has
+  // stopped, or once the model counts 90% of its expected vote in and is past the call threshold. The flag is about
+  // that field, which civicAPI leaves at 0 for some states' measures: Alaska's Measure 3 sat at 68-32 with "0%".)
+  const pctMoot = finalPhase && countedMargin != null && countedMargin >= F0!.noForecastMargin && (over || (countedShare != null && countedShare >= 0.9 && p != null && p >= cfg.threshold));
+  for (const fl of cfg.blockingFlags) if (f.flags.includes(fl) && !(rcv && fl === "RULE_RANKED_CHOICE") && !(pctMoot && fl === "TURNOUT_WEAK_EVIDENCE")) blockers.push(`data-quality flag ${fl}`);
   if (rcv && (pMaj as number) < cfg.threshold) blockers.push("ranked choice: called only on a certain majority of first choices, and there is none yet");
   if (f.dataState === "MISSING" || f.dataState === "INVALID" || f.dataState === "STALE") blockers.push(`data state ${f.dataState}`);
   if (p == null) blockers.push("no model probability");
@@ -183,16 +207,20 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, provider
   // actually counted. The model's own tail still holds a small chance that the count reopens, which is what kept a
   // finished race at 1.2 points "too open to call" for a week.)
   // (plain plurality races only: a measure with a 60% bar, a runoff rule or ranked choice is not settled by who leads)
-  const overPl = over && f.rule === "plurality";
+  // (a measure counts as one since 2.5.1, measured against its bar)
+  const overPl = over && (f.rule === "plurality" || onBar);
   if (overPl && cfg.finished && top) {
-    if (byVotes[0]?.candidateId !== top.candidateId) blockers.push("the model's leader does not lead the count");
+    if (countLeaderId !== top.candidateId) blockers.push("the model's leader does not lead the count");
     else if (countedMargin == null || countedMargin < cfg.finished.minCountedMargin) blockers.push(`the count has stopped with the leader under ${cfg.finished.minCountedMargin} points ahead: recount territory`);
   } else if (out && top && f.projectedTopTwo) {
     const sorted = [...f.candidates].filter((c) => c.reportedVotes != null).sort((a, b) => (b.reportedVotes as number) - (a.reportedVotes as number));
-    const lead = sorted.length > 1 && sorted[0].candidateId === top.candidateId ? (sorted[0].reportedVotes as number) - (sorted[1].reportedVotes as number) : -1;
+    // (a measure: the votes by which the count clears or misses its bar, and the share of what is out that the other
+    // side would need to overturn that, which starts from its own side of the bar)
+    const lead = onBar ? (countLeaderId === top.candidateId ? 2 * Math.abs((mYes!.reportedVotes as number) - bar! * yn) : -1)
+      : sorted.length > 1 && sorted[0].candidateId === top.candidateId ? (sorted[0].reportedVotes as number) - (sorted[1].reportedVotes as number) : -1;
     if (lead < 0) blockers.push("the model's leader does not lead the count");
     else if (out.i95.hi > 0) {
-      const needed = 0.5 + lead / (2 * out.i95.hi);
+      const needed = (onBar ? (passing ? 1 - bar! : bar!) : 0.5) + lead / (2 * out.i95.hi);
       // A race modeled county by county knows where the outstanding ballots are, so the test is against what those
       // counties are expected to give the runner-up: he must need at least minNeededOverExpected more of them, head
       // to head, than the model expects him to get. ("All that is left is the Panhandle": needing 48% there is not
@@ -218,7 +246,9 @@ export function probe(f: RaceForecast, cfg: CallConfig, stale: boolean, provider
   // under the threshold (the model never quite lets go of the chance that a count reopens): the model must still
   // favour the leader strongly, and the counted lead must be twice the recount floor.
   const F = cfg.finished;
-  const settled = !standard && !viaFast && overPl && !!F && F.settledMinProb != null && F.settledMargin != null && pc != null && pc >= F.settledMinProb && countedMargin != null && countedMargin >= F.settledMargin
+  // (final phase: ten days on, the recount floor and a model that still favours the leader are enough)
+  const sProb = finalPhase && F?.finalMinProb != null ? F.finalMinProb : F?.settledMinProb, sMargin = finalPhase && F ? F.minCountedMargin : F?.settledMargin;
+  const settled = !standard && !viaFast && overPl && !!F && sProb != null && sMargin != null && pc != null && pc >= sProb && countedMargin != null && countedMargin >= sMargin
     && blockers.every((b) => b === "the probability does not clear the threshold after simulation error") && slow.every((b) => !b.startsWith("under "));
   const all = settled ? [] : safeSeat ? blockers : [...blockers, ...slow];
   if (overPl && F && !standard && !viaFast && !settled && !all.length && pc != null) all.push(`the count has stopped, and the model's ${(100 * pc).toFixed(1)}% is under the threshold with the leader under ${F.settledMargin ?? F.minCountedMargin} points ahead`);
@@ -247,7 +277,7 @@ export function stepLedger(prev: Ledger, inp: StepInput): Ledger {
     // silence is an update too: the same data, looked at again after `stepMin` minutes (only where the source says when the total last moved)
     const quietStep = !!cfg.finished && f.turnout.quietMin != null && f.turnout.quietMin >= cfg.finished.stepAfterMin && !!old.updatedAt && (Date.parse(inp.at) - Date.parse(old.updatedAt)) / 60_000 >= cfg.finished.stepMin;
     const fresh = key !== old.lastObsKey || (finished && inp.snapshotId !== old.lastSnapshotId), distinct = fresh || quietStep;
-    const pr = probe(f, cfg, !!inp.stale, obs?.providerPctReporting ?? null);
+    const pr = probe(f, cfg, !!inp.stale, obs?.providerPctReporting ?? null, obs?.pollsCloseAt ? (Date.parse(inp.at) - Date.parse(obs.pollsCloseAt)) / 60_000 : null);
     // first-report quarantine: count the distinct updates that carried votes
     const updates = (old.updates ?? 0) + (fresh && f.turnout.counted > 0 ? 1 : 0);      // silence does not count toward the quarantine
     // (a safe seat has its own, shorter quarantine: there the forecast and the count must agree, so a faulty first

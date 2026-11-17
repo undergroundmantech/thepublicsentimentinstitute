@@ -39,7 +39,11 @@ if (a.manifests.some((m) => m.usesFutureObservation)) blockers.push("it contains
 if (a.manifests.some((m) => m.synthetic)) blockers.push("it contains synthetic observations");
 
 let outcomes: Outcomes;
-if (pipelineTest) outcomes = outcomesFromFinalState(frames[frames.length - 1].state);
+if (pipelineTest) {
+  // measures are judged against their stated bar, read from the results index
+  const ixr = JSON.parse(fs.readFileSync(path.join(path.resolve(import.meta.dirname, "../.."), "public/results/2026/index.json"), "utf8")) as { races: { id: string; thr?: number }[] };
+  outcomes = outcomesFromFinalState(frames[frames.length - 1].state, 99, Object.fromEntries(ixr.races.filter((r) => r.thr != null).map((r) => [r.id, r.thr as number])));
+}
 else {
   const raw = JSON.parse(fs.readFileSync(path.resolve(arg("--outcomes")!), "utf8")) as Record<string, { winnerId?: string; winnerName?: string; marginPp: number; source: string }>;
   const last = frames[frames.length - 1].state; outcomes = {};

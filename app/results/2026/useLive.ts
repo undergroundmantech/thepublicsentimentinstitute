@@ -3,7 +3,7 @@
 // every LIVE_POLL_MS, matching each civicAPI race to its forecast race. Keeps the previous read so the monitor can show
 // what changed between reads.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { beforeClose, civicRead, matchCivic, showTest, TYPE_SETS, type CRace, type XIndex } from "./live";
+import { beforeClose, CIVIC_BY_ID, civicRead, civicReadById, matchCivic, showTest, TYPE_SETS, type CRace, type XIndex } from "./live";
 import { LIVE_POLL_MS, STALE_MS, mergeReads, type GoodReads, type TypeRead } from "./liveFeed";
 import { useEngine } from "./engineClient";
 import type { View } from "@/app/lib/engine/serve";
@@ -81,6 +81,11 @@ export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], eve
       const res: Record<string, TypeRead | Error> = {};
       for (const t of types) {             // one type at a time, so the proxy never bursts civicAPI
         try { res[t] = await civicRead(t, ac.signal); } catch (e) { if ((e as Error).name === "AbortError") return; res[t] = e as Error; }
+      }
+      // the few measures civicAPI files under a type too broad to search are read by id, kept like a type's read
+      if (sets.includes("ballot")) for (const id of CIVIC_BY_ID) {
+        try { const c = await civicReadById(id, ac.signal); res[`id:${id}`] = c ? { races: [c], at: Date.now() } : new Error(`race ${id}`); }
+        catch (e) { if ((e as Error).name === "AbortError") return; res[`id:${id}`] = e as Error; }
       }
       if (dead) return;
       // a type that fails keeps its last good read instead of dropping its races to "no votes"

@@ -27,12 +27,19 @@ export const DEFAULT_GATE: GateTargets = { coverage80: [0.72, 0.88], coverage95M
 export const half = (raceId: string): "A" | "B" => (parseInt(fnv64(raceId).slice(-2), 16) % 2 === 0 ? "A" : "B");
 
 /** Outcomes taken from the last frame of a source. Only for pipeline tests: never certified, never a basis for calibration. */
-export function outcomesFromFinalState(s: StoredState, minPct = 99): Outcomes {
+export function outcomesFromFinalState(s: StoredState, minPct = 99, /** a measure's passing bar by race id (Yes share of Yes and No); 0.5 where absent */ bars: Record<string, number> = {}): Outcomes {
   const out: Outcomes = {};
   for (const r of Object.values(s.races)) {
     if ((r.providerPct ?? 0) < minPct || r.rule === "ranked_choice" || r.rule === "multi_seat") continue;
     const rep = r.c.filter((c) => c[3] != null).sort((a, b) => (b[3] as number) - (a[3] as number));
     const tot = rep.reduce((x, c) => x + (c[3] as number), 0); if (rep.length < 2 || !tot) continue;
+    // a measure is won against its bar (Florida 60%, New Hampshire two-thirds), not by the larger side
+    const yes = r.rule === "measure" ? rep.find((c) => c[1] === "Yes") : undefined, no = r.rule === "measure" ? rep.find((c) => c[1] === "No") : undefined;
+    if (yes && no) {
+      const bar = bars[r.id] ?? 0.5, yn = (yes[3] as number) + (no[3] as number), ys = yn ? (yes[3] as number) / yn : 0, pass = bar > 0.5 ? ys >= bar : ys > 0.5;
+      out[r.id] = { winnerId: (pass ? yes : no)[0], marginPp: 200 * Math.abs(ys - bar), certified: false, source: `last frame of the source (${s.t})` };
+      continue;
+    }
     out[r.id] = { winnerId: rep[0][0], marginPp: (100 * ((rep[0][3] as number) - (rep[1][3] as number))) / tot, certified: false, source: `last frame of the source (${s.t})` };
   }
   return out;

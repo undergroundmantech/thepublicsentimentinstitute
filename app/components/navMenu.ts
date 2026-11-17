@@ -77,21 +77,16 @@ export const MENU: NavGroup[] = [
       ] },
     ] },
   { key: "polls", label: "Polls", href: "/polls",
-    feature: { href: "/majority-tracker", eyebrow: "New · Dec 1 leader vote", title: "Majority Tracker", note: "Schumer or Van Hollen: who has the votes to lead Senate Democrats.", cta: "Open the tracker" },
     cols: [
       { h: "National", links: [
         { href: "/polls/approval", label: "Trump approval" },
         { href: "/polls/generic-ballot", label: "Generic ballot" },
         { href: "/polls/right-track", label: "Right track, wrong track" },
       ] },
-      { h: "2028", links: [
-        { href: "/polls/2028/republican-primary", label: "Republican primary" },
-        { href: "/polls/2028/democratic-primary", label: "Democratic primary" },
-        { href: "/polls/2028", label: "General election matchups" },
-        { href: "/polls/ratings", label: "Pollster ratings" },
-      ] },
-      { h: "Senate leadership", links: [
-        { href: "/majority-tracker", label: "Majority Tracker", note: "Schumer vs Van Hollen", badge: "New" },
+      { h: "Races", links: [
+        { href: "/polls/2028", label: "2028 primaries" },
+        { href: "/polls/senate", label: "Senate" },
+        { href: "/polls/governor", label: "Governors" },
       ] },
       { h: "Ours", links: [
         { href: "/on-point-polling/polls", label: "On Point Polling releases" },
@@ -101,7 +96,6 @@ export const MENU: NavGroup[] = [
   { key: "more", label: "More", href: "/news", more: true,
     cols: [
       { h: "Analysis", href: "/analysis", links: [
-        { href: "/majority-tracker", label: "Majority Tracker", note: "Schumer vs Van Hollen", badge: "New" },
         { href: "/analysis", label: "All analysis" },
         { href: "/analysis/2028-first-look", label: "2028: where it starts" },
         { href: "/analysis/2026-forecast-review", label: "2026: right and wrong" },

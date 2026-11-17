@@ -1,5 +1,8 @@
 # Election Night 2.0, patch 3: entering the monitor, and Pointy in the Pro modes
 
+> A fourth part followed (`docs/ELECTION_NIGHT_2_PATCH_4.md`): today's civicAPI count and engine 2.5.1, with a new
+> replay data pack. All four parts ship in one updater, `apply_election_night_2_patch4_full.py`.
+
 The third and last part of the patch to the Election Night 2.0 final update. It ships in the same single updater as
 parts one and two (`docs/ELECTION_NIGHT_2_PATCH_1.md`, `docs/ELECTION_NIGHT_2_PATCH_2.md`). Three small things, all
 front end. The engine (`onpoint-engine/2.5.0`), the call rules and the replay data pack are unchanged.
@@ -10,15 +13,14 @@ One updater and one replay data pack carry all three parts. The Election Night 2
 (`apply_election_night_2.py`) must already be applied. From the site's root folder:
 
 ```
-python3 apply_election_night_2_patch3_full.py --dry-run
-python3 apply_election_night_2_patch3_full.py
-python3 apply_election_night_2_patch3_full.py --install-replay election-night-2-patch2-replay-data.zip
+python3 apply_election_night_2_patch4_full.py --dry-run
+python3 apply_election_night_2_patch4_full.py
+python3 apply_election_night_2_patch4_full.py --install-replay election-night-2-patch4-replay-data.zip
 npx tsc --noEmit
 npm run test:intelligence
 ```
 
-The replay data pack is the one already delivered with part two (same file, same name); if it is installed, the third
-command can be skipped. `--verify` checks the files on disk; `--rollback` restores them as they were before the run.
+The replay data pack was rebuilt in part four; install it. `--verify` checks the files on disk; `--rollback` restores them as they were before the run.
 The updater also runs on a checkout that already has part one, or parts one and two, and then writes only what
 differs. It never deletes anything, never runs npm and sends nothing over the network.
 

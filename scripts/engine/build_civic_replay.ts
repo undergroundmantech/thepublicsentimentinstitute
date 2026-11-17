@@ -24,7 +24,7 @@ import type { XIndex } from "../../app/results/2026/live";
 const arg = (k: string, d?: string) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const root = path.resolve(import.meta.dirname, "../..");
 const histDir = arg("--history"), storeDir = arg("--store"), limit = Number(arg("--limit", "0"));
-if (!histDir || !storeDir) { console.error("usage: build_civic_replay.ts --history <dir> --store <dir> [--night-every 120] [--verify | --verify-only] [--limit n]"); process.exit(2); }
+if (!histDir || !storeDir) { console.error("usage: build_civic_replay.ts --history <dir> --store <dir> [--night-every 120] [--verify | --verify-only] [--limit n] [--until <ISO>] [--after <ISO>]"); process.exit(2); }
 if (path.resolve(storeDir).startsWith(path.join(root, "public"))) { console.error("Keep the working archive out of public/. export_static_replay.ts writes the public pack."); process.exit(2); }
 export const CIVIC_REPLAY_ID = "civicapi-2026-11-03";
 const d = (s: string) => Date.parse(s), nightEvery = Number(arg("--night-every", "120")) * 1000;
@@ -32,7 +32,8 @@ const d = (s: string) => Date.parse(s), nightEvery = Number(arg("--night-every",
 export const PLAN: FramePlan = [
   { fromMs: d("2026-11-03T22:58:00Z"), toMs: d("2026-11-04T10:00:00Z"), everyMs: nightEvery },
   { fromMs: d("2026-11-04T10:00:00Z"), toMs: d("2026-11-05T06:00:00Z"), everyMs: 600_000 },
-  { fromMs: d("2026-11-05T06:00:00Z"), toMs: d("2026-11-12T02:00:00Z"), everyMs: 3_600_000 },
+  // --until extends the hourly stretch for a history that has later snapshots added (scripts/engine/append_civic_live.py)
+  { fromMs: d("2026-11-05T06:00:00Z"), toMs: d(arg("--until", "2026-11-12T02:00:00Z")!), everyMs: 3_600_000 },
 ];
 const hs = prepare(fs.readdirSync(histDir).filter((f) => f.endsWith(".json.gz")).map((f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(histDir, f))).toString("utf8")) as CompactRace));
 const index = JSON.parse(fs.readFileSync(path.join(root, "public/results/2026/index.json"), "utf8")) as XIndex;
@@ -40,11 +41,13 @@ const pre = preElectionFrom(JSON.parse(fs.readFileSync(path.join(root, "public/f
 // county forecasts for the Senate and governor's races: those races are modeled county by county (app/lib/engine/countyBaselines.ts)
 const county = countyContext(JSON.parse(fs.readFileSync(path.join(root, "public/forecast/counties.json"), "utf8")), index);
 let times = frameTimes(hs, PLAN); if (limit) times = times.slice(0, limit);
+// --after <ISO time>: continue a finished archive, recording only the frames later than its last one
+const after = arg("--after"); if (after) times = times.filter((t) => t > d(after));
 const store = new FsStore(path.resolve(storeDir), { durable: true });
 const nSnaps = hs.reduce((n, h) => n + h.timesMs.length, 0);
 console.log(`civicAPI history: ${hs.length} races, ${nSnaps} stored snapshots -> ${times.length} frames, ${new Date(times[0]).toISOString()} to ${new Date(times[times.length - 1]).toISOString()}`);
 await describeSource(store, "historical", CIVIC_REPLAY_ID, { label: "November 3, 2026: election night as civicAPI recorded it", election: "2026-11-03",
-  notes: [`Recorded replay of civicAPI's stored snapshots (${nSnaps.toLocaleString("en-US")} across ${hs.length} races), shown as published at each moment: every 2 minutes on election night, every 10 minutes the next day, hourly through November 11. Unofficial; not certified results. Used with civicAPI's permission.`] });
+  notes: [`Recorded replay of civicAPI's stored snapshots (${nSnaps.toLocaleString("en-US")} across ${hs.length} races), shown as published at each moment: every 2 minutes on election night, every 10 minutes the next day, hourly through ${new Date(times[times.length - 1]).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "America/New_York" })}. Unofficial; not certified results. Used with civicAPI's permission.`] });
 const t0 = Date.now(); let rec = 0, same = 0;
 // --verify-only: check an archive that is already built, without recording anything
 const verifyOnly = process.argv.includes("--verify-only");
