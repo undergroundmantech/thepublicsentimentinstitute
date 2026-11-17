@@ -13,6 +13,8 @@ export type Poll2028 = Poll & { startDate?: string; sampleImputed?: boolean };
 
 /** 2028 Republican presidential primary, national. */
 export const R_PRIMARY_2028: Poll2028[] = [
+  // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 350, "sampleType": "RV", "results": {"Vance": 47.1, "Rubio": 23.6, "DeSantis": 12.3, "Cruz": 4.7, "Other": 3.5, "Carlson": 3.3, "Ramaswamy": 2.9, "Haley": 2.0, "Kemp": 0.7}},
   // On Point Polling post election national survey, Nov 6 2026, 1,088 registered voters
   {"pollster": "On Point Polling", "endDate": "2026-11-06", "sampleSize": 1088, "sampleType": "RV", "results": {"Vance": 28.3, "Rubio": 20.8, "Trump Jr.": 13.3, "DeSantis": 12.7, "Kennedy": 3.3, "Cruz": 2.7, "Carlson": 2.4, "Haley": 1.5, "Ramaswamy": 1.3, "Other": 3.3, "Undecided": 10.4}},
   {"pollster": "YouGov (Economist)", "startDate": "2026-11-09", "endDate": "2026-11-11", "sampleSize": 354, "sampleType": "RV", "results": {"Vance": 41.0, "Rubio": 34.0, "DeSantis": 12.0, "Haley": 1.0, "Massie": 1.0}},
@@ -150,6 +152,8 @@ export const R_PRIMARY_2028: Poll2028[] = [
 
 /** 2028 Democratic presidential primary, national. */
 export const D_PRIMARY_2028: Poll2028[] = [
+  // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 491, "sampleType": "RV", "results": {"Harris": 36.9, "Newsom": 14.0, "Kelly": 9.2, "Ossoff": 7.9, "Buttigieg": 7.6, "Ocasio-Cortez": 7.0, "Shapiro": 6.1, "Beshear": 3.8, "Other": 2.3, "Booker": 2.2, "Stephen A. Smith": 2.1, "Pritzker": 0.9}},
   // On Point Polling post election national survey, Nov 6 2026, 1,088 registered voters
   {"pollster": "On Point Polling", "endDate": "2026-11-06", "sampleSize": 1088, "sampleType": "RV", "results": {"Harris": 25.5, "Newsom": 12.8, "Buttigieg": 7.7, "Ossoff": 7.6, "Ocasio-Cortez": 6.8, "Shapiro": 5.3, "Kelly": 4.0, "Beshear": 3.0, "Booker": 2.4, "Pritzker": 2.0, "Whitmer": 1.5, "Stephen A. Smith": 1.4, "Other": 2.0, "Undecided": 17.9}},
   {"pollster": "YouGov (Economist)", "startDate": "2026-11-09", "endDate": "2026-11-11", "sampleSize": 470, "sampleType": "RV", "results": {"Harris": 18.0, "Buttigieg": 11.0, "Newsom": 14.0, "Ocasio-Cortez": 13.0, "Ossoff": 15.0, "Shapiro": 4.0, "Kelly": 4.0, "Beshear": 3.0, "Pritzker": 3.0, "Booker": 2.0, "Bernie Sanders": 3.0}},
@@ -291,6 +295,25 @@ export const D_PRIMARY_2028: Poll2028[] = [
 
 /** 2028 general election head to heads, national. Each row is one matchup of one poll. */
 export const GENERAL_2028: Poll2028[] = [
+  // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 41.6, "Harris": 51.3}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 41.0, "Newsom": 53.3}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 42.1, "Buttigieg": 52.1}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 42.6, "Ocasio-Cortez": 51.6}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 40.2, "Ossoff": 52.8}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 41.6, "Stephen A. Smith": 48.6}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 44.1, "Harris": 50.1}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 43.4, "Newsom": 50.9}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 42.4, "Buttigieg": 52.4}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 43.4, "Ocasio-Cortez": 50.2}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 41.5, "Ossoff": 51.7}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Rubio": 44.6, "Stephen A. Smith": 46.7}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 42.9, "Harris": 50.4}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 42.9, "Newsom": 51.3}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 41.7, "Buttigieg": 53.2}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 42.1, "Ocasio-Cortez": 51.9}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 42.5, "Ossoff": 52.5}},
+  {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"DeSantis": 43.6, "Stephen A. Smith": 46.8}},
   {"pollster": "Emerson College", "startDate": "2026-08-16", "endDate": "2026-08-17", "sampleSize": 1000, "sampleType": "LV", "results": {"Vance": 45.0, "Harris": 49.0}},
   {"pollster": "Zogby", "startDate": "2026-07-01", "endDate": "2026-07-04", "sampleSize": 1003, "sampleType": "LV", "results": {"Vance": 43.0, "Harris": 48.0}},
   {"pollster": "On Point Polling", "startDate": "2026-05-21", "endDate": "2026-05-21", "sampleSize": 893, "sampleType": "LV", "results": {"Vance": 39.0, "Harris": 47.0}},

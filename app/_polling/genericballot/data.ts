@@ -9,6 +9,9 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 17, 2026: post midterm national polls ──
+  { pollster: "On Point Polling", endDate: "2026-11-16", sampleSize: 920, sampleType: "RV", results: { Democrats: 52.1, Republicans: 38.6, Other: 2.4 } },   // On Point national poll, Nov 16, registered voters, House vote this month as asked, D+13.6; 6.9 did not vote
+  { pollster: "On Point Polling", endDate: "2026-11-06", sampleSize: 1088, sampleType: "RV", results: { Democrats: 54.6, Republicans: 41.6, Other: 3.8 } },   // On Point post election national poll, Nov 6, all registered voters: each voter's House vote plus who nonvoters would have picked, undecideds leaned, D+13.0
   // ── Added Nov 3, 2026 8 AM sweep ──
   { pollster: "Reuters/Ipsos", endDate: "2026-11-02", sampleSize: 1357, sampleType: "RV", results: { Democrats: 49, Republicans: 42 } },   // Oct 29 to Nov 2, final, registered voters; likely voters 52 to 44 at 1,212
   // ── Added Nov 2, 2026 8 PM sweep ──

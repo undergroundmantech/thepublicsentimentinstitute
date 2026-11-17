@@ -7,6 +7,18 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 17, 2026: post midterm national polls ──
+  { pollster: "On Point Polling", endDate: "2026-11-16", sampleSize: 920, sampleType: "RV", results: { Approve: 39.0, Disapprove: 58.6 } },   // On Point national poll, Nov 16, registered voters, as published
+  { pollster: "Morning Consult", endDate: "2026-11-15", sampleSize: 2200, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },   // Nov 13 to 15, registered voters
+  { pollster: "Reuters/Ipsos", endDate: "2026-11-16", sampleSize: 1521, sampleType: "A", results: { Approve: 32, Disapprove: 66 } },   // Nov 13 to 16, adults, from the Ipsos release
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-11-15", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 58 } },   // daily tracking Nov 9 to 15
+  { pollster: "Economist/YouGov", endDate: "2026-11-11", sampleSize: 1463, sampleType: "RV", results: { Approve: 36, Disapprove: 61 } },   // Nov 9 to 11, registered voters; one listing gives 1,685
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-11-09", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 59 } },   // daily tracking Nov 3 to 9
+  { pollster: "Reuters/Ipsos", endDate: "2026-11-09", sampleSize: 1705, sampleType: "A", results: { Approve: 32, Disapprove: 65 } },   // Nov 6 to 9, 1,705 adults per Ipsos; one listing gives 36 to 63 among 1,352 registered voters
+  { pollster: "Morning Consult", endDate: "2026-11-08", sampleSize: 2200, sampleType: "RV", results: { Approve: 40, Disapprove: 57 } },   // Nov 6 to 8, registered voters
+  { pollster: "Navigator Research", endDate: "2026-11-08", sampleSize: 3000, sampleType: "LV", results: { Approve: 37, Disapprove: 63 } },   // Oct 28 to Nov 8, likely voters
+  { pollster: "On Point Polling", endDate: "2026-11-06", sampleSize: 1088, sampleType: "RV", results: { Approve: 36.4, Disapprove: 60.4 } },   // On Point post election national poll, Nov 6, registered voters
+  { pollster: "Economist/YouGov", endDate: "2026-11-06", sampleSize: 3166, sampleType: "RV", results: { Approve: 36, Disapprove: 62 } },   // Nov 4 to 6, registered voters
   // ── Added Nov 3, 2026 8 AM sweep ──
   { pollster: "Reuters/Ipsos", endDate: "2026-11-02", sampleSize: 1765, sampleType: "A", results: { Approve: 32, Disapprove: 64 } },   // Oct 29 to Nov 2, adults; registered voters 36 to 63
   // ── Added Nov 2, 2026 8 PM sweep ──

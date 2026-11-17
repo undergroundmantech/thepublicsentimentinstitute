@@ -35,6 +35,8 @@ export function createEngine(DATA, AKCT) {
   };
   // the primary field's county shares, recalibrated to the chosen targets, for the general election engine
   const pmemo = {};
+  // v48f: candidates marked withdrawn in prim_cands are out of the primary field
+  op28.withdrawn = (party) => { const d = dash.data('prim_cands'); return d && d.status === 'ok' ? d.data.filter((r) => r.party === party && Number(r.withdrawn) === 1).map((r) => r.name) : []; };
   op28.primShares = (party) => {
     if (!['prim_model', 'prim_cands'].every((id) => dash.data(id).status === 'ok')) return null;
     const p = P(); const out0 = [].concat(p.pout || []); const key = JSON.stringify([party, out0, p.ptgt, dash.data('prim_polls').status]);
@@ -66,7 +68,7 @@ export function createEngine(DATA, AKCT) {
   op28.prim = () => {
     if (!op28.primReady()) return null;
     const N = 4000;
-    const p = P(); const out0 = [].concat(p.pout || []); const key = JSON.stringify(['v45', p.pparty, out0, p.ptgt, dash.data('prim_polls').status]);
+    const p = P(); const out0 = [].concat(p.pout || [], op28.withdrawn(p.pparty === 'R' ? 'R' : 'D')); const key = JSON.stringify(['v45', p.pparty, out0, p.ptgt, dash.data('prim_polls').status]);
     if (memo.key === key) return memo.out;
     const party = p.pparty === 'R' ? 'R' : 'D';
     const pm = dash.data('prim_model').data, pc = dash.data('prim_cands').data.filter((r) => r.party === party), cal = dash.data('prim_calendar').data.filter((r) => r.party === party);
@@ -197,6 +199,12 @@ export function createEngine(DATA, AKCT) {
     TRAITS = basisTraits(cm);
     const g = (c) => (c ? TRAITS.map((t) => Number(c['g_' + t]) || 0) : TRAITS.map(() => 0));
     const gD = g(D), gR = g(R), gDV = g(DV), gRV = g(RV);
+    // v48c: each candidate's own county term from the respondent file (cand_county): their turnout and vote against the generic
+    // nominee, by who lives in the county, which shows they follow and the county's traits. The old coalition basis is the fallback.
+    const CCd = dash.data('cand_county'); const CC = CCd && CCd.status === 'ok' && CCd.data.length ? CCd.data : null;
+    const ccIx = CC ? new Map(CC.map((r, k) => [r.fips, k])) : null;
+    const ccKey = (c, party) => (c && CC && Object.prototype.hasOwnProperty.call(CC[0], party + '|' + c.name) ? party + '|' + c.name : null);
+    const kD = ccKey(D, 'D'), kR = ccKey(R, 'R'), kDV = ccKey(DV, 'D'), kRV = ccKey(RV, 'R');
     const n = cm.length, two = new Float64Array(n), tot = new Float64Array(n), othS = new Float64Array(n);
     const xD = new Float64Array(n), xR = new Float64Array(n), xI = new Float64Array(n);
     // issue coalitions: each nominee's issue profile, running mates at a quarter, on the county's persuadable issue lean
@@ -209,15 +217,20 @@ export function createEngine(DATA, AKCT) {
       const c = cm[i]; tot[i] = Number(c.total); two[i] = tot[i] * (1 - Number(c.other_share));
       const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
       othS[i] = Math.min(0.2, Math.max(0.002, GP.hist_blend * Number(c.other_share) + (1 - GP.hist_blend) * GP.g0 * prop)) * (T ? GP.named_third_keep : 1);
-      let a = 0, b = 0;
-      for (let k = 0; k < TRAITS.length; k++) { const z = Number(c['z_' + TRAITS[k]]); a += (gD[k] + 0.25 * gDV[k]) * z; b += (gR[k] + 0.25 * gRV[k]) * z; }
+      let aD = 0, aDV = 0, bR = 0, bRV = 0;
+      for (let k = 0; k < TRAITS.length; k++) { const z = Number(c['z_' + TRAITS[k]]); aD += gD[k] * z; aDV += gDV[k] * z; bR += gR[k] * z; bRV += gRV[k] * z; }
+      const cr = ccIx && ccIx.has(c.fips) ? CC[ccIx.get(c.fips)] : null;
+      if (cr) { if (kD) aD = Number(cr[kD]) || 0; if (kDV) aDV = Number(cr[kDV]) || 0; if (kR) bR = Number(cr[kR]) || 0; if (kRV) bRV = Number(cr[kRV]) || 0; }
+      const a = aD + 0.25 * aDV, b = bR + 0.25 * bRV;
       let ii = 0; for (let k = 0; k < ISS.length; k++) ii += aI[k] * (Number(c['iss_' + ISS[k]]) || 0);
       xD[i] = a; xR[i] = b; xI[i] = ii; W += two[i]; mD += a * two[i]; mR += b * two[i]; mI += ii * two[i];
     }
     mD /= W; mR /= W; mI /= W;
     const hD = json(D.home), hR = json(R.home), vD = DV ? homeOf(DV) : null, vR = RV ? homeOf(RV) : null;
     // v19: what each nominee's 2028 primary says, the 2026 candidate rules: party unity, demographic strength, home ground
-    const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return (pD[b] || 0) + (pR[b] || 0); };
+    // v48c: prim_w scales these; the respondent file's county term already holds each candidate's demographic strength
+    const pw = GP.prim_w == null ? 1 : Number(GP.prim_w);
+    const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return pw * ((pD[b] || 0) + (pR[b] || 0)); };
     const qual = (ptR ? -ptR.quality : 0) + (ptD ? ptD.quality : 0);
     const natPart = Number(D.nat) + Number(R.nat) + qual;
     // spending gridlock: project 2028 ad dollars from this ticket's own map, then damp each state's national swing
@@ -274,7 +287,8 @@ export function createEngine(DATA, AKCT) {
       if (!pt) return [d, r, 0]; const ii = pt.S.cidx.get(c.fips); if (ii == null) return [d, r, 0];
       const K = pt.S.names.length; let ax = 0, an = 0;
       for (let j = 0; j < K; j++) { const s = pt.S.sh[ii * K + j]; ax += s * pt.dxv[j]; an += s * pt.dnv[j]; }
-      const own = party === 'D' ? d : r; const f = Math.min(GP.f_cap, pt.S.V[ii] / Math.max(1, own));
+      // v48c: consol_w scales the rival supporters' defection; the respondent file's vote for each nominee already holds it
+      const own = party === 'D' ? d : r; const f = Math.min(GP.f_cap, pt.S.V[ii] / Math.max(1, own)) * (GP.consol_w == null ? 1 : Number(GP.consol_w));
       const mx = Math.max(-0.3, Math.min(0.3, ax * f)) * own, mn = Math.max(-0.3, Math.min(0.3, an * f)) * own;
       return party === 'D' ? [d - mx - mn, r + mx, GP.third_of_n * mn] : [d + mx, r - mx - mn, GP.third_of_n * mn];
     };
@@ -291,7 +305,7 @@ export function createEngine(DATA, AKCT) {
         if (pull[i] > 0) { const pv = Math.min(pull[i], 0.5 * (T.party === 'D' ? d : r)); if (T.party === 'D') d -= pv; else r -= pv; t += pv; }
       }
       const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
-      cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i), pc, q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
+      cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i), pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
       add(c.st, d, r, t, o);
       if (Number(c.ne2) > 0) add(NE2, d, r, t, o, Number(c.ne2));
       if (c.st === 'ME') { add(ME1, d, r, t, o, Number(c.me1)); add(ME2, d, r, t, o, 1 - Number(c.me1)); }
@@ -337,16 +351,20 @@ export function createEngine(DATA, AKCT) {
     const meta = Object.fromEntries(st.map((r) => [r.st, r]));
     const keys = Object.keys(agg).filter((s) => meta[s] && Number(meta[s].ev) > 0);
     const sdS = keys.map((s) => { const r = meta[s]; return Math.max(1.5, Math.sqrt(Math.max(0, ((Number(r.p90) - Number(r.p10)) / 2.563) ** 2 - 4.6 ** 2 - 1.5 ** 2))); });
+    // v48b, from the 2026 backtest: states in the same region share a miss of about a point, and a state's own miss has fatter
+    // tails than a normal curve (t with 5 degrees of freedom, scaled to the same spread)
+    const REG8 = {"AK":7,"AL":0,"AR":0,"AZ":6,"CA":7,"CO":7,"CT":4,"DC":3,"DE":3,"FL":5,"GA":5,"HI":7,"IA":2,"ID":7,"IL":1,"IN":1,"KS":2,"KY":0,"LA":0,"MA":4,"MD":3,"ME":4,"MI":1,"MN":1,"MO":2,"MS":0,"MT":7,"NC":5,"ND":2,"NE":2,"NH":4,"NJ":3,"NM":6,"NV":7,"NY":3,"OH":1,"OK":2,"OR":7,"PA":3,"RI":4,"SC":5,"SD":2,"TN":0,"TX":6,"UT":7,"VA":5,"VT":4,"WA":7,"WI":1,"WV":0,"WY":7};
+    const tdraw = (r) => { let c = 0; for (let k = 0; k < 5; k++) { const z = gauss(r); c += z * z; } return gauss(r) / Math.sqrt(c / 5) / Math.sqrt(5 / 3); };
     const rr = rng(2028); const ev = keys.map((s) => Number(meta[s].ev));
     const win = keys.map(() => [0, 0, 0]); const share = keys.map(() => [0, 0, 0, 0]);
     let wD = 0, wR = 0, wI = 0, none = 0, evD = 0, evR = 0, evI = 0; const hist = new Array(28).fill(0);
     for (let s = 0; s < N; s++) {
       let chi = 0; for (let j = 0; j < 6; j++) { const z = gauss(rr); chi += z * z; }
       const nat = 3.8 * gauss(rr) / Math.sqrt(chi / 6); const fI = Math.exp(0.35 * gauss(rr) - 0.06); const fO = Math.exp(0.3 * gauss(rr) - 0.045);
-      let eD = 0, eR = 0, eI = 0, neW = 1; const stN = {};
+      let eD = 0, eR = 0, eI = 0, neW = 1; const stN = {}, regN = {};
       for (let j = 0; j < keys.length; j++) {
         const s0 = keys[j], base = s0.split('-')[0]; const a = agg[s0]; const total = a.D + a.R + a.I + a.O;
-        const sn = stN[base] ?? (stN[base] = 1.5 * gauss(rr) + sdS[j] * gauss(rr));
+        const rg = REG8[base] ?? -1; const sn = stN[base] ?? (stN[base] = (regN[rg] ?? (regN[rg] = 1.0 * gauss(rr))) + 1.12 * gauss(rr) + sdS[j] * tdraw(rr));
         const I = Math.min(total * 0.7, a.I * fI * Math.exp(0.2 * gauss(rr))); const O = Math.min(total * 0.25, a.O * fO); const tw = total - I - O;
         const m = ((a.R - a.D) / Math.max(1, a.R + a.D)) * 100 + nat * dmp(s0) + sn;
         const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2;

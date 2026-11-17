@@ -9,6 +9,9 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 17, 2026: post midterm national polls ──
+  { pollster: "On Point Polling", endDate: "2026-11-16", sampleSize: 920, sampleType: "RV", results: { RightTrack: 28.3, WrongTrack: 60.2 } },   // On Point national poll, Nov 16, registered voters
+  { pollster: "On Point Polling", endDate: "2026-11-06", sampleSize: 1088, sampleType: "RV", results: { RightTrack: 25.4, WrongTrack: 62.0 } },   // On Point post election national poll, Nov 6, registered voters
   // ── Added Oct 28, 2026 ──
   { pollster: "On Point Polling", endDate: "2026-10-28", sampleSize: 672, sampleType: "LV", results: { RightTrack: 31.6, WrongTrack: 61.9 } },   // On Point national poll, Oct 28, likely voters; registered voters 29.9 to 60.3
   // ── Added Oct 5, 2026: June through September releases ──
