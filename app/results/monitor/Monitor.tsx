@@ -15,7 +15,7 @@ import { marginColor, marginColorInd } from "@/app/lib/opp";
 import { STN, KIND_LABEL, FIRST_CLOSE, fmtM, isInd, sides, expSides, type CRace, type CCand, type Kind, type XRace, type Exp } from "../2026/live";
 import { PROXY_CACHE_MS } from "../2026/liveFeed";
 import { sideNames } from "../2026/candidates";
-import { useIndex, useLive, useStateFile } from "../2026/useLive";
+import { useIndex, useLive, useShownIndex, useStateFile } from "../2026/useLive";
 import NightDesk from "../2026/NightDesk";
 import FloatTip from "@/app/components/opp/FloatTip";
 import { paintUnit } from "./paint";
@@ -61,7 +61,7 @@ const officeGroup = (off: string) => OFFICE_GROUPS.find((g) => g[2].test(off))?.
 const clockET = (d: Date) => d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });
 
 export default function Monitor({ chambers }: { chambers: Chambers }) {
-  const ix = useIndex();
+  const ixAll = useIndex();
   const [mode, setMode] = useState<Mode>("sen");
   const [color, setColor] = useState<Color>("results");
   const engS = useEngine();
@@ -90,7 +90,9 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const [zoomK, setZoomK] = useState(2.2);
   const [office, setOffice] = useState<string>("all");
   const [q, setQ] = useState("");
-  const live = useLive(ix, SETS[mode]);
+  const live = useLive(ixAll, SETS[mode]);
+  // races with no data are left off once the night is over (shownIndex.ts)
+  const ix = useShownIndex(ixAll, live, SETS[mode]);
   const sf = useStateFile(sel);
   // how the state in view voted from 2018 to 2024, statewide and by county
   const pastH = useStateHistory(sel);
@@ -116,15 +118,19 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
   const drag = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
 
   useEffect(() => { setNow(new Date()); const t = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(t); }, []);
-  // the opening screen stays up until the map, the races and the results (in a replay, its first frame) are in, for at
-  // least a second and a half so it never flashes, and never longer than twelve seconds whatever happens
-  const ready = !!geo && !!ix && engS.checked && (engS.mode !== "REPLAY" || !!engS.view);
+  // The opening screen stays up until the map, the races and the count are all in (in a replay, its first frame; live,
+  // civicAPI's first read with On Point's calls on it), for at least a second and a half so it never flashes, and
+  // never longer than thirty seconds whatever happens. Its line says what it is waiting for.
+  const ready = !!geo && !!ix && engS.checked && (engS.mode !== "REPLAY" || !!engS.view) && !live.loading;
+  const splashNote = !geo ? "Drawing the map" : !engS.checked ? "Loading the races"
+    : engS.mode === "REPLAY" ? (!engS.view || !ix ? "Loading the recorded night" : "Putting On Point's calls on the map")
+    : live.loading || !ix ? "Reading the count from civicAPI" : "Putting On Point's calls on the map";
   const [splash, setSplash] = useState<"on" | "out" | "off">("on");
   const born = useRef(0);
   useEffect(() => { born.current = performance.now(); }, []);
   useEffect(() => {
     if (splash !== "on") return;
-    const t = window.setTimeout(() => setSplash("out"), ready ? Math.max(400, 1600 - (performance.now() - born.current)) : 12000);
+    const t = window.setTimeout(() => setSplash("out"), ready ? Math.max(400, 1600 - (performance.now() - born.current)) : 30000);
     return () => window.clearTimeout(t);
   }, [ready, splash]);
   useEffect(() => { if (splash !== "out") return; const t = window.setTimeout(() => setSplash("off"), 500); return () => window.clearTimeout(t); }, [splash]);
@@ -606,7 +612,7 @@ export default function Monitor({ chambers }: { chambers: Chambers }) {
 
   return (
     <div className={`mon${desk ? " desk-on" : ""}`}>
-      {splash !== "off" ? <MonitorSplash out={splash === "out"} /> : null}
+      {splash !== "off" ? <MonitorSplash out={splash === "out"} note={splashNote} /> : null}
       <section className="mon-top" aria-label="Monitor controls">
         <nav className="mon-nav" aria-label="Where you are">
           <Link className="mon-nav-out" href="/results/2026"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden><path d="M7.5 1.5 3 6l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>2026 results</Link>

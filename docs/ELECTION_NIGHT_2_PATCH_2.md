@@ -1,8 +1,8 @@
 # Election Night 2.0, patch 2: the Calls Desk
 
 > A third part followed (`docs/ELECTION_NIGHT_2_PATCH_3.md`): the Results tab opens the monitor behind an opening
-> screen, and the character is kept out of the Pro modes. All three parts ship in one updater,
-> `apply_election_night_2_patch4_full.py`; file counts in this document are as of part two.
+> screen, and the character is kept out of the Pro modes; parts four and five followed. All five parts ship in one updater,
+> `apply_election_night_2_patch5_full.py`; file counts in this document are as of part two.
 
 The second part of the patch to the Election Night 2.0 final update. Part one is everything in
 `docs/ELECTION_NIGHT_2_PATCH_1.md` (engine 2.5.0: On Point's calls only, the docked replay bar, larger charts,
@@ -20,9 +20,9 @@ Patches 1 and 2 are delivered as **one updater and one replay data pack**. The E
 (`apply_election_night_2.py`, engine 2.4.0) must already be applied. Then, from the site's root folder:
 
 ```
-python3 apply_election_night_2_patch4_full.py --dry-run
-python3 apply_election_night_2_patch4_full.py
-python3 apply_election_night_2_patch4_full.py --install-replay election-night-2-patch4-replay-data.zip
+python3 apply_election_night_2_patch5_full.py --dry-run
+python3 apply_election_night_2_patch5_full.py
+python3 apply_election_night_2_patch5_full.py --install-replay election-night-2-patch5-replay-data.zip
 npx tsc --noEmit
 npm run test:intelligence
 ```

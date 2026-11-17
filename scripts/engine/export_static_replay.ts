@@ -48,7 +48,7 @@ const index = JSON.parse(fs.readFileSync(path.join(root, "public/results/2026/in
 const meta = new Map<string, RaceMeta>(index.races.map((r) => { const p = r.k === "measure" ? r.pPass ?? null : r.pR ?? null; return [r.id, { id: r.id, nm: r.nm, k: r.k, st: r.st, fav: p == null ? null : Math.max(p, 1 - p) }]; }));
 const hs = prepare(fs.readdirSync(histDir).filter((f) => f.endsWith(".json.gz")).map((f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(histDir, f))).toString("utf8")) as CompactRace));
 const src = `historical/${id}`, base = id, times = a.manifests.map((m) => m.t);
-let bytes = 0, prev: StoredState | null = null, prevView: View | null = null, keyBytes = 0, deltaBytes = 0; const moments: Moment[] = []; const byRace = new Map<string, RacePoint[]>(); const pids = new Set<number>();
+let bytes = 0, prev: StoredState | null = null, prevView: View | null = null, keyBytes = 0, deltaBytes = 0; const moments: Moment[] = []; const byRace = new Map<string, RacePoint[]>(); const counted = new Set<string>(); const pids = new Set<number>();
 const same = (x: RacePoint, y: RacePoint) => JSON.stringify({ ...x, t: "" }) === JSON.stringify({ ...y, t: "" });
 for (let i = 0; i < a.manifests.length; i++) {
   const s = await readState(store, a.manifests[i]);
@@ -62,6 +62,9 @@ for (let i = 0; i < a.manifests.length; i++) {
   }
   prevView = view;
   moments.push(...momentsBetween(prev, s, meta));
+  // races that ever have a vote counted (or an On Point call) in the recording: the pages show only these (shownIndex.ts)
+  for (const [rid, r] of Object.entries(s.races)) if (r.c.some((c) => (c[3] ?? 0) > 0)) counted.add(rid);
+  for (const [rid, r] of Object.entries(s.ledger.races)) if (r.modelCall) counted.add(rid);
   for (const rid of Object.keys(s.races)) { const p = racePoint(s, rid); if (p) { const arr = byRace.get(rid) ?? []; arr.push(p); byRace.set(rid, arr); } const pid = s.races[rid].pid; if (typeof pid === "number") pids.add(pid); }
   prev = s; if (i % 50 === 0) console.log(`frame ${i} of ${a.manifests.length}  ${s.t}`);
 }
@@ -91,9 +94,9 @@ put("index.json", JSON.stringify({ v: 1, sources: [info] }));
 if (prev) {
   const calls: Record<string, [string, string | null, string, string]> = {};
   for (const [rid, r] of Object.entries(prev.ledger.races)) if (r.modelCall) calls[rid] = [r.modelCall.name, r.modelCall.partyRaw, r.modelCall.calledAt, r.modelCall.lane ?? "standard"];
-  const body = JSON.stringify({ v: 1, engine: info.modelVersion, source: `On Point model calls on the recorded civicAPI night (${id}), as of its last update`, asOf: prev.t, calls });
+  const body = JSON.stringify({ v: 1, engine: info.modelVersion, source: `On Point model calls on the recorded civicAPI night (${id}), as of its last update`, asOf: prev.t, calls, counted: [...counted].sort() });
   const callsOut = arg("--calls"); if (callsOut) { fs.mkdirSync(path.dirname(path.resolve(callsOut)), { recursive: true }); fs.writeFileSync(path.resolve(callsOut), body); } else put("onpoint-calls.json", body);
-  console.log(`calls file: ${Object.keys(calls).length} On Point calls as of ${prev.t}`);
+  console.log(`calls file: ${Object.keys(calls).length} On Point calls as of ${prev.t}; ${counted.size} races with votes counted at some point`);
 }
 const kinds: Record<string, number> = {}; for (const x of moments) kinds[x.kind] = (kinds[x.kind] ?? 0) + 1;
 bytes += keyBytes + deltaBytes; console.log(`frames: ${(keyBytes / 1e6).toFixed(1)} MB whole, ${(deltaBytes / 1e6).toFixed(1)} MB deltas`);

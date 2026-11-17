@@ -94,7 +94,14 @@ const lastOf = (n: string) => norm(n).replace(/ (jr|sr|ii|iii|iv)$/, "").split("
  * (checked against civicAPI's race list for that election). A pin wins over the matcher, and applies only when
  * the provider race with that id is present.
  */
+/** A pin of 0 means "no civicAPI race yet": nothing may stand in for it. Each of these was matched on a shared surname
+ *  alone: the Missouri Supreme Court retention vote on Judge Paul C. Wilson to the Missouri auditor's race (Quentin
+ *  Wilson); New Mexico's on Justice David Thomson to New Mexico State House 24 (Elizabeth Thomson); DC's Board of
+ *  Education Ward 1 (Ben Williams) to Ward 6 (Amber A. Williams). */
 export const CIVIC_PINS: Record<string, number> = {
+  "court-mo-missouri-supreme-court-judge-paul-c-wilson": 0,
+  "court-nm-new-mexico-supreme-court-justice-david-thomson": 0,
+  "board-dc-district-of-columbia-state-board-of-education-ward-1": 0,
   "bm-WA-initiative-measure-no-ip26-645": 130145, "bm-WA-initiative-measure-no-il26-638": 130146, "bm-WA-initiative-measure-no-il26-001": 87525,
   "bm-NC-photo-id-amendment": 140116, "bm-NC-income-tax-cap-amendment": 140117, "bm-NC-property-tax-limit-amendment": 140118,
   "sos-SC": 142155, "treas-SC": 142156, "ag-SC": 142157, "comp-SC": 142158, "supt-SC": 142159, "agri-SC": 142160,

@@ -4,8 +4,8 @@ import React, { useMemo, useState } from "react";
 import Link from "@/app/components/Link";
 import { useSearchParams } from "next/navigation";
 import { STN, KIND_LABEL, expMargin, fmtK, fmtM, forecastHref, isInd, resultsHref, sides, type Kind, type XRace } from "./live";
-import { useIndex, useLive } from "./useLive";
-import { useSharedLive } from "./LiveProvider";
+import { useIndex, useLive, useShownIndex } from "./useLive";
+import { useAttached, useSharedLive } from "./LiveProvider";
 import { percentIn, pctFraction } from "@/app/lib/fmtPct";
 
 const KINDS: (Kind | "all")[] = ["all", "sen", "gov", "house", "state", "measure", "leg", "other"];
@@ -16,7 +16,7 @@ export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
   // inside the national page the read is shared with the dashboard; standalone it subscribes on its own
   const shared = useSharedLive();
   const ownIx = useIndex();
-  const ix = shared ? shared.ix : ownIx;
+  const rawIx = shared ? shared.ix : ownIx;
   const [k, setK] = useState<Kind | "all">((sp.get("k") as Kind) || "all");
   const [st, setSt] = useState<string>((sp.get("st") || "").toUpperCase());
   const [q, setQ] = useState("");
@@ -26,8 +26,13 @@ export default function RacesHub({ embedded = false }: { embedded?: boolean }) {
   const [seenK, setSeenK] = useState(kq);
   if (kq !== seenK) { setSeenK(kq); if (kq && KINDS.includes(kq as Kind)) setK(kq as Kind); }
   const sets = useMemo(() => [...SETS[k]], [k]);
-  const ownLive = useLive(shared ? null : ix, sets as never);
+  const ownLive = useLive(shared ? null : rawIx, sets as never);
   const live = shared ? shared.live : ownLive;
+  // (the shared read is already without the races that have no data; standalone, the same rule: shownIndex.ts)
+  const ownShown = useShownIndex(shared ? null : ownIx, ownLive, sets as never);
+  // (null while attaching to the server's HTML: see useAttached)
+  const attached = useAttached();
+  const ix = !attached ? null : shared ? shared.ix : ownShown;
   const list = useMemo(() => {
     let L = (ix?.races ?? []).filter((r) => (k === "all" || r.k === k) && (!st || r.st === st));
     const s = q.trim().toLowerCase();

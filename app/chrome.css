@@ -92,3 +92,11 @@ header.opp-top.scrolled .top { border-bottom-color: var(--line); background: rgb
 .opp.rband .call.no { color: var(--hi); border: 1px solid var(--line2); }
 .opp.rband .call.x { color: var(--mute); background: var(--glass2); }
 .opp.rband .more { margin-left: auto; color: var(--hi); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; font-weight: 600; }
+
+/* tabs: a tap goes to the page, a hold opens the panel (Navbar.tsx); no link preview or text selection on the hold */
+.opp .t5-l, .opp .mnav .macc-go { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
+/* the phone menu's sections with a page of their own: the name is a link, the caret opens the list */
+.opp .mnav .macc-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+.opp .mnav .macc-go { flex: 1; padding: 14px 0; color: var(--hi); font: 700 22px/1.2 var(--font-d); letter-spacing: -.02em; text-decoration: none; }
+.opp .mnav .macc-x { flex: none; display: grid; place-items: center; width: 52px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--hi); cursor: pointer; }
+.opp .macc-g.open .macc-x .cr { transform: rotate(180deg); }

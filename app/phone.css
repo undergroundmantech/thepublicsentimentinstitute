@@ -8,7 +8,7 @@ html[data-phone] { --tabbar: calc(58px + env(safe-area-inset-bottom, 0px)); }
 /* the tab bar */
 .opp-tabs { display: none; }
 html[data-phone] .opp-tabs {
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: fixed; left: 0; right: 0; bottom: 0; z-index: 85;
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); position: fixed; left: 0; right: 0; bottom: 0; z-index: 85;
   height: var(--tabbar); padding: 0 4px env(safe-area-inset-bottom, 0px); background: rgb(var(--bg2-rgb)); border-top: 1px solid var(--line2);
   transition: transform .2s ease;
 }
@@ -103,3 +103,6 @@ html[data-phone] .opp .fx-st > * { min-width: 0; } html[data-phone] .opp .fx-st 
 html[data-phone] .opp :is(.sl-foot, .bm-foot, .pa-hero, .tn2-head) > * { min-width: 0; }
 html[data-phone] .opp .callout { overflow-wrap: anywhere; }
 html[data-phone] .opp .tn-hl { white-space: normal; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* the Results tab is held for its menu: no link preview or text selection on the hold */
+.opp-tabs a { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }

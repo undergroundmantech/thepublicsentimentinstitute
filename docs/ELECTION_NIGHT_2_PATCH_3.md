@@ -1,7 +1,8 @@
 # Election Night 2.0, patch 3: entering the monitor, and Pointy in the Pro modes
 
 > A fourth part followed (`docs/ELECTION_NIGHT_2_PATCH_4.md`): today's civicAPI count and engine 2.5.1, with a new
-> replay data pack. All four parts ship in one updater, `apply_election_night_2_patch4_full.py`.
+> replay data pack, then a fifth (`docs/ELECTION_NIGHT_2_PATCH_5.md`): only races being counted are shown, and a click
+> on Results goes straight to the results. All five parts ship in one updater, `apply_election_night_2_patch5_full.py`.
 
 The third and last part of the patch to the Election Night 2.0 final update. It ships in the same single updater as
 parts one and two (`docs/ELECTION_NIGHT_2_PATCH_1.md`, `docs/ELECTION_NIGHT_2_PATCH_2.md`). Three small things, all
@@ -13,9 +14,9 @@ One updater and one replay data pack carry all three parts. The Election Night 2
 (`apply_election_night_2.py`) must already be applied. From the site's root folder:
 
 ```
-python3 apply_election_night_2_patch4_full.py --dry-run
-python3 apply_election_night_2_patch4_full.py
-python3 apply_election_night_2_patch4_full.py --install-replay election-night-2-patch4-replay-data.zip
+python3 apply_election_night_2_patch5_full.py --dry-run
+python3 apply_election_night_2_patch5_full.py
+python3 apply_election_night_2_patch5_full.py --install-replay election-night-2-patch5-replay-data.zip
 npx tsc --noEmit
 npm run test:intelligence
 ```

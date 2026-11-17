@@ -139,7 +139,8 @@ test("pinned provider races win over the matcher and only when present", () => {
   assert.equal(m["psc-AZ"]?.id, 86927); assert.equal(m["edb-MI-michigan-state-university-board-of-trustees"]?.id, 155750); assert.equal(m["edb-MI-state-board-of-education"]?.id, 155748);
   assert.equal(m["edb-MI-university-of-michigan-board-of-regents"], undefined, "a pin with no provider race present matches nothing");
   for (const id of Object.keys(CIVIC_PINS)) assert.ok(ix.races.some((r) => r.id === id), `${id} is a race in the index`);
-  assert.equal(new Set(Object.values(CIVIC_PINS)).size, Object.keys(CIVIC_PINS).length, "no provider race is pinned twice");
+  const real = Object.values(CIVIC_PINS).filter((v) => v !== 0);   // (0: "no civicAPI race yet", shared by design)
+  assert.equal(new Set(real).size, real.length, "no provider race is pinned twice");
 });
 
 test("a frame rebuilt from the frame before it and its delta is the frame, value for value", () => {

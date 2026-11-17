@@ -4,7 +4,7 @@
 // in full to search engines and before the first live read.
 import React from "react";
 import Link from "@/app/components/Link";
-import { useIndex, useLive } from "../useLive";
+import { useIndex, useLive, useShownIndex } from "../useLive";
 import { fmtM, sides, type XRace } from "../live";
 import { percentIn } from "@/app/lib/fmtPct";
 
@@ -14,9 +14,16 @@ export type LiveGroup = { k: string; label: string; rows: LiveRow[]; more?: { n:
 type ORace = { id: number; type: string; district: string | null; name: string; pr: number; c: [string, string, number, number, number][] };
 const LEG = /^(state senate|state house|state assembly|house of delegates|state legislature)$/i;
 
+const SETS_READ: ("fed" | "state" | "ballot")[] = ["fed", "state", "ballot"];
+
 export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: string }) {
   const ix = useIndex();
-  const live = useLive(ix, ["fed", "state", "ballot"]);
+  const live = useLive(ix, SETS_READ);
+  // races with no data are left off once the night is over (shownIndex.ts)
+  const shown = useShownIndex(ix, live, SETS_READ);
+  // (until it is known, nothing is left off: the static list shows the forecast in the meantime)
+  const off = React.useMemo(() => { if (!shown) return new Set<string>(); const keep = new Set(shown.races.map((r) => r.id)); return new Set((ix?.races ?? []).filter((r) => !keep.has(r.id)).map((r) => r.id)); }, [ix, shown]);
+  const shownGroups = groups.map((g) => ({ ...g, rows: g.rows.filter((x) => !off.has(x.id)) })).filter((g) => g.rows.length || g.more);
   // every other civicAPI race in the state: the ones the forecast does not cover get their own results page
   const [others, setOthers] = React.useState<ORace[] | null>(null);
   React.useEffect(() => {
@@ -30,7 +37,7 @@ export default function StateLive({ groups, st }: { groups: LiveGroup[]; st?: st
   const byId = React.useMemo(() => Object.fromEntries((ix?.races ?? []).map((r) => [r.id, r])) as Record<string, XRace>, [ix]);
   return (
     <div className="srs-groups">
-      {groups.map((g) => (
+      {shownGroups.map((g) => (
         <section key={g.k} className="srs-g" aria-labelledby={`srs-${g.k}`}>
           <h2 id={`srs-${g.k}`}>{g.label} <em>{g.rows.length + (g.more?.n ?? 0)}</em></h2>
           <ul>

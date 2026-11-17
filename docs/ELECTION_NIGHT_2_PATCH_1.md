@@ -1,6 +1,6 @@
 # Election Night 2.0, patch 1 (engine 2.5.0)
 
-> **Delivered as one package with patch 2.** Patches 1 and 2 ship together as `apply_election_night_2_patch4_full.py`
+> **Delivered as one package with patches 2 to 5.** All five parts ship together as `apply_election_night_2_patch5_full.py`
 > (one run on top of the final update) with one replay data pack. This document describes the patch 1 part;
 > `docs/ELECTION_NIGHT_2_PATCH_2.md` describes the Calls Desk and has the combined install steps and file counts.
 > File counts below (105 files) are for the patch 1 part alone.
@@ -30,9 +30,9 @@ review of the Situation Monitor in replay:
 The Election Night 2.0 final update must already be applied. Then, from the site's root folder:
 
 ```
-python3 apply_election_night_2_patch4_full.py --dry-run
-python3 apply_election_night_2_patch4_full.py
-python3 apply_election_night_2_patch4_full.py --install-replay election-night-2-patch4-replay-data.zip
+python3 apply_election_night_2_patch5_full.py --dry-run
+python3 apply_election_night_2_patch5_full.py
+python3 apply_election_night_2_patch5_full.py --install-replay election-night-2-patch5-replay-data.zip
 npx tsc --noEmit
 npm run test:intelligence
 ```
@@ -338,9 +338,9 @@ Three files to hand over, plus this document:
 
 | file | what it is |
 |---|---|
-| `apply_election_night_2_patch4_full.py` | the updater (the changes are inside it). Run from the site root. |
-| `election-night-2-patch4-full-changes.zip` | the same 105 files with a manifest of checksums, to read or diff |
-| `election-night-2-patch4-replay-data.zip` | the replay pack rebuilt under 2.5.0, 59 MB, with `onpoint-calls.json` |
+| `apply_election_night_2_patch5_full.py` | the updater (the changes are inside it). Run from the site root. |
+| `election-night-2-patch5-full-changes.zip` | the same 105 files with a manifest of checksums, to read or diff |
+| `election-night-2-patch5-replay-data.zip` | the replay pack (now rebuilt under 2.5.1, see patches 4 and 5), with `onpoint-calls.json` |
 
 Both parts are needed: the code without the new pack shows no race as called outside a replay.
 

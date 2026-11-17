@@ -7,6 +7,7 @@ import { beforeClose, CIVIC_BY_ID, civicRead, civicReadById, matchCivic, showTes
 import { LIVE_POLL_MS, STALE_MS, mergeReads, type GoodReads, type TypeRead } from "./liveFeed";
 import { useEngine } from "./engineClient";
 import type { View } from "@/app/lib/engine/serve";
+import { shownIndex } from "./shownIndex";
 import { applyCalls, callsFromLedger, callsFromRecorded, withoutProviderCall, type CallBook, type RecordedCalls } from "./onpointCalls";
 
 /**
@@ -51,6 +52,20 @@ export function useRecordedCalls() {
   return b;
 }
 
+let COUNTED: Promise<Set<string> | null> | null = null;
+/** the races the recorded night ever counts (from the replay pack's onpoint-calls.json); null when the pack has no list */
+export function loadCountedRaces() { COUNTED ??= fetch("/replay/2026/onpoint-calls.json").then((r) => (r.ok ? r.json() : null)).then((f: RecordedCalls | null) => (f?.counted ? new Set(f.counted) : null)).catch(() => null); return COUNTED; }
+/** The index without the races that have no votes being counted (shownIndex.ts). */
+export function useShownIndex(ix: XIndex | null, live: LiveState, sets: (keyof typeof TYPE_SETS)[]): XIndex | null {
+  const replay = useEngine().mode === "REPLAY";
+  const [counted, setCounted] = useState<Set<string> | null>(null);
+  // (a pack without the list: an empty list stands in, and then live's own read decides)
+  useEffect(() => { void loadCountedRaces().then((c) => setCounted(c ?? new Set())); }, []);
+  const key = sets.join(",");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(() => shownIndex(ix, live, sets, replay, counted), [ix, live, key, replay, counted]);
+}
+
 let INDEX: Promise<XIndex> | null = null;
 export function loadIndex() { INDEX ??= fetch("/results/2026/index.json").then((r) => r.json()); return INDEX; }
 
@@ -64,6 +79,8 @@ export function useIndex() {
 // `stale` means a read failed or that data is older than STALE_MS; `error` then says so in words.
 export type LiveState = { at: Date | null; byId: Record<string, CRace>; prev: Record<string, CRace>; raw: CRace[]; error: string | null; loading: boolean; hidden: number; test: boolean; stale: boolean };
 
+/** race types read at once from the site's proxy (see useLive) */
+export const READ_AT_ONCE = 4;
 export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], everyMs = LIVE_POLL_MS): LiveState {
   const [st, setSt] = useState<LiveState>({ at: null, byId: {}, prev: {}, raw: [], error: null, loading: true, hidden: 0, test: false, stale: false });
   const key = sets.join(",");
@@ -79,9 +96,18 @@ export function useLive(ix: XIndex | null, sets: (keyof typeof TYPE_SETS)[], eve
     const types = [...new Set(sets.flatMap((s) => TYPE_SETS[s]))];
     const tick = async () => {
       const res: Record<string, TypeRead | Error> = {};
-      for (const t of types) {             // one type at a time, so the proxy never bursts civicAPI
-        try { res[t] = await civicRead(t, ac.signal); } catch (e) { if ((e as Error).name === "AbortError") return; res[t] = e as Error; }
-      }
+      // Four race types at a time (patch 5; it was one), so the first read is in within seconds rather than a minute.
+      // These go to the site's own caching proxy, not to civicAPI: civicAPI still sees at most one request per race type
+      // per five minutes, however many people are watching (app/api/civic/search/route.ts).
+      let next = 0, aborted = false;
+      const worker = async () => {
+        while (next < types.length && !aborted) {
+          const t = types[next++];
+          try { res[t] = await civicRead(t, ac.signal); } catch (e) { if ((e as Error).name === "AbortError") { aborted = true; return; } res[t] = e as Error; }
+        }
+      };
+      await Promise.all(Array.from({ length: Math.min(READ_AT_ONCE, types.length) }, worker));
+      if (aborted) return;
       // the few measures civicAPI files under a type too broad to search are read by id, kept like a type's read
       if (sets.includes("ballot")) for (const id of CIVIC_BY_ID) {
         try { const c = await civicReadById(id, ac.signal); res[`id:${id}`] = c ? { races: [c], at: Date.now() } : new Error(`race ${id}`); }

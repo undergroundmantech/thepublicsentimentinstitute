@@ -1,10 +1,12 @@
 "use client";
-// The phone tab bar: the four desks people come back to, in reach of a thumb, and the full menu. Shown at 860px
-// and narrower (app/phone.css). It steps aside while the on screen keyboard is up and in full screen views.
-// Nov 2026 refresh: a floating capsule with a lit blob that glides between tabs (refresh.css).
+// The phone tab bar: the 2026 results and the four desks people come back to, in reach of a thumb, and the full menu.
+// Shown at 860px and narrower (app/phone.css). It steps aside while the on screen keyboard is up and in full screen
+// views. Tapping Results goes straight to the Situation Monitor; holding it (half a second) opens the menu at the
+// results pages instead, as hovering the desktop tab does.
+// Nov 2026 refresh: a floating capsule with a lit blob that glides between tabs (refresh.css), one tab wide.
 import Link from "@/app/components/Link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ev } from "@/app/lib/ev";
 
 type Tab = { key: string; label: string; href: string; on: (p: string) => boolean; icon: React.ReactNode };
@@ -12,6 +14,8 @@ type Tab = { key: string; label: string; href: string; on: (p: string) => boolea
 const I = (d: React.ReactNode) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 
 const TABS: Tab[] = [
+  { key: "results", label: "Results", href: "/results/monitor", on: (p) => p.startsWith("/results"),
+    icon: I(<><rect x="4" y="4" width="16" height="16" rx="3" /><path d="m8.5 12.2 2.4 2.4 4.8-5.2" /></>) },
   { key: "opp", label: "On Point", href: "/on-point-polling", on: (p) => p.startsWith("/on-point-polling"),
     icon: I(<><path d="M4 19V9" /><path d="M9 19V5" /><path d="M14 19v-7" /><path d="M19 19v-4" /><path d="M3 19h18" /></>) },
   { key: "accuracy", label: "Accuracy", href: "/accuracy", on: (p) => p.startsWith("/accuracy") || p.startsWith("/most-accurate-pollster"),
@@ -34,14 +38,29 @@ export default function MobileTabs() {
   }, []);
   const at = TABS.findIndex((t) => t.on(path));
   const menu = () => { ev("Tab bar", { to: "menu" }); window.dispatchEvent(new Event("opp:menu")); };
+  const hold = useRef<{ t: number | null; held: boolean }>({ t: null, held: false });
+  const holdStart = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") return;
+    hold.current.held = false; if (hold.current.t) window.clearTimeout(hold.current.t);
+    hold.current.t = window.setTimeout(() => {
+      hold.current.held = true; navigator.vibrate?.(10); ev("Tab bar", { to: "results menu" });
+      // the finger's release still sends a click, now landing on the menu that just opened under it: swallow that one
+      const eat = (c: MouseEvent) => { c.preventDefault(); c.stopPropagation(); window.removeEventListener("click", eat, true); };
+      window.addEventListener("click", eat, true); window.setTimeout(() => window.removeEventListener("click", eat, true), 1200);
+      window.dispatchEvent(new CustomEvent("opp:menu", { detail: { section: "results" } }));
+    }, 450);
+  };
+  const holdEnd = () => { if (hold.current.t) window.clearTimeout(hold.current.t); hold.current.t = null; };
   return (
     <nav className={`opp opp-tabs${kb ? " kb" : ""}`} aria-label="Sections">
       {/* a soft lit blob that glides to the current tab */}
-      <span className={`tb-blob${at >= 0 ? " on" : ""}`} style={{ transform: `translateX(${Math.max(at, 0) * 100}%)` }} aria-hidden="true" />
+      <span className={`tb-blob${at >= 0 ? " on" : ""}`} style={{ width: `${100 / (TABS.length + 1)}%`, transform: `translateX(${Math.max(at, 0) * 100}%)` }} aria-hidden="true" />
       {TABS.map((t) => {
         const on = t.on(path);
         return (
-          <Link key={t.key} href={t.href} className={on ? "on" : undefined} aria-current={on ? "page" : undefined} onClick={() => ev("Tab bar", { to: t.key })}>
+          <Link key={t.key} href={t.href} className={on ? "on" : undefined} aria-current={on ? "page" : undefined}
+            onClick={(e) => { if (t.key === "results" && hold.current.held) { e.preventDefault(); hold.current.held = false; e.currentTarget.dataset.held = "1"; return; } ev("Tab bar", { to: t.key }); }}
+            {...(t.key === "results" ? { onPointerDown: holdStart, onPointerUp: holdEnd, onPointerCancel: holdEnd, onContextMenu: (e: React.MouseEvent) => { if (hold.current.held || hold.current.t) e.preventDefault(); } } : {})}>
             {t.icon}<span>{t.label}</span>
           </Link>
         );

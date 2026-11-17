@@ -1,11 +1,15 @@
 # Election Night 2.0, patch 4: today's civicAPI count, and the final phase of the count (engine 2.5.1)
 
+> A fifth part followed (`docs/ELECTION_NIGHT_2_PATCH_5.md`): only races being counted are shown, a click on Results
+> goes straight to the results, and the opening screen waits for the count. It ships in the same updater,
+> `apply_election_night_2_patch5_full.py`, with a new replay pack, `election-night-2-patch5-replay-data.zip`.
+
 The fourth part of the patch to the Election Night 2.0 final update, shipped with parts one to three in one updater.
 It brings On Point's calls up to civicAPI's count as of 3:21 p.m. Eastern on November 16, and adds the rules the model needed for the last
 stretch of a count: measures judged against their passing bar, and a "final phase" ten days after the polls close.
 
 - Engine: `onpoint-engine/2.5.1` (was 2.5.0).
-- Replay data pack: rebuilt, `election-night-2-patch4-replay-data.zip`. It carries the calls the live pages show.
+- Replay data pack: rebuilt, `election-night-2-patch5-replay-data.zip`. It carries the calls the live pages show.
 - Status: built and tested on a copy of the site. Nothing has been deployed; no database or production setting touched.
 - Calibration status: unchanged. **Not calibrated.**
 
@@ -14,9 +18,9 @@ stretch of a count: measures judged against their passing bar, and a "final phas
 The Election Night 2.0 final update (`apply_election_night_2.py`) must already be applied. From the site's root:
 
 ```
-python3 apply_election_night_2_patch4_full.py --dry-run
-python3 apply_election_night_2_patch4_full.py
-python3 apply_election_night_2_patch4_full.py --install-replay election-night-2-patch4-replay-data.zip
+python3 apply_election_night_2_patch5_full.py --dry-run
+python3 apply_election_night_2_patch5_full.py
+python3 apply_election_night_2_patch5_full.py --install-replay election-night-2-patch5-replay-data.zip
 npx tsc --noEmit
 npm run test:intelligence
 ```

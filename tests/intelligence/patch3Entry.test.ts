@@ -20,7 +20,8 @@ test("the monitor has an opening screen: at the click, while the route loads, an
   const mon = read("app/results/monitor/Monitor.tsx");
   assert.match(mon, /<MonitorSplash out=\{splash === "out"\}/);
   assert.match(mon, /const ready = !!geo && !!ix && engS\.checked/);
-  assert.match(mon, /: 12000\)/, "the screen never waits forever");
+  assert.match(mon, /: 30000\)/, "the screen never waits forever");
+  assert.match(mon, /&& !live\.loading/, "the screen stays until the first count has been read");
   const nav = read("app/components/Navbar.tsx");
   assert.match(nav, /a\.pathname !== "\/results\/monitor"/); assert.match(nav, /<MonitorSplash fixed \/>/);
   assert.match(nav, /e\.metaKey \|\| e\.ctrlKey/, "a new-tab click is left alone");

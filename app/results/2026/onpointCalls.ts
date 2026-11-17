@@ -15,7 +15,9 @@ export type OnPointCall = { name: string; party: string | null; /** when the eng
 export type CallBook = Record<string, OnPointCall>;
 
 /** The compact file the live pages read when no engine ledger is available: public/replay/2026/onpoint-calls.json (part of the replay data pack, written by scripts/engine/export_static_replay.ts). */
-export type RecordedCalls = { v: 1; engine: string; source: string; asOf: string; calls: Record<string, [name: string, party: string | null, at: string, lane: CallLane]> };
+export type RecordedCalls = { v: 1; engine: string; source: string; asOf: string; calls: Record<string, [name: string, party: string | null, at: string, lane: CallLane]>;
+  /** races with a vote counted (or an On Point call) at some point in the recording (since patch 5) */
+  counted?: string[] };
 
 type LedgerRaces = Record<string, { modelCall: null | { candidateId: string; name: string; partyRaw: string | null; calledAt: string; lane?: string } }>;
 

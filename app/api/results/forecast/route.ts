@@ -25,7 +25,7 @@ export async function GET(req: Request) {
   const raceId = new URL(req.url).searchParams.get("race");
   const index = read("public/results/2026/index.json") as XIndex;
   const receivedAt = new Date().toISOString(); const blankTest = Date.now() < FIRST_CLOSE;
-  const { raws, failed } = await fetchCivicRaces(["fed"]);   // one type at a time, as the pages do
+  const { raws, failed } = await fetchCivicRaces(["fed"]);   // one type at a time (this goes to civicAPI itself)
   if (!raws.length) return NextResponse.json({ error: "civicAPI unreachable", failed }, { status: 502 });
   const snap = snapshotFromCivic(index, raws, { receivedAt, mode: "LIVE", source: "civicAPI race search", blankTest });
   const head = { "cache-control": `public, max-age=60, s-maxage=${REVAL}, stale-while-revalidate=600` };
