@@ -232,7 +232,10 @@ export function createEngine(DATA, AKCT) {
     const pw = GP.prim_w == null ? 1 : Number(GP.prim_w);
     const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return pw * ((pD[b] || 0) + (pR[b] || 0)); };
     const qual = (ptR ? -ptR.quality : 0) + (ptD ? ptD.quality : 0);
-    const natPart = Number(D.nat) + Number(R.nat) + qual;
+    // v48g: a matchup with two or more of its own polls keeps part of its polling average beyond its two candidates' effects (pair_adj)
+    const PAd = dash.data('pair_adj'); const PA = PAd && PAd.status === 'ok' ? PAd.data : []; const pa = PA.find((r) => r.dem === D.name && r.rep === R.name);
+    const pairAdj = pa ? Number(pa.adj) || 0 : 0;
+    const natPart = Number(D.nat) + Number(R.nat) + qual + pairAdj;
     // spending gridlock: project 2028 ad dollars from this ticket's own map, then damp each state's national swing
     const SPr = dash.data('spending'); const spRows = SPr && SPr.status === 'ok' ? SPr.data : [];
     const damp = {}; const spend = {}; let tip = null;
