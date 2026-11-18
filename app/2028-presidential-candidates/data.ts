@@ -19,7 +19,7 @@ const c = (party: Cand["party"], name: string, role: string, status: Status, not
 
 export const CANDS: Cand[] = [
   // ---------------- Democrats
-  c("D", "Alexandria Ocasio-Cortez", "U.S. Representative, New York", "likely", "Reelected in November. Has said she has not ruled out a run, and advisers are reported to be planning a national tour.", "Is AOC running for president in 2028?"),
+  c("D", "Alexandria Ocasio-Cortez", "U.S. Representative, New York", "likely", "Reelected in November and has filed for reelection. New York City DSA voted Nov 14 to urge her to run in 2028. Has said she has not ruled out a run.", "Is AOC running for president in 2028?"),
   c("D", "Gavin Newsom", "Governor of California", "likely", "Says he will decide in late January 2027, and said in September he would not run if Kamala Harris does.", "Is Gavin Newsom running for president in 2028?"),
   c("D", "Kamala Harris", "Former Vice President", "likely", "Passed on the 2026 California governor race and says she is thinking about 2028.", "Is Kamala Harris running in 2028?"),
   c("D", "Josh Shapiro", "Governor of Pennsylvania", "likely", "Reelected in November. Says the decision is one he will make with his family."),

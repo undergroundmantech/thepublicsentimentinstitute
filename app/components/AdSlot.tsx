@@ -1,25 +1,19 @@
 "use client";
-import { useEffect, useRef } from "react";
+// The fallback ad above the footer, for pages that have no ads of their own. A page with its own ad panels, or the
+// game, which has its own ad breaks, gets none here, so ads never stack up at the bottom of a page.
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import AdUnit from "./AdUnit";
 
-// One display ad space with its room reserved, so nothing on the page jumps when the ad loads.
-const CLIENT = "ca-pub-7542770820535344";
-const SLOT = "1176653089";
-
-export default function AdSlot({ slot = SLOT }: { slot?: string }) {
-  const path = usePathname();
-  const ref = useRef<HTMLModElement>(null);
+const NONE = ["/play", "/portal"];
+export default function AdSlot() {
+  const path = usePathname() || "";
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    const el = ref.current;
-    if (!slot || !el || el.getAttribute("data-adsbygoogle-status")) return;
-    try { ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({}); } catch {}
-  }, [slot, path]);
-  if (!slot) return null;
-  return (
-    <aside aria-label="Advertisement" style={{ width: "100%", maxWidth: 1200, margin: "48px auto 32px", padding: "0 16px", boxSizing: "border-box" }}>
-      <div style={{ font: "700 10px/1 system-ui, sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", textAlign: "center", marginBottom: 8 }}>Advertisement</div>
-      <ins key={path} ref={ref} className="adsbygoogle" style={{ display: "block", minHeight: 100 }}
-        data-ad-client={CLIENT} data-ad-slot={slot} data-ad-format="auto" data-full-width-responsive="true" />
-    </aside>
-  );
+    setShow(false); if (NONE.some((p) => path === p || path.startsWith(p + "/"))) return;
+    // wait for the page to render, then look for its own ad panels
+    const id = setTimeout(() => setShow(!document.querySelector(".opp-ad")), 400);
+    return () => clearTimeout(id);
+  }, [path]);
+  return show ? <AdUnit key={path} kind="multiplex" className="opp-ad-foot" /> : null;
 }

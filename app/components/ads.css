@@ -1,0 +1,9 @@
+/* Every ad on the site has one look: a quiet labeled panel the width of the reading column, set apart from the
+   content around it, never inside a chart, a map or a table. */
+.opp-ad { box-sizing: border-box; width: 100%; max-width: 1000px; margin: 44px auto; padding: 12px 14px 14px; border-radius: 18px;
+  border: 1px solid rgba(140, 130, 170, .18); background: rgba(140, 130, 170, .05); }
+.opp-ad > span { display: block; margin: 0 0 10px 2px; font: 700 10px/1 var(--font-m, ui-monospace, monospace); letter-spacing: .18em; text-transform: uppercase; color: rgba(160, 150, 190, .75); }
+.opp-ad ins { display: block; width: 100%; }
+.opp-ad.end { max-width: 1200px; }
+.opp-ad.side { margin: 0 0 16px; }
+.opp-ad[data-empty="1"] { display: none; }

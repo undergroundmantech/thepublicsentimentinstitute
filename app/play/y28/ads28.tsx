@@ -5,12 +5,12 @@
 //             shows, using the frequency hint on the AdSense tag in the root layout.
 //   rewards   an ad the player chooses to watch for something in the game, a sponsor's money drop, a free poll or a
 //             rested candidate. The button only appears when Google has an ad ready.
-//   units     ordinary display ads beside and below the game frame and on the result screen, never inside the map
-//             or next to the buttons the player clicks.
+//   units     the site's ordinary ad panel below the game frame and on the result screen, never inside the map or
+//             next to the buttons the player clicks.
 // Until the account is approved for H5 Games Ads, breaks and rewards quietly do nothing and the game plays as before.
 import React, { useEffect, useRef, useState } from "react";
+import SiteAd from "@/app/components/AdUnit";
 
-const CLIENT = "ca-pub-7542770820535344";
 export const SLOT = "1176653089";
 
 type AdW = Window & { adsbygoogle?: unknown[]; adBreak?: (o: Record<string, unknown>) => void; adConfig?: (o: Record<string, unknown>) => void };
@@ -76,16 +76,9 @@ export function RewardBtn({ name, k, label, note, onReward, className }: { name:
   return <button type="button" className={className ?? "px-btn sm y28-reward"} onClick={() => play((ok) => { if (ok) onReward(); })}><small>Watch a sponsor message</small>{label}<em>{note}</em></button>;
 }
 
-/** A display ad with its room reserved, labeled, filled once per mount. */
-export function AdUnit({ format = "auto", minH = 100, className, k }: { format?: "auto" | "vertical" | "horizontal" | "rectangle"; minH?: number; className?: string; k?: string }) {
-  const ref = useRef<HTMLModElement>(null);
-  useEffect(() => { const el = ref.current; if (!el || el.getAttribute("data-adsbygoogle-status")) return; push({}); }, [k]);
-  return (
-    <aside className={`y28-ad ${className ?? ""}`} aria-label="Advertisement">
-      <span>Advertisement</span>
-      <ins key={k} ref={ref} className="adsbygoogle" style={{ display: "block", minHeight: minH }} data-ad-client={CLIENT} data-ad-slot={SLOT} data-ad-format={format} data-full-width-responsive="true" />
-    </aside>
-  );
+/** A display ad in the site's one ad panel, the same look as every other ad on the site. */
+export function AdUnit({ minH, className }: { format?: string; minH?: number; className?: string; k?: string }) {
+  return <SiteAd minH={minH} className={className} />;
 }
 
 /** Wide enough for a rail ad beside the game frame with Google's 150 pixel gap from the game. */

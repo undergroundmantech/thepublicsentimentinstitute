@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, isoDay, pageLd, seo } from "@/app/lib/seo";
-import { CAND, NEXT, SENATORS, SWING, TIER, UPDATED, VOTE_DATE, tally } from "./data";
+import { CAND, NEWS, NEXT, SENATORS, SWING, TIER, UPDATED, VOTE_DATE, tally } from "./data";
 import Roster from "./Roster";
 import Chamber from "./Chamber";
 import Toon from "./Toon";
@@ -28,13 +28,13 @@ export const metadata: Metadata = seo({
 const FAQ: [string, string][] = [
   ["When is the Senate Democratic leader election?", `Senate Democrats vote on ${day(VOTE_DATE)} in a secret ballot of the caucus.`],
   ["Who is running for Senate Democratic leader?", "Chuck Schumer of New York, the leader since 2017, and Chris Van Hollen of Maryland, who announced his challenge on November 12, 2026."],
-  ["How many votes does it take to win?", `${T.need} of the ${T.caucusSeated} seated members of the incoming caucus, or ${T.needAll} if Mary Peltola is seated after Alaska's count.`],
+  ["How many votes does it take to win?", `${T.need} of the ${T.caucus} members of the incoming caucus, a simple majority, now that the AP has called Alaska for Mary Peltola.`],
   ["Which senators back Chris Van Hollen?", `${SENATORS.filter((s) => s.pick === "V" && !TIER[s.tier].estimate && !/^Chris Van Hollen/.test(s.name)).map((s) => s.name).join(", ")} are on record against Schumer or for Van Hollen. Every other pick on this page is our estimate.`],
   ["Which senators back Chuck Schumer?", `${T.firmS} members are on record for Schumer, including ${SENATORS.filter((s) => s.pick === "S" && !TIER[s.tier].estimate && s.name !== "Chuck Schumer").slice(0, 8).map((s) => s.name).join(", ")}.`],
 ];
 
 export default function MajorityTrackerPage() {
-  const vhNeed = T.need - T.bestV, vhNeedAll = T.needAll - T.bestV;
+  const vhNeed = T.need - T.bestV;
   const days = Math.max(0, Math.ceil((new Date(VOTE_DATE + "T15:00:00Z").getTime() - Date.now()) / 864e5));
   const swing = SENATORS.filter((s) => SWING.includes(s.name));
   const next = SENATORS.filter((s) => NEXT.includes(s.name));
@@ -78,11 +78,18 @@ export default function MajorityTrackerPage() {
       <Chamber rows={SENATORS} need={T.need} />
 
       <dl className="mt-strip">
-        <div><dt>Needed to win</dt><dd>{T.need}</dd><span>of {T.caucusSeated} seated, {T.needAll} if Peltola is seated</span></div>
+        <div><dt>Needed to win</dt><dd>{T.need}</dd><span>a majority of the {T.caucus} member caucus</span></div>
         <div><dt>On record</dt><dd><b className="mt-c-S">{T.firmS}</b> · <b className="mt-c-V">{T.firmV}</b></dd><span>stated or reported, the rest are our estimates</span></div>
         <div><dt>Best cases</dt><dd><b className="mt-c-S">{T.bestS}</b> · <b className="mt-c-V">{T.bestV}</b></dd><span>if every low confidence call flips one way</span></div>
-        <div><dt>Without Peltola</dt><dd><b className="mt-c-S">{T.Sseated}</b> · <b className="mt-c-V">{T.Vseated}</b></dd><span>of {T.caucusSeated} senators seated today</span></div>
+        <div><dt>Betting market</dt><dd><b className="mt-c-S">91%</b> · <b className="mt-c-V">8%</b></dd><span>Kalshi traders, Nov 18</span></div>
       </dl>
+
+      <section className="mt-news" aria-labelledby="mt-news-h">
+        <div className="mt-sec-h"><p className="eye">The latest</p><h2 id="mt-news-h">What changed in the race</h2></div>
+        <ol>{NEWS.map(([d, what, src, href], i) => (
+          <li key={i}><time dateTime={d}>{day(d, false)}</time><p>{what}</p><a href={href} target="_blank" rel="noopener noreferrer">{src}</a></li>
+        ))}</ol>
+      </section>
 
       <section className="mt-fence" aria-labelledby="mt-fence-h">
         <div className="mt-sec-h"><p className="eye">On the fence</p><h2 id="mt-fence-h">The senators who can still move the count</h2></div>
@@ -97,7 +104,7 @@ export default function MajorityTrackerPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-fence-n">Even if every low confidence Schumer pick flips, Van Hollen reaches {T.bestV}. He would also need {vhNeed > 0 ? `at least ${vhNeed}` : "none of the"} senators we rate medium for Schumer, {vhNeedAll > 0 ? vhNeedAll : 0} if Peltola is seated.</p>
+        <p className="mt-fence-n">Even if every low confidence Schumer pick flips, Van Hollen reaches {T.bestV}. He would also need {vhNeed > 0 ? `at least ${vhNeed}` : "none of the"} senators we rate medium for Schumer.</p>
       </section>
 
       <Roster rows={SENATORS} />

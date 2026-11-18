@@ -9,6 +9,8 @@ import path from "node:path";
 import "./desk.css";
 import { getWarIndex } from "./war-room/data";
 
+type Latest = { asOf: string; note: string; items: { date: string; tag: string; what: string; src: string; href: string; link: string | null }[] };
+
 export const metadata: Metadata = { title: { absolute: "Watchdog: follow the money and the people | On Point Politics" }, description: "Outside money in every close 2026 race, the donors and super PACs behind it, the firms they pay, where Trump, Vance, Obama and others are campaigning, and every county's data." };
 
 const STN: Record<string, string> = { TX: "Texas", OH: "Ohio", MI: "Michigan", IA: "Iowa", ME: "Maine", NC: "North Carolina", AK: "Alaska", NH: "New Hampshire", NE: "Nebraska", GA: "Georgia", KS: "Kansas", FL: "Florida", SC: "South Carolina", MT: "Montana", MN: "Minnesota" };
@@ -37,6 +39,7 @@ export default function Page() {
   const topRace = m.races[0];
   const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
   const next = upcoming[0];
+  const latest = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "watchdog", "latest.json"), "utf8")) as Latest;
   const num = (n: number) => n.toLocaleString("en-US");
   // what each Start here card shows: the number that answers its question, and one sentence of what is inside
   const START: Record<ToolKey, { stat: string; unit: string; line: string } | undefined> = {
@@ -57,7 +60,7 @@ export default function Page() {
         <div>
           <div className="eye gold">Watchdog · On Point Politics</div>
           <h1>Follow the money. <em>Follow the people.</em></h1>
-          <p className="lede">Watchdog tracks who is paying for the 2026 midterms, where that money goes, which firms get paid and which national figures are out campaigning. Every tie is sourced. Pick a question below to start.</p>
+          <p className="lede">Watchdog tracks who paid for the 2026 midterms, where that money went, which firms got paid, which national figures were out campaigning and who is lining up for 2028. Every tie is sourced. Pick a question below to start.</p>
           <div className="dk-cta"><a className="btn g" href="#start">Pick a question</a><Link className="btn" href="/watchdog/war-room">Open the War Room</Link><Link className="btn" href="/watchdog/connections">See who is tied to whom</Link></div>
         </div>
         <div className="dk-badge" aria-hidden="true">
@@ -89,6 +92,20 @@ export default function Page() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="dk-latest" aria-labelledby="dk-latest-h">
+        <div className="dk-start-h">
+          <h2 id="dk-latest-h">Since Election Day</h2>
+          <p>The money, the people and the races to watch now that the midterms are over, newest first. Updated {day(latest.asOf)}.</p>
+        </div>
+        <ol>{latest.items.map((x, i) => (
+          <li key={i} className="card">
+            <div className="h"><time dateTime={x.date}>{day(x.date)}</time><span className="tag">{x.tag}</span></div>
+            <p>{x.what}</p>
+            <div className="f"><a href={x.href} target="_blank" rel="noopener noreferrer">{x.src}</a>{x.link ? <Link href={x.link}>Open on On Point</Link> : null}</div>
+          </li>
+        ))}</ol>
       </section>
 
       <div className="dk-start-h dk-today">

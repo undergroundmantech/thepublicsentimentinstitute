@@ -379,13 +379,8 @@
 .opp.pg .y28-reward em { font: 400 10px var(--px-fd); font-style: normal; }
 @keyframes y28-pulse { 50% { filter: brightness(1.15); } }
 @media (prefers-reduced-motion: reduce) { .opp.pg .y28-reward, .opp.pg .y28-cty-map g.c path.on { animation: none; } }
-.opp.pg .y28-stage.rail { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 150px; align-items: start; }
-.opp.pg .y28-rail { position: sticky; top: 90px; }
-.opp.pg .y28-ad { display: grid; gap: 6px; margin: 0; }
-.opp.pg .y28-ad > span { font: 700 10px var(--px-fb); letter-spacing: .16em; text-transform: uppercase; color: var(--px-mute); text-align: center; }
-.opp.pg .y28-ad-below { margin: 28px auto 10px; max-width: 970px; }
-.opp.pg .y28-ad-result { margin-top: 150px; }
-.opp.pg .px-about .y28-ad { margin: 26px 0; }
+.opp.pg .opp-ad.y28-ad-result { margin-top: 150px; }
+
 
 /* ---------------- a fresher campaign HQ ---------------- */
 .opp.pg .y28-mapcol .y28-map { position: relative; }

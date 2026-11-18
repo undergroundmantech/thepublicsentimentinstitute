@@ -293,3 +293,12 @@
 .opp.mt .mt-read .big { font-size: 66px; }
 .opp.mt .mt-read .sub { font-size: 14px; }
 @media (max-width: 640px) { .opp.mt .mt-read .big { font-size: 80px; } .opp.mt .mt-read .sub { font-size: 18px; } }
+
+/* the latest in the race */
+.opp.mt .mt-news { margin: 8px 0 34px; }
+.opp.mt .mt-news ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.opp.mt .mt-news li { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 6px 16px; align-items: baseline; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--inkline); background: rgb(var(--canvas-rgb)); box-shadow: 4px 4px 0 var(--inkline); }
+.opp.mt .mt-news time { font: 800 12px var(--font-m); letter-spacing: .06em; text-transform: uppercase; }
+.opp.mt .mt-news p { margin: 0; font-size: 15px; line-height: 1.5; }
+.opp.mt .mt-news a { font: 700 12px var(--font-b); white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) { .opp.mt .mt-news li { grid-template-columns: minmax(0, 1fr); } }

@@ -17,7 +17,7 @@ import PlayApp, { type PIndex } from "../PlayApp";
 import { cls } from "../px/ui";
 import { seedOf } from "../px/sprites";
 import { sfx, unlock, setSound, soundState } from "../px/sound";
-import { AdUnit, adBreak, onLeaveNative, onMute, useWide } from "./ads28";
+import { AdUnit, adBreak, onLeaveNative, onMute } from "./ads28";
 import * as CT from "./cty28";
 
 type Screen = "title" | "setup" | "game" | "classic";
@@ -73,7 +73,6 @@ export default function App28({ idx }: { idx: PIndex }) {
   // Leaving full screen any way the browser allows, the Esc key or its own exit control, also leaves the game's full
   // screen frame, so the page and the game never disagree about which mode they are in.
   const native = useRef(false);
-  const wide = useWide();
   // an ad needs the browser's own full screen off to show; the game's frame stays, so nothing on screen moves
   useEffect(() => {
     onLeaveNative(() => { native.current = false; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); });
@@ -112,8 +111,8 @@ export default function App28({ idx }: { idx: PIndex }) {
     }
   };
   // starting or continuing a campaign always opens the game full screen
-  // on a wide screen the game plays in theater mode beside a rail ad; full screen is one click away. Elsewhere it opens full screen.
-  const enter = () => { unlock(); goFull(!wide); };
+  // starting or continuing a campaign always opens the game full screen
+  const enter = () => { unlock(); goFull(true); };
 
   const opP: E.Party = party === "D" ? "R" : "D";
   const mine = useMemo(() => (d ? d.cands[party].slice().sort((a, b) => b.nom - a.nom || b.field - a.field) : []), [d, party]);
@@ -121,12 +120,11 @@ export default function App28({ idx }: { idx: PIndex }) {
 
   const shell = (body: React.ReactNode, foot?: React.ReactNode) => (
     <>
-      <div className={cls("y28-stage", !full && wide && "rail")}>
+      <div className="y28-stage">
         <div ref={root} className={cls("px-app y28-app", full && "y28-full")}>
           <div className="y28-screen">{body}</div>
           <div className="y28-foot">{foot ?? <span className="px-k">Campaign 2028 · On Point Politics</span>}<button type="button" className={cls("px-btn sm y28-fs", full && "on")} onClick={() => goFull(!full)}>{full ? "Exit full screen" : "Play full screen"}</button></div>
         </div>
-        {!full && wide ? <div className="y28-rail"><AdUnit format="vertical" minH={600} k="rail" /></div> : null}
       </div>
       {!full ? <AdUnit format="horizontal" minH={90} className="y28-ad-below" k="below" /> : null}
     </>
