@@ -18,7 +18,7 @@ export type St = { st: string; n: string; ev: number; m: number; sd: number; p24
 export type Third = { n: string; who: string; status: string; lane: string; core: string; quotes: string[]; pillars: string; attacks: string; reach: string; risks: string; share: number; rlean: number; dlean: number; home: Record<string, number>; pos: number[] | null };
 export type Issue = { k: string; l: string; d: number; r: number; i: number; cd: number; cr: number; ci: number };
 export type Prim = { total: number; cal: [string, number, number][]; shares: Record<string, Record<string, number>>; rule: string };
-export type Data = { groups?: Grp[]; dmas?: Dma[]; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
+export type Data = { groups?: Grp[]; dmas?: Dma[]; cty?: import("./cty28").CIdx; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; fund: number; opp: number; neg: number }> = {
   safe: { name: "Friendly year", blurb: "The wind at your back: two points better than the model, donors give more, rivals are slower.", start: 2, fund: 1.25, opp: 0.8, neg: 0.8 },
@@ -328,6 +328,10 @@ export type GenS = {
   story?: Story; econ?: Econ; raised?: number; opRaised?: number; spent?: number; spentLast?: number; opFocus?: string[];
   meeting?: Meeting | null; meetW?: number; metDept?: Record<string, number>;
   mo?: More; scen?: number[];
+  // the county ground game: the work in each county, and what it adds to each state in the player's favor
+  cw?: import("./cty28").CW; cfx?: number[];
+  // sponsor rewards claimed, by week
+  rwW?: number; rwS?: number;
 };
 export const nState = (d: Data) => d.states.length;
 export function candOf(d: Data, p: Party, n: string) { return d.cands[p].find((c) => c.n === n)!; }
@@ -372,7 +376,7 @@ export function marginsRD(d: Data, s: GenS): number[] {
   const sg = sideSign(s.party);
   const en = ((s.enth[0] - 50) - (s.enth[1] - 50)) / 25; // points from enthusiasm, the player's way
   const gf = groupFx(d, s);
-  return base.map((b, i) => b + (s.scen?.[i] ?? 0) + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en + gf[i]));
+  return base.map((b, i) => b + (s.scen?.[i] ?? 0) + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en + gf[i] + (s.cfx?.[i] ?? 0)));
 }
 /** Player margins (positive is the player leading). */
 export const myMargins = (d: Data, s: GenS) => marginsRD(d, s).map((m) => sideSign(s.party) * m);

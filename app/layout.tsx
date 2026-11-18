@@ -30,6 +30,7 @@ import YouTubePromo from "./components/YouTubePromo";
 import VideoPromo from "./components/VideoPromo";
 import { FLAG_VALUES, flagJson } from "./lib/flagValues";
 import { KEYWORDS, SITE, graph, orgLd } from "./lib/seo";
+import AdSlot from "./components/AdSlot";
 
 // Same type system as the main site: Geist for display and body, JetBrains Mono for data.
 // globals.css maps --font-display, --font-body and --font-numeric to --font-d, --font-b, --font-m.
@@ -44,7 +45,7 @@ const verification: NonNullable<Metadata["verification"]> = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: "On Point Politics: 2026 midterm forecasts, polling averages and live results", template: "%s | On Point Politics" },
+  title: { default: "On Point Politics: 2028 election forecast, polls and results", template: "%s | On Point Politics" },
   description: SITE.description,
   applicationName: SITE.name,
   keywords: KEYWORDS,
@@ -75,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google AdSense: the account tag that verifies onpointpolitics.us, and the AdSense loader, as AdSense asks, in
             the head of every page. public/ads.txt carries the same publisher id. */}
         <meta name="google-adsense-account" content="ca-pub-7542770820535344" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7542770820535344" crossOrigin="anonymous" />
+        <script async data-ad-frequency-hint="30s" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7542770820535344" crossOrigin="anonymous" />
         <link rel="alternate" type="text/plain" title="On Point Politics for language models" href="/llms.txt" />
         <JsonLd data={graph(orgLd())} />
       </head>
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="opp-main">
           <div className="opp-page">{children}</div>
         </main>
+        <AdSlot />
         <Footer />
         <MobileTabs />
         <VideoPromo />

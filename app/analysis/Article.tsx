@@ -1,9 +1,18 @@
 // The frame every analysis piece shares: breadcrumbs, headline, byline, the article body and a list of other pieces.
+import { Children, type ReactNode } from "react";
 import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { SITE, ORG_ID } from "@/app/lib/seo";
 import { ARTICLES, fmtDate, type ArticleMeta } from "./lib";
 import "./analysis.css";
+import AdUnit from "@/app/components/AdUnit";
+
+/** The body with ads between paragraphs: one a third of the way in, and on long pieces another two thirds in. */
+function withAds(children: ReactNode) {
+  const a = Children.toArray(children); if (a.length < 6) return a;
+  const k1 = Math.floor(a.length / 3), k2 = Math.floor((2 * a.length) / 3);
+  return [...a.slice(0, k1), <AdUnit key="ad1" kind="article" />, ...a.slice(k1, k2), ...(a.length >= 10 ? [<AdUnit key="ad2" kind="article" />] : []), ...a.slice(k2)];
+}
 
 export default function Article({ a, children, sources }: { a: ArticleMeta; children: React.ReactNode; sources?: { label: string; href: string }[] }) {
   const more = ARTICLES.filter((x) => x.slug !== a.slug);
@@ -20,7 +29,7 @@ export default function Article({ a, children, sources }: { a: ArticleMeta; chil
           <p className="lede">{a.dek}</p>
           <div className="pmeta"><span>By <b>the On Point Politics desk</b></span><span>Published <b>{fmtDate(a.published)}</b></span>{a.modified !== a.published ? <span>Updated <b>{fmtDate(a.modified)}</b></span> : null}<span><b>{a.read}</b> minute read</span></div>
         </header>
-        <div className="an-prose">{children}</div>
+        <div className="an-prose">{withAds(children)}</div>
         {sources?.length ? (
           <aside className="an-src"><h2>Data behind this piece</h2><ul>{sources.map((s) => <li key={s.href}><Link href={s.href}>{s.label}</Link></li>)}</ul></aside>
         ) : null}
@@ -32,6 +41,7 @@ export default function Article({ a, children, sources }: { a: ArticleMeta; chil
           <Link key={x.slug} href={`/analysis/${x.slug}`} className="card an-card"><span className="eye">{x.tag} · {fmtDate(x.published)}</span><b>{x.title}</b><small>{x.dek}</small></Link>
         ))}</div>
       </section>
+      <AdUnit kind="multiplex" />
     </div>
   );
 }

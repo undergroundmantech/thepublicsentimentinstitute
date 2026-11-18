@@ -58,12 +58,26 @@ export const MENU: NavGroup[] = [
         { href: "/accuracy", label: "How the forecast did" },
       ] },
     ] },
+  { key: "tracker", label: "Majority Tracker", href: "/majority-tracker", chip: "Live",
+    feature: { href: "/majority-tracker", eyebrow: "Live whip count", title: "Schumer vs Van Hollen", note: "Every Senate Democrat and where we project them in the December 1 leader election.", cta: "Open the tracker" },
+    cols: [
+      { h: "The race", links: [
+        { href: "/majority-tracker", label: "Majority Tracker", note: "Every senator, every call", badge: "Live" },
+        { href: "/majority-tracker#mt-fence-h", label: "On the fence", note: "The senators who can still move it" },
+        { href: "/majority-tracker#mt-faq-h", label: "The race explained" },
+      ] },
+      { h: "2028", links: [
+        { href: "/2028-presidential-candidates", label: "Who is running in 2028", note: "Every name, by party" },
+        { href: "/forecast/2028", label: "2028 forecast" },
+      ] },
+    ] },
   { key: "forecast", label: "Forecasts", href: "/forecast",
     feature: { href: "/forecast/2028", eyebrow: "Now forecasting", title: "The 2028 presidential race", note: "The Electoral College and both primaries, county by county.", cta: "Open 2028" },
     cols: [
       { h: "2028", links: [
         { href: "/forecast/2028", label: "2028 forecast", note: "Map, primaries and simulator" },
         { href: "/polls/2028", label: "2028 primary polls" },
+        { href: "/2028-presidential-candidates", label: "Who is running in 2028" },
       ] },
       { h: "2026 final", links: [
         { href: "/forecast", label: "The final 2026 forecast", note: "Senate, House and governors" },
@@ -85,6 +99,7 @@ export const MENU: NavGroup[] = [
       ] },
       { h: "Races", links: [
         { href: "/polls/2028", label: "2028 primaries" },
+        { href: "/majority-tracker", label: "Senate leader race", badge: "Live" },
         { href: "/polls/senate", label: "Senate" },
         { href: "/polls/governor", label: "Governors" },
       ] },

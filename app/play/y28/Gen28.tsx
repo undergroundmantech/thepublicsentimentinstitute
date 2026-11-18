@@ -18,6 +18,9 @@ import { sfx, music } from "../px/sound";
 import * as SY from "./story28";
 import * as TM from "./team28";
 import * as MO from "./more28";
+import * as CT from "./cty28";
+import County28 from "./County28";
+import { adBreak, RewardBtn } from "./ads28";
 
 type Tab = "state" | "groups" | "early" | "camp" | "ticket" | "oppo" | "polls" | "wire";
 /** A debate's name from the calendar, which negotiations can change. */
@@ -43,6 +46,7 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
   const [inv, setInv] = useState<X2.Invite | null>(null);
   const [finalOpen, setFinalOpen] = useState(false);
   const [burst, setBurst] = useState<Mark[]>([]);
+  const [cty, setCty] = useState<string | null>(null);
   useEffect(() => { music("trail"); }, []);
 
   // one issue moment a week
@@ -125,6 +129,8 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
     const x = structuredClone(g); const s = x.Gn!; const items: E.LogItem[] = [];
     const vd = s.debates.find((y) => y.w === s.week && !y.done && y.kind === "vp");
     if (vd) { const k = E.gauss(x) * 0.35 + (s.vp ? 0.05 : -0.1); s.nat += k; vd.done = true; vd.score = k; items.push({ t: s.week, kind: k >= 0 ? "you" : "bad", s: `Vice presidential debate: ${k >= 0 ? `${s.vp ?? "your running mate"} won the night` : `${s.opVp ?? "their running mate"} won the night`}.`, fx: k }); }
+    // the county ground game: persuasion fades, offices pay, and the other campaign works its counties
+    if (d.cty) items.push(...CT.ctyWeek(d, s, x, E.rand, E.DIFF[s.diff].opp).map((t) => ({ t: s.week, kind: "rival" as const, s: t })));
     items.push(...E.genEnd(d, s, x)); x.log.push(...items);
     if (s.crisis && s.crisisW === s.week) items.push({ t: s.week, kind: "bad", s: `Breaking as the week opens: ${s.crisis.title}.` });
     if (s.done) { x.night = E.election(d, s, x.seed * 7 + 2028); s.result = x.night; }
@@ -162,6 +168,8 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
         <div className="who"><Face28 seed={seedOf(me)} party={S.party} size={48} female={FEMALE.has(me)} talking /><div><b>{me}</b><span className="px-k">{S.vp ? `with ${S.vp}` : partyName(S.party)} · week {Math.min(S.week, S.weeks)} of {S.weeks} · {dates}</span></div></div>
         <div className="kv"><span className="px-k">Days · stamina {Math.round(S.stamina)}</span><DaysBar n={S.days} /></div>
         <div className="kv"><span className="px-k">Cash</span><b className="gold"><Roll v={S.cash} fmt={E.usd} /></b></div>
+        {S.rwW !== S.week ? <RewardBtn name="gen-cash" k={`c${S.week}`} label="Sponsor drop" note="+$5M" onReward={() => run((x) => { x.Gn!.cash += 5e6; x.Gn!.rwW = x.Gn!.week; return { ok: true, t: "A sponsor's money drop: $5M for the campaign." }; })} /> : null}
+        {S.stamina < 55 && S.rwS !== S.week ? <RewardBtn name="gen-rest" k={`s${S.week}`} label="Energy drink" note="+30 stamina" onReward={() => run((x) => { x.Gn!.stamina = Math.min(100, x.Gn!.stamina + 30); x.Gn!.rwS = x.Gn!.week; return { ok: true, t: "The candidate is back on their feet." }; })} /> : null}
         <div className="kv"><span className="px-k">EV</span><b>{ev} <small>/ 270</small></b></div>
         <div className="kv"><span className="px-k">Win</span><b className={win >= 0.5 ? "up" : "dn"}>{pct(win)}</b></div>
         <div className="kv"><span className="px-k">Popular</span><b>{ptsLead(nat, sur(me), sur(op))}</b></div>
@@ -186,6 +194,7 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
           {tab === "state" && XS && sel ? (
             <div className="y28-pane">
               <h3>{XS.n} <small>{XS.ev} electoral votes</small></h3>
+              {d.cty?.[XS.st.split("-")[0]] ? <button type="button" className="px-press y28-ctybtn" onClick={() => { setCty(XS.st); sfx("whoosh"); }}><span>County war room</span><small>{d.cty[XS.st.split("-")[0]].length} counties · rallies, offices, doors and local ads, county by county</small></button> : null}
               <div className="y28-kvs">
                 <span><small>Your read</small><b className={ms[i] >= 0 ? "up" : "dn"}>{ptsLead(ms[i], sur(me), sur(op))}</b></span>
                 <span><small>Accurate to</small><b>about {fogSd(age).toFixed(1)}</b></span>
@@ -379,6 +388,7 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
           <div className="y28-end-bar">{deb ? <span className="px-tag hot">{debName(S, deb)}</span> : finalWeek ? <span className="px-tag hot">Final week</span> : null}<button type="button" className="px-press" onClick={endWeek}>{presDeb ? "Take the debate stage" : finalWeek && !S.finalDone ? "Plan the final weekend" : finalWeek ? "Election Day" : "End the week"}</button></div>
         </div>
       </div>
+      {cty ? <County28 d={d} S={S} st={cty} run={(fn) => run((x) => fn(x.Gn!), cty)} onClose={() => setCty(null)} /> : null}
       {toast ? <div key={toast.k} className={cls("px-toast", toast.ok ? "ok" : "no")} role="status" onAnimationEnd={() => setToast(null)}>{toast.t}</div> : null}
       {crisis && !fx && !report && !debate ? <CrisisModal c={crisis} me={me} party={S.party} onPick={answerCrisis} /> : null}
       {story && !fx && !report && !debate && !inv ? <StoryModal ev={story} me={me} party={S.party} S={S} onPick={(k) => run((x) => { const r = SY.resolveStory(d, x.Gn!, k, x); if (!r) return { ok: false, t: "" }; x.log.push({ t: x.Gn!.week, kind: r.v >= 0 ? "you" : "bad", s: r.t, fx: r.v }); return { ok: true, t: r.t, fx: r.v }; })} /> : null}
@@ -393,7 +403,7 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
           <div className="px-card wide report">
             <span className="px-tag">Week {Math.min(S.week - (S.done ? 0 : 1), S.weeks)}</span><h3 id="y28-grep-h">{S.done ? "The polls are open" : "The week in review"}</h3>
             <ul className="y28-wire">{report.map((l, k) => <li key={k} className={l.kind}>{l.s}</li>)}</ul>
-            <button type="button" className="px-btn go" onClick={() => { setReport(null); if (S.done) onDone(g); }}>{S.done ? "Watch the returns" : "Next week"}</button>
+            <button type="button" className="px-btn go" onClick={() => { const fin = S.done; adBreak(fin ? "returns" : `week-${S.week}`).then(() => { setReport(null); if (fin) onDone(g); }); }}>{S.done ? "Watch the returns" : "Next week"}</button>
           </div>
         </div>
       ) : null}

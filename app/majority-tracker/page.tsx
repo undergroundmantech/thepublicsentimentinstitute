@@ -2,63 +2,113 @@ import type { Metadata } from "next";
 import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, isoDay, pageLd, seo } from "@/app/lib/seo";
-import { NEXT, SENATORS, SWING, UPDATED, VOTE_DATE, tally } from "./data";
-import TrackerTable from "./TrackerTable";
+import { CAND, NEXT, SENATORS, SWING, TIER, UPDATED, VOTE_DATE, tally } from "./data";
+import Roster from "./Roster";
 import Chamber from "./Chamber";
+import Toon from "./Toon";
 import "./tracker.css";
+import AdUnit from "@/app/components/AdUnit";
+
+// rebuilt every hour, so the countdown and the tally stay current between updates
+export const revalidate = 3600;
 
 const day = (d: string, y = true) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", ...(y ? { year: "numeric" } : {}) });
 const T = tally();
-const DESC = `Who has the votes to lead Senate Democrats? On Point Politics tracks all ${T.caucus} members of the incoming caucus in the ${day(VOTE_DATE)} leader election between Chuck Schumer and Chris Van Hollen: stated positions, reported positions and our best estimates for everyone else.`;
+const DESC = `Who has the votes to lead Senate Democrats? Live whip count of the ${day(VOTE_DATE)} Senate Democratic leader election, Chuck Schumer vs Chris Van Hollen: all ${T.caucus} members of the incoming caucus, their stated and reported positions and On Point Politics' estimate for everyone else.`;
 
 export const metadata: Metadata = seo({
-  title: "Majority Tracker: Schumer vs Van Hollen for Senate Democratic leader",
+  title: "Schumer vs Van Hollen whip count: Senate Democratic leader race",
   description: DESC,
   path: "/majority-tracker",
   type: "article",
   modified: isoDay(UPDATED),
-  keywords: ["Senate Democratic leader", "Schumer Van Hollen", "Chuck Schumer", "Chris Van Hollen", "Senate Democratic leader election", "whip count", "Senate leadership vote", "Majority Tracker"],
+  keywords: ["Schumer Van Hollen", "Senate Democratic leader election", "Senate majority leader vote", "Schumer whip count", "Chris Van Hollen leader", "who supports Van Hollen", "Senate Democratic leadership vote December 1", "Chuck Schumer challenge", "Majority Tracker"],
 });
+
+const FAQ: [string, string][] = [
+  ["When is the Senate Democratic leader election?", `Senate Democrats vote on ${day(VOTE_DATE)} in a secret ballot of the caucus.`],
+  ["Who is running for Senate Democratic leader?", "Chuck Schumer of New York, the leader since 2017, and Chris Van Hollen of Maryland, who announced his challenge on November 12, 2026."],
+  ["How many votes does it take to win?", `${T.need} of the ${T.caucusSeated} seated members of the incoming caucus, or ${T.needAll} if Mary Peltola is seated after Alaska's count.`],
+  ["Which senators back Chris Van Hollen?", `${SENATORS.filter((s) => s.pick === "V" && !TIER[s.tier].estimate && !/^Chris Van Hollen/.test(s.name)).map((s) => s.name).join(", ")} are on record against Schumer or for Van Hollen. Every other pick on this page is our estimate.`],
+  ["Which senators back Chuck Schumer?", `${T.firmS} members are on record for Schumer, including ${SENATORS.filter((s) => s.pick === "S" && !TIER[s.tier].estimate && s.name !== "Chuck Schumer").slice(0, 8).map((s) => s.name).join(", ")}.`],
+];
 
 export default function MajorityTrackerPage() {
   const vhNeed = T.need - T.bestV, vhNeedAll = T.needAll - T.bestV;
+  const days = Math.max(0, Math.ceil((new Date(VOTE_DATE + "T15:00:00Z").getTime() - Date.now()) / 864e5));
+  const swing = SENATORS.filter((s) => SWING.includes(s.name));
+  const next = SENATORS.filter((s) => NEXT.includes(s.name));
+  const lead = T.S >= T.need ? "S" : T.V >= T.need ? "V" : null;
   return (
     <div className="opp mt">
       <JsonLd data={graph(
         crumbsLd([["Home", "/"], ["Polls", "/polls"], ["Majority Tracker", "/majority-tracker"]]),
         pageLd({ name: "Majority Tracker: Senate Democratic leader election", description: DESC, path: "/majority-tracker", modified: isoDay(UPDATED), about: "Senate Democratic leader election" }),
       )} />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }} />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span><span aria-current="page">Majority Tracker</span></nav>
 
-      <header className="ph mt-head">
-        <div className="eye g">Senate Democratic leader election · {day(VOTE_DATE)}</div>
-        <h1>Majority <em>Tracker</em></h1>
-        <p className="lede">Chuck Schumer against Chris Van Hollen. One seat for each of the {T.caucus} members of the incoming Senate Democratic caucus, with where we project each of them to vote. {T.need} votes win the leadership with {T.caucusSeated} senators seated, {T.needAll} if Mary Peltola is seated after Alaska&apos;s count.</p>
+      {/* the face off: two candidates, one aisle, a countdown */}
+      <header className="mt-show">
+        <div className="mt-show-bg" aria-hidden="true" />
+        <div className="mt-show-top">
+          <span className="mt-live"><i />Live whip count</span>
+          <span className="mt-when">{days > 0 ? <><b>{days}</b> {days === 1 ? "day" : "days"} to the vote · {day(VOTE_DATE, false)}</> : <>Vote day · {day(VOTE_DATE, false)}</>}</span>
+        </div>
+        <h1 className="mt-title">Majority <em>Tracker</em></h1>
+        <p className="mt-sub">Who leads Senate Democrats? Every member of the incoming caucus, and where we project each one on {day(VOTE_DATE)}.</p>
+        <div className="mt-ring">
+          {(["S", "V"] as const).map((k) => (
+            <div key={k} className={`mt-fighter p-${k}${lead === k ? " lead" : ""}`}>
+              <div className="mt-bubble">{k === "S" ? "Says he has the votes" : "Challenging since Nov 12"}</div>
+              <Toon name={CAND[k].full} side={k} size={190} className="mt-ffc" uid="h" />
+              <div className="mt-fname"><b>{CAND[k].full}</b><span>{CAND[k].st} · {k === "S" ? "leader since 2017" : "the challenger"}</span></div>
+              <div className="mt-fnum"><b>{k === "S" ? T.S : T.V}</b><span>projected · {k === "S" ? T.firmS : T.firmV} on record</span></div>
+            </div>
+          ))}
+          <div className="mt-vs" aria-hidden="true"><span>VS</span><em>{T.need} to win</em></div>
+        </div>
       </header>
 
       <aside className="mt-note" role="note">
         <b>These are our best estimates.</b>
-        <p>For senators who haven&apos;t announced a vote, every pick here is On Point Politics&apos; best estimate, not a reported position. The count will change over time, and we will update this page as senators take sides. Updated {day(UPDATED)}.</p>
+        <p>The vote is a secret ballot. For senators who haven&apos;t announced a vote, every pick here is On Point Politics&apos; best estimate, not a reported position, and the count will move as senators take sides. Updated {day(UPDATED)}.</p>
       </aside>
 
       <Chamber rows={SENATORS} need={T.need} />
 
       <dl className="mt-strip">
-        <div><dt>Needed to win</dt><dd>{T.need}</dd><span>of {T.caucusSeated} seated, {T.needAll} if Peltola wins Nov 18</span></div>
+        <div><dt>Needed to win</dt><dd>{T.need}</dd><span>of {T.caucusSeated} seated, {T.needAll} if Peltola is seated</span></div>
         <div><dt>On record</dt><dd><b className="mt-c-S">{T.firmS}</b> · <b className="mt-c-V">{T.firmV}</b></dd><span>stated or reported, the rest are our estimates</span></div>
         <div><dt>Best cases</dt><dd><b className="mt-c-S">{T.bestS}</b> · <b className="mt-c-V">{T.bestV}</b></dd><span>if every low confidence call flips one way</span></div>
         <div><dt>Without Peltola</dt><dd><b className="mt-c-S">{T.Sseated}</b> · <b className="mt-c-V">{T.Vseated}</b></dd><span>of {T.caucusSeated} senators seated today</span></div>
       </dl>
 
-      <div className="grid3 mt-read">
-        <div className="card card-b"><p className="eye">Read the chamber</p><p>Each candidate fills from his own wall, firmest votes first, so the seats beside the center aisle are the least certain. A side that reaches the aisle has {T.need}, enough to win with {T.caucusSeated} seated. With Peltola seated the bar is {T.needAll}, one seat past it.</p></div>
-        <div className="card card-b"><p className="eye">Swing senators</p><p>{SWING.map((n) => n.split(" ").slice(1).join(" ")).join(", ").replace(/, ([^,]*)$/, " and $1")} are the likeliest to move the count. {NEXT.map((n) => n.split(" ").slice(1).join(" ")).join(" and ")} are next.</p></div>
-        <div className="card card-b"><p className="eye">What Van Hollen needs</p><p>Even if every low confidence Schumer pick flips, he reaches {T.bestV}. He would also need at least {vhNeed} senators we rate medium for Schumer, {vhNeedAll} if Peltola is seated.</p></div>
-      </div>
+      <section className="mt-fence" aria-labelledby="mt-fence-h">
+        <div className="mt-sec-h"><p className="eye">On the fence</p><h2 id="mt-fence-h">The senators who can still move the count</h2></div>
+        <ul>
+          {[...swing, ...next].map((s, i) => (
+            <li key={s.name} className={`p-${s.pick}${i >= swing.length ? " next" : ""}`}>
+              <Toon name={s.name} side={s.pick} size={96} className="mt-fence-face" uid="f" />
+              <div>
+                <b>{s.name}</b><span>{s.st} · leaning {CAND[s.pick].name} · {TIER[s.tier].short.toLowerCase()} confidence</span>
+                <p>{s.note}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-fence-n">Even if every low confidence Schumer pick flips, Van Hollen reaches {T.bestV}. He would also need {vhNeed > 0 ? `at least ${vhNeed}` : "none of the"} senators we rate medium for Schumer, {vhNeedAll > 0 ? vhNeedAll : 0} if Peltola is seated.</p>
+      </section>
 
-      <TrackerTable rows={SENATORS} />
+      <Roster rows={SENATORS} />
 
-      <p className="mt-foot">The leader election is a secret ballot, so individual votes may never be public. Stated and reported positions come from senators&apos; public statements and news reports. Every other pick is On Point Politics&apos; estimate from each senator&apos;s record, statements and ties to the candidates, and is labeled with our confidence. These are our best estimates for those who haven&apos;t announced a vote; they will change over time and this page will be updated.</p>
+      <AdUnit />
+      <section className="mt-faq" aria-labelledby="mt-faq-h">
+        <div className="mt-sec-h"><p className="eye">The race in brief</p><h2 id="mt-faq-h">Schumer vs Van Hollen, explained</h2></div>
+        {FAQ.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
+      </section>
+
+      <p className="mt-foot">The leader election is a secret ballot, so individual votes may never be public. Stated and reported positions come from senators&apos; public statements and news reports. Every other pick is On Point Politics&apos; estimate from each senator&apos;s record, statements and ties to the candidates, and is labeled with our confidence. The portraits are cartoons drawn for this page. See also the <Link href="/polls/approval">Trump approval average</Link>, the <Link href="/polls/generic-ballot">generic ballot</Link> and the <Link href="/forecast/2028">2028 forecast</Link>.</p>
     </div>
   );
 }

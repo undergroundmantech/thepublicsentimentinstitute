@@ -11,6 +11,7 @@ import { Roll, cls, sur } from "../px/ui";
 import { seedOf } from "../px/sprites";
 import { sfx, music } from "../px/sound";
 import { onRecord, storyOf, recordOn, recallText } from "./story28";
+import { adBreak, RewardBtn } from "./ads28";
 
 type Tab = "state" | "nat" | "field" | "wire";
 export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; commit: (x: Game) => void; onDone: (x: Game) => void }) {
@@ -86,6 +87,7 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
         <div className="kv"><span className="px-k">{T.date}</span><b>{T.label}</b></div>
         <div className="kv"><span className="px-k">Time</span><DaysBar n={P.days} /></div>
         <div className="kv"><span className="px-k">Cash</span><b className="gold"><Roll v={P.cash} fmt={E.usd} /></b></div>
+        {(P as E.PrimS & { rwT?: number }).rwT !== P.t ? <RewardBtn name="prim-cash" k={`p${P.t}`} label="Sponsor drop" note="+$1.5M" onReward={() => { const x = structuredClone(g); x.P!.cash += 1.5e6; (x.P! as E.PrimS & { rwT?: number }).rwT = x.P!.t; commit(x); sfx("coin"); }} /> : null}
         <div className="kv"><span className="px-k">Delegates</span><b>{P.field[0].del.toLocaleString()} <small>/ {Math.floor(tot / 2) + 1}</small></b></div>
         <div className="kv"><span className="px-k">Nomination odds</span><b>{pct(odds[me] ?? 0)}</b></div>
         <div className="kv"><span className="px-k">Stamina</span><b>{Math.round(P.stamina)}</b></div>
@@ -170,7 +172,7 @@ export default function Prim28({ d, g, commit, onDone }: { d: E.Data; g: Game; c
           <div className="px-card wide report">
             <span className="px-tag">{T.date}</span><h3 id="y28-rep-h">{P.done ? "The primaries are over" : "The turn in review"}</h3>
             <ul className="y28-wire">{report.map((l, k) => <li key={k} className={l.kind}>{l.s}</li>)}</ul>
-            <button type="button" className="px-btn go" onClick={() => { setReport(null); if (P.done) onDone(g); }}>{P.done ? "On to the convention" : "Next turn"}</button>
+            <button type="button" className="px-btn go" onClick={() => { adBreak(`turn-${P.t}`).then(() => { setReport(null); if (P.done) onDone(g); }); }}>{P.done ? "On to the convention" : "Next turn"}</button>
           </div>
         </div>
       ) : null}

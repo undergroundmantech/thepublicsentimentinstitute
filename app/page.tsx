@@ -18,10 +18,11 @@ import { seo } from "@/app/lib/seo";
 import HomeDeck from "@/app/components/home/HomeDeck";
 import ResultsBand from "@/app/components/home/ResultsBand";
 import { getAcc } from "@/app/accuracy/data";
+import AdUnit from "@/app/components/AdUnit";
 const APPROVAL_POLLS = aggPolls("trump-approval");
 const GENERIC_POLLS = aggPolls("generic-ballot");
 
-export const metadata: Metadata = seo({"title": "On Point Politics: the most accurate pollster of 2026, with forecasts, polls and results", "description": "On Point Polling was the most accurate pollster of the 2026 midterms, D +13.1 on the final generic ballot against a D +13.0 result. The On Point forecast called the Senate, the House and the governors, with every race, county and state legislature scored against the count.", "path": "/", "absoluteTitle": true});
+export const metadata: Metadata = seo({"title": "On Point Politics: 2028 election forecast, polls and results from the most accurate pollster of 2026", "description": "The 2028 presidential forecast and electoral map, every 2028 candidate, the Trump approval and generic ballot averages and the Senate leader race, from On Point Polling, the most accurate pollster of the 2026 midterms: D +13.1 on the final generic ballot against a D +13.0 result.", "path": "/", "absoluteTitle": true});
 
 type RawPoll = { pollster: string; startDate?: string; endDate: string; sampleSize?: number; sampleType?: string; results: Record<string, number> };
 
@@ -132,6 +133,8 @@ export default function Home() {
             rows={latestRows(GENERIC_POLLS as RawPoll[], "Democrats", "Republicans", true)} />
         </div>
       </section>
+
+      <AdUnit />
 
       <section className="sec">
         <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<>{acc.headline.all.called_right} of {acc.headline.all.races} races called right.</>} /><div><div className="eye g">Results desk</div><h2>The returns, county by county</h2></div><span className="pill d" style={{ marginBottom: 6 }}>Results are in</span></div>

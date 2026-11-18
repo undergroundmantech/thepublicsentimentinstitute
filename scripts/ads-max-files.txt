@@ -1,0 +1,7 @@
+app/analysis/Article.tsx
+app/forecast/[state]/[race]/page.tsx
+app/polls/Average.tsx
+app/news/story/[id]/page.tsx
+app/results/2026/[id]/page.tsx
+app/page.tsx
+app/components/AdUnit.tsx

@@ -7,7 +7,7 @@ export type Pick = "S" | "V";
 export type Tier = "stated" | "reported" | "high" | "med" | "low";
 export type Senator = { name: string; last: string; st: string; pick: Pick; tier: Tier; note: string; ifSeated?: boolean };
 
-export const UPDATED = "2026-11-12";
+export const UPDATED = "2026-11-18";
 export const VOTE_DATE = "2026-12-01";
 export const CAND: Record<Pick, { name: string; full: string; st: string }> = {
   S: { name: "Schumer", full: "Chuck Schumer", st: "NY" },
@@ -29,10 +29,10 @@ const s = (name: string, st: string, pick: Pick, tier: Tier, note: string, ifSea
 export const SENATORS: Senator[] = [
   s("Chuck Schumer", "NY", "S", "stated", "The candidate. Says he has the votes, Nov 12."),
   s("Kirsten Gillibrand", "NY", "S", "stated", "Said he will win any leader race, WCAX Nov 10."),
-  s("John Fetterman", "PA", "S", "stated", "Said he will vote for Schumer, Nov 11."),
+  s("John Fetterman", "PA", "S", "stated", "Said he will vote for Schumer, Nov 11, and warned Van Hollen's bid could push him out of the party, Nov 14."),
   s("Ruben Gallego", "AZ", "S", "stated", "Backed Schumer with a World Series manager line, NBC Nov 10."),
   s("Mark Kelly", "AZ", "S", "stated", "Said yes on support, Roll Call Nov 10."),
-  s("Richard Blumenthal", "CT", "S", "stated", "Plans to support Schumer, CT Public Nov 9. One later list says uncommitted."),
+  s("Richard Blumenthal", "CT", "S", "stated", "Backed Schumer again despite calls for him to step aside, CT Post Nov 17."),
   s("Sherrod Brown", "OH", "S", "stated", "Said yes, NBC Nov 10. A Schumer recruit."),
   s("Angus King", "ME", "S", "stated", "Restated support after the challenge, Roll Call Nov 12."),
   s("Sheldon Whitehouse", "RI", "S", "stated", "Said the win justifies another term, Washington Post Nov 6."),
@@ -46,8 +46,8 @@ export const SENATORS: Senator[] = [
   s("Tim Kaine", "VA", "S", "reported", "Gave Schumer an A, Punchbowl News Jan 15."),
   s("Adam Schiff", "CA", "S", "high", "Seeking a leadership role, not challenging the team, Semafor Nov 10."),
   s("Amy Klobuchar", "MN", "S", "high", "On the leadership team and leaving Jan 4. Her Dec 1 vote is unconfirmed."),
-  s("Jacky Rosen", "NV", "S", "high", "No public statement. A moderate who has not broken with leadership."),
-  s("Jack Reed", "RI", "S", "high", "No public statement. Senior member, and his state partner Whitehouse backs Schumer."),
+  s("Jacky Rosen", "NV", "S", "reported", "Listed among Schumer's backers, The New Republic Nov 13."),
+  s("Jack Reed", "RI", "S", "reported", "Listed among Schumer's backers, The New Republic Nov 13."),
   s("Chris Coons", "DE", "S", "med", "Open to hearing others, PBS Nov 11. Institutionalist."),
   s("Patty Murray", "WA", "S", "med", "The caucus will decide, KUOW Nov 10. Former leadership."),
   s("Maria Cantwell", "WA", "S", "med", "Gave him points for the victory, Spokesman Review Nov 4."),
@@ -61,7 +61,7 @@ export const SENATORS: Senator[] = [
   s("Tammy Duckworth", "IL", "S", "med", "No public statement. No history of breaking with leadership."),
   s("Maggie Hassan", "NH", "S", "med", "No public statement. Moderate."),
   s("Raphael Warnock", "GA", "S", "low", "Wants to hear the case, 41NBC Nov 10. Won't commit."),
-  s("Scott Colom", "MS", "S", "low", "A Schumer recruit who won't commit. Reports conflict."),
+  s("Scott Colom", "MS", "S", "low", "Won't commit and disputed that Schumer recruited him, The New Republic Nov 13."),
   s("Ron Wyden", "OR", "S", "low", "Focused on policy, per KGW Nov 10."),
   s("Andy Kim", "NJ", "S", "low", "Supportive of leadership as of March. Reform brand."),
   s("Cory Booker", "NJ", "S", "low", "Wants a family conversation, Oct 8."),
@@ -70,24 +70,24 @@ export const SENATORS: Senator[] = [
   s("Bernie Sanders", "VT", "V", "stated", "Will not support Schumer and will support Van Hollen, Nov 10 and 11."),
   s("Abdul El-Sayed", "MI", "V", "stated", "Proud to stand with him, Roll Call Nov 12."),
   s("Peggy Flanagan", "MN", "V", "reported", "Time for new leadership, Newsweek Nov 6. Impressed by Van Hollen."),
-  s("Juliana Stratton", "IL", "V", "high", "Will not support Schumer, per Newsweek. Van Hollen is the only declared alternative."),
-  s("Troy Jackson", "ME", "V", "high", "Told Schumer he will support somebody else, The Blaze Nov 11."),
-  s("Adam Hamilton", "KS", "V", "med", "Not supporting Schumer. A progressive is not an obvious fit."),
-  s("Annie Andrews", "SC", "V", "med", "Wants generational change, Nov 5. Van Hollen is 67."),
-  s("Elissa Slotkin", "MI", "V", "low", "A no without a concrete plan. Moderate, could be won back."),
+  s("Juliana Stratton", "IL", "V", "reported", "Listed as not backing Schumer, The New Republic Nov 13. Van Hollen is the only declared alternative."),
+  s("Troy Jackson", "ME", "V", "reported", "Said he won't support Schumer, The New Republic Nov 13."),
+  s("Adam Hamilton", "KS", "V", "reported", "Listed as not backing Schumer, The New Republic Nov 13. A progressive is not an obvious fit."),
+  s("Annie Andrews", "SC", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
+  s("Elissa Slotkin", "MI", "V", "med", "Called for a challenger to Schumer, USA Today Nov 16. A moderate, so not locked."),
   s("Peter Welch", "VT", "V", "low", "Committed to change, WPTZ Nov 11. Sanders's state partner."),
-  s("Chris Pappas", "NH", "V", "low", "Wants a new generation, Roll Call Nov 4. Uncommitted."),
-  s("James Talarico", "TX", "V", "low", "Withheld support, The Hill Nov 12."),
+  s("Chris Pappas", "NH", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
+  s("James Talarico", "TX", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
   s("Elizabeth Warren", "MA", "V", "low", "Not today, Nov 10. Backed primary challengers per Zeteo."),
-  s("Chris Murphy", "CT", "V", "low", "No commitment found. Backed primary challengers per Zeteo."),
+  s("Chris Murphy", "CT", "V", "low", "Has not commented on the race, CT Post Nov 17. Backed primary challengers per Zeteo."),
   s("Ed Markey", "MA", "V", "low", "Noncommittal, Boston Globe Nov 6. Backed challengers per Zeteo."),
-  s("Jeff Merkley", "OR", "V", "low", "West Bank trip with Van Hollen per Zeteo. KGW says open to Schumer."),
+  s("Jeff Merkley", "OR", "V", "stated", "Backs Van Hollen, The New Republic Nov 13."),
   s("Martin Heinrich", "NM", "V", "low", "Won't commit, Punchbowl News Nov 11. The least certain Van Hollen estimate."),
 ];
 
 /** Senators most likely to move the count, in order. */
-export const SWING = ["Elizabeth Warren", "Chris Murphy", "Elissa Slotkin", "Chris Pappas", "James Talarico", "Scott Colom"];
-export const NEXT = ["Raphael Warnock", "Cory Booker"];
+export const SWING = ["Elizabeth Warren", "Chris Murphy", "Elissa Slotkin", "Scott Colom", "Raphael Warnock", "Martin Heinrich"];
+export const NEXT = ["Cory Booker", "Ed Markey"];
 
 export function tally(list: Senator[] = SENATORS) {
   const seated = list.filter((x) => !x.ifSeated);

@@ -15,6 +15,7 @@ import { STN, KIND_LABEL, fmtM, forecastHref, type XRace } from "../live";
 import { sideNames, sideTags } from "../candidates";
 import "../results2026.css";
 import "./stateResults.css";
+import AdUnit from "@/app/components/AdUnit";
 
 // Every November 3 race has a results page here, and so does every state: /results/2026/texas. The state pages are
 // written for the searches people make on election night, so they render their races, the forecast and when the
@@ -117,6 +118,7 @@ function StatePage({ st }: { st: string }) {
       <StateCharts state={name} races={rs.filter((r) => r.k === "sen" || r.k === "gov").map((r) => ({ id: r.id, label: rs.filter((x) => x.k === r.k).length > 1 ? short(r) : KIND_LABEL[r.k] }))} />
       <PastResults st={st} stateName={name} />
       <AlertSignup from="results" title={`${name} results in your inbox`} note="The On Point newsletter: the final forecast before Election Day and the results as races are called. Free, and you can leave any time." />
+      <AdUnit />
       <section className="srs-faq" aria-labelledby="srs-faq">
         <h2 id="srs-faq">{name} results, answered</h2>
         {faq.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}

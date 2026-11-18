@@ -7,6 +7,7 @@ import "./promo.css";
 import { aggById } from "./registry";
 import { DESK_AGGREGATES as AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
 import { avgLd, avgSummary } from "./seo";
+import AdUnit from "@/app/components/AdUnit";
 
 /** Forecast race pages the averages page can link to, keyed `sen-GA` / `gov-GA`. Built on the
  *  server from the model so the client gets a small lookup, not the model. */
@@ -46,6 +47,8 @@ export default function Average({ id }: { id: string }) {
         </Link>
       ) : null}
       <PollingAveragesPage initialId={id} forecast={forecastLinks()} initialBuilt={initialBuild(id)} />
+      <AdUnit />
+      <AdUnit kind="multiplex" />
     </>
   );
 }

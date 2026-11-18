@@ -27,6 +27,7 @@ import RaceHistorySection from "@/app/components/opp/RaceHistorySection";
 import { frozenPointsFor } from "@/app/lib/intelligence/raceHistoryStore";
 import { FX_CSS } from "@/app/components/opp/fxCss";
 import { pctPoints, probFraction } from "@/app/lib/fmtPct";
+import AdUnit from "@/app/components/AdUnit";
 
 export const dynamicParams = false;
 
@@ -289,6 +290,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
             </section>
           ) : null}
 
+          <AdUnit />
           <section id="history" className="st-sec">
             <SecTitle title="Race history" sub="Every published forecast for this race, and on election night the live projection and the count, over time" />
             <RaceHistorySection raceId={r.id} title={`${lastName(r.dem)} vs. ${lastName(r.gop)}`} />
@@ -394,6 +396,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
             </section>
           ) : null}
 
+          <AdUnit />
           <section id="path" className="st-sec">
             <SecTitle title="How we got here" sub="From the state's partisan lean to the forecast, one stage at a time" />
             <ModelPath ind={ind} steps={pathSteps} />
@@ -427,6 +430,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
             </section>
           ) : null}
 
+          <AdUnit kind="multiplex" />
           <YouTubeBand from="race" title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "governor" ? "governor" : r.office === "senate" ? "Senate" : "House"} race, explained on YouTube`} note="Forecast breakdowns, the polls and election night coverage on the On Point channel." />
           <div className="callout">
             <div className="eye">Methodology</div>

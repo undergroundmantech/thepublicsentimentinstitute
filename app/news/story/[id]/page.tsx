@@ -8,6 +8,7 @@ import LiveWire from "../../LiveWire";
 import { RumpleDefs, ScrollFx } from "../../NewsFront";
 import "../../news.css";
 import "../../paper.css";
+import AdUnit from "@/app/components/AdUnit";
 
 export function generateStaticParams() { return getDesk().stories.map((s) => ({ id: s.id })); }
 export const dynamicParams = false;
@@ -41,6 +42,7 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
         <div className="nw-st-g">
           <div className="nw-st-main">
             <section className="nw-prose" aria-label="Summary">{s.summary.map((p, i) => <p key={i}>{p}</p>)}</section>
+            <AdUnit kind="article" />
             {s.facts.length ? <section className="card nw-facts"><h2>What is established</h2><ul>{s.facts.map((f, i) => <li key={i}>{f}</li>)}</ul></section> : null}
             {s.sides.length ? <section className="nw-sides"><h2>What each side says</h2>{s.sides.map((x, i) => <div key={i} className="card"><b>{x.who}</b><p>{x.says}</p></div>)}</section> : null}
             <section className="nw-frame"><h2>How it was covered</h2>
@@ -54,6 +56,7 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
             </section>
           </div>
           <aside className="nw-st-side">
+            <AdUnit minH={280} />
             {s.related.length ? <div className="card nw-rel"><h3>On Point Politics</h3>{s.related.map((r) => <Link key={r.href} href={r.href}>{r.label}</Link>)}</div> : null}
             <div className="card nw-rel"><h3>About this summary</h3><p>{desk.note}</p><p>Outlet ratings are ours. <Link href="/news/sources">How we rate</Link>. Spot an error? <Link href="/contact">Tell us</Link>.</p>
               <p className="nw-outs">{[...new Set(s.coverage.map((c) => c.o))].map((o) => <span key={o}>{OUTLET[o]?.name ?? o} <i className={`l-${OUTLET[o]?.lean ?? "C"}`}>{LEAN_LABEL[OUTLET[o]?.lean ?? "C"]}</i></span>)}</p></div>

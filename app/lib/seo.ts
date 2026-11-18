@@ -9,7 +9,7 @@ export const SITE = {
   publisher: "On Point Polling",
   publisherShort: "On Point Polling",
   description:
-    "Home of On Point Polling, the most accurate pollster of the 2026 midterms: polling averages, election forecasts, the 2026 results and an accuracy report scoring every race against the count.",
+    "Home of On Point Polling, the most accurate pollster of the 2026 midterms: the 2028 presidential forecast and electoral map, every 2028 candidate, polling averages, election results and an accuracy report scoring every race against the count.",
   logo: "/icon.png",
   election: "2026-11-03",
 } as const;
@@ -17,6 +17,7 @@ export const SITE = {
 export const abs = (path: string) => (path.startsWith("http") ? path : `${SITE.url}${path.startsWith("/") ? "" : "/"}${path}`);
 
 export const KEYWORDS = [
+  "2028 election forecast", "2028 presidential election", "2028 electoral map", "2028 presidential candidates", "2028 polls", "2028 Democratic primary", "2028 Republican primary",
   "2026 midterm forecast", "2026 election forecast", "2026 Senate forecast", "2026 House forecast", "2026 governor forecast",
   "state legislature forecast", "ballot measure forecast", "polling average", "generic ballot", "Trump approval rating",
   "election results", "election model", "On Point Politics", "On Point Polling",

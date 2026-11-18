@@ -84,7 +84,7 @@ export const RAMP = "linear-gradient(90deg,#10288c 0%,#3d7bff 25%,#d6e2ff 48%,#f
 export const SHIFT_RAMP = "linear-gradient(90deg,#2454d6 0%,#ecf0fa 48%,#faecf0 52%,#c81e40 100%)";
 export const DEM = "var(--dem)", REP = "var(--gop)", IND = "var(--ind)";
 export function rateLabel(m: number) {
-  const a = Math.abs(m); if (a < 2) return "Toss up"; const s = m < 0 ? "D" : "R";
+  const a = Math.abs(m); const s = m < 0 ? "D" : "R"; if (a < 2) return `Tilt ${s}`;
   return `${a < 6 ? "Lean" : a < 12 ? "Likely" : "Safe"} ${s}`;
 }
 

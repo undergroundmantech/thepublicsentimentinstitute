@@ -1,71 +1,48 @@
 import type { Metadata } from "next";
 import Link from "@/app/components/Link";
-import Matchup, { EvBar } from "./Matchup";
-import PrimView from "./PrimView";
+import JsonLd from "@/app/components/JsonLd";
+import { crumbsLd, graph, pageLd, seo } from "@/app/lib/seo";
+import Home28 from "./Home28";
 import Method from "./Method";
-import { getCands, getDefault, getGenBase, getGenNames, getGrid, getPrimSummary, getPrimVotes, getWeighted, top } from "./server";
-import { fmtK, fmtMg, fmtPct, last, two } from "./lib";
+import { ELECTION_DAY, featured, geo, nomination, primStates } from "./data28";
+import { STATE_NAME, fmtMg, fmtPct, last } from "./lib";
+import { getDefault } from "./server";
+import "./h28.css";
+import AdUnit from "@/app/components/AdUnit";
 
-export const metadata: Metadata = {
-  title: "2028 Presidential Model | On Point Politics",
-  description: "The On Point 2028 presidential model: both primaries, the general election and any ticket you pick, forecast in every county and added up to every state.",
-  alternates: { canonical: "/2028" },
-};
+export const revalidate = 3600;
+const DESC = "The On Point 2028 presidential forecast: the electoral map for every likely matchup, both primaries and every state's chance, forecast county by county and added up to every state.";
+export const metadata: Metadata = seo({
+  title: "2028 election forecast and electoral map",
+  description: DESC,
+  path: "/2028",
+  keywords: ["2028 election forecast", "2028 electoral map", "2028 presidential election predictions", "2028 presidential forecast", "Vance vs Harris", "2028 polls", "who will win 2028", "2028 primary forecast"],
+});
 
 export default function Page2028() {
-  const def = getDefault(); const s = getGenBase(); const wt = getWeighted(); const grid = getGrid(); const ps = getPrimSummary(); const pv = getPrimVotes();
-  const dT = top(ps.D), rT = top(ps.R); const nat = s.natM ?? two(s.VD, s.VR);
-  const likely = [...grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0)).slice(0, 3);
-  const built = new Date(def.built + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  const pairs = featured(8); const nom = nomination(); const prim = primStates(); const g = geo(); const def = getDefault();
+  const ev: Record<string, number> = {};
+  for (const [k, v] of Object.entries(def.summary.states)) ev[k] = v.ev;
+  const days = Math.max(0, Math.ceil((new Date(ELECTION_DAY + "T12:00:00Z").getTime() - Date.now()) / 864e5));
+  const top = pairs[0];
+  const states = Object.keys(g.states).filter((s) => STATE_NAME[s]).sort((a, b) => STATE_NAME[a].localeCompare(STATE_NAME[b]));
   return (
-    <main className="wrap x28-main">
-      <section className="x28-hero">
-        <div>
-          <div className="eye g">2028 presidential model · built {built}</div>
-          <h1>The road to 2028, <span className="gt">county by county.</span></h1>
-          <p className="lede">Every one of the 3,142 counties forecast for both primaries and the general election, then added up into every state. These are the On Point 2028 Forecast&apos;s own numbers. Pick any pairing, or build a full ticket and the forecast&apos;s ticket engine reruns every county in your browser.</p>
-        </div>
-        <div className="x28-kpis">
-          <div className="card x28-k"><span className="lab">General election, headline</span><b className="d">{fmtPct(s.pD)}</b><em>{s.D} against {s.R} · {fmtMg(nat)} nationally</em><EvBar d={s.evD} r={s.evR} /><em>Over every likely matchup, weighted by the nomination odds: Democrats win {fmtPct(wt.pD)}, {Math.round(wt.evD)} electoral votes on average</em></div>
-          <div className="card x28-k"><span className="lab">Democratic nomination</span><b style={{ color: dT[0].color }}>{dT[0].name} {fmtPct(dT[0].p)}</b><em>{dT.slice(1).map((x) => `${x.name} ${fmtPct(x.p)}`).join(" · ")}</em></div>
-          <div className="card x28-k"><span className="lab">Republican nomination</span><b style={{ color: rT[0].color }}>{rT[0].name} {fmtPct(rT[0].p)}</b><em>{rT.slice(1).map((x) => `${x.name} ${fmtPct(x.p)}`).join(" · ")}</em></div>
-        </div>
-      </section>
+    <main className="h28-page">
+      <JsonLd data={graph(crumbsLd([["Home", "/"], ["2028 forecast", "/2028"]]), pageLd({ name: "2028 election forecast", description: DESC, path: "/2028", about: "2028 United States presidential election" }))} />
+      <Home28 pairs={pairs} nom={nom} prim={prim} ev={ev} days={days} a24={g.a24} />
 
-      <section className="x28-previews">
-        <Link href="/2028/primaries" className="card x28-pv">
-          <span className="eye">Preview · 2028 primaries</span><h2>Who comes out of the primaries</h2>
-          <div className="x28-pvbars">{[...dT, ...rT].map((x) => <div key={x.name}><span>{x.name}</span><span className="bar"><b style={{ width: `${x.p * 100}%`, background: x.color }} /></span><em>{fmtPct(x.p)}</em></div>)}</div>
-          <p>{fmtK(pv.D)} Democratic and {fmtK(pv.R)} Republican primary votes, with the whole field in every state, county by county.</p><span className="go">Open the primaries</span>
-        </Link>
-        <Link href="/2028/general" className="card x28-pv">
-          <span className="eye">Preview · 2028 general</span><h2>The likeliest matchups</h2>
-          <div className="x28-pvm">{likely.map((g) => <div key={g.d + g.r}><span>{last(g.d)} v {last(g.r)}</span><b className={g.pD >= 0.5 ? "d" : "r"}>{fmtPct(Math.max(g.pD, 1 - g.pD))} {g.pD >= 0.5 ? last(g.d) : last(g.r)}</b><em>{fmtMg(g.nat)} · {Math.round(g.evD)} EV</em></div>)}</div>
-          <p>Pick both nominees and read the map, the electoral college and every state, all from the counties up.</p><span className="go">Open the general election</span>
-        </Link>
-        <Link href="/2028/ticket" className="card x28-pv">
-          <span className="eye">Preview · pick a ticket</span><h2>Build your own ticket</h2>
-          <p>Choose the nominees, their running mates and a third party candidate with their share of the vote. Each choice moves every county through its voter coalitions, issue positions, primary scars and home state pull.</p>
-          {def.example && <div className="x28-pvm"><div><span>{def.example.label}</span><b className={def.example.pD >= 0.5 ? "d" : "r"}>{fmtPct(Math.max(def.example.pD, 1 - def.example.pD))} {def.example.pD >= 0.5 ? "D" : "R"}</b><em>{fmtMg(def.example.nat)} · {Math.round(def.example.evD)} EV · example ticket</em></div>
-            <div><span>{def.example.label3}</span><b className={def.example.pD3 >= 0.5 ? "d" : "r"}>{fmtPct(Math.max(def.example.pD3, 1 - def.example.pD3))} {def.example.pD3 >= 0.5 ? "D" : "R"}</b><em>{fmtMg(def.example.nat3)} · with a third party at {def.example.tps3}%</em></div></div>}
-          <span className="go">Pick a ticket</span>
-        </Link>
-      </section>
-
-      <section className="x28-sec">
-        <div className="x28-sech"><div><div className="eye g">General election</div><h2>{s.D} against {s.R}</h2>
-          <p>Hover any state for its projected votes, added up from its county forecasts, and its win chance from the forecast&apos;s 20,000 simulations. Click a state to open its counties.</p></div>
-          <Link className="btn" href="/2028/general">Change the nominees</Link></div>
-        <Matchup base={s} cands={getCands()} mode="overview" grid={grid} gnames={getGenNames()} />
-      </section>
-
-      <section className="x28-sec">
-        <div className="x28-sech"><div><div className="eye g">Primaries</div><h2>Both nominations, state by state</h2>
-          <p>Every candidate is on every state&apos;s ballot at once, with no dropouts. Each state is the sum of its counties.</p></div>
-          <Link className="btn" href="/2028/primaries">Every state</Link></div>
-        <PrimView sum={ps} compact />
+      <AdUnit />
+      <section className="h28-read" aria-labelledby="h28-read">
+        <h2 id="h28-read">The 2028 forecast in brief</h2>
+        <p>The likeliest general election is {top.d} against {top.r}, a {fmtPct(top.odds ?? 0)} chance from both parties&apos; nomination odds. In it, {top.pD >= 0.5 ? top.d : top.r} wins {fmtPct(Math.max(top.pD, 1 - top.pD))} of 20,000 simulations, leading in states worth {top.pD >= 0.5 ? top.evMap : 538 - top.evMap} electoral votes, and a popular vote margin of {fmtMg(top.nat)}. {STATE_NAME[top.tip]} is the tipping point state.</p>
+        <p>For the nominations, {nom.D[0].name} leads the Democratic field at {fmtPct(nom.D[0].p)}, ahead of {nom.D.slice(1, 3).map((x) => `${x.name} at ${fmtPct(x.p)}`).join(" and ")}. {nom.R[0].name} leads the Republican field at {fmtPct(nom.R[0].p)}, ahead of {last(nom.R[1].name)} at {fmtPct(nom.R[1].p)}. See <Link href="/2028-presidential-candidates">who is running in 2028</Link> for where every possible candidate stands.</p>
+        <nav className="h28-states" aria-label="2028 forecast by state">
+          <h3>Every state&apos;s 2028 forecast</h3>
+          <ul>{states.map((s) => <li key={s}><Link href={`/2028/${s.toLowerCase()}`}>{STATE_NAME[s]}</Link></li>)}</ul>
+        </nav>
       </section>
       <Method />
+      <AdUnit kind="multiplex" />
     </main>
   );
 }

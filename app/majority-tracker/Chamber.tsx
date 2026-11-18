@@ -5,6 +5,7 @@
 // chamber live; every seat is a button with the senator's card.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CAND, NEXT, SWING, TIER, TIERS, type Pick, type Senator, type Tier } from "./data";
+import Toon, { ToonG } from "./Toon";
 
 type Mode = "proj" | "record" | "flipV" | "flipS";
 const MODES: { k: Mode; label: string; note: string }[] = [
@@ -16,7 +17,7 @@ const MODES: { k: Mode; label: string; note: string }[] = [
 type Side = Pick | "U";
 type Seat = { x: number; y: number; a: number };
 
-const W = 1000, CX = 500, CY = 520, RIN = 190, ROUT = 462, ROWS = [6, 8, 12, 14, 16];
+const W = 1000, CX = 500, CY = 520, RIN = 190, ROUT = 462, ROWS = [6, 8, 12, 14, 16], HR = 27;
 
 /** seat positions, ordered left to right around the arc */
 function seats(): Seat[] {
@@ -119,15 +120,16 @@ export default function Chamber({ rows, need }: { rows: Senator[]; need: number 
                   onMouseEnter={() => { if (!pinned) setSel(x); }} onFocus={() => setSel(x)}
                   onClick={() => { setSel(x); setPinned(!(pinned && sel?.name === x.name)); }}
                   onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSel(x); setPinned(true); } }}>
-                  {x.ifSeated ? <circle r="23" className="ring" /> : null}
-                  <circle r="17" className="body" />
-                  {t === "reported" ? <circle r="17" className="half" clipPath="url(#mt-half)" /> : null}
-                  {!est && t === "stated" ? <circle r="4" className="core" /> : null}
+                  {x.ifSeated ? <circle r={HR + 9} className="ring" /> : null}
+                  <circle r={HR + 3.5} className="body" />
+                  <g className="face"><g transform={`translate(${-HR} ${-HR}) scale(${(2 * HR) / 100})`}><ToonG name={x.name} side={side} uid="c" /></g></g>
+                  {!est && t === "stated" ? <g className="star" transform={`translate(${HR * 0.72} ${-HR * 0.72})`}><circle r="8" /><path d="M0 -4.6 1.35 -1.4 4.6 -1.3 2 .8 2.9 4 0 2.2 -2.9 4 -2 .8 -4.6 -1.3 -1.35 -1.4Z" /></g> : null}
+                  {t === "reported" ? <g className="star rep" transform={`translate(${HR * 0.72} ${-HR * 0.72})`}><circle r="7" /></g> : null}
                   <title>{`${x.name}, ${x.st}`}</title>
                 </g>
               );
             })}
-            <g className="mt-read" transform={`translate(${CX} ${CY - 40})`}>
+            <g className="mt-read" transform={`translate(${CX} ${CY - 22})`}>
               <text className="big" textAnchor="middle" y="-34"><tspan className="S">{nS}</tspan><tspan className="dot" dx="14">·</tspan><tspan className="V" dx="14">{nV}</tspan></text>
               <text className="sub" textAnchor="middle" y="4">{lead ? `${CAND[lead].name} clears ${need}` : `Nobody at ${need}${plan.U ? `, ${plan.U} undeclared` : ""}`}</text>
             </g>
@@ -145,7 +147,7 @@ export default function Chamber({ rows, need }: { rows: Senator[]; need: number 
           <div className="mt-card" aria-live="polite">
             {show ? (
               <>
-                <div className={`hd s-${sideOf(show, mode)}`}><i /><b>{show.name.replace(", if seated", "")}</b><span>{show.st}</span></div>
+                <div className={`hd s-${sideOf(show, mode)}`}><Toon name={show.name} side={sideOf(show, mode)} size={76} className="mt-cface" uid="k" /><div><b>{show.name.replace(", if seated", "")}</b><span>{show.st}</span></div></div>
                 <div className="tags">
                   <span className={`tag s-${sideOf(show, mode)}`}>{sideOf(show, mode) === "U" ? "Not yet on record" : CAND[sideOf(show, mode) as Pick].name}</span>
                   <span className={`tag ${TIER[show.tier].estimate ? "est" : "rec"}`}>{TIER[show.tier].label}</span>

@@ -155,3 +155,141 @@
   .opp.mt .seat, .opp.mt .mt-rope .f, .opp.mt .mt-rope .knot { transition: none; }
   .opp.mt .seat.swing .body { animation: none; stroke-width: 5; }
 }
+
+/* =====================================================================================================
+   v2, Nov 18 2026: the cartoon edition. A fight poster face off, faces in every seat, trading cards.
+   ===================================================================================================== */
+.opp.mt { --inkline: #1b1328; --halftone: radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.6px); }
+:root[data-theme="light"] .opp.mt { --halftone: radial-gradient(rgba(27,19,40,.10) 1.2px, transparent 1.6px); }
+.opp.mt .eye { margin: 0 0 6px; font: 700 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.opp.mt .mt-sec-h { margin: 0 0 16px; }
+.opp.mt .mt-sec-h h2 { margin: 0; font: 800 clamp(24px, 3vw, 34px)/1.1 var(--font-d); letter-spacing: -.025em; text-wrap: balance; }
+
+/* ---------- the face off ---------- */
+.opp.mt .mt-show { position: relative; isolation: isolate; overflow: hidden; margin: 6px 0 22px; padding: clamp(20px, 3vw, 34px) clamp(16px, 3vw, 36px) 30px; border-radius: 28px; border: 2px solid rgba(var(--line-rgb), .14); background: rgb(var(--canvas-rgb)); }
+.opp.mt .mt-show-bg { position: absolute; inset: 0; z-index: -1; background:
+    var(--halftone) 0 0 / 14px 14px,
+    linear-gradient(105deg, color-mix(in srgb, var(--sch) 34%, transparent) 0 48%, transparent 48% 52%, color-mix(in srgb, var(--vh) 34%, transparent) 52% 100%); }
+.opp.mt .mt-show-bg::after { content: ""; position: absolute; left: 50%; top: 40%; bottom: -20%; width: 10px; margin-left: -5px; transform: rotate(15deg); background: var(--gold); box-shadow: 0 0 40px 6px rgba(231,179,65,.45); }
+.opp.mt .mt-show-top { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.opp.mt .mt-live { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 99px; background: var(--inkline); color: #fff; font: 700 11px var(--font-m); letter-spacing: .16em; text-transform: uppercase; }
+.opp.mt .mt-live i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b5c; box-shadow: 0 0 0 0 rgba(255,59,92,.7); animation: mt-beat 1.6s infinite; }
+@keyframes mt-beat { 70% { box-shadow: 0 0 0 9px rgba(255,59,92,0); } 100% { box-shadow: 0 0 0 0 rgba(255,59,92,0); } }
+.opp.mt .mt-when { padding: 6px 14px; border-radius: 99px; background: rgba(var(--canvas-rgb), .75); border: 1.5px solid rgba(var(--line-rgb), .2); font: 600 13px var(--font-b); color: var(--ink2); }
+.opp.mt .mt-when b { font: 800 16px var(--font-d); color: var(--gold); }
+.opp.mt .mt-title { margin: 14px 0 6px; text-align: center; font: 900 clamp(44px, 8vw, 96px)/.92 var(--font-d); letter-spacing: -.05em; text-transform: uppercase; color: var(--ink); text-shadow: 4px 4px 0 rgba(var(--line-rgb), .12); }
+.opp.mt .mt-title em { font-style: italic; background: linear-gradient(90deg, var(--sch), var(--gold) 50%, var(--vh)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
+.opp.mt .mt-sub { position: relative; margin: 0 auto 18px; max-width: 60ch; text-align: center; color: var(--ink2); font-size: 16px; text-wrap: balance; }
+.opp.mt .mt-ring { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(60px, 9vw, 150px); max-width: 980px; margin: 0 auto; }
+.opp.mt .mt-fighter { --c: var(--sch); display: grid; justify-items: center; gap: 10px; text-align: center; }
+.opp.mt .mt-fighter.p-V { --c: var(--vh); }
+.opp.mt .mt-ffc { width: clamp(120px, 20vw, 190px); height: auto; border-radius: 50%; box-shadow: 8px 8px 0 var(--inkline), 0 0 0 6px var(--c); transform: rotate(-4deg); transition: transform .4s var(--spring, ease); }
+.opp.mt .mt-fighter.p-V .mt-ffc { transform: rotate(4deg) scaleX(-1); }
+.opp.mt .mt-fighter:hover .mt-ffc { transform: rotate(0) scale(1.04); }
+.opp.mt .mt-fighter.p-V:hover .mt-ffc { transform: rotate(0) scale(1.04) scaleX(-1); }
+.opp.mt .mt-fighter.lead .mt-ffc { box-shadow: 8px 8px 0 var(--inkline), 0 0 0 6px var(--c), 0 0 46px 10px color-mix(in srgb, var(--c) 55%, transparent); }
+.opp.mt .mt-bubble { position: relative; padding: 8px 14px; border-radius: 16px; background: #fff; color: var(--inkline); border: 2.5px solid var(--inkline); font: 800 13px var(--font-d); box-shadow: 3px 3px 0 var(--inkline); }
+.opp.mt .mt-bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; width: 14px; height: 14px; margin-left: -7px; background: #fff; border-right: 2.5px solid var(--inkline); border-bottom: 2.5px solid var(--inkline); transform: rotate(45deg); }
+.opp.mt .mt-fname { display: grid; gap: 2px; }
+.opp.mt .mt-fname b { font: 800 clamp(18px, 2.2vw, 24px)/1.1 var(--font-d); letter-spacing: -.02em; }
+.opp.mt .mt-fname span { font: 600 12px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.opp.mt .mt-fnum { display: grid; gap: 2px; }
+.opp.mt .mt-fnum b { font: 900 clamp(46px, 7vw, 78px)/.9 var(--font-d); letter-spacing: -.05em; color: var(--c); font-variant-numeric: tabular-nums; text-shadow: 3px 3px 0 var(--inkline); }
+.opp.mt .mt-fnum span { font: 600 12.5px var(--font-b); color: var(--ink2); }
+.opp.mt .mt-vs { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%) rotate(-8deg); display: grid; justify-items: center; gap: 6px; pointer-events: none; }
+.opp.mt .mt-vs span { display: grid; place-items: center; width: clamp(64px, 9vw, 96px); aspect-ratio: 1; font: 900 clamp(26px, 3.6vw, 40px) var(--font-d); color: var(--inkline); background: var(--gold); border: 3px solid var(--inkline); box-shadow: 5px 5px 0 var(--inkline);
+  clip-path: polygon(50% 0, 61% 18%, 82% 8%, 80% 30%, 100% 38%, 84% 54%, 96% 74%, 74% 74%, 68% 96%, 50% 82%, 32% 96%, 26% 74%, 4% 74%, 16% 54%, 0 38%, 20% 30%, 18% 8%, 39% 18%); }
+.opp.mt .mt-vs em { font: 800 11px var(--font-m); font-style: normal; letter-spacing: .14em; text-transform: uppercase; padding: 4px 9px; border-radius: 99px; background: var(--inkline); color: #fff; white-space: nowrap; }
+
+/* ---------- faces in the seats ---------- */
+.opp.mt .seat .body { fill: none; stroke: var(--c); stroke-width: 4; }
+.opp.mt .seat.t-reported .body { fill: none; stroke-dasharray: 10 4; }
+.opp.mt .seat.t-high .body, .opp.mt .seat.t-med .body, .opp.mt .seat.t-low .body { fill: none; stroke-dasharray: 3 5; stroke-linecap: round; }
+.opp.mt .seat.s-U .body { fill: none; stroke-dasharray: 2 5; }
+.opp.mt .seat .face { transition: transform .25s var(--spring, ease), opacity .3s, filter .3s; transform-box: fill-box; transform-origin: center; }
+.opp.mt .seat.t-high .face { opacity: .92; }
+.opp.mt .seat.t-med .face { opacity: .78; filter: saturate(.75); }
+.opp.mt .seat.t-low .face { opacity: .6; filter: saturate(.45); }
+.opp.mt .seat.s-U .face { opacity: .45; filter: grayscale(1); }
+.opp.mt .seat:hover .face, .opp.mt .seat.sel .face, .opp.mt .seat:focus-visible .face { transform: scale(1.32); opacity: 1; filter: none; }
+.opp.mt .seat:hover .body, .opp.mt .seat.sel .body, .opp.mt .seat:focus-visible .body { r: 34; filter: drop-shadow(0 0 10px var(--c)); }
+.opp.mt .seat:hover, .opp.mt .seat.sel, .opp.mt .seat:focus-visible { z-index: 2; }
+.opp.mt .seat .star circle { fill: var(--c); stroke: var(--inkline); stroke-width: 2; }
+.opp.mt .seat .star path { fill: #fff; }
+.opp.mt .seat .star.rep circle { fill: #fff; stroke: var(--c); stroke-width: 3; }
+.opp.mt .seat.swing .body { animation: mt-pulse 1.6s ease-in-out infinite; stroke: var(--gold); }
+.opp.mt .seat.dim { opacity: .12; }
+.opp.mt .mt-card .hd { align-items: center; }
+.opp.mt .mt-card .hd > div { display: grid; gap: 2px; }
+.opp.mt .mt-card .hd span { margin-left: 0; }
+.opp.mt .mt-cface { flex: none; border-radius: 50%; box-shadow: 4px 4px 0 var(--inkline); }
+.opp.mt .mt-focus .k.t-stated { background: var(--ink2); border-style: solid; }
+.opp.mt .mt-focus .k.t-reported { background: none; border-style: dashed; }
+.opp.mt .mt-focus .k.t-high, .opp.mt .mt-focus .k.t-med, .opp.mt .mt-focus .k.t-low { background: none; border-style: dotted; }
+
+/* ---------- on the fence ---------- */
+.opp.mt .mt-fence { margin: 8px 0 30px; }
+.opp.mt .mt-fence ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.opp.mt .mt-fence li { --c: var(--sch); display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; padding: 16px; border-radius: 22px; border: 2px solid var(--inkline); background: var(--halftone) 0 0 / 12px 12px, linear-gradient(135deg, color-mix(in srgb, var(--c) 18%, rgb(var(--canvas-rgb))), rgb(var(--canvas-rgb)) 70%); box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 70%, var(--inkline)); transition: transform .25s var(--spring, ease), box-shadow .25s; }
+.opp.mt .mt-fence li.p-V { --c: var(--vh); }
+.opp.mt .mt-fence li:nth-child(odd) { transform: rotate(-.6deg); }
+.opp.mt .mt-fence li:nth-child(even) { transform: rotate(.6deg); }
+.opp.mt .mt-fence li:hover { transform: rotate(0) translate(-2px, -2px); box-shadow: 9px 9px 0 color-mix(in srgb, var(--c) 70%, var(--inkline)); }
+.opp.mt .mt-fence li.next { opacity: .82; }
+.opp.mt .mt-fence-face { border-radius: 50%; }
+.opp.mt .mt-fence b { display: block; font: 800 18px/1.15 var(--font-d); letter-spacing: -.02em; }
+.opp.mt .mt-fence li span { display: block; margin-top: 3px; font: 600 11.5px var(--font-m); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.opp.mt .mt-fence li p { margin: 8px 0 0; padding: 9px 12px; border-radius: 14px; background: rgba(var(--canvas-rgb), .7); border: 1.5px solid rgba(var(--line-rgb), .16); color: var(--ink2); font-size: 14px; line-height: 1.45; }
+.opp.mt .mt-fence-n { margin: 16px 0 0; color: var(--ink2); max-width: 90ch; }
+
+/* ---------- trading cards ---------- */
+.opp.mt .mt-roster { margin: 8px 0 30px; }
+.opp.mt .mt-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 16px; }
+.opp.mt .mt-tools input, .opp.mt .mt-tools select { height: 38px; border: 1.5px solid rgba(var(--line-rgb), .16); border-radius: 99px; background: rgba(var(--line-rgb), .05); color: var(--ink); padding: 0 14px; font: 500 13.5px var(--font-b); }
+.opp.mt .mt-tools input { width: 240px; max-width: 100%; }
+.opp.mt .mt-tools input:focus-visible, .opp.mt .mt-tools select:focus-visible, .opp.mt .mt-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.opp.mt .mt-seg { display: inline-flex; padding: 3px; gap: 3px; border-radius: 99px; background: rgba(var(--line-rgb), .06); }
+.opp.mt .mt-seg button { border: 0; border-radius: 99px; padding: 7px 14px; background: none; color: var(--ink2); font: 700 13px var(--font-b); cursor: pointer; }
+.opp.mt .mt-seg button.on { background: var(--ink); color: rgb(var(--canvas-rgb)); }
+.opp.mt .mt-seg button.on.p-S { background: var(--sch); color: #fff; }
+.opp.mt .mt-seg button.on.p-V { background: var(--vh); color: #fff; }
+.opp.mt .mt-count { margin-left: auto; font: 600 12px var(--font-m); color: var(--mute); }
+.opp.mt .mt-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 14px; }
+.opp.mt .mt-tc { --c: var(--sch); position: relative; display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 14px; border-radius: 20px; background: linear-gradient(160deg, rgba(var(--line-rgb), .07), rgba(var(--line-rgb), .02)); border: 1.5px solid rgba(var(--line-rgb), .12); overflow: hidden; transition: transform .25s var(--spring, ease), border-color .25s; }
+.opp.mt .mt-tc.p-V { --c: var(--vh); }
+.opp.mt .mt-tc::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--c); }
+.opp.mt .mt-tc:hover { transform: translateY(-3px); border-color: var(--c); }
+.opp.mt .mt-tc.t-low .mt-tc-face, .opp.mt .mt-tc.t-med .mt-tc-face { opacity: .82; }
+.opp.mt .mt-tc-face { border-radius: 50%; }
+.opp.mt .mt-tc-b { min-width: 0; }
+.opp.mt .mt-tc-n { display: flex; align-items: baseline; gap: 8px; }
+.opp.mt .mt-tc-n b { font: 800 17px/1.15 var(--font-d); letter-spacing: -.02em; }
+.opp.mt .mt-tc-n span { font: 700 12px var(--font-m); color: var(--mute); }
+.opp.mt .mt-tc-t { display: flex; flex-wrap: wrap; gap: 6px; margin: 7px 0; }
+.opp.mt .mt-tc .mt-pk { font-size: 12px; padding: 2px 9px; border-radius: 99px; color: #fff; background: var(--c); }
+.opp.mt .mt-tc p { margin: 0; color: var(--ink2); font-size: 13.5px; line-height: 1.45; }
+.opp.mt .mt-none { color: var(--mute); padding: 20px; }
+
+/* ---------- explainer ---------- */
+.opp.mt .mt-faq { margin: 8px 0 26px; display: grid; gap: 8px; max-width: 880px; }
+.opp.mt .mt-faq details { border-radius: 16px; background: rgba(var(--line-rgb), .045); border: 1.5px solid rgba(var(--line-rgb), .1); }
+.opp.mt .mt-faq summary { cursor: pointer; padding: 14px 18px; font: 700 16px var(--font-d); list-style-position: inside; }
+.opp.mt .mt-faq details p { margin: 0; padding: 0 18px 16px; color: var(--ink2); line-height: 1.55; }
+.opp.mt .mt-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .opp.mt .mt-ring { gap: 54px; }
+  .opp.mt .mt-vs { top: 30%; }
+  .opp.mt .mt-bubble { font-size: 11.5px; padding: 6px 10px; }
+  .opp.mt .mt-fence li { transform: none !important; }
+  .opp.mt .mt-count { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .opp.mt .mt-live i { animation: none; }
+  .opp.mt .seat .face, .opp.mt .mt-ffc, .opp.mt .mt-tc, .opp.mt .mt-fence li { transition: none; }
+}
+
+/* the chamber's own readout, smaller now that every seat is a face */
+.opp.mt .mt-read .big { font-size: 66px; }
+.opp.mt .mt-read .sub { font-size: 14px; }
+@media (max-width: 640px) { .opp.mt .mt-read .big { font-size: 80px; } .opp.mt .mt-read .sub { font-size: 18px; } }

@@ -1,0 +1,3 @@
+app/page.tsx
+app/layout.tsx
+app/lib/seo.ts

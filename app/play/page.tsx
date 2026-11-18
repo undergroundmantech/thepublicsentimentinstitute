@@ -4,6 +4,7 @@ import path from "node:path";
 import { Press_Start_2P, Pixelify_Sans } from "next/font/google";
 import { type PIndex } from "./PlayApp";
 import App28 from "./y28/App28";
+import { AdUnit } from "./y28/ads28";
 import "./play.css";
 import "./y28/play28.css";
 
@@ -23,8 +24,10 @@ export default function Page() {
       <App28 idx={idx} />
       <section className="px-about">
         <h1>Campaign 2028</h1>
-        <p>Run for president. Pick any of the 54 Democrats and Republicans in the On Point 2028 model and fight for the nomination state by state, from the first debate stages to the last primaries, or skip ahead to the general election. Every state&apos;s starting margin, every candidate&apos;s pull state by state, the delegate math, the primary standings and the vote history of every group of voters come from the same model that runs the On Point forecast. The midterm edition is still one click away from the title screen.</p>
+        <p>Run for president. Pick any of the 54 Democrats and Republicans in the On Point 2028 model and fight for the nomination state by state, from the first debate stages to the last primaries, or skip ahead to the general election, then fight for every county in the states that decide it. Every state&apos;s starting margin, every candidate&apos;s pull state by state, the delegate math, the primary standings and the vote history of every group of voters come from the same model that runs the On Point forecast. The midterm edition is still one click away from the title screen.</p>
+        <AdUnit k="about1" minH={250} />
         <ul className="px-how">
+          <li><b>County ground game</b><span>Every county from the On Point forecast: rallies, field offices, door knocking and local ads, with the other campaign working counties too.</span></li>
           <li><b>Primaries</b><span>Iowa to June, real delegate rules, rivals who drop out and endorse.</span></li>
           <li><b>Endorsements</b><span>Chase the endorsements that move each party&apos;s voters.</span></li>
           <li><b>Debate stage</b><span>Real 2028 issues, a timing meter for every answer and a live focus group.</span></li>
@@ -42,6 +45,7 @@ export default function Page() {
           <li><b>Election night</b><span>Storms and long lines on Election Day, then the calls come in as polls close.</span></li>
           <li><b>Trophies</b><span>Fifteen to earn, from a clean early sweep to a 400 vote landslide.</span></li>
         </ul>
+        <AdUnit k="about2" minH={250} />
       </section>
     </div>
   );

@@ -169,7 +169,7 @@ export function createEngine(DATA, AKCT) {
   function rng(seed) { let s = seed >>> 0; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
   function gauss(r) { let u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
   op28.ticketReady = () => ['county_model', 'cands', 'types', 'states', 'state_extra'].every((id) => dash.data(id).status === 'ok');
-  const GP0 = { grid_g: 0.5, grid_L: 20, total28: 3300, state_frac: 0.95, w24: 0.45, wcomp: 0.35, w26: 0.2, comp_sd: 3.5, dx_a: 0.03, dx_b: 0.14, dx_pow: 1.5, dn_a: 0.04, dn_b: 0.10, third_of_n: 0.5, f_cap: 0.8, kappa_R: 0.134, kappa_D: 0.041, deficit_cap: 30, w_polled: 0.5, g0: 0.0165, hist_blend: 0.5, named_third_keep: 0.6, prim_pull: 0.35 };
+  const GP0 = { grid_g: 0.5, grid_L: 20, total28: 3300, state_frac: 0.95, w24: 0.45, wcomp: 0.35, w26: 0.2, comp_sd: 3.5, dx_a: 0.03, dx_b: 0.14, dx_pow: 1.5, dn_a: 0.04, dn_b: 0.10, third_of_n: 0.5, f_cap: 0.8, kappa_R: 0.134, kappa_D: 0.041, deficit_cap: 30, w_polled: 0.5, g0: 0.0165, hist_blend: 0.5, named_third_keep: 0.6, prim_pull: 0.35, fn_a: 3, fn_l: 30 };
   op28.params = () => { const d = dash.data('general_params'); const o = Object.assign({}, GP0); if (d && d.status === 'ok') for (const r of d.data) if (isFinite(Number(r.value))) o[r.key] = Number(r.value); return o; };
   // primary strength for a nominee: consolidation by county against the party's frontrunner, and primary quality
   op28.primTerm = (party, name, GP) => {
@@ -231,6 +231,34 @@ export function createEngine(DATA, AKCT) {
     // v48c: prim_w scales these; the respondent file's county term already holds each candidate's demographic strength
     const pw = GP.prim_w == null ? 1 : Number(GP.prim_w);
     const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return pw * ((pD[b] || 0) + (pR[b] || 0)); };
+    // v50: every ticket effect county by county, none uniform across a state.
+    //  elasticity  each county's own (county_model el: 0.7 its Gallup party ID move, 0.3 its vote history, the blend the 2026
+    //              Senate counties chose), vote weighted mean 1; national candidate effects move each county by it
+    //  home state  strongest around the candidate's home county and in the counties that move most: elasticity x
+    //              (1 + fn_a x exp(-distance / fn_l)), scaled so the state's total stays the researched edge; running mates
+    //              the same at their 1.5 points
+    //  primaries   each state's primary term goes to its counties by elasticity and by how the nominee ran in each
+    //              county's primary
+    const EL = new Float64Array(n); { let a = 0, b = 0; for (let i = 0; i < n; i++) { const v = Number(cm[i].el); EL[i] = isFinite(v) && v > 0 ? v : 1; a += EL[i] * tot[i]; b += tot[i]; } for (let i = 0; i < n; i++) EL[i] *= a > 0 ? b / a : 1; }
+    const byState = {}; for (let i = 0; i < n; i++) (byState[cm[i].st] || (byState[cm[i].st] = [])).push(i);
+    const fipsIx = new Map(cm.map((c, i) => [c.fips, i]));
+    const FN_A = GP.fn_a == null ? 3 : Number(GP.fn_a), FN_L = GP.fn_l == null ? 30 : Number(GP.fn_l);
+    const HO = new Float64Array(n), PRC = new Float64Array(n);
+    const spread = (C, amp) => {
+      if (!C) return; const hc = json(C.home_cty || '{}');
+      for (const [s, v] of Object.entries(amp)) { const ix = byState[s]; if (!ix || !v) continue; const h = hc[s] != null ? fipsIx.get(hc[s]) : undefined;
+        let sw = 0, sv = 0; const ww = ix.map((i) => { let w = EL[i]; if (h != null) { const dd = Math.hypot((Number(cm[i].cx) || 0) - (Number(cm[h].cx) || 0), (Number(cm[i].cy) || 0) - (Number(cm[h].cy) || 0)); w *= 1 + FN_A * Math.exp(-dd / FN_L); } sw += w * tot[i]; sv += tot[i]; return w; });
+        ix.forEach((i, k) => { HO[i] += v * ww[k] * sv / sw; }); } };
+    spread(D, hD); spread(R, hR);
+    if (DV && vD) spread(DV, { [vD]: -1.5 }); if (RV && vR) spread(RV, { [vR]: 1.5 });
+    const primSpread = (pt, Cn, pj) => {
+      const S = pt ? pt.S : null; const j = S ? S.names.indexOf(Cn.name) : -1; const K = S ? S.names.length : 0;
+      for (const [s, v0] of Object.entries(pj)) { const v = pw * Number(v0); const ix = byState[s]; if (!ix || !v) continue;
+        const sh = ix.map((i) => { if (j < 0) return NaN; const ii = S.cidx.get(cm[i].fips); return ii == null ? NaN : S.sh[ii * K + j]; });
+        let a = 0, b = 0; ix.forEach((i, k) => { if (isFinite(sh[k])) { a += sh[k] * tot[i]; b += tot[i]; } }); const m = b > 0 && a > 0 ? a / b : 1;
+        let sw = 0, sv = 0; const ww = ix.map((i, k) => { const r = isFinite(sh[k]) ? Math.max(0.25, Math.min(4, sh[k] / m)) : 1; const w = EL[i] * Math.sqrt(r); sw += w * tot[i]; sv += tot[i]; return w; });
+        ix.forEach((i, k) => { PRC[i] += v * ww[k] * sv / sw; }); } };
+    primSpread(ptD, D, pD); primSpread(ptR, R, pR);
     const qual = (ptR ? -ptR.quality : 0) + (ptD ? ptD.quality : 0);
     // v48g: a matchup with two or more of its own polls keeps part of its polling average beyond its two candidates' effects (pair_adj)
     const PAd = dash.data('pair_adj'); const PA = PAd && PAd.status === 'ok' ? PAd.data : []; const pa = PA.find((r) => r.dem === D.name && r.rep === R.name);
@@ -262,10 +290,8 @@ export function createEngine(DATA, AKCT) {
       for (const k of Object.keys(dd)) { const pv = dd[k] * 1e6 / Math.max(1, vv[k]); dmaDamp[k] = 1 - GP.grid_g * (1 - Math.exp(-pv / GP.grid_L)); } } }
     const dmp = (s, i) => (i != null && cm[i] && cm[i].dma && dmaDamp[cm[i].dma] != null ? dmaDamp[cm[i].dma] : (damp[String(s).split('-')[0]] ?? 1));
     const eff = (s, i) => {
-      let e = natPart * dmp(s, i) + (hD[s] || 0) + (hR[s] || 0) + pr(s);
-      if (vD === s) e -= 1.5; if (vR === s) e += 1.5;
-      if (i != null) e += -(xD[i] - mD) + (xR[i] - mR) - LI * (xI[i] - mI);
-      return e;
+      if (i == null) { let e = natPart * dmp(s, i) + (hD[s] || 0) + (hR[s] || 0) + pr(s); if (vD === s) e -= 1.5; if (vR === s) e += 1.5; return e; }
+      return natPart * dmp(s, i) * EL[i] + HO[i] + PRC[i] - (xD[i] - mD) + (xR[i] - mR) - LI * (xI[i] - mI);
     };
     // third party draw through political types, the county's third party history, and a primary candidate's own voters
     const tsplit = Object.fromEntries(types.map((t) => [t.type, Number(t.d_share)]));
@@ -308,7 +334,7 @@ export function createEngine(DATA, AKCT) {
         if (pull[i] > 0) { const pv = Math.min(pull[i], 0.5 * (T.party === 'D' ? d : r)); if (T.party === 'D') d -= pv; else r -= pv; t += pv; }
       }
       const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
-      cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i), pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
+      cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i) * EL[i], home: HO[i], primc: PRC[i], pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
       add(c.st, d, r, t, o);
       if (Number(c.ne2) > 0) add(NE2, d, r, t, o, Number(c.ne2));
       if (c.st === 'ME') { add(ME1, d, r, t, o, Number(c.me1)); add(ME2, d, r, t, o, 1 - Number(c.me1)); }
