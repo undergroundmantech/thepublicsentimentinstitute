@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 const CLIENT = "ca-pub-7542770820535344";
-export const UNITS = { display: "1176653089", article: "", multiplex: "" };
+export const UNITS = { display: "1176653089", article: "6961518143", multiplex: "1901083950" };
 
 type Kind = "display" | "article" | "multiplex";
 export default function AdUnit({ kind = "display", className, minH }: { kind?: Kind; className?: string; minH?: number }) {
