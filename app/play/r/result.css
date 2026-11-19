@@ -1,0 +1,15 @@
+.opp.pr28 { display: grid; gap: 8px; max-width: 980px; margin: 0 auto; padding-block: 24px 40px; }
+.pr28-card { display: grid; justify-items: center; gap: 14px; padding: clamp(20px, 4vw, 40px); border-radius: 26px; border: 1px solid rgba(255,255,255,.1); text-align: center;
+  background: radial-gradient(120% 80% at 0% 0%, rgba(61,123,255,.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(255,59,92,.2), transparent 60%), #120c1f; }
+.pr28-card h1 { margin: 0; font: 900 clamp(30px, 5vw, 54px)/1.02 var(--font-d); letter-spacing: -.04em; text-wrap: balance; }
+.pr28-card h1 em { font-style: normal; background: linear-gradient(110deg, #3d7bff, #9b5cff 50%, #ff3b5c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pr28-score { display: flex; align-items: baseline; gap: 16px; margin: 0; font: 800 13px var(--font-m); color: var(--mute); text-transform: uppercase; letter-spacing: .08em; }
+.pr28-score b { font: 900 clamp(30px, 5vw, 48px) var(--font-m); letter-spacing: -.03em; }
+.pr28-score .d { color: #3d7bff; } .pr28-score .r { color: #ff3b5c; }
+.pr28-map { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); gap: 4px; width: min(100%, 640px); }
+.pr28-map i { display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; font: 800 clamp(8px, 1.4vw, 12px) var(--font-m); font-style: normal; color: #fff; }
+.pr28-map i.d { background: #2a5ee8; } .pr28-map i.r { background: #e0284b; }
+.pr28-note { margin: 0; max-width: 620px; color: var(--mute); font-size: 14px; }
+.pr28-go { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.pr28-more { padding: 10px 4px; } .pr28-more h2 { margin: 0 0 6px; font: 800 20px var(--font-d); } .pr28-more p { margin: 0; color: var(--mute); }
+.pr28-more a { text-decoration: underline; text-underline-offset: 3px; }

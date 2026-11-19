@@ -10,7 +10,7 @@ import SectionNav from "@/app/components/opp/SectionNav";
 import JsonLd from "@/app/components/JsonLd";
 import { SITE, ORG_ID } from "@/app/lib/seo";
 import { PollRanking, SeatTable } from "./Bench";
-import { faqLd, getBench, getPolling, rankingLd } from "./bench";
+import { dm, faqLd, getBench, getPolling, rankingLd } from "./bench";
 import { asofLabel, calledSeats, seatMiss, cls, er, FROZEN_DIR, getAcc, getManifest, mg, OFFICE, pc, who, winnerName, type Blk, type Office, type Race } from "./data";
 import "./acc.css";
 import "./fx/fx.css";
@@ -20,14 +20,14 @@ import HTrack from "./fx/HTrack";
 import { CallCards, Chapter, Dumbbells, PollRace, SeatMiss, Stats } from "./fx/Story";
 
 export const metadata = seo({
-  title: "The most accurate pollster of 2026: the On Point accuracy report",
-  description: "On Point Polling was the most accurate pollster of the 2026 midterms: D +13.1 on the final generic ballot against a D +13.0 result, first of 42 final national polls. Every Senate, House, governor, county and state legislative forecast, scored against the count.",
+  title: "The 2026 accuracy report: On Point Polling and the On Point forecast",
+  description: "On Point Polling's final national poll was D +13.1 against a D +14.0 count, 0.9 points off and second of 42 final national polls. Every Senate, House, governor, county and state legislative forecast, scored against the count.",
   path: "/accuracy",
   type: "article",
   published: "2026-11-06",
-  modified: "2026-11-06",
+  modified: "2026-11-19",
   ownImage: true,
-  keywords: ["most accurate pollster", "most accurate pollster 2026", "most accurate poll", "most accurate election forecast", "2026 midterm polling accuracy", "pollster rankings 2026", "generic ballot accuracy", "On Point Polling", "On Point Politics", "VT Analytics"],
+  keywords: ["pollster accuracy 2026", "generic ballot polls 2026", "2026 midterm polling accuracy", "most accurate election forecast", "pollster rankings 2026", "generic ballot accuracy", "On Point Polling", "On Point Politics", "VT Analytics"],
 });
 
 const n = (x: number) => x.toLocaleString("en-US");
@@ -91,10 +91,10 @@ export default function AccuracyPage() {
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>2026 accuracy</span></nav>
       <ForecastNav />
       <JsonLd data={{ "@context": "https://schema.org", "@graph": [
-        { "@type": "Article", "@id": `${SITE.url}/accuracy#article`, headline: "The most accurate pollster of 2026: the On Point accuracy report", url: `${SITE.url}/accuracy`,
+        { "@type": "Article", "@id": `${SITE.url}/accuracy#article`, headline: "The 2026 accuracy report: On Point Polling and the On Point forecast", url: `${SITE.url}/accuracy`,
           datePublished: "2026-11-06T08:00:00-05:00", dateModified: `${A.built.replace("Z", ":00Z")}`, image: `${SITE.url}/accuracy/opengraph-image.jpg`,
           author: { "@id": ORG_ID }, publisher: { "@id": ORG_ID }, about: ["2026 United States elections", "Opinion poll accuracy", "Election forecasting"],
-          description: `On Point Polling's final national poll had Democrats up ${B.generic.us.margin.toFixed(1)} against a D +${B.generic.result.margin.toFixed(1)} result, first of ${B.national.polls.length} final national polls. The forecast called ${H.all.called_right} of ${H.all.races} Senate, House and governor races and the winner of all three chambers.` },
+          description: `On Point Polling's final national poll had Democrats up ${B.generic.us.margin.toFixed(1)} against a D +${B.generic.result.margin.toFixed(1)} count, second of ${B.national.polls.length} final national polls. The forecast called ${H.all.called_right} of ${H.all.races} Senate, House and governor races and the winner of all three chambers.` },
         rankingLd(B, "/accuracy"),
         faqLd(B, [{ q: "How accurate was the On Point 2026 forecast?", a: `The final forecast, frozen on November 3 before polls closed, called ${H.all.called_right} of ${H.all.races} Senate, House and governor races and the winner of the Senate, the House and the governors. It called ${LG.chambers.right} of ${LG.chambers.settled} settled state legislative chambers and ${LG.scored.share.toFixed(1)} percent of contested legislative districts.` }]),
         { "@type": "Dataset", name: "On Point Politics 2026 forecast accuracy scores", url: `${SITE.url}/accuracy`, distribution: [{ "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `${SITE.url}/accuracy/2026.json` }],
@@ -106,10 +106,10 @@ export default function AccuracyPage() {
 
       <header className="sv-hero" data-par>
         <div className="sv-orbs" aria-hidden="true" data-par><i /><i /><i /></div>
-        <p className="eye g">The 2026 accuracy report · count as of {asofLabel(A.results_asof.federal)}</p>
-        <h1>{words("The most accurate poll")} <em>{words("in America.", 4)}</em></h1>
+        <p className="eye g">The 2026 accuracy report · races counted as of {asofLabel(A.results_asof.federal)} · national vote as of {B.generic.result.asof_label}</p>
+        <h1>{words("Within a point")} <em>{words("of the count.", 3)}</em></h1>
         <p className="lede">
-          Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The projected final is {B.generic.result.margin.toFixed(1)}.
+          Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The count is {B.generic.result.margin.toFixed(1)}. Of {B.national.polls.length} final national polls, only {B.national.polls[0].name} was closer.
           Scroll through how the poll and the forecast held up: every pollster, every forecaster, every race we polled, and then every race, county and legislative district against the count.
         </p>
         <div className="sv-cta">
@@ -119,29 +119,29 @@ export default function AccuracyPage() {
         </div>
         <div className="sv-cue" aria-hidden="true"><i />Scroll the story</div>
         <Stats items={[
-          { k: "Final national poll", to: B.generic.us.margin, dec: 1, pre: "D +", cls: "d", s: `The result: D +${B.generic.result.margin.toFixed(1)}. The averages: D +${B.generic.averages.margin.toFixed(1)}.` },
+          { k: "Final national poll", to: B.generic.us.margin, dec: 1, pre: "D +", cls: "d", s: `The count: D +${B.generic.result.margin.toFixed(1)}. Second of ${B.national.polls.length}. The averages: D +${B.generic.averages.margin.toFixed(1)}.` },
           { k: "Race winners called", to: H.all.called_right, suf: ` of ${H.all.races}`, s: "Senate, House and governor, by the final forecast" },
           { k: "Chambers called", to: (["senate", "house", "governor"] as Office[]).filter((o) => C[o].right).length, suf: " of 3", cls: "ok", s: "Senate, House and the governors" },
           { k: "Our Senate polls", to: P.summary.senate.mae, dec: 1, suf: " pts", s: `Average miss across the ${P.summary.senate.n} Senate races we polled` },
         ]} />
       </header>
 
-      <Chapter id="poll" eye="The most accurate poll" title={<>A tenth of a point.</>}
+      <Chapter id="poll" eye="The generic ballot" title={<>Nine tenths of a point.</>}
         lede={<>Six days out, every major polling average had Democrats ahead by single digits. Our final national survey of {B.generic.us.n.toLocaleString("en-US")} registered voters said thirteen.</>}>
         <BallotScrolly polls={B.national.polls.map((p) => ({ name: p.name, final: p.final, us: p.us }))} us={B.generic.us.margin} result={B.generic.result.margin} averages={B.generic.averages.margin}
           steps={[
             { k: "The averages", t: `The polling averages closed the race near D +${B.generic.averages.margin.toFixed(1)}.` },
             { k: "Our final poll", t: `On Point Polling, October 28: Democrats ${B.generic.us.d.toFixed(1)}, Republicans ${B.generic.us.r.toFixed(1)}. D +${B.generic.us.margin.toFixed(1)}.` },
-            { k: "The result", t: `The projected final is D +${B.generic.result.margin.toFixed(1)}. The averages missed by ${(B.generic.result.margin - B.generic.averages.margin).toFixed(1)}. We missed by ${Math.abs(B.generic.us.margin - B.generic.result.margin).toFixed(1)}.` },
-            { k: "Every final poll", t: `${B.national.polls.length} pollsters published a final national poll. Here is where every one of them landed.` },
+            { k: "The result", t: `The count is D +${B.generic.result.margin.toFixed(1)}. The averages missed by ${(B.generic.result.margin - B.generic.averages.margin).toFixed(1)}. We missed by ${Math.abs(B.generic.us.margin - B.generic.result.margin).toFixed(1)}.` },
+            { k: "Every final poll", t: `${B.national.polls.length} pollsters published a final national poll. ${B.national.polls[0].name}, at ${dm(B.national.polls[0].final)}, was the only one closer than ours.` },
           ]} />
       </Chapter>
 
       <Chapter id="rankings" eye="The rankings" title={<>Every final national poll, ranked.</>}
-        lede={<>Scored on the margin and on each party&apos;s share. Shorter bars are better. On the margin alone, The Honest Poll matched D +13 exactly and we were a tenth off; on the shares, we were closest.</>}>
+        lede={<>Ranked by each final poll&apos;s distance from the count. Shorter bars are better. {B.national.polls[0].name} was {B.national.polls[0].score.toFixed(1)} off; we were second at {Math.abs(B.generic.us.margin - B.generic.result.margin).toFixed(1)}, a tenth ahead of {B.national.polls[2].name}.</>}>
         <div className="ch-body"><PollRace b={B} limit={12} /></div>
         <details className="card acc-more"><summary>All {B.national.polls.length} final national polls</summary><PollRanking b={B} /></details>
-        <p className="bx-src">{B.national.method} The D +{B.generic.result.margin.toFixed(1)} result is the projected final once every vote is counted; the {B.generic.result.counted_votes_m} million votes counted by {B.asof_label} show D +{B.generic.result.counted_margin.toFixed(1)}.</p>
+        <p className="bx-src">{B.national.method} The count is D +{B.generic.result.margin.toFixed(1)} with about 98 percent of the expected vote, {B.generic.result.counted_votes_m} million votes as of {B.generic.result.asof_label}, from the {B.generic.result.source}.{B.national.source ? <> Ranking: <a href={B.national.source.url} target="_blank" rel="noopener noreferrer">{B.national.source.name}</a>.</> : null}</p>
       </Chapter>
 
       <Chapter id="our-polls" eye="On Point Polling, race by race" title={<>{P.summary.all.right} of {P.summary.all.n} race winners. Every miss shown.</>}

@@ -52,9 +52,9 @@ export function llmsText(full: boolean): string {
 
   {
     const B = getBench(), A = getAcc(), g = B.generic, P = B.national.polls;
-    h("2026 results: the most accurate pollster and forecast");
+    h("2026 results: the polling and the forecast against the count");
     L.push(
-      `* On Point Polling was the most accurate pollster of the 2026 midterms. Its final national poll had the generic ballot at D +${g.us.margin.toFixed(1)}, ${g.us.d.toFixed(1)} D to ${g.us.r.toFixed(1)} R, against a projected final of D +${g.result.margin.toFixed(1)}; scored on margin and vote share it ranked first of ${P.length} final national polls, score ${P[0].score.toFixed(2)} against ${P[1].score.toFixed(2)} for ${P[1].name}. ${U("/most-accurate-pollster")}`,
+      `* On Point Polling's final 2026 national poll had the generic ballot at D +${g.us.margin.toFixed(1)}, ${g.us.d.toFixed(1)} D to ${g.us.r.toFixed(1)} R, against a count of D +${g.result.margin.toFixed(1)}: ${Math.abs(g.us.margin - g.result.margin).toFixed(1)} points off, second of ${P.length} final national polls. ${P[0].name} was closest at ${P[0].score.toFixed(1)} off. ${U("/most-accurate-pollster")}`,
       `* The final On Point forecast, frozen on November 3 before polls closed, called ${A.headline.all.called_right} of ${A.headline.all.races} Senate, House and governor races and called control of the Senate, the House and the governors right. ${U("/accuracy")}`,
       `* Final seat counts, the winner picked in each race plus seats not up: Senate ${A.chambers.senate.projD} Democratic side, House ${A.chambers.house.projD} Democratic, governors ${A.chambers.governor.projD} Democratic, the closest seat counts of any published forecast. ${U("/accuracy#forecasters")}`,
       `* On Point Polling's final state and district polls called ${getPolling().summary.all.right} of ${getPolling().summary.all.n} race winners in ${getPolling().summary.states} states, with a ${getPolling().summary.senate.mae.toFixed(1)} point average miss in Senate races. Every poll is scored race by race. ${U("/accuracy#our-polls")}`,

@@ -22,10 +22,10 @@ const SVC_ID = `${URL}#service`;
 
 export const metadata: Metadata = seo({
   title: "On Point Polling: nonpartisan polling firm and election analytics",
-  description: "On Point Polling is a nonpartisan polling firm with the most accurate final national poll of 2026: D +13.1 against a D +13.0 result. One time polls, monthly and quarterly tracking, message testing, county by county election simulations, likely voter modeling and a weighting dashboard. Statewide, district and national polls fielded in 48 to 72 hours.",
+  description: "On Point Polling is a nonpartisan polling firm whose final 2026 national poll was D +13.1 against a D +14.0 count, second closest of 42. One time polls, monthly and quarterly tracking, message testing, county by county election simulations, likely voter modeling and a weighting dashboard. Statewide, district and national polls fielded in 48 to 72 hours.",
   path: "/on-point-polling",
   ownImage: true,
-  keywords: ["On Point Polling", "polling firm", "political polling firm", "nonpartisan pollster", "hire a pollster", "polling services", "campaign polling", "most accurate pollster 2026", "tracking poll", "message testing", "county level election forecast", "election simulation", "likely voter model", "MRP", "survey weighting", "voter file polling", "text to web survey", "statewide poll", "district poll", "national poll"],
+  keywords: ["On Point Polling", "polling firm", "political polling firm", "nonpartisan pollster", "hire a pollster", "polling services", "campaign polling", "pollster accuracy 2026", "tracking poll", "message testing", "county level election forecast", "election simulation", "likely voter model", "MRP", "survey weighting", "voter file polling", "text to web survey", "statewide poll", "district poll", "national poll"],
 });
 
 const STAGES = [
@@ -48,7 +48,7 @@ export default function OnPointPolling() {
   const P = getPolling();
   const g = B.generic, S = P.summary;
   const FAQ: { q: string; a: string }[] = [
-    { q: "How accurate is On Point Polling?", a: `On Point Polling's final 2026 national poll had Democrats ahead by ${g.us.margin.toFixed(1)} points against a projected final of D +${g.result.margin.toFixed(1)}, the closest final national poll of the midterms. Its final state polls called ${S.senate.right} of ${S.senate.n} Senate winners with an average miss of ${S.senate.mae.toFixed(1)} points. Every poll is scored in the public accuracy report, misses included.` },
+    { q: "How accurate is On Point Polling?", a: `On Point Polling's final 2026 national poll had Democrats ahead by ${g.us.margin.toFixed(1)} points against a count of D +${g.result.margin.toFixed(1)}, ${Math.abs(g.us.margin - g.result.margin).toFixed(1)} points off and second of ${B.national.polls.length} final national polls. Its final state polls called ${S.senate.right} of ${S.senate.n} Senate winners with an average miss of ${S.senate.mae.toFixed(1)} points. Every poll is scored in the public accuracy report, misses included.` },
     { q: "What services does On Point Polling offer?", a: `${SERVICES.map((s) => s.name).join(", ")}.` },
     { q: "Is On Point Polling partisan?", a: "No. On Point Polling is nonpartisan and polls for Democrats, Republicans, independents, ballot measures, newsrooms and companies with the same method for every client. Sponsors of public releases are disclosed." },
     { q: "How fast can you field a poll?", a: "Most polls field in 48 to 72 hours from an approved questionnaire, with toplines and crosstabs delivered shortly after." },
@@ -67,7 +67,6 @@ export default function OnPointPolling() {
           logo: `${SITE.url}/brand/on-point-polling-color.svg`, image: `${URL}/opengraph-image.jpg`, parentOrganization: { "@id": ORG_ID },
           areaServed: { "@type": "Country", name: "United States" }, priceRange: "Quoted per project", slogan: "Nonpartisan polling, scored against the count",
           description: "Nonpartisan polling firm and election analytics: one time polls, tracking programs, message testing, county by county election simulations, likely voter modeling, MRP, voter file sampling and a weighting dashboard.",
-          award: `Most accurate final national poll of the 2026 midterms, D +${g.us.margin.toFixed(1)} against a D +${g.result.margin.toFixed(1)} result`,
           knowsAbout: ["Election polling", "Survey research", "Likely voter modeling", "Survey weighting", "Election forecasting", "MRP", "Message testing"],
           hasOfferCatalog: { "@type": "OfferCatalog", name: "On Point Polling services", itemListElement: GROUPS.map((gr) => ({ "@type": "OfferCatalog", name: gr.name,
             itemListElement: SERVICES.filter((s) => s.group === gr.id).map((s) => ({ "@type": "Offer", url: `${SITE.url}${svcHref(s)}`, itemOffered: { "@type": "Service", "@id": `${SITE.url}${svcHref(s)}#service`, name: s.name, description: s.short, provider: { "@id": SVC_ID } } })) })) } },
@@ -83,7 +82,7 @@ export default function OnPointPolling() {
             <PollingLockup height={60} className="oph-lockup" />
             <p className="eye oph-kicker">Nonpartisan survey research and election analytics</p>
             <h1>Polling and election analytics for campaigns, causes and companies.</h1>
-            <p className="lede">Our final national poll of 2026 landed a tenth of a point from the result. Clients hire the same voter file fieldwork, likely voter model and county simulations for statewide, district and national research, delivered in days.</p>
+            <p className="lede">Our final national poll of 2026 landed within a point of the count, second of 42. Clients hire the same voter file fieldwork, likely voter model and county simulations for statewide, district and national research, delivered in days.</p>
             <div className="oph-cta-row">
               <a className="btn white" href={mailto("Proposal request")}>Request a proposal</a>
               <a className="btn" href="#services">View services</a>
@@ -94,7 +93,7 @@ export default function OnPointPolling() {
           <Needle B={B} />
         </div>
         <Stats items={[
-          { k: "Final national poll", to: g.us.margin, dec: 1, pre: "D +", s: `Result D +${g.result.margin.toFixed(1)}, the closest final national poll` },
+          { k: "Final national poll", to: g.us.margin, dec: 1, pre: "D +", s: `The count D +${g.result.margin.toFixed(1)}, second of ${B.national.polls.length} final national polls` },
           { k: "Senate winners called", to: S.senate.right, suf: ` of ${S.senate.n}`, s: `${S.senate.mae.toFixed(1)} point average miss` },
           { k: "Race winners called", to: S.all.right, suf: ` of ${S.all.n}`, s: `Final state and district polls in ${S.states} states` },
           { k: "States polled in 2026", to: S.states, suf: " + US", s: `${S.releases} public releases, fielded in 48 to 72 hours` },
@@ -171,7 +170,7 @@ export default function OnPointPolling() {
         <div className="ch-body oph-race">
           <h3 className="oph-sub">Final national polls, ranked by accuracy</h3>
           <PollRace b={B} limit={10} />
-          <p className="bx-src">Scored on the margin and each party&apos;s share against the projected final. <Link href="/most-accurate-pollster">The full ranking.</Link></p>
+          <p className="bx-src">Ranked by each poll&apos;s distance from the D +{g.result.margin.toFixed(1)} count. <Link href="/most-accurate-pollster">The full ranking.</Link></p>
         </div>
       </Chapter>
 

@@ -2,10 +2,14 @@
 // A state's 2028 page, On Point's own layout: the state's shape behind its name and rating, a duel bar between the two
 // nominees, the counties, a field of 100 simulated elections, the margin's range and the biggest counties. Every county
 // moves with its state between matchups, the forecast's own rule, so the state's total is the sum of its counties.
-import { useMemo, useState } from "react";
+// Sketchbook look, Nov 19 2026: the state floats as a 3D paper slab in the hero, its rating stamps down on every
+// matchup, the counties flip in from the left under a pencil outline that traces itself, and a hovered county pops up.
+import { useMemo, useRef, useState, type CSSProperties } from "react";
+import Pointy from "@/onpoint-sketchbook/react/Pointy";
+import { InkDefs, InkOutline, Lift, Slab3D, WASH_CUTS, WASH_D, WASH_R, WASH_T, sweepDelays, useBoil, useInView, usePxScale, washColor, washInk, washStep } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
-import { fmtMg, fmtPct, last, marginColor, shiftColor } from "./lib";
+import { fmtMg, fmtPct, last, shiftColor } from "./lib";
 import { CountyTip, Tip } from "./Tips28";
 import { RATE, rateOf } from "./rate28";
 import type { Pair } from "./data28";
@@ -31,6 +35,10 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
     return { D, R, O, T: D + R + O, cty };
   }, [data, shift]);
   const big = useMemo(() => [...data.counties].sort((a, b) => b.w - a.w).slice(0, 8), [data]);
+  const mapBox = useRef<HTMLElement>(null);
+  const go = useInView(mapBox); useBoil(mapBox);
+  const cShapes = useMemo(() => data.counties.map((c) => [c.f, c.d] as [string, string]), [data]);
+  const cDel = useMemo(() => sweepDelays(cShapes, 1.1), [cShapes]);
 
   const [x, y, w, h] = data.box; const pad = Math.max(w, h) * 0.06;
   const vb = `${x - pad} ${y - pad} ${w + 2 * pad} ${h + 2 * pad}`;
@@ -41,14 +49,25 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
   const nD = Math.round(sv[1] * 100);
   const hc = hov ? res.cty.get(hov.f) : null, hn = hov ? data.counties.find((c) => c.f === hov.f) : null;
   const S = 25, pos = (m: number) => Math.max(0, Math.min(100, ((m + S) / (2 * S)) * 100));
+  const ctySvg = useRef<SVGSVGElement>(null);
+  const sc = usePxScale(ctySvg, vb);
+  const cFill = (f: string) => { const c = data.counties.find((q) => q.f === f); const r = res.cty.get(f); if (!c || !r) return "none"; return mode === "s" ? (c.m24 != null ? shiftColor(r.m - c.m24, 16) : "#d8d3c8") : washColor(r.m); };
+  // counties per step of the wash, for the legend
+  const steps = useMemo(() => { const n = { d: [0, 0, 0, 0, 0], r: [0, 0, 0, 0, 0], t: 0 }; for (const c of data.counties) { const m = res.cty.get(c.f)?.m ?? 0; const k = washStep(m); if (k === 0) n.t++; else (m < 0 ? n.d : n.r)[k - 1]++; } return n; }, [data, res]);
+  const upC = hov?.f ?? lit;
 
   return (
     <div className="s28">
       <header className="s28-hero">
-        <svg className="s28-ghost" viewBox={vb} aria-hidden="true"><path d={data.outline} /></svg>
-        <p className="s28-eye"><Link href="/2028">The 2028 forecast</Link> · {data.ev} electoral votes</p>
-        <h1>{data.name}</h1>
-        <div className="s28-rate"><span style={{ background: rt.color, color: rt.ink }}>{rt.label}</span><b>{fmtMg(sv[0])}</b><em>{W} carries it in {fmtPct(pW)} of simulations{data.m24 != null ? ` · ${fmtMg(data.m24)} in 2024` : ""}</em></div>
+        <div className="s28-hero-t">
+          <p className="s28-eye"><Link href="/2028">The 2028 forecast</Link> · {data.ev} electoral votes</p>
+          <h1>{data.name}</h1>
+          <div className="s28-rate"><span key={p.id} className="s28-stamp" style={{ color: rt.text ?? rt.color }}>{rt.label}</span><b key={p.id + "m"} className="h28-slam">{fmtMg(sv[0])}</b><em>{W} carries it in {fmtPct(pW)} of simulations{data.m24 != null ? ` · ${fmtMg(data.m24)} in 2024` : ""}</em></div>
+        </div>
+        <div className="s28-slab-wrap">
+          <Slab3D d={data.outline} viewBox={vb} fill={rt.color} />
+          <Pointy pose="point-pointer" size={128} className="s28-pointy" />
+        </div>
       </header>
 
       <div className="s28-mu" role="group" aria-label="Matchup">
@@ -75,19 +94,38 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
       </section>
 
       <div className="s28-grid">
-        <section className="s28-map" aria-label={`${data.name} by county`} onMouseLeave={() => setHov(null)}>
-          <div className="h28-modes s" role="radiogroup" aria-label="Color the counties by">
-            {([["m", "Margin"], ["s", "Change from 2024"]] as ["m" | "s", string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
+        <section ref={mapBox} className={`s28-map ${go ? "sk-map-go" : "sk-map-wait"}`} aria-label={`${data.name} by county`} onMouseLeave={() => setHov(null)}>
+          <div className="h28-modes s">
+            <div className="sk-seg" role="radiogroup" aria-label="Color the counties by">
+              {([["m", "Margin"], ["s", "Change from 2024"]] as ["m" | "s", string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
+            </div>
             <span className="h28-closest">{data.counties.length} counties · hover any one for its vote</span>
           </div>
-          <svg viewBox={vb} role="img" aria-label={`${data.name} 2028 forecast by county`}>
-            {data.counties.map((c) => { const r = res.cty.get(c.f)!; return <path key={c.f} d={c.d} fill={mode === "s" ? (c.m24 != null ? shiftColor(r.m - c.m24, 16) : "#2a2438") : marginColor(r.m)} className={hov?.f === c.f || lit === c.f ? "hov" : lit ? "fade" : undefined} onMouseMove={(e) => setHov({ f: c.f, x: e.clientX, y: e.clientY })} />; })}
-            <path d={data.outline} className="s28-ol" />
-          </svg>
+          <div className="s28-paper">
+            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
+            <svg ref={ctySvg} viewBox={vb} role="img" aria-label={`${data.name} 2028 forecast by county`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
+              <InkDefs id="st28" scale={sc} />
+              <g className="s28-cty sk-map-flip" key={`${mode}|${sel}`}>
+                {data.counties.map((c) => <path key={c.f} d={c.d} fill={cFill(c.f)} style={{ "--d": cDel[c.f] } as CSSProperties} className={hov?.f === c.f || lit === c.f ? "hov" : lit ? "fade" : undefined} onMouseMove={(e) => setHov({ f: c.f, x: e.clientX, y: e.clientY })} />)}
+              </g>
+              <path className="s28-tex" d={data.outline} fill="url(#st28-pen)" aria-hidden="true" />
+              <InkOutline id="st28" shapes={[["ol", data.outline]]} width={3.4} scale={sc} delays={{ ol: "0.15s" }} />
+              <Lift id="st28" d={upC ? data.counties.find((c) => c.f === upC)?.d ?? null : null} fill={upC ? cFill(upC) : "none"} scale={sc} />
+            </svg>
+          </div>
           <Tip at={hov && hc && hn ? { x: hov.x, y: hov.y } : null}>
             {hc && hn ? <CountyTip name={hn.n} st={data.st} D={hc.D} R={hc.R} O={hn.o} d={p.d} r={p.r} m={hc.m} m24={hn.m24} /> : null}
           </Tip>
-          {mode === "m" ? <div className="s28-key"><span>{last(p.d)}</span><i /><span>{last(p.r)}</span></div> : <div className="s28-key"><span>Bluer than 2024</span><i className="sh" /><span>Redder than 2024</span></div>}
+          {mode === "m" ? (
+            <div className="s28-wash" aria-label="County margins">
+              <span className="end">{last(p.d)}</span>
+              {[4, 3, 2, 1, 0].map((i) => <span key={"d" + i} className="sw" style={{ background: WASH_D[i] }} title={`${last(p.d)} by ${WASH_CUTS[i]}${i < 4 ? ` to ${WASH_CUTS[i + 1]}` : " or more"}`}><b>{steps.d[i]}</b></span>)}
+              <span className="sw" style={{ background: WASH_T }} title="Within a point"><b>{steps.t}</b></span>
+              {[0, 1, 2, 3, 4].map((i) => <span key={"r" + i} className="sw" style={{ background: WASH_R[i] }} title={`${last(p.r)} by ${WASH_CUTS[i]}${i < 4 ? ` to ${WASH_CUTS[i + 1]}` : " or more"}`}><b>{steps.r[i]}</b></span>)}
+              <span className="end">{last(p.r)}</span>
+              <em>counties in each shade, pale for close and deep for safe</em>
+            </div>
+          ) : <div className="s28-key"><span>Bluer than 2024</span><i className="sh" /><span>Redder than 2024</span></div>}
           {data.dists.length ? (
             <div className="s28-dists">
               {data.dists.map((d) => { const v = distRes[p.id]?.[d.k]; if (!v) return null; const r = RATE[rateOf(v[0])]; return <div key={d.k}><b>{d.k}</b><span style={{ background: r.color, color: r.ink }}>{r.label}</span><em>{fmtMg(v[0])} · {d.ev} vote</em></div>; })}
@@ -98,8 +136,8 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
         <aside className="s28-side">
           <section className="s28-card" aria-labelledby="s28-sims">
             <h2 id="s28-sims">100 simulated elections</h2>
-            <div className="s28-dots" role="img" aria-label={`${last(p.d)} wins ${nD} of 100, ${last(p.r)} wins ${100 - nD}`}>
-              {Array.from({ length: 100 }, (_, i) => <i key={i} className={i < nD ? "d" : "r"} />)}
+            <div key={p.id} className="s28-dots" role="img" aria-label={`${last(p.d)} wins ${nD} of 100, ${last(p.r)} wins ${100 - nD}`}>
+              {Array.from({ length: 100 }, (_, i) => <i key={i} className={i < nD ? "d" : "r"} style={{ "--i": i } as CSSProperties} />)}
             </div>
             <p className="s28-dl"><b className="d">{last(p.d)} {nD}</b><b className="r">{100 - nD} {last(p.r)}</b></p>
             <p className="s28-say">{pW >= 0.95 ? `${W} wins almost every time.` : pW >= 0.8 ? `${W} wins most of the time, but ${L} takes it in about ${Math.round((1 - pW) * 100)} of 100.` : pW >= 0.6 ? `${W} is ahead, and ${L} wins about ${Math.round((1 - pW) * 100)} of 100.` : "Close to a coin flip."}</p>
@@ -118,7 +156,7 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
           <section className="s28-card" aria-labelledby="s28-big">
             <h2 id="s28-big">The biggest counties</h2>
             <ul className="s28-big">
-              {big.map((c) => { const r = res.cty.get(c.f)!; return <li key={c.f} onMouseEnter={() => setLit(c.f)} onMouseLeave={() => setLit(null)} className={lit === c.f ? "on" : undefined}><span className="n">{c.n}</span><span className="v">{fmtV(r.t)}</span><span className="m" style={{ background: marginColor(r.m), color: Math.abs(r.m) > 18 ? "#fff" : "#1b1328" }}>{fmtMg(r.m)}</span></li>; })}
+              {big.map((c) => { const r = res.cty.get(c.f)!; return <li key={c.f} onMouseEnter={() => setLit(c.f)} onMouseLeave={() => setLit(null)} className={lit === c.f ? "on" : undefined}><span className="n">{c.n}</span><span className="v">{fmtV(r.t)}</span><span className="m" style={{ background: washColor(r.m), color: washInk(r.m) }}>{fmtMg(r.m)}</span></li>; })}
             </ul>
           </section>
           {prim.D || prim.R ? (

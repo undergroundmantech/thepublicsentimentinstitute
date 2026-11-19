@@ -34,8 +34,8 @@ export default function HomeDeck() {
       <div className="hd-grid">
         <Link href="/accuracy" className="hd-t hd-acc glass" data-ev="Home tile" data-ev-d='{"tile":"accuracy"}'>
           <span className="hd-k">The 2026 accuracy report</span>
-          <b className="hd-title">The most accurate poll in America</b>
-          <span className="hd-p">Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The result: D +{B.generic.result.margin.toFixed(1)}. Then every race, county and district against the count.</span>
+          <b className="hd-title">Within a point of the count</b>
+          <span className="hd-p">Our final national poll had Democrats up {B.generic.us.margin.toFixed(1)}. The count: D +{B.generic.result.margin.toFixed(1)}, second closest of {B.national.polls.length} final national polls. Then every race, county and district against the count.</span>
           <span className="hd-links"><span>The poll</span><span>Every pollster</span><span>Our polls</span><span>The forecast</span></span>
         </Link>
 

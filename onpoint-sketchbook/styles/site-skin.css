@@ -1,0 +1,258 @@
+/* =====================================================================
+   SITE SKIN: the whole On Point site in the sketchbook look.
+   Loads after sketchbook.css. Everything is scoped to [data-sk], so
+   removing data-sk from <html> brings the old look back untouched.
+   1. tokens: the site's own names, re-pointed to paper and ink
+   2. chrome: masthead, ticker, footer, mobile tabs
+   3. primitives every page shares: cards, glass, KPIs, buttons, pills, tables
+   4. type
+   5. dark scopes: panels that stay black (footer, terminal, "most accurate" tiles)
+   6. page families that draw their own surfaces
+   ===================================================================== */
+
+/* ---------- 1. tokens ---------- */
+:root[data-sk]{
+  --bg:var(--sk-paper); --bg2:var(--sk-paper-3); --bg3:var(--sk-paper-2);
+  --glass:var(--sk-paper-3); --glass2:rgba(20,18,24,.05);
+  --line:rgba(20,18,24,.38); --line2:rgba(20,18,24,.8);
+  --ink:var(--sk-ink); --ink2:var(--sk-ink-2); --mute:var(--sk-ink-3); --mute2:#6c6675; --hi:var(--sk-ink); --logo:var(--sk-ink);
+  --accent:var(--sk-purple); --accent2:var(--sk-purple-ink); --accent-rgb:107,47,214;
+  --dem:var(--sk-d); --dem2:#1733b0; --dem3:var(--sk-d-soft);
+  --gop:var(--sk-r); --gop2:#b21f1f; --gop3:var(--sk-r-soft);
+  --ind:var(--sk-toss); --toss:#a8700a; --win:var(--sk-good); --live:var(--sk-r);
+  --ink-rgb:20,18,24; --canvas-rgb:233,229,220; --line-rgb:20,18,24; --bg2-rgb:251,250,246; --hi-rgb:20,18,24;
+  --shadow-card:6px 7px 0 var(--sk-ink); --shadow-sm:3px 4px 0 var(--sk-ink); --shadow-md:6px 7px 0 var(--sk-ink);
+  --shadow-grad:4px 5px 0 var(--sk-ink); --shadow-red:6px 7px 0 var(--sk-r); --shadow-blue:6px 7px 0 var(--sk-d);
+  --shadow-overlay:10px 12px 0 var(--sk-ink); --card-glow:none;
+  --surface-overlay:var(--sk-paper-3); --surface-masthead:var(--sk-paper); --surface-tooltip:var(--sk-paper-3);
+  --chart-grid:rgba(20,18,24,.14);
+  --purple-dim:rgba(107,47,214,.12); --red-dim:rgba(212,42,42,.12); --blue-dim:rgba(31,63,209,.12);
+  --dem-dim:rgba(31,63,209,.12); --gop-dim:rgba(212,42,42,.12);
+  --ambient:0; --grain:0;
+  --r:18px; --r-lg:22px;
+}
+[data-sk] body{ background:var(--sk-paper); }
+/* the site's own glow art steps aside; the kit draws grain, scanlines and the vignette */
+[data-sk] :is(.opp .orbs, .opp .orb, .opp .grain, .amb, .ambient, .spotlight, .sx-spot){ display:none !important; }
+[data-sk] .opp{ background:transparent; }
+[data-sk] ::selection{ background:var(--sk-purple); color:#fff; }
+
+/* ---------- 2. chrome ---------- */
+[data-sk] .opp-top, [data-sk] .opp .top{
+  background:var(--sk-paper) !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
+  border-bottom:4px solid var(--sk-ink) !important; box-shadow:0 5px 0 rgba(20,18,24,.12);
+}
+[data-sk] .opp .nav a{ color:var(--sk-ink); font-weight:700; }
+[data-sk] .opp .nav a:hover, [data-sk] .opp .nav a[aria-current="page"]{ background:var(--sk-ink); color:var(--sk-paper); border-radius:999px; }
+[data-sk] .opp .top .btn, [data-sk] .opp-top .btn{ box-shadow:3px 3px 0 var(--sk-ink); }
+/* dropdown menus read as taped index cards */
+[data-sk] :is(.t5-in, .macc, .mnav){ background:var(--sk-paper-3) !important; border:3px solid var(--sk-ink) !important; box-shadow:8px 9px 0 var(--sk-ink) !important; backdrop-filter:none !important; }
+[data-sk] .t5-chip{ background:var(--sk-ink) !important; color:var(--sk-paper) !important; }
+
+/* ticker: a black tape strip across the page */
+[data-sk] .opp .ticker-bar{ background:var(--sk-ink) !important; border-block:0 !important; color:#f3eff8;
+  --ink:#f3eff8; --ink2:#d8d2e2; --mute:#b9b2c6; --line:rgba(255,255,255,.25); }
+[data-sk] .opp .ticker-bar .lbl{ background:var(--sk-purple); color:#fff; transform:rotate(-1.5deg); padding:4px 10px; font-weight:800; }
+[data-sk] .opp .ticker-track span{ color:#f3eff8; }
+[data-sk] .opp .ticker-track .d{ color:#8fb0ff; } [data-sk] .opp .ticker-track .r{ color:#ff8f87; }
+
+/* mobile bottom tabs */
+[data-sk] .mtabs, [data-sk] [class*="mobile-tabs"]{ background:var(--sk-paper) !important; border-top:4px solid var(--sk-ink) !important; backdrop-filter:none !important; }
+
+/* ---------- 3. primitives ---------- */
+/* cards, glass panels and KPI tiles become raised paper with an ink line and a hard offset shadow */
+[data-sk] :is(.opp .card, .opp .glass, .opp .kpi, .opp .hero-panel > .glass, .card, .panel, .tile, .box, .glass){
+  background:var(--sk-paper-3);
+  border:3px solid var(--sk-ink) !important;
+  box-shadow:6px 7px 0 var(--sk-ink);
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+}
+/* only cards you can click lift on hover. A card that holds a map or a chart stays put, so the shape under the
+   pointer never slides away from it. */
+[data-sk] :is(.opp .card, .opp .glass, .opp .kpi){ transition:transform .14s cubic-bezier(.2,.8,.2,1), box-shadow .14s cubic-bezier(.2,.8,.2,1); }
+[data-sk] :is(.opp a.card, .opp a.glass, .opp a.kpi, .opp a > .kpi, .opp .card.story, .opp .card[role="link"]):hover{ box-shadow:9px 10px 0 var(--sk-ink); transform:translate(-2px,-2px); }
+[data-sk] :is(.opp .card, .opp .glass):has(svg path:is(.state, .st, .unit, .county, .cty, [data-st], [data-fips], [data-sk-fill])){ transform:none !important; }
+[data-sk] .opp .card.story:nth-child(odd){ transform:rotate(-.6deg); } [data-sk] .opp .card.story:nth-child(even){ transform:rotate(.5deg); }
+[data-sk] .opp .card.story:hover{ transform:rotate(0) translate(-2px,-2px); }
+[data-sk] .opp .card-h{ border-bottom:2px dashed rgba(20,18,24,.35); }
+/* a strip of masking tape on the first card of each section */
+[data-sk] .opp .sec > :is(.grid2,.grid3,.grid4,.grid) > .card:first-child{ position:relative; overflow:visible; }
+[data-sk] .opp .sec > :is(.grid2,.grid3,.grid4,.grid) > .card:first-child::before{ content:""; position:absolute; top:-14px; left:24px; width:120px; height:32px;
+  background:rgba(222,210,170,.7); box-shadow:0 1px 2px rgba(0,0,0,.15); transform:rotate(-6deg); z-index:3; pointer-events:none; }
+
+/* buttons: ink outline, paper face, hard shadow; the main call to action is solid ink, the brand one purple */
+[data-sk] :is(.opp .btn, .btn, button.btn, a.btn){
+  background:var(--sk-paper-3) !important; color:var(--sk-ink) !important; border:3px solid var(--sk-ink) !important;
+  border-radius:999px; box-shadow:4px 5px 0 var(--sk-ink); font-weight:800; text-shadow:none;
+}
+[data-sk] :is(.opp .btn, .btn):hover{ transform:translate(-1px,-1px); box-shadow:6px 7px 0 var(--sk-ink); }
+[data-sk] :is(.opp .btn, .btn):active{ transform:translate(3px,3px); box-shadow:1px 1px 0 var(--sk-ink); }
+[data-sk] :is(.opp .btn.g, .btn.g, .btn.primary, .btn.white){ background:var(--sk-ink) !important; color:var(--sk-paper) !important; }
+[data-sk] :is(.opp .btn.gold, .btn.gold){ background:var(--sk-purple) !important; color:#fff !important; }
+
+/* pills, chips and segmented controls */
+[data-sk] :is(.opp .pill, .pill, .opp .chip, .chip, .tag, .badge){ border:2px solid var(--sk-ink) !important; border-radius:999px; font-weight:800; box-shadow:2px 2px 0 var(--sk-ink); }
+[data-sk] .opp .pill.d, [data-sk] .pill.d{ background:var(--sk-d) !important; color:#fff !important; }
+[data-sk] .opp .pill.r, [data-sk] .pill.r{ background:var(--sk-r) !important; color:#fff !important; }
+[data-sk] .opp .pill.t, [data-sk] .pill.t{ background:#f1d36b !important; color:var(--sk-ink) !important; }
+[data-sk] .opp .pill.i, [data-sk] .pill.i{ background:var(--sk-toss) !important; color:#fff !important; }
+[data-sk] :is(.opp .seg, .seg, [role="tablist"]){ border:3px solid var(--sk-ink) !important; background:var(--sk-paper-3) !important; border-radius:999px; box-shadow:3px 4px 0 var(--sk-ink); }
+[data-sk] :is(.opp .seg button, .seg button){ color:var(--sk-ink) !important; font-weight:800; }
+[data-sk] :is(.opp .seg button.on, .seg button.on, .seg button[aria-pressed="true"], [role="tab"][aria-selected="true"]){ background:var(--sk-ink) !important; color:var(--sk-paper) !important; }
+
+/* tables: ink rules, mono heads */
+[data-sk] table th{ font-family:var(--sk-font-m); text-transform:uppercase; letter-spacing:.08em; color:var(--sk-ink) !important; border-bottom:3px solid var(--sk-ink) !important; }
+[data-sk] table td{ border-bottom:1px dashed rgba(20,18,24,.35) !important; }
+[data-sk] table tr:hover td{ background:rgba(107,47,214,.07); }
+
+/* inputs */
+[data-sk] :is(input[type="text"], input[type="search"], input[type="email"], input[type="number"], select, textarea){
+  background:var(--sk-paper-3) !important; color:var(--sk-ink) !important; border:3px solid var(--sk-ink) !important; border-radius:12px; box-shadow:3px 3px 0 var(--sk-ink);
+}
+
+/* bars and meters: hatched ink fills */
+[data-sk] .opp .kpi .bar, [data-sk] .opp .bar{ background:var(--sk-paper-2); border:2px solid var(--sk-ink); }
+[data-sk] .opp .kpi .bar i{ background:repeating-linear-gradient(-45deg,var(--sk-d) 0 5px,#5876e8 5px 8px); }
+
+/* ---------- 4. type ---------- */
+[data-sk] :is(.opp h1, .opp .hero h1, h1){ font-weight:900; letter-spacing:-.045em; color:var(--sk-ink); }
+[data-sk] :is(.opp h2, .opp .sec-h h2, h2){ font-weight:900; letter-spacing:-.035em; color:var(--sk-ink); }
+[data-sk] :is(.opp h3, .opp .card-h h3, h3){ font-weight:800; letter-spacing:-.02em; color:var(--sk-ink); }
+[data-sk] .opp .hero h1 em{ background:none; -webkit-text-fill-color:currentColor; color:var(--sk-purple); font-style:normal;
+  text-decoration:underline; text-decoration-thickness:.09em; text-underline-offset:.08em; text-decoration-color:var(--sk-ink); }
+[data-sk] :is(.opp .eye, .eye, .lab, .opp .kpi .lab){ font-family:var(--sk-font-m); letter-spacing:.14em; color:var(--sk-ink-2) !important; }
+[data-sk] .opp .eye.g, [data-sk] .eye.g{ background:none !important; -webkit-text-fill-color:var(--sk-purple); color:var(--sk-purple) !important; }
+[data-sk] .opp .sec-h h2::after{ content:""; display:block; width:min(220px,40%); height:7px; margin-top:8px; background:var(--sk-purple); transform:rotate(-1deg); border-radius:3px; }
+[data-sk] :is(.opp .kpi .v, .bignum, .opp .count .v){ font-weight:900; letter-spacing:-.04em; }
+[data-sk] a{ text-underline-offset:.18em; }
+
+/* ---------- 5. dark scopes: these stay black, with paper-colored text ---------- */
+[data-sk] :is(.opp .foot, footer.foot, .foot, .bandx, .terminal){
+  --ink:#f3eff8; --ink2:#d8d2e2; --mute:#b9b2c6; --mute2:#9b94aa; --hi:#fff; --logo:#fff;
+  --line:rgba(255,255,255,.18); --line2:rgba(255,255,255,.35); --line-rgb:255,255,255; --bg2:#121016; --glass:#121016;
+  background:var(--sk-black) !important; color:#f3eff8;
+}
+[data-sk] .opp .foot{ border-top:6px solid var(--sk-purple); }
+[data-sk] .opp .foot :is(h2,h3,h4,a,p,span,li){ color:inherit; }
+[data-sk] .opp .foot a:hover{ color:var(--sk-purple-2); }
+/* panels the site draws on a forced dark ground keep it, now as the black sketch panel */
+[data-sk] :is(.dark, .is-dark, .cnt-dark){ --ink:#f3eff8; --ink2:#d8d2e2; --mute:#b9b2c6; --line-rgb:255,255,255; background:var(--sk-black) !important; color:#f3eff8 !important; }
+[data-sk] :is(.dark, .is-dark, .cnt-dark) :is(h1,h2,h3,p,span,b,strong){ color:inherit; }
+
+/* ---------- 6. page families ---------- */
+/* charts drawn in SVG: ink axes, paper backgrounds */
+[data-sk] svg :is(.domain, .tick line){ stroke:rgba(20,18,24,.55); }
+[data-sk] svg .tick text{ fill:var(--sk-ink-2); font-family:var(--sk-font-m); }
+/* maps: one outline weight at every zoom. States carry an ink line, counties and districts a fine grey one, and the
+   state border drawn over a county map stays the heaviest line on it. js/sk-maps.js handles the fills. */
+[data-sk] svg :is(path, polygon):is(.state, .st, .unit, [data-st]){ stroke:var(--sk-ink); stroke-width:1.2px; vector-effect:non-scaling-stroke; stroke-linejoin:round; }
+[data-sk] svg :is(path, polygon):is(.county, .cty, .precinct, .district, [data-fips], [data-county], [data-cd]){ stroke:rgba(20,18,24,.4); stroke-width:.6px; vector-effect:non-scaling-stroke; stroke-linejoin:round; }
+[data-sk] svg path:is(.state-border, .state-mesh, .borders, .mesh, .outline)[fill="none"]{ stroke:var(--sk-ink); stroke-width:1.6px; vector-effect:non-scaling-stroke; stroke-linejoin:round; pointer-events:none; }
+/* seats that changed hands get the highlighter, whatever the site calls them */
+[data-sk] svg :is(path, polygon):is(.flip, .flipped, [data-flip="1"], [data-flip="true"]){ stroke:var(--sk-marker); stroke-width:3.5px; paint-order:stroke; vector-effect:non-scaling-stroke; }
+/* the open state or county */
+[data-sk] svg :is(path, polygon):is(.on, .sel, .selected, .active, [aria-selected="true"], [aria-pressed="true"])[data-sk-fill]{ stroke:var(--sk-ink); stroke-width:3px; }
+/* map labels sit on a paper halo so they read over the hatching */
+[data-sk] svg:has([data-sk-fill]) text{ paint-order:stroke; stroke:var(--sk-paper-3); stroke-width:2.5px; stroke-linejoin:round; fill:var(--sk-ink); }
+/* tooltips and popovers */
+[data-sk] :is(.tip, .tooltip, [role="tooltip"], .popover){ background:var(--sk-paper-3) !important; color:var(--sk-ink) !important; border:3px solid var(--sk-ink) !important; box-shadow:5px 6px 0 var(--sk-ink) !important; border-radius:12px; }
+/* the intro dialog */
+[data-sk] :is([role="dialog"], dialog){ background:var(--sk-paper-3) !important; border:4px solid var(--sk-ink) !important; box-shadow:12px 14px 0 var(--sk-ink) !important; }
+/* ad slots read as taped-in clippings */
+[data-sk] .opp-ad{ border:2px dashed rgba(20,18,24,.45); border-radius:14px; padding:10px; background:var(--sk-paper-2); }
+[data-sk] .opp-ad > div:first-child{ color:var(--sk-ink-3) !important; }
+
+/* ---------- 7. home hero: the globe sits on graph paper ---------- */
+[data-sk] .hg{ background:
+  linear-gradient(var(--sk-grid) 1.5px,transparent 1.5px) 0 0/40px 40px,
+  linear-gradient(90deg,var(--sk-grid) 1.5px,transparent 1.5px) 0 0/40px 40px,
+  var(--sk-paper) !important; color:var(--sk-ink); border-bottom:5px solid var(--sk-ink); }
+[data-sk] .hg-copy h1{ text-shadow:none; }
+[data-sk] .hg-copy h1 :is(em, .g, span:last-child){ background:none !important; -webkit-text-fill-color:var(--sk-purple); color:var(--sk-purple); }
+[data-sk] .hg :is(.hg-odds > *, .hg-side, .hg-list, .hg-bub, .hg-tip){ background:var(--sk-paper-3) !important; border:3px solid var(--sk-ink) !important; box-shadow:5px 6px 0 var(--sk-ink); backdrop-filter:none; }
+[data-sk] .hg .chip{ background:var(--sk-paper-3) !important; }
+[data-sk] .hg-legend{ background:var(--sk-ink); color:#f3eff8; padding:6px 12px; border-radius:6px; }
+[data-sk] .hg-legend *{ color:#f3eff8 !important; }
+/* the legend swatches match the pencil the globe is drawn with */
+[data-sk] .hg-legend i{ border:1.5px solid #f3eff8; border-radius:3px; background-color:var(--sk-paper-3) !important; }
+[data-sk] .hg-legend i[data-rt="safeD"]{ background:repeating-linear-gradient(40deg,var(--sk-d) 0 2.6px,#c3ccf3 2.6px 4.4px) !important; }
+[data-sk] .hg-legend i[data-rt="likelyD"]{ background:repeating-linear-gradient(40deg,var(--sk-d) 0 1.8px,#dfe4f8 1.8px 5px) !important; }
+[data-sk] .hg-legend i[data-rt="leanD"]{ background:repeating-linear-gradient(40deg,var(--sk-d-soft) 0 1.2px,#eef0f8 1.2px 6px) !important; }
+[data-sk] .hg-legend i[data-rt="toss"]{ background:repeating-linear-gradient(90deg,var(--sk-toss) 0 1.6px,#f1ecfa 1.6px 5px) !important; }
+[data-sk] .hg-legend i[data-rt="leanR"]{ background:repeating-linear-gradient(-40deg,var(--sk-r-soft) 0 1.2px,#f8efec 1.2px 6px) !important; }
+[data-sk] .hg-legend i[data-rt="likelyR"]{ background:repeating-linear-gradient(-40deg,var(--sk-r) 0 1.8px,#f6dfdb 1.8px 5px) !important; }
+[data-sk] .hg-legend i[data-rt="safeR"]{ background:repeating-linear-gradient(-40deg,var(--sk-r) 0 2.6px,#f0c4c0 2.6px 4.4px) !important; }
+[data-sk] .hg-legend i[data-rt="ind"]{ background:repeating-linear-gradient(35deg,var(--sk-purple-ink) 0 2.4px,#cdbcf0 2.4px 5px) !important; }
+/* the hover card and the closest race rows read as index cards */
+[data-sk] .hg-tip{ border-radius:12px; }
+[data-sk] .hg-tip .r + .r{ border-top:1px dashed rgba(20,18,24,.3); }
+[data-sk] .hg-row{ border-radius:10px; transition:background .12s, transform .12s; }
+[data-sk] .hg-row:hover{ background:rgba(245,197,24,.28); transform:translateX(3px); }
+[data-sk] .hg-tabs [role="tab"]:focus-visible, [data-sk] .hg-row:focus-visible{ outline:3px dashed var(--sk-purple); outline-offset:2px; }
+
+/* ---------- 8. maps: the race rating fills become pencil hatching ---------- */
+[data-sk] svg [fill="#1a3fb0" i]{ fill:url(#sk-h-d-safe); }
+[data-sk] svg [fill="#3d7bff" i]{ fill:url(#sk-h-d-likely); }
+[data-sk] svg [fill="#a6c2ff" i]{ fill:url(#sk-h-d-lean); }
+[data-sk] svg [fill="#b0163a" i]{ fill:url(#sk-h-r-safe); }
+[data-sk] svg [fill="#ff3b5c" i]{ fill:url(#sk-h-r-likely); }
+[data-sk] svg [fill="#ffb3c0" i]{ fill:url(#sk-h-r-lean); }
+[data-sk] svg [fill="#e7b341" i]{ fill:url(#sk-h-toss); }
+[data-sk] svg [fill="#b78cff" i]{ fill:url(#sk-h-purple); }
+/* These exact matches only cover the first paint. Once js/sk-maps.js has read the map it tags each shape with
+   data-sk-fill, and the rules in sketchbook.css section 11 take over: hatching for states, a flat wash for counties. */
+
+/* ---------- 9. PAPER RUNS THE WHOLE PAGE ----------
+   The kit's paper texture sits on body::before. The site gives body a fixed height, so the texture stopped at
+   the first screen. Let body grow with the page and keep the texture light enough that cards stay crisp. */
+html[data-sk], [data-sk] body{ height:auto !important; }
+[data-sk] body.sk-paper{ min-height:100vh; }
+
+/* ---------- 10. PAGE FAMILIES WITH THEIR OWN PALETTES ---------- */
+
+/* 2028 scoreboard and primary board: a paper card on graph paper, a faint blue and red wash at the two ends */
+[data-sk] :is(.h28-board, .s28-hero){
+  border:3px solid var(--sk-ink) !important; border-radius:var(--sk-radius,18px); box-shadow:var(--sk-shadow, 7px 8px 0 var(--sk-ink));
+  background:
+    linear-gradient(var(--sk-grid) 1.5px,transparent 1.5px) 0 0/40px 40px,
+    linear-gradient(90deg,var(--sk-grid) 1.5px,transparent 1.5px) 0 0/40px 40px,
+    linear-gradient(100deg,rgba(31,63,209,.12),transparent 30% 70%,rgba(212,42,42,.12)),
+    var(--sk-paper-3) !important; }
+[data-sk] :is(.h28-board .h28-h1, .s28-hero h1) em{ background:none; -webkit-text-fill-color:currentColor; color:var(--sk-purple); }
+
+/* Watchdog: the investigator's terminal printed in pencil. Green interface ink becomes the kit's ink and purple. */
+html[data-sk][data-theme] .wd.wd.wd, html[data-sk][data-theme] .wd.wdt.wdt{
+  --wg:var(--sk-purple); --wg2:var(--sk-purple-ink); --wt:var(--sk-purple); --wt2:var(--sk-purple-ink);
+  --wbg:var(--sk-paper); --wpan:var(--sk-paper-3); --wnav:var(--sk-paper-2);
+  --wline:rgba(20,18,24,.4); --wline2:var(--sk-ink);
+  --ink:var(--sk-ink); --ink2:var(--sk-ink-2); --mute:var(--sk-ink-3); --hi:var(--sk-ink);
+  --line:rgba(20,18,24,.22); --line2:rgba(20,18,24,.45); }
+html[data-sk][data-theme] .wd.wd .wd-tab.on{ color:#fff; background:var(--sk-ink); }
+
+/* The poll room whiteboard: no dark wall or metal frame, a paper board in an ink frame */
+[data-sk] .wbr-wall, [data-sk] .wbr-floor, [data-sk] .wbr-lamp, [data-sk] .wbr-board::before{ display:none; }
+[data-sk] .wbr-frame{ background:var(--sk-ink); padding:3px; border-radius:var(--sk-radius,18px); box-shadow:var(--sk-shadow, 7px 8px 0 var(--sk-ink)); }
+[data-sk] .wbr-surface{ background:var(--sk-paper-3); border-radius:calc(var(--sk-radius,18px) - 3px); box-shadow:none;
+  --ink:var(--sk-ink); --ink2:var(--sk-ink-2); --mute:var(--sk-ink-3); --hi:var(--sk-ink); color:var(--sk-ink); }
+[data-sk] .wbroom{ --font-mark:var(--sk-font-d); --font-hand:var(--sk-font-b); }
+[data-sk] .wbr-intro :is(h1,h2), [data-sk] .wbr-title{ font-weight:900; letter-spacing:-.03em; color:var(--sk-ink); }
+[data-sk] .wbr-intro :is(h1,h2) em{ color:var(--sk-purple); }
+
+/* ---------- 11. INKED SELECTIONS READ LIGHT ----------
+   A selected tab is filled with ink; big tabs such as the forecast and results tiles carry their own labels and
+   numbers, so the text tokens flip to paper inside them. */
+[data-sk] :is(.opp .seg button.on, .seg button.on, .seg button[aria-pressed="true"], [role="tab"][aria-selected="true"]){
+  --ink:var(--sk-paper); --ink2:#d8d2e2; --mute:#b9b2c6; --hi:#fff; --line-rgb:255,255,255; --dem:#9db0ff; --gop:#ff9a9a; }
+[data-sk] [role="tab"][aria-selected="true"] :is(small, .sb, .st, .lab, .lb, .eye){ color:#d8d2e2 !important; }
+[data-sk] [role="tab"][aria-selected="true"] :is(.d, .dem){ color:#9db0ff !important; }
+[data-sk] [role="tab"][aria-selected="true"] :is(.r, .rep, .gop){ color:#ff9a9a !important; }
+[data-sk] .bxr li.us .fn{ color:#c9b5ff; }
+
+/* 2028: names and margins that were white on the dark board now sit on paper */
+[data-sk] .h28-board :is(.h28-nm, b, strong){ color:var(--sk-ink); }
+[data-sk] .h28 :is(.h28-lad-fold, .mv){ color:var(--sk-ink-2) !important; }
+[data-sk] .h28 .h28-lad-fold.d{ color:var(--sk-d, #1f3fd1) !important; } [data-sk] .h28 .h28-lad-fold.r{ color:var(--sk-r, #d42a2a) !important; }
+
+/* Watchdog tags */
+[data-sk] .wd .card .tag{ color:var(--sk-ink-2); background:var(--sk-paper-2); border:1.5px solid var(--sk-ink); }
+[data-sk] .h28 .ab{ color:var(--sk-ink) !important; text-shadow:0 0 3px var(--sk-paper-3),0 0 2px var(--sk-paper-3); }

@@ -10,6 +10,8 @@ import { partyName } from "./cards28";
 import Prim28 from "./Prim28";
 import Gen28 from "./Gen28";
 import County28 from "./County28";
+import Share28, { resOf } from "./Share28";
+import { decodeRes } from "../share28";
 import { Title28, VPPick, Convention, Night28, Result28, Trophies } from "./Scenes28";
 import { FEMALE, type Game, type Mode, load28, save28, pct, short, firstSentence, Face28 } from "./ui28";
 import { TROPHIES, earned, addTrophies, trophyCase } from "./trophies28";
@@ -33,6 +35,20 @@ function otherNominee(d: E.Data, p: E.Party, seed: number): { op: string; opVp: 
   for (const c of cs) { r -= Math.max(0.002, c.nom); if (r <= 0) { op = c.n; break; } }
   const vp = cs.find((c) => c.n !== op)?.n ?? null;
   return { op, opVp: vp };
+}
+/** The daily challenge: one race for everyone today, picked from the date. */
+function dailyGame(d: E.Data): Game {
+  const day = MO.dailySeed(); const G = { rng: day };
+  const p: E.Party = E.rand(G) < 0.5 ? "D" : "R"; const top = (q: E.Party) => d.cands[q].slice().sort((a, b) => b.nom - a.nom).slice(0, 4);
+  const meC = top(p)[Math.floor(E.rand(G) * 4)]; const o = otherNominee(d, p === "D" ? "R" : "D", day);
+  return { v: 28, mode: "general", phase: "vp", party: p, me: meC.n, diff: "tossup", seed: day, rng: day ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: day, op: o.op, opVp: o.opVp };
+}
+/** A friend's shared race: same nominees, same year and the same seed, from the running mate pick on. */
+function challengeGame(d: E.Data, code: string): Game | null {
+  const r = decodeRes(code); if (!r) return null; const opP: E.Party = r.p === "D" ? "R" : "D";
+  if (!d.cands[r.p]?.some((c) => c.n === r.me) || !d.cands[opP]?.some((c) => c.n === r.op)) return null;
+  const seed = Number(r.seed) || MO.dailySeed(); const diff = (r.diff && r.diff in E.DIFF ? r.diff : "tossup") as E.Diff;
+  return { v: 28, mode: "general", phase: "vp", party: r.p, me: r.me, diff, seed, rng: seed ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: r.day, op: r.op, opVp: d.cands[opP].find((c) => c.n !== r.op)?.n ?? null };
 }
 const label = (g: Game) => `${g.me}, ${g.phase === "primary" ? `primaries turn ${(g.P?.t ?? 0) + 1}` : g.phase === "general" ? `general week ${g.Gn?.week ?? 1}` : g.phase === "night" ? "election night" : g.phase === "vp" ? "picking a running mate" : g.phase}`;
 
@@ -98,6 +114,20 @@ export default function App28({ idx }: { idx: PIndex }) {
     // ironman: a lost campaign is gone for good
     if (x.iron && x.phase === "over" && x.night && !x.night.win) save28(null); else save28(x);
   }, [d]);
+  // links into the game: ?as=Name opens the setup with that candidate picked, ?daily=1 starts today's challenge and
+  // ?c=<code> starts a friend's shared race with the same seed
+  const linked = useRef(false);
+  useEffect(() => {
+    if (!d || linked.current) return; linked.current = true;
+    let q: URLSearchParams; try { q = new URLSearchParams(window.location.search); } catch { return; }
+    const as = q.get("as"), c = q.get("c");
+    if (c) { const x = challengeGame(d, c); if (x) { commit(x); setScreen("game"); setFull(false); } return; }
+    if (q.get("daily")) { commit(dailyGame(d)); setScreen("game"); setFull(false); return; }
+    if (as) {
+      const low = as.toLowerCase();
+      for (const p of ["D", "R"] as E.Party[]) { const hit = d.cands[p].find((x) => x.n.toLowerCase() === low || low.endsWith(" " + x.n.toLowerCase()) || x.n.toLowerCase().endsWith(low)); if (hit) { setParty(p); setMe(hit.n); setFull(false); setScreen("setup"); return; } }
+    }
+  }, [d, commit]);
   /** Into full screen: the game's frame covers the page, and the browser goes full screen too where it can. Phones
    * that cannot full screen a page element, such as the iPhone, get the frame alone. Out of it: both undone. */
   const goFull = (on: boolean) => {
@@ -110,7 +140,6 @@ export default function App28({ idx }: { idx: PIndex }) {
       if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     }
   };
-  // starting or continuing a campaign always opens the game full screen
   // starting or continuing a campaign always opens the game full screen
   const enter = () => { unlock(); goFull(true); };
 
@@ -139,13 +168,7 @@ export default function App28({ idx }: { idx: PIndex }) {
   if (!d) return shell(<div className="px-lobby"><p className="px-note">{err || "Loading the 2028 map…"}</p></div>);
 
   /** The daily challenge: one race for everyone today, picked from the date. */
-  const daily = () => {
-    if (!d) return; sfx("fanfare"); const day = MO.dailySeed(); const G = { rng: day };
-    const p: E.Party = E.rand(G) < 0.5 ? "D" : "R"; const top = (q: E.Party) => d.cands[q].slice().sort((a, b) => b.nom - a.nom).slice(0, 4);
-    const meC = top(p)[Math.floor(E.rand(G) * 4)]; const o = otherNominee(d, p === "D" ? "R" : "D", day);
-    const base: Game = { v: 28, mode: "general", phase: "vp", party: p, me: meC.n, diff: "tossup", seed: day, rng: day ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: day, op: o.op, opVp: o.opVp };
-    commit(base); setScreen("game");
-  };
+  const daily = () => { if (!d) return; sfx("fanfare"); commit(dailyGame(d)); setScreen("game"); };
   const start = () => {
     if (!me) return; enter(); sfx("fanfare");
     const seed = (Date.now() % 1e9) | 0; const t = third === "none" ? null : third;
@@ -269,7 +292,7 @@ export default function App28({ idx }: { idx: PIndex }) {
       {g.phase === "recount" && g.Gn && g.night ? <Recount28 d={d} s={g.Gn} res={g.night} seed={g.seed + 270} onDone={(res, lg) => { const y = structuredClone(g); y.night = res; y.Gn!.result = res; y.legacy = (y.legacy ?? 0) + lg; y.phase = "over"; commit(y); }} /> : null}
       {g.phase === "hundred" && g.Gn && g.night ? <Hundred28 d={d} s={g.Gn} res={g.night} seed={g.seed + 100} legacy={g.legacy ?? 0} onDone={(h) => { const y = structuredClone(g); y.hund = h; y.phase = "over"; commit(y); }} /> : null}
       {g.phase === "over" && g.Gn && g.night ? <Result28 d={d} s={g.Gn} res={g.night} trophies={g.trophies} start={{ p: g.Gn.trend[0]?.p ?? 0.5, ev: g.Gn.trend[0]?.ev ?? 269 }} onAgain={again} onMenu={menu}
-        extra={<><AfterCard d={d} s={g.Gn} res={g.night} legacy={g.legacy ?? 0} iron={g.iron} onGovern={g.night.win && !g.hund ? () => { const y = structuredClone(g); y.phase = "hundred"; commit(y); } : undefined} />{d.cty ? <section className="px-step y28-cty-res"><span className="px-k">County by county</span><div className="px-row">{g.night.calls.filter((c) => !c.st.includes("-") && d.cty?.[c.st]).sort((a, b) => a.close - b.close).slice(0, 6).map((c) => <button key={c.st} type="button" className={cls("px-btn sm", c.win ? "up" : "dn")} onClick={() => setNightCty(c.st)}>{E.nameOf(d, c.st)} {c.m >= 0 ? "+" : ""}{c.m.toFixed(1)}</button>)}</div></section> : null}<AdUnit minH={250} className="y28-ad-result" k="result" /></>} /> : null}
+        extra={<><Share28 r={resOf(d, g.Gn, g.night, { day: g.daily, diff: g.diff, seed: g.seed })} /><AfterCard d={d} s={g.Gn} res={g.night} legacy={g.legacy ?? 0} iron={g.iron} onGovern={g.night.win && !g.hund ? () => { const y = structuredClone(g); y.phase = "hundred"; commit(y); } : undefined} />{d.cty ? <section className="px-step y28-cty-res"><span className="px-k">County by county</span><div className="px-row">{g.night.calls.filter((c) => !c.st.includes("-") && d.cty?.[c.st]).sort((a, b) => a.close - b.close).slice(0, 6).map((c) => <button key={c.st} type="button" className={cls("px-btn sm", c.win ? "up" : "dn")} onClick={() => setNightCty(c.st)}>{E.nameOf(d, c.st)} {c.m >= 0 ? "+" : ""}{c.m.toFixed(1)}</button>)}</div></section> : null}<AdUnit minH={250} className="y28-ad-result" k="result" /></>} /> : null}
       {g.phase === "over" && g.Gn && g.night && nightCty ? <County28 d={d} S={g.Gn} st={nightCty} run={() => {}} onClose={() => setNightCty(null)} final={g.night.calls.find((c) => c.st === nightCty)?.m ?? 0} /> : null}
       {g.phase === "over" && g.Gn && g.night && !g.speech ? <Speech28 s={g.Gn} res={g.night} onPick={(k, v) => { const y = structuredClone(g); y.speech = k; y.legacy = (y.legacy ?? 0) + v; commit(y); }} /> : null}
       {g.phase === "over" && g.hund ? <div className="y28-hund-sum px-note">Your first hundred days: approval {g.hund.approval.toFixed(0)} percent, {g.hund.passed.length} of 3 priorities signed, 2030 House outlook {g.hund.midHouse >= 0 ? "+" : ""}{g.hund.midHouse} seats.</div> : null}

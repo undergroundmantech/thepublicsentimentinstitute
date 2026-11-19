@@ -356,7 +356,8 @@ export const ACCURACY_2026 = {
   dInternal: { n: 60, bias: -0.68, mae: 5.75 },
   senate: { bias: 3.03, mae: 4.91 }, governor: { bias: 3.89, mae: 5.72 },
   lv: { n: 465, bias: 3.45, mae: 5.28 }, rv: { n: 16, bias: 3.87, mae: 6.36 },
-  generic: { result: 13.0, averages: 8.5, fieldMiss: 4.53 },
+  // result is the D +13.0 projection the grades were set against on Nov 13; count is the national House vote as of Nov 17
+  generic: { result: 13.0, count: 14.0, averages: 8.5, fieldMiss: 4.53 },
 };
 
 /** Partisan lean against the nonpartisan polls of the same race, final 30 days, trimmed of the extreme tenth and shrunk

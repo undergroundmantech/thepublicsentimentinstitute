@@ -9,7 +9,7 @@ export const SITE = {
   publisher: "On Point Polling",
   publisherShort: "On Point Polling",
   description:
-    "Home of On Point Polling, the most accurate pollster of the 2026 midterms: the 2028 presidential forecast and electoral map, every 2028 candidate, polling averages, election results and an accuracy report scoring every race against the count.",
+    "Home of On Point Polling, whose final 2026 national poll landed within a point of the count: the 2028 presidential forecast and electoral map, every 2028 candidate, polling averages, election results and an accuracy report scoring every race against the count.",
   logo: "/icon.png",
   election: "2026-11-03",
 } as const;
@@ -92,10 +92,10 @@ export function orgLd(): LD[] {
       "@id": PUB_ID,
       name: SITE.publisher,
       url: abs("/on-point-polling"),
-      description: "On Point Polling, with VT Analytics, is the polling and research arm behind On Point Politics and the most accurate pollster of the 2026 midterms: its final national poll had the generic ballot at D +13.1 against a D +13.0 result. Statewide, district and national polls, likely voter modeling, MRP and message testing.",
+      description: "On Point Polling, with VT Analytics, is the polling and research arm behind On Point Politics. Its final 2026 national poll had the generic ballot at D +13.1 against a D +14.0 count, second closest of 42 final national polls. Statewide, district and national polls, likely voter modeling, MRP and message testing.",
       email: "onpointpoliticscontact@gmail.com",
       contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "onpointpoliticscontact@gmail.com", areaServed: "US", availableLanguage: "English" },
-      award: ["Most accurate final national poll of the 2026 midterms", "#1 forecast of the 2026 midterms"],
+      award: ["#1 forecast of the 2026 midterms"],
       slogan: "Nonpartisan polling for both parties",
       knowsAbout: ["Public opinion polling", "Likely voter modeling", "Multilevel regression and poststratification", "Voter file sampling", "Message testing"],
     },

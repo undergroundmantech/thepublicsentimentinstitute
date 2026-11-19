@@ -11,12 +11,14 @@
    "note": "Registered voters, likely voter results with undecideds leaned"
   },
   "result": {
-   "margin": 13.0,
-   "label": "Projected final, all votes counted",
-   "counted_margin": 12.6,
-   "counted_d": 55.6,
-   "counted_r": 43.0,
-   "counted_votes_m": 119
+   "margin": 14.0,
+   "label": "The count, about 98 percent of the expected vote",
+   "counted_margin": 14.0,
+   "counted_d": 56.0,
+   "counted_r": 42.0,
+   "counted_votes_m": 118.6,
+   "asof_label": "November 17",
+   "source": "Cook Political Report national House vote tracker and the CNN count of all 435 districts"
   },
   "averages": {
    "margin": 8.5,
@@ -29,300 +31,402 @@
   "polls": [
    {
     "rank": 1,
-    "name": "On Point Polling / VT Analytics",
-    "final": 13.1,
-    "score": 0.48,
-    "us": true
+    "name": "AtlasIntel",
+    "final": 14.1,
+    "score": 0.1,
+    "us": false,
+    "field": "2026-11-01",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
     "rank": 2,
-    "name": "The Honest Poll",
-    "final": 13.0,
+    "name": "On Point Polling",
+    "final": 13.1,
     "score": 0.9,
-    "us": false
+    "us": true,
+    "field": "2026-10-28",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
     "rank": 3,
-    "name": "AtlasIntel",
-    "final": 14.1,
-    "score": 0.98,
-    "us": false
+    "name": "The Honest Poll",
+    "final": 13.0,
+    "score": 1.0,
+    "us": false,
+    "field": "2026-10-29",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
     "rank": 4,
-    "name": "Big Data Poll",
+    "name": "People's Pundit",
     "final": 12.3,
-    "score": 1.93,
-    "us": false
+    "score": 1.7,
+    "us": false,
+    "field": "2026-10-30",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
     "rank": 5,
-    "name": "Tufts / YouGov",
+    "name": "Tufts University",
     "final": 12.0,
-    "score": 2.15,
-    "us": false
+    "score": 2.0,
+    "us": false,
+    "field": "2026-10-27",
+    "pop": "A",
+    "src": "atlas"
    },
    {
-    "rank": 6,
-    "name": "SurveyMonkey",
-    "final": 10.0,
-    "score": 2.16,
-    "us": false
+    "rank": 5,
+    "name": "Quinnipiac",
+    "final": 12.0,
+    "score": 2.0,
+    "us": false,
+    "src": "earlier"
    },
    {
     "rank": 7,
+    "name": "New York Times / Siena College",
+    "final": 11.0,
+    "score": 3.0,
+    "us": false,
+    "field": "2026-10-19",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 7,
+    "name": "Change Research",
+    "final": 11.0,
+    "score": 3.0,
+    "us": false,
+    "field": "2026-10-18",
+    "pop": "RV",
+    "src": "atlas"
+   },
+   {
+    "rank": 7,
+    "name": "RMG Research",
+    "final": 11.0,
+    "score": 3.0,
+    "us": false,
+    "field": "2026-10-13",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 10,
+    "name": "The Argument / Verasight",
+    "final": 10.8,
+    "score": 3.2,
+    "us": false,
+    "field": "2026-10-23",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 11,
     "name": "Prolific",
     "final": 10.7,
-    "score": 2.18,
-    "us": false
+    "score": 3.3,
+    "us": false,
+    "field": "2026-10-22",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 8,
-    "name": "NYT / Siena",
-    "final": 11.0,
-    "score": 2.4,
-    "us": false
-   },
-   {
-    "rank": 8,
-    "name": "The Argument / Verasight",
-    "final": 11.0,
-    "score": 2.4,
-    "us": false
-   },
-   {
-    "rank": 10,
-    "name": "Quinnipiac",
-    "final": 12.0,
-    "score": 2.65,
-    "us": false
-   },
-   {
-    "rank": 10,
-    "name": "I&I / TIPP",
+    "rank": 12,
+    "name": "TIPP Insights",
     "final": 10.0,
-    "score": 2.65,
-    "us": false
+    "score": 4.0,
+    "us": false,
+    "field": "2026-10-30",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 10,
-    "name": "Emerson",
+    "rank": 12,
+    "name": "Emerson College",
     "final": 10.0,
-    "score": 2.65,
-    "us": false
+    "score": 4.0,
+    "us": false,
+    "field": "2026-10-26",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 13,
-    "name": "Economist / YouGov",
-    "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "rank": 12,
+    "name": "SSRS",
+    "final": 10.0,
+    "score": 4.0,
+    "us": false,
+    "field": "2026-10-18",
+    "pop": "RV",
+    "src": "atlas"
    },
    {
-    "rank": 13,
+    "rank": 12,
+    "name": "SurveyMonkey",
+    "final": 10.0,
+    "score": 4.0,
+    "us": false,
+    "src": "earlier"
+   },
+   {
+    "rank": 16,
     "name": "YouGov",
     "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "score": 5.0,
+    "us": false,
+    "field": "2026-10-30",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 13,
-    "name": "Cygnal",
+    "rank": 16,
+    "name": "Economist / YouGov",
     "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "score": 5.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 13,
+    "rank": 16,
     "name": "Fox News",
     "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "score": 5.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 13,
+    "rank": 16,
     "name": "Beacon / Shaw",
     "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "score": 5.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 13,
+    "rank": 16,
     "name": "UMass Lowell",
     "final": 9.0,
-    "score": 2.91,
-    "us": false
+    "score": 5.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 19,
-    "name": "RMG Research",
+    "rank": 21,
+    "name": "Cygnal",
+    "final": 8.4,
+    "score": 5.6,
+    "us": false,
+    "field": "2026-10-24",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 22,
+    "name": "Ipsos",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "field": "2026-11-02",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 19,
-    "name": "Reuters / Ipsos",
+    "rank": 22,
+    "name": "Clarity Campaign Labs",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "field": "2026-10-21",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 19,
-    "name": "Morning Consult",
+    "rank": 22,
+    "name": "Marist College",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "field": "2026-10-20",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 19,
-    "name": "NPR / PBS / Marist",
+    "rank": 22,
+    "name": "The Rainey Center",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "field": "2026-10-20",
+    "pop": "RV",
+    "src": "atlas"
    },
    {
-    "rank": 19,
+    "rank": 22,
     "name": "CBS News",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 19,
+    "rank": 22,
     "name": "ABC / WaPo / Ipsos",
     "final": 8.0,
-    "score": 3.66,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 19,
-    "name": "Clarity",
-    "final": 8.0,
-    "score": 3.66,
-    "us": false
-   },
-   {
-    "rank": 19,
-    "name": "Rainey Center",
-    "final": 8.0,
-    "score": 3.66,
-    "us": false
-   },
-   {
-    "rank": 27,
-    "name": "CNN",
-    "final": 10.0,
-    "score": 4.15,
-    "us": false
-   },
-   {
-    "rank": 27,
+    "rank": 22,
     "name": "Centerline",
     "final": 8.0,
-    "score": 4.15,
-    "us": false
+    "score": 6.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 29,
-    "name": "Focaldata / FT",
+    "rank": 22,
+    "name": "Pew",
+    "final": 8.0,
+    "score": 6.0,
+    "us": false,
+    "src": "earlier"
+   },
+   {
+    "rank": 30,
+    "name": "Morning Consult",
+    "final": 7.9,
+    "score": 6.1,
+    "us": false,
+    "field": "2026-11-01",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 31,
+    "name": "Focaldata",
     "final": 7.0,
-    "score": 4.41,
-    "us": false
+    "score": 7.0,
+    "us": false,
+    "field": "2026-11-01",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 29,
-    "name": "NBC News / Hart / POS",
+    "rank": 31,
+    "name": "Hart / Public Opinion Strategies",
     "final": 7.0,
-    "score": 4.41,
-    "us": false
+    "score": 7.0,
+    "us": false,
+    "field": "2026-10-30",
+    "pop": "RV",
+    "src": "atlas"
    },
    {
-    "rank": 29,
+    "rank": 31,
+    "name": "Leger",
+    "final": 7.0,
+    "score": 7.0,
+    "us": false,
+    "field": "2026-10-25",
+    "pop": "A",
+    "src": "atlas"
+   },
+   {
+    "rank": 31,
     "name": "CNBC",
     "final": 7.0,
-    "score": 4.41,
-    "us": false
+    "score": 7.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 29,
+    "rank": 31,
     "name": "ActiVote",
     "final": 7.0,
-    "score": 4.41,
-    "us": false
+    "score": 7.0,
+    "us": false,
+    "src": "earlier"
    },
    {
-    "rank": 33,
+    "rank": 31,
     "name": "TrueDot",
     "final": 7.0,
-    "score": 4.9,
-    "us": false
-   },
-   {
-    "rank": 34,
-    "name": "Zogby",
-    "final": 6.0,
-    "score": 5.16,
-    "us": false
-   },
-   {
-    "rank": 34,
-    "name": "Ipsos",
-    "final": 6.0,
-    "score": 5.16,
-    "us": false
-   },
-   {
-    "rank": 34,
-    "name": "Rasmussen Reports",
-    "final": 6.0,
-    "score": 5.16,
-    "us": false
+    "score": 7.0,
+    "us": false,
+    "src": "earlier"
    },
    {
     "rank": 37,
+    "name": "John Zogby Strategies",
+    "final": 6.0,
+    "score": 8.0,
+    "us": false,
+    "field": "2026-11-02",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 37,
+    "name": "Rasmussen Reports",
+    "final": 6.0,
+    "score": 8.0,
+    "us": false,
+    "field": "2026-10-28",
+    "pop": "LV",
+    "src": "atlas"
+   },
+   {
+    "rank": 39,
     "name": "Echelon Insights",
     "final": 5.0,
-    "score": 5.91,
-    "us": false
-   },
-   {
-    "rank": 38,
-    "name": "Harvard / Harris",
-    "final": 4.0,
-    "score": 6.66,
-    "us": false
-   },
-   {
-    "rank": 38,
-    "name": "Penn State",
-    "final": 4.0,
-    "score": 6.66,
-    "us": false
+    "score": 9.0,
+    "us": false,
+    "field": "2026-10-23",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
     "rank": 40,
-    "name": "Pew",
-    "final": 8.0,
-    "score": 7.15,
-    "us": false
+    "name": "Harris Insights & Analytics",
+    "final": 4.0,
+    "score": 10.0,
+    "us": false,
+    "field": "2026-10-26",
+    "pop": "LV",
+    "src": "atlas"
    },
    {
-    "rank": 41,
-    "name": "Targoz",
-    "final": 3.0,
-    "score": 7.41,
-    "us": false
+    "rank": 40,
+    "name": "Penn State",
+    "final": 4.0,
+    "score": 10.0,
+    "us": false,
+    "src": "earlier"
    },
    {
     "rank": 42,
-    "name": "Leger",
-    "final": 6.0,
-    "score": 8.65,
-    "us": false
+    "name": "Targoz Market Research",
+    "final": 3.0,
+    "score": 11.0,
+    "us": false,
+    "field": "2026-10-22",
+    "pop": "LV",
+    "src": "atlas"
    }
   ],
-  "method": "Score is the average of two misses: the margin miss against the D+13.0 projected final, and the average miss on the Democratic and Republican shares against the 55.6 D, 43.0 R counted so far. Lower is better; ties share a rank. Each pollster's last national generic ballot before Election Day with shares as published, from RealClearPolling, ElectionsUSA and Pollcheck. On Point uses its likely voter results with undecideds leaned."
+  "method": "Each pollster's last national House poll before Election Day, ranked by its distance from the count, D +14.0. 28 come from AtlasIntel's ranking, built on Silver Bulletin's list of national generic ballot polls with fieldwork ending October 13 to November 2, with the lead as published and undecideds included; On Point Polling, The Honest Poll and People's Pundit, not on that list, are from their own releases. The other 14 are the final polls from our earlier list, from RealClearPolling, ElectionsUSA and Pollcheck, rescored against the count. Lower is better; ties share a rank. LV likely voters, RV registered voters, A adults.",
+  "source": {
+   "name": "AtlasIntel",
+   "url": "https://x.com/atlas_intel/status/2123551875308142677"
+  }
  },
  "called": {
   "right": 446,
@@ -589,7 +693,7 @@
   {
    "k": "Generic ballot",
    "v": "D +13.1",
-   "t": "The result is D +13.0. Number one of 42 final national polls."
+   "t": "The count is D +14.0. Second of 42 final national polls, 0.9 off; only AtlasIntel was closer."
   },
   {
    "k": "Senate flips",
@@ -599,7 +703,7 @@
   {
    "k": "Senate seats",
    "v": "56",
-   "t": "Our number. Exactly 56 if Peltola holds Alaska; every other forecast was off by 3 or more."
+   "t": "Our number, exactly. Peltola held Alaska for 56; every other forecast was off by 3 or more."
   },
   {
    "k": "House seats",

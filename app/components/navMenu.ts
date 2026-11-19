@@ -15,7 +15,7 @@ export type NavGroup = {
 
 export const MENU: NavGroup[] = [
   { key: "opp", label: "On Point Polling", href: "/on-point-polling",
-    feature: { href: "/on-point-polling#contact", eyebrow: "Nonpartisan · both parties", title: "Field a poll with the most accurate pollster of 2026", note: "Democrats, Republicans and independents, committees, newsrooms and companies.", cta: "Get a quote" },
+    feature: { href: "/on-point-polling#contact", eyebrow: "Nonpartisan · both parties", title: "Field a poll with the firm that landed within a point in 2026", note: "Democrats, Republicans and independents, committees, newsrooms and companies.", cta: "Get a quote" },
     cols: [
       { h: "Work with us", links: [
         { href: "/on-point-polling#contact", label: "Get a quote", note: "Fielded in 48 to 72 hours" },
@@ -33,7 +33,7 @@ export const MENU: NavGroup[] = [
     feature: { href: "/accuracy", eyebrow: "The #1 forecast of 2026", title: "The 2026 accuracy report", note: "Every race we forecast and every poll we fielded, scored against the count.", cta: "Read the report" },
     cols: [
       { h: "The record", links: [
-        { href: "/most-accurate-pollster", label: "Most accurate pollster", note: "D +13.1 against a D +13.0 result" },
+        { href: "/most-accurate-pollster", label: "Pollster ranking", note: "D +13.1 against a D +14.0 count, second of 42" },
         { href: "/accuracy#field", label: "The #1 forecast", note: "Against every major forecast" },
         { href: "/accuracy#our-polls", label: "Our polls, scored", note: "Race by race, misses included" },
       ] },
@@ -105,7 +105,7 @@ export const MENU: NavGroup[] = [
       ] },
       { h: "Ours", links: [
         { href: "/on-point-polling/polls", label: "On Point Polling releases" },
-        { href: "/most-accurate-pollster", label: "Most accurate pollster" },
+        { href: "/most-accurate-pollster", label: "Pollster ranking" },
       ] },
     ] },
   { key: "more", label: "More", href: "/news", more: true,

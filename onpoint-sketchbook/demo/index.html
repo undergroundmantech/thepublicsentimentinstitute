@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en" data-sk>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>On Point Sketchbook Style</title>
+<link rel="stylesheet" href="../styles/sketchbook.css">
+<style>
+ body{margin:0}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+ section{padding:clamp(48px,7vw,96px) 0;position:relative}
+ .row{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));align-items:start}
+ .hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:36px;align-items:center}
+ @media (max-width:820px){.hero-grid{grid-template-columns:minmax(0,1fr)} .hero-art [data-sk-coin]{width:150px!important;height:150px!important} .hero-art [data-sk-pointy]{width:130px!important} .pointy-row [data-sk-pointy]{width:88px!important} .rc{grid-template-columns:minmax(0,1fr)!important}}
+ .tone{position:fixed;right:16px;bottom:16px;z-index:9100}
+ .stack{display:grid;gap:14px}
+ .swatch{display:flex;align-items:center;gap:10px;font:700 12px var(--sk-font-m);letter-spacing:.1em}
+ .swatch i{width:44px;height:30px;border:3px solid var(--sk-ink);display:inline-block}
+ .wide{max-width:1440px}
+ .desk-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 28px;margin-bottom:22px}
+ .desk-head .stack{gap:8px}
+ .note{font:600 14px/1.5 var(--sk-font-b);color:var(--sk-ink-2);margin:0;max-width:60ch}
+</style>
+</head>
+<body class="sk-paper">
+
+<nav class="sk-nav">
+ <a class="brand" href="#"><img src="../../public/sketchbook/onpoint-logo.svg" alt="">On Point</a>
+ <a class="item" href="#" aria-current="page">Forecasts</a><a class="item" href="#">Polls</a><a class="item" href="#">Watchdog</a><a class="item" href="#">Accuracy</a>
+ <span style="flex:1"></span><a class="sk-btn" href="#">Get a quote</a>
+</nav>
+
+<header class="sk-hero sk-grid">
+ <div class="wrap hero-grid">
+  <div class="stack">
+   <span class="sk-label purple">On Point Politics and On Point Polling</span>
+   <h1 class="sk-big" data-sk-reveal="slam">all of politics.<br><span class="sk-accent">one site.</span></h1>
+   <div><span class="sk-strip" data-sk-reveal="whip" data-sk-delay="250">nonpartisan. accurate. fast.</span></div>
+   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px"><a class="sk-btn" href="#">See the 2028 forecast</a><a class="sk-btn ghost" href="#">Polling averages</a></div>
+  </div>
+  <div class="hero-art" style="display:flex;align-items:end;gap:10px;justify-content:center">
+   <div data-sk-coin style="width:220px;height:220px"></div>
+   <div data-sk-pointy="wave-hello" data-sk-wave style="width:190px"></div>
+  </div>
+ </div>
+</header>
+
+<section class="sk-paper" id="desk">
+ <div class="wrap wide">
+  <div class="desk-head">
+   <div class="stack">
+    <span class="sk-label purple">Election desk</span>
+    <h2 class="sk-h2">every state. <span class="sk-underline">every county.</span></h2>
+    <nav class="sk-tabsline" aria-label="Office"><a href="#desk" class="on">Senate</a><a href="#desk">House</a><a href="#desk">Governors</a><a href="#desk">2028</a></nav>
+   </div>
+   <div class="sk-seg" role="group" aria-label="Map view"><button type="button" id="v-states" class="on" aria-pressed="true">States</button><button type="button" id="v-counties" aria-pressed="false">Florida counties</button></div>
+  </div>
+
+  <div class="sk-desk">
+   <div class="sk-rail">
+    <div class="sk-score d" id="sc-d"><span class="who">Democrats</span><span class="sk-tag" id="sc-d-tag"></span><span class="n" id="sc-d-n">0</span><span class="sub" id="sc-d-sub"></span></div>
+    <div class="sk-score r" id="sc-r"><span class="who">Republicans</span><span class="sk-tag" id="sc-r-tag"></span><span class="n" id="sc-r-n">0</span><span class="sub" id="sc-r-sub"></span></div>
+    <span class="sk-label">The closest races</span>
+    <div class="sk-rail" id="races" style="gap:10px"></div>
+   </div>
+
+   <div class="sk-mapstage" id="stage">
+    <header><h3 id="map-title">U.S. Senate, state by state</h3><span class="sk-chip fine">Sample data for the style demo</span></header>
+    <svg class="sk-map" id="map" viewBox="0 0 960 600" role="img" aria-label="Sample map"></svg>
+    <div class="sk-maplegend" id="legend"></div>
+    <div class="hint" id="hint">Hover a state for its margin. Click Florida to open its counties.</div>
+    <div class="sk-tip" id="tip" hidden></div>
+   </div>
+
+   <div class="sk-rail">
+    <div class="sk-panel">
+     <header><h3>Seats after the count</h3><span class="sk-tag live">Sample</span></header>
+     <div class="big"><b id="p-n">0</b><span id="p-line"></span></div>
+     <div class="sk-meter" id="meter"><i class="d"></i><i class="r"></i><em data-label="51 for control"></em></div>
+     <div class="sk-chips" id="p-chips"></div>
+    </div>
+    <div class="sk-tiles">
+     <a class="sk-tile" href="#desk"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 0 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Explore a state</a>
+     <a class="sk-tile" href="#desk"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.500 4.300 1.100 6.1L12 16.900 6.600 19.8l1.100-6.1L3.200 9.400l6.1-.8z"/></svg>Build a race</a>
+    </div>
+    <a class="sk-btn purple wide" href="#desk">Replay election night</a>
+    <span class="sk-label">Head to head</span>
+    <a class="sk-vs" href="#desk"><div><div class="nm"><span>Candidate A</span><span>Candidate B</span></div><div class="split" style="--v:.43"><i></i><i style="--v:.41"></i></div></div><div class="top"><b class="d">43</b><span class="sk-label" style="text-align:center">20 polls</span><b class="r">41</b></div><div class="ft">Forecast A +4.0 · 319 electoral votes</div></a>
+    <a class="sk-vs" href="#desk"><div><div class="nm"><span>Candidate C</span><span>Candidate B</span></div><div class="split" style="--v:.41"><i></i><i style="--v:.44"></i></div></div><div class="top"><b class="d">41</b><span class="sk-label" style="text-align:center">11 polls</span><b class="r">44</b></div><div class="ft">Forecast even · 269 electoral votes</div></a>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sk-paper">
+ <div class="wrap stack">
+  <span class="sk-label">2026 report card</span>
+  <h2 class="sk-narrow-wrap" aria-label="we called it"><span class="sk-narrow semi"><span>we</span><span>called</span><span>it</span></span></h2>
+  <div class="row rc" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)">
+   <div class="stack">
+    <div><div class="sk-label">The polling average said</div><div class="sk-bar"><i class="sk-hatch-ink" style="--v:.57"></i><em style="color:#55505e">D+8.5</em></div></div>
+    <div><div class="sk-label purple">We said</div><div class="sk-bar"><i class="sk-hatch-purple" style="--v:.87"></i><em class="sk-accent">D+13.1</em></div></div>
+    <div><div class="sk-label" style="color:var(--sk-good)">America voted</div><div class="sk-bar"><i class="sk-hatch-good" style="--v:.9"></i><em style="color:var(--sk-good)">D+13.5</em></div></div>
+   </div>
+   <div class="sk-stat"><b data-sk-count="0.4">0.4</b><span>point miss. No final national poll came closer.</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="sk-grid">
+ <div class="wrap row">
+  <div class="sk-card" style="position:relative"><span class="sk-tape tl"></span>
+   <span class="sk-label">Senate</span><div class="sk-stat good"><b data-sk-count="33">33</b><span>of 35 called right</span></div></div>
+  <div class="sk-card tilt-r" style="position:relative"><span class="sk-tape tr"></span>
+   <span class="sk-label">Governors</span><div class="sk-stat good"><b data-sk-count="35">35</b><span>of 36 called right</span></div></div>
+  <div class="sk-card tilt-l" style="position:relative"><span class="sk-tape tl"></span>
+   <span class="sk-label">House</span><div class="sk-stat good"><b data-sk-count="409">409</b><span>of 435 called right</span></div></div>
+ </div>
+ <div class="wrap" style="margin-top:26px"><div class="sk-legend"><span><i class="sk-hatch-good"></i>Called right</span><span><i class="sk-hatch-bad"></i>Missed</span></div></div>
+</section>
+
+<section class="sk-paper">
+ <div class="wrap row">
+  <div class="stack">
+   <span class="sk-label">2028 model</span>
+   <h2 class="sk-h2">the new <span class="sk-circled">battlegrounds</span></h2>
+   <table class="sk-table">
+    <thead><tr><th>State</th><th>Rating</th><th style="text-align:right">Margin</th></tr></thead>
+    <tbody>
+     <tr><td>Texas</td><td><span class="sk-chip toss">Tossup</span></td><td class="num" style="color:var(--sk-d)">D+0.3</td></tr>
+     <tr><td>Ohio</td><td><span class="sk-chip toss">Tossup</span></td><td class="num" style="color:var(--sk-r)">R+0.6</td></tr>
+     <tr><td>Iowa</td><td><span class="sk-chip toss">Tossup</span></td><td class="num" style="color:var(--sk-d)">D+1.1</td></tr>
+     <tr><td>Florida</td><td><span class="sk-chip toss">Tossup</span></td><td class="num" style="color:var(--sk-r)">R+1.5</td></tr>
+    </tbody>
+   </table>
+   <span class="sk-label">Dem nominee vs Vance</span>
+  </div>
+  <div class="stack">
+   <span class="sk-label">Map fills</span>
+   <div class="row" style="grid-template-columns:repeat(2,1fr);gap:12px">
+    <span class="swatch"><i class="sk-hatch-d"></i>Dem, hatched</span><span class="swatch"><i class="sk-hatch-r"></i>GOP, hatched</span>
+    <span class="swatch"><i style="background:var(--sk-d-safe)"></i>Safe D</span><span class="swatch"><i style="background:var(--sk-r-safe)"></i>Safe R</span>
+    <span class="swatch"><i style="background:var(--sk-d-likely)"></i>Likely D</span><span class="swatch"><i style="background:var(--sk-r-likely)"></i>Likely R</span>
+    <span class="swatch"><i style="background:var(--sk-d-lean)"></i>Lean D</span><span class="swatch"><i style="background:var(--sk-r-lean)"></i>Lean R</span>
+    <span class="swatch"><i style="background:var(--sk-tilt)"></i>Tilt</span><span class="swatch"><i class="sk-hatch-toss"></i>Tossup</span>
+   </div>
+   <span class="sk-label">County wash, close to safe</span>
+   <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <span class="sk-ramp"><i><i style="background:var(--sk-f-d-1)"></i><i style="background:var(--sk-f-d-2)"></i><i style="background:var(--sk-f-d-3)"></i><i style="background:var(--sk-f-d-4)"></i><i style="background:var(--sk-f-d-5)"></i></i></span>
+    <span class="sk-ramp"><i><i style="background:var(--sk-f-r-1)"></i><i style="background:var(--sk-f-r-2)"></i><i style="background:var(--sk-f-r-3)"></i><i style="background:var(--sk-f-r-4)"></i><i style="background:var(--sk-f-r-5)"></i></i></span>
+   </div>
+   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px"><span class="sk-stamp">Report card</span><span class="sk-stamp good">Called it</span><span class="sk-stamp bad">Missed</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="sk-dark">
+ <div class="wrap row">
+  <div class="stack">
+   <span class="sk-label">Watchdog</span>
+   <h2 class="sk-h2" style="color:#f3eff8">follow the money.</h2>
+   <div class="sk-stat dark"><b data-sk-count="1.36" data-sk-prefix="$" data-sk-suffix="B">$1.36B</b><span style="color:#cfc8e6">outside money tracked in 16 races</span></div>
+  </div>
+  <div class="sk-terminal">
+   <div><span class="prompt">&gt;</span> <span data-sk-type="watchdog://start">watchdog://start</span><span class="caret"></span></div>
+   <div><span class="prompt">&gt;</span> WAR ROOM</div><div><span class="prompt">&gt;</span> MONEY FLOW</div><div><span class="prompt">&gt;</span> WHO GETS PAID</div><div><span class="prompt">&gt;</span> CONNECTIONS</div><div><span class="prompt">&gt;</span> PEOPLE FILES</div>
+  </div>
+ </div>
+</section>
+
+<section class="sk-paper sk-rings">
+ <div class="wrap row">
+  <div class="stack">
+   <span class="sk-label">On Point Polling</span>
+   <h2 class="sk-h2">what we field</h2>
+   <ul class="sk-check">
+    <li>State, district and national polls</li><li>Message and ad testing</li><li>Issue and ballot measure polls</li>
+    <li>Modeled voter universes</li><li>Buy a question on our national poll</li>
+   </ul>
+  </div>
+  <div class="stack" style="align-items:start">
+   <div class="sk-bubble" data-sk-reveal="pop">Immigration</div>
+   <div class="sk-bubble" data-sk-reveal="pop" data-sk-delay="150">ask about gun rights</div>
+   <div class="sk-bubble" data-sk-reveal="pop" data-sk-delay="300">Something about the coffee crisis</div>
+   <div class="pointy-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-top:10px">
+    <div data-sk-pointy="idle" data-sk-run style="width:150px"></div>
+    <div data-sk-pointy="think" style="width:150px"></div>
+    <div data-sk-pointy="point-pointer" style="width:150px"></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sk-grid">
+ <div class="wrap" style="text-align:center">
+  <h2 class="sk-big" data-sk-reveal="slam">need a <span class="sk-accent">poll?</span></h2>
+  <p class="sk-label" style="margin:18px 0 26px">Voter file anchored. Text to web. 48 to 72 hours.</p>
+  <a class="sk-btn purple" href="#">Get a quote</a>
+ </div>
+</section>
+
+<button class="sk-btn ghost tone" type="button" onclick="var h=document.documentElement;if(h.dataset.skTone==='pro'){delete h.dataset.skTone;this.textContent='Pro tone'}else{h.dataset.skTone='pro';this.textContent='Loud tone'}">Pro tone</button>
+
+<footer class="sk-footer">
+ <div class="wrap">ON POINT POLITICS AND ON POINT POLLING · NONPARTISAN POLLING AND FORECASTS · <a href="#">ONPOINTPOLITICS.US</a></div>
+</footer>
+
+<script type="module">
+ import SK from '../js/sketchbook.js';
+ import SKMaps from '../js/sk-maps.js';
+ import { STATES, FL_COUNTIES } from './geo.js';
+ SK.init({ base: '../../public/sketchbook' });
+
+ // ---- sample data for the demo only. The live site feeds its own maps; the kit restyles whatever they draw. ----
+ // margin in points, negative is Democratic. Thirty five seats up; the rest of the map has no race.
+ const M = { AL:22, AK:6, AR:20, CO:-9, DE:-15, GA:-3.4, ID:30, IL:-14, IA:3.1, KS:9, KY:18, LA:15, ME:-1.8, MA:-25, MI:-2.9, MN:-7, MS:12, MT:14, NE:8, NH:-5, NJ:-10, NM:-9, NC:-0.9, OK:28, OR:-12, RI:-18, SC:11, SD:25, TN:20, TX:5.2, VA:-9, WV:30, WY:40, FL:6.3, OH:1.6 };
+ const FLIPS = new Set(['NC', 'ME']);
+ const HELD = { d: 34, r: 31 };                       // seats not on the ballot
+ const BLUE = new Set(['12011', '12099', '12095', '12073', '12001', '12039', '12097', '12057', '12086', '12031', '12103', '12117']);
+ const rnd = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+ const CM = Object.fromEntries(FL_COUNTIES.map((c) => { const k = rnd(+c.fips); return [c.fips, BLUE.has(c.fips) ? -(1 + k * 24) : 4 + k * 48]; }));
+
+ // the site's own palette, on purpose: the map engine has to turn these into pencil by itself
+ const rateFill = (m) => { const a = Math.abs(m); return a < 2 ? '#e7b341' : m < 0 ? (a >= 12 ? '#1a3fb0' : a >= 6 ? '#3d7bff' : '#a6c2ff') : a >= 12 ? '#b0163a' : a >= 6 ? '#ff3b5c' : '#ffb3c0'; };
+ const mix = (a, b, t) => '#' + [0, 1, 2].map((i) => Math.round(parseInt(a.substr(1 + i * 2, 2), 16) * (1 - t) + parseInt(b.substr(1 + i * 2, 2), 16) * t).toString(16).padStart(2, '0')).join('');
+ const rampFill = (m) => { const t = Math.min(1, Math.abs(m) / 40); return m < 0 ? mix('#c9d8ff', '#12308f', t) : mix('#ffd0d8', '#8f1230', t); };
+ const fm = (m) => (Math.abs(m) < 0.05 ? 'Even' : `${m < 0 ? 'D' : 'R'} +${Math.abs(m).toFixed(1)}`);
+ const share = (m) => (50 + Math.abs(m) / 2).toFixed(1) + '%';
+ const $ = (id) => document.getElementById(id);
+ const map = $('map'), tip = $('tip'), stage = $('stage');
+ const SMALL = new Set(['CT', 'RI', 'DE', 'NJ', 'MD', 'MA', 'NH', 'VT', 'DC', 'HI']);
+
+ function drawStates() {
+  map.setAttribute('viewBox', '0 20 960 580');
+  let h = '<g>';
+  for (const s of STATES) h += s.st in M
+   ? `<path d="${s.d}" fill="${rateFill(M[s.st])}" data-k="${s.st}" tabindex="0" role="button" aria-label="${s.name}, ${fm(M[s.st])}"/>`
+   : `<path class="sk-off" d="${s.d}" data-k="${s.st}"/>`;
+  h += '</g><g>';
+  for (const s of STATES) if (FLIPS.has(s.st)) h += `<path class="sk-flipline" d="${s.d}"/><path class="sk-flipline-ink" d="${s.d}"/>`;
+  h += '</g><g>';
+  for (const s of STATES) if (!SMALL.has(s.st)) h += `<text class="sk-maplabel${s.st in M ? '' : ' off'}" x="${s.c[0]}" y="${s.c[1]}">${s.st}</text>`;
+  map.innerHTML = h + '</g>';
+  $('map-title').textContent = 'U.S. Senate, state by state';
+  $('hint').textContent = 'Hover a state for its margin. Click Florida to open its counties.';
+  const n = (f) => Object.values(M).filter(f).length;
+  $('legend').innerHTML = [
+   ['d3', 'D +12 or more', n((m) => m <= -12)], ['d2', 'D +6 to 12', n((m) => m > -12 && m <= -6)], ['d1', 'D +2 to 6', n((m) => m > -6 && m <= -2)],
+   ['t', 'Inside 2', n((m) => Math.abs(m) < 2)],
+   ['r1', 'R +2 to 6', n((m) => m >= 2 && m < 6)], ['r2', 'R +6 to 12', n((m) => m >= 6 && m < 12)], ['r3', 'R +12 or more', n((m) => m >= 12)],
+   ['flip', 'Changed hands', FLIPS.size], ['off', 'No race', STATES.length - 1 - Object.keys(M).length],
+  ].map(([c, l, k]) => `<span><i class="sk-sw ${c}"></i>${l} <b>${k}</b></span>`).join('');
+ }
+ function drawCounties() {
+  map.setAttribute('viewBox', '0 0 760 600');
+  map.innerHTML = '<g>' + FL_COUNTIES.map((c) => `<path d="${c.d}" fill="${rampFill(CM[c.fips])}" data-fips="${c.fips}" data-k="${c.fips}" tabindex="0" role="button" aria-label="${c.name} County, ${fm(CM[c.fips])}"/>`).join('') + '</g>';
+  $('map-title').textContent = 'Florida, county by county';
+  $('hint').textContent = 'Sixty seven counties in a flat ink wash. Pale is close, deep is safe.';
+  const sw = (p) => [1, 2, 3, 4, 5].map((i) => `<i style="background:var(--sk-f-${p}-${i})"></i>`).join('');
+  $('legend').innerHTML = `<span class="sk-ramp">Democratic <i>${sw('d')}</i></span><span class="sk-ramp">Republican <i>${sw('r')}</i></span><span>Close <b>to</b> safe</span>`;
+ }
+ let view = 'states';
+ function show(v) {
+  view = v; tip.hidden = true; (v === 'states' ? drawStates : drawCounties)();
+  for (const [id, on] of [['v-states', v === 'states'], ['v-counties', v === 'counties']]) { $(id).classList.toggle('on', on); $(id).setAttribute('aria-pressed', on); }
+ }
+ $('v-states').onclick = () => show('states'); $('v-counties').onclick = () => show('counties');
+
+ // rails
+ const won = { d: Object.values(M).filter((m) => m < 0).length, r: Object.values(M).filter((m) => m > 0).length };
+ const seats = { d: HELD.d + won.d, r: HELD.r + won.r }, lead = seats.d > seats.r ? 'd' : 'r';
+ for (const p of ['d', 'r']) {
+  $(`sc-${p}-n`).innerHTML = `${seats[p]}<small>seats</small>`;
+  $(`sc-${p}-tag`).textContent = p === lead ? 'Majority' : 'Minority'; $(`sc-${p}-tag`).classList.toggle('win', p === lead); $(`sc-${p}`).classList.toggle('win', p === lead);
+  const g = [...FLIPS].filter((st) => (M[st] < 0) === (p === 'd'));
+  $(`sc-${p}-sub`).innerHTML = `Won <b>${won[p]}</b> of 35 · ${g.length ? `gains <b>${g.join(' · ')}</b>` : 'no gains'}`;
+ }
+ $('p-n').textContent = seats[lead]; $('p-line').textContent = `of 100. ${lead === 'd' ? 'Democrats' : 'Republicans'} hold the majority.`;
+ $('meter').style.cssText = `--d:${seats.d};--r:${seats.r};--of:100;--at:51`;
+ $('p-chips').innerHTML = `<span class="sk-chip fine">Every race called</span><span class="sk-chip fine marker">${FLIPS.size} seats change hands</span>`;
+ const name = Object.fromEntries(STATES.map((s) => [s.st, s.name]));
+ $('races').innerHTML = Object.entries(M).sort((a, b) => Math.abs(a[1]) - Math.abs(b[1])).slice(0, 4).map(([st, m]) =>
+  `<a class="sk-race ${m < 0 ? 'd' : 'r'}" href="#desk" data-st="${st}"><span class="st">${name[st]}</span><span class="sk-tag ${FLIPS.has(st) ? 'flip' : ''}">${FLIPS.has(st) ? 'Flip' : 'Hold'}</span><span class="m"><b>${fm(m)}</b><span>${share(m)} winner vote</span></span><span class="vs">Sample matchup, wire to the race feed</span></a>`).join('');
+
+ // tooltip, selection and the Florida drill down
+ const info = (k) => view === 'states'
+  ? (k in M ? { t: name[k], m: M[k], flip: FLIPS.has(k), cta: k === 'FL' ? 'Click for the counties' : 'Click for the full race' } : null)
+  : { t: FL_COUNTIES.find((c) => c.fips === k).name + ' County', m: CM[k], cta: 'Click for the precincts' };
+ map.addEventListener('pointermove', (e) => {
+  const k = e.target.dataset && e.target.dataset.k, d = k && info(k); if (!d) { tip.hidden = true; return; }
+  const b = stage.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top, w = 50 + Math.abs(d.m) / 2;
+  tip.innerHTML = `<h4>${d.t}${d.flip ? '<span class="sk-tag flip">Flip</span>' : ''}</h4><div class="r"><span class="d">Democrat</span><b>${(d.m < 0 ? w : 100 - w).toFixed(1)}%</b></div><div class="r"><span class="rp">Republican</span><b>${(d.m > 0 ? w : 100 - w).toFixed(1)}%</b></div><div class="r"><span>Margin</span><b>${fm(d.m)}</b></div><div class="cta">${d.cta}</div>`;
+  tip.hidden = false; tip.style.left = (x > b.width - 290 ? x - 18 - tip.offsetWidth : x + 18) + 'px'; tip.style.top = (y > b.height - 190 ? y - 12 - tip.offsetHeight : y + 12) + 'px';
+ });
+ map.addEventListener('pointerleave', () => { tip.hidden = true; });
+ const pick = (k) => {
+  if (view === 'states' && k === 'FL') { show('counties'); return; }
+  map.querySelectorAll('.sk-sel').forEach((p) => p.classList.remove('sk-sel'));
+  const el = map.querySelector(`[data-k="${k}"]`); if (el && el.hasAttribute('data-sk-fill')) el.classList.add('sk-sel');
+  document.querySelectorAll('#races .sk-race').forEach((a) => a.classList.toggle('on', a.dataset.st === k));
+ };
+ map.addEventListener('click', (e) => { const k = e.target.dataset && e.target.dataset.k; if (k) pick(k); });
+ map.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { const k = e.target.dataset && e.target.dataset.k; if (k) { e.preventDefault(); pick(k); } } });
+ $('races').addEventListener('click', (e) => { const a = e.target.closest('.sk-race'); if (a) { e.preventDefault(); if (view !== 'states') show('states'); requestAnimationFrame(() => pick(a.dataset.st === 'FL' ? '' : a.dataset.st)); } });
+
+ show('states');
+ SKMaps.start();
+</script>
+</body>
+</html>

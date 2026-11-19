@@ -122,7 +122,7 @@ export default function Prim28({ sum }: { sum: PrimSummary }) {
       <header className="h28-board p28-board">
         <div className="h28-board-top">
           <p className="h28-count"><i />{busy ? "Rerunning every state and county" : `${(Pf?.sims.primary ?? 4000).toLocaleString("en-US")} simulated primaries · every candidate on every ballot`}</p>
-          <div className="h28-race" role="tablist" aria-label="Party">
+          <div className="h28-race sk-tabsline" role="tablist" aria-label="Party">
             {(["D", "R"] as P[]).map((k) => <button key={k} type="button" role="tab" aria-selected={party === k} className={party === k ? "on" : ""} onClick={() => { setParty(k); setFocus(null); setPick(null); if (mode === "cand") setMode("lead"); }}>{k === "D" ? "Democratic primary" : "Republican primary"}</button>)}
           </div>
         </div>
@@ -164,8 +164,10 @@ export default function Prim28({ sum }: { sum: PrimSummary }) {
       <div className="h28-body">
         {/* the map */}
         <section className="h28-map" aria-label="Primary map">
-          <div className="h28-modes" role="radiogroup" aria-label="Color the map by">
-            {([["lead", "Who leads"], ["sure", "How sure"], ["cand", "One candidate"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => { setMode(k); if (k === "cand" && !pick) setPick(live[0]?.n ?? null); }}>{l}</button>)}
+          <div className="h28-modes">
+            <div className="sk-seg" role="radiogroup" aria-label="Color the map by">
+              {([["lead", "Who leads"], ["sure", "How sure"], ["cand", "One candidate"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => { setMode(k); if (k === "cand" && !pick) setPick(live[0]?.n ?? null); }}>{l}</button>)}
+            </div>
             {mode === "cand" ? <select className="p28-sel" value={pick ?? ""} onChange={(e) => setPick(e.target.value)} aria-label="Candidate">{live.map((x) => <option key={x.n} value={x.n}>{x.n}</option>)}</select> : null}
             {focus ? <button type="button" className="p28-back" onClick={() => setFocus(null)}>Back to the country</button> : null}
           </div>

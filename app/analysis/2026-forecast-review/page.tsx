@@ -16,7 +16,7 @@ type Reg = { k: string; counties: number; bias: number; mae: number };
 type Acc = { headline: Record<"all" | "senate" | "governor" | "house", Head>; chambers: Record<"senate" | "governor" | "house", Ch>; races: Race[];
   counties: { all: { counties: number; mae: number; wmae: number; bias: number }; area: Reg[]; region: Reg[] };
   legislatures: { called_right: number; called: number; chambers: { settled: number; right: number } } };
-type Bench = { generic: { us: { margin: number; n: number }; result: { margin: number }; averages: { margin: number } }; national: { polls: unknown[] } };
+type Bench = { generic: { us: { margin: number; n: number }; result: { margin: number }; averages: { margin: number } }; national: { polls: { name: string }[] } };
 type Pol = { summary: Record<"senate" | "governor", { n: number; right: number; mae: number; bias: number }> };
 const read = <T,>(p: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", p), "utf8")) as T;
 
@@ -42,7 +42,7 @@ export default function Page() {
         the <Link href="/accuracy">accuracy report</Link>. Some races are still being counted, so a few numbers below will move as the final certified results come in.
       </p>
 
-      <h2>The headline: three chambers, and the national vote to a tenth</h2>
+      <h2>The headline: three chambers, and the national vote within a point</h2>
       <p>
         The forecast picked the winner in <b>{H.all.called_right} of {H.all.races}</b> Senate, House and governor races, counting leaders in races that were not finished.
         Among races that were fully counted when we scored them, it was right in <b>{H.all.scored_final.right} of {H.all.scored_final.n}</b>, or {H.all.scored_final.share.toFixed(1)} percent.
@@ -50,9 +50,9 @@ export default function Page() {
       </p>
       <p>
         The part we are proudest of is the national vote. Our final national survey of {B.generic.us.n.toLocaleString("en-US")} registered voters, fielded October 28, had Democrats ahead
-        by {B.generic.us.margin.toFixed(1)} points on the generic congressional ballot. The projected final national House vote is D +{B.generic.result.margin.toFixed(1)}. The major polling
+        by {B.generic.us.margin.toFixed(1)} points on the generic congressional ballot. The national House vote counted so far is D +{B.generic.result.margin.toFixed(1)}. The major polling
         averages closed near D +{B.generic.averages.margin.toFixed(1)}, which means the industry as a whole underestimated the Democratic wave by about {(B.generic.result.margin - B.generic.averages.margin).toFixed(1)} points.
-        Of the {B.national.polls.length} final national polls we tracked, ours finished closest.
+        Of the {B.national.polls.length} final national polls in the ranking, ours finished second, behind {B.national.polls[0].name}.
       </p>
       <Fig title="Seats, forecast against result" head={["Chamber", "Forecast median", "80 percent range", "Result, D", "Chance we gave Democrats"]}
         rows={(["senate", "house", "governor"] as const).map((k) => [k === "senate" ? "Senate" : k === "house" ? "House" : "Governors", `${C[k].median} D`, `${C[k].p10} to ${C[k].p90}`, `${C[k].actualD}${C[k].counting ? " so far" : ""}`, pct(C[k].demControl)])}

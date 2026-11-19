@@ -388,3 +388,8 @@
 .opp.pg .y28-top { background: linear-gradient(180deg, #1c1238, var(--px-ink)); }
 .opp.pg .y28-side .px-tabs button[aria-selected="true"] { box-shadow: inset 0 -3px 0 var(--px-gold); }
 .opp.pg .y28-cty-top .kv b.up { color: var(--px-green); } .opp.pg .y28-cty-top .kv b.dn { color: var(--px-gop2); }
+
+/* sharing a result */
+.opp.pg .y28-share { display: grid; gap: 10px; border: 3px solid #000; box-shadow: var(--px-bevel); background: var(--px-panel2); }
+.opp.pg .y28-share-text { margin: 0; padding: 10px 12px; background: #120c26; color: var(--px-hi); font: 600 14px/1.5 var(--px-fb); white-space: pre-wrap; box-shadow: 0 0 0 2px #000; }
+.opp.pg .y28-share-btns { flex-wrap: wrap; gap: 8px; }

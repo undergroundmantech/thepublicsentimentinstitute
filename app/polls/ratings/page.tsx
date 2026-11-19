@@ -28,7 +28,7 @@ export default function Page() {
       <header className="ph">
         <div className="eye g">Pollster ratings · after the 2026 midterms</div>
         <h1>Who got 2026 <em>right</em></h1>
-        <p className="lede">We scored {A.polls} Senate and governor polls from the final month of the campaign, {A.window}, against the certified results in {A.races} races, plus every firm&apos;s final national generic ballot against the D +{A.generic.result.toFixed(1)} result. The grades below now set how much each poll counts in every On Point average.</p>
+        <p className="lede">We scored {A.polls} Senate and governor polls from the final month of the campaign, {A.window}, against the certified results in {A.races} races, plus every firm&apos;s final national generic ballot against the D +{A.generic.result.toFixed(1)} projection of November 13. The count has since moved to D +{A.generic.count.toFixed(1)}. The grades below now set how much each poll counts in every On Point average.</p>
       </header>
 
       <section className="card">
@@ -50,13 +50,13 @@ export default function Page() {
         <div className="rt-kpi">
           <div><span>Average miss</span><b>{A.mae.toFixed(1)}</b><small>points on the margin</small></div>
           <div><span>Direction</span><b>R {sgn(A.bias)}</b><small>polls ran too Republican</small></div>
-          <div><span>Generic ballot</span><b>D +{A.generic.averages.toFixed(1)}</b><small>averages, against D +{A.generic.result.toFixed(1)}</small></div>
+          <div><span>Generic ballot</span><b>D +{A.generic.averages.toFixed(1)}</b><small>averages, against a D +{A.generic.count.toFixed(1)} count</small></div>
           <div><span>Senate · governor</span><b>{A.senate.mae.toFixed(1)} · {A.governor.mae.toFixed(1)}</b><small>average miss by office</small></div>
         </div>
         <div className="rt-prose">
           <p>The 2026 polls understated Democrats almost everywhere. Across the final month the typical poll had the margin {side(A.bias)}, and nonpartisan polls alone were {side(A.nonpartisan.bias)}. Republican campaign and party polls were {side(A.rInternal.bias)}; Democratic ones landed close to the result, {side(A.dInternal.bias)}, though with as wide a spread.</p>
           <p>Outside reviews found the same pattern. Pew Research counted polls understating the Democratic margin by at least two points in 21 of 27 Senate and governor races, by about four points on average. G. Elliott Morris put the average miss at 3.5 points and traced most of it to turnout: likely voter screens built on past vote history were more Republican than the registered voter numbers in 25 of 32 cases and missed by more, 4.4 points against 2.6. A review of 412 final two week polls found 334 of them understated Democrats.</p>
-          <p>The firms that held up shared that lesson. NYT/Siena had the smallest typical miss of any firm with a full slate, AtlasIntel and CNN/SSRS beat the field race for race, and On Point, The Honest Poll, AtlasIntel and Big Data Poll were the four national finals closest to the D +13 result.</p>
+          <p>The firms that held up shared that lesson. NYT/Siena had the smallest typical miss of any firm with a full slate, AtlasIntel and CNN/SSRS beat the field race for race, and AtlasIntel, On Point, The Honest Poll and Big Data Poll were the four national finals closest to the D +14 count, in that order.</p>
         </div>
       </section>
 

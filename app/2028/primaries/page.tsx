@@ -8,6 +8,7 @@ import Method from "../Method";
 import { getPrimSummary, top } from "../server";
 import { fmtPct } from "../lib";
 import "../h28.css";
+import PlayCta from "@/app/2028/PlayCta";
 
 const DESC = "The 2028 Democratic and Republican primary forecast: every candidate's chance at the nomination, who leads every state from the early states to June, and every county. Take any candidate out and the race reruns.";
 export const metadata: Metadata = seo({
@@ -32,6 +33,7 @@ export default function Primaries28() {
         { "@type": "FAQPage", mainEntity: qa.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
       )} />
       <Prim28 sum={sum} />
+      <PlayCta title="Win the nomination yourself" note="Debates, endorsements, delegates and a contested convention, Iowa to June, on these same numbers." />
       <AdUnit />
       <section className="h28-read" aria-labelledby="p28-read">
         <h2 id="p28-read">The 2028 primaries in brief</h2>

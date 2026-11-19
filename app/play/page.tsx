@@ -6,24 +6,31 @@ import { type PIndex } from "./PlayApp";
 import App28 from "./y28/App28";
 import { AdUnit } from "./y28/ads28";
 import "./play.css";
+import JsonLd from "@/app/components/JsonLd";
+import { seo, SITE } from "@/app/lib/seo";
 import "./y28/play28.css";
 
 const head = Press_Start_2P({ weight: "400", subsets: ["latin"], variable: "--px-d", display: "swap" });
 const body = Pixelify_Sans({ subsets: ["latin"], variable: "--px-b", display: "swap" });
 
-export const metadata: Metadata = {
-  title: "Campaign 2028: run for president",
-  description: "A pixel campaign game built on the On Point Politics 2028 forecast. Run in the Democratic or Republican primaries, win the delegates and the nomination, pick a running mate and take ten weeks to 270 electoral votes, with every state, candidate and voter group from the On Point model.",
-  alternates: { canonical: "/play" },
-};
+const DESC = "Campaign 2028 is a free presidential election game in your browser. Pick any of 54 Democrats and Republicans, win the primaries and the nomination, pick a running mate, debate, and fight county by county to 270 electoral votes, all on the real On Point 2028 forecast. New daily challenge every day.";
+export const metadata: Metadata = seo({
+  title: "Campaign 2028: a free presidential election simulator game",
+  description: DESC,
+  path: "/play",
+  ownImage: true,
+  keywords: ["presidential election game", "election simulator", "2028 election game", "campaign simulator", "political strategy game", "president game online", "270 to win game", "election game free", "campaign trail game"],
+});
 
 export default function Page() {
   const idx = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "play", "index.json"), "utf8")) as PIndex;
   return (
     <div className={`opp pg ${head.variable} ${body.variable}`}>
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "VideoGame", name: "Campaign 2028", url: `${SITE.url}/play`, description: DESC, genre: ["Strategy", "Simulation"], gamePlatform: "Web browser", applicationCategory: "Game", operatingSystem: "Any", playMode: "SinglePlayer", isAccessibleForFree: true, inLanguage: "en", image: `${SITE.url}/play/opengraph-image`, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, publisher: { "@type": "Organization", name: SITE.name, url: SITE.url } }} />
       <App28 idx={idx} />
       <section className="px-about">
         <h1>Campaign 2028</h1>
+        <p className="px-how-links"><a href="/play?daily=1">Play today&apos;s daily challenge</a> · <a href="/2028">See the real 2028 forecast</a> · <a href="/2028-presidential-candidates">Who is running in 2028</a></p>
         <p>Run for president. Pick any of the 54 Democrats and Republicans in the On Point 2028 model and fight for the nomination state by state, from the first debate stages to the last primaries, or skip ahead to the general election, then fight for every county in the states that decide it. Every state&apos;s starting margin, every candidate&apos;s pull state by state, the delegate math, the primary standings and the vote history of every group of voters come from the same model that runs the On Point forecast. The midterm edition is still one click away from the title screen.</p>
         <AdUnit k="about1" minH={250} />
         <ul className="px-how">

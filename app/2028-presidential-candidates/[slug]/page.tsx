@@ -11,6 +11,7 @@ import { CANDS, STATUS, UPDATED, type Cand } from "../data";
 import { slugOf } from "../slug";
 import "../candidates.css";
 import AdUnit from "@/app/components/AdUnit";
+import PlayCta from "@/app/2028/PlayCta";
 
 export const dynamicParams = false;
 export const revalidate = 3600;
@@ -69,6 +70,7 @@ export default async function CandPage({ params }: { params: Promise<{ slug: str
           {pr && win != null ? <div><span>If nominated, against {opp}</span><b>{fmtPct(win)}</b><em>{Math.round(ev!)} electoral votes · {fmtMg(pr.nat)}</em><Link href="/2028/general">Every matchup</Link></div> : null}
         </div>
       ) : null}
+      {mn && party ? <PlayCta as={mn} side={party} title={`Play as ${c.name}`} note={`Run ${last(c.name)}\u2019s 2028 campaign in Campaign 2028: primaries, debates, a running mate and the fight for 270.`} /> : null}
       <AdUnit />
       <section className="pc28-faq" aria-label="Questions">
         {qa.map(([q, a]) => <details key={q} open><summary>{q}</summary><p>{a}</p></details>)}

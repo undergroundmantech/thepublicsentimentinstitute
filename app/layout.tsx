@@ -5,6 +5,10 @@ import "./chrome.css";
 import "./lite.css";
 import "./phone.css";
 import "./refresh.css";
+import "../onpoint-sketchbook/styles/sketchbook.css";
+import "../onpoint-sketchbook/styles/site-skin.css";
+import SketchProvider from "../onpoint-sketchbook/react/SketchProvider";
+import SkHatchMaps from "../onpoint-sketchbook/react/SkHatchMaps";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -65,13 +69,17 @@ export const metadata: Metadata = {
   verification,
 };
 
-export const viewport: Viewport = { themeColor: "#110019", colorScheme: "dark light" };
+export const viewport: Viewport = { themeColor: "#e9e5dc", colorScheme: "light" };
+
+const SK_INIT = `(function(){var d=document.documentElement;d.setAttribute("data-theme","light");d.setAttribute("data-mode","light");d.setAttribute("data-sk","");})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="light" data-mode="light" data-sk="" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        {/* Sketchbook: the paper and ink look runs on the light scheme, whatever mode a visitor stored before. */}
+        <script dangerouslySetInnerHTML={{ __html: SK_INIT }} />
         <script dangerouslySetInnerHTML={{ __html: LITE_INIT_SCRIPT }} />
         {/* Google AdSense: the account tag that verifies onpointpolitics.us, and the AdSense loader, as AdSense asks, in
             the head of every page. public/ads.txt carries the same publisher id. */}
@@ -80,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="text/plain" title="On Point Politics for language models" href="/llms.txt" />
         <JsonLd data={graph(orgLd())} />
       </head>
-      <body suppressHydrationWarning>
+      <body className="sk-paper" suppressHydrationWarning>
         <RolloutGate />
         <div className="sx-progress" aria-hidden="true" />
         <Ambient />
@@ -88,7 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RouteFx />
         <Navbar />
         <main className="opp-main">
-          <div className="opp-page">{children}</div>
+          <div className="opp-page"><SketchProvider tone="default">{children}<SkHatchMaps /></SketchProvider></div>
         </main>
         <AdSlot />
         <Footer />

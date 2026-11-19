@@ -23,14 +23,14 @@ export default function ResultsBand() {
       <div className="sec-h">
         <div><div className="eye g">The 2026 midterms, scored</div>
           <h2>We called {H.called_right} of {H.races} races{allRight ? " and all three chambers" : ""}.</h2>
-          <p><b>On Point Polling was the most accurate pollster in America:</b> D +13.1 on the final generic ballot against a D +13.0 result. The final forecast, frozen on November 3 before the first polls closed, is graded against the count in every race, county and state legislative district.</p></div>
-        <div className="rb-cta"><Link className="btn white" href="/accuracy">Read the accuracy report</Link><Link className="btn" href="/most-accurate-pollster">Most accurate pollster</Link><Link className="btn" href="/forecast/2026">The forecast as published</Link></div>
+          <p><b>On Point Polling landed within a point of the national vote:</b> D +{B.generic.us.margin.toFixed(1)} on the final generic ballot against a D +{B.generic.result.margin.toFixed(1)} count, second of {B.national.polls.length} final national polls. The final forecast, frozen on November 3 before the first polls closed, is graded against the count in every race, county and state legislative district.</p></div>
+        <div className="rb-cta"><Link className="btn white" href="/accuracy">Read the accuracy report</Link><Link className="btn" href="/most-accurate-pollster">Pollster ranking</Link><Link className="btn" href="/forecast/2026">The forecast as published</Link></div>
       </div>
       <div className="rb-grid">
         <Link href="/most-accurate-pollster" className="rb-t rb-lead">
-          <span className="l">Most accurate poll</span>
+          <span className="l">Final national poll</span>
           <span className="v">D +{B.generic.us.margin.toFixed(1)}</span>
-          <span className="s">Our final national poll. The result: D +{B.generic.result.margin.toFixed(1)}</span>
+          <span className="s">The count: D +{B.generic.result.margin.toFixed(1)}. Second of {B.national.polls.length}, {Math.abs(B.generic.us.margin - B.generic.result.margin).toFixed(1)} off</span>
         </Link>
         {tile("senate", "Senate")}
         {tile("house", "House")}

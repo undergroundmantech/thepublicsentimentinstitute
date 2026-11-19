@@ -32,7 +32,7 @@ export function Stats({ items }: { items: { k: string; to: number; dec?: number;
   );
 }
 
-/** Every final national poll as a bar race on the accuracy score, ours lit. Shorter is better. */
+/** Every final national poll as a bar race on its distance from the count, ours lit. Shorter is better. */
 export function PollRace({ b, limit }: { b: Bench; limit?: number }) {
   const rows = limit ? b.national.polls.slice(0, limit) : b.national.polls;
   const top = Math.max(...b.national.polls.map((p) => p.score));
@@ -44,7 +44,7 @@ export function PollRace({ b, limit }: { b: Bench; limit?: number }) {
           <span className="nm">{p.name}</span>
           <span className="fn">D +{Number.isInteger(p.final) ? p.final : p.final.toFixed(1)}</span>
           <span className="br" aria-hidden="true"><i /></span>
-          <span className="sc">{p.score.toFixed(2)}</span>
+          <span className="sc">{p.score.toFixed(1)}</span>
         </li>
       ))}
     </ol>

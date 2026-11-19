@@ -7,8 +7,10 @@ import Method from "./Method";
 import { ELECTION_DAY, featured, geo, nomination, primStates } from "./data28";
 import { STATE_NAME, fmtMg, fmtPct, last } from "./lib";
 import { getDefault } from "./server";
+import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "./h28.css";
 import AdUnit from "@/app/components/AdUnit";
+import PlayCta from "@/app/2028/PlayCta";
 
 export const revalidate = 3600;
 const DESC = "The On Point 2028 presidential forecast: the electoral map for every likely matchup, both primaries and every state's chance, forecast county by county and added up to every state.";
@@ -31,6 +33,7 @@ export default function Page2028() {
       <JsonLd data={graph(crumbsLd([["Home", "/"], ["2028 forecast", "/2028"]]), pageLd({ name: "2028 election forecast", description: DESC, path: "/2028", about: "2028 United States presidential election" }))} />
       <Home28 pairs={pairs} nom={nom} prim={prim} ev={ev} days={days} a24={g.a24} />
 
+      <PlayCta title="Run for president on this map" note="Pick any of 54 candidates, win the primaries and fight county by county to 270, on the same forecast." />
       <AdUnit />
       <section className="h28-read" aria-labelledby="h28-read">
         <h2 id="h28-read">The 2028 forecast in brief</h2>

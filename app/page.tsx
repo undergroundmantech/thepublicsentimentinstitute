@@ -22,7 +22,7 @@ import AdUnit from "@/app/components/AdUnit";
 const APPROVAL_POLLS = aggPolls("trump-approval");
 const GENERIC_POLLS = aggPolls("generic-ballot");
 
-export const metadata: Metadata = seo({"title": "On Point Politics: 2028 election forecast, polls and results from the most accurate pollster of 2026", "description": "The 2028 presidential forecast and electoral map, every 2028 candidate, the Trump approval and generic ballot averages and the Senate leader race, from On Point Polling, the most accurate pollster of the 2026 midterms: D +13.1 on the final generic ballot against a D +13.0 result.", "path": "/", "absoluteTitle": true});
+export const metadata: Metadata = seo({"title": "On Point Politics: 2028 election forecast, polls and results from On Point Polling", "description": "The 2028 presidential forecast and electoral map, every 2028 candidate, the Trump approval and generic ballot averages and the Senate leader race, from On Point Polling, whose final 2026 national poll was D +13.1 against a D +14.0 count.", "path": "/", "absoluteTitle": true});
 
 type RawPoll = { pollster: string; startDate?: string; endDate: string; sampleSize?: number; sampleType?: string; results: Record<string, number> };
 

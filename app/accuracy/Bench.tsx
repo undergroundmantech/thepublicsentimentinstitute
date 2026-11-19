@@ -1,5 +1,5 @@
 // On Point against every other pollster and forecaster, shared by /accuracy and /most-accurate-pollster.
-import { dm, marginMiss, type Bench, type SeatVal } from "./bench";
+import { dm, type Bench, type SeatVal } from "./bench";
 
 /** The final generic ballot: our poll, the result and the averages. */
 export function GenericTrio({ b }: { b: Bench }) {
@@ -27,20 +27,28 @@ export function GenericTrio({ b }: { b: Bench }) {
   );
 }
 
-/** Every final national poll, scored on the margin and the party shares. */
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "Oct. 28 · LV" from the poll's field end date and population */
+const fieldDay = (p: { field?: string; pop?: string }) => {
+  if (!p.field) return "";
+  const [, m, d] = p.field.split("-").map(Number);
+  return `${MON[m - 1]}. ${d}${p.pop ? ` · ${p.pop}` : ""}`;
+};
+
+/** Every final national poll, ranked by its distance from the count. */
 export function PollRanking({ b, limit }: { b: Bench; limit?: number }) {
   const rows = limit ? b.national.polls.slice(0, limit) : b.national.polls;
   const top = Math.max(...b.national.polls.map((p) => p.score));
   return (
     <div className="acc-tbl"><table className="tbl bx-rank">
-      <thead><tr><th className="n">Rank</th><th>Pollster</th><th className="n">Final poll</th><th className="n">Margin miss</th><th className="n">Score</th><th aria-hidden="true" className="bar-h" /></tr></thead>
+      <thead><tr><th className="n">Rank</th><th>Pollster</th><th>Field ended</th><th className="n">Final poll</th><th className="n">Error</th><th aria-hidden="true" className="bar-h" /></tr></thead>
       <tbody>{rows.map((p) => (
         <tr key={p.name} className={p.us ? "us" : ""}>
           <td className="n">{p.rank}</td>
           <td className="pn"><span>{p.name}</span></td>
+          <td className="dim">{fieldDay(p)}</td>
           <td className="n">{dm(p.final)}</td>
-          <td className="n">{marginMiss(p, b.generic.result.margin).toFixed(1)}</td>
-          <td className="n b">{p.score.toFixed(2)}</td>
+          <td className="n b">{p.score.toFixed(1)}</td>
           <td className="bar" aria-hidden="true"><i style={{ width: `${(100 * p.score) / top}%` }} /></td>
         </tr>
       ))}</tbody>

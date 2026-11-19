@@ -19,7 +19,7 @@ export default function Footer() {
             <div>
               <div className="fbrand"><Lockup height={40} /></div>
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
-                Nonpartisan polling and forecasts. The most accurate poll and the #1 forecast of 2026, by On Point Polling, Miami.
+                Nonpartisan polling and forecasts. The #1 forecast of 2026 and a final national poll within a point of the count, by On Point Polling, Miami.
               </p>
               <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/about">About us</Link><Link href="/analysis">Analysis</Link><Link href="/accuracy">2026 accuracy report</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link><a href="https://www.youtube.com/@onpointpoliticsofficial?sub_confirmation=1" target="_blank" rel="noopener" data-ev="YouTube subscribe" data-ev-d='{"from":"footer"}'>YouTube</a><a href="https://onpointpolitics.substack.com" target="_blank" rel="noopener">Newsletter</a></p>
             </div>

@@ -35,6 +35,22 @@ function CountUp({ to }: { to: number }) {
 }
 const pcN = (p: number) => (p > 0.99 || p < 0.01 ? null : Math.round(p * 100));
 
+// Sketchbook pencil hatching for a rating: a pale wash of the rating color under diagonal ink strokes, denser for
+// safe seats, leaning one way for Democrats and the other for Republicans. Built once per rating and reused.
+const SK_HATCH: Record<string, CanvasPattern | null> = {};
+function skHatch(ctx: CanvasRenderingContext2D, rt: keyof typeof RATE) {
+  if (rt in SK_HATCH) return SK_HATCH[rt] || RATE[rt];
+  const dense = rt.startsWith("safe") ? [3, 6] : rt.startsWith("likely") ? [2.2, 7] : [1.5, 9];
+  // the kit's pencil colors: one blue, one red, purple for the toss ups and independents
+  const col = rt.endsWith("D") ? (rt === "leanD" ? "#3d64e6" : "#1f3fd1") : rt.endsWith("R") ? (rt === "leanR" ? "#e05454" : "#d42a2a") : rt === "toss" ? "#8a4cf0" : "#5b2bb0", g = Math.round(dense[1] * 2), c = document.createElement("canvas"); c.width = g; c.height = g;
+  const x = c.getContext("2d"); if (!x) { SK_HATCH[rt] = null; return col; }
+  x.globalAlpha = rt.startsWith("safe") ? 0.38 : rt.startsWith("likely") ? 0.22 : 0.14; x.fillStyle = col; x.fillRect(0, 0, g, g); x.globalAlpha = 1;
+  x.strokeStyle = col; x.lineWidth = dense[0]; x.lineCap = "square";
+  const flip = rt.endsWith("R");
+  for (let k = -g; k <= 2 * g; k += dense[1]) { x.beginPath(); if (flip) { x.moveTo(k, 0); x.lineTo(k + g, g); } else { x.moveTo(k, g); x.lineTo(k + g, 0); } x.stroke(); }
+  SK_HATCH[rt] = ctx.createPattern(c, "repeat"); return SK_HATCH[rt] || col;
+}
+
 export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
@@ -97,7 +113,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     const rnd = (i: number) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
     const stars = Array.from({ length: isLite() ? 120 : 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
     const centroid = (st: string) => { const f = geo.states.find((g) => g.st === st); return f ? (geoCentroid(f as GeoPermissibleObjects) as [number, number]) : null; };
-    const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
+    const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: document.documentElement.hasAttribute("data-sk") ? (Math.abs(r.m) < 1.5 ? "138,76,240" : r.m < 0 ? (r.ind ? "91,43,176" : "31,63,209") : "212,42,42") : Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
     const steps: { ll: [number, number]; t: number; side: number }[] = []; let lastStep = 0, side = 1;
     const facing = (ll: [number, number]) => geoDistance(ll, [-rot.current[0], -rot.current[1]]) < 1.5;
     // the walk: leg k goes from tour[k] to tour[k+1] over the globe surface, then a pause at the stop
@@ -114,8 +130,10 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const [cx, cy] = proj.translate(), R = proj.scale();
       const L = themeRef.current === "light";
+      // Sketchbook (html[data-sk]): paper globe, ink outlines, every rated state drawn in pencil hatching
+      const SK = document.documentElement.hasAttribute("data-sk");
       // stars
-      for (const st of stars) {
+      if (!SK) for (const st of stars) {
         const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(st.ph + t / 1000 * st.sp));
         ctx.fillStyle = L ? (st.hue > 0.7 ? `rgba(120,90,220,${a * 0.22})` : `rgba(60,40,120,${a * 0.12})`) : st.hue > 0.85 ? `rgba(255,214,140,${a * 0.8})` : st.hue > 0.7 ? `rgba(160,190,255,${a * 0.8})` : `rgba(255,255,255,${a * 0.7})`;
         ctx.fillRect(st.x * W, st.y * H, st.r, st.r);
@@ -123,20 +141,31 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       // atmosphere and ocean
       const atm = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.12);
       atm.addColorStop(0, L ? "rgba(120,90,255,.22)" : "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
-      ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, 6.283); ctx.fill();
+      if (!SK) { ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, 6.283); ctx.fill(); }
       const sea = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.4, R * 0.1, cx, cy, R);
-      sea.addColorStop(0, L ? "#f1effa" : "#1a1240"); sea.addColorStop(1, L ? "#cdc7e6" : "#07040f");
+      sea.addColorStop(0, SK ? "#f4f1ea" : L ? "#f1effa" : "#1a1240"); sea.addColorStop(1, SK ? "#d8d2c4" : L ? "#cdc7e6" : "#07040f");
       ctx.fillStyle = sea; ctx.beginPath(); path({ type: "Sphere" }); ctx.fill();
+      if (SK) { ctx.strokeStyle = "#141218"; ctx.lineWidth = 3; ctx.stroke(); }
       ctx.strokeStyle = L ? "rgba(60,40,140,.09)" : "rgba(170,150,255,.08)"; ctx.lineWidth = 1; ctx.beginPath(); path(grat); ctx.stroke();
-      if (geo.land) { ctx.fillStyle = L ? "#e6e2f2" : "#1c1630"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill(); }
+      if (geo.land) { ctx.fillStyle = SK ? "#e9e5dc" : L ? "#e6e2f2" : "#1c1630"; ctx.beginPath(); path(geo.land as GeoPermissibleObjects); ctx.fill(); }
       ctx.strokeStyle = L ? "rgba(60,40,120,.14)" : "rgba(255,255,255,.06)"; ctx.stroke();
       for (const f of geo.states) {
         const r = bySt[f.st];
         ctx.beginPath(); path(f as GeoPermissibleObjects);
-        ctx.fillStyle = r ? RATE[rateOf(r)] : L ? "#d9d4e8" : "#2b2440";
+        ctx.fillStyle = r ? (SK ? skHatch(ctx, rateOf(r)) : RATE[rateOf(r)]) : SK ? "#e2ddd0" : L ? "#d9d4e8" : "#2b2440";
         ctx.fill();
-        if (hoverRef.current === f.st) { ctx.fillStyle = `rgba(255,255,255,${0.12 + 0.1 * Math.sin(t / 240)})`; ctx.fill(); }
-        ctx.strokeStyle = hoverRef.current === f.st ? (L ? "#110019" : "#fff") : L ? "rgba(255,255,255,.95)" : "rgba(10,6,18,.9)"; ctx.lineWidth = hoverRef.current === f.st ? 2.2 : 0.8; ctx.stroke();
+        if (hoverRef.current === f.st) { ctx.fillStyle = SK ? `rgba(245,197,24,${0.2 + 0.08 * Math.sin(t / 240)})` : `rgba(255,255,255,${0.12 + 0.1 * Math.sin(t / 240)})`; ctx.fill(); }
+        ctx.strokeStyle = hoverRef.current === f.st ? (L ? "#110019" : "#fff") : SK ? "#141218" : L ? "rgba(255,255,255,.95)" : "rgba(10,6,18,.9)"; ctx.lineWidth = hoverRef.current === f.st ? 2.6 : SK ? 1.1 : 0.8; ctx.stroke();
+      }
+      // Sketchbook: the hovered state is outlined again on top of every other state, highlighter under ink, so the
+      // neighbors painted after it never cover half of its border
+      if (SK && hoverRef.current) {
+        const hf = geo.states.find((g) => g.st === hoverRef.current);
+        if (hf) {
+          ctx.lineJoin = "round"; ctx.beginPath(); path(hf as GeoPermissibleObjects);
+          ctx.strokeStyle = "rgba(245,197,24,.9)"; ctx.lineWidth = 8; ctx.stroke();
+          ctx.strokeStyle = "#141218"; ctx.lineWidth = 2.6; ctx.stroke(); ctx.lineJoin = "miter";
+        }
       }
       // labels
       ctx.font = "800 11px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -146,7 +175,8 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 34) continue;
         const p = proj(ll); if (!p || (W >= 1100 && p[0] < W * 0.31)) continue;
         const r = bySt[f.st], rt = r ? rateOf(r) : null;
-        ctx.fillStyle = rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : L ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.3)";
+        ctx.fillStyle = SK ? (r ? "#141218" : "rgba(20,18,24,.4)") : rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : L ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.3)";
+        if (SK && r) { ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(251,250,246,.92)"; ctx.lineWidth = 3.5; ctx.strokeText(f.st, p[0], p[1]); ctx.lineJoin = "miter"; }
         ctx.fillText(f.st, p[0], p[1]);
       }
       // beacons on the closest races
@@ -278,7 +308,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         </div>
       </div>
       <div className="hg-spot" aria-hidden="true" />
-      <div className="hg-legend">{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i style={{ background: RATE.ind }} />Independent</span><span className="hint">Drag to spin the globe</span></div>
+      <div className="hg-legend">{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i data-rt={k} style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i data-rt="ind" style={{ background: RATE.ind }} />Independent</span><span className="hint">Drag to spin the globe</span></div>
     </section>
   );
 }

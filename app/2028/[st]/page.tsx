@@ -6,8 +6,10 @@ import { crumbsLd, graph, pageLd, seo } from "@/app/lib/seo";
 import State28 from "../State28";
 import { featured, primStates, stateCodes, stateData } from "../data28";
 import { STATE_NAME, fmtMg, fmtPct } from "../lib";
+import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "../h28.css";
 import AdUnit from "@/app/components/AdUnit";
+import PlayCta from "@/app/2028/PlayCta";
 
 export const dynamicParams = false;
 export const revalidate = 3600;
@@ -44,6 +46,7 @@ export default async function StatePage({ params }: { params: Promise<{ st: stri
         ] as [string, string][]).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
       )} />
       <State28 data={data} pairs={pairs} prim={{ D: prim.D[S] ?? null, R: prim.R[S] ?? null }} distRes={Object.fromEntries(pairs.map((x) => [x.id, Object.fromEntries(data.dists.map((d) => [d.k, x.st[d.k] ?? null]))]))} />
+      <PlayCta title={`Win ${data.name} county by county`} note={`Campaign 2028 runs on this forecast. Rally, open field offices and knock doors in every ${data.name} county.`} />
       <AdUnit />
       <section className="h28-read" aria-labelledby="h28-sread">
         <h2 id="h28-sread">{data.name} in 2028</h2>

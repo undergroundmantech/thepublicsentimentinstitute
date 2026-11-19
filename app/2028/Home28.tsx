@@ -3,7 +3,11 @@
 // electoral vote by rating, the map beside the path to 270 (every state lined up from the bluest to the reddest), and
 // a dock of matchups along the bottom. Every state, band and ladder row has a hover card. The map reads three ways:
 // the rating, the win chance, or the change from 2024.
-import { useMemo, useState, type MouseEvent } from "react";
+// Sketchbook look, Nov 19 2026: the map is a paper cutout, every state flips in from the left with its pencil outline
+// tracing itself in, the hovered state pops off the page, and the lines wobble like stop motion.
+import { useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import Pointy from "@/onpoint-sketchbook/react/Pointy";
+import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
 import { X, STATE_NAME, fmtMg, fmtPct, last, probColor, shiftColor, type StatesGeo } from "./lib";
@@ -30,6 +34,15 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
   const [hov, setHov] = useState<Hover>(null);
   const [lit, setLit] = useState<string | null>(null);
   const p = pairs.find((x) => x.id === sel) ?? pairs[0];
+  const stage = useRef<HTMLDivElement>(null);
+  const go = useInView(stage); useBoil(stage);
+  const shapes = useMemo(() => (geo ? Object.entries(geo.states) : []) as [string, string][], [geo]);
+  const delays = useMemo(() => sweepDelays(shapes), [shapes]);
+  const allD = useMemo(() => shapes.map(([, d]) => d).join(""), [shapes]);
+  const upSt = hov?.kind === "st" ? hov.st.split("-")[0] : lit ? lit.split("-")[0] : null;
+  const hatched = tab === "pres" && mode === "rate";
+  // states and D.C. per rating, for the map's legend
+  const counts = useMemo(() => { const c: Partial<Record<Rate, number>> = {}; for (const [k, v] of Object.entries(p.st)) if (!k.includes("-")) { const r = rateOf(v[0]); c[r] = (c[r] ?? 0) + 1; } return c; }, [p]);
   const evR = 538 - p.evMap, dLead = p.evMap >= 270;
 
   // every electoral unit, lined up from the bluest to the reddest, with the running Democratic total
@@ -56,7 +69,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
     const v = p.st[st]; if (!v) return "#2a2438";
     if (mode === "prob") return probColor(v[1]);
     if (mode === "shift") return a24[st] != null ? shiftColor(v[0] - a24[st]!, 16) : "#2a2438";
-    return RATE[rateOf(v[0])].color;
+    return `url(#us28-h-${rateOf(v[0])})`;
   };
   const point = (e: MouseEvent, st: string) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "st", st });
   const stTip = (st: string) => {
@@ -71,7 +84,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
       <header className="h28-board">
         <div className="h28-board-top">
           <p className="h28-count"><i />{days} days to Election Day · November 7, 2028</p>
-          <div className="h28-race" role="tablist" aria-label="Race">
+          <div className="h28-race sk-tabsline" role="tablist" aria-label="Race">
             {([["pres", "President"], ["D", "Democratic primary"], ["R", "Republican primary"]] as [Tab, string][]).map(([k, l]) => (
               <button key={k} type="button" role="tab" aria-selected={tab === k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{l}</button>
             ))}
@@ -81,7 +94,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
           <div className="h28-face-off">
             <div className={`h28-side d${dLead ? " lead" : ""}`}>
               <Toon name={p.d} side="D" size={112} className="h28-big-face" uid="b" />
-              <div><span className="h28-party">Democrat</span><b className="h28-nm">{p.d}</b><span className="h28-ev"><b>{p.evMap}</b> electoral votes</span><span className="h28-sub">{fmtPct(p.pD)} to win · {Math.round(p.evD)} in the average simulation</span></div>
+              <div><span className="h28-party">Democrat</span><b className="h28-nm">{p.d}</b><span className="h28-ev"><b key={p.id} className="h28-slam">{p.evMap}</b> electoral votes</span><span className="h28-sub">{fmtPct(p.pD)} to win · {Math.round(p.evD)} in the average simulation</span></div>
             </div>
             <div className="h28-mid">
               <h1 className="h28-h1">The <em>2028</em> forecast</h1>
@@ -92,7 +105,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
               </div>
             </div>
             <div className={`h28-side r${!dLead ? " lead" : ""}`}>
-              <div><span className="h28-party">Republican</span><b className="h28-nm">{p.r}</b><span className="h28-ev"><b>{evR}</b> electoral votes</span><span className="h28-sub">{fmtPct(1 - p.pD)} to win · {538 - Math.round(p.evD)} in the average simulation</span></div>
+              <div><span className="h28-party">Republican</span><b className="h28-nm">{p.r}</b><span className="h28-ev"><b key={p.id} className="h28-slam">{evR}</b> electoral votes</span><span className="h28-sub">{fmtPct(1 - p.pD)} to win · {538 - Math.round(p.evD)} in the average simulation</span></div>
               <Toon name={p.r} side="R" size={112} className="h28-big-face" uid="b" />
             </div>
           </div>
@@ -116,10 +129,10 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
         {tab === "pres" ? (
           <div className="h28-ribbon" aria-label="Electoral votes by rating">
             <div className="bar" onMouseLeave={() => setHov(null)}>
-              {RATES.map((r) => { const n = ladder.band[r.k]?.ev ?? 0; return n ? <i key={r.k} style={{ flexGrow: n, background: r.color, color: r.ink }} className={hov?.kind === "band" && hov.k === r.k ? "on" : undefined} onMouseMove={(e) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "band", k: r.k })}>{n >= 20 ? n : ""}</i> : null; })}
+              {RATES.map((r) => { const n = ladder.band[r.k]?.ev ?? 0; return n ? <i key={r.k} style={{ flexGrow: n }} className={`h28-hz ${r.k}${hov?.kind === "band" && hov.k === r.k ? " on" : ""}`} onMouseMove={(e) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "band", k: r.k })}>{n >= 20 ? n : ""}</i> : null; })}
               <em style={{ left: `${(270 / 538) * 100}%` }}><span>270</span></em>
             </div>
-            <div className="keys">{RATES.map((r) => <span key={r.k}><i style={{ background: r.color }} />{r.label} <b>{ladder.band[r.k]?.ev ?? 0}</b></span>)}</div>
+            <div className="keys">{RATES.map((r) => <span key={r.k}><i className={`h28-hz ${r.k}`} />{r.label} <b>{ladder.band[r.k]?.ev ?? 0}</b></span>)}</div>
           </div>
         ) : null}
       </header>
@@ -128,31 +141,41 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
         {/* the map */}
         <section className="h28-map" aria-label="2028 forecast map">
           {tab === "pres" ? (
-            <div className="h28-modes" role="radiogroup" aria-label="Color the map by">
-              {([["rate", "Rating"], ["prob", "Win chance"], ["shift", "Change from 2024"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
+            <div className="h28-modes">
+              <div className="sk-seg" role="radiogroup" aria-label="Color the map by">
+                {([["rate", "Rating"], ["prob", "Win chance"], ["shift", "Change from 2024"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
+              </div>
               <span className="h28-closest">Closest: {closest.map((r, i) => <span key={r.k} onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}><Link href={slug(r.k)}>{r.k} {fmtMg(r.m)}</Link>{i < closest.length - 1 ? "," : ""}</span>)}</span>
             </div>
           ) : null}
-          <div className="h28-stage" onMouseLeave={() => setHov(null)}>
-            {!geo ? <div className="h28-load">Loading the map</div> : (
-              <svg viewBox="-20 -10 1015 630" role="img" aria-label="United States map of the 2028 forecast">
-                <g className="h28-states">
-                  {Object.entries(geo.states).map(([st, d]) => (
+          <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}`} onMouseLeave={() => setHov(null)}>
+            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
+            {!geo ? <div className="h28-load">Sketching the map</div> : (
+              <svg viewBox="-20 -10 1015 630" role="img" aria-label="United States map of the 2028 forecast" className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
+                <InkDefs id="us28" /><HatchDefs id="us28" />
+                {/* a paper base under the states, so the hatching reads on paper and the cutout edge only shows at the coast */}
+                <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
+                <g className="h28-states sk-map-flip" key={`${tab}|${mode}|${sel}`}>
+                  {shapes.map(([st, d]) => (
                     <a key={st} href={slug(st)} aria-label={`${STATE_NAME[st] ?? st} 2028 forecast`}>
-                      <path d={d} fill={fill(st)} className={(hov?.kind === "st" && hov.st === st) || lit === st ? "hov" : lit || (hov?.kind === "band" && rateOf(p.st[st]?.[0] ?? 0) !== hov.k) ? "fade" : undefined} onMouseMove={(e) => point(e, st)} />
+                      <path d={d} fill={fill(st)} style={{ "--d": delays[st] } as CSSProperties} className={(hov?.kind === "st" && hov.st === st) || lit === st ? "hov" : lit || (hov?.kind === "band" && rateOf(p.st[st]?.[0] ?? 0) !== hov.k) ? "fade" : undefined} onMouseMove={(e) => point(e, st)} />
                     </a>
                   ))}
                 </g>
+                {hatched ? null : <path className="h28-tex" d={allD} fill="url(#us28-pen)" aria-hidden="true" />}
+                <InkOutline id="us28" shapes={shapes} width={1.5} delays={delays} />
+                <Lift id="us28" d={upSt && geo.states[upSt] ? geo.states[upSt] : null} fill={upSt ? fill(upSt) : "none"} />
                 <g className="h28-labels" aria-hidden="true">
-                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={ink(fill(st))}>{st}</text> : null)}
+                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched ? "#141218" : ink(fill(st))} className={hatched ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
             )}
+            <Pointy pose="point-pointer" size={112} className="h28-pointy" />
           </div>
           <div className="h28-under">
             {tab === "pres" ? <>
-              {Object.keys(p.st).filter((k) => k.includes("-") || k === "DC").map((k) => { const v = p.st[k]; const r = RATE[rateOf(v[0])]; return <span key={k} onMouseMove={(e) => point(e, k)} onMouseLeave={() => setHov(null)}><Link href={slug(k)} className="h28-chip" style={{ background: r.color, color: r.ink }}>{k === "DC" ? "D.C." : k}</Link></span>; })}
-              {mode === "rate" ? <span className="mute">Ratings by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up.</span>
+              {Object.keys(p.st).filter((k) => k.includes("-") || k === "DC").map((k) => { const v = p.st[k]; const r = RATE[rateOf(v[0])]; return <span key={k} onMouseMove={(e) => point(e, k)} onMouseLeave={() => setHov(null)}><Link href={slug(k)} className={`h28-chip h28-hz ${r.k}`}>{k === "DC" ? "D.C." : k}</Link></span>; })}
+              {mode === "rate" ? <div className="sk-maplegend h28-legend">{RATES.map((r) => <span key={r.k}><i className={`h28-hz ${r.k}`} />{r.label} <b>{counts[r.k] ?? 0}</b></span>)}<em>states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up</em></div>
                 : mode === "prob" ? <span className="h28-scale"><em>{last(p.d)} certain</em><i className="pr" /><em>{last(p.r)} certain</em></span>
                 : <span className="h28-scale"><em>Bluer than 2024</em><i className="sh" /><em>Redder than 2024</em></span>}
             </> : nom[tab].slice(0, 6).map((x) => <span key={x.name} className="h28-pk"><i style={{ background: x.color }} />{x.name}</span>)}
@@ -195,6 +218,26 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
         </aside>
       </div>
 
+      {/* the closest states, as election desk race cards: flip or hold against 2024 */}
+      {tab === "pres" ? (
+        <section className="h28-close" aria-labelledby="h28-cl">
+          <div className="h28-dock-h"><h2 id="h28-cl">The closest states</h2><span>Within a few points in {last(p.d)} against {last(p.r)}</span></div>
+          <div className="h28-races">
+            {closest.map((r) => {
+              const was = a24[r.k] ?? null, flip = was != null && Math.sign(was) !== Math.sign(r.m), dW = r.m <= 0;
+              return (
+                <Link key={r.k} href={slug(r.k)} className={`sk-race ${dW ? "d" : "r"}`}>
+                  <span className="st" onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}>{nameOf(r.k)}</span>
+                  <span className={`sk-tag${flip ? " flip" : ""}`}>{flip ? "Flip" : "Hold"}</span>
+                  <span className="m"><b>{fmtMg(r.m)}</b><span>{dW ? last(p.d) : last(p.r)} {fmtPct(Math.max(r.pD, 1 - r.pD))}</span></span>
+                  <span className="vs">{r.ev} electoral vote{r.ev === 1 ? "" : "s"}{was != null ? ` · ${fmtMg(was)} in 2024` : ""}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
       {/* the matchup dock */}
       <section className="h28-dock" aria-labelledby="h28-mu">
         <div className="h28-dock-h"><h2 id="h28-mu">Pick the matchup</h2><span>The likeliest pairings by both parties&apos; nomination odds</span><Link href="/2028/general">Every matchup</Link></div>
@@ -219,7 +262,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
       <nav className="h28-go" aria-label="More of the 2028 forecast">
         <Link href={slug(p.tip)}><b>{STATE_NAME[p.tip]}</b><span>The tipping point, county by county</span></Link>
         <Link href="/2028/primaries"><b>Play the primaries</b><span>Every state, every candidate</span></Link>
-        <Link href="/2028/ticket"><b>Build a ticket</b><span>Running mates and third parties</span></Link>
+        <a href="/play" className="hot"><b>Play Campaign 2028</b><span>Run for president on this map</span></a>
         <Link href="/2028-presidential-candidates" className="hot"><b>Who is running in 2028</b><span>Every name, by party</span></Link>
       </nav>
 
