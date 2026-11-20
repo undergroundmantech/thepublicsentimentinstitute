@@ -213,6 +213,19 @@ const ccIx = CC ? new Map(CC.map((r, k) => [r.fips, k])) : null;
 const ccKey = (c, party) => (c && CC && Object.prototype.hasOwnProperty.call(CC[0], party + '|' + c.name) ? party + '|' + c.name : null);
 const kD = ccKey(D, 'D'), kR = ccKey(R, 'R'), kDV = ccKey(DV, 'D'), kRV = ccKey(RV, 'R');
 const n = cm.length, two = new Float64Array(n), tot = new Float64Array(n), othS = new Float64Array(n);
+// site v51: who shows up depends on the matchup. Every county's voter groups (party, race, age, college and 2024 vote)
+// turn out more or less for each nominee than for a generic one, from the respondent model and anchored to the
+// dashboard's matchup turnout; running mates count a quarter. The extra or missing voters keep the county's margin.
+const TOd = dash.data('turnout_cty'), TCf = dash.data('turnout_coef');
+const TO = TOd && TOd.status === 'ok' ? new Map(TOd.data.map((r) => [r.fips, r])) : new Map();
+const TCo = TCf && TCf.status === 'ok' ? new Map(TCf.data.map((r) => [r.key, r])) : new Map();
+const TDIM = ['pR', 'pI', 'rB', 'rH', 'rA', 'a3044', 'a4564', 'a65', 'col', 'nv24'];
+const tco = (c, party, w) => { const r = c ? TCo.get(party + '|' + c.name) : null; return r ? [Number(r.b0) || 0, ...TDIM.map((k) => Number(r['b_' + k]) || 0)].map((x) => x * w) : null; };
+const TCV = [tco(D, 'D', 1), tco(R, 'R', 1), tco(DV, 'D', 0.25), tco(RV, 'R', 0.25)].filter(Boolean);
+const dT = (key) => { const r = TO.get(key); if (!r || !TCV.length) return 0; let x = 0; const v = [1, ...TDIM.map((k) => Number(r[k]) || 0)]; for (const b of TCV) for (let j = 0; j < v.length; j++) x += b[j] * v[j]; return x; };
+const turnAdd = (key, base) => { const r = TO.get(key); if (!r) return 0; const E = Number(r.elig) || 0; if (!(E > 0)) return 0; const add = E * dT(key) / 100; return Math.max(-0.5 * base, Math.min(0.97 * E - base, add)); };
+const lpOf = (key) => { const r = TO.get(key); const v = r ? Number(r.lp) : 1; return isFinite(v) && v > 0 ? v : 1; };
+let baseVotes = 0, turnVotes = 0;
 const xD = new Float64Array(n), xR = new Float64Array(n), xI = new Float64Array(n);
 const ISS = ['col', 'epstein', 'iran', 'immig', 'socialism', 'trans'];
 const ia = (c, f) => (c ? ISS.map((k) => f * (Number(c['a_' + k]) || 0)) : ISS.map(() => 0));
@@ -220,7 +233,7 @@ const aI = ISS.map((k, j) => ia(D, 1)[j] + ia(R, 1)[j] + ia(DV, 0.25)[j] + ia(RV
 const LI = Number(GP.lam_issue) || 0;
 let W = 0, mD = 0, mR = 0, mI = 0;
 for (let i = 0; i < n; i++) {
-const c = cm[i]; tot[i] = Number(c.total); two[i] = tot[i] * (1 - Number(c.other_share));
+const c = cm[i]; { const b0 = Number(c.total); const ad = turnAdd(c.fips, b0); tot[i] = b0 + ad; baseVotes += b0; turnVotes += ad; } two[i] = tot[i] * (1 - Number(c.other_share));
 const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
 othS[i] = Math.min(0.2, Math.max(0.002, GP.hist_blend * Number(c.other_share) + (1 - GP.hist_blend) * GP.g0 * prop)) * (T ? GP.named_third_keep : 1);
 let aD = 0, aDV = 0, bR = 0, bRV = 0;
@@ -317,7 +330,7 @@ a *= (1 + Math.abs(hm[c.st] || 0) / 10) * (1 + 0.25 * Math.abs(hv[c.st] || 0) / 
 idx[i] = a; qd[i] = q; qs += a * tot[i]; ws += tot[i];
 }
 for (let i = 0; i < n; i++) idx[i] = qs > 0 ? idx[i] * ws / qs : 1;
-TK.push({ key: t.key, name: C.name, vp: V ? V.name : '', vpKey: V ? t.vp : '', label: C.name + (V ? ' and ' + V.name : ''), O: o, user: t.share != null && isFinite(t.share) ? Math.max(0, Math.min(45, t.share)) / 100 : null,
+TK.push({ nf: row && row.new_voters !== '' && isFinite(Number(row.new_voters)) ? Number(row.new_voters) : 0.1, newV: 0, key: t.key, name: C.name, vp: V ? V.name : '', vpKey: V ? t.vp : '', label: C.name + (V ? ' and ' + V.name : ''), O: o, user: t.share != null && isFinite(t.share) ? Math.max(0, Math.min(45, t.share)) / 100 : null,
 modeled: o / (1 + o), idx, qd, fromD: row ? Number(row.from_d) : null, custom });
 }
 const NT = TK.length;
@@ -353,7 +366,7 @@ const m0 = (r - d) / Math.max(1, r + d) * 100;
 let x = consol(ptD, 'D', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m1 = (r - d) / Math.max(1, r + d) * 100;
 x = consol(ptR, 'R', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m2 = (r - d) / Math.max(1, r + d) * 100;
 const tk = NT ? new Array(NT) : null;
-for (let k2 = 0; k2 < NT; k2++) { const tv = tsh[k2][i] * tot[i]; const fd = Math.min(d, tv * TK[k2].qd[i]), fr = Math.min(r, tv - fd); d -= fd; r -= fr; tk[k2] = fd + fr; t += fd + fr; }
+for (let k2 = 0; k2 < NT; k2++) { const tv = tsh[k2][i] * tot[i]; const nv = Math.min(0.5, TK[k2].nf * lpOf(c.fips)) * tv; const fd = Math.min(d, (tv - nv) * TK[k2].qd[i]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
 const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
 cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, T: tk, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i) * EL[i], home: HO[i], primc: PRC[i], pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
 add(c.st, d, r, t, o, 1, tk);
@@ -362,9 +375,9 @@ if (c.st === 'ME') { add(ME1, d, r, t, o, Number(c.me1), tk); add(ME2, d, r, t, 
 }
 const natPC = pcW > 0 ? (pcD + pcR) / pcW : 0;
 for (const e of ex) {
-const m = Number(e.base_margin) + eff(e.st, null) + natPC; const tt = Number(e.total); const o = tt * Math.min(0.2, Number(e.other_share)) * (T ? GP.named_third_keep : 1); const tw = tt - o;
+const m = Number(e.base_margin) + eff(e.st, null) + natPC; const tt0 = Number(e.total), tad = turnAdd(e.st, tt0), tt = tt0 + tad; baseVotes += tt0; turnVotes += tad; const o = tt * Math.min(0.2, Number(e.other_share)) * (T ? GP.named_third_keep : 1); const tw = tt - o;
 let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0; const tk = NT ? new Array(NT) : null;
-for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const fd = Math.min(d, tv * avgQd[k2]), fr = Math.min(r, tv - fd); d -= fd; r -= fr; tk[k2] = fd + fr; t += fd + fr; }
+for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const nv = Math.min(0.5, TK[k2].nf) * tv; const fd = Math.min(d, (tv - nv) * avgQd[k2]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
 add(e.st, d, r, t, o, 1, tk);
 }
 // site: the reader can set the Democrat's and the Republican's national share. Every county and statewide unit scales
@@ -408,11 +421,11 @@ const tks = a.T ?? a[4]; dist.push({ cd: r.cd, st: r.st, m, m24: m0, iS: tt > 0 
 // turnout share, solving one shift so the counties add exactly to the state
 for (const s of ['AK', 'CT']) {
 const a = agg[s]; const rows = AKCT.filter((r) => r[1] === s); if (!a || !rows.length) continue;
-const two = a.D + a.R, pD0 = a.D / two, L0 = Math.log(pD0 / (1 - pD0)); const ws = rows.reduce((x, r) => x + r[2], 0), ow = rows.reduce((x, r) => x + r[2] * r[4], 0);
+const two = Math.max(1e-9, a.D + a.R), pD0 = Math.min(1 - 1e-6, Math.max(1e-6, a.D / two)), L0 = Math.log(pD0 / (1 - pD0)); const ws = rows.reduce((x, r) => x + r[2], 0), ow = rows.reduce((x, r) => x + r[2] * r[4], 0);
 let lo = -6, hi = 6;
 for (let it = 0; it < 60; it++) { const mid = (lo + hi) / 2; let sv = 0; for (const r of rows) sv += (r[2] / ws) / (1 + Math.exp(-(L0 + mid + r[3]))); if (sv > pD0) hi = mid; else lo = mid; }
 const dl = (lo + hi) / 2; let sD = 0; const tmp = rows.map((r) => { const tp = two * r[2] / ws; const d = tp / (1 + Math.exp(-(L0 + dl + r[3]))); sD += d; return [r, tp, d]; });
-for (const [r, tp, d0] of tmp) { const d = d0 * a.D / sD, rr_ = tp - d;
+for (const [r, tp, d0] of tmp) { const d = sD > 0 ? d0 * a.D / sD : 0, rr_ = Math.max(0, tp - d);
 cty.push({ fips: r[0], st: s, D: d, R: rr_, I: a.I * r[2] / ws, T: a.T.map((v) => v * r[2] / ws), O: a.O * r[2] * r[4] / ow, m: ((rr_ - d) / Math.max(1, rr_ + d)) * 100, eff: 0, pc: 0, q: 0, damp: dmp(s), grid: 0, alloc: true }); }
 }
 const cwin = new Float64Array(cty.length * 3); const rcn = rng(9028); let cN = 0;
@@ -466,9 +479,11 @@ pD: win[j][0] / N, pR: win[j][1] / N, pI: win[j][2] / N, sD: share[j][0] / N, sR
 T: a.T.slice(), tk: TK.map((_, k) => ({ v: a.T[k], s: shK[j][k] / N, p: winK[j][k] / N })) }; });
 const districts = {}; for (const x of dist) districts[x.cd] = { st: x.st, m: x.m, m24: x.m24, pD: x.win[0] / N, pR: x.win[1] / N, pI: x.win[2] / N };
 let VD = 0, VR = 0, VI = 0, VO = 0; const VK = TK.map(() => 0); for (const s of Object.keys(agg)) if (!s.includes('-')) { VD += agg[s].D; VR += agg[s].R; VI += agg[s].I; VO += agg[s].O; for (let k = 0; k < NT; k++) VK[k] += agg[s].T[k]; }
-const tickets = TK.map((t, k) => ({ color: op28.TKC[k % op28.TKC.length], key: t.key, name: t.name, vp: t.vp, label: t.label, votes: VK[k], modeled: t.modeled, joint: t.joint, target: t.target, user: t.user, fromD: t.fromD, custom: t.custom, pWin: tW[k] / N, ev: tEV[k] / N }));
+const tickets = TK.map((t, k) => ({ newV: t.newV, nf: t.nf, color: op28.TKC[k % op28.TKC.length], key: t.key, name: t.name, vp: t.vp, label: t.label, votes: VK[k], modeled: t.modeled, joint: t.joint, target: t.target, user: t.user, fromD: t.fromD, custom: t.custom, pWin: tW[k] / N, ev: tEV[k] / N }));
 const pinfo = (pt, party, nat) => (pt ? { share: pt.share, front: pt.front, frontShare: pt.frontShare, quality: party === 'R' ? -pt.quality : pt.quality, consol: nat, polled: pt.polled } : null);
-const out = { D: D.name, R: R.name, T: NT ? TK.map((t) => t.label).join(' + ') : null, tickets, pD: wD / N, pR: wR / N, pI: wI / N, pNone: none / N, evD: evD / N, evR: evR / N, evI: evI / N,
+const stE = {}; for (const r of TO.values()) stE[r.st] = (stE[r.st] || 0) + (Number(r.elig) || 0);
+const turnout = { elig: Object.values(stE).reduce((a, b) => a + b, 0), base: baseVotes, matchup: turnVotes, newT: TK.reduce((a, t) => a + t.newV, 0), stE };
+const out = { turnout, D: D.name, R: R.name, T: NT ? TK.map((t) => t.label).join(' + ') : null, tickets, pD: wD / N, pR: wR / N, pI: wI / N, pNone: none / N, evD: evD / N, evR: evR / N, evI: evI / N,
 VD, VR, VI, VO, states, districts, cty, hist, keys, spend, tip, prim: { D: pinfo(ptD, 'D', pcW > 0 ? pcD / pcW : 0), R: pinfo(ptR, 'R', pcW > 0 ? pcR / pcW : 0) } };
 memo = { key, out };
 return out;

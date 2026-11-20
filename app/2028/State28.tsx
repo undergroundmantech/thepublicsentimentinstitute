@@ -9,12 +9,12 @@ import Pointy from "@/onpoint-sketchbook/react/Pointy";
 import { InkDefs, InkOutline, Lift, Slab3D, WASH_CUTS, WASH_D, WASH_R, WASH_T, sweepDelays, useBoil, useInView, usePxScale, washColor, washInk, washStep } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
-import { fmtMg, fmtPct, last, shiftColor } from "./lib";
+import { fmtMg, fmtPct, last, shiftColor, tmAdd } from "./lib";
 import { CountyTip, Tip } from "./Tips28";
 import { RATE, rateOf } from "./rate28";
 import type { Pair, StateEvery } from "./data28";
 
-type Data = { st: string; name: string; ev: number; base: number; sig: number; m24: number | null; outline: string; box: [number, number, number, number];
+type Data = { tm?: { dims: Record<string, number[]>; coef: Record<string, number[]> } | null; st: string; name: string; ev: number; base: number; sig: number; m24: number | null; outline: string; box: [number, number, number, number];
   counties: { f: string; n: string; d: string; w: number; o: number; m: number; m24: number | null }[]; dists: { k: string; ev: number }[] };
 type PrimSt = { lead: string; color: string; share: number; win: number; top: [string, number, string][] } | null;
 const fmtV = (n: number) => Math.round(n).toLocaleString("en-US");
@@ -43,9 +43,14 @@ export default function State28({ data, pairs, prim, distRes: dr0, every }: { da
 
   const res = useMemo(() => {
     let D = 0, R = 0, O = 0; const cty = new Map<string, { D: number; R: number; m: number; t: number }>();
-    for (const c of data.counties) { const m = c.m + shift; const d = (c.w * (1 - m / 100)) / 2, r = c.w - d; D += d; R += r; O += c.o; cty.set(c.f, { D: d, R: r, m, t: c.w + c.o }); }
+    // who shows up depends on the matchup: each county's votes move with its voter groups' turnout for these nominees,
+    // and one small shift across the state keeps the state's margin, the sum of its counties, where the forecast has it
+    const k = new Map<string, number>(); let a0 = 0, w0 = 0, a1 = 0, w1 = 0;
+    for (const c of data.counties) { const x = data.tm ? 1 + tmAdd(data.tm, c.f, p.d, p.r, c.w + c.o) / Math.max(1, c.w + c.o) : 1; k.set(c.f, x); const m = c.m + shift; a0 += c.w * m; w0 += c.w; a1 += c.w * x * m; w1 += c.w * x; }
+    const adj = w0 > 0 && w1 > 0 ? a0 / w0 - a1 / w1 : 0;
+    for (const c of data.counties) { const x = k.get(c.f) ?? 1; const w = c.w * x, o = c.o * x; const m = c.m + shift + adj; const d = (w * (1 - m / 100)) / 2, r = w - d; D += d; R += r; O += o; cty.set(c.f, { D: d, R: r, m, t: w + o }); }
     return { D, R, O, T: D + R + O, cty };
-  }, [data, shift]);
+  }, [data, shift, p.d, p.r]);
   const big = useMemo(() => [...data.counties].sort((a, b) => b.w - a.w).slice(0, 8), [data]);
   const mapBox = useRef<HTMLElement>(null);
   const go = useInView(mapBox); useBoil(mapBox);

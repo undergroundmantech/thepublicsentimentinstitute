@@ -13,6 +13,7 @@ import Toon from "@/app/majority-tracker/Toon";
 import { X, STATE_NAME, fmtK, fmtN, fmtMg, fmtPct, fmtSh, genRes, last, probColor, shiftColor, two, type CountiesGeo, type GenFile, type Res, type StatesGeo, type TicketRes } from "./lib";
 import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "@/onpoint-sketchbook/react/SketchMap";
 import { CountyPaths28, CtyTip, ViewSeg, type CtyRow, type View } from "./Cty28";
+import Show28, { type Why } from "./Show28";
 import { useJSON, useTicket, type Ticket } from "./useX";
 import { RATE, RATES, rateOf, type Rate } from "./rate28";
 import { RateTip, StateTip, Tip, type At } from "./Tips28";
@@ -44,7 +45,8 @@ function TicketHatch({ id, colors }: { id: string; colors: string[] }) {
 }
 type TK = { key: string; vp: string; share: number | null };
 const writeTickets = (l: TK[]) => l.map((t) => `${encodeURIComponent(t.key)}~${encodeURIComponent(t.vp || "")}~${t.share == null || !isFinite(t.share) ? "" : t.share}`).join(";");
-export type ThirdModel = { key: string; party: string; name: string; share: number | null; lift: number | null; fromD: number | null; own: number | null; ind: number | null; basis: string; m?: Record<string, number | null> };
+export type ThirdModel = { key: string; party: string; name: string; share: number | null; lift: number | null; fromD: number | null; own: number | null; ind: number | null; basis: string; m?: Record<string, number | null>;
+  base?: number | null; mMsg?: number | null; mMed?: number | null; mCoal?: number | null; newV?: number | null; reach?: number | null };
 /** a candidate's modeled share alone against this pair of nominees, the dashboard's rule: the national odds times the
  *  multiplier for each nominee; null when the model takes them off the ballot against one of the nominees */
 const pairShare = (r: ThirdModel, dp: string, rp: string): number | null => {
@@ -98,6 +100,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
 
   const set = (p: Partial<Full>) => setT((o) => ({ ...o, ...p }));
   const geo = useJSON<StatesGeo>(`${X}/states.json`);
+  const why = useJSON<Why>(`${X}/why.json`);
   const [mode, setMode] = useState<Mode>("rate");
   const [hov, setHov] = useState<Hover>(null);
   const [lit, setLit] = useState<string | null>(null);
@@ -284,12 +287,12 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
         <div className="g28-nat" aria-label="Nationwide results">
           <div className="g28-nat-h"><h2>Nationwide</h2><span>{fmtN(all)} votes projected · electoral votes on the map are the states each candidate leads · the average and win chance come from {sims.toLocaleString("en-US")} simulations</span></div>
           <div className="g28-scroll"><table>
-            <thead><tr><th>Candidate</th><th>Votes</th><th>Popular vote</th><th>Margin</th><th>Electoral votes</th><th>States won</th><th>Average EV</th><th>Wins the presidency</th></tr></thead>
+            <thead><tr><th>Candidate</th><th>Votes</th><th>Popular vote</th><th>Margin</th><th>New voters</th><th>Electoral votes</th><th>States won</th><th>Average EV</th><th>Wins the presidency</th></tr></thead>
             <tbody>{(() => {
               const rows = [
-                { k: "D", nm: res.D, sub: `Democrat${t.dvp ? ` · with ${t.dvp}` : ""}`, side: "D" as const, c: "#1f3fd1", v: res.VD, ev: evMap.D, n: list.filter((x) => x.lead === "D" && !x.k.includes("-")).length, avg: res.evD, p: res.pD },
-                { k: "R", nm: res.R, sub: `Republican${t.rvp ? ` · with ${t.rvp}` : ""}`, side: "R" as const, c: "#d42a2a", v: res.VR, ev: evMap.R, n: list.filter((x) => x.lead === "R" && !x.k.includes("-")).length, avg: res.evR, p: res.pR },
-                ...TKS.map((tk, j) => ({ k: tk.key, nm: tk.name, sub: `Third party${tk.vp ? ` · with ${tk.vp}` : ""}`, side: "U" as const, c: tk.color, v: tk.votes, ev: evMap.T[j] ?? 0, n: list.filter((x) => x.lead === j && !x.k.includes("-")).length, avg: tk.ev, p: tk.pWin })),
+                { nv: null as number | null, k: "D", nm: res.D, sub: `Democrat${t.dvp ? ` · with ${t.dvp}` : ""}`, side: "D" as const, c: "#1f3fd1", v: res.VD, ev: evMap.D, n: list.filter((x) => x.lead === "D" && !x.k.includes("-")).length, avg: res.evD, p: res.pD },
+                { nv: null as number | null, k: "R", nm: res.R, sub: `Republican${t.rvp ? ` · with ${t.rvp}` : ""}`, side: "R" as const, c: "#d42a2a", v: res.VR, ev: evMap.R, n: list.filter((x) => x.lead === "R" && !x.k.includes("-")).length, avg: res.evR, p: res.pR },
+                ...TKS.map((tk, j) => ({ nv: tk.newV ?? null, k: tk.key, nm: tk.name, sub: `Third party${tk.vp ? ` · with ${tk.vp}` : ""}`, side: "U" as const, c: tk.color, v: tk.votes, ev: evMap.T[j] ?? 0, n: list.filter((x) => x.lead === j && !x.k.includes("-")).length, avg: tk.ev, p: tk.pWin })),
               ].sort((a, b) => b.v - a.v);
               const top = rows[0].v;
               return <>
@@ -299,14 +302,16 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
                     <td>{fmtN(r.v)}</td>
                     <td><span className="g28-nat-bar"><i style={{ width: `${(100 * r.v) / all}%`, background: r.c }} /></span><b>{fmtSh(r.v / all)}</b></td>
                     <td>{i === 0 ? `+${((100 * (r.v - rows[1].v)) / all).toFixed(1)}` : `${((100 * (r.v - top)) / all).toFixed(1)}`}</td>
+                    <td>{r.nv != null ? `+${fmtN(r.nv)}` : ""}</td>
                     <td><b className={r.ev >= 270 ? "won" : undefined}>{r.ev}</b></td>
                     <td>{r.n}</td>
                     <td>{Math.round(r.avg)}</td>
                     <td>{fmtPct(r.p)}</td>
                   </tr>
                 ))}
-                <tr className="o"><td><span className="g28-nat-who"><span><b>Other candidates</b><small>Everyone not on a ticket above</small></span></span></td><td>{fmtN(res.VO + (NT ? 0 : res.VI))}</td><td><b>{fmtSh((res.VO + (NT ? 0 : res.VI)) / all)}</b></td><td /><td>0</td><td>0</td><td /><td />{null}</tr>
-                {res.pNone > 0.0005 ? <tr className="o"><td colSpan={7}>No one reaches 270 electoral votes, so the House picks the president</td><td>{fmtPct(res.pNone)}</td></tr> : null}
+                <tr className="o"><td><span className="g28-nat-who"><span><b>Other candidates</b><small>Everyone not on a ticket above</small></span></span></td><td>{fmtN(res.VO + (NT ? 0 : res.VI))}</td><td><b>{fmtSh((res.VO + (NT ? 0 : res.VI)) / all)}</b></td><td /><td /><td>0</td><td>0</td><td /><td />{null}</tr>
+                {why ? <tr className="o"><td colSpan={9}>Turnout {((100 * all) / (res.turnout?.elig ?? why.elig)).toFixed(1)}% of {fmtN(res.turnout?.elig ?? why.elig)} eligible citizens, against {res.turnout ? ((100 * res.turnout.base) / res.turnout.elig).toFixed(1) : why.base_turnout.toFixed(1)}% with generic nominees{NT ? `; the third party tickets bring ${fmtN(TKS.reduce((a, x) => a + (x.newV ?? 0), 0))} new voters` : ""}. Who shows up, and why, is below the map.</td></tr> : null}
+                {res.pNone > 0.0005 ? <tr className="o"><td colSpan={8}>No one reaches 270 electoral votes, so the House picks the president</td><td>{fmtPct(res.pNone)}</td></tr> : null}
               </>;
             })()}</tbody>
           </table></div>
@@ -461,6 +466,8 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
         </aside>
       </div>
 
+      {why ? <Show28 why={why} res={res} dp={res.D} rp={res.R} dvp={t.dvp} rvp={t.rvp} /> : null}
+
       {/* the closest states */}
       <section className="h28-close" aria-labelledby="g28-cl">
         <div className="h28-dock-h"><h2 id="g28-cl">The closest states</h2><span>{last(res.D)} against {last(res.R)}{T ? ` and ${last(T)}` : ""}</span></div>
@@ -490,10 +497,10 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
         <section className="s28-card g28-tbl" aria-labelledby="g28-t">
           <h2 id="g28-t">Every state</h2>
           <div className="g28-scroll"><table>
-            <thead><tr><th>State</th><th>EV</th><th>{last(res.D)}</th><th>{last(res.R)}</th>{TKS.map((tk) => <th key={tk.key} style={{ color: tk.color }}>{last(tk.name)}</th>)}<th>Margin</th><th>Leader wins</th></tr></thead>
+            <thead><tr><th>State</th><th>EV</th><th>{last(res.D)}</th><th>{last(res.R)}</th>{TKS.map((tk) => <th key={tk.key} style={{ color: tk.color }}>{last(tk.name)}</th>)}<th>Margin</th><th>Leader wins</th><th>Turnout</th></tr></thead>
             <tbody>{[...list].sort((a, b) => a.fm - b.fm).map((x) => (
               <tr key={x.k}><td><Link href={slug(x.k)}>{nameOf(x.k)}</Link></td><td>{x.ev}</td><td>{fmtSh(x.sD)}</td><td>{fmtSh(x.sR)}</td>{TKS.map((tk, j) => <td key={tk.key}>{fmtSh(x.sT[j])}</td>)}
-                <td className={typeof x.lead === "number" ? "i" : x.lead === "D" ? "d" : "r"} style={typeof x.lead === "number" ? { color: TKS[x.lead]?.color } : undefined}>{leadText(x)}</td><td>{fmtPct(typeof x.lead === "number" ? x.pT[x.lead] : x.lead === "D" ? x.pD : x.pR)}</td></tr>
+                <td className={typeof x.lead === "number" ? "i" : x.lead === "D" ? "d" : "r"} style={typeof x.lead === "number" ? { color: TKS[x.lead]?.color } : undefined}>{leadText(x)}</td><td>{fmtPct(typeof x.lead === "number" ? x.pT[x.lead] : x.lead === "D" ? x.pD : x.pR)}</td><td>{(() => { const s = res.states[x.k]; const e = res.turnout?.stE?.[x.k] ?? why?.states[x.k]?.elig; return s && e ? `${((100 * (s.D + s.R + s.I + s.O)) / e).toFixed(1)}%` : ""; })()}</td></tr>
             ))}</tbody>
           </table></div>
         </section>
@@ -502,11 +509,11 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
       {/* the dashboard's third party model: every candidate as an independent, and the third party profiles */}
       <section className="s28-card g28-3m" aria-labelledby="g28-3m">
         <h2 id="g28-3m">Every candidate as an independent</h2>
-        <p className="s28-say">The dashboard&apos;s third party model: each candidate&apos;s share running as an independent in this matchup, {t.dp} against {t.rp}, and against the generic nominees, from every respondent&apos;s three way choice, how much they lift over an unknown independent and where their vote comes from. Two or more tickets on one ballot split the same voters, so each lands a little lower once added. Add any of them as a ticket above.</p>
+        <p className="s28-say">The dashboard&apos;s third party model: each candidate&apos;s share running as an independent in this matchup, {t.dp} against {t.rp}, and against the generic nominees, from every respondent&apos;s three way choice, reassessed in v51 by message fit (each candidate&apos;s issue positions and emphasis against every voter group&apos;s positions and top issues, weighted by who is open to a third party), media reach (their shows and platforms, county by county, from the social media dataset) and coalition openness (how persuadable the political types they draw are), with the share of their vote from people who would otherwise stay home. Two or more tickets on one ballot split the same voters, so each lands a little lower once added. Add any of them as a ticket above.</p>
         <div className="g28-scroll"><table>
-          <thead><tr><th>Candidate</th><th>{last(t.dp)} v {last(t.rp)}</th><th>Generic nominees</th><th>Lift</th><th>From the Democratic side</th><th>Their own party</th><th>Independents</th><th>Basis</th><th /></tr></thead>
+          <thead><tr><th>Candidate</th><th>{last(t.dp)} v {last(t.rp)}</th><th>Generic nominees</th><th>Before v51</th><th>Message</th><th>Media reach</th><th>Coalition</th><th>New voters</th><th>Lift</th><th>From the Democratic side</th><th>Their own party</th><th>Independents</th><th>Basis</th><th /></tr></thead>
           <tbody>{(showAll ? tm : tm.slice(0, 15)).map((r) => (
-            <tr key={r.key}><td><b>{r.name}</b><small>{r.party === "I" ? "Independent" : r.party === "D" ? "Democrat" : "Republican"}</small></td><td><b>{r.here != null ? `${r.here.toFixed(1)}%` : "Off the ballot"}</b></td><td>{r.share != null ? `${r.share.toFixed(1)}%` : ""}</td><td>{r.lift != null ? r.lift.toFixed(2) : ""}</td>
+            <tr key={r.key}><td><b>{r.name}</b><small>{r.party === "I" ? "Independent" : r.party === "D" ? "Democrat" : "Republican"}</small></td><td><b>{r.here != null ? `${r.here.toFixed(1)}%` : "Off the ballot"}</b></td><td>{r.share != null ? `${r.share.toFixed(1)}%` : ""}</td><td>{r.base != null ? `${r.base.toFixed(1)}%` : ""}</td><td>{r.mMsg != null ? `×${r.mMsg.toFixed(2)}` : ""}</td><td>{r.mMed != null ? `×${r.mMed.toFixed(2)}` : ""}</td><td>{r.mCoal != null ? `×${r.mCoal.toFixed(2)}` : ""}</td><td>{r.newV != null ? fmtSh(r.newV, 0) : ""}</td><td>{r.lift != null ? r.lift.toFixed(2) : ""}</td>
               <td>{r.fromD != null ? fmtSh(r.fromD, 0) : ""}</td><td>{r.own != null ? `${r.own.toFixed(1)}%` : ""}</td><td>{r.ind != null ? `${r.ind.toFixed(1)}%` : ""}</td><td>{r.basis}</td>
               <td>{t.tks.some((x) => x.key === r.key) ? <em>On the ballot</em> : r.here == null ? null : t.tks.length < 4 ? <button type="button" className="g28-addrow" onClick={() => addTk(r.key)}>Add</button> : null}</td></tr>
           ))}</tbody>

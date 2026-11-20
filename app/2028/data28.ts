@@ -97,6 +97,8 @@ export function stateData(st: string) {
   return {
     st, name: STATE_NAME[st], ev: G.ev[st] ?? 0, base: countySum()[st] ?? G.base[st] ?? 0, sig: G.sig[st] ?? 4, m24: g.a24[st] ?? null,
     outline: g.states[st], box: g.box[st], counties, dists: dists.map((k) => ({ k, ev: G.ev[k] ?? 0 })),
+    // v51 turnout by matchup for this state's counties
+    tm: G.tm ? { dims: Object.fromEntries(Object.entries(G.tm.dims).filter(([k]) => k === st || counties.some((c) => c.f === k))), coef: G.tm.coef } : null,
   };
 }
 
