@@ -24,7 +24,14 @@ const leadTint = (c: string, fm: number) => { const B = [2, 6, 12]; let i = B.fi
 const tkStep = (fm: number) => (fm < 2 ? "Tilt" : fm < 6 ? "Lean" : fm < 12 ? "Likely" : "Safe");
 type TK = { key: string; vp: string; share: number | null };
 const writeTickets = (l: TK[]) => l.map((t) => `${encodeURIComponent(t.key)}~${encodeURIComponent(t.vp || "")}~${t.share == null || !isFinite(t.share) ? "" : t.share}`).join(";");
-export type ThirdModel = { key: string; party: string; name: string; share: number | null; lift: number | null; fromD: number | null; own: number | null; ind: number | null; basis: string };
+export type ThirdModel = { key: string; party: string; name: string; share: number | null; lift: number | null; fromD: number | null; own: number | null; ind: number | null; basis: string; m?: Record<string, number | null> };
+/** a candidate's modeled share alone against this pair of nominees, the dashboard's rule: the national odds times the
+ *  multiplier for each nominee; null when the model takes them off the ballot against one of the nominees */
+const pairShare = (r: ThirdModel, dp: string, rp: string): number | null => {
+  if (r.share == null) return null; const s0 = r.share / 100; let o = s0 / (1 - s0);
+  const a = r.m?.[`D|${dp}`], b = r.m?.[`R|${rp}`]; const ma = a == null ? 1 : a, mb = b == null ? 1 : b;
+  if (!(ma > 0) || !(mb > 0)) return null; o *= ma * mb; return (100 * o) / (1 + o);
+};
 export type ThirdProfile = Record<"name" | "who" | "status" | "lane" | "core" | "quotes" | "pillars" | "attacks" | "reach" | "risks" | "draw_note", string>;
 const LANES = ["Right populist", "Libertarian", "Centrist", "Progressive left", "Anti establishment", "Working class"];
 const SMALL = ["DE", "RI", "CT", "NJ", "MD", "MA", "VT", "NH", "DC", "HI"];
@@ -148,7 +155,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   const tpOpts: [string, string][] = [["X|Custom", "Custom independent, build from lanes"], ...il.map((c) => [`I|${c.name}`, c.name] as [string, string]),
     ...[...dl, ...rl].filter((c) => !c.name.startsWith("Generic") && c.name !== t.dp && c.name !== t.rp).map((c) => [`${c.party}|${c.name}`, `${c.name} as an independent, from the ${c.party === "D" ? "Democratic" : "Republican"} side`] as [string, string])];
   const vpOpts: [string, string][] = [...il.map((c) => [`I|${c.name}`, c.name] as [string, string]), ...[...dl, ...rl].filter((c) => !c.name.startsWith("Generic")).map((c) => [`${c.party}|${c.name}`, c.name] as [string, string])];
-  const modelShare = (key: string) => third.model.find((r) => r.key === key)?.share ?? null;
+  const modelShare = (key: string) => { const r = third.model.find((x) => x.key === key); return r ? pairShare(r, t.dp, t.rp) : null; };
   const setTk = (j: number, p: Partial<TK>) => set({ tks: t.tks.map((x, i) => (i === j ? { ...x, ...p } : x)) });
   const addTk = (key?: string) => { if (t.tks.length >= 4) return; const used = new Set(t.tks.map((x) => x.key)); const k = key ?? tpOpts.map((o) => o[0]).find((o) => !used.has(o) && o !== "X|Custom") ?? "X|Custom"; if (used.has(k)) return; set({ tks: [...t.tks, { key: k, vp: "", share: null }] }); };
   const dropTk = (j: number) => set({ tks: t.tks.filter((_, i) => i !== j) });
@@ -157,7 +164,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   const laneVal = (l: string) => (hasLanes ? lanes[l] ?? 0 : l === "Anti establishment" || l === "Centrist" ? 50 : 0);
   const setLane = (l: string, v: number) => { const o: Record<string, number> = hasLanes ? { ...lanes } : { "Anti establishment": 50, Centrist: 50 }; o[l] = v; set({ tlanes: joinLanes(o) }); };
   const [showAll, setShowAll] = useState(false);
-  const tm = [...third.model].sort((a, b) => (b.share ?? 0) - (a.share ?? 0));
+  const tm = useMemo(() => third.model.filter((r) => r.key !== `D|${t.dp}` && r.key !== `R|${t.rp}`).map((r) => ({ ...r, here: pairShare(r, t.dp, t.rp) })).sort((a, b) => (b.here ?? -1) - (a.here ?? -1)), [third.model, t.dp, t.rp]);
 
   return (
     <div className="h28 g28">
@@ -190,7 +197,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
             <Toon name={tk.name} side="U" size={58} uid={`gt${j}`} />
             <div><span className="h28-party">Third party{tk.vp ? ` · with ${tk.vp}` : ""}</span><b>{tk.label}</b></div>
             <span><em>Popular vote</em><b>{fmtSh(tk.votes / all)}</b></span>
-            <span><em>Dashboard model</em><b>{fmtSh(tk.modeled)}{tk.user != null ? ` · set ${fmtSh(tk.user)}` : ""}</b></span>
+            <span><em>Dashboard model</em><b>{fmtSh(tk.joint)}{tk.user != null ? ` · set ${fmtSh(tk.user)}` : ""}</b></span>
             <span><em>Wins the presidency</em><b>{fmtPct(tk.pWin)}</b></span>
             <span><em>States led · EV</em><b>{counts[`T${j}`] ?? 0} · {evMap.T[j] ?? 0}</b></span>
             <button type="button" className="g28-x" onClick={() => dropTk(j)}>Remove</button>
@@ -220,7 +227,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
           <button type="button" aria-pressed={t.dp === "Generic Democrat" && t.rp === "Vance"} onClick={() => set({ dp: "Generic Democrat", rp: "Vance" })}>Generic D v Vance<em>headline</em></button>
         </div>
         <div className={`g28-tp${t.tks.length ? " on" : ""}`}>
-          {t.tks.map((tk, j) => { const c = res.tickets?.find((x) => x.key === tk.key); const ms = c ? c.modeled * 100 : modelShare(tk.key); return (
+          {t.tks.map((tk, j) => { const c = res.tickets?.find((x) => x.key === tk.key); const ms = c ? c.joint * 100 : modelShare(tk.key); return (
             <div key={j} className="g28-tk" style={{ "--tk": c?.color ?? TKC[j] } as CSSProperties}>
               <span className="g28-tkn">{j + 1}</span>
               <label className="g28-f i wide"><span>Third party ticket {j + 1}</span><select value={tk.key} onChange={(e) => setTk(j, { key: e.target.value, share: null })}>{tpOpts.filter(([v]) => v === tk.key || !t.tks.some((x) => x.key === v)).filter(([v]) => v !== "X|Custom" || tk.key === "X|Custom" || !custom).map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select></label>
@@ -358,13 +365,13 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
       {/* the dashboard's third party model: every candidate as an independent, and the third party profiles */}
       <section className="s28-card g28-3m" aria-labelledby="g28-3m">
         <h2 id="g28-3m">Every candidate as an independent</h2>
-        <p className="s28-say">The dashboard&apos;s third party model: each candidate&apos;s national share running as an independent against the generic nominees, from every respondent&apos;s three way choice, how much they lift over an unknown independent and where their vote comes from. Add any of them as a ticket above.</p>
+        <p className="s28-say">The dashboard&apos;s third party model: each candidate&apos;s share running as an independent in this matchup, {t.dp} against {t.rp}, and against the generic nominees, from every respondent&apos;s three way choice, how much they lift over an unknown independent and where their vote comes from. Two or more tickets on one ballot split the same voters, so each lands a little lower once added. Add any of them as a ticket above.</p>
         <div className="g28-scroll"><table>
-          <thead><tr><th>Candidate</th><th>Share</th><th>Lift</th><th>From the Democratic side</th><th>Their own party</th><th>Independents</th><th>Basis</th><th /></tr></thead>
+          <thead><tr><th>Candidate</th><th>{last(t.dp)} v {last(t.rp)}</th><th>Generic nominees</th><th>Lift</th><th>From the Democratic side</th><th>Their own party</th><th>Independents</th><th>Basis</th><th /></tr></thead>
           <tbody>{(showAll ? tm : tm.slice(0, 15)).map((r) => (
-            <tr key={r.key}><td><b>{r.name}</b><small>{r.party === "I" ? "Independent" : r.party === "D" ? "Democrat" : "Republican"}</small></td><td>{r.share != null ? `${r.share.toFixed(1)}%` : ""}</td><td>{r.lift != null ? r.lift.toFixed(2) : ""}</td>
+            <tr key={r.key}><td><b>{r.name}</b><small>{r.party === "I" ? "Independent" : r.party === "D" ? "Democrat" : "Republican"}</small></td><td><b>{r.here != null ? `${r.here.toFixed(1)}%` : "Off the ballot"}</b></td><td>{r.share != null ? `${r.share.toFixed(1)}%` : ""}</td><td>{r.lift != null ? r.lift.toFixed(2) : ""}</td>
               <td>{r.fromD != null ? fmtSh(r.fromD, 0) : ""}</td><td>{r.own != null ? `${r.own.toFixed(1)}%` : ""}</td><td>{r.ind != null ? `${r.ind.toFixed(1)}%` : ""}</td><td>{r.basis}</td>
-              <td>{t.tks.some((x) => x.key === r.key) ? <em>On the ballot</em> : r.name === t.dp || r.name === t.rp ? <em>Nominee</em> : t.tks.length < 4 ? <button type="button" className="g28-addrow" onClick={() => addTk(r.key)}>Add</button> : null}</td></tr>
+              <td>{t.tks.some((x) => x.key === r.key) ? <em>On the ballot</em> : r.here == null ? null : t.tks.length < 4 ? <button type="button" className="g28-addrow" onClick={() => addTk(r.key)}>Add</button> : null}</td></tr>
           ))}</tbody>
         </table></div>
         {tm.length > 15 ? <button type="button" className="p28-more" onClick={() => setShowAll((v) => !v)}>{showAll ? "Show the top 15" : `Show all ${tm.length}`}</button> : null}
