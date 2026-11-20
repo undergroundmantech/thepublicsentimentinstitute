@@ -226,6 +226,10 @@ const dT = (key) => { const r = TO.get(key); if (!r || !TCV.length) return 0; le
 const turnAdd = (key, base) => { const r = TO.get(key); if (!r) return 0; const E = Number(r.elig) || 0; if (!(E > 0)) return 0; const add = E * dT(key) / 100; return Math.max(-0.5 * base, Math.min(0.97 * E - base, add)); };
 const lpOf = (key) => { const r = TO.get(key); const v = r ? Number(r.lp) : 1; return isFinite(v) && v > 0 ? v : 1; };
 let baseVotes = 0, turnVotes = 0;
+// third party new voters come out of the county's nonvoters, and no more than about a third of them can be moved:
+// small draws pass through, large ones saturate
+const newScale = (key, votes, want) => { const r = TO.get(key); const E = r ? Number(r.elig) || 0 : 0; if (!(E > 0)) return 1; let N = 0; for (let k = 0; k < NT; k++) N += want(k);
+  const cap = 0.35 * Math.max(0, E - votes); return N > 0 && cap > 0 ? (cap * (1 - Math.exp(-N / cap))) / N : 0; };
 const xD = new Float64Array(n), xR = new Float64Array(n), xI = new Float64Array(n);
 const ISS = ['col', 'epstein', 'iran', 'immig', 'socialism', 'trans'];
 const ia = (c, f) => (c ? ISS.map((k) => f * (Number(c['a_' + k]) || 0)) : ISS.map(() => 0));
@@ -366,7 +370,8 @@ const m0 = (r - d) / Math.max(1, r + d) * 100;
 let x = consol(ptD, 'D', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m1 = (r - d) / Math.max(1, r + d) * 100;
 x = consol(ptR, 'R', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m2 = (r - d) / Math.max(1, r + d) * 100;
 const tk = NT ? new Array(NT) : null;
-for (let k2 = 0; k2 < NT; k2++) { const tv = tsh[k2][i] * tot[i]; const nv = Math.min(0.5, TK[k2].nf * lpOf(c.fips)) * tv; const fd = Math.min(d, (tv - nv) * TK[k2].qd[i]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
+const nvS = newScale(c.fips, tot[i], (k2) => Math.min(0.5, TK[k2].nf * lpOf(c.fips)) * tsh[k2][i] * tot[i]);
+for (let k2 = 0; k2 < NT; k2++) { const tv = tsh[k2][i] * tot[i]; const nv = Math.min(0.5, TK[k2].nf * lpOf(c.fips)) * tv * nvS; const fd = Math.min(d, (tv - nv) * TK[k2].qd[i]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
 const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
 cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, T: tk, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i) * EL[i], home: HO[i], primc: PRC[i], pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
 add(c.st, d, r, t, o, 1, tk);
@@ -377,7 +382,8 @@ const natPC = pcW > 0 ? (pcD + pcR) / pcW : 0;
 for (const e of ex) {
 const m = Number(e.base_margin) + eff(e.st, null) + natPC; const tt0 = Number(e.total), tad = turnAdd(e.st, tt0), tt = tt0 + tad; baseVotes += tt0; turnVotes += tad; const o = tt * Math.min(0.2, Number(e.other_share)) * (T ? GP.named_third_keep : 1); const tw = tt - o;
 let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0; const tk = NT ? new Array(NT) : null;
-for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const nv = Math.min(0.5, TK[k2].nf) * tv; const fd = Math.min(d, (tv - nv) * avgQd[k2]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
+const nvS = newScale(e.st, tt, (k2) => Math.min(0.5, TK[k2].nf) * TK[k2].target * tt);
+for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const nv = Math.min(0.5, TK[k2].nf) * tv * nvS; const fd = Math.min(d, (tv - nv) * avgQd[k2]), fr = Math.min(r, tv - nv - fd); d -= fd; r -= fr; tk[k2] = fd + fr + nv; t += fd + fr + nv; TK[k2].newV += nv; }
 add(e.st, d, r, t, o, 1, tk);
 }
 // site: the reader can set the Democrat's and the Republican's national share. Every county and statewide unit scales

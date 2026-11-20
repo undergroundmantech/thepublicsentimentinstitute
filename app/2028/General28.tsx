@@ -310,7 +310,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
                   </tr>
                 ))}
                 <tr className="o"><td><span className="g28-nat-who"><span><b>Other candidates</b><small>Everyone not on a ticket above</small></span></span></td><td>{fmtN(res.VO + (NT ? 0 : res.VI))}</td><td><b>{fmtSh((res.VO + (NT ? 0 : res.VI)) / all)}</b></td><td /><td /><td>0</td><td>0</td><td /><td />{null}</tr>
-                {why ? <tr className="o"><td colSpan={9}>Turnout {((100 * all) / (res.turnout?.elig ?? why.elig)).toFixed(1)}% of {fmtN(res.turnout?.elig ?? why.elig)} eligible citizens, against {res.turnout ? ((100 * res.turnout.base) / res.turnout.elig).toFixed(1) : why.base_turnout.toFixed(1)}% with generic nominees{NT ? `; the third party tickets bring ${fmtN(TKS.reduce((a, x) => a + (x.newV ?? 0), 0))} new voters` : ""}. Who shows up, and why, is below the map.</td></tr> : null}
+                {why ? <tr className="o"><td colSpan={9}>Turnout {((100 * all) / (res.turnout?.elig || why.elig)).toFixed(1)}% of {fmtN(res.turnout?.elig || why.elig)} eligible citizens, against {res.turnout?.elig ? ((100 * res.turnout.base) / res.turnout.elig).toFixed(1) : why.base_turnout.toFixed(1)}% with generic nominees{NT ? `; the third party tickets bring ${fmtN(TKS.reduce((a, x) => a + (x.newV ?? 0), 0))} new voters` : ""}. Who shows up, and why, is below the map.</td></tr> : null}
                 {res.pNone > 0.0005 ? <tr className="o"><td colSpan={8}>No one reaches 270 electoral votes, so the House picks the president</td><td>{fmtPct(res.pNone)}</td></tr> : null}
               </>;
             })()}</tbody>
@@ -396,7 +396,14 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
           </div>
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}${busy ? " g28-dim" : ""}`} onMouseLeave={() => setHov(null)}>
             <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
-            {!geo ? <div className="h28-load">Sketching the map</div> : (
+            {!geo ? <div className="h28-load">Sketching the map</div> : focus ? (
+              // one state close up: its own drawing, sized to the state, with only its counties and its outline
+              <svg viewBox={vb.v} role="img" aria-label={`${STATE_NAME[focus]} by county, ${res.D} against ${res.R}`} className="g28-focus" preserveAspectRatio="xMidYMid meet">
+                <path d={geo.states[focus]} fill="#fbfaf6" />
+                {cg && cty ? <CountyPaths28 rows={cRows} fill={cFill} onHover={cHover} onLeave={() => setHov(null)} href={slug} paint={cPaint} /> : <text x={(box?.[0] ?? 0) + (box?.[2] ?? 0) / 2} y={(box?.[1] ?? 0) + (box?.[3] ?? 0) / 2} textAnchor="middle" className="g28-cload" style={{ fontSize: 13 * vb.k }}>Drawing the counties</text>}
+                <path d={geo.states[focus]} fill="none" stroke="#141218" strokeWidth={2} vectorEffect="non-scaling-stroke" strokeLinejoin="round" pointerEvents="none" />
+              </svg>
+            ) : (
               <svg viewBox={vb.v} role="img" aria-label={`2028 map${focus ? `, ${STATE_NAME[focus]} by county` : ""}, ${res.D} against ${res.R}${T ? ` and ${T}` : ""}`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
                 <InkDefs id="g28" /><HatchDefs id="g28" /><TicketHatch id="g28" colors={TKS.length ? TKS.map((x) => x.color) : TKC} />
                 <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />

@@ -32,7 +32,7 @@ const SEG: Record<string, string> = { "every election": "Vote every election", "
 
 export default function Show28({ why, res, dp, rp, dvp, rvp }: { why: Why; res: Res; dp: string; rp: string; dvp: string; rvp: string }) {
   const all = res.VD + res.VR + res.VI + res.VO;
-  const E = res.turnout?.elig ?? why.elig;
+  const E = res.turnout?.elig || why.elig;
   const cD = why.coef[`D|${dp}`], cR = why.coef[`R|${rp}`], cDV = dvp ? why.coef[`D|${dvp}`] : null, cRV = rvp ? why.coef[`R|${rvp}`] : null;
   const nat = (c: typeof cD | null, w = 1) => (c ? c.nat * w : 0);
   const effD = nat(cD) + nat(cDV, 0.25), effR = nat(cR) + nat(cRV, 0.25);

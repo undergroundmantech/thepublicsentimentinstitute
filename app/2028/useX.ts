@@ -4,10 +4,13 @@
 import { useEffect, useState } from "react";
 import { X, fromEngine, type CountiesGeo, type PrimField, type Res } from "./lib";
 
+const DATA_V = "51b";
 const cache = new Map<string, Promise<unknown>>();
 const done = new Map<string, unknown>();
 export function getJSON<T>(url: string): Promise<T> {
-  if (!cache.has(url)) cache.set(url, fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(url)))).then((j) => { done.set(url, j); return j; }));
+  // the 2028 data files carry the data version, so a browser or CDN copy from before a model update is never mixed with new code
+  const src = url.startsWith(X + "/") ? `${url}${url.includes("?") ? "&" : "?"}v=${DATA_V}` : url;
+  if (!cache.has(url)) cache.set(url, fetch(src).then((r) => (r.ok ? r.json() : Promise.reject(new Error(url)))).then((j) => { done.set(url, j); return j; }));
   return cache.get(url) as Promise<T>;
 }
 export function useJSON<T>(url: string | null): T | null {
