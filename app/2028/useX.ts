@@ -30,7 +30,7 @@ export function getEngine(): Promise<Engine> {
     .then(([E, C, m]) => (m as unknown as { createEngine: (d: unknown, a: unknown) => Engine; expand: (e: unknown) => unknown }).createEngine((m as unknown as { expand: (e: unknown) => unknown }).expand(E), C.akct));
   return ENG;
 }
-export interface Ticket { dp: string; rp: string; dvp?: string; rvp?: string; tp?: string; tps?: number | null; tname?: string; thome?: string; tlanes?: string; tx?: string }
+export interface Ticket { dp: string; rp: string; dvp?: string; rvp?: string; tp?: string; tps?: number | null; tname?: string; thome?: string; tlanes?: string; tx?: string; dsh?: number | null; rsh?: number | null }
 const memo = new Map<string, Res>();
 /** runs the county engine for a ticket; null while it loads or runs. `base` is shown for the default ticket. */
 export function useTicket(t: Ticket, base: Res | null, isBase: boolean): { res: Res | null; busy: boolean } {

@@ -197,7 +197,7 @@ return { S, dxv, dnv, quality, share: S.tgt[N], front: S.names[F], frontShare: S
 };
 op28.ticket = () => {
 if (!op28.ticketReady()) return null;
-const p = P(); const key = JSON.stringify([p.dp, p.dvp, p.rp, p.rvp, p.tp, p.tps, p.tx, (dash.data('third_model') || {}).status, (dash.data('third_county') || {}).status, (dash.data('third_pairs') || {}).status, p.tname, p.thome, p.tlanes, p.pout, p.ptgt, dash.data('prim_model').status, dash.data('general_params').status, dash.data('spending').status, (dash.data('districts') || {}).status, (dash.data('cd_xwalk') || {}).status]);
+const p = P(); const key = JSON.stringify([p.dp, p.dvp, p.rp, p.rvp, p.tp, p.tps, p.tx, p.dsh, p.rsh, (dash.data('third_model') || {}).status, (dash.data('third_county') || {}).status, (dash.data('third_pairs') || {}).status, p.tname, p.thome, p.tlanes, p.pout, p.ptgt, dash.data('prim_model').status, dash.data('general_params').status, dash.data('spending').status, (dash.data('districts') || {}).status, (dash.data('cd_xwalk') || {}).status]);
 if (memo.key === key) return memo.out;
 const GP = op28.params();
 const cm = dash.data('county_model').data, cands = dash.data('cands').data, types = dash.data('types').data, st = dash.data('states').data, ex = dash.data('state_extra').data;
@@ -334,7 +334,8 @@ for (let k = 0; k < NT; k++) { const exV = ex.reduce((a, e) => a + Number(e.tota
 scl[k] *= got[k] > 0 ? Math.pow(TK[k].target * totAll / got[k], 1.2) : 1; }
 }
 const cty = new Array(n); const agg = {};
-const add = (s, d, r, t, o, w = 1, tk = null) => { const a = agg[s] || (agg[s] = { D: 0, R: 0, I: 0, O: 0, T: new Array(NT).fill(0) }); a.D += d * w; a.R += r * w; a.I += t * w; a.O += o * w; if (tk) for (let k = 0; k < NT; k++) a.T[k] += tk[k] * w; };
+const contrib = [];
+const add = (s, d, r, t, o, w = 1, tk = null, keep = true) => { if (keep) contrib.push([s, d, r, t, o, w, tk]); const a = agg[s] || (agg[s] = { D: 0, R: 0, I: 0, O: 0, T: new Array(NT).fill(0) }); a.D += d * w; a.R += r * w; a.I += t * w; a.O += o * w; if (tk) for (let k = 0; k < NT; k++) a.T[k] += tk[k] * w; };
 const consol = (pt, party, c, d, r) => {
 if (!pt) return [d, r, 0]; const ii = pt.S.cidx.get(c.fips); if (ii == null) return [d, r, 0];
 const K = pt.S.names.length; let ax = 0, an = 0;
@@ -366,6 +367,29 @@ let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0; const tk = NT
 for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const fd = Math.min(d, tv * avgQd[k2]), fr = Math.min(r, tv - fd); d -= fd; r -= fr; tk[k2] = fd + fr; t += fd + fr; }
 add(e.st, d, r, t, o, 1, tk);
 }
+// site: the reader can set the Democrat's and the Republican's national share. Every county and statewide unit scales
+// its Democratic and Republican vote by one national factor each, the third party tickets (or, with none, the other
+// candidates) take up or give back the difference in proportion to their own vote, and every state is rebuilt as the
+// sum of its counties, so the map, the simulations and the counties all carry the same numbers.
+{ const tD = p.dsh === '' || p.dsh == null || !isFinite(Number(p.dsh)) ? null : Math.max(0, Math.min(95, Number(p.dsh))) / 100;
+  const tR = p.rsh === '' || p.rsh == null || !isFinite(Number(p.rsh)) ? null : Math.max(0, Math.min(95, Number(p.rsh))) / 100;
+  if (tD != null || tR != null) {
+    const g = (d, r, t, o, tk, fD, fR) => {
+      const tot = d + r + t + o; let nd = d * fD, nr = r * fR; let room = tot - o - nd - nr; let nk = tk ? tk.slice() : null, nt = t, no = o;
+      if (room >= 0) { if (NT && t > 0) { const f = room / t; nk = tk.map((v) => v * f); nt = room; } else if (NT) { nk = tk.map(() => room / NT); nt = room; } else no = o + room; }
+      else { const f = (tot - o) / Math.max(1, nd + nr); nd *= f; nr *= f; nt = 0; if (nk) nk = nk.map(() => 0); }
+      return [nd, nr, nt, no, nk];
+    };
+    let fD = 1, fR = 1;
+    for (let it = 0; it < 8; it++) {
+      let VDn = 0, VRn = 0, VA = 0;
+      for (const c of contrib) { if (String(c[0]).includes('-')) continue; const x = g(c[1], c[2], c[3], c[4], c[6], fD, fR); VDn += x[0] * c[5]; VRn += x[1] * c[5]; VA += (c[1] + c[2] + c[3] + c[4]) * c[5]; }
+      if (tD != null && VDn > 0) fD *= tD * VA / VDn; if (tR != null && VRn > 0) fR *= tR * VA / VRn;
+    }
+    for (const k of Object.keys(agg)) delete agg[k];
+    for (const c of contrib) { const x = g(c[1], c[2], c[3], c[4], c[6], fD, fR); add(c[0], x[0], x[1], x[2], x[3], c[5], x[4], false); }
+    for (let i = 0; i < n; i++) { const c = cty[i]; if (!c) continue; const x = g(c.D, c.R, c.I, c.O, c.T, fD, fR); c.D = x[0]; c.R = x[1]; c.I = x[2]; c.O = x[3]; c.T = x[4]; c.m = ((c.R - c.D) / Math.max(1, c.R + c.D)) * 100; }
+  } }
 const DSd = dash.data('districts'), DXd = dash.data('cd_xwalk'); const dist = [];
 if (DSd && DSd.status === 'ok' && DXd && DXd.status === 'ok') {
 const ci = new Map(cm.map((c, i) => [c.fips, i])); const acc = {};
