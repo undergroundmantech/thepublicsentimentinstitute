@@ -18,6 +18,9 @@ import { seo } from "@/app/lib/seo";
 import HomeDeck from "@/app/components/home/HomeDeck";
 import ResultsBand from "@/app/components/home/ResultsBand";
 import HomeNext from "@/app/components/home/HomeNext";
+import { featured } from "@/app/2028/data28";
+import { STATE_NAME } from "@/app/2028/lib";
+import { STATES as ST27, stateModel } from "@/app/2027/data27";
 import { getAcc } from "@/app/accuracy/data";
 import AdUnit from "@/app/components/AdUnit";
 const APPROVAL_POLLS = aggPolls("trump-approval");
@@ -59,6 +62,14 @@ export default function Home() {
 
   const toG = (r: (typeof model.races)[number]): GRace => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id),
     pl: (r.polls ?? []).slice(0, 30).map((x) => [x.age, Math.round(x.margin * 10) / 10, x.n || 600] as [number, number, number]) });
+  // the globe now shows what is next: the likeliest 2028 matchup state by state, and the three 2027 governor races
+  const pair = featured(1)[0];
+  const last28 = (n: string) => n.split(" ").slice(-1)[0];
+  const g27 = ST27.map((s) => stateModel(s.code));
+  const nextRaces: Record<string, GRace[]> = {
+    p28: Object.entries(pair.st).filter(([k]) => !k.includes("-") && STATE_NAME[k]).map(([st, v]) => ({ id: `p28-${st}`, st, name: STATE_NAME[st], dem: pair.d, gop: pair.r, m: v[0], p: 1 - v[1], ind: false, href: `/2028/${st.toLowerCase()}`, label: STATE_NAME[st] })),
+    g27: g27.map((S) => { const t = S.pairs[0]; return { id: `g27-${S.code}`, st: S.code, name: `${S.name} governor`, dem: t?.d ?? "Democrat", gop: t?.r ?? "Republican", m: t?.margin ?? S.margin, p: t?.pR ?? S.pR, ind: false, href: `/2027/${S.slug}` }; }),
+  };
   const globeRaces: Record<"senate" | "governor", GRace[]> = {
     senate: model.races.filter((r) => r.office === "senate").map(toG),
     governor: model.races.filter((r) => r.office === "governor").map(toG),
@@ -66,6 +77,7 @@ export default function Home() {
   const latestOp = STATE_POLLS.filter((s) => s.status === "released").slice(-2).map((s) => s.name).join(" and ");
   const ap = stats.approval, gb = stats.generic;
   const gbD = r1(50 + gb.net / 2), gbR = r1(100 - gbD);
+  void globeRaces; // the 2026 globe data, kept for the forecast cards below
   const updated = new Date(meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
   const spark = (vals: number[], color: string) => {
@@ -86,8 +98,12 @@ export default function Home() {
 
   return (
     <div className="opp">
+      <HomeGlobe races={nextRaces} tabs={[{ key: "p28", label: "2028 President", eyebrow: `Closest states, ${last28(pair.d)} v ${last28(pair.r)}` }, { key: "g27", label: "2027 Governors", eyebrow: "The 2027 governor races" }]}
+        copy={{ aria: "The 2028 forecast and the 2027 governors on a globe", chip: { text: `The 2028 forecast · ${last28(pair.d)} v ${last28(pair.r)}, the likeliest matchup`, href: "/2028" },
+          lede: "The 2028 presidential race and the three 2027 governor races on one globe. Spin it, hover a state for the odds, click it for the full forecast, county by county.",
+          odds: [{ l: "White House 2028", v: pair.pD, href: "/2028" }, ...g27.map((S) => ({ l: S.name, v: 1 - S.pR, href: `/2027/${S.slug}` }))],
+          cta: [{ label: "The 2028 forecast", href: "/2028" }, { label: "2027 governors", href: "/2027" }, { label: "Play Campaign 2028", href: "/play" }] }} />
       <HomeNext />
-      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
       <ResultsBand />
       <HomeDeck />
       <HomeWhatIf />

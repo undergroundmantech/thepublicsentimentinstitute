@@ -237,7 +237,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
               {paths.length ? <GeoMap paths={paths} fills={fills} tips={tips} hrefs={hrefs} highlight={r.office === "house" ? r.id : undefined} label={`${officeTitle} ${unit} map`} /> : <div className="empty">No county build for this race.</div>}
               <div className="legend" style={{ paddingInline: 8 }}>
                 {r.office === "house"
-                  ? (["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as const).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)
+                  ? (["safeD", "likelyD", "leanD", "tiltD", "tiltR", "leanR", "likelyR", "safeR"] as const).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)
                   : <><span>D +40</span><span className="ramp" style={{ flex: 1, maxWidth: 280, margin: 0, background: RAMP_CSS }} /><span>R +40</span><span style={{ marginLeft: "auto" }}>Hover a county for the simulated vote</span></>}
               </div>
             </div>

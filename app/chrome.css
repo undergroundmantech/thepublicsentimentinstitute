@@ -100,3 +100,8 @@ header.opp-top.scrolled .top { border-bottom-color: var(--line); background: rgb
 .opp .mnav .macc-go { flex: 1; padding: 14px 0; color: var(--hi); font: 700 22px/1.2 var(--font-d); letter-spacing: -.02em; text-decoration: none; }
 .opp .mnav .macc-x { flex: none; display: grid; place-items: center; width: 52px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--hi); cursor: pointer; }
 .opp .macc-g.open .macc-x .cr { transform: rotate(180deg); }
+
+/* Eight tabs since 2027 joined the bar: tighten them before they reach the buttons, then hand over to the burger. */
+@media (max-width: 1700px) { .opp .top .right .btn.hire { display: none; } .opp .t5-l { padding-left: 9px; gap: 5px; font-size: 13.5px; } .opp button.t5-t { padding: 0 9px; font-size: 13.5px; } .opp .top .wrap { gap: 14px; } }
+@media (max-width: 1440px) { .opp .top .right .langp { display: none; } .opp .t5-chip { display: none; } }
+@media (max-width: 1320px) { .opp .nav.tabs5 { display: none; } .opp .top .right { margin-left: auto; } .opp .burger { display: inline-flex; padding: 8px 14px; height: 38px; align-items: center; } }

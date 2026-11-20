@@ -1,5 +1,6 @@
 // Shared pieces of the 2027 governor pages: the scoreboard, the range of outcomes and a primary field.
 import Link from "@/app/components/Link";
+import { RATE, rateOf } from "@/app/2028/rate28";
 import { last, mg, pc, type Cand, type StateModel } from "./data27";
 
 /** the distribution of simulated margins, 40 bins of 2 points from D +40 to R +40 */
@@ -86,9 +87,9 @@ export function Matchups({ S }: { S: StateModel }) {
         {S.pairs.map((p) => (
           <div key={p.id} className={`sk-race ${p.margin > 0 ? "r" : "d"}`}>
             <span className="st">{last(p.r)} v {last(p.d)}</span>
-            <span className="sk-tag">{pc(p.p)} likely</span>
+            <span className="sk-tag" style={{ color: RATE[rateOf(p.margin)].text }}>{RATE[rateOf(p.margin)].label}</span>
             <span className="m"><b>{mg(p.margin)}</b><span>{p.margin > 0 ? last(p.r) : last(p.d)} wins {pc(p.margin > 0 ? p.pR : 1 - p.pR)}</span></span>
-            <span className="vs">{p.r} (R) v {p.d} (D)</span>
+            <span className="vs">Republican {p.r} v Democrat {p.d} · {pc(p.p)} chance of this ballot</span>
           </div>
         ))}
       </div>

@@ -10,7 +10,7 @@ export default function SketchProvider({ children, tone = 'default', overlays = 
   useEffect(() => {
     document.documentElement.setAttribute('data-sk', '');
     if (tone === 'pro') document.documentElement.setAttribute('data-sk-tone', 'pro'); else document.documentElement.removeAttribute('data-sk-tone');
-    import('../js/sketchbook.js').then(m => m.default.init({ base: '/sketchbook', overlays }));
+    import('../js/sketchbook.js').then(m => m.default.init({ base: '/sketchbook', overlays, paper: overlays }));
   }, [tone, overlays]);
   useEffect(() => {
     // no static flash between pages: it read as a frozen screen. Only the scroll reveals run.

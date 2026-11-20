@@ -1,5 +1,5 @@
 "use client";
-// The home page stage: the 2026 map drawn on a globe that fills the screen, every state shaded by the forecast,
+// The home page stage: the map drawn on a globe (now the 2028 forecast and the 2027 governors; the tabs and copy come in as props) that fills the screen, every state shaded by the forecast,
 // with Pointy the On Point canvasser walking across it from one close race to the next. Drag to turn the globe,
 // hover a state for its odds, click it for the full race. Canvas for the globe, SVG for the mascot and its bubble.
 import { canvasDpr, frameGap, isLite } from "@/app/lib/lite";
@@ -15,8 +15,11 @@ import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
 import { useSiteMode, useThemeRef } from "@/app/lib/useSiteTheme";
 
-export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
-type Office = "senate" | "governor";
+export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][]; label?: string };
+type Office = string;
+/** what the globe shows: each tab is a set of races on the map, and the copy over it */
+export type GlobeTab = { key: string; label: string; eyebrow: string };
+export type GlobeCopy = { chip: { text: string; href: string }; lede: string; odds: { l: string; v: number; href: string }[]; cta: { label: string; href: string }[]; aria: string };
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
@@ -40,30 +43,32 @@ const pcN = (p: number) => (p > 0.99 || p < 0.01 ? null : Math.round(p * 100));
 const SK_HATCH: Record<string, CanvasPattern | null> = {};
 function skHatch(ctx: CanvasRenderingContext2D, rt: keyof typeof RATE) {
   if (rt in SK_HATCH) return SK_HATCH[rt] || RATE[rt];
-  const dense = rt.startsWith("safe") ? [3, 6] : rt.startsWith("likely") ? [2.2, 7] : [1.5, 9];
+  const dense = rt.startsWith("safe") ? [3, 6] : rt.startsWith("likely") ? [2.2, 7] : rt.startsWith("tilt") ? [1, 13] : [1.5, 9];
   // the kit's pencil colors: one blue, one red, purple for the toss ups and independents
-  const col = rt.endsWith("D") ? (rt === "leanD" ? "#3d64e6" : "#1f3fd1") : rt.endsWith("R") ? (rt === "leanR" ? "#e05454" : "#d42a2a") : rt === "toss" ? "#8a4cf0" : "#5b2bb0", g = Math.round(dense[1] * 2), c = document.createElement("canvas"); c.width = g; c.height = g;
+  const col = rt.endsWith("D") ? (rt === "leanD" || rt === "tiltD" ? "#3d64e6" : "#1f3fd1") : rt.endsWith("R") ? (rt === "leanR" || rt === "tiltR" ? "#e05454" : "#d42a2a") : rt === "toss" ? "#8a4cf0" : "#5b2bb0", g = Math.round(dense[1] * 2), c = document.createElement("canvas"); c.width = g; c.height = g;
   const x = c.getContext("2d"); if (!x) { SK_HATCH[rt] = null; return col; }
-  x.globalAlpha = rt.startsWith("safe") ? 0.38 : rt.startsWith("likely") ? 0.22 : 0.14; x.fillStyle = col; x.fillRect(0, 0, g, g); x.globalAlpha = 1;
+  x.globalAlpha = rt.startsWith("safe") ? 0.38 : rt.startsWith("likely") ? 0.22 : rt.startsWith("tilt") ? 0.07 : 0.14; x.fillStyle = col; x.fillRect(0, 0, g, g); x.globalAlpha = 1;
   x.strokeStyle = col; x.lineWidth = dense[0]; x.lineCap = "square";
   const flip = rt.endsWith("R");
   for (let k = -g; k <= 2 * g; k += dense[1]) { x.beginPath(); if (flip) { x.moveTo(k, 0); x.lineTo(k + g, g); } else { x.moveTo(k, g); x.lineTo(k + g, 0); } x.stroke(); }
   SK_HATCH[rt] = ctx.createPattern(c, "repeat"); return SK_HATCH[rt] || col;
 }
 
-export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
+export default function HomeGlobe({ races, tabs, copy }: { races: Record<Office, GRace[]>; tabs: GlobeTab[]; copy: GlobeCopy }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const man = useRef<HTMLDivElement>(null);
-  const [office, setOffice] = useState<Office>("senate");
+  const [office, setOffice] = useState<Office>(tabs[0].key);
   const [geo, setGeo] = useState<{ land: Feature<Geometry> | null; states: SF[] } | null>(null);
   const [tip, setTip] = useState<{ st: string; x: number; y: number; w: number; h: number } | null>(null);
   const [stop, setStop] = useState<GRace | null>(null);
   const [dir, setDir] = useState(1);
   const [walking, setWalking] = useState(true);
   // Pointy, his route and his footprints belong to the Theme mode only: Pro Dark and Pro Light show the globe alone
-  const themed = useSiteMode() === "themed";
+  const [skMode, setSkMode] = useState(false);
+  useEffect(() => { setSkMode(document.documentElement.hasAttribute("data-sk")); }, []);
+  const themed = useSiteMode() === "themed" || skMode;
   const themedRef = useRef(themed);
   useEffect(() => { themedRef.current = themed; }, [themed]);
   const rot = useRef<[number, number, number]>([96, -38, 0]);
@@ -175,7 +180,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         const b = path.bounds(f as GeoPermissibleObjects); if (b[1][0] - b[0][0] < 34) continue;
         const p = proj(ll); if (!p || (W >= 1100 && p[0] < W * 0.31)) continue;
         const r = bySt[f.st], rt = r ? rateOf(r) : null;
-        ctx.fillStyle = SK ? (r ? "#141218" : "rgba(20,18,24,.4)") : rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : L ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.3)";
+        ctx.fillStyle = SK ? (r ? "#141218" : "rgba(20,18,24,.4)") : rt === "leanD" || rt === "leanR" || rt === "tiltD" || rt === "tiltR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : L ? "rgba(17,0,25,.35)" : "rgba(255,255,255,.3)";
         if (SK && r) { ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(251,250,246,.92)"; ctx.lineWidth = 3.5; ctx.strokeText(f.st, p[0], p[1]); ctx.lineJoin = "miter"; }
         ctx.fillText(f.st, p[0], p[1]);
       }
@@ -258,9 +263,9 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
   const tr = tip ? bySt[tip.st] : null;
   const closest = [...list].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 6);
   return (
-    <section className="hg" aria-label="2026 forecast globe">
+    <section className="hg" aria-label={copy.aria}>
       <div className="hg-stage" ref={wrap}>
-        <canvas ref={cv} className="hg-cv" role="img" aria-label={`The 2026 ${office} forecast on a globe, each state shaded by its rating`} />
+        <canvas ref={cv} className="hg-cv" role="img" aria-label={`${copy.aria}: ${tabs.find((t) => t.key === office)?.label ?? ""}, each state shaded by its rating`} />
         {themed ? <div className="hg-man" ref={man} aria-hidden="true">
           <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
           {stop ? (
@@ -283,32 +288,32 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
 
       <div className="hg-over">
         <div className="hg-copy">
-          <a className="chip" href="/accuracy"><i />Final forecast, frozen {updated} · see how it did</a>
+          <a className="chip" href={copy.chip.href}><i />{copy.chip.text}</a>
           <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
-          <p>The 2026 midterms on one globe, as the final forecast saw them on Election Day. Spin it, hover a state, click it for the race, then see how every call held up against the count.</p>
+          <p>{copy.lede}</p>
           <div className="hg-odds">
-            {([["Senate", odds.senate, "/forecast?office=senate"], ["House", odds.house, "/forecast?office=house"], ["Governors", odds.governor, "/forecast?office=governor"]] as const).map(([l, v, h]) => (
+            {copy.odds.map(({ l, v, href: h }) => (
               <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pcN(v >= 0.5 ? v : 1 - v) == null ? pc(v >= 0.5 ? v : 1 - v) : <CountUp to={pcN(v >= 0.5 ? v : 1 - v)!} />}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
             ))}
           </div>
-          <div className="hg-cta"><Link className="btn g" href="/accuracy">How the forecast did</Link><Link className="btn" href="/results/2026">Every result</Link><Link className="btn" href="/forecast">The final forecast</Link></div>
+          <div className="hg-cta">{copy.cta.map((c, i) => <Link key={c.href} className={`btn${i === 0 ? " g" : ""}`} href={c.href}>{c.label}</Link>)}</div>
         </div>
         <div className="hg-side">
           <div className="hg-tabs" role="tablist" aria-label="Office">
-            {(["senate", "governor"] as Office[]).map((o) => <button key={o} role="tab" aria-selected={office === o} className={office === o ? "on" : ""} onClick={() => setOffice(o)}>{o === "senate" ? "Senate" : "Governors"}</button>)}
+            {tabs.map((t) => <button key={t.key} role="tab" aria-selected={office === t.key} className={office === t.key ? "on" : ""} onClick={() => setOffice(t.key)}>{t.label}</button>)}
           </div>
           <div className="hg-list">
-            <div className="eye">Closest {office === "senate" ? "Senate" : "governor"} races</div>
+            <div className="eye">{tabs.find((t) => t.key === office)?.eyebrow}</div>
             {closest.map((r) => (
               <Link key={r.id} href={r.href} className="hg-row" onMouseEnter={() => { hoverRef.current = r.st; }} onMouseLeave={() => { hoverRef.current = null; }}>
-                <span className="st">{r.st}</span><span className="nm">{last(r.dem)} v {last(r.gop)}</span><b className={r.m < 0 ? (r.ind ? "i" : "d") : "r"}>{fm(r.m, r.ind)}</b>
+                <span className="st">{r.st}</span><span className="nm">{r.label ?? `${last(r.dem)} v ${last(r.gop)}`}</span><b className={r.m < 0 ? (r.ind ? "i" : "d") : "r"}>{fm(r.m, r.ind)}</b>
               </Link>
             ))}
           </div>
         </div>
       </div>
       <div className="hg-spot" aria-hidden="true" />
-      <div className="hg-legend">{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i data-rt={k} style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i data-rt="ind" style={{ background: RATE.ind }} />Independent</span><span className="hint">Drag to spin the globe</span></div>
+      <div className="hg-legend">{(["safeD", "likelyD", "leanD", "tiltD", "tiltR", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i data-rt={k} style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i data-rt="ind" style={{ background: RATE.ind }} />Independent</span><span className="hint">Drag to spin the globe</span></div>
     </section>
   );
 }

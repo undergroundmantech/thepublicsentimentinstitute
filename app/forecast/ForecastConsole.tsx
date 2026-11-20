@@ -181,20 +181,20 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
           ? <>{dWin ? "Democrats win the Senate" : "Republicans hold the Senate"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>
           : <>Democrats are favored in <b className="d">{govFav} of {rs.length}</b> governor races and lead most governorships in <b className="d">{pc(c.demControl)}</b> of simulations</>,
         cells, cols: 25, mark: layer === "senate" ? 50 : 25, markLabel: layer === "senate" ? "51 for control" : "26 for most",
-        stats: [[layer === "senate" ? "Average D seats" : "Average D governors", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(rs.filter((r) => rateOf(r) === "toss").length)]] as [string, string][],
+        stats: [[layer === "senate" ? "Average D seats" : "Average D governors", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Tilts, under 2", String(rs.filter((r) => /^(tilt|toss)/.test(rateOf(r))).length)]] as [string, string][],
       };
     }
     if (layer === "house") {
       const c = ch.house, dWin = c.demControl >= 0.5;
       return { verdict: <>{dWin ? "Democrats win the House" : "Republicans hold the House"} in <b className={dWin ? "d" : "r"}>{Math.round((dWin ? c.demControl : 1 - c.demControl) * 100)} of 100</b> simulations</>,
         cells: cellsOf(data.house), cols: 29, mark: 217, markLabel: "218 for control",
-        stats: [["Average D seats", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Toss ups", String(data.house.filter((r) => rateOf(r) === "toss").length)]] as [string, string][] };
+        stats: [["Average D seats", c.demSeats.toFixed(1)], ["80 percent range", `${c.p10} to ${c.p90}`], ["Tilts, under 2", String(data.house.filter((r) => /^(tilt|toss)/.test(rateOf(r))).length)]] as [string, string][] };
     }
     if (layer === "statewide") {
       const rs = races, fav = rs.filter((r) => r.m < 0).length;
       return { verdict: <>Democrats are favored in <b className="d">{fav} of {rs.length}</b> {office === "all" ? "statewide office races" : `${(offices.find(([k]) => k === office)?.[1].label ?? "").toLowerCase()} races`}</>,
         cells: cellsOf(rs), cols: Math.min(25, Math.max(10, Math.ceil(Math.sqrt(rs.length * 3)))), mark: undefined, markLabel: "",
-        stats: [["Races", String(rs.length)], ["Toss ups", String(rs.filter((r) => rateOf(r) === "toss").length)], ["Expected D wins", rs.reduce((a, r) => a + (1 - r.p), 0).toFixed(1)]] as [string, string][] };
+        stats: [["Races", String(rs.length)], ["Tilts, under 2", String(rs.filter((r) => /^(tilt|toss)/.test(rateOf(r))).length)], ["Expected D wins", rs.reduce((a, r) => a + (1 - r.p), 0).toFixed(1)]] as [string, string][] };
     }
     if (layer === "legis") {
       const cs = data.legis.filter((c) => c.chamber === chamber), fav = cs.filter((c) => c.demControl > c.gopControl).length;
@@ -337,7 +337,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
             {layer === "measures" ? (
               <><span><i style={{ background: passFill(0.05) }} />Most fail</span><span><i style={{ background: passFill(0.5) }} />Even</span><span><i style={{ background: passFill(0.95) }} />Most pass</span><span><i className="off" />No measures</span></>
             ) : layer === "legis" ? <span className="eye">District shapes are estimated from where each district&apos;s voters live</span> : (
-              <>{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}{layer === "senate" ? <span><i style={{ background: RATE.ind }} />Lean I</span> : null}<span><i className="off" />No race</span></>
+              <>{(["safeD", "likelyD", "leanD", "tiltD", "tiltR", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}{layer === "senate" ? <span><i style={{ background: RATE.ind }} />Lean I</span> : null}<span><i className="off" />No race</span></>
             )}
           </div>
         </div>

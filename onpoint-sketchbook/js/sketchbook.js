@@ -144,7 +144,7 @@ ${H('sk-h-good', 35, '#168c50', 3, 7, 'rgba(22,140,80,.3)')}${H('sk-h-bad', -35,
   function init(o = {}) {
     if (started) return; started = true; BASE = o.base || BASE;
     reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    defs(); paper(); if (o.overlays !== false) overlays();
+    defs(); if (o.paper !== false) paper(); if (o.overlays !== false) overlays();
     if (!reduce) tick();
     reveal();
     document.querySelectorAll('[data-sk-coin]').forEach(el => coin(el));

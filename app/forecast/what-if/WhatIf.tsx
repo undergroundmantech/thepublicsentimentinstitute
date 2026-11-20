@@ -295,7 +295,7 @@ export default function WhatIf() {
               </div>
             ) : null}
           </div>
-          <div className="wif-legend">{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i className="pin" />Your pick</span></div>
+          <div className="wif-legend">{(["safeD", "likelyD", "leanD", "tiltD", "tiltR", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i className="pin" />Your pick</span></div>
         </div>
 
         <aside className="wif-side">

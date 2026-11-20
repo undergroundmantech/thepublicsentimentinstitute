@@ -3,6 +3,10 @@ import Link from "@/app/components/Link";
 import { seo } from "@/app/lib/seo";
 import { STATES, last, mg, pc, stateModel } from "./data27";
 import { Hist } from "./Parts27";
+import { Slab3D } from "@/onpoint-sketchbook/react/SketchMap";
+import { stateData } from "@/app/2028/data28";
+import { RATE, rateOf } from "@/app/2028/rate28";
+import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "@/app/2028/h28.css";
 import "./g27.css";
 
@@ -26,9 +30,10 @@ export default function Gov27() {
         </div>
       </header>
       <div className="g27-cards">
-        {all.map((S) => { const top = S.pairs[0]; return (
+        {all.map((S) => { const top = S.pairs[0]; const g = stateData(S.code); const [x, y, w, h] = g.box as number[]; const pd = Math.max(w, h) * 0.06; const rt = RATE[rateOf(top?.margin ?? S.margin)]; return (
           <Link key={S.code} href={`/2027/${S.slug}`} className="s28-card g27-card">
             <span className="h28-party">{S.name}</span>
+            <div className="g27-slab"><Slab3D d={g.outline} viewBox={`${x - pd} ${y - pd} ${w + 2 * pd} ${h + 2 * pd}`} fill={rt.color} /><span className="s28-stamp" style={{ color: rt.text ?? rt.color }}>{rt.label}</span></div>
             <div className="g27-cn"><b className="r">R {pc(S.pR)}</b><b className="d">D {pc(1 - S.pR)}</b></div>
             <p className="g27-inc">{S.meta.incumbent}</p>
             {top ? <p className="g27-top">Likeliest: <b>{last(top.r)}</b> v <b>{last(top.d)}</b>, <span className={top.margin > 0 ? "r" : "d"}>{mg(top.margin)}</span></p> : null}

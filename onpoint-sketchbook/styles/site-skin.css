@@ -317,3 +317,20 @@ html[data-sk] ::view-transition-old(root), html[data-sk] ::view-transition-new(r
 [data-sk] :is(.cx-stage, .fcx-stage, .fcx-mapcard) svg { filter: drop-shadow(1.2px 1.4px 0 #3a1a78) drop-shadow(1.2px 1.4px 0 #24103f) drop-shadow(3px 4px 0 rgba(20,18,24,.22)); }
 [data-sk] :is(.cx-stage, .fcx-mapcard)::before { content: ""; position: absolute; z-index: 3; top: -14px; left: 26px; width: 120px; height: 32px; background: rgba(222,210,170,.7); transform: rotate(-7deg); pointer-events: none; }
 [data-sk] .fcx-tile { border: 2.5px solid var(--sk-ink) !important; border-radius: 16px !important; box-shadow: 4px 5px 0 var(--sk-ink) !important; }
+
+/* ---------- 16. NO PAPER STATIC ----------
+   The generated paper texture read as TV static on every page, so the ground is flat paper everywhere: no texture on
+   the body, on the 2028 pages or anywhere else that borrows --sk-ptex. */
+html[data-sk] { --sk-ptex: none !important; }
+html[data-sk] body, [data-sk] body.sk-paper { background: var(--sk-paper) !important; background-image: none !important; }
+[data-sk] body.sk-paper::before, [data-sk] .sk-paper::before { display: none !important; background: none !important; }
+[data-sk] .h28-page::before { background: none !important; }
+[data-sk] .sk-overlays { display: none !important; }
+
+/* the 2028 breadcrumb is plain text, not a sticky tinted band */
+[data-sk] .x28-top { position: static !important; background: none !important; border: 0 !important; box-shadow: none !important; }
+[data-sk] .x28-crumb { padding-top: 14px; }
+[data-sk] .hg-legend i[data-rt="tiltD"]{ background:repeating-linear-gradient(40deg,var(--sk-d-soft) 0 1px,#f4f5fa 1px 8px) !important; }
+[data-sk] .hg-legend i[data-rt="tiltR"]{ background:repeating-linear-gradient(-40deg,var(--sk-r-soft) 0 1px,#faf3f1 1px 8px) !important; }
+[data-sk] .hg-legend i[data-rt="tiltD"]{ background:repeating-linear-gradient(40deg,var(--sk-d-soft) 0 1px,#f3f4fb 1px 7px) !important; }
+[data-sk] .hg-legend i[data-rt="tiltR"]{ background:repeating-linear-gradient(-40deg,var(--sk-r-soft) 0 1px,#fbf3f1 1px 7px) !important; }

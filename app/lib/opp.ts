@@ -3,26 +3,26 @@
 // independent) lead, positive a Republican lead.
 
 export const RATE = {
-  safeD: "#1a3fb0", likelyD: "#3d7bff", leanD: "#a6c2ff",
+  safeD: "#1a3fb0", likelyD: "#3d7bff", leanD: "#a6c2ff", tiltD: "#d6e2ff",
   toss: "#e7b341",
-  leanR: "#ffb3c0", likelyR: "#ff3b5c", safeR: "#b0163a",
+  tiltR: "#ffdce4", leanR: "#ffb3c0", likelyR: "#ff3b5c", safeR: "#b0163a",
   ind: "#b78cff", none: "rgba(var(--line-rgb),.08)",
 } as const;
 export type Rating = keyof typeof RATE;
 
 export const RATING_LABEL: Record<Rating, string> = {
-  safeD: "Safe D", likelyD: "Likely D", leanD: "Lean D", toss: "Toss up",
-  leanR: "Lean R", likelyR: "Likely R", safeR: "Safe R", ind: "Lean I", none: "No race",
+  safeD: "Safe D", likelyD: "Likely D", leanD: "Lean D", tiltD: "Tilt D", toss: "Even",
+  tiltR: "Tilt R", leanR: "Lean R", likelyR: "Likely R", safeR: "Safe R", ind: "Lean I", none: "No race",
 };
 
-/** Rating bands: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe. */
+/** Rating bands by the margin: 0 to 2 tilt, 2 to 6 lean, 6 to 12 likely, 12 and over safe. A dead even margin is Even. */
 export function rating(m: number, ind = false): Rating {
   // an independent in the anti Republican lane is purple only while they lead; a Republican lead is rated like any other
   const a = Math.abs(m);
   if (ind && a >= 2 && m < 0) return "ind";
-  if (a < 2) return "toss";
+  if (a < 0.05) return "toss";
   const s = m < 0 ? "D" : "R";
-  return ((a < 6 ? "lean" : a < 12 ? "likely" : "safe") + s) as Rating;
+  return ((a < 2 ? "tilt" : a < 6 ? "lean" : a < 12 ? "likely" : "safe") + s) as Rating;
 }
 
 /** Pill class for a rating: d, r, t or i. */
@@ -33,7 +33,7 @@ export function ratingPill(r: Rating): "d" | "r" | "t" | "i" {
 }
 
 /** Map label text is dark on the pale fills. */
-export function darkLabel(r: Rating) { return r === "leanD" || r === "leanR" || r === "toss"; }
+export function darkLabel(r: Rating) { return r === "leanD" || r === "leanR" || r === "tiltD" || r === "tiltR" || r === "toss"; }
 
 export const lastName = (n: string) => n.trim().split(/\s+/).pop() || n;
 

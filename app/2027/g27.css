@@ -86,3 +86,11 @@
 .g27-others, .g27-foot { margin: 0; color: var(--ink2); font-size: 14px; line-height: 1.55; }
 .g27-others a, .g27-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .g27-foot { font-size: 12.5px; color: var(--mute); max-width: 90ch; }
+
+/* The state page now opens in the 2028 format; these are the few pieces only a governor race has. */
+.g27 .s28 { margin-top: 6px; }
+.g27-two.one { grid-template-columns: minmax(0, 1fr); }
+.s28-ends { display: flex; justify-content: space-between; margin: 8px 0 0; font: 700 10.5px var(--fm); letter-spacing: .08em; color: var(--mute); }
+.g27-slab { position: relative; display: grid; place-items: center; padding: 4px 8% 10px; }
+.g27-slab .sk-slab, .g27-slab .sk-slab-rig { max-height: 190px; width: auto; margin: 0 auto; }
+.g27-slab .s28-stamp { position: absolute; right: 2px; bottom: 6px; font-size: 15px; }

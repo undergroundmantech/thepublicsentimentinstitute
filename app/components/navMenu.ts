@@ -42,6 +42,19 @@ export const MENU: NavGroup[] = [
         { href: "/2028-presidential-candidates", label: "The candidates" },
       ] },
     ] },
+  { key: "g27", label: "2027 Governors", href: "/2027",
+    feature: { href: "/2027", eyebrow: "The 2027 governor model", title: "Kentucky, Mississippi and Louisiana", note: "The first races of the 2028 cycle: every primary, every matchup and every county, on 20,000 runs a state.", cta: "Open 2027" },
+    cols: [
+      { h: "The three races", links: [
+        { href: "/2027/kentucky", label: "Kentucky", note: "Open seat after Andy Beshear" },
+        { href: "/2027/mississippi", label: "Mississippi", note: "Open seat after Tate Reeves" },
+        { href: "/2027/louisiana", label: "Louisiana", note: "Jeff Landry and the open primary" },
+      ] },
+      { h: "The model", links: [
+        { href: "/2027", label: "All three races", note: "Odds, matchups and the counties" },
+        { href: "/2028", label: "The 2028 forecast", note: "The White House, next" },
+      ] },
+    ] },
   { key: "results", label: "2026 Results", href: "/results/monitor",
     feature: { href: "/results/monitor", eyebrow: "Election night", title: "The Situation Monitor", note: "The map, the count and every On Point call on one screen, with the election-night replay.", cta: "Open the monitor" },
     cols: [

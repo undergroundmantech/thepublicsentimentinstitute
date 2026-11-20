@@ -14,7 +14,7 @@ export type BoardData = { senate: BRace[]; governor: BRace[]; house: BRace[]; ch
 type Office = "senate" | "house" | "governor";
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string; box?: number[] } | string> };
 
-const ORDER: Rating[] = ["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"];
+const ORDER: Rating[] = ["safeD", "likelyD", "leanD", "tiltD", "tiltR", "leanR", "likelyR", "safeR"];
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"}+${Math.abs(m).toFixed(1)}`);
 
@@ -159,7 +159,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
   const closest = useMemo(() => [...races].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).slice(0, 4), [races]);
   const favD = races.filter((r) => r.m < 0).length, favR = races.length - favD;
   const dSeats = Math.round(ch.median), rSeats = ch.seatsTotal - dSeats;
-  const toss = counts.toss ?? 0;
+  const toss = (counts.tiltD ?? 0) + (counts.tiltR ?? 0) + (counts.toss ?? 0);
 
   const shapes = useMemo(() => {
     if (!geo) return [] as { key: string; d: string; x: number }[];
@@ -195,7 +195,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
           </div>
           <div className="fb-eye" style={{ marginTop: 16 }}>The closest {office === "house" ? "seats" : "races"}</div>
           {closest.map((r, i) => {
-            const rt = rate(r); const cls = rt === "toss" ? "t" : r.m < 0 ? "d" : "r";
+            const rt = rate(r); const cls = rt === "toss" || rt === "tiltD" || rt === "tiltR" ? "t" : r.m < 0 ? "d" : "r";
             const shape = geo ? (office === "house" ? (() => { const v = geo.districts[r.id]; return typeof v === "string" ? v : v?.d; })() : geo.states[r.st]) : null;
             const leadShare = 50 + Math.abs(r.m) / 2;
             return (
@@ -220,7 +220,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
               const fill = r ? RATE[rate(r)] : undefined;
               const delay = `${((s.x / W) * 0.6).toFixed(2)}s`;
               return (
-                <path key={s.key} d={s.d} className={r ? `live${rate(r) === "toss" ? " tt" : ""}` : "off"} style={r ? { fill, transitionDelay: delay } : { transitionDelay: delay }}
+                <path key={s.key} d={s.d} className={r ? `live${/^(toss|tilt)/.test(rate(r)) ? " tt" : ""}` : "off"} style={r ? { fill, transitionDelay: delay } : { transitionDelay: delay }}
                   tabIndex={r ? 0 : -1} role={r ? "link" : undefined} aria-label={r ? `${r.name}, ${RATING_LABEL[rate(r)]}, ${fm(r.m, r.ind)}` : undefined}
                   onMouseMove={r ? (e) => { const box = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ id: s.key, x: e.clientX - box.left, y: e.clientY - box.top, w: box.width, h: box.height }); } : undefined}
                   onClick={r ? () => router.push(raceHref(r.id)) : undefined}
@@ -252,7 +252,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
             <div className="fb-bar"><i style={{ width: `${(dSeats / ch.seatsTotal) * 100}%`, background: "linear-gradient(90deg,#1c3fb8,#5b8fff)" }} /><i style={{ width: `${(rSeats / ch.seatsTotal) * 100}%`, background: "linear-gradient(90deg,#ff5a6e,#9a1230)" }} /><u style={{ left: `${(ch.majority / ch.seatsTotal) * 100}%` }} /></div>
             <div className="mk">{office === "governor" ? "half" : `${ch.majority} for control`}</div>
             <div className="fb-chips">
-              <span>{toss} toss {toss === 1 ? "up" : "ups"}</span>
+              <span>{toss} {toss === 1 ? "tilt" : "tilts"}, under 2</span>
               <span>{probFraction(Math.max(ch.demControl, 1 - ch.demControl))} chance</span>
               <span>Range {ch.p10} to {ch.p90} D</span>
             </div>

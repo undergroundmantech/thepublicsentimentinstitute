@@ -22,7 +22,7 @@ const TABS: Tab[] = [
     icon: I(<><rect x="4" y="4" width="16" height="16" rx="3" /><path d="m8.5 12.2 2.4 2.4 4.8-5.2" /></>) },
   { key: "opp", label: "On Point", href: "/on-point-polling", on: (p) => p.startsWith("/on-point-polling") || p.startsWith("/accuracy") || p.startsWith("/most-accurate-pollster"),
     icon: I(<><path d="M4 19V9" /><path d="M9 19V5" /><path d="M14 19v-7" /><path d="M19 19v-4" /><path d="M3 19h18" /></>) },
-  { key: "forecast", label: "Forecasts", href: "/forecast", on: (p) => p.startsWith("/forecast") || p.startsWith("/what-if") || p.startsWith("/swingometer"),
+  { key: "forecast", label: "Forecasts", href: "/forecast", on: (p) => p.startsWith("/forecast") || p.startsWith("/2027") || p.startsWith("/what-if") || p.startsWith("/swingometer"),
     icon: I(<><path d="M3 20h18" /><path d="M6 16V10" /><path d="M11 16V5" /><path d="M16 16v-8" /><path d="M21 16v-4" /></>) },
   { key: "polls", label: "Polls", href: "/polls", on: (p) => p.startsWith("/polls") || p.startsWith("/majority-tracker"),
     icon: I(<><path d="M4 18 9 12l4 3 7-8" /><circle cx="9" cy="12" r="1.2" /><circle cx="13" cy="15" r="1.2" /></>) },

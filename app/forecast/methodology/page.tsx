@@ -159,7 +159,7 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
     id: "ratings", eye: "Ratings", title: "Rating bands",
     body: (
       <>
-        <p>Every race gets a rating from its model margin. A race inside 2 points is a toss up. From 2 to 6 points it leans to the leader, from 6 to 12 it is likely, and at 12 points or more it is safe. Where the leading non Republican candidate is an independent, the race is shown in the independent lavender. The same bands color the maps, pale for close races and deep for safe ones.</p>
+        <p>Every race gets a rating from its model margin. A race inside 2 points tilts to the leader. From 2 to 6 points it leans to the leader, from 6 to 12 it is likely, and at 12 points or more it is safe. Where the leading non Republican candidate is an independent, the race is shown in the independent lavender. The same bands color the maps, pale for close races and deep for safe ones.</p>
       </>
     ),
   },
@@ -167,7 +167,7 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
 
 const BANDS: { k: keyof typeof RATE; range: string }[] = [
   { k: "safeD", range: "D 12+" }, { k: "likelyD", range: "D 6 to 12" }, { k: "leanD", range: "D 2 to 6" },
-  { k: "toss", range: "Under 2" },
+  { k: "tiltD", range: "D 0 to 2" }, { k: "tiltR", range: "R 0 to 2" },
   { k: "leanR", range: "R 2 to 6" }, { k: "likelyR", range: "R 6 to 12" }, { k: "safeR", range: "R 12+" },
 ];
 

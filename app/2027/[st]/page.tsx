@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "@/app/components/Link";
 import { seo } from "@/app/lib/seo";
 import { STATES, bySlug, last, mg, pc, stateModel } from "../data27";
-import { Board, Field, Matchups, Others, Range } from "../Parts27";
-import Map27 from "../Map27";
+import { Field, Matchups, Others } from "../Parts27";
+import StateView from "../State27";
+import { stateData } from "@/app/2028/data28";
+import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "@/app/2028/h28.css";
 import "../g27.css";
 
@@ -27,12 +29,18 @@ export default async function State27({ params }: { params: Promise<{ st: string
   const S = stateModel(s.code);
   const unit = s.code === "LA" ? "Parish" : "County";
   const L = S.lean;
+  const geo = stateData(s.code);
+  const idx = new Map(S.counties.map((c, i) => [c.fips, i]));
+  const counties = geo.counties.map((c) => { const i = idx.get(c.f); const g = i != null ? S.counties[i] : null; const m: Record<string, number> = {}; if (i != null) for (const p of S.pairs) m[p.id] = p.cty[i]; return { f: c.f, n: g?.name ?? c.n, d: c.d, votes: g?.votes ?? 0, m24: g?.m24 ?? c.m24 ?? null, m }; });
+  const pairs = S.pairs.map((p) => ({ id: p.id, r: p.r, d: p.d, p: p.p, pR: p.pR, margin: p.margin }));
+  const prim = S.code === "LA"
+    ? { R: S.jungle.filter((c) => c.party === "R").map((c) => ({ name: c.name, win: c.win, party: c.party })), D: S.jungle.filter((c) => c.party === "D").map((c) => ({ name: c.name, win: c.win, party: c.party })) }
+    : { R: S.R.map((c) => ({ name: c.name, win: c.win, party: c.party })), D: S.D.map((c) => ({ name: c.name, win: c.win, party: c.party })) };
   return (
     <main className="h28-page g27">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><Link href="/2027">2027 governors</Link><span className="sep">/</span><span aria-current="page">{s.name}</span></nav>
-      <Board S={S} />
-      <div className="g27-two">
-        <Range S={S} />
+      <StateView name={s.name} code={s.code} general={S.meta.general} incumbent={S.meta.incumbent} outline={geo.outline} box={geo.box as [number, number, number, number]} counties={counties} pairs={pairs} spread={(S.p90 - S.p10) / 2} prim={prim} unit={unit} />
+      <div className="g27-two one">
         <section className="s28-card g27-how">
           <h2>How the race is built</h2>
           <dl>
@@ -46,10 +54,6 @@ export default async function State27({ params }: { params: Promise<{ st: string
         </section>
       </div>
       <Matchups S={S} />
-      <section className="g27-map" aria-labelledby={`map-${S.code}`}>
-        <div className="g27-h"><h2 id={`map-${S.code}`}>{s.name} by {unit.toLowerCase()}</h2><span>Pick a matchup and every {unit.toLowerCase()} repaints</span></div>
-        <Map27 id={`g27${S.code}`} counties={S.counties} pairs={S.pairs} viewBox={S.viewBox} unit={unit} />
-      </section>
       {S.code === "LA" ? (
         <div className="g27-fields one">
           <Field jungle title="The October open primary" sub={`Every candidate on one ballot. Someone wins outright in ${pc(S.outright ?? 0)} of runs, a Republican in ${pc(S.outrightR ?? 0)}; otherwise the top two meet in the ${S.meta.runoff} runoff. The bar is the chance of winning the governorship.`} cands={S.jungle} />

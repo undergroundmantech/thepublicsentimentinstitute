@@ -76,7 +76,7 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
               <style>{WALKER_CSS}</style>
               <UsMap key={office} races={list} office={office} show={show} hide={hide} onPick={(st) => { const r = list[st]; if (r) open(r.id); }} go={(href) => router.push(href)} />
               <div className="legend">
-                {([["safeD", "Safe D"], ["likelyD", "Likely D"], ["leanD", "Lean D"], ["toss", "Toss up"], ["leanR", "Lean R"], ["likelyR", "Likely R"], ["safeR", "Safe R"], ["ind", "Independent"], ["none", "No race"]] as [Rating, string][]).map(([k, l]) => (
+                {([["safeD", "Safe D"], ["likelyD", "Likely D"], ["leanD", "Lean D"], ["tiltD", "Tilt D"], ["tiltR", "Tilt R"], ["leanR", "Lean R"], ["likelyR", "Likely R"], ["safeR", "Safe R"], ["ind", "Independent"], ["none", "No race"]] as [Rating, string][]).map(([k, l]) => (
                   <span key={k}><i style={{ background: RATE[k] }} />{l}</span>
                 ))}
               </div>
@@ -167,10 +167,10 @@ function UsMap({ races, office, show, hide, onPick, go }: { races: Record<string
 
 function Seats({ office, chamber, races, notUp }: { office: Office; chamber: Chamber; races: Record<string, MiniRace>; notUp: { senD: number; senR: number; govD: number; govR: number } }) {
   const tot = chamber.seatsTotal;
-  const cnt: Record<string, number> = { safeD: 0, likelyD: 0, leanD: 0, toss: 0, leanR: 0, likelyR: 0, safeR: 0, ind: 0 };
+  const cnt: Record<string, number> = { safeD: 0, likelyD: 0, leanD: 0, tiltD: 0, toss: 0, tiltR: 0, leanR: 0, likelyR: 0, safeR: 0, ind: 0 };
   Object.values(races).forEach((r) => { cnt[rating(r.m, r.ind)]++; });
   const nD = office === "senate" ? notUp.senD : notUp.govD, nR = office === "senate" ? notUp.senR : notUp.govR;
-  const segs: [Rating, number][] = [["safeD", nD + cnt.safeD], ["likelyD", cnt.likelyD], ["leanD", cnt.leanD], ["ind", cnt.ind], ["toss", cnt.toss], ["leanR", cnt.leanR], ["likelyR", cnt.likelyR], ["safeR", cnt.safeR + nR]];
+  const segs: [Rating, number][] = [["safeD", nD + cnt.safeD], ["likelyD", cnt.likelyD], ["leanD", cnt.leanD], ["ind", cnt.ind], ["tiltD", cnt.tiltD], ["toss", cnt.toss], ["tiltR", cnt.tiltR], ["leanR", cnt.leanR], ["likelyR", cnt.likelyR], ["safeR", cnt.safeR + nR]];
   const [on, setOn] = useState(false);
   useEffect(() => { setOn(false); const t = setTimeout(() => setOn(true), 50); return () => clearTimeout(t); }, [office]);
   // chamber.hist is keyed by GOP seats; convert to Dem seats and fill gaps so bars sit on a true axis
