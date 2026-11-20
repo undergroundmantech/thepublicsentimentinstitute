@@ -390,24 +390,39 @@ add(e.st, d, r, t, o, 1, tk);
 // its Democratic and Republican vote by one national factor each, the third party tickets (or, with none, the other
 // candidates) take up or give back the difference in proportion to their own vote, and every state is rebuilt as the
 // sum of its counties, so the map, the simulations and the counties all carry the same numbers.
-{ const tD = p.dsh === '' || p.dsh == null || !isFinite(Number(p.dsh)) ? null : Math.max(0, Math.min(95, Number(p.dsh))) / 100;
-  const tR = p.rsh === '' || p.rsh == null || !isFinite(Number(p.rsh)) ? null : Math.max(0, Math.min(95, Number(p.rsh))) / 100;
+{ let tD = p.dsh === '' || p.dsh == null || !isFinite(Number(p.dsh)) ? null : Math.max(0, Math.min(95, Number(p.dsh))) / 100;
+  let tR = p.rsh === '' || p.rsh == null || !isFinite(Number(p.rsh)) ? null : Math.max(0, Math.min(95, Number(p.rsh))) / 100;
   if (tD != null || tR != null) {
-    const g = (d, r, t, o, tk, fD, fR) => {
-      const tot = d + r + t + o; let nd = d * fD, nr = r * fR; let room = tot - o - nd - nr; let nk = tk ? tk.slice() : null, nt = t, no = o;
-      if (room >= 0) { if (NT && t > 0) { const f = room / t; nk = tk.map((v) => v * f); nt = room; } else if (NT) { nk = tk.map(() => room / NT); nt = room; } else no = o + room; }
-      else { const f = (tot - o) / Math.max(1, nd + nr); nd *= f; nr *= f; nt = 0; if (nk) nk = nk.map(() => 0); }
+    // Every county's two party split moves by the same amount in log odds until the set share is reached nationally.
+    // One share set: the two nominees trade votes between themselves, so every third party ticket keeps exactly its
+    // vote and the other nominee gives up or takes back the difference. Both set: the split follows both, the two
+    // nominees' pool grows or shrinks to their combined share, and the third party tickets fill the rest in proportion.
+    const lg = (x) => Math.log(x / (1 - x)), sg = (z) => 1 / (1 + Math.exp(-z));
+    const g = (d, r, t, o, tk, k, fP) => {
+      const P = d + r; if (!(P > 0)) return [d, r, t, o, tk ? tk.slice() : null];
+      const s = Math.min(1 - 1e-6, Math.max(1e-6, r / P)), sr = sg(lg(s) + k);
+      let nr = P * sr * fP, nd = P * (1 - sr) * fP, nt = t, no = o, nk = tk ? tk.slice() : null;
+      if (fP !== 1) {
+        const room = d + r + t + o - o - nd - nr;
+        if (room >= 0) { if (NT && t > 0) { const f = room / t; nk = tk.map((v) => v * f); nt = room; } else if (NT) { nk = tk.map(() => room / NT); nt = room; } else no = o + room; }
+        else { const f = (d + r + t) / Math.max(1, nd + nr); nd *= f; nr *= f; nt = 0; if (nk) nk = nk.map(() => 0); }
+      }
       return [nd, nr, nt, no, nk];
     };
-    let fD = 1, fR = 1;
-    for (let it = 0; it < 8; it++) {
-      let VDn = 0, VRn = 0, VA = 0;
-      for (const c of contrib) { if (String(c[0]).includes('-')) continue; const x = g(c[1], c[2], c[3], c[4], c[6], fD, fR); VDn += x[0] * c[5]; VRn += x[1] * c[5]; VA += (c[1] + c[2] + c[3] + c[4]) * c[5]; }
-      if (tD != null && VDn > 0) fD *= tD * VA / VDn; if (tR != null && VRn > 0) fR *= tR * VA / VRn;
-    }
-    for (const k of Object.keys(agg)) delete agg[k];
-    for (const c of contrib) { const x = g(c[1], c[2], c[3], c[4], c[6], fD, fR); add(c[0], x[0], x[1], x[2], x[3], c[5], x[4], false); }
-    for (let i = 0; i < n; i++) { const c = cty[i]; if (!c) continue; const x = g(c.D, c.R, c.I, c.O, c.T, fD, fR); c.D = x[0]; c.R = x[1]; c.I = x[2]; c.O = x[3]; c.T = x[4]; c.m = ((c.R - c.D) / Math.max(1, c.R + c.D)) * 100; }
+    const sums = (k, fP) => { let VDn = 0, VRn = 0, VA = 0; for (const c of contrib) { if (String(c[0]).includes('-')) continue; const x = g(c[1], c[2], c[3], c[4], c[6], k, fP); VDn += x[0] * c[5]; VRn += x[1] * c[5]; VA += (c[1] + c[2] + c[3] + c[4]) * c[5]; } return [VDn, VRn, VA]; };
+    // the quantity that rises with k, and its goal
+    let both = tD != null && tR != null;
+    // with both set, the third party tickets never lose votes to make room: if the two shares ask for more than the
+    // nominees can have beside the tickets and the other candidates, both come down together in their own ratio
+    if (both && NT) { let VA = 0, VT = 0, VO = 0; for (const c of contrib) { if (String(c[0]).includes('-')) continue; VA += (c[1] + c[2] + c[3] + c[4]) * c[5]; VT += c[3] * c[5]; VO += c[4] * c[5]; }
+      const avail = (VA - VT - VO) / Math.max(1, VA); if (tD + tR > avail) { const f = avail / (tD + tR); tD *= f; tR *= f; } }
+    const aim = (k) => { const [VDn, VRn, VA] = sums(k, 1); return both ? VRn / Math.max(1, VDn + VRn) - tR / Math.max(1e-6, tD + tR) : tR != null ? VRn / Math.max(1, VA) - tR : tD - VDn / Math.max(1, VA); };
+    let lo = -9, hi = 9; for (let it = 0; it < 48; it++) { const mid = (lo + hi) / 2; if (aim(mid) > 0) hi = mid; else lo = mid; }
+    const k = (lo + hi) / 2; let fP = 1;
+    if (both) { for (let it = 0; it < 6; it++) { const [VDn, VRn, VA] = sums(k, fP); if (VDn + VRn > 0) fP *= ((tD + tR) * VA) / (VDn + VRn); } }
+    for (const key of Object.keys(agg)) delete agg[key];
+    for (const c of contrib) { const x = g(c[1], c[2], c[3], c[4], c[6], k, fP); add(c[0], x[0], x[1], x[2], x[3], c[5], x[4], false); }
+    for (let i = 0; i < n; i++) { const c = cty[i]; if (!c) continue; const x = g(c.D, c.R, c.I, c.O, c.T, k, fP); c.D = x[0]; c.R = x[1]; c.I = x[2]; c.O = x[3]; c.T = x[4]; c.m = ((c.R - c.D) / Math.max(1, c.R + c.D)) * 100; }
   } }
 const DSd = dash.data('districts'), DXd = dash.data('cd_xwalk'); const dist = [];
 if (DSd && DSd.status === 'ok' && DXd && DXd.status === 'ok') {

@@ -345,7 +345,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
               </label>
             </div>
           ))}
-          <p className="g28-drn">Set either nominee&apos;s national share and every county moves by the same factor. With third party tickets on the ballot they give up or take back the difference in proportion to their own vote; without one, the other candidates do. Counties, states, the electoral votes and the simulations all rerun on the new numbers.</p>
+          <p className="g28-drn">Set a nominee&apos;s national share and every county swings by the same amount between the two nominees, so the other nominee gives up or takes back the difference and every third party ticket keeps its vote. Set both and the tickets fill whatever the two leave; if the two ask for more than is left beside the tickets, both come down together. Counties, states, the electoral votes and the simulations all rerun on the new numbers.</p>
         </div>
         <div className="g28-chips"><span className="eye">Likeliest matchups</span>
           {chips.map((g) => <button type="button" key={g.d + g.r} aria-pressed={t.dp === g.d && t.rp === g.r} onClick={() => set({ dp: g.d, rp: g.r })}>{last(g.d)} v {last(g.r)}<em>{fmtPct(g.odds ?? 0)} likely</em></button>)}

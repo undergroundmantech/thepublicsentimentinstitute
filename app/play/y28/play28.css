@@ -393,3 +393,26 @@
 .opp.pg .y28-share { display: grid; gap: 10px; border: 3px solid #000; box-shadow: var(--px-bevel); background: var(--px-panel2); }
 .opp.pg .y28-share-text { margin: 0; padding: 10px 12px; background: #120c26; color: var(--px-hi); font: 600 14px/1.5 var(--px-fb); white-space: pre-wrap; box-shadow: 0 0 0 2px #000; }
 .opp.pg .y28-share-btns { flex-wrap: wrap; gap: 8px; }
+
+/* Nov 20 2026 layout pass. The game frame sits in one centered column, narrow enough that the wide screen side rail
+   ads land in the empty margins beside it instead of over it. */
+.opp.pg:has(.y28-app) { max-width: 1240px; width: 100%; margin-inline: auto; }
+.opp.pg .y28-shell { width: 100%; }
+.opp.pg .px-about { justify-self: center; width: 100%; }
+.opp.pg .y28-ad-below { justify-self: center; width: 100%; }
+/* the site's main column is its own layer under the masthead; while the game is full screen or a question is up,
+   lift it over the masthead so nothing of the site covers the game */
+.opp-main:has(.y28-full), .opp-main:has(.px-modal), .opp-main:has(.px-app.imm) { z-index: 3000; }
+/* the game is a dark world inside the paper site: the site's ink tokens turn to the game's light text, so plain
+   paragraphs, headings and table rules read on the dark panels */
+.opp.pg .px-app, .opp.pg .px-modal {
+  --ink: var(--px-text); --ink2: var(--px-text); --mute: var(--px-mute); --mute2: var(--px-mute); --hi: var(--px-hi);
+  --line: rgba(255, 255, 255, .18); --line2: rgba(255, 255, 255, .35); --line-rgb: 255, 255, 255;
+  --sk-ink: var(--px-hi); --sk-ink-2: var(--px-mute); --sk-paper: var(--px-ink); --sk-paper-3: var(--px-panel);
+}
+/* low specificity on purpose: beats the site's bare p rule, loses to every game rule that sets its own color */
+.px-app p, .px-app li, .px-modal p, .px-modal li { color: inherit; }
+.opp.pg .px-modal { color: var(--px-text); }
+.opp.pg .px-app table td { border-bottom-color: rgba(255, 255, 255, .14) !important; }
+.opp.pg .px-app table th { color: var(--px-hi) !important; border-bottom-color: var(--px-line) !important; }
+.opp.pg .y28-evbar .lab, .opp.pg .y28-night-ev .lab { color: var(--px-hi) !important; }

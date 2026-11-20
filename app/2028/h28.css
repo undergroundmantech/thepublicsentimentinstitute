@@ -665,7 +665,7 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 .g28-nat-who small { display: block; font: 600 10px var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
 .g28-nat-bar { display: inline-block; width: 90px; height: 8px; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; vertical-align: middle; margin-right: 8px; background: #fff; }
 .g28-nat-bar i { display: block; height: 100%; }
-.g28-nat b.won { background: #141218; color: #fbfaf6; padding: 1px 8px; border-radius: 999px; }
+.g28-nat b.won { background: #141218; color: #fbfaf6 !important; padding: 1px 8px; border-radius: 999px; }
 /* the Democrat's and the Republican's own national share */
 .g28-dr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 12px 0 4px; }
 .g28-dr .g28-drk.d .g28-slide input[type="range"] { accent-color: #1f3fd1; } .g28-dr .g28-drk.r .g28-slide input[type="range"] { accent-color: #d42a2a; }

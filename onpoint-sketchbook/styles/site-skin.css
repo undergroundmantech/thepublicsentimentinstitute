@@ -157,7 +157,7 @@
 /* tooltips and popovers */
 [data-sk] :is(.tip, .tooltip, [role="tooltip"], .popover){ background:var(--sk-paper-3) !important; color:var(--sk-ink) !important; border:3px solid var(--sk-ink) !important; box-shadow:5px 6px 0 var(--sk-ink) !important; border-radius:12px; }
 /* the intro dialog */
-[data-sk] :is([role="dialog"], dialog){ background:var(--sk-paper-3) !important; border:4px solid var(--sk-ink) !important; box-shadow:12px 14px 0 var(--sk-ink) !important; }
+[data-sk] :is([role="dialog"], dialog):not(.px-modal){ background:var(--sk-paper-3) !important; border:4px solid var(--sk-ink) !important; box-shadow:12px 14px 0 var(--sk-ink) !important; }
 /* ad slots read as taped-in clippings */
 [data-sk] .opp-ad{ border:2px dashed rgba(20,18,24,.45); border-radius:14px; padding:10px; background:var(--sk-paper-2); }
 [data-sk] .opp-ad > div:first-child{ color:var(--sk-ink-3) !important; }

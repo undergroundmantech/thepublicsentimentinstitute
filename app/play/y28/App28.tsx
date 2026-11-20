@@ -149,7 +149,7 @@ export default function App28({ idx }: { idx: PIndex }) {
 
   const shell = (body: React.ReactNode, foot?: React.ReactNode) => (
     <>
-      <div className="y28-stage">
+      <div className="y28-shell">
         <div ref={root} className={cls("px-app y28-app", full && "y28-full")}>
           <div className="y28-screen">{body}</div>
           <div className="y28-foot">{foot ?? <span className="px-k">Campaign 2028 · On Point Politics</span>}<button type="button" className={cls("px-btn sm y28-fs", full && "on")} onClick={() => goFull(!full)}>{full ? "Exit full screen" : "Play full screen"}</button></div>
@@ -226,7 +226,7 @@ export default function App28({ idx }: { idx: PIndex }) {
         </section>
         <section className="px-step">
           <div className="px-sh"><span className="px-n">2</span><h2>Pick a party</h2></div>
-          <div className="px-chips y28-party">{(["D", "R"] as E.Party[]).map((p) => <button key={p} type="button" className={cls(party === p && "on", p.toLowerCase())} onClick={() => { setParty(p); setMe(null); setOp(null); sfx("click"); }}>{partyName(p)}s</button>)}</div>
+          <div className="px-chips y28-party">{(["D", "R"] as E.Party[]).map((p) => <button key={p} type="button" className={cls(party === p && "on", p.toLowerCase())} onClick={() => { setParty(p); setMe(null); setOp(null); sfx("click"); }}>{p === "D" ? "Democrats" : "Republicans"}</button>)}</div>
         </section>
         <section className="px-step">
           <div className="px-sh"><span className="px-n">3</span><h2>Pick your candidate</h2><span className="px-k">Sorted by the On Point nomination odds</span></div>

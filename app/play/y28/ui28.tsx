@@ -14,7 +14,7 @@ export type Game = { v: 28; mode: Mode; phase: Phase; party: E.Party; me: string
 const KEY = "opp_play28_v3";
 export function load28(): Game | null { try { const j = localStorage.getItem(KEY); return j ? (JSON.parse(j) as Game) : null; } catch { return null; } }
 export function save28(g: Game | null) { try { if (g) localStorage.setItem(KEY, JSON.stringify(g)); else localStorage.removeItem(KEY); } catch { /* storage blocked */ } }
-export const FEMALE = new Set(["Harris", "Ocasio-Cortez", "Whitmer", "Crockett", "Hinojosa", "Klobuchar", "Haley", "Huckabee Sanders", "Greene", "Noem", "Stefanik", "Candace Owens"]);
+export const FEMALE = new Set(["Harris", "Ocasio-Cortez", "Whitmer", "Crockett", "Hinojosa", "Klobuchar", "Haley", "Huckabee Sanders", "Greene", "Noem", "Stefanik", "Candace Owens", "Warren", "Slotkin"]);
 export const pct = (p: number) => `${Math.round(p * 100)}%`;
 export const ptsLead = (m: number, me: string, op: string) => (Math.abs(m) < 0.05 ? "Even" : m > 0 ? `${me} +${m.toFixed(1)}` : `${op} +${Math.abs(m).toFixed(1)}`);
 export const short = (s: string, n = 140) => (s.length > n ? s.slice(0, n - 1).replace(/[ ,;]+\S*$/, "") + "…" : s);

@@ -64,5 +64,7 @@ export function Roll({ v, fmt = (x: number) => Math.round(x).toLocaleString(), m
 }
 
 export const cls = (...a: (string | false | null | undefined)[]) => a.filter(Boolean).join(" ");
-export const sur = (n: string) => n.replace(/,?\s+(Jr\.?|Sr\.?|II|III|IV)$/i, "").split(" ").slice(-1)[0];
+// people who would otherwise share a last name in the same field keep a name that tells them apart
+const SUR: Record<string, string> = { "Kennedy Jr.": "RFK Jr.", "John Kennedy": "Kennedy", "Bernie Sanders": "Sanders", "Huckabee Sanders": "Huckabee Sanders", "Trump Jr.": "Trump Jr." };
+export const sur = (n: string) => SUR[n] ?? n.replace(/,?\s+(Jr\.?|Sr\.?|II|III|IV)$/i, "").split(" ").slice(-1)[0];
 export const fxs = (v: number) => `${v >= 0 ? "+" : "-"}${Math.abs(v).toFixed(2)}`;
