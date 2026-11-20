@@ -13,7 +13,8 @@ export default function SketchProvider({ children, tone = 'default', overlays = 
     import('../js/sketchbook.js').then(m => m.default.init({ base: '/sketchbook', overlays }));
   }, [tone, overlays]);
   useEffect(() => {
-    import('../js/sketchbook.js').then(m => { m.default.flash(180); m.default.reveal(); });
-  }, [path]);
+    // no static flash between pages: it read as a frozen screen. Only the scroll reveals run.
+    import('../js/sketchbook.js').then(m => { if (overlays) m.default.flash(180); m.default.reveal(); });
+  }, [path, overlays]);
   return <>{children}</>;
 }

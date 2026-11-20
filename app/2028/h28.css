@@ -499,3 +499,6 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 .h28-play .art { background: var(--card2); border: 2px solid var(--ink); }
 .h28-play em { color: var(--pu); }
 .h28-play .go { background: var(--ink); color: var(--card); }
+
+/* the site's .opp .band is a padded promo band; the range bar's band is a bare marker */
+.opp .s28-strip .band { padding: 0; display: block; overflow: visible; min-height: 0; box-shadow: none; }

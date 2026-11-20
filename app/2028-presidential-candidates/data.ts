@@ -29,7 +29,7 @@ export const CANDS: Cand[] = [
   c("D", "Ro Khanna", "U.S. Representative, California", "possible", "Says the midterms made a run more likely than not and that he will decide after the holidays. Allies launched a draft committee."),
   c("D", "Cory Booker", "U.S. Senator, New Jersey", "possible", "Reelected in November and says he is giving another run serious thought."),
   c("D", "Mark Kelly", "U.S. Senator, Arizona", "possible", "Has said a 2028 bid is under consideration."),
-  c("D", "Elissa Slotkin", "U.S. Senator, Michigan", "possible", "Says she is seriously considering a run and has not decided."),
+  c("D", "Elissa Slotkin", "U.S. Senator, Michigan", "possible", "Says she is seriously considering a run and has not decided. Endorsed Chris Van Hollen over Chuck Schumer for Senate Democratic leader on Nov 19."),
   c("D", "Ruben Gallego", "U.S. Senator, Arizona", "possible", "Says raising three young children is a big part of the decision."),
   c("D", "Rahm Emanuel", "Former Ambassador to Japan", "possible", "Says he is thinking about it and would decide after the midterms."),
   c("D", "Gretchen Whitmer", "Governor of Michigan", "possible", "Said in May she would not run, then softened it to never say never."),

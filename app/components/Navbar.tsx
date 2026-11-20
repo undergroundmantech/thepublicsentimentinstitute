@@ -84,9 +84,10 @@ export default function Navbar() {
 
   const under = (p: string) => pathname === p || pathname.startsWith(p + "/");
   const inGroup = (g: NavGroup) => {
-    if (g.key === "opp") return under("/on-point-polling") || under("/portal") || pathname === "/contact";
-    if (g.key === "accuracy") return under("/accuracy") || under("/most-accurate-pollster");
-    if (g.key === "forecast") return under("/forecast") || under("/what-if") || under("/swingometer");
+    if (g.key === "opp") return under("/on-point-polling") || under("/portal") || pathname === "/contact" || under("/accuracy") || under("/most-accurate-pollster");
+    if (g.key === "f28") return under("/2028") || under("/2028-presidential-candidates");
+    if (g.key === "play") return under("/play");
+    if (g.key === "forecast") return under("/forecast") || under("/what-if") || under("/swingometer") || under("/2027");
     if (g.key === "polls") return under("/polls");
     if (g.key === "results") return under("/results");
     if (g.more) return g.cols.some((c) => c.href && under(c.href.split("/").slice(0, 2).join("/"))) || under("/accountability");

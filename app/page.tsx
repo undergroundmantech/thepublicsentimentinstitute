@@ -17,6 +17,7 @@ import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
 import HomeDeck from "@/app/components/home/HomeDeck";
 import ResultsBand from "@/app/components/home/ResultsBand";
+import HomeNext from "@/app/components/home/HomeNext";
 import { getAcc } from "@/app/accuracy/data";
 import AdUnit from "@/app/components/AdUnit";
 const APPROVAL_POLLS = aggPolls("trump-approval");
@@ -85,6 +86,7 @@ export default function Home() {
 
   return (
     <div className="opp">
+      <HomeNext />
       <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
       <ResultsBand />
       <HomeDeck />

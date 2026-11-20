@@ -7,7 +7,7 @@ export type Pick = "S" | "V";
 export type Tier = "stated" | "reported" | "high" | "med" | "low";
 export type Senator = { name: string; last: string; st: string; pick: Pick; tier: Tier; note: string; ifSeated?: boolean };
 
-export const UPDATED = "2026-11-18";
+export const UPDATED = "2026-11-19";
 export const VOTE_DATE = "2026-12-01";
 export const CAND: Record<Pick, { name: string; full: string; st: string }> = {
   S: { name: "Schumer", full: "Chuck Schumer", st: "NY" },
@@ -74,7 +74,7 @@ export const SENATORS: Senator[] = [
   s("Troy Jackson", "ME", "V", "reported", "Said he won't support Schumer, The New Republic Nov 13."),
   s("Adam Hamilton", "KS", "V", "reported", "Listed as not backing Schumer, The New Republic Nov 13. A progressive is not an obvious fit."),
   s("Annie Andrews", "SC", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
-  s("Elissa Slotkin", "MI", "V", "med", "Called for a challenger to Schumer, USA Today Nov 16. A moderate, so not locked."),
+  s("Elissa Slotkin", "MI", "V", "reported", "Endorsed Van Hollen for leader over Schumer, per Politics & Poll Tracker on X, Nov 19. Had called for a challenger, USA Today Nov 16."),
   s("Peter Welch", "VT", "V", "low", "Committed to change, WPTZ Nov 11. Sanders's state partner."),
   s("Chris Pappas", "NH", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
   s("James Talarico", "TX", "V", "reported", "Listed as wanting new leadership, The New Republic Nov 13."),
@@ -87,6 +87,7 @@ export const SENATORS: Senator[] = [
 
 /** The latest in the race, newest first: date, what happened, the source and its link. */
 export const NEWS: [string, string, string, string][] = [
+  ["2026-11-19", "Elissa Slotkin endorses Chris Van Hollen for majority leader over Schumer, the first moderate to back the challenge publicly.", "Politics & Poll Tracker on X", "https://x.com/PollTracker2024"],
   ["2026-11-18", "Prediction market traders put Schumer at 91 percent to be the next majority leader and Van Hollen at 8.", "Kalshi News", "https://news.kalshi.com/p/senate-majority-leader-odds-schumer-91-van-hollen"],
   ["2026-11-17", "The AP calls Alaska for Mary Peltola, 50.1 to 45.8, without a ranked choice count. Democrats hold 56 seats, so the winner needs 29 votes on Dec 1.", "ICT, citing the AP", "https://ictnews.org/politics/election-2026/peltola-declared-winner-in-alaska-becomes-second-native-woman-elected-to-senate/"],
   ["2026-11-17", "Fourteen senators publicly back Schumer and four back Van Hollen: Sanders, Merkley and senators elect El-Sayed and Flanagan. Van Hollen says at least 15 have committed privately.", "Washington Times", "https://www.washingtontimes.com/news/2026/nov/17/senate-democrats-listening-mode-majority-leader-race/"],
@@ -97,8 +98,8 @@ export const NEWS: [string, string, string, string][] = [
 ];
 
 /** Senators most likely to move the count, in order. */
-export const SWING = ["Elizabeth Warren", "Chris Murphy", "Elissa Slotkin", "Scott Colom", "Raphael Warnock", "Martin Heinrich"];
-export const NEXT = ["Cory Booker", "Ed Markey"];
+export const SWING = ["Elizabeth Warren", "Chris Murphy", "Scott Colom", "Raphael Warnock", "Martin Heinrich", "Cory Booker"];
+export const NEXT = ["Ed Markey"];
 
 export function tally(list: Senator[] = SENATORS) {
   const seated = list.filter((x) => !x.ifSeated);

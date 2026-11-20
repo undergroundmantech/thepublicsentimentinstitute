@@ -9,6 +9,7 @@ import { modelName, nomination, pairFor } from "@/app/2028/data28";
 import { fmtMg, fmtPct, last } from "@/app/2028/lib";
 import { CANDS, STATUS, UPDATED, type Cand } from "../data";
 import { slugOf } from "../slug";
+import { ABOUT, ageOn, bornLabel } from "../about";
 import "../candidates.css";
 import AdUnit from "@/app/components/AdUnit";
 import PlayCta from "@/app/2028/PlayCta";
@@ -42,6 +43,8 @@ export default async function CandPage({ params }: { params: Promise<{ slug: str
   const pr = mn && opp ? (party === "D" ? pairFor(mn, opp) : pairFor(opp, mn)) : null;
   const win = pr ? (party === "D" ? pr.pD : 1 - pr.pD) : null;
   const ev = pr ? (party === "D" ? pr.evMap : 538 - pr.evMap) : null;
+  const ab = ABOUT[c.name];
+  const age = ab?.born ? ageOn(ab.born, UPDATED) : null;
   const peers = CANDS.filter((x) => x.party === c.party && x.name !== c.name && x.status !== "out").slice(0, 12);
   const qa: [string, string][] = [
     [`Is ${c.name} running for president in 2028?`, `${answer(c)} ${c.note}`],
@@ -54,6 +57,9 @@ export default async function CandPage({ params }: { params: Promise<{ slug: str
         crumbsLd([["Home", "/"], ["2028 candidates", "/2028-presidential-candidates"], [c.name, `/2028-presidential-candidates/${slug}`]]),
         pageLd({ name: `Is ${c.name} running for president in 2028?`, description: c.note, path: `/2028-presidential-candidates/${slug}`, modified: isoDay(UPDATED), about: c.name }),
       )} />
+      {ab ? <JsonLd data={{ "@context": "https://schema.org", "@type": "Person", name: c.name, jobTitle: c.role, description: ab.bio,
+        ...(ab.born && ab.born.length > 4 ? { birthDate: ab.born } : {}), ...(ab.place ? { birthPlace: ab.place } : {}),
+        ...(c.party !== "I" ? { affiliation: { "@type": "Organization", name: c.party === "D" ? "Democratic Party" : "Republican Party" } } : {}) }} /> : null}
       <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: qa.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }} />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/2028-presidential-candidates">2028 candidates</Link><span className="sep">/</span><span aria-current="page">{c.name}</span></nav>
       <header className="pc28-one">
@@ -71,6 +77,22 @@ export default async function CandPage({ params }: { params: Promise<{ slug: str
         </div>
       ) : null}
       {mn && party ? <PlayCta as={mn} side={party} title={`Play as ${c.name}`} note={`Run ${last(c.name)}\u2019s 2028 campaign in Campaign 2028: primaries, debates, a running mate and the fight for 270.`} /> : null}
+      {ab ? (
+        <section className="pc28-about" aria-labelledby="pc28-about-h">
+          <h2 id="pc28-about-h">About {c.name}</h2>
+          <div className="pc28-about-b">
+            <p className="pc28-bio">{ab.bio}</p>
+            <dl className="pc28-facts">
+              {ab.born ? <div><dt>Born</dt><dd>{bornLabel(ab.born)}{ab.place ? `, ${ab.place}` : ""}{age != null ? <span className="age"> · {age} years old</span> : null}</dd></div> : null}
+              <div><dt>Party</dt><dd>{PARTY[c.party]}</dd></div>
+              {ab.home ? <div><dt>Home state</dt><dd>{ab.home}</dd></div> : null}
+              <div><dt>Now</dt><dd>{c.role}</dd></div>
+              {ab.edu ? <div><dt>Education</dt><dd>{ab.edu}</dd></div> : null}
+              <div className="wide"><dt>Career</dt><dd><ul>{ab.career.map((x) => <li key={x}>{x}</li>)}</ul></dd></div>
+            </dl>
+          </div>
+        </section>
+      ) : null}
       <AdUnit />
       <section className="pc28-faq" aria-label="Questions">
         {qa.map(([q, a]) => <details key={q} open><summary>{q}</summary><p>{a}</p></details>)}

@@ -96,3 +96,18 @@
 .cam-404 { right: -230px; top: 30px; }
 .cam-foot { right: 9%; bottom: calc(100% - 26px); }
 @media (max-width: 1240px) { .cam-404 { position: relative; right: auto; top: auto; align-items: flex-start; margin-bottom: 12px; } }
+
+/* November 2026 Pointy: two eyes that blink together and glance around, gloves that flex, a little sway at rest */
+.pty-v2 .pty-eye, .pty-v2 .pty-hand, .pty-v2 .pty-look, .pty-v2 .pty-mouth { transform-box: fill-box; transform-origin: center; }
+.pty-v2 .pty-lid { animation: pty-blink2 5.2s infinite; }
+.pty-v2 .pty-eye.r .pty-lid { animation-delay: .04s; }
+.pty-v2 .pty-look { animation: pty-glance 7s ease-in-out infinite; }
+.pty-v2.pose-idle .pty-all, .pty-v2.pose-wave .pty-all, .pty-v2.pose-point .pty-all { animation: pty-sway 3.2s ease-in-out infinite; transform-origin: 150px 400px; }
+.pty-v2 .pty-arm.f .pty-hand { animation: pty-flex 2.6s ease-in-out infinite; }
+.pty-v2.pose-wave .pty-mouth, .pty-v2.pose-cheer .pty-mouth { animation: pty-grin 1.4s ease-in-out infinite; }
+@keyframes pty-blink2 { 0%, 91%, 100% { height: 0; } 93%, 95% { height: 62px; } }
+@keyframes pty-glance { 0%, 30%, 100% { transform: translate(0, 0); } 36%, 56% { transform: translate(-6px, -2px); } 62%, 80% { transform: translate(5px, 2px); } }
+@keyframes pty-sway { 0%, 100% { transform: rotate(-1.4deg); } 50% { transform: rotate(1.4deg); } }
+@keyframes pty-flex { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08) rotate(-6deg); } }
+@keyframes pty-grin { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06, 1.1); } }
+@media (prefers-reduced-motion: reduce) { .pty-v2 * { animation: none !important; } }

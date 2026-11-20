@@ -256,3 +256,64 @@ html[data-sk][data-theme] .wd.wd .wd-tab.on{ color:#fff; background:var(--sk-ink
 /* Watchdog tags */
 [data-sk] .wd .card .tag{ color:var(--sk-ink-2); background:var(--sk-paper-2); border:1.5px solid var(--sk-ink); }
 [data-sk] .h28 .ab{ color:var(--sk-ink) !important; text-shadow:0 0 3px var(--sk-paper-3),0 0 2px var(--sk-paper-3); }
+
+/* ---------- 12. CALM: NO PAGE TRANSITIONS, NO SCHEME SWITCH ----------
+   Pages arrive as they are: no lift, fade or blur on the route, and the hero pieces do not slide in.
+   The sketchbook is one paper and ink scheme, so the appearance switch is hidden. */
+html[data-sk] .sx-route, html[data-sk] .sx-route .ph > *, html[data-sk] .opp-main > .opp-page { animation: none !important; }
+html[data-sk] ::view-transition-old(root), html[data-sk] ::view-transition-new(root) { animation: none !important; }
+[data-sk] :is(.modep, .modep-seg) { display: none !important; }
+[data-sk] body.sk-paper::before { opacity: .5; }
+
+/* ---------- 13. SITUATION MONITOR ON PAPER ---------- */
+[data-sk] .mon { background:
+  linear-gradient(var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px,
+  linear-gradient(90deg, var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px, var(--sk-paper) !important; }
+[data-sk] :is(.mon .glass, .mon-left > *, .mon-right, .mon-title, .mon-seg, .mon-hud, .mon-zoom button) {
+  background: var(--sk-paper-3) !important; border: 2.5px solid var(--sk-ink) !important; box-shadow: 4px 5px 0 var(--sk-ink) !important; backdrop-filter: none !important; }
+[data-sk] .mon-seg button[aria-pressed="true"] { background: var(--sk-ink) !important; color: var(--sk-paper) !important; }
+[data-sk] .mon-title h1 { color: var(--sk-ink); }
+[data-sk] .mon-title h1 em { background: none; -webkit-text-fill-color: currentColor; color: var(--sk-purple); }
+[data-sk] .mon-title .eye, [data-sk] :is(.mon-feed, .mon-grp) h3 { color: var(--sk-purple); }
+[data-sk] .mon :is(p, .n, .mute, small) { color: var(--sk-ink-2); }
+[data-sk] .mon-row.on { background: rgba(107,47,214,.12); }
+[data-sk] .mon-tip { background: var(--sk-paper-3) !important; border: 2.5px solid var(--sk-ink) !important; box-shadow: 4px 5px 0 var(--sk-ink) !important; color: var(--sk-ink); }
+
+/* ---------- 14. POINTY'S SPEECH BUBBLE AS AN INDEX CARD ---------- */
+[data-sk] .pty-say { background: var(--sk-paper-3); color: var(--sk-ink); border: 2.5px solid var(--sk-ink); box-shadow: 4px 5px 0 var(--sk-ink); border-radius: 14px; }
+[data-sk] .pty-say::after { background: var(--sk-paper-3); border-right: 2.5px solid var(--sk-ink); border-bottom: 2.5px solid var(--sk-ink); }
+[data-sk] .pty-say b { color: var(--sk-ink); } [data-sk] .pty-say .d { color: var(--sk-d); } [data-sk] .pty-say .r { color: var(--sk-r); } [data-sk] .pty-say a { color: var(--sk-purple); }
+[data-sk] .pty-cameo .pty-fig { filter: drop-shadow(3px 5px 0 rgba(20,18,24,.18)); }
+
+/* ---------- 15. THE 2026 FORECAST PAGES IN THE 2028 LOOK ----------
+   The race opener becomes the 2028 scoreboard: a graph paper board with a blue and a red wash at the two ends, a big
+   headline, candidate cards with a hatched party edge and a pencil hatched win bar. Maps sit on paper cutout stages. */
+[data-sk] .prh { position: relative; padding: clamp(16px, 2.2vw, 26px) clamp(16px, 2.6vw, 30px) 22px; margin: 10px 0 26px;
+  border: 3px solid var(--sk-ink); border-radius: 22px; box-shadow: 7px 8px 0 var(--sk-ink);
+  background: linear-gradient(var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px, linear-gradient(90deg, var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px,
+    linear-gradient(100deg, rgba(31,63,209,.10), transparent 30% 70%, rgba(212,42,42,.10)), var(--sk-paper-3); --prh-acc: var(--sk-purple); }
+[data-sk] .prh h1 { font: 900 clamp(30px, 3.6vw, 54px)/1.02 var(--sk-font-d); letter-spacing: -.045em; color: var(--sk-ink); }
+[data-sk] .prh h1 .ph-w { color: var(--sk-purple); text-decoration: underline; text-decoration-thickness: 5px; text-underline-offset: 6px; }
+[data-sk] .prh .prh-kick { color: var(--sk-ink-2); }
+[data-sk] .prh-c { background: var(--sk-paper-3); border: 2.5px solid var(--sk-ink); border-radius: 16px; box-shadow: 4px 5px 0 var(--sk-ink); position: relative; overflow: hidden; }
+[data-sk] .prh-c::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 12px; border-right: 2px solid var(--sk-ink);
+  background: repeating-linear-gradient(40deg, var(--c, var(--sk-d)) 0 2.6px, color-mix(in srgb, var(--c, var(--sk-d)) 25%, #fff) 2.6px 5px); }
+[data-sk] .prh-c.r::before { background: repeating-linear-gradient(-40deg, var(--c, var(--sk-r)) 0 2.6px, color-mix(in srgb, var(--c, var(--sk-r)) 25%, #fff) 2.6px 5px); }
+[data-sk] .prh-c { padding-left: 24px !important; }
+[data-sk] .prh-win dd { font-weight: 900 !important; letter-spacing: -.04em; }
+[data-sk] .prh-track { height: 22px !important; border: 2.5px solid var(--sk-ink) !important; border-radius: 11px !important; overflow: hidden; background: var(--sk-paper-2) !important; }
+[data-sk] .prh-seg { background: repeating-linear-gradient(40deg, var(--c) 0 2.6px, color-mix(in srgb, var(--c) 28%, #fff) 2.6px 5px) !important; border-right: 2px solid var(--sk-ink); }
+[data-sk] .prh-seg:last-of-type { border-right: 0; }
+[data-sk] .prh-mid { border-left: 2px dashed var(--sk-ink) !important; background: none !important; }
+[data-sk] .prh-facts .prh-fact { border: 2px dashed rgba(20,18,24,.35); border-radius: 10px; background: var(--sk-paper-3); }
+[data-sk] .prh-links a { border: 2px solid var(--sk-ink); border-radius: 99px; padding: 6px 12px; background: var(--sk-paper-3); box-shadow: 3px 4px 0 var(--sk-ink); color: var(--sk-ink); text-decoration: none; font-weight: 800; }
+
+/* section headings on the race and state pages read like the 2028 ones */
+[data-sk] .st-sec > h2, [data-sk] .st-sec .sec-h h2, [data-sk] .fx-sec > h2 { font: 900 clamp(24px, 3vw, 36px)/1 var(--sk-font-d) !important; letter-spacing: -.04em !important; text-transform: none !important; }
+
+/* every forecast map on a paper cutout stage */
+[data-sk] :is(.cx-stage, .fcx-stage, .fcx-mapcard) { position: relative; border: 3px solid var(--sk-ink) !important; border-radius: 20px !important; box-shadow: 7px 8px 0 var(--sk-ink) !important;
+  background: linear-gradient(var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px, linear-gradient(90deg, var(--sk-grid) 1.5px, transparent 1.5px) 0 0/40px 40px, var(--sk-paper-3) !important; }
+[data-sk] :is(.cx-stage, .fcx-stage, .fcx-mapcard) svg { filter: drop-shadow(1.2px 1.4px 0 #3a1a78) drop-shadow(1.2px 1.4px 0 #24103f) drop-shadow(3px 4px 0 rgba(20,18,24,.22)); }
+[data-sk] :is(.cx-stage, .fcx-mapcard)::before { content: ""; position: absolute; z-index: 3; top: -14px; left: 26px; width: 120px; height: 32px; background: rgba(222,210,170,.7); transform: rotate(-7deg); pointer-events: none; }
+[data-sk] .fcx-tile { border: 2.5px solid var(--sk-ink) !important; border-radius: 16px !important; box-shadow: 4px 5px 0 var(--sk-ink) !important; }

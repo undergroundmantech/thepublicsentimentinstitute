@@ -1,5 +1,6 @@
 // A way into Campaign 2028 from the forecast pages: the same data, played instead of read.
 import Toon from "@/app/majority-tracker/Toon";
+import "./playcta.css";
 
 export default function PlayCta({ title, note, href = "/play", as, side }: { title: string; note: string; href?: string; as?: string; side?: "D" | "R" }) {
   return (

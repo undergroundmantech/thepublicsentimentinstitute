@@ -23,7 +23,7 @@ export default function RouteFx() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const calm = () => root.hasAttribute("data-lite") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const calm = () => root.hasAttribute("data-lite") || root.hasAttribute("data-sk") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;

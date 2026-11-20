@@ -40,7 +40,10 @@ export function readStoredMode(): Mode | null {
 
 export function setMode(next: Mode, persist = true): void {
   if (typeof document === "undefined") return;
-  const root = document.documentElement, scheme = schemeOf(next);
+  const root = document.documentElement;
+  // The sketchbook look is one paper and ink scheme: a stored dark or Theme choice must not repaint it dark.
+  if (root.hasAttribute("data-sk")) next = "light";
+  const scheme = schemeOf(next);
   root.dataset.mode = next;
   if (root.dataset.theme !== scheme) root.dataset.theme = scheme;
   root.dataset.opaTheme = scheme;

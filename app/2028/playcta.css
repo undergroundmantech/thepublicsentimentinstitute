@@ -1,0 +1,13 @@
+/* The way into Campaign 2028, styled on its own so it reads the same on the forecast, state and candidate pages. */
+.h28-play { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; margin: 22px 0; padding: 16px 18px; border-radius: 18px; text-decoration: none; color: var(--ink);
+  border: 3px solid var(--ink); background: var(--sk-paper-3, var(--glass)); box-shadow: 6px 7px 0 var(--ink); transition: transform .14s, box-shadow .14s; }
+.h28-play:hover { transform: translate(-2px, -2px); box-shadow: 8px 9px 0 var(--ink); }
+.h28-play .art { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--sk-paper-2, rgba(var(--line-rgb), .06)); border: 2px solid var(--ink); overflow: hidden; }
+.h28-play .art i { font-size: 32px; font-style: normal; }
+.h28-play .art svg { border-radius: 50%; }
+.h28-play .t { display: grid; gap: 2px; min-width: 0; }
+.h28-play em { font: 700 10.5px var(--font-m); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--sk-purple, #9b5cff); }
+.h28-play b { font: 800 18px var(--font-d); color: var(--ink); }
+.h28-play .t span { font-size: 13px; color: var(--ink2); }
+.h28-play .go { padding: 10px 16px; border-radius: 99px; background: var(--ink); color: var(--sk-paper-3, #fff); font: 800 13px var(--font-b); white-space: nowrap; }
+@media (max-width: 560px) { .h28-play { grid-template-columns: auto minmax(0, 1fr); } .h28-play .go { grid-column: 1 / -1; text-align: center; } }

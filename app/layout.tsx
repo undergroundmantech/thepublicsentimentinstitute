@@ -96,7 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RouteFx />
         <Navbar />
         <main className="opp-main">
-          <div className="opp-page"><SketchProvider tone="default">{children}<SkHatchMaps /></SketchProvider></div>
+          <div className="opp-page"><SketchProvider tone="default" overlays={false}>{children}<SkHatchMaps /></SketchProvider></div>
         </main>
         <AdSlot />
         <Footer />

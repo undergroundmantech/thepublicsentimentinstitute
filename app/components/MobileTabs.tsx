@@ -14,12 +14,14 @@ type Tab = { key: string; label: string; href: string; on: (p: string) => boolea
 const I = (d: React.ReactNode) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 
 const TABS: Tab[] = [
+  { key: "f28", label: "2028", href: "/2028", on: (p) => p.startsWith("/2028"),
+    icon: I(<><path d="M3 6.5 12 3l9 3.5" /><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9" /><path d="M3 20.5h18" /></>) },
+  { key: "play", label: "Play", href: "/play", on: (p) => p.startsWith("/play"),
+    icon: I(<><rect x="3" y="7" width="18" height="11" rx="5" /><path d="M8 10.5v4M6 12.5h4" /><circle cx="15.5" cy="11.5" r=".9" /><circle cx="17.5" cy="13.8" r=".9" /></>) },
   { key: "results", label: "Results", href: "/results/monitor", on: (p) => p.startsWith("/results"),
     icon: I(<><rect x="4" y="4" width="16" height="16" rx="3" /><path d="m8.5 12.2 2.4 2.4 4.8-5.2" /></>) },
-  { key: "opp", label: "On Point", href: "/on-point-polling", on: (p) => p.startsWith("/on-point-polling"),
+  { key: "opp", label: "On Point", href: "/on-point-polling", on: (p) => p.startsWith("/on-point-polling") || p.startsWith("/accuracy") || p.startsWith("/most-accurate-pollster"),
     icon: I(<><path d="M4 19V9" /><path d="M9 19V5" /><path d="M14 19v-7" /><path d="M19 19v-4" /><path d="M3 19h18" /></>) },
-  { key: "accuracy", label: "Accuracy", href: "/accuracy", on: (p) => p.startsWith("/accuracy") || p.startsWith("/most-accurate-pollster"),
-    icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r=".8" /></>) },
   { key: "forecast", label: "Forecasts", href: "/forecast", on: (p) => p.startsWith("/forecast") || p.startsWith("/what-if") || p.startsWith("/swingometer"),
     icon: I(<><path d="M3 20h18" /><path d="M6 16V10" /><path d="M11 16V5" /><path d="M16 16v-8" /><path d="M21 16v-4" /></>) },
   { key: "polls", label: "Polls", href: "/polls", on: (p) => p.startsWith("/polls") || p.startsWith("/majority-tracker"),
