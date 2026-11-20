@@ -9,7 +9,8 @@ import { Chapter, PollRace, Stats } from "@/app/accuracy/fx/Story";
 import PolledMap from "./home/PolledMap";
 import Needle from "./home/Needle";
 import Clip from "./home/Clip";
-import { GROUPS, MEDIA, PARTNERS, SERVICES, CONTACT, mailto, svcHref } from "./home/services";
+import { ENGAGE, GROUPS, MEDIA, PARTNERS, SERVICES, CONTACT, mailto, quoteHref, svcHref } from "./home/services";
+import { AUDIENCES, audHref } from "./home/audiences";
 import "@/app/accuracy/acc.css";
 import "@/app/accuracy/fx/fx.css";
 import "./home/home.css";
@@ -21,11 +22,11 @@ const URL = `${SITE.url}/on-point-polling`;
 const SVC_ID = `${URL}#service`;
 
 export const metadata: Metadata = seo({
-  title: "On Point Polling: nonpartisan polling firm and election analytics",
-  description: "On Point Polling is a nonpartisan polling firm whose final 2026 national poll was D +13.1 against a D +14.0 count, second closest of 42. One time polls, monthly and quarterly tracking, message testing, county by county election simulations, likely voter modeling and a weighting dashboard. Statewide, district and national polls fielded in 48 to 72 hours.",
+  title: "On Point Polling: nonpartisan polling firm for campaigns, PACs and party committees",
+  description: "Hire On Point Polling, the nonpartisan polling firm whose final 2026 national poll was D +13.1 against a D +14.0 count, second closest of 42. Benchmark and tracking polls, message and ad testing, viability studies, ballot measure polling, voter modeling and election night desks for candidates, parties, PACs, super PACs, advocacy groups, media and companies. Fielded on the voter file in 48 to 72 hours.",
   path: "/on-point-polling",
   ownImage: true,
-  keywords: ["On Point Polling", "polling firm", "political polling firm", "nonpartisan pollster", "hire a pollster", "polling services", "campaign polling", "pollster accuracy 2026", "tracking poll", "message testing", "county level election forecast", "election simulation", "likely voter model", "MRP", "survey weighting", "voter file polling", "text to web survey", "statewide poll", "district poll", "national poll"],
+  keywords: ["On Point Polling", "polling firm", "political polling firm", "nonpartisan pollster", "hire a pollster", "polling services", "campaign polling", "campaign pollster", "pollster for candidates", "PAC polling", "super PAC pollster", "party committee polling", "ballot measure polling", "candidate viability poll", "message testing poll", "pollster accuracy 2026", "tracking poll", "message testing", "county level election forecast", "election simulation", "likely voter model", "MRP", "survey weighting", "voter file polling", "text to web survey", "statewide poll", "district poll", "national poll"],
 });
 
 const STAGES = [
@@ -35,7 +36,6 @@ const STAGES = [
   { t: "Turnout projection", s: "Turnout follows from the fitted likely voter curve, bounded by the voter file, past turnout in the same kind of election and ballots already cast." },
 ];
 const RULES = ["Pre registration", "Stated preference never reassigned", "Anomalies tested before corrected", "Reference data matches the instrument", "Unadjusted estimate kept as a control", "Independence of funding disclosed", "Post election accounting published"];
-const WHO = ["Campaigns and candidates", "Party committees and PACs", "Ballot measure campaigns", "Advocacy and nonprofit groups", "Newsrooms and media", "Companies and public affairs"];
 const STEPS = [
   { t: "Scope call", s: "Thirty minutes on the decision, the questions and the deadline. A written quote the same day." },
   { t: "Design", s: "The questionnaire, the voter file universe, quotas and weighting targets, agreed before field." },
@@ -51,11 +51,15 @@ export default function OnPointPolling() {
     { q: "How accurate is On Point Polling?", a: `On Point Polling's final 2026 national poll had Democrats ahead by ${g.us.margin.toFixed(1)} points against a count of D +${g.result.margin.toFixed(1)}, ${Math.abs(g.us.margin - g.result.margin).toFixed(1)} points off and second of ${B.national.polls.length} final national polls. Its final state polls called ${S.senate.right} of ${S.senate.n} Senate winners with an average miss of ${S.senate.mae.toFixed(1)} points. Every poll is scored in the public accuracy report, misses included.` },
     { q: "What services does On Point Polling offer?", a: `${SERVICES.map((s) => s.name).join(", ")}.` },
     { q: "Is On Point Polling partisan?", a: "No. On Point Polling is nonpartisan and polls for Democrats, Republicans, independents, ballot measures, newsrooms and companies with the same method for every client. Sponsors of public releases are disclosed." },
+    { q: "Who hires On Point Polling?", a: `${AUDIENCES.map((a) => a.name).join(", ")}. Each kind of client has its own page with the research it usually needs.` },
+    { q: "Can PACs and super PACs hire you?", a: "Yes. PACs, super PACs and independent expenditure groups hire us for race selection, message and ad testing, targeting models and tracking. Their research is confidential and never shared with candidates, parties or other clients." },
+    { q: "Can you poll a small or local race?", a: "Yes. Samples come from the voter file for the exact jurisdiction, so we poll state legislative districts, county races, mayoral races and school boards as well as statewide and national races." },
+    { q: "Do you field polls for other consultants and pollsters?", a: "Yes. White label fieldwork, weighting and tabulation are delivered under your firm's name, with no contact with your client." },
     { q: "How fast can you field a poll?", a: "Most polls field in 48 to 72 hours from an approved questionnaire, with toplines and crosstabs delivered shortly after." },
     { q: "How much does a poll cost?", a: "Polls are quoted per project on geography, sample size, questionnaire length and cadence. Send the scope and you will have a written quote the same day." },
     { q: "Who are On Point Polling's data partners?", a: `${PARTNERS.map((p) => `${p.name}, ${p.role.toLowerCase()}`).join("; ")}.` },
     { q: "Are your dashboards public?", a: "No. The County Desk and the Weighting Dashboard are delivered privately to clients. The clips on this page use illustrative data." },
-    { q: "How do I start a project?", a: `Email ${CONTACT} with the race or topic, the geography, the timeline and a budget or sample size.` },
+    { q: "How do I start a project?", a: `Fill in the proposal form or email ${CONTACT} with the race or topic, the geography, the timeline and a budget or sample size. You will have a written quote the same day.` },
   ];
   const vid = (m: typeof MEDIA.desk, name: string) => ({ "@type": "VideoObject", name, description: m.alt, thumbnailUrl: `${SITE.url}${m.poster}`, contentUrl: `${SITE.url}${m.src}.mp4`, uploadDate: "2026-11-12", publisher: { "@id": ORG_ID } });
 
@@ -66,8 +70,10 @@ export default function OnPointPolling() {
         { "@type": "ProfessionalService", "@id": SVC_ID, name: "On Point Polling", url: URL, email: CONTACT,
           logo: `${SITE.url}/brand/on-point-polling-color.svg`, image: `${URL}/opengraph-image.jpg`, parentOrganization: { "@id": ORG_ID },
           areaServed: { "@type": "Country", name: "United States" }, priceRange: "Quoted per project", slogan: "Nonpartisan polling, scored against the count",
-          description: "Nonpartisan polling firm and election analytics: one time polls, tracking programs, message testing, county by county election simulations, likely voter modeling, MRP, voter file sampling and a weighting dashboard.",
-          knowsAbout: ["Election polling", "Survey research", "Likely voter modeling", "Survey weighting", "Election forecasting", "MRP", "Message testing"],
+          description: "Nonpartisan polling firm for candidates, party committees, PACs, ballot measure campaigns, advocacy groups, media and companies: benchmark and tracking polls, message and ad testing, viability studies, issue and ballot measure polling, voter modeling, county by county election simulations and white label fieldwork.",
+          knowsAbout: ["Election polling", "Campaign polling", "Survey research", "Likely voter modeling", "Survey weighting", "Election forecasting", "MRP", "Message testing", "Ad testing", "Ballot measure polling", "Voter targeting models", "Post election analysis", "Public affairs research"],
+          audience: AUDIENCES.map((a) => ({ "@type": "BusinessAudience", audienceType: a.name })),
+          potentialAction: { "@type": "CommunicateAction", name: "Request a proposal", target: `${SITE.url}${quoteHref()}` },
           hasOfferCatalog: { "@type": "OfferCatalog", name: "On Point Polling services", itemListElement: GROUPS.map((gr) => ({ "@type": "OfferCatalog", name: gr.name,
             itemListElement: SERVICES.filter((s) => s.group === gr.id).map((s) => ({ "@type": "Offer", url: `${SITE.url}${svcHref(s)}`, itemOffered: { "@type": "Service", "@id": `${SITE.url}${svcHref(s)}#service`, name: s.name, description: s.short, provider: { "@id": SVC_ID } } })) })) } },
         { "@type": "FAQPage", "@id": `${URL}#faq`, mainEntity: FAQ.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
@@ -80,15 +86,15 @@ export default function OnPointPolling() {
         <div className="oph-hero-grid">
           <div>
             <PollingLockup height={60} className="oph-lockup" />
-            <p className="eye oph-kicker">Nonpartisan survey research and election analytics</p>
-            <h1>Polling and election analytics for campaigns, causes and companies.</h1>
-            <p className="lede">Our final national poll of 2026 landed within a point of the count, second of 42. Clients hire the same voter file fieldwork, likely voter model and county simulations for statewide, district and national research, delivered in days.</p>
+            <p className="eye oph-kicker">Nonpartisan polling firm · Survey research and election analytics</p>
+            <h1>The pollster for campaigns, committees, PACs and causes.</h1>
+            <p className="lede">Our final national poll of 2026 landed within a point of the count, second of 42. Candidates, party committees, PACs, ballot measure campaigns, advocacy groups, newsrooms and companies hire the same voter file fieldwork, likely voter model and county simulations for national, statewide, district and local research, delivered in days.</p>
             <div className="oph-cta-row">
-              <a className="btn white" href={mailto("Proposal request")}>Request a proposal</a>
-              <a className="btn" href="#services">View services</a>
+              <Link className="btn white" href={quoteHref()}>Request a proposal</Link>
+              <Link className="btn" href="/on-point-polling/services">View services</Link>
               <Link className="btn" href="/accuracy">Accuracy report</Link>
             </div>
-            <p className="oph-trust">Polls for both parties · Sponsors disclosed · Every poll scored against the count</p>
+            <p className="oph-trust">Both parties · Client work kept confidential · Sponsors disclosed on public releases · Every poll scored against the count</p>
           </div>
           <Needle B={B} />
         </div>
@@ -105,8 +111,13 @@ export default function OnPointPolling() {
         <ul>{PARTNERS.map((p) => <li key={p.name}><b>{p.name}</b><span>{p.role}</span></li>)}</ul>
       </section>
 
+      <section id="who" className="oph-sec" aria-labelledby="who-h">
+        <div className="oph-sec-h"><p className="eye">Who we work with</p><h2 id="who-h">Research built for the decision you face</h2><p>The same method for every client, in both parties. Pick yours to see the research it usually needs.</p></div>
+        <ul className="oph-auds">{AUDIENCES.map((a) => <li key={a.slug}><Link href={audHref(a)}><span className="k">{a.label}</span><h3>{a.title}</h3><p>{a.short}</p><span className="more">See the research</span></Link></li>)}</ul>
+      </section>
+
       <Chapter id="services" eye="Services" title={<>What we do, what you get and how fast.</>}
-        lede={<>Every service lists its deliverables and its scope up front. Choose one study or combine them into a program.</>}>
+        lede={<>{SERVICES.length} services in five practice areas. Every one lists its deliverables and its scope up front. Choose one study or combine them into a program. <Link href="/on-point-polling/services">See every service in detail.</Link></>}>
         <div className="oph-groups">
           {GROUPS.map((gr) => (
             <section key={gr.id} className="oph-group" aria-labelledby={`g-${gr.id}`}>
@@ -126,6 +137,13 @@ export default function OnPointPolling() {
           ))}
         </div>
       </Chapter>
+
+      <section id="engage" className="oph-sec" aria-labelledby="eng-h">
+        <div className="oph-sec-h"><p className="eye">Engagement</p><h2 id="eng-h">Four ways to work with us</h2><p>Every engagement is quoted in writing before work starts. Programs cost less per wave than separate studies.</p></div>
+        <div className="oph-engage">{ENGAGE.map((e) => (
+          <div key={e.name}><h3>{e.name}</h3><p>{e.s}</p><ul>{e.inc.map((i) => <li key={i}>{i}</li>)}</ul><p className="fit"><b>Fits</b> {e.fit}</p></div>
+        ))}</div>
+      </section>
 
       <Chapter id="dashboards" eye="Client dashboards" title={<>Work inside the model, not around a PDF.</>}
         lede={<>Clients get private dashboards built on their own data. Below, each one runs on illustrative data.</>}>
@@ -183,7 +201,6 @@ export default function OnPointPolling() {
 
       <Chapter id="process" eye="How a project runs" title={<>From a call to crosstabs in days.</>}>
         <ol className="oph-steps" data-fx>{STEPS.map((s, i) => <li key={s.t} style={{ ["--i" as string]: i }}><span className="n">{i + 1}</span><h3>{s.t}</h3><p>{s.s}</p></li>)}</ol>
-        <div className="oph-who" id="who"><p className="eye">Who we work with</p><ul>{WHO.map((w) => <li key={w}>{w}</li>)}</ul></div>
       </Chapter>
 
       <Chapter id="faq" eye="Questions" title={<>Before you hire a pollster.</>}>
@@ -195,8 +212,8 @@ export default function OnPointPolling() {
         <h2>Tell us the decision. We will design the research.</h2>
         <p>Send the race or topic, the geography, your timeline and a budget or sample size. You will have a written quote the same day.</p>
         <div className="oph-cta-row">
-          <a className="btn white" href={mailto("Proposal request")}>Email {CONTACT}</a>
-          <a className="btn" href="#services">All services</a>
+          <Link className="btn white" href={quoteHref()}>Request a proposal</Link>
+          <a className="btn" href={mailto("Proposal request")}>Email {CONTACT}</a>
           <Link className="btn" href="/on-point-polling/polls">Every 2026 release</Link>
         </div>
       </section>

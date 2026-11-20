@@ -175,7 +175,7 @@ export default function Navbar() {
             <Link className="btn icon t5-search" href="/search" aria-label="Search"><SearchIcon /></Link>
             <LangPicker />
             <ThemeToggle />
-            <Link className="btn white hire" href="/on-point-polling#contact">Hire us</Link>
+            <Link className="btn white hire" href="/contact#brief">Hire us</Link>
             <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function Navbar() {
             ))}
           </nav>
           <div className="mfoot">
-            <Link className="btn white" href="/on-point-polling#contact">Hire us</Link>
+            <Link className="btn white" href="/contact#brief">Hire us</Link>
             <Link className="btn" href="/contact">Contact</Link>
             <ThemeToggle className="btn" />
             <LangPicker className="btn" inMenu />

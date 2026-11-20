@@ -23,15 +23,22 @@ const shiftLine = (m: number, m24: number | null | undefined) => {
 };
 
 /** a state in a general election matchup: rating, both nominees' two party share and win chance, the change from 2024 */
-export function StateTip({ name, ev, m, pD, d, r, m24, note }: { name: string; ev: number; m: number; pD: number; d: string; r: string; m24?: number | null; note?: string }) {
-  const rt = RATE[rateOf(m)], dS = (100 - m) / 2, rS = 100 - dS;
+export function StateTip({ name, ev, m, pD, d, r, m24, note, t }: { name: string; ev: number; m: number; pD: number; d: string; r: string; m24?: number | null; note?: string;
+  /** a third party on the ballot: its name, and each candidate's share of the whole vote and chance to carry the state */
+  t?: { name: string; sD: number; sR: number; sI: number; pR: number; pI: number } }) {
+  const lead3 = t && t.sI > t.sD && t.sI > t.sR;
+  const rt = lead3 ? { color: "#f2b705", ink: "#1b1328", label: `${last(t!.name)} leads` } : RATE[rateOf(m)];
+  const dS = t ? t.sD * 100 : (100 - m) / 2, rS = t ? t.sR * 100 : 100 - dS;
+  const rows: [string, string, number, number][] = [["D", d, dS, pD], ["R", r, rS, t ? t.pR : 1 - pD]];
+  if (t) rows.push(["I", t.name, t.sI * 100, t.pI]);
+  const best = Math.max(...rows.map((x) => x[3]));
   return (
     <div className="t28-card">
       <div className="t28-h"><b>{name}</b><span>{ev} electoral vote{ev === 1 ? "" : "s"}</span></div>
       <div className="t28-rt"><span style={{ background: rt.color, color: rt.ink }}>{rt.label}</span><b>{fmtMg(m)}</b></div>
-      {([["D", d, dS, pD], ["R", r, rS, 1 - pD]] as const).map(([k, n, s, p]) => (
-        <div key={k} className={`t28-row ${k === "D" ? "d" : "r"}${(k === "D") === (pD >= 0.5) ? " lead" : ""}`}>
-          <Toon name={n} side={k} size={30} uid="t" />
+      {rows.map(([k, n, s, p]) => (
+        <div key={k} className={`t28-row ${k === "D" ? "d" : k === "R" ? "r" : "i"}${p === best ? " lead" : ""}`}>
+          <Toon name={n} side={k === "I" ? "U" : (k as "D" | "R")} size={30} uid="t" />
           <span className="n">{last(n)}</span>
           <span className="s">{s.toFixed(1)}%</span>
           <span className="bar"><i style={{ width: `${s}%` }} /></span>

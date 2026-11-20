@@ -21,8 +21,7 @@ export const MENU: NavGroup[] = [
       { h: "The forecast", links: [
         { href: "/2028", label: "Overview", note: "The map and the path to 270" },
         { href: "/2028/primaries", label: "Primaries", note: "Every state, every candidate" },
-        { href: "/2028/general", label: "General election", note: "Every matchup" },
-        { href: "/2028/ticket", label: "Pick a ticket", note: "Build your own matchup" },
+        { href: "/2028/general", label: "General election", note: "Any matchup, with third parties" },
       ] },
       { h: "The field", links: [
         { href: "/2028-presidential-candidates", label: "Who is running in 2028", note: "Every name, by party" },
@@ -113,22 +112,24 @@ export const MENU: NavGroup[] = [
       ] },
     ] },
   { key: "opp", label: "On Point Polling", href: "/on-point-polling",
-    feature: { href: "/on-point-polling#contact", eyebrow: "Nonpartisan · both parties", title: "Field a poll with the firm that landed within a point in 2026", note: "Democrats, Republicans and independents, committees, newsrooms and companies.", cta: "Get a quote" },
+    feature: { href: "/contact#brief", eyebrow: "Nonpartisan · both parties", title: "Hire the pollster that landed within a point in 2026", note: "Candidates, party committees, PACs, ballot measures, advocacy groups, media and companies.", cta: "Request a proposal" },
     cols: [
-      { h: "Work with us", links: [
-        { href: "/on-point-polling#contact", label: "Get a quote", note: "Fielded in 48 to 72 hours" },
-        { href: "/on-point-polling#services", label: "What we field", note: "Horse races, issue surveys, MRP" },
-        { href: "/on-point-polling#who", label: "Who we work with", note: "Both parties, one method" },
+      { h: "Work with us", href: "/on-point-polling", links: [
+        { href: "/on-point-polling/services", label: "Services", note: "Polls, testing, modeling, fieldwork" },
+        { href: "/on-point-polling/for", label: "Who we work with", note: "Candidates, parties, PACs and more" },
+        { href: "/contact#brief", label: "Request a proposal", note: "A written quote the same day" },
+      ] },
+      { h: "By client", links: [
+        { href: "/on-point-polling/for/candidates", label: "Candidates" },
+        { href: "/on-point-polling/for/party-committees", label: "Party committees" },
+        { href: "/on-point-polling/for/pacs", label: "PACs and super PACs" },
+        { href: "/on-point-polling/for/ballot-measures", label: "Ballot measures" },
       ] },
       { h: "Our record", links: [
         { href: "/accuracy", label: "The 2026 accuracy report", note: "Every race against the count" },
         { href: "/most-accurate-pollster", label: "Pollster ranking", note: "D +13.1 against a D +14.0 count, second of 42" },
-      ] },
-      { h: "Our polling", links: [
-        { href: "/on-point-polling/polls", label: "Poll releases", note: "Toplines and crosstabs" },
+        { href: "/on-point-polling/polls", label: "Poll releases" },
         { href: "/on-point-polling/methodology", label: "Methodology" },
-        { href: "/on-point-polling/weighting-room", label: "The Weighting Room", note: "Subscriber community" },
-        { href: "/portal/login", label: "Client portal" },
       ] },
     ] },
   { key: "more", label: "More", href: "/news", more: true,

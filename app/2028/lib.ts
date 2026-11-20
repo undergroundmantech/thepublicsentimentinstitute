@@ -112,6 +112,8 @@ export function genRes(G: GenFile, d: string, r: string): Res | null {
   for (const [s, [w, o, m]] of Object.entries(G.dist)) { const mm = pm[s]?.[0] ?? m; const D = (w * (1 - mm / 100)) / 2; add(s, D, w - D, o); }
   let VD = 0, VR = 0, VO = 0;
   for (const [s, a] of Object.entries(states)) { a.m = two(a.D, a.R); if (!s.includes("-")) { VD += a.D; VR += a.R; VO += a.O; } }
+  // a place with no county rows, the District of Columbia, keeps the pairing's own margin and chance, at its usual turnout
+  for (const s of G.keys) if (!states[s] && pm[s] && (G.ev[s] ?? 0) > 0) { const w = 330000, D = (w * (1 - pm[s][0] / 100)) / 2; states[s] = { D, R: w - D, I: 0, O: 0, m: pm[s][0], pD: pm[s][1], pR: 1 - pm[s][1], pI: 0, ev: G.ev[s] }; }
   return { D: d, R: r, T: null, pD: p[2], pR: 1 - p[2], pI: 0, pNone: 0, evD: p[3], evR: 538 - p[3], evI: 0, VD, VR, VI: 0, VO, hist: p[10], tip: p[7], states, cty,
     natM: p[6], ev10: p[4], ev90: p[5], hyp: p[9] === 1, sims: 20000 };
 }

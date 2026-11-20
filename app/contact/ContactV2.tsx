@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/app/components/Link";
+import { SERVICES } from "@/app/on-point-polling/home/services";
+import { AUDIENCES } from "@/app/on-point-polling/home/audiences";
 
 const CONTACT_EMAIL = "onpointpoliticscontact@gmail.com";
 
@@ -10,6 +12,7 @@ type FormState = {
   email: string;
   org: string;
   topic: string;
+  kind: string;
   geography: string;
   audience: string;
   timeline: string;
@@ -23,30 +26,30 @@ type Status =
   | { type: "error"; message: string };
 
 const EMPTY_FORM: FormState = {
-  name: "", email: "", org: "", topic: "",
+  name: "", email: "", org: "", topic: "", kind: "",
   geography: "", audience: "", timeline: "", message: "",
 };
 
-const TOPICS = [
-  "Presidential Approval",
-  "Generic Ballot",
-  "State-Level Polling",
-  "Issue Polling",
-  "Custom Track",
-  "Partnership / Media",
-  "Other",
-];
+const TOPICS = [...SERVICES.map((x) => x.name), "A program of several studies", "Media or interview request", "Something else"];
+const KINDS = [...AUDIENCES.map((x) => x.name), "Other"];
 
 const TAKES = [
-  { t: "Custom polls", n: "A race, a district, an issue: fielded, weighted and delivered with the crosstabs." },
-  { t: "Recurring tracks", n: "Weekly or monthly waves on the questions you need answered all cycle long." },
-  { t: "Partner research", n: "Co-branded studies with campaigns, media desks, and research organizations." },
-  { t: "Media & data requests", n: "Methodology questions, interview requests, and raw series access." },
-];
+  { t: "Polling", n: "Benchmark, tracking, issue and ballot measure polls for any race from national to a city ward." },
+  { t: "Strategy research", n: "Viability studies, message and ad tests, modeled voter universes and post election autopsies." },
+  { t: "Modeling and dashboards", n: "County simulations, likely voter models, MRP and election night desks." },
+  { t: "Fieldwork and data", n: "Voter file samples, text programs and white label fieldwork for consultants and pollsters." },
+]
 
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>({ type: "idle" });
+  // a service or a kind of client picked on the polling pages arrives in the link
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const svc = SERVICES.find((x) => x.slug === q.get("service"));
+    const aud = AUDIENCES.find((x) => x.slug === q.get("for"));
+    if (svc || aud) setForm((f) => ({ ...f, topic: svc?.name ?? f.topic, kind: aud?.name ?? f.kind }));
+  }, []);
 
   const onChange =
     (key: keyof FormState) =>
@@ -72,12 +75,13 @@ export default function ContactPage() {
       if (!res.ok) throw new Error("server error");
       setStatus({ type: "sent" });
     } catch {
-      const subject = encodeURIComponent("[On Point Polling Project Request] " + (form.topic || "General Inquiry"));
+      const subject = encodeURIComponent("[On Point Polling Proposal Request] " + (form.topic || "General Inquiry") + (form.kind ? ` for ${form.kind}` : ""));
       const body = encodeURIComponent(
         [
           `Name: ${form.name}`,
           `Email: ${form.email}`,
           `Organization: ${form.org || "N/A"}`,
+          `Client type: ${form.kind || "N/A"}`,
           ``,
           `Topic / Issue: ${form.topic || "N/A"}`,
           `Geography: ${form.geography || "N/A"}`,
@@ -98,19 +102,19 @@ export default function ContactPage() {
       <style>{CSS}</style>
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Contact</span></nav>
       <header className="ph">
-        <div className="eye g">Contact the desk</div>
-        <h1>Partner with the <em>desk</em></h1>
-        <p className="lede">Custom surveys, recurring tracks and partner research, scoped, fielded by On Point Polling and delivered with the crosstabs. Inquiries go directly to the research team.</p>
+        <div className="eye g">On Point Polling</div>
+        <h1>Request a <em>proposal</em></h1>
+        <p className="lede">Tell us the decision, the geography and the deadline. A researcher replies with a written proposal and quote, usually the same business day. Client work is confidential, and we work with both parties.</p>
         <div className="pmeta">
-          <span>Replies in <b>24 to 48 hours</b></span>
-          <span>Model <b>Meridian coalition voter model</b></span>
-          <span>Crosstabs <b>Included</b></span>
+          <span>Reply <b>Same business day</b></span>
+          <span>Fieldwork <b>48 to 72 hours</b></span>
+          <span>Deliverables <b>Toplines, crosstabs, memo</b></span>
         </div>
       </header>
 
       <div className="layout">
-        <section className="card" aria-labelledby="ct-form-h">
-          <div className="card-h"><h3 id="ct-form-h">Start a brief</h3><span className="eye" style={{ marginLeft: "auto" }}>Two minutes</span></div>
+        <section className="card" id="brief" aria-labelledby="ct-form-h">
+          <div className="card-h"><h3 id="ct-form-h">Your project</h3><span className="eye" style={{ marginLeft: "auto" }}>Two minutes</span></div>
           <form className="card-b ct-form" onSubmit={onSubmit} aria-label="Project intake form">
             <p className="ct-intro">Name, email and a few sentences are enough. The rest helps us scope the work faster.</p>
             <div className="ct-grid">
@@ -124,10 +128,17 @@ export default function ContactPage() {
               </label>
               <label className="ct-field">
                 <span>Organization</span>
-                <input value={form.org} onChange={onChange("org")} placeholder="Campaign, outlet or org, optional" />
+                <input value={form.org} onChange={onChange("org")} placeholder="Campaign, committee, PAC, outlet or company" />
               </label>
               <label className="ct-field">
-                <span>Topic</span>
+                <span>You are a</span>
+                <select value={form.kind} onChange={onChange("kind")}>
+                  <option value="">Pick the closest fit</option>
+                  {KINDS.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </label>
+              <label className="ct-field">
+                <span>Service</span>
                 <select value={form.topic} onChange={onChange("topic")}>
                   <option value="">Pick the closest fit</option>
                   {TOPICS.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -135,7 +146,7 @@ export default function ContactPage() {
               </label>
               <label className="ct-field">
                 <span>Geography</span>
-                <input value={form.geography} onChange={onChange("geography")} placeholder="National, a state, a district" />
+                <input value={form.geography} onChange={onChange("geography")} placeholder="National, a state, a district, a city" />
               </label>
               <label className="ct-field">
                 <span>Timeline</span>
@@ -152,10 +163,10 @@ export default function ContactPage() {
             </div>
             <div className="ct-actions">
               <button type="submit" className="btn g ct-send" disabled={!canSubmit || status.type === "sending"}>
-                {status.type === "sending" ? "Sending..." : "Send it to the desk"}
+                {status.type === "sending" ? "Sending..." : "Request a proposal"}
               </button>
               <span className="ct-status" role="status">
-                {status.type === "sent" && <span className="ok">Received. We&rsquo;ll reply within two days.</span>}
+                {status.type === "sent" && <span className="ok">Thank you. If your email app opened with the brief, press send. We reply the same business day.</span>}
                 {status.type === "error" && status.message}
                 {status.type === "idle" && !canSubmit && "Name, email and a brief are required"}
               </span>

@@ -17,6 +17,8 @@ import { ELECTION_DATES, RACE_REGISTRY } from "@/app/results/_data/raceRegistry"
 import { DEDICATED_BOARDS, RACE_PAGES } from "@/app/results/archive/nightBoards";
 import { STN as STATE_NAMES } from "@/app/results/2026/live";
 import { ARTICLES } from "@/app/analysis/lib";
+import { SERVICES, svcHref } from "@/app/on-point-polling/home/services";
+import { AUDIENCES, audHref } from "@/app/on-point-polling/home/audiences";
 
 type Entry = MetadataRoute.Sitemap[number];
 const u = (path: string, lastModified: string | Date, changeFrequency: Entry["changeFrequency"], priority: number): Entry => ({
@@ -82,17 +84,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/results/2026", today, "daily", 0.8),
     u("/results/2026/calls", today, "daily", 0.6),
     u("/results/archive", today, "weekly", 0.5),
-    u("/on-point-polling", today, "monthly", 0.5),
     u("/on-point-polling/methodology", today, "monthly", 0.5),
     u("/on-point-polling/polls", today, "weekly", 0.6),
     u("/on-point-polling/polls/texas-2026", "2026-10-18", "weekly", 0.8),
     u("/on-point-polling/polls/ohio-2026", "2026-10-17", "weekly", 0.8),
     u("/on-point-polling/polls/national-2026", today, "monthly", 0.6),
     u("/on-point-polling/polls/la-mayor-2026", today, "monthly", 0.5),
-    u("/on-point-polling/services", today, "monthly", 0.4),
+    u("/on-point-polling/services", today, "monthly", 0.9),
+    u("/on-point-polling/for", today, "monthly", 0.8),
+    ...SERVICES.map((x) => u(svcHref(x), today, "monthly", 0.8)),
+    ...AUDIENCES.map((x) => u(audHref(x), today, "monthly", 0.8)),
     u("/on-point-polling/weighting-room", today, "monthly", 0.4),
     u("/on-point-polling/sms", today, "yearly", 0.2),
-    u("/contact", today, "yearly", 0.3),
+    u("/contact", today, "monthly", 0.6),
     u("/terms", today, "yearly", 0.1),
     u("/about", "2026-11-10", "monthly", 0.5),
     u("/privacy", "2026-11-10", "yearly", 0.2),

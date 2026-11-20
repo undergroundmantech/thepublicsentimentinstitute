@@ -1,21 +1,30 @@
 import type { Metadata } from "next";
-import Matchup from "../Matchup";
+import General28 from "../General28";
 import Method from "../Method";
 import AdUnit from "@/app/components/AdUnit";
+import { seo } from "@/app/lib/seo";
+import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "../h28.css";
-import { getCands, getGenBase, getGenNames, getGrid } from "../server";
+import { genRes } from "../lib";
+import { geo } from "../data28";
+import { getCands, getGen, getGenNames, getGrid } from "../server";
 
-export const metadata: Metadata = {
-  title: "2028 General Election Forecast | On Point Politics",
-  description: "Pick the 2028 nominees: every county forecast and 4,000 simulations, added up into every state and the Electoral College.",
-  alternates: { canonical: "/2028/general" },
-};
-export default function General28() {
+export const metadata: Metadata = seo({
+  title: "2028 general election forecast: build any matchup, with third parties",
+  description: "Pick any 2028 Democrat and Republican, add running mates and add or remove a third party candidate. Every county is forecast and every state is the sum of its counties, with the path to 270 and the closest states.",
+  path: "/2028/general",
+  keywords: ["2028 general election forecast", "2028 electoral map", "2028 matchup", "2028 third party", "2028 independent candidate", "2028 election simulator", "build a 2028 ticket"],
+});
+
+export default function General28Page() {
+  const grid = getGrid();
+  const top = [...grid].filter((g) => g.odds != null).sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0))[0];
+  const r = genRes(getGen(), top?.d ?? "Generic Democrat", top?.r ?? "Vance")!;
+  // the page draws states, not counties, so the counties stay on the server
+  const base = { ...r, cty: {} };
   return (
-    <main className="wrap x28-main h28-page">
-      <header className="h28-board p28-board x28-board"><div className="h28-board-top"><p className="h28-count"><i />2028 general election · every county</p></div><div className="h28-face-off prim"><div className="h28-mid wide"><h1 className="h28-h1">Pick the <em>2028</em> nominees</h1>
-        <p>Choose a Democrat and a Republican. Every pairing is the On Point 2028 Forecast&apos;s own general election forecast, carried down to all 3,142 counties, and each state is the sum of its counties.</p></div></div></header>
-      <Matchup base={getGenBase()} cands={getCands()} mode="general" grid={getGrid()} gnames={getGenNames()} />
+    <main className="h28-page">
+      <General28 base={base} cands={getCands()} grid={grid} names={getGenNames()} a24={geo().a24} />
       <AdUnit />
       <Method />
       <AdUnit kind="multiplex" />

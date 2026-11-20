@@ -217,3 +217,104 @@
 body:has(.oph) .ambient .orbs { display: none; }
 .oph .ch-h h2, .oph .ch-h .sx-h { font: 700 clamp(30px, 3.8vw, 50px)/1.06 var(--font-d) !important; letter-spacing: -.035em !important; font-stretch: normal !important; max-width: 24ch; }
 .oph .ch-lede { color: var(--ink2); }
+
+/* Sales pages, Nov 2026: shared sections for the hub, the services catalog, each service and each kind of client.
+   Same quiet register: hairlines, one ink primary, no party color outside data. */
+.oph-sec { margin-top: clamp(56px, 8vh, 96px); }
+.oph-sec-h { display: grid; gap: 8px; margin-bottom: 22px; max-width: 760px; }
+.oph-sec-h h2 { font: 700 clamp(26px, 3vw, 40px)/1.08 var(--font-d); letter-spacing: -.03em; color: var(--hi); margin: 0; text-wrap: balance; }
+.oph-sec-h > p:not(.eye) { margin: 0; color: var(--ink2); font-size: 15.5px; line-height: 1.6; }
+.oph-cta-row.sm { margin-top: 12px; gap: 8px; }
+.oph-cta-row.sm .btn { padding: 8px 14px; font-size: 13px; }
+.oph .btn.ghost { background: none; border-color: transparent; text-decoration: underline; text-underline-offset: 3px; }
+.oph-prose { margin: 0 0 10px; color: var(--ink2); font-size: 15.5px; line-height: 1.7; max-width: 72ch; }
+.oph-prose a { color: var(--hi); text-decoration: underline; text-underline-offset: 3px; }
+
+/* the record strip */
+.oph-proof { margin-top: 28px; display: grid; grid-template-columns: 1fr auto; gap: 14px 24px; align-items: center; padding: 18px 0; border-block: 1px solid var(--line2); }
+.oph-proof ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.oph-proof li { display: grid; gap: 4px; align-content: start; }
+.oph-proof b { font: 700 clamp(20px, 2vw, 26px)/1 var(--font-d); letter-spacing: -.02em; color: var(--hi); font-variant-numeric: tabular-nums; }
+.oph-proof span { font-size: 12.5px; line-height: 1.45; color: var(--mute); }
+.oph-proof-l { font: 600 13px var(--font-b); color: var(--hi); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+@media (max-width: 900px) { .oph-proof { grid-template-columns: 1fr; } .oph-proof ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* kinds of client */
+.oph-auds { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 1100px) { .oph-auds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .oph-auds { grid-template-columns: 1fr; } }
+.oph-auds a { display: grid; gap: 8px; align-content: start; height: 100%; padding: 20px; border: 1px solid var(--line2); border-radius: 14px; background: var(--glass); color: inherit; text-decoration: none; transition: border-color .2s, transform .2s; }
+.oph-auds a:hover { border-color: rgba(var(--line-rgb), .35); transform: translateY(-2px); }
+.oph-auds a:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+.oph-auds .k { font: 600 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.oph-auds :is(h2, h3) { font: 700 17.5px/1.25 var(--font-d); letter-spacing: -.01em; color: var(--hi); margin: 0; text-wrap: balance; }
+.oph-auds p { margin: 0; color: var(--ink2); font-size: 13.5px; line-height: 1.55; }
+.oph-auds .more { margin-top: 4px; font: 600 12.5px var(--font-b); color: var(--hi); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
+.oph-auds.big { margin-top: 36px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.oph-auds.big a { padding: 26px; }
+.oph-auds.big h2 { font-size: 22px; }
+.oph-auds.big p { font-size: 15px; }
+@media (max-width: 760px) { .oph-auds.big { grid-template-columns: 1fr; } }
+
+/* decisions, each linked to the service that answers it */
+.oph-dec { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line2); border: 1px solid var(--line2); border-radius: 14px; overflow: hidden; }
+@media (max-width: 760px) { .oph-dec { grid-template-columns: 1fr; } }
+.oph-dec a { display: grid; gap: 6px; height: 100%; padding: 20px 22px; background: var(--bg); color: inherit; text-decoration: none; }
+.oph-dec a:hover { background: var(--glass2); }
+.oph-dec b { font: 700 18px/1.3 var(--font-d); color: var(--hi); letter-spacing: -.01em; }
+.oph-dec span { font: 600 11px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.oph-dec em { font-style: normal; font-size: 14px; line-height: 1.55; color: var(--ink2); }
+
+/* a program across a cycle */
+.oph-cycle { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 980px) { .oph-cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .oph-cycle { grid-template-columns: 1fr; } }
+.oph-cycle li { display: grid; gap: 8px; align-content: start; padding-top: 16px; border-top: 2px solid var(--hi); }
+.oph-cycle .n { font: 600 12px var(--font-m); color: var(--mute); }
+.oph-cycle h3 { font: 700 18px var(--font-d); color: var(--hi); margin: 0; }
+.oph-cycle p { margin: 0; color: var(--ink2); font-size: 14px; line-height: 1.6; }
+
+/* notes */
+.oph-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 980px) { .oph-notes { grid-template-columns: 1fr; } }
+.oph-notes > div { padding: 20px; border: 1px solid var(--line2); border-radius: 14px; }
+.oph-notes h3 { font: 700 16.5px var(--font-d); color: var(--hi); margin: 0 0 8px; }
+.oph-notes p { margin: 0; color: var(--ink2); font-size: 14px; line-height: 1.6; }
+
+/* other kinds of client */
+.oph-also { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line2); }
+.oph-also ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.oph-also a { display: inline-block; font-size: 13.5px; color: var(--ink); padding: 7px 14px; border: 1px solid var(--line2); border-radius: 999px; text-decoration: none; }
+.oph-also a:hover { border-color: var(--hi); color: var(--hi); }
+
+/* services catalog */
+.oph-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.oph-jump a { font: 600 12.5px var(--font-b); color: var(--ink2); padding: 7px 13px; border: 1px solid var(--line2); border-radius: 999px; text-decoration: none; }
+.oph-jump a:hover { color: var(--hi); border-color: var(--hi); }
+.oph-cat { scroll-margin-top: 90px; }
+.oph-item { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line2); scroll-margin-top: 90px; }
+@media (max-width: 980px) { .oph-item { grid-template-columns: 1fr; gap: 16px; } }
+.oph-item .k { font: 600 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.oph-item h3 { font: 700 22px/1.2 var(--font-d); letter-spacing: -.02em; margin: 6px 0 8px; }
+.oph-item h3 a { color: var(--hi); text-decoration: none; }
+.oph-item h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.oph-item .t > p { margin: 0 0 8px; color: var(--ink2); font-size: 14.5px; line-height: 1.6; }
+.oph-item .for { font-size: 13px !important; color: var(--mute) !important; }
+.oph-item .for b { color: var(--ink); font-weight: 600; margin-right: 4px; }
+.oph-item .c ul, .oph-engage ul, .oph-when { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; }
+.oph-item .c li, .oph-engage li, .oph-when li { position: relative; padding-left: 18px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.oph-item .c li::before, .oph-engage li::before, .oph-when li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 1px; background: var(--hi); }
+.oph-item .c dl { margin-top: 14px; }
+.oph-when { gap: 10px; margin: 0; }
+.oph-when li { font-size: 15px; }
+
+/* engagement models */
+.oph-engage { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 1100px) { .oph-engage { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .oph-engage { grid-template-columns: 1fr; } }
+.oph-engage > div { display: grid; gap: 8px; align-content: start; padding: 22px; border: 1px solid var(--line2); border-radius: 14px; background: var(--glass); }
+.oph-engage h3 { font: 700 19px var(--font-d); color: var(--hi); margin: 0; letter-spacing: -.01em; }
+.oph-engage p { margin: 0; color: var(--ink2); font-size: 14px; line-height: 1.55; }
+.oph-engage .fit { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 13px; color: var(--mute); }
+.oph-engage .fit b { color: var(--ink); font-weight: 600; margin-right: 4px; }
+.oph-side-cta { justify-content: center; text-align: center; }

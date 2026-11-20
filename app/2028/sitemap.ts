@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
     { url: `${SITE.url}/2028`, lastModified: now, changeFrequency: "daily", priority: 1 },
-    ...["primaries", "general", "ticket"].map((p) => ({ url: `${SITE.url}/2028/${p}`, lastModified: now, changeFrequency: "daily" as const, priority: 0.8 })),
+    ...["primaries", "general"].map((p) => ({ url: `${SITE.url}/2028/${p}`, lastModified: now, changeFrequency: "daily" as const, priority: 0.8 })),
     ...stateCodes().map((s) => ({ url: `${SITE.url}/2028/${s.toLowerCase()}`, lastModified: now, changeFrequency: "daily" as const, priority: 0.7 })),
   ];
 }

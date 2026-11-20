@@ -19,7 +19,6 @@ export const redirects: Redirect[] = [
   p("/results/live", "/results/2026"),
   p("/results/live/:path*", "/results/2026"),
   p("/tpsi/situation-room", "/results/2026"),
-  p("/on-point-polling/services", "/on-point-polling#contact"),
   // Nov 6 2026: short addresses for the 2026 pollster ranking and the accuracy report
   p("/most-accurate-pollster-2026", "/most-accurate-pollster"),
   p("/most-accurate-poll", "/most-accurate-pollster"),
