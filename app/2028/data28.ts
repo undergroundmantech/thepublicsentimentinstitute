@@ -2,7 +2,7 @@
 // from the forecast's own files in public/forecast/2028/x, so a model update reaches these pages on the next build.
 import fs from "node:fs";
 import path from "node:path";
-import { STATE_NAME, type GenFile, type PrimFile, type StatesGeo, type CountiesGeo } from "./lib";
+import { FIPS_ST, STATE_NAME, type GenFile, type PrimFile, type StatesGeo, type CountiesGeo } from "./lib";
 
 const P = (f: string) => path.join(process.cwd(), "public", "forecast", "2028", "x", f);
 const cache: Record<string, unknown> = {};
@@ -19,9 +19,22 @@ export type Pair = {
   /** state or district: [margin, Democratic win chance], margins Republican minus Democrat */
   st: Record<string, [number, number]>;
 };
+/** each state's county simulation added up, the vote weighted margin of its counties for the generic Democrat against
+ * Vance, the dashboard's own state number */
+let CS: Record<string, number> | null = null;
+export function countySum(): Record<string, number> {
+  if (CS) return CS;
+  const G = gen(); const a: Record<string, [number, number]> = {};
+  for (const [f, [w, , m]] of Object.entries(G.cty)) { const st = FIPS_ST[f.slice(0, 2)]; if (!st || !(w > 0)) continue; const x = (a[st] ??= [0, 0]); x[0] += m * w; x[1] += w; }
+  CS = Object.fromEntries(Object.entries(a).map(([k, [mw, w]]) => [k, mw / w]));
+  return CS;
+}
+/** a state's margin in a matchup the way the dashboard maps it: the sum of its counties, moved by the matchup's change
+ * from the generic Democrat against Vance; districts and places without counties keep the matchup's own margin */
+export const dashMargin = (k: string, m: number) => { const c = countySum()[k]; return c == null ? m : c + (m - (gen().base[k] ?? m)); };
 const pairOf = (p: GenFile["pairs"][number], odds: number | null): Pair => {
   const G = gen(); const st: Pair["st"] = {};
-  G.keys.forEach((k, i) => { const v = p[11][i]; if (v) st[k] = [v[0], v[1]]; });
+  G.keys.forEach((k, i) => { const v = p[11][i]; if (v) st[k] = [dashMargin(k, v[0]), v[1]]; });
   return { id: `${p[0]}|${p[1]}`, d: p[0], r: p[1], pD: p[2], evD: p[3], ev10: p[4], ev90: p[5], nat: p[6], tip: p[7], odds, st, evMap: mapEV(st, G.ev) };
 };
 
@@ -76,7 +89,7 @@ export function stateData(st: string) {
   const counties = cg.counties.filter((c) => c[1] === st).map((c) => { const b = G.cty[c[0]]; return { f: c[0], n: c[2], d: c[3], w: b?.[0] ?? 0, o: b?.[1] ?? 0, m: b?.[2] ?? 0, m24: c[4] }; });
   const dists = Object.keys(G.dist).filter((k) => k.startsWith(st + "-"));
   return {
-    st, name: STATE_NAME[st], ev: G.ev[st] ?? 0, base: G.base[st] ?? 0, sig: G.sig[st] ?? 4, m24: g.a24[st] ?? null,
+    st, name: STATE_NAME[st], ev: G.ev[st] ?? 0, base: countySum()[st] ?? G.base[st] ?? 0, sig: G.sig[st] ?? 4, m24: g.a24[st] ?? null,
     outline: g.states[st], box: g.box[st], counties, dists: dists.map((k) => ({ k, ev: G.ev[k] ?? 0 })),
   };
 }
