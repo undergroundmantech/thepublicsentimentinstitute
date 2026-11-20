@@ -32,7 +32,7 @@ export default function Footer() {
             ))}
           </div>
           <div className="bottom">
-            <span>© 2026 On Point Politics and On Point Polling</span>
+            <span><Link href="/backroom" className="foot-quiet" aria-label="Copyright">©</Link> 2026 On Point Politics and On Point Polling</span>
             <span><Link href="/about">About</Link> · <Link href="/analysis">Analysis</Link> · <Link href="/contact">Contact</Link> · <Link href="/privacy">Privacy</Link> · <Link href="/terms">Terms</Link> · <Link href="/on-point-polling/sms">SMS opt in</Link></span>
           </div>
         </div>
