@@ -698,3 +698,4 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 .g28-chipsx li { border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 10px; font-size: 12.5px; background: #fbfaf6; }
 .g28-chipsx li small { color: var(--mute); }
 .g28-focus { width: 100%; height: auto; max-height: 640px; display: block; overflow: hidden; }
+.g28-show-why { margin-top: 14px; } .g28-show-why h3 { margin: 0 0 4px; font: 800 17px var(--fd, inherit); }

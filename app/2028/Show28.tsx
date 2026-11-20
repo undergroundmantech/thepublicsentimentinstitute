@@ -14,7 +14,8 @@ export type Why = {
   flow: { from: string; to: string; share: number }[];
   states: Record<string, { voters: number; elig: number; habit: number; irregular: number }>;
   dim_mean: Record<string, number>;
-  coef: Record<string, { nat: number; b: number[]; basis: string }>;
+  coef: Record<string, { nat: number; b: number[]; basis: string; parts?: Record<string, number> }>;
+  react?: { lam: number[]; r2: number; prim: number[] };
   third: { key: string; name: string; base: number; share: number; m_message: number; m_media: number; m_coalition: number; new_voters: number; reach: number | null }[];
 };
 const DIM = ["pR", "pI", "rB", "rH", "rA", "a3044", "a4564", "a65", "col", "nv24"];
@@ -59,6 +60,20 @@ export default function Show28({ why, res, dp, rp, dvp, rvp }: { why: Why; res: 
         <div><em>{last(dp)}</em><b className={effD >= 0 ? "up" : "dn"}>{sign(effD, 2)} pts</b><small>{cD?.basis ?? "no turnout data"}{dvp ? `, ${dvp} a quarter` : ""}</small></div>
         <div><em>{last(rp)}</em><b className={effR >= 0 ? "up" : "dn"}>{sign(effR, 2)} pts</b><small>{cR?.basis ?? "no turnout data"}{rvp ? `, ${rvp} a quarter` : ""}</small></div>
         {tks.length ? <div><em>Third party new voters</em><b className="up">+{fmtN(newT)}</b><small>people who stay home without them on the ballot</small></div> : null}
+      </div>
+
+      <div className="g28-show-why">
+        <h3>Why each nominee brings voters out or keeps them home</h3>
+        <p className="s28-say">Each nominee against a generic nominee of their party, in points of turnout across the voter groups. Their own side reacts to their positions and the issues they lead with, set against what each voter group believes and ranks in its top three; independents and the other side react the same way; their primary rivals&apos; voters turn out more or less depending on how alike the two candidates are, from the On Point primary averages; and low propensity voters follow the candidates who pull them in the crossover model. These terms are fit on every modeled respondent&apos;s own turnout with each candidate{why.react ? `, which they explain about ${Math.round(why.react.r2 * 100)} percent of` : ""}, then blended with it.</p>
+        <div className="g28-scroll"><table className="g28-show-t">
+          <thead><tr><th>Where it comes from</th><th>{last(dp)}</th><th>{last(rp)}</th></tr></thead>
+          <tbody>{([["own", "Their own party's reaction to their message"], ["ind", "Independents' reaction"], ["opp", "The other party, coming out against them or not"], ["primary", "Their primary rivals' voters"], ["lowprop", "Low propensity voters they pull in"], ["respondents", "Respondents' own turnout with them"], ["rest", "The county electorate's mix and the dashboard's matchup turnout"]] as [string, string][]).map(([k, l]) => {
+            const a = cD?.parts?.[k], b = cR?.parts?.[k]; if (a == null && b == null) return null;
+            return <tr key={k}><td>{l}</td><td className={(a ?? 0) >= 0 ? "up" : "dn"}>{a == null ? "" : sign(a, 2)}</td><td className={(b ?? 0) >= 0 ? "up" : "dn"}>{b == null ? "" : sign(b, 2)}</td></tr>;
+          })}
+            <tr className="first"><td><b>Turnout against a generic nominee</b></td><td className={(cD?.nat ?? 0) >= 0 ? "up" : "dn"}><b>{sign(cD?.nat ?? 0, 2)}</b></td><td className={(cR?.nat ?? 0) >= 0 ? "up" : "dn"}><b>{sign(cR?.nat ?? 0, 2)}</b></td></tr>
+          </tbody>
+        </table></div>
       </div>
 
       <div className="g28-show-grid">
