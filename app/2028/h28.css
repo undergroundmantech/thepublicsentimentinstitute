@@ -569,3 +569,42 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 .g28-tbl td.d { color: #1f3fd1; font-weight: 800; } .g28-tbl td.r { color: #d42a2a; font-weight: 800; } .g28-tbl td.i { color: #8a6200; font-weight: 800; }
 .t28-row.i .bar i { background: #f2b705; }
 @media (prefers-reduced-motion: reduce) { .g28-busy { animation: none; } }
+
+/* any matchup on a state page */
+.s28-pick { display: flex; flex-wrap: wrap; align-items: end; gap: 10px 14px; }
+.s28-pick label { display: grid; gap: 4px; flex: 1 1 220px; max-width: 320px; }
+.s28-pick label span { font: 700 10.5px var(--fm); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.s28-pick select { height: 40px; padding: 0 12px; border: 2.5px solid var(--ink); border-radius: 10px; background: var(--card); color: var(--ink); font: 700 14.5px var(--fb); }
+.s28-pick label:first-child select { box-shadow: inset 5px 0 0 #1f3fd1; padding-left: 16px; }
+.s28-pick label:nth-child(2) select { box-shadow: inset 5px 0 0 #d42a2a; padding-left: 16px; }
+.s28-pick > span { font: 600 11.5px var(--fm); color: var(--mute); padding-bottom: 10px; }
+.h28-any { display: flex; flex-wrap: wrap; align-items: end; gap: 8px 14px; margin: 10px 0 2px; }
+.h28-any label { display: grid; gap: 3px; flex: 0 1 240px; }
+.h28-any label span { font: 700 10px var(--fm); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.h28-any select { height: 36px; padding: 0 10px 0 14px; border: 2.5px solid var(--ink); border-radius: 10px; background: var(--card); color: var(--ink); font: 700 14px var(--fb); }
+.h28-any label:first-child select { box-shadow: inset 5px 0 0 #1f3fd1; }
+.h28-any label:nth-child(2) select { box-shadow: inset 5px 0 0 #d42a2a; }
+.h28-any > span { font: 600 11px var(--fm); color: var(--mute); padding-bottom: 9px; }
+
+/* a state's two primaries, county by county, on its page */
+.pc28 { display: grid; gap: 14px; margin-top: 28px; }
+.pc28-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 900px) { .pc28-two { grid-template-columns: minmax(0, 1fr); } }
+.pc28-one { display: grid; gap: 10px; align-content: start; padding: 16px; border: 2.5px solid var(--ink); border-radius: 18px; background: var(--card); box-shadow: var(--sh-sm, 5px 6px 0 var(--ink)); min-width: 0; }
+.pc28-one header { display: grid; gap: 4px; }
+.pc28-one h3 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px/1.35 var(--fb); }
+.pc28-one h3 svg { flex: none; border-radius: 50%; box-shadow: 0 0 0 2.5px var(--ink); }
+.pc28-one h3 b { font: 900 20px var(--fd); letter-spacing: -.02em; }
+.pc28-sub { margin: 0; font: 600 11.5px var(--fm); color: var(--mute); }
+.pc28-paper { position: relative; padding: 10px; }
+.pc28-paper svg { display: block; width: 100%; height: auto; max-height: 460px; }
+.pc28-paper path { stroke: #fbfaf6; stroke-width: .6; vector-effect: non-scaling-stroke; transition: opacity .15s; }
+.pc28-paper path.hov { stroke: #141218; stroke-width: 2.2; }
+.pc28-paper path.ol { fill: none; stroke: #141218; stroke-width: 2.6; pointer-events: none; }
+.pc28-key { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.pc28-key li { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto auto; gap: 8px; align-items: center; font-size: 13.5px; }
+.pc28-key i { width: 14px; height: 14px; border-radius: 4px; border: 2px solid var(--ink); }
+.pc28-key b { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc28-key span { font: 800 12.5px var(--fm); font-variant-numeric: tabular-nums; }
+.pc28-key em { font: 600 11px var(--fm); font-style: normal; color: var(--mute); min-width: 82px; text-align: right; }
+.h28-page a.s28-more, .h28-page a.h28-lad-more, .h28-page a.s28-more:visited { color: #f3eff8 !important; }

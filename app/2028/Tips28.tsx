@@ -85,7 +85,7 @@ export function PrimTip({ name, party, top, lead, win }: { name: string; party: 
           <span className="p" />
         </div>
       ))}
-      <div className="t28-f">{lead} carries it in {fmtPct(win)} of runs</div>
+      <div className="t28-f">{lead} carries it in {fmtPct(win)} of runs<em>Click for its counties</em></div>
     </div>
   );
 }

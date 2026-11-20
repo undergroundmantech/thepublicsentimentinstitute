@@ -12,19 +12,31 @@ import Toon from "@/app/majority-tracker/Toon";
 import { fmtMg, fmtPct, last, shiftColor } from "./lib";
 import { CountyTip, Tip } from "./Tips28";
 import { RATE, rateOf } from "./rate28";
-import type { Pair } from "./data28";
+import type { Pair, StateEvery } from "./data28";
 
 type Data = { st: string; name: string; ev: number; base: number; sig: number; m24: number | null; outline: string; box: [number, number, number, number];
   counties: { f: string; n: string; d: string; w: number; o: number; m: number; m24: number | null }[]; dists: { k: string; ev: number }[] };
 type PrimSt = { lead: string; color: string; share: number; win: number; top: [string, number, string][] } | null;
 const fmtV = (n: number) => Math.round(n).toLocaleString("en-US");
 
-export default function State28({ data, pairs, prim, distRes }: { data: Data; pairs: Pair[]; prim: { D: PrimSt; R: PrimSt }; distRes: Record<string, Record<string, [number, number] | null>> }) {
+export default function State28({ data, pairs, prim, distRes: dr0, every }: { data: Data; pairs: Pair[]; prim: { D: PrimSt; R: PrimSt }; distRes: Record<string, Record<string, [number, number] | null>>; every: StateEvery }) {
   const [sel, setSel] = useState(pairs[0].id);
+  // any pairing the forecast ran opens here, not only the featured ones
+  const anyPair = (id: string): Pair | null => {
+    const f = pairs.find((x) => x.id === id); if (f) return f;
+    const row = every.rows[id]; if (!row) return null; const [d, r] = id.split("|");
+    return { id, d, r, pD: 0, evD: 0, ev10: 0, ev90: 0, nat: 0, tip: "", odds: null, evMap: 0, st: { [data.st]: row[0] ?? [data.base, 0.5] } };
+  };
+  const distRes = useMemo(() => {
+    if (dr0[sel]) return dr0; const row = every.rows[sel]; if (!row) return dr0;
+    return { ...dr0, [sel]: Object.fromEntries(data.dists.map((d, i) => [d.k, row[i + 1] ?? null])) };
+  }, [dr0, sel, every, data.dists]);
+  const [pd, pr] = sel.split("|");
+  const pick = (d: string, r: string) => { const id = `${d}|${r}`; if (every.rows[id]) setSel(id); };
   const [hov, setHov] = useState<{ f: string; x: number; y: number } | null>(null);
   const [lit, setLit] = useState<string | null>(null);
   const [mode, setMode] = useState<"m" | "s">("m");
-  const p = pairs.find((x) => x.id === sel) ?? pairs[0];
+  const p = anyPair(sel) ?? pairs[0];
   const sv = p.st[data.st] ?? [data.base, 0.5];
   const shift = sv[0] - data.base;
   const rt = RATE[rateOf(sv[0])];
@@ -70,6 +82,11 @@ export default function State28({ data, pairs, prim, distRes }: { data: Data; pa
         </div>
       </header>
 
+      <div className="s28-pick" role="group" aria-label="Pick any matchup">
+        <label><span>Democrat</span><select value={pd} onChange={(e) => pick(e.target.value, every.rows[`${e.target.value}|${pr}`] ? pr : (every.R.find((r) => every.rows[`${e.target.value}|${r}`]) ?? pr))}>{every.D.map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
+        <label><span>Republican</span><select value={pr} onChange={(e) => pick(pd, e.target.value)}>{every.R.filter((n) => every.rows[`${pd}|${n}`]).map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
+        <span>{Object.keys(every.rows).length.toLocaleString("en-US")} matchups the forecast ran in {data.name}</span>
+      </div>
       <div className="s28-mu" role="group" aria-label="Matchup">
         {pairs.map((q) => <button key={q.id} type="button" aria-pressed={q.id === sel} className={q.id === sel ? "on" : ""} onClick={() => setSel(q.id)}>{last(q.d)} v {last(q.r)}{q.odds != null ? <em>{fmtPct(q.odds)}</em> : null}</button>)}
       </div>

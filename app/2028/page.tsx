@@ -6,7 +6,7 @@ import Home28 from "./Home28";
 import Method from "./Method";
 import { ELECTION_DAY, featured, geo, nomination, primStates } from "./data28";
 import { STATE_NAME, fmtMg, fmtPct, last } from "./lib";
-import { getDefault } from "./server";
+import { getDefault, getGenNames } from "./server";
 import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "./h28.css";
 import AdUnit from "@/app/components/AdUnit";
@@ -31,7 +31,7 @@ export default function Page2028() {
   return (
     <main className="h28-page">
       <JsonLd data={graph(crumbsLd([["Home", "/"], ["2028 forecast", "/2028"]]), pageLd({ name: "2028 election forecast", description: DESC, path: "/2028", about: "2028 United States presidential election" }))} />
-      <Home28 pairs={pairs} nom={nom} prim={prim} ev={ev} days={days} a24={g.a24} />
+      <Home28 pairs={pairs} nom={nom} prim={prim} ev={ev} days={days} a24={g.a24} names={getGenNames()} />
 
       <PlayCta title="Run for president on this map" note="Pick any of 54 candidates, win the primaries and fight county by county to 270, on the same forecast." />
       <AdUnit />

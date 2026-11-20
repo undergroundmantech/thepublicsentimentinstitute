@@ -4,7 +4,8 @@ import Link from "@/app/components/Link";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, pageLd, seo } from "@/app/lib/seo";
 import State28 from "../State28";
-import { featured, primStates, stateCodes, stateData } from "../data28";
+import { everyForState, featured, primCounties, primStates, stateCodes, stateData } from "../data28";
+import PrimCounties28 from "../PrimCounties28";
 import { STATE_NAME, fmtMg, fmtPct } from "../lib";
 import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "../h28.css";
@@ -45,7 +46,8 @@ export default async function StatePage({ params }: { params: Promise<{ st: stri
           ...(prim.D[S] && prim.R[S] ? [[`Who leads the 2028 primaries in ${data.name}?`, `${prim.D[S].lead} leads the Democratic primary with ${(prim.D[S].share * 100).toFixed(1)}% and ${prim.R[S].lead} leads the Republican primary with ${(prim.R[S].share * 100).toFixed(1)}% in the On Point forecast.`] as [string, string]] : []),
         ] as [string, string][]).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
       )} />
-      <State28 data={data} pairs={pairs} prim={{ D: prim.D[S] ?? null, R: prim.R[S] ?? null }} distRes={Object.fromEntries(pairs.map((x) => [x.id, Object.fromEntries(data.dists.map((d) => [d.k, x.st[d.k] ?? null]))]))} />
+      <State28 data={data} pairs={pairs} prim={{ D: prim.D[S] ?? null, R: prim.R[S] ?? null }} distRes={Object.fromEntries(pairs.map((x) => [x.id, Object.fromEntries(data.dists.map((d) => [d.k, x.st[d.k] ?? null]))]))} every={everyForState(S)} />
+      <PrimCounties28 st={S} name={data.name} counties={data.counties.map((c) => ({ f: c.f, n: c.n, d: c.d }))} outline={data.outline} box={data.box as [number, number, number, number]} prim={primCounties(S)} />
       <PlayCta title={`Win ${data.name} county by county`} note={`Campaign 2028 runs on this forecast. Rally, open field offices and knock doors in every ${data.name} county.`} />
       <AdUnit />
       <section className="h28-read" aria-labelledby="h28-sread">

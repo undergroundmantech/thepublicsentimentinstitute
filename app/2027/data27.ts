@@ -47,9 +47,20 @@ function viewBoxOf(counties: County[]) {
   return `${(x0 - pad).toFixed(1)} ${(y0 - pad).toFixed(1)} ${(x1 - x0 + 2 * pad).toFixed(1)} ${(y1 - y0 + 2 * pad).toFixed(1)}`;
 }
 
+function erf(x: number) { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
+const ncdf = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+function ninv(p: number) { let lo = -8, hi = 8; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (ncdf(m) < p) lo = m; else hi = m; } return (lo + hi) / 2; }
+
 export function stateModel(code: Code) {
   const F = file(), S = F.states[code];
-  const pairs: Pair[] = Object.entries(S.pairs).map(([id, v]) => { const [r, d] = id.split("|"); return { id, r, d, p: v.p, pR: v.pR, margin: v.margin, cty: v.cty }; }).sort((a, b) => b.p - a.p);
+  // A matchup that only turns up in a few dozen of the 20,000 runs has a noisy win chance, so it is blended toward the
+  // chance its own margin implies, using the spread the state's well sampled matchups show. Above a few thousand runs the
+  // simulated chance stands on its own.
+  const runs = (v: { p: number }) => v.p * F.N;
+  const zs = Object.values(S.pairs).filter((v) => runs(v) >= 1000 && Math.abs(v.margin) > 0.5 && v.pR > 0.02 && v.pR < 0.98).map((v) => v.margin / ninv(v.pR)).filter((x) => x > 0).sort((a, b) => a - b);
+  const sd = zs.length ? zs[Math.floor(zs.length / 2)] : (S.p90 - S.p10) / 2.5631;
+  const steady = (v: { p: number; pR: number; margin: number }) => { const w = runs(v) / (runs(v) + 500); return w * v.pR + (1 - w) * ncdf(v.margin / sd); };
+  const pairs: Pair[] = Object.entries(S.pairs).map(([id, v]) => { const [r, d] = id.split("|"); return { id, r, d, p: v.p, pR: steady(v), margin: v.margin, cty: v.cty }; }).sort((a, b) => b.p - a.p);
   const fieldOf = (party: "R" | "D"): Cand[] => {
     const f = S.primary[party]; if (!f) return [];
     return f.names.map((n, i) => ({ name: n, party, pRun: f.p_run[i], win: f.nom[i], share: f.share[i], note: f.notes[i] ?? "" })).sort((a, b) => b.win - a.win);

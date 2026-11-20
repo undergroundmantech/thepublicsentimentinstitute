@@ -20,7 +20,7 @@ export type Pair = {
   st: Record<string, [number, number]>;
 };
 /** each state's county simulation added up, the vote weighted margin of its counties for the generic Democrat against
- * Vance, the dashboard's own state number */
+ * Vance; the dashboard's counties add up to its state margins, so this is the state page's baseline */
 let CS: Record<string, number> | null = null;
 export function countySum(): Record<string, number> {
   if (CS) return CS;
@@ -29,12 +29,9 @@ export function countySum(): Record<string, number> {
   CS = Object.fromEntries(Object.entries(a).map(([k, [mw, w]]) => [k, mw / w]));
   return CS;
 }
-/** a state's margin in a matchup the way the dashboard maps it: the sum of its counties, moved by the matchup's change
- * from the generic Democrat against Vance; districts and places without counties keep the matchup's own margin */
-export const dashMargin = (k: string, m: number) => { const c = countySum()[k]; return c == null ? m : c + (m - (gen().base[k] ?? m)); };
 const pairOf = (p: GenFile["pairs"][number], odds: number | null): Pair => {
   const G = gen(); const st: Pair["st"] = {};
-  G.keys.forEach((k, i) => { const v = p[11][i]; if (v) st[k] = [dashMargin(k, v[0]), v[1]]; });
+  G.keys.forEach((k, i) => { const v = p[11][i]; if (v) st[k] = [v[0], v[1]]; });
   return { id: `${p[0]}|${p[1]}`, d: p[0], r: p[1], pD: p[2], evD: p[3], ev10: p[4], ev90: p[5], nat: p[6], tip: p[7], odds, st, evMap: mapEV(st, G.ev) };
 };
 
@@ -53,6 +50,15 @@ export function nomination() {
 }
 
 /** the matchups worth a card: the likeliest pairings by both nominations' odds, then the forecast's generic headline */
+/** every pairing the forecast ran, in one state and its districts: the names on each side and [margin, Democratic win
+ * chance] for the state, then the same for each district, so a state page can open any matchup */
+export type StateEvery = { D: string[]; R: string[]; rows: Record<string, ([number, number] | null)[]> };
+export function everyForState(st: string): StateEvery {
+  const G = gen(); const ks = [st, ...Object.keys(G.dist).filter((k) => k.startsWith(st + "-"))]; const ix = ks.map((k) => G.keys.indexOf(k));
+  const rows: StateEvery["rows"] = {};
+  for (const p of G.pairs) { const v = ix.map((i) => (i >= 0 ? p[11][i] : null)); if (!v[0]) continue; rows[`${p[0]}|${p[1]}`] = v.map((x) => (x ? [x[0], x[1]] as [number, number] : null)); }
+  return { D: [...new Set(G.pairs.map((p) => p[0]))], R: [...new Set(G.pairs.map((p) => p[1]))], rows };
+}
 export function featured(n = 8): Pair[] {
   const G = gen(); const nom = nomination();
   const odd = (k: "D" | "R", name: string) => nom[k].find((x) => x.name === name)?.p ?? 0;
@@ -102,4 +108,24 @@ export function pairFor(d: string, r: string): Pair | null {
 export function modelName(full: string, party: "D" | "R"): string | null {
   const names = [...new Set([...prim()[party].names, ...gen().pairs.map((p) => p[party === "D" ? 0 : 1])])].filter((n) => !n.startsWith("Generic"));
   return names.find((n) => n === full) ?? names.find((n) => full.endsWith(" " + n) || full.endsWith(n)) ?? null;
+}
+
+/** a state's two primaries county by county, cut down to what its page draws: each county's leader, the leader's share
+ * and its top three, and the state's own totals, which are the sum of these counties */
+export type PrimCounty = { l: number; s: number; t: number; top: [number, number][] };
+export type PrimState = { party: "D" | "R"; names: string[]; colors: string[]; nom: number[]; total: number; votes: number[]; win: number[]; counties: Record<string, PrimCounty> };
+export function primCounties(st: string): Record<"D" | "R", PrimState | null> {
+  const P = prim(); const pre = Object.entries(FIPS_ST).find(([, v]) => v === st)?.[0];
+  const one = (k: "D" | "R"): PrimState | null => {
+    const f = P[k]; const s = f.states[st]; if (!s || !pre) return null;
+    const counties: Record<string, PrimCounty> = {};
+    for (const [fp, row] of Object.entries(f.counties)) {
+      if (fp.slice(0, 2) !== pre) continue;
+      const other = row[0] as number; const c = (row.slice(1) as [number, number][]).slice().sort((a, b) => b[1] - a[1]); const t = other + c.reduce((a, x) => a + x[1], 0);
+      if (!c.length || !t) continue;
+      counties[fp] = { l: c[0][0], s: c[0][1] / t, t, top: c.slice(0, 3).map(([j, v]) => [j, v / t]) };
+    }
+    return { party: k, names: f.names, colors: f.colors, nom: f.nomination, total: s.total, votes: s.votes, win: s.win ?? [], counties };
+  };
+  return { D: one("D"), R: one("R") };
 }

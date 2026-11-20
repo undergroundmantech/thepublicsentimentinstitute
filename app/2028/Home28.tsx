@@ -5,12 +5,12 @@
 // the rating, the win chance, or the change from 2024.
 // Sketchbook look, Nov 19 2026: the map is a paper cutout, every state flips in from the left with its pencil outline
 // tracing itself in, the hovered state pops off the page, and the lines wobble like stop motion.
-import { useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import Pointy from "@/onpoint-sketchbook/react/Pointy";
 import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
-import { X, STATE_NAME, fmtMg, fmtPct, last, probColor, shiftColor, type StatesGeo } from "./lib";
+import { X, STATE_NAME, fmtMg, fmtPct, last, probColor, shiftColor, type GenFile, type StatesGeo } from "./lib";
 import { useJSON } from "./useX";
 import { RATE, RATES, rateOf, type Rate } from "./rate28";
 import { PrimTip, RateTip, StateTip, Tip, type At } from "./Tips28";
@@ -26,14 +26,28 @@ const slug = (st: string) => `/2028/${st.toLowerCase().split("-")[0]}`;
 const nameOf = (k: string) => STATE_NAME[k] ?? (k === "NE-1" ? "Nebraska 1st District" : k === "NE-3" ? "Nebraska 3rd District" : k === "ME-2" ? "Maine 2nd District" : k);
 const ink = (hex: string) => { const c = hex.replace(/^rgb\(|\)$/g, ""); const v = hex.startsWith("#") ? [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)) : c.split(",").map(Number); return v[0] * 0.3 + v[1] * 0.59 + v[2] * 0.11 > 150 ? "#1b1328" : "#fff"; };
 
-export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pair[]; nom: Nom; prim: PrimSt; ev: Record<string, number>; days: number; a24: Record<string, number | null> }) {
+export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pairs: Pair[]; nom: Nom; prim: PrimSt; ev: Record<string, number>; days: number; a24: Record<string, number | null>; names: { D: string[]; R: string[] } }) {
   const geo = useJSON<StatesGeo>(`${X}/states.json`);
   const [sel, setSel] = useState(pairs[0].id);
+  // any pairing the forecast ran: the featured ones ship with the page, the rest load from the forecast file on demand
+  const [want, setWant] = useState<string | null>(null);
+  const G = useJSON<GenFile>(want ? `${X}/gen.json` : null);
+  const extra = useMemo(() => {
+    if (!want || !G) return null; const [d, r] = want.split("|"); const g = G.pairs.find((x) => x[0] === d && x[1] === r); if (!g) return null;
+    const st: Pair["st"] = {}; G.keys.forEach((k, i) => { const v = g[11][i]; if (v) st[k] = [v[0], v[1]]; });
+    let evMap = 0; for (const [k, v] of Object.entries(st)) if (v[0] <= 0) evMap += G.ev[k] ?? 0; if (st.NE && st.NE[0] <= 0) evMap += 2;
+    return { id: want, d, r, pD: g[2], evD: g[3], ev10: g[4], ev90: g[5], nat: g[6], tip: g[7], odds: null, st, evMap } as Pair;
+  }, [want, G]);
+  const all = extra && !pairs.some((x) => x.id === extra.id) ? [...pairs, extra] : pairs;
+  useEffect(() => { if (extra) setSel(extra.id); }, [extra]);
+  const [pd, pr] = (want ?? sel).split("|");
+  const pick = (d: string, r: string) => { const id = `${d}|${r}`; setTab("pres"); if (pairs.some((x) => x.id === id)) { setSel(id); setWant(null); } else setWant(id); };
+  const loading = !!want && !extra;
   const [tab, setTab] = useState<Tab>("pres");
   const [mode, setMode] = useState<Mode>("rate");
   const [hov, setHov] = useState<Hover>(null);
   const [lit, setLit] = useState<string | null>(null);
-  const p = pairs.find((x) => x.id === sel) ?? pairs[0];
+  const p = all.find((x) => x.id === sel) ?? pairs[0];
   const stage = useRef<HTMLDivElement>(null);
   const go = useInView(stage); useBoil(stage);
   const shapes = useMemo(() => (geo ? Object.entries(geo.states) : []) as [string, string][], [geo]);
@@ -90,6 +104,13 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
             ))}
           </div>
         </div>
+        {tab === "pres" ? (
+          <div className="h28-any" role="group" aria-label="Pick any matchup">
+            <label><span>Democrat</span><select value={pd} onChange={(e) => pick(e.target.value, pr)}>{names.D.map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
+            <label><span>Republican</span><select value={pr} onChange={(e) => pick(pd, e.target.value)}>{names.R.map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
+            <span>{loading ? "Loading the matchup" : `Any of the forecast's ${(names.D.length * names.R.length).toLocaleString("en-US")} matchups`}</span>
+          </div>
+        ) : null}
         {tab === "pres" ? (
           <div className="h28-face-off">
             <div className={`h28-side d${dLead ? " lead" : ""}`}>
@@ -157,7 +178,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24 }: { pairs: Pai
                 <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
                 <g className="h28-states sk-map-flip" key={`${tab}|${mode}|${sel}`}>
                   {shapes.map(([st, d]) => (
-                    <a key={st} href={slug(st)} aria-label={`${STATE_NAME[st] ?? st} 2028 forecast`}>
+                    <a key={st} href={tab === "pres" ? slug(st) : `/2028/primaries?st=${st}&party=${tab}`} aria-label={tab === "pres" ? `${STATE_NAME[st] ?? st} 2028 forecast` : `${STATE_NAME[st] ?? st} ${tab === "D" ? "Democratic" : "Republican"} primary by county`}>
                       <path d={d} fill={fill(st)} style={{ "--d": delays[st] } as CSSProperties} className={(hov?.kind === "st" && hov.st === st) || lit === st ? "hov" : lit || (hov?.kind === "band" && rateOf(p.st[st]?.[0] ?? 0) !== hov.k) ? "fade" : undefined} onMouseMove={(e) => point(e, st)} />
                     </a>
                   ))}

@@ -70,7 +70,7 @@ export default function General28({ base, cands, grid, names, a24 }: { base: Res
   const units = useMemo(() => {
     const u: Record<string, Unit> = {};
     for (const [k, s] of Object.entries(res.states)) {
-      const tot = s.D + s.R + s.I + s.O || 1; const m = two(s.D, s.R);
+      const tot = s.D + s.R + s.I + s.O || 1; const m = isFinite(s.m) ? s.m : two(s.D, s.R);
       u[k] = { k, m, pD: s.pD, pR: s.pR, pI: s.pI, sD: s.D / tot, sR: s.R / tot, sI: s.I / tot, ev: s.ev, lead: T && s.I > s.D && s.I > s.R ? "I" : m <= 0 ? "D" : "R" };
     }
     if (u.NE && (u.NE.ev ?? 0) <= 2) for (const k of ["NE-1", "NE-3"]) if (!u[k]) u[k] = { ...u.NE, k, ev: 1 };

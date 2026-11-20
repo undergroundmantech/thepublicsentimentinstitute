@@ -18,7 +18,7 @@ export type St = { st: string; n: string; ev: number; m: number; sd: number; p24
 export type Third = { n: string; who: string; status: string; lane: string; core: string; quotes: string[]; pillars: string; attacks: string; reach: string; risks: string; share: number; rlean: number; dlean: number; home: Record<string, number>; pos: number[] | null };
 export type Issue = { k: string; l: string; d: number; r: number; i: number; cd: number; cr: number; ci: number };
 export type Prim = { total: number; cal: [string, number, number][]; shares: Record<string, Record<string, number>>; rule: string };
-export type Data = { groups?: Grp[]; dmas?: Dma[]; cty?: import("./cty28").CIdx; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
+export type Data = { px?: Record<string, number[]>; groups?: Grp[]; dmas?: Dma[]; cty?: import("./cty28").CIdx; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; fund: number; opp: number; neg: number }> = {
   safe: { name: "Friendly year", blurb: "The wind at your back: two points better than the model, donors give more, rivals are slower.", start: 2, fund: 1.25, opp: 0.8, neg: 0.8 },
@@ -338,6 +338,8 @@ export function candOf(d: Data, p: Party, n: string) { return d.cands[p].find((c
 const sideSign = (p: Party) => (p === "R" ? 1 : -1); // turns R minus D into the player's favor
 /** The model's margin in each state for this pairing, R minus D: base, the Democrat's effect, the Republican's. */
 export function pairMargins(d: Data, dName: string, rName: string): number[] {
+  // the dashboard's own margin for this exact pairing, when the forecast ran it
+  const x = d.px?.[`${dName}|${rName}`]; if (x && x.length === d.states.length) return x.slice();
   const D = candOf(d, "D", dName), R = candOf(d, "R", rName);
   return d.states.map((s, i) => s.m + (D?.eff[i] ?? 0) + (R?.eff[i] ?? 0));
 }
