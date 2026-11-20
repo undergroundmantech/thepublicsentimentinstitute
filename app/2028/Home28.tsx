@@ -10,7 +10,9 @@ import Pointy from "@/onpoint-sketchbook/react/Pointy";
 import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
-import { X, STATE_NAME, fmtMg, fmtPct, last, probColor, shiftColor, type GenFile, type StatesGeo } from "./lib";
+import { X, STATE_NAME, fmtMg, fmtPct, genRes, last, leaderColor, probColor, shiftColor, two, type CountiesGeo, type GenFile, type PrimFile, type StatesGeo } from "./lib";
+import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "@/onpoint-sketchbook/react/SketchMap";
+import { CountyPaths28, CtyTip, ViewSeg, type View } from "./Cty28";
 import { useJSON } from "./useX";
 import { RATE, RATES, rateOf, type Rate } from "./rate28";
 import { PrimTip, RateTip, StateTip, Tip, type At } from "./Tips28";
@@ -20,7 +22,7 @@ type Nom = Record<"D" | "R", { name: string; p: number; color: string }[]>;
 type PrimSt = Record<"D" | "R", Record<string, { lead: string; color: string; share: number; win: number; top: [string, number, string][] }>>;
 type Tab = "pres" | "D" | "R";
 type Mode = "rate" | "prob" | "shift";
-type Hover = { at: At; kind: "st"; st: string } | { at: At; kind: "band"; k: Rate } | null;
+type Hover = { at: At; kind: "st"; st: string } | { at: At; kind: "band"; k: Rate } | { at: At; kind: "cty"; f: string } | null;
 const SMALL = ["DE", "RI", "CT", "NJ", "MD", "MA", "VT", "NH", "DC", "HI"];
 const slug = (st: string) => `/2028/${st.toLowerCase().split("-")[0]}`;
 const nameOf = (k: string) => STATE_NAME[k] ?? (k === "NE-1" ? "Nebraska 1st District" : k === "NE-3" ? "Nebraska 3rd District" : k === "ME-2" ? "Maine 2nd District" : k);
@@ -31,7 +33,8 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
   const [sel, setSel] = useState(pairs[0].id);
   // any pairing the forecast ran: the featured ones ship with the page, the rest load from the forecast file on demand
   const [want, setWant] = useState<string | null>(null);
-  const G = useJSON<GenFile>(want ? `${X}/gen.json` : null);
+  const [view, setView] = useState<View>("st");
+  const G = useJSON<GenFile>(want || view === "co" ? `${X}/gen.json` : null);
   const extra = useMemo(() => {
     if (!want || !G) return null; const [d, r] = want.split("|"); const g = G.pairs.find((x) => x[0] === d && x[1] === r); if (!g) return null;
     const st: Pair["st"] = {}; G.keys.forEach((k, i) => { const v = g[11][i]; if (v) st[k] = [v[0], v[1]]; });
@@ -86,6 +89,34 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
     return `url(#us28-h-${rateOf(v[0])})`;
   };
   const point = (e: MouseEvent, st: string) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "st", st });
+
+  // the county view: the matchup's counties from the forecast file, or each primary's county leader
+  const cg = useJSON<CountiesGeo>(view === "co" ? `${X}/counties.json` : null);
+  const PF = useJSON<PrimFile>(view === "co" && tab !== "pres" ? `${X}/prim.json` : null);
+  const gr = useMemo(() => (view === "co" && G ? genRes(G, p.d, p.r) : null), [view, G, p.d, p.r]);
+  const c24 = useMemo(() => new Map((cg?.counties ?? []).map((c) => [c[0], c[4]])), [cg]);
+  const pcol = useMemo(() => (tab === "pres" ? {} : Object.fromEntries(nom[tab].map((x) => [x.name, x.color]))), [tab, nom]);
+  const pLead = (f: string) => { if (tab === "pres" || !PF) return null; const F = PF[tab]; const c = F.counties[f]; if (!c || c.length < 2) return null;
+    const tot = (c[0] as number) + (c.slice(1) as [number, number][]).reduce((a, x) => a + x[1], 0); const [j, v] = c[1] as [number, number]; return { F, c, tot, name: F.names[j], color: pcol[F.names[j]] ?? F.colors[j] ?? "#8f8a99", sh: v / Math.max(1, tot) }; };
+  const cFill = (f: string) => {
+    if (tab !== "pres") { const l = pLead(f); return l ? leaderColor(l.color, Math.min(0.62, l.sh * 2.2)) : "#e6e0d3"; }
+    const r = gr?.cty[f]; if (!r) return "#e6e0d3"; const m = two(r[0], r[1]);
+    if (mode === "prob") return probColor(r[4]);
+    if (mode === "shift") { const was = c24.get(f); return was != null ? shiftColor(m - was, 16) : "#e6e0d3"; }
+    return washColor(m);
+  };
+  const cHover = (f: string, e: MouseEvent) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "cty", f });
+  const cTip = (f: string) => {
+    const g = cg?.counties.find((c) => c[0] === f); if (!g) return null;
+    if (tab !== "pres") {
+      const l = pLead(f); if (!l) return null;
+      return <CtyTip name={g[2]} st={g[1]} rows={(l.c.slice(1, 5) as [number, number][]).map(([j, v]) => ({ name: l.F.names[j], side: "U" as const, v, c: pcol[l.F.names[j]] ?? l.F.colors[j] }))} other={l.tot - (l.c.slice(1, 5) as [number, number][]).reduce((a, x) => a + x[1], 0)} m24={null} m={null} />;
+    }
+    const r = gr?.cty[f]; if (!r) return null;
+    return <CtyTip name={g[2]} st={g[1]} rows={[{ name: p.d, side: "D", v: r[0] }, { name: p.r, side: "R", v: r[1] }]} other={r[2] + r[3]} m24={g[4]} m={two(r[0], r[1])} />;
+  };
+  const cReady = !!cg && (tab === "pres" ? !!gr : !!PF);
+  const cPaint = `${tab}|${mode}|${p.id}|${cReady ? 1 : 0}`;
   const stTip = (st: string) => {
     if (tab !== "pres") { const s = prim[tab][st]; return s ? <PrimTip name={nameOf(st)} party={tab} top={s.top} lead={s.lead} win={s.win} /> : null; }
     const v = p.st[st] ?? (st.startsWith("NE-") ? p.st.NE : undefined); if (!v) return null;
@@ -166,9 +197,10 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
               <div className="sk-seg" role="radiogroup" aria-label="Color the map by">
                 {([["rate", "Rating"], ["prob", "Win chance"], ["shift", "Change from 2024"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
               </div>
+              <ViewSeg view={view} set={setView} busy={view === "co" && !cReady} />
               <span className="h28-closest">Closest: {closest.map((r, i) => <span key={r.k} onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}><Link href={slug(r.k)}>{r.k} {fmtMg(r.m)}</Link>{i < closest.length - 1 ? "," : ""}</span>)}</span>
             </div>
-          ) : null}
+          ) : <div className="h28-modes"><ViewSeg view={view} set={setView} busy={view === "co" && !cReady} /><span className="h28-closest">{view === "co" ? "Each county colored by its primary leader, deeper with a bigger share" : "Each state colored by its primary leader"}</span></div>}
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}`} onMouseLeave={() => setHov(null)}>
             <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             {!geo ? <div className="h28-load">Sketching the map</div> : (
@@ -176,18 +208,19 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
                 <InkDefs id="us28" /><HatchDefs id="us28" />
                 {/* a paper base under the states, so the hatching reads on paper and the cutout edge only shows at the coast */}
                 <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
-                <g className="h28-states sk-map-flip" key={`${tab}|${mode}|${sel}`}>
+                {view === "co" && cg && cReady ? <CountyPaths28 rows={cg.counties} fill={cFill} onHover={cHover} onLeave={() => setHov(null)} href={(st) => (tab === "pres" ? slug(st) : `/2028/primaries?st=${st}&party=${tab}`)} paint={cPaint} /> : null}
+                {view === "co" ? (cReady ? null : <text x="487" y="300" textAnchor="middle" className="g28-cload">Drawing 3,100 counties</text>) : <g className="h28-states sk-map-flip" key={`${tab}|${mode}|${sel}`}>
                   {shapes.map(([st, d]) => (
                     <a key={st} href={tab === "pres" ? slug(st) : `/2028/primaries?st=${st}&party=${tab}`} aria-label={tab === "pres" ? `${STATE_NAME[st] ?? st} 2028 forecast` : `${STATE_NAME[st] ?? st} ${tab === "D" ? "Democratic" : "Republican"} primary by county`}>
                       <path d={d} fill={fill(st)} style={{ "--d": delays[st] } as CSSProperties} className={(hov?.kind === "st" && hov.st === st) || lit === st ? "hov" : lit || (hov?.kind === "band" && rateOf(p.st[st]?.[0] ?? 0) !== hov.k) ? "fade" : undefined} onMouseMove={(e) => point(e, st)} />
                     </a>
                   ))}
-                </g>
-                {hatched ? null : <path className="h28-tex" d={allD} fill="url(#us28-pen)" aria-hidden="true" />}
+                </g>}
+                {hatched || view === "co" ? null : <path className="h28-tex" d={allD} fill="url(#us28-pen)" aria-hidden="true" />}
                 <InkOutline id="us28" shapes={shapes} width={1.5} delays={delays} />
-                <Lift id="us28" d={upSt && geo.states[upSt] ? geo.states[upSt] : null} fill={upSt ? fill(upSt) : "none"} />
+                <Lift id="us28" d={view !== "co" && upSt && geo.states[upSt] ? geo.states[upSt] : null} fill={upSt ? fill(upSt) : "none"} />
                 <g className="h28-labels" aria-hidden="true">
-                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched ? "#141218" : ink(fill(st))} className={hatched ? "halo" : undefined}>{st}</text> : null)}
+                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
             )}
@@ -196,7 +229,8 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
           <div className="h28-under">
             {tab === "pres" ? <>
               {Object.keys(p.st).filter((k) => k.includes("-") || k === "DC").map((k) => { const v = p.st[k]; const r = RATE[rateOf(v[0])]; return <span key={k} onMouseMove={(e) => point(e, k)} onMouseLeave={() => setHov(null)}><Link href={slug(k)} className={`h28-chip h28-hz ${r.k}`}>{k === "DC" ? "D.C." : k}</Link></span>; })}
-              {mode === "rate" ? <div className="sk-maplegend h28-legend">{RATES.map((r) => <span key={r.k}><i className={`h28-hz ${r.k}`} />{r.label} <b>{counts[r.k] ?? 0}</b></span>)}<em>states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up</em></div>
+              {view === "co" && mode === "rate" ? <div className="sk-maplegend h28-legend g28-wash">{[4, 3, 2, 1, 0].map((i) => <i key={"d" + i} style={{ background: WASH_D[i] }} />)}<i style={{ background: WASH_T }} />{[0, 1, 2, 3, 4].map((i) => <i key={"r" + i} style={{ background: WASH_R[i] }} />)}<em>counties, from {last(p.d)} by {WASH_CUTS[4]} or more to {last(p.r)} by {WASH_CUTS[4]} or more, lavender within a point</em></div>
+                : mode === "rate" ? <div className="sk-maplegend h28-legend">{RATES.map((r) => <span key={r.k}><i className={`h28-hz ${r.k}`} />{r.label} <b>{counts[r.k] ?? 0}</b></span>)}<em>states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up</em></div>
                 : mode === "prob" ? <span className="h28-scale"><em>{last(p.d)} certain</em><i className="pr" /><em>{last(p.r)} certain</em></span>
                 : <span className="h28-scale"><em>Bluer than 2024</em><i className="sh" /><em>Redder than 2024</em></span>}
             </> : nom[tab].slice(0, 6).map((x) => <span key={x.name} className="h28-pk"><i style={{ background: x.color }} />{x.name}</span>)}
@@ -288,7 +322,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
       </nav>
 
       <Tip at={hov?.at ?? null}>
-        {hov?.kind === "st" ? stTip(hov.st) : hov?.kind === "band" ? (() => { const r = RATE[hov.k]; const b = ladder.band[hov.k]; return <RateTip label={r.label} color={r.color} ink={r.ink} states={b?.states ?? []} ev={b?.ev ?? 0} />; })() : null}
+        {hov?.kind === "st" ? stTip(hov.st) : hov?.kind === "cty" ? cTip(hov.f) : hov?.kind === "band" ? (() => { const r = RATE[hov.k]; const b = ladder.band[hov.k]; return <RateTip label={r.label} color={r.color} ink={r.ink} states={b?.states ?? []} ev={b?.ev ?? 0} />; })() : null}
       </Tip>
     </div>
   );

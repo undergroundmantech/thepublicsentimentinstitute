@@ -35,7 +35,7 @@ export function StateTip({ name, ev, m, pD, d, r, m24, note, field, lead }: { na
   return (
     <div className="t28-card">
       <div className="t28-h"><b>{name}</b><span>{ev} electoral vote{ev === 1 ? "" : "s"}</span></div>
-      <div className="t28-rt"><span style={{ background: rt.color, color: rt.ink }}>{rt.label}</span><b>{fmtMg(m)}</b></div>
+      <div className="t28-rt"><span style={{ background: rt.color, color: rt.ink }}>{rt.label}</span>{lead && field && !field.some((f) => f.name === lead.name && f.side !== "U") ? null : <b>{fmtMg(m)}</b>}</div>
       {rows.map((x) => (
         <div key={x.name} className={`t28-row ${x.side === "D" ? "d" : x.side === "R" ? "r" : "i"}${x.p === best ? " lead" : ""}`}>
           <Toon name={x.name} side={x.side} size={30} uid="t" />

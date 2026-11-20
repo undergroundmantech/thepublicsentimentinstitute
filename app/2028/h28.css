@@ -633,3 +633,20 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 .g28-pgrid article > p b { color: var(--ink); margin-right: 4px; }
 .g28-draw { font: 600 11px var(--fm) !important; color: var(--mute) !important; }
 .g28-prof { display: grid; gap: 14px; }
+/* the national county layer: thin paper seams under the state outlines */
+.h28-cty path { stroke: rgba(251,250,246,.55); stroke-width: .25; cursor: pointer; transition: fill .3s; }
+.h28-cty a:hover path { stroke: #141218; stroke-width: 1.1; }
+.g28-cload { font: 700 13px var(--fm); letter-spacing: .14em; text-transform: uppercase; fill: var(--mute); }
+.g28-wash { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.g28-wash > i { width: 22px; height: 12px; display: inline-block; border: 1px solid rgba(20,18,24,.25); margin-right: -1px; }
+.g28-wash > i.tk { margin-left: 8px; width: 34px; }
+.g28-wash > em { margin-left: 10px; }
+.h28-modes .sk-seg + .sk-seg { margin-left: 8px; }
+.h28-cty path { vector-effect: non-scaling-stroke; }
+.g28-back { font: 700 11px var(--fm); letter-spacing: .12em; text-transform: uppercase; background: #141218; color: #fbfaf6; border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer; margin-left: 8px; }
+.g28-ctab { margin: 14px 0 6px; }
+.g28-ctab-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 8px; }
+.g28-ctab-h h3 { margin: 0; font: 800 20px var(--fd, inherit); }
+.g28-ctab-h span { font: 600 11px var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.g28-ctab-h .g28-back { margin-left: auto; }
+.g28-ctab td.i { font-weight: 700; }

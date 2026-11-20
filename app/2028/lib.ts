@@ -16,6 +16,8 @@ export interface Res {
   states: Record<string, StateRes>; cty: Record<string, CtyRes>;
   /** the artifact's General election tab: its national margin, 80% electoral vote range and simulation count */
   natM?: number; ev10?: number; ev90?: number; hyp?: boolean; sims?: number; tickets?: TicketRes[];
+  /** each third party ticket's votes in each county, in ticket order */
+  ctyT?: Record<string, number[]>;
   prim?: Record<"D" | "R", { share: number; front: string; frontShare: number; quality: number; consol: number; polled: boolean } | null>;
 }
 export interface DefaultFile {
@@ -48,11 +50,12 @@ export function fromDefault(f: DefaultFile): Res {
   return { D: s.D, R: s.R, T: null, pD: s.pD, pR: s.pR, pI: 0, pNone: s.pNone, evD: s.evD, evR: s.evR, evI: 0, VD: s.VD, VR: s.VR, VI: 0, VO: s.VO, hist: s.hist, tip: s.tip, states, cty };
 }
 type EngOut = { tickets?: TicketRes[]; D: string; R: string; T: string | null; pD: number; pR: number; pI: number; pNone: number; evD: number; evR: number; evI: number; VD: number; VR: number; VI: number; VO: number; hist: number[]; tip: string | null;
-  states: Record<string, StateRes>; cty: { fips: string; D: number; R: number; I: number; O: number; pD: number; pR: number }[]; prim: Res["prim"] };
+  states: Record<string, StateRes>; cty: { fips: string; D: number; R: number; I: number; O: number; pD: number; pR: number; T?: number[] }[]; prim: Res["prim"] };
 export function fromEngine(t: EngOut, N = 4000): Res {
   const cty: Record<string, CtyRes> = {};
-  for (const c of t.cty) if (c) cty[c.fips] = [c.D, c.R, c.I, c.O, c.pD, c.pR];
-  return { D: t.D, R: t.R, T: t.T, pD: t.pD, pR: t.pR, pI: t.pI, pNone: t.pNone, evD: t.evD, evR: t.evR, evI: t.evI, VD: t.VD, VR: t.VR, VI: t.VI, VO: t.VO,
+  const ctyT: Record<string, number[]> = {};
+  for (const c of t.cty) if (c) { cty[c.fips] = [c.D, c.R, c.I, c.O, c.pD, c.pR]; if (c.T) ctyT[c.fips] = c.T; }
+  return { ctyT, D: t.D, R: t.R, T: t.T, pD: t.pD, pR: t.pR, pI: t.pI, pNone: t.pNone, evD: t.evD, evR: t.evR, evI: t.evI, VD: t.VD, VR: t.VR, VI: t.VI, VO: t.VO,
     hist: t.hist.map((h) => h / N), tip: t.tip, states: t.states, cty, prim: t.prim, tickets: t.tickets ?? [] };
 }
 

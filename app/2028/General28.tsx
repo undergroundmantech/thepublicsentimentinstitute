@@ -10,7 +10,9 @@ import Pointy from "@/onpoint-sketchbook/react/Pointy";
 import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
-import { X, STATE_NAME, fmtK, fmtMg, fmtPct, fmtSh, genRes, last, probColor, shiftColor, two, type GenFile, type Res, type StatesGeo, type TicketRes } from "./lib";
+import { X, STATE_NAME, fmtK, fmtMg, fmtPct, fmtSh, genRes, last, probColor, shiftColor, two, type CountiesGeo, type GenFile, type Res, type StatesGeo, type TicketRes } from "./lib";
+import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "@/onpoint-sketchbook/react/SketchMap";
+import { CountyPaths28, CtyTip, ViewSeg, type CtyRow, type View } from "./Cty28";
 import { useJSON, useTicket, type Ticket } from "./useX";
 import { RATE, RATES, rateOf, type Rate } from "./rate28";
 import { RateTip, StateTip, Tip, type At } from "./Tips28";
@@ -22,6 +24,24 @@ const TKC = ["#d98a1c", "#13a39a", "#c23f8e", "#7b4fd6"];
 const mixHex = (a: string, b: string, t: number) => { const p = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(",")})`; };
 const leadTint = (c: string, fm: number) => { const B = [2, 6, 12]; let i = B.findIndex((b) => fm < b); if (i < 0) i = B.length; const tt = 0.1 + 0.9 * i / B.length; const lo = mixHex("#ffffff", c, 0.25); const l = lo.match(/\d+/g)!.map(Number); const h = [1, 3, 5].map((j) => parseInt(c.slice(j, j + 2), 16)); return `rgb(${l.map((v, k) => Math.round(v + (h[k] - v) * tt)).join(",")})`; };
 const tkStep = (fm: number) => (fm < 2 ? "Tilt" : fm < 6 ? "Lean" : fm < 12 ? "Likely" : "Safe");
+/** a third party's sketch hatch, the same four steps as Tilt to Safe: line width, gap and wash, drawn upright so it reads apart from the slanted blue and red */
+const TK_HATCH: [number, number, number][] = [[1.2, 9, 0.1], [1.6, 7, 0.16], [2, 6.5, 0.24], [3.4, 5, 0.46]];
+/** a third party's chance to carry a state: a light tint at a coin flip up to its full color at certain */
+const winTint = (c: string, p: number) => mixHex("#ffffff", c, 0.15 + 0.85 * Math.max(0, Math.min(1, (p - 0.34) / 0.66)));
+const tkI = (fm: number) => (fm < 2 ? 0 : fm < 6 ? 1 : fm < 12 ? 2 : 3);
+const rgba = (c: string, a: number) => `rgba(${[1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16)).join(",")},${a})`;
+const tkCss = (c: string, fm: number) => { const [w, g, a] = TK_HATCH[tkI(fm)]; return `repeating-linear-gradient(90deg, ${c} 0 ${w}px, ${rgba(c, a)} ${w}px ${g}px)`; };
+function TicketHatch({ id, colors }: { id: string; colors: string[] }) {
+  return (
+    <defs>
+      {colors.map((c, j) => TK_HATCH.map(([w, g, a], i) => (
+        <pattern key={`${j}-${i}`} id={`${id}-t${j}-${i}`} width={g} height={g} patternUnits="userSpaceOnUse">
+          <rect width={g} height={g} fill={rgba(c, a)} /><line x1="0" y1="0" x2="0" y2={g} stroke={c} strokeWidth={w} />
+        </pattern>
+      )))}
+    </defs>
+  );
+}
 type TK = { key: string; vp: string; share: number | null };
 const writeTickets = (l: TK[]) => l.map((t) => `${encodeURIComponent(t.key)}~${encodeURIComponent(t.vp || "")}~${t.share == null || !isFinite(t.share) ? "" : t.share}`).join(";");
 export type ThirdModel = { key: string; party: string; name: string; share: number | null; lift: number | null; fromD: number | null; own: number | null; ind: number | null; basis: string; m?: Record<string, number | null> };
@@ -45,13 +65,16 @@ type Full = Required<Pick<Ticket, "dp" | "rp">> & { dvp: string; rvp: string; tk
 type Lead = "D" | "R" | number;
 type Mode = "rate" | "prob" | "shift";
 type Band = Rate | `T${number}`;
-type Hover = { at: At; kind: "st"; st: string } | { at: At; kind: "band"; k: Band } | null;
+type Hover = { at: At; kind: "st"; st: string } | { at: At; kind: "band"; k: Band } | { at: At; kind: "cty"; f: string } | null;
 type Unit = { k: string; m: number; fm: number; pD: number; pR: number; pT: number[]; sD: number; sR: number; sT: number[]; ev: number; lead: Lead };
 
 export default function General28({ base, cands, grid, names, a24, third }: { base: Res; cands: CandOpt[]; grid: Grid[]; names: { D: string[]; R: string[] }; a24: Record<string, number | null>; third: { model: ThirdModel[]; profiles: ThirdProfile[] } }) {
   const [t, setT] = useState<Full>({ dp: base.D, rp: base.R, dvp: "", rvp: "", tks: [], tname: "", thome: "", tlanes: "" });
   const plain = !t.dvp && !t.rvp && !t.tks.length;
-  const G = useJSON<GenFile>(plain && !(t.dp === base.D && t.rp === base.R) ? `${X}/gen.json` : null);
+  const [view, setView] = useState<View>("st");
+  const [focus, setFocus] = useState<string | null>(null);
+  const basePair = t.dp === base.D && t.rp === base.R;
+  const G = useJSON<GenFile>(plain && (!basePair || view === "co") ? `${X}/gen.json` : null);
   const rg = useMemo(() => (plain && G ? genRes(G, t.dp, t.rp) : null), [plain, G, t.dp, t.rp]);
   const tq = useMemo<Ticket>(() => ({ dp: t.dp, rp: t.rp, dvp: t.dvp, rvp: t.rvp, tx: writeTickets(t.tks), tname: t.tname, thome: t.thome, tlanes: t.tlanes }), [t]);
   const eng = useTicket(tq, null, plain);
@@ -85,6 +108,8 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   const allD = useMemo(() => shapes.map(([, d]) => d).join(""), [shapes]);
   const T = res.T; const TKS: TicketRes[] = res.tickets ?? []; const NT = TKS.length;
   const tkName = (k: number) => TKS[k]?.label ?? "Third party";
+  /** the ticket's presidential candidate, so a running mate never stands in for the ticket */
+  const tkTop = (k: number) => TKS[k]?.name ?? "Third party";
 
   // every electoral unit with its leader among every candidate; Nebraska's 1st and 3rd districts vote with the state
   const units = useMemo(() => {
@@ -94,7 +119,10 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
       const tv = TKS.map((_, j) => s.tk?.[j]?.v ?? 0);
       const field: [Lead, number][] = [["D", s.D], ["R", s.R], ...tv.map((v, j) => [j, v] as [Lead, number])]; field.sort((a, b) => b[1] - a[1]);
       const lead: Lead = NT ? field[0][0] : m <= 0 ? "D" : "R";
-      u[k] = { k, m, fm: NT ? (100 * (field[0][1] - field[1][1])) / tot : Math.abs(m), pD: s.pD, pR: s.pR, pT: TKS.map((_, j) => s.tk?.[j]?.p ?? 0), sD: s.D / tot, sR: s.R / tot, sT: tv.map((v) => v / tot), ev: s.ev, lead };
+      // with a third party on the ballot the margin is the leader's lead over the runner up, in points of the whole vote:
+      // negative when the Democrat leads, positive when the Republican does, and zero for a third party's state on the ladder
+      const fm = NT ? (100 * (field[0][1] - field[1][1])) / tot : Math.abs(m);
+      u[k] = { k, m: NT ? (lead === "D" ? -fm : lead === "R" ? fm : 0) : m, fm, pD: s.pD, pR: s.pR, pT: TKS.map((_, j) => s.tk?.[j]?.p ?? 0), sD: s.D / tot, sR: s.R / tot, sT: tv.map((v) => v / tot), ev: s.ev, lead };
     }
     if (u.NE && (u.NE.ev ?? 0) <= 2) for (const k of ["NE-1", "NE-3"]) if (!u[k]) u[k] = { ...u.NE, k, ev: 1 };
     return u;
@@ -127,26 +155,69 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   }, [list]);
   const all = res.VD + res.VR + res.VI + res.VO;
   const nat = res.natM ?? two(res.VD, res.VR);
+  // the national popular vote: the two party margin, or with third parties the leader's lead over the field
+  const natField = NT ? ([[res.D, res.VD, "d"], [res.R, res.VR, "r"], ...TKS.map((tk) => [tk.name, tk.votes, "i"])] as [string, number, string][]).sort((a, b) => b[1] - a[1]) : null;
+  const natText = natField ? `${last(natField[0][0].split(" and ")[0])} +${((100 * (natField[0][1] - natField[1][1])) / all).toFixed(1)}` : fmtMg(nat);
+  const natCls = natField ? natField[0][2] : nat < 0 ? "d" : "r";
   const sims = res.sims ?? 4000;
   const dLead = evMap.D >= 270, rLead = evMap.R >= 270;
   const hatched = mode === "rate";
-  const leaderOf = (x: Unit) => (x.lead === "D" ? res.D : x.lead === "R" ? res.R : tkName(x.lead));
+  const leaderOf = (x: Unit) => (x.lead === "D" ? res.D : x.lead === "R" ? res.R : tkTop(x.lead));
   const leadText = (x: Unit) => (NT ? `${last(leaderOf(x).split(" and ")[0])} +${x.fm.toFixed(1)}` : fmtMg(x.m));
 
   const fill = (st: string) => {
     const v = units[st]; if (!v) return "#2a2438";
-    if (typeof v.lead === "number") return leadTint(TKS[v.lead]?.color ?? TKC[v.lead], v.fm);
-    if (mode === "prob") return probColor(v.pD / Math.max(1e-6, v.pD + v.pR));
+    if (typeof v.lead === "number") return mode === "rate" ? `url(#g28-t${v.lead}-${tkI(v.fm)})` : mode === "prob" ? winTint(TKS[v.lead]?.color ?? TKC[v.lead], v.pT[v.lead]) : leadTint(TKS[v.lead]?.color ?? TKC[v.lead], v.fm);
+    // the chance to carry the state among every candidate on the ballot, not just the two parties
+    if (mode === "prob") return probColor(v.pD / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) + (NT ? 0.5 * v.pT.reduce((a, b) => a + b, 0) / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) : 0));
     if (mode === "shift") return a24[st] != null ? shiftColor(v.m - a24[st]!, 16) : "#2a2438";
     return `url(#g28-h-${sideRate(v)})`;
   };
   const point = (e: MouseEvent, st: string) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "st", st });
+
+  // the county view: every county of the matchup on screen, from the forecast file or the county engine
+  const cg = useJSON<CountiesGeo>(view === "co" ? `${X}/counties.json` : null);
+  const cty = isBase ? rg?.cty ?? null : res.cty && Object.keys(res.cty).length ? res.cty : null;
+  const c24 = useMemo(() => new Map((cg?.counties ?? []).map((c) => [c[0], c[4]])), [cg]);
+  const cInfo = (f: string) => {
+    const r = cty?.[f]; if (!r) return null;
+    const tv = NT ? res.ctyT?.[f] ?? [] : [];
+    const tot = r[0] + r[1] + r[2] + r[3] || 1;
+    const field: [Lead, number][] = [["D", r[0]], ["R", r[1]], ...tv.map((v, j) => [j, v] as [Lead, number])]; field.sort((a, b) => b[1] - a[1]);
+    const lead = field[0][0], fm = (100 * (field[0][1] - field[1][1])) / tot;
+    const m = NT ? (lead === "D" ? -fm : lead === "R" ? fm : null) : two(r[0], r[1]);
+    return { r, tv, tot, lead, fm, m };
+  };
+  const cFill = (f: string) => {
+    const x = cInfo(f); if (!x) return "#e6e0d3";
+    if (typeof x.lead === "number") return leadTint(TKS[x.lead]?.color ?? TKC[x.lead], x.fm);
+    if (mode === "prob") return probColor(x.r[4] / Math.max(1e-6, x.r[4] + x.r[5]) * (NT ? 1 - x.tv.reduce((a, b) => a + b, 0) / x.tot : 1) + (NT ? 0.5 * x.tv.reduce((a, b) => a + b, 0) / x.tot : 0));
+    if (mode === "shift") { const was = c24.get(f); return was != null && x.m != null ? shiftColor(x.m - was, 16) : "#e6e0d3"; }
+    return washColor(x.m ?? 0);
+  };
+  const cHover = (f: string, e: MouseEvent) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "cty", f });
+  const cTip = (f: string) => {
+    const x = cInfo(f); const g = cg?.counties.find((c) => c[0] === f); if (!x || !g) return null;
+    const rows: CtyRow[] = [{ name: res.D, side: "D", v: x.r[0] }, { name: res.R, side: "R", v: x.r[1] }, ...x.tv.map((v, j) => ({ name: tkTop(j), side: "U" as const, v, c: TKS[j]?.color }))];
+    return <CtyTip name={g[2]} st={g[1]} rows={rows} other={x.r[3] + (NT ? 0 : x.r[2])} m24={typeof x.lead === "number" ? null : g[4]} m={x.m} note={focus ? "" : NT ? "Click to open the state's counties with these tickets" : "Click to open the state's counties"} />;
+  };
+  const cPaint = `${mode}|${res.D}|${res.R}|${res.VD}|${NT}|${cty ? 1 : 0}|${TKS.map((x) => x.color).join()}|${focus}`;
+  const cRows = useMemo(() => (cg ? (focus ? cg.counties.filter((c) => c[1] === focus) : cg.counties) : []), [cg, focus]);
+  // with a third party on the ballot the state pages cannot show this ticket, so a click opens the state's counties here
+  const zoom = (st: string) => { setView("co"); setFocus(st.split("-")[0]); setHov(null); };
+  const box = focus && geo?.box[focus] ? geo.box[focus] : null;
+  const vb = box ? (() => { const [x, y, w, h] = box; const pad = Math.max(w, h) * 0.08; let W = w + 2 * pad, H = h + 2 * pad; const r = 1015 / 630; if (W / H < r) W = H * r; else H = W / r; return { v: `${x + w / 2 - W / 2} ${y + h / 2 - H / 2} ${W} ${H}`, k: W / 1015 }; })() : { v: "-20 -10 1015 630", k: 1 };
+  // the focused state's counties, largest first, every candidate's share
+  const fList = useMemo(() => (focus && cty ? cRows.map((c) => ({ g: c, x: cInfo(c[0]) })).filter((q) => q.x).sort((a, b) => b.x!.tot - a.x!.tot) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [focus, cty, cRows, res]);
+  const coBusy = view === "co" && (!cg || !cty);
   const stTip = (st: string) => {
     const v = units[st] ?? (st.startsWith("NE-") ? units.NE : undefined); if (!v) return null;
-    return <StateTip name={nameOf(st)} ev={v.ev} m={v.m} pD={v.pD} d={res.D} r={res.R} m24={a24[st] ?? null}
-      field={NT ? [{ name: res.D, side: "D" as const, s: v.sD, p: v.pD }, { name: res.R, side: "R" as const, s: v.sR, p: v.pR }, ...TKS.map((tk, j) => ({ name: tk.label, side: "U" as const, s: v.sT[j], p: v.pT[j], c: tk.color }))].sort((a, b) => b.s - a.s) : undefined}
+    return <StateTip name={nameOf(st)} ev={v.ev} m={v.m} pD={v.pD} d={res.D} r={res.R} m24={typeof v.lead === "number" ? null : a24[st] ?? null}
+      field={NT ? [{ name: res.D, side: "D" as const, s: v.sD, p: v.pD }, { name: res.R, side: "R" as const, s: v.sR, p: v.pR }, ...TKS.map((tk, j) => ({ name: tk.name, side: "U" as const, s: v.sT[j], p: v.pT[j], c: tk.color }))].sort((a, b) => b.s - a.s) : undefined}
       lead={NT ? { name: leaderOf(v), fm: v.fm, c: typeof v.lead === "number" ? TKS[v.lead]?.color ?? TKC[0] : v.lead === "D" ? "#1f3fd1" : "#d42a2a" } : undefined}
-      note={st === res.tip ? "The tipping point in the simulations" : st.length === 2 ? "Click for its counties" : undefined} />;
+      note={st === res.tip ? "The tipping point in the simulations" : st.length === 2 ? (NT ? "Click to open its counties with these tickets" : "Click for its counties") : undefined} />;
   };
 
   // the ticket builder
@@ -182,7 +253,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
           <div className="h28-mid">
             <h1 className="h28-h1">The <em>2028</em> race</h1>
             <div className="h28-kpis">
-              <span><em>Popular vote</em><b className={nat < 0 ? "d" : "r"}>{fmtMg(nat)}</b></span>
+              <span><em>Popular vote</em><b className={natCls}>{natText}</b></span>
               <span><em>Tipping point</em><b>{res.tip ? <Link href={slug(res.tip)}>{STATE_NAME[res.tip] ?? res.tip}</Link> : "None"}</b></span>
               <span><em>Flips from 2024</em><b>{flips} states</b></span>
             </div>
@@ -206,7 +277,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
         {NT ? <p className="g28-nobody">No one reaches 270 in {fmtPct(res.pNone)} of runs · third parties carry {evT} electoral votes on the map</p> : null}
         <div className="h28-ribbon" aria-label="Electoral votes by rating">
           <div className="bar" onMouseLeave={() => setHov(null)}>
-            {bands.map((k) => { const n = ladder.band[k]?.ev ?? 0; return n ? <i key={k} style={{ flexGrow: n, ...(!RATE[k as Rate] ? { background: bandStyle(k).color, color: "#fff", textShadow: "none" } : {}) }} className={`h28-hz ${k}${hov?.kind === "band" && hov.k === k ? " on" : ""}`} onMouseMove={(e) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "band", k })}>{n >= 20 ? n : ""}</i> : null; })}
+            {bands.map((k) => { const n = ladder.band[k]?.ev ?? 0; return n ? <i key={k} style={{ flexGrow: n, ...(!RATE[k as Rate] ? { background: tkCss(bandStyle(k).color, 6), color: "#141218" } : {}) }} className={`h28-hz ${k}${hov?.kind === "band" && hov.k === k ? " on" : ""}`} onMouseMove={(e) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "band", k })}>{n >= 20 ? n : ""}</i> : null; })}
             <em style={{ left: `${(270 / 538) * 100}%` }}><span>270</span></em>
           </div>
           <div className="keys">{bands.map((k) => { const b = bandStyle(k); return <span key={k}><i className={`h28-hz ${k}`} style={!RATE[k as Rate] ? { background: b.color } : undefined} />{b.label} <b>{ladder.band[k]?.ev ?? 0}</b></span>; })}</div>
@@ -265,34 +336,51 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
             <div className="sk-seg" role="radiogroup" aria-label="Color the map by">
               {([["rate", "Rating"], ["prob", "Win chance"], ["shift", "Change from 2024"]] as [Mode, string][]).map(([k, l]) => <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>)}
             </div>
+            <ViewSeg view={view} set={(v) => { setView(v); if (v === "st") setFocus(null); }} busy={coBusy} />
+            {focus ? <button type="button" className="g28-back" onClick={() => setFocus(null)}>All states</button> : null}
             <span className="h28-closest">Closest: {closest.map((r, i) => <span key={r.k} onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}><Link href={slug(r.k)}>{r.k} {leadText(r)}</Link>{i < closest.length - 1 ? "," : ""}</span>)}</span>
           </div>
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}${busy ? " g28-dim" : ""}`} onMouseLeave={() => setHov(null)}>
             <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             {!geo ? <div className="h28-load">Sketching the map</div> : (
-              <svg viewBox="-20 -10 1015 630" role="img" aria-label={`2028 map, ${res.D} against ${res.R}${T ? ` and ${T}` : ""}`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
-                <InkDefs id="g28" /><HatchDefs id="g28" />
+              <svg viewBox={vb.v} role="img" aria-label={`2028 map${focus ? `, ${STATE_NAME[focus]} by county` : ""}, ${res.D} against ${res.R}${T ? ` and ${T}` : ""}`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
+                <InkDefs id="g28" /><HatchDefs id="g28" /><TicketHatch id="g28" colors={TKS.length ? TKS.map((x) => x.color) : TKC} />
                 <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
-                <g className="h28-states sk-map-flip" key={`${mode}|${res.D}|${res.R}|${T}|${res.VD}`}>
+                {view === "co" && cg && cty ? <CountyPaths28 rows={cRows} fill={cFill} onHover={cHover} onLeave={() => setHov(null)} href={slug} paint={cPaint} onPick={focus ? undefined : zoom} /> : null}
+                {view === "co" ? null : <g className="h28-states sk-map-flip" key={`${mode}|${res.D}|${res.R}|${T}|${res.VD}`}>
                   {shapes.map(([st, d]) => (
-                    <a key={st} href={slug(st)} aria-label={`${STATE_NAME[st] ?? st} 2028 forecast`}>
+                    <a key={st} href={slug(st)} aria-label={`${STATE_NAME[st] ?? st} 2028 forecast`} onClick={NT ? (e) => { e.preventDefault(); zoom(st); } : undefined}>
                       <path d={d} fill={fill(st)} style={{ "--d": delays[st] } as CSSProperties} className={(hov?.kind === "st" && hov.st === st) || lit === st ? "hov" : lit || (hov?.kind === "band" && units[st] && rk(units[st]) !== hov.k) ? "fade" : undefined} onMouseMove={(e) => point(e, st)} />
                     </a>
                   ))}
-                </g>
-                {hatched ? null : <path className="h28-tex" d={allD} fill="url(#g28-pen)" aria-hidden="true" />}
-                <InkOutline id="g28" shapes={shapes} width={1.5} delays={delays} />
-                <Lift id="g28" d={hov?.kind === "st" && geo.states[hov.st.split("-")[0]] ? geo.states[hov.st.split("-")[0]] : lit && geo.states[lit.split("-")[0]] ? geo.states[lit.split("-")[0]] : null} fill={hov?.kind === "st" ? fill(hov.st.split("-")[0]) : lit ? fill(lit.split("-")[0]) : "none"} />
-                <g className="h28-labels" aria-hidden="true">
-                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched ? "#141218" : ink(fill(st))} className={hatched ? "halo" : undefined}>{st}</text> : null)}
+                </g>}
+                {hatched || view === "co" ? null : <path className="h28-tex" d={allD} fill="url(#g28-pen)" aria-hidden="true" />}
+                {view === "co" && !coBusy ? null : view === "co" ? <text x="487" y="300" textAnchor="middle" className="g28-cload">Drawing 3,100 counties</text> : null}
+                <InkOutline id="g28" shapes={focus ? shapes.filter(([k]) => k === focus) : shapes} width={1.5} delays={delays} scale={vb.k} />
+                <Lift id="g28" d={view === "co" ? null : hov?.kind === "st" && geo.states[hov.st.split("-")[0]] ? geo.states[hov.st.split("-")[0]] : lit && geo.states[lit.split("-")[0]] ? geo.states[lit.split("-")[0]] : null} fill={hov?.kind === "st" ? fill(hov.st.split("-")[0]) : lit ? fill(lit.split("-")[0]) : "none"} />
+                <g className="h28-labels" aria-hidden="true" display={focus ? "none" : undefined}>
+                  {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
             )}
             <Pointy pose="point-pointer" size={112} className="h28-pointy" />
           </div>
+          {focus && fList.length ? (
+            <div className="s28-card g28-tbl g28-ctab">
+              <div className="g28-ctab-h"><h3>{STATE_NAME[focus]} by {focus === "AK" ? "borough" : "county"}</h3><span>{fList.length} {focus === "AK" ? "boroughs and census areas" : "counties"} · the state is their sum · largest first</span><button type="button" className="g28-back" onClick={() => setFocus(null)}>All states</button></div>
+              <div className="g28-scroll"><table>
+                <thead><tr><th>{focus === "AK" ? "Borough" : "County"}</th><th>Votes</th><th>{last(res.D)}</th><th>{last(res.R)}</th>{TKS.map((tk) => <th key={tk.key} style={{ color: tk.color }}>{last(tk.name)}</th>)}<th>Lead</th><th>2024</th></tr></thead>
+                <tbody>{fList.slice(0, 40).map(({ g, x }) => { const r = x!.r; const t0 = x!.tot; const ld = x!.lead; const who = ld === "D" ? res.D : ld === "R" ? res.R : tkTop(ld as number);
+                  return <tr key={g[0]} onMouseMove={(e) => cHover(g[0], e)} onMouseLeave={() => setHov(null)}><td>{g[2]}</td><td>{fmtK(t0)}</td><td>{fmtSh(r[0] / t0)}</td><td>{fmtSh(r[1] / t0)}</td>{TKS.map((tk, j) => <td key={tk.key}>{fmtSh((x!.tv[j] ?? 0) / t0)}</td>)}
+                    <td className={typeof ld === "number" ? "i" : ld === "D" ? "d" : "r"} style={typeof ld === "number" ? { color: TKS[ld]?.color } : undefined}>{last(who)} +{x!.fm.toFixed(1)}</td><td>{g[4] != null ? fmtMg(g[4]) : ""}</td></tr>; })}</tbody>
+              </table></div>
+              {fList.length > 40 ? <p className="s28-say">The 40 largest of {fList.length}; hover the map for the rest.</p> : null}
+            </div>
+          ) : null}
           <div className="h28-under">
-            {list.filter((x) => x.k.includes("-") || x.k === "DC").map((x) => { const k = rk(x); return <span key={x.k} onMouseMove={(e) => point(e, x.k)} onMouseLeave={() => setHov(null)}><Link href={slug(x.k)} className={`h28-chip h28-hz ${k}`} style={!RATE[k as Rate] ? { background: fill(x.k), color: "#fff", textShadow: "none" } : undefined}>{x.k === "DC" ? "D.C." : x.k}</Link></span>; })}
-            {mode === "rate" ? <div className="sk-maplegend h28-legend">{bands.map((k) => { const b = bandStyle(k); return <span key={k}><i className={`h28-hz ${k}`} style={!RATE[k as Rate] ? { background: `linear-gradient(90deg, ${leadTint(b.color, 1)}, ${b.color})` } : undefined} />{b.label} <b>{counts[k] ?? 0}</b></span>; })}<em>{NT ? "states, by the leader's lead over the field: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up; a third party's states deepen from a light tint to full color the same way" : "states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up"}</em></div>
+            {list.filter((x) => x.k.includes("-") || x.k === "DC").map((x) => { const k = rk(x); return <span key={x.k} onMouseMove={(e) => point(e, x.k)} onMouseLeave={() => setHov(null)}><Link href={slug(x.k)} className={`h28-chip h28-hz ${k}`} style={!RATE[k as Rate] ? ({ "--hatch": mode === "rate" ? tkCss(bandStyle(k).color, x.fm) : "none", backgroundColor: mode === "rate" ? "#fbfaf6" : fill(x.k), color: "#141218" } as CSSProperties) : undefined}>{x.k === "DC" ? "D.C." : x.k}</Link></span>; })}
+            {view === "co" && mode === "rate" ? <div className="sk-maplegend h28-legend g28-wash">{[4, 3, 2, 1, 0].map((i) => <i key={"d" + i} style={{ background: WASH_D[i] }} />)}<i style={{ background: WASH_T }} />{[0, 1, 2, 3, 4].map((i) => <i key={"r" + i} style={{ background: WASH_R[i] }} />)}{TKS.map((tk) => <i key={tk.key} className="tk" style={{ background: `linear-gradient(90deg, ${leadTint(tk.color, 1)}, ${tk.color})` }} />)}<em>counties, from {last(res.D)} by {WASH_CUTS[4]} or more to {last(res.R)} by {WASH_CUTS[4]} or more, lavender within a point{NT ? `; a third party's counties tint from light to its full color by its lead` : ""}</em></div>
+              : mode === "rate" ? <div className="sk-maplegend h28-legend">{bands.map((k) => { const b = bandStyle(k); return <span key={k}><i className={`h28-hz ${k}`} style={!RATE[k as Rate] ? { background: tkCss(b.color, 6) } : undefined} />{b.label} <b>{counts[k] ?? 0}</b></span>; })}<em>{NT ? "states, by the leader's lead over the field: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up; a third party's states are hatched upright in its color, denser the same way" : "states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up"}</em></div>
               : mode === "prob" ? <span className="h28-scale"><em>{last(res.D)} certain</em><i className="pr" /><em>{last(res.R)} certain</em></span>
               : <span className="h28-scale"><em>Bluer than 2024</em><i className="sh" /><em>Redder than 2024</em></span>}
           </div>
@@ -309,7 +397,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
                 <li key={r.k} className={isX ? "tip" : undefined} onMouseEnter={() => setLit(r.k.split("-")[0])} onMouseMove={(e) => point(e, r.k)}>
                   <Link href={slug(r.k)}>
                     <span className="ab">{r.k}{isTp ? <i className="tp">TP</i> : null}</span>
-                    <span className="mg"><i style={{ width: `${Math.min(100, (Math.abs(r.m) / 20) * 100)}%`, background: b.color, marginLeft: r.m <= 0 ? "auto" : undefined }} /></span>
+                    <span className="mg"><i style={{ width: `${Math.min(100, ((typeof r.lead === "number" ? r.fm : Math.abs(r.m)) / 20) * 100)}%`, background: b.color, marginLeft: r.lead === "D" ? "auto" : undefined }} /></span>
                     <span className="mv" style={{ color: !RATE[k as Rate] ? b.color : RATE[k as Rate].text ?? b.color }}>{leadText(r)}</span>
                     <span className="ev">{r.ev}</span>
                     <span className="run">{r.run}</span>
@@ -335,7 +423,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
               <Link key={r.k} href={slug(r.k)} className={`sk-race ${r.lead === "R" ? "r" : "d"}`}>
                 <span className="st" onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}>{nameOf(r.k)}</span>
                 <span className={`sk-tag${flip ? " flip" : ""}`}>{flip ? "Flip" : "Hold"}</span>
-                <span className="m"><b>{fmtMg(r.m)}</b><span>{last(wn)} {fmtPct(pw)}</span></span>
+                <span className="m"><b>{leadText(r)}</b><span>{last(wn)} {fmtPct(pw)}</span></span>
                 <span className="vs">{r.ev} electoral vote{r.ev === 1 ? "" : "s"}{was != null ? ` · ${fmtMg(was)} in 2024` : ""}{TKS.map((tk, j) => ` · ${last(tk.name)} ${fmtSh(r.sT[j], 1)}`).join("")}</span>
               </Link>
             );
@@ -354,7 +442,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
           <h2 id="g28-t">Every state</h2>
           <div className="g28-scroll"><table>
             <thead><tr><th>State</th><th>EV</th><th>{last(res.D)}</th><th>{last(res.R)}</th>{TKS.map((tk) => <th key={tk.key} style={{ color: tk.color }}>{last(tk.name)}</th>)}<th>Margin</th><th>Leader wins</th></tr></thead>
-            <tbody>{[...list].sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).map((x) => (
+            <tbody>{[...list].sort((a, b) => a.fm - b.fm).map((x) => (
               <tr key={x.k}><td><Link href={slug(x.k)}>{nameOf(x.k)}</Link></td><td>{x.ev}</td><td>{fmtSh(x.sD)}</td><td>{fmtSh(x.sR)}</td>{TKS.map((tk, j) => <td key={tk.key}>{fmtSh(x.sT[j])}</td>)}
                 <td className={typeof x.lead === "number" ? "i" : x.lead === "D" ? "d" : "r"} style={typeof x.lead === "number" ? { color: TKS[x.lead]?.color } : undefined}>{leadText(x)}</td><td>{fmtPct(typeof x.lead === "number" ? x.pT[x.lead] : x.lead === "D" ? x.pD : x.pR)}</td></tr>
             ))}</tbody>
@@ -399,7 +487,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
       </nav>
 
       <Tip at={hov?.at ?? null}>
-        {hov?.kind === "st" ? stTip(hov.st) : hov?.kind === "band" ? (() => { const b = bandStyle(hov.k); const x = ladder.band[hov.k]; return <RateTip label={b.label} color={b.color} ink={b.ink} states={x?.states ?? []} ev={x?.ev ?? 0} />; })() : null}
+        {hov?.kind === "st" ? stTip(hov.st) : hov?.kind === "cty" ? cTip(hov.f) : hov?.kind === "band" ? (() => { const b = bandStyle(hov.k); const x = ladder.band[hov.k]; return <RateTip label={b.label} color={b.color} ink={b.ink} states={x?.states ?? []} ev={x?.ev ?? 0} />; })() : null}
       </Tip>
     </div>
   );
