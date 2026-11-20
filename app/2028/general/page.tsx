@@ -8,6 +8,8 @@ import "../h28.css";
 import { genRes } from "../lib";
 import { geo } from "../data28";
 import { getCands, getGen, getGenNames, getGrid } from "../server";
+import fs from "node:fs";
+import path from "node:path";
 
 export const metadata: Metadata = seo({
   title: "2028 general election forecast: build any matchup, with third parties",
@@ -24,7 +26,7 @@ export default function General28Page() {
   const base = { ...r, cty: {} };
   return (
     <main className="h28-page">
-      <General28 base={base} cands={getCands()} grid={grid} names={getGenNames()} a24={geo().a24} />
+      <General28 base={base} cands={getCands()} grid={grid} names={getGenNames()} a24={geo().a24} third={JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/forecast/2028/x/third.json"), "utf8"))} />
       <AdUnit />
       <Method />
       <AdUnit kind="multiplex" />

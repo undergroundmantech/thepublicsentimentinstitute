@@ -2,7 +2,11 @@
 // Democratic lead, the same sign as every On Point forecast.
 export const X = "/forecast/2028/x";
 
-export interface StateRes { D: number; R: number; I: number; O: number; m: number; pD: number; pR: number; pI: number; ev: number }
+export interface StateRes { D: number; R: number; I: number; O: number; m: number; pD: number; pR: number; pI: number; ev: number;
+  /** each third party ticket in this state: its votes, average share across the simulations and chance to carry it */
+  tk?: { v: number; s: number; p: number }[] }
+/** a third party ticket as the dashboard's engine reports it */
+export interface TicketRes { color: string; key: string; name: string; vp: string; label: string; votes: number; modeled: number; joint: number; target: number; user: number | null; fromD: number | null; custom: boolean; pWin: number; ev: number }
 /** a county: Democratic, Republican, third party and other votes, then the Democratic and Republican win chance */
 export type CtyRes = [number, number, number, number, number, number];
 export interface Res {
@@ -11,7 +15,7 @@ export interface Res {
   VD: number; VR: number; VI: number; VO: number; hist: number[]; tip: string | null;
   states: Record<string, StateRes>; cty: Record<string, CtyRes>;
   /** the artifact's General election tab: its national margin, 80% electoral vote range and simulation count */
-  natM?: number; ev10?: number; ev90?: number; hyp?: boolean; sims?: number;
+  natM?: number; ev10?: number; ev90?: number; hyp?: boolean; sims?: number; tickets?: TicketRes[];
   prim?: Record<"D" | "R", { share: number; front: string; frontShare: number; quality: number; consol: number; polled: boolean } | null>;
 }
 export interface DefaultFile {
@@ -43,13 +47,13 @@ export function fromDefault(f: DefaultFile): Res {
   for (const [k, v] of Object.entries(f.cty)) cty[k] = [v[0], v[1], 0, v[2], v[3], 1 - v[3]];
   return { D: s.D, R: s.R, T: null, pD: s.pD, pR: s.pR, pI: 0, pNone: s.pNone, evD: s.evD, evR: s.evR, evI: 0, VD: s.VD, VR: s.VR, VI: 0, VO: s.VO, hist: s.hist, tip: s.tip, states, cty };
 }
-type EngOut = { D: string; R: string; T: string | null; pD: number; pR: number; pI: number; pNone: number; evD: number; evR: number; evI: number; VD: number; VR: number; VI: number; VO: number; hist: number[]; tip: string | null;
+type EngOut = { tickets?: TicketRes[]; D: string; R: string; T: string | null; pD: number; pR: number; pI: number; pNone: number; evD: number; evR: number; evI: number; VD: number; VR: number; VI: number; VO: number; hist: number[]; tip: string | null;
   states: Record<string, StateRes>; cty: { fips: string; D: number; R: number; I: number; O: number; pD: number; pR: number }[]; prim: Res["prim"] };
 export function fromEngine(t: EngOut, N = 4000): Res {
   const cty: Record<string, CtyRes> = {};
   for (const c of t.cty) if (c) cty[c.fips] = [c.D, c.R, c.I, c.O, c.pD, c.pR];
   return { D: t.D, R: t.R, T: t.T, pD: t.pD, pR: t.pR, pI: t.pI, pNone: t.pNone, evD: t.evD, evR: t.evR, evI: t.evI, VD: t.VD, VR: t.VR, VI: t.VI, VO: t.VO,
-    hist: t.hist.map((h) => h / N), tip: t.tip, states: t.states, cty, prim: t.prim };
+    hist: t.hist.map((h) => h / N), tip: t.tip, states: t.states, cty, prim: t.prim, tickets: t.tickets ?? [] };
 }
 
 export const STATE_NAME: Record<string, string> = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", "ME-1": "Maine 1st District", "ME-2": "Maine 2nd District", "NE-2": "Nebraska 2nd District" };

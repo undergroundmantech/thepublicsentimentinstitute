@@ -143,289 +143,312 @@ export function createEngine(DATA, AKCT) {
   };
 })();
 
-// ticket builder: county engine and simulation, run in the browser from the datasets
+// ticket builder: the live dashboard's engine, Nov 18 2026 (v50b), with any number of third party tickets, up to four,
+// each with its modeled share from third_model, its county spread from third_county and the overlap from third_pairs. Two site
+// additions are marked "site": Alaska and Connecticut counties, and county win chances in the same runs.
 (() => {
-  const N = 4000;
-  // v26: coalitions by voter group, carried as county basis columns z_b1.. and candidate loadings g_b1..
-  let TRAITS = ['college', 'hisp', 'black', 'young', 'old', 'rural', 'evang'];
-  const basisTraits = (cm) => { const k = cm && cm.length ? Object.keys(cm[0]).filter((c) => /^z_b\d+$/.test(c)).map((c) => c.slice(2)) : []; return k.length ? k : TRAITS; };
-  const P = () => Object.assign({ dp: 'Generic Democrat', dvp: '', rp: 'Vance', rvp: '', tp: '', tps: null, tname: '', thome: '', tlanes: '' }, dash.params());
-  // lanes for a custom independent, each a draw over the dataset's political types
-  op28.LANES = { 'Right populist': { af: 1, pop: 0.8, anti: 0.5, leanR: 0.4 }, 'Libertarian': { lib: 1, anti: 0.4, leanR: 0.3 },
-    'Centrist': { mod: 1, sub: 0.6, inst: 0.3, leanD: 0.3, leanR: 0.3 }, 'Progressive left': { prog: 1, leanD: 0.4, anti: 0.2 },
-    'Anti establishment': { anti: 1, none: 0.8, mod: 0.3 }, 'Working class': { union: 1, pop: 0.8, mod: 0.3 } };
-  op28.parseLanes = (s) => { const o = {}; (s || '').split(';').filter(Boolean).forEach((x) => { const i = x.lastIndexOf('='); o[decodeURIComponent(x.slice(0, i))] = Number(x.slice(i + 1)); }); return o; };
-  op28.customCand = (p) => {
-    const ln = op28.parseLanes(p.tlanes); const tot = Object.values(ln).reduce((a, b) => a + (b > 0 ? b : 0), 0) || 0;
-    const draw = {}; const use = tot > 0 ? ln : { 'Anti establishment': 50, 'Centrist': 50 }; const s = tot > 0 ? tot : 100;
-    for (const [lane, wgt] of Object.entries(use)) for (const [ty, v] of Object.entries(op28.LANES[lane] || {})) draw[ty] = (draw[ty] || 0) + v * (wgt / s);
-    return { name: p.tname || 'Custom independent', party: 'X', draw: JSON.stringify(draw), home: JSON.stringify(p.thome ? { [p.thome]: 3 } : {}), third_default: 5, lane: 'Custom independent built from lanes.' };
-  };
-  const ME1 = 'ME-1', ME2 = 'ME-2', NE2 = 'NE-2';
-  let memo = { key: '', out: null };
-  const cand = (cands, party, name) => cands.find((c) => c.party === party && c.name === name);
-  const json = (s) => { try { return JSON.parse(s); } catch (e) { return {}; } };
-  const homeOf = (c) => Object.keys(json(c.home))[0] || null;
-  function rng(seed) { let s = seed >>> 0; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
-  function gauss(r) { let u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
-  op28.ticketReady = () => ['county_model', 'cands', 'types', 'states', 'state_extra'].every((id) => dash.data(id).status === 'ok');
-  const GP0 = { grid_g: 0.5, grid_L: 20, total28: 3300, state_frac: 0.95, w24: 0.45, wcomp: 0.35, w26: 0.2, comp_sd: 3.5, dx_a: 0.03, dx_b: 0.14, dx_pow: 1.5, dn_a: 0.04, dn_b: 0.10, third_of_n: 0.5, f_cap: 0.8, kappa_R: 0.134, kappa_D: 0.041, deficit_cap: 30, w_polled: 0.5, g0: 0.0165, hist_blend: 0.5, named_third_keep: 0.6, prim_pull: 0.35, fn_a: 3, fn_l: 30 };
-  op28.params = () => { const d = dash.data('general_params'); const o = Object.assign({}, GP0); if (d && d.status === 'ok') for (const r of d.data) if (isFinite(Number(r.value))) o[r.key] = Number(r.value); return o; };
-  // primary strength for a nominee: consolidation by county against the party's frontrunner, and primary quality
-  op28.primTerm = (party, name, GP) => {
-    const S = op28.primShares ? op28.primShares(party) : null; if (!S) return null; const N = S.names.indexOf(name); if (N < 0) return null;
-    const F = S.F, K = S.names.length; const w = S.hyp[name] ? 1 : GP.w_polled;
-    const dxv = new Float64Array(K), dnv = new Float64Array(K);
-    for (let j = 0; j < K; j++) {
-      const sN = S.sim[j][N], sF = S.sim[j][F];
-      dxv[j] = w * GP.dx_b * (Math.pow(1 - sN, GP.dx_pow) - Math.pow(1 - sF, GP.dx_pow));
-      dnv[j] = w * GP.dn_b * (sF - sN);
-    }
-    const deficit = Math.min(GP.deficit_cap, Math.max(0, (S.tgt[F] - S.tgt[N]) * 100));
-    const quality = w * (party === 'R' ? GP.kappa_R : GP.kappa_D) * deficit;
-    return { S, dxv, dnv, quality, share: S.tgt[N], front: S.names[F], frontShare: S.tgt[F], polled: !S.hyp[name] };
-  };
-  op28.ticket = () => {
-    if (!op28.ticketReady()) return null;
-    const p = P(); const key = JSON.stringify([p.dp, p.dvp, p.rp, p.rvp, p.tp, p.tps, p.tname, p.thome, p.tlanes, p.pout, p.ptgt, dash.data('prim_model').status, dash.data('general_params').status, dash.data('spending').status, (dash.data('districts') || {}).status, (dash.data('cd_xwalk') || {}).status]);
-    if (memo.key === key) return memo.out;
-    const GP = op28.params();
-    const cm = dash.data('county_model').data, cands = dash.data('cands').data, types = dash.data('types').data, st = dash.data('states').data, ex = dash.data('state_extra').data;
-    const D = cand(cands, 'D', p.dp) || cand(cands, 'D', 'Generic Democrat'), R = cand(cands, 'R', p.rp) || cand(cands, 'R', 'Vance');
-    const DV = p.dvp ? cand(cands, 'D', p.dvp) : null, RV = p.rvp ? cand(cands, 'R', p.rvp) : null;
-    const [tparty, tname] = (p.tp || '').split('|'); const T = tparty === 'X' ? op28.customCand(p) : tname ? cand(cands, tparty, tname) : null;
-    const tshare = T ? Math.max(0, Math.min(40, Number(p.tps ?? T.third_default) || 0)) / 100 : 0;
-    const ptD = op28.primTerm('D', D.name, GP), ptR = op28.primTerm('R', R.name, GP);
-    TRAITS = basisTraits(cm);
-    const g = (c) => (c ? TRAITS.map((t) => Number(c['g_' + t]) || 0) : TRAITS.map(() => 0));
-    const gD = g(D), gR = g(R), gDV = g(DV), gRV = g(RV);
-    // v48c: each candidate's own county term from the respondent file (cand_county): their turnout and vote against the generic
-    // nominee, by who lives in the county, which shows they follow and the county's traits. The old coalition basis is the fallback.
-    const CCd = dash.data('cand_county'); const CC = CCd && CCd.status === 'ok' && CCd.data.length ? CCd.data : null;
-    const ccIx = CC ? new Map(CC.map((r, k) => [r.fips, k])) : null;
-    const ccKey = (c, party) => (c && CC && Object.prototype.hasOwnProperty.call(CC[0], party + '|' + c.name) ? party + '|' + c.name : null);
-    const kD = ccKey(D, 'D'), kR = ccKey(R, 'R'), kDV = ccKey(DV, 'D'), kRV = ccKey(RV, 'R');
-    const n = cm.length, two = new Float64Array(n), tot = new Float64Array(n), othS = new Float64Array(n);
-    const xD = new Float64Array(n), xR = new Float64Array(n), xI = new Float64Array(n);
-    // issue coalitions: each nominee's issue profile, running mates at a quarter, on the county's persuadable issue lean
-    const ISS = ['col', 'epstein', 'iran', 'immig', 'socialism', 'trans'];
-    const ia = (c, f) => (c ? ISS.map((k) => f * (Number(c['a_' + k]) || 0)) : ISS.map(() => 0));
-    const aI = ISS.map((k, j) => ia(D, 1)[j] + ia(R, 1)[j] + ia(DV, 0.25)[j] + ia(RV, 0.25)[j]);
-    const LI = Number(GP.lam_issue) || 0;
-    let W = 0, mD = 0, mR = 0, mI = 0;
-    for (let i = 0; i < n; i++) {
-      const c = cm[i]; tot[i] = Number(c.total); two[i] = tot[i] * (1 - Number(c.other_share));
-      const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
-      othS[i] = Math.min(0.2, Math.max(0.002, GP.hist_blend * Number(c.other_share) + (1 - GP.hist_blend) * GP.g0 * prop)) * (T ? GP.named_third_keep : 1);
-      let aD = 0, aDV = 0, bR = 0, bRV = 0;
-      for (let k = 0; k < TRAITS.length; k++) { const z = Number(c['z_' + TRAITS[k]]); aD += gD[k] * z; aDV += gDV[k] * z; bR += gR[k] * z; bRV += gRV[k] * z; }
-      const cr = ccIx && ccIx.has(c.fips) ? CC[ccIx.get(c.fips)] : null;
-      if (cr) { if (kD) aD = Number(cr[kD]) || 0; if (kDV) aDV = Number(cr[kDV]) || 0; if (kR) bR = Number(cr[kR]) || 0; if (kRV) bRV = Number(cr[kRV]) || 0; }
-      const a = aD + 0.25 * aDV, b = bR + 0.25 * bRV;
-      let ii = 0; for (let k = 0; k < ISS.length; k++) ii += aI[k] * (Number(c['iss_' + ISS[k]]) || 0);
-      xD[i] = a; xR[i] = b; xI[i] = ii; W += two[i]; mD += a * two[i]; mR += b * two[i]; mI += ii * two[i];
-    }
-    mD /= W; mR /= W; mI /= W;
-    const hD = json(D.home), hR = json(R.home), vD = DV ? homeOf(DV) : null, vR = RV ? homeOf(RV) : null;
-    // v19: what each nominee's 2028 primary says, the 2026 candidate rules: party unity, demographic strength, home ground
-    // v48c: prim_w scales these; the respondent file's county term already holds each candidate's demographic strength
-    const pw = GP.prim_w == null ? 1 : Number(GP.prim_w);
-    const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return pw * ((pD[b] || 0) + (pR[b] || 0)); };
-    // v50: every ticket effect county by county, none uniform across a state.
-    //  elasticity  each county's own (county_model el: 0.7 its Gallup party ID move, 0.3 its vote history, the blend the 2026
-    //              Senate counties chose), vote weighted mean 1; national candidate effects move each county by it
-    //  home state  strongest around the candidate's home county and in the counties that move most: elasticity x
-    //              (1 + fn_a x exp(-distance / fn_l)), scaled so the state's total stays the researched edge; running mates
-    //              the same at their 1.5 points
-    //  primaries   each state's primary term goes to its counties by elasticity and by how the nominee ran in each
-    //              county's primary
-    const EL = new Float64Array(n); { let a = 0, b = 0; for (let i = 0; i < n; i++) { const v = Number(cm[i].el); EL[i] = isFinite(v) && v > 0 ? v : 1; a += EL[i] * tot[i]; b += tot[i]; } for (let i = 0; i < n; i++) EL[i] *= a > 0 ? b / a : 1; }
-    const byState = {}; for (let i = 0; i < n; i++) (byState[cm[i].st] || (byState[cm[i].st] = [])).push(i);
-    const fipsIx = new Map(cm.map((c, i) => [c.fips, i]));
-    const FN_A = GP.fn_a == null ? 3 : Number(GP.fn_a), FN_L = GP.fn_l == null ? 30 : Number(GP.fn_l);
-    const HO = new Float64Array(n), PRC = new Float64Array(n);
-    const spread = (C, amp) => {
-      if (!C) return; const hc = json(C.home_cty || '{}');
-      for (const [s, v] of Object.entries(amp)) { const ix = byState[s]; if (!ix || !v) continue; const h = hc[s] != null ? fipsIx.get(hc[s]) : undefined;
-        let sw = 0, sv = 0; const ww = ix.map((i) => { let w = EL[i]; if (h != null) { const dd = Math.hypot((Number(cm[i].cx) || 0) - (Number(cm[h].cx) || 0), (Number(cm[i].cy) || 0) - (Number(cm[h].cy) || 0)); w *= 1 + FN_A * Math.exp(-dd / FN_L); } sw += w * tot[i]; sv += tot[i]; return w; });
-        ix.forEach((i, k) => { HO[i] += v * ww[k] * sv / sw; }); } };
-    spread(D, hD); spread(R, hR);
-    if (DV && vD) spread(DV, { [vD]: -1.5 }); if (RV && vR) spread(RV, { [vR]: 1.5 });
-    const primSpread = (pt, Cn, pj) => {
-      const S = pt ? pt.S : null; const j = S ? S.names.indexOf(Cn.name) : -1; const K = S ? S.names.length : 0;
-      for (const [s, v0] of Object.entries(pj)) { const v = pw * Number(v0); const ix = byState[s]; if (!ix || !v) continue;
-        const sh = ix.map((i) => { if (j < 0) return NaN; const ii = S.cidx.get(cm[i].fips); return ii == null ? NaN : S.sh[ii * K + j]; });
-        let a = 0, b = 0; ix.forEach((i, k) => { if (isFinite(sh[k])) { a += sh[k] * tot[i]; b += tot[i]; } }); const m = b > 0 && a > 0 ? a / b : 1;
-        let sw = 0, sv = 0; const ww = ix.map((i, k) => { const r = isFinite(sh[k]) ? Math.max(0.25, Math.min(4, sh[k] / m)) : 1; const w = EL[i] * Math.sqrt(r); sw += w * tot[i]; sv += tot[i]; return w; });
-        ix.forEach((i, k) => { PRC[i] += v * ww[k] * sv / sw; }); } };
-    primSpread(ptD, D, pD); primSpread(ptR, R, pR);
-    const qual = (ptR ? -ptR.quality : 0) + (ptD ? ptD.quality : 0);
-    // v48g: a matchup with two or more of its own polls keeps part of its polling average beyond its two candidates' effects (pair_adj)
-    const PAd = dash.data('pair_adj'); const PA = PAd && PAd.status === 'ok' ? PAd.data : []; const pa = PA.find((r) => r.dem === D.name && r.rep === R.name);
-    const pairAdj = pa ? Number(pa.adj) || 0 : 0;
-    const natPart = Number(D.nat) + Number(R.nat) + qual + pairAdj;
-    // spending gridlock: project 2028 ad dollars from this ticket's own map, then damp each state's national swing
-    const SPr = dash.data('spending'); const spRows = SPr && SPr.status === 'ok' ? SPr.data : [];
-    const damp = {}; const spend = {}; let tip = null;
-    if (spRows.length) {
-      const pre = {}; const addp = (s, m, w) => { const a = pre[s] || (pre[s] = [0, 0]); a[0] += m * w; a[1] += w; };
-      for (let i = 0; i < cm.length; i++) { const c = cm[i]; const w = Number(c.total); const m = Number(c.base_margin) + natPart * Number(c.damp0 || 1) + (hD[c.st] || 0) + (hR[c.st] || 0) + pr(c.st);
-        addp(c.st, m, w); if (Number(c.ne2) > 0) addp('NE-2', m, w * Number(c.ne2)); if (c.st === 'ME') addp('ME-2', m, w * (1 - Number(c.me1))); }
-      for (const e of ex) addp(e.st, Number(e.base_margin) + natPart, 1);
-      const pm = (s) => (pre[s] ? pre[s][0] / pre[s][1] : NaN);
-      const full = spRows.filter((r) => isFinite(pm(r.st))).sort((a, b) => pm(a.st) - pm(b.st)); let cum = 0;
-      for (const r of full) { cum += Number(r.ev); if (cum >= 270) { tip = r.st; break; } }
-      const mt = tip ? pm(tip) : 0; let cs = 0; const comp = {};
-      for (const r of spRows) { const unit = r.st === 'NE' ? 'NE-2' : r.st === 'ME' ? 'ME-2' : r.st; const mu = pm(unit); const evw = r.st === 'NE' || r.st === 'ME' ? 1.5 : Number(r.ev);
-        comp[r.st] = isFinite(mu) ? evw * Math.exp(-0.5 * ((mu - mt) / GP.comp_sd) ** 2) : 0; cs += comp[r.st]; }
-      for (const r of spRows) { const sh = GP.w24 * Number(r.share24) + GP.wcomp * (cs > 0 ? comp[r.st] / cs : 0) + GP.w26 * Number(r.share26);
-        const dol = GP.total28 * GP.state_frac * sh; const pv = dol * 1e6 / Math.max(1, Number(r.two_party_votes)); const sat = 1 - Math.exp(-pv / GP.grid_L);
-        damp[r.st] = 1 - GP.grid_g * sat; spend[r.st] = { dollars: dol, perVoter: pv, saturation: sat, damp: damp[r.st], share: sh, y24: Number(r.p24), y26: Number(r.m26_2wk), y20: Number(r.p20) }; }
-    }
-    // v33: the money cutoff by media market. Each state's dollars split across the markets that reach its voters (dma_alloc),
-    // a market's dollars reach every county in it, in any state, and each county takes its market's damp
-    const dmaDamp = {};
-    { const DA = dash.data('dma_alloc'); if (DA && DA.status === 'ok' && Object.keys(spend).length) { const dd = {}, vv = {};
-      for (const r of DA.data) { const sp = spend[r.st]; if (!sp) continue; dd[r.dma] = (dd[r.dma] || 0) + sp.dollars * Number(r.share); vv[r.dma] = Number(r.votes); }
-      for (const k of Object.keys(dd)) { const pv = dd[k] * 1e6 / Math.max(1, vv[k]); dmaDamp[k] = 1 - GP.grid_g * (1 - Math.exp(-pv / GP.grid_L)); } } }
-    const dmp = (s, i) => (i != null && cm[i] && cm[i].dma && dmaDamp[cm[i].dma] != null ? dmaDamp[cm[i].dma] : (damp[String(s).split('-')[0]] ?? 1));
-    const eff = (s, i) => {
-      if (i == null) { let e = natPart * dmp(s, i) + (hD[s] || 0) + (hR[s] || 0) + pr(s); if (vD === s) e -= 1.5; if (vR === s) e += 1.5; return e; }
-      return natPart * dmp(s, i) * EL[i] + HO[i] + PRC[i] - (xD[i] - mD) + (xR[i] - mR) - LI * (xI[i] - mI);
-    };
-    // third party draw through political types, the county's third party history, and a primary candidate's own voters
-    const tsplit = Object.fromEntries(types.map((t) => [t.type, Number(t.d_share)]));
-    const draw = T ? json(T.draw) : {}; const tHome = T ? json(T.home) : {};
-    const q = new Float64Array(n), qd = new Float64Array(n), pull = new Float64Array(n);
-    const tPrim = T && (T.party === 'D' || T.party === 'R') && T.name !== (T.party === 'D' ? D.name : R.name) && op28.primShares ? op28.primShares(T.party) : null;
-    const tj = tPrim ? tPrim.names.indexOf(T.name) : -1;
-    let qs = 0, ps = 0;
-    if (T) for (let i = 0; i < n; i++) {
-      const c = cm[i]; let a = 0, b = 0;
-      for (const t of Object.keys(tsplit)) { const w = (draw[t] || 0) * Number(c['type_' + t]); a += w; b += w * tsplit[t]; }
-      const hb = tHome[c.st] ? 1 + tHome[c.st] / 10 : 1; const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
-      q[i] = a * hb * (Number(c.indep_open) || 1) * Math.sqrt(prop); qd[i] = a > 0 ? b / a : 0.5; qs += q[i] * tot[i];
-      if (tj >= 0) { const ii = tPrim.cidx.get(c.fips); if (ii != null) { pull[i] = GP.prim_pull * tPrim.sh[ii * tPrim.names.length + tj] * tPrim.V[ii]; ps += pull[i]; } }
-    }
-    let totAll = 0; for (let i = 0; i < n; i++) totAll += tot[i];
-    for (const e of ex) totAll += Number(e.total);
-    const k = T && qs > 0 ? Math.max(0, tshare * totAll - ps) / qs : 0;
-    const cty = new Array(n); const agg = {};
-    const add = (s, d, r, t, o, w = 1) => { const a = agg[s] || (agg[s] = { D: 0, R: 0, I: 0, O: 0 }); a.D += d * w; a.R += r * w; a.I += t * w; a.O += o * w; };
-    const consol = (pt, party, c, d, r) => {
-      if (!pt) return [d, r, 0]; const ii = pt.S.cidx.get(c.fips); if (ii == null) return [d, r, 0];
-      const K = pt.S.names.length; let ax = 0, an = 0;
-      for (let j = 0; j < K; j++) { const s = pt.S.sh[ii * K + j]; ax += s * pt.dxv[j]; an += s * pt.dnv[j]; }
-      // v48c: consol_w scales the rival supporters' defection; the respondent file's vote for each nominee already holds it
-      const own = party === 'D' ? d : r; const f = Math.min(GP.f_cap, pt.S.V[ii] / Math.max(1, own)) * (GP.consol_w == null ? 1 : Number(GP.consol_w));
-      const mx = Math.max(-0.3, Math.min(0.3, ax * f)) * own, mn = Math.max(-0.3, Math.min(0.3, an * f)) * own;
-      return party === 'D' ? [d - mx - mn, r + mx, GP.third_of_n * mn] : [d + mx, r - mx - mn, GP.third_of_n * mn];
-    };
-    let pcW = 0, pcD = 0, pcR = 0;
-    for (let i = 0; i < n; i++) {
-      const c = cm[i]; const gridAdj = spRows.length ? (dmp(c.st, i) - Number(c.damp0 || 1)) * Number(c.natsw || 0) : 0; const m = Number(c.base_margin) + gridAdj + eff(c.st, i);
-      let o = tot[i] * othS[i]; const tw = tot[i] - o;
-      let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0;
-      const m0 = (r - d) / Math.max(1, r + d) * 100;
-      let x = consol(ptD, 'D', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m1 = (r - d) / Math.max(1, r + d) * 100;
-      x = consol(ptR, 'R', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m2 = (r - d) / Math.max(1, r + d) * 100;
-      if (T) {
-        t = Math.min(0.6, k * q[i]) * tot[i]; const fd = Math.min(d, t * qd[i]), fr = Math.min(r, t - fd); d -= fd; r -= fr; t = fd + fr;
-        if (pull[i] > 0) { const pv = Math.min(pull[i], 0.5 * (T.party === 'D' ? d : r)); if (T.party === 'D') d -= pv; else r -= pv; t += pv; }
-      }
-      const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
-      cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i) * EL[i], home: HO[i], primc: PRC[i], pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
-      add(c.st, d, r, t, o);
-      if (Number(c.ne2) > 0) add(NE2, d, r, t, o, Number(c.ne2));
-      if (c.st === 'ME') { add(ME1, d, r, t, o, Number(c.me1)); add(ME2, d, r, t, o, 1 - Number(c.me1)); }
-    }
-    const natPC = pcW > 0 ? (pcD + pcR) / pcW : 0;
-    let qa = 0, qb = 0; for (let i = 0; i < n; i++) { qa += q[i] * tot[i]; qb += q[i] * qd[i] * tot[i]; }
-    const avgQd = qa > 0 ? qb / qa : 0.5;
-    for (const e of ex) {
-      const m = Number(e.base_margin) + eff(e.st, null) + natPC; const tt = Number(e.total); const o = tt * Math.min(0.2, Number(e.other_share)) * (T ? GP.named_third_keep : 1); const tw = tt - o;
-      let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = T ? tshare * tt : 0; const fd = Math.min(d, t * avgQd); d -= fd; r -= Math.min(r, t - fd);
-      add(e.st, d, r, t, o);
-    }
-    // congressional districts, 2026 lines: each district's own 2024 margin moved by the vote weighted swing of its
-    // counties against those counties' 2024 margin, half in margin points and half in logit share space
-    const DSd = dash.data('districts'), DXd = dash.data('cd_xwalk'); const dist = [];
-    if (DSd && DSd.status === 'ok' && DXd && DXd.status === 'ok') {
-      const ci = new Map(cm.map((c, i) => [c.fips, i])); const acc = {};
-      for (const x of DXd.data) { const i = ci.get(x.fips); if (i == null) continue; const w = Number(x.share_c); const c = cty[i]; const a = acc[x.cd] || (acc[x.cd] = [0, 0, 0, 0]); a[0] += c.D * w; a[1] += c.R * w; a[2] += c.I * w; a[3] += c.O * w; }
-      const lg = (m) => { const v = Math.max(-99.5, Math.min(99.5, m)) / 100; return Math.log((1 - v) / (1 + v)); };
-      const ilg = (x) => Math.max(-99.5, Math.min(99.5, (1 - 2 / (1 + Math.exp(-x))) * 100));
-      for (const r of DSd.data) {
-        const so = Number(r.state_only) === 1; const a = so ? agg[r.st] : acc[r.cd]; if (!a) continue;
-        const ma = ((a.R ?? a[1]) - (a.D ?? a[0])) / Math.max(1, (a.R ?? a[1]) + (a.D ?? a[0])) * 100; const m0 = Number(r.m24), x0 = Number(r.xw_m24);
-        const m = r.st === 'AK' ? ma : 0.5 * (m0 + ma - x0) + 0.5 * ilg(lg(m0) + lg(ma) - lg(x0));
-        const tt = (a.D ?? a[0]) + (a.R ?? a[1]) + (a.I ?? a[2]) + (a.O ?? a[3]);
-        dist.push({ cd: r.cd, st: r.st, m, m24: m0, iS: tt > 0 ? (a.I ?? a[2]) / tt : 0, oS: tt > 0 ? (a.O ?? a[3]) / tt : 0, win: [0, 0, 0] });
-      }
-    }
-    // site: Alaska and Connecticut are state rows in the model; spread each over its counties by the county's lean and
-    // turnout share, solving one shift so the counties add exactly to the state
-    for (const s of ['AK', 'CT']) {
-      const a = agg[s]; const rows = AKCT.filter((r) => r[1] === s); if (!a || !rows.length) continue;
-      const two = a.D + a.R, pD0 = a.D / two, L0 = Math.log(pD0 / (1 - pD0)); const ws = rows.reduce((x, r) => x + r[2], 0), ow = rows.reduce((x, r) => x + r[2] * r[4], 0);
-      let lo = -6, hi = 6;
-      for (let it = 0; it < 60; it++) { const mid = (lo + hi) / 2; let sv = 0; for (const r of rows) sv += (r[2] / ws) / (1 + Math.exp(-(L0 + mid + r[3]))); if (sv > pD0) hi = mid; else lo = mid; }
-      const dl = (lo + hi) / 2; let sD = 0; const tmp = rows.map((r) => { const tp = two * r[2] / ws; const d = tp / (1 + Math.exp(-(L0 + dl + r[3]))); sD += d; return [r, tp, d]; });
-      for (const [r, tp, d0] of tmp) { const d = d0 * a.D / sD, rr_ = tp - d;
-        cty.push({ fips: r[0], st: s, D: d, R: rr_, I: a.I * r[2] / ws, O: a.O * r[2] * r[4] / ow, m: ((rr_ - d) / Math.max(1, rr_ + d)) * 100, eff: 0, pc: 0, q: 0, damp: dmp(s), grid: 0, alloc: true }); }
-    }
-    const cwin = new Float64Array(cty.length * 3); const rcn = rng(9028); let cN = 0;
-    const rd = rng(2814);
-    // simulation: national error with fat tails, regions, each state's own spread; third party strength varies too
-    const meta = Object.fromEntries(st.map((r) => [r.st, r]));
-    const keys = Object.keys(agg).filter((s) => meta[s] && Number(meta[s].ev) > 0);
-    const sdS = keys.map((s) => { const r = meta[s]; return Math.max(1.5, Math.sqrt(Math.max(0, ((Number(r.p90) - Number(r.p10)) / 2.563) ** 2 - 4.6 ** 2 - 1.5 ** 2))); });
-    // v48b, from the 2026 backtest: states in the same region share a miss of about a point, and a state's own miss has fatter
-    // tails than a normal curve (t with 5 degrees of freedom, scaled to the same spread)
-    const REG8 = {"AK":7,"AL":0,"AR":0,"AZ":6,"CA":7,"CO":7,"CT":4,"DC":3,"DE":3,"FL":5,"GA":5,"HI":7,"IA":2,"ID":7,"IL":1,"IN":1,"KS":2,"KY":0,"LA":0,"MA":4,"MD":3,"ME":4,"MI":1,"MN":1,"MO":2,"MS":0,"MT":7,"NC":5,"ND":2,"NE":2,"NH":4,"NJ":3,"NM":6,"NV":7,"NY":3,"OH":1,"OK":2,"OR":7,"PA":3,"RI":4,"SC":5,"SD":2,"TN":0,"TX":6,"UT":7,"VA":5,"VT":4,"WA":7,"WI":1,"WV":0,"WY":7};
-    const tdraw = (r) => { let c = 0; for (let k = 0; k < 5; k++) { const z = gauss(r); c += z * z; } return gauss(r) / Math.sqrt(c / 5) / Math.sqrt(5 / 3); };
-    const rr = rng(2028); const ev = keys.map((s) => Number(meta[s].ev));
-    const win = keys.map(() => [0, 0, 0]); const share = keys.map(() => [0, 0, 0, 0]);
-    let wD = 0, wR = 0, wI = 0, none = 0, evD = 0, evR = 0, evI = 0; const hist = new Array(28).fill(0);
-    for (let s = 0; s < N; s++) {
-      let chi = 0; for (let j = 0; j < 6; j++) { const z = gauss(rr); chi += z * z; }
-      const nat = 3.8 * gauss(rr) / Math.sqrt(chi / 6); const fI = Math.exp(0.35 * gauss(rr) - 0.06); const fO = Math.exp(0.3 * gauss(rr) - 0.045);
-      let eD = 0, eR = 0, eI = 0, neW = 1; const stN = {}, regN = {};
-      for (let j = 0; j < keys.length; j++) {
-        const s0 = keys[j], base = s0.split('-')[0]; const a = agg[s0]; const total = a.D + a.R + a.I + a.O;
-        const rg = REG8[base] ?? -1; const sn = stN[base] ?? (stN[base] = (regN[rg] ?? (regN[rg] = 1.0 * gauss(rr))) + 1.12 * gauss(rr) + sdS[j] * tdraw(rr));
-        const I = Math.min(total * 0.7, a.I * fI * Math.exp(0.2 * gauss(rr))); const O = Math.min(total * 0.25, a.O * fO); const tw = total - I - O;
-        const m = ((a.R - a.D) / Math.max(1, a.R + a.D)) * 100 + nat * dmp(s0) + sn;
-        const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2;
-        const w = d >= r && d >= I ? 0 : r >= I ? 1 : 2;
-        win[j][w]++; share[j][0] += d / total; share[j][1] += r / total; share[j][2] += I / total; share[j][3] += O / total;
-        if (w === 0) eD += ev[j]; else if (w === 1) eR += ev[j]; else eI += ev[j];
-        if (s0 === 'NE') neW = w;
-      }
-      for (const x of dist) { const sn = stN[x.st] ?? 0; const m = x.m + nat * dmp(x.st) + sn + 3.0 * gauss(rd); const I = Math.min(0.7, x.iS * fI); const tw = 1 - I - Math.min(0.25, x.oS * fO);
-        const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2; x.win[d >= r && d >= I ? 0 : r >= I ? 1 : 2]++; }
-      // site: every county in the same runs, a quarter of them, its own 3 point error on top of the state's
-      if (s % 4 === 0) { cN++;
-        for (let i = 0; i < cty.length; i++) { const c = cty[i]; if (!c) continue; const m = c.m + nat * c.damp + (stN[c.st] ?? 0) + 3.0 * gauss(rcn);
-          if (c.I > 0) { const tt = c.D + c.R + c.I + c.O; const I = Math.min(0.7, (c.I / tt) * fI); const tw = 1 - I - c.O / tt; const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2; cwin[i * 3 + (d >= r && d >= I ? 0 : r >= I ? 1 : 2)]++; }
-          else cwin[i * 3 + (m < 0 ? 0 : 1)]++; } }
-      // Nebraska 3 stays Republican; Nebraska 1 goes with the state
-      eR += 1; if (neW === 0) eD += 1; else if (neW === 2) eI += 1; else eR += 1;
-      if (eD >= 270) wD++; else if (eR >= 270) wR++; else if (eI >= 270) wI++; else none++;
-      evD += eD; evR += eR; evI += eI; hist[Math.min(27, Math.floor(eD / 20))]++;
-    }
-    for (let i = 0; i < cty.length; i++) if (cty[i]) { cty[i].pD = cwin[i * 3] / Math.max(1, cN); cty[i].pR = cwin[i * 3 + 1] / Math.max(1, cN); cty[i].pI = cwin[i * 3 + 2] / Math.max(1, cN); }
-    const states = {};
-    keys.forEach((s, j) => { const a = agg[s]; states[s] = { D: a.D, R: a.R, I: a.I, O: a.O, ev: ev[j], m: ((a.R - a.D) / Math.max(1, a.R + a.D)) * 100,
-      pD: win[j][0] / N, pR: win[j][1] / N, pI: win[j][2] / N, sD: share[j][0] / N, sR: share[j][1] / N, sI: share[j][2] / N, sO: share[j][3] / N }; });
-    const districts = {}; for (const x of dist) districts[x.cd] = { st: x.st, m: x.m, m24: x.m24, pD: x.win[0] / N, pR: x.win[1] / N, pI: x.win[2] / N };
-    let VD = 0, VR = 0, VI = 0, VO = 0; for (const s of Object.keys(agg)) if (!s.includes('-')) { VD += agg[s].D; VR += agg[s].R; VI += agg[s].I; VO += agg[s].O; }
-    const pinfo = (pt, party, nat) => (pt ? { share: pt.share, front: pt.front, frontShare: pt.frontShare, quality: party === 'R' ? -pt.quality : pt.quality, consol: nat, polled: pt.polled } : null);
-    const out = { D: D.name, R: R.name, T: T ? T.name : null, pD: wD / N, pR: wR / N, pI: wI / N, pNone: none / N, evD: evD / N, evR: evR / N, evI: evI / N,
-      VD, VR, VI, VO, states, districts, cty, hist, keys, spend, tip, prim: { D: pinfo(ptD, 'D', pcW > 0 ? pcD / pcW : 0), R: pinfo(ptR, 'R', pcW > 0 ? pcR / pcW : 0) } };
-    memo = { key, out };
-    return out;
-  };
+const N = 4000;
+let TRAITS = ['college', 'hisp', 'black', 'young', 'old', 'rural', 'evang'];
+const basisTraits = (cm) => { const k = cm && cm.length ? Object.keys(cm[0]).filter((c) => /^z_b\d+$/.test(c)).map((c) => c.slice(2)) : []; return k.length ? k : TRAITS; };
+const P = () => Object.assign({ dp: 'Generic Democrat', dvp: '', rp: 'Vance', rvp: '', tp: '', tps: null, tx: '', tname: '', thome: '', tlanes: '' }, dash.params());
+op28.LANES = { 'Right populist': { af: 1, pop: 0.8, anti: 0.5, leanR: 0.4 }, 'Libertarian': { lib: 1, anti: 0.4, leanR: 0.3 },
+'Centrist': { mod: 1, sub: 0.6, inst: 0.3, leanD: 0.3, leanR: 0.3 }, 'Progressive left': { prog: 1, leanD: 0.4, anti: 0.2 },
+'Anti establishment': { anti: 1, none: 0.8, mod: 0.3 }, 'Working class': { union: 1, pop: 0.8, mod: 0.3 } };
+op28.parseLanes = (s) => { const o = {}; (s || '').split(';').filter(Boolean).forEach((x) => { const i = x.lastIndexOf('='); o[decodeURIComponent(x.slice(0, i))] = Number(x.slice(i + 1)); }); return o; };
+op28.customCand = (p) => {
+const ln = op28.parseLanes(p.tlanes); const tot = Object.values(ln).reduce((a, b) => a + (b > 0 ? b : 0), 0) || 0;
+const draw = {}; const use = tot > 0 ? ln : { 'Anti establishment': 50, 'Centrist': 50 }; const s = tot > 0 ? tot : 100;
+for (const [lane, wgt] of Object.entries(use)) for (const [ty, v] of Object.entries(op28.LANES[lane] || {})) draw[ty] = (draw[ty] || 0) + v * (wgt / s);
+return { name: p.tname || 'Custom independent', party: 'X', draw: JSON.stringify(draw), home: JSON.stringify(p.thome ? { [p.thome]: 3 } : {}), third_default: 5, lane: 'Custom independent built from lanes.' };
+};
+op28.parseTickets = (p) => {
+const raw = (p.tx || '').split(';').filter(Boolean).map((x) => { const [k, v, s] = x.split('~'); return { key: decodeURIComponent(k || ''), vp: decodeURIComponent(v || ''), share: s === '' || s == null ? null : Number(s) }; });
+if (!raw.length && p.tp) raw.push({ key: p.tp, vp: '', share: p.tps == null || p.tps === '' ? null : Number(p.tps) });
+return raw.filter((t) => t.key).slice(0, 4);
+};
+op28.writeTickets = (list) => list.map((t) => encodeURIComponent(t.key) + '~' + encodeURIComponent(t.vp || '') + '~' + (t.share == null || !isFinite(t.share) ? '' : t.share)).join(';');
+op28.thirdRow = (key) => { const d = dash.data('third_model'); return d && d.status === 'ok' ? d.data.find((r) => r.key === key) || null : null; };
+// site: the site's Tilt ratings are purple, so the dashboard's purple first ticket moves to the end of the order
+op28.TKC = ['#d98a1c', '#13a39a', '#c23f8e', '#7b4fd6'];
+const ME1 = 'ME-1', ME2 = 'ME-2', NE2 = 'NE-2';
+let memo = { key: '', out: null };
+const cand = (cands, party, name) => cands.find((c) => c.party === party && c.name === name);
+const json = (s) => { try { return JSON.parse(s); } catch (e) { return {}; } };
+const homeOf = (c) => Object.keys(json(c.home))[0] || null;
+function rng(seed) { let s = seed >>> 0; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
+function gauss(r) { let u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
+const REG8 = {"AK":7,"AL":0,"AR":0,"AZ":6,"CA":7,"CO":7,"CT":4,"DC":3,"DE":3,"FL":5,"GA":5,"HI":7,"IA":2,"ID":7,"IL":1,"IN":1,"KS":2,"KY":0,"LA":0,"MA":4,"MD":3,"ME":4,"MI":1,"MN":1,"MO":2,"MS":0,"MT":7,"NC":5,"ND":2,"NE":2,"NH":4,"NJ":3,"NM":6,"NV":7,"NY":3,"OH":1,"OK":2,"OR":7,"PA":3,"RI":4,"SC":5,"SD":2,"TN":0,"TX":6,"UT":7,"VA":5,"VT":4,"WA":7,"WI":1,"WV":0,"WY":7};
+function tdraw(r) { let c = 0; for (let k = 0; k < 5; k++) { const z = gauss(r); c += z * z; } return gauss(r) / Math.sqrt(c / 5) / Math.sqrt(5 / 3); }
+op28.ticketReady = () => ['county_model', 'cands', 'types', 'states', 'state_extra'].every((id) => dash.data(id).status === 'ok');
+const GP0 = { grid_g: 0.5, grid_L: 20, total28: 3300, state_frac: 0.95, w24: 0.45, wcomp: 0.35, w26: 0.2, comp_sd: 3.5, dx_a: 0.03, dx_b: 0.14, dx_pow: 1.5, dn_a: 0.04, dn_b: 0.10, third_of_n: 0.5, f_cap: 0.8, kappa_R: 0.134, kappa_D: 0.041, deficit_cap: 30, w_polled: 0.5, g0: 0.0165, hist_blend: 0.5, named_third_keep: 0.6, prim_pull: 0.35, fn_a: 3, fn_l: 30 };
+op28.params = () => { const d = dash.data('general_params'); const o = Object.assign({}, GP0); if (d && d.status === 'ok') for (const r of d.data) if (isFinite(Number(r.value))) o[r.key] = Number(r.value); return o; };
+op28.primTerm = (party, name, GP) => {
+const S = op28.primShares ? op28.primShares(party) : null; if (!S) return null; const N = S.names.indexOf(name); if (N < 0) return null;
+const F = S.F, K = S.names.length; const w = S.hyp[name] ? 1 : GP.w_polled;
+const dxv = new Float64Array(K), dnv = new Float64Array(K);
+for (let j = 0; j < K; j++) {
+const sN = S.sim[j][N], sF = S.sim[j][F];
+dxv[j] = w * GP.dx_b * (Math.pow(1 - sN, GP.dx_pow) - Math.pow(1 - sF, GP.dx_pow));
+dnv[j] = w * GP.dn_b * (sF - sN);
+}
+const deficit = Math.min(GP.deficit_cap, Math.max(0, (S.tgt[F] - S.tgt[N]) * 100));
+const quality = w * (party === 'R' ? GP.kappa_R : GP.kappa_D) * deficit;
+return { S, dxv, dnv, quality, share: S.tgt[N], front: S.names[F], frontShare: S.tgt[F], polled: !S.hyp[name] };
+};
+op28.ticket = () => {
+if (!op28.ticketReady()) return null;
+const p = P(); const key = JSON.stringify([p.dp, p.dvp, p.rp, p.rvp, p.tp, p.tps, p.tx, (dash.data('third_model') || {}).status, (dash.data('third_county') || {}).status, (dash.data('third_pairs') || {}).status, p.tname, p.thome, p.tlanes, p.pout, p.ptgt, dash.data('prim_model').status, dash.data('general_params').status, dash.data('spending').status, (dash.data('districts') || {}).status, (dash.data('cd_xwalk') || {}).status]);
+if (memo.key === key) return memo.out;
+const GP = op28.params();
+const cm = dash.data('county_model').data, cands = dash.data('cands').data, types = dash.data('types').data, st = dash.data('states').data, ex = dash.data('state_extra').data;
+const D = cand(cands, 'D', p.dp) || cand(cands, 'D', 'Generic Democrat'), R = cand(cands, 'R', p.rp) || cand(cands, 'R', 'Vance');
+const DV = p.dvp ? cand(cands, 'D', p.dvp) : null, RV = p.rvp ? cand(cands, 'R', p.rvp) : null;
+const TL = op28.parseTickets(p); const T = TL.some((t) => t.key !== 'D|' + D.name && t.key !== 'R|' + R.name) ? true : null;
+const ptD = op28.primTerm('D', D.name, GP), ptR = op28.primTerm('R', R.name, GP);
+TRAITS = basisTraits(cm);
+const g = (c) => (c ? TRAITS.map((t) => Number(c['g_' + t]) || 0) : TRAITS.map(() => 0));
+const gD = g(D), gR = g(R), gDV = g(DV), gRV = g(RV);
+const CCd = dash.data('cand_county'); const CC = CCd && CCd.status === 'ok' && CCd.data.length ? CCd.data : null;
+const ccIx = CC ? new Map(CC.map((r, k) => [r.fips, k])) : null;
+const ccKey = (c, party) => (c && CC && Object.prototype.hasOwnProperty.call(CC[0], party + '|' + c.name) ? party + '|' + c.name : null);
+const kD = ccKey(D, 'D'), kR = ccKey(R, 'R'), kDV = ccKey(DV, 'D'), kRV = ccKey(RV, 'R');
+const n = cm.length, two = new Float64Array(n), tot = new Float64Array(n), othS = new Float64Array(n);
+const xD = new Float64Array(n), xR = new Float64Array(n), xI = new Float64Array(n);
+const ISS = ['col', 'epstein', 'iran', 'immig', 'socialism', 'trans'];
+const ia = (c, f) => (c ? ISS.map((k) => f * (Number(c['a_' + k]) || 0)) : ISS.map(() => 0));
+const aI = ISS.map((k, j) => ia(D, 1)[j] + ia(R, 1)[j] + ia(DV, 0.25)[j] + ia(RV, 0.25)[j]);
+const LI = Number(GP.lam_issue) || 0;
+let W = 0, mD = 0, mR = 0, mI = 0;
+for (let i = 0; i < n; i++) {
+const c = cm[i]; tot[i] = Number(c.total); two[i] = tot[i] * (1 - Number(c.other_share));
+const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
+othS[i] = Math.min(0.2, Math.max(0.002, GP.hist_blend * Number(c.other_share) + (1 - GP.hist_blend) * GP.g0 * prop)) * (T ? GP.named_third_keep : 1);
+let aD = 0, aDV = 0, bR = 0, bRV = 0;
+for (let k = 0; k < TRAITS.length; k++) { const z = Number(c['z_' + TRAITS[k]]); aD += gD[k] * z; aDV += gDV[k] * z; bR += gR[k] * z; bRV += gRV[k] * z; }
+const cr = ccIx && ccIx.has(c.fips) ? CC[ccIx.get(c.fips)] : null;
+if (cr) { if (kD) aD = Number(cr[kD]) || 0; if (kDV) aDV = Number(cr[kDV]) || 0; if (kR) bR = Number(cr[kR]) || 0; if (kRV) bRV = Number(cr[kRV]) || 0; }
+const a = aD + 0.25 * aDV, b = bR + 0.25 * bRV;
+let ii = 0; for (let k = 0; k < ISS.length; k++) ii += aI[k] * (Number(c['iss_' + ISS[k]]) || 0);
+xD[i] = a; xR[i] = b; xI[i] = ii; W += two[i]; mD += a * two[i]; mR += b * two[i]; mI += ii * two[i];
+}
+mD /= W; mR /= W; mI /= W;
+const hD = json(D.home), hR = json(R.home), vD = DV ? homeOf(DV) : null, vR = RV ? homeOf(RV) : null;
+const pw = GP.prim_w == null ? 1 : Number(GP.prim_w);
+const pD = json(D.prim || '{}'), pR = json(R.prim || '{}'); const pr = (s) => { const b = String(s).split('-')[0]; return pw * ((pD[b] || 0) + (pR[b] || 0)); };
+const EL = new Float64Array(n); { let a = 0, b = 0; for (let i = 0; i < n; i++) { const v = Number(cm[i].el); EL[i] = isFinite(v) && v > 0 ? v : 1; a += EL[i] * tot[i]; b += tot[i]; } for (let i = 0; i < n; i++) EL[i] *= a > 0 ? b / a : 1; }
+const byState = {}; for (let i = 0; i < n; i++) (byState[cm[i].st] || (byState[cm[i].st] = [])).push(i);
+const fipsIx = new Map(cm.map((c, i) => [c.fips, i]));
+const FN_A = GP.fn_a == null ? 3 : Number(GP.fn_a), FN_L = GP.fn_l == null ? 30 : Number(GP.fn_l);
+const HO = new Float64Array(n), PRC = new Float64Array(n);
+const spread = (C, amp) => {
+if (!C) return; const hc = json(C.home_cty || '{}');
+for (const [s, v] of Object.entries(amp)) { const ix = byState[s]; if (!ix || !v) continue; const h = hc[s] != null ? fipsIx.get(hc[s]) : undefined;
+let sw = 0, sv = 0; const ww = ix.map((i) => { let w = EL[i]; if (h != null) { const dd = Math.hypot((Number(cm[i].cx) || 0) - (Number(cm[h].cx) || 0), (Number(cm[i].cy) || 0) - (Number(cm[h].cy) || 0)); w *= 1 + FN_A * Math.exp(-dd / FN_L); } sw += w * tot[i]; sv += tot[i]; return w; });
+ix.forEach((i, k) => { HO[i] += v * ww[k] * sv / sw; }); } };
+spread(D, hD); spread(R, hR);
+if (DV && vD) spread(DV, { [vD]: -1.5 }); if (RV && vR) spread(RV, { [vR]: 1.5 });
+const primSpread = (pt, Cn, pj) => {
+const S = pt ? pt.S : null; const j = S ? S.names.indexOf(Cn.name) : -1; const K = S ? S.names.length : 0;
+for (const [s, v0] of Object.entries(pj)) { const v = pw * Number(v0); const ix = byState[s]; if (!ix || !v) continue;
+const sh = ix.map((i) => { if (j < 0) return NaN; const ii = S.cidx.get(cm[i].fips); return ii == null ? NaN : S.sh[ii * K + j]; });
+let a = 0, b = 0; ix.forEach((i, k) => { if (isFinite(sh[k])) { a += sh[k] * tot[i]; b += tot[i]; } }); const m = b > 0 && a > 0 ? a / b : 1;
+let sw = 0, sv = 0; const ww = ix.map((i, k) => { const r = isFinite(sh[k]) ? Math.max(0.25, Math.min(4, sh[k] / m)) : 1; const w = EL[i] * Math.sqrt(r); sw += w * tot[i]; sv += tot[i]; return w; });
+ix.forEach((i, k) => { PRC[i] += v * ww[k] * sv / sw; }); } };
+primSpread(ptD, D, pD); primSpread(ptR, R, pR);
+const qual = (ptR ? -ptR.quality : 0) + (ptD ? ptD.quality : 0);
+const PAd = dash.data('pair_adj'); const PA = PAd && PAd.status === 'ok' ? PAd.data : []; const pa = PA.find((r) => r.dem === D.name && r.rep === R.name);
+const pairAdj = pa ? Number(pa.adj) || 0 : 0;
+const natPart = Number(D.nat) + Number(R.nat) + qual + pairAdj;
+const SPr = dash.data('spending'); const spRows = SPr && SPr.status === 'ok' ? SPr.data : [];
+const damp = {}; const spend = {}; let tip = null;
+if (spRows.length) {
+const pre = {}; const addp = (s, m, w) => { const a = pre[s] || (pre[s] = [0, 0]); a[0] += m * w; a[1] += w; };
+for (let i = 0; i < cm.length; i++) { const c = cm[i]; const w = Number(c.total); const m = Number(c.base_margin) + natPart * Number(c.damp0 || 1) + (hD[c.st] || 0) + (hR[c.st] || 0) + pr(c.st);
+addp(c.st, m, w); if (Number(c.ne2) > 0) addp('NE-2', m, w * Number(c.ne2)); if (c.st === 'ME') addp('ME-2', m, w * (1 - Number(c.me1))); }
+for (const e of ex) addp(e.st, Number(e.base_margin) + natPart, 1);
+const pm = (s) => (pre[s] ? pre[s][0] / pre[s][1] : NaN);
+const full = spRows.filter((r) => isFinite(pm(r.st))).sort((a, b) => pm(a.st) - pm(b.st)); let cum = 0;
+for (const r of full) { cum += Number(r.ev); if (cum >= 270) { tip = r.st; break; } }
+const mt = tip ? pm(tip) : 0; let cs = 0; const comp = {};
+for (const r of spRows) { const unit = r.st === 'NE' ? 'NE-2' : r.st === 'ME' ? 'ME-2' : r.st; const mu = pm(unit); const evw = r.st === 'NE' || r.st === 'ME' ? 1.5 : Number(r.ev);
+comp[r.st] = isFinite(mu) ? evw * Math.exp(-0.5 * ((mu - mt) / GP.comp_sd) ** 2) : 0; cs += comp[r.st]; }
+for (const r of spRows) { const sh = GP.w24 * Number(r.share24) + GP.wcomp * (cs > 0 ? comp[r.st] / cs : 0) + GP.w26 * Number(r.share26);
+const dol = GP.total28 * GP.state_frac * sh; const pv = dol * 1e6 / Math.max(1, Number(r.two_party_votes)); const sat = 1 - Math.exp(-pv / GP.grid_L);
+damp[r.st] = 1 - GP.grid_g * sat; spend[r.st] = { dollars: dol, perVoter: pv, saturation: sat, damp: damp[r.st], share: sh, y24: Number(r.p24), y26: Number(r.m26_2wk), y20: Number(r.p20) }; }
+}
+const dmaDamp = {};
+{ const DA = dash.data('dma_alloc'); if (DA && DA.status === 'ok' && Object.keys(spend).length) { const dd = {}, vv = {};
+for (const r of DA.data) { const sp = spend[r.st]; if (!sp) continue; dd[r.dma] = (dd[r.dma] || 0) + sp.dollars * Number(r.share); vv[r.dma] = Number(r.votes); }
+for (const k of Object.keys(dd)) { const pv = dd[k] * 1e6 / Math.max(1, vv[k]); dmaDamp[k] = 1 - GP.grid_g * (1 - Math.exp(-pv / GP.grid_L)); } } }
+const dmp = (s, i) => (i != null && cm[i] && cm[i].dma && dmaDamp[cm[i].dma] != null ? dmaDamp[cm[i].dma] : (damp[String(s).split('-')[0]] ?? 1));
+const eff = (s, i) => {
+if (i == null) { let e = natPart * dmp(s, i) + (hD[s] || 0) + (hR[s] || 0) + pr(s); if (vD === s) e -= 1.5; if (vR === s) e += 1.5; return e; }
+return natPart * dmp(s, i) * EL[i] + HO[i] + PRC[i] - (xD[i] - mD) + (xR[i] - mR) - LI * (xI[i] - mI);
+};
+const tsplit = Object.fromEntries(types.map((t) => [t.type, Number(t.d_share)]));
+const TCd = dash.data('third_county'); const TCc = TCd && TCd.status === 'ok' && TCd.data.length ? TCd.data : null;
+const tcIx = TCc ? new Map(TCc.map((r, k) => [r.fips, k])) : null;
+const TPd = dash.data('third_pairs'); const TPr = TPd && TPd.status === 'ok' ? new Map(TPd.data.map((r) => [r.key, r])) : new Map();
+let totAll = 0; for (let i = 0; i < n; i++) totAll += tot[i];
+for (const e of ex) totAll += Number(e.total);
+const nomKey = { ['D|' + D.name]: 1, ['R|' + R.name]: 1 };
+const TK = [];
+for (const t of TL) {
+if (nomKey[t.key] || TK.some((x) => x.key === t.key || x.vpKey === t.key)) continue;
+const [tp_, tn_] = t.key.split('|'); const custom = tp_ === 'X';
+const C = custom ? op28.customCand(p) : tp_ === 'I' ? cand(cands, 'I', tn_) : cand(cands, tp_, tn_); if (!C) continue;
+const row = custom ? null : op28.thirdRow(t.key);
+const V = t.vp && !nomKey[t.vp] && t.vp !== t.key && !TK.some((x) => x.key === t.vp || x.vpKey === t.vp) && !TL.some((x) => x.key === t.vp) ? (() => { const [a, b] = t.vp.split('|'); return cand(cands, a, b); })() : null;
+const vrow = V ? op28.thirdRow(t.vp) : null;
+let s0 = row ? Number(row.share) / 100 : Number(C.third_default || 5) / 100; let o = s0 / (1 - s0);
+if (row) { const mD = row['m|D|' + D.name], mR = row['m|R|' + R.name]; const a = mD == null || mD === '' ? 1 : Number(mD), b = mR == null || mR === '' ? 1 : Number(mR); if (!(a > 0) || !(b > 0)) continue; o *= a * b; }
+if (vrow) o *= Math.exp(0.25 * Number(vrow.lift || 0));
+const idx = new Float64Array(n), qd = new Float64Array(n); const hm = json(C.home), hv = V ? json(V.home) : {};
+const kI = row && TCc && Object.prototype.hasOwnProperty.call(TCc[0], t.key + '|idx') ? t.key : null;
+const kV = vrow && TCc && Object.prototype.hasOwnProperty.call(TCc[0], t.vp + '|idx') ? t.vp : null;
+const draw = json(C.draw); let qs = 0, ws = 0;
+for (let i = 0; i < n; i++) {
+const c = cm[i]; let a = 1, q = 0.5; const cr = tcIx && tcIx.has(c.fips) ? TCc[tcIx.get(c.fips)] : null;
+if (kI && cr) { a = Number(cr[kI + '|idx']) || 1; q = Number(cr[kI + '|qd']); if (!isFinite(q)) q = 0.5; }
+else { let x = 0, y = 0; for (const ty of Object.keys(tsplit)) { const w = (draw[ty] || 0) * Number(c['type_' + ty]); x += w; y += w * tsplit[ty]; }
+const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1; a = x * (Number(c.indep_open) || 1) * Math.sqrt(prop); q = x > 0 ? y / x : 0.5; }
+if (kV && cr) a = 0.8 * a + 0.2 * (Number(cr[kV + '|idx']) || 1);
+a *= (1 + Math.abs(hm[c.st] || 0) / 10) * (1 + 0.25 * Math.abs(hv[c.st] || 0) / 10);
+idx[i] = a; qd[i] = q; qs += a * tot[i]; ws += tot[i];
+}
+for (let i = 0; i < n; i++) idx[i] = qs > 0 ? idx[i] * ws / qs : 1;
+TK.push({ key: t.key, name: C.name, vp: V ? V.name : '', vpKey: V ? t.vp : '', label: C.name + (V ? ' and ' + V.name : ''), O: o, user: t.share != null && isFinite(t.share) ? Math.max(0, Math.min(45, t.share)) / 100 : null,
+modeled: o / (1 + o), idx, qd, fromD: row ? Number(row.from_d) : null, custom });
+}
+const NT = TK.length;
+const F = TK.map((a, k) => TK.reduce((f, b, j) => { if (j === k) return f; const r = TPr.get(a.key); const v = r ? Number(r[b.key]) : NaN; return f * (isFinite(v) && v > 0 ? Math.sqrt(v) : 1); }, 1));
+const Osum = TK.reduce((a, t) => a + t.O, 0);
+TK.forEach((t, k) => { t.target = t.user != null ? t.user : (t.O / (1 + Osum)) * F[k]; t.joint = (t.O / (1 + Osum)) * F[k]; });
+const scl = TK.map(() => 1); const tsh = TK.map(() => new Float64Array(n));
+let avgQd = TK.map(() => 0.5);
+for (let it = 0; it < 5 && NT; it++) {
+const got = TK.map(() => 0), gq = TK.map(() => 0);
+for (let i = 0; i < n; i++) { let den = 1; for (let k = 0; k < NT; k++) den += TK[k].O * scl[k] * TK[k].idx[i];
+for (let k = 0; k < NT; k++) { const v = Math.min(0.6, TK[k].O * scl[k] * TK[k].idx[i] / den * F[k]); tsh[k][i] = v; got[k] += v * tot[i]; gq[k] += v * tot[i] * TK[k].qd[i]; } }
+for (let k = 0; k < NT; k++) { const exV = ex.reduce((a, e) => a + Number(e.total), 0) * TK[k].target; got[k] += exV; avgQd[k] = got[k] > exV ? gq[k] / (got[k] - exV) : 0.5;
+scl[k] *= got[k] > 0 ? Math.pow(TK[k].target * totAll / got[k], 1.2) : 1; }
+}
+const cty = new Array(n); const agg = {};
+const add = (s, d, r, t, o, w = 1, tk = null) => { const a = agg[s] || (agg[s] = { D: 0, R: 0, I: 0, O: 0, T: new Array(NT).fill(0) }); a.D += d * w; a.R += r * w; a.I += t * w; a.O += o * w; if (tk) for (let k = 0; k < NT; k++) a.T[k] += tk[k] * w; };
+const consol = (pt, party, c, d, r) => {
+if (!pt) return [d, r, 0]; const ii = pt.S.cidx.get(c.fips); if (ii == null) return [d, r, 0];
+const K = pt.S.names.length; let ax = 0, an = 0;
+for (let j = 0; j < K; j++) { const s = pt.S.sh[ii * K + j]; ax += s * pt.dxv[j]; an += s * pt.dnv[j]; }
+const own = party === 'D' ? d : r; const f = Math.min(GP.f_cap, pt.S.V[ii] / Math.max(1, own)) * (GP.consol_w == null ? 1 : Number(GP.consol_w));
+const mx = Math.max(-0.3, Math.min(0.3, ax * f)) * own, mn = Math.max(-0.3, Math.min(0.3, an * f)) * own;
+return party === 'D' ? [d - mx - mn, r + mx, GP.third_of_n * mn] : [d + mx, r - mx - mn, GP.third_of_n * mn];
+};
+let pcW = 0, pcD = 0, pcR = 0;
+for (let i = 0; i < n; i++) {
+const c = cm[i]; const gridAdj = spRows.length ? (dmp(c.st, i) - Number(c.damp0 || 1)) * Number(c.natsw || 0) : 0; const m = Number(c.base_margin) + gridAdj + eff(c.st, i);
+let o = tot[i] * othS[i]; const tw = tot[i] - o;
+let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0;
+const m0 = (r - d) / Math.max(1, r + d) * 100;
+let x = consol(ptD, 'D', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m1 = (r - d) / Math.max(1, r + d) * 100;
+x = consol(ptR, 'R', c, d, r); d = x[0]; r = x[1]; o += x[2]; const m2 = (r - d) / Math.max(1, r + d) * 100;
+const tk = NT ? new Array(NT) : null;
+for (let k2 = 0; k2 < NT; k2++) { const tv = tsh[k2][i] * tot[i]; const fd = Math.min(d, tv * TK[k2].qd[i]), fr = Math.min(r, tv - fd); d -= fd; r -= fr; tk[k2] = fd + fr; t += fd + fr; }
+const pc = m2 - m0; pcW += d + r; pcD += (m1 - m0) * (d + r); pcR += (m2 - m1) * (d + r);
+cty[i] = { fips: c.fips, st: c.st, D: d, R: r, I: t, O: o, T: tk, m: ((r - d) / Math.max(1, r + d)) * 100, eff: eff(c.st, i) - natPart * dmp(c.st, i) * EL[i], home: HO[i], primc: PRC[i], pc, cc: -(xD[i] - mD) + (xR[i] - mR), q: qual * dmp(c.st, i), damp: dmp(c.st, i), grid: Number(c.natsw || 0) * (dmp(c.st) - 1) };
+add(c.st, d, r, t, o, 1, tk);
+if (Number(c.ne2) > 0) add(NE2, d, r, t, o, Number(c.ne2), tk);
+if (c.st === 'ME') { add(ME1, d, r, t, o, Number(c.me1), tk); add(ME2, d, r, t, o, 1 - Number(c.me1), tk); }
+}
+const natPC = pcW > 0 ? (pcD + pcR) / pcW : 0;
+for (const e of ex) {
+const m = Number(e.base_margin) + eff(e.st, null) + natPC; const tt = Number(e.total); const o = tt * Math.min(0.2, Number(e.other_share)) * (T ? GP.named_third_keep : 1); const tw = tt - o;
+let d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2, t = 0; const tk = NT ? new Array(NT) : null;
+for (let k2 = 0; k2 < NT; k2++) { const tv = TK[k2].target * tt; const fd = Math.min(d, tv * avgQd[k2]), fr = Math.min(r, tv - fd); d -= fd; r -= fr; tk[k2] = fd + fr; t += fd + fr; }
+add(e.st, d, r, t, o, 1, tk);
+}
+const DSd = dash.data('districts'), DXd = dash.data('cd_xwalk'); const dist = [];
+if (DSd && DSd.status === 'ok' && DXd && DXd.status === 'ok') {
+const ci = new Map(cm.map((c, i) => [c.fips, i])); const acc = {};
+for (const x of DXd.data) { const i = ci.get(x.fips); if (i == null) continue; const w = Number(x.share_c); const c = cty[i]; const a = acc[x.cd] || (acc[x.cd] = [0, 0, 0, 0, new Array(NT).fill(0)]); a[0] += c.D * w; a[1] += c.R * w; a[2] += c.I * w; a[3] += c.O * w; for (let k = 0; k < NT; k++) a[4][k] += (c.T ? c.T[k] : 0) * w; }
+const lg = (m) => { const v = Math.max(-99.5, Math.min(99.5, m)) / 100; return Math.log((1 - v) / (1 + v)); };
+const ilg = (x) => Math.max(-99.5, Math.min(99.5, (1 - 2 / (1 + Math.exp(-x))) * 100));
+for (const r of DSd.data) {
+const so = Number(r.state_only) === 1; const a = so ? agg[r.st] : acc[r.cd]; if (!a) continue;
+const ma = ((a.R ?? a[1]) - (a.D ?? a[0])) / Math.max(1, (a.R ?? a[1]) + (a.D ?? a[0])) * 100; const m0 = Number(r.m24), x0 = Number(r.xw_m24);
+const m = r.st === 'AK' ? ma : 0.5 * (m0 + ma - x0) + 0.5 * ilg(lg(m0) + lg(ma) - lg(x0));
+const tt = (a.D ?? a[0]) + (a.R ?? a[1]) + (a.I ?? a[2]) + (a.O ?? a[3]);
+const tks = a.T ?? a[4]; dist.push({ cd: r.cd, st: r.st, m, m24: m0, iS: tt > 0 ? (a.I ?? a[2]) / tt : 0, iK: TK.map((_, k) => (tt > 0 ? tks[k] / tt : 0)), oS: tt > 0 ? (a.O ?? a[3]) / tt : 0, win: [0, 0, 0] });
+}
+}
+// site: Alaska and Connecticut are state rows in the model; spread each over its counties by the county's lean and
+// turnout share, solving one shift so the counties add exactly to the state
+for (const s of ['AK', 'CT']) {
+const a = agg[s]; const rows = AKCT.filter((r) => r[1] === s); if (!a || !rows.length) continue;
+const two = a.D + a.R, pD0 = a.D / two, L0 = Math.log(pD0 / (1 - pD0)); const ws = rows.reduce((x, r) => x + r[2], 0), ow = rows.reduce((x, r) => x + r[2] * r[4], 0);
+let lo = -6, hi = 6;
+for (let it = 0; it < 60; it++) { const mid = (lo + hi) / 2; let sv = 0; for (const r of rows) sv += (r[2] / ws) / (1 + Math.exp(-(L0 + mid + r[3]))); if (sv > pD0) hi = mid; else lo = mid; }
+const dl = (lo + hi) / 2; let sD = 0; const tmp = rows.map((r) => { const tp = two * r[2] / ws; const d = tp / (1 + Math.exp(-(L0 + dl + r[3]))); sD += d; return [r, tp, d]; });
+for (const [r, tp, d0] of tmp) { const d = d0 * a.D / sD, rr_ = tp - d;
+cty.push({ fips: r[0], st: s, D: d, R: rr_, I: a.I * r[2] / ws, T: a.T.map((v) => v * r[2] / ws), O: a.O * r[2] * r[4] / ow, m: ((rr_ - d) / Math.max(1, rr_ + d)) * 100, eff: 0, pc: 0, q: 0, damp: dmp(s), grid: 0, alloc: true }); }
+}
+const cwin = new Float64Array(cty.length * 3); const rcn = rng(9028); let cN = 0;
+const rd = rng(2814);
+const meta = Object.fromEntries(st.map((r) => [r.st, r]));
+const keys = Object.keys(agg).filter((s) => meta[s] && Number(meta[s].ev) > 0);
+const sdS = keys.map((s) => { const r = meta[s]; return Math.max(1.5, Math.sqrt(Math.max(0, ((Number(r.p90) - Number(r.p10)) / 2.563) ** 2 - 4.6 ** 2 - 1.5 ** 2))); });
+const rr = rng(2028); const ev = keys.map((s) => Number(meta[s].ev));
+const win = keys.map(() => [0, 0, 0]); const share = keys.map(() => [0, 0, 0, 0]); const winK = keys.map(() => new Array(NT).fill(0)); const shK = keys.map(() => new Array(NT).fill(0));
+const tW = TK.map(() => 0), tEV = TK.map(() => 0);
+let wD = 0, wR = 0, wI = 0, none = 0, evD = 0, evR = 0, evI = 0; const hist = new Array(28).fill(0);
+for (let s = 0; s < N; s++) {
+let chi = 0; for (let j = 0; j < 6; j++) { const z = gauss(rr); chi += z * z; }
+const nat = 3.8 * gauss(rr) / Math.sqrt(chi / 6); const fI = Math.exp(0.35 * gauss(rr) - 0.06); const fO = Math.exp(0.3 * gauss(rr) - 0.045);
+const fK = TK.map((_, k) => (k === 0 ? fI : Math.exp(0.35 * gauss(rr) - 0.06))); const eK = TK.map(() => 0);
+let eD = 0, eR = 0, eI = 0, neW = 1; const stN = {}, regN = {};
+for (let j = 0; j < keys.length; j++) {
+const s0 = keys[j], base = s0.split('-')[0]; const a = agg[s0]; const total = a.D + a.R + a.I + a.O;
+const rg = REG8[base] ?? -1; const sn = stN[base] ?? (stN[base] = (regN[rg] ?? (regN[rg] = 1.0 * gauss(rr))) + 1.12 * gauss(rr) + sdS[j] * tdraw(rr));
+const zI = Math.exp(0.2 * gauss(rr));
+const IK = TK.map((_, k) => a.T[k] * fK[k] * zI); let I = NT ? IK.reduce((x, y) => x + y, 0) : Math.min(total * 0.7, a.I * fI * zI);
+if (I > total * 0.7) { const f = total * 0.7 / I; for (let k = 0; k < NT; k++) IK[k] *= f; I = total * 0.7; }
+const O = Math.min(total * 0.25, a.O * fO); const tw = total - I - O;
+const m = ((a.R - a.D) / Math.max(1, a.R + a.D)) * 100 + nat * dmp(s0) + sn;
+const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2;
+let kb = -1, Ib = 0; for (let k = 0; k < NT; k++) if (IK[k] > Ib) { Ib = IK[k]; kb = k; }
+if (!NT) Ib = I;
+const w = d >= r && d >= Ib ? 0 : r >= Ib ? 1 : 2;
+win[j][w]++; share[j][0] += d / total; share[j][1] += r / total; share[j][2] += I / total; share[j][3] += O / total;
+for (let k = 0; k < NT; k++) shK[j][k] += IK[k] / total;
+if (w === 0) eD += ev[j]; else if (w === 1) eR += ev[j]; else { eI += ev[j]; if (kb >= 0) { winK[j][kb]++; eK[kb] += ev[j]; } }
+if (s0 === 'NE') neW = w;
+}
+for (const x of dist) { const sn = stN[x.st] ?? 0; const m = x.m + nat * dmp(x.st) + sn + 3.0 * gauss(rd); const I = Math.min(0.7, NT ? x.iK.reduce((a, v, k) => a + v * fK[k], 0) : x.iS * fI); const tw = 1 - I - Math.min(0.25, x.oS * fO);
+const Ib = NT ? Math.max(...x.iK.map((v, k) => v * fK[k])) : I;
+const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2; x.win[d >= r && d >= Ib ? 0 : r >= Ib ? 1 : 2]++; }
+// site: every county in the same runs, a quarter of them, its own 3 point error on top of the state's
+if (s % 4 === 0) { cN++;
+for (let i = 0; i < cty.length; i++) { const c = cty[i]; if (!c) continue; const m = c.m + nat * c.damp + (stN[c.st] ?? 0) + 3.0 * gauss(rcn);
+if (c.I > 0) { const tt = c.D + c.R + c.I + c.O; const IK = NT && c.T ? c.T.map((v, k) => Math.min(0.7, (v / tt) * fK[k])) : [Math.min(0.7, (c.I / tt) * fI)]; const I = IK.reduce((x, y) => x + y, 0); const Ib = Math.max(...IK); const tw = 1 - I - c.O / tt; const d = tw * (1 - m / 100) / 2, r = tw * (1 + m / 100) / 2; cwin[i * 3 + (d >= r && d >= Ib ? 0 : r >= Ib ? 1 : 2)]++; }
+else cwin[i * 3 + (m < 0 ? 0 : 1)]++; } }
+eR += 1; if (neW === 0) eD += 1; else if (neW === 2) eI += 1; else eR += 1;
+let kw = -1; for (let k = 0; k < NT; k++) { tEV[k] += eK[k]; if (eK[k] >= 270) kw = k; }
+if (eD >= 270) wD++; else if (eR >= 270) wR++; else if (kw >= 0 || (!NT && eI >= 270)) { wI++; if (kw >= 0) tW[kw]++; } else none++;
+evD += eD; evR += eR; evI += eI; hist[Math.min(27, Math.floor(eD / 20))]++;
+}
+for (let i = 0; i < cty.length; i++) if (cty[i]) { cty[i].pD = cwin[i * 3] / Math.max(1, cN); cty[i].pR = cwin[i * 3 + 1] / Math.max(1, cN); cty[i].pI = cwin[i * 3 + 2] / Math.max(1, cN); }
+const states = {};
+keys.forEach((s, j) => { const a = agg[s]; states[s] = { D: a.D, R: a.R, I: a.I, O: a.O, ev: ev[j], m: ((a.R - a.D) / Math.max(1, a.R + a.D)) * 100,
+pD: win[j][0] / N, pR: win[j][1] / N, pI: win[j][2] / N, sD: share[j][0] / N, sR: share[j][1] / N, sI: share[j][2] / N, sO: share[j][3] / N,
+T: a.T.slice(), tk: TK.map((_, k) => ({ v: a.T[k], s: shK[j][k] / N, p: winK[j][k] / N })) }; });
+const districts = {}; for (const x of dist) districts[x.cd] = { st: x.st, m: x.m, m24: x.m24, pD: x.win[0] / N, pR: x.win[1] / N, pI: x.win[2] / N };
+let VD = 0, VR = 0, VI = 0, VO = 0; const VK = TK.map(() => 0); for (const s of Object.keys(agg)) if (!s.includes('-')) { VD += agg[s].D; VR += agg[s].R; VI += agg[s].I; VO += agg[s].O; for (let k = 0; k < NT; k++) VK[k] += agg[s].T[k]; }
+const tickets = TK.map((t, k) => ({ color: op28.TKC[k % op28.TKC.length], key: t.key, name: t.name, vp: t.vp, label: t.label, votes: VK[k], modeled: t.modeled, joint: t.joint, target: t.target, user: t.user, fromD: t.fromD, custom: t.custom, pWin: tW[k] / N, ev: tEV[k] / N }));
+const pinfo = (pt, party, nat) => (pt ? { share: pt.share, front: pt.front, frontShare: pt.frontShare, quality: party === 'R' ? -pt.quality : pt.quality, consol: nat, polled: pt.polled } : null);
+const out = { D: D.name, R: R.name, T: NT ? TK.map((t) => t.label).join(' + ') : null, tickets, pD: wD / N, pR: wR / N, pI: wI / N, pNone: none / N, evD: evD / N, evR: evR / N, evI: evI / N,
+VD, VR, VI, VO, states, districts, cty, hist, keys, spend, tip, prim: { D: pinfo(ptD, 'D', pcW > 0 ? pcD / pcW : 0), R: pinfo(ptR, 'R', pcW > 0 ? pcR / pcW : 0) } };
+memo = { key, out };
+return out;
+};
 })();
 
   return {
