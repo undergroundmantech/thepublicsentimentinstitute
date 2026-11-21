@@ -7,6 +7,11 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 21, 2026: polls released Nov 17 to 20 ──
+  { pollster: "Emerson", endDate: "2026-11-16", sampleSize: 1000, sampleType: "RV", results: { Approve: 37, Disapprove: 54 } },   // Nov 14 to 16, 1,000 voters matched to the voter file
+  { pollster: "Economist/YouGov", endDate: "2026-11-16", sampleSize: 1386, sampleType: "RV", results: { Approve: 37, Disapprove: 62 } },   // Nov 13 to 16, registered voters; 35 to 61 among all 1,628 citizens
+  { pollster: "Echelon Insights (R)", endDate: "2026-11-16", sampleSize: 1027, sampleType: "LV", results: { Approve: 36, Disapprove: 63 } },   // Nov 12 to 16, verified voters in the likely electorate
+  { pollster: "Strength In Numbers/Verasight", endDate: "2026-11-13", sampleSize: 1500, sampleType: "A", results: { Approve: 31, Disapprove: 66 } },   // Nov 11 to 13, adults; the release gives no sample size, so 1,500 stands in
   // ── Added Nov 17, 2026: post midterm national polls ──
   { pollster: "On Point Polling", endDate: "2026-11-16", sampleSize: 920, sampleType: "RV", results: { Approve: 39.0, Disapprove: 58.6 } },   // On Point national poll, Nov 16, registered voters, as published
   { pollster: "Morning Consult", endDate: "2026-11-15", sampleSize: 2200, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },   // Nov 13 to 15, registered voters

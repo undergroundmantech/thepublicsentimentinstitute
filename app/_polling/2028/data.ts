@@ -13,6 +13,12 @@ export type Poll2028 = Poll & { startDate?: string; sampleImputed?: boolean };
 
 /** 2028 Republican presidential primary, national. */
 export const R_PRIMARY_2028: Poll2028[] = [
+  // Added Nov 21 2026: Echelon Insights Nov 12 to 16, 397 Republicans and leaners in the likely electorate
+  {"pollster": "Echelon Insights", "startDate": "2026-11-12", "endDate": "2026-11-16", "sampleSize": 397, "sampleType": "LV", "results": {"Vance": 40.0, "Rubio": 26.0, "DeSantis": 12.0, "Kennedy": 4.0, "Huckabee Sanders": 2.0, "Carlson": 1.0, "Cruz": 1.0, "Greene": 1.0, "John Kennedy": 1.0, "Youngkin": 1.0, "Rand Paul": 1.0, "Other": 2.0, "Undecided": 8.0}},
+  // Emerson College Nov 14 to 16, about 418 Republican primary and caucus voters, the list question
+  {"pollster": "Emerson College", "startDate": "2026-11-14", "endDate": "2026-11-16", "sampleSize": 418, "sampleType": "RV", "results": {"Rubio": 43.6, "Vance": 24.0, "DeSantis": 9.4, "Trump Jr.": 6.0, "Carlson": 5.0, "Cruz": 3.7}},
+  // Rasmussen Reports Nov 5 and 8 to 9, likely Republican primary voters out of 1,090 likely voters; subsample size not published
+  {"pollster": "Rasmussen Reports", "startDate": "2026-11-05", "endDate": "2026-11-09", "sampleSize": 450, "sampleType": "LV", "results": {"Vance": 32.0, "Rubio": 27.0, "DeSantis": 13.0, "Cruz": 5.0, "Haley": 3.0, "Kennedy": 3.0}, "sampleImputed": true},
   // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
   {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 350, "sampleType": "RV", "results": {"Vance": 47.1, "Rubio": 23.6, "DeSantis": 12.3, "Cruz": 4.7, "Other": 3.5, "Carlson": 3.3, "Ramaswamy": 2.9, "Haley": 2.0, "Kemp": 0.7}},
   // On Point Polling post election national survey, Nov 6 2026, 1,088 registered voters
@@ -152,6 +158,10 @@ export const R_PRIMARY_2028: Poll2028[] = [
 
 /** 2028 Democratic presidential primary, national. */
 export const D_PRIMARY_2028: Poll2028[] = [
+  // Added Nov 21 2026: Echelon Insights Nov 12 to 16, 531 Democrats and leaners in the likely electorate
+  {"pollster": "Echelon Insights", "startDate": "2026-11-12", "endDate": "2026-11-16", "sampleSize": 531, "sampleType": "LV", "results": {"Harris": 19.0, "Buttigieg": 15.0, "Newsom": 11.0, "Ocasio-Cortez": 10.0, "Ossoff": 10.0, "Kelly": 5.0, "Shapiro": 4.0, "Pritzker": 3.0, "Beshear": 2.0, "Whitmer": 2.0, "Booker": 2.0, "Khanna": 1.0, "Warnock": 1.0, "Other": 1.0, "Undecided": 13.0}},
+  // Emerson College Nov 14 to 16, Democratic primary voters, the list question; subsample size not published
+  {"pollster": "Emerson College", "startDate": "2026-11-14", "endDate": "2026-11-16", "sampleSize": 450, "sampleType": "RV", "results": {"Ossoff": 17.0, "Harris": 16.0, "Ocasio-Cortez": 15.0, "Buttigieg": 14.0, "Newsom": 11.0, "Beshear": 7.0, "Kelly": 4.0, "Shapiro": 3.0, "Pritzker": 3.0}, "sampleImputed": true},
   // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
   {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 491, "sampleType": "RV", "results": {"Harris": 36.9, "Newsom": 14.0, "Kelly": 9.2, "Ossoff": 7.9, "Buttigieg": 7.6, "Ocasio-Cortez": 7.0, "Shapiro": 6.1, "Beshear": 3.8, "Other": 2.3, "Booker": 2.2, "Stephen A. Smith": 2.1, "Pritzker": 0.9}},
   // On Point Polling post election national survey, Nov 6 2026, 1,088 registered voters
@@ -295,6 +305,14 @@ export const D_PRIMARY_2028: Poll2028[] = [
 
 /** 2028 general election head to heads, national. Each row is one matchup of one poll. */
 export const GENERAL_2028: Poll2028[] = [
+  // Added Nov 21 2026: general election matchups from October and early November releases that were missing here
+  {"pollster": "McLaughlin & Associates", "startDate": "2026-10-30", "endDate": "2026-11-05", "sampleSize": 1000, "sampleType": "LV", "results": {"Vance": 49.0, "Ocasio-Cortez": 39.0}},
+  {"pollster": "McLaughlin & Associates", "startDate": "2026-10-30", "endDate": "2026-11-05", "sampleSize": 1000, "sampleType": "LV", "results": {"Rubio": 48.0, "Ocasio-Cortez": 38.0}},
+  {"pollster": "YouGov (Bulwark)", "startDate": "2026-10-10", "endDate": "2026-10-14", "sampleSize": 1417, "sampleType": "A", "results": {"Vance": 38.0, "Ocasio-Cortez": 40.0}},
+  {"pollster": "YouGov (Bulwark)", "startDate": "2026-10-10", "endDate": "2026-10-14", "sampleSize": 1417, "sampleType": "A", "results": {"Vance": 36.0, "Buttigieg": 38.0}},
+  {"pollster": "YouGov/UMass Lowell", "startDate": "2026-10-02", "endDate": "2026-10-04", "sampleSize": 1000, "sampleType": "LV", "results": {"Vance": 42.0, "Ocasio-Cortez": 45.0}},
+  {"pollster": "YouGov/UMass Lowell", "startDate": "2026-10-02", "endDate": "2026-10-04", "sampleSize": 1000, "sampleType": "LV", "results": {"Rubio": 42.0, "Newsom": 44.0}},
+  {"pollster": "YouGov/UMass Lowell", "startDate": "2026-10-02", "endDate": "2026-10-04", "sampleSize": 1000, "sampleType": "LV", "results": {"Rubio": 43.0, "Ocasio-Cortez": 43.0}},
   // On Point Polling national survey, Nov 16 2026, registered voters, leaned: undecided voters allocated from their other answers
   {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 41.6, "Harris": 51.3}},
   {"pollster": "On Point Polling", "startDate": "2026-11-16", "endDate": "2026-11-16", "sampleSize": 921, "sampleType": "RV", "results": {"Vance": 41.0, "Newsom": 53.3}},

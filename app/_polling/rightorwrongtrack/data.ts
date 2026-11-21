@@ -9,6 +9,73 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Nov 21, 2026: Nov 16 releases, and the June through November polls the RealClearPolling list carries that were missing here ──
+  { pollster: "Reuters/Ipsos", endDate: "2026-11-16", sampleSize: 1199, sampleType: "RV", results: { RightTrack: 14, WrongTrack: 70 } },   // Nov 13 to 16, registered voters; 13 to 68 among all 1,521 adults
+  { pollster: "Echelon Insights (R)", endDate: "2026-11-16", sampleSize: 1027, sampleType: "LV", results: { RightTrack: 27, WrongTrack: 62 } },   // Nov 12 to 16, verified voters in the likely electorate
+  { pollster: "Economist/YouGov", endDate: "2026-11-16", sampleSize: 1386, sampleType: "RV", results: { RightTrack: 22, WrongTrack: 68 } },   // 11/13 to 11/16
+  { pollster: "Economist/YouGov", endDate: "2026-11-11", sampleSize: 1463, sampleType: "RV", results: { RightTrack: 23, WrongTrack: 67 } },   // 11/9 to 11/11
+  { pollster: "Economist/YouGov", endDate: "2026-11-06", sampleSize: 3166, sampleType: "RV", results: { RightTrack: 22, WrongTrack: 66 } },   // 11/4 to 11/6
+  { pollster: "Cygnal (R)", endDate: "2026-11-05", sampleSize: 3000, sampleType: "LV", results: { RightTrack: 29, WrongTrack: 63 } },   // 11/4 to 11/5
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-11-05", sampleSize: 1753, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 59 } },   // 11/1 to 11/5
+  { pollster: "NBC News", endDate: "2026-10-30", sampleSize: 1000, sampleType: "RV", results: { RightTrack: 25, WrongTrack: 70 } },   // 10/28 to 10/30
+  { pollster: "Big Data Poll", endDate: "2026-10-30", sampleSize: 3214, sampleType: "LV", results: { RightTrack: 31, WrongTrack: 61 } },   // 10/27 to 10/30
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-29", sampleSize: 1777, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 60 } },   // 10/25 to 10/29
+  { pollster: "Harvard-Harris", endDate: "2026-10-26", sampleSize: 2700, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 59 } },   // 10/24 to 10/26
+  { pollster: "Economist/YouGov", endDate: "2026-10-26", sampleSize: 1272, sampleType: "LV", results: { RightTrack: 30, WrongTrack: 63 } },   // 10/23 to 10/26
+  { pollster: "Cygnal (R)", endDate: "2026-10-24", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 34, WrongTrack: 63 } },   // 10/23 to 10/24
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-22", sampleSize: 1755, sampleType: "LV", results: { RightTrack: 34, WrongTrack: 61 } },   // 10/18 to 10/22
+  { pollster: "Economist/YouGov", endDate: "2026-10-20", sampleSize: 1315, sampleType: "LV", results: { RightTrack: 29, WrongTrack: 66 } },   // 10/19 to 10/20
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-15", sampleSize: 1788, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 61 } },   // 10/11 to 10/15
+  { pollster: "ABC/Wash Post/Ipsos", endDate: "2026-10-13", sampleSize: 2032, sampleType: "RV", results: { RightTrack: 29, WrongTrack: 70 } },   // 10/9 to 10/13
+  { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1184, sampleType: "LV", results: { RightTrack: 29, WrongTrack: 65 } },   // 10/10 to 10/12
+  { pollster: "Cygnal (R)", endDate: "2026-10-10", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 32, WrongTrack: 63 } },   // 10/7 to 10/10
+  { pollster: "NBC News Decision Desk", endDate: "2026-10-12", sampleSize: 19135, sampleType: "A", results: { RightTrack: 29, WrongTrack: 71 } },   // 9/28 to 10/12
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-08", sampleSize: 1788, sampleType: "LV", results: { RightTrack: 33, WrongTrack: 61 } },   // 10/4 to 10/8
+  { pollster: "Economist/YouGov", endDate: "2026-10-05", sampleSize: 1181, sampleType: "LV", results: { RightTrack: 31, WrongTrack: 63 } },   // 10/2 to 10/5
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-10-01", sampleSize: 1782, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 60 } },   // 9/27 to 10/1
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-25", sampleSize: 1847, sampleType: "LV", results: { RightTrack: 37, WrongTrack: 58 } },   // 9/21 to 9/25
+  { pollster: "Quantus Insights", endDate: "2026-09-18", sampleSize: 1389, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 60 } },   // 9/15 to 9/18
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-17", sampleSize: 1737, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 60 } },   // 9/13 to 9/17
+  { pollster: "Big Data Poll", endDate: "2026-09-15", sampleSize: 2633, sampleType: "LV", results: { RightTrack: 31, WrongTrack: 62 } },   // 9/13 to 9/15
+  { pollster: "The Honest Poll", endDate: "2026-09-13", sampleSize: 1392, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 57 } },   // 9/7 to 9/13
+  { pollster: "NY Times/Siena", endDate: "2026-09-13", sampleSize: 1503, sampleType: "LV", results: { RightTrack: 32, WrongTrack: 59 } },   // 9/8 to 9/13
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-10", sampleSize: 1871, sampleType: "LV", results: { RightTrack: 34, WrongTrack: 59 } },   // 9/6 to 9/10
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-09-03", sampleSize: 1865, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 56 } },   // 8/30 to 9/3
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-08-27", sampleSize: 1834, sampleType: "LV", results: { RightTrack: 37, WrongTrack: 58 } },   // 8/23 to 8/27
+  { pollster: "Economist/YouGov", endDate: "2026-08-24", sampleSize: 1379, sampleType: "RV", results: { RightTrack: 30, WrongTrack: 65 } },   // 8/21 to 8/24
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-08-20", sampleSize: 1816, sampleType: "LV", results: { RightTrack: 33, WrongTrack: 58 } },   // 8/16 to 8/20
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-08-13", sampleSize: 1831, sampleType: "LV", results: { RightTrack: 33, WrongTrack: 60 } },   // 8/9 to 8/13
+  { pollster: "Economist/YouGov", endDate: "2026-08-10", sampleSize: 1420, sampleType: "RV", results: { RightTrack: 28, WrongTrack: 64 } },   // 8/7 to 8/10
+  { pollster: "Cygnal (R)", endDate: "2026-08-07", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 37, WrongTrack: 59 } },   // 8/6 to 8/7
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-08-06", sampleSize: 1953, sampleType: "LV", results: { RightTrack: 34, WrongTrack: 60 } },   // 8/2 to 8/6
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-07-30", sampleSize: 1900, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 59 } },   // 7/26 to 7/30
+  { pollster: "Big Data Poll", endDate: "2026-07-29", sampleSize: 2617, sampleType: "LV", results: { RightTrack: 30, WrongTrack: 61 } },   // 7/27 to 7/29
+  { pollster: "Economist/YouGov", endDate: "2026-07-27", sampleSize: 1407, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 62 } },   // 7/25 to 7/27
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-07-23", sampleSize: 1833, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 57 } },   // 7/19 to 7/23
+  { pollster: "Economist/YouGov", endDate: "2026-07-20", sampleSize: 1432, sampleType: "RV", results: { RightTrack: 30, WrongTrack: 63 } },   // 7/17 to 7/20
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-07-16", sampleSize: 1824, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 58 } },   // 7/12 to 7/16
+  { pollster: "Economist/YouGov", endDate: "2026-07-13", sampleSize: 1450, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 62 } },   // 7/10 to 7/13
+  { pollster: "HarrisX", endDate: "2026-07-10", sampleSize: 787, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 57 } },   // 7/9 to 7/10
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-07-09", sampleSize: 1852, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 55 } },   // 7/5 to 7/9
+  { pollster: "Quantus Insights", endDate: "2026-07-07", sampleSize: 1140, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 62 } },   // 7/3 to 7/7
+  { pollster: "Economist/YouGov", endDate: "2026-07-06", sampleSize: 1443, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 61 } },   // 7/3 to 7/6
+  { pollster: "Cygnal (R)", endDate: "2026-07-01", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 60 } },   // 6/30 to 7/1
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-07-02", sampleSize: 1852, sampleType: "LV", results: { RightTrack: 33, WrongTrack: 60 } },   // 6/28 to 7/2
+  { pollster: "Economist/YouGov", endDate: "2026-06-29", sampleSize: 1428, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 61 } },   // 6/26 to 6/29
+  { pollster: "Big Data Poll", endDate: "2026-06-28", sampleSize: 2604, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 57 } },   // 6/26 to 6/28
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-06-25", sampleSize: 1852, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 56 } },   // 6/21 to 6/25
+  { pollster: "Economist/YouGov", endDate: "2026-06-22", sampleSize: 1517, sampleType: "RV", results: { RightTrack: 34, WrongTrack: 60 } },   // 6/19 to 6/22
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-06-18", sampleSize: 1733, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 56 } },   // 6/14 to 6/18
+  { pollster: "Economist/YouGov", endDate: "2026-06-15", sampleSize: 1403, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 61 } },   // 6/13 to 6/15
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-06-11", sampleSize: 1806, sampleType: "LV", results: { RightTrack: 34, WrongTrack: 59 } },   // 6/7 to 6/11
+  { pollster: "Economist/YouGov", endDate: "2026-06-08", sampleSize: 1438, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 62 } },   // 6/5 to 6/8
+  { pollster: "Cygnal (R)", endDate: "2026-06-03", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 57 } },   // 6/2 to 6/3
+  { pollster: "Rasmussen Reports (R)", endDate: "2026-06-04", sampleSize: 1799, sampleType: "LV", results: { RightTrack: 35, WrongTrack: 59 } },   // 5/31 to 6/4
+  { pollster: "Quantus Insights", endDate: "2026-06-02", sampleSize: 1050, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 61 } },   // 6/1 to 6/2
+  { pollster: "Focaldata", endDate: "2026-06-01", sampleSize: 1537, sampleType: "RV", results: { RightTrack: 24, WrongTrack: 64 } },   // 5/29 to 6/1
+  { pollster: "Economist/YouGov", endDate: "2026-06-01", sampleSize: 1453, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 64 } },   // 5/29 to 6/1
+  { pollster: "Harvard-Harris", endDate: "2026-05-31", sampleSize: 1725, sampleType: "RV", results: { RightTrack: 36, WrongTrack: 56 } },   // 5/29 to 5/31
+  { pollster: "Forbes/HarrisX", endDate: "2026-06-07", sampleSize: 1137, sampleType: "LV", results: { RightTrack: 37, WrongTrack: 55 } },   // 5/20 to 6/7
   // ── Added Nov 17, 2026: post midterm national polls ──
   { pollster: "On Point Polling", endDate: "2026-11-16", sampleSize: 920, sampleType: "RV", results: { RightTrack: 28.3, WrongTrack: 60.2 } },   // On Point national poll, Nov 16, registered voters
   { pollster: "On Point Polling", endDate: "2026-11-06", sampleSize: 1088, sampleType: "RV", results: { RightTrack: 25.4, WrongTrack: 62.0 } },   // On Point post election national poll, Nov 6, registered voters
