@@ -11,7 +11,7 @@ import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView }
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
 import { X, STATE_NAME, fmtMg, fmtPct, genRes, last, leaderColor, probColor, shiftColor, two, type CountiesGeo, type GenFile, type PrimFile, type StatesGeo } from "./lib";
-import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "@/onpoint-sketchbook/react/SketchMap";
+import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "./lib";
 import { CountyPaths28, CtyTip, ViewSeg, type View } from "./Cty28";
 import { useJSON } from "./useX";
 import { RATE, RATES, rateOf, type Rate } from "./rate28";

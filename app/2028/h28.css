@@ -449,18 +449,18 @@ body:has(.h28-page) { background: #e9e5dc; color: #141218; }
 @media (max-width: 560px) { .h28-play { grid-template-columns: auto minmax(0, 1fr); } .h28-play .go { grid-column: 1 / -1; text-align: center; } }
 
 /* ---------------- election desk pieces from the sketchbook kit, Nov 19 2026 ---------------- */
-/* the same pencil hatching as the map, on the ribbon, keys, chips and legend */
+/* the same solid rating fills as the map, on the ribbon, keys, chips and legend */
 .h28-hz { background-image: none; }
-.h28-page .h28-hz.SD { background: repeating-linear-gradient(40deg, #1f3fd1 0 2.8px, rgba(31,63,209,.46) 2.8px 4.4px) !important; }
-.h28-page .h28-hz.LD { background: repeating-linear-gradient(40deg, #1f3fd1 0 1.8px, rgba(31,63,209,.14) 1.8px 5px) !important; }
-.h28-page .h28-hz.ND { background: repeating-linear-gradient(40deg, #3d64e6 0 1.2px, rgba(61,100,230,.08) 1.2px 6px) !important; }
-.h28-page .h28-hz.TD { background: repeating-linear-gradient(40deg, #8a4cf0 0 1.5px, rgba(138,76,240,.14) 1.5px 5.5px) !important; }
-.h28-page .h28-hz.TR { background: repeating-linear-gradient(-40deg, #8a4cf0 0 1.5px, rgba(138,76,240,.14) 1.5px 5.5px) !important; }
-.h28-page .h28-hz.NR { background: repeating-linear-gradient(-40deg, #e05454 0 1.2px, rgba(224,84,84,.08) 1.2px 6px) !important; }
-.h28-page .h28-hz.LR { background: repeating-linear-gradient(-40deg, #d42a2a 0 1.8px, rgba(212,42,42,.14) 1.8px 5px) !important; }
-.h28-page .h28-hz.SR { background: repeating-linear-gradient(-40deg, #d42a2a 0 2.8px, rgba(212,42,42,.46) 2.8px 4.4px) !important; }
-.h28-ribbon .bar i.h28-hz { color: var(--ink); text-shadow: 0 0 3px #fbfaf6, 0 0 3px #fbfaf6, 0 0 2px #fbfaf6; }
-.h28-chip.h28-hz { color: var(--ink); text-shadow: 0 0 3px #fbfaf6, 0 0 2px #fbfaf6; }
+.h28-page .h28-hz.SD { background: #10288c !important; color: #fff !important; text-shadow: none !important; }
+.h28-page .h28-hz.LD { background: #4358aa !important; color: #fff !important; text-shadow: none !important; }
+.h28-page .h28-hz.ND { background: #798bc9 !important; color: #0b1640 !important; text-shadow: none !important; }
+.h28-page .h28-hz.TD { background: #a6b5e3 !important; color: #0b1640 !important; text-shadow: none !important; }
+.h28-page .h28-hz.TR { background: #e3aab7 !important; color: #40080f !important; text-shadow: none !important; }
+.h28-page .h28-hz.NR { background: #c9798c !important; color: #40080f !important; text-shadow: none !important; }
+.h28-page .h28-hz.LR { background: #aa4159 !important; color: #fff !important; text-shadow: none !important; }
+.h28-page .h28-hz.SR { background: #8c0a28 !important; color: #fff !important; text-shadow: none !important; }
+.h28-ribbon .bar i.h28-hz { font-weight: 700; }
+.h28-chip.h28-hz { font-weight: 700; }
 .h28-ribbon .keys i.h28-hz, .h28-legend i.h28-hz { width: 18px; height: 14px; border: 1.5px solid var(--ink); border-radius: 3px; }
 .h28-legend { flex-basis: 100%; font: 700 11px var(--fm); letter-spacing: .05em; text-transform: uppercase; color: var(--ink2); }
 .h28-legend em { flex-basis: 100%; text-align: center; font-style: normal; font-weight: 600; text-transform: none; letter-spacing: .02em; color: var(--mute); }

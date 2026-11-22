@@ -6,7 +6,8 @@
 // matchup, the counties flip in from the left under a pencil outline that traces itself, and a hovered county pops up.
 import { useMemo, useRef, useState, type CSSProperties } from "react";
 import Pointy from "@/onpoint-sketchbook/react/Pointy";
-import { InkDefs, InkOutline, Lift, Slab3D, WASH_CUTS, WASH_D, WASH_R, WASH_T, sweepDelays, useBoil, useInView, usePxScale, washColor, washInk, washStep } from "@/onpoint-sketchbook/react/SketchMap";
+import { InkDefs, InkOutline, Lift, Slab3D, sweepDelays, useBoil, useInView, usePxScale } from "@/onpoint-sketchbook/react/SketchMap";
+import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor, washInk, washStep } from "./lib";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
 import { fmtMg, fmtPct, last, shiftColor, tmAdd } from "./lib";

@@ -152,3 +152,12 @@ export function genRes(G: GenFile, d: string, r: string): Res | null {
     natM: p[6], ev10: p[4], ev90: p[5], hyp: p[9] === 1, sims: 20000,
     turnout: G.tm ? { elig: Object.values(stE).reduce((a, b) => a + b, 0), base: vGen + 330000, matchup: vNow - vGen, newT: 0, stE } : undefined };
 }
+
+/** the 2028 county wash: the win chance ramp at five steps a side, pale for close, deep for safe, lavender for even */
+export const WASH_D = ["#a6b5e3", "#798bc9", "#5367b3", "#30469e", "#10288c"];
+export const WASH_R = ["#e3aab7", "#c9798c", "#b35168", "#9e2c46", "#8c0a28"];
+export const WASH_T = "#d9c6fb";
+export const WASH_CUTS = [1, 6, 14, 26, 40];
+export function washStep(m: number) { const a = Math.abs(m); return a < WASH_CUTS[0] ? 0 : a < WASH_CUTS[1] ? 1 : a < WASH_CUTS[2] ? 2 : a < WASH_CUTS[3] ? 3 : a < WASH_CUTS[4] ? 4 : 5; }
+export function washColor(m: number) { const s = washStep(m); return s === 0 ? WASH_T : (m < 0 ? WASH_D : WASH_R)[s - 1]; }
+export function washInk(m: number) { return washStep(m) >= 3 ? "#fff" : "#141218"; }

@@ -63,18 +63,16 @@ export function InkDefs({ id, scale = 1, wobble = 1 }: { id: string; scale?: num
   );
 }
 
-/** pencil hatching for the eight ratings, the same densities as the kit's state maps: safe heavy, likely mid, lean light */
+/** the eight ratings as solid fills on the win chance ramp, pale for tilt, deep for safe */
 export const HATCH: Record<string, [number, string, number, number, string]> = {
-  SD: [40, "#1f3fd1", 3.4, 5, "rgba(31,63,209,.46)"], LD: [40, "#1f3fd1", 2, 6.5, "rgba(31,63,209,.14)"], ND: [40, "#3d64e6", 1.2, 9, "rgba(61,100,230,.07)"],
-  TD: [40, "#8a4cf0", 1.6, 7, "rgba(138,76,240,.14)"], TR: [-40, "#8a4cf0", 1.6, 7, "rgba(138,76,240,.14)"],
-  NR: [-40, "#e05454", 1.2, 9, "rgba(224,84,84,.07)"], LR: [-40, "#d42a2a", 2, 6.5, "rgba(212,42,42,.14)"], SR: [-40, "#d42a2a", 3.4, 5, "rgba(212,42,42,.46)"],
+  SD: [40, "#10288c", 0, 6, "#10288c"], LD: [40, "#4358aa", 0, 6, "#4358aa"], ND: [40, "#798bc9", 0, 6, "#798bc9"], TD: [40, "#a6b5e3", 0, 6, "#a6b5e3"], TR: [-40, "#e3aab7", 0, 6, "#e3aab7"], NR: [-40, "#c9798c", 0, 6, "#c9798c"], LR: [-40, "#aa4159", 0, 6, "#aa4159"], SR: [-40, "#8c0a28", 0, 6, "#8c0a28"],
 };
 export function HatchDefs({ id, scale = 1 }: { id: string; scale?: number }) {
   return (
     <defs>
       {Object.entries(HATCH).map(([k, [a, c, w, g, bg]]) => (
         <pattern key={k} id={`${id}-h-${k}`} width={g * scale} height={g * scale} patternUnits="userSpaceOnUse" patternTransform={`rotate(${a})`}>
-          <rect width={g * scale} height={g * scale} fill={bg} /><line x1="0" y1="0" x2="0" y2={g * scale} stroke={c} strokeWidth={w * scale} />
+          <rect width={g * scale} height={g * scale} fill={bg} />{w > 0 && <line x1="0" y1="0" x2="0" y2={g * scale} stroke={c} strokeWidth={w * scale} />}
         </pattern>
       ))}
     </defs>
