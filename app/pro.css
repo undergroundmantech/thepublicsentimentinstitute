@@ -1,0 +1,57 @@
+/* =====================================================================
+   PRO: the On Point UI, Nov 23 2026. The sketchbook look is retired.
+   The sketchbook's own components (tabs, segmented controls, race cards,
+   tags, legends, map moves) are still used by some pages, so their tokens
+   are re-pointed here to the dark, glass On Point palette.
+   ===================================================================== */
+:root[data-ui="pro"]{
+  --sk-paper:#0a0711; --sk-paper-2:#130e1c; --sk-paper-3:#17111f;
+  --sk-ink:#f3eff8; --sk-ink-2:#cfc8dc; --sk-ink-3:#8e86a3; --sk-black:#050308;
+  --sk-grid:rgba(243,239,248,.05);
+  --sk-purple:#c08ad9; --sk-purple-2:#b78cff; --sk-purple-ink:#c08ad9;
+  --sk-grad:linear-gradient(90deg,#064bf9 0%,#83449c 50%,#f9064b 100%);
+  --sk-d:#3d7bff; --sk-d-soft:#7fa6ff; --sk-r:#ff3b5c; --sk-r-soft:#ff8399; --sk-toss:#b78cff;
+  --sk-d-safe:#1c3fc4; --sk-d-likely:#3d7bff; --sk-d-lean:#7fa6ff;
+  --sk-r-safe:#b0163a; --sk-r-likely:#ff3b5c; --sk-r-lean:#ff8399; --sk-tilt:#b78cff;
+  --sk-f-off:#241c31;
+  --sk-marker:#e7b341; --sk-good:#3ddc97; --sk-bad:#ff3b5c;
+  --sk-shadow:0 24px 60px rgba(0,0,0,.42); --sk-shadow-sm:0 8px 22px rgba(0,0,0,.35);
+  --sk-line:1px; --sk-line-2:1px; --sk-line-1:1px;
+  --sk-rule:rgba(243,239,248,.1);
+  --sk-grain:0; --sk-scan:0; --sk-vignette:0; --sk-boil:0;
+}
+html[data-ui="pro"] body{ background:#0a0711; }
+
+/* segmented controls and tab lines */
+html[data-ui="pro"] .sk-seg{ border:1px solid rgba(243,239,248,.12); background:rgba(243,239,248,.04); box-shadow:none; }
+html[data-ui="pro"] .sk-seg button{ color:#b9b0c9; font-weight:700; }
+html[data-ui="pro"] .sk-seg button:hover{ color:#f3eff8; }
+html[data-ui="pro"] .sk-seg button:is(.on,[aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){ background:#83449c; color:#fff; box-shadow:0 6px 18px rgba(131,68,156,.4); }
+html[data-ui="pro"] .sk-tabsline :is(a,button){ color:#8e86a3; }
+html[data-ui="pro"] .sk-tabsline :is(.on,[aria-current="page"],[aria-selected="true"]){ color:#f3eff8; }
+html[data-ui="pro"] .sk-tabsline :is(.on,[aria-current="page"],[aria-selected="true"])::after{ height:2px; bottom:-2px; left:0; right:0; border-radius:2px; background:linear-gradient(90deg,#064bf9,#83449c 50%,#f9064b); transform:none; }
+
+/* tags and race cards */
+html[data-ui="pro"] .sk-tag{ border:1px solid rgba(243,239,248,.16); background:rgba(243,239,248,.06); color:#f3eff8; transform:none; border-radius:999px; }
+html[data-ui="pro"] .sk-tag.flip{ background:#e7b341; border-color:#e7b341; color:#1b1205; }
+html[data-ui="pro"] .sk-tag.win{ background:#f3eff8; color:#0a0711; }
+html[data-ui="pro"] .sk-race{ border:1px solid rgba(243,239,248,.1); border-radius:16px; box-shadow:none; transform:none;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--p) 34%, #120c1b), color-mix(in srgb, var(--p) 12%, #120c1b)); }
+html[data-ui="pro"] .sk-race::before{ width:4px; border:0; }
+html[data-ui="pro"] .sk-race:is(a,button):hover, html[data-ui="pro"] .sk-race.on{ transform:translateY(-2px); box-shadow:0 14px 34px color-mix(in srgb, var(--p) 35%, transparent); border-color:color-mix(in srgb, var(--p) 60%, transparent); }
+html[data-ui="pro"] .sk-race .m b{ color:#fff; }
+html[data-ui="pro"] .sk-race .m span, html[data-ui="pro"] .sk-race .vs{ color:rgba(243,239,248,.72); }
+
+/* legends and maps */
+html[data-ui="pro"] .sk-maplegend{ border-top:1px solid rgba(243,239,248,.08); }
+html[data-ui="pro"] .sk-map-extrude{ filter:drop-shadow(0 18px 40px rgba(0,0,0,.45)); }
+html[data-ui="pro"] .sk-map-ink path{ stroke:#0a0711; stroke-width:.9; filter:none; }
+html[data-ui="pro"] .sk-map-ink{ filter:none !important; }
+html[data-ui="pro"] .sk-map-marker{ stroke:#f3eff8; stroke-width:2.4px; stroke-opacity:.95; }
+html[data-ui="pro"] .sk-map-lift{ filter:none !important; }
+html[data-ui="pro"] .sk-map-lift path:not(.sk-map-marker){ filter:drop-shadow(0 10px 18px rgba(0,0,0,.55)); }
+html[data-ui="pro"] .sk-tape, html[data-ui="pro"] .h28-pointy, html[data-ui="pro"] .s28-pointy, html[data-ui="pro"] .sk-pointy{ display:none !important; }
+@media (prefers-reduced-motion: reduce){ html[data-ui="pro"] .sk-map-go .sk-map-flip path{ animation:none; } }
+/* the map's states fade up in a quick sweep instead of flipping like cards */
+html[data-ui="pro"] .sk-map-go .sk-map-flip path{ animation:pro-map-in .45s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) * .5) both; }
+@keyframes pro-map-in{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:none; } }

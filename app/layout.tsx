@@ -8,8 +8,7 @@ import "./refresh.css";
 import "../onpoint-sketchbook/styles/sketchbook.css";
 import "../onpoint-sketchbook/styles/site-skin.css";
 import "./hybrid.css";
-import SketchProvider from "../onpoint-sketchbook/react/SketchProvider";
-import SkHatchMaps from "../onpoint-sketchbook/react/SkHatchMaps";
+import "./pro.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -72,16 +71,16 @@ export const metadata: Metadata = {
   verification,
 };
 
-export const viewport: Viewport = { themeColor: "#e9e5dc", colorScheme: "light" };
+export const viewport: Viewport = { themeColor: "#0a0711", colorScheme: "dark" };
 
-const SK_INIT = `(function(){var d=document.documentElement;d.setAttribute("data-theme","light");d.setAttribute("data-mode","light");d.setAttribute("data-sk","");})();`;
+const SK_INIT = `(function(){var d=document.documentElement;d.removeAttribute("data-sk");d.setAttribute("data-theme","dark");d.setAttribute("data-mode","dark");d.setAttribute("data-ui","pro");d.style.colorScheme="dark";})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light" data-mode="light" data-sk="" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-mode="dark" data-ui="pro" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        {/* Sketchbook: the paper and ink look runs on the light scheme, whatever mode a visitor stored before. */}
+        {/* Nov 23 2026: the sketchbook look is retired. The site runs the On Point UI, dark first, glass surfaces. */}
         <script dangerouslySetInnerHTML={{ __html: SK_INIT }} />
         <script dangerouslySetInnerHTML={{ __html: LITE_INIT_SCRIPT }} />
         {/* Google AdSense: the account tag that verifies onpointpolitics.us, and the AdSense loader, as AdSense asks, in
@@ -91,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="text/plain" title="On Point Politics for language models" href="/llms.txt" />
         <JsonLd data={graph(orgLd())} />
       </head>
-      <body className="sk-paper" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <RolloutGate />
         <div className="sx-progress" aria-hidden="true" />
         <Ambient />
@@ -99,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RouteFx />
         <Navbar />
         <main className="opp-main">
-          <div className="opp-page"><TopAd /><SketchProvider tone="default" overlays={false}>{children}<SkHatchMaps /></SketchProvider></div>
+          <div className="opp-page"><TopAd />{children}</div>
         </main>
         <SiteSignup />
         <AdSlot />

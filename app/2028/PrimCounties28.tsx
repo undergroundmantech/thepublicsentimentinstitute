@@ -30,7 +30,6 @@ export default function PrimCounties28({ st, name, counties, outline, box, prim 
           <p className="pc28-sub">{P.win[lead[0]] != null ? `Carries the state in ${fmtPct(P.win[lead[0]])} of runs · ` : ""}{fmtN(P.total)} projected votes, the sum of {Object.keys(P.counties).length} {unit}</p>
         </header>
         <div className="s28-paper pc28-paper">
-          <span className="sk-tape tl" aria-hidden="true" />
           <svg viewBox={vb} role="img" aria-label={`${name} ${k === "D" ? "Democratic" : "Republican"} primary by county`} onMouseLeave={() => setHov(null)}>
             {counties.map((c) => <path key={c.f} d={c.d} fill={fill(c.f)} className={hov?.k === k && hov.f === c.f ? "hov" : undefined} onMouseMove={(e) => setHov({ at: { x: e.clientX, y: e.clientY }, k, f: c.f })} />)}
             <path d={outline} className="ol" />

@@ -8,6 +8,7 @@ import { DEBATE_Q, debateLines } from "./cards28";
 import { TROPHIES } from "./trophies28";
 import TileMap28, { shade } from "./TileMap28";
 import Swing28 from "./Swing28";
+import Plug28 from "./Plug28";
 import { FEMALE, pct, short, firstSentence, Face28, Body28 } from "./ui28";
 import { Type, Roll, cls, sur } from "../px/ui";
 import { seedOf } from "../px/sprites";
@@ -60,6 +61,7 @@ export function Title28({ onNew, onResume, saved, onClassic, extra }: { onNew: (
           <li>Opposition research</li><li>Ad tone and backfires</li><li>Internal polls and fog of war</li><li>Super PACs</li><li>Turnout drives by vote history</li><li>Third party spoilers</li>
           <li>Debate timing meter</li><li>Election Day weather</li><li>Election night calls</li><li>Monday staff meetings</li><li>Twenty voter groups</li><li>A record that comes back</li><li>Debate negotiations</li><li>Graded pollsters</li><li>Jobs reports and FEC filings</li><li>Trophies</li>
         </ul>
+        <Plug28 title="Join the On Point community" />
         <button type="button" className="px-btn sm y28-classic" onClick={() => { sfx("click"); onClassic(); }}>Play the 2026 midterm edition</button>
       </div>
     </section>
@@ -319,6 +321,7 @@ export function Result28({ d, s, res, onAgain, onMenu, start, trophies = [], ext
         <Trophies ids={trophies} />
         {flips.length ? <p className="px-note">Flipped from 2024: {flips.map((c) => `${E.nameOf(d, c.st)} to ${c.win ? sur(s.me) : sur(s.op)}`).join(", ")}.</p> : null}
         {extra}
+        <Plug28 title={res.win ? "Post your win where it counts" : "Plot the comeback with the community"} />
         <div className="px-row"><button type="button" className="px-press" onClick={onAgain}>Run again</button><button type="button" className="px-press ghost" onClick={onMenu}>Main menu</button></div>
       </section>
     </div>

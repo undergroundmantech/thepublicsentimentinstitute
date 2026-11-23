@@ -5,8 +5,7 @@
 // Sketchbook look, Nov 19 2026: the state floats as a 3D paper slab in the hero, its rating stamps down on every
 // matchup, the counties flip in from the left under a pencil outline that traces itself, and a hovered county pops up.
 import { useMemo, useRef, useState, type CSSProperties } from "react";
-import Pointy from "@/onpoint-sketchbook/react/Pointy";
-import { InkDefs, InkOutline, Lift, Slab3D, sweepDelays, useBoil, useInView, usePxScale } from "@/onpoint-sketchbook/react/SketchMap";
+import { InkDefs, InkOutline, Lift, Slab3D, sweepDelays, useInView, usePxScale } from "@/onpoint-sketchbook/react/SketchMap";
 import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor, washInk, washStep } from "./lib";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
@@ -54,7 +53,7 @@ export default function State28({ data, pairs, prim, distRes: dr0, every }: { da
   }, [data, shift, p.d, p.r]);
   const big = useMemo(() => [...data.counties].sort((a, b) => b.w - a.w).slice(0, 8), [data]);
   const mapBox = useRef<HTMLElement>(null);
-  const go = useInView(mapBox); useBoil(mapBox);
+  const go = useInView(mapBox);
   const cShapes = useMemo(() => data.counties.map((c) => [c.f, c.d] as [string, string]), [data]);
   const cDel = useMemo(() => sweepDelays(cShapes, 1.1), [cShapes]);
 
@@ -84,7 +83,6 @@ export default function State28({ data, pairs, prim, distRes: dr0, every }: { da
         </div>
         <div className="s28-slab-wrap">
           <Slab3D d={data.outline} viewBox={vb} fill={rt.color} />
-          <Pointy pose="point-pointer" size={128} className="s28-pointy" />
         </div>
       </header>
 
@@ -125,7 +123,6 @@ export default function State28({ data, pairs, prim, distRes: dr0, every }: { da
             <span className="h28-closest">{data.counties.length} counties · hover any one for its vote</span>
           </div>
           <div className="s28-paper">
-            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             <svg ref={ctySvg} viewBox={vb} role="img" aria-label={`${data.name} 2028 forecast by county`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
               <InkDefs id="st28" scale={sc} />
               <g className="s28-cty sk-map-flip" key={`${mode}|${sel}`}>

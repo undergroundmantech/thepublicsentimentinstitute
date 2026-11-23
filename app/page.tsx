@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PromoHub from "./components/PromoHub";
 import Link from "@/app/components/Link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
 import { aggPolls } from "@/app/_polling/lib/aggregates";
@@ -108,6 +109,7 @@ export default function Home() {
       <ResultsBand />
       <HomeDeck />
       <HomeWhatIf />
+      <div className="wrap"><PromoHub title="Play it, watch it, join it" note="The free Campaign 2028 game, the YouTube channel, the Discord, the weekly reader poll, and the pollster behind it all for campaigns and causes." /></div>
 
       <section className="sec">
         <div className="hero-panel kpi-stack home-kpis">

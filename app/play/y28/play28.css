@@ -442,3 +442,16 @@
 .y28-swmap { width: 100%; max-height: 520px; height: auto; display: block; }
 .y28-swmap path { cursor: pointer; }
 .y28-swcty select { padding: 6px 8px; border-radius: 8px; }
+
+/* On Point inside the game, Nov 23 2026 */
+.y28-plug { display: grid; gap: 8px; margin: 14px auto 6px; max-width: 760px; text-align: center; }
+.y28-plug ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 6px; }
+.y28-plug a { display: grid; gap: 2px; padding: 8px 8px 9px; text-decoration: none; color: #fff6e0; background: #1d1438; border: 2px solid #5a4a98; box-shadow: 3px 3px 0 #0a0616; transition: transform .12s; }
+.y28-plug a:hover, .y28-plug a:focus-visible { transform: translate(-1px, -2px); border-color: #ffcc4d; outline: none; }
+.y28-plug b { font: 700 12px var(--px-font, ui-monospace, monospace); letter-spacing: .04em; text-transform: uppercase; }
+.y28-plug small { font-size: 10.5px; color: #b9b0d8; }
+.y28-plug-yt b { color: #ff5a73; } .y28-plug-dc b { color: #8c9bff; } .y28-plug-lb b { color: #ffcc4d; }
+.y28-plug-cm b { color: #3ddc97; } .y28-plug-fc b { color: #7fa6ff; } .y28-plug-op b { color: #e7b341; }
+.px-title .y28-plug ul, .y28-result .y28-plug ul { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; flex-direction: initial; }
+.px-title .y28-plug li, .y28-result .y28-plug li { width: auto; margin: 0; }
+@media (max-width: 560px) { .px-title .y28-plug ul, .y28-result .y28-plug ul { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }

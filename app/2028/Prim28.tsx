@@ -5,8 +5,7 @@
 // with no dropouts; taking one out reruns every state and county in the browser with the same engine. Each state is
 // exactly the sum of its counties, and clicking a state opens them.
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import Pointy from "@/onpoint-sketchbook/react/Pointy";
-import { InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
+import { InkDefs, Lift, sweepDelays, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Toon from "@/app/majority-tracker/Toon";
 import { useJSON, usePrim } from "./useX";
 import { X, STATE_NAME, fmtN, fmtK, fmtPct, fmtSh, last, leaderColor, type PrimFile, type PrimField, type CountiesGeo, type StatesGeo } from "./lib";
@@ -39,7 +38,7 @@ export default function Prim28({ sum }: { sum: PrimSummary }) {
   const { field: Fx, busy } = usePrim(party, out);
   // the same paper cutout map as the 2028 home: fills flip in, the pencil outline traces itself, the hovered state lifts
   const stage = useRef<HTMLDivElement>(null);
-  const go = useInView(stage); useBoil(stage);
+  const go = useInView(stage);
   const shapes = useMemo(() => (geo ? Object.entries(geo.states) : []) as [string, string][], [geo]);
   const delays = useMemo(() => sweepDelays(shapes), [shapes]);
   const allD = useMemo(() => shapes.map(([, d]) => d).join(""), [shapes]);
@@ -180,7 +179,6 @@ export default function Prim28({ sum }: { sum: PrimSummary }) {
             {focus ? <button type="button" className="p28-back" onClick={() => setFocus(null)}>Back to the country</button> : null}
           </div>
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}${busy ? " busy" : ""}`} onMouseLeave={() => setHov(null)}>
-            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             {!geo || !F ? <div className="h28-load">Loading the primaries</div> : focus && box ? (
               <svg viewBox={`${box[0] - pad} ${box[1] - pad} ${box[2] + 2 * pad} ${box[3] + 2 * pad}`} role="img" aria-label={`${STATE_NAME[focus]} primary by county`} className="p28-cmap sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
                 <InkDefs id="p28c" />
@@ -191,19 +189,16 @@ export default function Prim28({ sum }: { sum: PrimSummary }) {
             ) : (
               <svg viewBox="-20 -10 1015 630" role="img" aria-label="United States primary map" className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
                 <InkDefs id="p28" />
-                <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
+                <path className="h28-base" d={allD} fill="#1a1426" aria-hidden="true" />
                 <g className="h28-states sk-map-flip" key={`${party}|${mode}|${pick}`}>
                   {shapes.map(([st, d]) => (
                     <path key={st} d={d} fill={fill(st)} className={hov?.st === st || lit === st ? "hov" : lit ? "fade" : undefined} onMouseMove={(e) => point(e, { st })} onClick={() => { setFocus(st); setHov(null); }} style={{ cursor: "pointer", "--d": delays[st] } as CSSProperties} />
                   ))}
                 </g>
-                <path className="h28-tex" d={allD} fill="url(#p28-pen)" aria-hidden="true" />
-                <InkOutline id="p28" shapes={shapes} width={1.5} delays={delays} />
                 <Lift id="p28" d={hov?.st && geo.states[hov.st] ? geo.states[hov.st] : null} fill={hov?.st ? fill(hov.st) : "none"} />
                 <g className="h28-labels" aria-hidden="true">{Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill="#141218" className="halo">{st}</text> : null)}</g>
               </svg>
             )}
-            {focus ? null : <Pointy pose="point-pointer" size={104} className="h28-pointy" />}
           </div>
           <div className="h28-under">
             {mode === "cand" && pj >= 0 ? <span className="h28-scale"><em>Weaker</em><i style={{ background: `linear-gradient(90deg, ${heat(0, col(pj))}, ${heat(0.45, col(pj))})` }} /><em>{last(pick!)} stronger</em></span>

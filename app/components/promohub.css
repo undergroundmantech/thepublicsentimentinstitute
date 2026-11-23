@@ -1,0 +1,48 @@
+/* PromoHub: the rail of widgets beside a map and the full band of every On Point channel. On Point UI: glass cards,
+   one accent per channel on the icon only, gold for the pollster. */
+.ph-card { --c: #c08ad9; position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  padding: 14px 14px 14px 12px; border-radius: 16px; text-decoration: none; color: #f3eff8; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025)); border: 1px solid rgba(243,239,248,.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.ph-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 120% at 0% 0%, color-mix(in srgb, var(--c) 22%, transparent), transparent 60%); pointer-events: none; }
+.ph-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--c) 55%, transparent); }
+.ph-card:focus-visible { outline: 2px solid #7aa2ff; outline-offset: 2px; }
+.ph-i { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--c) 20%, transparent); color: var(--c); }
+.ph-i svg { width: 22px; height: 22px; fill: currentColor; }
+.ph-t { position: relative; display: grid; gap: 2px; min-width: 0; }
+.ph-t em { font: 700 10.5px var(--font-m, ui-monospace, monospace); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.ph-t b { font: 800 15px/1.2 var(--font-d, system-ui, sans-serif); letter-spacing: -.01em; }
+.ph-t span { font: 500 13px/1.4 var(--font-b, system-ui, sans-serif); color: #b9b0c9; }
+.ph-go { position: relative; font: 700 12.5px var(--font-b, system-ui, sans-serif); white-space: nowrap; padding: 8px 12px; border-radius: 999px; background: rgba(243,239,248,.08); border: 1px solid rgba(243,239,248,.14); }
+.ph-card:hover .ph-go { background: var(--c); border-color: var(--c); color: #0a0711; }
+.ph-game { --c: #b78cff; } .ph-yt { --c: #ff3b5c; } .ph-dc { --c: #8c9bff; } .ph-cm { --c: #3ddc97; } .ph-lb { --c: #e7b341; }
+.ph-mm { --c: #7fa6ff; } .ph-x { --c: #f3eff8; } .ph-ss { --c: #ff8a3d; } .ph-wr { --c: #e7b341; } .ph-ws { --c: #5fd4ff; } .ph-hire { --c: #e7b341; }
+.ph-game .ph-go { background: linear-gradient(90deg, #064bf9, #83449c 50%, #f9064b); border: 0; color: #fff; }
+.ph-hire { border-color: rgba(231,179,65,.35); background: linear-gradient(180deg, rgba(231,179,65,.1), rgba(231,179,65,.03)); }
+.ph-hire .ph-go { background: #e7b341; border-color: #e7b341; color: #1b1205; }
+
+/* the rail: stacked, one column */
+.ph-rail { display: grid; gap: 10px; align-content: start; }
+.ph-rail .ph-card { grid-template-columns: auto minmax(0, 1fr); }
+.ph-rail .ph-go { grid-column: 1 / -1; justify-self: stretch; text-align: center; }
+.ph-rail .ph-s .ph-go { grid-column: auto; justify-self: end; }
+.ph-rail .ph-game, .ph-rail .ph-hire { grid-template-columns: auto minmax(0, 1fr); }
+.ph-rail .ph-game .ph-go, .ph-rail .ph-hire .ph-go { grid-column: 1 / -1; }
+.ph-rail .ph-card:not(.ph-game):not(.ph-hire) { grid-template-columns: auto minmax(0, 1fr) auto; }
+.ph-rail .ph-card:not(.ph-game):not(.ph-hire) .ph-go { grid-column: auto; }
+
+/* the band: every channel */
+.ph-band { display: grid; gap: 18px; margin: clamp(28px, 4vw, 48px) 0; }
+.ph-head { display: grid; gap: 6px; max-width: 720px; }
+.ph-head .eye { font: 700 11px var(--font-m, monospace); letter-spacing: .16em; text-transform: uppercase; color: #8e86a3; }
+.ph-head .eye.g { background: linear-gradient(90deg, #064bf9, #83449c 50%, #f9064b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ph-head h2 { margin: 0; font: 800 clamp(26px, 3vw, 38px)/1.05 var(--font-d, system-ui); letter-spacing: -.03em; color: #f3eff8; }
+.ph-head p { margin: 0; color: #b9b0c9; font-size: 15px; }
+.ph-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.ph-grid .ph-l { grid-template-columns: auto minmax(0, 1fr); align-content: start; align-items: start; min-height: 132px; }
+.ph-grid .ph-l .ph-go { grid-column: 2; justify-self: start; margin-top: 4px; }
+.ph-grid .ph-hire { grid-column: span 2; }
+@media (max-width: 700px) { .ph-grid .ph-hire { grid-column: auto; } }
+@media (prefers-reduced-motion: reduce) { .ph-card { transition: none; } .ph-card:hover { transform: none; } }
+.ph-card .ph-t b { color: #f3eff8; }
+.ph-card .ph-go { color: #f3eff8; }

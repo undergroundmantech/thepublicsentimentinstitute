@@ -6,8 +6,7 @@
 // lanes with a home state and a share. Plain pairings read the forecast's own grid; anything else runs the county engine
 // in the browser, 4,000 simulations, and every state is the sum of its counties.
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import Pointy from "@/onpoint-sketchbook/react/Pointy";
-import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
+import { HatchDefs, InkDefs, Lift, sweepDelays, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
 import Toon from "@/app/majority-tracker/Toon";
 import { X, STATE_NAME, fmtK, fmtN, fmtMg, fmtPct, fmtSh, genRes, last, probColor, shiftColor, two, type CountiesGeo, type GenFile, type Res, type StatesGeo, type TicketRes } from "./lib";
@@ -105,7 +104,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   const [hov, setHov] = useState<Hover>(null);
   const [lit, setLit] = useState<string | null>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const go = useInView(stage); useBoil(stage);
+  const go = useInView(stage);
   const shapes = useMemo(() => (geo ? Object.entries(geo.states) : []) as [string, string][], [geo]);
   const delays = useMemo(() => sweepDelays(shapes), [shapes]);
   const allD = useMemo(() => shapes.map(([, d]) => d).join(""), [shapes]);
@@ -169,7 +168,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
   const natCls = natField ? natField[0][2] : nat < 0 ? "d" : "r";
   const sims = res.sims ?? 4000;
   const dLead = evMap.D >= 270, rLead = evMap.R >= 270;
-  const hatched = mode === "rate";
+  const hatched = false;
   const leaderOf = (x: Unit) => (x.lead === "D" ? res.D : x.lead === "R" ? res.R : tkTop(x.lead));
   const leadText = (x: Unit) => (NT ? `${last(leaderOf(x).split(" and ")[0])} +${x.fm.toFixed(1)}` : fmtMg(x.m));
 
@@ -179,7 +178,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
     // the chance to carry the state among every candidate on the ballot, not just the two parties
     if (mode === "prob") return probColor(v.pD / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) + (NT ? 0.5 * v.pT.reduce((a, b) => a + b, 0) / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) : 0));
     if (mode === "shift") return a24[st] != null ? shiftColor(v.m - a24[st]!, 16) : "#2a2438";
-    return `url(#g28-h-${sideRate(v)})`;
+    return RATE[sideRate(v)].color;
   };
   const point = (e: MouseEvent, st: string) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "st", st });
 
@@ -395,7 +394,6 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
             <span className="h28-closest">Closest: {closest.map((r, i) => <span key={r.k} onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}><Link href={slug(r.k)}>{r.k} {leadText(r)}</Link>{i < closest.length - 1 ? "," : ""}</span>)}</span>
           </div>
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}${busy ? " g28-dim" : ""}`} onMouseLeave={() => setHov(null)}>
-            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             {!geo ? <div className="h28-load">Sketching the map</div> : focus ? (
               // one state close up: its own drawing, sized to the state, with only its counties and its outline
               <svg viewBox={vb.v} role="img" aria-label={`${STATE_NAME[focus]} by county, ${res.D} against ${res.R}`} className="g28-focus" preserveAspectRatio="xMidYMid meet">
@@ -406,7 +404,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
             ) : (
               <svg viewBox={vb.v} role="img" aria-label={`2028 map${focus ? `, ${STATE_NAME[focus]} by county` : ""}, ${res.D} against ${res.R}${T ? ` and ${T}` : ""}`} className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
                 <InkDefs id="g28" /><HatchDefs id="g28" /><TicketHatch id="g28" colors={TKS.length ? TKS.map((x) => x.color) : TKC} />
-                <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
+                <path className="h28-base" d={allD} fill="#1a1426" aria-hidden="true" />
                 {view === "co" && cg && cty ? <CountyPaths28 rows={cRows} fill={cFill} onHover={cHover} onLeave={() => setHov(null)} href={slug} paint={cPaint} onPick={focus ? undefined : zoom} /> : null}
                 {view === "co" ? null : <g className="h28-states sk-map-flip" key={`${mode}|${res.D}|${res.R}|${T}|${res.VD}`}>
                   {shapes.map(([st, d]) => (
@@ -415,16 +413,13 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
                     </a>
                   ))}
                 </g>}
-                {hatched || view === "co" ? null : <path className="h28-tex" d={allD} fill="url(#g28-pen)" aria-hidden="true" />}
                 {view === "co" && !coBusy ? null : view === "co" ? <text x="487" y="300" textAnchor="middle" className="g28-cload">Drawing 3,100 counties</text> : null}
-                <InkOutline id="g28" shapes={focus ? shapes.filter(([k]) => k === focus) : shapes} width={1.5} delays={delays} scale={vb.k} />
                 <Lift id="g28" d={view === "co" ? null : hov?.kind === "st" && geo.states[hov.st.split("-")[0]] ? geo.states[hov.st.split("-")[0]] : lit && geo.states[lit.split("-")[0]] ? geo.states[lit.split("-")[0]] : null} fill={hov?.kind === "st" ? fill(hov.st.split("-")[0]) : lit ? fill(lit.split("-")[0]) : "none"} />
                 <g className="h28-labels" aria-hidden="true" display={focus ? "none" : undefined}>
                   {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
             )}
-            <Pointy pose="point-pointer" size={112} className="h28-pointy" />
           </div>
           {focus && fList.length ? (
             <div className="s28-card g28-tbl g28-ctab">

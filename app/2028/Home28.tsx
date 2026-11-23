@@ -6,9 +6,9 @@
 // Sketchbook look, Nov 19 2026: the map is a paper cutout, every state flips in from the left with its pencil outline
 // tracing itself in, the hovered state pops off the page, and the lines wobble like stop motion.
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import Pointy from "@/onpoint-sketchbook/react/Pointy";
-import { HatchDefs, InkDefs, InkOutline, Lift, sweepDelays, useBoil, useInView } from "@/onpoint-sketchbook/react/SketchMap";
+import { InkDefs, Lift, sweepDelays, useInView } from "@/onpoint-sketchbook/react/SketchMap";
 import Link from "@/app/components/Link";
+import { PromoRail } from "@/app/components/PromoHub";
 import Toon from "@/app/majority-tracker/Toon";
 import { X, STATE_NAME, fmtMg, fmtPct, genRes, last, leaderColor, probColor, shiftColor, two, type CountiesGeo, type GenFile, type PrimFile, type StatesGeo } from "./lib";
 import { WASH_CUTS, WASH_D, WASH_R, WASH_T, washColor } from "./lib";
@@ -52,12 +52,12 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
   const [lit, setLit] = useState<string | null>(null);
   const p = all.find((x) => x.id === sel) ?? pairs[0];
   const stage = useRef<HTMLDivElement>(null);
-  const go = useInView(stage); useBoil(stage);
+  const go = useInView(stage);
   const shapes = useMemo(() => (geo ? Object.entries(geo.states) : []) as [string, string][], [geo]);
   const delays = useMemo(() => sweepDelays(shapes), [shapes]);
   const allD = useMemo(() => shapes.map(([, d]) => d).join(""), [shapes]);
   const upSt = hov?.kind === "st" ? hov.st.split("-")[0] : lit ? lit.split("-")[0] : null;
-  const hatched = tab === "pres" && mode === "rate";
+  const hatched = false;
   // states and D.C. per rating, for the map's legend
   const counts = useMemo(() => { const c: Partial<Record<Rate, number>> = {}; for (const [k, v] of Object.entries(p.st)) if (!k.includes("-")) { const r = rateOf(v[0]); c[r] = (c[r] ?? 0) + 1; } return c; }, [p]);
   const evR = 538 - p.evMap, dLead = p.evMap >= 270;
@@ -86,7 +86,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
     const v = p.st[st]; if (!v) return "#2a2438";
     if (mode === "prob") return probColor(v[1]);
     if (mode === "shift") return a24[st] != null ? shiftColor(v[0] - a24[st]!, 16) : "#2a2438";
-    return `url(#us28-h-${rateOf(v[0])})`;
+    return RATE[rateOf(v[0])].color;
   };
   const point = (e: MouseEvent, st: string) => setHov({ at: { x: e.clientX, y: e.clientY }, kind: "st", st });
 
@@ -202,12 +202,11 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
             </div>
           ) : <div className="h28-modes"><ViewSeg view={view} set={setView} busy={view === "co" && !cReady} /><span className="h28-closest">{view === "co" ? "Each county colored by its primary leader, deeper with a bigger share" : "Each state colored by its primary leader"}</span></div>}
           <div ref={stage} className={`h28-stage ${go ? "sk-map-go" : "sk-map-wait"}`} onMouseLeave={() => setHov(null)}>
-            <span className="sk-tape tl" aria-hidden="true" /><span className="sk-tape br" aria-hidden="true" />
             {!geo ? <div className="h28-load">Sketching the map</div> : (
               <svg viewBox="-20 -10 1015 630" role="img" aria-label="United States map of the 2028 forecast" className="sk-map-extrude" data-sk-nohatch="" data-sk-noring="">
-                <InkDefs id="us28" /><HatchDefs id="us28" />
+                <InkDefs id="us28" />
                 {/* a paper base under the states, so the hatching reads on paper and the cutout edge only shows at the coast */}
-                <path className="h28-base" d={allD} fill="#fbfaf6" aria-hidden="true" />
+                <path className="h28-base" d={allD} fill="#1a1426" aria-hidden="true" />
                 {view === "co" && cg && cReady ? <CountyPaths28 rows={cg.counties} fill={cFill} onHover={cHover} onLeave={() => setHov(null)} href={(st) => (tab === "pres" ? slug(st) : `/2028/primaries?st=${st}&party=${tab}`)} paint={cPaint} /> : null}
                 {view === "co" ? (cReady ? null : <text x="487" y="300" textAnchor="middle" className="g28-cload">Drawing 3,100 counties</text>) : <g className="h28-states sk-map-flip" key={`${tab}|${mode}|${sel}`}>
                   {shapes.map(([st, d]) => (
@@ -216,15 +215,12 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
                     </a>
                   ))}
                 </g>}
-                {hatched || view === "co" ? null : <path className="h28-tex" d={allD} fill="url(#us28-pen)" aria-hidden="true" />}
-                <InkOutline id="us28" shapes={shapes} width={1.5} delays={delays} />
                 <Lift id="us28" d={view !== "co" && upSt && geo.states[upSt] ? geo.states[upSt] : null} fill={upSt ? fill(upSt) : "none"} />
                 <g className="h28-labels" aria-hidden="true">
                   {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
             )}
-            <Pointy pose="point-pointer" size={112} className="h28-pointy" />
           </div>
           <div className="h28-under">
             {tab === "pres" ? <>
@@ -235,9 +231,29 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
                 : <span className="h28-scale"><em>Bluer than 2024</em><i className="sh" /><em>Redder than 2024</em></span>}
             </> : nom[tab].slice(0, 6).map((x) => <span key={x.name} className="h28-pk"><i style={{ background: x.color }} />{x.name}</span>)}
           </div>
+          {/* the closest states, as election desk race cards: flip or hold against 2024 */}
+          {tab === "pres" ? (
+            <section className="h28-close" aria-labelledby="h28-cl">
+              <div className="h28-dock-h"><h2 id="h28-cl">The closest states</h2><span>Within a few points in {last(p.d)} against {last(p.r)}</span></div>
+              <div className="h28-races">
+                {closest.map((r) => {
+                  const was = a24[r.k] ?? null, flip = was != null && Math.sign(was) !== Math.sign(r.m), dW = r.m <= 0;
+                  return (
+                    <Link key={r.k} href={slug(r.k)} className={`sk-race ${dW ? "d" : "r"}`}>
+                      <span className="st" onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}>{nameOf(r.k)}</span>
+                      <span className={`sk-tag${flip ? " flip" : ""}`}>{flip ? "Flip" : "Hold"}</span>
+                      <span className="m"><b>{fmtMg(r.m)}</b><span>{dW ? last(p.d) : last(p.r)} {fmtPct(Math.max(r.pD, 1 - r.pD))}</span></span>
+                      <span className="vs">{r.ev} electoral vote{r.ev === 1 ? "" : "s"}{was != null ? ` · ${fmtMg(was)} in 2024` : ""}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
         </section>
 
-        {/* the path to 270 */}
+        {/* the path to 270, then the rail of everything else On Point runs */}
+        <div className="h28-col">
         <aside className="h28-ladder" aria-labelledby="h28-lad">
           {tab === "pres" ? <>
             <div className="h28-lad-h"><h2 id="h28-lad">The path to 270</h2><span>Every state from the bluest to the reddest</span></div>
@@ -271,27 +287,10 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
             <Link href="/2028/primaries" className="h28-lad-more">Every state&apos;s primary</Link>
           </>}
         </aside>
+        <PromoRail />
+        </div>
       </div>
 
-      {/* the closest states, as election desk race cards: flip or hold against 2024 */}
-      {tab === "pres" ? (
-        <section className="h28-close" aria-labelledby="h28-cl">
-          <div className="h28-dock-h"><h2 id="h28-cl">The closest states</h2><span>Within a few points in {last(p.d)} against {last(p.r)}</span></div>
-          <div className="h28-races">
-            {closest.map((r) => {
-              const was = a24[r.k] ?? null, flip = was != null && Math.sign(was) !== Math.sign(r.m), dW = r.m <= 0;
-              return (
-                <Link key={r.k} href={slug(r.k)} className={`sk-race ${dW ? "d" : "r"}`}>
-                  <span className="st" onMouseEnter={() => setLit(r.k)} onMouseLeave={() => setLit(null)}>{nameOf(r.k)}</span>
-                  <span className={`sk-tag${flip ? " flip" : ""}`}>{flip ? "Flip" : "Hold"}</span>
-                  <span className="m"><b>{fmtMg(r.m)}</b><span>{dW ? last(p.d) : last(p.r)} {fmtPct(Math.max(r.pD, 1 - r.pD))}</span></span>
-                  <span className="vs">{r.ev} electoral vote{r.ev === 1 ? "" : "s"}{was != null ? ` · ${fmtMg(was)} in 2024` : ""}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
 
       {/* the matchup dock */}
       <section className="h28-dock" aria-labelledby="h28-mu">

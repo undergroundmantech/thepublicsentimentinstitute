@@ -3,14 +3,15 @@
 // Colors are the win chance ramp, pale for close and deep for safe, solid at four steps a side so the bands still read.
 export type Rate = "SD" | "LD" | "ND" | "TD" | "TR" | "NR" | "LR" | "SR";
 export const RATES: { k: Rate; label: string; short: string; color: string; ink: string; text?: string }[] = [
-  { k: "SD", label: "Safe D", short: "Safe", color: "#10288c", ink: "#fff", text: "#10288c" },
-  { k: "LD", label: "Likely D", short: "Likely", color: "#4358aa", ink: "#fff", text: "#2c429c" },
-  { k: "ND", label: "Lean D", short: "Lean", color: "#798bc9", ink: "#0b1640", text: "#4358aa" },
-  { k: "TD", label: "Tilt D", short: "Tilt", color: "#a6b5e3", ink: "#0b1640", text: "#5b6fb8" },
-  { k: "TR", label: "Tilt R", short: "Tilt", color: "#e3aab7", ink: "#40080f", text: "#b85a6f" },
-  { k: "NR", label: "Lean R", short: "Lean", color: "#c9798c", ink: "#40080f", text: "#aa4159" },
-  { k: "LR", label: "Likely R", short: "Likely", color: "#aa4159", ink: "#fff", text: "#9c2742" },
-  { k: "SR", label: "Safe R", short: "Safe", color: "#8c0a28", ink: "#fff", text: "#8c0a28" },
+  // Nov 23 2026: the On Point UI ramp for a dark page, pale for close and deep for safe
+  { k: "SD", label: "Safe D", short: "Safe", color: "#1c3fc4", ink: "#fff", text: "#8fb0ff" },
+  { k: "LD", label: "Likely D", short: "Likely", color: "#3d7bff", ink: "#fff", text: "#7fa6ff" },
+  { k: "ND", label: "Lean D", short: "Lean", color: "#7fa6ff", ink: "#0b1640", text: "#a6c2ff" },
+  { k: "TD", label: "Tilt D", short: "Tilt", color: "#bccdff", ink: "#0b1640", text: "#c4d4ff" },
+  { k: "TR", label: "Tilt R", short: "Tilt", color: "#ffc2cd", ink: "#40080f", text: "#ffc4cf" },
+  { k: "NR", label: "Lean R", short: "Lean", color: "#ff8399", ink: "#40080f", text: "#ff9aac" },
+  { k: "LR", label: "Likely R", short: "Likely", color: "#ff3b5c", ink: "#fff", text: "#ff6680" },
+  { k: "SR", label: "Safe R", short: "Safe", color: "#b0163a", ink: "#fff", text: "#ff4d6a" },
 ];
 export const RATE = Object.fromEntries(RATES.map((r) => [r.k, r])) as Record<Rate, (typeof RATES)[number]>;
 export function rateOf(m: number): Rate {

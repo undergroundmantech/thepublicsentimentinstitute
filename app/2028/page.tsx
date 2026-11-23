@@ -7,10 +7,10 @@ import Method from "./Method";
 import { ELECTION_DAY, featured, geo, nomination, primStates } from "./data28";
 import { STATE_NAME, fmtMg, fmtPct, last } from "./lib";
 import { getDefault, getGenNames } from "./server";
-import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "./h28.css";
 import AdUnit from "@/app/components/AdUnit";
-import PlayCta from "@/app/2028/PlayCta";
+import PromoHub from "@/app/components/PromoHub";
+import HireBand from "@/app/components/HireBand";
 import StayConnected from "@/app/components/StayConnected";
 
 export const revalidate = 3600;
@@ -34,7 +34,7 @@ export default function Page2028() {
       <JsonLd data={graph(crumbsLd([["Home", "/"], ["2028 forecast", "/2028"]]), pageLd({ name: "2028 election forecast", description: DESC, path: "/2028", about: "2028 United States presidential election" }))} />
       <Home28 pairs={pairs} nom={nom} prim={prim} ev={ev} days={days} a24={g.a24} names={getGenNames()} />
 
-      <PlayCta title="Run for president on this map" note="Pick any of 54 candidates, win the primaries and fight county by county to 270, on the same forecast." />
+      <PromoHub title="More than a forecast" note="Run for president on this map, watch the breakdowns, argue it out in the Discord, or hire the pollster behind it." />
       <AdUnit />
       <section className="h28-read" aria-labelledby="h28-read">
         <h2 id="h28-read">The 2028 forecast in brief</h2>
@@ -46,6 +46,7 @@ export default function Page2028() {
         </nav>
       </section>
       <StayConnected from="2028" title="Get the 2028 forecast the moment it moves" note="An email when the forecast shifts, a new 2028 poll drops or a new On Point video goes up. Free, and you can leave any time." pick={["forecast", "videos", "polls"]} />
+      <HireBand title="Polling for campaigns, PACs and causes" stats={[["Within 1 pt", "Final 2026 national poll"], ["3,100+", "Counties forecast"], ["20,000", "Simulations a run"]]} />
       <Method />
       <AdUnit kind="multiplex" />
     </main>
