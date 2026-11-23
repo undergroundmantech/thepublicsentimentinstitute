@@ -11,10 +11,10 @@ import { moreWeek, weekStart, type More, type Recount } from "./more28";
 import { deepWeek, groupFx, groupStance, toGo, pollSd, payroll, bankOf, skewOf, earlyOf, type Grp, type Dma, type Staff, type Invite, type Closing } from "./deep28";
 
 export type Party = "D" | "R";
-export type Cand = { n: string; c: string; nat: number; home: Record<string, number>; hyp: number; lane: string; grp: Record<string, number>; nom: number; field: number;
+export type Cand = { n: string; c: string; nat: number; home: Record<string, number>; hyp: number; lane: string; grp: Record<string, number>; nom: number; field: number; co?: [number, number]; est?: number; wc?: number;
   eff: number[]; effSrc: string; pos: number[] | null; emph: number[] | null; ind: number | null; note: string; src: string; sim: Record<string, number> };
 export type Seg = [number, number, number]; // share of the state's 2028 voters, Democratic two party share, turnout
-export type St = { st: string; n: string; ev: number; m: number; sd: number; p24: number | null; votes: number; close: number; segs: Seg[] };
+export type St = { st: string; n: string; ev: number; m: number; sd: number; p24: number | null; votes: number; close: number; segs: Seg[]; ax?: [number, number] };
 export type Third = { n: string; who: string; status: string; lane: string; core: string; quotes: string[]; pillars: string; attacks: string; reach: string; risks: string; share: number; rlean: number; dlean: number; home: Record<string, number>; pos: number[] | null };
 export type Issue = { k: string; l: string; d: number; r: number; i: number; cd: number; cr: number; ci: number };
 export type Prim = { total: number; cal: [string, number, number][]; shares: Record<string, Record<string, number>>; rule: string };
@@ -266,7 +266,10 @@ export function primEnd(d: Data, s: PrimS, G: { rng: number }): LogItem[] {
   }
   if (T.states.length) {
     const mine = T.states.reduce((a, st) => a + (s.results[st].del[me0(s)] ?? 0), 0);
-    s.cash += Math.round(1.5e6 * mine / 30);
+    const won = T.states.filter((st) => s.results[st].win === me0(s)).length;
+    // delegates and wins bring money: donors pile in behind whoever just won
+    const bump = Math.round(2.5e6 * mine / 30 + 2e6 * won);
+    s.cash += bump; if (bump > 1e6) out.push({ t: s.t, kind: "money", s: `${won ? `Winning ${won === 1 ? "a state" : `${won} states`} brought` : "Your delegates brought"} a donor surge: ${usd(bump)}.` });
   }
   // receipts for the player
   const sh = natShares(d, s)[me0(s)] ?? 4;
@@ -342,12 +345,22 @@ export type GenS = {
 export const nState = (d: Data) => d.states.length;
 export function candOf(d: Data, p: Party, n: string) { return d.cands[p].find((c) => c.n === n)!; }
 const sideSign = (p: Party) => (p === "R" ? 1 : -1); // turns R minus D into the player's favor
-/** The model's margin in each state for this pairing, R minus D: base, the Democrat's effect, the Republican's. */
+/** The model's margin in each state for this pairing, R minus D: base, the Democrat's effect, the Republican's, and
+ * the two nominees' coalitions along the lines past results drew (sw/coalitions28.py). */
 export function pairMargins(d: Data, dName: string, rName: string): number[] {
+  const D = candOf(d, "D", dName), R = candOf(d, "R", rName); const co = coShift(d, D, R);
   // the dashboard's own margin for this exact pairing, when the forecast ran it
+  // v59: the forecast now runs every pairing with each nominee's coalition and turnout built in, so its own margins carry
+  // the coalitions already; the coalition shift is added only where the forecast has no margin for the pairing
   const x = d.px?.[`${dName}|${rName}`]; if (x && x.length === d.states.length) return x.slice();
-  const D = candOf(d, "D", dName), R = candOf(d, "R", rName);
-  return d.states.map((s, i) => s.m + (D?.eff[i] ?? 0) + (R?.eff[i] ?? 0));
+  return d.states.map((s, i) => s.m + (D?.eff[i] ?? 0) + (R?.eff[i] ?? 0) + co[i]);
+}
+/** How far a pairing's coalitions move each place, R minus D, from its two axes: the Trump era realignment and
+ * establishment Republican primary strength. Zero for Harris against Vance, the 2024 coalitions. */
+export const coAt = (D: Cand | undefined, R: Cand | undefined, a: number, e: number) =>
+  (D?.co?.[0] ?? 0) * a + (R?.co?.[0] ?? 0) * a + (R?.co?.[1] ?? 0) * e;
+export function coShift(d: Data, D: Cand | undefined, R: Cand | undefined): number[] {
+  return d.states.map((s) => (s.ax ? coAt(D, R, s.ax[0], s.ax[1]) : 0));
 }
 /** A running mate brings their home state and half their regional pull. */
 export function vpEffect(d: Data, p: Party, vp: string | null): number[] {

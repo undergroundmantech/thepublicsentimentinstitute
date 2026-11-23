@@ -6,10 +6,10 @@
 // Persuasion fades week to week unless it is renewed; turnout work mostly holds. The other campaign works counties
 // too. Getting around costs time: a stop in another part of the country takes an extra half day of travel.
 import type { Data, GenS, Res } from "./engine28";
-import { REGION, readMargins, usd } from "./engine28";
+import { REGION, coAt, readMargins, usd } from "./engine28";
 
 /** A county: fips, name, projected 2028 votes, baseline margin R minus D, and its center on the national map. */
-export type CRow = [string, string, number, number, number, number];
+export type CRow = [string, string, number, number, number, number, number?, number?];
 export type CIdx = Record<string, CRow[]>;
 export type CShape = { st: string; box: [number, number, number, number] | null; outline: string | null; p: Record<string, string> };
 /** The campaign's county work. loc and turn are points in the player's favor, local to one county. */
@@ -61,8 +61,13 @@ export function sync(d: Data, s: GenS) {
 export function counties(d: Data, s: GenS, st: string, ms = readMargins(d, s)) {
   const rows = rowsOf(d, st); const i = si(d, st.split("-")[0]); if (!rows.length || i < 0) return [];
   const V = votesOf(rows), b = baseOf(rows), cw = cwOf(s), cf = s.cfx?.[i] ?? 0;
-  return rows.map((r) => {
-    const loc = locOf(cw, r[0]); const m = sg(s) * (r[3] - b) + ms[i] - cf + loc;
+  // the nominees' coalitions move each county against its state: a Haley gains in the suburbs and gives back the
+  // Trump gains in the small towns, and the counties still average to the state
+  const Dn = s.party === "D" ? s.me : s.op, Rn = s.party === "R" ? s.me : s.op;
+  const Dc = d.cands.D.find((c) => c.n === Dn), Rc = d.cands.R.find((c) => c.n === Rn);
+  const co = rows.map((r) => coAt(Dc, Rc, r[6] ?? 0, r[7] ?? 0)); const coS = rows.reduce((a, r, k) => a + r[2] * co[k], 0) / Math.max(1, V);
+  return rows.map((r, k) => {
+    const loc = locOf(cw, r[0]); const m = sg(s) * (r[3] + co[k] - coS - b) + ms[i] - cf + loc;
     return { f: r[0], n: r[1], v: r[2], sh: r[2] / V, m, x: r[4], y: r[5], loc, swing: swingK(m), vis: cw.vis[r[0]] ?? 0, op: cw.opVis[r[0]] ?? 0, off: cw.off.includes(r[0]), opOff: cw.opOff.includes(r[0]) };
   });
 }

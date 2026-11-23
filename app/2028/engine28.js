@@ -237,7 +237,10 @@ const aI = ISS.map((k, j) => ia(D, 1)[j] + ia(R, 1)[j] + ia(DV, 0.25)[j] + ia(RV
 const LI = Number(GP.lam_issue) || 0;
 let W = 0, mD = 0, mR = 0, mI = 0;
 for (let i = 0; i < n; i++) {
-const c = cm[i]; { const b0 = Number(c.total); const ad = turnAdd(c.fips, b0); tot[i] = b0 + ad; baseVotes += b0; turnVotes += ad; } two[i] = tot[i] * (1 - Number(c.other_share));
+const c = cm[i]; { const b0 = Number(c.total); let ad = turnAdd(c.fips, b0);
+  // v59: the ground up simulation's turnout factor for each nominee in this county (T|party|name in cand_county), 0.85 to 1.15
+  const r0 = ccIx && ccIx.has(c.fips) ? CC[ccIx.get(c.fips)] : null; if (r0) { const tf = (k) => { const v = k ? Number(r0['T|' + k]) : NaN; return isFinite(v) && v > 0 ? Math.min(1.15, Math.max(0.85, v)) : 1; }; ad += (b0 + ad) * (tf(kD) * tf(kR) - 1); }
+  tot[i] = b0 + ad; baseVotes += b0; turnVotes += ad; } two[i] = tot[i] * (1 - Number(c.other_share));
 const prop = isFinite(Number(c.tp_prop)) && c.tp_prop !== '' ? Number(c.tp_prop) : 1;
 othS[i] = Math.min(0.2, Math.max(0.002, GP.hist_blend * Number(c.other_share) + (1 - GP.hist_blend) * GP.g0 * prop)) * (T ? GP.named_third_keep : 1);
 let aD = 0, aDV = 0, bR = 0, bRV = 0;

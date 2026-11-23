@@ -1,0 +1,105 @@
+/* On Point hybrid look, Nov 2026: the paper and ink brand kept, the cartoon weight taken out, and the data put on dark.
+   Loaded last, so it refines the sketchbook skin rather than replacing it:
+   1. lighter line work: two pixel borders and short shadows instead of three pixel borders and seven pixel offsets
+   2. a dark masthead, dark card headers and dark table heads, the data terminal look, over the paper ground
+   3. numbers in mono with tabular figures everywhere they line up
+   4. no tape, no tilted story cards, quiet ad slots */
+
+[data-sk] {
+  --hy-night: #110019; --hy-night-2: #1b0f2b; --hy-night-3: #2a1a40; --hy-on-night: #f3eff8; --hy-on-night-2: #b9adc9;
+  --sk-shadow: 3px 4px 0 var(--sk-ink); --sk-shadow-sm: 2px 2px 0 var(--sk-ink);
+  --shadow-card: 3px 4px 0 var(--sk-ink); --shadow-sm: 2px 2px 0 var(--sk-ink); --shadow-md: 3px 4px 0 var(--sk-ink);
+  --shadow-grad: 3px 3px 0 var(--sk-ink); --shadow-overlay: 6px 7px 0 var(--sk-ink);
+}
+
+/* ---------------------------------------------------------------- masthead: night */
+[data-sk] .opp-top, [data-sk] .opp .top {
+  background: var(--hy-night) !important; border-bottom: 0 !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .06), 0 10px 30px -18px rgba(17, 0, 25, .8) !important;
+  --logo: #fff; --ink: var(--hy-on-night); --hi: #fff; color: var(--hy-on-night);
+}
+:root[data-theme][data-sk] .opp-top .lk .lk-l, [data-sk] .opp-top .lk .lk-l { display: none !important; }
+:root[data-theme][data-sk] .opp-top .lk .lk-d, [data-sk] .opp-top .lk .lk-d { display: block !important; color: #fff; }
+[data-sk] .opp-top .nav { background: rgba(255, 255, 255, .05) !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08) !important; }
+[data-sk] .opp-top .nav a, [data-sk] .opp-top .nav button { color: var(--hy-on-night) !important; }
+[data-sk] .opp-top .nav a:hover, [data-sk] .opp-top .nav a[aria-current="page"], [data-sk] .opp-top .nav button:hover { background: #fff !important; color: var(--hy-night) !important; }
+[data-sk] .opp-top :is(.btn, button.btn, a.btn) {
+  background: rgba(255, 255, 255, .06) !important; color: #fff !important; border: 1.5px solid rgba(255, 255, 255, .35) !important; box-shadow: none !important;
+}
+[data-sk] .opp-top :is(.btn, button.btn, a.btn):hover { background: #fff !important; color: var(--hy-night) !important; transform: none; }
+[data-sk] .opp-top svg:not([class*="lk"]) { color: currentColor; }
+
+/* ---------------------------------------------------------------- cards: lighter line work */
+[data-sk] :is(.opp .card, .opp .glass, .opp .kpi, .opp .hero-panel > .glass, .card, .panel, .tile, .box, .glass) {
+  border-width: 2px !important; box-shadow: 3px 4px 0 var(--sk-ink); border-radius: 16px;
+}
+[data-sk] :is(.opp a.card, .opp a.glass, .opp a.kpi, .opp a > .kpi, .opp .card.story, .opp .card[role="link"]):hover { box-shadow: 5px 6px 0 var(--sk-ink); transform: translate(-1px, -1px); }
+[data-sk] .opp .card.story:nth-child(odd), [data-sk] .opp .card.story:nth-child(even) { transform: none; }
+[data-sk] .opp .card.story:hover { transform: translate(-1px, -1px); }
+[data-sk] .opp .sec > :is(.grid2, .grid3, .grid4, .grid) > .card:first-child::before { display: none; }
+
+/* card headers: a dark strip with a mono eyebrow, the data terminal inside a paper card */
+[data-sk] .opp .card > .card-h {
+  background: var(--hy-night); color: var(--hy-on-night); border-bottom: 0 !important;
+  border-radius: 13px 13px 0 0; margin: -1px -1px 0; padding-block: 11px;
+}
+[data-sk] .opp .card > .card-h :is(h2, h3, h4, b, strong) { color: #fff !important; }
+[data-sk] .opp .card > .card-h :is(.eye, .mono, small, span:not(.pill)) { color: var(--hy-on-night-2) !important; }
+[data-sk] .opp .card > .card-h a { color: #fff !important; }
+
+/* buttons: two pixels and a short shadow */
+[data-sk] :is(.opp .btn, .btn, button.btn, a.btn) { border-width: 2px !important; box-shadow: 2px 3px 0 var(--sk-ink); }
+[data-sk] :is(.opp .btn, .btn):hover { box-shadow: 3px 4px 0 var(--sk-ink); transform: translate(-1px, -1px); }
+[data-sk] :is(.opp .btn.g, .btn.g) { background: var(--hy-night) !important; color: #fff !important; }
+[data-sk] .pill { border-width: 1.5px !important; box-shadow: none !important; }
+
+/* ---------------------------------------------------------------- tables: dark heads, mono figures */
+[data-sk] .opp :is(table.tbl, .tbl table, table.cm-lb) { border-collapse: separate; border-spacing: 0; }
+[data-sk] .opp :is(table.tbl, .tbl table) thead th {
+  background: var(--hy-night); color: var(--hy-on-night-2); font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; border: 0;
+}
+[data-sk] .opp :is(table.tbl, .tbl table) thead th:first-child { border-radius: 10px 0 0 10px; }
+[data-sk] .opp :is(table.tbl, .tbl table) thead th:last-child { border-radius: 0 10px 10px 0; }
+[data-sk] .opp :is(td.n, th.n, .n, .num, .mono, .kpi .v, .bignum, [class*="score"], [class*="margin"]) { font-variant-numeric: tabular-nums; }
+[data-sk] .opp :is(table.tbl, .tbl table) tbody tr:hover td { background: rgba(107, 47, 214, .06); }
+
+/* ---------------------------------------------------------------- the home globe: its data on night glass */
+[data-sk] .hg .hg-side { background: var(--hy-night) !important; color: var(--hy-on-night); border: 0 !important; box-shadow: 0 18px 40px -22px rgba(17, 0, 25, .9) !important; border-radius: 18px; }
+[data-sk] .hg .hg-side .hg-list { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+[data-sk] .hg .hg-side .hg-row { color: var(--hy-on-night) !important; }
+[data-sk] .hg .hg-side :is(b, strong, .nm, h3) { color: #fff !important; }
+[data-sk] .hg .hg-side :is(.eye, small, .st) { color: var(--hy-on-night-2) !important; }
+[data-sk] .hg .hg-side .hg-tabs { background: rgba(255, 255, 255, .06) !important; border-color: rgba(255, 255, 255, .15) !important; box-shadow: none !important; }
+[data-sk] .hg .hg-side .hg-tabs :is(button, a) { color: var(--hy-on-night) !important; }
+[data-sk] .hg .hg-side .hg-tabs :is(button, a)[aria-selected="true"], [data-sk] .hg .hg-side .hg-tabs .on { background: #fff !important; color: var(--hy-night) !important; }
+[data-sk] .hg .hg-side .r, [data-sk] .hg .hg-side [class~="r"] { color: #ff7a8a !important; }
+[data-sk] .hg .hg-side .d, [data-sk] .hg .hg-side [class~="d"] { color: #8fb0ff !important; }
+[data-sk] .hg .hg-side [class*="row"], [data-sk] .hg .hg-side li { border-color: rgba(255, 255, 255, .08) !important; }
+[data-sk] .hg .hg-odds > * { border-width: 2px !important; box-shadow: 2px 3px 0 var(--sk-ink) !important; }
+
+/* ---------------------------------------------------------------- quiet ad slots */
+[data-sk] .opp-ad { border: 1px solid rgba(20, 18, 24, .12) !important; background: rgba(20, 18, 24, .025) !important; border-radius: 12px; }
+[data-sk] .opp-ad::before, [data-sk] .opp-ad > .lbl, [data-sk] .opp-ad > span:first-child { opacity: .55; }
+
+/* ---------------------------------------------------------------- type: headlines a touch tighter, eyebrows mono */
+[data-sk] .opp :is(h1, .ph h1) { letter-spacing: -.025em; text-wrap: balance; }
+[data-sk] .opp :is(h2, h3) { text-wrap: balance; }
+[data-sk] .opp .eye { font-family: var(--font-m); letter-spacing: .14em; }
+
+/* ---------------------------------------------------------------- signup and community panels: the night treatment */
+[data-sk] .opp.oc { background: var(--hy-night) !important; border: 0 !important; color: var(--hy-on-night); box-shadow: 0 20px 44px -26px rgba(17, 0, 25, .9); }
+[data-sk] .opp.oc .oc-head h2 { color: #fff; }
+[data-sk] .opp.oc :is(.oc-head p, .oc-news, .oc-consent) { color: var(--hy-on-night-2); }
+[data-sk] .opp.oc .oc-chip { color: var(--hy-on-night); border-color: rgba(255, 255, 255, .25); }
+[data-sk] .opp.oc .oc-chip.on { background: #fff; color: var(--hy-night); border-color: #fff; }
+[data-sk] .opp.oc .oc-fields input { background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .2); color: #fff; }
+[data-sk] .opp.oc .oc-fields input::placeholder { color: var(--hy-on-night-2); }
+[data-sk] .opp.oc .oc-fields .btn { background: #fff !important; color: var(--hy-night) !important; border-color: #fff !important; box-shadow: none; }
+[data-sk] .opp.oc .oc-done { color: #fff; }
+
+/* ---------------------------------------------------------------- phones: less chrome */
+@media (max-width: 760px) {
+  [data-sk] :is(.opp .card, .card) { box-shadow: 2px 3px 0 var(--sk-ink); border-radius: 14px; }
+  [data-sk] .opp .card > .card-h { border-radius: 11px 11px 0 0; }
+}
+@media (prefers-reduced-motion: reduce) { [data-sk] :is(.opp .card, .btn) { transition: none !important; } }

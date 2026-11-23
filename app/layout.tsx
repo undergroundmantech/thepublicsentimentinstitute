@@ -7,6 +7,7 @@ import "./phone.css";
 import "./refresh.css";
 import "../onpoint-sketchbook/styles/sketchbook.css";
 import "../onpoint-sketchbook/styles/site-skin.css";
+import "./hybrid.css";
 import SketchProvider from "../onpoint-sketchbook/react/SketchProvider";
 import SkHatchMaps from "../onpoint-sketchbook/react/SkHatchMaps";
 

@@ -1,6 +1,191 @@
 {
  "entries": [
   {
+   "slug": "2026-11-24",
+   "date": "2026-11-24",
+   "title": "Every nominee now brings their own coalition and their own turnout",
+   "summary": "In the Generic Democrat against Vance matchup the national vote went from D +8.0 to D +8.0, and the Democratic chance from 96 to 95 percent, with 348 to 348 expected Democratic electoral votes. 2 states changed their ratings.",
+   "matchup": [
+    "Generic Democrat",
+    "Vance"
+   ],
+   "nat": [
+    -7.96,
+    -8.05
+   ],
+   "pD": [
+    0.957,
+    0.948
+   ],
+   "evD": [
+    348.2,
+    348.2
+   ],
+   "states": [
+    {
+     "st": "NH",
+     "name": "New Hampshire",
+     "ev": 4,
+     "old": -12.42,
+     "new": -11.41,
+     "rOld": "Safe D",
+     "rNew": "Likely D"
+    },
+    {
+     "st": "GA",
+     "name": "Georgia",
+     "ev": 16,
+     "old": -6.17,
+     "new": -5.67,
+     "rOld": "Likely D",
+     "rNew": "Lean D"
+    },
+    {
+     "st": "DC",
+     "name": "District of Columbia",
+     "ev": 3,
+     "old": -89.45,
+     "new": -94.04,
+     "rOld": "Safe D",
+     "rNew": "Safe D"
+    },
+    {
+     "st": "WV",
+     "name": "West Virginia",
+     "ev": 4,
+     "old": 32.85,
+     "new": 36.27,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "ME-2",
+     "name": "Maine's 2nd",
+     "ev": 1,
+     "old": 2.37,
+     "new": 5.48,
+     "rOld": "Lean R",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "MS",
+     "name": "Mississippi",
+     "ev": 6,
+     "old": 14.57,
+     "new": 17.07,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "WY",
+     "name": "Wyoming",
+     "ev": 3,
+     "old": 35.85,
+     "new": 38.31,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "AR",
+     "name": "Arkansas",
+     "ev": 6,
+     "old": 23.71,
+     "new": 26.09,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "AL",
+     "name": "Alabama",
+     "ev": 9,
+     "old": 22.59,
+     "new": 24.85,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "KY",
+     "name": "Kentucky",
+     "ev": 8,
+     "old": 20.88,
+     "new": 23.07,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "SD",
+     "name": "South Dakota",
+     "ev": 3,
+     "old": 17.13,
+     "new": 19.31,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "ME",
+     "name": "Maine",
+     "ev": 2,
+     "old": -14.52,
+     "new": -12.38,
+     "rOld": "Safe D",
+     "rNew": "Safe D"
+    }
+   ],
+   "nom": {
+    "D": [
+     {
+      "name": "Harris",
+      "old": 0.74,
+      "new": 0.74
+     },
+     {
+      "name": "Newsom",
+      "old": 0.0955,
+      "new": 0.0955
+     },
+     {
+      "name": "Ocasio-Cortez",
+      "old": 0.0688,
+      "new": 0.0688
+     },
+     {
+      "name": "Buttigieg",
+      "old": 0.0455,
+      "new": 0.0455
+     }
+    ],
+    "R": [
+     {
+      "name": "Vance",
+      "old": 0.843,
+      "new": 0.843
+     },
+     {
+      "name": "Rubio",
+      "old": 0.1502,
+      "new": 0.1502
+     },
+     {
+      "name": "DeSantis",
+      "old": 0.0067,
+      "new": 0.0067
+     },
+     {
+      "name": "Cruz",
+      "old": 0.0,
+      "new": 0.0
+     }
+    ]
+   },
+   "why": [
+    "Each candidate's county results are now built from the ground up: every county's voters are simulated from real On Point respondents, and each voter is scored on the candidate's pull with their age, race, education, party and 2024 vote, and on what the candidate runs on against what that voter cares about most.",
+    "That score moves turnout as well as votes. A candidate who excites their own side brings out more of their low propensity voters, and one who leaves them cold loses some at home.",
+    "Past results now shape every coalition: how each county moved from 2012 to 2024, and where Haley in 2024 and Kasich and Rubio in 2016 ran strongest in the Republican primaries. Haley runs four points ahead of Vance in Virginia and eight behind him in Ohio; Beshear pulls Ohio, Iowa and Wisconsin back toward Democrats.",
+    "The national race barely moved. What changed is which states each matchup turns on."
+   ],
+   "built": "2026-11-22"
+  },
+  {
    "slug": "2026-11-23",
    "date": "2026-11-23",
    "title": "This week: a voter by voter rebuild, realistic turnout and real primary history",
