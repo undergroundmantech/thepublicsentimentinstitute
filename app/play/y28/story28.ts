@@ -197,7 +197,10 @@ export function worldWeek(d: Data, s: GenS, G: { rng: number }, out: LogItem[]) 
   if (s.opVp && !S.flags.vpGaffe && g <= 6 && E.rand(G) < 0.12) { S.flags.vpGaffe = 1; queue(S, w + 1, "vp_gaffe"); }
   s.opRaised = (s.opRaised ?? 0) + 24e6 / E.DIFF[s.diff].opp;
   // money that comes in without asking: the website, the list, the post debate surge, more when your side is fired up
-  const org = Math.round(11e6 * (s.mo?.hard ? 0.8 : 1) * E.DIFF[s.diff].fund * (0.5 + s.enth[0] / 100) * (s.staff?.digital ? 1.15 : 1)); s.cash += org; s.raised = (s.raised ?? 0) + org;
+  const pNow = s.trend[s.trend.length - 1]?.p ?? 0.5;
+  const org = Math.round(12.5e6 * (s.mo?.hard ? 0.8 : 1) * E.DIFF[s.diff].fund * (0.5 + s.enth[0] / 100) * (s.staff?.digital ? 1.15 : 1) * (0.85 + 0.35 * pNow) * E.momentumK(s)); s.cash += org; s.raised = (s.raised ?? 0) + org;
+  // the national committee keeps its nominee on the air, once
+  if (s.cash < 10e6 && !S.flags.partyCash) { S.flags.partyCash = 1; const a = Math.round(30e6 * E.DIFF[s.diff].fund); s.cash += a; s.raised = (s.raised ?? 0) + a; out.push({ t: w, kind: "money", s: `The ${s.party === "D" ? "Democratic" : "Republican"} National Committee wires ${E.usd(a)} to keep you on the air. It only does this once.` }); }
 }
 /** Remember world events from issue cards, so the economy and later news follow them. */
 export function afterCard(s: GenS | { story?: Story }, id: string) {

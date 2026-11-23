@@ -416,3 +416,5 @@
 .opp.pg .px-app table td { border-bottom-color: rgba(255, 255, 255, .14) !important; }
 .opp.pg .px-app table th { color: var(--px-hi) !important; border-bottom-color: var(--px-line) !important; }
 .opp.pg .y28-evbar .lab, .opp.pg .y28-night-ev .lab { color: var(--px-hi) !important; }
+/* a stale or disputed read of a state */
+.y28-warn { margin: 8px 0; padding: 8px 10px; border-radius: 10px; border: 1.5px solid #c0392b; background: rgba(192, 57, 43, .08); font-size: 12.5px; line-height: 1.45; }

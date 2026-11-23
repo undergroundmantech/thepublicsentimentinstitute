@@ -226,11 +226,11 @@ export function tired(s: GenS, G: { rng: number }): string | null {
 
 // ------------------------------------------------------------- starting maps and what ifs
 export const SCENARIOS: { k: string; l: string; blurb: string }[] = [
-  { k: "model", l: "The 2028 model", blurb: "Every state where the On Point model has this matchup today." },
+  { k: "tied", l: "An even race", blurb: "The national vote starts tied, with every state's lean intact. A fair fight for either party." },
+  { k: "model", l: "The real 2028 forecast", blurb: "Every state where the On Point model has this matchup today. Hard mode for Republicans: the model has Democrats well ahead." },
   { k: "m24", l: "The 2024 map", blurb: "Every state starts where Trump and Harris finished in 2024." },
   { k: "m20", l: "The 2020 map", blurb: "Every state starts where Biden and Trump finished in 2020, from county returns." },
   { k: "recession", l: "What if: a recession", blurb: "Unemployment is climbing. The White House party starts three points worse everywhere." },
-  { k: "tied", l: "What if: dead even", blurb: "The national vote starts tied, with every state's lean intact." },
   { k: "landslide", l: "What if: a landslide for you", blurb: "You start five points up. Can you avoid blowing it?" },
 ];
 /** Offsets, R minus D, that move the matchup's map to the scenario's. */

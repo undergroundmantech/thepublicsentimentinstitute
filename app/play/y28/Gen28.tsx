@@ -182,8 +182,8 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
         <div className="y28-mapcol">
           <TileMap28 states={all} title="The electoral map, shaded by your campaign's read of each state" sel={sel} hov={hov} onPick={(st) => { setSel(st); setTab("state"); sfx("click"); }} onHover={setHov}
             fill={(st) => shade(rd[idx(st)])} marks={marks} />
-          <div className="y28-close" aria-label="Closest states">{close.map((r) => <button key={r.x.st} type="button" className={cls(r.m > 0 ? "me" : "op", sel === r.x.st && "on")} onClick={() => { setSel(r.x.st); setTab("state"); }}><b>{r.x.st}</b>{r.x.ev}<small>{r.m > 0 ? "+" : ""}{r.m.toFixed(1)}</small></button>)}</div>
-          <p className="px-note y28-small">Your campaign&apos;s read of the race, not the truth: states you have not polled lately can be off by a few points. Tipping point: <b>{tipping.x.n}</b>, {tipping.m >= 0 ? `yours by ${tipping.m.toFixed(1)}` : `${sur(op)} by ${Math.abs(tipping.m).toFixed(1)}`}.{third ? ` ${third.n} is on the ballot at about ${third.share.toFixed(1)} percent.` : ""} {X2.earlyOpen(S) ? "Early voting is open." : `Early voting opens in week ${S.weeks - X2.EARLY_FROM + 1}.`} {S.week <= X2.regDeadline(S) ? `Registration closes after week ${X2.regDeadline(S)}.` : "Registration has closed."}</p>
+          <div className="y28-close" aria-label="Closest states">{close.map((r) => <button key={r.x.st} type="button" className={cls(r.m > 0 ? "me" : "op", sel === r.x.st && "on")} title={(() => { const a = E.pollAge(S, r.x.st); return a == null || a >= 2 ? "Your read here is stale: poll it" : undefined; })()} onClick={() => { setSel(r.x.st); setTab("state"); }}><b>{r.x.st}{(() => { const a = E.pollAge(S, r.x.st); return a == null || a >= 2 ? "*" : ""; })()}</b>{r.x.ev}<small>{r.m > 0 ? "+" : ""}{r.m.toFixed(1)}</small></button>)}</div>
+          <p className="px-note y28-small">Your campaign&apos;s read of the race, not the truth: states you have not polled lately can be off by a few points, and a star marks a read that is two weeks old or more. Tipping point: <b>{tipping.x.n}</b>, {tipping.m >= 0 ? `yours by ${tipping.m.toFixed(1)}` : `${sur(op)} by ${Math.abs(tipping.m).toFixed(1)}`}.{third ? ` ${third.n} is on the ballot at about ${third.share.toFixed(1)} percent.` : ""} {X2.earlyOpen(S) ? "Early voting is open." : `Early voting opens in week ${S.weeks - X2.EARLY_FROM + 1}.`} {S.week <= X2.regDeadline(S) ? `Registration closes after week ${X2.regDeadline(S)}.` : "Registration has closed."}</p>
         </div>
         <div className="y28-side">
           {S.invites?.length || meeting ? <div className="y28-invites" aria-label="Invitations and meetings this week">
@@ -197,10 +197,15 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
               {d.cty?.[XS.st.split("-")[0]] ? <button type="button" className="px-press y28-ctybtn" onClick={() => { setCty(XS.st); sfx("whoosh"); }}><span>County war room</span><small>{d.cty[XS.st.split("-")[0]].length} counties · rallies, offices, doors and local ads, county by county</small></button> : null}
               <div className="y28-kvs">
                 <span><small>Your read</small><b className={ms[i] >= 0 ? "up" : "dn"}>{ptsLead(ms[i], sur(me), sur(op))}</b></span>
-                <span><small>Accurate to</small><b>about {fogSd(age).toFixed(1)}</b></span>
+                <span><small>Likely range</small><b>{(() => { const e = 1.64 * fogSd(age) + 1.5; const lo = ms[i] - e, hi = ms[i] + e; const f = (x: number) => `${x >= 0 ? "+" : ""}${x.toFixed(0)}`; return `${f(lo)} to ${f(hi)}`; })()}</b></span>
+                <span><small>Public polls</small><b>{(() => { const pa = E.publicAvg(S, XS.st); return pa ? `${ptsLead(pa.m, sur(me), sur(op))} · ${pa.n}` : "none lately"; })()}</b></span>
                 <span><small>2024</small><b>{p24(XS.p24)}</b></span>
                 <span><small>Early vote</small><b>{Math.round(X2.earlyOf(XS.st) * 100)}% of ballots</b></span>
               </div>
+              {(() => { const e = 1.64 * fogSd(age) + 1.5; const pa = E.publicAvg(S, XS.st); const gap = pa ? Math.abs(pa.m - ms[i]) : 0;
+                const stale = age == null || age >= 2; const inside = Math.abs(ms[i]) < e;
+                if (!(stale && inside) && gap < 3) return null;
+                return <p className="px-note y28-warn" role="note"><b>Check before you spend.</b> {gap >= 3 ? `Your read and the public polls here are ${gap.toFixed(1)} points apart. ` : ""}{stale ? `${age == null ? "You have never polled here" : `Your last poll here is ${age} weeks old`}, and the race is inside the range where it could go either way.` : "The race here is inside the range where it could go either way."} An internal poll costs {E.usd(pollCost)} and sharpens this for two weeks.</p>; })()}
               {(() => { const sr = senRaces.find((r) => r.st === XS.st); const me0 = mo.measures.find((m) => m.st === XS.st); const rg = mo.reg[XS.st]; if (!sr && !me0 && !rg) return null; return (
                 <ul className="y28-brief">
                   {sr ? <li><span>Senate race · {sr.hold === S.party ? "your party's seat" : "their party's seat"}</span><b className={sr.m >= 0 ? "up" : "dn"}>{sr.m >= 0 ? "Yours" : "Theirs"} {sr.m >= 0 ? "+" : ""}{sr.m.toFixed(1)}</b></li> : null}

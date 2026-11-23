@@ -288,7 +288,12 @@ export function marketWeek(s: GenS, G: { rng: number }, pubM: number): string | 
 export function deepWeek(d: Data, s: GenS, G: { rng: number }, out: LogItem[], order: { i: number; w: number }[]) {
   const w = s.week, g = toGo(s);
   // payroll
-  const pay = payroll(s); if (pay) { s.cash -= pay; out.push({ t: w, kind: "money", s: `Payroll for your senior staff: ${E.usd(pay)}.` }); }
+  const pay = payroll(s);
+  if (pay) {
+    if (s.cash >= pay) { s.cash -= pay; out.push({ t: w, kind: "money", s: `Payroll for your senior staff: ${E.usd(pay)}.` }); }
+    else { const paid = Math.max(0, s.cash); s.cash = 0; out.push({ t: w, kind: "bad", s: `You could only make ${E.usd(paid)} of a ${E.usd(pay)} payroll. Your staff are working on IOUs: raise money or let someone go.` }); }
+    if (s.cash > 0 && s.cash < pay * 3 + 5e6) out.push({ t: w, kind: "bad", s: `Cash warning: ${E.usd(s.cash)} in the bank and ${E.usd(pay)} a week in payroll. Hold your next big buy until you raise more.` });
+  }
   // reserved air time that airs this week
   for (const r of (s.reserved ?? []).filter((x) => x.w === w)) { const m = dmasOf(d).find((x) => x.n === r.dma); if (m) airMarket(d, s, m, r.amt, E.TONES[r.tone as Tone].k * E.mgrOf(s).tv * (s.staff?.media ? 1.2 : 1) / rateAt(s)); }
   if ((s.reserved ?? []).some((x) => x.w === w)) out.push({ t: w, kind: "you", s: `Your reserved air time ran this week in ${[...new Set((s.reserved ?? []).filter((x) => x.w === w).map((x) => x.dma))].join(", ")}.` });

@@ -60,7 +60,7 @@ export type PrimS = {
   shifts: Record<string, number>; // your stance moves on each issue from your record, carried into November
   endorsed: string[]; debates: number; done: boolean; nominee?: string; contested?: boolean; cards: Card[]; cardT: number; ans?: number; debW?: number;
   mgr?: Mgr; gused?: Record<string, number>; vpPromise?: string; crisis?: Crisis | null; crisisT?: number; deals?: string[]; perfect?: number; early?: number;
-  story?: Story;
+  story?: Story; lastSh?: number; lifeline?: boolean;
 };
 /** Who can endorse in each party's primary, and what the endorsement does. */
 export const ENDORSERS: Record<Party, { id: string; who: string; what: string; mom: number; st?: string[]; local?: number; cash?: number; lean?: string; hard: number }[]> = {
@@ -154,6 +154,7 @@ export function primRally(d: Data, s: PrimS, st: string): Res {
 export function primTownHall(d: Data, s: PrimS, st: string): Res {
   if (s.days < 1) return { ok: false, t: "No time left this turn." };
   const v = s.visits[st] ?? 0; const k = 0.07 / (1 + 0.3 * v) * (winOf(d, s.party, st) === 1 ? 1.5 : 1);
+  if (s.cash < 40e3) return { ok: false, t: "Not enough cash for a town hall. Make some calls first." };
   s.days -= 1; s.cash -= 40e3; s.visits[st] = v + 1; s.stamina = clamp(s.stamina - 6, 0, 100); addBoost(s, st, me0(s), k);
   return { ok: true, t: `A diner and town hall swing through ${nameOf(d, st)}.`, fx: k };
 }
@@ -179,7 +180,7 @@ export function primFund(d: Data, s: PrimS, kind: "call" | "email" | "bundlers")
   }
   const need = kind === "call" ? 1 : 2; if (s.days < need) return { ok: false, t: "No time left this turn." };
   s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100);
-  const amt = Math.round((kind === "call" ? 0.8e6 : 2.6e6) * (0.5 + sh / 12) * Math.exp(s.field[0].mom * 0.8) * mgrOf(s).fund);
+  const amt = Math.round((kind === "call" ? 1.1e6 : 3.4e6) * (0.6 + sh / 12) * Math.exp(s.field[0].mom * 0.8) * mgrOf(s).fund);
   s.cash += amt; return { ok: true, t: kind === "call" ? `A morning of call time: ${usd(amt)}.` : `A bundlers' dinner on the coasts: ${usd(amt)}.` };
 }
 export function primMedia(d: Data, s: PrimS, G: { rng: number }): Res {
@@ -269,8 +270,13 @@ export function primEnd(d: Data, s: PrimS, G: { rng: number }): LogItem[] {
   }
   // receipts for the player
   const sh = natShares(d, s)[me0(s)] ?? 4;
-  const rec = Math.round((1.4e6 + 0.45e6 * sh) * Math.exp(s.field[0].mom) * (0.7 + s.buzz / 100));
-  s.cash += rec; out.push({ t: s.t, kind: "money", s: `Online and mail receipts: ${usd(rec)}.` });
+  // money follows the polls: a rising share brings a surge of small donors, a falling one dries them up a little
+  const prevSh = s.lastSh ?? sh; const rise = clamp((sh - prevSh) / 6, -0.25, 0.5); s.lastSh = sh;
+  const rec = Math.round((2e6 + 0.55e6 * sh) * Math.exp(s.field[0].mom) * (0.75 + s.buzz / 100) * (1 + rise));
+  s.cash += rec; out.push({ t: s.t, kind: "money", s: `Online and mail receipts: ${usd(rec)}.${rise > 0.08 ? " Your rise in the polls brought in new donors." : ""}` });
+  // one lifeline: when the account runs nearly dry, home state donors and an allied super PAC step in once
+  if (s.cash < 1.5e6 && !s.lifeline) { s.lifeline = true; const a = 5e6; s.cash += a; out.push({ t: s.t, kind: "money", s: `Running on fumes: your home state donors and an allied super PAC come through with ${usd(a)}. It only happens once.` }); }
+  else if (s.cash < 3e6) out.push({ t: s.t, kind: "bad", s: `Cash warning: ${usd(s.cash)} left. Make calls or send an email before you buy more television.` });
   // dropouts after the voting starts: the weak and the broke leave, and their voters move to the candidates most like them
   if (s.t >= 3) {
     const ns = natShares(d, s); const lead = Math.max(...s.field.map((r) => r.del));
@@ -413,6 +419,7 @@ export function genRally(d: Data, s: GenS, st: string): Res {
 }
 export function genHall(d: Data, s: GenS, st: string): Res {
   if (s.days < 1) return { ok: false, t: "No time left this week." };
+  if (s.cash < 80e3) return { ok: false, t: "Not enough cash for a town hall. Raise some money first." };
   const i = si(d, st); const v = s.visits[st] ?? 0; const k = sizeK(d.states[i]) * 0.25 / (1 + 0.4 * v);
   s.days -= 1; s.cash -= 80e3; s.visits[st] = v + 1; s.pers[i] += k; s.nat += 0.02; s.stamina = clamp(s.stamina - 6, 0, 100);
   return { ok: true, t: `Town hall with undecided voters in ${d.states[i].n}.`, fx: k };
@@ -457,12 +464,17 @@ export function genSegment(d: Data, s: GenS, st: string, seg: number, amt: numbe
   s.cash -= amt; s.gotv[i] += fx; s.segUsed[key] = used + 1;
   return { ok: true, t: `${usd(amt)} to turn out ${d.seg[seg]} voters in ${d.states[i].n}: they vote ${Math.round(lean * 100)} percent your way.${fx < 0 ? " That drive helped the other side." : ""}`, fx };
 }
+/** Donors follow the polls: up to a fifth more when your national numbers are climbing, a little less when they slide. */
+export function momentumK(s: GenS) {
+  const P = s.natPolls; if (P.length < 2) return 1;
+  const a = P[P.length - 1].m, b = P[Math.max(0, P.length - 3)].m; return clamp(1 + (a - b) * 0.08, 0.9, 1.2);
+}
 export function genFund(d: Data, s: GenS, kind: "call" | "dinner" | "email"): Res {
   const f = DIFF[s.diff].fund * mgrOf(s).fund;
-  if (kind === "email") { const amt = Math.round(9e6 * f * (0.6 + s.enth[0] / 100) * (s.staff?.digital ? 1.4 : 1)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
+  if (kind === "email") { const amt = Math.round(9e6 * f * momentumK(s) * (0.6 + s.enth[0] / 100) * (s.staff?.digital ? 1.4 : 1)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
   const need = kind === "call" ? 1 : 2; if (s.days < need) return { ok: false, t: "No time left this week." };
   s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100);
-  const amt = Math.round((kind === "call" ? 6e6 : 18e6) * f); s.cash += amt;
+  const amt = Math.round((kind === "call" ? 7e6 : 20e6) * f * momentumK(s)); s.cash += amt;
   return { ok: true, t: kind === "call" ? `Call time: ${usd(amt)}.` : `A finance dinner: ${usd(amt)}.` };
 }
 export function genMedia(d: Data, s: GenS, G: { rng: number }): Res {
@@ -530,6 +542,7 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
     if (toGo(s) === 4 && !s.surprise) { s.surprise = true; s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, true, avoid); s.crisisW = s.week + 1; }
     else if (rand(G) < (s.mo?.hard ? 0.3 : 0.2) && !storyOf(s).queue.some((q) => q.w === s.week + 1)) { s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, false, avoid); s.crisisW = s.week + 1; }
   }
+  if (s.cash < 0) { out.push({ t: s.week, kind: "bad", s: `You ended the week ${usd(-s.cash)} in debt. The bank covered it, and the interest comes out of next week.` }); s.cash = Math.round(s.cash * 1.05); }
   s.week += 1; s.days = DAYS; s.stamina = clamp(s.stamina + 16, 0, 100);
   s.spentLast = (s.spent ?? 0) + payroll(s); s.spent = 0; weekStart(d, s);
   if (s.week <= s.weeks) dueStory(d, s, G);
@@ -665,10 +678,16 @@ export function genPoll(d: Data, s: GenS, st: string, G: { rng: number }): Res {
   const i = si(d, st); s.cash -= cost; s.polledW = { ...(s.polledW ?? {}), [st]: s.week };
   if (s.fog) s.fog[i] = gauss(G) * 0.6 * mgrOf(s).poll;
   const m = myMargins(d, s)[i] + (s.fog?.[i] ?? 0);
-  return { ok: true, t: `Internal poll of ${d.states[i].n}: ${lead(m)}. Your read there is sharp for about two weeks.`, fx: 0 };
+  const moe = Math.max(1.5, 0.6 * mgrOf(s).poll * 1.64 + 1.4);
+  return { ok: true, t: `Internal poll of ${d.states[i].n}: ${lead(m)}, give or take ${moe.toFixed(1)} points, and election night can still miss by a couple more. Your read there is sharp for about two weeks.`, fx: 0 };
 }
 /** What the campaign believes: the true margins plus the error in its read of each state. */
 export const readMargins = (d: Data, s: GenS) => myMargins(d, s).map((m, i) => m + (s.fog?.[i] ?? 0));
+/** The public polls of a state from the last three weeks, averaged, in the player's favor; null when nobody has polled it. */
+export function publicAvg(s: GenS, st: string): { m: number; n: number } | null {
+  const P = s.polls.filter((p) => p.st === st && s.week - p.w <= 3); if (!P.length) return null;
+  return { m: P.reduce((a, p) => a + p.m, 0) / P.length, n: P.length };
+}
 export const pollAge = (s: GenS, st: string) => (s.polledW?.[st] == null ? null : s.week - s.polledW[st]);
 
 // ============================================================= the primary coalition

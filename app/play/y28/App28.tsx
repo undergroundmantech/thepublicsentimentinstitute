@@ -41,14 +41,14 @@ function dailyGame(d: E.Data): Game {
   const day = MO.dailySeed(); const G = { rng: day };
   const p: E.Party = E.rand(G) < 0.5 ? "D" : "R"; const top = (q: E.Party) => d.cands[q].slice().sort((a, b) => b.nom - a.nom).slice(0, 4);
   const meC = top(p)[Math.floor(E.rand(G) * 4)]; const o = otherNominee(d, p === "D" ? "R" : "D", day);
-  return { v: 28, mode: "general", phase: "vp", party: p, me: meC.n, diff: "tossup", seed: day, rng: day ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: day, op: o.op, opVp: o.opVp };
+  return { v: 28, mode: "general", phase: "vp", party: p, me: meC.n, diff: "tossup", seed: day, rng: day ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "tied", daily: day, op: o.op, opVp: o.opVp };
 }
 /** A friend's shared race: same nominees, same year and the same seed, from the running mate pick on. */
 function challengeGame(d: E.Data, code: string): Game | null {
   const r = decodeRes(code); if (!r) return null; const opP: E.Party = r.p === "D" ? "R" : "D";
   if (!d.cands[r.p]?.some((c) => c.n === r.me) || !d.cands[opP]?.some((c) => c.n === r.op)) return null;
   const seed = Number(r.seed) || MO.dailySeed(); const diff = (r.diff && r.diff in E.DIFF ? r.diff : "tossup") as E.Diff;
-  return { v: 28, mode: "general", phase: "vp", party: r.p, me: r.me, diff, seed, rng: seed ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "model", daily: r.day, op: r.op, opVp: d.cands[opP].find((c) => c.n !== r.op)?.n ?? null };
+  return { v: 28, mode: "general", phase: "vp", party: r.p, me: r.me, diff, seed, rng: seed ^ 0x2028, third: null, seen: [], log: [], mgr: "data", len: 12, plong: false, scen: "tied", daily: r.day, op: r.op, opVp: d.cands[opP].find((c) => c.n !== r.op)?.n ?? null };
 }
 const label = (g: Game) => `${g.me}, ${g.phase === "primary" ? `primaries turn ${(g.P?.t ?? 0) + 1}` : g.phase === "general" ? `general week ${g.Gn?.week ?? 1}` : g.phase === "night" ? "election night" : g.phase === "vp" ? "picking a running mate" : g.phase}`;
 
@@ -71,7 +71,7 @@ export default function App28({ idx }: { idx: PIndex }) {
   const [mgr, setMgr] = useState<E.Mgr>("data");
   const [len, setLen] = useState(12);
   const [plong, setPlong] = useState(true);
-  const [scen, setScen] = useState("model");
+  const [scen, setScen] = useState("tied");
   const [hard, setHard] = useState(false);
   const [iron, setIron] = useState(false);
   const [nightCty, setNightCty] = useState<string | null>(null);
