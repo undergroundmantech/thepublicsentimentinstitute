@@ -4,14 +4,14 @@ import { seo } from "@/app/lib/seo";
 import { FOUNDING, LOCALS, SOCIAL, TIERS } from "@/app/lib/offers";
 import "@/app/components/community.css";
 
-export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The members community from On Point Polling and On Point Politics: raw crosstabs, model notes, a monthly live Q and A, workshop replays and early looks at the data. From $10 a month.", "path": "/on-point-polling/weighting-room"});
+export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The members community from On Point Polling and On Point Politics: raw crosstabs, model notes, a monthly live Q and A, workshop replays and early looks at the data. $50 a month.", "path": "/on-point-polling/weighting-room"});
 
 const PERKS = [
   ["Raw crosstabs", "The full tables behind every On Point Polling release, before they are summarized."],
   ["Model notes", "Why the forecast moved, race by race, from the people who built it."],
   ["Early looks", "Toplines and county maps ahead of public release."],
   ["Ask the desk", "A monthly live Q and A, and questions answered in the members' feed on method, weighting and the numbers."],
-  ["Workshop replays", "Every polling workshop and course session, with the files, for full members."],
+  ["Workshop replays", "Every polling workshop and course session, with the files, for every member."],
   ["Members' Discord", "Private channels in the On Point Discord for poll nights, election nights and the model."],
 ];
 
@@ -23,7 +23,7 @@ export default function Page() {
         <div className="eye" style={{ color: "var(--gold)" }}>Subscriber community</div>
         <h1>The Weighting <em>Room</em></h1>
         <p className="lede">Where On Point Polling works in the open: the raw data, the weighting decisions and the arguments about both.</p>
-        <div className="pmeta"><span>From <b>On Point Polling</b></span><span>On <b>Locals</b></span><span>From <b>$10 a month</b></span></div>
+        <div className="pmeta"><span>From <b>On Point Polling</b></span><span>On <b>Locals</b></span><span>Membership <b>$50 a month</b></span></div>
       </header>
 
       <div className="layout">
@@ -43,11 +43,11 @@ export default function Page() {
         <aside className="side">
           {TIERS.map((t) => (
             <div key={t.name} className="card wr-join" style={t.best ? { borderColor: "rgba(231,179,65,.75)" } : undefined}><div className="card-b">
-              <div className="eye" style={{ color: "var(--gold)" }}>{t.best ? "Most members pick this" : "Membership"}</div>
+              <div className="eye" style={{ color: "var(--gold)" }}>Membership</div>
               <h3 style={{ fontSize: 20, margin: "8px 0 2px" }}>{t.name}</h3>
               <p style={{ margin: 0 }}><b style={{ font: "800 28px var(--font-d)" }}>{t.price}</b> <span style={{ fontSize: 13 }}>{t.per}</span></p>
               <ul style={{ margin: "10px 0 0", paddingLeft: 18, fontSize: 13.5, display: "grid", gap: 4 }}>{t.perks.map((x) => <li key={x}>{x}</li>)}</ul>
-              <a className={`btn${t.best ? " gold" : ""}`} href={LOCALS} target="_blank" rel="noopener noreferrer" style={{ marginTop: 14 }}>Join as {t.name}</a>
+              <a className="btn gold" href={LOCALS} target="_blank" rel="noopener noreferrer" style={{ marginTop: 14 }}>Join the Weighting Room</a>
             </div></div>
           ))}
           <div className="callout"><div className="eye" style={{ color: "var(--gold)" }}>Founding members</div>{FOUNDING.note} Only {FOUNDING.seats} founding seats.</div>

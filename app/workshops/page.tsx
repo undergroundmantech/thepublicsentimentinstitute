@@ -9,7 +9,7 @@ export const metadata: Metadata = seo({ title: "Polling workshops: learn how pol
 
 const FAQ = [
   ["Do I need to know statistics?", "No. The first class assumes nothing past high school math, and every step is done live in a spreadsheet you keep."],
-  ["What if I can't make it live?", "Every seat includes the replay and the files, and Weighting Room full members get the whole replay library."],
+  ["What if I can't make it live?", "Every seat includes the replay and the files, and Weighting Room members get the whole replay library."],
   ["Do you share the On Point model?", "The class teaches the standard methods every pollster uses, step by step. The On Point weighting model itself stays private."],
   ["Can I get a refund?", "Yes, a full refund up to 48 hours before the first session, no questions asked."],
 ];

@@ -18,8 +18,7 @@ export const PAY_COURSE = "";
 
 /** the Weighting Room membership tiers, paid on Locals */
 export const TIERS = [
-  { name: "Insider", price: "$10", per: "a month", perks: ["Every poll's full crosstabs the day it is released", "The members' feed of model notes", "The members' Discord channels"] },
-  { name: "Full member", price: "$25", per: "a month, or $199 a year", best: true, perks: ["Everything in Insider", "A monthly live Q and A with the desk", "Early looks at toplines and county maps", "The replay library of every workshop"] },
+  { name: "Member", price: "$50", per: "a month", best: true, perks: ["Every poll's full crosstabs the day it is released", "The members' feed of model notes and early looks at toplines and county maps", "A monthly live Q and A with the desk, and live chats", "The replay library of every workshop", "The members' Discord channels"] },
 ];
 export const FOUNDING = { seats: 100, note: "The first 100 members keep their price for as long as they stay." };
 
