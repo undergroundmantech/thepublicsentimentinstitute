@@ -12,7 +12,7 @@
   --fb: var(--font-b, Inter, system-ui, sans-serif);
   --fm: var(--font-m, "JetBrains Mono", ui-monospace, monospace);
   position: relative; isolation: isolate; color: var(--ink); font-family: var(--fb); padding: 10px clamp(12px, 2.2vw, 32px) 48px; max-width: 1640px; margin: 0 auto; }
-body:has(.h28-page) { background: #0a0711; color: #f3eff8; }
+html:not([data-theme="light"]) body:has(.h28-page) { background: #0a0711; color: #f3eff8; }
 .h28-page::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(50% 30% at 15% 0%, rgba(6,75,249,.16), transparent 70%), radial-gradient(45% 30% at 85% 4%, rgba(249,6,75,.13), transparent 70%); }
 .h28-page .d { color: var(--pd); }

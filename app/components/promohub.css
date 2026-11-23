@@ -46,3 +46,16 @@
 @media (prefers-reduced-motion: reduce) { .ph-card { transition: none; } .ph-card:hover { transform: none; } }
 .ph-card .ph-t b { color: #f3eff8; }
 .ph-card .ph-go { color: #f3eff8; }
+
+/* light mode */
+html[data-theme="light"] .ph-card { color: #16092a; background: #fff; border-color: rgba(22,9,42,.1); box-shadow: 0 8px 24px rgba(40,18,80,.08); }
+html[data-theme="light"] .ph-card .ph-t b { color: #16092a; }
+html[data-theme="light"] .ph-t span { color: #463d5a; }
+html[data-theme="light"] .ph-card .ph-go { color: #16092a; background: rgba(22,9,42,.05); border-color: rgba(22,9,42,.12); }
+html[data-theme="light"] .ph-card:hover .ph-go { color: #fff; }
+html[data-theme="light"] .ph-x { --c: #16092a; }
+html[data-theme="light"] .ph-hire { background: linear-gradient(180deg, rgba(168,112,10,.1), #fff); border-color: rgba(168,112,10,.35); }
+html[data-theme="light"] .ph-head h2 { color: #16092a; }
+html[data-theme="light"] .ph-head p { color: #463d5a; }
+html[data-theme="light"] .ph-game, html[data-theme="light"] .ph-lb, html[data-theme="light"] .ph-wr, html[data-theme="light"] .ph-hire { --c: #8a5c00; }
+html[data-theme="light"] .ph-game { --c: #7c3aed; }

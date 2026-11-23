@@ -171,3 +171,9 @@
 @media (max-width: 900px) { .nat-board { grid-template-columns: repeat(2, minmax(0, 1fr)); } .nat-head { grid-template-columns: 1fr; } .nat-side { justify-items: start; } .nat-meta { justify-content: flex-start; } }
 @media (max-width: 560px) { .nat-board { grid-template-columns: 1fr; } .nat-legend .ramp { width: 100px; } .nat-meta div { flex: 1 1 calc(50% - 4px); min-width: 0; } .nat-cb { width: 60px; } .nat-read { padding: 14px; } .nat-mapcard { padding: 12px 12px 10px; } }
 @media (prefers-reduced-motion: reduce) { .nat *, .nat *::after { animation: none !important; transition: none !important; } }
+
+/* light mode: give the national map a visible ground and state edges on the pale page */
+html[data-theme="light"] .nat { --await: #d9d3e6; --off: #ebe7f2; }
+html[data-theme="light"] .nat-map .u path.g { stroke: #ffffff; stroke-width: 1; }
+html[data-theme="light"] .nat-map .u path.lean { opacity: .9; }
+html[data-theme="light"] .nat-map text { fill: #463d5a; }

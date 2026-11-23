@@ -73,7 +73,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#0a0711", colorScheme: "dark" };
 
-const SK_INIT = `(function(){var d=document.documentElement;d.removeAttribute("data-sk");d.setAttribute("data-theme","dark");d.setAttribute("data-mode","dark");d.setAttribute("data-ui","pro");d.style.colorScheme="dark";})();`;
+const SK_INIT = `(function(){var d=document.documentElement;d.removeAttribute("data-sk");d.setAttribute("data-ui","pro");})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
