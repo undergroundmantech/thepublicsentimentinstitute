@@ -89,3 +89,6 @@ html[data-ui="pro"][data-theme="light"] .x28 .sk-seg button{ color:#b9b0c9; }
 html[data-ui="pro"][data-theme="light"] .x28 .sk-tag{ border-color:rgba(243,239,248,.16); background:rgba(243,239,248,.06); color:#f3eff8; }
 html[data-ui="pro"][data-theme="light"] .x28 .sk-map-ink path{ stroke:#0a0711; }
 html[data-ui="pro"][data-theme="light"] .x28 .x28-top{ background:#0a0711; }
+html[data-ui="pro"][data-theme="light"] .x28 .sk-tabsline :is(.on,[aria-current="page"],[aria-selected="true"]){ color:#f3eff8; }
+html[data-ui="pro"][data-theme="light"] .x28 .sk-seg button:hover{ color:#f3eff8; }
+html[data-ui="pro"][data-theme="light"] .x28 .sk-tag.win{ background:#f3eff8; color:#0a0711; }

@@ -540,7 +540,7 @@ html:not([data-theme="light"]) body:has(.h28-page) { background: #0a0711; color:
 .g28-chips button { appearance: none; display: grid; gap: 1px; text-align: left; padding: 7px 12px; border: 1px solid var(--edge); border-radius: 10px; background: var(--card); color: var(--ink); font: 800 13px var(--fb); cursor: pointer; }
 .g28-chips button em { font: 600 10.5px var(--fm); font-style: normal; color: var(--mute); }
 .g28-chips button[aria-pressed="true"] { background: var(--ink); color: var(--card); box-shadow: var(--sh-sm); }
-.g28-chips button[aria-pressed="true"] em { color: #d8d0ea; }
+.g28-chips button[aria-pressed="true"] em { color: #5f5873; }
 .g28-tp { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 12px; }
 .g28-tp.on { padding: 14px; border: 1px solid var(--edge); border-radius: 14px; background: color-mix(in srgb, #f2b705 10%, var(--card)); }
 .g28-add { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
