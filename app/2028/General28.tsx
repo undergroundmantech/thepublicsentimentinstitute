@@ -30,7 +30,11 @@ const TK_HATCH: [number, number, number][] = [[1.2, 9, 0.1], [1.6, 7, 0.16], [2,
 const winTint = (c: string, p: number) => mixHex("#ffffff", c, 0.15 + 0.85 * Math.max(0, Math.min(1, (p - 0.34) / 0.66)));
 const tkI = (fm: number) => (fm < 2 ? 0 : fm < 6 ? 1 : fm < 12 ? 2 : 3);
 const rgba = (c: string, a: number) => `rgba(${[1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16)).join(",")},${a})`;
-const tkCss = (c: string, fm: number) => { const [w, g, a] = TK_HATCH[tkI(fm)]; return `repeating-linear-gradient(90deg, ${c} 0 ${w}px, ${rgba(c, a)} ${w}px ${g}px)`; };
+/** Nov 23 2026: a third party's states are solid in its own color, the same ramp as the two parties: pale for a close lead
+ *  and the full color for a safe one, so they read on the dark map instead of as a dark hatch */
+const TK_MIX = [0.38, 0.62, 0.84, 1];
+const tkSolid = (c: string, fm: number) => mixHex("#ffffff", c, TK_MIX[tkI(fm)]);
+const tkCss = (c: string, fm: number) => tkSolid(c, fm);
 function TicketHatch({ id, colors }: { id: string; colors: string[] }) {
   return (
     <defs>
@@ -174,7 +178,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
 
   const fill = (st: string) => {
     const v = units[st]; if (!v) return "#2a2438";
-    if (typeof v.lead === "number") return mode === "rate" ? `url(#g28-t${v.lead}-${tkI(v.fm)})` : mode === "prob" ? winTint(TKS[v.lead]?.color ?? TKC[v.lead], v.pT[v.lead]) : leadTint(TKS[v.lead]?.color ?? TKC[v.lead], v.fm);
+    if (typeof v.lead === "number") return mode === "rate" ? tkSolid(TKS[v.lead]?.color ?? TKC[v.lead], v.fm) : mode === "prob" ? winTint(TKS[v.lead]?.color ?? TKC[v.lead], v.pT[v.lead]) : leadTint(TKS[v.lead]?.color ?? TKC[v.lead], v.fm);
     // the chance to carry the state among every candidate on the ballot, not just the two parties
     if (mode === "prob") return probColor(v.pD / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) + (NT ? 0.5 * v.pT.reduce((a, b) => a + b, 0) / Math.max(1e-6, v.pD + v.pR + v.pT.reduce((a, b) => a + b, 0)) : 0));
     if (mode === "shift") return a24[st] != null ? shiftColor(v.m - a24[st]!, 16) : "#2a2438";
@@ -436,7 +440,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
           <div className="h28-under">
             {list.filter((x) => x.k.includes("-") || x.k === "DC").map((x) => { const k = rk(x); return <span key={x.k} onMouseMove={(e) => point(e, x.k)} onMouseLeave={() => setHov(null)}><Link href={slug(x.k)} className={`h28-chip h28-hz ${k}`} style={!RATE[k as Rate] ? ({ "--hatch": mode === "rate" ? tkCss(bandStyle(k).color, x.fm) : "none", backgroundColor: mode === "rate" ? "#fbfaf6" : fill(x.k), color: "#141218" } as CSSProperties) : undefined}>{x.k === "DC" ? "D.C." : x.k}</Link></span>; })}
             {view === "co" && mode === "rate" ? <div className="sk-maplegend h28-legend g28-wash">{[4, 3, 2, 1, 0].map((i) => <i key={"d" + i} style={{ background: WASH_D[i] }} />)}<i style={{ background: WASH_T }} />{[0, 1, 2, 3, 4].map((i) => <i key={"r" + i} style={{ background: WASH_R[i] }} />)}{TKS.map((tk) => <i key={tk.key} className="tk" style={{ background: `linear-gradient(90deg, ${leadTint(tk.color, 1)}, ${tk.color})` }} />)}<em>counties, from {last(res.D)} by {WASH_CUTS[4]} or more to {last(res.R)} by {WASH_CUTS[4]} or more, lavender within a point{NT ? `; a third party's counties tint from light to its full color by its lead` : ""}</em></div>
-              : mode === "rate" ? <div className="sk-maplegend h28-legend">{bands.map((k) => { const b = bandStyle(k); return <span key={k}><i className={`h28-hz ${k}`} style={!RATE[k as Rate] ? { background: tkCss(b.color, 6) } : undefined} />{b.label} <b>{counts[k] ?? 0}</b></span>; })}<em>{NT ? "states, by the leader's lead over the field: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up; a third party's states are hatched upright in its color, denser the same way" : "states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up"}</em></div>
+              : mode === "rate" ? <div className="sk-maplegend h28-legend">{bands.map((k) => { const b = bandStyle(k); return <span key={k}><i className={`h28-hz ${k}`} style={!RATE[k as Rate] ? { background: tkCss(b.color, 6) } : undefined} />{b.label} <b>{counts[k] ?? 0}</b></span>; })}<em>{NT ? "states, by the leader's lead over the field: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up; a third party's states are solid in its own color, pale for a close lead and full for a safe one" : "states, by the forecast margin: Tilt under 2 points, Lean 2 to 6, Likely 6 to 12, Safe 12 and up"}</em></div>
               : mode === "prob" ? <span className="h28-scale"><em>{last(res.D)} certain</em><i className="pr" /><em>{last(res.R)} certain</em></span>
               : <span className="h28-scale"><em>Bluer than 2024</em><i className="sh" /><em>Redder than 2024</em></span>}
           </div>
