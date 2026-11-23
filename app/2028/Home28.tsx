@@ -216,7 +216,7 @@ export default function Home28({ pairs, nom, prim, ev, days, a24, names }: { pai
                   ))}
                 </g>}
                 <Lift id="us28" d={view !== "co" && upSt && geo.states[upSt] ? geo.states[upSt] : null} fill={upSt ? fill(upSt) : "none"} />
-                <g className="h28-labels" aria-hidden="true">
+                <g className="h28-labels" aria-hidden="true" display={view === "co" ? "none" : undefined}>
                   {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>

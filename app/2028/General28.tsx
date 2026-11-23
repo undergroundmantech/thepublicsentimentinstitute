@@ -415,7 +415,7 @@ export default function General28({ base, cands, grid, names, a24, third }: { ba
                 </g>}
                 {view === "co" && !coBusy ? null : view === "co" ? <text x="487" y="300" textAnchor="middle" className="g28-cload">Drawing 3,100 counties</text> : null}
                 <Lift id="g28" d={view === "co" ? null : hov?.kind === "st" && geo.states[hov.st.split("-")[0]] ? geo.states[hov.st.split("-")[0]] : lit && geo.states[lit.split("-")[0]] ? geo.states[lit.split("-")[0]] : null} fill={hov?.kind === "st" ? fill(hov.st.split("-")[0]) : lit ? fill(lit.split("-")[0]) : "none"} />
-                <g className="h28-labels" aria-hidden="true" display={focus ? "none" : undefined}>
+                <g className="h28-labels" aria-hidden="true" display={focus || view === "co" ? "none" : undefined}>
                   {Object.entries(geo.labels).map(([st, [x, y]]) => !SMALL.includes(st) ? <text key={st} x={x} y={y} fill={hatched || view === "co" ? "#141218" : ink(fill(st))} className={hatched || view === "co" ? "halo" : undefined}>{st}</text> : null)}
                 </g>
               </svg>
