@@ -7,6 +7,7 @@ import * as X2 from "./deep28";
 import { DEBATE_Q, debateLines } from "./cards28";
 import { TROPHIES } from "./trophies28";
 import TileMap28, { shade } from "./TileMap28";
+import Swing28 from "./Swing28";
 import { FEMALE, pct, short, firstSentence, Face28, Body28 } from "./ui28";
 import { Type, Roll, cls, sur } from "../px/ui";
 import { seedOf } from "../px/sprites";
@@ -314,6 +315,7 @@ export function Result28({ d, s, res, onAgain, onMenu, start, trophies = [], ext
         <h2 className="y28-big">{res.win ? `President elect ${s.me}` : `${s.op} wins`}</h2>
         <p className="px-note">{res.win ? `${res.ev} to ${res.opEv}` : `${res.opEv} to ${res.ev}`} electoral votes. Popular vote {res.pop >= 0 ? `${sur(s.me)} +${res.pop.toFixed(1)}` : `${sur(s.op)} +${Math.abs(res.pop).toFixed(1)}`}. The tipping point state was {E.nameOf(d, tp.st)}, {tp.win ? "yours" : "theirs"} by {tp.close.toFixed(1)}. You started with a {pct(start.p)} chance and {start.ev} electoral votes.</p>
         <TileMap28 states={d.states.map((x) => x.st)} title="The final map" fill={(st) => { const c = byI.get(st); return c ? shade(sg * c.m) : "#2f1f5a"; }} />
+        <Swing28 d={d} s={s} res={res} />
         <Trophies ids={trophies} />
         {flips.length ? <p className="px-note">Flipped from 2024: {flips.map((c) => `${E.nameOf(d, c.st)} to ${c.win ? sur(s.me) : sur(s.op)}`).join(", ")}.</p> : null}
         {extra}

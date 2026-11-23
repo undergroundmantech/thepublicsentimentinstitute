@@ -9,7 +9,7 @@ import type { Data, GenS, Res } from "./engine28";
 import { REGION, coAt, readMargins, usd } from "./engine28";
 
 /** A county: fips, name, projected 2028 votes, baseline margin R minus D, and its center on the national map. */
-export type CRow = [string, string, number, number, number, number, number?, number?];
+export type CRow = [string, string, number, number, number, number, number?, number?, (number | null)?];
 export type CIdx = Record<string, CRow[]>;
 export type CShape = { st: string; box: [number, number, number, number] | null; outline: string | null; p: Record<string, string> };
 /** The campaign's county work. loc and turn are points in the player's favor, local to one county. */

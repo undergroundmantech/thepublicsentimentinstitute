@@ -11,14 +11,14 @@ import { moreWeek, weekStart, type More, type Recount } from "./more28";
 import { deepWeek, groupFx, groupStance, toGo, pollSd, payroll, bankOf, skewOf, earlyOf, type Grp, type Dma, type Staff, type Invite, type Closing } from "./deep28";
 
 export type Party = "D" | "R";
-export type Cand = { n: string; c: string; nat: number; home: Record<string, number>; hyp: number; lane: string; grp: Record<string, number>; nom: number; field: number; co?: [number, number]; est?: number; wc?: number;
+export type Cand = { n: string; c: string; nat: number; home: Record<string, number>; hyp: number; lane: string; grp: Record<string, number>; nom: number; field: number; co?: [number, number]; est?: number; wc?: number; pw?: number[];
   eff: number[]; effSrc: string; pos: number[] | null; emph: number[] | null; ind: number | null; note: string; src: string; sim: Record<string, number> };
 export type Seg = [number, number, number]; // share of the state's 2028 voters, Democratic two party share, turnout
-export type St = { st: string; n: string; ev: number; m: number; sd: number; p24: number | null; votes: number; close: number; segs: Seg[]; ax?: [number, number] };
+export type St = { st: string; n: string; ev: number; m: number; sd: number; p24: number | null; votes: number; close: number; segs: Seg[]; ax?: [number, number]; pw?: number[] };
 export type Third = { n: string; who: string; status: string; lane: string; core: string; quotes: string[]; pillars: string; attacks: string; reach: string; risks: string; share: number; rlean: number; dlean: number; home: Record<string, number>; pos: number[] | null };
 export type Issue = { k: string; l: string; d: number; r: number; i: number; cd: number; cr: number; ci: number };
 export type Prim = { total: number; cal: [string, number, number][]; shares: Record<string, Record<string, number>>; rule: string };
-export type Data = { px?: Record<string, number[]>; groups?: Grp[]; dmas?: Dma[]; cty?: import("./cty28").CIdx; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
+export type Data = { pew?: string[]; px?: Record<string, number[]>; groups?: Grp[]; dmas?: Dma[]; cty?: import("./cty28").CIdx; asOf: string; election: string; nat: number; pD: number; ev: number; iss: string[]; issues: Issue[]; seg: string[]; states: St[]; cands: Record<Party, Cand[]>; primary: Record<Party, Prim>; third: Third[] };
 export type Diff = "safe" | "lean" | "tossup" | "wave";
 export const DIFF: Record<Diff, { name: string; blurb: string; start: number; fund: number; opp: number; neg: number }> = {
   safe: { name: "Friendly year", blurb: "The wind at your back: two points better than the model, donors give more, rivals are slower.", start: 2, fund: 1.25, opp: 0.8, neg: 0.8 },
@@ -60,7 +60,7 @@ export type PrimS = {
   shifts: Record<string, number>; // your stance moves on each issue from your record, carried into November
   endorsed: string[]; debates: number; done: boolean; nominee?: string; contested?: boolean; cards: Card[]; cardT: number; ans?: number; debW?: number;
   mgr?: Mgr; gused?: Record<string, number>; vpPromise?: string; crisis?: Crisis | null; crisisT?: number; deals?: string[]; perfect?: number; early?: number;
-  story?: Story; lastSh?: number; lifeline?: boolean;
+  story?: Story; lastSh?: number; lifeline?: boolean; tvSat?: Record<string, number>; fundN?: number;
 };
 /** Who can endorse in each party's primary, and what the endorsement does. */
 export const ENDORSERS: Record<Party, { id: string; who: string; what: string; mom: number; st?: string[]; local?: number; cash?: number; lean?: string; hard: number }[]> = {
@@ -161,9 +161,15 @@ export function primTownHall(d: Data, s: PrimS, st: string): Res {
 export function primTV(d: Data, s: PrimS, st: string, amt: number): Res {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
   const scale = Math.max(1, delOf(d, s.party, st)) * 60e3;
-  const k = 0.22 * Math.log(1 + amt / scale) * mgrOf(s).tv;
-  s.cash -= amt; addBoost(s, st, me0(s), k);
-  return { ok: true, t: `${usd(amt)} of television in ${nameOf(d, st)}.`, fx: k };
+  // the air saturates: every dollar already on in this state this cycle makes the next one worth less, and primary
+  // voters who already know you move least of all
+  s.tvSat = s.tvSat ?? {}; const sat = s.tvSat[st] ?? 0;
+  const k = 0.16 * (Math.log(1 + (sat + amt) / scale) - Math.log(1 + sat / scale)) * mgrOf(s).tv;
+  s.tvSat[st] = sat + amt; s.cash -= amt; addBoost(s, st, me0(s), k);
+  // rivals answer on the air where you just went up, if they can afford it
+  for (const r of s.field.slice(1)) if (r.alive && r.cash > amt * 0.5) { const a = Math.min(r.cash * 0.3, amt * 0.6); r.cash -= a; addBoost(s, st, r.n, 0.1 * Math.log(1 + a / scale)); }
+  const full = sat > scale * 12;
+  return { ok: true, t: `${usd(amt)} of television in ${nameOf(d, st)}.${full ? " The air is saturated here: voters have seen your ad dozens of times, and your rivals answered." : ""}`, fx: k };
 }
 export function primOffice(d: Data, s: PrimS, st: string): Res {
   if (s.offices.includes(st)) return { ok: false, t: "You already have an operation there." };
@@ -180,7 +186,8 @@ export function primFund(d: Data, s: PrimS, kind: "call" | "email" | "bundlers")
   }
   const need = kind === "call" ? 1 : 2; if (s.days < need) return { ok: false, t: "No time left this turn." };
   s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100);
-  const amt = Math.round((kind === "call" ? 1.1e6 : 3.4e6) * (0.6 + sh / 12) * Math.exp(s.field[0].mom * 0.8) * mgrOf(s).fund);
+  s.fundN = (s.fundN ?? 0) + 1;                               // the same donors, asked again this turn, give less
+  const amt = Math.round((kind === "call" ? 0.9e6 : 2.8e6) / (1 + 0.35 * (s.fundN - 1)) * (0.6 + sh / 12) * Math.exp(s.field[0].mom * 0.8) * mgrOf(s).fund);
   s.cash += amt; return { ok: true, t: kind === "call" ? `A morning of call time: ${usd(amt)}.` : `A bundlers' dinner on the coasts: ${usd(amt)}.` };
 }
 export function primMedia(d: Data, s: PrimS, G: { rng: number }): Res {
@@ -226,7 +233,12 @@ export function primStance(d: Data, s: PrimS, k: number, pos: number, mult = 1):
 }
 /** End the turn: rivals campaign, the turn's contests are counted, delegates allocated, momentum moves and the weak drop. */
 export function primEnd(d: Data, s: PrimS, G: { rng: number }): LogItem[] {
-  const out: LogItem[] = []; const T = s.turns[s.t];
+  const out: LogItem[] = []; const T = s.turns[s.t]; s.fundN = 0;
+  // ads fade between contests, and front runners draw fire: the more you lead, the more the field and the press go after you
+  for (const st of Object.keys(s.boost)) if (!s.results[st]) { const b = s.boost[st]; for (const k of Object.keys(b)) b[k] *= 0.8; }
+  if (s.tvSat) for (const k of Object.keys(s.tvSat)) s.tvSat[k] *= 0.5;
+  { const ns = natShares(d, s); const mine = ns[me0(s)] ?? 0; const best = Math.max(0, ...s.field.slice(1).filter((r) => r.alive).map((r) => ns[r.n] ?? 0));
+    if (mine > best + 8) { const k = Math.min(0.06, (mine - best - 8) / 400); s.field[0].mom -= k; out.push({ t: s.t, kind: "bad", s: `Front runner scrutiny: your rivals and the press spent the week on your record. Momentum slips.`, fx: -k }); } }
   // rivals spend where the next contests are
   const next = s.turns.slice(s.t, s.t + 2).flatMap((x) => x.states);
   for (const r of s.field.slice(1)) {
@@ -268,14 +280,14 @@ export function primEnd(d: Data, s: PrimS, G: { rng: number }): LogItem[] {
     const mine = T.states.reduce((a, st) => a + (s.results[st].del[me0(s)] ?? 0), 0);
     const won = T.states.filter((st) => s.results[st].win === me0(s)).length;
     // delegates and wins bring money: donors pile in behind whoever just won
-    const bump = Math.round(2.5e6 * mine / 30 + 2e6 * won);
+    const bump = Math.round(1.2e6 * mine / 30 + 0.8e6 * won);
     s.cash += bump; if (bump > 1e6) out.push({ t: s.t, kind: "money", s: `${won ? `Winning ${won === 1 ? "a state" : `${won} states`} brought` : "Your delegates brought"} a donor surge: ${usd(bump)}.` });
   }
   // receipts for the player
   const sh = natShares(d, s)[me0(s)] ?? 4;
   // money follows the polls: a rising share brings a surge of small donors, a falling one dries them up a little
   const prevSh = s.lastSh ?? sh; const rise = clamp((sh - prevSh) / 6, -0.25, 0.5); s.lastSh = sh;
-  const rec = Math.round((2e6 + 0.55e6 * sh) * Math.exp(s.field[0].mom) * (0.75 + s.buzz / 100) * (1 + rise));
+  const rec = Math.round((1.5e6 + 0.45e6 * sh) * Math.exp(s.field[0].mom) * (0.75 + s.buzz / 100) * (1 + rise));
   s.cash += rec; out.push({ t: s.t, kind: "money", s: `Online and mail receipts: ${usd(rec)}.${rise > 0.08 ? " Your rise in the polls brought in new donors." : ""}` });
   // one lifeline: when the account runs nearly dry, home state donors and an allied super PAC step in once
   if (s.cash < 1.5e6 && !s.lifeline) { s.lifeline = true; const a = 5e6; s.cash += a; out.push({ t: s.t, kind: "money", s: `Running on fumes: your home state donors and an allied super PAC come through with ${usd(a)}. It only happens once.` }); }
@@ -336,7 +348,7 @@ export type GenS = {
   // the story and the staff: what the campaign has said and done, the world's own calendar, and the weekly staff meeting
   story?: Story; econ?: Econ; raised?: number; opRaised?: number; spent?: number; spentLast?: number; spentTot?: number; opFocus?: string[];
   meeting?: Meeting | null; meetW?: number; metDept?: Record<string, number>;
-  mo?: More; scen?: number[];
+  mo?: More; scen?: number[]; adWk?: number[]; fundN?: number; pew?: number[]; pewN?: Record<string, number>;
   // the county ground game: the work in each county, and what it adds to each state in the player's favor
   cw?: import("./cty28").CW; cfx?: number[];
   // sponsor rewards claimed, by week
@@ -397,7 +409,8 @@ export function marginsRD(d: Data, s: GenS): number[] {
   const sg = sideSign(s.party);
   const en = ((s.enth[0] - 50) - (s.enth[1] - 50)) / 25; // points from enthusiasm, the player's way
   const gf = groupFx(d, s);
-  return base.map((b, i) => b + (s.scen?.[i] ?? 0) + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en + gf[i] + (s.cfx?.[i] ?? 0)));
+  const pf = pewFx(d, s);
+  return base.map((b, i) => b + (s.scen?.[i] ?? 0) + vD[i] + vR[i] + th[i] + sg * (s.nat + s.pers[i] + s.ads[i] - s.opAds[i] + s.gotv[i] + en + gf[i] + (s.cfx?.[i] ?? 0) + pf[i]));
 }
 /** Player margins (positive is the player leading). */
 export const myMargins = (d: Data, s: GenS) => marginsRD(d, s).map((m) => sideSign(s.party) * m);
@@ -446,12 +459,18 @@ export const TONES: Record<Tone, { name: string; blurb: string; k: number; risk:
 export function genTV(d: Data, s: GenS, st: string, amt: number, tone: Tone = "contrast", G?: { rng: number }): Res {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
   const i = si(d, st); if (i < 0) return { ok: false, t: "Unknown state." };
-  const T = TONES[tone]; let k = 0.9 * Math.log(1 + amt / (d.states[i].votes * 1.6)) * (toGo(s) <= 2 ? 1.15 : 1) * mgrOf(s).tv * T.k * (s.staff?.media ? 1.2 : 1);
-  s.cash -= amt;
+  const T = TONES[tone]; const V = d.states[i].votes * 1.6;
+  // saturation: the week's spending in this state stacks on a log curve, so the tenth buy moves far less than the first;
+  // persuadables: a state far from even has few voters left to move, so money there mostly buys nothing
+  s.adWk = s.adWk ?? d.states.map(() => 0); const sat = s.adWk[i];
+  const m = myMargins(d, s)[i]; const pers = 0.2 + 0.8 * Math.exp(-((m / 14) ** 2));
+  let k = 1.25 * (Math.log(1 + (sat + amt) / V) - Math.log(1 + sat / V)) * pers * (toGo(s) <= 2 ? 1.15 : 1) * mgrOf(s).tv * T.k * (s.staff?.media ? 1.2 : 1);
+  s.adWk[i] = sat + amt; s.cash -= amt;
   const risk = T.risk * (s.mgr === "ads" ? 0.5 : 1);
   if (G && rand(G) < risk) { k = -0.35 * k; s.ads[i] += k; s.enth[1] = clamp(s.enth[1] + 0.8, 0, 100); return { ok: true, t: `The ${T.name.toLowerCase()} ad in ${d.states[i].n} backfired: local news called it misleading and ran it free for the other side.`, fx: k }; }
   s.ads[i] += k; if (tone === "positive") s.enth[0] = clamp(s.enth[0] + 0.4, 0, 100);
-  return { ok: true, t: `${usd(amt)} of ${T.name.toLowerCase()} television in ${d.states[i].n}.`, fx: k };
+  const why = pers < 0.45 ? ` ${d.states[i].n} is not close, so there were few persuadable voters to reach.` : sat > V * 2 ? " The air here is saturated this week." : "";
+  return { ok: true, t: `${usd(amt)} of ${T.name.toLowerCase()} television in ${d.states[i].n}.${why}`, fx: k };
 }
 export function genNatTV(d: Data, s: GenS, amt: number): Res {
   if (s.cash < amt) return { ok: false, t: "Not enough cash." };
@@ -484,10 +503,10 @@ export function momentumK(s: GenS) {
 }
 export function genFund(d: Data, s: GenS, kind: "call" | "dinner" | "email"): Res {
   const f = DIFF[s.diff].fund * mgrOf(s).fund;
-  if (kind === "email") { const amt = Math.round(9e6 * f * momentumK(s) * (0.6 + s.enth[0] / 100) * (s.staff?.digital ? 1.4 : 1)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
+  if (kind === "email") { s.fundN = (s.fundN ?? 0) + 1; const amt = Math.round(6e6 / (1 + 0.5 * (s.fundN - 1)) * f * momentumK(s) * (0.6 + s.enth[0] / 100) * (s.staff?.digital ? 1.4 : 1)); s.cash += amt; s.enth[0] = clamp(s.enth[0] - 0.6, 0, 100); return { ok: true, t: `Small dollar blast: ${usd(amt)}.` }; }
   const need = kind === "call" ? 1 : 2; if (s.days < need) return { ok: false, t: "No time left this week." };
-  s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100);
-  const amt = Math.round((kind === "call" ? 7e6 : 20e6) * f * momentumK(s)); s.cash += amt;
+  s.days -= need; s.stamina = clamp(s.stamina - 5 * need, 0, 100); s.fundN = (s.fundN ?? 0) + 1;
+  const amt = Math.round((kind === "call" ? 5e6 : 14e6) * f * momentumK(s) / (1 + 0.35 * (s.fundN - 1))); s.cash += amt;
   return { ok: true, t: kind === "call" ? `Call time: ${usd(amt)}.` : `A finance dinner: ${usd(amt)}.` };
 }
 export function genMedia(d: Data, s: GenS, G: { rng: number }): Res {
@@ -519,7 +538,8 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
   const k = DIFF[s.diff].opp; const spend = Math.min(s.opCash, 28e6 * k + s.opCash * 0.08);
   s.opCash -= spend; s.opCash += 24e6 / k;
   const tgt = order.slice(0, 6); s.opVisits = tgt.slice(0, 3).map((x) => d.states[x.i].st);
-  for (const x of tgt) s.opAds[x.i] += 0.9 * Math.log(1 + (spend / 6) / (d.states[x.i].votes * 1.6)) * k * 0.92;
+  // the rival goes hardest where you left the air to them
+  for (const x of tgt) { const open = (s.adWk?.[x.i] ?? 0) < spend / 12 ? 1.3 : 1; s.opAds[x.i] += 0.9 * Math.log(1 + (spend / 6) / (d.states[x.i].votes * 1.6)) * k * 0.92 * open; }
   s.opN = s.opN ?? {};
   for (const x of tgt.slice(0, 3)) { const st = d.states[x.i].st, v = s.opN[st] ?? 0; s.pers[x.i] -= sizeK(d.states[x.i]) * 0.5 * k * 0.8 / (1 + 0.5 * v); s.opN[st] = v + 1; }
   out.push({ t: s.week, kind: "rival", s: `${s.op} campaigned in ${s.opVisits.map((st) => nameOf(d, st)).join(", ")} and ran about ${usd(spend)} of ads.` });
@@ -556,6 +576,11 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
     else if (rand(G) < (s.mo?.hard ? 0.3 : 0.2) && !storyOf(s).queue.some((q) => q.w === s.week + 1)) { s.crisis = dealCrisis(d, s.party, s.me, s.op, s.vp, G, true, false, avoid); s.crisisW = s.week + 1; }
   }
   if (s.cash < 0) { out.push({ t: s.week, kind: "bad", s: `You ended the week ${usd(-s.cash)} in debt. The bank covered it, and the interest comes out of next week.` }); s.cash = Math.round(s.cash * 1.05); }
+  // a big favorite draws scrutiny and the race tightens, as real races do; wasted weeks in safe states let it happen
+  { const p = s.trend[s.trend.length - 1]?.p ?? 0.5; if (p > 0.65) { const k = 0.4 * (p - 0.65); s.nat -= k; out.push({ t: s.week, kind: "bad", s: `The race tightens: as the favorite you drew the press's scrutiny and ${s.op}'s best attacks this week.`, fx: -k }); } }
+  s.adWk = d.states.map(() => 0); s.fundN = 0;
+  // the other campaign courts the open voter types too, the ones where you lead
+  if (d.pew) { s.pew = s.pew ?? Array(9).fill(0); const k = [3, 4, 5, 6, 2][Math.floor(rand(G) * 5)]; const a = 1.1 * PEW_OPEN[k] * DIFF[s.diff].opp; s.pew[k] -= a; out.push({ t: s.week, kind: "rival", s: `${s.op} spent the week courting the ${PEW_SHORT[k]}.` }); s.pew = s.pew.map((x) => x * 0.92); }
   s.week += 1; s.days = DAYS; s.stamina = clamp(s.stamina + 16, 0, 100);
   s.spentLast = (s.spent ?? 0) + payroll(s); s.spentTot = (s.spentTot ?? 0) + s.spentLast; s.spent = 0; weekStart(d, s);
   if (s.week <= s.weeks) dueStory(d, s, G);
@@ -724,4 +749,29 @@ export function primGroup(d: Data, s: PrimS, gk: string, st: string): Res {
   const k = 0.5 / (1 + 0.4 * n);
   for (const x of Object.keys(d.primary[s.party].shares)) { const sh = primGroupShare(d, s.party, gk, x); addBoost(s, x, me0(s), k * sh * (x === st ? 1 : 0.18)); }
   return { ok: true, t: `Courting ${g.l.toLowerCase()} in ${nameOf(d, st)}. They are about ${Math.round(primGroupShare(d, s.party, gk, st) * 100)} percent of the ${s.party === "D" ? "Democratic" : "Republican"} primary vote there.`, fx: k };
+}
+
+// ------------------------------------------------------------- v61: the coalition, voter type by voter type
+/** The nine Pew political types, left to right, and how many of each are still open to persuasion. */
+export const PEW_SHORT = ["Progressives", "Loyal Liberals", "Left-Out Left", "Order and Opportunity Left", "Tuned-Out Middle", "Pragmatic Right", "Unconventional Right", "Faith First", "No Apologies Right"];
+export const PEW_OPEN = [0.3, 0.2, 0.4, 0.9, 1.0, 0.9, 0.55, 0.3, 0.15];
+/** Points in the player's favor in each state from courting voter types: each type's gain times its share of the state. */
+export function pewFx(d: Data, s: GenS): number[] {
+  const p = s.pew; if (!p || !p.some((x) => x)) return d.states.map(() => 0);
+  return d.states.map((x) => (x.pw ? x.pw.reduce((a, sh, k) => a + sh * (p[k] ?? 0), 0) : 0));
+}
+/** Court one voter type for a week: a speech, events and ads built for them. They move toward you as far as they are
+ * persuadable, each return trip moves them less, and the types furthest from them on the spectrum notice and cool. */
+export function genCourt(d: Data, s: GenS, k: number): Res {
+  if (s.days < 1) return { ok: false, t: "Courting a voter type takes a day of the candidate's time." };
+  if (s.cash < 1.5e6) return { ok: false, t: "An outreach push costs $1.5M." };
+  s.pew = s.pew ?? Array(9).fill(0); s.pewN = s.pewN ?? {};
+  const n = s.pewN[k] ?? 0; const meC = candOf(d, s.party, s.me);
+  // your own pull with the type matters: a candidate they already like gets more for the effort
+  const like = clamp(1 + (meC?.pw?.[k] ?? 0) / 20, 0.5, 1.5);
+  const gain = 3.2 * PEW_OPEN[k] * like / (1 + 0.6 * n);
+  s.days -= 1; s.cash -= 1.5e6; s.pewN[k] = n + 1; s.pew[k] += gain;
+  const hurt: string[] = [];
+  for (let j = 0; j < 9; j++) { const dist = Math.abs(j - k); if (dist >= 4) { const loss = gain * 0.3 * (dist - 3) / 5; s.pew[j] -= loss; if (loss > 0.15) hurt.push(PEW_SHORT[j]); } }
+  return { ok: true, t: `A week courting the ${PEW_SHORT[k]}: about ${gain.toFixed(1)} points with them.${hurt.length ? ` The ${hurt.join(" and ")} noticed, and cooled on you.` : ""}${n >= 2 ? " They have heard this pitch before." : ""}`, fx: gain * 0.1 };
 }

@@ -423,3 +423,22 @@
 .y28-lb { display: grid; gap: 8px; margin-top: 10px; }
 .y28-lb-in { flex: 1 1 180px; min-width: 0; padding: 9px 11px; border-radius: 10px; border: 2px solid currentColor; background: transparent; color: inherit; font: 700 14px inherit; }
 .oc-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* voter types */
+.y28-types { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.y28-types li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, .12); font-size: 12.5px; }
+.y28-types li span:first-child { display: grid; } .y28-types li small { opacity: .75; font-size: 11px; }
+.y28-types .up { color: #6fe3a0; } .y28-types .dn { color: #ff8a8a; }
+
+/* results, state by state */
+.y28-swing { display: grid; gap: 10px; }
+.y28-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 11.5px; }
+.y28-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: -2px; }
+.y28-tblwrap { overflow-x: auto; display: grid; gap: 8px; }
+.y28-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.y28-tbl th, .y28-tbl td { padding: 5px 8px; border-bottom: 1px solid rgba(255, 255, 255, .12); text-align: left; white-space: nowrap; }
+.y28-tbl .n { text-align: right; font-variant-numeric: tabular-nums; }
+.y28-tbl .up { color: #6fe3a0; } .y28-tbl .dn { color: #ff8a8a; }
+.y28-swmap { width: 100%; max-height: 520px; height: auto; display: block; }
+.y28-swmap path { cursor: pointer; }
+.y28-swcty select { padding: 6px 8px; border-radius: 8px; }

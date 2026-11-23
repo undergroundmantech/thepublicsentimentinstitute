@@ -22,7 +22,7 @@ import * as CT from "./cty28";
 import County28 from "./County28";
 import { adBreak, RewardBtn } from "./ads28";
 
-type Tab = "state" | "groups" | "early" | "camp" | "ticket" | "oppo" | "polls" | "wire";
+type Tab = "state" | "types" | "groups" | "early" | "camp" | "ticket" | "oppo" | "polls" | "wire";
 /** A debate's name from the calendar, which negotiations can change. */
 const debName = (S: E.GenS, x?: { w: number; kind: "pres" | "vp" }) => {
   if (!x) return "Debate"; if (x.kind === "vp") return "Vice presidential debate";
@@ -30,7 +30,7 @@ const debName = (S: E.GenS, x?: { w: number; kind: "pres" | "vp" }) => {
   return k === pres.length - 1 && k > 0 ? "Final presidential debate" : `${["First", "Second", "Third", "Fourth"][k] ?? "Another"} presidential debate`;
 };
 const TM_KEYS = Object.keys(TM.DEPTS) as TM.Dept[];
-const TABS: [Tab, string][] = [["state", "State"], ["groups", "Groups"], ["early", "Early vote"], ["camp", "Campaign"], ["ticket", "Ticket"], ["oppo", "Oppo"], ["polls", "Polls"], ["wire", "Wire"]];
+const TABS: [Tab, string][] = [["state", "State"], ["types", "Voter types"], ["groups", "Groups"], ["early", "Early vote"], ["camp", "Campaign"], ["ticket", "Ticket"], ["oppo", "Oppo"], ["polls", "Polls"], ["wire", "Wire"]];
 
 export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; commit: (x: Game) => void; onDone: (x: Game) => void }) {
   const S = g.Gn!; const me = S.me, op = S.op; const opP: E.Party = S.party === "D" ? "R" : "D";
@@ -250,6 +250,18 @@ export default function Gen28({ d, g, commit, onDone }: { d: E.Data; g: Game; co
             </div>
           ) : null}
 
+          {tab === "types" && d.pew ? (() => {
+            const meC = d.cands[S.party].find((c) => c.n === S.me); const V = d.states.reduce((a, x) => a + (x.st.includes("-") ? 0 : x.votes), 0);
+            const nat = d.pew.map((_, k) => d.states.reduce((a, x) => a + (x.st.includes("-") || !x.pw ? 0 : x.pw[k] * x.votes), 0) / Math.max(1, V));
+            return (
+              <div className="y28-pane">
+                <h3>Voter types <small>the nine Pew political types</small></h3>
+                <p className="px-note y28-small">Your coalition, type by type. Courting a type moves it toward you as far as it is open to persuasion; the types at the other end of the spectrum notice. Your pull is how this type rates you against a generic nominee; outreach is what your campaign has added this race.</p>
+                <ul className="y28-types">{d.pew.map((t, k) => { const pull = meC?.pw?.[k] ?? 0; const work = S.pew?.[k] ?? 0; return (
+                  <li key={t}><span><b>{E.PEW_SHORT[k]}</b><small>{(nat[k] * 100).toFixed(0)}% of voters · {E.PEW_OPEN[k] >= 0.8 ? "very persuadable" : E.PEW_OPEN[k] >= 0.4 ? "somewhat persuadable" : "locked in"}</small></span>
+                    <span className={pull >= 0 ? "up" : "dn"}>pull {pull >= 0 ? "+" : ""}{pull.toFixed(1)}</span><span className={work >= 0 ? "up" : "dn"}>outreach {work >= 0 ? "+" : ""}{work.toFixed(1)}</span>
+                    <button type="button" className="px-btn sm" onClick={() => run((x) => E.genCourt(d, x.Gn!, k))}><small>1 day · $1.5M</small>Court</button></li>); })}</ul>
+              </div>); })() : null}
           {tab === "groups" ? (
             <div className="y28-pane">
               <h3>The coalition <small>{groups.length} groups, nationwide</small></h3>
