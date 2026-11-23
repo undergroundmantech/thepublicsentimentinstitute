@@ -10,7 +10,7 @@ export type Mode = "primary" | "full" | "general";
 export type Phase = "primary" | "convention" | "vp" | "general" | "night" | "recount" | "hundred" | "over";
 export type Game = { v: 28; mode: Mode; phase: Phase; party: E.Party; me: string; diff: E.Diff; seed: number; rng: number; third: string | null; op?: string; opVp?: string | null;
   P?: E.PrimS; Gn?: E.GenS; seen: string[]; log: E.LogItem[]; lost?: string; night?: E.NightRes; trophies?: string[]; mgr?: E.Mgr; len?: number; plong?: boolean;
-  scen?: string; hard?: boolean; iron?: boolean; daily?: number; legacy?: number; speech?: string; hund?: import("./more28").Hundred; logged?: boolean };
+  scen?: string; hard?: boolean; iron?: boolean; level?: boolean; daily?: number; legacy?: number; speech?: string; hund?: import("./more28").Hundred; logged?: boolean };
 const KEY = "opp_play28_v3";
 export function load28(): Game | null { try { const j = localStorage.getItem(KEY); return j ? (JSON.parse(j) as Game) : null; } catch { return null; } }
 export function save28(g: Game | null) { try { if (g) localStorage.setItem(KEY, JSON.stringify(g)); else localStorage.removeItem(KEY); } catch { /* storage blocked */ } }

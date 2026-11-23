@@ -60,7 +60,7 @@ export type PrimS = {
   shifts: Record<string, number>; // your stance moves on each issue from your record, carried into November
   endorsed: string[]; debates: number; done: boolean; nominee?: string; contested?: boolean; cards: Card[]; cardT: number; ans?: number; debW?: number;
   mgr?: Mgr; gused?: Record<string, number>; vpPromise?: string; crisis?: Crisis | null; crisisT?: number; deals?: string[]; perfect?: number; early?: number;
-  story?: Story; lastSh?: number; lifeline?: boolean; tvSat?: Record<string, number>; fundN?: number;
+  story?: Story; lastSh?: number; lifeline?: boolean; tvSat?: Record<string, number>; fundN?: number; lvl?: Record<string, number>;
 };
 /** Who can endorse in each party's primary, and what the endorsement does. */
 export const ENDORSERS: Record<Party, { id: string; who: string; what: string; mom: number; st?: string[]; local?: number; cash?: number; lean?: string; hard: number }[]> = {
@@ -110,16 +110,20 @@ export function primTurns(d: Data, p: Party, long = false): Turn[] {
     { label: "The last primaries", date: "May and June", states: w4.slice(half) },
   ];
 }
-export function newPrimary(d: Data, p: Party, me: string, diff: Diff, seed: number, long = false): PrimS {
+export function newPrimary(d: Data, p: Party, me: string, diff: Diff, seed: number, long = false, level = false): PrimS {
   const g = { rng: seed };
   const cs = d.cands[p];
   const top = cs.filter((c) => c.n !== me).sort((a, b) => b.nom - a.nom || b.field - a.field).slice(0, 7).map((c) => c.n);
   const names = [me, ...top];
   const meC = cs.find((c) => c.n === me)!;
   const startCash = (c: Cand) => 6e6 + 70e6 * Math.min(1, c.nom * 1.4) + 1.6e6 * c.field;
-  const field: Rival[] = names.map((n) => { const c = cs.find((x) => x.n === n)!; return { n, alive: true, cash: startCash(c) * (n === me ? DIFF[diff].fund : 1 / DIFF[diff].opp), mom: n === me ? DIFF[diff].start * 0.04 : gauss(g) * 0.03, del: 0, wins: 0, endorse: [] }; });
+  // level field: the same money for everyone, no head start in momentum, and each candidate's state map scaled so their
+  // national standing matches everyone else's; their own strong and weak states stay where they are
+  const even = level ? names.reduce((a, n) => a + startCash(cs.find((x) => x.n === n)!), 0) / names.length : 0;
+  const field: Rival[] = names.map((n) => { const c = cs.find((x) => x.n === n)!; return { n, alive: true, cash: (level ? even : startCash(c)) * (n === me ? DIFF[diff].fund : 1 / DIFF[diff].opp), mom: n === me ? DIFF[diff].start * 0.04 : level ? 0 : gauss(g) * 0.03, del: 0, wins: 0, endorse: [] }; });
   const s: PrimS = { party: p, turns: primTurns(d, p, long), t: 0, days: DAYS, cash: field[0].cash, stamina: 100, buzz: 30 + Math.round(meC.field * 2), field, boost: {}, visits: {}, offices: [], results: {}, shifts: {}, endorsed: [], debates: 0, done: false, cards: [], cardT: -1 };
   field[0].cash = 0; // the player's cash lives in s.cash
+  if (level) { s.buzz = 40; const sh = d.primary[p].shares; const sts = Object.keys(sh); s.lvl = Object.fromEntries(names.map((n) => [n, Math.max(0.3, sts.reduce((a, st) => a + Math.max(0.3, sh[st]?.[n] ?? cs.find((c) => c.n === n)?.field ?? 1), 0) / Math.max(1, sts.length))])); }
   return s;
 }
 /** Every candidate's share in a state right now, from the model's primary standing, momentum and local boosts. */
@@ -127,7 +131,7 @@ export function primShares(d: Data, s: PrimS, st: string): Record<string, number
   const base = d.primary[s.party].shares[st] ?? {};
   const alive = s.field.filter((r) => r.alive);
   const w: Record<string, number> = {};
-  for (const r of alive) { const b0 = Math.max(0.3, base[r.n] ?? d.cands[s.party].find((c) => c.n === r.n)?.field ?? 1); w[r.n] = b0 * Math.exp(r.mom + (s.boost[st]?.[r.n] ?? 0)); }
+  for (const r of alive) { let b0 = Math.max(0.3, base[r.n] ?? d.cands[s.party].find((c) => c.n === r.n)?.field ?? 1); if (s.lvl?.[r.n]) b0 = 10 * Math.min(1.25, Math.max(0.8, Math.pow(b0 / s.lvl[r.n], 0.5))); /* level: each candidate's own map kept, but no state more than a quarter better or a fifth worse */ w[r.n] = b0 * Math.exp(r.mom + (s.boost[st]?.[r.n] ?? 0)); }
   const tot = Object.values(w).reduce((a, b) => a + b, 0) || 1;
   return Object.fromEntries(Object.entries(w).map(([k, v]) => [k, (100 * v) / tot]));
 }
@@ -203,18 +207,38 @@ export function primEndorse(d: Data, s: PrimS, id: string, seedG: { rng: number 
   if (s.endorsed.includes(id) || s.field.some((r) => r.endorse.includes(id))) return { ok: false, t: `${e.who} has already endorsed.` };
   if (s.days < COST.endorse) return { ok: false, t: "Courting an endorsement takes a full day." };
   s.days -= COST.endorse;
-  const me = d.cands[s.party].find((c) => c.n === me0(s))!; const sh = natShares(d, s)[me.n] ?? 5;
-  let fit = 0.5;
-  if (e.lean === "left" && me.pos) fit = clamp(0.5 - (me.pos[0] + me.pos[1] + me.pos[12]) / 6, 0, 1);
-  if (e.lean === "right" && me.pos) fit = clamp((me.pos[4] + me.pos[13]) / 4, 0, 1);
-  if (e.lean === "af" && me.pos) fit = clamp(0.5 - me.pos[11] / 3, 0, 1);
-  const p = clamp((0.15 + 0.5 * fit + sh / 60 + s.field[0].mom) * (1 - e.hard * 0.7), 0.03, 0.85);
+  const me = d.cands[s.party].find((c) => c.n === me0(s))!;
+  const p = endorseChance(d, s, e, me.n, true);
+  if (p <= 0) return { ok: true, t: e.id === "obama" ? "Obama's office says he is staying out of the primary until there is a presumptive nominee." : `${e.who} took the meeting, and does not see a fit.` };
   if (rand(seedG) < p) {
     s.endorsed.push(id); s.field[0].mom += e.mom; s.field[0].endorse.push(id); if (e.cash) s.cash += e.cash;
     for (const st of e.st ?? []) addBoost(s, st, me.n, e.local ?? 0.1);
     return { ok: true, t: `${e.who} endorses you. ${e.what}`, fx: e.mom };
   }
   return { ok: true, t: `${e.who} took the meeting, and is keeping their powder dry. About a ${Math.round(p * 100)} percent shot.` };
+}
+/** How well an endorser fits a candidate, 0 to 1, from where the candidate stands and who backs them. */
+export function endorseFit(d: Data, party: Party, e: (typeof ENDORSERS)["D"][number], name: string) {
+  const c = d.cands[party].find((x) => x.n === name); const pos = c?.pos; const g = c?.grp ?? {};
+  if (e.id === "sanders") return pos ? clamp(-(pos[0] + pos[1] + pos[12]) / 3 - 1, 0, 1) : 0.2;          // only the real left
+  if (e.id === "clyburn") return clamp(0.45 + (g.black ?? 0) / 14, 0, 1);                                // the candidate Black voters already like
+  if (e.id === "unions") return clamp(0.45 + (g.wnc ?? 0) / 18 - (pos ? (pos[13] ?? 0) / 6 : 0), 0, 1); // working class pull, against free trade
+  if (e.lean === "right") return pos ? clamp((pos[4] + pos[13]) / 4, 0, 1) : 0.5;
+  if (e.lean === "af") return pos ? clamp(0.5 - pos[11] / 3, 0, 1) : 0.5;
+  return 0.5;
+}
+/** The chance an endorser comes out for a candidate this turn. The same rule for you and every rival: fit first, then
+ * standing and momentum. Obama stays out until someone holds a real delegate lead. */
+export function endorseChance(d: Data, s: PrimS, e: (typeof ENDORSERS)["D"][number], name: string, asked = false) {
+  const r = s.field.find((x) => x.n === name); if (!r || !r.alive) return 0;
+  if (e.id === "obama") {
+    const tot = d.primary[s.party].total; const won = s.field.reduce((a, x) => a + x.del, 0);
+    const lead = Math.max(...s.field.map((x) => x.del)); if (won < tot / 3 || r.del < lead || r.del < won * 0.5) return 0;
+  }
+  const fit = endorseFit(d, s.party, e, name); if (fit < 0.15) return 0;
+  const sh = natShares(d, s)[name] ?? 5;
+  const base = (0.1 + 0.55 * fit + sh / 90 + r.mom) * (1 - e.hard * 0.7) * (asked ? 1.15 : 1);
+  return clamp(base, 0.02, 0.8);
 }
 /** Take a stand on an issue in the primary. Your party's voters reward moving toward them, weighted by how much they
  * care; independents remember it in November. Breaking with your own record costs credibility. */
@@ -247,11 +271,13 @@ export function primEnd(d: Data, s: PrimS, G: { rng: number }): LogItem[] {
     const spend = Math.min(r.cash, 2.5e6 + r.cash * 0.25) * DIFF.lean.opp;
     r.cash -= spend; r.cash += (1.2e6 + 0.5e6 * (natShares(d, s)[r.n] ?? 3)) * Math.exp(r.mom);
     for (const st of next) addBoost(s, st, r.n, 0.12 * Math.log(1 + spend / Math.max(1, next.length) / (Math.max(1, delOf(d, s.party, st)) * 60e3)) * (0.6 + rand(G) * 0.8));
+    // rivals work the ground too: rallies and town halls in the next contests, as hard as you can on a level field
+    { const ks = next.slice().sort(() => rand(G) - 0.5).slice(0, 2); for (const st of ks) addBoost(s, st, r.n, (s.lvl ? 0.16 : 0.08) * (0.6 + rand(G) * 0.8) * (winOf(d, s.party, st) === 1 ? 1.4 : 1)); }
     // rivals chase endorsements too
     if (rand(G) < 0.18) {
       const free = ENDORSERS[s.party].filter((e) => !s.endorsed.includes(e.id) && !s.field.some((x) => x.endorse.includes(e.id)));
       const e = free[Math.floor(rand(G) * free.length)];
-      if (e && rand(G) < 0.5 * (1 - e.hard * 0.6) + (natShares(d, s)[r.n] ?? 0) / 80) { r.endorse.push(e.id); r.mom += e.mom; if (e.cash) r.cash += e.cash; for (const st of e.st ?? []) addBoost(s, st, r.n, e.local ?? 0.1); out.push({ t: s.t, kind: "rival", s: `${e.who} endorses ${r.n}.` }); }
+      if (e && rand(G) < endorseChance(d, s, e, r.n)) { r.endorse.push(e.id); r.mom += e.mom; if (e.cash) r.cash += e.cash; for (const st of e.st ?? []) addBoost(s, st, r.n, e.local ?? 0.1); out.push({ t: s.t, kind: "rival", s: `${e.who} endorses ${r.n}.` }); }
     }
   }
   // the turn's contests

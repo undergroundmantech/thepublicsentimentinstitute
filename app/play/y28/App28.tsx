@@ -81,6 +81,7 @@ export default function App28({ idx }: { idx: PIndex }) {
   const [plong, setPlong] = useState(true);
   const [scen, setScen] = useState("tied");
   const [hard, setHard] = useState(false);
+  const [level, setLevel] = useState(true);
   const [iron, setIron] = useState(false);
   const [nightCty, setNightCty] = useState<string | null>(null);
 
@@ -180,11 +181,11 @@ export default function App28({ idx }: { idx: PIndex }) {
   const start = () => {
     if (!me) return; enter(); sfx("fanfare");
     const seed = (Date.now() % 1e9) | 0; const t = third === "none" ? null : third;
-    const base: Game = { v: 28, mode, phase: "primary", party, me, diff, seed, rng: seed ^ 0x2028, third: t, seen: [], log: [], mgr, len, plong, scen, hard, iron };
+    const base: Game = { v: 28, mode, phase: "primary", party, me, diff, seed, rng: seed ^ 0x2028, third: t, seen: [], log: [], mgr, len, plong, scen: level && scen === "model" ? "tied" : scen, hard, iron, level };
     if (mode === "general") {
       const o = op ?? theirs[0].n; base.op = o; base.opVp = theirs.find((c) => c.n !== o)?.n ?? null; base.phase = "vp";
     } else {
-      base.P = E.newPrimary(d, party, me, diff, seed, plong); base.P.mgr = mgr;
+      base.P = E.newPrimary(d, party, me, diff, seed, plong, level); base.P.mgr = mgr;
       base.log.push({ t: 0, kind: "event", s: `${me} announces a run for the ${partyName(party)} nomination, with ${E.MGR[mgr].name.toLowerCase()} running the campaign.` });
     }
     commit(base); setScreen("game");
@@ -273,6 +274,13 @@ export default function App28({ idx }: { idx: PIndex }) {
           <div className="px-sh"><span className="px-n">{mode === "general" ? 7 : mode === "full" ? 6 : 5}</span><h2>How long a campaign</h2></div>
           {mode !== "general" ? <div className="px-chips"><button type="button" className={plong ? "on" : ""} onClick={() => setPlong(true)}>Long primary, from summer 2027</button><button type="button" className={!plong ? "on" : ""} onClick={() => setPlong(false)}>Short primary, from fall 2027</button></div> : null}
           {mode !== "primary" ? <div className="px-diffs len">{LENGTHS.map((l) => <button key={l.w} type="button" className={cls("px-diff", len === l.w && "on")} aria-pressed={len === l.w} onClick={() => { setLen(l.w); sfx("click"); }}><b>{l.name} · {l.w} weeks</b><small>{l.blurb}</small></button>)}</div> : null}
+        </section>
+        <section className="px-step">
+          <div className="px-sh"><span className="px-n">⚖</span><h2>Playing field</h2></div>
+          <div className="px-diffs">
+            <button type="button" className={cls("px-diff", level && "on")} aria-pressed={level} onClick={() => { setLevel(true); sfx("click"); }}><b>Level, every candidate starts even</b><small>The same money, no head start in the primary polls and a tied national race. Each candidate keeps their own strong and weak states and voter groups, so Stephen A. Smith plays as hard as Harris.</small></button>
+            <button type="button" className={cls("px-diff", !level && "on")} aria-pressed={!level} onClick={() => { setLevel(false); sfx("click"); }}><b>Real standing</b><small>Every candidate starts where the On Point model has them today: the frontrunners with the money and the polls, the long shots with neither.</small></button>
+          </div>
         </section>
         <section className="px-step">
           <div className="px-sh"><span className="px-n">{mode === "general" ? 8 : mode === "full" ? 7 : 6}</span><h2>The year</h2></div>
