@@ -1,6 +1,181 @@
 {
  "entries": [
   {
+   "slug": "2026-11-25",
+   "date": "2026-11-25",
+   "title": "Coalitions read through today's electorate, not the 2012 map",
+   "summary": "In the Generic Democrat against Vance matchup the national vote went from D +8.0 to D +8.1, and the Democratic chance from 95 to 95 percent, with 348 to 349 expected Democratic electoral votes. 1 state changed its rating.",
+   "matchup": [
+    "Generic Democrat",
+    "Vance"
+   ],
+   "nat": [
+    -8.05,
+    -8.1
+   ],
+   "pD": [
+    0.948,
+    0.949
+   ],
+   "evD": [
+    348.2,
+    349.0
+   ],
+   "states": [
+    {
+     "st": "FL",
+     "name": "Florida",
+     "ev": 30,
+     "old": 2.04,
+     "new": 1.96,
+     "rOld": "Lean R",
+     "rNew": "Tilt R"
+    },
+    {
+     "st": "DC",
+     "name": "District of Columbia",
+     "ev": 3,
+     "old": -94.04,
+     "new": -94.21,
+     "rOld": "Safe D",
+     "rNew": "Safe D"
+    },
+    {
+     "st": "UT",
+     "name": "Utah",
+     "ev": 6,
+     "old": 7.73,
+     "new": 7.6,
+     "rOld": "Likely R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "VT",
+     "name": "Vermont",
+     "ev": 3,
+     "old": -38.13,
+     "new": -38.01,
+     "rOld": "Safe D",
+     "rNew": "Safe D"
+    },
+    {
+     "st": "TX",
+     "name": "Texas",
+     "ev": 40,
+     "old": 0.7,
+     "new": 0.6,
+     "rOld": "Tilt R",
+     "rNew": "Tilt R"
+    },
+    {
+     "st": "ID",
+     "name": "Idaho",
+     "ev": 4,
+     "old": 26.24,
+     "new": 26.14,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "KS",
+     "name": "Kansas",
+     "ev": 6,
+     "old": 4.8,
+     "new": 4.71,
+     "rOld": "Lean R",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "KY",
+     "name": "Kentucky",
+     "ev": 8,
+     "old": 23.07,
+     "new": 22.98,
+     "rOld": "Safe R",
+     "rNew": "Safe R"
+    },
+    {
+     "st": "MT",
+     "name": "Montana",
+     "ev": 4,
+     "old": 9.99,
+     "new": 9.9,
+     "rOld": "Likely R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "NV",
+     "name": "Nevada",
+     "ev": 6,
+     "old": -9.9,
+     "new": -9.99,
+     "rOld": "Likely D",
+     "rNew": "Likely D"
+    },
+    {
+     "st": "HI",
+     "name": "Hawaii",
+     "ev": 4,
+     "old": -35.91,
+     "new": -35.82,
+     "rOld": "Safe D",
+     "rNew": "Safe D"
+    }
+   ],
+   "nom": {
+    "D": [
+     {
+      "name": "Harris",
+      "old": 0.74,
+      "new": 0.74
+     },
+     {
+      "name": "Newsom",
+      "old": 0.0955,
+      "new": 0.0955
+     },
+     {
+      "name": "Ocasio-Cortez",
+      "old": 0.0688,
+      "new": 0.0688
+     },
+     {
+      "name": "Buttigieg",
+      "old": 0.0455,
+      "new": 0.0455
+     }
+    ],
+    "R": [
+     {
+      "name": "Vance",
+      "old": 0.843,
+      "new": 0.843
+     },
+     {
+      "name": "Rubio",
+      "old": 0.1502,
+      "new": 0.1502
+     },
+     {
+      "name": "DeSantis",
+      "old": 0.0067,
+      "new": 0.0067
+     },
+     {
+      "name": "Cruz",
+      "old": 0.0,
+      "new": 0.0
+     }
+    ]
+   },
+   "why": [
+    "Each candidate's pull is now read through the nine Pew political types that make up today's voters, from how those types answered our matchup and primary questions, and through who is actually in each type.",
+    "The Pragmatic and Polite Right, the old establishment Republican vote, is now about one voter in ten, and nearly four in ten of them are 65 or older. An establishment nominee can only win back as much of the 2012 map as those voters still exist to carry, so the 2012 to 2024 history now counts for much less, and only where those swing voters still live.",
+    "Haley still runs ahead of Vance in Virginia and well behind him in Ohio, but by less than last week. Rubio's Texas edge shrinks a point: it now comes from his pull with Hispanic voters rather than from the old suburban map."
+   ],
+   "built": "2026-11-22"
+  },
+  {
    "slug": "2026-11-24",
    "date": "2026-11-24",
    "title": "Every nominee now brings their own coalition and their own turnout",
