@@ -11,13 +11,21 @@ export default function SmsOptInPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  const [busy, setBusy] = useState(false);
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) { setError("Email address is required."); return; }
     if (phone.replace(/\D/g, "").length < 10) { setError("Enter the mobile number you want texts sent to."); return; }
     if (!agreed) { setError("You must consent to receive SMS messages."); return; }
-    setError("");
-    setSubmitted(true);
+    setError(""); setBusy(true);
+    try {
+      // the SMS program list: survey invitations and polling alerts, stored with this page's consent wording
+      const r = await fetch("/api/alerts/subscribe", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, phone, name: firstName, topics: ["polls", "videos"], smsConsent: true, from: "/on-point-polling/sms", form: "sms" }) });
+      const j = await r.json();
+      if (!j.ok) { setError(j.error || "That didn't go through. Try again."); return; }
+      setSubmitted(true);
+    } catch { setError("That didn't go through. Check your connection and try again."); } finally { setBusy(false); }
   }
 
   return (
@@ -151,7 +159,7 @@ export default function SmsOptInPage() {
 
                   {error && <div className="sms-error" role="alert">{error}</div>}
 
-                  <button type="submit" className="btn g sms-submit">Submit</button>
+                  <button type="submit" className="btn g sms-submit" disabled={busy}>{busy ? "Signing you up" : "Submit"}</button>
                 </form>
               )}
               <div className="sms-legal">

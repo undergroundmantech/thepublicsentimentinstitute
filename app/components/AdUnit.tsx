@@ -21,6 +21,7 @@ export default function AdUnit({ kind = "display", className, minH, side, format
   const fluid = kind === "article" && !!UNITS.article;
   useEffect(() => {
     const el = ref.current; if (!slot || !el) return; setEmpty(false);
+    if (document.documentElement.hasAttribute("data-present")) { setEmpty(true); return; }   // presenter mode: no ads
     if (!el.getAttribute("data-adsbygoogle-status")) { try { ((window as unknown as { adsbygoogle?: unknown[] }).adsbygoogle ||= []).push({}); } catch { /* blocked */ } }
     // Google marks a slot it could not fill; the panel then folds away instead of leaving a blank box
     const mo = new MutationObserver(() => { if (el.getAttribute("data-ad-status") === "unfilled") setEmpty(true); });

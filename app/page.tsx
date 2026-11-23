@@ -23,6 +23,7 @@ import { STATE_NAME } from "@/app/2028/lib";
 import { STATES as ST27, stateModel } from "@/app/2027/data27";
 import { getAcc } from "@/app/accuracy/data";
 import AdUnit from "@/app/components/AdUnit";
+import StayConnected from "@/app/components/StayConnected";
 const APPROVAL_POLLS = aggPolls("trump-approval");
 const GENERIC_POLLS = aggPolls("generic-ballot");
 
@@ -196,6 +197,8 @@ export default function Home() {
       </section>
 
       <AdUnit />
+
+      <StayConnected from="home" />
 
       <section className="sec">
         <div className="band">

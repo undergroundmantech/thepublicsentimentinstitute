@@ -22,6 +22,8 @@ export const MENU: NavGroup[] = [
         { href: "/2028", label: "Overview", note: "The map and the path to 270" },
         { href: "/2028/primaries", label: "Primaries", note: "Every state, every candidate" },
         { href: "/2028/general", label: "General election", note: "Any matchup, with third parties" },
+        { href: "/2028/map-maker", label: "Make your own map", note: "Rate every state and share it" },
+        { href: "/what-moved", label: "What moved this week" },
       ] },
       { h: "The field", links: [
         { href: "/2028-presidential-candidates", label: "Who is running in 2028", note: "Every name, by party" },
@@ -118,6 +120,8 @@ export const MENU: NavGroup[] = [
         { href: "/on-point-polling/services", label: "Services", note: "Polls, testing, modeling, fieldwork" },
         { href: "/on-point-polling/for", label: "Who we work with", note: "Candidates, parties, PACs and more" },
         { href: "/contact#brief", label: "Request a proposal", note: "A written quote the same day" },
+        { href: "/work-with-on-point", label: "Consulting and strategy calls", note: "Forecasts, readouts, retainers" },
+        { href: "/workshops", label: "Polling workshops", note: "Learn how polls really work" },
       ] },
       { h: "By client", links: [
         { href: "/on-point-polling/for/candidates", label: "Candidates" },
@@ -162,6 +166,11 @@ export const MENU: NavGroup[] = [
       ] },
       { h: "Majority Tracker", href: "/majority-tracker", links: [
         { href: "/majority-tracker", label: "Senate leader race", note: "Schumer vs Van Hollen", badge: "Live" },
+      ] },
+      { h: "Community", href: "/community", links: [
+        { href: "/community", label: "Reader poll and contest", badge: "New" },
+        { href: "/alerts", label: "Free video and poll alerts" },
+        { href: "/on-point-polling/weighting-room", label: "The Weighting Room" },
       ] },
     ] },
 ];

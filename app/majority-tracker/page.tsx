@@ -8,6 +8,7 @@ import Chamber from "./Chamber";
 import Toon from "./Toon";
 import "./tracker.css";
 import AdUnit from "@/app/components/AdUnit";
+import StayConnected from "@/app/components/StayConnected";
 
 // rebuilt every hour, so the countdown and the tally stay current between updates
 export const revalidate = 3600;
@@ -108,6 +109,8 @@ export default function MajorityTrackerPage() {
         </ul>
         <p className="mt-fence-n">Even if every low confidence Schumer pick flips, Van Hollen reaches {T.bestV}. He would also need {vhNeed > 0 ? `at least ${vhNeed}` : "none of the"} senators we rate medium for Schumer.</p>
       </section>
+
+      <StayConnected from="majority-tracker" title="Know the moment the leader count moves" note="An email when a senator moves, a new On Point video breaks it down, or a new poll drops. Free, and you can leave any time." pick={["majority", "videos"]} />
 
       <Roster rows={SENATORS} />
 

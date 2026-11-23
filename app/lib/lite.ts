@@ -5,10 +5,13 @@
 //   data-phone  screens 860px wide or less. Turns on the phone layout: the tab bar, the hiding masthead and larger
 //               touch targets.
 // A visitor can force either way from the console with localStorage "opp.lite" set to "1" or "0".
+//   data-present  presenter mode for screen sharing and streaming: open any page with ?present=1 once and it sticks in
+//               that browser until ?present=0. Everything in light rendering, plus no ads, no ambient effects, no
+//               pop ups and no animation at all, so StreamYard or OBS capturing the tab costs the computer little.
 
 export const LITE_KEY = "opp.lite";
 
-export const LITE_INIT_SCRIPT = `(function(){try{var r=document.documentElement,m=function(q){return !!(window.matchMedia&&matchMedia(q).matches)},n=navigator,o=null;try{o=localStorage.getItem("${LITE_KEY}")}catch(e){}var l=o==="1"?true:o==="0"?false:(m("(pointer: coarse)")||m("(max-width: 860px)")||m("(prefers-reduced-motion: reduce)")||!!(n.connection&&n.connection.saveData)||(n.deviceMemory||8)<=2||(n.hardwareConcurrency||8)<=2);if(l)r.setAttribute("data-lite","");if(m("(max-width: 860px)"))r.setAttribute("data-phone","")}catch(e){}})();`;
+export const LITE_INIT_SCRIPT = `(function(){try{var r=document.documentElement,m=function(q){return !!(window.matchMedia&&matchMedia(q).matches)},n=navigator,o=null;try{o=localStorage.getItem("${LITE_KEY}")}catch(e){}var P=null;try{P=new URLSearchParams(location.search).get("present")}catch(e){}if(P==="1"){try{localStorage.setItem("opp.present","1")}catch(e){}}else if(P==="0"){try{localStorage.removeItem("opp.present")}catch(e){}}var pr=false;try{pr=localStorage.getItem("opp.present")==="1"}catch(e){}if(pr){r.setAttribute("data-present","");o="1";window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.pauseAdRequests=1}var l=o==="1"?true:o==="0"?false:(m("(pointer: coarse)")||m("(max-width: 860px)")||m("(prefers-reduced-motion: reduce)")||!!(n.connection&&n.connection.saveData)||(n.deviceMemory||8)<=2||(n.hardwareConcurrency||8)<=2);if(l)r.setAttribute("data-lite","");if(m("(max-width: 860px)"))r.setAttribute("data-phone","")}catch(e){}})();`;
 
 /** True when the page is in light rendering. Safe on the server, where it is false. */
 export function isLite(): boolean {

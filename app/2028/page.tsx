@@ -11,6 +11,7 @@ import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "./h28.css";
 import AdUnit from "@/app/components/AdUnit";
 import PlayCta from "@/app/2028/PlayCta";
+import StayConnected from "@/app/components/StayConnected";
 
 export const revalidate = 3600;
 const DESC = "The On Point 2028 presidential forecast: the electoral map for every likely matchup, both primaries and every state's chance, forecast county by county and added up to every state.";
@@ -44,6 +45,7 @@ export default function Page2028() {
           <ul>{states.map((s) => <li key={s}><Link href={`/2028/${s.toLowerCase()}`}>{STATE_NAME[s]}</Link></li>)}</ul>
         </nav>
       </section>
+      <StayConnected from="2028" title="Get the 2028 forecast the moment it moves" note="An email when the forecast shifts, a new 2028 poll drops or a new On Point video goes up. Free, and you can leave any time." pick={["forecast", "videos", "polls"]} />
       <Method />
       <AdUnit kind="multiplex" />
     </main>

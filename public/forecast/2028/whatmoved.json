@@ -1,0 +1,190 @@
+{
+ "entries": [
+  {
+   "slug": "2026-11-23",
+   "date": "2026-11-23",
+   "title": "This week: a voter by voter rebuild, realistic turnout and real primary history",
+   "summary": "In the Generic Democrat against Vance matchup the national vote went from D +9.9 to D +8.0, and the Democratic chance from 99 to 96 percent, with 373 to 348 expected Democratic electoral votes. 12 states changed their ratings.",
+   "matchup": [
+    "Generic Democrat",
+    "Vance"
+   ],
+   "nat": [
+    -9.85,
+    -7.96
+   ],
+   "pD": [
+    0.986,
+    0.957
+   ],
+   "evD": [
+    373.3,
+    348.2
+   ],
+   "states": [
+    {
+     "st": "NE",
+     "name": "Nebraska",
+     "ev": 2,
+     "old": 3.38,
+     "new": 8.05,
+     "rOld": "Lean R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "KS",
+     "name": "Kansas",
+     "ev": 6,
+     "old": -0.4,
+     "new": 4.15,
+     "rOld": "Tilt D",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "IN",
+     "name": "Indiana",
+     "ev": 11,
+     "old": 2.78,
+     "new": 7.11,
+     "rOld": "Lean R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "MT",
+     "name": "Montana",
+     "ev": 4,
+     "old": 4.25,
+     "new": 8.29,
+     "rOld": "Lean R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "IA",
+     "name": "Iowa",
+     "ev": 6,
+     "old": -1.44,
+     "new": 2.45,
+     "rOld": "Tilt D",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "NV",
+     "name": "Nevada",
+     "ev": 6,
+     "old": -12.6,
+     "new": -8.99,
+     "rOld": "Safe D",
+     "rNew": "Likely D"
+    },
+    {
+     "st": "OH",
+     "name": "Ohio",
+     "ev": 17,
+     "old": 0.85,
+     "new": 3.69,
+     "rOld": "Tilt R",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "UT",
+     "name": "Utah",
+     "ev": 6,
+     "old": 5.4,
+     "new": 8.19,
+     "rOld": "Lean R",
+     "rNew": "Likely R"
+    },
+    {
+     "st": "TX",
+     "name": "Texas",
+     "ev": 40,
+     "old": -0.92,
+     "new": 1.36,
+     "rOld": "Tilt D",
+     "rNew": "Tilt R"
+    },
+    {
+     "st": "AK",
+     "name": "Alaska",
+     "ev": 3,
+     "old": 1.2,
+     "new": 3.31,
+     "rOld": "Tilt R",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "FL",
+     "name": "Florida",
+     "ev": 30,
+     "old": 1.9,
+     "new": 2.63,
+     "rOld": "Tilt R",
+     "rNew": "Lean R"
+    },
+    {
+     "st": "ME-2",
+     "name": "Maine's 2nd",
+     "ev": 1,
+     "old": 1.65,
+     "new": 2.37,
+     "rOld": "Tilt R",
+     "rNew": "Lean R"
+    }
+   ],
+   "nom": {
+    "D": [
+     {
+      "name": "Harris",
+      "old": 0.6482,
+      "new": 0.74
+     },
+     {
+      "name": "Newsom",
+      "old": 0.0955,
+      "new": 0.0955
+     },
+     {
+      "name": "Ocasio-Cortez",
+      "old": 0.121,
+      "new": 0.0688
+     },
+     {
+      "name": "Buttigieg",
+      "old": 0.0885,
+      "new": 0.0455
+     }
+    ],
+    "R": [
+     {
+      "name": "Vance",
+      "old": 0.7355,
+      "new": 0.843
+     },
+     {
+      "name": "Rubio",
+      "old": 0.257,
+      "new": 0.1502
+     },
+     {
+      "name": "DeSantis",
+      "old": 0.0073,
+      "new": 0.0067
+     },
+     {
+      "name": "Cruz",
+      "old": 0.0,
+      "new": 0.0
+     }
+    ]
+   },
+   "why": [
+    "Every eligible voter in every county is now simulated from real On Point respondents with the same race, age, education and 2024 vote, each carrying their own Trump approval, party ID, voter type and answer to every matchup.",
+    "Gallup's leaned party ID now sets each county's partisanship, scaled so the nation matches Gallup exactly: Democrats 50, Republicans 39.",
+    "Turnout starts from each county's real 2024 vote and can grow at most 4 percent, so no county runs past its eligible voters. That trimmed the inflated Democratic margins in fast growing metros.",
+    "The primaries now weigh past primary results, Gallup party ID and candidate strength, so states that went for Sanders or Trump in past primaries lean their way again.",
+    "The 2026 midterm results are in: candidates who ran ahead of their party in 2026 carry part of that edge, and the 2026 county swings, including the South Texas shift toward Democrats, are carried at half strength."
+   ],
+   "built": "2026-11-22"
+  }
+ ]
+}

@@ -28,6 +28,7 @@ import { frozenPointsFor } from "@/app/lib/intelligence/raceHistoryStore";
 import { FX_CSS } from "@/app/components/opp/fxCss";
 import { pctPoints, probFraction } from "@/app/lib/fmtPct";
 import AdUnit from "@/app/components/AdUnit";
+import "@/app/components/community.css";
 
 export const dynamicParams = false;
 
@@ -396,6 +397,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
             </section>
           ) : null}
 
+          <p className="hire-line">Running in a race like this one? <Link href="/work-with-on-point">Hire the pollster who called 2026</Link> for a custom poll or a county by county forecast of your own.</p>
           <AdUnit />
           <section id="path" className="st-sec">
             <SecTitle title="How we got here" sub="From the state's partisan lean to the forecast, one stage at a time" />

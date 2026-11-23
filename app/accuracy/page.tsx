@@ -19,6 +19,8 @@ import BallotScrolly from "./fx/BallotScrolly";
 import HTrack from "./fx/HTrack";
 import { CallCards, Chapter, Dumbbells, PollRace, SeatMiss, Stats } from "./fx/Story";
 import AdUnit from "@/app/components/AdUnit";
+import StayConnected from "@/app/components/StayConnected";
+import HireBand from "@/app/components/HireBand";
 
 export const metadata = seo({
   title: "The 2026 accuracy report: On Point Polling and the On Point forecast",
@@ -126,6 +128,7 @@ export default function AccuracyPage() {
           { k: "Our Senate polls", to: P.summary.senate.mae, dec: 1, suf: " pts", s: `Average miss across the ${P.summary.senate.n} Senate races we polled` },
         ]} />
       </header>
+      <HireBand stats={[[`${H.all.called_right} of ${H.all.races}`, "Races called right"], [`D +${B.generic.us.margin.toFixed(1)}`, "Final national poll"], [`D +${B.generic.result.margin.toFixed(1)}`, "The national count"], ["3 of 3", "Chambers called"]]} />
 
       <Chapter id="poll" eye="The generic ballot" title={<>Nine tenths of a point.</>}
         lede={<>Six days out, every major polling average had Democrats ahead by single digits. Our final national survey of {B.generic.us.n.toLocaleString("en-US")} registered voters said thirteen.</>}>
@@ -377,6 +380,7 @@ export default function AccuracyPage() {
         </div>
       </section>
 
+      <StayConnected from="accuracy" title="Get the next On Point poll the day it drops" pick={["polls", "videos", "forecast"]} />
       <AdUnit kind="article" />
       <section className="acc-sec" id="method">
         <div className="sec-h"><div><p className="eye">Method</p><h2>How the grade is built</h2></div></div>

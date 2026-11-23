@@ -36,6 +36,7 @@ import { FLAG_VALUES, flagJson } from "./lib/flagValues";
 import { KEYWORDS, SITE, graph, orgLd } from "./lib/seo";
 import AdSlot from "./components/AdSlot";
 import TopAd from "./components/TopAd";
+import SiteSignup from "./components/SiteSignup";
 
 // Same type system as the main site: Geist for display and body, JetBrains Mono for data.
 // globals.css maps --font-display, --font-body and --font-numeric to --font-d, --font-b, --font-m.
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="opp-main">
           <div className="opp-page"><TopAd /><SketchProvider tone="default" overlays={false}>{children}<SkHatchMaps /></SketchProvider></div>
         </main>
+        <SiteSignup />
         <AdSlot />
         <Footer />
         <MobileTabs />

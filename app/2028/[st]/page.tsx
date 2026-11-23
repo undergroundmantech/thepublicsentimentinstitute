@@ -11,6 +11,7 @@ import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "../h28.css";
 import AdUnit from "@/app/components/AdUnit";
 import PlayCta from "@/app/2028/PlayCta";
+import Keep28 from "../Keep28";
 
 export const dynamicParams = false;
 export const revalidate = 3600;
@@ -56,6 +57,7 @@ export default async function StatePage({ params }: { params: Promise<{ st: stri
         {prim.D[S] && prim.R[S] ? <p>In the primaries, {prim.D[S].lead} leads the Democratic field here with {(prim.D[S].share * 100).toFixed(1)}% and {prim.R[S].lead} leads the Republican field with {(prim.R[S].share * 100).toFixed(1)}%. Every county is forecast for both, then added up.</p> : null}
         <nav className="h28-states" aria-label="Other states"><h3>Other states</h3><ul>{all.map((s) => <li key={s}><Link href={`/2028/${s.toLowerCase()}`}>{STATE_NAME[s]}</Link></li>)}</ul></nav>
       </section>
+      <Keep28 st={S} name={data.name} />
       <AdUnit kind="multiplex" />
     </main>
   );

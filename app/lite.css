@@ -27,3 +27,11 @@ html[data-lite] footer.opp { content-visibility: auto; contain-intrinsic-size: a
 
 /* hover only flourishes never fire on touch, so drop their transitions too */
 html[data-lite] .opp .card { transition: none; }
+
+/* Presenter mode, for screen sharing: html[data-present], set by ?present=1. Light rendering plus no ads, no ambient
+   layers, no pop ups and no motion, so a capture tool encoding the tab has far less to redraw. */
+html[data-present] ins.adsbygoogle, html[data-present] .opp-ad, html[data-present] .google-auto-placed, html[data-present] .adsbygoogle-noablate,
+html[data-present] iframe[id^="aswift"], html[data-present] .sx-progress, html[data-present] .orb, html[data-present] .ambient, html[data-present] .grain,
+html[data-present] .ytp, html[data-present] .vpp { display: none !important; }
+html[data-present] *, html[data-present] *::before, html[data-present] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+html[data-present] footer.opp { content-visibility: auto; contain-intrinsic-size: auto 900px; }
