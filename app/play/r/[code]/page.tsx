@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "@/app/components/Link";
 import AdUnit from "@/app/components/AdUnit";
 import { seo } from "@/app/lib/seo";
-import { TILES, evLine, headline, last } from "../../share28";
+import { TILES, evLine, flipLine, headline, last } from "../../share28";
 import { load } from "../data";
 import "../result.css";
 
@@ -24,6 +24,7 @@ export default async function SharedResult({ params }: { params: Promise<{ code:
         <p className="eye">{r.day ? "Campaign 2028 · daily challenge" : "Campaign 2028"}</p>
         <h1>{r.win ? <><em>{r.me}</em> won the White House</> : <><em>{r.op}</em> beat {r.me}</>}</h1>
         <p className="pr28-score"><b className="d">{last(dName)} {r.p === "D" ? r.ev : 538 - r.ev}</b><span>electoral votes</span><b className="r">{r.p === "R" ? r.ev : 538 - r.ev} {last(rName)}</b></p>
+        {flipLine(r) ? <p className="pr28-note"><b>{flipLine(r)}.</b>{r.sp ? ` Spent $${r.sp.toLocaleString()} million.` : ""}</p> : null}
         <div className="pr28-map" role="img" aria-label="The final map">
           {Object.entries(TILES).map(([st, [c, rr]]) => <i key={st} className={dWon[st] ? "d" : "r"} style={{ gridColumn: c + 1, gridRow: rr + 1 }}>{st}</i>)}
         </div>
@@ -32,6 +33,7 @@ export default async function SharedResult({ params }: { params: Promise<{ code:
           <a className="btn g" href={`/play?c=${code}`}>Play this exact race</a>
           {r.day ? <a className="btn" href="/play?daily=1">Play today&apos;s challenge</a> : null}
           <Link className="btn" href="/play">Start your own campaign</Link>
+          <Link className="btn" href="/play/leaderboard">This week&apos;s leaderboard</Link>
         </div>
       </section>
       <AdUnit />

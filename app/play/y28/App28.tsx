@@ -23,6 +23,14 @@ import { AdUnit, adBreak, onLeaveNative, onMute } from "./ads28";
 import * as CT from "./cty28";
 
 type Screen = "title" | "setup" | "game" | "classic";
+/** Ready made races: one tap sets the candidates, the map and the ballot, then straight to the general election. */
+const PRESETS: { name: string; blurb: string; party: E.Party; me: string; op: string; scen: string; third?: string }[] = [
+  { name: "Talarico in Texas", blurb: "James Talarico against Vance, with South Texas still swinging toward Democrats. Can Texas finally flip?", party: "D", me: "Talarico", op: "Vance", scen: "texas" },
+  { name: "The Ocasio-Cortez nomination", blurb: "The progressive wins the primary. Now win the country against Vance in an even race.", party: "D", me: "Ocasio-Cortez", op: "Vance", scen: "tied" },
+  { name: "Vance against the forecast", blurb: "Vance against Harris on the real On Point forecast. The model gives him almost no chance. Prove it wrong.", party: "R", me: "Vance", op: "Harris", scen: "model" },
+  { name: "The great realignment", blurb: "Rubio against Newsom, with the Rust Belt redder and the Sun Belt bluer than ever.", party: "R", me: "Rubio", op: "Newsom", scen: "realign" },
+  { name: "A third party surge", blurb: "Shapiro against Rubio, with a centrist independent on every ballot pulling from both sides.", party: "D", me: "Shapiro", op: "Rubio", scen: "tied", third: "Centrist independent" },
+];
 const MODES: { k: Mode; name: string; blurb: string }[] = [
   { k: "full", name: "The whole road", blurb: "Run the primaries, win the nomination, pick a running mate and take it to November." },
   { k: "primary", name: "Primaries only", blurb: "Fight for the nomination state by state, from the first debates to the last delegates." },
@@ -221,6 +229,12 @@ export default function App28({ idx }: { idx: PIndex }) {
     <div className="y28-setup">
       <div className="px-lobby">
         <section className="px-step">
+          <div className="px-sh"><span className="px-n">★</span><h2>Ready made races</h2></div>
+          <div className="px-diffs">{PRESETS.filter((x) => d.cands[x.party].some((c) => c.n === x.me) && d.cands[x.party === "D" ? "R" : "D"].some((c) => c.n === x.op)).map((x) => (
+            <button key={x.name} type="button" className={cls("px-diff", mode === "general" && me === x.me && op === x.op && scen === x.scen && "on")} onClick={() => { setMode("general"); setParty(x.party); setMe(x.me); setOp(x.op); setScen(x.scen); setThird(x.third && d.third.some((t) => t.n === x.third) ? x.third : "none"); sfx("click"); }}><b>{x.name}</b><small>{x.blurb}</small></button>))}</div>
+          <p className="px-note">Pick one to fill in the race below, then pick your running mate and go, or set up your own.</p>
+        </section>
+        <section className="px-step">
           <div className="px-sh"><span className="px-n">1</span><h2>How far do you want to run</h2></div>
           <div className="px-diffs len">{MODES.map((m) => <button key={m.k} type="button" className={cls("px-diff", mode === m.k && "on")} aria-pressed={mode === m.k} onClick={() => { setMode(m.k); sfx("click"); }}><b>{m.name}</b><small>{m.blurb}</small></button>)}</div>
         </section>
@@ -292,7 +306,7 @@ export default function App28({ idx }: { idx: PIndex }) {
       {g.phase === "recount" && g.Gn && g.night ? <Recount28 d={d} s={g.Gn} res={g.night} seed={g.seed + 270} onDone={(res, lg) => { const y = structuredClone(g); y.night = res; y.Gn!.result = res; y.legacy = (y.legacy ?? 0) + lg; y.phase = "over"; commit(y); }} /> : null}
       {g.phase === "hundred" && g.Gn && g.night ? <Hundred28 d={d} s={g.Gn} res={g.night} seed={g.seed + 100} legacy={g.legacy ?? 0} onDone={(h) => { const y = structuredClone(g); y.hund = h; y.phase = "over"; commit(y); }} /> : null}
       {g.phase === "over" && g.Gn && g.night ? <Result28 d={d} s={g.Gn} res={g.night} trophies={g.trophies} start={{ p: g.Gn.trend[0]?.p ?? 0.5, ev: g.Gn.trend[0]?.ev ?? 269 }} onAgain={again} onMenu={menu}
-        extra={<><Share28 r={resOf(d, g.Gn, g.night, { day: g.daily, diff: g.diff, seed: g.seed })} /><AfterCard d={d} s={g.Gn} res={g.night} legacy={g.legacy ?? 0} iron={g.iron} onGovern={g.night.win && !g.hund ? () => { const y = structuredClone(g); y.phase = "hundred"; commit(y); } : undefined} />{d.cty ? <section className="px-step y28-cty-res"><span className="px-k">County by county</span><div className="px-row">{g.night.calls.filter((c) => !c.st.includes("-") && d.cty?.[c.st]).sort((a, b) => a.close - b.close).slice(0, 6).map((c) => <button key={c.st} type="button" className={cls("px-btn sm", c.win ? "up" : "dn")} onClick={() => setNightCty(c.st)}>{E.nameOf(d, c.st)} {c.m >= 0 ? "+" : ""}{c.m.toFixed(1)}</button>)}</div></section> : null}<AdUnit minH={250} className="y28-ad-result" k="result" /></>} /> : null}
+        extra={<><Share28 r={resOf(d, g.Gn, g.night, { day: g.daily, diff: g.diff, seed: g.seed, sc: g.scen })} /><AfterCard d={d} s={g.Gn} res={g.night} legacy={g.legacy ?? 0} iron={g.iron} onGovern={g.night.win && !g.hund ? () => { const y = structuredClone(g); y.phase = "hundred"; commit(y); } : undefined} />{d.cty ? <section className="px-step y28-cty-res"><span className="px-k">County by county</span><div className="px-row">{g.night.calls.filter((c) => !c.st.includes("-") && d.cty?.[c.st]).sort((a, b) => a.close - b.close).slice(0, 6).map((c) => <button key={c.st} type="button" className={cls("px-btn sm", c.win ? "up" : "dn")} onClick={() => setNightCty(c.st)}>{E.nameOf(d, c.st)} {c.m >= 0 ? "+" : ""}{c.m.toFixed(1)}</button>)}</div></section> : null}<AdUnit minH={250} className="y28-ad-result" k="result" /></>} /> : null}
       {g.phase === "over" && g.Gn && g.night && nightCty ? <County28 d={d} S={g.Gn} st={nightCty} run={() => {}} onClose={() => setNightCty(null)} final={g.night.calls.find((c) => c.st === nightCty)?.m ?? 0} /> : null}
       {g.phase === "over" && g.Gn && g.night && !g.speech ? <Speech28 s={g.Gn} res={g.night} onPick={(k, v) => { const y = structuredClone(g); y.speech = k; y.legacy = (y.legacy ?? 0) + v; commit(y); }} /> : null}
       {g.phase === "over" && g.hund ? <div className="y28-hund-sum px-note">Your first hundred days: approval {g.hund.approval.toFixed(0)} percent, {g.hund.passed.length} of 3 priorities signed, 2030 House outlook {g.hund.midHouse >= 0 ? "+" : ""}{g.hund.midHouse} seats.</div> : null}

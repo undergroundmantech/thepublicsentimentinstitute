@@ -232,6 +232,8 @@ export const SCENARIOS: { k: string; l: string; blurb: string }[] = [
   { k: "m20", l: "The 2020 map", blurb: "Every state starts where Biden and Trump finished in 2020, from county returns." },
   { k: "recession", l: "What if: a recession", blurb: "Unemployment is climbing. The White House party starts three points worse everywhere." },
   { k: "landslide", l: "What if: a landslide for you", blurb: "You start five points up. Can you avoid blowing it?" },
+  { k: "texas", l: "What if: the South Texas shift", blurb: "An even race, but Hispanic voters keep moving toward Democrats the way South Texas did in 2026: Texas six points bluer, Arizona and New Mexico two." },
+  { k: "realign", l: "What if: the great realignment", blurb: "An even race, but the Rust Belt runs four points more Republican and the Sun Belt four points more Democratic." },
 ];
 /** Offsets, R minus D, that move the matchup's map to the scenario's. */
 export function scenarioShift(d: Data, s: GenS, k: string): number[] {
@@ -241,6 +243,12 @@ export function scenarioShift(d: Data, s: GenS, k: string): number[] {
   if (k === "m20") return d.states.map((x, i) => { const v = h20[x.st]; return v == null ? 0 : v - base[i]; });
   if (k === "recession") return d.states.map(() => -3); // the White House is Republican, so R minus D falls
   if (k === "tied") { const nm = E.natMargin(d, base); return d.states.map(() => -nm); }
+  if (k === "texas" || k === "realign") {
+    const nm = E.natMargin(d, base);
+    const TX: Record<string, number> = { TX: -6, AZ: -2, NM: -2, NV: -1, FL: -1 };
+    const RA: Record<string, number> = { MI: 4, WI: 4, PA: 4, OH: 4, MN: 4, IA: 4, AZ: -4, GA: -4, NC: -4, NV: -4, TX: -4, FL: -4 };
+    const M = k === "texas" ? TX : RA; return d.states.map((x) => -nm + (M[x.st.split("-")[0]] ?? 0));
+  }
   if (k === "landslide") { const nm = E.natMargin(d, base) * sg(s.party); return d.states.map(() => sg(s.party) * (5 - nm)); }
   return d.states.map(() => 0);
 }

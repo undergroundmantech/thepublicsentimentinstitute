@@ -418,3 +418,8 @@
 .opp.pg .y28-evbar .lab, .opp.pg .y28-night-ev .lab { color: var(--px-hi) !important; }
 /* a stale or disputed read of a state */
 .y28-warn { margin: 8px 0; padding: 8px 10px; border-radius: 10px; border: 1.5px solid #c0392b; background: rgba(192, 57, 43, .08); font-size: 12.5px; line-height: 1.45; }
+
+/* the weekly leaderboard entry on the results screen */
+.y28-lb { display: grid; gap: 8px; margin-top: 10px; }
+.y28-lb-in { flex: 1 1 180px; min-width: 0; padding: 9px 11px; border-radius: 10px; border: 2px solid currentColor; background: transparent; color: inherit; font: 700 14px inherit; }
+.oc-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

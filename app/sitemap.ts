@@ -101,6 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/work-with-on-point", today, "monthly", 0.6),
     u("/2028/map-maker", today, "weekly", 0.7),
     u("/what-moved", today, "weekly", 0.6),
+    u("/play/leaderboard", today, "daily", 0.6),
     u("/on-point-polling/sms", today, "yearly", 0.2),
     u("/contact", today, "monthly", 0.6),
     u("/terms", today, "yearly", 0.1),

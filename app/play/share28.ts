@@ -7,6 +7,8 @@ export type ShareRes = {
   v: 1; p: "D" | "R"; me: string; op: string; vp?: string | null; ev: number; pop: number; win: boolean;
   /** one hex digit per four units of the model's state list, a bit set where the Democrat carried it */
   w: string; day?: number; diff?: string; seed?: number; close?: string[];
+  /** states the player flipped from the other party's 2024 column, and total campaign spending in millions */
+  fl?: string[]; sp?: number; sc?: string;
 };
 
 const b64 = (s: string) => (typeof btoa === "function" ? btoa(unescape(encodeURIComponent(s))) : Buffer.from(s, "utf8").toString("base64"));
@@ -18,6 +20,9 @@ export function decodeRes(code: string): ShareRes | null {
     if (j?.v !== 1 || !j.me || !j.op || typeof j.ev !== "number" || typeof j.w !== "string") return null;
     j.me = String(j.me).slice(0, 40); j.op = String(j.op).slice(0, 40); if (j.vp) j.vp = String(j.vp).slice(0, 40);
     j.ev = Math.max(0, Math.min(538, Math.round(j.ev))); j.pop = Math.max(-60, Math.min(60, Number(j.pop) || 0));
+    j.fl = Array.isArray(j.fl) ? j.fl.map(String).filter((x) => /^[A-Z]{2}(-\d)?$/.test(x)).slice(0, 14) : undefined;
+    j.sp = j.sp == null ? undefined : Math.max(0, Math.min(99999, Math.round(Number(j.sp) || 0)));
+    j.sc = j.sc ? String(j.sc).replace(/[^a-z0-9]/gi, "").slice(0, 16) : undefined;
     return j;
   } catch { return null; }
 }
@@ -47,5 +52,15 @@ export function shareText(r: ShareRes, url: string) {
   const sq = (r.close ?? []).map((x) => `${x.slice(0, 2)}${x.endsWith("D") ? "🟦" : "🟥"}`).join(" ");
   const head = r.day ? `Campaign 2028 Daily · ${String(r.day).replace(/^(\d{4})(\d{2})(\d{2})$/, "$2/$3")}` : "Campaign 2028";
   const line = r.win ? `I ran as ${r.me} and WON the White House, ${r.ev} to ${538 - r.ev} 🗳️` : `I ran as ${r.me} and lost to ${last(r.op)}, ${538 - r.ev} to ${r.ev} 😤`;
-  return `${head}\n${line}\n${sq}\nCan you beat it?\n${url}`;
+  const fl = flipLine(r);
+  return `${head}\n${line}${fl ? `\n${fl}` : ""}\n${sq}\nCan you beat it?\n${url}`;
+}
+
+const NAMES: Record<string, string> = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "DC", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
+export const stName = (st: string) => (st.includes("-") ? st : NAMES[st] ?? st);
+/** "Flipped Kansas and Iowa", the states the player took from the other party's 2024 column */
+export function flipLine(r: ShareRes) {
+  const f = (r.fl ?? []).filter((x) => !x.includes("-")); if (!f.length) return "";
+  const n = f.map(stName); const list = n.length <= 2 ? n.join(" and ") : `${n.slice(0, 3).join(", ")}${n.length > 3 ? ` and ${n.length - 3} more` : ""}`;
+  return `Flipped ${list} as ${last(r.me)}`;
 }

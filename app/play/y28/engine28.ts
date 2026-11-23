@@ -331,7 +331,7 @@ export type GenS = {
   staff?: Staff; vol?: number; contacts?: number; reserved?: { w: number; dma: string; amt: number; tone: string }[];
   invites?: Invite[]; invW?: number; met?: number; mkt?: { p: number; hist: number[] }; finalDone?: boolean; closing?: Closing; lawyers?: boolean;
   // the story and the staff: what the campaign has said and done, the world's own calendar, and the weekly staff meeting
-  story?: Story; econ?: Econ; raised?: number; opRaised?: number; spent?: number; spentLast?: number; opFocus?: string[];
+  story?: Story; econ?: Econ; raised?: number; opRaised?: number; spent?: number; spentLast?: number; spentTot?: number; opFocus?: string[];
   meeting?: Meeting | null; meetW?: number; metDept?: Record<string, number>;
   mo?: More; scen?: number[];
   // the county ground game: the work in each county, and what it adds to each state in the player's favor
@@ -544,7 +544,7 @@ export function genEnd(d: Data, s: GenS, G: { rng: number }): LogItem[] {
   }
   if (s.cash < 0) { out.push({ t: s.week, kind: "bad", s: `You ended the week ${usd(-s.cash)} in debt. The bank covered it, and the interest comes out of next week.` }); s.cash = Math.round(s.cash * 1.05); }
   s.week += 1; s.days = DAYS; s.stamina = clamp(s.stamina + 16, 0, 100);
-  s.spentLast = (s.spent ?? 0) + payroll(s); s.spent = 0; weekStart(d, s);
+  s.spentLast = (s.spent ?? 0) + payroll(s); s.spentTot = (s.spentTot ?? 0) + s.spentLast; s.spent = 0; weekStart(d, s);
   if (s.week <= s.weeks) dueStory(d, s, G);
   s.trend.push({ w: s.week - 1, ...snapshot(d, s) }); s.lowP = Math.min(s.lowP ?? 1, s.trend[s.trend.length - 1].p);
   if (s.week > s.weeks) s.done = true;

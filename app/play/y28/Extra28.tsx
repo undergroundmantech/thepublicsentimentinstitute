@@ -121,7 +121,7 @@ export function DailyBoard({ onPlay }: { onPlay: () => void }) {
   return (
     <div className="y28-daily">
       <button type="button" className="px-press ghost" onClick={() => { sfx("coin"); onPlay(); }}>Daily challenge</button>
-      <small>Same race for everyone today: same candidates, same seed, toss up year. {rows.length ? `Your best today: ${rows.map((r) => `${r.ev} EV${r.win ? ", won" : ""}`).join(" · ")}` : "Scores stay on this device."}</small>
+      <small>Same race for everyone today: same candidates, same seed, toss up year. {rows.length ? `Your best today: ${rows.map((r) => `${r.ev} EV${r.win ? ", won" : ""}`).join(" · ")}` : "Scores stay on this device."} <a href="/play/leaderboard">This week&apos;s leaderboard</a></small>
     </div>
   );
 }
