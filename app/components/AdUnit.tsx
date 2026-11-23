@@ -13,7 +13,7 @@ const CLIENT = "ca-pub-7542770820535344";
 export const UNITS = { display: "1176653089", article: "6961518143", multiplex: "1901083950" };
 
 type Kind = "display" | "article" | "multiplex";
-export default function AdUnit({ kind = "display", className, minH, side }: { kind?: Kind; className?: string; minH?: number; side?: boolean }) {
+export default function AdUnit({ kind = "display", className, minH, side, format }: { kind?: Kind; className?: string; minH?: number; side?: boolean; format?: "auto" | "horizontal" | "rectangle" }) {
   const path = usePathname();
   const ref = useRef<HTMLModElement>(null);
   const [empty, setEmpty] = useState(false);
@@ -36,7 +36,7 @@ export default function AdUnit({ kind = "display", className, minH, side }: { ki
         ? <ins key={path} ref={ref} className="adsbygoogle" style={{ display: "block", minHeight: h }} data-ad-client={CLIENT} data-ad-slot={slot} data-ad-format="autorelaxed" />
         : fluid
           ? <ins key={path} ref={ref} className="adsbygoogle" style={{ display: "block", textAlign: "center", minHeight: h }} data-ad-client={CLIENT} data-ad-slot={slot} data-ad-layout="in-article" data-ad-format="fluid" />
-          : <ins key={path} ref={ref} className="adsbygoogle" style={{ display: "block", minHeight: h }} data-ad-client={CLIENT} data-ad-slot={slot} data-ad-format={side ? "rectangle" : "auto"} data-full-width-responsive="true" />}
+          : <ins key={path} ref={ref} className="adsbygoogle" style={{ display: "block", minHeight: h }} data-ad-client={CLIENT} data-ad-slot={slot} data-ad-format={format ?? (side ? "rectangle" : "auto")} data-full-width-responsive="true" />}
     </aside>
   );
 }

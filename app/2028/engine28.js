@@ -223,7 +223,7 @@ const TDIM = ['pR', 'pI', 'rB', 'rH', 'rA', 'a3044', 'a4564', 'a65', 'col', 'nv2
 const tco = (c, party, w) => { const r = c ? TCo.get(party + '|' + c.name) : null; return r ? [Number(r.b0) || 0, ...TDIM.map((k) => Number(r['b_' + k]) || 0)].map((x) => x * w) : null; };
 const TCV = [tco(D, 'D', 1), tco(R, 'R', 1), tco(DV, 'D', 0.25), tco(RV, 'R', 0.25)].filter(Boolean);
 const dT = (key) => { const r = TO.get(key); if (!r || !TCV.length) return 0; let x = 0; const v = [1, ...TDIM.map((k) => Number(r[k]) || 0)]; for (const b of TCV) for (let j = 0; j < v.length; j++) x += b[j] * v[j]; return x; };
-const turnAdd = (key, base) => { const r = TO.get(key); if (!r) return 0; const E = Number(r.elig) || 0; if (!(E > 0)) return 0; const add = E * dT(key) / 100; return Math.max(-0.5 * base, Math.min(0.97 * E - base, add)); };
+const turnAdd = (key, base) => { const r = TO.get(key); if (!r) return 0; const E = Number(r.elig) || 0; if (!(E > 0)) return 0; const add = E * dT(key) / 100; return Math.max(-0.04 * base, Math.min(0.03 * base, Math.max(0, Math.min(0.95 * E, base + 0.01 * E) - base), add)); };
 const lpOf = (key) => { const r = TO.get(key); const v = r ? Number(r.lp) : 1; return isFinite(v) && v > 0 ? v : 1; };
 let baseVotes = 0, turnVotes = 0;
 // third party new voters come out of the county's nonvoters, and no more than about a third of them can be moved:

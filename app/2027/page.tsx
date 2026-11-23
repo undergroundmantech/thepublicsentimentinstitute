@@ -9,6 +9,7 @@ import { RATE, rateOf } from "@/app/2028/rate28";
 import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "@/app/2028/h28.css";
 import "./g27.css";
+import AdUnit from "@/app/components/AdUnit";
 
 export const metadata: Metadata = seo({
   title: "2027 governor forecast: Kentucky, Mississippi and Louisiana",
@@ -42,6 +43,7 @@ export default function Gov27() {
           </Link>
         ); })}
       </div>
+      <AdUnit />
       <p className="g27-foot">Early model, built {all[0].built}. Each state is 20,000 runs with a 2027 national environment of {mg(all[0].env)}, the state's own lean in governor, Senate and presidential races, and an electorate built from the L2 voter file.</p>
     </main>
   );

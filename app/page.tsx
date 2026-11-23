@@ -171,6 +171,8 @@ export default function Home() {
         </div>
       </section>
 
+      <AdUnit kind="article" />
+
       <section className="sec">
         <div className="sec-h home-ph"><Pointy className="home-pty op pty-side" pose="idle" prop="clipboard" size={104} look={-1} flip cap say={<>Fresh from the field: <b>{latestOp}</b>.</>} /><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/on-point-polling/polls">All releases</Link></div>
         <div className="grid4">
@@ -192,6 +194,8 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <AdUnit />
 
       <section className="sec">
         <div className="band">

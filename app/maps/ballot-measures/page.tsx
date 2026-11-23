@@ -8,6 +8,7 @@ import { seo, graph, pageLd, crumbsLd } from "@/app/lib/seo";
 import { getMeasures, bmHref, GROUP_LABEL } from "@/app/forecast/measures/data";
 import { STATE_NAME } from "@/app/lib/opp";
 import MeasuresMap, { type MapMeasure } from "./MeasuresMap";
+import AdUnit from "@/app/components/AdUnit";
 
 const PATH = "/maps/ballot-measures";
 
@@ -52,6 +53,8 @@ export default function BallotMeasuresMapPage() {
       </header>
 
       <MeasuresMap measures={list} states={geo.states} frame={geo.frame} names={names} />
+
+      <AdUnit />
 
       <section className="card" style={{ marginTop: 16 }} aria-labelledby="bmm-all">
         <div className="card-h"><h3 id="bmm-all">Every measure, projected vote</h3><span className="eye" style={{ marginLeft: "auto" }}>{list.length} measures</span></div>

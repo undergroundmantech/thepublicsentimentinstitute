@@ -11,6 +11,7 @@ import { hubLd, hubMeta } from "./seo";
 import YouTubeBand from "@/app/components/YouTubeBand";
 import Link from "@/app/components/Link";
 import { getAcc } from "@/app/accuracy/data";
+import AdUnit from "@/app/components/AdUnit";
 
 export function generateMetadata(): Metadata { return hubMeta(); }
 
@@ -63,6 +64,7 @@ export default function ForecastPage() {
         </aside>
         <ForecastConsole data={data} initial="senate" />
       </div>
+      <AdUnit />
       <div className="opp fc-page fc-wide">
         <YouTubeBand from="forecast-hub" title="The 2026 forecast, explained on YouTube" note="How the final forecast held up, which calls missed and why, and what the 2026 results mean for 2028." />
         <details className="fcx-index">

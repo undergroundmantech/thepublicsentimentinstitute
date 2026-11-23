@@ -91,6 +91,8 @@ export default function MajorityTrackerPage() {
         ))}</ol>
       </section>
 
+      <AdUnit />
+
       <section className="mt-fence" aria-labelledby="mt-fence-h">
         <div className="mt-sec-h"><p className="eye">On the fence</p><h2 id="mt-fence-h">The senators who can still move the count</h2></div>
         <ul>

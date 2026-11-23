@@ -113,7 +113,9 @@ export function tmAdd(t: TM, key: string, d: string, r: string, base: number) { 
   const sum = (cs: (number[] | undefined)[]) => { let x = 0; for (const c of cs) if (c) { x += c[0]; for (let j = 0; j < 10; j++) x += c[j + 1] * v[j]; } return x; };
   const x = sum([t.coef[`D|${d}`], t.coef[`R|${r}`]]) - sum([t.coef["R|Vance"]]); if (!x) return 0;
   // a county of Alaska or Connecticut takes its state's mix at the usual two in three turnout of eligible citizens
-  const E = own ? v[10] : base / 0.66; return Math.max(-0.5 * base, Math.min(0.97 * E - base, (E * x) / 100));
+  // v57: realistic turnout, a pairing moves a county's vote at most 3 percent up or 4 down, and never more than a point of its
+  // eligible citizens over its own expected turnout
+  const E = own ? v[10] : base / 0.66; return Math.max(-0.04 * base, Math.min(0.03 * base, Math.max(0, Math.min(0.95 * E, base + 0.01 * E) - base), (E * x) / 100));
 }
 function erf(x: number) { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
 const ncdf = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));

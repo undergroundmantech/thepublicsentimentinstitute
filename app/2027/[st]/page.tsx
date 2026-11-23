@@ -9,6 +9,7 @@ import { stateData } from "@/app/2028/data28";
 import "@/onpoint-sketchbook/styles/sketchbook.css";
 import "@/app/2028/h28.css";
 import "../g27.css";
+import AdUnit from "@/app/components/AdUnit";
 
 export const dynamicParams = false;
 export function generateStaticParams() { return STATES.map((s) => ({ st: s.slug })); }
@@ -53,6 +54,7 @@ export default async function State27({ params }: { params: Promise<{ st: string
           <p className="g27-mute">Governor races in {s.name} have run far closer than its presidential vote. The model starts from how the state has voted for governor, moves it with the 2027 environment, then builds the electorate up from the L2 voter file, {unit.toLowerCase()} by {unit.toLowerCase()}. {S.N.toLocaleString("en-US")} runs, built {S.built}.</p>
         </section>
       </div>
+      <AdUnit />
       <Matchups S={S} />
       {S.code === "LA" ? (
         <div className="g27-fields one">

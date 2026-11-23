@@ -18,6 +18,7 @@ import AccFX from "./fx/AccFX";
 import BallotScrolly from "./fx/BallotScrolly";
 import HTrack from "./fx/HTrack";
 import { CallCards, Chapter, Dumbbells, PollRace, SeatMiss, Stats } from "./fx/Story";
+import AdUnit from "@/app/components/AdUnit";
 
 export const metadata = seo({
   title: "The 2026 accuracy report: On Point Polling and the On Point forecast",
@@ -233,6 +234,7 @@ export default function AccuracyPage() {
         </div>
       </section>
 
+      <AdUnit />
       <section className="acc-sec" id="calibration">
         <div className="sec-h"><div><p className="eye">Calibration</p><h2>Were the odds honest?</h2>
           <p>A forecast that gives favorites 80 percent should see them win about 80 percent of the time. Dots on the line are honest, dots above it mean the odds were too cautious, dots below mean they were too confident.</p></div></div>
@@ -257,6 +259,7 @@ export default function AccuracyPage() {
         <AccMap states={stateRows} house={houseRows} />
       </section>
 
+      <AdUnit kind="article" />
       <section className="acc-sec" id="senate">
         <div className="sec-h"><div><p className="eye">Senate</p><h2>{H.senate.called_right} of {H.senate.races} Senate races called right</h2>
           <p>Sorted from the closest forecast to the safest. Average miss {H.senate.scored?.mae.toFixed(1)} points.</p></div></div>
@@ -275,6 +278,7 @@ export default function AccuracyPage() {
         <HouseExplorer rows={house} />
       </section>
 
+      <AdUnit />
       <section className="acc-sec" id="counties">
         <div className="sec-h"><div><p className="eye">Counties</p><h2>{n(CO.all.counties)} counties in {CO.races} statewide races</h2>
           <p>Counties at 95 percent counted or more. The county miss splits in two: the statewide miss every county shares, and the shape miss left after it is taken out, which is the county model on its own.</p></div></div>
@@ -373,6 +377,7 @@ export default function AccuracyPage() {
         </div>
       </section>
 
+      <AdUnit kind="article" />
       <section className="acc-sec" id="method">
         <div className="sec-h"><div><p className="eye">Method</p><h2>How the grade is built</h2></div></div>
         <div className="acc-grid2">

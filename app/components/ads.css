@@ -7,3 +7,6 @@
 .opp-ad.end { max-width: 1200px; }
 .opp-ad.side { margin: 0 0 16px; }
 .opp-ad[data-empty="1"] { display: none; }
+/* the banner under the navigation bar */
+.opp-ad.top { max-width: 1200px; margin: 14px auto 22px; padding: 8px 12px 10px; }
+.opp-ad.top > span { margin-bottom: 6px; }
