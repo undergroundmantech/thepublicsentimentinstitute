@@ -22,6 +22,7 @@ export const MENU: NavGroup[] = [
         { href: "/2028", label: "Overview", note: "The map and the path to 270" },
         { href: "/2028/primaries", label: "Primaries", note: "Every state, every candidate" },
         { href: "/2028/general", label: "General election", note: "Any matchup, with third parties" },
+        { href: "/2028/senate", label: "Senate", note: "All 34 races, with the split ticket effect" },
         { href: "/2028/map-maker", label: "Make your own map", note: "Rate every state and share it" },
         { href: "/what-moved", label: "What moved this week" },
       ] },

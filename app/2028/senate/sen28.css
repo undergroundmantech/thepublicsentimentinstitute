@@ -1,0 +1,43 @@
+/* Nov 24 2026: the 2028 Senate page, on the 2028 desk's dark tokens from h28.css */
+.sn28 { display: grid; gap: 16px; }
+.sn28 .s28-card { background: var(--card); border: 1px solid var(--edge); box-shadow: var(--sh-sm); }
+.sn-hero { padding: 18px 4px 4px; }
+.sn-eye { font: 700 11px/1 var(--fm); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.sn-hero h1 { margin: 10px 0 8px; font: 800 clamp(30px, 4.4vw, 52px)/1.02 var(--fd); letter-spacing: -.035em; text-wrap: balance; }
+.sn-hero h1 em { font-style: normal; background: linear-gradient(90deg, #064bf9, #c08ad9 55%, #f9064b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sn-lede { margin: 0; max-width: 70ch; color: var(--ink2); font-size: 15px; line-height: 1.55; }
+.sn-note { margin: 12px 0 0; color: var(--mute); font-size: 12.5px; line-height: 1.5; max-width: 95ch; }
+.sn-ctl select, .sn-ctl input[type="range"] { width: 100%; }
+.sn-ctl select { background: var(--card2); color: var(--ink); border: 1px solid var(--edge2); border-radius: 10px; padding: 9px 10px; font: 600 14px var(--fb); }
+.sn-ctl .g28-f > span { font: 700 11px/1 var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.sn-tog { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--edge2); border-radius: 10px; cursor: pointer; font: 600 13px var(--fb); }
+.sn-tog input { accent-color: #c08ad9; width: 16px; height: 16px; }
+.sn-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.sn-kpi { display: grid; gap: 6px; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--edge); }
+.sn-kpi span { font: 700 11px/1 var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.sn-kpi b { font: 800 30px/1 var(--fd); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.sn-kpi b i { font-style: normal; }
+.sn-kpi.d b { color: var(--pd); } .sn-kpi.r b { color: var(--pr); }
+.sn-kpi em { font-style: normal; color: var(--mute); font-size: 12px; }
+.sn-hist { display: flex; align-items: flex-end; gap: 2px; height: 180px; padding-top: 6px; }
+.sn-bar { flex: 1 1 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; min-width: 0; }
+.sn-bar i { display: block; width: 100%; border-radius: 3px 3px 0 0; min-height: 1px; }
+.sn-bar.d i { background: #3d7bff; } .sn-bar.r i { background: #ff3b5c; } .sn-bar.t i { background: #c08ad9; }
+.sn-bar span { font: 600 10px/1 var(--fm); color: var(--mute); height: 14px; padding-top: 4px; font-variant-numeric: tabular-nums; }
+.sn-tbl, .sn-bt { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.sn-tbl th, .sn-bt th { text-align: left; font: 700 10.5px/1 var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding: 8px 10px; border-bottom: 1px solid var(--edge2); white-space: nowrap; }
+.sn-tbl td, .sn-bt td { padding: 9px 10px; border-bottom: 1px solid var(--edge); white-space: nowrap; }
+.sn-tbl .n, .sn-bt .n { text-align: right; }
+.sn-tbl .mono, .sn-bt td.n { font-family: var(--fm); font-variant-numeric: tabular-nums; }
+.sn-tbl .who a { color: var(--ink); font-weight: 700; text-decoration: none; }
+.sn-tbl .who a:hover { text-decoration: underline; }
+.sn-p { font: 700 10px var(--fm); font-style: normal; color: var(--mute); }
+.sn-st { display: inline-block; padding: 3px 8px; border-radius: 999px; font: 700 10.5px/1.2 var(--fm); letter-spacing: .04em; border: 1px solid var(--edge2); }
+.sn-st.s1 { color: var(--ink2); } .sn-st.s5 { color: #e7b341; border-color: rgba(231,179,65,.4); } .sn-st.s0 { color: #c08ad9; border-color: rgba(192,138,217,.45); }
+.sn-chip { display: inline-block; min-width: 64px; text-align: center; padding: 3px 8px; border-radius: 6px; color: #fff; font-weight: 700; }
+.sn-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.sn-method h3 { margin: 0 0 8px; font: 800 15px/1.2 var(--fd); }
+.sn-method p, .sn-method li { color: var(--ink2); font-size: 13.5px; line-height: 1.55; }
+.sn-method ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+.sn-method a { color: #c08ad9; }
+.sn28 .g28-scroll { max-height: none; overflow-x: auto; }
