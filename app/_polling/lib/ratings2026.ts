@@ -264,10 +264,10 @@ export const RATED_2026: RatedFirm[] = [
   {"firm": "Chism Strategies", "grade": "A", "old": "NR", "score": -1.86, "units": 2, "polls": 2, "nat": null, "mae": 1.27, "bias": -1.27, "called": 2, "tag": "D"},
   {"firm": "State Navigate", "grade": "A", "old": "NR", "score": -1.68, "units": 4, "polls": 4, "nat": null, "mae": 3.89, "bias": 0.33, "called": 4, "tag": ""},
   {"firm": "HighGround", "grade": "A", "old": "C", "score": -1.52, "units": 2, "polls": 2, "nat": null, "mae": 2.3, "bias": 0.06, "called": 2, "tag": ""},
-  {"firm": "Mason-Dixon", "grade": "A", "old": "D-", "score": -1.18, "units": 4, "polls": 4, "nat": null, "mae": 4.82, "bias": 0.18, "called": 4, "tag": ""},
+  {"firm": "Mason-Dixon", "grade": "A", "old": "D-", "score": -1.18, "units": 4, "polls": 4, "nat": null, "mae": 4.82, "bias": 0.18, "called": 4, "tag": "R lean"},
   {"firm": "TIPP", "grade": "A", "old": "A", "score": -1.0, "units": 3, "polls": 0, "nat": 10.0, "mae": null, "bias": null, "called": 0, "tag": ""},
   {"firm": "St. Pete Polls", "grade": "A", "old": "NR", "score": -0.96, "units": 4, "polls": 4, "nat": null, "mae": 1.15, "bias": 0.05, "called": 3, "tag": ""},
-  {"firm": "Beacon/Shaw", "grade": "A", "old": "C+", "score": -0.85, "units": 4, "polls": 1, "nat": 9.0, "mae": 2.24, "bias": -2.24, "called": 1, "tag": "R"},
+  {"firm": "Beacon/Shaw", "grade": "A", "old": "C+", "score": -0.85, "units": 4, "polls": 1, "nat": 9.0, "mae": 2.24, "bias": -2.24, "called": 1, "tag": ""},
   {"firm": "Verasight", "grade": "A", "old": "NR", "score": -0.68, "units": 9, "polls": 6, "nat": 11.0, "mae": 4.04, "bias": 4.04, "called": 5, "tag": ""},
   {"firm": "Prolific", "grade": "A", "old": "NR", "score": -0.67, "units": 3, "polls": 0, "nat": 10.7, "mae": null, "bias": null, "called": 0, "tag": ""},
   {"firm": "Marquette University", "grade": "A", "old": "B", "score": -0.59, "units": 1, "polls": 1, "nat": null, "mae": 1.4, "bias": 1.4, "called": 1, "tag": ""},
@@ -301,7 +301,7 @@ export const RATED_2026: RatedFirm[] = [
   {"firm": "GrayHouse", "grade": "B-", "old": "NR", "score": 0.19, "units": 6, "polls": 6, "nat": null, "mae": 4.8, "bias": 3.68, "called": 5, "tag": "R"},
   {"firm": "RedBox Research", "grade": "B-", "old": "NR", "score": 0.19, "units": 13, "polls": 13, "nat": null, "mae": 4.24, "bias": 4.06, "called": 11, "tag": "D"},
   {"firm": "Franklin & Marshall", "grade": "B-", "old": "C-", "score": 0.24, "units": 1, "polls": 1, "nat": null, "mae": 1.47, "bias": -1.47, "called": 1, "tag": ""},
-  {"firm": "Quantus Insights", "grade": "B-", "old": "Gold", "score": 0.26, "units": 8, "polls": 8, "nat": null, "mae": 9.04, "bias": 8.9, "called": 4, "tag": ""},
+  {"firm": "Quantus Insights", "grade": "B-", "old": "Gold", "score": 0.26, "units": 8, "polls": 8, "nat": null, "mae": 9.04, "bias": 8.9, "called": 4, "tag": "R lean"},
   {"firm": "Spry Strategies", "grade": "C+", "old": "C+", "score": 0.32, "units": 1, "polls": 1, "nat": null, "mae": 8.99, "bias": 8.99, "called": 1, "tag": "R"},
   {"firm": "Texas Public Opinion Research", "grade": "C+", "old": "NR", "score": 0.42, "units": 2, "polls": 2, "nat": null, "mae": 7.9, "bias": 7.9, "called": 1, "tag": "D"},
   {"firm": "RMG Research", "grade": "C+", "old": "C+", "score": 0.43, "units": 3, "polls": 0, "nat": 8.0, "mae": null, "bias": null, "called": 0, "tag": ""},
@@ -316,7 +316,7 @@ export const RATED_2026: RatedFirm[] = [
   {"firm": "Morning Consult", "grade": "C", "old": "C-", "score": 0.68, "units": 5, "polls": 2, "nat": 8.0, "mae": 5.0, "bias": 5.0, "called": 2, "tag": ""},
   {"firm": "GBAO", "grade": "C", "old": "F", "score": 0.69, "units": 4, "polls": 4, "nat": null, "mae": 3.71, "bias": -0.04, "called": 3, "tag": "D"},
   {"firm": "Change Research", "grade": "C", "old": "D", "score": 0.71, "units": 3, "polls": 3, "nat": null, "mae": 4.64, "bias": 3.77, "called": 1, "tag": "D"},
-  {"firm": "InsiderAdvantage", "grade": "C", "old": "A+", "score": 0.73, "units": 18, "polls": 18, "nat": null, "mae": 5.43, "bias": 5.02, "called": 12, "tag": "R"},
+  {"firm": "InsiderAdvantage", "grade": "C", "old": "A+", "score": 0.73, "units": 18, "polls": 18, "nat": null, "mae": 5.43, "bias": 5.02, "called": 12, "tag": "R lean"},
   {"firm": "UH Hobby School", "grade": "C", "old": "NR", "score": 0.77, "units": 2, "polls": 2, "nat": null, "mae": 8.89, "bias": 8.89, "called": 1, "tag": ""},
   {"firm": "Noble Predictive Insights", "grade": "C", "old": "C+", "score": 0.78, "units": 2, "polls": 2, "nat": null, "mae": 7.88, "bias": 7.88, "called": 2, "tag": ""},
   {"firm": "OnMessage", "grade": "C-", "old": "A+", "score": 0.83, "units": 1, "polls": 1, "nat": null, "mae": 15.36, "bias": 15.36, "called": 1, "tag": "R"},
@@ -338,12 +338,18 @@ export const RATED_2026: RatedFirm[] = [
   {"firm": "Harris Poll", "grade": "D", "old": "B", "score": 1.92, "units": 3, "polls": 0, "nat": 4.0, "mae": null, "bias": null, "called": 0, "tag": ""},
   {"firm": "Penn State", "grade": "D", "old": "NR", "score": 2.21, "units": 3, "polls": 0, "nat": 4.0, "mae": null, "bias": null, "called": 0, "tag": ""},
   {"firm": "UNH", "grade": "D", "old": "C-", "score": 2.26, "units": 4, "polls": 4, "nat": null, "mae": 6.77, "bias": -6.77, "called": 2, "tag": ""},
-  {"firm": "Trafalgar", "grade": "D-", "old": "A-", "score": 1.85, "units": 13, "polls": 13, "nat": null, "mae": 7.95, "bias": 7.95, "called": 8, "tag": "R"},
+  {"firm": "Trafalgar", "grade": "D-", "old": "A-", "score": 1.85, "units": 13, "polls": 13, "nat": null, "mae": 7.95, "bias": 7.95, "called": 8, "tag": "R lean"},
   {"firm": "co/efficient", "grade": "F", "old": "C+", "score": 2.26, "units": 8, "polls": 8, "nat": null, "mae": 6.71, "bias": 6.71, "called": 4, "tag": "R"},
-  {"firm": "Targoz", "grade": "F", "old": "C+", "score": 2.46, "units": 9, "polls": 6, "nat": 3.0, "mae": 6.43, "bias": 6.43, "called": 5, "tag": "R"},
+  {"firm": "Targoz", "grade": "F", "old": "C+", "score": 2.46, "units": 9, "polls": 6, "nat": 3.0, "mae": 6.43, "bias": 6.43, "called": 5, "tag": "R lean"},
   {"firm": "Concord Public Opinion Partners", "grade": "F", "old": "NR", "score": 4.84, "units": 10, "polls": 10, "nat": null, "mae": 13.31, "bias": -13.04, "called": 4, "tag": "D"},
 ];
 
+/** Nov 24 2026 reassessment of the Gold Standard, rescored against the D +14.0 national House count and every certified race.
+ *  Gold needs all four: a score a full point better than the field, -1.05 or lower, after the prior grade's four polls; five scored
+ *  units, or a national final within a point of the count; no firm level R or D label; and no measured house lean of two points
+ *  or more at t of 2.5 or more. The same seven qualify: The Honest Poll -2.64, NYT/Siena -1.77, Big Data Poll -1.75, AtlasIntel
+ *  -1.49, Quinnipiac -1.38, On Point Polling -1.10, Emerson -1.07. Cook Political with GS Strategy, -1.00, is the closest miss.
+ *  On Point's one Virginia Project release is a sponsored Republican poll and is corrected as one; the firm carries no label. */
 /** The 2026 Gold Standard: graded Gold on 2026 accuracy. Names as they appear in poll listings. */
 export const GOLD_2026 = ["On Point Polling", "The Honest Poll", "Honest Poll", "Big Data Poll", "NYT/Siena", "New York Times", "NY Times", "NYT", "Quinnipiac", "AtlasIntel", "Atlas Intel", "Emerson"];
 
@@ -360,14 +366,36 @@ export const ACCURACY_2026 = {
   generic: { result: 13.0, count: 14.0, averages: 8.5, fieldMiss: 4.53 },
 };
 
-/** Partisan lean against the nonpartisan polls of the same race, final 30 days, trimmed of the extreme tenth and shrunk
- *  by n / (n + 5). These are the points a poll is moved back before it enters a 2028 average. */
-export const LEAN_CAL_2026: Record<string, { lean: number; n: number }> = {
-  rinternal: { lean: 2.2, n: 101 },
-  dinternal: { lean: 1.8, n: 59 },
-  trafalgar: { lean: 2.3, n: 13 },
-  insideradvantage: { lean: 1.6, n: 18 },
-  quantus: { lean: 2.4, n: 8 },
-  gbao: { lean: 0.9, n: 4 },
-  dataforprogress: { lean: 0.3, n: 8 },
+/** Nov 24 2026 reassessment. Partisan lean against the nonpartisan polls of the same race ended within three weeks, Sep 1 to
+ *  Nov 3 2026, the firm's own polls left out of its comparison set. Pooled by side and trimmed: Republican aligned polls ran
+ *  2.6 points right of the nonpartisan polls of the same races, Democratic aligned polls 2.2 points left, shrunk by n / (n + 5).
+ *  Against the results, Republican aligned polls were 5.2 too Republican, nonpartisan polls 3.7 too Republican and Democratic
+ *  aligned polls 0.4 too Democratic: the whole field missed right, so the corrections stay measured against the nonpartisan polls.
+ *  A firm that mainly works for one party is shrunk toward its side's pooled lean, (n x its own lean + 5 x the side) / (n + 5),
+ *  so Echelon and Cygnal, which ran with the field, move about one point, not the full side figure. A firm labelled on its
+ *  measured lean alone (Trafalgar, InsiderAdvantage, Quantus, Mason-Dixon, Targoz) is shrunk toward zero. No firm is moved
+ *  against its label: RedBox, which ran right of the field despite its Democratic clients, is not moved.
+ *  These are the points a poll is moved back before it enters a 2028 average. */
+export type LeanCal = { lean: number; n: number; dir: "R" | "D"; label: string; raw?: number };
+export const LEAN_CAL_2026: Record<string, LeanCal> = {
+  rinternal: { lean: 2.5, n: 156, dir: "R", label: "Republican campaign and party polls" },
+  dinternal: { lean: 2.1, n: 74, dir: "D", label: "Democratic campaign and party polls" },
+  trafalgar: { lean: 2.1, n: 24, dir: "R", label: "Trafalgar", raw: 2.55 },
+  insideradvantage: { lean: 1.5, n: 31, dir: "R", label: "InsiderAdvantage", raw: 1.71 },
+  quantus: { lean: 2.8, n: 16, dir: "R", label: "Quantus Insights", raw: 3.70 },
+  masondixon: { lean: 2.0, n: 8, dir: "R", label: "Mason-Dixon", raw: 3.29 },
+  coefficient: { lean: 4.2, n: 26, dir: "R", label: "co/efficient", raw: 4.50 },
+  rasmussen: { lean: 1.6, n: 29, dir: "R", label: "Rasmussen Reports", raw: 1.48 },
+  npa: { lean: 2.9, n: 12, dir: "R", label: "National Public Affairs", raw: 3.08 },
+  echelon: { lean: 1.1, n: 12, dir: "R", label: "Echelon Insights", raw: 0.47 },
+  cygnal: { lean: 0.9, n: 6, dir: "R", label: "Cygnal", raw: -0.44 },
+  grayhouse: { lean: 3.2, n: 5, dir: "R", label: "GrayHouse", raw: 3.94 },
+  targoz: { lean: 1.5, n: 6, dir: "R", label: "Targoz", raw: 2.75 },
+  changeresearch: { lean: 3.9, n: 6, dir: "D", label: "Change Research", raw: -5.33 },
+  ppp: { lean: 2.0, n: 6, dir: "D", label: "Public Policy Polling", raw: -1.84 },
+  gsg: { lean: 2.6, n: 5, dir: "D", label: "Global Strategy Group", raw: -3.13 },
+  gbao: { lean: 2.2, n: 7, dir: "D", label: "GBAO", raw: -2.22 },
+  dataforprogress: { lean: 1.1, n: 8, dir: "D", label: "Data for Progress", raw: -0.47 },
+  redbox: { lean: 0.0, n: 13, dir: "D", label: "RedBox Research", raw: 0.99 },
+  concord: { lean: 6.0, n: 9, dir: "D", label: "Concord Public Opinion Partners", raw: -8.24 },
 };

@@ -21,7 +21,6 @@ export default function Clip({ m, priority = false }: { m: Media; priority?: boo
       <div className="vid">
         <video ref={ref} muted loop playsInline preload={priority ? "auto" : "none"} poster={m.poster} width={m.w} height={m.h} aria-label={m.alt}
           onPlay={() => setPaused(false)} onPause={() => setPaused(true)}>
-          <source src={`${m.src}.webm`} type="video/webm" />
           <source src={`${m.src}.mp4`} type="video/mp4" />
         </video>
         {paused ? <button type="button" className="play" onClick={() => ref.current?.play()} aria-label={`Play: ${m.label}`}><span /></button> : null}

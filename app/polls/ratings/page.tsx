@@ -6,7 +6,7 @@ import { ACCURACY_2026 as A, LEAN_CAL_2026, RATED_2026 } from "@/app/_polling/li
 import "../2028/p2028.css";
 
 const DESC = "On Point Politics pollster ratings after the 2026 midterms: the new Gold Standard, a grade for every firm scored against the results, and the partisan corrections the averages now use.";
-export const metadata: Metadata = seo({ title: "Pollster ratings 2026: the most accurate pollsters and the new Gold Standard", description: DESC, path: "/polls/ratings", type: "article", modified: "2026-11-13" });
+export const metadata: Metadata = seo({ title: "Pollster ratings 2026: the most accurate pollsters and the new Gold Standard", description: DESC, path: "/polls/ratings", type: "article", modified: "2026-11-24" });
 
 const GOLD = RATED_2026.filter((r) => r.grade === "Gold");
 const ORDER = ["Gold", "A++", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "D-", "F", "NR"];
@@ -22,7 +22,7 @@ export default function Page() {
     <div className="opp rt">
       <JsonLd data={graph(
         crumbsLd([["Home", "/"], ["Polls", "/polls"], ["Pollster ratings", "/polls/ratings"]]),
-        pageLd({ name: "Pollster ratings 2026", description: DESC, path: "/polls/ratings", modified: "2026-11-13", about: "Pollster ratings" }),
+        pageLd({ name: "Pollster ratings 2026", description: DESC, path: "/polls/ratings", modified: "2026-11-24", about: "Pollster ratings" }),
       )} />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span><span aria-current="page">Pollster ratings</span></nav>
       <header className="ph">
@@ -43,6 +43,7 @@ export default function Page() {
           ))}
         </div>
         <p className="pf-note">Quinnipiac and AtlasIntel join. Cygnal moves to A minus and Quantus Insights to B minus after running well to the right of the results. The Wall Street Journal, with no scored 2026 polls, moves to A++ until it has a record to grade.</p>
+        <p className="pf-note">Reassessed November 24 against the D +14.0 national House count and every certified race. Gold takes all four: a score a full point better than the field, five scored polls or a national final within a point of the count, no firm level R or D label, and no measured house lean of two points or more. The same seven qualify; Cook Political with GS Strategy is the closest miss at minus 1.00.</p>
       </section>
 
       <section className="card">
@@ -67,12 +68,12 @@ export default function Page() {
             <thead><tr><th>Who</th><th className="n">Polls scored</th><th className="n">Moved toward</th><th className="n">Points</th></tr></thead>
             <tbody>
               {Object.entries(LEAN_CAL_2026).map(([k, v]) => (
-                <tr key={k}><td className="who">{SHIFT_LABEL[k] ?? k}</td><td className="n">{v.n}</td><td className="n">{SHIFT_DIR[k] === "R" ? "Democrats" : "Republicans"}</td><td className="n mono">{v.lean.toFixed(1)}</td></tr>
+                <tr key={k}><td className="who">{v.label ?? SHIFT_LABEL[k] ?? k}</td><td className="n">{v.n}</td><td className="n">{(v.dir ?? SHIFT_DIR[k]) === "R" ? "Democrats" : "Republicans"}</td><td className="n mono">{v.lean.toFixed(1)}</td></tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="pf-note">Each figure is how far that side&apos;s polls ran from the nonpartisan polls of the same races in the final month of 2026, trimmed of the most extreme tenth and shrunk toward zero when there are few polls. Measuring against the nonpartisan polls rather than the results keeps the correction about the sponsor: every kind of poll missed toward Republicans in 2026, and that shared miss is not something a single firm&apos;s correction should carry into 2028. Tables keep each poll as published.</p>
+        <p className="pf-note">Each figure is how far that side&apos;s polls ran from the nonpartisan polls of the same races ended within three weeks, September 1 to November 3, 2026, trimmed and shrunk when there are few polls. Reassessed November 24: a firm that mainly works for one party is shrunk toward its side&apos;s pooled figure, so Echelon and Cygnal, which ran with the field, move about a point; Trafalgar, InsiderAdvantage, Quantus, Mason-Dixon and Targoz carry an R lean label on their measured lean alone; Beacon with Shaw is a bipartisan pair and carries none; RedBox ran to the right of the field despite its Democratic clients and is not moved. Measuring against the nonpartisan polls rather than the results keeps the correction about the sponsor: every kind of poll missed toward Republicans in 2026, and that shared miss is not something a single firm&apos;s correction should carry into 2028. Tables keep each poll as published.</p>
       </section>
 
       <section className="card">
@@ -83,7 +84,7 @@ export default function Page() {
             <tbody>
               {rated.map((r) => (
                 <tr key={r.firm}>
-                  <td className="who">{r.firm}{r.tag ? <span className="ty"> {r.tag === "R" ? "R sponsor" : r.tag === "D" ? "D sponsor" : ""}</span> : null}</td>
+                  <td className="who">{r.firm}{r.tag ? <span className="ty"> {r.tag === "R" ? "R sponsor" : r.tag === "D" ? "D sponsor" : r.tag === "R lean" ? "R lean" : r.tag === "D lean" ? "D lean" : ""}</span> : null}</td>
                   <td><span className={`rt-g k-${r.grade}`}>{r.grade}</span></td>
                   <td className={rank(r.grade) < rank(r.old) ? "rt-up" : "rt-dn"}>{r.old}</td>
                   <td className="n mono">{sgn(r.score)}</td>

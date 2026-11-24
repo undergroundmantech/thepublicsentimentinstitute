@@ -4,7 +4,7 @@ import {
   getCandidateList,
   buildDailyWeightedSeries, pollSharesOn,
   getPollsterEntry,
-  isExcludedPollster, rLeanFirms, R_LEAN_FIRMS, type ModelOptions,
+  isExcludedPollster, rLeanFirms, leanFirms2028, R_LEAN_FIRMS, type ModelOptions,
 } from "./buildDailyModel";
 
 import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../genericballot/data";
@@ -455,13 +455,14 @@ export type PollLean = { dir: "R" | "D"; pts: number; firms: string };
 // races in the final month of 2026, the stretch scored against the results, where that lean is known.
 function leanFor(d: AggregateDef, f: string): LeanEstimate | undefined {
   const e = R_LEAN_ESTIMATES[f], c = LEAN_CAL_2026[f];
-  if (!e || !c || d.category !== "2028") return e;
-  return { ...e, lean: c.lean, n: c.n };
+  if (!c || d.category !== "2028") return e;
+  // Nov 24 2026: the 2028 averages read the calibrated figure, firm level where the firm has one
+  return { id: f, label: c.label, dir: c.dir, raw: c.raw ?? e?.raw ?? 0, n: c.n, lean: c.lean };
 }
 function cleanPolls(d: AggregateDef): Poll[] {
   const side = rSideOf(d);
   return d.polls.filter((p) => !isExcludedPollster(p.pollster)).map((p) => {
-    const firms = rLeanFirms(p.pollster);
+    const firms = d.category === "2028" ? leanFirms2028(p.pollster) : rLeanFirms(p.pollster);
     if (!firms.length || !side) return p;
     // a joint release of an R lean and a D lean firm would cancel; every listed joint release is two R lean firms
     const est = firms.map((f) => leanFor(d, f)).filter(Boolean) as LeanEstimate[];

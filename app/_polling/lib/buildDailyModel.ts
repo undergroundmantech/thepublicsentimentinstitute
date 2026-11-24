@@ -93,6 +93,24 @@ const bipartisan = (n: string) => BIPARTISAN.test(n) || (/\(D\)/.test(n) && /\(R
 const INTERNAL_IDS = new Set(["rinternal", "dinternal"]);
 export function leanFirms(name: string): string[] { const n = name || ""; return LEAN_FIRMS.filter((f) => f.re.test(n) && !(f.dir === "D" && bipartisan(n)) && !(INTERNAL_IDS.has(f.id) && bipartisan(n))).map((f) => f.id); }
 export const rLeanFirms = leanFirms;
+// Nov 24 2026 reassessment, 2028 averages only: firm level corrections from ratings2026.ts LEAN_CAL_2026. A poll from a listed firm
+// takes that firm's own measured lean, shrunk toward its side, in place of the pooled campaign figure, and a poll from a firm
+// labelled on its measured lean takes that lean whether or not the listing carries an (R) or (D). Everything else falls back to
+// leanFirms: the pooled Republican or Democratic figure for a tagged internal, nothing for a nonpartisan poll.
+export const LEAN_FIRMS_2028: { id: string; re: RegExp }[] = [
+  { id: "trafalgar", re: /trafalgar/i }, { id: "insideradvantage", re: /insider\s*advantage/i }, { id: "quantus", re: /quantus/i },
+  { id: "masondixon", re: /mason.?dixon/i }, { id: "coefficient", re: /co\/?efficient/i }, { id: "rasmussen", re: /rasmussen/i },
+  { id: "npa", re: /national\s*public\s*affairs/i }, { id: "echelon", re: /echelon/i }, { id: "cygnal", re: /cygnal/i },
+  { id: "grayhouse", re: /grayhouse/i }, { id: "targoz", re: /targoz/i }, { id: "changeresearch", re: /change\s*research/i },
+  { id: "ppp", re: /public\s*policy\s*polling|\bppp\b/i }, { id: "gsg", re: /global\s*strategy\s*group|\bgsg\b/i }, { id: "gbao", re: /\bgbao\b/i },
+  { id: "dataforprogress", re: /data\s*for\s*progress/i }, { id: "redbox", re: /redbox/i }, { id: "concord", re: /concord\s*public/i },
+];
+export function leanFirms2028(name: string): string[] {
+  const n = name || "";
+  if (bipartisan(n)) return [];
+  const own = LEAN_FIRMS_2028.filter((f) => f.re.test(n)).map((f) => f.id);
+  return own.length ? own : leanFirms(n);
+}
 export const leanDirOf = (id: string): LeanDir => LEAN_FIRMS.find((f) => f.id === id)?.dir ?? "R";
 
 // Unrated pollsters: slight penalty below B baseline.

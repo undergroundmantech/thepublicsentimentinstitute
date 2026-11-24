@@ -1,0 +1,23 @@
+# Nov 24 2026: folders the site never reads at build or at run time stay in the repo but are not uploaded to Vercel.
+# Keep scripts/calibration (prebuild), scripts/forecast/earlyvote (read by the early vote pages), scripts/intelligence and data.
+/ev_history
+/docs
+/results_tool
+/leg_results_out
+/tpsiPollingSpreadsheets
+/changeorders
+/tests
+/*.zip
+/scripts/watchdog
+/scripts/forecast/donors
+/scripts/forecast/model
+/scripts/forecast/statehouse
+/scripts/forecast/measures
+/scripts/forecast/downballot
+/scripts/history
+/scripts/results
+/scripts/recorder
+/scripts/brasil
+/scripts/donors
+/scripts/voterreg
+/scripts/play/research
