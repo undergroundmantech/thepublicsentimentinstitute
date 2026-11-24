@@ -111,6 +111,8 @@ export const MENU: NavGroup[] = [
       { h: "Ours", links: [
         { href: "/on-point-polling/polls", label: "On Point Polling releases" },
         { href: "/most-accurate-pollster", label: "Pollster ranking" },
+        { href: "/polls/ratings", label: "Pollster ratings" },
+        { href: "/polls/archive/2026", label: "2026 averages archive" },
       ] },
     ] },
   { key: "opp", label: "On Point Polling", href: "/on-point-polling",

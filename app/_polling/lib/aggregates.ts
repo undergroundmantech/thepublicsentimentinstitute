@@ -453,19 +453,19 @@ export const R_LEAN_ESTIMATES: Record<string, LeanEstimate> = measureLeans(RAW_A
 export type PollLean = { dir: "R" | "D"; pts: number; firms: string };
 // Nov 13 2026: a 2028 average moves partisan polls by the lean measured against the nonpartisan polls of the same
 // races in the final month of 2026, the stretch scored against the results, where that lean is known.
-function leanFor(d: AggregateDef, f: string): LeanEstimate | undefined {
+function leanFor(d: AggregateDef, f: string, calibrated = d.category === "2028"): LeanEstimate | undefined {
   const e = R_LEAN_ESTIMATES[f], c = LEAN_CAL_2026[f];
-  if (!c || d.category !== "2028") return e;
+  if (!c || !calibrated) return e;
   // Nov 24 2026: the 2028 averages read the calibrated figure, firm level where the firm has one
   return { id: f, label: c.label, dir: c.dir, raw: c.raw ?? e?.raw ?? 0, n: c.n, lean: c.lean };
 }
-function cleanPolls(d: AggregateDef): Poll[] {
+function cleanPolls(d: AggregateDef, calibrated = d.category === "2028"): Poll[] {
   const side = rSideOf(d);
   return d.polls.filter((p) => !isExcludedPollster(p.pollster)).map((p) => {
-    const firms = d.category === "2028" ? leanFirms2028(p.pollster) : rLeanFirms(p.pollster);
+    const firms = calibrated ? leanFirms2028(p.pollster) : rLeanFirms(p.pollster);
     if (!firms.length || !side) return p;
     // a joint release of an R lean and a D lean firm would cancel; every listed joint release is two R lean firms
-    const est = firms.map((f) => leanFor(d, f)).filter(Boolean) as LeanEstimate[];
+    const est = firms.map((f) => leanFor(d, f, calibrated)).filter(Boolean) as LeanEstimate[];
     const dir = est[0]?.dir ?? "R";
     const lean = est.filter((e) => e.dir === dir).reduce((s, e) => s + e.lean, 0) / Math.max(1, est.filter((e) => e.dir === dir).length);
     if (!(lean > 0)) return p;
@@ -487,6 +487,26 @@ export const AGGREGATES: AggregateDef[] = RAW_AGGREGATES.map((d) => ({ ...d, gol
  *  forecast race pages and are kept off the polling desk, which reads DESK_AGGREGATES. */
 export const RETIRED_CATEGORIES = new Set(["2026 Senate", "2026 Governor"]);
 export const DESK_AGGREGATES: AggregateDef[] = AGGREGATES.filter((d) => !RETIRED_CATEGORIES.has(d.category));
+/** Nov 24 2026: the 2026 archive. Every 2026 Senate and governor average and the national generic ballot, approval and right
+ *  track averages, run again on the polls that ended by Election Day, November 3, under the 2026 ratings: the 2026 grades,
+ *  the 2026 Gold Standard at the top weight, and the November 24 partisan corrections, firm by firm. The forecast race pages
+ *  keep the averages as they stood on the night; this is the same record read with what 2026 taught. */
+export const ARCHIVE_2026_NATIONAL = ["generic-ballot", "trump-approval", "right-wrong-track"];
+export const ARCHIVE_2026: AggregateDef[] = RAW_AGGREGATES
+  .filter((d) => RETIRED_CATEGORIES.has(d.category) || ARCHIVE_2026_NATIONAL.includes(d.id))
+  .map((d) => {
+    const cut = { ...d, polls: d.polls.filter((p) => p.endDate <= "2026-11-03") };
+    return { ...cut, gold: GOLD_2026, polls: cleanPolls(cut, true) };
+  });
+/** The same averages as they stood on the night: the polls through November 3 with the corrections the desk used then. */
+export const NIGHT_2026: AggregateDef[] = AGGREGATES
+  .filter((d) => RETIRED_CATEGORIES.has(d.category) || ARCHIVE_2026_NATIONAL.includes(d.id))
+  .map((d) => ({ ...d, polls: d.polls.filter((p) => p.endDate <= "2026-11-03") }));
+/** Republican minus Democratic points from an average's net, A minus B; null when neither side is the Republican one. */
+export function rMinusD(d: AggregateDef, net: number): number | null {
+  const s = rSideOf(d); if (!s) return null;
+  return s === "A" ? net : -net;
+}
 /** The cleaned poll list of one average: removed firms dropped, Republican lean taken off. */
 export function aggPolls(id: string): Poll[] { return AGGREGATES.find((d) => d.id === id)?.polls ?? []; }
 

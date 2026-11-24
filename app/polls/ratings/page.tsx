@@ -44,6 +44,7 @@ export default function Page() {
         </div>
         <p className="pf-note">Quinnipiac and AtlasIntel join. Cygnal moves to A minus and Quantus Insights to B minus after running well to the right of the results. The Wall Street Journal, with no scored 2026 polls, moves to A++ until it has a record to grade.</p>
         <p className="pf-note">Reassessed November 24 against the D +14.0 national House count and every certified race. Gold takes all four: a score a full point better than the field, five scored polls or a national final within a point of the count, no firm level R or D label, and no measured house lean of two points or more. The same seven qualify; Cook Political with GS Strategy is the closest miss at minus 1.00.</p>
+        <p className="pf-note"><Link href="/polls/archive/2026">The 2026 averages archive</Link> reruns every Senate and governor average under these ratings and sets each against the result.</p>
       </section>
 
       <section className="card">

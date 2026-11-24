@@ -73,6 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/polls/generic-ballot", today, "daily", 1),
     u("/polls/2028", today, "daily", 0.95),
     u("/polls/right-track", today, "daily", 0.7),
+    u("/polls/archive/2026", today, "monthly", 0.7),
     u("/results/monitor", today, "weekly", 0.8),
     u("/polls/senate", today, "daily", 0.8),
     u("/polls/governor", today, "daily", 0.8),
