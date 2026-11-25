@@ -41,3 +41,4 @@
 .sn-method ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
 .sn-method a { color: #c08ad9; }
 .sn28 .g28-scroll { max-height: none; overflow-x: auto; }
+.sn28 .sn-map { background: var(--card); border: 1px solid var(--edge); border-radius: 18px; }
